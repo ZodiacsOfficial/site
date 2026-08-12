@@ -49,9 +49,11 @@ describe('Terminal market and venue notice coverage', () => {
     for (const phrase of REQUIRED_COPY) expect(markets).toContain(phrase);
   });
 
-  it('retains exactly one complete notice on the Terminal landing', async () => {
-    const terminal = compact(await read('public/terminal/index.html'));
-    expect(terminal.match(/data-terminal-market-notice/gu) ?? []).toHaveLength(1);
-    for (const phrase of REQUIRED_COPY) expect(terminal).toContain(phrase);
+  it('retains exactly one complete notice on both Terminal landings', async () => {
+    for (const path of ['public/terminal/index.html', 'public/terminal/pro/index.html']) {
+      const terminal = compact(await read(path));
+      expect(terminal.match(/data-terminal-market-notice/gu) ?? [], path).toHaveLength(1);
+      for (const phrase of REQUIRED_COPY) expect(terminal, path).toContain(phrase);
+    }
   });
 });

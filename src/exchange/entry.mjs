@@ -88,18 +88,18 @@ export function injectRegistryExchange(html, env = {}) {
 }
 
 /**
- * The Registry landing owns only a build marker for this surface. Its React
- * shell decides whether and where to render the single discovery entry. This
- * keeps the route and landing on one flag without baking terminal markup or a
- * venue URL into the committed hub.
+ * The Pro Terminal landing owns only a build marker for this surface. Its
+ * React shell decides whether and where to render the single discovery entry.
+ * This keeps the Markets route and Pro landing on one flag without baking
+ * terminal markup or a venue URL into the committed reading surface.
  */
 export function injectRegistryExchangeLanding(html, env = {}) {
   const enabled = registryExchangeEnabled(env);
   const source = `<meta name="${REGISTRY_EXCHANGE_META}" content="[01]" />`;
   const matches = html.match(new RegExp(source, 'g')) ?? [];
-  if (matches.length === 0) throw new Error('registry-exchange: hub is missing its flag marker');
+  if (matches.length === 0) throw new Error('registry-exchange: Pro landing is missing its flag marker');
   if (matches.length !== 1) {
-    throw new Error('registry-exchange: hub must contain exactly one flag marker');
+    throw new Error('registry-exchange: Pro landing must contain exactly one flag marker');
   }
   const meta = new RegExp(source);
   return { output: html.replace(meta, metaFor(enabled)), enabled };

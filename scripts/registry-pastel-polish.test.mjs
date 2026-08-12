@@ -106,24 +106,24 @@ describe('registry pastel polish', () => {
     expect(reducedRules).toContain(".market-tape__group[aria-hidden='true'] { display: none; }");
   });
 
-  it('opens on the capital market masthead and keeps the optional Cabinet in the purpose section', async () => {
+  it('opens on the identity masthead and keeps the optional Cabinet in the purpose section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/terminal/index.html'),
     ]);
 
-    // The film is retired. A single market identity now precedes the selected
-    // sculpture and compact board without introducing a second brand.
+    // The film is retired. Identity, artwork, and verification now precede
+    // the low market snapshot without introducing a second brand.
     expect(source).not.toContain('function CineHero(');
     expect(source).not.toContain('className="cine__frame"');
     const masthead = source.slice(
-      source.indexOf('function ConsumerCapitalHeader('),
-      source.indexOf('function ConsumerMarketSection('),
+      source.indexOf('function ConsumerIdentityHeader('),
+      source.indexOf('function ConsumerMarketSnapshot('),
     );
     expect(masthead).toContain('Zodiac Terminal');
-    expect(masthead).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
-    expect(masthead).toContain('<MarketTape season={season} />');
-    expect(masthead).toContain('className="capital-pulse"');
+    expect(masthead).toContain('Every sign has one official token. Find yours, see the artwork, and verify the public record.');
+    expect(masthead).toContain('<TerminalViewLink view="pro"');
+    expect(masthead).not.toContain('<MarketTape');
     const stage = source.slice(
       source.indexOf('function GalleryBand('),
       source.indexOf('function ConsumerExplorer('),
@@ -136,7 +136,7 @@ describe('registry pastel polish', () => {
     // The no-JS shell mirrors the same masthead instead of briefly showing a
     // cinematic title that disappears after React mounts.
     expect(registry).toContain('<h1 id="static-capital-title">Zodiac Terminal</h1>');
-    expect(registry).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
+    expect(registry).toContain('Every sign has one official token. Find yours, see the artwork, and verify the public record.');
     expect(registry).not.toContain('data-cine-video');
     expect(source).toContain('id="thesis" className="consumer-purpose reveal"');
     expect(source).toContain('REGISTRY_AURA_ENABLED &&');

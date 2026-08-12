@@ -63,8 +63,8 @@ describe('buildSearchIndex', () => {
     expect(first.entries.filter((entry) => ['terminal', 'registry'].includes(entry.kind)))
       .toEqual([...CURATED_WING_ENTRIES].sort((left, right) => left.path.localeCompare(right.path)));
     expect(first.entries.filter((entry) => entry.kind !== 'term'))
-      .toHaveLength(2 + 16);
-    expect(first.entries).toHaveLength(2 + 16 + GLOSSARY.length);
+      .toHaveLength(2 + 17);
+    expect(first.entries).toHaveLength(2 + 17 + GLOSSARY.length);
     expect(first.entries.filter((entry) => entry.kind === 'term')).toHaveLength(GLOSSARY.length);
     expect(searchIndex(first.entries, 'registry')[0]).toMatchObject({ kind: 'registry' });
     expect(searchIndex(first.entries, 'registry')).toContainEqual(expect.objectContaining({
@@ -73,6 +73,22 @@ describe('buildSearchIndex', () => {
     }));
     expect(searchIndex(first.entries, 'astrofolio')[0]).toMatchObject({
       path: '/terminal/',
+      kind: 'terminal',
+    });
+    expect(searchIndex(first.entries, 'zodiac gallery verifier')[0]).toMatchObject({
+      path: '/terminal/',
+      kind: 'terminal',
+    });
+    expect(searchIndex(first.entries, 'zodiac capital markets')[0]).toMatchObject({
+      path: '/terminal/pro/',
+      kind: 'terminal',
+    });
+    expect(searchIndex(first.entries, 'market tape liquidity')[0]).toMatchObject({
+      path: '/terminal/pro/',
+      kind: 'terminal',
+    });
+    expect(searchIndex(first.entries, 'ranked zodiac tokens')[0]).toMatchObject({
+      path: '/terminal/pro/',
       kind: 'terminal',
     });
     expect(searchIndex(first.entries, 'thesis')[0]).toMatchObject({

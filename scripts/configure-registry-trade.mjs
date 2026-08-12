@@ -12,11 +12,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import {
-  injectRegistryTrade,
-  injectRegistryTradeLanding,
-  registryTradeEnabled,
-} from '../src/trade/entry.mjs';
+import { injectRegistryTrade, registryTradeEnabled } from '../src/trade/entry.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SIGNS = [
@@ -36,19 +32,7 @@ for (const sign of SIGNS) {
   written += 1;
 }
 
-// The Terminal explorer carries the panel too. Its shell holds no markup for
-// it — the panel is mounted into the chosen sign's card at runtime — so only
-// the flag is stamped here.
-const terminalFile = resolve(root, 'public/terminal/index.html');
-const terminalSource = await readFile(terminalFile, 'utf8');
-const terminal = injectRegistryTradeLanding(terminalSource, process.env).output;
-if (terminal !== terminalSource) {
-  await writeFile(terminalFile, terminal);
-  written += 1;
-}
-
 console.log(
   `Registry trade panel: ${enabled ? 'enabled' : 'disabled'} `
-  + `(${written} of ${SIGNS.length + 1} page${written === 1 ? '' : 's'} rewritten,`
-  + ' Terminal landing included)',
+  + `(${written} of ${SIGNS.length} page${written === 1 ? '' : 's'} rewritten)`,
 );

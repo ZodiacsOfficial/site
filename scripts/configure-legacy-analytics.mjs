@@ -1,13 +1,21 @@
 import { readdir, readFile, unlink, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ANALYTICS_EVENT_PROPS } from '../src/lib/analytics-config.mjs';
+import {
+  ANALYTICS_EVENT_PROPS,
+  ANALYTICS_EVENT_VALUES,
+} from '../src/lib/analytics-config.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const START = '<!-- zodiacs-analytics:start -->';
 const END = '<!-- zodiacs-analytics:end -->';
 const BLOCK = new RegExp(`\\n?${START}[\\s\\S]*?${END}\\n?`, 'g');
+
+export const TERMINAL_ANALYTICS_PATHS = Object.freeze([
+  'public/terminal/index.html',
+  'public/terminal/pro/index.html',
+]);
 
 function escapeAttribute(value) {
   return value
@@ -20,36 +28,45 @@ function escapeAttribute(value) {
 export function injectLegacyAnalytics(html, config = {}) {
   const clean = html.replace(BLOCK, '');
   const scriptUrl = config.scriptUrl?.trim();
-  if (!scriptUrl) return clean;
+  // Several hand-authored wing pages carry the standard Plausible loader in
+  // their source. Add only the bounded event bridge there so a configured
+  // build never loads the provider twice.
+  const providerIsPresent = /<script\b[^>]*\bsrc=["'][^"']*plausible[^"']*["'][^>]*>/i.test(clean);
+  if (!scriptUrl && !(config.bridgeExistingProvider && providerIsPresent)) return clean;
   if (!clean.includes('</head>')) throw new Error('legacy analytics target has no </head>');
-
   const endpoint = config.endpoint?.trim() ?? '';
   const domain = config.domain?.trim() ?? '';
   const domainAttribute = domain ? ` data-domain="${escapeAttribute(domain)}"` : '';
-  const setup = `
-${START}
-<script>
+  const providerSetup = providerIsPresent ? '' : `
   window.plausible = window.plausible || function () {
     (window.plausible.q = window.plausible.q || []).push(arguments);
   };
   window.plausible.init = window.plausible.init || function (options) {
     window.plausible.o = options || {};
   };
+  var endpoint = ${JSON.stringify(endpoint)};
+  var options = {
+    hashBasedRouting: false,
+    transformRequest: function (payload) {
+      var canonical = document.querySelector('link[rel="canonical"]');
+      payload.u = canonical ? canonical.href : location.origin + location.pathname;
+      payload.r = null;
+      if (payload.p && payload.p.url) delete payload.p.url;
+      return payload;
+    }
+  };
+  if (endpoint) options.endpoint = endpoint;
+  window.plausible.init(options);`;
+  const providerScript = providerIsPresent
+    ? ''
+    : `\n<script defer${domainAttribute} src="${escapeAttribute(scriptUrl)}"></script>`;
+  const setup = `
+${START}
+<script>
   (function () {
-    var endpoint = ${JSON.stringify(endpoint)};
-    var options = {
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    };
-    if (endpoint) options.endpoint = endpoint;
-    window.plausible.init(options);
+${providerSetup}
     var eventProps = Object.freeze(${JSON.stringify(ANALYTICS_EVENT_PROPS)});
+    var eventValues = Object.freeze(${JSON.stringify(ANALYTICS_EVENT_VALUES)});
     window.zodiacsAnalytics = Object.freeze({
       track: function (name, props) {
         var allowed = eventProps[name];
@@ -57,6 +74,8 @@ ${START}
         var safe = {};
         allowed.forEach(function (key) {
           var value = (props || {})[key];
+          var enumValues = eventValues[name] && eventValues[name][key];
+          if (enumValues && (typeof value !== 'string' || enumValues.indexOf(value) === -1)) return;
           if (typeof value === 'number' || typeof value === 'boolean' ||
               (typeof value === 'string' && value.length <= 32)) safe[key] = value;
         });
@@ -64,8 +83,7 @@ ${START}
       }
     });
   }());
-</script>
-<script defer${domainAttribute} src="${escapeAttribute(scriptUrl)}"></script>
+</script>${providerScript}
 ${END}
 `;
   return clean.replace('</head>', `${setup}</head>`);
@@ -91,15 +109,20 @@ async function registryHtmlFiles() {
 export async function configureLegacyAnalytics(config = {}) {
   const targets = [
     ...(await registryHtmlFiles()),
+    ...TERMINAL_ANALYTICS_PATHS.map((path) => resolve(root, path)),
     resolve(root, 'public/terminal/markets/index.html'),
     resolve(root, 'public/archive/index.html'),
     resolve(root, 'public/sdk/index.html'),
     resolve(root, 'public/thesis/index.html'),
   ];
   let changed = 0;
+  const terminalTargets = new Set(TERMINAL_ANALYTICS_PATHS.map((path) => resolve(root, path)));
   for (const target of targets) {
     const before = await readFile(target, 'utf8');
-    const after = injectLegacyAnalytics(before, config);
+    const after = injectLegacyAnalytics(before, {
+      ...config,
+      bridgeExistingProvider: terminalTargets.has(target),
+    });
     if (after !== before) {
       await writeFile(target, after, 'utf8');
       changed += 1;

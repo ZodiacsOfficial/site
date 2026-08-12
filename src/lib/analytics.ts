@@ -24,6 +24,7 @@ export type AnalyticsEventName =
   | 'widget_embed_copied'
   | 'registry_visit'
   | 'verifier_used'
+  | 'terminal_view_switch'
   | 'sdk_click'
   | 'wallet_chart_computed'
   | 'aura_view'

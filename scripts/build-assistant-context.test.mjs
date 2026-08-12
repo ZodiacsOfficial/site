@@ -9,6 +9,7 @@ import {
   MIN_CONTEXT_BYTES,
   TOOL_ROUTES,
   buildAssistantContext,
+  consumerVocabularyScope,
   extractCanonicalLabels,
   extractLearnTopics,
   generateAssistantContext,
@@ -62,7 +63,9 @@ describe('assistant site context', () => {
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
     expect(context).toContain('- /learn/placements/sun-in-aries/ — What Sun in Aries means in a birth chart.');
     expect(context).toContain('- /rising-sign/pisces/ — What Pisces rising means.');
-    expect(context).toContain('- /terminal/ — Zodiac Terminal: the separate consumer interface');
+    expect(context).toContain('- /terminal/ — Zodiac Terminal: the simple, identity-first view');
+    expect(context).toContain('- /terminal/pro/ — Zodiac Terminal Pro: the dense market view');
+    expect(context).toContain('ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart');
     expect(context).toContain('- /registry/ — Zodiacs Registry: the read-only verification hub');
     expect(context).not.toContain('Astrofolio catalogue');
   });
@@ -98,8 +101,9 @@ describe('assistant site context', () => {
     expect(context).not.toMatch(/(?:^|\s)\/es\//m);
     expect(context).not.toMatch(/(?:^|\s)\/pt\//m);
     expect(context).not.toMatch(/(?:^|\s)\/ru\//m);
+    const consumerContext = consumerVocabularyScope(context);
     for (const word of BANNED_CONSUMER_VOCABULARY) {
-      expect(context).not.toMatch(new RegExp(`\\b${word}(?:s)?\\b`, 'i'));
+      expect(consumerContext).not.toMatch(new RegExp(`\\b${word}(?:s)?\\b`, 'i'));
     }
   });
 

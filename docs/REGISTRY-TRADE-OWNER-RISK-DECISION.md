@@ -25,6 +25,14 @@ when that request happens rather than merely that it can. Nothing is
 requested from any venue, and no panel code is fetched, before that
 choice.
 
+Scope amended 2026-08-12 by the owner-authorized Terminal audience split.
+The identity-first `/terminal/` consumer view no longer carries the trade
+flag, trade panel, or acquisition action. This narrows the authorization back
+to the twelve `/registry/{sign}/` catalogue pages. Their flag, risk language,
+provider boundary, compensation controls, and rollback behavior remain
+unchanged; this amendment does not authorize a replacement acquisition entry
+on the Consumer or Pro Terminal views.
+
 ## Decision
 
 The site owner has chosen not to obtain outside legal advice for this

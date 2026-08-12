@@ -127,16 +127,17 @@ describe('glossary search entries', () => {
 });
 
 describe('curated wing search entries', () => {
-  it('freezes the Terminal and fifteen records-register destinations with validated kinds', () => {
+  it('freezes both Terminal views and fifteen records-register destinations with validated kinds', () => {
     expect(SEARCH_KINDS).toContain('terminal');
     expect(SEARCH_KINDS).toContain('registry');
-    expect(CURATED_WING_ENTRIES).toHaveLength(16);
+    expect(CURATED_WING_ENTRIES).toHaveLength(17);
     expect(Object.isFrozen(CURATED_WING_ENTRIES)).toBe(true);
     expect(CURATED_WING_ENTRIES.every((entry) => (
       Object.isFrozen(entry) && Object.isFrozen(entry.keywords)
     ))).toBe(true);
     expect(CURATED_WING_ENTRIES.map((entry) => entry.path)).toEqual([
       '/terminal/',
+      '/terminal/pro/',
       '/registry/',
       '/thesis/',
       '/sdk/',
@@ -153,11 +154,16 @@ describe('curated wing search entries', () => {
       '/registry/aquarius/',
       '/registry/pisces/',
     ]);
-    expect(CURATED_WING_ENTRIES.slice(0, 4)).toEqual([
+    expect(CURATED_WING_ENTRIES.slice(0, 5)).toEqual([
       expect.objectContaining({
         path: '/terminal/',
         title: 'Zodiac Terminal',
-        description: 'Live markets, rotating gold sculptures, price history, and reviewed research for the twelve Zodiac tokens.',
+        description: 'Choose your sign and meet its one official Zodiac token through artwork, story, address verification, and a calm price snapshot.',
+      }),
+      expect.objectContaining({
+        path: '/terminal/pro/',
+        title: 'Zodiac Terminal Pro',
+        description: 'A dense ranked view of all twelve Zodiac tokens with price, 24-hour change, liquidity, a selected-sign chart, market tape, briefings, and research.',
       }),
       expect.objectContaining({
         path: '/registry/',
@@ -175,7 +181,7 @@ describe('curated wing search entries', () => {
         description: 'Open tools for building astrology apps — charts, icons, and the registry interface.',
       }),
     ]);
-    expect(CURATED_WING_ENTRIES[4]).toEqual(expect.objectContaining({
+    expect(CURATED_WING_ENTRIES[5]).toEqual(expect.objectContaining({
       path: '/registry/aries/',
       title: 'Aries — official Zodiac record',
       description: 'Official Aries identity, addresses, artwork, provenance, and verification.',
@@ -187,7 +193,9 @@ describe('curated wing search entries', () => {
   });
 
   it('keeps non-market wing records out of the market register', () => {
-    for (const entry of CURATED_WING_ENTRIES.filter(({ path }) => path !== '/terminal/')) {
+    for (const entry of CURATED_WING_ENTRIES.filter(({ path }) => (
+      path !== '/terminal/' && path !== '/terminal/pro/'
+    ))) {
       expect(`${entry.title} ${entry.description}`).not.toMatch(BANNED_MARKET_WORDS);
     }
   });

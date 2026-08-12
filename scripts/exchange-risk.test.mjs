@@ -153,4 +153,28 @@ describe('Exchange risk and trust copy', () => {
     expect(decision).toContain('No global navigation, footer, Cabinet, or sign-record entry is authorized');
     expect(decision).toContain('noindex, no-store, CSP, service-worker, custody, compensation, independent-venue, pilot, and rollback controls remain unchanged');
   });
+
+  it('records the dated Pro gateway move without extending the Markets pilot', async () => {
+    const [decision, runbook] = await Promise.all([
+      read('docs/REGISTRY-EXCHANGE-OWNER-RISK-DECISION.md').then(compact),
+      read('docs/REGISTRY-EXCHANGE-LAUNCH-RUNBOOK.md').then(compact),
+    ]);
+    expect(decision).toContain('Addendum — 2026-08-12: Pro Terminal discovery entry');
+    expect(decision).toContain('Authorized: 2026-08-12');
+    expect(decision).toContain('The one same-origin, flag-gated Zodiac Markets discovery entry moves from `/terminal/` to `/terminal/pro/`');
+    expect(decision).toContain('`/terminal/` remains the indexed consumer Terminal and carries no Zodiac Markets discovery entry or exchange flag marker in either flag state');
+    expect(decision).toContain('links to `/terminal/markets/#<selected-sign>`');
+    expect(decision).toContain('Markets terminal and Pro gateway are absent and both markers are `0`');
+    expect(decision).toContain('Mounting, focusing, or selecting the gateway causes no provider or wallet request');
+    expect(decision).toContain('each form of its navigation URL is service-worker network-only');
+    expect(decision).toContain('Zodiac Markets itself remains `noindex`, `no-store`, out of the sitemap');
+    expect(decision).toContain('does not restart or extend the 30-day pilot');
+    expect(decision).toContain('returns flag-off on or before **2026-09-09**');
+
+    expect(runbook).toContain('both the route and `/terminal/pro/` landing markers are `0`');
+    expect(runbook).toContain('`/terminal/` must have no exchange flag marker in either state');
+    expect(runbook).toContain('exactly one Zodiac Markets discovery entry appears on `/terminal/pro/`');
+    expect(runbook).toContain('no CacheStorage entry for any Zodiac Markets or Pro Terminal navigation');
+    expect(runbook).toContain('On or before 2026-09-09, turn the flag off');
+  });
 });

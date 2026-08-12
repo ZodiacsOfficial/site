@@ -17,6 +17,8 @@ import {
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ON = { [REGISTRY_EXCHANGE_FLAG]: '1' };
 const page = () => readFile(resolve(root, 'public/terminal/markets/index.html'), 'utf8');
+const proPage = () => readFile(resolve(root, 'public/terminal/pro/index.html'), 'utf8');
+const consumerPage = () => readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
 const landing = () => [
   '<!doctype html>',
   '<html><head>',
@@ -33,7 +35,7 @@ describe('the flag', () => {
     expect(registryExchangeEnabled({})).toBe(false);
   });
 
-  it('exports one stable public integration contract for the Registry landing', () => {
+  it('exports one stable public integration contract for the Pro gateway', () => {
     expect(REGISTRY_EXCHANGE_PATH).toBe('/terminal/markets/');
     expect(REGISTRY_EXCHANGE_PUBLIC_NAME).toBe('Zodiac Markets');
     expect(REGISTRY_EXCHANGE_LANDING_COPY).toEqual({
@@ -113,8 +115,15 @@ describe('stamping', () => {
   });
 });
 
-describe('Registry landing flag synchronization', () => {
-  it('stamps the landing marker from the exact same flag', () => {
+describe('Pro Terminal gateway flag synchronization', () => {
+  it('commits the Pro marker off and leaves the consumer Terminal unmarked', async () => {
+    const [pro, consumer] = await Promise.all([proPage(), consumerPage()]);
+    expect(pro.match(new RegExp(REGISTRY_EXCHANGE_META, 'g'))).toHaveLength(1);
+    expect(pro).toContain(`<meta name="${REGISTRY_EXCHANGE_META}" content="0" />`);
+    expect(consumer).not.toContain(REGISTRY_EXCHANGE_META);
+  });
+
+  it('stamps the Pro marker from the exact same flag', () => {
     const committed = landing();
     const on = injectRegistryExchangeLanding(committed, ON);
     expect(on.enabled).toBe(true);
@@ -123,15 +132,22 @@ describe('Registry landing flag synchronization', () => {
     expect(injectRegistryExchangeLanding(on.output, {}).output).toBe(committed);
   });
 
-  it('is idempotent and fails closed when the landing marker is missing', () => {
+  it('is idempotent and fails closed when the Pro marker is missing', () => {
     const committed = landing();
     const on = injectRegistryExchangeLanding(committed, ON).output;
     expect(injectRegistryExchangeLanding(on, ON).output).toBe(on);
     expect(injectRegistryExchangeLanding(committed, {}).output).toBe(committed);
     expect(() => injectRegistryExchangeLanding('<html><head></head></html>', ON))
-      .toThrow(/hub is missing its flag marker/);
+      .toThrow(/Pro landing is missing its flag marker/);
     expect(() => injectRegistryExchangeLanding(`${committed}\n${committed}`, ON))
-      .toThrow(/hub must contain exactly one flag marker/);
+      .toThrow(/Pro landing must contain exactly one flag marker/);
+  });
+
+  it('is byte-reversible on the committed Pro page', async () => {
+    const committed = await proPage();
+    const on = injectRegistryExchangeLanding(committed, ON).output;
+    expect(on).not.toBe(committed);
+    expect(injectRegistryExchangeLanding(on, {}).output).toBe(committed);
   });
 });
 
@@ -153,15 +169,16 @@ describe('the committed-off drift invariant', () => {
     expect(job.indexOf('configure-registry-exchange.mjs')).toBeLessThan(job.indexOf('git diff --exit-code'));
   });
 
-  it('configures the route and Terminal landing together before writing either', async () => {
+  it('configures the route and Pro landing together before writing either', async () => {
     const configure = await readFile(resolve(root, 'scripts/configure-registry-exchange.mjs'), 'utf8');
     expect(configure).toContain("resolve(root, 'public/terminal/markets/index.html')");
-    expect(configure).toContain("resolve(root, 'public/terminal/index.html')");
+    expect(configure).toContain("resolve(root, 'public/terminal/pro/index.html')");
+    expect(configure).not.toContain("resolve(root, 'public/terminal/index.html')");
     expect(configure).toContain('injectRegistryExchange(exchangeSource, process.env)');
-    expect(configure).toContain('injectRegistryExchangeLanding(terminalSource, process.env)');
+    expect(configure).toContain('injectRegistryExchangeLanding(proSource, process.env)');
     expect(configure.indexOf('const exchangeOutput =')).toBeLessThan(configure.indexOf('const writes ='));
-    expect(configure.indexOf('const terminalOutput =')).toBeLessThan(configure.indexOf('const writes ='));
+    expect(configure.indexOf('const proOutput =')).toBeLessThan(configure.indexOf('const writes ='));
     expect(configure).toContain('await Promise.all(writes)');
-    expect(configure).toContain('of 2 surfaces rewritten, Terminal landing included');
+    expect(configure).toContain('of 2 surfaces rewritten, Pro landing included');
   });
 });

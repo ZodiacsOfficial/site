@@ -1,8 +1,40 @@
     const { useState, useMemo, useEffect, useRef, useCallback } = React;
     const REGISTRY_VIEW = document.querySelector('meta[name="zodiacs-registry-view"]')?.content ?? '';
+    const TERMINAL_VIEW_STORAGE_KEY = 'zodiacs:terminal-view:v1';
+    const TERMINAL_PRO_BANNER_DISMISSED_KEY = 'zodiacs:terminal-pro-banner-dismissed:v1';
+    const TERMINAL_RANKS = new Set(['marketCap', 'liquidity', 'change']);
+    const TERMINAL_LEGACY_PRO_HASHES = Object.freeze({
+      market: 'market',
+      briefing: 'briefing',
+      research: 'research',
+      outlook: 'briefing',
+    });
 
     function trackAnalytics(name, properties = {}) {
       window.zodiacsAnalytics?.track?.(name, properties);
+    }
+
+    function validTerminalSign(value) {
+      const normalized = String(value || '').toLowerCase();
+      return SIGNS?.find?.((item) => item.asset.sign === normalized || item.ticker.toLowerCase() === normalized) || null;
+    }
+
+    function terminalViewHref(view, sign, { keepRank = false, hash = '' } = {}) {
+      const path = view === 'pro' ? '/terminal/pro/' : '/terminal/';
+      const params = new URLSearchParams();
+      if (sign?.asset?.sign) params.set('sign', sign.asset.sign);
+      if (keepRank) {
+        try {
+          const rank = new URLSearchParams(window.location.search).get('rank');
+          if (TERMINAL_RANKS.has(rank)) params.set('rank', rank);
+        } catch { /* malformed URL: omit optional rank */ }
+      }
+      return `${path}${params.size ? `?${params}` : ''}${hash ? `#${hash}` : ''}`;
+    }
+
+    function rememberTerminalView(view, surface, direction) {
+      try { window.localStorage.setItem(TERMINAL_VIEW_STORAGE_KEY, view); } catch { /* storage may be unavailable */ }
+      trackAnalytics('terminal_view_switch', { surface, direction });
     }
 
     // IntersectionObserver-driven scroll reveal — no static mount.
@@ -1321,8 +1353,10 @@
 
     const REGISTRY_MARKET_HISTORY_URL = '/assets/data/registry-market-history.v1.json';
     const REGISTRY_NEWS_URL = '/api/registry/news';
+    const REGISTRY_RESEARCH_FEED_URL = '/assets/registry-research-feed.json';
     let registryMarketHistoryRequest = null;
     let registryNewsRequest = null;
+    let registryResearchRequest = null;
     const registryResourceCache = new Map();
 
     function loadRegistryJson(url, cachedRequest, setRequest) {
@@ -1356,6 +1390,14 @@
         REGISTRY_NEWS_URL,
         registryNewsRequest,
         (request) => { registryNewsRequest = request; },
+      );
+    }
+
+    function loadRegistryResearch() {
+      return loadRegistryJson(
+        REGISTRY_RESEARCH_FEED_URL,
+        registryResearchRequest,
+        (request) => { registryResearchRequest = request; },
       );
     }
 
@@ -1544,7 +1586,7 @@
                 <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
                 <kbd className="wnav__search-kbd" aria-hidden="true">/</kbd>
               </a>
-              <a className="wnav__chip" href="/terminal/" aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>Terminal</a>
+              <a className="wnav__chip" href="/terminal/" aria-current={REGISTRY_VIEW === 'terminal' || REGISTRY_VIEW === 'terminal-pro' ? 'page' : undefined}>Terminal</a>
               <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
                 <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
               </button>
@@ -1568,9 +1610,9 @@
                 <a className="wnav-menu__link" style={{ '--i': 0 }} href="/learn/">Learn</a>
                 <a className="wnav-menu__link" style={{ '--i': 1 }} href="/horoscopes/">Horoscopes</a>
                 <a className="wnav-menu__link" style={{ '--i': 2 }} href="/profile/">Saved charts</a>
-                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href="/terminal/" aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>
+                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href="/terminal/" aria-current={REGISTRY_VIEW === 'terminal' || REGISTRY_VIEW === 'terminal-pro' ? 'page' : undefined}>
                   <span>Terminal</span>
-                  <small>Markets, token records, and research</small>
+                  <small>Find a sign and verify its official record</small>
                 </a>
               </div>
               <div className="wnav-menu__group">
@@ -1706,8 +1748,9 @@
        season around the wheel. Its continuously moving copy is hidden from
        assistive technology because the complete accessible market table sits
        below; reduced motion keeps one static, horizontally scrollable group. */
-    function MarketTape({ season, paused = false }) {
-      const batch = useTwelveQuotes(true);
+    function MarketTape({ season, paused = false, batch: sharedBatch = null }) {
+      const fallbackBatch = useTwelveQuotes(!sharedBatch);
+      const batch = sharedBatch || fallbackBatch;
       const start = Math.max(0, SIGNS.findIndex(item => item.ticker === season?.sign?.ticker));
       const ordered = [...SIGNS.slice(start), ...SIGNS.slice(0, start)];
       const renderItems = (group) => ordered.map((item) => {
@@ -2542,7 +2585,15 @@
       );
     }
 
-    function GalleryBand({ active, setActive, consumer = false, carousel = false }) {
+    function GalleryBand({
+      active,
+      setActive,
+      consumer = false,
+      carousel = false,
+      identityOnly = false,
+      personalSlug = '',
+      setPersonalSlug = () => {},
+    }) {
       const stageRef = useRef(null);
       // The slug the scene last announced — the guard that keeps the
       // selection loop (scene → state → scene) from echoing.
@@ -2553,6 +2604,7 @@
       activeSlugRef.current = slug;
       const [posterSlug, setPosterSlug] = useState(slug);
       const season = useCurrentSeason();
+      const tradingEnabled = consumer && !identityOnly && REGISTRY_TRADE_ENABLED;
       // The trade sheet: the panel slides in over the stage on request and
       // the sculpture stays where it is, dimmed behind the scrim. Closing
       // returns focus to the pill that opened it.
@@ -2651,7 +2703,7 @@
          reader already is; flag-off it opens the sign's record, so the piece
          is never inert. */
       const openTrade = () => {
-        if (REGISTRY_TRADE_ENABLED) {
+        if (tradingEnabled) {
           window.clearTimeout(sheetCloseTimer.current);
           setSheetState('open');
         }
@@ -2814,12 +2866,27 @@
                 <span id="stage-placard-name" className="stage-placard__name">{sign.name}</span>
                 <span className="stage-placard__meta">
                   <span className="stage-placard__dates">{signDateLabel(sign)}</span>
-                  <PlacardQuote sign={sign} />
+                  {!identityOnly && <PlacardQuote sign={sign} />}
                 </span>
               </span>
-              <PlacardMarketPanel sign={sign} />
+              {identityOnly && (
+                <span className="stage-placard__identity">
+                  <span>{sign.element} · {sign.modality}</span>
+                  <strong>{sign.archetype}</strong>
+                </span>
+              )}
+              {!identityOnly && <PlacardMarketPanel sign={sign} />}
               <span className="stage-placard__actions">
-                {REGISTRY_TRADE_ENABLED ? (
+                {identityOnly ? (
+                  <button
+                    type="button"
+                    className="btn btn--primary stage-placard__pill"
+                    aria-pressed={personalSlug === slug}
+                    onClick={() => setPersonalSlug(slug)}
+                  >
+                    <span>{personalSlug === slug ? `${sign.name} is my sign` : 'This is my sign'}</span>
+                  </button>
+                ) : tradingEnabled ? (
                   <button
                     ref={tradePillRef}
                     type="button"
@@ -2842,7 +2909,7 @@
           {/* Portalled to the body: the sheet must stand above the floating
               nav, and everything inside main sits in a lower stacking
               context than the nav does. */}
-          {consumer && REGISTRY_TRADE_ENABLED && sheetVisible && ReactDOM.createPortal(
+          {tradingEnabled && sheetVisible && ReactDOM.createPortal(
             <div
               className="stage-sheet"
               role="dialog"
@@ -2895,7 +2962,7 @@
             <h2 className="card__name" id="gcard-name" data-card-name="" />
             <p className="card__figure" data-card-figure="" />
 
-            <div className="card__market" hidden={consumer}>
+            {!identityOnly && <div className="card__market" hidden={consumer}>
               <p className="card__market-state" data-market-state="">Loading market context.</p>
               <div className="card__price" data-market-price-row="" hidden>
                 <span className="card__price-value" data-market-price="" />
@@ -2919,7 +2986,7 @@
                 transactions. Operator and economic-interest statements remain
                 pending confirmation; see the <a href="/disclosure/">Disclosure</a>.
               </p>
-            </div>
+            </div>}
 
             <dl className="card__facts" data-card-facts="" />
             <div className="card__records" data-card-records="" />
@@ -4464,6 +4531,330 @@
       change: { label: '24h move', short: '24H', field: 'priceChange24h' },
     });
 
+    function TerminalViewLink({ view, sign, surface = 'header', keepRank = false, className = '' }) {
+      const pro = view === 'pro';
+      const direction = pro ? 'consumer_to_pro' : 'pro_to_consumer';
+      return (
+        <a
+          className={className}
+          href={terminalViewHref(view, sign, { keepRank })}
+          data-terminal-view-link={view}
+          onClick={() => rememberTerminalView(view, surface, direction)}
+        >
+          {pro ? 'Pro terminal' : 'Simple view'} <span aria-hidden="true">↗</span>
+        </a>
+      );
+    }
+
+    function ConsumerPreferenceBanner({ sign }) {
+      const [visible, setVisible] = useState(() => {
+        try {
+          return window.localStorage.getItem(TERMINAL_VIEW_STORAGE_KEY) === 'pro'
+            && window.sessionStorage.getItem(TERMINAL_PRO_BANNER_DISMISSED_KEY) !== '1';
+        } catch {
+          return false;
+        }
+      });
+      if (!visible) return null;
+      const dismiss = () => {
+        try { window.sessionStorage.setItem(TERMINAL_PRO_BANNER_DISMISSED_KEY, '1'); } catch { /* session storage may be unavailable */ }
+        setVisible(false);
+      };
+      return (
+        <aside className="terminal-preference" data-terminal-preference-banner role="status">
+          <p>You last chose the market desk.</p>
+          <TerminalViewLink view="pro" sign={sign} surface="preference_banner" keepRank className="terminal-preference__link" />
+          <button type="button" onClick={dismiss} aria-label="Dismiss Pro terminal reminder">Dismiss</button>
+        </aside>
+      );
+    }
+
+    function ConsumerIdentityHeader({ sign }) {
+      return (
+        <>
+          <header className="terminal-consumer-hero" aria-labelledby="consumer-explorer-title">
+            <div>
+              <span><a href="/registry/">Verified by the Zodiacs Registry</a></span>
+              <h1 id="consumer-explorer-title">Zodiac Terminal</h1>
+              <p>Every sign has one official token. Find yours, see the artwork, and verify the public record.</p>
+            </div>
+            <TerminalViewLink view="pro" sign={sign} keepRank className="terminal-view-link" />
+          </header>
+          <ConsumerPreferenceBanner sign={sign} />
+        </>
+      );
+    }
+
+    function plainMarketMovement(value) {
+      const movement = toFiniteNumber(value);
+      if (movement === null) return '24h movement unavailable';
+      if (movement > 0) return `up ${formatPercent(movement).replace('+', '')} over 24 hours`;
+      if (movement < 0) return `down ${formatPercent(Math.abs(movement)).replace('+', '')} over 24 hours`;
+      return 'unchanged over 24 hours';
+    }
+
+    function ConsumerMarketSnapshot() {
+      const reveal = useReveal();
+      const [hostRef, inView] = useInView('420px 0px');
+      const [retryKey, setRetryKey] = useState(0);
+      const batch = useTwelveQuotes(inView, retryKey);
+      return (
+        <section ref={reveal} className="consumer-snapshot reveal" aria-labelledby="consumer-snapshot-title">
+          <header ref={hostRef} className="consumer-section-head">
+            <span className="consumer-section-head__eyebrow">A calm market snapshot</span>
+            <h2 id="consumer-snapshot-title">Price, without the leaderboard.</h2>
+            <p>The twelve stay in zodiac order. This is context, not a ranking or recommendation.</p>
+          </header>
+          {batch.status === 'unavailable' && (
+            <div className="consumer-snapshot__state" role="status">
+              <p>Live price context is temporarily unavailable. Every official record remains available.</p>
+              <button type="button" onClick={() => setRetryKey(value => value + 1)}>Try again</button>
+            </div>
+          )}
+          <ul className="consumer-snapshot__rows" aria-busy={batch.status === 'loading'} data-consumer-market-snapshot>
+            {SIGNS.map((item) => {
+              const quote = batch.status === 'ok' ? batch.quotes[item.asset.sign] : null;
+              return (
+                <li key={item.ticker} data-snapshot-sign={item.asset.sign} style={{ '--row-sign': item.hue }}>
+                  <span className="consumer-snapshot__identity">
+                    <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
+                    <strong>{item.name}</strong>
+                  </span>
+                  <span className="consumer-snapshot__price">{quote ? formatPriceUsd(quote.priceUsd) : batch.status === 'loading' ? 'Reading…' : '—'}</span>
+                  <span className={'consumer-snapshot__move' + marketChangeClass(quote?.priceChange24h)}>
+                    {quote ? plainMarketMovement(quote.priceChange24h) : '24h movement unavailable'}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+          <p className="consumer-snapshot__foot">
+            Price and movement use the deepest indexed Solana pool. DexScreener is independent third-party context, may be incomplete, and is not a recommendation. See the{' '}
+            <a href="/registry/technical/#market-transparency">method and technical record</a>.
+          </p>
+        </section>
+      );
+    }
+
+    function ProMasthead({ sign, batch }) {
+      const season = useCurrentSeason();
+      const [paused, setPaused] = useState(() => {
+        try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; }
+      });
+      const quotes = batch.status === 'ok'
+        ? SIGNS.map(item => batch.quotes[item.asset.sign]).filter(Boolean)
+        : [];
+      const marketCaps = quotes.map(quote => toFiniteNumber(quote.marketCap)).filter(value => value !== null);
+      const liquidities = quotes.map(quote => toFiniteNumber(quote.liquidityUsd)).filter(value => value !== null);
+      const advancing = quotes.filter(quote => (toFiniteNumber(quote.priceChange24h) ?? 0) > 0).length;
+      return (
+        <header className="pro-masthead" aria-labelledby="pro-terminal-title">
+          <div className="pro-masthead__identity">
+            <div>
+              <span><a href="/registry/technical/">Registry market methodology</a></span>
+              <h1 id="pro-terminal-title">Zodiac Terminal Pro</h1>
+              <p>Live context for the twelve official Zodiac tokens, kept separate from execution.</p>
+            </div>
+            <TerminalViewLink view="consumer" sign={sign} className="terminal-view-link" />
+          </div>
+          <div className="pro-tape-control">
+            <MarketTape season={season} paused={paused} batch={batch} />
+            <button type="button" aria-pressed={paused} onClick={() => setPaused(value => !value)}>
+              {paused ? 'Resume tape' : 'Pause tape'}
+            </button>
+          </div>
+          <dl className="pro-aggregate" aria-busy={batch.status === 'loading'}>
+            <div><dt>Reported market cap</dt><dd>{batch.status === 'ok' ? formatUsdCompact(marketCaps.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>{marketCaps.length} of 12 reporting</small></div>
+            <div><dt>Indexed liquidity</dt><dd>{batch.status === 'ok' ? formatUsdCompact(liquidities.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>Exact-mint Solana pools</small></div>
+            <div><dt>24h breadth</dt><dd>{batch.status === 'ok' ? `${advancing} / ${quotes.length || 12}` : '—'}</dd><small>Tokens trading higher</small></div>
+          </dl>
+        </header>
+      );
+    }
+
+    function ProMarketBoard({ active, setActive, batch }) {
+      const initialRank = (() => {
+        try {
+          const rank = new URLSearchParams(window.location.search).get('rank');
+          return TERMINAL_RANKS.has(rank) ? rank : 'marketCap';
+        } catch { return 'marketCap'; }
+      })();
+      const [rankBy, setRankBy] = useState(initialRank);
+      const rows = useMemo(() => {
+        const field = MARKET_RANKS[rankBy].field;
+        return SIGNS.map(item => ({ sign: item, quote: batch.status === 'ok' ? batch.quotes[item.asset.sign] : null }))
+          .sort((left, right) => {
+            const a = toFiniteNumber(left.quote?.[field]);
+            const b = toFiniteNumber(right.quote?.[field]);
+            if (a === null && b === null) return left.sign.order - right.sign.order;
+            if (a === null) return 1;
+            if (b === null) return -1;
+            return b - a || left.sign.order - right.sign.order;
+          });
+      }, [batch, rankBy]);
+      const chooseRank = (rank) => {
+        setRankBy(rank);
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set('rank', rank);
+          window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+        } catch { /* keep UI sorting if URL mutation is unavailable */ }
+      };
+      const observed = batch.observedAt ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : '';
+      return (
+        <section id="market" className="pro-board" aria-labelledby="pro-board-title">
+          <header>
+            <span className="consumer-section-head__eyebrow">Twelve-token market board</span>
+            <h2 id="pro-board-title">Ranked by {MARKET_RANKS[rankBy].label.toLowerCase()}.</h2>
+            <p>Choose a sortable measure or a sign. Missing source values always sort last.</p>
+            <p className="pro-board__freshness" role="status">{observed ? `Read ${observed}${batch.stale ? ' · refresh delayed' : batch.refreshing ? ' · refreshing' : ''}` : batch.status === 'unavailable' ? 'Live feed unavailable' : 'Reading live markets…'}</p>
+          </header>
+          <div className="pro-board__scroll">
+            <table aria-busy={batch.status === 'loading'}>
+              <thead>
+                <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Sign</th>
+                  <th scope="col">Price</th>
+                  <th scope="col" aria-sort={rankBy === 'change' ? 'descending' : 'none'}><button type="button" onClick={() => chooseRank('change')}>24h change</button></th>
+                  <th scope="col" aria-sort={rankBy === 'liquidity' ? 'descending' : 'none'}><button type="button" onClick={() => chooseRank('liquidity')}>Indexed liquidity</button></th>
+                  <th scope="col" aria-sort={rankBy === 'marketCap' ? 'descending' : 'none'}><button type="button" onClick={() => chooseRank('marketCap')}>Reported market cap</button></th>
+                  <th scope="col"><span className="sr-only">Official record</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, index) => {
+                  const item = row.sign;
+                  const quote = row.quote;
+                  const isActive = item.ticker === active;
+                  return (
+                    <tr key={item.ticker} className={isActive ? 'is-active' : ''} data-market-sign={item.asset.sign} style={{ '--row-sign': item.hue }}>
+                      <td className="pro-board__rank">{String(index + 1).padStart(2, '0')}</td>
+                      <th scope="row">
+                        <button type="button" className="pro-board__sign" aria-pressed={isActive} onClick={() => setActive(item.ticker)}>
+                          <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
+                          <span><strong>{item.name}</strong><small>{item.ticker}</small></span>
+                        </button>
+                      </th>
+                      <td>{quote ? formatPriceUsd(quote.priceUsd) : '—'}</td>
+                      <td className={marketChangeClass(quote?.priceChange24h)}>{quote ? formatPercent(quote.priceChange24h) : '—'}</td>
+                      <td>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</td>
+                      <td>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</td>
+                      <td><a href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>Official record ↗</a></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          {batch.status === 'unavailable' && <p className="pro-board__state" role="status">Live market context is temporarily unavailable. Official records remain available.</p>}
+          <p className="pro-board__foot">
+            Price and 24h change use the deepest indexed Solana pool. Liquidity sums the
+            pools returned for each official mint; market cap is shown only when the source
+            reports market cap, never substituted with FDV. DexScreener is independent
+            third-party context, may be incomplete, and is not a recommendation. See the{' '}
+            <a href="/registry/technical/#market-transparency">method and technical record</a>.
+          </p>
+        </section>
+      );
+    }
+
+    function ProSelectedSign({ sign, batch }) {
+      const season = useCurrentSeason();
+      const history = useRegistryMarketHistory(true);
+      const ledger = useMemo(() => marketHistoryForSign(history.data, sign.asset.sign), [history.data, sign.asset.sign]);
+      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
+      const pool = quote?.pairAddress || ledger.latest?.deepestPool?.pairAddress || '';
+      return (
+        <section className="pro-selected" aria-labelledby="pro-selected-title" style={{ '--active-sign': sign.hue }}>
+          <header>
+            <span className="consumer-section-head__eyebrow">Selected-sign readout</span>
+            <h2 id="pro-selected-title">{sign.name}, in market and season.</h2>
+            <p>{signDateLabel(sign)} · {sign.element} · {sign.archetype}</p>
+          </header>
+          <div className="pro-selected__grid">
+            <div className="pro-selected__chart" aria-label={`${sign.name} selected-sign history`}>
+              <SelectedTokenMiniChart key={sign.asset.sign} sign={sign} pool={pool} observations={ledger.observations} />
+            </div>
+            <SeasonNow season={season} />
+          </div>
+        </section>
+      );
+    }
+
+    function ProMarketsGateway({ sign }) {
+      if (!REGISTRY_EXCHANGE_ENABLED) return null;
+      return (
+        <aside className="pro-gateway" data-pro-markets-gateway>
+          <span><small>{REGISTRY_EXCHANGE_LANDING_COPY.eyebrow}</small><strong>{REGISTRY_EXCHANGE_LANDING_COPY.action}</strong></span>
+          <p>{REGISTRY_EXCHANGE_LANDING_COPY.description}</p>
+          <a href={`${REGISTRY_EXCHANGE_PATH}#${sign.asset.sign}`} aria-label={`${REGISTRY_EXCHANGE_LANDING_COPY.action} for ${sign.name}`}>
+            Open {sign.name} in Zodiac Markets <span aria-hidden="true">↗</span>
+          </a>
+        </aside>
+      );
+    }
+
+    function publishedResearchItems(data, activeSlug) {
+      const generatedAt = Date.parse(data?.generatedAt || '');
+      const now = Number.isFinite(generatedAt) ? generatedAt : Date.now();
+      return (Array.isArray(data?.items) ? data.items : [])
+        .filter(item => item?.status === 'published'
+          && Date.parse(item.visibleAt || item.publishedAt || '') <= now
+          && item.url && item.title)
+        .sort((left, right) => {
+          const leftMatch = Array.isArray(left.signs) && left.signs.includes(activeSlug);
+          const rightMatch = Array.isArray(right.signs) && right.signs.includes(activeSlug);
+          if (leftMatch !== rightMatch) return leftMatch ? -1 : 1;
+          return Date.parse(right.visibleAt || right.publishedAt || '') - Date.parse(left.visibleAt || left.publishedAt || '');
+        })
+        .slice(0, 3);
+    }
+
+    function ProResearchSection({ sign }) {
+      const [hostRef, inView] = useInView('420px 0px');
+      const research = useRegistryResource(inView, loadRegistryResearch);
+      const items = publishedResearchItems(research.data, sign.asset.sign);
+      return (
+        <section id="research" ref={hostRef} className="pro-research" aria-labelledby="pro-research-title">
+          <header>
+            <span className="consumer-section-head__eyebrow">Published internal research</span>
+            <h2 id="pro-research-title">Research ledger.</h2>
+            <p>Reviewed editions related to {sign.name} appear first, followed by the newest published work.</p>
+          </header>
+          {items.length > 0 ? (
+            <div className="pro-research__cards">
+              {items.map(item => (
+                <article key={item.id} data-research-status={item.status}>
+                  <span>{item.kind?.replaceAll('-', ' ') || 'Research'}</span>
+                  <h3><a href={item.url}>{item.title}</a></h3>
+                  <p>{item.summary}</p>
+                  <time dateTime={item.visibleAt || item.publishedAt}>{formatBriefingDate(item.visibleAt || item.publishedAt)}</time>
+                </article>
+              ))}
+            </div>
+          ) : research.status === 'idle' || research.status === 'loading' ? (
+            <p role="status">Reading the published ledger…</p>
+          ) : (
+            <div className="pro-research__empty" data-research-empty>
+              <strong>The public ledger is waiting for its first reviewed edition.</strong>
+              <p>Drafts never appear here.</p>
+              <a href="/terminal/research/">Open the research ledger ↗</a>
+            </div>
+          )}
+        </section>
+      );
+    }
+
+    function ProVerifierLink({ sign }) {
+      return (
+        <aside id="verify" className="pro-verifier">
+          <span><small>Read-only verification</small><strong>Check an exact token address.</strong></span>
+          <a href={`/terminal/?sign=${sign.asset.sign}#verify`}>Open the address verifier ↗</a>
+        </aside>
+      );
+    }
+
     function MarketSocialIcon({ network }) {
       if (network === 'x') {
         return (
@@ -4923,13 +5314,14 @@
       );
     }
 
-    function ConsumerMarketBriefing({ active }) {
+    function ConsumerMarketBriefing({ active, sharedMarket = null, includeLegacyAnchors = false }) {
       const reveal = useReveal();
       const [hostRef, inView] = useInView('460px 0px');
       const [sky, setSky] = useState({ status: 'idle' });
       const [skyAttempt, setSkyAttempt] = useState(0);
       const [nowMs, setNowMs] = useState(() => Date.now());
-      const market = useTwelveQuotes(inView);
+      const fallbackMarket = useTwelveQuotes(!sharedMarket && inView);
+      const market = sharedMarket || fallbackMarket;
       const news = useRegistryNews(inView);
       const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
 
@@ -5000,8 +5392,8 @@
           data-briefing-sign={activeSign.asset.sign}
           style={{ '--briefing-sign': activeSign.hue }}
         >
-          <span id="research" className="consumer-briefing__legacy-anchor" aria-hidden="true" />
-          <span id="outlook" className="consumer-briefing__legacy-anchor" aria-hidden="true" />
+          {includeLegacyAnchors && <span id="research" className="consumer-briefing__legacy-anchor" aria-hidden="true" />}
+          {includeLegacyAnchors && <span id="outlook" className="consumer-briefing__legacy-anchor" aria-hidden="true" />}
           <header ref={hostRef} className="consumer-briefing__head">
             <div>
               <span className="consumer-section-head__eyebrow">Sky fact · market observation</span>
@@ -5063,7 +5455,7 @@
                 <div><dt>Liquidity</dt><dd>{quote ? formatUsdCompact(quote.liquidityUsd) : marketLoading ? '…' : '—'}</dd></div>
                 <div><dt>24H volume</dt><dd>{quote ? formatUsdCompact(quote.volume24h) : marketLoading ? '…' : '—'}</dd></div>
               </dl>
-              <p>Observed separately. Market data never changes the sky reading.</p>
+              <p>Symbolic context is not a price forecast. Market observations never change the sky reading.</p>
             </aside>
 
             <aside className="consumer-briefing__next" aria-label={`${activeSign.name} next exact event`} data-briefing-next-event>
@@ -5123,7 +5515,14 @@
       return GALLERY_LIVE;
     }
 
-    function ConsumerExplorer({ active, setActive, sign, stageMode }) {
+    function ConsumerExplorer({
+      active,
+      setActive,
+      sign,
+      stageMode,
+      personalSlug,
+      setPersonalSlug,
+    }) {
       const reveal = useReveal();
 
       return (
@@ -5141,7 +5540,10 @@
             active={active}
             setActive={setActive}
             consumer
+            identityOnly
             carousel={!stageMode}
+            personalSlug={personalSlug}
+            setPersonalSlug={setPersonalSlug}
           />
 
           <p className="sr-only" role="status" aria-live="polite" data-consumer-live>
@@ -5514,14 +5916,14 @@
       );
     }
 
-    function Footer({ technical = false }) {
+    function Footer({ technical = false, pro = false }) {
       if (technical) return <TechnicalFooter />;
       return (
         <footer className="ftr">
           <div className="ftr__mast">
             <div className="ftr__identity">
               <div className="mark">Zodiacs<span className="g">·</span>org</div>
-              <p>Live markets, verified by the public Registry.</p>
+              <p>{pro ? 'Live market context, anchored to verified public records.' : 'Official tokens, artwork, and public records.'}</p>
             </div>
             <div className="ftr__copyright">© MMXXVI</div>
           </div>
@@ -5531,8 +5933,10 @@
               <span className="ftr__label">Explore</span>
               <div className="ftr__links">
                 <a href="/registry/">Official Registry</a>
-                <a href="/terminal/research/">Markets research</a>
-                <a href="/registry/#verify">Verify a token</a>
+                {pro
+                  ? <a href="/terminal/research/">Markets research</a>
+                  : <a href="/why-zodiacs-matter/">Why Zodiacs matter</a>}
+                <a href="/terminal/#verify">Verify a token</a>
               </div>
             </nav>
             <nav className="ftr__group" aria-label="Trust and policies">
@@ -5603,14 +6007,16 @@
 
     function Zodiacs() {
       const technical = REGISTRY_VIEW === 'technical';
+      const pro = REGISTRY_VIEW === 'terminal-pro';
       const [activeTicker, setActiveTicker] = useState(
         () => {
           try {
             const requested = new URLSearchParams(window.location.search).get('sign') || '';
-            const shared = SIGNS.find(item => (
-              item.asset.sign === requested.toLowerCase() || item.ticker === requested.toUpperCase()
-            ));
+            const shared = validTerminalSign(requested);
             if (shared) return shared.ticker;
+            const saved = window.localStorage.getItem('zodiacs:today-sun-sign:v1');
+            const personal = validTerminalSign(saved);
+            if (personal) return personal.ticker;
           } catch { /* malformed query: season remains the safe default */ }
           return currentSeason()?.sign.ticker ?? SIGNS[0].ticker;
         }
@@ -5635,9 +6041,11 @@
       }, []);
       // Which hero the page wears: the film, or the gallery itself.
       const stageMode = useStageMode();
+      const proMarket = useTwelveQuotes(pro);
 
       useEffect(() => {
-        trackAnalytics(technical ? 'registry_technical_visit' : 'registry_visit');
+        if (technical) trackAnalytics('registry_technical_visit');
+        else if (!pro) trackAnalytics('registry_visit');
         const onClick = (event) => {
           const link = event.target.closest?.('a[href]');
           if (!link) return;
@@ -5650,10 +6058,10 @@
         };
         document.addEventListener('click', onClick);
         return () => document.removeEventListener('click', onClick);
-      }, [technical]);
+      }, [technical, pro]);
 
       useEffect(() => {
-        if (technical) return undefined;
+        if (pro) return undefined;
         const redirectLegacyHash = () => {
           let id = '';
           try {
@@ -5661,14 +6069,28 @@
           } catch {
             return;
           }
-          const destination = LEGACY_TECHNICAL_HASHES[id];
-          if (!destination) return;
-          window.location.replace(`/registry/technical/${window.location.search}#${encodeURIComponent(destination)}`);
+          const technicalDestination = LEGACY_TECHNICAL_HASHES[id];
+          if (technicalDestination) {
+            window.location.replace(`/registry/technical/${window.location.search}#${encodeURIComponent(technicalDestination)}`);
+            return;
+          }
+          if (technical) return;
+          const proDestination = TERMINAL_LEGACY_PRO_HASHES[id];
+          if (!proDestination) return;
+          const clean = new URLSearchParams();
+          try {
+            const incoming = new URLSearchParams(window.location.search);
+            const incomingSign = validTerminalSign(incoming.get('sign'));
+            const incomingRank = incoming.get('rank');
+            if (incomingSign) clean.set('sign', incomingSign.asset.sign);
+            if (TERMINAL_RANKS.has(incomingRank)) clean.set('rank', incomingRank);
+          } catch { /* malformed query: redirect without it */ }
+          window.location.replace(`/terminal/pro/${clean.size ? `?${clean}` : ''}#${proDestination}`);
         };
         redirectLegacyHash();
         window.addEventListener('hashchange', redirectLegacyHash);
         return () => window.removeEventListener('hashchange', redirectLegacyHash);
-      }, [technical]);
+      }, [technical, pro]);
 
       useEffect(() => {
         let cancelled = false;
@@ -5857,6 +6279,27 @@
         );
       }
 
+      if (pro) {
+        return (
+          <>
+            <a href="#main" className="skip">Skip to content</a>
+            <div className="stars" aria-hidden="true" />
+            <div className="grain" aria-hidden="true" />
+            <Header />
+            <main id="main" className="zd terminal-pro">
+              <ProMasthead sign={sign} batch={proMarket} />
+              <ProMarketBoard active={activeTicker} setActive={setActiveTicker} batch={proMarket} />
+              <ProSelectedSign sign={sign} batch={proMarket} />
+              <ProMarketsGateway sign={sign} />
+              <ConsumerMarketBriefing active={activeTicker} sharedMarket={proMarket} />
+              <ProResearchSection sign={sign} />
+              <ProVerifierLink sign={sign} />
+              <Footer pro />
+            </main>
+          </>
+        );
+      }
+
       return (
         <>
           <a href="#main" className="skip">Skip to content</a>
@@ -5864,22 +6307,25 @@
           <div className="grain" aria-hidden="true" />
           <Header />
           <main id="main" className="zd consumer-registry">
-            <ConsumerCapitalHeader sign={sign} />
-            <div className="consumer-capital-opening">
-              <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} stageMode={stageMode} />
-              <ConsumerMarketSection
-                active={activeTicker}
-                setActive={setActiveTicker}
-                personalSlug={personalSlug}
-                setPersonalSlug={setPersonalSlug}
-              />
-            </div>
-            <ConsumerMarketBriefing active={activeTicker} />
+            <ConsumerIdentityHeader sign={sign} />
+            <ConsumerExplorer
+              active={activeTicker}
+              setActive={setActiveTicker}
+              sign={sign}
+              stageMode={stageMode}
+              personalSlug={personalSlug}
+              setPersonalSlug={setPersonalSlug}
+            />
             <ConsumerHowItWorks />
             <VerifierSection />
             <ConsumerPurpose />
+            <ConsumerMarketSnapshot />
             <ConsumerFaq />
             <ConsumerClosing />
+            <span id="market" className="terminal-compat-target" aria-hidden="true" />
+            <span id="briefing" className="terminal-compat-target" aria-hidden="true" />
+            <span id="research" className="terminal-compat-target" aria-hidden="true" />
+            <span id="outlook" className="terminal-compat-target" aria-hidden="true" />
             <Footer />
           </main>
         </>

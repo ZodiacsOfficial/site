@@ -51,10 +51,12 @@ node scripts/configure-registry-exchange.mjs
 git diff --exit-code
 ```
 
-Before any flag-on QA, verify that both the route and `/terminal/` landing
-markers are `0`, the terminal and its script are absent, and Zodiac Terminal has
-no Zodiac Markets discovery entry. The round trip above must stamp both
-markers to `1` from the same environment flag, then restore both to `0`.
+Before any flag-on QA, verify that both the route and `/terminal/pro/` landing
+markers are `0`, the terminal and its script are absent, and neither Terminal
+page has a Zodiac Markets discovery entry. `/terminal/` must have no exchange
+flag marker in either state. The round trip above must stamp the route and Pro
+markers to `1` from the same environment flag while leaving `/terminal/`
+clean, then restore the two stamped surfaces to `0` byte-for-byte.
 
 ## Protected flag-on QA
 
@@ -64,9 +66,10 @@ production alias. Remove the branch override after QA.
 
 Verify:
 
-- the enabled meta marker is `1` on both Zodiac Markets and `/terminal/`, the
-  terminal mounts, and the twelve records remain below it;
-- exactly one Zodiac Markets discovery entry appears on `/terminal/`; it is
+- the enabled meta marker is `1` on both Zodiac Markets and `/terminal/pro/`,
+  the terminal mounts, and the twelve records remain below it;
+- `/terminal/` has no exchange marker and no Zodiac Markets discovery entry;
+- exactly one Zodiac Markets discovery entry appears on `/terminal/pro/`; it is
   same-origin, points to `/terminal/markets/#<selected-sign>`, contains no
   venue URL, and causes no provider or wallet request merely by rendering or
   receiving focus;
@@ -83,7 +86,9 @@ Verify:
 - requests are limited to self, `lite-api.jup.ag`, `api.dexscreener.com`,
   `api.geckoterminal.com`, and `plausible.io`; a wallet address appears only
   after the visitor explicitly asks the panel to trade;
-- the service worker has no CacheStorage entry for any Zodiac Markets navigation.
+- the service worker has no CacheStorage entry for any Zodiac Markets or Pro
+  Terminal navigation, including the extensionless, trailing-slash, and
+  `index.html` forms.
 
 ## Merge and production pilot
 
@@ -121,9 +126,11 @@ requires a dated owner decision.
 ## Emergency rollback
 
 1. Use Vercel Instant Rollback to the retained flag-off production deployment.
-2. Confirm both the production route and Terminal landing meta markers are
-   `0`, the terminal/script and sole Terminal discovery entry are absent, and
-   an offline request cannot recover a cached flag-on page.
+2. Confirm both the production route and Pro Terminal landing meta markers are
+   `0`, the terminal/script and sole Pro discovery entry are absent, and the
+   consumer Terminal has neither an exchange marker nor a discovery entry.
+   Confirm an offline request cannot recover a cached flag-on Markets or Pro
+   page.
 3. Remove the Production environment variable and deploy the current `main` to
    make flag-off durable.
 4. If Vercel paused automatic domain assignment during rollback, restore it

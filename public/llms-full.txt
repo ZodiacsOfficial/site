@@ -1,6 +1,6 @@
 # Zodiacs.org Full AI Context
 
-Zodiacs.org is a free astrology reference and calculation platform. It also publishes Zodiac Terminal, a separate market-and-records interface powered by the original Zodiacs Registry and its read-only developer SDK. Keep those surfaces distinct: consumer astrology guidance and calculators are the primary site; Zodiac Terminal presents market context and research; the Registry remains the canonical data and verification layer.
+Zodiacs.org is a free astrology reference and calculation platform. It also publishes Zodiac Terminal, a separate identity-and-records interface, and Zodiac Terminal Pro, its dense market view. Both are powered by the original Zodiacs Registry and its read-only developer SDK. Keep those surfaces distinct: consumer astrology guidance and calculators are the primary site; the two Terminal views present official Zodiac identities and optional market context; the Registry remains the canonical data and verification layer.
 
 ## Consumer Astrology Platform
 
@@ -108,7 +108,9 @@ Astrofolio is a related consumer project exploring personal Zodiac shelves, prof
 
 ### Zodiac Terminal
 
-Zodiac Terminal is the consumer market interface at https://zodiacs.org/terminal/. It presents live market context, rotating gold artwork, price history, reviewed research, and links to each official token record. Advanced charts and independent venue quotes live at https://zodiacs.org/terminal/markets/; the reviewed research archive lives at https://zodiacs.org/terminal/research/. The Terminal does not replace or rename the Zodiacs Registry, execute trades, take custody, or change verification status.
+Zodiac Terminal at https://zodiacs.org/terminal/ is the simple, identity-first view. It leads with the sign picker, official artwork and story, a plain-language explanation, address verification, and purpose before a small per-sign price snapshot.
+
+Zodiac Terminal Pro at https://zodiacs.org/terminal/pro/ is the dense market view. It presents the twelve ranked live with price, 24-hour change, and indexed liquidity, plus a market tape, one selected-sign chart, briefing, season context, and research headlines. The reviewed research archive lives at https://zodiacs.org/terminal/research/. The Terminal views do not replace or rename the Zodiacs Registry, execute trades, take custody, or change verification status.
 
 ### Official registry
 

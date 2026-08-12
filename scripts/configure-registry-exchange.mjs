@@ -1,5 +1,5 @@
 // Stamps Zodiac Markets into (or out of) /terminal/markets/ and synchronizes
-// the discovery rail on /terminal/ from
+// the single discovery gateway on /terminal/pro/ from
 // PUBLIC_REGISTRY_EXCHANGE_ENABLED in the SHELL env. Plain-node generators do
 // not read .env files — set the flag in the shell, the way
 // configure-registry-trade does, or the halves skew.
@@ -21,26 +21,26 @@ import {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const exchangeFile = resolve(root, 'public/terminal/markets/index.html');
-const terminalFile = resolve(root, 'public/terminal/index.html');
+const proFile = resolve(root, 'public/terminal/pro/index.html');
 
 const enabled = registryExchangeEnabled(process.env);
-const [exchangeSource, terminalSource] = await Promise.all([
+const [exchangeSource, proSource] = await Promise.all([
   readFile(exchangeFile, 'utf8'),
-  readFile(terminalFile, 'utf8'),
+  readFile(proFile, 'utf8'),
 ]);
 
 // Validate and render both surfaces before writing either one. A malformed or
-// missing Terminal marker must fail the build without leaving route and entry in
-// different flag states.
+// missing Pro marker must fail the build without leaving the Markets route and
+// its only discovery entry in different flag states.
 const exchangeOutput = injectRegistryExchange(exchangeSource, process.env).output;
-const terminalOutput = injectRegistryExchangeLanding(terminalSource, process.env).output;
+const proOutput = injectRegistryExchangeLanding(proSource, process.env).output;
 const writes = [
   exchangeOutput !== exchangeSource ? writeFile(exchangeFile, exchangeOutput) : null,
-  terminalOutput !== terminalSource ? writeFile(terminalFile, terminalOutput) : null,
+  proOutput !== proSource ? writeFile(proFile, proOutput) : null,
 ].filter(Boolean);
 await Promise.all(writes);
 
 console.log(
   `Registry exchange terminal: ${enabled ? 'enabled' : 'disabled'} `
-  + `(${writes.length} of 2 surfaces rewritten, Terminal landing included)`,
+  + `(${writes.length} of 2 surfaces rewritten, Pro landing included)`,
 );

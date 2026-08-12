@@ -74,10 +74,13 @@ describe('Zodiacs Registry authority hub', () => {
     expect(html).toContain('It is not government, regulator, wallet, or exchange approval');
   });
 
-  test('hands old market state to Terminal without hijacking Registry state', async () => {
+  test('hands old identity and market state to the matching Terminal view without hijacking Registry state', async () => {
     const html = await read('public/registry/index.html');
-    expect(html).toContain("['sign','rank','outlook']");
-    expect(html).toContain("'market','outlook','sign-gallery','gallery','aries'");
+    expect(html).toContain("var proQuery=['rank','outlook']");
+    expect(html).toContain("var proHash=['market','briefing','research','outlook']");
+    expect(html).toContain("'sign-gallery','gallery','aries'");
+    expect(html).toContain("var proHashValue=hash==='outlook'?'briefing':hash");
+    expect(html).toContain("location.replace('/terminal/pro/'+location.search+(proHashValue?'#'+proHashValue:''))");
     expect(html).toContain("location.replace('/terminal/'+location.search+location.hash)");
     expect(html).toContain('id="verify"');
     expect(html).not.toContain("'address'].some");

@@ -24,7 +24,7 @@ import {
   injectRegistryAuraLanding,
   injectRegistryAuraThesis,
 } from '../src/lib/registry-aura-entry.mjs';
-import { REGISTRY_TRADE_META, injectRegistryTradeLanding } from '../src/trade/entry.mjs';
+import { REGISTRY_TRADE_META } from '../src/trade/entry.mjs';
 import {
   REGISTRY_EXCHANGE_LANDING_COPY,
   REGISTRY_EXCHANGE_META,
@@ -39,6 +39,7 @@ const root = resolve(here, '..');
 const SRC = resolve(root, 'src/app.jsx');
 const OUT = resolve(root, 'public/assets/app.js');
 const TERMINAL_HTML = resolve(root, 'public/terminal/index.html');
+const TERMINAL_PRO_HTML = resolve(root, 'public/terminal/pro/index.html');
 const THESIS_HTML = resolve(root, 'public/thesis/index.html');
 const REGISTRY_DATA = resolve(root, 'public/registry/zodiacs.registry.json');
 const REGISTRY_TECHNICAL_HTML = resolve(root, 'public/registry/technical/index.html');
@@ -90,9 +91,27 @@ function replaceGeneratedRegion(sourceHtml, name, content) {
 }
 
 function extractRegistryStyles(registryHtml) {
-  const styles = registryHtml.match(/<style(?:\s[^>]*)?>[\s\S]*?<\/style>/giu) ?? [];
+  const styles = (registryHtml.match(/<style(?:\s[^>]*)?>[\s\S]*?<\/style>/giu) ?? [])
+    .filter((style) => !style.includes('data-terminal-split-styles'));
   if (styles.length === 0) throw new Error('Registry HTML contains no shared style blocks');
   return styles.join('\n\n');
+}
+
+function synchronizeTerminalStyles(sourceHtml, targetHtml) {
+  const sourceStyles = sourceHtml.match(/<style(?:\s[^>]*)?>[\s\S]*?<\/style>/giu) ?? [];
+  const splitStyle = sourceStyles.find((style) => style.includes('data-terminal-split-styles'));
+  const sharedStyles = sourceStyles.filter((style) => style !== splitStyle);
+  const cleanTarget = targetHtml.replace(/\s*<style data-terminal-split-styles>[\s\S]*?<\/style>/iu, '');
+  const targetMatches = [...cleanTarget.matchAll(/<style(?:\s[^>]*)?>[\s\S]*?<\/style>/giu)];
+  if (!splitStyle || sharedStyles.length === 0 || targetMatches.length < sharedStyles.length) {
+    throw new Error('Terminal Pro is missing the shared Terminal style blocks');
+  }
+  let output = cleanTarget;
+  for (let index = sharedStyles.length - 1; index >= 0; index -= 1) {
+    const match = targetMatches[index];
+    output = output.slice(0, match.index) + sharedStyles[index] + output.slice(match.index + match[0].length);
+  }
+  return output.replace('</head>', `\n${splitStyle}\n</head>`);
 }
 
 function renderTechnicalRecords(registry) {
@@ -160,26 +179,26 @@ const registryMeta = [
   `const REGISTRY_EXCHANGE_LANDING_COPY=Object.freeze(${JSON.stringify(REGISTRY_EXCHANGE_LANDING_COPY)});`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
-const [terminalHtml, thesisHtml, registryOutlook] = await Promise.all([
+const [terminalHtml, terminalProHtml, thesisHtml, registryOutlook] = await Promise.all([
   readFile(TERMINAL_HTML, 'utf8'),
+  readFile(TERMINAL_PRO_HTML, 'utf8'),
   readFile(THESIS_HTML, 'utf8'),
   buildRegistryOutlookArtifact(root),
 ]);
-// Registry feature flags stamp the same Terminal shell, so they are chained: each owns a
-// disjoint marker and neither can overwrite the other's configured output.
-const configuredTerminal = injectRegistryTradeLanding(
-  injectRegistryExchangeLanding(
-    injectRegistryAuraLanding(terminalHtml, process.env).output,
-    process.env,
-  ).output,
-  process.env,
-).output;
+// Consumer retains its collection control, but acquisition and exchange
+// discovery markers stay off this identity-first surface.
+const configuredTerminal = injectRegistryAuraLanding(terminalHtml, process.env).output;
+const configuredTerminalPro = synchronizeTerminalStyles(
+  configuredTerminal,
+  injectRegistryExchangeLanding(terminalProHtml, process.env).output,
+);
 const configuredThesis = injectRegistryAuraThesis(thesisHtml, process.env).output;
 
 await Promise.all([
   writeFile(OUT, output, 'utf8'),
   writeFile(REGISTRY_OUTLOOK, `${JSON.stringify(registryOutlook, null, 2)}\n`, 'utf8'),
   configuredTerminal !== terminalHtml ? writeFile(TERMINAL_HTML, configuredTerminal, 'utf8') : null,
+  configuredTerminalPro !== terminalProHtml ? writeFile(TERMINAL_PRO_HTML, configuredTerminalPro, 'utf8') : null,
   configuredThesis !== thesisHtml ? writeFile(THESIS_HTML, configuredThesis, 'utf8') : null,
 ]);
 

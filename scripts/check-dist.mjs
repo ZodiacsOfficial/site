@@ -633,6 +633,7 @@ for (const relativePath of [
   'es/aries/index.html',
   'registry/index.html',
   'terminal/index.html',
+  'terminal/pro/index.html',
   'terminal/markets/index.html',
   'thesis/index.html',
   'sdk/index.html',
@@ -1047,8 +1048,8 @@ const indexedRegistryResearchPaths = new Set([
     .map((item) => item.url),
 ]);
 const sitemapPolicy = {
-  // 2422 = 2420 + /registry/technical/ + the separately canonical /terminal/.
-  total: 2422 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
+  // 2423 = 2420 + /registry/technical/ + both canonical Terminal views.
+  total: 2423 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,
   compatibilityPairs: 78,
@@ -1293,6 +1294,7 @@ for (const artifact of [
   '404.html',
   'registry/index.html',
   'terminal/index.html',
+  'terminal/pro/index.html',
   'thesis/index.html',
   'sdk/index.html',
 ]) {

@@ -188,10 +188,16 @@ const html = `<!doctype html>
   <script>
     (function(){
       var query=new URLSearchParams(location.search);
-      var legacyQuery=['sign','rank','outlook'].some(function(key){return query.has(key);});
+      var proQuery=['rank','outlook'].some(function(key){return query.has(key);});
+      var consumerQuery=query.has('sign');
       var hash=location.hash.slice(1).toLowerCase();
-      var legacyHash=['market','outlook','sign-gallery','gallery',${SIGN_ORDER.map((sign) => `'${sign}'`).join(',')}].includes(hash);
-      if(legacyQuery||legacyHash) location.replace('/terminal/'+location.search+location.hash);
+      var proHash=['market','briefing','research','outlook'].includes(hash);
+      var consumerHash=['sign-gallery','gallery',${SIGN_ORDER.map((sign) => `'${sign}'`).join(',')}].includes(hash);
+      if(proQuery||proHash){
+        var proHashValue=hash==='outlook'?'briefing':hash;
+        location.replace('/terminal/pro/'+location.search+(proHashValue?'#'+proHashValue:''));
+      }
+      else if(consumerQuery||consumerHash) location.replace('/terminal/'+location.search+location.hash);
     })();
   </script>
 

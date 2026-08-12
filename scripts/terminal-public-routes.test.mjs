@@ -9,6 +9,7 @@ const exists = async (path) => access(resolve(root, path)).then(() => true, () =
 
 describe('Terminal public-route split', () => {
   it('serves the advanced market and research sources only from Terminal paths', async () => {
+    expect(await exists('public/terminal/pro/index.html')).toBe(true);
     expect(await exists('public/terminal/markets/index.html')).toBe(true);
     expect(await exists('public/registry/exchange/index.html')).toBe(false);
     expect(await exists('src/pages/terminal/research/index.astro')).toBe(true);
@@ -22,9 +23,25 @@ describe('Terminal public-route split', () => {
     expect(markets).not.toContain('https://zodiacs.org/registry/exchange/');
 
     const research = await read('src/pages/terminal/research/index.astro');
+    const researchNote = await read('src/pages/terminal/research/[slug].astro');
     expect(research).toContain('path="/terminal/research/"');
-    expect(research).toContain('href="/terminal/"');
+    expect(research).toContain('href="/terminal/pro/"');
+    expect(researchNote).toContain('href="/terminal/pro/"');
     expect(research).not.toContain('/registry/research/');
+  });
+
+  it('keeps the indexed Pro reading surface separate from the protected Markets route', async () => {
+    const [consumer, pro, markets] = await Promise.all([
+      read('public/terminal/index.html'),
+      read('public/terminal/pro/index.html'),
+      read('public/terminal/markets/index.html'),
+    ]);
+    expect(pro).toContain('<link rel="canonical" href="https://zodiacs.org/terminal/pro/" />');
+    expect(pro).toContain('<meta name="zodiacs-registry-view" content="terminal-pro" />');
+    expect(pro).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
+    expect(pro).not.toMatch(/<meta\s+name=["']robots["'][^>]*noindex/iu);
+    expect(consumer).not.toContain('zodiacs-registry-exchange-enabled');
+    expect(markets).toContain('<meta name="robots" content="noindex" />');
   });
 
   it('redirects legacy consumer routes directly to their Terminal destinations', async () => {
@@ -69,8 +86,11 @@ describe('Terminal public-route split', () => {
 
     const feed = await read('src/pages/feeds/market-research.json.ts');
     const sitemap = await read('src/pages/sitemap.xml.ts');
+    const legacyUrls = await read('src/lib/legacy/urls.ts');
     expect(feed).toContain("home_page_url: 'https://zodiacs.org/terminal/research/'");
     expect(sitemap).toContain("'/terminal/research/'");
+    expect(sitemap).toContain("['/terminal/pro/', '2026-08-12']");
+    expect(legacyUrls).toContain("{ path: '/terminal/pro/', priority: 0.78 }");
     expect(sitemap).not.toContain("'/registry/research/'");
   });
 });

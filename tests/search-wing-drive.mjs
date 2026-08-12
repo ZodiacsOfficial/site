@@ -13,12 +13,15 @@ const OUT = process.env.OUT_DIR ?? null;
 const queries = [
   ['terminal', 'Zodiac Terminal', 'Terminal'],
   ['registry', 'Zodiacs Registry', 'Registry'],
-  ['zodiac capital markets', 'Zodiac Terminal', 'Terminal'],
+  ['zodiac capital markets', 'Zodiac Terminal Pro', 'Terminal'],
+  ['market tape liquidity', 'Zodiac Terminal Pro', 'Terminal'],
+  ['ranked zodiac tokens', 'Zodiac Terminal Pro', 'Terminal'],
+  ['zodiac gallery verifier', 'Zodiac Terminal', 'Terminal'],
   ['astrofolio', 'Zodiac Terminal', 'Terminal'],
   ['thesis', 'The Registry Thesis', 'Registry'],
   ['aries record', 'Aries — official Zodiac record', 'Registry'],
 ];
-const wingPaths = ['/terminal/', '/registry/', '/thesis/', '/sdk/', '/registry/aries/'];
+const wingPaths = ['/terminal/', '/terminal/pro/', '/registry/', '/thesis/', '/sdk/', '/registry/aries/'];
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 

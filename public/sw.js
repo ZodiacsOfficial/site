@@ -73,6 +73,9 @@ function registryVolatileSurface(url) {
     || url.pathname === '/terminal'
     || url.pathname === '/terminal/'
     || url.pathname === '/terminal/index.html'
+    || url.pathname === '/terminal/pro'
+    || url.pathname === '/terminal/pro/'
+    || url.pathname === '/terminal/pro/index.html'
     || url.pathname === '/terminal/markets'
     || url.pathname === '/terminal/markets/'
     || url.pathname === '/terminal/markets/index.html';

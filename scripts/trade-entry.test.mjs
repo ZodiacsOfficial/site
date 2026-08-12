@@ -5,7 +5,6 @@ import { describe, expect, it } from 'vitest';
 import {
   REGISTRY_TRADE_FLAG,
   injectRegistryTrade,
-  injectRegistryTradeLanding,
   registryTradeEnabled,
   renderTradeRegion,
 } from '../src/trade/entry.mjs';
@@ -133,37 +132,11 @@ describe('the rendered region', () => {
 describe('the landing', () => {
   const hub = () => readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
 
-  it('ships flag-off, carrying nothing of the panel', async () => {
+  it('is identity-first and carries no trade flag or panel surface', async () => {
     const html = await hub();
-    expect(html).toContain('<meta name="zodiacs-registry-trade-enabled" content="0" />');
+    expect(html).not.toContain('zodiacs-registry-trade-enabled');
     expect(html).not.toContain('data-trade-panel');
     expect(html).not.toContain('/assets/trade.js');
-  });
-
-  it('flips only the flag — the explorer mounts the panel itself', async () => {
-    const committed = await hub();
-    const { output, enabled } = injectRegistryTradeLanding(committed, ON);
-    expect(enabled).toBe(true);
-    expect(output).toContain('<meta name="zodiacs-registry-trade-enabled" content="1" />');
-    // Exactly one line differs. Anything else here would be markup the drift
-    // gate has to un-write, and this is what makes the flag reversible.
-    const changed = output.split('\n')
-      .filter((line, i) => line !== committed.split('\n')[i]);
-    expect(changed).toHaveLength(1);
-  });
-
-  it('is byte-reversible and idempotent, both ways', async () => {
-    const committed = await hub();
-    const on = injectRegistryTradeLanding(committed, ON).output;
-    expect(on).not.toBe(committed);
-    expect(injectRegistryTradeLanding(on, ON).output).toBe(on);
-    expect(injectRegistryTradeLanding(on, {}).output).toBe(committed);
-    expect(injectRegistryTradeLanding(committed, {}).output).toBe(committed);
-  });
-
-  it('refuses a shell whose marker is missing rather than writing blind', () => {
-    expect(() => injectRegistryTradeLanding('<html><head></head></html>', ON))
-      .toThrow(/hub is missing its flag marker/);
   });
 
   // The Registry's own risk test forbids a swap deep-link in the shell. The
