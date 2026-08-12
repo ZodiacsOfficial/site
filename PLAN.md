@@ -1,14 +1,15 @@
 # Zodiacs.org household-name program
 
-Last updated: 2026-07-26
+Last updated: 2026-08-02
 
-Active phase: **Phase 6 candidate — Ask Zodiacs. The existing isolated
-assistant gains its committed quota migration, the indexable /ask/ home
-with the feature-off static guide, exact-preview chart consent, the
-internal-source row, and executable grounded/red-team evaluation suites.
-The public flag stays off until the release ladder — migration, secrets,
-budget, owner canary, red-team, ≥90% link sample — is green. Phase 7 is
-not part of this program.**
+Active phase: **Phase 6 candidate — Ask Zodiacs, your chart guide. The
+candidate moves the isolated endpoint to buffered, structured OpenAI Responses
+with deterministic chart facts, current transits, a build-time knowledge
+index, validated receipts and follow-up questions. Session memory is tab-only
+by default; signed-in people may explicitly remember complete visible turns
+for a fixed 90 days. The public flag stays off until the database contract,
+OpenAI billing, preview/browser suites, guided evaluations, safety gates, and
+controlled cost limits are green. Phase 7 is not part of this program.**
 
 ## Authority and operating rule
 
@@ -177,10 +178,13 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 
 ### Phase 6 — Ask Zodiacs
 
-- Extend the existing isolated assistant endpoint into `/ask/`; do not move model code into the page bundle.
-- Send a structured chart summary only after plain-language consent. Do not retain conversations or chart summaries.
-- Retrieval uses the site's own corpus and event/fact records. At least 90% of sampled substantive answers must include relevant internal source links.
-- The existing `ASSISTANT_ENABLED` server flag remains the kill switch. Flag-off `/ask/` is a useful static guide, not an error shell.
+- `/ask/` is the full guided experience and the isolated server endpoint remains outside the browser bundle. Navigation and contextual “Ask about this” actions only prefill; they never send automatically.
+- OpenAI Responses uses `gpt-5.6-luna`, `store: false`, low reasoning and verbosity, a 900-token cap, no retry layer, and a strict buffered result. Anthropic remains a manual seven-day rollback deployment only.
+- A chart is attached only after explicit local selection and exact-payload preview. Only the compact positions token, retrograde-body names, and optional cusps cross the boundary. Saved names, chart IDs, birth inputs, places, times, and coordinates never do. The deterministic engine calculates placements, houses, natal aspects, and current transits; the model interprets facts rather than calculating them.
+- Retrieval uses a committed 500–900-character knowledge index with deterministic BM25-style selection, at most six chunks and two per page. Source and fact IDs are validated server-side; unsupported questions return a clear no-coverage guide rather than invented material.
+- Session memory uses versioned `sessionStorage` only. An authenticated user may atomically opt in and import completed visible turns into owner-only Supabase memory with a fixed 90-day expiry, explicit delete controls, immediate expired-row hiding, and hourly bounded cleanup.
+- Atomic budget reservations enforce ten questions per visitor per UTC day, $3 production spend per UTC day, and a hard $100 production spend per UTC month. Stable public errors distinguish maintenance, quota-store failure, visitor limit, service budget, provider failure, invalid request, and safety routing.
+- The existing `ASSISTANT_ENABLED` server flag remains the kill switch. Flag-off `/ask/` is a useful localized static guide, not an error shell.
 
 ## Phase gates
 
@@ -192,7 +196,7 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 | 3. Habit layer | Phase 2 complete | Double opt-in and unsubscribe verified; three automated test-list sends; correct chart-tier test brief; installable offline-capable PWA; push separately gated; setup instructions reproducible. |
 | 4. Sharing loop | Phase 3 complete | A→B→conversion, expiry, and revocation proven; B makes no unconsented writes; share cards pixel-reviewed at 1×/2× mobile; share/download analytics pass. |
 | 5. People directory | Phase 4 complete | **DONE 2026-07-27** — 500 people + 366 birthday pages live; schema/sitemap complete; 20 sampled charts verified; provenance and data-quality label on every person; no thin indexed pages. |
-| 6. Ask Zodiacs | Phase 5 complete | Grounded chat behind flag; ≥90% internal-link sample; written red-team passes; rate limit and disclosure proven; static fallback useful. |
+| 6. Ask Zodiacs | Phase 5 complete | Grounded chart guide behind flag; no fabricated source or critical chart-fact/safety failure; structured grounded/guided/red-team suites pass; quota, cost, retention, consent, accessibility, and disclosures are proven; static fallback remains useful. |
 
 ## Phase 5 formal closure
 
@@ -599,6 +603,38 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-08-10 — Phase 6 Luna cost migration
+
+- Switched the candidate generation model from `gpt-5.6-terra` to
+  `gpt-5.6-luna` for the cost-sensitive public guide workload.
+- Repriced atomic reservations and usage settlement to Luna's standard token
+  rates. The exact-preview grounded, guided, and red-team evaluations remain
+  required before launch because the model-quality evidence must match the
+  deployed model.
+
+### 2026-08-02 — Phase 6 chart-guide restoration candidate
+
+- Restored the inactive Supabase project and applied the two existing assistant
+  quota migrations; the pre-existing production deployment still returns a
+  provider/configuration failure before quota reservation, so the public flag
+  remains off.
+- Replaced the candidate adapter with one buffered `gpt-5.6-terra` Responses
+  call and a strict `answer`/`receipts`/`followUps` contract; added versioned
+  SSE, stable errors, static safety routes, HMAC safety identifiers, and atomic
+  visitor/daily/monthly cost reservations.
+- Added deterministic chart, house, natal-aspect, and current-transit facts;
+  capability gates remove Rising/houses or current guidance when the required
+  facts are unavailable.
+- Rebuilt the site guide as a deterministic 7,661-chunk knowledge index with
+  server-validated source IDs, active-locale preference, and explicit canonical
+  English fallback.
+- Added tab-session memory plus explicit, owner-only 90-day account memory;
+  opt-in and initial import are atomic, expiry never extends, and opt-out
+  deletes remembered conversations.
+- Expanded release evidence to structured grounded receipts, chart facts,
+  unknown-time gates, current transits, unsupported coverage, multi-turn
+  context, crisis/professional routing, reflective tone, and released locales.
 
 ### 2026-07-27 — Phase 6 candidate: Ask Zodiacs implementation
 

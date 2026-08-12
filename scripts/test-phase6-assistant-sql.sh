@@ -95,5 +95,33 @@ run_phase6_sql_file \
   "${phase6_repo_root}/supabase/migrations/20260727050000_phase6_assistant_quota.sql"
 
 run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/migrations/20260802070819_assistant_memory_and_cost_budget.sql"
+
+# The follow-up hardening remains replay-safe and must be re-applied after a
+# reviewed retry of the base memory migration, which restores its old grants.
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/migrations/20260802090000_assistant_memory_storage_caps.sql"
+
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/migrations/20260802090000_assistant_memory_storage_caps.sql"
+
+# The idempotent-save follow-up is also replay-safe. Reapply it after the
+# reviewed base/cap retries above, which otherwise restore the earlier RPC
+# body, and replay it once more to prove migration idempotency.
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/migrations/20260802101500_assistant_memory_idempotent_save.sql"
+
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/migrations/20260802101500_assistant_memory_idempotent_save.sql"
+
+run_phase6_sql_file \
   "${phase6_repo_root}/supabase/tests/phase6_assistant_quota.sql"
-echo "PostgreSQL 17 Phase 6 assistant-quota SQL tests passed."
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/tests/assistant_memory_and_budget.sql"
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/tests/assistant_memory_caps.sql"
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/tests/assistant_memory_caps_concurrency.sql"
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/tests/assistant_budget_concurrency.sql"
+echo "PostgreSQL 17 Phase 6 assistant quota, memory, and budget SQL tests passed."

@@ -4,12 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       suite:
-        description: One complete suite per runner and visitor quota
+        description: Full suite, sharded to at most ten cases per runner
         required: true
         type: choice
         options:
           - grounded
+          - guided
           - redteam
+      base_url:
+        description: Exact production or immutable Ask-preview origin
+        required: true
+        default: https://zodiacs.org
+        type: string
 
 permissions:
   contents: read
@@ -19,16 +25,33 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  validate-target:
+    name: Validate exact evaluation target
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target validator
+        uses: actions/checkout@v6
+
+      - name: Restrict the target to production or the reviewed Ask preview
+        env:
+          EVAL_BASE: ${{ inputs.base_url }}
+          EVAL_REF: ${{ github.ref }}
+        run: node scripts/assistant-eval-target.mjs
+
   evaluate:
-    name: ${{ inputs.suite }} against production
-    if: github.ref == 'refs/heads/main'
+    name: ${{ inputs.suite }} shard ${{ matrix.offset }} against exact deployment
+    needs: validate-target
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        offset: ${{ fromJSON(inputs.suite == 'grounded' && '[0,10,20]' || inputs.suite == 'redteam' && '[0,10]' || '[0]') }}
     steps:
       - name: Checkout evaluated source
         uses: actions/checkout@v6
 
-      - name: Record reviewed main source
+      - name: Record evaluated source
         id: source
         run: echo "sha=$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
 
@@ -44,44 +67,54 @@ jobs:
       - name: Build exact route inventory
         run: npm run build
 
+      - name: Verify committed assistant knowledge index
+        run: |
+          npm run data:assistant-context
+          git diff --exit-code -- api/_assistant/context.ts
+
       - name: Run live evaluation
         id: live_eval
         continue-on-error: true
         env:
           EVAL_SUITE: ${{ inputs.suite }}
+          EVAL_BASE: ${{ inputs.base_url }}
           DEPLOYMENT_SHA: ${{ steps.source.outputs.sha }}
         run: |
           set +e
           node scripts/assistant-eval.mjs \
             "--suite=${EVAL_SUITE}" \
-            --base=https://zodiacs.org \
+            "--base=${EVAL_BASE}" \
+            "--origin=${EVAL_BASE}" \
             --pace=13000 \
             --limit=0 \
+            --offset=${{ matrix.offset }} \
             "--deployment-sha=${DEPLOYMENT_SHA}" \
-            > "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}.json" \
-            2> "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}.log"
+            > "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}-${{ matrix.offset }}.json" \
+            2> "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}-${{ matrix.offset }}.log"
           evaluation_status=$?
           set -e
           node -e '
             const fs = require("node:fs");
             const evidence = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
-            const complete = evidence.suite === "grounded"
-              ? evidence.asked === evidence.sampledOf
-              : evidence.cases === evidence.sampledOf;
-            if (!complete || evidence.deploymentSha !== process.argv[2] || evidence.sourceCommit !== process.argv[2]) {
+            const count = evidence.suite === "grounded" ? evidence.asked : evidence.cases;
+            const expected = Math.max(0, Math.min(10, evidence.sampledOf - evidence.offset));
+            const complete = count === expected;
+            if (!complete || evidence.deploymentSha !== process.argv[2]
+              || evidence.sourceCommit !== process.argv[2]
+              || evidence.base !== process.argv[3]) {
               throw new Error("Evaluation evidence is incomplete or has mismatched provenance.");
             }
-          ' "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}.json" "${DEPLOYMENT_SHA}"
+          ' "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}-${{ matrix.offset }}.json" "${DEPLOYMENT_SHA}" "${EVAL_BASE}"
           exit "${evaluation_status}"
 
       - name: Upload exact evaluation evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ask-zodiacs-${{ inputs.suite }}-${{ steps.source.outputs.sha }}
+          name: ask-zodiacs-${{ inputs.suite }}-${{ matrix.offset }}-${{ steps.source.outputs.sha }}
           path: |
-            ${{ runner.temp }}/ask-zodiacs-${{ inputs.suite }}.json
-            ${{ runner.temp }}/ask-zodiacs-${{ inputs.suite }}.log
+            ${{ runner.temp }}/ask-zodiacs-${{ inputs.suite }}-${{ matrix.offset }}.json
+            ${{ runner.temp }}/ask-zodiacs-${{ inputs.suite }}-${{ matrix.offset }}.log
           if-no-files-found: error
           retention-days: 90
 
@@ -90,3 +123,62 @@ jobs:
         env:
           EVAL_OUTCOME: ${{ steps.live_eval.outcome }}
         run: test "${EVAL_OUTCOME}" = "success"
+
+  coverage:
+    name: ${{ inputs.suite }} full-dataset coverage
+    needs: evaluate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout evaluated source
+        uses: actions/checkout@v6
+
+      - name: Download every successful shard
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ask-zodiacs-${{ inputs.suite }}-*-${{ github.sha }}
+          merge-multiple: true
+          path: ${{ runner.temp }}/ask-zodiacs-evidence
+
+      - name: Require exact full-suite coverage
+        env:
+          EVAL_SUITE: ${{ inputs.suite }}
+          EVAL_BASE: ${{ inputs.base_url }}
+          DEPLOYMENT_SHA: ${{ github.sha }}
+          EVIDENCE_DIR: ${{ runner.temp }}/ask-zodiacs-evidence
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const datasets = {
+            grounded: ['docs/phase6/eval/grounded-questions.json', 'questions', (row) => row.question],
+            guided: ['docs/phase6/eval/guided-cases.json', 'cases', (row) => row.id],
+            redteam: ['docs/phase6/eval/redteam.json', 'cases', (row) => row.id],
+          };
+          const [datasetPath, collection, rowKey] = datasets[process.env.EVAL_SUITE];
+          const expectedDocument = JSON.parse(fs.readFileSync(datasetPath, 'utf8'));
+          const expected = expectedDocument[collection].map((entry) => (
+            process.env.EVAL_SUITE === 'grounded' ? entry : entry.id
+          ));
+          const files = fs.readdirSync(process.env.EVIDENCE_DIR)
+            .filter((name) => name.endsWith('.json'))
+            .sort();
+          if (!files.length) throw new Error('No evaluation shard evidence was downloaded.');
+          const evidence = files.map((name) => JSON.parse(
+            fs.readFileSync(path.join(process.env.EVIDENCE_DIR, name), 'utf8'),
+          ));
+          for (const shard of evidence) {
+            if (shard.suite !== process.env.EVAL_SUITE || !shard.pass
+              || shard.deploymentSha !== process.env.DEPLOYMENT_SHA
+              || shard.sourceCommit !== process.env.DEPLOYMENT_SHA
+              || shard.base !== process.env.EVAL_BASE) {
+              throw new Error('A shard failed or has mismatched provenance.');
+            }
+          }
+          const actual = evidence.flatMap((shard) => shard.rows.map(rowKey));
+          if (actual.length !== expected.length
+            || new Set(actual).size !== actual.length
+            || expected.some((key) => !actual.includes(key))) {
+            throw new Error(`Incomplete full-suite coverage: ${actual.length}/${expected.length}.`);
+          }
+          console.log(`Ask Zodiacs ${process.env.EVAL_SUITE}: ${actual.length}/${expected.length} cases covered.`);
+          NODE

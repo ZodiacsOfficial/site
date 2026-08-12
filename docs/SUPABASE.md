@@ -172,10 +172,13 @@ approved `admin@zodiacs.org` account:
 
 Two more Supabase surfaces were added after the provisioning above:
 
-- **Assistant quota** (`api/assistant.ts`): the `assistant_quota` table and
-  `assistant_quota_bump` definer function — the SQL and its security notes
-  live in PR #77's description. Applied during the assistant's preview
-  verification.
+- **Assistant guide** (`api/assistant.ts`): committed migrations define the
+  two-day pseudonymous visitor quota, atomic daily/monthly cost reservation and
+  settlement, and owner-only fixed-90-day conversation memory. Browser roles
+  cannot read quota or aggregate-cost rows; only the service role can execute
+  budget RPCs. Authenticated memory RPCs enforce ownership and opt-in through
+  `auth.uid()`, while RLS hides expired threads immediately and an hourly
+  bounded cleanup removes them.
 - **Push subscriptions** (`api/push/subscribe.ts`): the `push_subscriptions`
   table from the push setup packet. Preview-scoped until the push launch
   flip.

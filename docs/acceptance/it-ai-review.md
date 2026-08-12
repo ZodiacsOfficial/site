@@ -34,7 +34,7 @@ natale`, `ascendente`, `case`, `transiti`, `luna piena`, `luna nuova` and
 - [x] Metadata, schema names, descriptions, breadcrumbs and `inLanguage` use
   Italian on the authored routes.
 - [x] Privacy copy preserves the meaning of the English policy, including
-  local calculation, optional sync, Anthropic processing, salted quota
+  local calculation, optional sync, OpenAI processing, pseudonymous quota
   identifiers, push subscriptions, Plausible analytics and deletion choices.
 - [x] English-only destinations are labelled as English and are not presented
   as translated content.

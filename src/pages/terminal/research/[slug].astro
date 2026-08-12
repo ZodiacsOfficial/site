@@ -50,7 +50,7 @@ const jsonUrl = `/assets/data/registry-research/items/${item.id}.json`;
   stableTypography
   terminalMarketNotice
 >
-  <main class="research-note" data-visible-at={item.visibleAt} data-scheduled={scheduled ? 'true' : undefined}>
+  <article class="research-note" data-visible-at={item.visibleAt} data-scheduled={scheduled ? 'true' : undefined}>
     <a class="research-note__back" href="/terminal/research/">← Markets Research</a>
     <div class="research-note__meta">
       <span>{item.kind.replaceAll('-', ' ')}</span>
@@ -112,7 +112,7 @@ const jsonUrl = `/assets/data/registry-research/items/${item.id}.json`;
         <a href="/terminal/">Return to Zodiac Terminal →</a>
       </div>
     </div>
-  </main>
+  </article>
 </Base>
 
 {scheduled && (

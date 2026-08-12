@@ -147,20 +147,30 @@ const jsonLd = [
       <h2>Assistente de IA</h2>
       <p>
         Quando você usa o assistente, suas mensagens são enviadas ao nosso
-        provedor de IA, a Anthropic, para gerar a resposta. Um mapa salvo só é
-        incluído depois que você pressiona “Anexar meu mapa”; a tela de
-        consentimento mostra o resumo apenas das posições antes do envio. O
-        resumo acompanha cada pergunta enquanto “Usando meu mapa” estiver ativo;
-        você pode desativá-lo. Não
-        armazenamos as conversas; a Anthropic afirma que o tráfego da API não é
-        usado para treinar modelos. O assistente nunca anexa seu nome nem a data,
-        a hora, o local de nascimento ou as coordenadas
-        nascimento salvos; tudo o que você digitar no chat fará parte da
-        mensagem enviada. Para aplicar o limite diário, mantemos um
-        identificador unidirecional com sal derivado do seu endereço IP e a
-        contagem do dia, nunca o IP original; as verificações de cota apagam
-        registros com mais de 35 dias. Enviamos esse mesmo identificador
-        pseudônimo à Anthropic como metadado da solicitação.
+        provedor de IA, a OpenAI, para gerar a resposta. Um mapa salvo só é
+        incluído depois que você o escolhe, ativa o anexo e aprova a prévia da
+        carga exata, limitada às posições. O nome e o identificador do mapa, a
+        data, a hora, o local de nascimento e as coordenadas nunca são incluídos;
+        tudo o que você digitar no chat fará parte da mensagem. As solicitações
+        usam <code>store: false</code>, embora a retenção da OpenAI para monitorar
+        abuso ainda possa se aplicar.
+      </p>
+      <p>
+        Por padrão, conversas concluídas ficam apenas no armazenamento de sessão
+        desta aba. Pessoas conectadas podem escolher explicitamente “Lembrar esta
+        conversa por 90 dias”. Os tópicos lembrados expiram 90 dias após a criação,
+        sem prorrogação, e podem ser apagados um a um, todos de uma vez ou ao
+        desativar a opção. Respostas interrompidas, parciais ou com falha não são
+        salvas.
+      </p>
+      <p>
+        Para os limites de uso, mantemos um pseudônimo HMAC derivado de dados da
+        rede com a contagem diária, nunca o IP original nem um identificador de
+        conta. As linhas de cota guardam apenas hoje e ontem. Um pseudônimo HMAC
+        distinto, derivado separadamente com separação de domínio, é enviado à
+        OpenAI como identificador de segurança; os totais agregados de
+        custo não contêm perguntas, respostas, dados do mapa nem identificadores
+        brutos.
       </p>
 
       <h2>Resumo diário, calendário e notificações</h2>

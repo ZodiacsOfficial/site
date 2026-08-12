@@ -1,271 +1,90 @@
 /**
- * Lazy assistant drive with a fully mocked /api/assistant SSE endpoint.
+ * Focused quick-access dialog drive. The full /ask/ acceptance story lives in
+ * phase6-ask-drive.mjs; this checks the lazy modal in site navigation contexts.
  *
  *   npm run build
- *   OUT_DIR=/tmp/assistant node tests/assistant-drive.mjs
+ *   node tests/assistant-drive.mjs
  */
-import { mkdir } from 'node:fs/promises';
-import { setTimeout as wait } from 'node:timers/promises';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
-const OUT = process.env.OUT_DIR ?? null;
 const results = [];
-const requests = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
+const sse = [
+  'event: status\ndata: {"stage":"thinking"}\n\n',
+  'event: answer.delta\ndata: {"text":"A square brings two functions into active tension."}\n\n',
+  'event: guide.meta\ndata: {"capabilities":{"chart":false,"houses":false,"transits":false},"receipts":[{"label":"Aspect guide","factIds":[],"sourceIds":["aspects"],"sources":[{"id":"aspects","path":"/learn/aspects/","title":"The aspects"}]}],"followUps":[{"question":"How is a trine different?","requires":"none","factIds":[],"sourceIds":["aspects"]}]}\n\n',
+  'event: done\ndata: {}\n\n',
+].join('');
 
-if (OUT) await mkdir(OUT, { recursive: true });
-
-const profile = {
-  version: 1,
-  settings: { houseSystem: 'whole' },
-  charts: [{
-    id: 'private-chart-id',
-    name: 'Secret Person',
-    createdAt: '2026-01-01T00:00:00.000Z',
-    updatedAt: '2026-07-12T00:00:00.000Z',
-    birth: {
-      date: '1990-04-17',
-      time: '08:45',
-      timeKnown: true,
-      place: {
-        name: 'Bangkok', admin1: '', country: 'TH',
-        lat: 13.7563, lon: 100.5018, tz: 'Asia/Bangkok',
-      },
-    },
-    summary: {
-      engineVersion: '1.0.0',
-      utcISO: '1990-04-17T01:45:00.000Z',
-      houseSystem: 'whole',
-      bodies: [
-        { body: 'Sun', lon: 27.2, retrograde: false },
-        { body: 'Moon', lon: 301.5, retrograde: false },
-        { body: 'Mercury', lon: 45.25, retrograde: true },
-      ],
-      angles: { asc: 125, mc: 35 },
-      flags: [],
-    },
-  }],
-};
-
-function lastQuestion(body) {
-  return body.messages.at(-1)?.content ?? '';
-}
-
-await withPreview({ port: 4404 }, async (baseURL) => {
-  const browser = await chromium.launch({
-    executablePath: await findChromium(),
-    args: STABLE_CHROMIUM_ARGS,
-  });
-
+await withPreview({ port: 4405 }, async (baseURL) => {
+  const browser = await chromium.launch({ executablePath: await findChromium(), args: STABLE_CHROMIUM_ARGS });
   try {
-    const context = await browser.newContext({ viewport: { width: 375, height: 812 }, hasTouch: true });
-    await context.addInitScript((savedProfile) => {
-      localStorage.setItem('zodiacs.profile.v1', JSON.stringify(savedProfile));
-      window.__assistantAnalytics = [];
-      window.zodiacsAnalytics = {
-        track(...args) { window.__assistantAnalytics.push(args); },
-      };
-    }, profile);
-
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
     const page = await context.newPage();
-    await page.route('**/assets/assistant-ui.css', async (route) => {
-      await wait(250);
-      await route.continue();
-    });
+    const requests = [];
     await page.route('**/api/assistant', async (route) => {
-      const body = route.request().postDataJSON();
-      requests.push(body);
-      const question = lastQuestion(body);
-
-      if (question.includes('[stop]')) {
-        await wait(1_500);
-        await route.fulfill({
-          status: 200,
-          contentType: 'text/event-stream',
-          body: 'data: {"t":"late"}\n\ndata: [DONE]\n\n',
-        }).catch(() => {});
-        return;
-      }
-      if (question.includes('[limit]')) {
-        await route.fulfill({ status: 429, contentType: 'application/json', body: '{"error":"limit"}' });
-        return;
-      }
-      if (question.includes('[disabled]')) {
-        await route.fulfill({ status: 503, contentType: 'application/json', body: '{"error":"disabled"}' });
-        return;
-      }
-      if (question.includes('[unavailable]')) {
-        await route.fulfill({ status: 502, contentType: 'application/json', body: '{"error":"unavailable"}' });
-        return;
-      }
-      await route.fulfill({
-        status: 200,
-        contentType: 'text/event-stream',
-        body: [
-          'data: {"t":"Read "}\n\n',
-          'data: {"t":"/learn/aspects/ next."}\n\n',
-          'data: [DONE]\n\n',
-        ].join(''),
-      });
+      requests.push(route.request().postDataJSON());
+      await route.fulfill({ status: 200, contentType: 'text/event-stream', body: sse });
     });
-
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(`${baseURL}/tools/`, { waitUntil: 'networkidle' });
-    const opener = page.locator('[data-assistant-open][data-assistant-locale="en"]').first();
+    const opener = page.locator('.footer__assistant');
     await opener.click();
-    const dialog = page.locator('.zassistant__panel');
-    const input = page.locator('.zassistant__input');
-    const chart = page.locator('.zassistant__chart-chip');
-    check('dialog waits for its lazy stylesheet before rendering', await page.locator('.zassistant').count() === 0);
-    await dialog.waitFor({ state: 'visible' });
-
-    check('lazy dialog opens and focuses its textarea', await input.evaluate((element) => document.activeElement === element));
-    check('saved-chart chip defaults off', await chart.textContent() === 'Use my chart'
-      && await chart.getAttribute('aria-pressed') === 'false');
-    check(
-      'reply region is polite',
-      await page.locator('.zassistant__log').getAttribute('aria-live') === 'polite',
-    );
-    const closeControl = page.getByRole('button', { name: 'Close assistant' });
-    const closeBox = await closeControl.boundingBox();
-    check('visible close button has a 44px target', (closeBox?.width ?? 0) >= 44 && (closeBox?.height ?? 0) >= 44, JSON.stringify(closeBox));
-    // The saved-chart chip sits between the input and close control in DOM
-    // order, so two keyboard steps land on the close button and activate
-    // :focus-visible as a real keyboard user would.
-    await page.keyboard.press('Shift+Tab');
-    await page.keyboard.press('Shift+Tab');
-    const focusStyle = await closeControl.evaluate((element) => {
-      const style = getComputedStyle(element);
-      return { style: style.outlineStyle, width: style.outlineWidth };
-    });
-    check('close control has a visible focus ring', focusStyle.style !== 'none' && focusStyle.width !== '0px', JSON.stringify(focusStyle));
-    if (OUT) await dialog.screenshot({ path: `${OUT}/assistant-mobile-focus.png` });
-    await page.keyboard.press('Shift+Tab');
-    check('focus trap wraps from close to the last control', await input.evaluate((element) => document.activeElement === element));
-    check(
-      'privacy footer uses the approved copy',
-      await page.locator('.zassistant__privacy').textContent()
-        === "The assistant can be wrong. Conversations aren't stored by us.",
-    );
-
-    await input.fill('What is a trine?');
-    await input.press('Shift+Enter');
-    await input.type('Give me a path.');
-    await input.press('Enter');
-    await page.locator('.zassistant__message--assistant').filter({ hasText: 'Read /learn/aspects/ next.' }).waitFor();
-    check('Shift+Enter inserts a newline and Enter sends', lastQuestion(requests[0]) === 'What is a trine?\nGive me a path.');
-    check('chart stays out of an ordinary request', !('chart' in requests[0]));
-    check(
-      'completed same-site paths become safe links',
-      await page.locator('.zassistant__link[href="/learn/aspects/"]').textContent() === '/learn/aspects/',
-    );
-    if (OUT) await dialog.screenshot({ path: `${OUT}/assistant-mobile-stream.png` });
-
-    await input.fill('What does my chart say?');
-    await input.press('Enter');
-    await page.locator('.zassistant__message--assistant').filter({ hasText: '/learn/aspects/' }).nth(1).waitFor();
-    const heuristicRequest = requests[1];
-    check('my-chart wording attaches the newest saved chart', typeof heuristicRequest.chart === 'string'
-      && await chart.textContent() === 'Using my chart');
-    check(
-      'chart context has sign, degree, and house lines',
-      /Sun: \d+°\d{2}′ [A-Z][a-z]+ · house \d+/.test(heuristicRequest.chart ?? ''),
-      heuristicRequest.chart ?? '',
-    );
-    check(
-      'chart request contains no saved PII',
-      !/Secret Person|private-chart-id|1990-04-17|08:45|Bangkok|13\.7563|100\.5018|Asia\/Bangkok|1990-04-17T01:45/.test(JSON.stringify(heuristicRequest)),
-    );
-
-    await page.getByRole('button', { name: 'Close assistant' }).click();
-    await opener.click();
-    check('reopening resets chart attachment to off', await chart.textContent() === 'Use my chart'
-      && await chart.getAttribute('aria-pressed') === 'false');
-    await chart.click();
-    await input.fill('What should I read next?');
-    await input.press('Enter');
-    await page.locator('.zassistant__message--assistant').filter({ hasText: '/learn/aspects/' }).nth(2).waitFor();
-    check('tapping Use my chart attaches placements', typeof requests[2].chart === 'string');
-
-    await input.fill('[limit]');
-    await input.press('Enter');
-    await page.locator('.zassistant__status').filter({
-      hasText: "That's everything for today — the assistant caps out at 30 messages a day.",
-    }).waitFor();
-    check('429 renders approved friendly copy', true);
-
-    await input.fill('[disabled]');
-    await input.press('Enter');
-    await page.locator('.zassistant__status').filter({ hasText: 'not available on this site' }).waitFor();
-    check('disabled state is distinct', true);
-
-    await input.fill('[unavailable]');
-    await input.press('Enter');
-    await page.locator('.zassistant__status').filter({ hasText: 'unavailable right now' }).waitFor();
-    check('unavailable state is friendly', true);
-
-    await input.fill('[stop]');
-    await input.press('Enter');
-    const stop = page.getByRole('button', { name: 'Stop' });
-    await stop.waitFor({ state: 'visible' });
-    await stop.click();
-    await page.locator('.zassistant__status').filter({ hasText: 'Stopped.' }).waitFor();
-    check('Stop aborts the active request', true);
-
-    if (OUT) await dialog.screenshot({ path: `${OUT}/assistant-mobile-states.png` });
-
+    const modal = page.locator('.zassistant--modal');
+    await modal.waitFor({ state: 'visible', timeout: 15_000 });
+    check('quick access opens the chart guide dialog', await modal.locator('.zassistant__title').textContent() === 'Ask Zodiacs — your chart guide');
+    check('dialog has a polite conversation log', await modal.locator('.zassistant__log').getAttribute('aria-live') === 'polite');
+    check('chart is not selected or attached by default', await modal.locator('.zassistant__chart-select').inputValue() === ''
+      && await modal.locator('.zassistant__chart-chip').getAttribute('aria-pressed') === 'false');
+    const firstStarter = modal.locator('.zassistant__starter').first();
+    const prompt = await firstStarter.textContent();
+    await firstStarter.click();
+    check('starter prefill does not send', await modal.locator('textarea').inputValue() === prompt && requests.length === 0);
+    await modal.locator('form button[type="submit"]').click();
+    await modal.locator('.zassistant__source[href="/learn/aspects/"]').waitFor();
+    check('modal sends the v2 request without chart context', requests[0].version === 2 && requests[0].chart === undefined);
+    check('completed dialog turn enters sessionStorage', await page.evaluate(() => JSON.parse(sessionStorage.getItem('zodiacs.assistant.session.v2')).turns.length) === 1);
+    await modal.locator('a[href]').last().focus();
+    await page.keyboard.press('Tab');
+    check('Tab wraps inside the modal focus trap', await modal.locator('.zassistant__close').evaluate((node) => document.activeElement === node));
     await page.keyboard.press('Escape');
-    check('Escape closes and restores the opener', !(await page.locator('.zassistant').isVisible())
-      && await opener.evaluate((element) => document.activeElement === element));
-    await opener.click();
-    await page.locator('.zassistant').click({ position: { x: 4, y: 4 } });
-    check('backdrop closes the dialog', !(await page.locator('.zassistant').isVisible()));
-
-    const analytics = await page.evaluate(() => window.__assistantAnalytics);
-    check(
-      'assistant analytics use approved no-prop events only',
-      analytics.every((args) => args.length === 1 && ['assistant_open', 'assistant_reply'].includes(args[0]))
-        && analytics.some(([name]) => name === 'assistant_open')
-        && analytics.some(([name]) => name === 'assistant_reply'),
-      JSON.stringify(analytics),
-    );
+    check('Escape closes and restores opener focus', !(await modal.isVisible())
+      && await opener.evaluate((node) => document.activeElement === node));
 
     await page.goto(`${baseURL}/es/tools/`, { waitUntil: 'networkidle' });
-    await page.locator('[data-assistant-open][data-assistant-locale="es"]').first().click();
-    await page.locator('.zassistant__panel').waitFor({ state: 'visible' });
-    check('ES module-local strings render', await page.locator('.zassistant__title').textContent() === 'Pregunta a Zodiacs'
-      && await page.locator('.zassistant__chart-chip').textContent() === 'Usar mi carta');
-    check(
-      'ES privacy line is faithful',
-      await page.locator('.zassistant__privacy').textContent()
-        === 'El asistente puede equivocarse. Nosotros no guardamos las conversaciones.',
-    );
-    await page.getByRole('button', { name: 'Cerrar asistente' }).click();
+    await page.locator('.footer__assistant').click();
+    const spanish = page.locator('.zassistant--modal');
+    await spanish.waitFor({ state: 'visible' });
+    check('released locale copy and starters are localized', await spanish.locator('.zassistant__title').textContent() === 'Pregunta a Zodiacs — tu guía de la carta'
+      && (await spanish.locator('.zassistant__starter').first().textContent()).startsWith('¿'));
+    await page.keyboard.press('Escape');
 
-    for (const wingPath of ['/terminal/', '/registry/', '/thesis/']) {
-      await page.goto(`${baseURL}${wingPath}`, { waitUntil: 'networkidle' });
-      await page.getByRole('button', { name: 'Ask Zodiacs' }).click();
-      await page.locator('.zassistant__panel').waitFor({ state: 'visible' });
-      const wingClose = page.getByRole('button', { name: 'Close assistant' });
-      const box = await wingClose.boundingBox();
-      const winsHitTest = box ? await page.evaluate(({ x, y }) => {
-        return document.elementFromPoint(x, y)?.closest('.zassistant__close') !== null;
-      }, { x: box.x + box.width / 2, y: box.y + box.height / 2 }) : false;
-      check(`${wingPath} assistant paints and hits above wing navigation`, winsHitTest, JSON.stringify(box));
-      await wingClose.click();
-    }
+    await page.goto(`${baseURL}/transits/`, { waitUntil: 'networkidle' });
+    const contextual = page.locator('.ask-context__button');
+    await contextual.click();
+    const contextualModal = page.locator('.zassistant--modal');
+    await contextualModal.waitFor({ state: 'visible' });
+    check('Ask about this prefills but does not auto-send',
+      await contextualModal.locator('textarea').inputValue() === 'Help me understand these transits.'
+      && requests.length === 1);
 
+    await page.keyboard.press('Escape');
+    await page.goto(`${baseURL}/terminal/`, { waitUntil: 'networkidle' });
+    check('Terminal keeps a shared Ask guide destination', await page.locator('.wnav a[href="/ask/"]').count() === 1);
+
+    await page.goto(`${baseURL}/registry/`, { waitUntil: 'networkidle' });
+    check('verification Registry keeps a shared Ask guide destination', await page.locator('.wnav a[href="/ask/"]').count() === 1);
+    check('no runtime errors', errors.length === 0, errors.join(' | '));
     await context.close();
   } finally {
     await browser.close();
   }
 });
 
-let failed = 0;
-for (const result of results) {
-  if (!result.ok) failed += 1;
-  console.log(`${result.ok ? 'PASS' : 'FAIL'}  ${result.name}${result.detail ? ` · ${result.detail}` : ''}`);
-}
-console.log(failed ? `\n${failed} FAILURE${failed === 1 ? '' : 'S'}` : `\nALL ${results.length} CHECKS PASS`);
-process.exit(failed ? 1 : 0);
+const failures = results.filter((result) => !result.ok);
+for (const result of results) console.log(`${result.ok ? 'PASS' : 'FAIL'}  ${result.name}${result.detail ? ` · ${result.detail}` : ''}`);
+console.log(failures.length ? `\n${failures.length} FAILURE${failures.length === 1 ? '' : 'S'}` : `\nALL ${results.length} CHECKS PASS`);
+process.exit(failures.length ? 1 : 0);

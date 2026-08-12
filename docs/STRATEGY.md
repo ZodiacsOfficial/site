@@ -13,7 +13,7 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 - **Free tools → identity layer is the proven wedge** in this category. The incumbent calculator sites (Astro-Seek, Cafe Astrology, astrology.com) win on depth and lose badly on UX, design, and mobile. A genuinely modern, fast, beautiful calculator experience is a real, exploitable gap — not a hopeful one.
 - **`zodiacs.org` is a category-exact domain** with unusual existing craft discipline: anti-hype copy rules, CI content gates, data-generated pages, weekly refresh automation, and AEO plumbing (llms.txt, IndexNow, AI-crawler allowlists) that most competitors don't have.
 - **The visual raw material already exists**: the 12 pastel SDK icons and the ambient astronomical-dial films give the site a distinctive identity from day one.
-- **Client-side chart calculation makes privacy a feature**: chart calculation stays on the device. Birth details leave only when a visitor explicitly opts into account sync or types them into Ask Zodiacs; attaching a chart to Ask Zodiacs sends derived placements to Anthropic, not the saved name, birth date, time, place, or coordinates. Marginal calculation cost per user is ~zero, and no major competitor leads with this local-first posture.
+- **Client-side chart calculation makes privacy a feature**: chart calculation stays on the device. Birth details leave only when a visitor explicitly opts into account sync or types them into Ask Zodiacs; attaching a chart to Ask Zodiacs sends an approved placements-only payload transiently to OpenAI, not the saved name, chart ID, birth date, time, place, or coordinates. Marginal calculation cost per user is ~zero, and no major competitor leads with this local-first posture.
 
 **What's weak or dangerous — stated plainly:**
 
@@ -151,7 +151,7 @@ The registry is **the collector's wing**: the prior homepage experience lives in
 - **Geocoding:** no API — GeoNames cities index shipped as sharded static JSON with client-side typeahead (CC-BY attribution in the calculator footnote and colophon).
 - **Timezones:** GeoNames rows carry the IANA zone; historical offsets come from the browser's own tzdb via `Intl` (war time, pre-1970 shifts, LMT-with-seconds), with explicit DST-gap/fold policy and flags saved on the chart. LMT caveat documented on `/methodology/`.
 - **Paid astrology APIs** (astrology-api.io, AstrologyAPI.com, Prokerala): not on the core path — per-call pricing taxes exactly the growth we want. Useful as validation datasets and a Phase-3 option for exotic calculations.
-- **Privacy dividend:** chart calculation stays on the device. Birth details leave only through explicit account sync or when the visitor types them into Ask Zodiacs; the optional assistant chart attachment sends derived placements to Anthropic, not saved identity or birth-input fields. Lead with the precise local-first claim, not an absolute no-transmission promise.
+- **Privacy dividend:** chart calculation stays on the device. Birth details leave only through explicit account sync or when the visitor types them into Ask Zodiacs; the optional assistant chart attachment sends an approved placements-only payload transiently to OpenAI, not saved identity, chart IDs, or birth-input fields. Session chat is tab-scoped by default; 90-day account memory is a separate explicit choice. Lead with the precise local-first claim, not an absolute no-transmission promise.
 
 ## 12. Technical stack
 

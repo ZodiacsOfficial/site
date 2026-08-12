@@ -82,12 +82,18 @@ export const STAGED_CORE_ROUTE_LOCALES = [] as const satisfies readonly Locale[]
 /** Birthday and Chinese-zodiac families remain outside R1/R2/A1/A2. */
 export const PROGRAMMATIC_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
 
+/** Ask Zodiacs is released with the five complete assistant catalogs. */
+export const ASSISTANT_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
+
 /** Byte-compatible locale-home fallback; future locales never join it. */
 export const LEGACY_HOME_SELECTOR_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
 
 /** Locales in which each translated route is actually available. */
-export const LOCALIZED_PATHS: ReadonlyMap<string, readonly Locale[]> = new Map(
-  CORE_LOCALIZED_PATHS.map((path) => [path, CORE_ROUTE_LOCALES] as const),
+export const LOCALIZED_PATHS: ReadonlyMap<string, readonly Locale[]> = new Map<string, readonly Locale[]>(
+  [
+    ...CORE_LOCALIZED_PATHS.map((path): [string, readonly Locale[]] => [path, CORE_ROUTE_LOCALES]),
+    ['/ask/', ASSISTANT_ROUTE_LOCALES] as [string, readonly Locale[]],
+  ],
 );
 
 const BIRTHDAY_MONTH_LENGTHS: Readonly<Record<string, number>> = Object.freeze({
@@ -131,6 +137,7 @@ export function availableLocalesForPath(path: string): readonly Locale[] | undef
 /** Internal rendering availability; never use this for discovery metadata. */
 export function renderableLocalesForPath(path: string): readonly Locale[] | undefined {
   const canonical = stripLocale(path);
+  if (canonical === '/ask/') return ASSISTANT_ROUTE_LOCALES;
   if (CORE_LOCALIZED_PATHS.includes(canonical)) {
     return [...CORE_ROUTE_LOCALES, ...STAGED_CORE_ROUTE_LOCALES];
   }

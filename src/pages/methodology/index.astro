@@ -115,8 +115,9 @@ const jsonLd = [
         you choose account sync, selected saved charts and their birth details
         upload to your Supabase account and are protected by row-level security.
         Separately, if you press “Attach my chart” in the AI assistant, each
-        message and a placements-only summary go to Anthropic while “Using my
-        chart” remains on;
+        message and the approved placements-only payload go transiently to
+        OpenAI while “Using my chart” remains on; model storage is disabled,
+        though provider abuse-monitoring retention may still apply;
         the assistant does not attach the saved name, birth fields, or
         coordinates.
       </p>

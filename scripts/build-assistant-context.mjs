@@ -8,11 +8,12 @@
  * second run over the same sources is byte-identical.
  */
 import { readFile, readdir, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { GLOSSARY } from '../src/data/glossary.ts';
 import { CHINESE_ZODIAC_COPY } from '../src/data/chinese-zodiac.ts';
-import { DEFAULT_LOCALE, LOCALES } from '../src/lib/i18n/core.ts';
+import { DEFAULT_LOCALE, LOCALES, RELEASED_LOCALES } from '../src/lib/i18n/core.ts';
 import { EN } from '../src/strings/en.mjs';
 import { WIDGET_EN } from '../src/strings/widgets.ts';
 
@@ -21,6 +22,8 @@ const DEFAULT_OUTPUT = resolve(repo, 'api/_assistant/context.ts');
 
 export const MIN_CONTEXT_BYTES = 30 * 1024;
 export const MAX_CONTEXT_BYTES = 60 * 1024;
+export const MIN_KNOWLEDGE_CHUNK_CHARS = 500;
+export const MAX_KNOWLEDGE_CHUNK_CHARS = 900;
 
 // These are the English tools and utilities that accept a date, chart, pair,
 // or current-sky question. The generator verifies every route has a real page
@@ -73,6 +76,47 @@ const LOCALIZED_PAGE_PREFIXES = LOCALES
 // indexing authorization; the assistant must honor that boundary too.
 const UNLISTED_ROUTE_PREFIXES = Object.freeze(['/people/']);
 
+// Rendered pages may contain a small amount of build-clock-dependent copy.
+// That copy is useful on the page, where it is rebuilt and freshness-labelled,
+// but it is the wrong source for a committed retrieval index: two production
+// builds from identical sources would otherwise produce different source IDs.
+// Keep the deterministic dated tables and evergreen explanations, and omit
+// only the UI fragments whose contents are selected from `new Date()`.
+const VOLATILE_RENDERED_CLASSES = Object.freeze(new Set([
+  // Current-state callouts on the eclipse, moon, and retrograde pages.
+  'rx-now',
+  // Current-state and next-event callouts on the events hub.
+  'evhub-now',
+  // Build-time current-sign line on the ten planet guides.
+  'learn-detail__facts',
+  // Current/upcoming lunations selected on the moon-phase page.
+  'lunations',
+  // Active-planet badges and per-window now/ahead labels. The windows and
+  // station positions themselves remain in the index.
+  'planet__now',
+  'rx-table__state',
+]));
+
+const VOLATILE_FAQ_QUESTIONS = Object.freeze(new Set([
+  'When is the next solar eclipse?',
+  'When is the next lunar eclipse?',
+  'When is the next full moon?',
+  'When is the next Mercury retrograde?',
+  'Which planets are retrograde right now?',
+]));
+
+const VOLATILE_FAQ_ROUTES = Object.freeze(new Set([
+  '/eclipses/',
+  '/full-moon-calendar/',
+  '/mercury-retrograde/',
+  '/retrogrades/',
+]));
+
+const VOID_HTML_ELEMENTS = Object.freeze(new Set([
+  'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link',
+  'meta', 'param', 'source', 'track', 'wbr',
+]));
+
 function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
 }
@@ -87,8 +131,115 @@ function clean(value) {
     .replaceAll('&lsquo;', '‘')
     .replaceAll('&quot;', '"')
     .replaceAll('&#39;', "'")
+    .replace(/&#(\d+);/g, (_match, decimal) => String.fromCodePoint(Number(decimal)))
+    .replace(/&#x([0-9a-f]+);/gi, (_match, hexadecimal) => String.fromCodePoint(Number.parseInt(hexadecimal, 16)))
     .replace(COLLAPSE, ' ')
     .trim();
+}
+
+function attributeValue(openingTag, attribute) {
+  const escaped = attribute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return openingTag.match(new RegExp(`\\b${escaped}\\s*=\\s*(["'])([\\s\\S]*?)\\1`, 'i'))?.[2] ?? null;
+}
+
+function hasClass(openingTag, className) {
+  return attributeValue(openingTag, 'class')?.split(/\s+/).includes(className) ?? false;
+}
+
+function matchingElementEnd(source, openingIndex, openingTag, tagName) {
+  if (VOID_HTML_ELEMENTS.has(tagName) || /\/\s*>$/.test(openingTag)) {
+    return openingIndex + openingTag.length;
+  }
+
+  const tagPattern = new RegExp(`<\\/?${tagName}\\b[^>]*>`, 'gi');
+  tagPattern.lastIndex = openingIndex + openingTag.length;
+  let depth = 1;
+  for (let match = tagPattern.exec(source); match; match = tagPattern.exec(source)) {
+    if (/^<\//.test(match[0])) {
+      depth -= 1;
+      if (depth === 0) return match.index + match[0].length;
+    } else if (!/\/\s*>$/.test(match[0])) {
+      depth += 1;
+    }
+  }
+  throw new Error(`Unclosed rendered <${tagName}> element`);
+}
+
+function stripRenderedElements(source, predicate) {
+  const openingPattern = /<([a-z][\w:-]*)\b[^>]*>/gi;
+  let output = '';
+  let copiedThrough = 0;
+  for (let match = openingPattern.exec(source); match; match = openingPattern.exec(source)) {
+    const tagName = match[1].toLowerCase();
+    const end = matchingElementEnd(source, match.index, match[0], tagName);
+    const element = source.slice(match.index, end);
+    if (!predicate({
+      element,
+      openingTag: match[0],
+      tagName,
+      text: clean(element),
+    })) continue;
+
+    output += source.slice(copiedThrough, match.index);
+    copiedThrough = end;
+    openingPattern.lastIndex = end;
+  }
+  return `${output}${source.slice(copiedThrough)}`;
+}
+
+/**
+ * Remove only build-clock-dependent fragments from rendered main HTML.
+ * Route-aware content rules prevent ordinary editorial uses of words such as
+ * "next" or "as of" from being discarded.
+ */
+export function sanitizeRenderedMainHtml(main, sourceName = 'rendered page') {
+  let sanitized = stripRenderedElements(main, ({ openingTag }) => (
+    [...VOLATILE_RENDERED_CLASSES].some((className) => hasClass(openingTag, className))
+  ));
+
+  // The events hub's three-card "Next up" section and its current-state
+  // callout are derived from the build instant. All calendar rows remain.
+  if (sourceName === '/events/') {
+    sanitized = stripRenderedElements(sanitized, ({ openingTag, tagName, text }) => (
+      (tagName === 'section' && attributeValue(openingTag, 'aria-labelledby') === 'next-up-head')
+      // Once a month becomes past, the hub wraps it in a details element and
+      // adds a changing count. Remove that summary while retaining its rows.
+      || (tagName === 'summary' && /^Earlier in \d{4}\b/u.test(text))
+    ));
+  }
+
+  // Placement panels combine stable dignity facts with windows selected
+  // relative to the build clock. Preserve the dignity row and remove only
+  // the current/upcoming/recent-window rows.
+  if (/^\/learn\/placements\/[^/]+\/$/u.test(sourceName)) {
+    sanitized = stripRenderedElements(sanitized, ({ openingTag, tagName, element }) => {
+      if (tagName !== 'div' || !hasClass(openingTag, 'plc-panel__row')) return false;
+      const label = clean(element.match(/<dt\b[^>]*>([\s\S]*?)<\/dt>/i)?.[1] ?? '');
+      return /^(?:In .+ now|Then|Next|Most recent eras?)$/u.test(label);
+    });
+  }
+
+  // Rising profiles print their ruler's degree at the exact build instant.
+  // Other rows in the same panel (ruler, element, cadence) are evergreen.
+  if (/^\/rising-sign\/[^/]+\/$/u.test(sourceName)) {
+    sanitized = stripRenderedElements(sanitized, ({ openingTag, tagName, element }) => {
+      if (tagName !== 'div' || !hasClass(openingTag, 'plc-panel__row')) return false;
+      const label = clean(element.match(/<dt\b[^>]*>([\s\S]*?)<\/dt>/i)?.[1] ?? '');
+      return /\bas of\b/iu.test(label);
+    });
+  }
+
+  // A handful of FAQ answers interpolate the same current/next status used
+  // by the omitted callouts. Remove those details; all timeless FAQs remain.
+  if (VOLATILE_FAQ_ROUTES.has(sourceName)) {
+    sanitized = stripRenderedElements(sanitized, ({ tagName, element }) => {
+      if (tagName !== 'details') return false;
+      const question = clean(element.match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/i)?.[1] ?? '');
+      return VOLATILE_FAQ_QUESTIONS.has(question);
+    });
+  }
+
+  return sanitized;
 }
 
 async function filesUnder(root, extension = '') {
@@ -167,6 +318,9 @@ function staticDescription(route, source, { ingresses, latestHoroscopeMonth }) {
   if (route === '/horoscopes/') {
     return `Dated daily horoscopes for every sign, with the exact UTC edition date printed on the page and links to tomorrow, weekly, ${monthLabel(latestHoroscopeMonth)} monthly, love, career, and year-ahead readings.`;
   }
+  if (route === '/ask/' && /<AskPage\s+locale=["']en["']\s*\/>/i.test(source)) {
+    return 'Ask a reflective astrology guide grounded in Zodiacs sources and deterministic chart facts. Choose whether to attach a privacy-safe chart payload.';
+  }
   if (route === '/learn/zodiac-dates/') return zodiacDatesDescription(ingresses);
 
   const named = source.match(/const description\s*=\s*(['"])([\s\S]*?)\1\s*;/)?.[2];
@@ -197,9 +351,14 @@ async function loadHoroscopes(root) {
     // The horoscope routes render the latest NON-DRAFT month; the site guide
     // must describe the same month a visitor actually sees.
     if (/^draft:\s*true$/m.test(source.split(/\r?\n---(?:\r?\n|$)/)[0] ?? '')) continue;
+    const sign = frontmatterField(source, 'sign', file);
+    const month = frontmatterField(source, 'month', file);
     all.push({
-      sign: frontmatterField(source, 'sign', file),
-      month: frontmatterField(source, 'month', file),
+      sign,
+      month,
+      title: `${signName(sign)} horoscope for ${monthLabel(month)}`,
+      description: `${signName(sign)} astrology themes grounded in the dated transits and lunations of ${monthLabel(month)}.`,
+      source,
     });
   }
   const latestMonth = all.map((entry) => entry.month).sort().at(-1);
@@ -235,7 +394,13 @@ async function loadStaticPages(repoRoot, context) {
     const source = await readFile(file, 'utf8');
     pages.push({
       route,
+      title: clean(
+        source.match(/<Base\b[\s\S]*?\btitle="([^"]+)"/i)?.[1]
+          ?? source.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]
+          ?? route,
+      ),
       description: staticDescription(route, source, context),
+      source,
     });
   }
   return pages.sort((a, b) => compareText(a.route, b.route));
@@ -315,6 +480,132 @@ function bannedVocabulary(text) {
   ));
 }
 
+/** Split a rendered-readable page into deterministic 500–900 character blocks. */
+export function chunkKnowledgeText(value) {
+  const normalized = clean(value);
+  if (normalized.length < MIN_KNOWLEDGE_CHUNK_CHARS) return [];
+
+  const words = normalized.split(' ');
+  let chunkCount = Math.ceil(normalized.length / MAX_KNOWLEDGE_CHUNK_CHARS);
+  while (chunkCount > 1 && normalized.length / chunkCount < MIN_KNOWLEDGE_CHUNK_CHARS) {
+    chunkCount -= 1;
+  }
+
+  const chunks = [];
+  let cursor = 0;
+  for (let chunkIndex = 0; chunkIndex < chunkCount; chunkIndex += 1) {
+    const chunksLeft = chunkCount - chunkIndex;
+    const remaining = words.slice(cursor).join(' ');
+    const target = Math.min(
+      MAX_KNOWLEDGE_CHUNK_CHARS,
+      Math.max(MIN_KNOWLEDGE_CHUNK_CHARS, Math.round(remaining.length / chunksLeft)),
+    );
+    let end = cursor;
+    let length = 0;
+    while (end < words.length) {
+      const nextLength = length + (length ? 1 : 0) + words[end].length;
+      if (nextLength > target && end > cursor) break;
+      length = nextLength;
+      end += 1;
+    }
+    chunks.push(words.slice(cursor, end).join(' '));
+    cursor = end;
+  }
+
+  // Word boundaries can leave the final block a few characters short. Move
+  // whole words from its predecessor so every committed block stays in band.
+  for (let index = chunks.length - 1; index > 0; index -= 1) {
+    while (chunks[index].length < MIN_KNOWLEDGE_CHUNK_CHARS) {
+      const previousWords = chunks[index - 1].split(' ');
+      if (previousWords.length < 2) break;
+      chunks[index] = `${previousWords.pop()} ${chunks[index]}`;
+      chunks[index - 1] = previousWords.join(' ');
+    }
+  }
+
+  return chunks.filter((chunk) => (
+    chunk.length >= MIN_KNOWLEDGE_CHUNK_CHARS
+      && chunk.length <= MAX_KNOWLEDGE_CHUNK_CHARS
+  ));
+}
+
+function renderedHtmlPath(renderedRoot, route) {
+  if (route === '/') return resolve(renderedRoot, 'index.html');
+  return resolve(renderedRoot, route.slice(1), 'index.html');
+}
+
+function localizedRoute(route, locale) {
+  if (locale === DEFAULT_LOCALE) return route;
+  return route === '/' ? `/${locale}/` : `/${locale}${route}`;
+}
+
+/** Text the visitor can actually read inside the rendered page landmark. */
+export function renderedMainText(html, sourceName = 'rendered page') {
+  const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1];
+  if (main === undefined) throw new Error(`Missing rendered <main> in ${sourceName}`);
+  const visibleMain = main
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<(?:style|script|template|svg|noscript)\b[\s\S]*?<\/(?:style|script|template|svg|noscript)>/gi, ' ');
+  return clean(sanitizeRenderedMainHtml(visibleMain, sourceName)
+    .replace(/<br\s*\/?\s*>/gi, '. ')
+    .replace(/<\/(?:h[1-6]|p|li|dt|dd|blockquote|section|article|div)>/gi, ' '));
+}
+
+function renderedTitle(html, fallback) {
+  const heading = clean(html.match(/<main\b[^>]*>[\s\S]*?<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? '');
+  const title = clean(html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? '')
+    .replace(/\s*[|·—-]\s*Zodiacs(?:\.org)?\s*$/i, '')
+    .trim();
+  return {
+    title: title || heading || clean(fallback),
+    heading: heading || title || clean(fallback),
+  };
+}
+
+async function renderedKnowledgeEntry(renderedRoot, entry, locale) {
+  const route = localizedRoute(entry.route, locale);
+  const file = renderedHtmlPath(renderedRoot, route);
+  let html;
+  try {
+    html = await readFile(file, 'utf8');
+  } catch (error) {
+    if (locale !== DEFAULT_LOCALE && error?.code === 'ENOENT') return null;
+    throw new Error(`Missing rendered page for assistant source ${route}: ${error?.message ?? error}`);
+  }
+  const text = renderedMainText(html, route);
+  const labels = renderedTitle(html, entry.title);
+  return { route, locale, text, ...labels };
+}
+
+async function knowledgeIndexFor(entries, renderedRoot) {
+  const uniqueEntries = [...new Map(entries.map((entry) => [entry.route, entry])).values()];
+  const renderedEntries = [];
+  for (const entry of uniqueEntries) {
+    for (const locale of RELEASED_LOCALES) {
+      const rendered = await renderedKnowledgeEntry(renderedRoot, entry, locale);
+      if (rendered) renderedEntries.push(rendered);
+    }
+  }
+
+  const chunks = renderedEntries.flatMap((entry) => (
+    chunkKnowledgeText(entry.text).map((chunk, index) => {
+      const digest = createHash('sha256')
+        .update(`${entry.locale}\n${entry.route}\n${index}\n${chunk}`)
+        .digest('hex');
+      return {
+        id: `src_${digest.slice(0, 20)}`,
+        path: entry.route,
+        title: entry.title,
+        heading: entry.heading,
+        locale: entry.locale,
+        text: chunk,
+      };
+    })
+  ));
+  const hash = createHash('sha256').update(JSON.stringify(chunks)).digest('hex');
+  return { version: 1, hash, chunks };
+}
+
 export async function generateAssistantContext({ repoRoot = repo } = {}) {
   const contentRoot = resolve(repoRoot, 'src/content');
   const horoscopeData = await loadHoroscopes(resolve(contentRoot, 'horoscopes'));
@@ -355,13 +646,17 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
   const labelLines = labels.map((label) => `- ${label}`).join('\n');
 
   const horoscopeLabel = monthLabel(horoscopeData.latestMonth);
-  const dailyHoroscopePages = horoscopeData.current.map(({ sign }) => ({
+  const dailyHoroscopePages = horoscopeData.current.map(({ sign, source }) => ({
     route: `/horoscopes/${sign}/`,
+    title: `${signName(sign)} daily horoscope`,
     description: `${signName(sign)} daily horoscope. Use the exact UTC edition date printed on the page; call it “today” only when that date matches the current UTC date.`,
+    source,
   }));
-  const monthlyHoroscopePages = horoscopeData.current.map(({ sign }) => ({
+  const monthlyHoroscopePages = horoscopeData.current.map(({ sign, source }) => ({
     route: `/horoscopes/${sign}/monthly/`,
+    title: `${signName(sign)} monthly horoscope`,
     description: `${signName(sign)} in ${horoscopeLabel}, grounded in the month's dated transits and lunations.`,
+    source,
   }));
 
   const rising = learn.filter((entry) => entry.id.startsWith('rising/'));
@@ -388,9 +683,9 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     'SITE CONTEXT — ZODIACS.ORG',
     '',
     'Zodiacs.org is a free astrology reference. Chart calculations run in the visitor’s browser. Positions are computed astronomy; meanings are interpretation.',
-    'Chart calculation does not send birth fields to a chart API. Saved charts are local-first; optional account sync uploads only the charts a person chooses, including their birth details, to that person’s account. The AI assistant sends chat messages to Anthropic and sends a placements-only chart summary only after the person explicitly chooses “Attach my chart”; it does not automatically attach the saved name, birth date, time, place, or coordinates.',
+    'Chart calculation does not send birth fields to a chart API. Saved charts are local-first; optional account sync uploads only the charts a person chooses, including their birth details, to that person’s account. Ask Zodiacs sends chat messages and explicitly selected, placements-only chart facts transiently to OpenAI only after the person confirms the exact preview; store is disabled for the model request, though OpenAI abuse-monitoring retention may still apply. It never sends the saved name, chart ID, birth date, birth time, birth place, or coordinates.',
     'Historical civil time uses the IANA/ICU history supplied by the visitor’s browser or device runtime, so historical coverage and tzdb version depend on that host. When birth time is unknown, the site uses 12:00 local civil time as a reference for body positions, omits the rising sign, angles, and houses, and flags uncertainty if the Moon changes signs during that local date.',
-    'The site has English pages and partial Spanish translations. The inventory below lists English routes once; do not invent an English or Spanish page that is not listed.',
+    'The site has released English, Spanish, Portuguese, French, and Italian routes. The canonical inventory below lists English routes once. Prefer retrieved material in the active locale when it exists; when it does not, label the canonical English fallback explicitly and never invent a localized link.',
     '',
     'CANONICAL LABELS',
     'Use these labels from docs/STRATEGY.md §4 when they fit:',
@@ -468,8 +763,20 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     throw new Error(`Assistant context is ${size} bytes; expected ${MIN_CONTEXT_BYTES}–${MAX_CONTEXT_BYTES}`);
   }
 
+  const knowledgeIndex = await knowledgeIndexFor([
+    ...staticPages,
+    ...guides,
+    ...learn,
+    ...pairs,
+    ...birthdays,
+    ...dailyHoroscopePages,
+    ...monthlyHoroscopePages,
+  ], resolve(repoRoot, 'dist'));
+  if (!knowledgeIndex.chunks.length) throw new Error('Assistant knowledge index is empty');
+
   return {
     context,
+    knowledgeIndex,
     counts: {
       birthdays: birthdays.length,
       consumerRoutes: consumerRoutes.size,
@@ -483,17 +790,19 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
   };
 }
 
-function asTypeScript(context) {
+function asTypeScript(context, knowledgeIndex) {
   const escaped = context
     .replaceAll('\\', '\\\\')
     .replaceAll('`', '\\`')
     .replaceAll('${', '\\${');
-  return `// Generated by scripts/build-assistant-context.mjs. Do not hand-edit.\nexport const ASSISTANT_CONTEXT = \`${escaped}\`;\n`;
+  return `// Generated by scripts/build-assistant-context.mjs. Do not hand-edit.\n`
+    + `export const ASSISTANT_CONTEXT = \`${escaped}\`;\n\n`
+    + `export const ASSISTANT_KNOWLEDGE_INDEX = ${JSON.stringify(knowledgeIndex, null, 2)} as const;\n`;
 }
 
 export async function buildAssistantContext({ repoRoot = repo, output = DEFAULT_OUTPUT } = {}) {
   const result = await generateAssistantContext({ repoRoot });
-  const source = asTypeScript(result.context);
+  const source = asTypeScript(result.context, result.knowledgeIndex);
   await writeFile(output, source, 'utf8');
   return { ...result, source };
 }
@@ -503,6 +812,7 @@ if (invokedPath === import.meta.url) {
   const result = await buildAssistantContext();
   console.log(
     `assistant-context: ${Buffer.byteLength(result.context)} bytes`
+    + ` · ${result.knowledgeIndex.chunks.length} knowledge chunks`
     + ` · ${result.counts.staticPages} static pages`
     + ` · ${result.counts.learn} learn guides`
     + ` · ${result.counts.glossary} glossary terms`,

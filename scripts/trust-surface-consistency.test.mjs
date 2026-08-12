@@ -18,9 +18,10 @@ describe('public trust-surface claims', () => {
     for (const copy of [short, full]) {
       expect(copy).toMatch(/12:00 local civil time/);
       expect(copy).toMatch(/angles.*houses/s);
-      expect(copy).toMatch(/Anthropic/);
-      expect(copy).toMatch(/Attach my chart/);
+      expect(copy).toMatch(/OpenAI/);
+      expect(copy).toMatch(/(?:Attach my chart|selects? (?:it|a chart)|explicitly approved)/i);
       expect(copy).toMatch(/birth date.*time.*place.*coordinates/s);
+      expect(copy).toMatch(/90 days/);
       expect(copy).toMatch(/IANA\/ICU.*(?:browser|runtime)/s);
       expect(copy).toMatch(/raw IP.*user agent.*24 hours/s);
     }
@@ -64,25 +65,49 @@ describe('public trust-surface claims', () => {
   it('names assistant consent and bounded analytics processing on every privacy page', async () => {
     for (const path of localeFiles('privacy')) {
       const copy = await text(path);
-      expect(copy, path).toMatch(/Anthropic/);
+      expect(copy, path).toMatch(/OpenAI/);
       expect(copy, path).toMatch(/Plausible/);
       expect(copy, path).toMatch(/24 (?:hours|horas|heures|ore|часа)/u);
     }
-    const assistant = await text('src/lib/assistant/open-assistant.ts');
-    expect(assistant).toMatch(/While “Using my chart” is on, each question.*sent to Anthropic/);
-    expect(assistant).toMatch(/saved name, birth date, time, place, or coordinates/);
-    expect(assistant).toMatch(/does not store the conversation/);
+    const [assistant, memory] = await Promise.all([
+      text('src/lib/assistant/open-assistant.ts'),
+      text('src/lib/assistant/memory.ts'),
+    ]);
+    expect(assistant).toMatch(/OpenAI/);
+    expect(assistant).toMatch(/90 (?:days|días|dias|jours|giorni)/u);
+    expect(memory).toMatch(/sessionStorage/);
   });
 
-  it('keeps the runtime assistant persona aligned with the public disclosure', async () => {
-    const persona = await text('api/_assistant/persona.ts');
-    expect(persona).toMatch(/Chat messages are sent to Anthropic/);
-    expect(persona).toMatch(/placements-only chart\s+summary.*explicitly enables/s);
-    expect(persona).toMatch(/does not store conversations/);
-    expect(persona).toMatch(/salted.*identifier derived from the visitor's IP address/s);
-    expect(persona).toMatch(/sends that identifier to Anthropic as request metadata/);
-    expect(persona).toMatch(/delete records older than 35 days/);
-    expect(persona).not.toMatch(/lives only in the visitor's browser|clears itself after two days/);
+  it('discloses a provider pseudonym distinct from the quota pseudonym in every released locale', async () => {
+    const paths = [
+      'src/pages/privacy/index.astro',
+      ...['es', 'pt', 'fr', 'it'].map((locale) => `src/pages/${locale}/privacy/index.astro`),
+    ];
+    const patterns = [
+      /separate, domain-separated HMAC\s+pseudonym/iu,
+      /seudónimo HMAC\s+distinto.*separación\s+de\s+dominio/isu,
+      /pseudônimo HMAC\s+distinto.*separação\s+de\s+domínio/isu,
+      /pseudonyme HMAC\s+distinct.*séparation\s+de\s+domaine/isu,
+      /pseudonimo HMAC\s+distinto.*separazione\s+di\s+dominio/isu,
+    ];
+    const copies = await Promise.all(paths.map(text));
+    copies.forEach((copy, index) => expect(copy, paths[index]).toMatch(patterns[index]));
+    expect(copies.join('\n')).not.toMatch(/same pseudonym|mismo seudónimo|mesmo pseudônimo|même pseudonyme|stesso pseudonimo/iu);
+  });
+
+  it('keeps the runtime provider request aligned with the public disclosure', async () => {
+    const [provider, handler, context] = await Promise.all([
+      text('api/_assistant/openai.ts'),
+      text('api/assistant.ts'),
+      text('scripts/build-assistant-context.mjs'),
+    ]);
+    expect(provider).toMatch(/store:\s*false/);
+    expect(provider).toMatch(/safety_identifier/);
+    expect(handler).toMatch(/update\(`quota:\$\{clientIp\}`\)/);
+    expect(handler).toMatch(/update\(`openai:\$\{visitorHash\}`\)/);
+    expect(context).toMatch(/placements-only chart facts transiently to OpenAI/);
+    expect(context).toMatch(/store is disabled/);
+    expect(context).toMatch(/never sends the saved name, chart ID, birth date, birth time, birth place, or coordinates/);
   });
 });
 
@@ -93,8 +118,8 @@ describe('repository operating claims', () => {
     expect(strategy).toMatch(/chart calculation stays on the device/iu);
     expect(strategy).toMatch(/opts into account sync/iu);
     expect(strategy).toMatch(/types them into Ask Zodiacs/iu);
-    expect(strategy).toMatch(/derived placements to Anthropic/iu);
-    expect(strategy).toMatch(/not the saved name, birth date, time, place, or coordinates/iu);
+    expect(strategy).toMatch(/placements-only payload transiently to OpenAI/iu);
+    expect(strategy).toMatch(/not the saved name, chart ID, birth date, time, place, or coordinates/iu);
   });
 
   it('keeps Growth OS measurement independent and aggregate-only', async () => {

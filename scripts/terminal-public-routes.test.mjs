@@ -22,9 +22,12 @@ describe('Terminal public-route split', () => {
     expect(markets).not.toContain('https://zodiacs.org/registry/exchange/');
 
     const research = await read('src/pages/terminal/research/index.astro');
+    const researchNote = await read('src/pages/terminal/research/[slug].astro');
     expect(research).toContain('path="/terminal/research/"');
     expect(research).toContain('href="/terminal/"');
     expect(research).not.toContain('/registry/research/');
+    expect(research).not.toContain('<main');
+    expect(researchNote).not.toContain('<main');
   });
 
   it('redirects legacy consumer routes directly to their Terminal destinations', async () => {

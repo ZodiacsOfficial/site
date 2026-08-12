@@ -13,3 +13,4 @@ build/
 .cache/
 supabase/.temp/
 .email-preview/
+.env*
