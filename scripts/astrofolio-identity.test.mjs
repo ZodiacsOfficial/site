@@ -47,19 +47,20 @@ function semanticIdentityManifest(manifest) {
 async function expectPixelEquivalent(actualPath, expectedPath, label, {
   maxDifferentPixelRatio = 0.015,
   maxNormalizedMeanAbsoluteError = 0.006,
+  crop,
 } = {}) {
   const comparisonSize = 256;
+  const decodedArtwork = (path) => {
+    let pipeline = sharp(path).ensureAlpha();
+    if (crop) pipeline = pipeline.extract(crop);
+    return pipeline
+      .resize({ width: comparisonSize, height: comparisonSize, fit: 'inside', kernel: 'lanczos3' })
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+  };
   const [actual, expected] = await Promise.all([
-    sharp(actualPath)
-      .ensureAlpha()
-      .resize({ width: comparisonSize, height: comparisonSize, fit: 'inside', kernel: 'lanczos3' })
-      .raw()
-      .toBuffer({ resolveWithObject: true }),
-    sharp(expectedPath)
-      .ensureAlpha()
-      .resize({ width: comparisonSize, height: comparisonSize, fit: 'inside', kernel: 'lanczos3' })
-      .raw()
-      .toBuffer({ resolveWithObject: true }),
+    decodedArtwork(actualPath),
+    decodedArtwork(expectedPath),
   ]);
   expect(actual.info, `${label}: decoded image geometry`).toMatchObject({
     width: expected.info.width,
@@ -239,7 +240,13 @@ describe('Astrofolio seasonal identity generator', () => {
         expect(digest(await readFile(committedPath)), `${season.sign}/${name}: committed manifest integrity`)
           .toBe(committedSha256);
         if (PLATFORM_RENDERED_ARTWORK.has(name)) {
-          await expectPixelEquivalent(replayPath, committedPath, `${season.sign}/${name}`);
+          await expectPixelEquivalent(replayPath, committedPath, `${season.sign}/${name}`, name === 'og-1200x630.png'
+            ? {
+                // Compare the user-facing seasonal motif independently from
+                // OS-specific anti-aliasing in the left-side wordmark.
+                crop: { left: 540, top: 0, width: 660, height: 630 },
+              }
+            : undefined);
         } else {
           expect(digest(await readFile(replayPath)), `${season.sign}/${name}: byte-exact replay`)
             .toBe(sha256);
