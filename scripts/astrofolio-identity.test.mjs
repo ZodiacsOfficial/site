@@ -44,7 +44,7 @@ function semanticIdentityManifest(manifest) {
   return semantic;
 }
 
-async function expectPixelEquivalent(actualPath, expectedPath, label) {
+async function expectPixelEquivalent(actualPath, expectedPath, label, { maxDifferentPixelRatio = 0.015 } = {}) {
   const comparisonSize = 256;
   const [actual, expected] = await Promise.all([
     sharp(actualPath)
@@ -82,7 +82,7 @@ async function expectPixelEquivalent(actualPath, expectedPath, label) {
   expect(
     differentPixelRatio,
     `${label}: ${(differentPixelRatio * 100).toFixed(3)}% perceptually different pixels`,
-  ).toBeLessThanOrEqual(0.015);
+  ).toBeLessThanOrEqual(maxDifferentPixelRatio);
   expect(
     normalizedMeanAbsoluteError,
     `${label}: ${normalizedMeanAbsoluteError.toFixed(6)} normalized decoded-channel MAE`,
@@ -218,7 +218,11 @@ describe('Astrofolio seasonal identity generator', () => {
     const committedTerminal = resolve(root, 'public/assets/og/v6/terminal.png');
     expect(digest(await readFile(committedTerminal)), 'committed Terminal OG manifest integrity')
       .toBe(committed.terminalOgSha256);
-    await expectPixelEquivalent(terminalOutput, committedTerminal, 'Terminal OG replay');
+    await expectPixelEquivalent(terminalOutput, committedTerminal, 'Terminal OG replay', {
+      // Satori's text rasterizer moves more anti-aliased edge pixels between
+      // macOS and Linux than the image-only seasonal compositions do.
+      maxDifferentPixelRatio: 0.03,
+    });
     for (const season of replay.seasons) {
       for (const [name, sha256] of Object.entries(season.sha256)) {
         const replayPath = resolve(outputDirectory, season.sign, name);
