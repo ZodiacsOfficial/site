@@ -255,6 +255,10 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(how).not.toContain('Read the story');
     expect(how).toContain('className="consumer-proof"');
     const purpose = functionBlock(source, 'ConsumerPurpose');
+    ordered(purpose, ['className="consumer-thesis"', 'className="consumer-collection"']);
+    expect(purpose).toContain('Symbol · record · identity');
+    expect(purpose).toContain('<span>Read the story</span><span className="consumer-purpose__arrow"');
+    expect(purpose).toContain('<span>Open the Cabinet</span><span className="consumer-purpose__arrow"');
     expect(purpose).toContain('{SIGNS.map((item, index) =>');
     expect(purpose).toContain("aries: { finish: 'crown', numeral: 'V', count: '×12' }");
     expect(purpose).toContain("aquarius: { finish: 'gold', numeral: 'IV', count: '×3' }");

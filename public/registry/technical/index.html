@@ -8059,46 +8059,54 @@
     .static-how__proof strong { display: block; margin-bottom: 3px; color: var(--ink-2); font-weight: 550; }
     .static-verifier { max-width: 820px; }
 
-    .static-story-band__link {
-      position: relative;
-      min-height: 508px;
-      display: flex;
-      align-items: flex-end;
+    .static-purpose {
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+      gap: clamp(18px, 3vw, 34px);
+      align-items: stretch;
+    }
+    .static-purpose:not(:has(.static-collection)) { grid-template-columns: minmax(0, 1fr); }
+    .static-story-band,
+    .static-collection {
+      min-width: 0;
       overflow: hidden;
-      border: 6px solid rgba(238, 241, 247, .035) !important;
-      border-radius: 34px 34px 10px 34px;
+      border: 1px solid var(--hair-2);
+      background: rgba(15, 18, 26, .74);
+      box-shadow: 0 28px 70px -58px rgba(0, 0, 0, .9);
+    }
+    .static-story-band { border-radius: 24px 24px 6px 24px; }
+    .static-story-band__link {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
       color: inherit;
-      background: #080a0e;
-      box-shadow: inset 0 0 0 1px rgba(238, 241, 247, .11), 0 40px 96px -72px rgba(0, 0, 0, .95);
       text-decoration: none;
     }
-    .static-story-band picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+    .static-story-band picture { position: relative; flex: none; display: block; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #08090d; }
     .static-story-band picture::after {
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(180deg, rgba(5, 6, 8, .02) 4%, rgba(5, 6, 8, .08) 38%, rgba(5, 6, 8, .76) 75%, #060709 100%),
-        radial-gradient(120% 86% at 78% 18%, transparent 34%, rgba(5, 6, 8, .34) 100%);
+      background: linear-gradient(180deg, transparent 42%, rgba(6, 7, 9, .88));
       content: '';
+      pointer-events: none;
     }
     .static-story-band img { display: block; width: 100%; height: 100%; }
     .static-story-band img {
       object-fit: cover;
-      object-position: 50% 45%;
+      object-position: 50% 52%;
       filter: saturate(1.02) contrast(1.04) brightness(.84);
       transform: none;
       transition: opacity 180ms linear;
     }
     .static-story-band__copy {
-      position: relative;
-      z-index: 2;
-      width: min(100%, 760px);
+      flex: 1;
       display: grid;
-      gap: 18px;
-      padding: clamp(32px, 5vw, 56px);
+      align-content: start;
+      gap: 16px;
+      padding: clamp(22px, 3vw, 32px);
     }
-    .static-story-band__copy strong { max-width: 15ch; color: var(--ink); font: 500 clamp(46px, 6vw, 78px)/.92 var(--serif); letter-spacing: -.042em; }
-    .static-story-band__copy > span { max-width: 47ch; color: rgba(238, 241, 247, .74); font: 400 16px/1.65 var(--sans); }
+    .static-story-band__copy strong { max-width: 13ch; color: var(--ink); font: 500 clamp(31px, 3.5vw, 44px)/.96 var(--serif); letter-spacing: -.025em; }
+    .static-story-band__copy > span { max-width: 48ch; color: var(--ink-2); font: 400 14px/1.58 var(--sans); }
     .static-story-band__copy b {
       width: fit-content;
       min-height: 52px;
@@ -8129,41 +8137,31 @@
     .static-story-band__link:active b { transform: scale(.98); }
     .static-story-band__link:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
-    .static-collection {
-      width: min(100%, 620px);
-      margin: clamp(16px, 3vw, 32px) auto 0;
-      overflow: hidden;
-      border: 1px solid var(--hair-2);
-      border-radius: 8px 30px 30px 30px;
-      background:
-        radial-gradient(85% 55% at 50% 8%, rgba(224, 169, 180, .085), transparent 74%),
-        rgba(12, 14, 20, .92);
-      box-shadow: 0 40px 96px -72px rgba(0, 0, 0, .95);
-    }
+    .static-collection { border-radius: 6px 24px 24px 24px; }
     .static-collection__link {
-      min-height: 580px;
+      height: 100%;
       display: flex;
       flex-direction: column;
       color: inherit;
       text-decoration: none;
     }
-    .static-collection__copy { padding: clamp(26px, 5vw, 42px) clamp(24px, 5vw, 42px) 18px; }
+    .static-collection__copy { padding: clamp(22px, 3vw, 32px); }
     .static-collection__eyebrow {
       display: block;
-      margin-bottom: 11px;
+      margin-bottom: 13px;
       color: #E0A9B4;
       font: 500 9px/1 var(--mono);
       letter-spacing: .14em;
       text-transform: uppercase;
     }
     .consumer-static .static-collection h3 {
-      max-width: 8ch;
+      max-width: 13ch;
       margin: 0;
       color: var(--ink);
-      font: 500 clamp(38px, 6vw, 58px)/.92 var(--serif);
-      letter-spacing: -.035em;
+      font: 500 clamp(31px, 3.5vw, 44px)/.96 var(--serif);
+      letter-spacing: -.025em;
     }
-    .static-collection p { max-width: 48ch; margin: 16px 0 0; color: var(--ink-dim); font: 400 14px/1.55 var(--sans); }
+    .static-collection p { max-width: 48ch; margin: 16px 0 0; color: var(--ink-2); font: 400 14px/1.58 var(--sans); }
     .static-collection__art {
       margin: auto 18px 0;
       padding: 9px;
@@ -8202,6 +8200,12 @@
     }
     .static-collection__link:active .static-collection__cta { transform: scale(.98); }
     .static-collection__link:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+    @media (max-width: 1020px) {
+      .static-purpose { grid-template-columns: minmax(0, 1fr); }
+      .static-story-band,
+      .static-collection { border-radius: 22px 22px 5px 22px; }
+    }
 
     .static-astrofolio-closing {
       padding: clamp(84px, 12vw, 150px) 0;
@@ -8273,12 +8277,10 @@
       .static-how__proof { grid-template-columns: minmax(0, 1fr); }
       .static-how__anatomy > li { min-height: 236px; }
       .static-how__proof span + span { border-top: 1px solid var(--hair); border-left: 0; }
-      .static-story-band__link { min-height: 488px; }
-      .static-story-band__copy { padding: 28px 24px; }
+      .static-story-band picture { aspect-ratio: 16 / 10; }
+      .static-story-band__copy { padding: 24px 22px; }
       .static-story-band__copy b { min-height: 50px; padding-left: 18px; }
       .static-story-band__arrow { width: 38px; height: 38px; }
-      .static-collection { width: 100%; }
-      .static-collection__link { min-height: 520px; }
       .static-collection__art { margin-inline: 12px; }
       .static-astrofolio-closing__actions { flex-direction: column; align-items: center; gap: 6px; }
     }

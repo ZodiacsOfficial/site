@@ -498,19 +498,29 @@ try {
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').getAttribute('href'), '/terminal/');
-    const staticStoryStyle = await noJsPage.locator('.static-story-band__link').evaluate((node) => {
+    const staticStoryStyle = await noJsPage.locator('.static-story-band').evaluate((node) => {
       const image = node.querySelector('img');
-      const linkStyle = getComputedStyle(node);
+      const picture = node.querySelector('picture')?.getBoundingClientRect();
+      const copy = node.querySelector('.static-story-band__copy')?.getBoundingClientRect();
+      const button = node.querySelector('.static-story-band__copy b');
+      const cardStyle = getComputedStyle(node);
       return {
-        background: linkStyle.backgroundColor,
-        overflow: linkStyle.overflow,
+        background: cardStyle.backgroundColor,
+        overflow: cardStyle.overflow,
+        radius: cardStyle.borderRadius,
         filter: image ? getComputedStyle(image).filter : '',
+        pictureBottom: picture?.bottom,
+        copyTop: copy?.top,
+        buttonRadius: button ? getComputedStyle(button).borderRadius : '',
       };
     });
-    assert.equal(staticStoryStyle.background, 'rgb(8, 10, 14)');
+    assert.equal(staticStoryStyle.background, 'rgba(15, 18, 26, 0.74)');
     assert.equal(staticStoryStyle.overflow, 'hidden');
+    assert.equal(staticStoryStyle.radius, '22px 22px 5px');
     assert.notEqual(staticStoryStyle.filter, 'none');
     assert.doesNotMatch(staticStoryStyle.filter, /grayscale/u);
+    assert.ok(staticStoryStyle.pictureBottom <= staticStoryStyle.copyTop + 1, 'the no-JavaScript thesis image sits above its copy');
+    assert.equal(staticStoryStyle.buttonRadius, '999px');
     await assertStaticFirstScreen(noJsPage, { width: 390, height: 844 });
     await assertPastelSelectorGeometry(noJsPage, { width: 390, height: 844, staticView: true });
     const staticStageBefore = await noJsPage.locator('[data-static-sign="leo"] .static-vitrine__stage').boundingBox();
@@ -538,6 +548,8 @@ try {
     assert.equal(await staticCabinet.locator('.consumer-cabinet__seat').count(), 12);
     assert.equal(await staticCabinet.locator('.consumer-cabinet__seat.is-filled').count(), 5);
     assert.equal(await staticCabinet.locator('a').getAttribute('href'), '/registry/collection/');
+    assert.equal(await staticCabinet.locator('.static-collection__cta').innerText(), 'Open collection view →');
+    assert.equal(await staticCabinet.locator('.static-collection__cta').evaluate((node) => getComputedStyle(node).borderRadius), '999px');
     assert.equal(await noJsCollectionPage.locator('[aria-hidden="true"] [data-registry-collection-entry]').count(), 0);
     await noJsCollection.close();
 
@@ -573,6 +585,19 @@ try {
     assert.equal(await collectionPage.locator('[data-registry-collection] .consumer-cabinet__seat').count(), 12);
     assert.equal(await collectionPage.locator('[data-registry-collection] .consumer-cabinet__seat.is-filled').count(), 5);
     assert.equal(await collectionPage.locator('[data-registry-collection] .consumer-purpose__cta > span').first().innerText(), 'Open the Cabinet');
+    assert.equal(await collectionPage.locator('.consumer-thesis .consumer-purpose__cta').evaluate((node) => getComputedStyle(node).borderRadius), '999px');
+    const mobilePurpose = await collectionPage.locator('.consumer-thesis, .consumer-collection').evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().toJSON()));
+    assert.ok(mobilePurpose[0].y < mobilePurpose[1].y, 'the restored mobile cards keep Story before Cabinet');
+    await collectionPage.setViewportSize({ width: 1280, height: 900 });
+    const desktopPurpose = await collectionPage.locator('.consumer-thesis, .consumer-collection').evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().toJSON()));
+    assert.ok(desktopPurpose[0].x < desktopPurpose[1].x, 'the restored desktop cards sit side by side');
+    assert.ok(desktopPurpose[0].width > desktopPurpose[1].width, 'the Story keeps the older Registry lead-card proportion');
+    const thesisFlow = await collectionPage.locator('.consumer-thesis').evaluate((node) => {
+      const visual = node.querySelector('.consumer-thesis__visual')?.getBoundingClientRect();
+      const essay = node.querySelector('.consumer-purpose__essay')?.getBoundingClientRect();
+      return { visualBottom: visual?.bottom, essayTop: essay?.top };
+    });
+    assert.ok(thesisFlow.visualBottom <= thesisFlow.essayTop + 1, 'the thesis clock is contained above its copy');
     const storyOrder = await collectionPage.locator('#thesis, .consumer-snapshot, #registry').evaluateAll((nodes) => (
       nodes.map((node) => node.id || [...node.classList].find((name) => name === 'consumer-snapshot'))
     ));
