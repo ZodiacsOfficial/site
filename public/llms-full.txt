@@ -1,6 +1,6 @@
 # Zodiacs.org Full AI Context
 
-Zodiacs.org is a free astrology reference and calculation platform. It also publishes Astrofolio, the consumer collection at /terminal/, and the Terminal, its expert market desk at /terminal/pro/. Both are powered by the original Zodiacs Registry and its read-only developer SDK. Keep those surfaces distinct: consumer astrology guidance and calculators are the primary site; Astrofolio presents the consumer collection; the Terminal carries dense market context; and the Registry remains the canonical data and verification layer. Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.
+Zodiacs.org is a free astrology reference and calculation platform. It also publishes Astrofolio, the consumer collection at /astrofolio/, and the Terminal, its expert market desk at /terminal/. Both are powered by the original Zodiacs Registry and its read-only developer SDK. Keep those surfaces distinct: consumer astrology guidance and calculators are the primary site; Astrofolio presents the consumer collection; the Terminal carries dense market context; and the Registry remains the canonical data and verification layer. Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.
 
 ## Consumer Astrology Platform
 
@@ -108,11 +108,11 @@ Astrofolio.xyz is a related external consumer project exploring personal Zodiac 
 
 ### Astrofolio
 
-Astrofolio at https://zodiacs.org/terminal/ is the consumer collection. It leads with the sign picker, gold sculpture, official token, Registry record, today's price, and a simple guide to buying.
+Astrofolio at https://zodiacs.org/astrofolio/ is the consumer collection. It leads with the sign picker, gold sculpture, official token, Registry record, today's price, and a simple guide to buying.
 
 ### Terminal
 
-The Terminal at https://zodiacs.org/terminal/pro/ is the expert market desk. It presents the twelve ranked live with price, 24-hour change, and indexed liquidity, plus a market tape, one selected-sign chart, briefing, season context, and research headlines. The reviewed research archive lives at https://zodiacs.org/terminal/research/. Astrofolio and the Terminal do not replace or rename the Zodiacs Registry, take custody, or change verification status.
+The Terminal at https://zodiacs.org/terminal/ is the expert market desk. It presents the twelve ranked live with price, 24-hour change, and indexed liquidity, plus a market tape, one selected-sign chart, briefing, season context, and research headlines. The reviewed research archive lives at https://zodiacs.org/terminal/research/. Astrofolio and the Terminal do not replace or rename the Zodiacs Registry, take custody, or change verification status.
 
 ### Official registry
 

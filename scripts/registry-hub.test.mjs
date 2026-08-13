@@ -62,7 +62,7 @@ describe('Zodiacs Registry authority hub', () => {
 
   test('separates Registry authority from the expert Terminal', async () => {
     const html = await read('public/registry/index.html');
-    expect(html).toContain('href="/terminal/pro/"');
+    expect(html).toContain('href="/terminal/"');
     expect(html).toContain('Open Terminal');
     for (const path of [
       '/registry/zodiacs.registry.json',
@@ -81,8 +81,8 @@ describe('Zodiacs Registry authority hub', () => {
     expect(html).toContain("var proHash=['market','briefing','research','outlook']");
     expect(html).toContain("'sign-gallery','gallery','aries'");
     expect(html).toContain("var proHashValue=hash==='outlook'?'briefing':hash");
-    expect(html).toContain("location.replace('/terminal/pro/'+location.search+(proHashValue?'#'+proHashValue:''))");
-    expect(html).toContain("location.replace('/terminal/'+location.search+location.hash)");
+    expect(html).toContain("location.replace('/terminal/'+location.search+(proHashValue?'#'+proHashValue:''))");
+    expect(html).toContain("location.replace('/astrofolio/'+location.search+location.hash)");
     expect(html).toContain('id="verify"');
     expect(html).not.toContain("'address'].some");
   });

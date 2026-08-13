@@ -351,7 +351,7 @@ export function AuraResult({
               </button>
             </>
           )}
-          <a class="btn btn--ghost" href="/terminal/">Browse Astrofolio</a>
+          <a class="btn btn--ghost" href="/astrofolio/">Browse Astrofolio</a>
         </div>
         {sharePreviewUrl && !illustrative && (
           <AuraSharePreview

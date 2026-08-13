@@ -9,16 +9,19 @@ Approved: 2026-08-10T11:40:11Z
 
 Authorized: 2026-08-13
 
-This addendum changes public labels only. It does not widen the acquisition,
+This addendum changes public labels and their canonical routes only. It does not widen the acquisition,
 execution, custody, indexing, provider, telemetry, pilot, or rollback boundary:
 
-- `/terminal/` is **Astrofolio**, the indexed consumer collection of gold
+- `/astrofolio/` is **Astrofolio**, the indexed consumer collection of gold
   sculptures and official Zodiac tokens.
-- `/terminal/pro/`, its reviewed research, and the protected
+- `/terminal/`, its reviewed research, and the protected
   `/terminal/markets/` venue route are **Terminal**, the expert market desk.
+- The former `/terminal/pro/` URL permanently redirects to `/terminal/` and
+  is no longer indexed or served as a second expert surface.
 - The protected route no longer presents **Zodiac Markets** as an active
   product name. Internal `exchange` identifiers, the feature flag, event
-  names, URLs, and every control in this record remain unchanged.
+  names and every control in this record remain unchanged. Route references
+  in earlier dated addenda are retained as historical decision evidence.
 - “Zodiac Markets,” “Pro Terminal,” “consumer Terminal,” and “Zodiac
   Terminal” below are historical labels from the dated decisions that used
   them; they are preserved as decision evidence, not current navigation copy.

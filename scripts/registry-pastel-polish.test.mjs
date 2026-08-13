@@ -42,7 +42,7 @@ describe('registry pastel polish', () => {
   it('keeps every selector disc pastel and reserves the selected hue for the ring, atmosphere, and movement', async () => {
     const [css, html] = await Promise.all([
       read('src/terminal/split-styles.css'),
-      read('public/terminal/index.html'),
+      read('public/astrofolio/index.html'),
     ]);
     const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
     expect(lit).toContain('color-mix(in srgb, var(--active-sign) 13%, transparent)');
@@ -57,10 +57,21 @@ describe('registry pastel polish', () => {
     expect(hydratedDisc).not.toContain('grayscale');
     expect(lit).toContain('.consumer-registry .vitrine-disc picture > source { display: none; }');
     expect(lit).toContain('.consumer-registry .vitrine-disc.is-active img { opacity: 1; }');
+    const hydratedGlow = cssRule(lit, '.consumer-registry .vitrine-disc picture::before {');
+    expect(hydratedGlow).toContain('radial-gradient');
+    expect(hydratedGlow).toContain('var(--sign) 28%');
+    expect(hydratedGlow).toContain('opacity: .45;');
+    expect(hydratedGlow).not.toContain('transition');
+    expect(lit).toContain('.consumer-registry .vitrine-disc.is-active picture::before { opacity: 1; }');
     expect(html).toContain('<span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/leo.webp"');
     expect(html).toContain('.static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc {');
     expect(html).toContain('0 0 0 4px var(--disc);');
     expect(cssRule(html, '.static-vitrine__rail img {')).toContain('filter: none;');
+    const staticGlow = cssRule(html, '.static-vitrine__disc::before {');
+    expect(staticGlow).toContain('radial-gradient');
+    expect(staticGlow).toContain('var(--disc) 28%');
+    expect(staticGlow).toContain('opacity: .45;');
+    expect(html).toContain('.static-vitrine__disc::before { opacity: 1; }');
     expect(lit).not.toContain('var(--gold)');
     expect(lit).not.toContain('var(--gold-bright)');
     expect(lit).not.toContain('var(--gold-deep)');
@@ -158,7 +169,7 @@ describe('registry pastel polish', () => {
   });
 
   it('keeps the committed collection flag off and its generator slots inert', async () => {
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     expect(html).toContain('<meta name="zodiacs-registry-collection-enabled" content="0" />');
     expect(html).toContain('<div hidden aria-hidden="true"><!-- registry-collection-hero:slot --></div>');
     expect(html).toContain('<div hidden aria-hidden="true"><!-- registry-collection-entry:slot --></div>');
@@ -167,7 +178,7 @@ describe('registry pastel polish', () => {
   it('keeps the wing nav on the shared compact and desktop geometry contract', async () => {
     const [wingNav, registry, thesis, sdk, source, siteNav] = await Promise.all([
       read('scripts/wing-nav.mjs'),
-      read('public/terminal/index.html'),
+      read('public/astrofolio/index.html'),
       read('public/thesis/index.html'),
       read('public/sdk/index.html'),
       read('src/app.jsx'),
@@ -221,8 +232,8 @@ describe('registry pastel polish', () => {
       expect(output).toContain('class="wnav-menu__sign" style="--i:0;--sign:#DE8E79"');
       expect(output).toContain('class="wnav-menu__sign" style="--i:11;--sign:#A9D4C4"');
     }
-    expect(thesis).toContain('<a class="wnav__chip" href="/terminal/">Astrofolio</a>');
-    expect(thesis).toContain('<span>Astrofolio</span><small>Your sign’s sculpture, official token, and buying guide</small>');
+    expect(thesis).toContain('<a class="wnav__chip" href="/astrofolio/">Astrofolio</a>');
+    expect(thesis).toContain('<span>Astrofolio</span><small>The collection of twelve gold Zodiac sculptures</small>');
     expect(thesis).not.toContain('<a class="wnav__chip" href="/terminal/">Terminal</a>');
     expect(siteNav).toContain('.mobile-menu__tool:last-child { border-bottom: 0; }');
     expect(source).toContain('<span className="wnav__sep">·</span><span className="wnav__dim">org</span>');

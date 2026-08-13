@@ -1,5 +1,5 @@
 // Stamps Terminal's venue route into (or out of) /terminal/markets/ and synchronizes
-// the single discovery gateway on /terminal/pro/ from
+// the single discovery gateway on /terminal/ from
 // PUBLIC_REGISTRY_EXCHANGE_ENABLED in the SHELL env. Plain-node generators do
 // not read .env files — set the flag in the shell, the way
 // configure-registry-trade does, or the halves skew.
@@ -21,22 +21,22 @@ import {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const exchangeFile = resolve(root, 'public/terminal/markets/index.html');
-const proFile = resolve(root, 'public/terminal/pro/index.html');
+const terminalFile = resolve(root, 'public/terminal/index.html');
 
 const enabled = registryExchangeEnabled(process.env);
-const [exchangeSource, proSource] = await Promise.all([
+const [exchangeSource, terminalSource] = await Promise.all([
   readFile(exchangeFile, 'utf8'),
-  readFile(proFile, 'utf8'),
+  readFile(terminalFile, 'utf8'),
 ]);
 
 // Validate and render both surfaces before writing either one. A malformed or
 // missing Terminal marker must fail the build without leaving the venue route and
 // its only discovery entry in different flag states.
 const exchangeOutput = injectRegistryExchange(exchangeSource, process.env).output;
-const proOutput = injectRegistryExchangeLanding(proSource, process.env).output;
+const terminalOutput = injectRegistryExchangeLanding(terminalSource, process.env).output;
 const writes = [
   exchangeOutput !== exchangeSource ? writeFile(exchangeFile, exchangeOutput) : null,
-  proOutput !== proSource ? writeFile(proFile, proOutput) : null,
+  terminalOutput !== terminalSource ? writeFile(terminalFile, terminalOutput) : null,
 ].filter(Boolean);
 await Promise.all(writes);
 

@@ -59,13 +59,13 @@ export const OG_EN = Object.freeze({
     data: 'Astrofolio · Registry · Terminal',
   },
   astrofolio: {
-    path: '/terminal/',
-    image: '/assets/og/v5/the-twelve.png',
+    path: '/astrofolio/',
+    image: '/assets/astrofolio/v1/leo/og-1200x630.png',
     alt: 'Astrofolio: the collection of gold sculptures and official tokens for the twelve Zodiac signs.',
   },
   terminal: {
-    path: '/terminal/pro/',
-    image: '/assets/og/v5/the-twelve.png',
+    path: '/terminal/',
+    image: '/assets/og/v6/terminal.png',
     alt: 'Terminal: expert market context and reviewed research for the twelve official Zodiac tokens.',
   },
   thesis: {
@@ -220,7 +220,8 @@ export const BREADCRUMB_LABELS = Object.freeze({
   'saturn-return': 'Saturn return',
   sdk: 'SDK',
   terms: 'Terms',
-  terminal: 'Astrofolio',
+  astrofolio: 'Astrofolio',
+  terminal: 'Terminal',
   thesis: 'The Thesis',
   today: 'Today',
   tools: 'Astrology tools',
@@ -234,7 +235,7 @@ function normalizedPath(path) {
 }
 
 const TERMINAL_OG_PREFIXES = Object.freeze([
-  '/terminal/pro/',
+  '/terminal/',
   '/terminal/markets/',
   '/terminal/research/',
 ]);

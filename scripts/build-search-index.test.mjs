@@ -72,23 +72,23 @@ describe('buildSearchIndex', () => {
       kind: 'registry',
     }));
     expect(searchIndex(first.entries, 'astrofolio')[0]).toMatchObject({
-      path: '/terminal/',
+      path: '/astrofolio/',
       kind: 'astrofolio',
     });
     expect(searchIndex(first.entries, 'zodiac gallery verifier')[0]).toMatchObject({
-      path: '/terminal/',
+      path: '/astrofolio/',
       kind: 'astrofolio',
     });
     expect(searchIndex(first.entries, 'zodiac capital markets')[0]).toMatchObject({
-      path: '/terminal/pro/',
+      path: '/terminal/',
       kind: 'terminal',
     });
     expect(searchIndex(first.entries, 'market tape liquidity')[0]).toMatchObject({
-      path: '/terminal/pro/',
+      path: '/terminal/',
       kind: 'terminal',
     });
     expect(searchIndex(first.entries, 'ranked zodiac tokens')[0]).toMatchObject({
-      path: '/terminal/pro/',
+      path: '/terminal/',
       kind: 'terminal',
     });
     expect(searchIndex(first.entries, 'thesis')[0]).toMatchObject({

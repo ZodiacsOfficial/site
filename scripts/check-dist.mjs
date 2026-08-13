@@ -287,7 +287,7 @@ async function hasId(filePath, id) {
   if (html.includes(`id="${id}"`) || html.includes(`id='${id}'`)) return true;
   // Astrofolio and Terminal render their sections client-side; ids live in
   // the compiled bundle (JSX id="x" compiles to id: "x").
-  if (filePath === resolve(root, 'terminal/index.html')) {
+  if ([resolve(root, 'astrofolio/index.html'), resolve(root, 'terminal/index.html')].includes(filePath)) {
     const bundlePath = resolve(root, 'assets/app.js');
     if (!idCache.has(bundlePath)) {
       idCache.set(bundlePath, await readFile(bundlePath, 'utf8'));
@@ -632,8 +632,8 @@ for (const relativePath of [
   'es/index.html',
   'es/aries/index.html',
   'registry/index.html',
+  'astrofolio/index.html',
   'terminal/index.html',
-  'terminal/pro/index.html',
   'terminal/markets/index.html',
   'thesis/index.html',
   'sdk/index.html',
@@ -992,17 +992,17 @@ for (const [pagePath, block] of sitemapBlocksByPath) {
   }
 }
 
-const terminalLandingPath = resolve(root, 'terminal/index.html');
-const terminalLandingHtml = idCache.get(terminalLandingPath)
-  ?? (await readFile(terminalLandingPath, 'utf8'));
-const registryAuraMarker = terminalLandingHtml.match(
+const astrofolioLandingPath = resolve(root, 'astrofolio/index.html');
+const astrofolioLandingHtml = idCache.get(astrofolioLandingPath)
+  ?? (await readFile(astrofolioLandingPath, 'utf8'));
+const registryAuraMarker = astrofolioLandingHtml.match(
   /<meta name="zodiacs-registry-collection-enabled" content="([01])" \/>/,
 )?.[1];
-if (!registryAuraMarker) fail('terminal/index.html: missing Registry Collection build marker');
+if (!registryAuraMarker) fail('astrofolio/index.html: missing Registry Collection build marker');
 const registryAuraBuildEnabled = registryAuraMarker === '1';
-const registryAuraLandingLinked = /href=["']\/registry\/collection\/["']/.test(terminalLandingHtml);
+const registryAuraLandingLinked = /href=["']\/registry\/collection\/["']/.test(astrofolioLandingHtml);
 if (registryAuraLandingLinked !== registryAuraBuildEnabled) {
-  fail('terminal/index.html: Registry Collection landing link does not match its build marker');
+  fail('astrofolio/index.html: Registry Collection landing link does not match its build marker');
 }
 const thesisHtmlPath = resolve(root, 'thesis/index.html');
 const thesisHtml = idCache.get(thesisHtmlPath) ?? (await readFile(thesisHtmlPath, 'utf8'));
@@ -1293,8 +1293,8 @@ for (const artifact of [
   'archive/rss.xml',
   '404.html',
   'registry/index.html',
+  'astrofolio/index.html',
   'terminal/index.html',
-  'terminal/pro/index.html',
   'thesis/index.html',
   'sdk/index.html',
 ]) {

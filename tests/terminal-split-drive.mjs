@@ -65,7 +65,7 @@ async function installNetworkHarness(context) {
 }
 
 async function installExchangeFlag(context) {
-  await context.route('**/terminal/pro/**', async (route) => {
+  await context.route('**/terminal/**', async (route) => {
     if (route.request().resourceType() !== 'document') return route.continue();
     const response = await route.fetch();
     const source = await response.text();
@@ -169,6 +169,20 @@ async function assertPastelSelectorGeometry(page, { width, height, staticView = 
   assert.equal(style.radius, '50%');
   assert.notEqual(style.shadow, 'none');
   assert.equal(await page.locator(activeImageSelector).evaluate((node) => getComputedStyle(node).opacity), '1');
+  const glowHosts = staticView ? '.static-vitrine__disc' : '.vitrine-disc picture';
+  const activeGlow = await page.locator(wrapperSelector).evaluate((node) => {
+    const style = getComputedStyle(node, '::before');
+    return { background: style.backgroundImage, opacity: style.opacity, transition: style.transitionDuration };
+  });
+  const glows = await page.locator(glowHosts).evaluateAll((nodes) => nodes.map((node) => ({
+    background: getComputedStyle(node, '::before').backgroundImage,
+    opacity: getComputedStyle(node, '::before').opacity,
+  })));
+  assert.equal(glows.length, 12);
+  assert.ok(glows.every(({ background }) => background.includes('radial-gradient')), 'all twelve discs have a pastel ambient shadow');
+  assert.ok(glows.every(({ opacity }) => Number.parseFloat(opacity) >= .4), 'every disc keeps a low matching glow');
+  assert.equal(activeGlow.opacity, '1');
+  assert.match(activeGlow.transition, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
 }
 
 if (OUT) await mkdir(OUT, { recursive: true });
@@ -189,8 +203,11 @@ try {
     await installNetworkHarness(mobile);
     const page = await mobile.newPage();
     const errors = watchErrors(page, 'Astrofolio mobile');
-    await page.goto(`${baseURL}/terminal/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
+    await page.goto(`${baseURL}/astrofolio/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
     await waitForTerminal(page, '#consumer-explorer-title');
+    assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), 'The Twelve Official Zodiacs');
+    assert.match(await page.locator('.astrofolio-lockup__avatar').getAttribute('src') ?? '', /\/assets\/astrofolio\/v1\/leo\/icon-192\.png$/u);
+    assert.equal(await page.locator('.terminal-consumer-hero__kicker').innerText(), 'Astrofolio');
 
     await page.waitForFunction(() => document.querySelector('[data-consumer-market-snapshot]')?.getAttribute('aria-busy') === 'false');
     assert.equal(counts.dex, 1, 'the first-screen placard and list share one batched quote request');
@@ -203,7 +220,7 @@ try {
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').innerText(), 'View official record');
     assert.equal(await page.locator('[data-terminal-preference-banner]').count(), 0);
     assert.equal(await page.locator('.terminal-consumer-hero [data-terminal-view-link="pro"]').count(), 0);
-    assert.equal(await page.locator('a[href^="/terminal/pro/"]').count(), 1);
+    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 1);
     assert.equal(await page.locator('[data-consumer-market-snapshot] [data-snapshot-sign]').count(), 12);
     assert.equal(await page.locator('.consumer-registry .market-tape, .consumer-registry .pro-aggregate, .consumer-registry [data-landing-trade]').count(), 0);
     assert.equal(counts.gecko, 0);
@@ -239,7 +256,7 @@ try {
     await page.locator('[data-consumer-sign="aries"]').click();
     await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="aries"]')?.classList.contains('is-active'));
     await page.waitForTimeout(40);
-    const interruptedOutgoingOpacity = await page.locator('[data-vitrine-sculpture="pisces"]').evaluate((node) => {
+    const interruptedOutgoingOpacity = await page.locator('[data-vitrine-sculpture="pisces"]').first().evaluate((node) => {
       const opacity = Number.parseFloat(getComputedStyle(node).opacity);
       document.querySelector('[data-consumer-sign="leo"]')?.click();
       return opacity;
@@ -256,7 +273,7 @@ try {
       && document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active')
     ));
     assert.equal(new URL(page.url()).searchParams.get('sign'), 'leo');
-    assert.equal(await page.locator('.consumer-closing__market').getAttribute('href'), '/terminal/pro/?sign=leo');
+    assert.equal(await page.locator('.consumer-closing__market').getAttribute('href'), '/terminal/?sign=leo');
     assert.equal(await page.locator('.vitrine-stage__layer').count(), 1, 'an interrupted fade settles to one sculpture layer');
     assert.equal(await page.locator('.vitrine-placard__layer').count(), 1, 'an interrupted fade settles to one placard layer');
     assert.equal(await page.locator('[data-vitrine-sculpture="leo"].is-active').count(), 1);
@@ -267,11 +284,19 @@ try {
     assert.deepEqual(errors, []);
     await mobile.close();
 
+    const legacy = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    await installNetworkHarness(legacy);
+    const legacyPage = await legacy.newPage();
+    await legacyPage.goto(`${baseURL}/terminal/?sign=leo&rank=liquidity#market-snapshot`, { waitUntil: 'load' });
+    await legacyPage.waitForURL(/\/astrofolio\/\?sign=leo&rank=liquidity#market-snapshot$/u);
+    assert.equal(new URL(legacyPage.url()).pathname, '/astrofolio/');
+    await legacy.close();
+
     const desktop = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
     await installNetworkHarness(desktop);
     const desktopPage = await desktop.newPage();
     const desktopErrors = watchErrors(desktopPage, 'Astrofolio desktop');
-    await desktopPage.goto(`${baseURL}/terminal/?sign=leo`, { waitUntil: 'load' });
+    await desktopPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(desktopPage, '#consumer-explorer-title');
     await desktopPage.waitForFunction(() => document.querySelector('[data-consumer-market-snapshot]')?.getAttribute('aria-busy') === 'false');
     await assertFirstScreen(desktopPage, { width: 1440, height: 900 });
@@ -312,7 +337,7 @@ try {
     });
     await installNetworkHarness(frenchLocale);
     const frenchPage = await frenchLocale.newPage();
-    await frenchPage.goto(`${baseURL}/terminal/?sign=aries`, { waitUntil: 'load' });
+    await frenchPage.goto(`${baseURL}/astrofolio/?sign=aries`, { waitUntil: 'load' });
     await waitForTerminal(frenchPage, '#consumer-explorer-title');
     await frenchPage.waitForFunction(() => document.querySelector('[data-consumer-market-snapshot]')?.getAttribute('aria-busy') === 'false');
     const frenchPlacard = frenchPage.locator('[data-vitrine-placard="aries"].is-active');
@@ -327,7 +352,7 @@ try {
       (route) => route.abort(),
     );
     const failedArtworkPage = await failedArtwork.newPage();
-    await failedArtworkPage.goto(`${baseURL}/terminal/?sign=leo`, { waitUntil: 'load' });
+    await failedArtworkPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(failedArtworkPage, '#consumer-explorer-title');
     await failedArtworkPage.locator('[data-consumer-sign="virgo"]').click();
     await failedArtworkPage.waitForFunction(() => (
@@ -348,7 +373,7 @@ try {
     await installNetworkHarness(reduced);
     const reducedPage = await reduced.newPage();
     const reducedErrors = watchErrors(reducedPage, 'Astrofolio reduced motion');
-    await reducedPage.goto(`${baseURL}/terminal/?sign=leo`, { waitUntil: 'load' });
+    await reducedPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(reducedPage, '#consumer-explorer-title');
     await reducedPage.locator('[data-consumer-sign="virgo"]').click();
     await reducedPage.waitForFunction(() => {
@@ -376,8 +401,7 @@ try {
     const proPage = await pro.newPage();
     const proErrors = watchErrors(proPage, 'Terminal');
     const beforeProDex = counts.dex;
-    await proPage.goto(`${baseURL}/terminal/?sign=PISCES&rank=change&junk=drop#outlook`, { waitUntil: 'load' });
-    await proPage.waitForURL(/\/terminal\/pro\/\?sign=pisces&rank=change#briefing$/u);
+    await proPage.goto(`${baseURL}/terminal/?sign=PISCES&rank=change#briefing`, { waitUntil: 'load' });
     await waitForTerminal(proPage, '#pro-terminal-title');
     await proPage.waitForFunction(() => document.querySelector('.pro-board table')?.getAttribute('aria-busy') === 'false');
     assert.equal(await proPage.locator('#pro-terminal-title').innerText(), 'Terminal');
@@ -393,22 +417,23 @@ try {
     assert.equal(await tapeButton.innerText(), 'Pause tape');
     await tapeButton.click();
     assert.equal(await tapeButton.innerText(), 'Resume tape');
-    assert.equal(await proPage.locator('[data-terminal-view-link="consumer"]').getAttribute('href'), '/terminal/?sign=pisces');
+    assert.equal(await proPage.locator('[data-terminal-view-link="consumer"]').getAttribute('href'), '/astrofolio/?sign=pisces');
     assert.deepEqual(proErrors, []);
     await pro.close();
 
     const noJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
     const noJsPage = await noJs.newPage();
-    await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
+    await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#static-astrofolio-title').innerText(), 'Choose your sign');
     assert.equal(await noJsPage.locator('.static-astrofolio-kicker').innerText(), 'Astrofolio');
+    assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), 'The Twelve Official Zodiacs');
     assert.equal(await noJsPage.locator('.static-vitrine__choice').count(), 12);
     assert.equal(await noJsPage.locator('.static-vitrine__panel').count(), 12);
     assert.equal(await noJsPage.locator('#market-snapshot li').count(), 12);
     assert.equal(await noJsPage.locator('#faq dt').count(), 4);
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 1);
-    assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').getAttribute('href'), '/terminal/pro/');
+    assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').getAttribute('href'), '/terminal/');
     const staticStoryStyle = await noJsPage.locator('.static-story-band__link').evaluate((node) => {
       const image = node.querySelector('img');
       const linkStyle = getComputedStyle(node);
@@ -444,18 +469,18 @@ try {
       { width: 1440, height: 900 },
     ]) {
       await noJsPage.setViewportSize(viewport);
-      await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
+      await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
       await assertPastelSelectorGeometry(noJsPage, { ...viewport, staticView: true });
     }
-    await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
+    await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
     await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900 });
     if (OUT) await noJsPage.screenshot({ path: `${OUT}/astrofolio-no-js-1440x900.png`, fullPage: false });
-    await noJsPage.goto(`${baseURL}/terminal/pro/`, { waitUntil: 'load' });
+    await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#pro-static-title').innerText(), 'Terminal');
     assert.equal(await noJsPage.locator('#market tbody tr').count(), 12);
     assert.equal(await noJsPage.locator('#market a', { hasText: 'Official record' }).count(), 12);
     assert.equal(await noJsPage.locator('#research [data-research-empty-state]').count(), 1);
-    assert.equal(await noJsPage.locator('a[href="/terminal/#verify"]').count() > 0, true);
+    assert.equal(await noJsPage.locator('a[href="/astrofolio/#verify"]').count() > 0, true);
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
     assert.equal(await noJsPage.locator('a[href^="/terminal/markets/"]').count(), 0);
     await noJs.close();
@@ -465,11 +490,11 @@ try {
     await installExchangeFlag(flagged);
     const flaggedPage = await flagged.newPage();
     const flaggedErrors = watchErrors(flaggedPage, 'flagged gateway');
-    await flaggedPage.goto(`${baseURL}/terminal/?sign=leo`, { waitUntil: 'load' });
+    await flaggedPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(flaggedPage, '#consumer-explorer-title');
     assert.equal(await flaggedPage.locator('meta[name="zodiacs-registry-exchange-enabled"]').count(), 0);
     assert.equal(await flaggedPage.locator('[data-pro-markets-gateway], a[href^="/terminal/markets/"]').count(), 0);
-    await flaggedPage.goto(`${baseURL}/terminal/pro/?sign=leo`, { waitUntil: 'load' });
+    await flaggedPage.goto(`${baseURL}/terminal/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(flaggedPage, '#pro-terminal-title');
     await flaggedPage.waitForFunction(() => document.querySelector('.pro-board table')?.getAttribute('aria-busy') === 'false');
     const gateway = flaggedPage.locator('[data-pro-markets-gateway]');

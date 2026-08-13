@@ -43,8 +43,8 @@ describe('legacy analytics build injection', () => {
 
   it('configures Astrofolio and the expert Terminal page exactly once', () => {
     expect(TERMINAL_ANALYTICS_PATHS).toEqual([
+      'public/astrofolio/index.html',
       'public/terminal/index.html',
-      'public/terminal/pro/index.html',
     ]);
     expect(new Set(TERMINAL_ANALYTICS_PATHS).size).toBe(2);
   });

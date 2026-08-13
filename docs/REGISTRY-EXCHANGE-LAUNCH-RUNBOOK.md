@@ -4,8 +4,8 @@ This runbook carries Terminal's protected venue route at `/terminal/markets/`
 from merged-but-flag-off to a time-limited production pilot. It does not ratify the owner decision, enable a
 Vercel environment, approve a PR, or authorize a real trade by itself.
 
-Current public labels since 2026-08-13 are Astrofolio for `/terminal/` and
-Terminal for the expert desk at `/terminal/pro/`, reviewed research, and this
+Current public labels since 2026-08-13 are Astrofolio for `/astrofolio/` and
+Terminal for the expert desk at `/terminal/`, reviewed research, and this
 venue route. The earlier owner record preserves “Zodiac Markets” as a
 historical label; internal `exchange` identifiers remain unchanged.
 
@@ -55,11 +55,11 @@ node scripts/configure-registry-exchange.mjs
 git diff --exit-code
 ```
 
-Before any flag-on QA, verify that both the route and `/terminal/pro/` landing
+Before any flag-on QA, verify that both the route and `/terminal/` landing
 markers are `0`, the terminal and its script are absent, and neither the
-Terminal page nor Astrofolio has a venue-route discovery entry. `/terminal/`
+Terminal page nor Astrofolio has a venue-route discovery entry. `/astrofolio/`
 must have no exchange flag marker in either state. The round trip above must stamp the route and Terminal
-markers to `1` from the same environment flag while leaving `/terminal/`
+markers to `1` from the same environment flag while leaving `/astrofolio/`
 clean, then restore the two stamped surfaces to `0` byte-for-byte.
 
 ## Protected flag-on QA
@@ -70,10 +70,10 @@ production alias. Remove the branch override after QA.
 
 Verify:
 
-- the enabled meta marker is `1` on both the Terminal venue route and `/terminal/pro/`,
+- the enabled meta marker is `1` on both the Terminal venue route and `/terminal/`,
   the terminal mounts, and the twelve records remain below it;
-- `/terminal/` has no exchange marker and no venue-route discovery entry;
-- exactly one Terminal venue-route discovery entry appears on `/terminal/pro/`; it is
+- `/astrofolio/` has no exchange marker and no venue-route discovery entry;
+- exactly one Terminal venue-route discovery entry appears on `/terminal/`; it is
   same-origin, points to `/terminal/markets/#<selected-sign>`, contains no
   venue URL, and causes no provider or wallet request merely by rendering or
   receiving focus;

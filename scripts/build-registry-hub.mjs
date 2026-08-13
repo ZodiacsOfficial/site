@@ -126,7 +126,7 @@ function renderNav() {
   // The wing navigation's public chip leads to consumer-facing Astrofolio.
   // Registry is an authority page, so Astrofolio is intentionally not current.
   return wingNavHtml({ includeSearch: true })
-    .replaceAll('href="/registry/"', 'href="/terminal/"')
+    .replaceAll('href="/registry/"', 'href="/astrofolio/"')
     .replaceAll(' aria-current="page"', '');
 }
 
@@ -195,9 +195,9 @@ const html = `<!doctype html>
       var consumerHash=['sign-gallery','gallery',${SIGN_ORDER.map((sign) => `'${sign}'`).join(',')}].includes(hash);
       if(proQuery||proHash){
         var proHashValue=hash==='outlook'?'briefing':hash;
-        location.replace('/terminal/pro/'+location.search+(proHashValue?'#'+proHashValue:''));
+        location.replace('/terminal/'+location.search+(proHashValue?'#'+proHashValue:''));
       }
-      else if(consumerQuery||consumerHash) location.replace('/terminal/'+location.search+location.hash);
+      else if(consumerQuery||consumerHash) location.replace('/astrofolio/'+location.search+location.hash);
     })();
   </script>
 
@@ -459,7 +459,7 @@ const html = `<!doctype html>
 
     <aside class="terminal" aria-labelledby="terminal-title">
       <div><p class="eyebrow">Market experience</p><h2 id="terminal-title">Looking for live markets?</h2><p>Rankings, charts, liquidity, market tape, and research live in the Terminal. The Registry stays focused on proof.</p></div>
-      <a class="terminal-link" href="/terminal/pro/"><b>Open Terminal</b><span aria-hidden="true">↗</span></a>
+      <a class="terminal-link" href="/terminal/"><b>Open Terminal</b><span aria-hidden="true">↗</span></a>
     </aside>
 
     <footer class="footer">

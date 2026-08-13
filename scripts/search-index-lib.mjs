@@ -39,7 +39,7 @@ const TOOL_ROOTS = new Set([
   'transits',
   'widgets',
 ]);
-const EXCLUDED_PREFIXES = ['/es/', '/terminal/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
+const EXCLUDED_PREFIXES = ['/es/', '/astrofolio/', '/terminal/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
 const NAMED_ENTITIES = Object.freeze({
   amp: '&',
   apos: "'",
@@ -70,7 +70,7 @@ function freezeCuratedEntry(entry) {
  */
 export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
-    path: '/terminal/',
+    path: '/astrofolio/',
     title: 'Astrofolio',
     description: 'Choose your sign, see its gold sculpture and official token, check its Registry record, and follow a simple guide to buying it.',
     kind: 'astrofolio',
@@ -80,7 +80,7 @@ export const CURATED_WING_ENTRIES = Object.freeze([
     ],
   }),
   freezeCuratedEntry({
-    path: '/terminal/pro/',
+    path: '/terminal/',
     title: 'Terminal',
     description: 'A dense ranked view of all twelve Zodiac tokens with price, 24-hour change, liquidity, a selected-sign chart, market tape, briefings, and research.',
     kind: 'terminal',

@@ -74,7 +74,8 @@ const RU_BREADCRUMB_LABELS: Readonly<Record<string, string>> = Object.freeze({
   'rising-sign': 'Асцендент',
   ru: 'Русский',
   'saturn-return': 'Возвращение Сатурна',
-  terminal: 'Astrofolio',
+  astrofolio: 'Astrofolio',
+  terminal: 'Terminal',
   tools: 'Астроинструменты',
   transits: 'Транзиты',
 });

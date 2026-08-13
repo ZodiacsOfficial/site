@@ -17,8 +17,8 @@ import {
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ON = { [REGISTRY_EXCHANGE_FLAG]: '1' };
 const page = () => readFile(resolve(root, 'public/terminal/markets/index.html'), 'utf8');
-const proPage = () => readFile(resolve(root, 'public/terminal/pro/index.html'), 'utf8');
-const consumerPage = () => readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
+const proPage = () => readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
+const consumerPage = () => readFile(resolve(root, 'public/astrofolio/index.html'), 'utf8');
 const landing = () => [
   '<!doctype html>',
   '<html><head>',
@@ -172,12 +172,12 @@ describe('the committed-off drift invariant', () => {
   it('configures the route and Terminal landing together before writing either', async () => {
     const configure = await readFile(resolve(root, 'scripts/configure-registry-exchange.mjs'), 'utf8');
     expect(configure).toContain("resolve(root, 'public/terminal/markets/index.html')");
-    expect(configure).toContain("resolve(root, 'public/terminal/pro/index.html')");
-    expect(configure).not.toContain("resolve(root, 'public/terminal/index.html')");
+    expect(configure).toContain("resolve(root, 'public/terminal/index.html')");
+    expect(configure).not.toContain("resolve(root, 'public/terminal/pro/index.html')");
     expect(configure).toContain('injectRegistryExchange(exchangeSource, process.env)');
-    expect(configure).toContain('injectRegistryExchangeLanding(proSource, process.env)');
+    expect(configure).toContain('injectRegistryExchangeLanding(terminalSource, process.env)');
     expect(configure.indexOf('const exchangeOutput =')).toBeLessThan(configure.indexOf('const writes ='));
-    expect(configure.indexOf('const proOutput =')).toBeLessThan(configure.indexOf('const writes ='));
+    expect(configure.indexOf('const terminalOutput =')).toBeLessThan(configure.indexOf('const writes ='));
     expect(configure).toContain('await Promise.all(writes)');
     expect(configure).toContain('of 2 surfaces rewritten, Terminal landing included');
   });

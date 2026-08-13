@@ -184,7 +184,7 @@ function jsonLd(m) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
-          { '@type': 'ListItem', position: 2, name: 'Astrofolio', item: 'https://zodiacs.org/terminal/' },
+          { '@type': 'ListItem', position: 2, name: 'Astrofolio', item: 'https://zodiacs.org/astrofolio/' },
           { '@type': 'ListItem', position: 3, name: 'Zodiacs Registry', item: 'https://zodiacs.org/registry/' },
           { '@type': 'ListItem', position: 4, name: m.name, item: signUrl(m.slug) }
         ]
@@ -880,7 +880,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
-      <nav aria-label="Breadcrumb"><ol class="lot__crumbs"><li><a href="/terminal/">Astrofolio</a></li><li><a href="/registry/">Zodiacs Registry</a></li><li aria-current="page">${esc(m.name)}</li></ol></nav>
+      <nav aria-label="Breadcrumb"><ol class="lot__crumbs"><li><a href="/astrofolio/">Astrofolio</a></li><li><a href="/registry/">Zodiacs Registry</a></li><li aria-current="page">${esc(m.name)}</li></ol></nav>
       <span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign ${m.order} of 12</span>
       <h1 class="lot__title" id="lot-title">${esc(m.name)} <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/${m.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/${m.slug}.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
       <p class="lot__epithet">${esc(p.epithet)}</p>
@@ -910,7 +910,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
             <figcaption class="card__caption">${esc(m.name)} <span class="g">·</span> ${esc(meta.archetype)}</figcaption>
           </div>
         </figure>
-        <a class="figure__gallery" href="/terminal/?sign=${m.slug}">
+        <a class="figure__gallery" href="/astrofolio/?sign=${m.slug}">
           <span>View ${esc(m.name)} in Astrofolio</span><span aria-hidden="true">→</span>
         </a>
       </div>
@@ -1085,7 +1085,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/terminal/">Astrofolio</a>
+          <a href="/astrofolio/">Astrofolio</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>

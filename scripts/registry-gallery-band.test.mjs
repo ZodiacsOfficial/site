@@ -115,7 +115,7 @@ describe('the legacy shared gallery band', () => {
   });
 
   it('probes WebGL before first paint and dresses the live page', async () => {
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     expect(html).toContain("documentElement.classList.add('gallery-live')");
     expect(html).toContain('network.saveData');
     expect(html).toContain("/(^|-)2g$/.test(network.effectiveType || '')");
@@ -265,7 +265,7 @@ describe('the legacy shared gallery band', () => {
 
   it('keeps the rectangle’s rail out of the band the scene measures', async () => {
     const [app, html] = await Promise.all([
-      read('src/app.jsx'), read('public/terminal/index.html'),
+      read('src/app.jsx'), read('public/astrofolio/index.html'),
     ]);
     // bandRects() treats .gband__chrome's offsetTop as the FLOOR of the band
     // it may paint into, so chrome above the canvas would leave the figures a
@@ -339,7 +339,7 @@ describe('the legacy shared gallery band', () => {
       'Open Jupiter route',
       'View market data',
     ]) expect(source).toContain(marker);
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     expect(html).toContain('.gcard {');
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
@@ -363,7 +363,7 @@ describe('the legacy shared gallery band', () => {
     const card = await read('src/shelf/card.mjs');
     expect(card).toContain('/assets/zodiac-icons/128/');
     expect(card).toContain('As it appears in wallets.');
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     expect(html).toContain('.gcard .rec__disc');
     expect(html).toContain('.gband .rail__tick img');
     const bundle = await read('public/assets/gallery.js');
@@ -380,7 +380,7 @@ describe('the legacy shared gallery band', () => {
     // The pointer-following wave is paint-only: hit targets keep a stable
     // pitch while the picture grows inside them, avoiding layout work during
     // a WebGL interaction.
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     expect(html).toContain('width: var(--tick); height: var(--tick)');
     expect(html).not.toContain('width: calc(var(--tick) * var(--mag))');
     expect(html).toContain('transform: scale(var(--mag)); transform-origin: bottom center;');

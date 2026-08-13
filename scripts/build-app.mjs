@@ -39,8 +39,8 @@ const root = resolve(here, '..');
 const SRC = resolve(root, 'src/app.jsx');
 const OUT = resolve(root, 'public/assets/app.js');
 const TERMINAL_SPLIT_CSS = resolve(root, 'src/terminal/split-styles.css');
+const ASTROFOLIO_HTML = resolve(root, 'public/astrofolio/index.html');
 const TERMINAL_HTML = resolve(root, 'public/terminal/index.html');
-const TERMINAL_PRO_HTML = resolve(root, 'public/terminal/pro/index.html');
 const THESIS_HTML = resolve(root, 'public/thesis/index.html');
 const REGISTRY_DATA = resolve(root, 'public/registry/zodiacs.registry.json');
 const REGISTRY_TECHNICAL_HTML = resolve(root, 'public/registry/technical/index.html');
@@ -198,28 +198,28 @@ const registryMeta = [
   `const REGISTRY_EXCHANGE_LANDING_COPY=Object.freeze(${JSON.stringify(REGISTRY_EXCHANGE_LANDING_COPY)});`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
-const [terminalSplitCss, terminalHtml, terminalProHtml, thesisHtml, registryOutlook] = await Promise.all([
+const [terminalSplitCss, astrofolioHtml, terminalHtml, thesisHtml, registryOutlook] = await Promise.all([
   readFile(TERMINAL_SPLIT_CSS, 'utf8'),
+  readFile(ASTROFOLIO_HTML, 'utf8'),
   readFile(TERMINAL_HTML, 'utf8'),
-  readFile(TERMINAL_PRO_HTML, 'utf8'),
   readFile(THESIS_HTML, 'utf8'),
   buildRegistryOutlookArtifact(root),
 ]);
 // Consumer retains its collection control, but acquisition and exchange
 // discovery markers stay off this identity-first surface.
-const styledTerminal = stampTerminalSplitStyles(terminalHtml, terminalSplitCss);
-const configuredTerminal = injectRegistryAuraLanding(styledTerminal, process.env).output;
-const configuredTerminalPro = synchronizeTerminalStyles(
-  configuredTerminal,
-  injectRegistryExchangeLanding(terminalProHtml, process.env).output,
+const styledAstrofolio = stampTerminalSplitStyles(astrofolioHtml, terminalSplitCss);
+const configuredAstrofolio = injectRegistryAuraLanding(styledAstrofolio, process.env).output;
+const configuredTerminal = synchronizeTerminalStyles(
+  configuredAstrofolio,
+  injectRegistryExchangeLanding(terminalHtml, process.env).output,
 );
 const configuredThesis = injectRegistryAuraThesis(thesisHtml, process.env).output;
 
 await Promise.all([
   writeFile(OUT, output, 'utf8'),
   writeFile(REGISTRY_OUTLOOK, `${JSON.stringify(registryOutlook, null, 2)}\n`, 'utf8'),
+  configuredAstrofolio !== astrofolioHtml ? writeFile(ASTROFOLIO_HTML, configuredAstrofolio, 'utf8') : null,
   configuredTerminal !== terminalHtml ? writeFile(TERMINAL_HTML, configuredTerminal, 'utf8') : null,
-  configuredTerminalPro !== terminalProHtml ? writeFile(TERMINAL_PRO_HTML, configuredTerminalPro, 'utf8') : null,
   configuredThesis !== thesisHtml ? writeFile(THESIS_HTML, configuredThesis, 'utf8') : null,
 ]);
 
@@ -228,7 +228,7 @@ const technicalHtml = await readFile(REGISTRY_TECHNICAL_HTML, 'utf8');
 const technicalWithStyles = replaceGeneratedRegion(
   technicalHtml,
   'registry-shared-styles',
-  extractRegistryStyles(configuredTerminal),
+  extractRegistryStyles(configuredAstrofolio),
 );
 const configuredTechnical = replaceGeneratedRegion(
   technicalWithStyles,

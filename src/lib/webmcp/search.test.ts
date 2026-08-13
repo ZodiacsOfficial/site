@@ -57,7 +57,7 @@ const entries: SearchEntry[] = [
     kind: 'page',
   },
   {
-    path: '/terminal/',
+    path: '/astrofolio/',
     title: 'Astrofolio',
     description: 'Choose your sign, see its gold sculpture and official token, and check its Registry record.',
     kind: 'astrofolio',

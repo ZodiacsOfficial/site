@@ -72,7 +72,7 @@ describe('Registry risk and trust copy', () => {
 
     // The route is built at runtime from the live registry answer — the mint
     // itself is never baked into the page that hosts the card.
-    const hub = await readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
+    const hub = await readFile(resolve(root, 'public/astrofolio/index.html'), 'utf8');
     expect(hub).not.toContain('jup.ag/swap/');
   });
 

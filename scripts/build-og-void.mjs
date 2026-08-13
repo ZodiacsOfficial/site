@@ -52,8 +52,9 @@ const { HOROSCOPE_OG_SURFACES, OG_EN } = await import(
   pathToFileURL(resolve(root, 'src/strings/seo.en.mjs')).href
 );
 const WING_OUT = resolve(root, 'public/assets/og/v5');
-// The v5 path cache-busts the former product-name card. The artwork itself is
-// neutral and serves both Astrofolio and Terminal with route-specific alts.
+// The immutable v5 card is retained as historical output. Astrofolio and
+// Terminal now have distinct v6-era identities built by the dedicated
+// Astrofolio identity generator.
 const WING_CARD = 'the-twelve.png';
 const LEGACY_REGISTRY_CARD_COPY = Object.freeze({
   kicker: 'The Official Registry',
@@ -61,10 +62,6 @@ const LEGACY_REGISTRY_CARD_COPY = Object.freeze({
   subtitle: 'A read-only catalogue of the twelve official Zodiac records.',
   data: 'Nº 01–12 / 12 · read-only by design',
 });
-const WING_CARD_PATH = `/assets/og/v5/${WING_CARD}`;
-if (OG_EN.astrofolio.image !== WING_CARD_PATH || OG_EN.terminal.image !== WING_CARD_PATH) {
-  throw new Error(`Astrofolio and Terminal OG paths must both be ${WING_CARD_PATH}`);
-}
 const {
   RU_OG_COPY_DIGEST_INPUT,
   RU_OG_REQUIRED_CARDS,
@@ -758,10 +755,10 @@ async function renderRussianCards() {
 }
 
 if (onlyWing) {
-  console.log('Rendering the shared Astrofolio and Terminal social card…');
-  await shoot(wingCard(), WING_CARD, WING_OUT);
-  console.log(`Done: ${count} shared wing card, ${(total / 1024).toFixed(0)}KB.`);
   await browser.close();
+  const { buildAstrofolioIdentity } = await import('./build-astrofolio-identity.mjs');
+  const identity = await buildAstrofolioIdentity();
+  console.log(`Done: ${identity.seasons.length} seasonal Astrofolio cards + distinct Terminal card.`);
   process.exit(0);
 }
 

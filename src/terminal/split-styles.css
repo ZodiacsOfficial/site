@@ -269,10 +269,34 @@
     }
     .consumer-registry .terminal-consumer-hero__kicker {
       display: block;
-      margin: 0 0 16px;
+      margin: 0;
       color: var(--ink-2);
       font: italic 500 clamp(18px, 1.8vw, 24px)/1.1 var(--serif);
       letter-spacing: -.01em;
+    }
+    .consumer-registry .astrofolio-lockup {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin: 0 0 16px;
+    }
+    .consumer-registry .astrofolio-lockup__avatar {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      border-radius: 14px;
+      box-shadow: 0 0 28px color-mix(in srgb, var(--active-sign) 12%, transparent);
+    }
+    .consumer-registry .astrofolio-lockup__copy {
+      display: grid;
+      gap: 4px;
+      text-transform: none;
+    }
+    .consumer-registry .astrofolio-lockup__copy small {
+      color: var(--ink-mute);
+      font: 500 11px/1.2 var(--sans);
+      letter-spacing: 0;
+      text-transform: none;
     }
     .consumer-registry .terminal-consumer-hero h1 {
       max-width: none;
@@ -322,6 +346,7 @@
       box-shadow: none;
     }
     .consumer-registry .vitrine-disc picture {
+      position: relative;
       display: block;
       box-sizing: border-box;
       width: 50px;
@@ -331,10 +356,28 @@
       border-radius: 50%;
       background: transparent;
       box-shadow: 0 0 0 0 transparent;
+      isolation: isolate;
       transition: none;
+    }
+    .consumer-registry .vitrine-disc picture::before {
+      position: absolute;
+      inset: -6px;
+      z-index: 0;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--sign) 28%, transparent) 0 40%,
+        color-mix(in srgb, var(--sign) 12%, transparent) 56%,
+        transparent 76%
+      );
+      content: "";
+      opacity: .45;
+      pointer-events: none;
     }
     .consumer-registry .vitrine-disc picture > source { display: none; }
     .consumer-registry .vitrine-disc img {
+      position: relative;
+      z-index: 1;
       width: 42px;
       height: 42px;
       margin: 4px auto;
@@ -349,6 +392,7 @@
         0 0 0 2px var(--bg),
         0 0 0 4px var(--sign);
     }
+    .consumer-registry .vitrine-disc.is-active picture::before { opacity: 1; }
     .consumer-registry .vitrine-disc:focus-visible picture {
       box-shadow:
         0 0 0 2px var(--bg),
@@ -941,7 +985,9 @@
 
     @media (max-width: 480px) {
       .consumer-registry .astrofolio-vitrine { padding-top: 84px; }
-      .consumer-registry .terminal-consumer-hero__kicker { margin-bottom: 11px; }
+      .consumer-registry .astrofolio-lockup { gap: 10px; margin-bottom: 11px; }
+      .consumer-registry .astrofolio-lockup__avatar { width: 44px; height: 44px; flex-basis: 44px; border-radius: 12px; }
+      .consumer-registry .astrofolio-lockup__copy small { font-size: 10px; }
       .consumer-registry .terminal-consumer-hero h1 { font-size: clamp(51px, 15vw, 64px); }
       .consumer-registry .terminal-consumer-hero p { font-size: 15px; line-height: 1.5; }
       .consumer-registry .vitrine-disc { flex-basis: 58px; }

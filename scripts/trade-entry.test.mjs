@@ -130,7 +130,7 @@ describe('the rendered region', () => {
 });
 
 describe('the landing', () => {
-  const hub = () => readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
+  const hub = () => readFile(resolve(root, 'public/astrofolio/index.html'), 'utf8');
 
   it('is identity-first and carries no trade flag or panel surface', async () => {
     const html = await hub();

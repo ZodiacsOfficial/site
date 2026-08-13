@@ -64,8 +64,8 @@ describe('assistant site context', () => {
     expect(context).toContain('- /learn/placements/sun-in-aries/ — What Sun in Aries means in a birth chart.');
     expect(context).toContain('- /rising-sign/pisces/ — What Pisces rising means.');
     expect(context).toContain('Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.');
-    expect(context).toContain('- /terminal/: Astrofolio is the consumer collection');
-    expect(context).toContain('- /terminal/pro/: Terminal is the expert market desk');
+    expect(context).toContain('- /astrofolio/: Astrofolio is the consumer collection');
+    expect(context).toContain('- /terminal/: Terminal is the expert market desk');
     expect(context).toContain('ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart');
     expect(context).toContain('- /registry/ — Zodiacs Registry: the read-only verification hub');
     expect(context).not.toContain('Zodiac Terminal');

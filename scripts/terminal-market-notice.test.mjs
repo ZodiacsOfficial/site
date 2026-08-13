@@ -56,7 +56,7 @@ describe('Terminal market and venue notice coverage', () => {
   });
 
   it('retains exactly one complete notice on both Terminal landings', async () => {
-    for (const path of ['public/terminal/index.html', 'public/terminal/pro/index.html']) {
+    for (const path of ['public/astrofolio/index.html', 'public/terminal/index.html']) {
       const terminal = await read(path);
       expect(terminal.match(/<aside[^>]*data-terminal-market-notice/gu) ?? [], path).toHaveLength(1);
       expect(paragraphText(notice(terminal)), path).toEqual(MARKET_NOTICE_PARAGRAPHS);

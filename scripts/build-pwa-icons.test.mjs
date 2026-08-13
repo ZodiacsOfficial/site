@@ -324,7 +324,7 @@ describe('PWA icon compositor', () => {
       .toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
   });
 
-  it('keeps every committed static page on the canonical icon set', async () => {
+  it('keeps global static pages on the canonical icon set and Astrofolio on its own identity', async () => {
     const pages = [
       'public/archive/index.html',
       'public/thesis/index.html',
@@ -344,6 +344,13 @@ describe('PWA icon compositor', () => {
       expect(html, page).toContain('href="/site.webmanifest"');
       expect(html.match(/<link rel="icon"[^>]+data:image/gu), page).toBeNull();
     }
+
+    const astrofolio = await readFile(resolve('public/astrofolio/index.html'), 'utf8');
+    for (const name of ['favicon.svg', 'favicon-16.png', 'favicon-32.png', 'favicon-96.png', 'apple-touch-icon-180.png']) {
+      expect(astrofolio).toContain(`/assets/astrofolio/v1/leo/${name}`);
+    }
+    expect(astrofolio).toContain('href="/assets/astrofolio/v1/leo/astrofolio.webmanifest"');
+    expect(astrofolio).not.toContain('href="/site.webmanifest"');
   });
 
   it('keeps push notification artwork on the same immutable icon version', async () => {

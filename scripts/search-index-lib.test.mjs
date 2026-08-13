@@ -137,8 +137,8 @@ describe('curated wing search entries', () => {
       Object.isFrozen(entry) && Object.isFrozen(entry.keywords)
     ))).toBe(true);
     expect(CURATED_WING_ENTRIES.map((entry) => entry.path)).toEqual([
+      '/astrofolio/',
       '/terminal/',
-      '/terminal/pro/',
       '/registry/',
       '/thesis/',
       '/sdk/',
@@ -157,12 +157,12 @@ describe('curated wing search entries', () => {
     ]);
     expect(CURATED_WING_ENTRIES.slice(0, 5)).toEqual([
       expect.objectContaining({
-        path: '/terminal/',
+        path: '/astrofolio/',
         title: 'Astrofolio',
         description: 'Choose your sign, see its gold sculpture and official token, check its Registry record, and follow a simple guide to buying it.',
       }),
       expect.objectContaining({
-        path: '/terminal/pro/',
+        path: '/terminal/',
         title: 'Terminal',
         description: 'A dense ranked view of all twelve Zodiac tokens with price, 24-hour change, liquidity, a selected-sign chart, market tape, briefings, and research.',
       }),
@@ -195,7 +195,7 @@ describe('curated wing search entries', () => {
 
   it('keeps non-market wing records out of the market register', () => {
     for (const entry of CURATED_WING_ENTRIES.filter(({ path }) => (
-      path !== '/terminal/' && path !== '/terminal/pro/'
+      path !== '/astrofolio/' && path !== '/terminal/'
     ))) {
       expect(`${entry.title} ${entry.description}`).not.toMatch(BANNED_MARKET_WORDS);
     }

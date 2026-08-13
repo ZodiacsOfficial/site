@@ -7417,12 +7417,26 @@
     .consumer-static p,
     .consumer-static li { font-family: var(--sans); }
 
-    .static-astrofolio-opening { padding: clamp(34px, 4vw, 52px) 0 clamp(88px, 11vw, 142px); }
+    .static-astrofolio-opening { padding: clamp(26px, 2.5vw, 32px) 0 clamp(88px, 11vw, 142px); }
     .static-astrofolio-header { max-width: 790px; }
-    .static-astrofolio-kicker {
+    .static-astrofolio-lockup {
+      display: flex;
+      align-items: center;
+      gap: 13px;
       margin: 0 0 13px;
+    }
+    .static-astrofolio-lockup > img {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+    }
+    .static-astrofolio-lockup > span { display: grid; gap: 4px; text-transform: none; }
+    .static-astrofolio-lockup small { color: var(--ink-mute); font: 500 11px/1.2 var(--sans); text-transform: none; }
+    .static-astrofolio-kicker {
+      margin: 0;
       color: var(--ink-dim);
       font: italic 400 19px/1.2 var(--serif) !important;
+      text-transform: none;
     }
     .static-astrofolio-header h1 {
       max-width: 12ch;
@@ -7482,6 +7496,7 @@
       transition: none;
     }
     .static-vitrine__disc {
+      position: relative;
       display: grid;
       box-sizing: border-box;
       width: 50px;
@@ -7491,8 +7506,26 @@
       border-radius: 50%;
       background: transparent;
       box-shadow: 0 0 0 0 transparent;
+      isolation: isolate;
+    }
+    .static-vitrine__disc::before {
+      position: absolute;
+      inset: -6px;
+      z-index: 0;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--disc) 28%, transparent) 0 40%,
+        color-mix(in srgb, var(--disc) 12%, transparent) 56%,
+        transparent 76%
+      );
+      content: "";
+      opacity: .45;
+      pointer-events: none;
     }
     .static-vitrine__rail img {
+      position: relative;
+      z-index: 1;
       display: block;
       width: 42px;
       height: 42px;
@@ -7522,6 +7555,7 @@
         0 0 0 2px var(--bg),
         0 0 0 4px var(--disc);
     }
+    .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc::before { opacity: 1; }
     .static-vitrine__rail label:has(.static-vitrine__choice:checked) img { opacity: 1; }
     .static-vitrine__choice:focus-visible { outline: 0; box-shadow: none; }
     .static-vitrine__rail label:has(.static-vitrine__choice:focus-visible) {
@@ -7785,7 +7819,7 @@
     @media (max-width: 480px) and (max-height: 860px) {
       .consumer-static { padding-top: 12px; }
       .static-astrofolio-opening { padding-top: 2px; }
-      .static-astrofolio-kicker { margin-bottom: 9px; }
+      .static-astrofolio-lockup { margin-bottom: 9px; }
       .static-astrofolio-header > p:last-child { margin-top: 18px; line-height: 1.42; }
       .static-vitrine { margin-top: 5px; }
       .static-vitrine__rail { padding-bottom: 4px; }

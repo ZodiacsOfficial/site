@@ -52,11 +52,11 @@ function normalizedText(value) {
 describe('Astrofolio consumer and Terminal market-desk split', () => {
   it('pins the indexed routes and their owner-directed names', async () => {
     const [consumer, pro] = await Promise.all([
+      read('public/astrofolio/index.html'),
       read('public/terminal/index.html'),
-      read('public/terminal/pro/index.html'),
     ]);
 
-    expect(consumer).toContain('<link rel="canonical" href="https://zodiacs.org/terminal/" />');
+    expect(consumer).toContain('<link rel="canonical" href="https://zodiacs.org/astrofolio/" />');
     expect(consumer).toContain('<meta name="zodiacs-registry-view" content="terminal" />');
     expect(consumer).toContain('<title>Astrofolio · Choose your sign and see its official Zodiac token · Zodiacs.org</title>');
     expect(consumer).toContain('<meta property="og:title" content="Astrofolio · Zodiacs" />');
@@ -66,19 +66,19 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(consumer).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
     expect(consumer).not.toMatch(/<meta\s+name="robots"[^>]*noindex/u);
 
-    expect(pro).toContain('<link rel="canonical" href="https://zodiacs.org/terminal/pro/" />');
+    expect(pro).toContain('<link rel="canonical" href="https://zodiacs.org/terminal/" />');
     expect(pro).toContain('<meta name="zodiacs-registry-view" content="terminal-pro" />');
     expect(pro).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
     expect(pro).toContain('<title>Terminal · Live Prices, Liquidity &amp; Research · Zodiacs.org</title>');
     expect(pro).toContain('<meta property="og:title" content="Terminal · Zodiacs" />');
     expect(pro).toContain('<meta name="twitter:title" content="Terminal · Zodiacs" />');
-    expect(pro).toContain('"position": 3, "name": "Terminal"');
+    expect(pro).toContain('"position": 2, "name": "Terminal"');
     expect(pro).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
     expect(pro).not.toMatch(/<meta\s+name="robots"[^>]*noindex/u);
   });
 
   it('keeps the no-JS Astrofolio journey complete and in the locked order', async () => {
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     ordered(html, [
       'id="official-twelve"',
       'id="buy"',
@@ -92,7 +92,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ]);
 
     const opening = section(html, 'official-twelve');
-    expect(normalizedText(opening)).toContain(`Astrofolio Choose your sign ${SUPPORT_COPY}`);
+    expect(normalizedText(opening)).toContain(`Astrofolio The Twelve Official Zodiacs Choose your sign ${SUPPORT_COPY}`);
     expect(opening.match(/class="static-vitrine__choice"/gu)).toHaveLength(12);
     expect(opening.match(/data-static-sign="[a-z]+"/gu)).toHaveLength(12);
     expect(opening).toContain('id="astrofolio-leo" checked');
@@ -104,9 +104,9 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(opening).toContain('>View official record</a>');
     expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
 
-    const marketLinks = html.match(/href="\/terminal\/pro\/(?:\?[^"#]*)?"/gu) ?? [];
+    const marketLinks = html.match(/href="\/terminal\/(?:\?[^"#]*)?"/gu) ?? [];
     expect(marketLinks).toHaveLength(1);
-    expect(html).toContain('<a href="/terminal/pro/" data-terminal-static-view="pro">Market view</a>');
+    expect(html).toContain('<a href="/terminal/" data-terminal-static-view="pro">Market view</a>');
     expect(html).not.toContain('data-terminal-preference-banner');
 
     const verifier = section(html, 'verify');
@@ -141,7 +141,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const explorer = functionBlock(source, 'ConsumerExplorer');
     const placard = functionBlock(source, 'VitrinePlacard');
 
-    expect(normalizedText(identity)).toContain(`Astrofolio Choose your sign ${SUPPORT_COPY}`);
+    expect(normalizedText(identity)).toContain(`Astrofolio The Twelve Official Zodiacs Choose your sign ${SUPPORT_COPY}`);
     expect(identity).not.toContain('<TerminalViewLink');
     expect(explorer).toContain('className="consumer-explorer astrofolio-vitrine"');
     expect(explorer).toContain('aria-label="Astrofolio sign collection"');
@@ -215,7 +215,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(movement).toContain("return 'unchanged today'");
     expect(movement).toContain("return 'movement unavailable'");
 
-    const staticSnapshot = section(await read('public/terminal/index.html'), 'market-snapshot');
+    const staticSnapshot = section(await read('public/astrofolio/index.html'), 'market-snapshot');
     ordered(staticSnapshot, SIGNS.map((slug) => `href="/registry/${slug}/"`));
     expect(staticSnapshot.match(/<li>/gu)).toHaveLength(12);
     expect(staticSnapshot).not.toMatch(/rank|spark|chart|market cap|liquidity|volume/iu);
@@ -224,7 +224,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
   it('pins the exact buying guidance and risk paragraph in both render paths', async () => {
     const source = await read('src/app.jsx');
     const hydrated = functionBlock(source, 'ConsumerBuyGuide');
-    const fallback = section(await read('public/terminal/index.html'), 'buy');
+    const fallback = section(await read('public/astrofolio/index.html'), 'buy');
     const required = [
       'How to buy your sign',
       'Buying happens on an independent service, from your own wallet.',
@@ -262,7 +262,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const faqStart = source.indexOf('    const CONSUMER_FAQS = [');
     const faqSource = source.slice(faqStart, source.indexOf('    function ConsumerFaq(', faqStart));
     expect(faqSource.match(/\n\s*q:/gu)).toHaveLength(4);
-    expect(section(await read('public/terminal/index.html'), 'faq').match(/<dt>/gu)).toHaveLength(4);
+    expect(section(await read('public/astrofolio/index.html'), 'faq').match(/<dt>/gu)).toHaveLength(4);
 
     const close = functionBlock(source, 'ConsumerClosing');
     expect(close).toContain('See all twelve records');
@@ -277,8 +277,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
   it('keeps consumer navigation on Astrofolio and market depth on Terminal', async () => {
     const source = await read('src/app.jsx');
     const header = functionBlock(source, 'Header');
-    expect(header).toContain("? { href: '/terminal/pro/', label: 'Terminal', description: 'The market desk for the twelve official tokens' }");
-    expect(header).toContain(": { href: '/terminal/', label: 'Astrofolio', description: 'Choose a sign and see its official token' }");
+    expect(header).toContain("? { href: '/terminal/', label: 'Terminal', description: 'The market desk for the twelve official tokens' }");
+    expect(header).toContain(": { href: '/astrofolio/', label: 'Astrofolio', description: 'Choose a sign and see its official token' }");
 
     const proStart = source.indexOf('<main id="main" className="zd terminal-pro">');
     const proMounted = source.slice(proStart, source.indexOf('</main>', proStart));
@@ -308,14 +308,14 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(remember).toContain("trackAnalytics('terminal_view_switch', { surface, direction })");
   });
 
-  it('keeps legacy market intent mapped to the unchanged Pro URL', async () => {
+  it('keeps legacy market intent mapped to the canonical Terminal URL', async () => {
     const source = await read('src/app.jsx');
     expect(source).toContain("market: 'market'");
     expect(source).toContain("briefing: 'briefing'");
     expect(source).toContain("research: 'research'");
     expect(source).toContain("outlook: 'briefing'");
-    expect(source).toContain('window.location.replace(`/terminal/pro/${clean.size ? `?${clean}` : \'\'}#${proDestination}`)');
-    const html = await read('public/terminal/index.html');
+    expect(source).toContain('window.location.replace(`/terminal/${clean.size ? `?${clean}` : \'\'}#${proDestination}`)');
+    const html = await read('public/astrofolio/index.html');
     for (const id of ['market', 'briefing', 'research', 'outlook']) {
       expect(html).toContain(`<span id="${id}" class="terminal-compat-target" aria-hidden="true"></span>`);
     }

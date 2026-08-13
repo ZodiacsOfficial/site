@@ -70,19 +70,19 @@ function registryVolatileSurface(url) {
     || url.pathname === '/registry/exchange'
     || url.pathname === '/registry/exchange/'
     || url.pathname === '/registry/exchange/index.html'
+    || url.pathname === '/astrofolio'
+    || url.pathname === '/astrofolio/'
+    || url.pathname === '/astrofolio/index.html'
     || url.pathname === '/terminal'
     || url.pathname === '/terminal/'
     || url.pathname === '/terminal/index.html'
-    || url.pathname === '/terminal/pro'
-    || url.pathname === '/terminal/pro/'
-    || url.pathname === '/terminal/pro/index.html'
     || url.pathname === '/terminal/markets'
     || url.pathname === '/terminal/markets/'
     || url.pathname === '/terminal/markets/index.html';
 }
 
 function registryWing(url) {
-  return ['/registry/', '/terminal/', '/sdk/', '/thesis/', '/archive/', '/disclosure/']
+  return ['/registry/', '/astrofolio/', '/terminal/', '/sdk/', '/thesis/', '/archive/', '/disclosure/']
     .some((prefix) => url.pathname.startsWith(prefix));
 }
 

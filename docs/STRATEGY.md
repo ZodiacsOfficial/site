@@ -4,7 +4,7 @@
 
 This document is the operating strategy for the Learn / Explore / Collect restructure. The companion implementation record lives in the repo history; the design contract lives in `src/styles/tokens.css` and the component library.
 
-**Owner decision · 2026-08-13:** Astrofolio now names the consumer collection experience at `/terminal/`. Saved charts at `/profile/` are called simply “saved charts” or “your profile”; their product behavior does not change. Terminal is reserved for the expert market desk at `/terminal/pro/`. **Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.**
+**Owner decision · 2026-08-13:** Astrofolio now names the consumer collection experience at `/astrofolio/`. Saved charts at `/profile/` are called simply “saved charts” or “your profile”; their product behavior does not change. Terminal is reserved for the expert market desk at `/terminal/`; the former `/terminal/pro/` URL redirects there. **Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.**
 
 ---
 
@@ -19,7 +19,7 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 
 **What's weak or dangerous — stated plainly:**
 
-1. **The crypto elephant.** The Collect layer is tradeable tokens. The mass astrology audience is the audience most allergic to token-shilling, and search engines treat crypto as YMYL. If token language leaks into Learn/Explore or saved-chart surfaces it poisons both trust and SEO. The fix is hard separation: token language stays inside Astrofolio at `/terminal/`, the Terminal market desk at `/terminal/pro/`, the Registry, and their collector/builder pages. Astrofolio stays plain-language and consumer-oriented; the Registry keeps its proof/read-only discipline; the Terminal holds the dense market detail.
+1. **The crypto elephant.** The Collect layer is tradeable tokens. The mass astrology audience is the audience most allergic to token-shilling, and search engines treat crypto as YMYL. If token language leaks into Learn/Explore or saved-chart surfaces it poisons both trust and SEO. The fix is hard separation: token language stays inside Astrofolio at `/astrofolio/`, the Terminal market desk at `/terminal/`, the Registry, and their collector/builder pages. Astrofolio stays plain-language and consumer-oriented; the Registry keeps its proof/read-only discipline; the Terminal holds the dense market detail.
 2. **The saved-charts promise gap.** "Saved charts" CTAs need somewhere real to land. That's why the MVP ships local-first saved charts on zodiacs.org itself; accounts come only when sync is a real need.
 3. **SEO is a 6–18 month compounding game** from near-zero consumer authority. Expect quiet months. The counter is correct cluster architecture from day one plus AEO/AI-answer citation, where this repo already has real infrastructure.
 4. **Horoscopes are a treadmill.** Daily × 12 is the classic content mill. Only do it with the transit-grounded pipeline (Phase 2) — real sky dates in, structured editorial out — or not at all.
@@ -50,8 +50,8 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 /horoscopes/{sign}/        Phase 2: weekly + monthly first; daily in Phase 3
 /compatibility/{a}-{b}/    Phase 2/3: 78 pair pages, only after the synastry tool exists
 /profile/                  Saved charts (local-first profile)
-/terminal/                 Astrofolio (consumer collection experience)
-/terminal/pro/             Terminal (expert market desk)
+/astrofolio/               Astrofolio (consumer collection experience)
+/terminal/                 Terminal (expert market desk)
 /registry/                  Collect wing landing (the registry experience, preserved)
   /registry/{sign}/           token catalogue pages (moved from /{sign}/)
 /thesis/ /archive/ /sdk/   Unchanged URLs (collector/builder wing)
@@ -83,7 +83,7 @@ Conversion arc (layout rhythm inspired by ploy.ai; execution fully zodiac-native
 
 Plain language first; jargon translated inline ("Rising sign — how people first meet you"). Confident and warm; never woo-woo, never salesy. Technical facts stay available where they build trust.
 
-Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Saved charts" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · nav collection label: "Astrofolio" (the consumer collection; the URL stays `/terminal/`) · "the Twelve" = the twelve signs as canonical records in the Registry · records bridge (sign guides EN+ES + the birth-chart result): "{sign} also exists as one of the Twelve — a canonical record in the Registry" → "View the record →" (records register, never market language) · profile empty state: "Nothing saved yet. Charts you save will live here, on your device first." · Astrofolio one-liner: "Choose your sign and meet its gold sculpture and official identity through one calm collection view."
+Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Saved charts" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · nav collection label: "Astrofolio" (the consumer collection at `/astrofolio/`) · "the Twelve" = the twelve signs as canonical records in the Registry · records bridge (sign guides EN+ES + the birth-chart result): "{sign} also exists as one of the Twelve — a canonical record in the Registry" → "View the record →" (records register, never market language) · profile empty state: "Nothing saved yet. Charts you save will live here, on your device first." · Astrofolio one-liner: "Choose your sign and meet its gold sculpture and official identity through one calm collection view."
 
 ## 5. MVP feature set (shipped in this restructure)
 
@@ -145,7 +145,7 @@ Funnel: anonymous tool use → local save (zero friction) → accumulation → a
 
 ## 10. The registry's place
 
-The Registry is **the record**: its verification experience lives at `/registry/`; catalogue pages live at `/registry/{sign}/`; thesis/archive/sdk URLs stay unchanged. Astrofolio at `/terminal/` is the consumer collection, while the Terminal at `/terminal/pro/` is the expert market desk. The Registry keeps its anti-hype/read-only discipline and remains the canonical source of identity, addresses, datasets, and methodology.
+The Registry is **the record**: its verification experience lives at `/registry/`; catalogue pages live at `/registry/{sign}/`; thesis/archive/sdk URLs stay unchanged. Astrofolio at `/astrofolio/` is the consumer collection, while the Terminal at `/terminal/` is the expert market desk. The Registry keeps its anti-hype/read-only discipline and remains the canonical source of identity, addresses, datasets, and methodology.
 
 ## 11. Calculations & APIs (own the math, client-side)
 

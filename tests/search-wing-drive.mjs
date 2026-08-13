@@ -21,7 +21,7 @@ const queries = [
   ['thesis', 'Why Zodiacs Matter — the Registry thesis', 'Registry'],
   ['aries record', 'Aries — official Zodiac record', 'Registry'],
 ];
-const wingPaths = ['/terminal/', '/terminal/pro/', '/registry/', '/thesis/', '/sdk/', '/registry/aries/'];
+const wingPaths = ['/astrofolio/', '/terminal/', '/registry/', '/thesis/', '/sdk/', '/registry/aries/'];
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 

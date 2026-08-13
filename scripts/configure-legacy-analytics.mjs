@@ -13,8 +13,8 @@ const END = '<!-- zodiacs-analytics:end -->';
 const BLOCK = new RegExp(`\\n?${START}[\\s\\S]*?${END}\\n?`, 'g');
 
 export const TERMINAL_ANALYTICS_PATHS = Object.freeze([
+  'public/astrofolio/index.html',
   'public/terminal/index.html',
-  'public/terminal/pro/index.html',
 ]);
 
 function escapeAttribute(value) {

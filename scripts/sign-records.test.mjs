@@ -99,8 +99,8 @@ describe('official Zodiac token records', () => {
     for (const sign of signs) {
       const html = await read(`public/registry/${sign}/index.html`);
       expect(html).toContain(`/assets/constellations/${sign}.svg`);
-      expect(html).toContain(`href="/terminal/?sign=${sign}"`);
-      expect(html).toContain('<a href="/terminal/">Astrofolio</a>');
+      expect(html).toContain(`href="/astrofolio/?sign=${sign}"`);
+      expect(html).toContain('<a href="/astrofolio/">Astrofolio</a>');
       expect(html).toContain('Astrofolio.xyz');
       expect(html).toContain('<a href="/registry/">Zodiacs Registry</a>');
       expect(html).toContain(`/terminal/research/?sign=${sign}&amp;type=daily`);

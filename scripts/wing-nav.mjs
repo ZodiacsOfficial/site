@@ -91,7 +91,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <a class="wnav__link" href="/profile/">Saved charts</a>
       </div>
       ${search}
-      <a class="wnav__chip" href="/terminal/">Astrofolio</a>
+      <a class="wnav__chip" href="/astrofolio/">Astrofolio</a>
       <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
         <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
       </button>
@@ -107,7 +107,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <a class="wnav-menu__link" style="--i:0" href="/learn/">Learn</a>
         <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
         <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
-        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/terminal/"><span>Astrofolio</span><small>Your sign’s sculpture, official token, and buying guide</small></a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/astrofolio/"><span>Astrofolio</span><small>The collection of twelve gold Zodiac sculptures</small></a>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">Tools</span>

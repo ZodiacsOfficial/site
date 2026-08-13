@@ -5,31 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
-  <meta name="zodiacs-registry-collection-enabled" content="0" />
-  <meta name="zodiacs-registry-view" content="terminal" />
+  <meta name="zodiacs-registry-exchange-enabled" content="0" />
+  <meta name="zodiacs-registry-view" content="terminal-pro" />
+  <script>
+    /* Preserve old consumer deep links after Terminal becomes the expert desk. */
+    (function () {
+      var hash = '';
+      try { hash = decodeURIComponent(location.hash.slice(1)).toLowerCase(); } catch (e) { return; }
+      var consumerHashes = new Set([
+        'verify', 'buy', 'faq', 'the-twelve', 'thesis',
+        'official-twelve', 'market-snapshot', 'registry',
+        'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+        'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
+      ]);
+      if (consumerHashes.has(hash)) location.replace('/astrofolio/' + location.search + location.hash);
+    }());
+  </script>
   <script>
     /* Chromium paints SVG url() backdrop filters; Safari reports support but
        renders nothing. Mark Chromium so the nav-pill lens applies only there. */
     try { if (window.chrome && window.CSS && CSS.supports('backdrop-filter', "url('#zdx-lens-nav')")) document.documentElement.classList.add('zdx-lens'); } catch (e) {}
   </script>
-  <script>
-    /* The gallery band mounts only where WebGL exists. Settled before first
-       paint so the page renders one selector or the other, never a flash of
-       both — same probe the gallery page itself uses. */
-    try {
-      var network = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      var constrained = network && (network.saveData || /(^|-)2g$/.test(network.effectiveType || ''));
-      var glProbe = document.createElement('canvas');
-      if (!constrained && (glProbe.getContext('webgl2') || glProbe.getContext('webgl'))) {
-        document.documentElement.classList.add('gallery-live');
-      }
-    } catch (e) {}
-  </script>
-  <meta name="description" content="Astrofolio lets you choose your sign, see its gold sculpture and official token, check today's price, and find a simple guide to buying it." />
+  <meta name="description" content="Terminal is the live market desk for the twelve official Zodiac tokens, with price, 24-hour change, indexed liquidity, market context, research, and verified records." />
 
   <link rel="canonical" href="https://zodiacs.org/terminal/" />
-  <link rel="alternate" type="application/rss+xml" title="Zodiacs — The Archive" href="/archive/rss.xml" />
-  <link rel="alternate" type="application/feed+json" title="Zodiacs — The Archive" href="/archive/feed.json" />
+  <link rel="alternate" type="application/rss+xml" title="Zodiacs.org Markets Research" href="/feeds/market-research.xml" />
+  <link rel="alternate" type="application/feed+json" title="Zodiacs.org Markets Research" href="/feeds/market-research.json" />
   <script>
     window.plausible = window.plausible || function () {
       (window.plausible.q = window.plausible.q || []).push(arguments);
@@ -51,25 +52,25 @@
   <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
 
   <meta property="og:site_name" content="Zodiacs" />
-  <meta property="og:title" content="Astrofolio · Zodiacs" />
-  <meta property="og:description" content="Choose your sign, see its gold sculpture and official token, and find a simple guide to buying it." />
+  <meta property="og:title" content="Terminal · Zodiacs" />
+  <meta property="og:description" content="The data-forward view of all twelve Zodiac tokens: live prices, 24-hour movement, indexed liquidity, market context, and reviewed research." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://zodiacs.org/terminal/" />
   <!-- og:image / twitter:image use the canonical zodiacs.org host so
        unfurlers can fetch the page-specific share image from the public site. -->
-  <meta property="og:image" content="https://zodiacs.org/assets/og/v5/the-twelve.png" />
+  <meta property="og:image" content="https://zodiacs.org/assets/og/v6/terminal.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Astrofolio, the collection of gold sculptures and official tokens for the twelve zodiac signs." />
+  <meta property="og:image:alt" content="Terminal, with live market data and research for the twelve official Zodiac tokens." />
   <meta property="og:locale" content="en_US" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Astrofolio · Zodiacs" />
-  <meta name="twitter:description" content="Choose your sign, see its gold sculpture and official token, and find a simple guide to buying it." />
-  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v5/the-twelve.png" />
-  <meta name="twitter:image:alt" content="Astrofolio, the collection of gold sculptures and official tokens for the twelve zodiac signs." />
+  <meta name="twitter:title" content="Terminal · Zodiacs" />
+  <meta name="twitter:description" content="The data-forward view of all twelve Zodiac tokens: live prices, 24-hour movement, indexed liquidity, market context, and reviewed research." />
+  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v6/terminal.png" />
+  <meta name="twitter:image:alt" content="Terminal, with live market data and research for the twelve official Zodiac tokens." />
 
-  <title>Astrofolio · Choose your sign and see its official Zodiac token · Zodiacs.org</title>
+  <title>Terminal · Live Prices, Liquidity &amp; Research · Zodiacs.org</title>
 
   <script type="application/ld+json">
   {
@@ -79,7 +80,7 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Zodiacs.org", "item": "https://zodiacs.org/" },
-          { "@type": "ListItem", "position": 2, "name": "Astrofolio", "item": "https://zodiacs.org/terminal/" }
+          { "@type": "ListItem", "position": 2, "name": "Terminal", "item": "https://zodiacs.org/terminal/" }
         ]
       },
       {
@@ -109,55 +110,37 @@
         "@type": "WebPage",
         "@id": "https://zodiacs.org/terminal/#page",
         "url": "https://zodiacs.org/terminal/",
-        "name": "Astrofolio · Choose your sign and see its official Zodiac token · Zodiacs.org",
-        "description": "Choose your sign, see its gold sculpture and official token, check today's price, and find a simple guide to buying it.",
+        "name": "Terminal · Live Prices, Liquidity & Research · Zodiacs.org",
+        "description": "A data-forward market desk for the twelve official Zodiac tokens, with live price, 24-hour movement, indexed liquidity, market context, research, and links to verified records.",
         "inLanguage": "en",
-        "isPartOf": { "@id": "https://zodiacs.org/#site" }
+        "isPartOf": { "@id": "https://zodiacs.org/#site" },
+        "about": { "@id": "https://zodiacs.org/#registry" },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://zodiacs.org/assets/og/v6/terminal.png",
+          "width": 1200,
+          "height": 630
+        }
       },
       {
-        "@type": "FAQPage",
-        "@id": "https://zodiacs.org/terminal/#faq",
-        "mainEntity": [
+        "@type": "DataFeed",
+        "@id": "https://zodiacs.org/terminal/#research-feed",
+        "name": "Zodiacs.org Markets Research",
+        "description": "Reviewed market context and research notes for the twelve official Zodiac tokens.",
+        "url": "https://zodiacs.org/terminal/research/",
+        "provider": { "@id": "https://zodiacs.org/#org" },
+        "isPartOf": { "@id": "https://zodiacs.org/terminal/#page" },
+        "distribution": [
           {
-            "@type": "Question",
-            "name": "Is there an official token for my zodiac sign?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each of the twelve signs has exactly one official token — native on Solana, with an official counterpart on Base. Both addresses are published here." }
+            "@type": "DataDownload",
+            "encodingFormat": "application/rss+xml",
+            "contentUrl": "https://zodiacs.org/feeds/market-research.xml"
           },
           {
-            "@type": "Question",
-            "name": "What does “official” mean?",
-            "acceptedAnswer": { "@type": "Answer", "text": "The address appears in this Registry. It does not mean approval from a government, wallet, marketplace, or exchange." }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I check whether a zodiac token is official?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Paste the mint or contract address into the checker on this page. The check is read-only and needs no wallet; anything not in the list is only reported as not found." }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I buy a zodiac token?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Each sign’s record page carries its acquisition route through independent third-party venues. Zodiacs.org itself sells nothing; digital assets can lose all market value." }
+            "@type": "DataDownload",
+            "encodingFormat": "application/feed+json",
+            "contentUrl": "https://zodiacs.org/feeds/market-research.json"
           }
-        ]
-      },
-      {
-        "@type": "ItemList",
-        "@id": "https://zodiacs.org/terminal/#the-twelve",
-        "name": "The Twelve — Zodiac catalogue",
-        "numberOfItems": 12,
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1,  "name": "Aries",       "url": "https://zodiacs.org/registry/aries/" },
-          { "@type": "ListItem", "position": 2,  "name": "Taurus",      "url": "https://zodiacs.org/registry/taurus/" },
-          { "@type": "ListItem", "position": 3,  "name": "Gemini",      "url": "https://zodiacs.org/registry/gemini/" },
-          { "@type": "ListItem", "position": 4,  "name": "Cancer",      "url": "https://zodiacs.org/registry/cancer/" },
-          { "@type": "ListItem", "position": 5,  "name": "Leo",         "url": "https://zodiacs.org/registry/leo/" },
-          { "@type": "ListItem", "position": 6,  "name": "Virgo",       "url": "https://zodiacs.org/registry/virgo/" },
-          { "@type": "ListItem", "position": 7,  "name": "Libra",       "url": "https://zodiacs.org/registry/libra/" },
-          { "@type": "ListItem", "position": 8,  "name": "Scorpio",     "url": "https://zodiacs.org/registry/scorpio/" },
-          { "@type": "ListItem", "position": 9,  "name": "Sagittarius", "url": "https://zodiacs.org/registry/sagittarius/" },
-          { "@type": "ListItem", "position": 10, "name": "Capricorn",   "url": "https://zodiacs.org/registry/capricorn/" },
-          { "@type": "ListItem", "position": 11, "name": "Aquarius",    "url": "https://zodiacs.org/registry/aquarius/" },
-          { "@type": "ListItem", "position": 12, "name": "Pisces",      "url": "https://zodiacs.org/registry/pisces/" }
         ]
       },
       {
@@ -7507,12 +7490,26 @@
     .consumer-static p,
     .consumer-static li { font-family: var(--sans); }
 
-    .static-astrofolio-opening { padding: clamp(34px, 4vw, 52px) 0 clamp(88px, 11vw, 142px); }
+    .static-astrofolio-opening { padding: clamp(26px, 2.5vw, 32px) 0 clamp(88px, 11vw, 142px); }
     .static-astrofolio-header { max-width: 790px; }
-    .static-astrofolio-kicker {
+    .static-astrofolio-lockup {
+      display: flex;
+      align-items: center;
+      gap: 13px;
       margin: 0 0 13px;
+    }
+    .static-astrofolio-lockup > img {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+    }
+    .static-astrofolio-lockup > span { display: grid; gap: 4px; text-transform: none; }
+    .static-astrofolio-lockup small { color: var(--ink-mute); font: 500 11px/1.2 var(--sans); text-transform: none; }
+    .static-astrofolio-kicker {
+      margin: 0;
       color: var(--ink-dim);
       font: italic 400 19px/1.2 var(--serif) !important;
+      text-transform: none;
     }
     .static-astrofolio-header h1 {
       max-width: 12ch;
@@ -7572,6 +7569,7 @@
       transition: none;
     }
     .static-vitrine__disc {
+      position: relative;
       display: grid;
       box-sizing: border-box;
       width: 50px;
@@ -7581,8 +7579,26 @@
       border-radius: 50%;
       background: transparent;
       box-shadow: 0 0 0 0 transparent;
+      isolation: isolate;
+    }
+    .static-vitrine__disc::before {
+      position: absolute;
+      inset: -6px;
+      z-index: 0;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--disc) 28%, transparent) 0 40%,
+        color-mix(in srgb, var(--disc) 12%, transparent) 56%,
+        transparent 76%
+      );
+      content: "";
+      opacity: .45;
+      pointer-events: none;
     }
     .static-vitrine__rail img {
+      position: relative;
+      z-index: 1;
       display: block;
       width: 42px;
       height: 42px;
@@ -7612,6 +7628,7 @@
         0 0 0 2px var(--bg),
         0 0 0 4px var(--disc);
     }
+    .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc::before { opacity: 1; }
     .static-vitrine__rail label:has(.static-vitrine__choice:checked) img { opacity: 1; }
     .static-vitrine__choice:focus-visible { outline: 0; box-shadow: none; }
     .static-vitrine__rail label:has(.static-vitrine__choice:focus-visible) {
@@ -7875,7 +7892,7 @@
     @media (max-width: 480px) and (max-height: 860px) {
       .consumer-static { padding-top: 12px; }
       .static-astrofolio-opening { padding-top: 2px; }
-      .static-astrofolio-kicker { margin-bottom: 9px; }
+      .static-astrofolio-lockup { margin-bottom: 9px; }
       .static-astrofolio-header > p:last-child { margin-top: 18px; line-height: 1.42; }
       .static-vitrine { margin-top: 5px; }
       .static-vitrine__rail { padding-bottom: 4px; }
@@ -7890,6 +7907,317 @@
         transition: none !important;
       }
       .consumer-static .static-vitrine__actions .btn:active { transform: none; }
+    }
+  </style>
+
+  <style>
+    /* Static Pro view. The interactive app replaces #root, but this remains a
+       complete, indexable market desk when scripts are delayed or disabled. */
+    .pro-static-hero,
+    .pro-static {
+      --sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    .pro-static-hero {
+      position: relative;
+      isolation: isolate;
+      width: min(100% - 40px, 1180px);
+      margin: 0 auto;
+      padding: 20px 0 0;
+      color: var(--ink);
+    }
+    .pro-static-hero::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset: 0 -10vw auto;
+      height: 520px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 76% 18%, rgba(62,99,120,.18), transparent 34%),
+        linear-gradient(rgba(198,204,218,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(198,204,218,.025) 1px, transparent 1px);
+      background-size: auto, 48px 48px, 48px 48px;
+      mask-image: linear-gradient(to bottom, #000 55%, transparent);
+    }
+    .pro-static-hero__bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--hair-2);
+      font: 500 10px/1 var(--mono);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .pro-static-hero__bar a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--ink-dim);
+      text-decoration: none;
+    }
+    .pro-static-hero__bar a:hover { color: var(--ink); }
+    .pro-static-hero__bar .pro-static-hero__switch {
+      color: var(--ink);
+      letter-spacing: .06em;
+      text-transform: none;
+    }
+    .pro-static-hero__intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(240px, .55fr);
+      gap: clamp(44px, 8vw, 112px);
+      align-items: end;
+      padding: clamp(64px, 10vw, 118px) 0 52px;
+    }
+    .pro-static-hero__eyebrow {
+      display: block;
+      margin-bottom: 20px;
+      color: var(--ink-dim);
+      font: 500 9px/1 var(--mono);
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+    .pro-static-hero h1 {
+      max-width: 10ch;
+      margin: 0;
+      color: var(--ink);
+      font: 400 clamp(58px, 8.8vw, 116px)/.82 var(--serif);
+      letter-spacing: -.045em;
+    }
+    .pro-static-hero__lede {
+      max-width: 58ch;
+      margin: 28px 0 0;
+      color: var(--ink-2);
+      font: 400 17px/1.58 var(--sans);
+    }
+    .pro-static-hero__status {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      border-top: 1px solid var(--hair-2);
+    }
+    .pro-static-hero__status div {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--hair);
+    }
+    .pro-static-hero__status dt,
+    .pro-static-hero__status dd {
+      margin: 0;
+      font: 500 9px/1.35 var(--mono);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .pro-static-hero__status dt { color: var(--ink-mute); }
+    .pro-static-hero__status dd { color: var(--ink-2); text-align: right; }
+    .pro-static-tape {
+      overflow: hidden;
+      display: flex;
+      gap: 25px;
+      padding: 15px 0;
+      border-top: 1px solid var(--hair-2);
+      border-bottom: 1px solid var(--hair-2);
+      color: var(--ink-dim);
+      font: 500 9px/1 var(--mono);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .pro-static-tape span::after {
+      content: '·';
+      margin-left: 25px;
+      color: var(--hair-3);
+    }
+
+    .static-site.pro-static {
+      width: min(100% - 40px, 1180px);
+      max-width: 1180px;
+      padding: 0 0 72px;
+      font-family: var(--sans);
+    }
+    .pro-static .static-site__nav {
+      justify-content: flex-start;
+      gap: 26px;
+      padding: 24px 0;
+      border-bottom: 0;
+    }
+    .pro-static .static-site__nav a:last-child { margin-left: auto; }
+    .pro-static .static-site__section {
+      padding: clamp(54px, 7vw, 88px) 0;
+      scroll-margin-top: 24px;
+    }
+    .pro-static .static-site__section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, .7fr);
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+    .pro-static .static-site__eyebrow { margin: 0 0 17px; }
+    .pro-static h2 {
+      max-width: 13ch;
+      margin: 0;
+      font-size: clamp(39px, 5.2vw, 68px);
+      line-height: .95;
+      letter-spacing: -.025em;
+    }
+    .pro-static h3 { font-size: 25px; line-height: 1.05; }
+    .pro-static p,
+    .pro-static li {
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.62;
+    }
+    .pro-static .static-site__section-head > p {
+      max-width: 54ch;
+      margin: 0;
+      color: var(--ink-dim);
+    }
+
+    .pro-market-table-wrap {
+      overflow-x: auto;
+      border-top: 1px solid var(--hair-3);
+      border-bottom: 1px solid var(--hair-3);
+      scrollbar-color: var(--hair-3) transparent;
+    }
+    .pro-market-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-variant-numeric: tabular-nums;
+    }
+    .pro-market-table th {
+      padding: 13px 12px;
+      color: var(--ink-mute);
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-align: right;
+      text-transform: uppercase;
+    }
+    .pro-market-table th:first-child,
+    .pro-market-table th:nth-child(2) { text-align: left; }
+    .pro-market-table td {
+      height: 58px;
+      padding: 8px 12px;
+      border-top: 1px solid var(--hair);
+      color: var(--ink-2);
+      font-size: 10px;
+      text-align: right;
+    }
+    .pro-market-table td:first-child {
+      width: 44px;
+      color: var(--ink-mute);
+      text-align: left;
+    }
+    .pro-market-table td:nth-child(2) { min-width: 220px; text-align: left; }
+    .pro-market-table a {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      border: 0;
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .pro-market-table a img { width: 28px; height: 28px; object-fit: contain; }
+    .pro-market-table a small {
+      color: var(--ink-mute);
+      font: 500 8px/1 var(--mono);
+      letter-spacing: .1em;
+    }
+    .pro-live-pending { color: var(--ink-mute); }
+    .pro-market-note {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      margin: 14px 0 0;
+      color: var(--ink-mute) !important;
+      font: 9px/1.55 var(--mono) !important;
+      letter-spacing: .06em;
+    }
+
+    .pro-briefing-grid,
+    .pro-research-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--hair-3);
+      border-bottom: 1px solid var(--hair-3);
+    }
+    .pro-briefing-card,
+    .pro-research-card {
+      min-height: 220px;
+      padding: 25px 26px 28px;
+    }
+    .pro-briefing-card + .pro-briefing-card,
+    .pro-research-card + .pro-research-card { border-left: 1px solid var(--hair); }
+    .pro-briefing-card span,
+    .pro-research-card span {
+      display: block;
+      margin-bottom: 54px;
+      color: var(--ink-mute);
+      font: 500 8px/1 var(--mono);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .pro-briefing-card p,
+    .pro-research-card p { margin: 12px 0 0; color: var(--ink-dim); }
+    .pro-research-card a { border-bottom-color: var(--hair-3); }
+
+    .pro-verify {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 48px;
+      align-items: center;
+      padding: clamp(32px, 5vw, 56px) !important;
+      border: 1px solid var(--hair-2) !important;
+      background: rgba(21,25,37,.55);
+    }
+    .pro-verify h2 { max-width: none; font-size: clamp(34px, 4vw, 51px); }
+    .pro-verify p { max-width: 62ch; margin: 14px 0 0; color: var(--ink-dim); }
+    .pro-verify__link {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border: 1px solid var(--hair-3) !important;
+      color: var(--ink) !important;
+      font: 500 11px/1 var(--sans);
+      white-space: nowrap;
+    }
+    .pro-static .static-site__footer { margin-top: 72px; }
+    .pro-static .static-site__market-notice p {
+      color: var(--ink-mute);
+      font-family: var(--sans);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 760px) {
+      .pro-static-hero,
+      .static-site.pro-static { width: min(100% - 32px, 1180px); }
+      .pro-static-hero__intro { grid-template-columns: 1fr; gap: 42px; padding: 60px 0 42px; }
+      .pro-static-hero h1 { max-width: 9ch; font-size: clamp(55px, 17vw, 84px); }
+      .pro-static .static-site__nav { gap: 15px 20px; }
+      .pro-static .static-site__nav a:last-child { margin-left: 0; }
+      .pro-static .static-site__section-head { grid-template-columns: 1fr; gap: 20px; }
+      .pro-briefing-grid,
+      .pro-research-grid { grid-template-columns: 1fr; }
+      .pro-briefing-card,
+      .pro-research-card { min-height: 0; }
+      .pro-briefing-card + .pro-briefing-card,
+      .pro-research-card + .pro-research-card { border-top: 1px solid var(--hair); border-left: 0; }
+      .pro-briefing-card span,
+      .pro-research-card span { margin-bottom: 28px; }
+      .pro-verify { grid-template-columns: 1fr; gap: 24px; }
+      .pro-verify__link { width: 100%; }
+      .pro-market-note { flex-direction: column; gap: 5px; }
     }
   </style>
 
@@ -8164,10 +8492,34 @@
     }
     .consumer-registry .terminal-consumer-hero__kicker {
       display: block;
-      margin: 0 0 16px;
+      margin: 0;
       color: var(--ink-2);
       font: italic 500 clamp(18px, 1.8vw, 24px)/1.1 var(--serif);
       letter-spacing: -.01em;
+    }
+    .consumer-registry .astrofolio-lockup {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin: 0 0 16px;
+    }
+    .consumer-registry .astrofolio-lockup__avatar {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      border-radius: 14px;
+      box-shadow: 0 0 28px color-mix(in srgb, var(--active-sign) 12%, transparent);
+    }
+    .consumer-registry .astrofolio-lockup__copy {
+      display: grid;
+      gap: 4px;
+      text-transform: none;
+    }
+    .consumer-registry .astrofolio-lockup__copy small {
+      color: var(--ink-mute);
+      font: 500 11px/1.2 var(--sans);
+      letter-spacing: 0;
+      text-transform: none;
     }
     .consumer-registry .terminal-consumer-hero h1 {
       max-width: none;
@@ -8217,6 +8569,7 @@
       box-shadow: none;
     }
     .consumer-registry .vitrine-disc picture {
+      position: relative;
       display: block;
       box-sizing: border-box;
       width: 50px;
@@ -8226,10 +8579,28 @@
       border-radius: 50%;
       background: transparent;
       box-shadow: 0 0 0 0 transparent;
+      isolation: isolate;
       transition: none;
+    }
+    .consumer-registry .vitrine-disc picture::before {
+      position: absolute;
+      inset: -6px;
+      z-index: 0;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--sign) 28%, transparent) 0 40%,
+        color-mix(in srgb, var(--sign) 12%, transparent) 56%,
+        transparent 76%
+      );
+      content: "";
+      opacity: .45;
+      pointer-events: none;
     }
     .consumer-registry .vitrine-disc picture > source { display: none; }
     .consumer-registry .vitrine-disc img {
+      position: relative;
+      z-index: 1;
       width: 42px;
       height: 42px;
       margin: 4px auto;
@@ -8244,6 +8615,7 @@
         0 0 0 2px var(--bg),
         0 0 0 4px var(--sign);
     }
+    .consumer-registry .vitrine-disc.is-active picture::before { opacity: 1; }
     .consumer-registry .vitrine-disc:focus-visible picture {
       box-shadow:
         0 0 0 2px var(--bg),
@@ -8836,7 +9208,9 @@
 
     @media (max-width: 480px) {
       .consumer-registry .astrofolio-vitrine { padding-top: 84px; }
-      .consumer-registry .terminal-consumer-hero__kicker { margin-bottom: 11px; }
+      .consumer-registry .astrofolio-lockup { gap: 10px; margin-bottom: 11px; }
+      .consumer-registry .astrofolio-lockup__avatar { width: 44px; height: 44px; flex-basis: 44px; border-radius: 12px; }
+      .consumer-registry .astrofolio-lockup__copy small { font-size: 10px; }
       .consumer-registry .terminal-consumer-hero h1 { font-size: clamp(51px, 15vw, 64px); }
       .consumer-registry .terminal-consumer-hero p { font-size: 15px; line-height: 1.5; }
       .consumer-registry .vitrine-disc { flex-basis: 58px; }
@@ -8895,236 +9269,155 @@
 <body>
   <div id="root">
     <a class="skip" href="#main">Skip to content</a>
-    <main class="static-site consumer-static" id="main">
-      <nav class="static-site__nav" aria-label="Astrofolio navigation">
-        <a href="#official-twelve" aria-current="page">Astrofolio</a>
-        <a href="#buy">How to buy</a>
-        <a href="#market-snapshot">All twelve</a>
-        <a href="#registry">What is a Zodiac?</a>
-        <a href="#verify">Verify</a>
-        <a href="#faq">Questions</a>
+    <header class="pro-static-hero" aria-labelledby="pro-static-title">
+      <div class="pro-static-hero__bar">
+        <a href="/registry/">Zodiacs Registry · Verified records</a>
+        <a class="pro-static-hero__switch" href="/astrofolio/" data-terminal-static-view="consumer">Astrofolio <span aria-hidden="true">&nbsp;←</span></a>
+      </div>
+      <div class="pro-static-hero__intro">
+        <div>
+          <span class="pro-static-hero__eyebrow">The data-forward view</span>
+          <h1 id="pro-static-title">Terminal</h1>
+          <p class="pro-static-hero__lede">A live desk for the twelve official Zodiac tokens: price, 24-hour movement, indexed liquidity, market context, and reviewed research—anchored to verified public records.</p>
+        </div>
+        <dl class="pro-static-hero__status" aria-label="Terminal coverage">
+          <div><dt>Universe</dt><dd>12 assets</dd></div>
+          <div><dt>Quotes</dt><dd>Live with JavaScript</dd></div>
+          <div><dt>Market source</dt><dd>DexScreener indexed</dd></div>
+          <div><dt>Records</dt><dd>Public Registry</dd></div>
+        </dl>
+      </div>
+      <div class="pro-static-tape" aria-label="The twelve official Zodiac tokens">
+        <span>ARIES</span><span>TAURUS</span><span>GEMINI</span><span>CANCER</span>
+        <span>LEO</span><span>VIRGO</span><span>LIBRA</span><span>SCORPIO</span>
+        <span>SAGITTARIUS</span><span>CAPRICORN</span><span>AQUARIUS</span><span>PISCES</span>
+      </div>
+    </header>
+    <main class="static-site pro-static" id="main">
+      <nav class="static-site__nav" aria-label="Terminal navigation">
+        <a href="#market">Market</a>
+        <a href="#selected">Selected sign</a>
+        <a href="#briefing">Briefing</a>
+        <a href="#research">Research</a>
+        <a href="/astrofolio/#verify">Verifier</a>
+        <a href="/astrofolio/" data-terminal-static-view="consumer">Astrofolio</a>
       </nav>
 
-      <section class="static-astrofolio-opening" id="official-twelve" aria-labelledby="static-astrofolio-title">
-        <header class="static-astrofolio-header">
-          <p class="static-astrofolio-kicker">Astrofolio</p>
-          <h1 id="static-astrofolio-title">Choose your sign</h1>
-          <p>Each sign has one gold sculpture and one official token. See yours, with today's price and a simple guide to buying it.</p>
+      <section class="static-site__section" id="market" aria-labelledby="pro-market-title">
+        <header class="static-site__section-head">
+          <div>
+            <p class="static-site__eyebrow">Live market board</p>
+            <h2 id="pro-market-title">The twelve, ranked live.</h2>
+          </div>
+          <p>The interactive terminal ranks exact-mint markets and adds current price, 24-hour movement, indexed liquidity, and reported market cap. This static table keeps every official record reachable before live data mounts.</p>
         </header>
+        <div class="pro-market-table-wrap" role="region" aria-label="Official Zodiac token market board" tabindex="0">
+          <table class="pro-market-table">
+            <thead>
+              <tr><th scope="col">#</th><th scope="col">Asset</th><th scope="col">Price</th><th scope="col">24h</th><th scope="col">Indexed liquidity</th><th scope="col">Reported market cap</th><th scope="col">Record</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>01</td><td><a href="/registry/aries/"><img src="/assets/zodiac-icons/48/aries.webp" width="28" height="28" alt=""><span>Aries <small>ARIES</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/aries/">Official record</a></td></tr>
+              <tr><td>02</td><td><a href="/registry/taurus/"><img src="/assets/zodiac-icons/48/taurus.webp" width="28" height="28" alt=""><span>Taurus <small>TAURUS</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/taurus/">Official record</a></td></tr>
+              <tr><td>03</td><td><a href="/registry/gemini/"><img src="/assets/zodiac-icons/48/gemini.webp" width="28" height="28" alt=""><span>Gemini <small>GEMINI</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/gemini/">Official record</a></td></tr>
+              <tr><td>04</td><td><a href="/registry/cancer/"><img src="/assets/zodiac-icons/48/cancer.webp" width="28" height="28" alt=""><span>Cancer <small>CANCER</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/cancer/">Official record</a></td></tr>
+              <tr><td>05</td><td><a href="/registry/leo/"><img src="/assets/zodiac-icons/48/leo.webp" width="28" height="28" alt=""><span>Leo <small>LEO</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/leo/">Official record</a></td></tr>
+              <tr><td>06</td><td><a href="/registry/virgo/"><img src="/assets/zodiac-icons/48/virgo.webp" width="28" height="28" alt=""><span>Virgo <small>VIRGO</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/virgo/">Official record</a></td></tr>
+              <tr><td>07</td><td><a href="/registry/libra/"><img src="/assets/zodiac-icons/48/libra.webp" width="28" height="28" alt=""><span>Libra <small>LIBRA</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/libra/">Official record</a></td></tr>
+              <tr><td>08</td><td><a href="/registry/scorpio/"><img src="/assets/zodiac-icons/48/scorpio.webp" width="28" height="28" alt=""><span>Scorpio <small>SCORPIO</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/scorpio/">Official record</a></td></tr>
+              <tr><td>09</td><td><a href="/registry/sagittarius/"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="28" height="28" alt=""><span>Sagittarius <small>SAGITTARIUS</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/sagittarius/">Official record</a></td></tr>
+              <tr><td>10</td><td><a href="/registry/capricorn/"><img src="/assets/zodiac-icons/48/capricorn.webp" width="28" height="28" alt=""><span>Capricorn <small>CAPRICORN</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/capricorn/">Official record</a></td></tr>
+              <tr><td>11</td><td><a href="/registry/aquarius/"><img src="/assets/zodiac-icons/48/aquarius.webp" width="28" height="28" alt=""><span>Aquarius <small>AQUARIUS</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/aquarius/">Official record</a></td></tr>
+              <tr><td>12</td><td><a href="/registry/pisces/"><img src="/assets/zodiac-icons/48/pisces.webp" width="28" height="28" alt=""><span>Pisces <small>PISCES</small></span></a></td><td><span class="pro-live-pending">Live with JS</span></td><td>—</td><td>—</td><td>—</td><td><a href="/registry/pisces/">Official record</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="pro-market-note">Price and 24h change use the deepest indexed Solana pool. Liquidity sums the pools returned for each official mint; market cap is shown only when the source reports market cap, never substituted with FDV. DexScreener is independent third-party context, may be incomplete, and is not a recommendation. See the <a href="/registry/technical/#market-transparency">method and technical record</a>.</p>
+      </section>
 
-        <fieldset class="static-vitrine">
-          <legend>Choose one of the twelve signs</legend>
-          <div class="static-vitrine__rail" aria-label="Choose a zodiac sign">
-            <label id="astrofolio-aries-label" for="astrofolio-aries"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-aries"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt=""></span><span>Aries</span></label>
-            <label id="astrofolio-taurus-label" for="astrofolio-taurus"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-taurus"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt=""></span><span>Taurus</span></label>
-            <label id="astrofolio-gemini-label" for="astrofolio-gemini"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-gemini"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/gemini.webp" width="48" height="48" alt=""></span><span>Gemini</span></label>
-            <label id="astrofolio-cancer-label" for="astrofolio-cancer"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-cancer"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/cancer.webp" width="48" height="48" alt=""></span><span>Cancer</span></label>
-            <label id="astrofolio-leo-label" for="astrofolio-leo"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-leo" checked><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/leo.webp" width="48" height="48" alt=""></span><span>Leo</span></label>
-            <label id="astrofolio-virgo-label" for="astrofolio-virgo"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-virgo"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/virgo.webp" width="48" height="48" alt=""></span><span>Virgo</span></label>
-            <label id="astrofolio-libra-label" for="astrofolio-libra"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-libra"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/libra.webp" width="48" height="48" alt=""></span><span>Libra</span></label>
-            <label id="astrofolio-scorpio-label" for="astrofolio-scorpio"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-scorpio"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/scorpio.webp" width="48" height="48" alt=""></span><span>Scorpio</span></label>
-            <label id="astrofolio-sagittarius-label" for="astrofolio-sagittarius"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-sagittarius"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="48" height="48" alt=""></span><span>Sagittarius</span></label>
-            <label id="astrofolio-capricorn-label" for="astrofolio-capricorn"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-capricorn"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/capricorn.webp" width="48" height="48" alt=""></span><span>Capricorn</span></label>
-            <label id="astrofolio-aquarius-label" for="astrofolio-aquarius"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-aquarius"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt=""></span><span>Aquarius</span></label>
-            <label id="astrofolio-pisces-label" for="astrofolio-pisces"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-pisces"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt=""></span><span>Pisces</span></label>
+      <section class="static-site__section" id="selected" aria-labelledby="pro-selected-static-title">
+        <header class="static-site__section-head">
+          <div>
+            <p class="static-site__eyebrow">Selected-sign readout</p>
+            <h2 id="pro-selected-static-title">One chart, kept in context.</h2>
           </div>
+          <p>The interactive desk follows the active valid <code>?sign</code>, loads one selected-sign history chart, and keeps current season context descriptive rather than predictive.</p>
+        </header>
+        <div class="pro-briefing-grid">
+          <article class="pro-briefing-card">
+            <span>Selected sign</span>
+            <h3>Choose one of the twelve.</h3>
+            <p>JavaScript adds the selected token’s historical readout. The market table and every official record remain available without it.</p>
+          </article>
+          <article class="pro-briefing-card">
+            <span>Season context</span>
+            <h3>A sky fact, not a forecast.</h3>
+            <p>Current-season context is symbolic and descriptive. Astrology has no established predictive relationship with asset prices.</p>
+          </article>
+        </div>
+      </section>
 
-          <div class="static-vitrine__panels" aria-live="polite">
-            <article class="static-vitrine__panel" data-static-sign="aries" aria-labelledby="static-aries-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/aries.webp" width="512" height="512" alt="Aries gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-aries-title">Aries</h2><p class="static-vitrine__dates">March 21 to April 19</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/aries/">See Aries</a><a class="btn btn--ghost" href="/registry/aries/#acquire">How to buy Aries</a><a class="static-vitrine__record" href="/registry/aries/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="taurus" aria-labelledby="static-taurus-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/taurus.webp" width="512" height="512" alt="Taurus gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-taurus-title">Taurus</h2><p class="static-vitrine__dates">April 20 to May 20</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/taurus/">See Taurus</a><a class="btn btn--ghost" href="/registry/taurus/#acquire">How to buy Taurus</a><a class="static-vitrine__record" href="/registry/taurus/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="gemini" aria-labelledby="static-gemini-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/gemini.webp" width="512" height="512" alt="Gemini gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-gemini-title">Gemini</h2><p class="static-vitrine__dates">May 21 to June 20</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/gemini/">See Gemini</a><a class="btn btn--ghost" href="/registry/gemini/#acquire">How to buy Gemini</a><a class="static-vitrine__record" href="/registry/gemini/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="cancer" aria-labelledby="static-cancer-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/cancer.webp" width="512" height="512" alt="Cancer gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-cancer-title">Cancer</h2><p class="static-vitrine__dates">June 21 to July 22</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/cancer/">See Cancer</a><a class="btn btn--ghost" href="/registry/cancer/#acquire">How to buy Cancer</a><a class="static-vitrine__record" href="/registry/cancer/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="leo" aria-labelledby="static-leo-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/leo.webp" width="512" height="512" alt="Leo gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-leo-title">Leo</h2><p class="static-vitrine__dates">July 23 to August 22</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/leo/">See Leo</a><a class="btn btn--ghost" href="/registry/leo/#acquire">How to buy Leo</a><a class="static-vitrine__record" href="/registry/leo/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="virgo" aria-labelledby="static-virgo-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/virgo.webp" width="512" height="512" alt="Virgo gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-virgo-title">Virgo</h2><p class="static-vitrine__dates">August 23 to September 22</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/virgo/">See Virgo</a><a class="btn btn--ghost" href="/registry/virgo/#acquire">How to buy Virgo</a><a class="static-vitrine__record" href="/registry/virgo/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="libra" aria-labelledby="static-libra-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/libra.webp" width="512" height="512" alt="Libra gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-libra-title">Libra</h2><p class="static-vitrine__dates">September 23 to October 22</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/libra/">See Libra</a><a class="btn btn--ghost" href="/registry/libra/#acquire">How to buy Libra</a><a class="static-vitrine__record" href="/registry/libra/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="scorpio" aria-labelledby="static-scorpio-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/scorpio.webp" width="512" height="512" alt="Scorpio gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-scorpio-title">Scorpio</h2><p class="static-vitrine__dates">October 23 to November 21</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/scorpio/">See Scorpio</a><a class="btn btn--ghost" href="/registry/scorpio/#acquire">How to buy Scorpio</a><a class="static-vitrine__record" href="/registry/scorpio/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="sagittarius" aria-labelledby="static-sagittarius-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/sagittarius.webp" width="512" height="512" alt="Sagittarius gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-sagittarius-title">Sagittarius</h2><p class="static-vitrine__dates">November 22 to December 21</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/sagittarius/">See Sagittarius</a><a class="btn btn--ghost" href="/registry/sagittarius/#acquire">How to buy Sagittarius</a><a class="static-vitrine__record" href="/registry/sagittarius/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="capricorn" aria-labelledby="static-capricorn-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/capricorn.webp" width="512" height="512" alt="Capricorn gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-capricorn-title">Capricorn</h2><p class="static-vitrine__dates">December 22 to January 19</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/capricorn/">See Capricorn</a><a class="btn btn--ghost" href="/registry/capricorn/#acquire">How to buy Capricorn</a><a class="static-vitrine__record" href="/registry/capricorn/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="aquarius" aria-labelledby="static-aquarius-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/aquarius.webp" width="512" height="512" alt="Aquarius gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-aquarius-title">Aquarius</h2><p class="static-vitrine__dates">January 20 to February 18</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/aquarius/">See Aquarius</a><a class="btn btn--ghost" href="/registry/aquarius/#acquire">How to buy Aquarius</a><a class="static-vitrine__record" href="/registry/aquarius/#record">View official record</a></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="pisces" aria-labelledby="static-pisces-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/pisces.webp" width="512" height="512" alt="Pisces gold sculpture"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-pisces-title">Pisces</h2><p class="static-vitrine__dates">February 19 to March 20</p>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/pisces/">See Pisces</a><a class="btn btn--ghost" href="/registry/pisces/#acquire">How to buy Pisces</a><a class="static-vitrine__record" href="/registry/pisces/#record">View official record</a></div>
-              </div>
-            </article>
+      <section class="static-site__section" id="briefing" aria-labelledby="pro-briefing-title">
+        <header class="static-site__section-head">
+          <div>
+            <p class="static-site__eyebrow">Daily desk</p>
+            <h2 id="pro-briefing-title">Today’s market briefing</h2>
           </div>
-        </fieldset>
-        <div hidden aria-hidden="true"><!-- registry-collection-hero:slot --></div>
-      </section>
-
-      <section class="static-site__section static-buy" id="buy" aria-labelledby="static-buy-title">
-        <h2 id="static-buy-title">How to buy your sign</h2>
-        <p class="static-buy__intro">Buying happens on an independent service, from your own wallet.<br>Zodiacs.org shows you the official token and the route to it. It never holds your money or your crypto.</p>
-        <ol class="static-buy__steps">
-          <li><span>1.</span><p>Pick your sign.</p></li>
-          <li><span>2.</span><p>Open its buying options on the sign's official record.</p></li>
-          <li><span>3.</span><p>Check before you approve: in your wallet, confirm the address, the network, the amount, and the fee.</p></li>
-        </ol>
-        <p class="static-buy__reassurance">Nothing on this page connects to a wallet.</p>
-        <div class="static-disclosures">
-          <details><summary>What you'll need</summary><div><p>A Solana-compatible wallet and enough SOL for your amount plus the network fee.</p></div></details>
-          <details><summary>Before you spend anything</summary><div><p>Zodiac tokens are speculative, thinly traded digital assets. Prices can be volatile, liquidity may disappear, and you could lose all money used to acquire one. Astrology has no established predictive relationship with asset prices.</p></div></details>
+          <p>One compact read across price action, market structure, season context, and independently sourced headlines. Symbolic context is not a price forecast. Market observations never change the sky reading.</p>
+        </header>
+        <div class="pro-briefing-grid">
+          <article class="pro-briefing-card">
+            <span>01 · Market observation</span>
+            <h3>Movement with its liquidity beside it.</h3>
+            <p>The live module pairs price and 24-hour change with volume and indexed liquidity so movement is not shown without market depth.</p>
+          </article>
+          <article class="pro-briefing-card">
+            <span>02 · Season context</span>
+            <h3>The sky fact stays separate.</h3>
+            <p>Current sign and exact-event context are descriptive. Astrology has no established predictive relationship with asset prices.</p>
+          </article>
+          <article class="pro-briefing-card">
+            <span>03 · Source discipline</span>
+            <h3>Research, not a trading signal.</h3>
+            <p>Reviewed headlines sit beside the selected token without changing the neutral sky reading or becoming a recommendation.</p>
+          </article>
         </div>
       </section>
 
-      <section class="static-site__section static-snapshot" id="market-snapshot">
-        <h2>All twelve, today</h2>
-        <p>The collection stays in zodiac order, with price and movement in plain language.</p>
-        <ul class="static-snapshot__rows" aria-label="The twelve in zodiac order">
-          <li><a href="/registry/aries/">Aries</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/taurus/">Taurus</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/gemini/">Gemini</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/cancer/">Cancer</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/leo/">Leo</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/virgo/">Virgo</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/libra/">Libra</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/scorpio/">Scorpio</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/sagittarius/">Sagittarius</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/capricorn/">Capricorn</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/aquarius/">Aquarius</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/pisces/">Pisces</a><span>Price unavailable</span><span>movement unavailable</span></li>
-        </ul>
-        <details class="static-disclosure"><summary>See market details</summary><div><p>Price and movement use the deepest indexed Solana pool. DexScreener is independent third-party context, may be incomplete, and is not a recommendation.</p><a href="/registry/technical/#market-transparency">See the sourcing method</a></div></details>
-      </section>
-
-      <section class="static-site__section static-how" id="registry" aria-labelledby="static-how-title">
-        <h2 id="static-how-title">What is a Zodiac?</h2>
-        <div class="static-how__copy">
-          <p>A Zodiac is the official token for one of the twelve signs. Its gold sculpture is collection artwork, not a physical object or a one-of-one NFT.</p>
-          <p>The token begins on Solana, with an official Base counterpart recorded in the Registry. The record lets anyone check the exact addresses.</p>
-        </div>
-        <div class="static-disclosures">
-          <details><summary>Read the story</summary><div><p>The twelve signs are old cultural symbols. The story explains why this collection gives each one a public record.</p><a href="/thesis/">Open the story</a></div></details>
-          <details><summary>How verification works</summary><div><p>Names and tickers can be copied. Verification compares the exact address with the published Registry.</p><a href="/registry/technical/#records-networks">See the records</a></div></details>
-          <details><summary>See market details</summary><div><p>Price is independent third-party context. It can be delayed or unavailable and never changes the official record.</p><a href="/registry/technical/#market-transparency">See the sourcing method</a></div></details>
+      <section class="static-site__section" id="research" aria-labelledby="pro-research-title">
+        <header class="static-site__section-head">
+          <div>
+            <p class="static-site__eyebrow">Research ledger</p>
+            <h2 id="pro-research-title">Context with a source trail.</h2>
+          </div>
+          <p>Published editions appear here when they enter the public ledger. Drafts never render.</p>
+        </header>
+        <div class="pro-research-grid">
+          <article class="pro-research-card" data-research-empty-state>
+            <span>Published editions</span>
+            <h3>The public ledger is quiet right now.</h3>
+            <p>No published edition is available yet. The ledger remains the source of truth, and drafts stay private.</p>
+            <p><a href="/terminal/research/">Open the Research ledger →</a></p>
+          </article>
         </div>
       </section>
 
-      <section class="static-site__section static-verifier" id="verify" aria-labelledby="static-verifier-title">
-        <h2 id="static-verifier-title">Check a Zodiac token address</h2>
-        <p>Compare the mint or contract address shown by a wallet or marketplace with the official list. Never paste a seed phrase.</p>
-        <p>This checks a Zodiac asset address, not your public wallet address. Open the official address list, then use your browser's Find command to search for the complete address.</p>
-        <p><strong>Nothing connects, signs, or moves.</strong> <a href="/registry/zodiacs.registry.json">Open the official address list</a>.</p>
+      <section class="static-site__section pro-verify" id="verify" aria-labelledby="pro-verify-title">
+        <div>
+          <p class="static-site__eyebrow">Before you act</p>
+          <h2 id="pro-verify-title">Verify the exact token address.</h2>
+          <p>The Registry verifier is read-only, needs no wallet, and never asks for a seed phrase. Check the mint or contract address before relying on any market listing.</p>
+        </div>
+        <a class="pro-verify__link" href="/astrofolio/#verify">Open address verifier →</a>
       </section>
-
-      <section class="static-site__section static-story-band" id="thesis" aria-labelledby="static-story-title">
-        <a class="static-story-band__link" href="/thesis/">
-          <picture>
-            <source srcset="/assets/art/zodiac-clock-768.avif 768w, /assets/art/zodiac-clock-960.avif 960w, /assets/art/zodiac-clock-1280.avif 1280w" sizes="(max-width: 640px) calc(100vw - 40px), 52vw" type="image/avif">
-            <img src="/assets/art/zodiac-clock-1280.jpg" width="1280" height="720" alt="Astronomical clock encircled by the twelve zodiac signs" loading="lazy" decoding="async">
-          </picture>
-          <span class="static-story-band__copy"><strong id="static-story-title">The story behind the collection</strong><span>The twelve signs have travelled through calendars, charts, jewellery, and screens. This is the story of giving their token records one public home.</span><b>Read the story</b></span>
-        </a>
-      </section>
-
-      <section class="static-site__section" id="faq" aria-labelledby="static-faq-title">
-        <h2 id="static-faq-title">Questions</h2>
-        <dl class="static-faq">
-          <div><dt>Is there an official token for my zodiac sign?</dt><dd>Yes. Each of the twelve signs has exactly one official token — native on Solana, with an official counterpart on Base. Both addresses are published here.</dd></div>
-          <div><dt>What does “official” mean?</dt><dd>The address appears in this Registry. It does not mean approval from a government, wallet, marketplace, or exchange.</dd></div>
-          <div><dt>How do I check whether a zodiac token is official?</dt><dd>Compare the complete mint or contract address with the official address list linked above. With JavaScript, the checker on this page performs the same read-only comparison and needs no wallet.</dd></div>
-          <div><dt>How do I buy a zodiac token?</dt><dd>Each sign’s record page carries its acquisition route through independent third-party venues. Zodiacs.org itself sells nothing; digital assets can lose all market value.</dd></div>
-        </dl>
-      </section>
-
-      <section class="static-astrofolio-closing" aria-labelledby="static-closing-title">
-        <h2 id="static-closing-title">See all twelve records</h2>
-        <p>The Registry is the public record for every sign in the collection.</p>
-        <div class="static-astrofolio-closing__actions"><a href="/registry/">Open the Registry</a><a href="/terminal/pro/" data-terminal-static-view="pro">Market view</a></div>
-      </section>
-
-      <div hidden aria-hidden="true"><!-- registry-collection-entry:slot --></div>
-
-      <span id="market" class="terminal-compat-target" aria-hidden="true"></span>
-      <span id="briefing" class="terminal-compat-target" aria-hidden="true"></span>
-      <span id="research" class="terminal-compat-target" aria-hidden="true"></span>
-      <span id="outlook" class="terminal-compat-target" aria-hidden="true"></span>
 
       <footer class="static-site__footer">
         <span>Zodiacs.org · Est. <span data-registry-established>MMXXIV</span></span>
-        <nav aria-label="Essential Astrofolio links">
+        <nav aria-label="Essential Terminal links">
+          <a href="/astrofolio/" data-terminal-static-view="consumer">Astrofolio</a>
           <a href="/registry/">Official Registry</a>
-          <a href="#verify">Verify a token</a>
-          <a href="/thesis/">Read the story</a>
+          <a href="/terminal/research/">Markets research</a>
+          <a href="/astrofolio/#verify">Verify a token</a>
           <a href="/disclosure/">Disclosure</a>
           <a href="/privacy/">Privacy</a>
           <a href="/terms/">Terms</a>
@@ -9142,33 +9435,15 @@
   <script>
   (function () {
     var signs = new Set(['aries','taurus','gemini','cancer','leo','virgo','libra','scorpio','sagittarius','capricorn','aquarius','pisces']);
-    var ranks = new Set(['marketCap','liquidity','change']);
-    var legacy = { market: 'market', briefing: 'briefing', research: 'research', outlook: 'briefing' };
-    function cleanState() {
-      var source = new URLSearchParams(location.search);
-      var target = new URLSearchParams();
-      var sign = (source.get('sign') || '').toLowerCase();
-      var rank = source.get('rank') || '';
-      if (signs.has(sign)) target.set('sign', sign);
-      if (ranks.has(rank)) target.set('rank', rank);
-      return target;
-    }
-    try {
-      var destination = legacy[decodeURIComponent(location.hash.slice(1))];
-      if (destination) {
-        var state = cleanState();
-        location.replace('/terminal/pro/' + (state.size ? '?' + state.toString() : '') + '#' + destination);
-        return;
-      }
-    } catch (error) {}
     document.addEventListener('click', function (event) {
-      var link = event.target.closest && event.target.closest('[data-terminal-static-view="pro"]');
+      var link = event.target.closest && event.target.closest('[data-terminal-static-view="consumer"]');
       if (!link) return;
-      var state = cleanState();
-      link.href = '/terminal/pro/' + (state.size ? '?' + state.toString() : '');
-      try { localStorage.setItem('zodiacs:terminal-view:v1', 'pro'); } catch (error) {}
+      var source = new URLSearchParams(location.search);
+      var sign = (source.get('sign') || '').toLowerCase();
+      link.href = '/astrofolio/' + (signs.has(sign) ? '?sign=' + encodeURIComponent(sign) : '');
+      try { localStorage.setItem('zodiacs:terminal-view:v1', 'consumer'); } catch (error) {}
       window.zodiacsAnalytics && window.zodiacsAnalytics.track('terminal_view_switch', {
-        surface: 'header', direction: 'consumer_to_pro'
+        surface: 'header', direction: 'pro_to_consumer'
       });
     });
   }());

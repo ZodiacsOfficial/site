@@ -19,7 +19,7 @@
     }
 
     function terminalViewHref(view, sign, { keepRank = false, hash = '' } = {}) {
-      const path = view === 'pro' ? '/terminal/pro/' : '/terminal/';
+      const path = view === 'pro' ? '/terminal/' : '/astrofolio/';
       const params = new URLSearchParams();
       if (sign?.asset?.sign) params.set('sign', sign.asset.sign);
       if (keepRank) {
@@ -45,7 +45,7 @@
         if (!el) return;
         // Hash navigation can place a section in the viewport before its
         // observer is attached. Reveal that target synchronously so a direct
-        // /terminal/#thesis visit never lands on an invisible panel.
+        // /astrofolio/#thesis visit never lands on an invisible panel.
         const rect = el.getBoundingClientRect();
         const isHashTarget = el.id && window.location.hash === `#${el.id}`;
         const isAlreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
@@ -967,17 +967,17 @@
     });
 
     // Current zodiac season, derived from registry dateRange metadata
-    // ("MM-DD to MM-DD"). Capricorn wraps the year boundary. Visitor-local
-    // time; the registry range is the source of truth, not astronomical
-    // ingress. Calendar ordinals are compared in UTC so daylight-saving
-    // changes cannot make a season one day too short or long.
+    // ("MM-DD to MM-DD"). Capricorn wraps the year boundary. UTC calendar
+    // time and the registry range are the source of truth, not astronomical
+    // ingress, so a release, its share card, and every visitor agree on the
+    // same season boundary.
     function parseDateRange(range) {
       const m = /^(\d{2})-(\d{2}) to (\d{2})-(\d{2})$/.exec(range || '');
       return m ? { sm: +m[1], sd: +m[2], em: +m[3], ed: +m[4] } : null;
     }
 
     function currentSeason(now = new Date()) {
-      const md = (now.getMonth() + 1) * 100 + now.getDate();
+      const md = (now.getUTCMonth() + 1) * 100 + now.getUTCDate();
       for (const sign of SIGNS) {
         const r = parseDateRange(sign.asset.metadata.dateRange);
         if (!r) continue;
@@ -988,10 +988,11 @@
           : (md >= start || md <= end);
         if (!inSeason) continue;
         const wraps = start > end;
-        const startYear = wraps && md <= end ? now.getFullYear() - 1 : now.getFullYear();
+        const currentYear = now.getUTCFullYear();
+        const startYear = wraps && md <= end ? currentYear - 1 : currentYear;
         const endYear = startYear + (wraps ? 1 : 0);
         const ordinal = (year, month, day) => Date.UTC(year, month - 1, day);
-        const today = ordinal(now.getFullYear(), now.getMonth() + 1, now.getDate());
+        const today = ordinal(currentYear, now.getUTCMonth() + 1, now.getUTCDate());
         const seasonStart = ordinal(startYear, r.sm, r.sd);
         const seasonEnd = ordinal(endYear, r.em, r.ed);
         const day = Math.round((today - seasonStart) / 86400000) + 1;
@@ -1001,7 +1002,7 @@
           day,
           total,
           remaining: Math.max(0, total - day),
-          ends: new Date(endYear, r.em - 1, r.ed)
+          ends: new Date(Date.UTC(endYear, r.em - 1, r.ed))
         };
       }
       return null;
@@ -1013,9 +1014,9 @@
         let timer = 0;
         const schedule = () => {
           const now = new Date();
-          const nextDay = new Date(
-            now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 2
-          );
+          const nextDay = new Date(Date.UTC(
+            now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 2
+          ));
           timer = window.setTimeout(() => {
             setSeason(currentSeason());
             schedule();
@@ -1572,8 +1573,8 @@
         { href: '/birthday/', name: 'Birthday', description: 'Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.' },
       ];
       const terminalNav = REGISTRY_VIEW === 'terminal-pro'
-        ? { href: '/terminal/pro/', label: 'Terminal', description: 'The market desk for the twelve official tokens' }
-        : { href: '/terminal/', label: 'Astrofolio', description: 'Choose a sign and see its official token' };
+        ? { href: '/terminal/', label: 'Terminal', description: 'The market desk for the twelve official tokens' }
+        : { href: '/astrofolio/', label: 'Astrofolio', description: 'Choose a sign and see its official token' };
       return (
         <>
           <div className="wnav-wrap">
@@ -1804,7 +1805,11 @@
     function SeasonNow({ season }) {
       if (!season) return null;
       const { sign, day, total, remaining, ends } = season;
-      const endLabel = ends.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      const endLabel = ends.toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC',
+      });
       const remainingLabel = remaining === 0
         ? 'Final day'
         : `${remaining} day${remaining === 1 ? '' : 's'} remaining`;
@@ -4553,9 +4558,24 @@
     }
 
     function ConsumerIdentityHeader() {
+      const season = useCurrentSeason()?.sign ?? SIGNS[0];
+      const identityBase = `/assets/astrofolio/v1/${season.asset.sign}`;
       return (
         <header className="terminal-consumer-hero" aria-labelledby="consumer-explorer-title">
-          <em className="terminal-consumer-hero__kicker">Astrofolio</em>
+          <div className="astrofolio-lockup">
+            <img
+              className="astrofolio-lockup__avatar"
+              src={`${identityBase}/icon-192.png`}
+              width="84"
+              height="84"
+              alt=""
+              decoding="async"
+            />
+            <span className="astrofolio-lockup__copy">
+              <em className="terminal-consumer-hero__kicker">Astrofolio</em>
+              <small>The Twelve Official Zodiacs</small>
+            </span>
+          </div>
           <h1 id="consumer-explorer-title">Choose your sign</h1>
           <p>
             Each sign has one gold sculpture and one official token. See yours, with
@@ -4829,7 +4849,7 @@
       return (
         <aside id="verify" className="pro-verifier">
           <span><small>Read-only verification</small><strong>Check an exact token address.</strong></span>
-          <a href={`/terminal/?sign=${sign.asset.sign}#verify`}>Open the address verifier ↗</a>
+          <a href={`/astrofolio/?sign=${sign.asset.sign}#verify`}>Open the address verifier ↗</a>
         </aside>
       );
     }
@@ -6200,7 +6220,7 @@
                 {pro
                   ? <a href="/terminal/research/">Markets research</a>
                   : <a href="/why-zodiacs-matter/">Why Zodiacs matter</a>}
-                <a href="/terminal/#verify">Verify a token</a>
+                <a href="/astrofolio/#verify">Verify a token</a>
               </div>
             </nav>
             <nav className="ftr__group" aria-label="Trust and policies">
@@ -6335,7 +6355,7 @@
             if (incomingSign) clean.set('sign', incomingSign.asset.sign);
             if (TERMINAL_RANKS.has(incomingRank)) clean.set('rank', incomingRank);
           } catch { /* malformed query: redirect without it */ }
-          window.location.replace(`/terminal/pro/${clean.size ? `?${clean}` : ''}#${proDestination}`);
+          window.location.replace(`/terminal/${clean.size ? `?${clean}` : ''}#${proDestination}`);
         };
         redirectLegacyHash();
         window.addEventListener('hashchange', redirectLegacyHash);

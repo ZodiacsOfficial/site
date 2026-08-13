@@ -26,7 +26,7 @@ requested from any venue, and no panel code is fetched, before that
 choice.
 
 Scope amended 2026-08-12 by the owner-authorized Terminal audience split.
-The identity-first `/terminal/` consumer view, now named Astrofolio, no longer carries the trade
+The identity-first `/astrofolio/` consumer view, named Astrofolio, no longer carries the trade
 flag, trade panel, or acquisition action. This narrows the authorization back
 to the twelve `/registry/{sign}/` catalogue pages. Their flag, risk language,
 provider boundary, compensation controls, and rollback behavior remain

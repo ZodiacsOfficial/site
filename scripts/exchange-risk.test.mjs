@@ -21,10 +21,10 @@ describe('Exchange risk and trust copy', () => {
     expect(html).toContain('operates no market');
     expect(html).toContain('<title>Terminal · Advanced Market Route · Zodiacs.org</title>');
     expect(html).toContain('<meta property="og:title" content="Terminal · Advanced Market Route" />');
-    expect(html).toContain('https://zodiacs.org/assets/og/v5/the-twelve.png');
+    expect(html).toContain('https://zodiacs.org/assets/og/v6/terminal.png');
     expect(html).not.toContain('https://zodiacs.org/assets/og/v2/registry.png');
     expect(html).toContain('"name": "Advanced market route"');
-    expect(html).toContain('"name": "Terminal", "item": "https://zodiacs.org/terminal/pro/"');
+    expect(html).toContain('"name": "Terminal", "item": "https://zodiacs.org/terminal/"');
     expect(html).toContain('<h1 id="zme-title">Terminal</h1>');
     expect(html).toContain('<h2 id="zme-records">The 12 Official Zodiac Tokens</h2>');
     expect(html).toContain('Sign 12 of 12');
@@ -143,7 +143,7 @@ describe('Exchange risk and trust copy', () => {
   it('records the owner-authorized Terminal route split without widening the acquisition surface', async () => {
     const decision = compact(await read('docs/REGISTRY-EXCHANGE-OWNER-RISK-DECISION.md'));
     expect(decision).toContain('Addendum: 2026-08-13 current public product names');
-    expect(decision).toContain('`/terminal/` is **Astrofolio**');
+    expect(decision).toContain('`/astrofolio/` is **Astrofolio**');
     expect(decision).toContain('`/terminal/markets/` venue route are **Terminal**, the expert market desk');
     expect(decision).toContain('“Zodiac Markets,” “Pro Terminal,” “consumer Terminal,” and “Zodiac Terminal” below are historical labels');
     expect(decision).toContain('Addendum — 2026-08-11: Terminal route split');
@@ -175,9 +175,9 @@ describe('Exchange risk and trust copy', () => {
     expect(decision).toContain('does not restart or extend the 30-day pilot');
     expect(decision).toContain('returns flag-off on or before **2026-09-09**');
 
-    expect(runbook).toContain('both the route and `/terminal/pro/` landing markers are `0`');
-    expect(runbook).toContain('`/terminal/` must have no exchange flag marker in either state');
-    expect(runbook).toContain('exactly one Terminal venue-route discovery entry appears on `/terminal/pro/`');
+    expect(runbook).toContain('both the route and `/terminal/` landing markers are `0`');
+    expect(runbook).toContain('`/astrofolio/` must have no exchange flag marker in either state');
+    expect(runbook).toContain('exactly one Terminal venue-route discovery entry appears on `/terminal/`');
     expect(runbook).toContain('no CacheStorage entry for any Terminal venue-route or expert Terminal navigation');
     expect(runbook).toContain('On or before 2026-09-09, turn the flag off');
   });

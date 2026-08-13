@@ -1,0 +1,240 @@
+{
+  "schema": "zodiacs.astrofolio-identity.v1",
+  "version": "v1",
+  "background": "#060709",
+  "iconSource": "/assets/zodiac-icons/128/{sign}.webp",
+  "sculptureSource": "/assets/sculptures/1024/{sign}.webp",
+  "cropSafeArea": 0.8,
+  "terminalOg": "/assets/og/v6/terminal.png",
+  "terminalOgSha256": "bce0a74f6754351e33be359532386e65dbdab223989fbae9d583d90ee691c292",
+  "seasons": [
+    {
+      "sign": "aries",
+      "displayName": "Aries",
+      "dateRange": "03-21 to 04-19",
+      "base": "/assets/astrofolio/v1/aries",
+      "sha256": {
+        "avatar-1024.png": "84872a1cd606e5e512f053fcd57e487f7e1608d1b1b1995faf906e6105b0b65b",
+        "favicon.svg": "8762608f708b22ad263e4bf055668d76f6bc7bfd2be58f52e600068ba92b6631",
+        "favicon-16.png": "1b5f2037577c77d6bce8c39e777e6a9e87b0918e5323eefa7e96b7a4af1bc00d",
+        "favicon-32.png": "71fd13be505f192914a8c60255c24bfc889e6075df6fca1487879c067f5d3a2f",
+        "favicon-96.png": "d9f8cadc3074604aef97585325094b2f1642daf4ca23c73d004bdaeaa171e7db",
+        "apple-touch-icon-180.png": "51df719549d55691d31ab66ae828baeee1a39e427106551d128cd3dcff543c5d",
+        "icon-192.png": "3eaa7e58eca7a2f4c02768b3b28ba4248edd010e5721b2ab177f3581cd97fec9",
+        "icon-512.png": "12152273d81083c3d2939c6935fa4f68f8747e46e837890127068a6d0bbb1b66",
+        "maskable-512.png": "12152273d81083c3d2939c6935fa4f68f8747e46e837890127068a6d0bbb1b66",
+        "astrofolio.webmanifest": "d8907b8487fb570ebf587fc2faaed822cb0746a0cbc09250b5f342f530beaa08",
+        "og-1200x630.png": "3c4a0ffb4d3469b8a0cb3d2ef57d20beea2bdbbd90a8f0fd5a4e101b6fc9bf1d"
+      }
+    },
+    {
+      "sign": "taurus",
+      "displayName": "Taurus",
+      "dateRange": "04-20 to 05-20",
+      "base": "/assets/astrofolio/v1/taurus",
+      "sha256": {
+        "avatar-1024.png": "14c1342bab102973edc1e47831ad83c5a2cc28ea9dcc22402a5ba39b88eebc11",
+        "favicon.svg": "554f18a2c8b7c927bdd6c5571873f786ee9b80385566696d990779d3e25b936f",
+        "favicon-16.png": "19810e96163db247d8af5594ad38493127085d9edc0a32ebc7c3c74cadadb984",
+        "favicon-32.png": "1dcdba66f57ba6bcebc789c3ba69e5dae42cfed68a55906ce17842418094bdc3",
+        "favicon-96.png": "16644d0ef73287c62101f403855c3e90e291c1e40b858315bcd2b6352834a72e",
+        "apple-touch-icon-180.png": "9ffad312c2f24d6d148f0da1e8939f7c9b5ff50302f6d4a37e2254f1729613a9",
+        "icon-192.png": "db8871242f88c6f1a1672267b151ccbe7274bec8d78de5d9a6f78ac26a5f45cd",
+        "icon-512.png": "1d886ab422560fbf3d12ff21bd006dbe2c1ae58c837772ab6e60883eb64d3bd9",
+        "maskable-512.png": "1d886ab422560fbf3d12ff21bd006dbe2c1ae58c837772ab6e60883eb64d3bd9",
+        "astrofolio.webmanifest": "eb62f2acd1eb4b39bc1d129f027eb38fbdecef8041d7e17069309cce71047230",
+        "og-1200x630.png": "ae9acd9a12762469b99013b7c221ff9625821badc18a1ba9524d3f6c9b6070ca"
+      }
+    },
+    {
+      "sign": "gemini",
+      "displayName": "Gemini",
+      "dateRange": "05-21 to 06-20",
+      "base": "/assets/astrofolio/v1/gemini",
+      "sha256": {
+        "avatar-1024.png": "ad68821bf2d7229833842be3ad30402a9bb512753b36068197d514cd9391fe77",
+        "favicon.svg": "b53b205127f7eb8c9c56fb89813dec2382f1a4b8f26d5bddf81617ee9caeb9d6",
+        "favicon-16.png": "d71ab2cd291d90a1b99506a649e586ad30a81cc5aefe9ef7fe3220a1d37c46ed",
+        "favicon-32.png": "a87d9a5e0b6c5fde684cad095408fe22a691c00476e2ff21597023daa9aa85ae",
+        "favicon-96.png": "3ca313593d01b052f8ada4bc576688aaa18be3b2665d30f574790914551012ff",
+        "apple-touch-icon-180.png": "8630a4d413049f648f81f556c53e531c6e68b6ec1c0df7f2319049d47b6a4f6f",
+        "icon-192.png": "6dd65f570a62854af17194b88f93c4b4bf82f9d967289baeb0f917efdc669a61",
+        "icon-512.png": "4398952aa73960147f282d21a659ee481f17c4ccd1d7215856c5777d76301e17",
+        "maskable-512.png": "4398952aa73960147f282d21a659ee481f17c4ccd1d7215856c5777d76301e17",
+        "astrofolio.webmanifest": "836c99ee1fa2393f78609d817b8f63695339ad6693ec36f15019d9d16a790ed7",
+        "og-1200x630.png": "a1651cf1ffab48f728da77ca6ab0475b14680c00f9d3329d38863cae159f4cad"
+      }
+    },
+    {
+      "sign": "cancer",
+      "displayName": "Cancer",
+      "dateRange": "06-21 to 07-22",
+      "base": "/assets/astrofolio/v1/cancer",
+      "sha256": {
+        "avatar-1024.png": "f4196368a171f4e19aebf2bf7aa5c17b396d5c669da268c0ad0a9019a4eeaafe",
+        "favicon.svg": "744efe956aa975e4c438d9f58f1d3e2049a932fd5a09f7600a24d54d58ee5f02",
+        "favicon-16.png": "b94aa9701c34becf0bb3c2fc686ee52730e596731b8899d68569522c38018a6d",
+        "favicon-32.png": "ba585c44275f03193ad72d58e84457dcd2817bcc5446b11973a893f5e054f1ef",
+        "favicon-96.png": "2254d7254d74c2d81a40b63b247c9f88df59e736c2818cebff75ed03ff66e9b8",
+        "apple-touch-icon-180.png": "ff33c01fad2839a45cd2bd77c325187585f7494d398c5990f18581c2824515e6",
+        "icon-192.png": "2ce543feee681c217899dbd90cf321cd793fb43fd724af6ef29a579063ad3be8",
+        "icon-512.png": "eacc39b5c908d76f335e3f037a8f116fa8b686e44fa78d792ee339ea97992f35",
+        "maskable-512.png": "eacc39b5c908d76f335e3f037a8f116fa8b686e44fa78d792ee339ea97992f35",
+        "astrofolio.webmanifest": "971aeff9a7d21f01edf8fa912c5eaeccb4bb083afa89767ea62ce81320a22bc7",
+        "og-1200x630.png": "cd74ad588d3198e710169751948b9f336577c8e39c200486b4e417119eb2001b"
+      }
+    },
+    {
+      "sign": "leo",
+      "displayName": "Leo",
+      "dateRange": "07-23 to 08-22",
+      "base": "/assets/astrofolio/v1/leo",
+      "sha256": {
+        "avatar-1024.png": "28d627556a8cafd73712ae9a7e9718b86e5559c86d1a9c674d329311cae796c7",
+        "favicon.svg": "a1fc6ce0fa9bdc19fdb93629152529214900360960b603739e304e597fff13e6",
+        "favicon-16.png": "9a9f0011047e1ea83c901bfd5727ad6454fbdbc8e118a965cd5cff2abb08b5e8",
+        "favicon-32.png": "ceb8d673f250694e5bc5e4a1bc42f0ba96119107228e98d2fc186b810207e606",
+        "favicon-96.png": "cfde97a1583ff063ff5dc4be4d825b98dc9d95c54bc7bc0ae2bc7ba7e7ccb8c6",
+        "apple-touch-icon-180.png": "9da01f6884332c1c509f624cb214c29dd477e3442e530d4f63f06ca705aecb9f",
+        "icon-192.png": "8f761994f1abced9ddbf5324566a857703a6cdd3a5d4b4106eed3e3ef2c2b42e",
+        "icon-512.png": "dc9bb3439643b135e4a2e81b06f8af988efe82dccd84ecac3f95cf9ccfa69a9f",
+        "maskable-512.png": "dc9bb3439643b135e4a2e81b06f8af988efe82dccd84ecac3f95cf9ccfa69a9f",
+        "astrofolio.webmanifest": "e6c4fde569f6b4a880340196dcd96a2966a5b82d18be85f98c8ff9f0c1808080",
+        "og-1200x630.png": "edc63a16779e346f94890c4fabddc02fb7bda7fa674c6ceb99eacf005dde8d9d"
+      }
+    },
+    {
+      "sign": "virgo",
+      "displayName": "Virgo",
+      "dateRange": "08-23 to 09-22",
+      "base": "/assets/astrofolio/v1/virgo",
+      "sha256": {
+        "avatar-1024.png": "91344354bc81a80e26367515afd1e69cc469a7340248529f24fb752d04ed5fe4",
+        "favicon.svg": "04c65fa29ce298ad5e3187dc4ed664b24297fa002631a8ab2bfa1dbb61de377e",
+        "favicon-16.png": "820a096c59da15de505e1ac557c142c8b12c4ec0a0d517376b3bce2da175d3fe",
+        "favicon-32.png": "804071b541b8cd6ada729fd16014ef492721b095eac47d1aa8faef036d008f64",
+        "favicon-96.png": "7ed1c11ff94324c14bb8366aae7220b5b6ac4ce9e258d2c38e30560740941969",
+        "apple-touch-icon-180.png": "662a09770ac9728dbbd10213e9df77fdb85c5dbf42e9a550db7aab79e65e102a",
+        "icon-192.png": "042fe1a5aa6c75eed5ce14eea6b855c332506b57a91373dacd6de79791b642c3",
+        "icon-512.png": "e85594f4d25fedd69cdf43474fe30aff25b9ddcb2e1d8738e625a5f6a69e94fb",
+        "maskable-512.png": "e85594f4d25fedd69cdf43474fe30aff25b9ddcb2e1d8738e625a5f6a69e94fb",
+        "astrofolio.webmanifest": "51957fe3c0299e2064d8b7b4cfc3e532da2c5e2ce4c7699318b8386297b06fc5",
+        "og-1200x630.png": "e1cd76c9bc9df8d52dca4201885014c86ea2e4ed710dd8afbb01aa0356addae5"
+      }
+    },
+    {
+      "sign": "libra",
+      "displayName": "Libra",
+      "dateRange": "09-23 to 10-22",
+      "base": "/assets/astrofolio/v1/libra",
+      "sha256": {
+        "avatar-1024.png": "52cb9cda36a336ee96514921bf16e445d200d311c6cc9cecc2a61c644f0e2056",
+        "favicon.svg": "f8ceeb6c17a04d2b7aa02b8495a1257ab666a27711cabbe0e64a395d77995771",
+        "favicon-16.png": "5f062eb9d10a90a43fec346dbb861cbff495a8cd5343d2943a35c8c75aaf4e6d",
+        "favicon-32.png": "4e994e4dd197ebd94a9cbae48ffc07c4bfcdd1114e24a6c47dcb6399d3ab2bbf",
+        "favicon-96.png": "a64bad32f3cbf38aa3af424e5df3e2aa70b6d64fa7df05e08a5e3ebb5f89b5a8",
+        "apple-touch-icon-180.png": "9a299616bc5aab352a13074c364a9f06fa8434eb2392efde653c9e3a0fbbde52",
+        "icon-192.png": "2aa4a65d1331477b7d4569f15bc543dfbeb14c4878741e63feeeae516165d18c",
+        "icon-512.png": "055eb1f8845035db585502e19afe6638486584de763594437dc2e8dab95fbfd5",
+        "maskable-512.png": "055eb1f8845035db585502e19afe6638486584de763594437dc2e8dab95fbfd5",
+        "astrofolio.webmanifest": "d93a7b25cefff8019117cc0b397e7541ac6154a0eb3c2f93731abaa95f88508a",
+        "og-1200x630.png": "aacc7d918a9167361d01bd50c495d0cf943578c6385cda97bf19fe3c1aca72bb"
+      }
+    },
+    {
+      "sign": "scorpio",
+      "displayName": "Scorpio",
+      "dateRange": "10-23 to 11-21",
+      "base": "/assets/astrofolio/v1/scorpio",
+      "sha256": {
+        "avatar-1024.png": "39ed5006913de3fe0b24e37d7debd0f444597b9049d39ff1048a77233cb8e098",
+        "favicon.svg": "6d502d29f91047d2b04c660b911f942ec76a427c5416ccf8a3065c727daf571a",
+        "favicon-16.png": "fc75e9a4015b885ac28756af717902705bf5ceabe0c76a81939fd49714b9e2d5",
+        "favicon-32.png": "a9b4c0f5f12ce1e1031e66b942da2b0fa4dd5ad0c71567d45cb2fd0e11829b1b",
+        "favicon-96.png": "b5bc79864a65ac9f3799e73da21ef8a8f8079e021c761e8937ceed375a1f8512",
+        "apple-touch-icon-180.png": "06e6d6da7c7acaee689be54ca8f6555c673ded8feef879df074fad1d1e99e6ca",
+        "icon-192.png": "84d8c8248bfe90f48f0cd14d77e0735218dc10fc9f2904a70345b09477af13fd",
+        "icon-512.png": "34d6c094bcefb3760c2ea89cb929859f0abcf84c68b28dfc69bebd424acdeb72",
+        "maskable-512.png": "34d6c094bcefb3760c2ea89cb929859f0abcf84c68b28dfc69bebd424acdeb72",
+        "astrofolio.webmanifest": "dc6bf4c17c6abba4d01df10adb96af00b9a7b6f6af91f5c9fb886423edb1246e",
+        "og-1200x630.png": "c99d88dafc30ce3d5626d09a51ed563c361adc92053614f3f587df1376e8881d"
+      }
+    },
+    {
+      "sign": "sagittarius",
+      "displayName": "Sagittarius",
+      "dateRange": "11-22 to 12-21",
+      "base": "/assets/astrofolio/v1/sagittarius",
+      "sha256": {
+        "avatar-1024.png": "35651112b6f7b3022b45e1fa11f013b17f5827fe99c9ca5ce0abef63ffca9219",
+        "favicon.svg": "13b700dd6243b7f2c099e2ec5c834019cef8c8162532361a90c0268d4ca1670d",
+        "favicon-16.png": "d059c13cb9f0fbbab33dde58daabae1e24f02bcff648b68930ccabc1973dfbf5",
+        "favicon-32.png": "7136f2d8c5e764cbcf6ccc31317dc5ac4355bafc180bc0b204574d1a5a0dcf79",
+        "favicon-96.png": "823e343b105818f7639e4afddbf7807626563a0c359b8cbc609c41955040828a",
+        "apple-touch-icon-180.png": "1a1cb758596ab4cfc6885b255efbd3669133c7794cdef6205e93340df193b9d1",
+        "icon-192.png": "6c86283758f0cfe0dc350036d25e0f15fdc56d04ff1039a239152c4938aaf8f8",
+        "icon-512.png": "0afd2840666a3108ea722b7baea186aa242c934e404abcd09d83557a3b9fb6a4",
+        "maskable-512.png": "0afd2840666a3108ea722b7baea186aa242c934e404abcd09d83557a3b9fb6a4",
+        "astrofolio.webmanifest": "d9177bf46784ebeb6475d912eb7f9285789e778e980431f68ad60b8b606adf14",
+        "og-1200x630.png": "fbf363a9f8c961732b45b5ec2c0b2830e0fed021760fde741f9e87c790987a0a"
+      }
+    },
+    {
+      "sign": "capricorn",
+      "displayName": "Capricorn",
+      "dateRange": "12-22 to 01-19",
+      "base": "/assets/astrofolio/v1/capricorn",
+      "sha256": {
+        "avatar-1024.png": "cc540b742103c6a9a7305ff4aa5b180cb863aeb6bf09fe84e517f7e60bdd5a07",
+        "favicon.svg": "2bbbb54c69f30e00cae135a367c41a682f5accaf8e254cb5315f7cd25a748587",
+        "favicon-16.png": "e55b2b58e216745d187deefc48cd0833ecc56bf8fa694407ee8da043c65a1300",
+        "favicon-32.png": "294565ae243f4919110670ab85b64721bad2f76f0a48ab77a2eab02aa0e49e9f",
+        "favicon-96.png": "51e9de79374d34da0db997714415dcc5102cbfc953166f653153fc234d059d32",
+        "apple-touch-icon-180.png": "e297a2d150cfef4da70b9bea73561951a17b2345d6752dce009d8746c87bcdf0",
+        "icon-192.png": "b92af6b2e3f54dc69d5713f1d5779eb32142c9edd7135b3f48a8e2d6f5f776e9",
+        "icon-512.png": "53425d5b73acc2ecd7e830d51068577baf029df50fd27faa0f01668c92475902",
+        "maskable-512.png": "53425d5b73acc2ecd7e830d51068577baf029df50fd27faa0f01668c92475902",
+        "astrofolio.webmanifest": "a7db891d53eb5a9acb635901e352eaa37b24f3b99bbb7b72779b2971653e7969",
+        "og-1200x630.png": "9c52487785caa1aef17801ed641b2f628dc59829477a249b9a9804c8eff49a31"
+      }
+    },
+    {
+      "sign": "aquarius",
+      "displayName": "Aquarius",
+      "dateRange": "01-20 to 02-18",
+      "base": "/assets/astrofolio/v1/aquarius",
+      "sha256": {
+        "avatar-1024.png": "624b7d74b1dfe5ca38b1d3259587204aa38ca22f7fe7e50d64901030d400fa35",
+        "favicon.svg": "65212c5409ae2fab37fb0d0483d1cd9d361e1dd2846e875f92513f9ae4a717e5",
+        "favicon-16.png": "7a398fe20eb21a937341c55bf26c8aeec694aab7bb6b212c316a1160a0ff22a5",
+        "favicon-32.png": "9a8af92f7cf5f723c1cd79148d241b51bd60dfd9ec0899cb2df557e4d67309fb",
+        "favicon-96.png": "1c62bb45494b3303ff3ee3c7e727d17314b17fcf5524ab57dbbfb4e660ea3ab7",
+        "apple-touch-icon-180.png": "73c880554cd188e5637922b42de0d5421ecb4758600b13229c3c37b542daa6c9",
+        "icon-192.png": "34ad88af1e0e1d6aec21a4b14503265b866bf6c8222b7562d224c2c8ed709f1b",
+        "icon-512.png": "4700f82d481bf511c05087e5e5471674ca6a176aecde9aa866f69c1d38e55fda",
+        "maskable-512.png": "4700f82d481bf511c05087e5e5471674ca6a176aecde9aa866f69c1d38e55fda",
+        "astrofolio.webmanifest": "807707e5736b1081df5b32a920a1bc42a16a4a53af01ce3152a202d6d3d2873f",
+        "og-1200x630.png": "db3bbc3b6bfbd4722a28c8957b19b535af2b59926966975f33e7e07519105f9c"
+      }
+    },
+    {
+      "sign": "pisces",
+      "displayName": "Pisces",
+      "dateRange": "02-19 to 03-20",
+      "base": "/assets/astrofolio/v1/pisces",
+      "sha256": {
+        "avatar-1024.png": "d4ea8a9c64a962a997167c5bc700677d53ea9d38bbd2587be5cab4bfbde0c570",
+        "favicon.svg": "1e57351c99b16d1c2ceacb43c4dd30288414fade58de79fa590cb4bb111a9eb2",
+        "favicon-16.png": "547a06429ff37855aed55bdb1ea0044d7a8102fcdfc89cf654b16ea8459d68a8",
+        "favicon-32.png": "61755e468152f445eac18e17fee79eecf6d1e701adf07f6daebdce8383dc5c90",
+        "favicon-96.png": "8228d6d69ff16fa0c8fa4a3bf90b2c4a386a9a1eb0a1d2d11c9f039b77f68ec2",
+        "apple-touch-icon-180.png": "b6fa9e1a9d5739243d8805753c5df6895e046037d387152748aff7ba33ff3f24",
+        "icon-192.png": "7d43db4c31ba82c3f70d98a43bbb6403d0cea2c07d6182e091553725a40323fc",
+        "icon-512.png": "74a832fd936421b356d62e23143bba0de3c06eba8479e3d01b96abe85bb9f064",
+        "maskable-512.png": "74a832fd936421b356d62e23143bba0de3c06eba8479e3d01b96abe85bb9f064",
+        "astrofolio.webmanifest": "58218862d568e88fd8a94afb406ef7e62afed29dc54b98a2cedaf84235daf634",
+        "og-1200x630.png": "a52a4ea3440c53b910914415f4b77128d4b642625fee33abfa7bf8b591d717fc"
+      }
+    }
+  ]
+}
