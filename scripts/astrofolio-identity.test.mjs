@@ -44,7 +44,10 @@ function semanticIdentityManifest(manifest) {
   return semantic;
 }
 
-async function expectPixelEquivalent(actualPath, expectedPath, label, { maxDifferentPixelRatio = 0.015 } = {}) {
+async function expectPixelEquivalent(actualPath, expectedPath, label, {
+  maxDifferentPixelRatio = 0.015,
+  maxNormalizedMeanAbsoluteError = 0.006,
+} = {}) {
   const comparisonSize = 256;
   const [actual, expected] = await Promise.all([
     sharp(actualPath)
@@ -86,7 +89,7 @@ async function expectPixelEquivalent(actualPath, expectedPath, label, { maxDiffe
   expect(
     normalizedMeanAbsoluteError,
     `${label}: ${normalizedMeanAbsoluteError.toFixed(6)} normalized decoded-channel MAE`,
-  ).toBeLessThanOrEqual(0.006);
+  ).toBeLessThanOrEqual(maxNormalizedMeanAbsoluteError);
 }
 
 afterAll(async () => {
@@ -222,6 +225,7 @@ describe('Astrofolio seasonal identity generator', () => {
       // Satori's text rasterizer moves more anti-aliased edge pixels between
       // macOS and Linux than the image-only seasonal compositions do.
       maxDifferentPixelRatio: 0.03,
+      maxNormalizedMeanAbsoluteError: 0.01,
     });
     for (const season of replay.seasons) {
       for (const [name, sha256] of Object.entries(season.sha256)) {
