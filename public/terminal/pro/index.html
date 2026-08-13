@@ -7533,19 +7533,32 @@
       place-items: center;
       gap: 7px;
       padding: 8px 4px;
-      border: 1px solid transparent;
-      border-radius: 15px;
+      border: 0;
+      border-radius: 0;
       color: var(--ink-dim);
       font: 500 11px/1 var(--sans);
       scroll-snap-align: center;
       cursor: pointer;
       transition: none;
     }
+    .static-vitrine__disc {
+      display: grid;
+      box-sizing: border-box;
+      width: 50px;
+      height: 50px;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: 0 0 0 0 transparent;
+    }
     .static-vitrine__rail img {
       display: block;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      opacity: .48;
-      filter: grayscale(1) saturate(0);
+      opacity: .86;
+      filter: none;
     }
     .static-vitrine__rail label[for="astrofolio-aries"] { --disc: #DE8E79; }
     .static-vitrine__rail label[for="astrofolio-taurus"] { --disc: #B9D4BE; }
@@ -7561,13 +7574,25 @@
     .static-vitrine__rail label[for="astrofolio-pisces"] { --disc: #A9D4C4; }
 
     .static-vitrine__rail label:has(.static-vitrine__choice:checked) {
-      border-color: var(--disc);
       background: transparent;
       color: var(--ink);
     }
+    .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc {
+      box-shadow:
+        0 0 0 2px var(--bg),
+        0 0 0 4px var(--disc);
+    }
+    .static-vitrine__rail label:has(.static-vitrine__choice:checked) img { opacity: 1; }
+    .static-vitrine__choice:focus-visible { outline: 0; box-shadow: none; }
     .static-vitrine__rail label:has(.static-vitrine__choice:focus-visible) {
-      outline: 2px solid var(--disc);
-      outline-offset: 3px;
+      outline: 0;
+      box-shadow: none;
+    }
+    .static-vitrine__rail label:has(.static-vitrine__choice:focus-visible) .static-vitrine__disc {
+      box-shadow:
+        0 0 0 2px var(--bg),
+        0 0 0 4px var(--disc),
+        0 0 0 7px color-mix(in srgb, var(--ink) 24%, transparent);
     }
 
     .static-vitrine__panel { display: none; }
@@ -7788,6 +7813,8 @@
       .static-vitrine { margin-top: 10px; }
       .static-vitrine__rail { margin-inline: -2px; padding-bottom: 8px; }
       .static-vitrine__rail label { flex-basis: 64px; min-height: 62px; }
+      .static-vitrine__disc { width: 46px; height: 46px; }
+      .static-vitrine__rail img { width: 38px; height: 38px; }
       .static-vitrine__panel {
         grid-template-columns: minmax(0, 1fr);
         grid-template-areas: "stage";
@@ -7832,6 +7859,7 @@
         scroll-behavior: auto !important;
         transition: none !important;
       }
+      .consumer-static .static-vitrine__actions .btn:active { transform: none; }
     }
   </style>
 
@@ -8465,29 +8493,48 @@
       scroll-snap-align: center;
       text-transform: none;
     }
+    .consumer-registry .vitrine-disc:focus-visible {
+      outline: 0;
+      box-shadow: none;
+    }
     .consumer-registry .vitrine-disc picture {
-      display: grid;
+      display: block;
+      box-sizing: border-box;
       width: 50px;
       height: 50px;
-      place-items: center;
-      border: 1px solid transparent;
+      aspect-ratio: 1;
+      border: 0;
       border-radius: 50%;
-      background: rgba(238, 241, 247, .025);
+      background: transparent;
+      box-shadow: 0 0 0 0 transparent;
       transition: none;
     }
+    .consumer-registry .vitrine-disc picture > source { display: none; }
     .consumer-registry .vitrine-disc img {
-      width: 38px;
-      height: 38px;
-      opacity: .43;
-      filter: grayscale(1) saturate(0) brightness(.9);
-      transition: opacity 120ms linear;
+      width: 42px;
+      height: 42px;
+      margin: 4px auto;
+      border-radius: 50%;
+      opacity: .86;
+      filter: none;
+      transition: none;
     }
     .consumer-registry .vitrine-disc.is-active { color: var(--ink); }
     .consumer-registry .vitrine-disc.is-active picture {
-      border-color: var(--sign);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--sign) 14%, transparent);
+      box-shadow:
+        0 0 0 2px var(--bg),
+        0 0 0 4px var(--sign);
     }
-    .consumer-registry .vitrine-disc.is-active img { opacity: .82; }
+    .consumer-registry .vitrine-disc:focus-visible picture {
+      box-shadow:
+        0 0 0 2px var(--bg),
+        0 0 0 4px var(--sign),
+        0 0 0 7px color-mix(in srgb, var(--ink) 24%, transparent);
+    }
+    .consumer-registry .vitrine-disc.is-active img { opacity: 1; }
+    @media (hover: hover) {
+      .consumer-registry .vitrine-disc:hover img { opacity: 1; }
+    }
 
     .consumer-registry .vitrine-stage {
       position: relative;
@@ -9075,6 +9122,7 @@
       .consumer-registry .terminal-consumer-hero p { font-size: 15px; line-height: 1.5; }
       .consumer-registry .vitrine-disc { flex-basis: 58px; }
       .consumer-registry .vitrine-disc picture { width: 46px; height: 46px; }
+      .consumer-registry .vitrine-disc img { width: 38px; height: 38px; }
       .consumer-registry .vitrine-placard__actions {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
         gap: 9px;
@@ -9095,6 +9143,9 @@
         transition: none !important;
       }
       .consumer-registry .reveal { opacity: 1; }
+      .consumer-registry .vitrine-placard__actions .btn:active,
+      .consumer-registry .vrf__submit:active,
+      .consumer-registry .vrf__example:active { transform: none; }
     }
 </style>
 <!-- zodiacs-analytics:start -->

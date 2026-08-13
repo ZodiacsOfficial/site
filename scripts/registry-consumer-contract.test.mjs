@@ -161,8 +161,15 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(layers).toContain("matchMedia('(prefers-reduced-motion: reduce)')");
     expect(layers).toContain('pendingIdRef.current = id');
     expect(layers).toContain('const markLayerReady = useCallback((id) =>');
+    expect(layers).toContain('current.filter((layer) => layer.ready)');
+    expect(layers).toContain('layer.id === id ? { ...layer, ready: true } : layer');
+    expect(layers).toContain('transitionIdRef.current = null');
+    expect(layers).toContain('if (transitionIdRef.current !== id) return');
+    expect(layers).toContain('setTransitionId(id)');
+    expect(layers).toContain('if (transitionId === null) return undefined');
     expect(layers).toContain('window.clearTimeout(timerRef.current)');
-    expect(layers).toContain('}, 180)');
+    expect(layers).toContain('window.setTimeout(() => settleLayer(transitionId), 240)');
+    expect(explorer).toContain("event.propertyName === 'opacity'");
     expect(explorer).toContain('const decoded = image.decode?.()');
     expect(explorer).toContain('decoded.then(() => markLayerReady(layer.id), () => markLayerReady(layer.id))');
     expect(explorer).toContain("image.src = `/assets/sculptures/512/${layer.slug}.webp`");

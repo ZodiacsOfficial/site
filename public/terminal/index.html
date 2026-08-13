@@ -7563,19 +7563,32 @@
       place-items: center;
       gap: 7px;
       padding: 8px 4px;
-      border: 1px solid transparent;
-      border-radius: 15px;
+      border: 0;
+      border-radius: 0;
       color: var(--ink-dim);
       font: 500 11px/1 var(--sans);
       scroll-snap-align: center;
       cursor: pointer;
       transition: none;
     }
+    .static-vitrine__disc {
+      display: grid;
+      box-sizing: border-box;
+      width: 50px;
+      height: 50px;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: 0 0 0 0 transparent;
+    }
     .static-vitrine__rail img {
       display: block;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      opacity: .48;
-      filter: grayscale(1) saturate(0);
+      opacity: .86;
+      filter: none;
     }
     .static-vitrine__rail label[for="astrofolio-aries"] { --disc: #DE8E79; }
     .static-vitrine__rail label[for="astrofolio-taurus"] { --disc: #B9D4BE; }
@@ -7591,13 +7604,25 @@
     .static-vitrine__rail label[for="astrofolio-pisces"] { --disc: #A9D4C4; }
 
     .static-vitrine__rail label:has(.static-vitrine__choice:checked) {
-      border-color: var(--disc);
       background: transparent;
       color: var(--ink);
     }
+    .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc {
+      box-shadow:
+        0 0 0 2px var(--bg),
+        0 0 0 4px var(--disc);
+    }
+    .static-vitrine__rail label:has(.static-vitrine__choice:checked) img { opacity: 1; }
+    .static-vitrine__choice:focus-visible { outline: 0; box-shadow: none; }
     .static-vitrine__rail label:has(.static-vitrine__choice:focus-visible) {
-      outline: 2px solid var(--disc);
-      outline-offset: 3px;
+      outline: 0;
+      box-shadow: none;
+    }
+    .static-vitrine__rail label:has(.static-vitrine__choice:focus-visible) .static-vitrine__disc {
+      box-shadow:
+        0 0 0 2px var(--bg),
+        0 0 0 4px var(--disc),
+        0 0 0 7px color-mix(in srgb, var(--ink) 24%, transparent);
     }
 
     .static-vitrine__panel { display: none; }
@@ -7818,6 +7843,8 @@
       .static-vitrine { margin-top: 10px; }
       .static-vitrine__rail { margin-inline: -2px; padding-bottom: 8px; }
       .static-vitrine__rail label { flex-basis: 64px; min-height: 62px; }
+      .static-vitrine__disc { width: 46px; height: 46px; }
+      .static-vitrine__rail img { width: 38px; height: 38px; }
       .static-vitrine__panel {
         grid-template-columns: minmax(0, 1fr);
         grid-template-areas: "stage";
@@ -7862,6 +7889,7 @@
         scroll-behavior: auto !important;
         transition: none !important;
       }
+      .consumer-static .static-vitrine__actions .btn:active { transform: none; }
     }
   </style>
 
@@ -8184,29 +8212,48 @@
       scroll-snap-align: center;
       text-transform: none;
     }
+    .consumer-registry .vitrine-disc:focus-visible {
+      outline: 0;
+      box-shadow: none;
+    }
     .consumer-registry .vitrine-disc picture {
-      display: grid;
+      display: block;
+      box-sizing: border-box;
       width: 50px;
       height: 50px;
-      place-items: center;
-      border: 1px solid transparent;
+      aspect-ratio: 1;
+      border: 0;
       border-radius: 50%;
-      background: rgba(238, 241, 247, .025);
+      background: transparent;
+      box-shadow: 0 0 0 0 transparent;
       transition: none;
     }
+    .consumer-registry .vitrine-disc picture > source { display: none; }
     .consumer-registry .vitrine-disc img {
-      width: 38px;
-      height: 38px;
-      opacity: .43;
-      filter: grayscale(1) saturate(0) brightness(.9);
-      transition: opacity 120ms linear;
+      width: 42px;
+      height: 42px;
+      margin: 4px auto;
+      border-radius: 50%;
+      opacity: .86;
+      filter: none;
+      transition: none;
     }
     .consumer-registry .vitrine-disc.is-active { color: var(--ink); }
     .consumer-registry .vitrine-disc.is-active picture {
-      border-color: var(--sign);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--sign) 14%, transparent);
+      box-shadow:
+        0 0 0 2px var(--bg),
+        0 0 0 4px var(--sign);
     }
-    .consumer-registry .vitrine-disc.is-active img { opacity: .82; }
+    .consumer-registry .vitrine-disc:focus-visible picture {
+      box-shadow:
+        0 0 0 2px var(--bg),
+        0 0 0 4px var(--sign),
+        0 0 0 7px color-mix(in srgb, var(--ink) 24%, transparent);
+    }
+    .consumer-registry .vitrine-disc.is-active img { opacity: 1; }
+    @media (hover: hover) {
+      .consumer-registry .vitrine-disc:hover img { opacity: 1; }
+    }
 
     .consumer-registry .vitrine-stage {
       position: relative;
@@ -8794,6 +8841,7 @@
       .consumer-registry .terminal-consumer-hero p { font-size: 15px; line-height: 1.5; }
       .consumer-registry .vitrine-disc { flex-basis: 58px; }
       .consumer-registry .vitrine-disc picture { width: 46px; height: 46px; }
+      .consumer-registry .vitrine-disc img { width: 38px; height: 38px; }
       .consumer-registry .vitrine-placard__actions {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
         gap: 9px;
@@ -8814,6 +8862,9 @@
         transition: none !important;
       }
       .consumer-registry .reveal { opacity: 1; }
+      .consumer-registry .vitrine-placard__actions .btn:active,
+      .consumer-registry .vrf__submit:active,
+      .consumer-registry .vrf__example:active { transform: none; }
     }
 </style>
 <!-- zodiacs-analytics:start -->
@@ -8864,18 +8915,18 @@
         <fieldset class="static-vitrine">
           <legend>Choose one of the twelve signs</legend>
           <div class="static-vitrine__rail" aria-label="Choose a zodiac sign">
-            <label id="astrofolio-aries-label" for="astrofolio-aries"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-aries"><img src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt=""><span>Aries</span></label>
-            <label id="astrofolio-taurus-label" for="astrofolio-taurus"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-taurus"><img src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt=""><span>Taurus</span></label>
-            <label id="astrofolio-gemini-label" for="astrofolio-gemini"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-gemini"><img src="/assets/zodiac-icons/48/gemini.webp" width="48" height="48" alt=""><span>Gemini</span></label>
-            <label id="astrofolio-cancer-label" for="astrofolio-cancer"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-cancer"><img src="/assets/zodiac-icons/48/cancer.webp" width="48" height="48" alt=""><span>Cancer</span></label>
-            <label id="astrofolio-leo-label" for="astrofolio-leo"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-leo" checked><img src="/assets/zodiac-icons/48/leo.webp" width="48" height="48" alt=""><span>Leo</span></label>
-            <label id="astrofolio-virgo-label" for="astrofolio-virgo"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-virgo"><img src="/assets/zodiac-icons/48/virgo.webp" width="48" height="48" alt=""><span>Virgo</span></label>
-            <label id="astrofolio-libra-label" for="astrofolio-libra"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-libra"><img src="/assets/zodiac-icons/48/libra.webp" width="48" height="48" alt=""><span>Libra</span></label>
-            <label id="astrofolio-scorpio-label" for="astrofolio-scorpio"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-scorpio"><img src="/assets/zodiac-icons/48/scorpio.webp" width="48" height="48" alt=""><span>Scorpio</span></label>
-            <label id="astrofolio-sagittarius-label" for="astrofolio-sagittarius"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-sagittarius"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="48" height="48" alt=""><span>Sagittarius</span></label>
-            <label id="astrofolio-capricorn-label" for="astrofolio-capricorn"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-capricorn"><img src="/assets/zodiac-icons/48/capricorn.webp" width="48" height="48" alt=""><span>Capricorn</span></label>
-            <label id="astrofolio-aquarius-label" for="astrofolio-aquarius"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-aquarius"><img src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt=""><span>Aquarius</span></label>
-            <label id="astrofolio-pisces-label" for="astrofolio-pisces"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-pisces"><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt=""><span>Pisces</span></label>
+            <label id="astrofolio-aries-label" for="astrofolio-aries"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-aries"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt=""></span><span>Aries</span></label>
+            <label id="astrofolio-taurus-label" for="astrofolio-taurus"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-taurus"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt=""></span><span>Taurus</span></label>
+            <label id="astrofolio-gemini-label" for="astrofolio-gemini"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-gemini"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/gemini.webp" width="48" height="48" alt=""></span><span>Gemini</span></label>
+            <label id="astrofolio-cancer-label" for="astrofolio-cancer"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-cancer"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/cancer.webp" width="48" height="48" alt=""></span><span>Cancer</span></label>
+            <label id="astrofolio-leo-label" for="astrofolio-leo"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-leo" checked><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/leo.webp" width="48" height="48" alt=""></span><span>Leo</span></label>
+            <label id="astrofolio-virgo-label" for="astrofolio-virgo"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-virgo"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/virgo.webp" width="48" height="48" alt=""></span><span>Virgo</span></label>
+            <label id="astrofolio-libra-label" for="astrofolio-libra"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-libra"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/libra.webp" width="48" height="48" alt=""></span><span>Libra</span></label>
+            <label id="astrofolio-scorpio-label" for="astrofolio-scorpio"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-scorpio"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/scorpio.webp" width="48" height="48" alt=""></span><span>Scorpio</span></label>
+            <label id="astrofolio-sagittarius-label" for="astrofolio-sagittarius"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-sagittarius"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="48" height="48" alt=""></span><span>Sagittarius</span></label>
+            <label id="astrofolio-capricorn-label" for="astrofolio-capricorn"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-capricorn"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/capricorn.webp" width="48" height="48" alt=""></span><span>Capricorn</span></label>
+            <label id="astrofolio-aquarius-label" for="astrofolio-aquarius"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-aquarius"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt=""></span><span>Aquarius</span></label>
+            <label id="astrofolio-pisces-label" for="astrofolio-pisces"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-pisces"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt=""></span><span>Pisces</span></label>
           </div>
 
           <div class="static-vitrine__panels" aria-live="polite">

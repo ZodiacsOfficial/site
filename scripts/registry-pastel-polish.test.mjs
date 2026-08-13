@@ -39,14 +39,28 @@ describe('registry pastel polish', () => {
     expect(source).toContain('alt={layer.current ? `${item.name} gold sculpture` : \'\'}');
   });
 
-  it('uses the selected pastel only for atmosphere, ring, and daily movement', async () => {
-    const css = await read('src/terminal/split-styles.css');
+  it('keeps every selector disc pastel and reserves the selected hue for the ring, atmosphere, and movement', async () => {
+    const [css, html] = await Promise.all([
+      read('src/terminal/split-styles.css'),
+      read('public/terminal/index.html'),
+    ]);
     const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
     expect(lit).toContain('color-mix(in srgb, var(--active-sign) 13%, transparent)');
-    expect(lit).toContain('border-color: var(--sign);');
+    expect(lit).toContain('0 0 0 4px var(--sign);');
     expect(lit).toContain('color: var(--active-sign);');
-    expect(lit).toContain('filter: grayscale(1) saturate(0) brightness(.9);');
-    expect(lit).toContain('filter: grayscale(1) saturate(0);');
+    const hydratedDisc = cssRule(lit, '.consumer-registry .vitrine-disc img {');
+    expect(hydratedDisc).toContain('width: 42px;');
+    expect(hydratedDisc).toContain('height: 42px;');
+    expect(hydratedDisc).toContain('margin: 4px auto;');
+    expect(hydratedDisc).toContain('opacity: .86;');
+    expect(hydratedDisc).toContain('filter: none;');
+    expect(hydratedDisc).not.toContain('grayscale');
+    expect(lit).toContain('.consumer-registry .vitrine-disc picture > source { display: none; }');
+    expect(lit).toContain('.consumer-registry .vitrine-disc.is-active img { opacity: 1; }');
+    expect(html).toContain('<span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/leo.webp"');
+    expect(html).toContain('.static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc {');
+    expect(html).toContain('0 0 0 4px var(--disc);');
+    expect(cssRule(html, '.static-vitrine__rail img {')).toContain('filter: none;');
     expect(lit).not.toContain('var(--gold)');
     expect(lit).not.toContain('var(--gold-bright)');
     expect(lit).not.toContain('var(--gold-deep)');
@@ -115,6 +129,8 @@ describe('registry pastel polish', () => {
     expect(reduced).toContain('animation: none !important;');
     expect(reduced).toContain('transition: none !important;');
     expect(reduced).toContain('.consumer-registry .reveal { opacity: 1; }');
+    expect(reduced).toContain('.consumer-registry .vitrine-placard__actions .btn:active,');
+    expect(reduced).toContain('.consumer-registry .vrf__example:active { transform: none; }');
   });
 
   it('limits the unfolding composition to three major hairlines and no dashboard boxes', async () => {

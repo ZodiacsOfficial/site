@@ -1,4 +1,4 @@
-    const { useState, useMemo, useEffect, useRef, useCallback } = React;
+    const { useState, useMemo, useEffect, useLayoutEffect, useRef, useCallback } = React;
     const REGISTRY_VIEW = document.querySelector('meta[name="zodiacs-registry-view"]')?.content ?? '';
     const TERMINAL_VIEW_STORAGE_KEY = 'zodiacs:terminal-view:v1';
     const TERMINAL_RANKS = new Set(['marketCap', 'liquidity', 'change']);
@@ -5502,34 +5502,38 @@
       const slugRef = useRef(sign.asset.sign);
       const idRef = useRef(0);
       const pendingIdRef = useRef(null);
+      const transitionIdRef = useRef(null);
       const timerRef = useRef(0);
       const frameRef = useRef(0);
+      const [transitionId, setTransitionId] = useState(null);
       const [layers, setLayers] = useState([
-        { id: 0, slug: sign.asset.sign, active: true, current: true },
+        { id: 0, slug: sign.asset.sign, active: true, current: true, ready: true },
       ]);
-      useEffect(() => {
+      const interruptTransition = useCallback(() => {
+        transitionIdRef.current = null;
+        window.clearTimeout(timerRef.current);
+        window.cancelAnimationFrame(frameRef.current);
+        setTransitionId(null);
+      }, []);
+      useLayoutEffect(() => {
         const next = sign.asset.sign;
         if (slugRef.current === next) return undefined;
         slugRef.current = next;
-        window.clearTimeout(timerRef.current);
-        window.cancelAnimationFrame(frameRef.current);
+        interruptTransition();
         const id = idRef.current + 1;
         idRef.current = id;
         pendingIdRef.current = id;
         // Keep the last decoded sculpture and its matching placard visible
         // while the next local artwork loads. The selector ring still updates
         // immediately, then both visual layers begin together once the image
-        // is ready; a rapid third selection simply replaces this pending one.
+        // is ready. Retain every decoded layer during an interrupted fade:
+        // removing a partially visible outgoing layer would create a flash.
         setLayers((current) => [
-          ...(() => {
-            const stable = [...current].reverse().find((layer) => layer.active)
-              ?? [...current].reverse().find((layer) => layer.current);
-            return stable ? [{ ...stable, active: true, current: true }] : [];
-          })(),
-          { id, slug: next, active: false, current: false },
+          ...current.filter((layer) => layer.ready),
+          { id, slug: next, active: false, current: false, ready: false },
         ]);
         return undefined;
-      }, [sign.asset.sign]);
+      }, [interruptTransition, sign.asset.sign]);
 
       const markLayerReady = useCallback((id) => {
         if (pendingIdRef.current !== id) return;
@@ -5541,26 +5545,48 @@
         if (reduce) {
           setLayers((current) => {
             const target = current.find((layer) => layer.id === id);
-            return target ? [{ ...target, active: true, current: true }] : current;
+            return target ? [{ ...target, active: true, current: true, ready: true }] : current;
           });
           return;
         }
         // The pending layer has already been committed at opacity zero. Start
-        // its 180ms opacity-only transition on the next paint, then remove the
-        // outgoing decoded layer after that same fixed interval.
+        // its opacity-only transition on the next paint. Existing decoded
+        // layers stay mounted, so CSS can retarget from their current computed
+        // opacity when selections arrive faster than the 180ms crossfade.
+        setLayers((current) => current.map((layer) => (
+          layer.id === id ? { ...layer, ready: true } : layer
+        )));
         frameRef.current = window.requestAnimationFrame(() => {
+          transitionIdRef.current = id;
           setLayers((current) => current.map((layer) => ({
             ...layer,
             active: layer.id === id,
             current: layer.id === id,
           })));
-          timerRef.current = window.setTimeout(() => {
-            setLayers((current) => current.some((layer) => layer.id === id)
-              ? current.filter((layer) => layer.id === id)
-              : current);
-          }, 180);
+          setTransitionId(id);
         });
       }, []);
+
+      const settleLayer = useCallback((id) => {
+        if (transitionIdRef.current !== id) return;
+        transitionIdRef.current = null;
+        window.clearTimeout(timerRef.current);
+        setLayers((current) => current.some((layer) => layer.id === id)
+          ? current.filter((layer) => layer.id === id)
+          : current);
+        setTransitionId((current) => current === id ? null : current);
+      }, []);
+
+      // The incoming sculpture's opacity transition is the source of truth
+      // for cleanup. A guarded fallback covers browsers that suppress the
+      // transitionend event without allowing an obsolete fade to remove a
+      // newer selection.
+      useEffect(() => {
+        if (transitionId === null) return undefined;
+        const timer = window.setTimeout(() => settleLayer(transitionId), 240);
+        timerRef.current = timer;
+        return () => window.clearTimeout(timer);
+      }, [settleLayer, transitionId]);
 
       const markLayerFailed = useCallback((id) => {
         setLayers((current) => current.map((layer) => (
@@ -5571,19 +5597,21 @@
 
       useEffect(() => () => {
         pendingIdRef.current = null;
+        transitionIdRef.current = null;
         window.clearTimeout(timerRef.current);
         window.cancelAnimationFrame(frameRef.current);
       }, []);
-      return [layers, markLayerReady, markLayerFailed];
+      return [layers, markLayerReady, markLayerFailed, settleLayer, interruptTransition];
     }
 
-    function VitrineDiscRail({ active, setActive }) {
+    function VitrineDiscRail({ active, setActive, interruptTransition }) {
       const railRef = useRef(null);
       const activeIndex = Math.max(0, SIGNS.findIndex((item) => item.ticker === active));
       const choose = (index, focus = false) => {
         const nextIndex = Math.min(SIGNS.length - 1, Math.max(0, index));
         const next = SIGNS[nextIndex];
         if (!next) return;
+        if (next.ticker !== active) interruptTransition();
         setActive(next.ticker);
         try {
           const url = new URL(window.location.href);
@@ -5697,7 +5725,7 @@
     }
 
     function ConsumerExplorer({ active, setActive, sign, batch }) {
-      const [layers, markLayerReady, markLayerFailed] = useConsumerSelectionLayers(sign);
+      const [layers, markLayerReady, markLayerFailed, settleLayer, interruptTransition] = useConsumerSelectionLayers(sign);
       // Lock the desktop stage to the dynamic viewport height measured on
       // entry. Mobile chrome may subsequently alter visualViewport.height;
       // retaining this clamped pixel value prevents the artwork from jumping.
@@ -5716,6 +5744,11 @@
             aria-hidden={layer.current ? undefined : 'true'}
             data-vitrine-sculpture={layer.slug}
             style={{ '--art-scale': presentation.scale, '--art-y': presentation.translateY }}
+            onTransitionEnd={(event) => {
+              if (event.target === event.currentTarget && event.propertyName === 'opacity' && layer.active) {
+                settleLayer(layer.id);
+              }
+            }}
           >
             <img
               src={`/assets/sculptures/512/${layer.slug}.webp`}
@@ -5770,7 +5803,7 @@
           }}
         >
           <ConsumerIdentityHeader />
-          <VitrineDiscRail active={active} setActive={setActive} />
+          <VitrineDiscRail active={active} setActive={setActive} interruptTransition={interruptTransition} />
           <div className="vitrine-stage" aria-label={`${sign.name} gold sculpture`} data-vitrine-stage>
             {layers.map(renderSculpture)}
           </div>

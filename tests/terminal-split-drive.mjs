@@ -137,6 +137,40 @@ async function assertStaticFirstScreen(page, { width, height, slug = 'leo' }) {
   );
 }
 
+async function assertPastelSelectorGeometry(page, { width, height, staticView = false }) {
+  assert.deepEqual(page.viewportSize(), { width, height });
+  const imageSelector = staticView ? '.static-vitrine__rail img' : '.vitrine-disc img';
+  const wrapperSelector = staticView
+    ? '.static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc'
+    : '.vitrine-disc.is-active picture';
+  const activeImageSelector = staticView
+    ? '.static-vitrine__rail label:has(.static-vitrine__choice:checked) img'
+    : '.vitrine-disc.is-active img';
+  const filters = await page.locator(imageSelector).evaluateAll((images) => (
+    images.map((image) => getComputedStyle(image).filter)
+  ));
+  assert.equal(filters.length, 12);
+  assert.ok(filters.every((filter) => filter === 'none'), `all twelve selector discs stay pastel at ${width}x${height}`);
+
+  const wrapper = await page.locator(wrapperSelector).boundingBox();
+  const image = await page.locator(activeImageSelector).boundingBox();
+  assert.ok(wrapper && image);
+  const expectedWrapper = width <= 480 ? 46 : 50;
+  const expectedImage = width <= 480 ? 38 : 42;
+  assert.ok(Math.abs(wrapper.width - expectedWrapper) <= .01 && Math.abs(wrapper.height - expectedWrapper) <= .01);
+  assert.ok(Math.abs(image.width - expectedImage) <= .01 && Math.abs(image.height - expectedImage) <= .01);
+  const deltaX = (image.x + image.width / 2) - (wrapper.x + wrapper.width / 2);
+  const deltaY = (image.y + image.height / 2) - (wrapper.y + wrapper.height / 2);
+  assert.ok(Math.abs(deltaX) <= .01 && Math.abs(deltaY) <= .01, `the active pastel ring is concentric at ${width}x${height}: ${deltaX}, ${deltaY}`);
+  const style = await page.locator(wrapperSelector).evaluate((node) => ({
+    radius: getComputedStyle(node).borderRadius,
+    shadow: getComputedStyle(node).boxShadow,
+  }));
+  assert.equal(style.radius, '50%');
+  assert.notEqual(style.shadow, 'none');
+  assert.equal(await page.locator(activeImageSelector).evaluate((node) => getComputedStyle(node).opacity), '1');
+}
+
 if (OUT) await mkdir(OUT, { recursive: true });
 
 const browser = await chromium.launch({
@@ -176,6 +210,7 @@ try {
     assert.equal(counts.wikimedia, 0);
     assert.equal(counts.jupiter, 0);
     assert.equal(counts.wallet, 0);
+    await assertPastelSelectorGeometry(page, { width: 390, height: 844 });
 
     const selector = page.locator('[data-consumer-sign="pisces"]');
     await selector.focus();
@@ -202,8 +237,24 @@ try {
     assert.ok(Math.abs(stageBefore.height - stageAfter.height) <= 1, 'browser-chrome height changes must not move or resize the sculpture stage');
 
     await page.locator('[data-consumer-sign="aries"]').click();
-    await page.locator('[data-consumer-sign="leo"]').click();
-    await page.waitForTimeout(200);
+    await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="aries"]')?.classList.contains('is-active'));
+    await page.waitForTimeout(40);
+    const interruptedOutgoingOpacity = await page.locator('[data-vitrine-sculpture="pisces"]').evaluate((node) => {
+      const opacity = Number.parseFloat(getComputedStyle(node).opacity);
+      document.querySelector('[data-consumer-sign="leo"]')?.click();
+      return opacity;
+    });
+    assert.ok(interruptedOutgoingOpacity > 0, 'the outgoing decoded sculpture remains visible during its fade');
+    await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active'));
+    const compositeOpacity = await page.locator('.vitrine-stage__layer').evaluateAll((nodes) => nodes.reduce((sum, node) => (
+      sum + Number.parseFloat(getComputedStyle(node).opacity)
+    ), 0));
+    assert.ok(compositeOpacity >= .75, `rapid retargeting preserves the visible sculpture composite (${compositeOpacity})`);
+    assert.equal(await page.locator('[data-vitrine-sculpture="pisces"]').count(), 1, 'rapid selection retains the partially faded layer instead of flashing it away');
+    await page.waitForFunction(() => (
+      document.querySelectorAll('.vitrine-stage__layer').length === 1
+      && document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active')
+    ));
     assert.equal(new URL(page.url()).searchParams.get('sign'), 'leo');
     assert.equal(await page.locator('.consumer-closing__market').getAttribute('href'), '/terminal/pro/?sign=leo');
     assert.equal(await page.locator('.vitrine-stage__layer').count(), 1, 'an interrupted fade settles to one sculpture layer');
@@ -211,6 +262,8 @@ try {
     assert.equal(await page.locator('[data-vitrine-sculpture="leo"].is-active').count(), 1);
     assert.equal(await page.locator('[data-vitrine-placard="leo"] [role="status"]').count(), 1);
     assert.equal(await page.locator('[data-vitrine-placard="leo"] [aria-hidden="true"][role="status"]').count(), 0);
+    await page.setViewportSize({ width: 768, height: 1024 });
+    await assertPastelSelectorGeometry(page, { width: 768, height: 1024 });
     assert.deepEqual(errors, []);
     await mobile.close();
 
@@ -222,6 +275,7 @@ try {
     await waitForTerminal(desktopPage, '#consumer-explorer-title');
     await desktopPage.waitForFunction(() => document.querySelector('[data-consumer-market-snapshot]')?.getAttribute('aria-busy') === 'false');
     await assertFirstScreen(desktopPage, { width: 1440, height: 900 });
+    await assertPastelSelectorGeometry(desktopPage, { width: 1440, height: 900 });
     if (OUT) await desktopPage.screenshot({ path: `${OUT}/astrofolio-1440x900.png`, fullPage: false });
     const desktopStageBefore = await desktopPage.locator('.vitrine-stage').boundingBox();
     await desktopPage.setViewportSize({ width: 1440, height: 760 });
@@ -231,6 +285,7 @@ try {
     assert.ok(Math.abs(desktopStageBefore.y - desktopStageAfter.y) <= 1, 'desktop browser-chrome height changes must not move the sculpture stage');
     await desktopPage.setViewportSize({ width: 1024, height: 900 });
     await assertFirstScreen(desktopPage, { width: 1024, height: 900 });
+    await assertPastelSelectorGeometry(desktopPage, { width: 1024, height: 900 });
     const intermediateStage = await desktopPage.locator('.vitrine-stage').boundingBox();
     assert.ok(intermediateStage && Math.abs((intermediateStage.width / intermediateStage.height) - 1.2) <= .01, 'intermediate desktop keeps the 6:5 stage ratio');
     const intermediateWidths = await desktopPage.evaluate(() => ({
@@ -367,6 +422,7 @@ try {
     assert.equal(staticStoryStyle.overflow, 'visible');
     assert.notEqual(staticStoryStyle.filter, 'none');
     await assertStaticFirstScreen(noJsPage, { width: 390, height: 844 });
+    await assertPastelSelectorGeometry(noJsPage, { width: 390, height: 844, staticView: true });
     const staticStageBefore = await noJsPage.locator('[data-static-sign="leo"] .static-vitrine__stage').boundingBox();
     await noJsPage.locator('#astrofolio-leo').focus();
     for (let index = 0; index < 7; index += 1) await noJsPage.keyboard.press('ArrowRight');
@@ -382,7 +438,15 @@ try {
     const staticMotion = await noJsPage.locator('#astrofolio-pisces-label').evaluate((node) => getComputedStyle(node).transitionDuration);
     assert.match(staticMotion, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
 
-    await noJsPage.setViewportSize({ width: 1440, height: 900 });
+    for (const viewport of [
+      { width: 768, height: 1024 },
+      { width: 1024, height: 900 },
+      { width: 1440, height: 900 },
+    ]) {
+      await noJsPage.setViewportSize(viewport);
+      await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
+      await assertPastelSelectorGeometry(noJsPage, { ...viewport, staticView: true });
+    }
     await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
     await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900 });
     if (OUT) await noJsPage.screenshot({ path: `${OUT}/astrofolio-no-js-1440x900.png`, fullPage: false });
