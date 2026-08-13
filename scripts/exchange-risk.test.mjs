@@ -9,7 +9,7 @@ const read = (path) => readFile(resolve(root, path), 'utf8');
 const compact = (value) => value.replace(/\s+/g, ' ');
 
 describe('Exchange risk and trust copy', () => {
-  it('keeps the pinned sentences on the committed page, beside Zodiac Markets, not in a footer', async () => {
+  it('keeps the pinned sentences on the committed page, beside Terminal, not in a footer', async () => {
     const html = compact(await read('public/terminal/markets/index.html'));
     expect(html).toContain('independent third-party');
     expect(html).toContain('can lose all market value');
@@ -19,13 +19,13 @@ describe('Exchange risk and trust copy', () => {
     // The venue boundary, in the decision record's own words, plus the fee.
     expect(html).toContain('presents a trade that an independent venue builds, executes, and charges for');
     expect(html).toContain('operates no market');
-    expect(html).toContain('<title>Zodiac Markets · Zodiacs.org</title>');
-    expect(html).toContain('<meta property="og:title" content="Zodiac Markets" />');
-    expect(html).toContain('https://zodiacs.org/assets/og/v4/zodiac-terminal.png');
+    expect(html).toContain('<title>Terminal · Advanced Market Route · Zodiacs.org</title>');
+    expect(html).toContain('<meta property="og:title" content="Terminal · Advanced Market Route" />');
+    expect(html).toContain('https://zodiacs.org/assets/og/v5/the-twelve.png');
     expect(html).not.toContain('https://zodiacs.org/assets/og/v2/registry.png');
-    expect(html).toContain('"name": "Zodiac Markets"');
-    expect(html).toContain('"name": "Zodiac Terminal", "item": "https://zodiacs.org/terminal/"');
-    expect(html).toContain('<h1 id="zme-title">Zodiac Markets</h1>');
+    expect(html).toContain('"name": "Advanced market route"');
+    expect(html).toContain('"name": "Terminal", "item": "https://zodiacs.org/terminal/pro/"');
+    expect(html).toContain('<h1 id="zme-title">Terminal</h1>');
     expect(html).toContain('<h2 id="zme-records">The 12 Official Zodiac Tokens</h2>');
     expect(html).toContain('Sign 12 of 12');
     expect(html).not.toMatch(/\bLot (?:I|V|X)/u);
@@ -117,7 +117,7 @@ describe('Exchange risk and trust copy', () => {
     }
   });
 
-  it('browser-enforces the Zodiac Markets network allowlist and noindex boundary', async () => {
+  it('browser-enforces the Terminal venue-route network allowlist and noindex boundary', async () => {
     const config = JSON.parse(await read('vercel.json'));
     const rule = config.headers.find((entry) => entry.source === '/terminal/markets/(.*)');
     const headers = new Map(rule?.headers?.map(({ key, value }) => [key, value]));
@@ -132,7 +132,7 @@ describe('Exchange risk and trust copy', () => {
     expect(headers.get('X-Robots-Tag')).toBe('noindex, noarchive');
   });
 
-  it('keeps the Cabinet free of any route to Zodiac Markets', async () => {
+  it('keeps the Cabinet free of any route to the Terminal venue route', async () => {
     // Mandatory control: the Collection surface never gains an acquisition
     // link — including a link to this room.
     const cabinet = await read('src/pages/registry/collection/index.astro');
@@ -142,6 +142,10 @@ describe('Exchange risk and trust copy', () => {
 
   it('records the owner-authorized Terminal route split without widening the acquisition surface', async () => {
     const decision = compact(await read('docs/REGISTRY-EXCHANGE-OWNER-RISK-DECISION.md'));
+    expect(decision).toContain('Addendum: 2026-08-13 current public product names');
+    expect(decision).toContain('`/terminal/` is **Astrofolio**');
+    expect(decision).toContain('`/terminal/markets/` venue route are **Terminal**, the expert market desk');
+    expect(decision).toContain('“Zodiac Markets,” “Pro Terminal,” “consumer Terminal,” and “Zodiac Terminal” below are historical labels');
     expect(decision).toContain('Addendum — 2026-08-11: Terminal route split');
     expect(decision).toContain('Zodiac Markets moves from `/registry/exchange/` to `/terminal/markets/`');
     expect(decision).toContain('discovery entry moves with Zodiac Terminal from the old `/registry/` market landing to `/terminal/`');
@@ -162,19 +166,19 @@ describe('Exchange risk and trust copy', () => {
     expect(decision).toContain('Addendum — 2026-08-12: Pro Terminal discovery entry');
     expect(decision).toContain('Authorized: 2026-08-12');
     expect(decision).toContain('The one same-origin, flag-gated Zodiac Markets discovery entry moves from `/terminal/` to `/terminal/pro/`');
-    expect(decision).toContain('`/terminal/` remains the indexed consumer Terminal and carries no Zodiac Markets discovery entry or exchange flag marker in either flag state');
+    expect(decision).toContain('`/terminal/` remains the indexed consumer collection, now named Astrofolio, and carries no venue-route discovery entry or exchange flag marker in either flag state');
     expect(decision).toContain('links to `/terminal/markets/#<selected-sign>`');
-    expect(decision).toContain('Markets terminal and Pro gateway are absent and both markers are `0`');
+    expect(decision).toContain('market terminal and expert gateway are absent and both markers are `0`');
     expect(decision).toContain('Mounting, focusing, or selecting the gateway causes no provider or wallet request');
     expect(decision).toContain('each form of its navigation URL is service-worker network-only');
-    expect(decision).toContain('Zodiac Markets itself remains `noindex`, `no-store`, out of the sitemap');
+    expect(decision).toContain('The venue route itself remains `noindex`, `no-store`, out of the sitemap');
     expect(decision).toContain('does not restart or extend the 30-day pilot');
     expect(decision).toContain('returns flag-off on or before **2026-09-09**');
 
     expect(runbook).toContain('both the route and `/terminal/pro/` landing markers are `0`');
     expect(runbook).toContain('`/terminal/` must have no exchange flag marker in either state');
-    expect(runbook).toContain('exactly one Zodiac Markets discovery entry appears on `/terminal/pro/`');
-    expect(runbook).toContain('no CacheStorage entry for any Zodiac Markets or Pro Terminal navigation');
+    expect(runbook).toContain('exactly one Terminal venue-route discovery entry appears on `/terminal/pro/`');
+    expect(runbook).toContain('no CacheStorage entry for any Terminal venue-route or expert Terminal navigation');
     expect(runbook).toContain('On or before 2026-09-09, turn the flag off');
   });
 });

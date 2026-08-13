@@ -1,4 +1,4 @@
-// The gallery band — the twelve as Zodiac Terminal's selector.
+// The legacy shared gallery band. Astrofolio uses the lean Lit Vitrine instead.
 //
 // The contract has three parties: the Terminal page (pre-paint WebGL probe + the
 // band's CSS), the Terminal application (the skeleton, the strip gate, the lazy
@@ -32,8 +32,8 @@ function functionBody(source, name) {
   return '';
 }
 
-describe('the gallery band on Zodiac Terminal', () => {
-  it('renders the embedded stage skeleton and gates the strip on the probe', async () => {
+describe('the legacy shared gallery band', () => {
+  it('keeps the legacy embedded stage available without mounting it in Astrofolio', async () => {
     const source = await read('src/app.jsx');
     for (const marker of [
       'data-gallery-embed',
@@ -43,11 +43,14 @@ describe('the gallery band on Zodiac Terminal', () => {
       "'/assets/gallery.js'",
       "classList.contains('gallery-live')",
     ]) expect(source).toContain(marker);
-    // Capable phones keep the same live stage as desktop. Only a missing
-    // WebGL probe falls back to the flat carousel; loading remains lazy.
-    expect(source).toContain('return GALLERY_LIVE;');
+    // The shared gallery implementation remains available to its legacy
+    // consumers, while Astrofolio mounts the lean opacity-only vitrine and
+    // therefore never requests the WebGL shelf from its opening experience.
+    expect(source).toContain("const GALLERY_LIVE = document.documentElement.classList.contains('gallery-live');");
+    expect(source).not.toContain('<GalleryBand');
+    expect(source).toContain('<ConsumerExplorer');
+    expect(source).toContain('batch={consumerMarket}');
     expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
-    expect(source).toContain('carousel={!stageMode}');
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
     expect(source).toContain('const [posterSlug, setPosterSlug] = useState(slug);');
     expect(source).toContain('if (!galleryReady) setPosterSlug(slug);');
@@ -340,10 +343,13 @@ describe('the gallery band on Zodiac Terminal', () => {
     expect(html).toContain('.gcard {');
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
-    // The static explorer keeps all twelve token destinations useful without
-    // JavaScript; every grid link opens the sign's official record.
+    // The static vitrine keeps all twelve destinations useful without
+    // JavaScript and mirrors the three hydrated placard actions.
     for (const slug of ['aries', 'virgo', 'pisces']) {
-      expect(html).toContain(`href="/registry/${slug}/" aria-label="View the `);
+      const title = slug[0].toUpperCase() + slug.slice(1);
+      expect(html).toContain(`href="/registry/${slug}/">See ${title}</a>`);
+      expect(html).toContain(`href="/registry/${slug}/#acquire">How to buy ${title}</a>`);
+      expect(html).toContain(`href="/registry/${slug}/#record">View official record</a>`);
     }
     expect(source).toContain('Drag to browse · Choose a sign to open.');
     expect(html).not.toContain('?gallery=gold');

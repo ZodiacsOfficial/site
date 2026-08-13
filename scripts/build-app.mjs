@@ -38,6 +38,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const SRC = resolve(root, 'src/app.jsx');
 const OUT = resolve(root, 'public/assets/app.js');
+const TERMINAL_SPLIT_CSS = resolve(root, 'src/terminal/split-styles.css');
 const TERMINAL_HTML = resolve(root, 'public/terminal/index.html');
 const TERMINAL_PRO_HTML = resolve(root, 'public/terminal/pro/index.html');
 const THESIS_HTML = resolve(root, 'public/thesis/index.html');
@@ -97,6 +98,18 @@ function extractRegistryStyles(registryHtml) {
   return styles.join('\n\n');
 }
 
+function stampTerminalSplitStyles(sourceHtml, splitCss) {
+  const marker = /<style data-terminal-split-styles>[\s\S]*?<\/style>/iu;
+  if (!marker.test(sourceHtml)) {
+    throw new Error('Terminal page is missing the generated split-style marker');
+  }
+  const splitStyle = `<style data-terminal-split-styles>${splitCss}</style>`;
+  const withoutStaleSplit = sourceHtml.replace(/\s*<style data-terminal-split-styles>[\s\S]*?<\/style>/iu, '');
+  const analyticsStart = '<!-- zodiacs-analytics:start -->';
+  const insertionPoint = withoutStaleSplit.includes(analyticsStart) ? analyticsStart : '</head>';
+  return withoutStaleSplit.replace(insertionPoint, `\n${splitStyle}\n${insertionPoint}`);
+}
+
 function synchronizeTerminalStyles(sourceHtml, targetHtml) {
   const sourceStyles = sourceHtml.match(/<style(?:\s[^>]*)?>[\s\S]*?<\/style>/giu) ?? [];
   const splitStyle = sourceStyles.find((style) => style.includes('data-terminal-split-styles'));
@@ -104,7 +117,7 @@ function synchronizeTerminalStyles(sourceHtml, targetHtml) {
   const cleanTarget = targetHtml.replace(/\s*<style data-terminal-split-styles>[\s\S]*?<\/style>/iu, '');
   const targetMatches = [...cleanTarget.matchAll(/<style(?:\s[^>]*)?>[\s\S]*?<\/style>/giu)];
   if (!splitStyle || sharedStyles.length === 0 || targetMatches.length < sharedStyles.length) {
-    throw new Error('Terminal Pro is missing the shared Terminal style blocks');
+    throw new Error('Terminal market desk is missing the shared wing style blocks');
   }
   let output = cleanTarget;
   for (let index = sharedStyles.length - 1; index >= 0; index -= 1) {
@@ -185,7 +198,8 @@ const registryMeta = [
   `const REGISTRY_EXCHANGE_LANDING_COPY=Object.freeze(${JSON.stringify(REGISTRY_EXCHANGE_LANDING_COPY)});`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
-const [terminalHtml, terminalProHtml, thesisHtml, registryOutlook] = await Promise.all([
+const [terminalSplitCss, terminalHtml, terminalProHtml, thesisHtml, registryOutlook] = await Promise.all([
+  readFile(TERMINAL_SPLIT_CSS, 'utf8'),
   readFile(TERMINAL_HTML, 'utf8'),
   readFile(TERMINAL_PRO_HTML, 'utf8'),
   readFile(THESIS_HTML, 'utf8'),
@@ -193,7 +207,8 @@ const [terminalHtml, terminalProHtml, thesisHtml, registryOutlook] = await Promi
 ]);
 // Consumer retains its collection control, but acquisition and exchange
 // discovery markers stay off this identity-first surface.
-const configuredTerminal = injectRegistryAuraLanding(terminalHtml, process.env).output;
+const styledTerminal = stampTerminalSplitStyles(terminalHtml, terminalSplitCss);
+const configuredTerminal = injectRegistryAuraLanding(styledTerminal, process.env).output;
 const configuredTerminalPro = synchronizeTerminalStyles(
   configuredTerminal,
   injectRegistryExchangeLanding(terminalProHtml, process.env).output,

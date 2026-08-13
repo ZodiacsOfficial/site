@@ -184,7 +184,7 @@ function jsonLd(m) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
-          { '@type': 'ListItem', position: 2, name: 'Zodiac Terminal', item: 'https://zodiacs.org/terminal/' },
+          { '@type': 'ListItem', position: 2, name: 'Astrofolio', item: 'https://zodiacs.org/terminal/' },
           { '@type': 'ListItem', position: 3, name: 'Zodiacs Registry', item: 'https://zodiacs.org/registry/' },
           { '@type': 'ListItem', position: 4, name: m.name, item: signUrl(m.slug) }
         ]
@@ -880,7 +880,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
-      <nav aria-label="Breadcrumb"><ol class="lot__crumbs"><li><a href="/terminal/">Zodiac Terminal</a></li><li><a href="/registry/">Zodiacs Registry</a></li><li aria-current="page">${esc(m.name)}</li></ol></nav>
+      <nav aria-label="Breadcrumb"><ol class="lot__crumbs"><li><a href="/terminal/">Astrofolio</a></li><li><a href="/registry/">Zodiacs Registry</a></li><li aria-current="page">${esc(m.name)}</li></ol></nav>
       <span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign ${m.order} of 12</span>
       <h1 class="lot__title" id="lot-title">${esc(m.name)} <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/${m.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/${m.slug}.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
       <p class="lot__epithet">${esc(p.epithet)}</p>
@@ -910,8 +910,8 @@ ${JSON.stringify(jsonLd(m), null, 2)}
             <figcaption class="card__caption">${esc(m.name)} <span class="g">·</span> ${esc(meta.archetype)}</figcaption>
           </div>
         </figure>
-        <a class="figure__gallery" href="/terminal/#${m.slug}">
-          <span>View ${esc(m.name)} on the market stage</span><span aria-hidden="true">→</span>
+        <a class="figure__gallery" href="/terminal/?sign=${m.slug}">
+          <span>View ${esc(m.name)} in Astrofolio</span><span aria-hidden="true">→</span>
         </a>
       </div>
 
@@ -1052,7 +1052,7 @@ ${beats.map((b) => `        <div class="prov__item">
           <span>View market data</span><span class="arr">↗</span>
         </a>
       </div>
-      <a class="acq__related" href="https://astrofolio.xyz/" rel="noopener noreferrer">Related product: view ${esc(m.name)} in Astrofolio <span aria-hidden="true">↗</span></a>
+      <a class="acq__related" href="https://astrofolio.xyz/" rel="noopener noreferrer">Related product: view ${esc(m.name)} in Astrofolio.xyz <span aria-hidden="true">↗</span></a>
       <p class="acq__note">
         Official mint: <a href="/registry/zodiacs.registry.json">${esc(m.solana.address.slice(0, 8))}…${esc(m.solana.address.slice(-6))}</a> ·
         This Registry page does not request custody, signing, approvals, or transactions.
@@ -1085,7 +1085,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/terminal/">Terminal</a>
+          <a href="/terminal/">Astrofolio</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>
@@ -1094,7 +1094,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
           <a href="/terms/">${esc(EN['disclosure.linkTerms'])}</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
           <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
-          <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio ↗</a>
+          <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio.xyz ↗</a>
         </div>
         <div>Registry lookup/display tools: read-only</div>
       </div>

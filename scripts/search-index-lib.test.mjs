@@ -127,8 +127,9 @@ describe('glossary search entries', () => {
 });
 
 describe('curated wing search entries', () => {
-  it('freezes both Terminal views and fifteen records-register destinations with validated kinds', () => {
+  it('freezes Astrofolio, Terminal, and fifteen records-register destinations with validated kinds', () => {
     expect(SEARCH_KINDS).toContain('terminal');
+    expect(SEARCH_KINDS).toContain('astrofolio');
     expect(SEARCH_KINDS).toContain('registry');
     expect(CURATED_WING_ENTRIES).toHaveLength(17);
     expect(Object.isFrozen(CURATED_WING_ENTRIES)).toBe(true);
@@ -157,12 +158,12 @@ describe('curated wing search entries', () => {
     expect(CURATED_WING_ENTRIES.slice(0, 5)).toEqual([
       expect.objectContaining({
         path: '/terminal/',
-        title: 'Zodiac Terminal',
-        description: 'Choose your sign and meet its one official Zodiac token through artwork, story, address verification, and a calm price snapshot.',
+        title: 'Astrofolio',
+        description: 'Choose your sign, see its gold sculpture and official token, check its Registry record, and follow a simple guide to buying it.',
       }),
       expect.objectContaining({
         path: '/terminal/pro/',
-        title: 'Zodiac Terminal Pro',
+        title: 'Terminal',
         description: 'A dense ranked view of all twelve Zodiac tokens with price, 24-hour change, liquidity, a selected-sign chart, market tape, briefings, and research.',
       }),
       expect.objectContaining({

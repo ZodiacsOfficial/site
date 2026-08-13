@@ -12,7 +12,8 @@ describe('Zodiacs Registry authority hub', () => {
     expect(html).toContain('one for every Zodiac sign');
     expect(html).toContain('one Solana origin and one Base counterpart per sign');
     expect(html).toContain('data-registry-established');
-    expect(html).not.toContain('<h1>Zodiac Terminal</h1>');
+    expect(html).not.toContain('<h1>Astrofolio</h1>');
+    expect(html).not.toContain('<h1>Terminal</h1>');
   });
 
   test('prints every canonical address from the source Registry', async () => {
@@ -59,10 +60,10 @@ describe('Zodiacs Registry authority hub', () => {
     expect(html).not.toMatch(/fetch\s*\(/u);
   });
 
-  test('separates Registry authority from the market-facing Terminal', async () => {
+  test('separates Registry authority from the expert Terminal', async () => {
     const html = await read('public/registry/index.html');
-    expect(html).toContain('href="/terminal/"');
-    expect(html).toContain('Open Zodiac Terminal');
+    expect(html).toContain('href="/terminal/pro/"');
+    expect(html).toContain('Open Terminal');
     for (const path of [
       '/registry/zodiacs.registry.json',
       '/registry/technical/',
@@ -74,7 +75,7 @@ describe('Zodiacs Registry authority hub', () => {
     expect(html).toContain('It is not government, regulator, wallet, or exchange approval');
   });
 
-  test('hands old identity and market state to the matching Terminal view without hijacking Registry state', async () => {
+  test('hands old identity and market state to Astrofolio or Terminal without hijacking Registry state', async () => {
     const html = await read('public/registry/index.html');
     expect(html).toContain("var proQuery=['rank','outlook']");
     expect(html).toContain("var proHash=['market','briefing','research','outlook']");
@@ -99,6 +100,6 @@ describe('Zodiacs Registry authority hub', () => {
     expect(technical).toContain('<title>Registry Data &amp; Methodology | Zodiacs Registry</title>');
     expect(technical).toContain('<li><a href="/registry/">Zodiacs Registry</a></li>');
     expect(technical).toContain('href="/registry/">← Return to Zodiacs Registry</a>');
-    expect(technical).not.toContain('href="/registry/">← Return to Zodiac Terminal</a>');
+    expect(technical).not.toContain('href="/registry/">← Return to Astrofolio</a>');
   });
 });

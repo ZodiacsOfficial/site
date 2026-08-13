@@ -1,5 +1,5 @@
 /**
- * Saved charts — the local-first Astrofolio surface. Renders
+ * Saved charts: the local-first profile surface. Renders
  * saved charts from localStorage, supports rename/delete, and frames
  * the local-first sync model honestly.
  */

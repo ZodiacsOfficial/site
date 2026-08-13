@@ -26,6 +26,7 @@ describe('legacy analytics build injection', () => {
     expect(result).toContain('<script defer data-domain="zodiacs.org"');
     expect(result).toContain('chart_computed');
     expect(result).toContain('wallet_chart_computed');
+    expect(result).toContain('registry_sign_selected');
     expect(result).toContain('terminal_view_switch');
     expect(result).toContain('preference_banner');
     expect(result).toContain('consumer_to_pro');
@@ -40,7 +41,7 @@ describe('legacy analytics build injection', () => {
     expect(result).toContain("enumValues.indexOf(value) === -1");
   });
 
-  it('configures the consumer and Pro Terminal pages exactly once', () => {
+  it('configures Astrofolio and the expert Terminal page exactly once', () => {
     expect(TERMINAL_ANALYTICS_PATHS).toEqual([
       'public/terminal/index.html',
       'public/terminal/pro/index.html',

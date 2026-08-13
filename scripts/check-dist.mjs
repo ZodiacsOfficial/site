@@ -285,7 +285,7 @@ async function hasId(filePath, id) {
   }
   const html = idCache.get(filePath);
   if (html.includes(`id="${id}"`) || html.includes(`id='${id}'`)) return true;
-  // Zodiac Terminal renders its sections client-side; ids live in
+  // Astrofolio and Terminal render their sections client-side; ids live in
   // the compiled bundle (JSX id="x" compiles to id: "x").
   if (filePath === resolve(root, 'terminal/index.html')) {
     const bundlePath = resolve(root, 'assets/app.js');

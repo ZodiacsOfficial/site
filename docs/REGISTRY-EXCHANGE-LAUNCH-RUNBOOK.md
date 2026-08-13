@@ -1,9 +1,13 @@
-# Zodiac Markets launch runbook
+# Terminal venue-route launch runbook
 
-This runbook carries Zodiac Markets at `/terminal/markets/` from
-merged-but-flag-off to a
-time-limited production pilot. It does not ratify the owner decision, enable a
+This runbook carries Terminal's protected venue route at `/terminal/markets/`
+from merged-but-flag-off to a time-limited production pilot. It does not ratify the owner decision, enable a
 Vercel environment, approve a PR, or authorize a real trade by itself.
+
+Current public labels since 2026-08-13 are Astrofolio for `/terminal/` and
+Terminal for the expert desk at `/terminal/pro/`, reviewed research, and this
+venue route. The earlier owner record preserves “Zodiac Markets” as a
+historical label; internal `exchange` identifiers remain unchanged.
 
 ## Hard gates
 
@@ -52,9 +56,9 @@ git diff --exit-code
 ```
 
 Before any flag-on QA, verify that both the route and `/terminal/pro/` landing
-markers are `0`, the terminal and its script are absent, and neither Terminal
-page has a Zodiac Markets discovery entry. `/terminal/` must have no exchange
-flag marker in either state. The round trip above must stamp the route and Pro
+markers are `0`, the terminal and its script are absent, and neither the
+Terminal page nor Astrofolio has a venue-route discovery entry. `/terminal/`
+must have no exchange flag marker in either state. The round trip above must stamp the route and Terminal
 markers to `1` from the same environment flag while leaving `/terminal/`
 clean, then restore the two stamped surfaces to `0` byte-for-byte.
 
@@ -66,10 +70,10 @@ production alias. Remove the branch override after QA.
 
 Verify:
 
-- the enabled meta marker is `1` on both Zodiac Markets and `/terminal/pro/`,
+- the enabled meta marker is `1` on both the Terminal venue route and `/terminal/pro/`,
   the terminal mounts, and the twelve records remain below it;
-- `/terminal/` has no exchange marker and no Zodiac Markets discovery entry;
-- exactly one Zodiac Markets discovery entry appears on `/terminal/pro/`; it is
+- `/terminal/` has no exchange marker and no venue-route discovery entry;
+- exactly one Terminal venue-route discovery entry appears on `/terminal/pro/`; it is
   same-origin, points to `/terminal/markets/#<selected-sign>`, contains no
   venue URL, and causes no provider or wallet request merely by rendering or
   receiving focus;
@@ -86,15 +90,15 @@ Verify:
 - requests are limited to self, `lite-api.jup.ag`, `api.dexscreener.com`,
   `api.geckoterminal.com`, and `plausible.io`; a wallet address appears only
   after the visitor explicitly asks the panel to trade;
-- the service worker has no CacheStorage entry for any Zodiac Markets or Pro
-  Terminal navigation, including the extensionless, trailing-slash, and
+- the service worker has no CacheStorage entry for any Terminal venue-route or
+  expert Terminal navigation, including the extensionless, trailing-slash, and
   `index.html` forms.
 
 ## Merge and production pilot
 
 Open the PR as draft. Describe the flag-off guarantee, audit fixes, legacy
-Ultra constraint, Zodiac Markets public name, CSP/cache controls, and rollback target. Do
-not merge around a red required check. Merge only after owner PR approval.
+Ultra constraint, Terminal public name, CSP/cache controls, and rollback target.
+Do not merge around a red required check. Merge only after owner PR approval.
 
 Confirm the merge deploy is flag-off first. Then the owner may set
 `PUBLIC_REGISTRY_EXCHANGE_ENABLED=1` for Production only and create a new
@@ -126,11 +130,11 @@ requires a dated owner decision.
 ## Emergency rollback
 
 1. Use Vercel Instant Rollback to the retained flag-off production deployment.
-2. Confirm both the production route and Pro Terminal landing meta markers are
-   `0`, the terminal/script and sole Pro discovery entry are absent, and the
-   consumer Terminal has neither an exchange marker nor a discovery entry.
-   Confirm an offline request cannot recover a cached flag-on Markets or Pro
-   page.
+2. Confirm both the production route and Terminal landing meta markers are
+   `0`, the terminal/script and sole expert discovery entry are absent, and
+   Astrofolio has neither an exchange marker nor a discovery entry.
+   Confirm an offline request cannot recover a cached flag-on venue route or
+   expert Terminal page.
 3. Remove the Production environment variable and deploy the current `main` to
    make flag-off durable.
 4. If Vercel paused automatic domain assignment during rollback, restore it

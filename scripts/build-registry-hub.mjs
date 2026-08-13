@@ -1,7 +1,7 @@
 // Generates the quiet authority hub at /registry/.
 //
-// The Registry is deliberately separate from the market-facing Zodiac
-// Terminal. It is a static, first-party verification surface: twelve records,
+// The Registry is deliberately separate from consumer-facing Astrofolio and the
+// expert Terminal. It is a static, first-party verification surface: twelve records,
 // twenty-four official addresses, two networks, and links to the canonical
 // data and methodology. The address verifier is a progressive enhancement;
 // every address remains readable and searchable when JavaScript is disabled.
@@ -123,8 +123,8 @@ function renderRecord(asset) {
 }
 
 function renderNav() {
-  // The wing navigation's public chip leads to the market-facing Terminal.
-  // Registry is an authority page, so Terminal is intentionally not current.
+  // The wing navigation's public chip leads to consumer-facing Astrofolio.
+  // Registry is an authority page, so Astrofolio is intentionally not current.
   return wingNavHtml({ includeSearch: true })
     .replaceAll('href="/registry/"', 'href="/terminal/"')
     .replaceAll(' aria-current="page"', '');
@@ -458,8 +458,8 @@ const html = `<!doctype html>
     </section>
 
     <aside class="terminal" aria-labelledby="terminal-title">
-      <div><p class="eyebrow">Market experience</p><h2 id="terminal-title">Looking for live markets?</h2><p>Prices, sculpture browsing, rankings, charts, and research live in Zodiac Terminal. The Registry stays focused on proof.</p></div>
-      <a class="terminal-link" href="/terminal/"><b>Open Zodiac Terminal</b><span aria-hidden="true">↗</span></a>
+      <div><p class="eyebrow">Market experience</p><h2 id="terminal-title">Looking for live markets?</h2><p>Rankings, charts, liquidity, market tape, and research live in the Terminal. The Registry stays focused on proof.</p></div>
+      <a class="terminal-link" href="/terminal/pro/"><b>Open Terminal</b><span aria-hidden="true">↗</span></a>
     </aside>
 
     <footer class="footer">

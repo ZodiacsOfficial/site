@@ -1,4 +1,4 @@
-/** Flag-on responsive acceptance for the live Zodiac Markets terminal. */
+/** Flag-on responsive acceptance for the live Terminal venue route. */
 import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';

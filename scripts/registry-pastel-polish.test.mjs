@@ -21,201 +21,131 @@ const signs = [
 
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
+function cssRule(source, selector) {
+  const start = source.indexOf(selector);
+  expect(start, `${selector} exists`).toBeGreaterThanOrEqual(0);
+  const open = source.indexOf('{', start);
+  const close = source.indexOf('}', open);
+  return source.slice(start, close + 1);
+}
+
 describe('registry pastel polish', () => {
-  it('uses the canonical pastel derivatives in the annotated registry surfaces', async () => {
-    const [source, bundle, registry] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/assets/app.js'),
-      read('public/terminal/index.html'),
-    ]);
-
-    expect(source).toContain('src="/assets/zodiac-icons/48/${s.asset.sign}.webp"');
-    expect(source).toContain('src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}');
-    expect(source).toContain('src={`/assets/zodiac-icons/48/${r.slug}.webp`}');
-    expect(source).toContain('className="pulse__bar-k pulse__bar-k--sign"');
-    const standings = source.slice(
-      source.indexOf('function StandingsSection()'),
-      source.indexOf('// ---- Shelf viewer'),
-    );
-    expect(standings).toContain('srcSet={`/assets/zodiac-icons/48/${slug}.avif`}');
-    expect(standings).toContain('src={`/assets/zodiac-icons/48/${slug}.webp`}');
-    expect(standings).not.toContain('src={`/assets/icons/${slug}.png`}');
-    expect(bundle).toContain('/assets/zodiac-icons/48/');
-    expect(bundle).toContain('/assets/zodiac-icons/128/');
-    expect(registry).toContain('@media (prefers-reduced-transparency: reduce)');
-    expect(registry).toContain('@media (prefers-contrast: more)');
-  });
-
-  it('uses a complete user-controlled desktop index and honest mobile overflow cues', async () => {
-    const [source, bundle, registry] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/assets/app.js'),
-      read('public/terminal/index.html'),
-    ]);
-
-    // The disc rail walks with the arrow keys and keeps a roving tabstop,
-    // the contract the pastel grid it replaced always had.
-    expect(source).toContain("return currentSeason()?.sign.ticker ?? SIGNS[0].ticker");
-    expect(source).toContain("new URLSearchParams(window.location.search).get('sign')");
-    expect(source).toContain('ArrowRight: activeIndex + 1,');
-    expect(source).toContain('ArrowLeft: activeIndex - 1,');
-    expect(source).toContain('End: SIGNS.length - 1');
-    expect(source).toContain('tabIndex={isActive ? 0 : -1}');
-    expect(source).toContain('Drag to browse · Choose a sign to open.');
-    expect(source).not.toContain('SELECTOR_CYCLE_MS');
-    expect(source).not.toContain('Auto-rotating · tap to pin');
-    expect(source).not.toContain('Scroll or drag to explore');
-    expect(bundle).not.toContain('Auto-rotating');
-    expect(bundle).not.toContain('Scroll or drag');
-    // The stage rail paints from inert placeholder discs until the scene
-    // bundle swaps in the live ticks; the ranked board remains a card list.
-    expect(registry).toContain('.rail__tick--placeholder');
-    expect(registry).toContain('.market-board__rows');
-    expect(registry).toContain('.market-tape__track');
-  });
-
-  it('keeps the display-only market tape moving until reduced motion requests native flow', async () => {
-    const [source, registry] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-    ]);
-    const tapeSource = source.slice(
-      source.indexOf('function MarketTape('),
-      source.indexOf('function SeasonNow('),
-    );
-    const tapeRules = registry.slice(
-      registry.indexOf('.market-tape {'),
-      registry.indexOf('.consumer-market {'),
-    );
-    const materialPass = registry.indexOf('Registry control pass');
-    const reducedStart = registry.lastIndexOf('@media (prefers-reduced-motion: reduce)', materialPass);
-    const reducedRules = registry.slice(reducedStart, materialPass);
-
-    expect(tapeSource).toContain("{renderItems('primary')}");
-    expect(tapeSource).toContain("{renderItems('echo')}");
-    expect(tapeSource).not.toContain('<button');
-    expect(tapeSource).not.toContain('<a ');
-    expect(tapeRules).toContain('animation: registry-market-loop');
-    expect(tapeRules).not.toContain('button.market-tape__item');
-    expect(tapeRules).not.toContain('.market-tape:hover');
-    expect(tapeRules).not.toContain('.market-tape:focus-within');
-    expect(tapeRules).not.toContain('.market-tape:active');
-    expect(tapeRules).toMatch(/\.market-tape\[data-paused\] \.market-tape__track \{\s*animation-play-state: paused;/u);
-    expect(reducedRules).toContain('.market-tape__viewport { overflow-x: auto;');
-    expect(reducedRules).toContain('.market-tape__track { animation: none; will-change: auto; }');
-    expect(reducedRules).toContain(".market-tape__group[aria-hidden='true'] { display: none; }");
-  });
-
-  it('opens on the identity masthead and keeps the optional Cabinet in the purpose section', async () => {
-    const [source, registry] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-    ]);
-
-    // The film is retired. Identity, artwork, and verification now precede
-    // the low market snapshot without introducing a second brand.
-    expect(source).not.toContain('function CineHero(');
-    expect(source).not.toContain('className="cine__frame"');
-    const masthead = source.slice(
-      source.indexOf('function ConsumerIdentityHeader('),
-      source.indexOf('function ConsumerMarketSnapshot('),
-    );
-    expect(masthead).toContain('Zodiac Terminal');
-    expect(masthead).toContain('Every sign has one official token. Find yours, see the artwork, and verify the public record.');
-    expect(masthead).toContain('<TerminalViewLink view="pro"');
-    expect(masthead).not.toContain('<MarketTape');
-    const stage = source.slice(
-      source.indexOf('function GalleryBand('),
-      source.indexOf('function ConsumerExplorer('),
-    );
-    expect(stage).toContain('<SeasonNow season={season} />');
-    expect(stage).not.toContain('className="stage-hero__head"');
-    expect(stage).not.toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
-    expect(stage).not.toContain('Open the Cabinet');
-    expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
-    // The no-JS shell mirrors the same masthead instead of briefly showing a
-    // cinematic title that disappears after React mounts.
-    expect(registry).toContain('<h1 id="static-capital-title">Zodiac Terminal</h1>');
-    expect(registry).toContain('Every sign has one official token. Find yours, see the artwork, and verify the public record.');
-    expect(registry).not.toContain('data-cine-video');
-    expect(source).toContain('id="thesis" className="consumer-purpose reveal"');
-    expect(source).toContain('REGISTRY_AURA_ENABLED &&');
-    expect(source).toContain('See occupied signs, material editions, and wheel coverage for any public wallet.');
-    expect(source).toContain('Read why Zodiacs matter');
-    expect(registry).toContain('registry-collection-hero:slot');
-    expect(registry).not.toContain('cine__why');
-    expect(registry).toContain('.cine__cta .btn--ghost::after { content: none; }');
-  });
-
-  it('gives Registry controls the stage Buy pill language without Market glass', async () => {
-    const [source, registry] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-    ]);
-    const materialPass = registry.slice(registry.indexOf('Registry control pass'));
-    const pillRule = materialPass.slice(
-      materialPass.indexOf('.consumer-registry .registry-pill {'),
-      materialPass.indexOf('.consumer-registry .registry-pill:active'),
-    );
-
-    expect(source).not.toContain('market-glass');
-    expect(registry).not.toContain('.market-glass');
-    expect(source).toContain('className="registry-pill registry-pill--segment"');
-    expect(source).toContain('className="registry-pill registry-pill--share market-board__share-primary"');
-    expect(source).toContain('className="registry-pill registry-pill--icon market-board__social"');
-    expect(source).toContain('className="market-row__record registry-pill registry-pill--record"');
-    expect(source).not.toContain('className="market-row__view');
-    expect(pillRule).toContain('min-height: 44px;');
-    expect(pillRule).toContain('border: 1px solid');
-    expect(pillRule).toContain('border-radius: 999px;');
-    expect(pillRule).toContain('font: 500 13px/1 var(--sans);');
-    expect(pillRule).toContain('inset 0 1px 0');
-    expect(pillRule).toContain('backdrop-filter: none;');
-    expect(materialPass).toContain('.consumer-registry .registry-pill:active { transform: scale(.97); }');
-    expect(materialPass).toContain(".consumer-registry .registry-pill[aria-pressed='true']");
-    expect(materialPass).toMatch(/\.consumer-registry \.registry-pill--record \{[\s\S]*?width: 100%;/u);
-    expect(materialPass).toMatch(/\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?min-height: 44px;[\s\S]*?border-radius: 999px;[\s\S]*?background: rgba\(10,12,17,\.56\);[\s\S]*?font: 500 13px\/1 var\(--sans\);[\s\S]*?backdrop-filter: none;/u);
-    expect(materialPass).toMatch(/@media \(prefers-reduced-transparency: reduce\) \{[\s\S]*?\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?background: #11141b !important;[\s\S]*?backdrop-filter: none !important;/u);
-    expect(materialPass).toMatch(/@media \(prefers-contrast: more\) \{[\s\S]*?\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?border-color: rgba\(238,241,247,\.72\) !important;[\s\S]*?color: var\(--ink\) !important;/u);
-  });
-
-  it('uses recognizable sign media and the Cabinet\'s canonical curator sample', async () => {
+  it('uses canonical sign discs and gold sculpture derivatives in the Lit Vitrine', async () => {
     const source = await read('src/app.jsx');
-    const how = source.slice(
-      source.indexOf('function ConsumerHowItWorks()'),
-      source.indexOf('function ConsumerPurpose()'),
-    );
-    const purpose = source.slice(
-      source.indexOf('function ConsumerPurpose()'),
-      source.indexOf('function ConsumerFaq()'),
-    );
+    expect(source).toContain('srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`}');
+    expect(source).toContain('src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}');
+    expect(source).toContain('src={`/assets/sculptures/512/${layer.slug}.webp`}');
+    expect(source).toContain('srcSet={`/assets/sculptures/512/${layer.slug}.webp 512w, /assets/sculptures/1024/${layer.slug}.webp 1024w`}');
+    expect(source).toContain('alt={layer.current ? `${item.name} gold sculpture` : \'\'}');
+  });
 
-    for (const marker of [
-      "['aries', 'leo', 'pisces']",
-      '/assets/zodiac-icons/48/leo.webp',
-      '8Cd7…b8Qm',
-      'One token for each sign',
-      'Verify the exact address',
-      'Hold, send, or collect',
-      'collection artwork—not a physical object',
-    ]) expect(how).toContain(marker);
+  it('uses the selected pastel only for atmosphere, ring, and daily movement', async () => {
+    const css = await read('src/terminal/split-styles.css');
+    const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
+    expect(lit).toContain('color-mix(in srgb, var(--active-sign) 13%, transparent)');
+    expect(lit).toContain('border-color: var(--sign);');
+    expect(lit).toContain('color: var(--active-sign);');
+    expect(lit).toContain('filter: grayscale(1) saturate(0) brightness(.9);');
+    expect(lit).toContain('filter: grayscale(1) saturate(0);');
+    expect(lit).not.toContain('var(--gold)');
+    expect(lit).not.toContain('var(--gold-bright)');
+    expect(lit).not.toContain('var(--gold-deep)');
+  });
 
-    for (const [slug, finish, numeral, count] of [
-      ['aries', 'crown', 'V', '×12'],
-      ['cancer', 'pastel', 'I', null],
-      ['leo', 'bronze', 'II', null],
-      ['scorpio', 'silver', 'III', null],
-      ['aquarius', 'gold', 'IV', '×3'],
-    ]) {
-      const countFragment = count ? `, count: '${count}'` : '';
-      expect(purpose).toContain(`${slug}: { finish: '${finish}', numeral: '${numeral}'${countFragment} }`);
-    }
-    expect(purpose).toContain("edition?.finish === 'gold' || edition?.finish === 'crown'");
-    expect(purpose).toContain('`/assets/cabinet-materials/gold/${item.asset.sign}`');
-    expect(purpose).toContain('`/assets/zodiac-icons/128/${item.asset.sign}`');
-    expect(purpose).toContain('data-cabinet-sample-finish={edition?.finish}');
-    expect(purpose).toContain('className="consumer-cabinet__edition"');
-    expect(purpose).toContain('className="consumer-cabinet__count"');
+  it('keeps the warm halo behind the sculpture and neutral UI chrome', async () => {
+    const css = await read('src/terminal/split-styles.css');
+    const halo = cssRule(css, '.consumer-registry .vitrine-stage::before {');
+    const primary = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn--primary {');
+    const buttons = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn {');
+    expect(halo).toContain('radial-gradient');
+    expect(halo).toContain('rgba(215, 173, 105, .15)');
+    expect(primary).toContain('background: var(--ink);');
+    expect(primary).toContain('color: var(--bg);');
+    expect(buttons).toContain('background: transparent;');
+    expect(buttons).not.toMatch(/--active-sign|--sign|215, 173, 105/u);
+  });
+
+  it('pins the Lit Vitrine typography roles and removes consumer mono-caps labels', async () => {
+    const css = await read('src/terminal/split-styles.css');
+    const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
+    expect(cssRule(lit, '.consumer-registry .terminal-consumer-hero__kicker {')).toContain('font: italic 500');
+    expect(cssRule(lit, '.consumer-registry .terminal-consumer-hero h1 {')).toContain('var(--serif)');
+    expect(cssRule(lit, '.consumer-registry .vitrine-placard__identity h2 {')).toContain('var(--serif)');
+    expect(cssRule(lit, '.consumer-registry .consumer-section-head h2,')).toContain('var(--serif)');
+    expect(cssRule(lit, '.consumer-registry .vitrine-price__figure {')).toContain('var(--mono)');
+    expect(cssRule(lit, '.consumer-registry .vitrine-price__figure {')).toContain('font-variant-numeric: tabular-nums;');
+    expect(cssRule(lit, '.consumer-registry .vitrine-disc {')).toContain('var(--sans)');
+    expect(lit).toContain('.consumer-registry .consumer-section-head__eyebrow { display: none; }');
+    expect(lit).toContain('letter-spacing: 0;');
+    expect(lit).toContain('text-transform: none;');
+  });
+
+  it('pins opacity-only crossfades, stable stage geometry, and quiet entrances', async () => {
+    const css = await read('src/terminal/split-styles.css');
+    const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
+    const stageLayer = cssRule(lit, '.consumer-registry .vitrine-stage__layer {');
+    const placardLayer = cssRule(lit, '.consumer-registry .vitrine-placard__layer {');
+    const reveal = cssRule(lit, '.consumer-registry .reveal {');
+    const stage = cssRule(lit, '.consumer-registry .vitrine-stage {');
+    expect(stageLayer).toContain('position: absolute;');
+    expect(stageLayer).toContain('transition: opacity 180ms linear;');
+    expect(stageLayer).not.toMatch(/transition:[^;]*(?:transform|filter)/u);
+    expect(placardLayer).toContain('position: absolute;');
+    expect(placardLayer).toContain('transition: opacity 180ms linear;');
+    expect(placardLayer).not.toMatch(/transition:[^;]*(?:transform|filter)/u);
+    expect(reveal).toContain('transition: opacity 240ms linear !important;');
+    expect(reveal).toContain('transform: none !important;');
+    expect(reveal).toContain('filter: none !important;');
+    expect(stage).toContain('width: min(100%, calc(var(--vitrine-stage-height, 520px) * 1.2));');
+    expect(stage).toContain('height: auto;');
+    expect(stage).toContain('aspect-ratio: 6 / 5;');
+    expect(lit).toContain('aspect-ratio: 4 / 5;');
+    expect(lit).toContain('scroll-snap-type: x mandatory;');
+    expect(lit).toContain('transition: none;');
+  });
+
+  it('pins the 0.98 press response and disables all consumer motion on request', async () => {
+    const css = await read('src/terminal/split-styles.css');
+    const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
+    expect(lit).toContain('transition: transform 80ms ease, border-color 120ms linear, background-color 120ms linear;');
+    expect(lit).toContain('.consumer-registry .vitrine-placard__actions .btn:active { transform: scale(.98); }');
+    expect(lit).toContain('.consumer-registry .vrf__submit:active,');
+    expect(lit).toContain('.consumer-registry .vrf__example:active { transform: scale(.98); }');
+    const reduced = lit.slice(lit.lastIndexOf('@media (prefers-reduced-motion: reduce)'));
+    expect(reduced).toContain('animation: none !important;');
+    expect(reduced).toContain('transition: none !important;');
+    expect(reduced).toContain('.consumer-registry .reveal { opacity: 1; }');
+  });
+
+  it('limits the unfolding composition to three major hairlines and no dashboard boxes', async () => {
+    const [source, css] = await Promise.all([
+      read('src/app.jsx'),
+      read('src/terminal/split-styles.css'),
+    ]);
+    expect(source.match(/data-vitrine-rule/gu)).toHaveLength(3);
+    expect(css).toContain('.consumer-registry > [data-vitrine-rule]::before {');
+    expect(css).toContain('height: 1px;');
+    const sections = cssRule(css, '.consumer-registry > .consumer-buy,');
+    expect(sections).toContain('border: 0;');
+    expect(sections).toContain('background: transparent;');
+    expect(sections).toContain('box-shadow: none;');
+    expect(css).toContain('--gold: var(--ink-2);');
+    expect(css).toContain('--gold-bright: var(--ink);');
+    expect(css).toContain('.consumer-registry .astrofolio-vitrine::after { content: none; }');
+    expect(css).toContain('outline-color: var(--ink-2);');
+    expect(css).not.toContain('outline-color: var(--active-sign');
+    expect(css).toContain('grid-template-columns: none;');
+    expect(css).toContain('isolation: auto;');
+    expect(css).toContain('.consumer-registry .consumer-closing__registry:hover .consumer-closing__arrow { transform: none; }');
+    expect(css).toContain('.consumer-registry .ftr .mark .g { color: var(--ink-2); }');
+    expect(css).toContain('.consumer-registry .consumer-thesis__link:hover .consumer-thesis__visual img { transform: none; }');
+  });
+
+  it('keeps the committed collection flag off and its generator slots inert', async () => {
+    const html = await read('public/terminal/index.html');
+    expect(html).toContain('<meta name="zodiacs-registry-collection-enabled" content="0" />');
+    expect(html).toContain('<div hidden aria-hidden="true"><!-- registry-collection-hero:slot --></div>');
+    expect(html).toContain('<div hidden aria-hidden="true"><!-- registry-collection-entry:slot --></div>');
   });
 
   it('keeps the wing nav on the shared compact and desktop geometry contract', async () => {
@@ -275,6 +205,9 @@ describe('registry pastel polish', () => {
       expect(output).toContain('class="wnav-menu__sign" style="--i:0;--sign:#DE8E79"');
       expect(output).toContain('class="wnav-menu__sign" style="--i:11;--sign:#A9D4C4"');
     }
+    expect(thesis).toContain('<a class="wnav__chip" href="/terminal/">Astrofolio</a>');
+    expect(thesis).toContain('<span>Astrofolio</span><small>Your sign’s sculpture, official token, and buying guide</small>');
+    expect(thesis).not.toContain('<a class="wnav__chip" href="/terminal/">Terminal</a>');
     expect(siteNav).toContain('.mobile-menu__tool:last-child { border-bottom: 0; }');
     expect(source).toContain('<span className="wnav__sep">·</span><span className="wnav__dim">org</span>');
     expect(source).toContain('<span className="wnav-menu__label">Tools</span>');
@@ -282,25 +215,7 @@ describe('registry pastel polish', () => {
     expect(source).toContain('className="wnav-menu__tool"');
   });
 
-  it('uses a full-row, plain-English Registry Collection feature band', async () => {
-    const [source, registry] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-    ]);
-
-    expect(source).toContain("t: 'Verify a Zodiac'");
-    expect(source).toContain("t: 'Read a collection'");
-    expect(source).toContain("t: 'Build with the record'");
-    expect(source).toContain('className="idctx__card idctx__card--aura"');
-    expect(source).toContain('Public collection');
-    expect(source).toContain('Saved chart');
-    expect(source).toContain('Today’s sky');
-    expect(registry).toContain('.idctx__card--aura {');
-    expect(registry).toContain('grid-column: 1 / -1;');
-    expect(registry).toContain('.static-site__card--aura {');
-  });
-
-  it('paints market direction after generic values and includes an explicit flat state', async () => {
+  it('paints technical market direction after generic values and includes a flat state', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/terminal/index.html'),

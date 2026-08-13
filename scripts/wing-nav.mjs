@@ -9,7 +9,7 @@
 // mobile burger overlay) — in the wing's inlined-token form (no hashed bundle).
 //
 // Link set (owner-directed): Signs ▾ · Tools · Learn · Horoscopes · Saved charts
-// on the left, a "Terminal" chip on the right. The verification Registry remains
+// on the left, an "Astrofolio" chip on the right. The verification Registry remains
 // a separate read-only destination linked from records and the footer.
 //
 // Sign table mirrors src/lib/signs.ts (slug/name/glyph/dates/hue); keep in sync
@@ -55,8 +55,8 @@ export function brandMarkSvg(size = 17) {
   return `<svg class="wnav__brand" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" aria-hidden="true">${dots}</svg>`;
 }
 
-// The full nav markup (bar + Signs dropdown + mobile overlay). Terminal is the
-// consumer market destination even when the current wing page is a Registry record.
+// The full nav markup (bar + Signs dropdown + mobile overlay). Astrofolio is the
+// consumer collection destination even when the current wing page is a Registry record.
 export function wingNavHtml({ includeSearch = true } = {}) {
   const signGrid = NAV_SIGNS.map((s) => (
     `<a class="wnav-signs__item" href="/${s.slug}/" style="--sign:${s.hue}">` +
@@ -91,7 +91,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <a class="wnav__link" href="/profile/">Saved charts</a>
       </div>
       ${search}
-      <a class="wnav__chip" href="/terminal/">Terminal</a>
+      <a class="wnav__chip" href="/terminal/">Astrofolio</a>
       <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
         <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
       </button>
@@ -107,7 +107,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <a class="wnav-menu__link" style="--i:0" href="/learn/">Learn</a>
         <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
         <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
-        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/terminal/"><span>Terminal</span><small>Live markets, gold sculptures, and research</small></a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/terminal/"><span>Astrofolio</span><small>Your sign’s sculpture, official token, and buying guide</small></a>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">Tools</span>

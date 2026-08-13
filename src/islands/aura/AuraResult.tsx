@@ -311,7 +311,7 @@ export function AuraResult({
         aria-labelledby="aura-closing-title"
       >
         <div>
-          <p class="aura-result__kicker">Continue through Zodiac Terminal</p>
+          <p class="aura-result__kicker">Continue through Astrofolio</p>
           <h3 id="aura-closing-title">
             {illustrative ? "Open your own cabinet." : "Keep this edition."}
           </h3>
@@ -351,7 +351,7 @@ export function AuraResult({
               </button>
             </>
           )}
-          <a class="btn btn--ghost" href="/terminal/">Browse Zodiac Terminal</a>
+          <a class="btn btn--ghost" href="/terminal/">Browse Astrofolio</a>
         </div>
         {sharePreviewUrl && !illustrative && (
           <AuraSharePreview

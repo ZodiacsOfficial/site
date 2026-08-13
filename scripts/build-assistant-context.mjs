@@ -61,7 +61,7 @@ export const BANNED_CONSUMER_VOCABULARY = Object.freeze([
   'wallet',
 ]);
 
-const WING_INVENTORY_HEADING = 'ZODIAC TERMINAL AND REGISTRY';
+const WING_INVENTORY_HEADING = 'ASTROFOLIO, TERMINAL, AND REGISTRY';
 const WING_INVENTORY_END_HEADING = 'GLOSSARY TERMS';
 
 const COLLAPSE = /\s+/g;
@@ -319,9 +319,9 @@ function bannedVocabulary(text) {
 }
 
 /**
- * The Terminal/Registry inventory intentionally uses its own records and
- * market register. Remove that bounded section before enforcing the consumer
- * astrology vocabulary rule on the rest of the assistant guide.
+ * The Astrofolio/Terminal/Registry inventory intentionally uses its own records
+ * and market register. Remove that bounded section before enforcing the
+ * consumer astrology vocabulary rule on the rest of the assistant guide.
  */
 export function consumerVocabularyScope(context) {
   const start = context.indexOf(`\n${WING_INVENTORY_HEADING}\n`);
@@ -448,8 +448,9 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     birthdayLines(birthdays, signNames),
     '',
     WING_INVENTORY_HEADING,
-    '- /terminal/ — Zodiac Terminal: the simple, identity-first view for choosing a sign, exploring its official artwork and story, verifying its published addresses, and reading a small per-sign price snapshot.',
-    '- /terminal/pro/ — Zodiac Terminal Pro: the dense market view of all twelve, ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart, market tape, briefing, season context, and research headlines.',
+    'Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.',
+    '- /terminal/: Astrofolio is the consumer collection for choosing a sign, seeing its gold sculpture and official token, checking its Registry record, and following a simple guide to buying it.',
+    '- /terminal/pro/: Terminal is the expert market desk for all twelve, ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart, market tape, briefing, season context, and research headlines.',
     '- /terminal/research/ — Research desk: reviewed sky facts, traditional readings, and separately timestamped public-activity observations.',
     '- /registry/ — Zodiacs Registry: the read-only verification hub for canonical identities, official addresses, records, datasets, and methodology.',
     '- /thesis/ — The Nº 09 essay: zodiac history and identity meet public digital ownership and Solana performance; supporting disclosures follow.',

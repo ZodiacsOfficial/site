@@ -5,6 +5,24 @@ below is satisfied.
 
 Approved: 2026-08-10T11:40:11Z
 
+## Addendum: 2026-08-13 current public product names
+
+Authorized: 2026-08-13
+
+This addendum changes public labels only. It does not widen the acquisition,
+execution, custody, indexing, provider, telemetry, pilot, or rollback boundary:
+
+- `/terminal/` is **Astrofolio**, the indexed consumer collection of gold
+  sculptures and official Zodiac tokens.
+- `/terminal/pro/`, its reviewed research, and the protected
+  `/terminal/markets/` venue route are **Terminal**, the expert market desk.
+- The protected route no longer presents **Zodiac Markets** as an active
+  product name. Internal `exchange` identifiers, the feature flag, event
+  names, URLs, and every control in this record remain unchanged.
+- “Zodiac Markets,” “Pro Terminal,” “consumer Terminal,” and “Zodiac
+  Terminal” below are historical labels from the dated decisions that used
+  them; they are preserved as decision evidence, not current navigation copy.
+
 ## Addendum — 2026-08-12: Pro Terminal discovery entry
 
 Authorized: 2026-08-12
@@ -13,32 +31,32 @@ This addendum supersedes only the location of the single already-authorized
 Zodiac Markets discovery entry and authorizes the accompanying Pro Terminal
 reading surface:
 
-- `/terminal/` remains the indexed consumer Terminal and carries no Zodiac
-  Markets discovery entry or exchange flag marker in either flag state.
-  `/terminal/pro/` is an indexed, data-forward reading surface; the view
-  switch between those two Terminal pages is not a Zodiac Markets entry.
+- `/terminal/` remains the indexed consumer collection, now named Astrofolio,
+  and carries no venue-route discovery entry or exchange flag marker in either
+  flag state. `/terminal/pro/` is the indexed, data-forward Terminal surface;
+  the view switch between Astrofolio and Terminal is not a venue-route entry.
 - The one same-origin, flag-gated Zodiac Markets discovery entry moves from
   `/terminal/` to `/terminal/pro/`. It appears only when
   `PUBLIC_REGISTRY_EXCHANGE_ENABLED=1`, links to
   `/terminal/markets/#<selected-sign>`, and carries only a canonical sign slug
   in the URL hash. It contains no venue URL.
-- The same build stamper sets the Zodiac Markets route marker and the Pro
-  Terminal marker from the same flag. Committed HTML remains flag-off: the
-  Markets terminal and Pro gateway are absent and both markers are `0`.
+- The same build stamper sets the venue-route marker and the expert Terminal
+  marker from the same flag. Committed HTML remains flag-off: the market
+  terminal and expert gateway are absent and both markers are `0`.
 - Mounting, focusing, or selecting the gateway causes no provider or wallet
-  request. The Pro reading surface may continue the Terminal's existing
+  request. The expert reading surface may continue Terminal's existing
   browser-direct, read-only indexed market-data requests; it embeds no trade
   panel and adds no Jupiter request.
-- No global navigation, footer, Cabinet, sign-record, consumer-Terminal, or
-  leaderboard-row Zodiac Markets entry is authorized. The Pro page and each
+- No global navigation, footer, Cabinet, sign-record, Astrofolio, or
+  leaderboard-row venue-route entry is authorized. The Terminal page and each
   form of its navigation URL is service-worker network-only so rollback
   cannot recover a stale flag-on gateway.
-- Zodiac Markets itself remains `noindex`, `no-store`, out of the sitemap, and
+- The venue route itself remains `noindex`, `no-store`, out of the sitemap, and
   under its existing route-specific CSP. Its route, execution/custody boundary,
   internal `exchange` identifiers, analytics event names, provider controls,
   zero-compensation terms, risk copy, and rollback procedure stay unchanged.
 
-This addendum does not restart or extend the 30-day pilot. Zodiac Markets
+This addendum does not restart or extend the 30-day pilot. The protected venue route
 returns flag-off on or before **2026-09-09** unless the owner records the dated
 live-contract and pilot-evidence review already required by this decision.
 Every earlier control remains in force unless its only subject is the

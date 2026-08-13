@@ -1,6 +1,6 @@
 import type { CatalogLocale as Locale } from '../lib/i18n/core';
 import { additionText, localizedAdditionObject } from './additions';
-import { BREADCRUMB_LABELS, OG_EN, SCHEMA_EN, ogImageForPath } from './seo.en.mjs';
+import { BREADCRUMB_LABELS, OG_EN, SCHEMA_EN, ogImageForPath, ogSpecialForPath } from './seo.en.mjs';
 import { ruOgImageForPath } from './seo.ru.mjs';
 
 // Russian is the first localized social-card catalogue. Other released
@@ -35,15 +35,10 @@ export function ogAltForPathAndLocale(path: string, locale: Locale): string {
     if (locale === 'ru') return `${RU_OG_TOOL_TITLES[tool.key] ?? tool.title} — Zodiacs.org`;
     return `${additionText(locale, `og.tools.${tool.key}.title`, tool.title)} — Zodiacs.org`;
   }
-  for (const [key, special] of [
-    ['registry', OG_EN.registry],
-    ['thesis', OG_EN.thesis],
-    ['disclosure', OG_EN.disclosure],
-  ] as const) {
-    if (special.path === normalized) {
-      if (locale === 'ru') return RU_OG_SPECIAL_ALT[key];
-      return additionText(locale, `og.${key}.alt`, special.alt);
-    }
+  const special = ogSpecialForPath(normalized);
+  if (special) {
+    if (locale === 'ru') return RU_OG_SPECIAL_ALT[special.key] ?? special.value.alt;
+    return additionText(locale, `og.${special.key}.alt`, special.value.alt);
   }
   if (locale === 'ru') return 'Zodiacs.org — бесплатные натальные карты, гиды по знакам и астрологические инструменты.';
   return additionText(locale, 'og.fallbackAlt', OG_EN.fallbackAlt);
@@ -69,7 +64,7 @@ const RU_BREADCRUMB_LABELS: Readonly<Record<string, string>> = Object.freeze({
   compatibility: 'Совместимость',
   disclosure: 'Раскрытие информации',
   methodology: 'Методология',
-  markets: 'Zodiac Markets',
+  markets: 'Маршрут Terminal к торговой площадке',
   'moon-phase': 'Фаза Луны',
   'moon-sign': 'Лунный знак',
   privacy: 'Конфиденциальность',
@@ -79,7 +74,7 @@ const RU_BREADCRUMB_LABELS: Readonly<Record<string, string>> = Object.freeze({
   'rising-sign': 'Асцендент',
   ru: 'Русский',
   'saturn-return': 'Возвращение Сатурна',
-  terminal: 'Zodiac Terminal',
+  terminal: 'Astrofolio',
   tools: 'Астроинструменты',
   transits: 'Транзиты',
 });
@@ -96,8 +91,9 @@ const RU_OG_TOOL_TITLES: Readonly<Record<string, string>> = Object.freeze({
   transits: 'Ваши транзиты сегодня',
 });
 
-const RU_OG_SPECIAL_ALT = Object.freeze({
-  registry: 'Реестр Zodiacs.org — двенадцать официальных записей в каталоге только для чтения.',
+const RU_OG_SPECIAL_ALT: Readonly<Record<string, string>> = Object.freeze({
+  astrofolio: 'Astrofolio: коллекция золотых скульптур и официальных токенов для двенадцати знаков Зодиака.',
+  terminal: 'Terminal: экспертный рыночный контекст и проверенные исследования двенадцати официальных токенов Зодиака.',
   thesis: 'Вера — самый древний актив: манифест Реестра Zodiacs.org.',
   disclosure: 'Раскрытие информации о Реестре — подтверждённые факты и ожидающие подтверждения сведения.',
 });

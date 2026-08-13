@@ -16,13 +16,12 @@ Use these labels from docs/STRATEGY.md §4 when they fit:
 - Find your moon sign
 - Find your rising sign
 - Read your sign
-- Registry
-- Registro
+- Astrofolio
 - the Twelve
-- {sign} also exists as one of the Twelve — a canonical record in the registry
+- {sign} also exists as one of the Twelve — a canonical record in the Registry
 - View the record →
 - Nothing saved yet. Charts you save will live here, on your device first.
-- The optional companion app the free tools feed into — your saved charts and the signs you care about become a cosmic identity you keep.
+- Choose your sign and meet its gold sculpture and official identity through one calm collection view.
 - “the Twelve” means the twelve signs as canonical records in the registry.
 - The records bridge is: “{sign} also exists as one of the Twelve — a canonical record in the registry” → “View the record →”.
 
@@ -740,9 +739,10 @@ Every route below is a live date guide. Each one-line description names the sign
 - /birthday/september-8/ — Virgo birthday guide.
 - /birthday/september-9/ — Virgo birthday guide.
 
-ZODIAC TERMINAL AND REGISTRY
-- /terminal/ — Zodiac Terminal: the simple, identity-first view for choosing a sign, exploring its official artwork and story, verifying its published addresses, and reading a small per-sign price snapshot.
-- /terminal/pro/ — Zodiac Terminal Pro: the dense market view of all twelve, ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart, market tape, briefing, season context, and research headlines.
+ASTROFOLIO, TERMINAL, AND REGISTRY
+Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.
+- /terminal/: Astrofolio is the consumer collection for choosing a sign, seeing its gold sculpture and official token, checking its Registry record, and following a simple guide to buying it.
+- /terminal/pro/: Terminal is the expert market desk for all twelve, ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart, market tape, briefing, season context, and research headlines.
 - /terminal/research/ — Research desk: reviewed sky facts, traditional readings, and separately timestamped public-activity observations.
 - /registry/ — Zodiacs Registry: the read-only verification hub for canonical identities, official addresses, records, datasets, and methodology.
 - /thesis/ — The Nº 09 essay: zodiac history and identity meet public digital ownership and Solana performance; supporting disclosures follow.

@@ -60,7 +60,7 @@ const ru = {
   navTools: 'Инструменты',
   navLearn: 'Разбор',
   navHoroscopes: 'Гороскопы',
-  navCollect: 'Terminal',
+  navCollect: 'Astrofolio',
   navSavedCharts: 'Сохранённые карты',
   navMenu: 'Меню',
   navSite: 'О сайте',

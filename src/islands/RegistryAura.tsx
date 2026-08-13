@@ -987,7 +987,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     <div id="aura-composer" class="aura-composer">
       <header class="aura-page__hero">
         <div class="aura-page__hero-lede">
-          <em class="kicker">Zodiac Terminal</em>
+          <em class="kicker">Astrofolio</em>
           <h1 class="display">See your Zodiac collection.</h1>
           <p class="aura-page__hero-copy">
             Every Zodiac you hold takes its place in the Cabinet of Twelve —

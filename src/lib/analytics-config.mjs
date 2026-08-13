@@ -7,6 +7,7 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   share_card_downloaded: ['variant'],
   widget_embed_copied: ['widget', 'mode'],
   registry_visit: [],
+  registry_sign_selected: ['sign', 'source'],
   verifier_used: ['chain', 'outcome'],
   terminal_view_switch: ['surface', 'direction'],
   sdk_click: ['source', 'destination'],

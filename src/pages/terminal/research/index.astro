@@ -24,18 +24,27 @@ const dateLabel = (value: string) => new Intl.DateTimeFormat('en-US', {
 }).format(new Date(value));
 const categoryFor = (item: ResearchItem) => item.kind === 'event-brief' ? 'calendar' : 'zodiacs-research';
 const visibleItems = publication.items.filter((item) => item.status === 'published' && item.visibleAt <= publication.generatedAt);
+const terminalResearchBreadcrumb = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+    { '@type': 'ListItem', position: 2, name: 'Terminal', item: 'https://zodiacs.org/terminal/pro/' },
+    { '@type': 'ListItem', position: 3, name: 'Markets Research', item: 'https://zodiacs.org/terminal/research/' },
+  ],
+};
 ---
 <Base
-  title="Markets Research | Zodiac Terminal"
+  title="Markets Research | Terminal"
   description="Verified sky facts, traditional symbolic readings, and separately timestamped Zodiac market observations from Zodiacs.org Research System."
   path="/terminal/research/"
+  jsonLd={[terminalResearchBreadcrumb]}
   rssFeed={{ href: '/feeds/market-research.xml', title: 'Zodiacs.org Markets Research' }}
   stableTypography
   terminalMarketNotice
 >
   <main class="research-shell">
     <header class="research-hero">
-      <a class="research-back" href="/terminal/pro/">← Pro terminal</a>
+      <a class="research-back" href="/terminal/pro/">← Terminal</a>
       <p class="research-kicker">Zodiacs.org Research System</p>
       <h1>Markets Research</h1>
       <p class="research-deck">

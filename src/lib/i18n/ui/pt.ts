@@ -7,7 +7,7 @@ const pt = {
   navTools: 'Ferramentas',
   navLearn: 'Aprenda',
   navHoroscopes: 'Horóscopos',
-  navCollect: 'Terminal',
+  navCollect: 'Astrofolio',
   navSavedCharts: 'Mapas salvos',
   navMenu: 'Menu',
   navSite: 'O site',

@@ -19,7 +19,7 @@ describe('Terminal public-route split', () => {
 
     const markets = await read('public/terminal/markets/index.html');
     expect(markets).toContain('href="https://zodiacs.org/terminal/markets/"');
-    expect(markets).toContain('"item": "https://zodiacs.org/terminal/"');
+    expect(markets).toContain('"item": "https://zodiacs.org/terminal/pro/"');
     expect(markets).not.toContain('https://zodiacs.org/registry/exchange/');
 
     const research = await read('src/pages/terminal/research/index.astro');
@@ -42,6 +42,22 @@ describe('Terminal public-route split', () => {
     expect(pro).not.toMatch(/<meta\s+name=["']robots["'][^>]*noindex/iu);
     expect(consumer).not.toContain('zodiacs-registry-exchange-enabled');
     expect(markets).toContain('<meta name="robots" content="noindex" />');
+  });
+
+  it('publishes Astrofolio for consumers and reserves Terminal for the market desk', async () => {
+    const [consumer, pro] = await Promise.all([
+      read('public/terminal/index.html'),
+      read('public/terminal/pro/index.html'),
+    ]);
+    expect(consumer).toContain('<title>Astrofolio · Choose your sign and see its official Zodiac token · Zodiacs.org</title>');
+    expect(consumer).toContain('aria-label="Astrofolio navigation"');
+    expect(consumer).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
+    expect(pro).toContain('<title>Terminal · Live Prices, Liquidity &amp; Research · Zodiacs.org</title>');
+    expect(pro).toContain('<h1 id="pro-static-title">Terminal</h1>');
+    expect(pro).toContain('title="Zodiacs.org Markets Research"');
+    expect(pro).not.toContain('Zodiac Markets Research');
+    expect(pro).toContain('<a class="pro-static-hero__switch" href="/terminal/" data-terminal-static-view="consumer">Astrofolio');
+    expect(pro).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
   });
 
   it('redirects legacy consumer routes directly to their Terminal destinations', async () => {
@@ -89,8 +105,20 @@ describe('Terminal public-route split', () => {
     const legacyUrls = await read('src/lib/legacy/urls.ts');
     expect(feed).toContain("home_page_url: 'https://zodiacs.org/terminal/research/'");
     expect(sitemap).toContain("'/terminal/research/'");
-    expect(sitemap).toContain("['/terminal/pro/', '2026-08-12']");
+    expect(sitemap).toContain("['/terminal/pro/', '2026-08-13']");
     expect(legacyUrls).toContain("{ path: '/terminal/pro/', priority: 0.78 }");
     expect(sitemap).not.toContain("'/registry/research/'");
+  });
+
+  it('keeps research breadcrumbs inside the Terminal identity', async () => {
+    const [index, article] = await Promise.all([
+      read('src/pages/terminal/research/index.astro'),
+      read('src/pages/terminal/research/[slug].astro'),
+    ]);
+    for (const source of [index, article]) {
+      expect(source).toContain("name: 'Terminal', item: 'https://zodiacs.org/terminal/pro/'");
+      expect(source).toContain('jsonLd={[terminalResearchBreadcrumb]}');
+      expect(source).not.toContain("name: 'Astrofolio'");
+    }
   });
 });

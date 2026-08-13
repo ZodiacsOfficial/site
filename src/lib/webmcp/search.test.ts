@@ -58,10 +58,10 @@ const entries: SearchEntry[] = [
   },
   {
     path: '/terminal/',
-    title: 'Zodiac Terminal',
-    description: 'Live markets, official token records, and reviewed research.',
-    kind: 'terminal',
-    keywords: ['terminal', 'zodiac terminal', 'zodiac capital markets', 'astrofolio'],
+    title: 'Astrofolio',
+    description: 'Choose your sign, see its gold sculpture and official token, and check its Registry record.',
+    kind: 'astrofolio',
+    keywords: ['astrofolio', 'collection', 'gold sculpture', 'official token'],
   },
   {
     path: '/registry/',
@@ -196,7 +196,7 @@ describe('WebMCP consumer search', () => {
   it.each(['registry', 'thesis', 'astrofolio', 'aries record'])
     ('never returns a wing entry for %s', (query) => {
       const results = rankConsumerSearchEntries(entries, query);
-      expect(results.every((entry) => entry.kind !== 'terminal' && entry.kind !== 'registry')).toBe(true);
+      expect(results.every((entry) => entry.kind !== 'astrofolio' && entry.kind !== 'terminal' && entry.kind !== 'registry')).toBe(true);
       expect(results.every((entry) => !/^\/(?:terminal|registry|thesis|sdk|archive)(?:\/|$)/.test(entry.path)))
         .toBe(true);
     });

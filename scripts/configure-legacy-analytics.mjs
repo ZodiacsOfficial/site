@@ -97,7 +97,7 @@ async function registryHtmlFiles() {
     // analytics or other third-party request; record and technical pages keep
     // the legacy analytics policy below it.
     if (entry.isFile() && entry.name === 'index.html') return [];
-    // Zodiac Markets moved to /terminal/markets/. The legacy directory may
+    // The Terminal venue route moved to /terminal/markets/. The legacy directory may
     // still exist in a dirty worktree while its tracked page is being removed.
     if (entry.isDirectory() && entry.name === 'exchange') return [];
     if (entry.isFile() && entry.name.endsWith('.html')) return [join(directory, entry.name)];
