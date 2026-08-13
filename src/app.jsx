@@ -6051,6 +6051,7 @@
                     decoding="async"
                   />
                 </picture>
+                <span className="consumer-thesis__line" aria-hidden="true">Symbol · record · identity</span>
               </div>
               <div className="consumer-purpose__essay">
                 <h2 id="consumer-purpose-title">The story behind the collection</h2>

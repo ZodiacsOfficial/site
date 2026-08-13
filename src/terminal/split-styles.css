@@ -1002,69 +1002,85 @@
 
     .consumer-registry > .consumer-purpose {
       display: grid;
-      grid-template-columns: minmax(0, 1.28fr) minmax(300px, .72fr);
-      gap: clamp(16px, 2.5vw, 28px);
+      grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+      gap: clamp(18px, 3vw, 34px);
       align-items: stretch;
       padding: clamp(64px, 8vw, 110px) 0 clamp(78px, 10vw, 130px);
     }
     .consumer-registry > .consumer-purpose:not(:has(.consumer-collection)) { grid-template-columns: minmax(0, 1fr); }
-    .consumer-registry .consumer-thesis {
-      width: 100%;
-      min-height: clamp(520px, 50vw, 620px);
+    .consumer-registry .consumer-thesis,
+    .consumer-registry .consumer-collection {
+      min-width: 0;
       overflow: hidden;
-      padding: 6px;
-      border: 0;
-      border-radius: 34px 34px 10px 34px;
-      background: rgba(238, 241, 247, .035);
-      box-shadow: inset 0 0 0 1px rgba(238, 241, 247, .11), 0 40px 96px -72px rgba(0, 0, 0, .95);
+      padding: 0;
+      border: 1px solid var(--hair-2);
+      border-radius: 6px 24px 24px 24px;
+      background: rgba(15, 18, 26, .74);
+      box-shadow: 0 28px 70px -58px rgba(0, 0, 0, .9);
     }
-    .consumer-registry .consumer-thesis__link {
-      position: relative;
-      min-height: clamp(508px, calc(50vw - 12px), 608px);
+    .consumer-registry .consumer-thesis { border-radius: 24px 24px 6px 24px; }
+    .consumer-registry .consumer-thesis__link,
+    .consumer-registry .consumer-collection__link {
+      height: 100%;
       display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-      border-radius: 28px 28px 6px 28px;
+      flex-direction: column;
       color: inherit;
       text-decoration: none;
     }
-    .consumer-registry .consumer-thesis__visual {
-      position: absolute;
-      inset: 0;
+    .consumer-registry .consumer-thesis__link {
       min-height: 100%;
+    }
+    .consumer-registry .consumer-thesis__visual {
+      position: relative;
+      flex: none;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
       border: 0;
-      background: #080a0e;
+      background: #08090d;
     }
     .consumer-registry .consumer-thesis__visual picture { display: block; width: 100%; height: 100%; }
     .consumer-registry .consumer-thesis__visual::after {
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(180deg, rgba(5, 6, 8, .02) 4%, rgba(5, 6, 8, .08) 38%, rgba(5, 6, 8, .76) 75%, #060709 100%),
-        radial-gradient(120% 86% at 78% 18%, transparent 34%, rgba(5, 6, 8, .34) 100%);
+      background: linear-gradient(180deg, transparent 42%, rgba(6, 7, 9, .88));
       content: "";
+      pointer-events: none;
     }
     .consumer-registry .consumer-thesis__visual img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 50% 45%;
+      object-position: 50% 52%;
       filter: saturate(1.02) contrast(1.04) brightness(.84);
       transform: none;
       transition: opacity 180ms linear;
     }
-    .consumer-registry .consumer-thesis__line { position: absolute; z-index: 2; top: 25px; left: 27px; color: rgba(255, 255, 255, .64); }
-    .consumer-registry .consumer-purpose__essay {
-      position: relative;
+    .consumer-registry .consumer-thesis__line {
+      position: absolute;
       z-index: 2;
-      width: min(100%, 760px);
-      padding: clamp(32px, 5vw, 56px);
+      bottom: 14px;
+      left: 18px;
+      color: rgba(238, 241, 247, .66);
+      font: 500 8px/1 var(--mono);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .consumer-registry .consumer-purpose__essay {
+      flex: 1;
+      padding: clamp(22px, 3vw, 32px);
+    }
+    .consumer-registry .consumer-purpose__essay h2 {
+      max-width: 13ch;
+      margin: 0;
+      color: var(--ink);
+      font: 500 clamp(31px, 3.5vw, 44px)/.96 var(--serif);
+      letter-spacing: -.025em;
     }
     .consumer-registry .consumer-purpose__essay p {
-      max-width: 47ch;
-      margin: 22px 0 0;
-      color: rgba(238, 241, 247, .74);
-      font: 400 16px/1.65 var(--sans);
+      max-width: 48ch;
+      margin: 16px 0 0;
+      color: var(--ink-2);
+      font: 400 14px/1.58 var(--sans);
     }
     .consumer-registry .consumer-purpose__cta {
       min-height: 52px;
@@ -1098,45 +1114,31 @@
     .consumer-registry .consumer-thesis__link:focus-visible,
     .consumer-registry .consumer-collection__link:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
-    .consumer-registry .consumer-collection {
-      min-width: 0;
-      min-height: 580px;
-      overflow: hidden;
-      padding: 0;
-      border: 1px solid var(--hair-2);
-      border-radius: 8px 30px 30px 30px;
-      background:
-        radial-gradient(85% 55% at 50% 8%, rgba(219, 188, 119, .085), transparent 74%),
-        rgba(12, 14, 20, .92);
-      box-shadow: 0 40px 96px -72px rgba(0, 0, 0, .95);
-    }
-    .consumer-registry .consumer-collection__link {
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      color: inherit;
-      text-decoration: none;
-    }
-    .consumer-registry .consumer-collection__copy { padding: clamp(26px, 3vw, 34px) clamp(24px, 3vw, 34px) 18px; }
+    .consumer-registry .consumer-collection__copy { padding: clamp(22px, 3vw, 32px); }
     .consumer-registry .consumer-collection__eyebrow {
       display: block;
-      margin-bottom: 11px;
+      margin-bottom: 13px;
       color: color-mix(in srgb, var(--active-sign) 78%, var(--ink));
       font: 500 9px/1 var(--mono);
       letter-spacing: .14em;
       text-transform: uppercase;
     }
     .consumer-registry .consumer-collection h3 {
-      max-width: 8ch;
+      max-width: 13ch;
       margin: 0;
       color: var(--ink);
-      font: 500 clamp(35px, 4vw, 49px)/.92 var(--serif);
-      letter-spacing: -.035em;
+      font: 500 clamp(31px, 3.5vw, 44px)/.96 var(--serif);
+      letter-spacing: -.025em;
     }
-    .consumer-registry .consumer-collection p { margin: 16px 0 0; color: var(--ink-dim); font: 400 14px/1.55 var(--sans); }
+    .consumer-registry .consumer-collection p { max-width: 48ch; margin: 16px 0 0; color: var(--ink-2); font: 400 14px/1.58 var(--sans); }
     .consumer-registry .consumer-collection__art {
+      position: relative;
       margin: auto 18px 0;
-      border-color: color-mix(in srgb, var(--active-sign) 34%, var(--hair-2));
+      padding: 9px;
+      border: 1px solid color-mix(in srgb, var(--active-sign) 42%, var(--hair-2));
+      border-radius: 12px 12px 3px 12px;
+      background: rgba(6, 7, 9, .76);
+      box-shadow: inset 0 0 0 4px rgba(198, 204, 218, .025), 0 20px 44px -34px rgba(0, 0, 0, .95);
     }
     .consumer-registry .consumer-collection__cta { margin: 18px 24px 24px; align-self: flex-start; }
     .consumer-registry .consumer-cabinet {
@@ -1249,6 +1251,12 @@
       text-transform: none;
     }
 
+    @media (max-width: 1020px) {
+      .consumer-registry > .consumer-purpose { grid-template-columns: minmax(0, 1fr); }
+      .consumer-registry .consumer-thesis,
+      .consumer-registry .consumer-collection { border-radius: 22px 22px 5px 22px; }
+    }
+
     @media (max-width: 899px) {
       .consumer-registry .astrofolio-vitrine {
         grid-template-columns: minmax(0, 1fr);
@@ -1317,12 +1325,8 @@
       .consumer-registry .consumer-steps > li { min-height: 236px; }
       .consumer-registry .consumer-proof { grid-template-columns: minmax(0, 1fr); }
       .consumer-registry .consumer-proof span + span { border-top: 1px solid var(--hair); border-left: 0; }
-      .consumer-registry > .consumer-purpose { grid-template-columns: minmax(0, 1fr); }
-      .consumer-registry .consumer-thesis,
-      .consumer-registry .consumer-collection { min-height: 520px; }
-      .consumer-registry .consumer-thesis { min-height: 500px; }
-      .consumer-registry .consumer-thesis__link { min-height: 488px; }
-      .consumer-registry .consumer-purpose__essay { padding: 30px 24px 34px; }
+      .consumer-registry .consumer-thesis__visual { aspect-ratio: 16 / 10; }
+      .consumer-registry .consumer-purpose__essay { padding: 24px 22px; }
       .consumer-registry .consumer-collection__art { margin-inline: 12px; }
       .consumer-registry .consumer-collection__cta { margin-inline: 20px; }
     }

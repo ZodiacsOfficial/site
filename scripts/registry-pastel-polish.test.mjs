@@ -171,12 +171,19 @@ describe('registry pastel polish', () => {
     expect(css).toContain('.consumer-registry .astrofolio-vitrine::after { content: none; }');
     expect(css).toContain('outline-color: var(--ink-2);');
     expect(css).not.toContain('outline-color: var(--active-sign');
-    expect(css).toContain('grid-template-columns: minmax(0, 1.28fr) minmax(300px, .72fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);');
+    expect(css).toContain('.consumer-registry .consumer-thesis { border-radius: 24px 24px 6px 24px; }');
+    expect(css).toContain('aspect-ratio: 16 / 9;');
+    expect(css).toContain('@media (max-width: 1020px) {');
+    expect(css).toContain('.consumer-registry .consumer-thesis__visual { aspect-ratio: 16 / 10; }');
+    expect(css).not.toContain('min-height: clamp(520px, 50vw, 620px);');
     expect(css).toContain('isolation: auto;');
     expect(css).toContain('.consumer-registry .consumer-closing__registry:hover .consumer-closing__arrow { transform: none; }');
     expect(css).toContain('.consumer-registry .ftr .mark .g { color: var(--ink-2); }');
     expect(css).toContain('.consumer-registry .consumer-thesis__link:hover .consumer-thesis__visual img { transform: none; }');
     expect(cssRule(css, '.consumer-registry .consumer-thesis__visual img {')).not.toContain('grayscale');
+    expect(cssRule(css, '.consumer-registry .consumer-purpose__cta {')).toContain('border-radius: 999px;');
+    expect(cssRule(css, '.consumer-registry .consumer-purpose__arrow {')).toContain('border-radius: 50%;');
   });
 
   it('keeps the committed collection flag off and its generator slots inert', async () => {
