@@ -12,6 +12,15 @@
       "sign": "aries",
       "displayName": "Aries",
       "dateRange": "03-21 to 04-19",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Aries",
+        "sequence": "01 / 12",
+        "dateRange": "MAR 21 – APR 19",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/aries",
       "sha256": {
         "avatar-1024.png": "84872a1cd606e5e512f053fcd57e487f7e1608d1b1b1995faf906e6105b0b65b",
@@ -24,13 +33,22 @@
         "icon-512.png": "12152273d81083c3d2939c6935fa4f68f8747e46e837890127068a6d0bbb1b66",
         "maskable-512.png": "12152273d81083c3d2939c6935fa4f68f8747e46e837890127068a6d0bbb1b66",
         "astrofolio.webmanifest": "d8907b8487fb570ebf587fc2faaed822cb0746a0cbc09250b5f342f530beaa08",
-        "og-1200x630.png": "3c4a0ffb4d3469b8a0cb3d2ef57d20beea2bdbbd90a8f0fd5a4e101b6fc9bf1d"
+        "og-1200x630.png": "c01336c9d5a5188381c76c4f4fe877eeb9206c764587cf38eb6d7723e2c14ac7"
       }
     },
     {
       "sign": "taurus",
       "displayName": "Taurus",
       "dateRange": "04-20 to 05-20",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Taurus",
+        "sequence": "02 / 12",
+        "dateRange": "APR 20 – MAY 20",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/taurus",
       "sha256": {
         "avatar-1024.png": "14c1342bab102973edc1e47831ad83c5a2cc28ea9dcc22402a5ba39b88eebc11",
@@ -43,13 +61,22 @@
         "icon-512.png": "1d886ab422560fbf3d12ff21bd006dbe2c1ae58c837772ab6e60883eb64d3bd9",
         "maskable-512.png": "1d886ab422560fbf3d12ff21bd006dbe2c1ae58c837772ab6e60883eb64d3bd9",
         "astrofolio.webmanifest": "eb62f2acd1eb4b39bc1d129f027eb38fbdecef8041d7e17069309cce71047230",
-        "og-1200x630.png": "ae9acd9a12762469b99013b7c221ff9625821badc18a1ba9524d3f6c9b6070ca"
+        "og-1200x630.png": "cef56a524687a8450cf1cdfb806aef52e8d5b0469b3f2ead3ba097fcb849b9cc"
       }
     },
     {
       "sign": "gemini",
       "displayName": "Gemini",
       "dateRange": "05-21 to 06-20",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Gemini",
+        "sequence": "03 / 12",
+        "dateRange": "MAY 21 – JUN 20",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/gemini",
       "sha256": {
         "avatar-1024.png": "ad68821bf2d7229833842be3ad30402a9bb512753b36068197d514cd9391fe77",
@@ -62,13 +89,22 @@
         "icon-512.png": "4398952aa73960147f282d21a659ee481f17c4ccd1d7215856c5777d76301e17",
         "maskable-512.png": "4398952aa73960147f282d21a659ee481f17c4ccd1d7215856c5777d76301e17",
         "astrofolio.webmanifest": "836c99ee1fa2393f78609d817b8f63695339ad6693ec36f15019d9d16a790ed7",
-        "og-1200x630.png": "a1651cf1ffab48f728da77ca6ab0475b14680c00f9d3329d38863cae159f4cad"
+        "og-1200x630.png": "b9414e1b200c131d51e2cc708912b21c4602b28987d348691843a8753c6c61da"
       }
     },
     {
       "sign": "cancer",
       "displayName": "Cancer",
       "dateRange": "06-21 to 07-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Cancer",
+        "sequence": "04 / 12",
+        "dateRange": "JUN 21 – JUL 22",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/cancer",
       "sha256": {
         "avatar-1024.png": "f4196368a171f4e19aebf2bf7aa5c17b396d5c669da268c0ad0a9019a4eeaafe",
@@ -81,13 +117,22 @@
         "icon-512.png": "eacc39b5c908d76f335e3f037a8f116fa8b686e44fa78d792ee339ea97992f35",
         "maskable-512.png": "eacc39b5c908d76f335e3f037a8f116fa8b686e44fa78d792ee339ea97992f35",
         "astrofolio.webmanifest": "971aeff9a7d21f01edf8fa912c5eaeccb4bb083afa89767ea62ce81320a22bc7",
-        "og-1200x630.png": "cd74ad588d3198e710169751948b9f336577c8e39c200486b4e417119eb2001b"
+        "og-1200x630.png": "5238e13d7e20f9696c17a117ff0a94490d0b9bdb0f2f13824ce8c15e0e1165c4"
       }
     },
     {
       "sign": "leo",
       "displayName": "Leo",
       "dateRange": "07-23 to 08-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Leo",
+        "sequence": "05 / 12",
+        "dateRange": "JUL 23 – AUG 22",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/leo",
       "sha256": {
         "avatar-1024.png": "28d627556a8cafd73712ae9a7e9718b86e5559c86d1a9c674d329311cae796c7",
@@ -100,13 +145,22 @@
         "icon-512.png": "dc9bb3439643b135e4a2e81b06f8af988efe82dccd84ecac3f95cf9ccfa69a9f",
         "maskable-512.png": "dc9bb3439643b135e4a2e81b06f8af988efe82dccd84ecac3f95cf9ccfa69a9f",
         "astrofolio.webmanifest": "e6c4fde569f6b4a880340196dcd96a2966a5b82d18be85f98c8ff9f0c1808080",
-        "og-1200x630.png": "edc63a16779e346f94890c4fabddc02fb7bda7fa674c6ceb99eacf005dde8d9d"
+        "og-1200x630.png": "28e18572dc6b3b6ad54aa09f429aa9d45fa9d24241a351524e82f705b4ff4102"
       }
     },
     {
       "sign": "virgo",
       "displayName": "Virgo",
       "dateRange": "08-23 to 09-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Virgo",
+        "sequence": "06 / 12",
+        "dateRange": "AUG 23 – SEP 22",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/virgo",
       "sha256": {
         "avatar-1024.png": "91344354bc81a80e26367515afd1e69cc469a7340248529f24fb752d04ed5fe4",
@@ -119,13 +173,22 @@
         "icon-512.png": "e85594f4d25fedd69cdf43474fe30aff25b9ddcb2e1d8738e625a5f6a69e94fb",
         "maskable-512.png": "e85594f4d25fedd69cdf43474fe30aff25b9ddcb2e1d8738e625a5f6a69e94fb",
         "astrofolio.webmanifest": "51957fe3c0299e2064d8b7b4cfc3e532da2c5e2ce4c7699318b8386297b06fc5",
-        "og-1200x630.png": "e1cd76c9bc9df8d52dca4201885014c86ea2e4ed710dd8afbb01aa0356addae5"
+        "og-1200x630.png": "0bf65b2fa52edf77138c55b43ba8728c337c411243910ddf65d34ec571063f4a"
       }
     },
     {
       "sign": "libra",
       "displayName": "Libra",
       "dateRange": "09-23 to 10-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Libra",
+        "sequence": "07 / 12",
+        "dateRange": "SEP 23 – OCT 22",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/libra",
       "sha256": {
         "avatar-1024.png": "52cb9cda36a336ee96514921bf16e445d200d311c6cc9cecc2a61c644f0e2056",
@@ -138,13 +201,22 @@
         "icon-512.png": "055eb1f8845035db585502e19afe6638486584de763594437dc2e8dab95fbfd5",
         "maskable-512.png": "055eb1f8845035db585502e19afe6638486584de763594437dc2e8dab95fbfd5",
         "astrofolio.webmanifest": "d93a7b25cefff8019117cc0b397e7541ac6154a0eb3c2f93731abaa95f88508a",
-        "og-1200x630.png": "aacc7d918a9167361d01bd50c495d0cf943578c6385cda97bf19fe3c1aca72bb"
+        "og-1200x630.png": "e1875093ab384bab60653d655ec68a0fb6ab6fb3d2caddab46acde06e52be7ab"
       }
     },
     {
       "sign": "scorpio",
       "displayName": "Scorpio",
       "dateRange": "10-23 to 11-21",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Scorpio",
+        "sequence": "08 / 12",
+        "dateRange": "OCT 23 – NOV 21",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/scorpio",
       "sha256": {
         "avatar-1024.png": "39ed5006913de3fe0b24e37d7debd0f444597b9049d39ff1048a77233cb8e098",
@@ -157,13 +229,22 @@
         "icon-512.png": "34d6c094bcefb3760c2ea89cb929859f0abcf84c68b28dfc69bebd424acdeb72",
         "maskable-512.png": "34d6c094bcefb3760c2ea89cb929859f0abcf84c68b28dfc69bebd424acdeb72",
         "astrofolio.webmanifest": "dc6bf4c17c6abba4d01df10adb96af00b9a7b6f6af91f5c9fb886423edb1246e",
-        "og-1200x630.png": "c99d88dafc30ce3d5626d09a51ed563c361adc92053614f3f587df1376e8881d"
+        "og-1200x630.png": "50de089cd3cf6848a2f5df0db37e4cc108c65a68b03232329f8cf02db651e259"
       }
     },
     {
       "sign": "sagittarius",
       "displayName": "Sagittarius",
       "dateRange": "11-22 to 12-21",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Sagittarius",
+        "sequence": "09 / 12",
+        "dateRange": "NOV 22 – DEC 21",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/sagittarius",
       "sha256": {
         "avatar-1024.png": "35651112b6f7b3022b45e1fa11f013b17f5827fe99c9ca5ce0abef63ffca9219",
@@ -176,13 +257,22 @@
         "icon-512.png": "0afd2840666a3108ea722b7baea186aa242c934e404abcd09d83557a3b9fb6a4",
         "maskable-512.png": "0afd2840666a3108ea722b7baea186aa242c934e404abcd09d83557a3b9fb6a4",
         "astrofolio.webmanifest": "d9177bf46784ebeb6475d912eb7f9285789e778e980431f68ad60b8b606adf14",
-        "og-1200x630.png": "fbf363a9f8c961732b45b5ec2c0b2830e0fed021760fde741f9e87c790987a0a"
+        "og-1200x630.png": "9a3836c1c3303cbcccd6f9eeed02368b1f27bb4672d702e6eaf961fc51b93cce"
       }
     },
     {
       "sign": "capricorn",
       "displayName": "Capricorn",
       "dateRange": "12-22 to 01-19",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Capricorn",
+        "sequence": "10 / 12",
+        "dateRange": "DEC 22 – JAN 19",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/capricorn",
       "sha256": {
         "avatar-1024.png": "cc540b742103c6a9a7305ff4aa5b180cb863aeb6bf09fe84e517f7e60bdd5a07",
@@ -195,13 +285,22 @@
         "icon-512.png": "53425d5b73acc2ecd7e830d51068577baf029df50fd27faa0f01668c92475902",
         "maskable-512.png": "53425d5b73acc2ecd7e830d51068577baf029df50fd27faa0f01668c92475902",
         "astrofolio.webmanifest": "a7db891d53eb5a9acb635901e352eaa37b24f3b99bbb7b72779b2971653e7969",
-        "og-1200x630.png": "9c52487785caa1aef17801ed641b2f628dc59829477a249b9a9804c8eff49a31"
+        "og-1200x630.png": "3ce13d484d3229d5560e66e039276e5c6680366b2cb73abdc78c365743d8ef59"
       }
     },
     {
       "sign": "aquarius",
       "displayName": "Aquarius",
       "dateRange": "01-20 to 02-18",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Aquarius",
+        "sequence": "11 / 12",
+        "dateRange": "JAN 20 – FEB 18",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/aquarius",
       "sha256": {
         "avatar-1024.png": "624b7d74b1dfe5ca38b1d3259587204aa38ca22f7fe7e50d64901030d400fa35",
@@ -214,13 +313,22 @@
         "icon-512.png": "4700f82d481bf511c05087e5e5471674ca6a176aecde9aa866f69c1d38e55fda",
         "maskable-512.png": "4700f82d481bf511c05087e5e5471674ca6a176aecde9aa866f69c1d38e55fda",
         "astrofolio.webmanifest": "807707e5736b1081df5b32a920a1bc42a16a4a53af01ce3152a202d6d3d2873f",
-        "og-1200x630.png": "db3bbc3b6bfbd4722a28c8957b19b535af2b59926966975f33e7e07519105f9c"
+        "og-1200x630.png": "c1e724685a3af4935f375ca7da2d25dbcf7bc7a47fc43cc592043d2910aa7d02"
       }
     },
     {
       "sign": "pisces",
       "displayName": "Pisces",
       "dateRange": "02-19 to 03-20",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Pisces",
+        "sequence": "12 / 12",
+        "dateRange": "FEB 19 – MAR 20",
+        "timeZone": "UTC"
+      },
       "base": "/assets/astrofolio/v1/pisces",
       "sha256": {
         "avatar-1024.png": "d4ea8a9c64a962a997167c5bc700677d53ea9d38bbd2587be5cab4bfbde0c570",
@@ -233,7 +341,7 @@
         "icon-512.png": "74a832fd936421b356d62e23143bba0de3c06eba8479e3d01b96abe85bb9f064",
         "maskable-512.png": "74a832fd936421b356d62e23143bba0de3c06eba8479e3d01b96abe85bb9f064",
         "astrofolio.webmanifest": "58218862d568e88fd8a94afb406ef7e62afed29dc54b98a2cedaf84235daf634",
-        "og-1200x630.png": "a52a4ea3440c53b910914415f4b77128d4b642625fee33abfa7bf8b591d717fc"
+        "og-1200x630.png": "bad0456d0fdca4ae3d9bc38cddeeb7dde91fd4c75bf64834507e5ccdf0f532fb"
       }
     }
   ]

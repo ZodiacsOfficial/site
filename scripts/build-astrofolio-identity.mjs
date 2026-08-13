@@ -148,33 +148,98 @@ async function rasterizeFavicon(svg, size) {
     .toBuffer();
 }
 
-async function loadInstrumentFont(rootDirectory) {
-  const path = resolve(
-    rootDirectory,
+async function loadIdentityFonts(rootDirectory) {
+  const [instrument, serif, serifItalic, mono] = await Promise.all([
     'node_modules/@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2',
-  );
-  return (await readFile(path)).toString('base64');
+    'node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-500-normal.woff2',
+    'node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-500-italic.woff2',
+    'node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2',
+  ].map(async (path) => (
+    readFile(resolve(rootDirectory, path)).then((bytes) => bytes.toString('base64'))
+  )));
+  return { instrument, serif, serifItalic, mono };
 }
 
-function ogTextSvg(fontData, seasonHue) {
+function seasonDateLabel(dateRange) {
+  const match = /^(\d{2})-(\d{2}) to (\d{2})-(\d{2})$/.exec(dateRange);
+  if (!match) throw new Error(`Invalid Astrofolio season date range: ${dateRange}`);
+  const months = [
+    'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
+    'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
+  ];
+  const [, startMonth, startDay, endMonth, endDay] = match;
+  return `${months[Number(startMonth) - 1]} ${Number(startDay)} – ${months[Number(endMonth) - 1]} ${Number(endDay)}`;
+}
+
+export function astrofolioOgCopy(season, seasonIndex) {
+  if (!season?.displayName || !season?.dateRange) throw new Error('Astrofolio OG season metadata is incomplete');
+  if (!Number.isInteger(seasonIndex) || seasonIndex < 0 || seasonIndex >= SIGN_ORDER.length) {
+    throw new Error(`Invalid Astrofolio OG season index: ${seasonIndex}`);
+  }
+  return {
+    title: 'Astrofolio',
+    caption: 'The Twelve Official Zodiacs',
+    status: 'NOW IN SEASON',
+    season: season.displayName,
+    sequence: `${String(seasonIndex + 1).padStart(2, '0')} / 12`,
+    dateRange: seasonDateLabel(season.dateRange),
+    timeZone: 'UTC',
+  };
+}
+
+function ogTextSvg(fonts, season, seasonIndex) {
+  const seasonHue = PASTELS[SIGN_ORDER.indexOf(season.sign)];
+  const copy = astrofolioOgCopy(season, seasonIndex);
   return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-    <style>@font-face{font-family:Instrument;src:url(data:font/woff2;base64,${fontData}) format('woff2');font-weight:100 900}</style>
-    <text x="92" y="284" fill="${INK}" font-family="Instrument,sans-serif" font-size="90" font-weight="560" letter-spacing="-4.4">Astrofolio</text>
-    <text x="98" y="336" fill="#B8B3AA" font-family="Instrument,sans-serif" font-size="25" font-weight="430" letter-spacing=".6">The Twelve Official Zodiacs</text>
-    <path d="M98 378H332" stroke="${seasonHue}" stroke-opacity=".62" stroke-width="2"/>
+    <style>
+      @font-face{font-family:Instrument;src:url(data:font/woff2;base64,${fonts.instrument}) format('woff2');font-weight:100 900}
+      @font-face{font-family:Editorial;src:url(data:font/woff2;base64,${fonts.serif}) format('woff2');font-weight:500}
+      @font-face{font-family:Editorial;src:url(data:font/woff2;base64,${fonts.serifItalic}) format('woff2');font-weight:500;font-style:italic}
+      @font-face{font-family:Mono;src:url(data:font/woff2;base64,${fonts.mono}) format('woff2');font-weight:100 800}
+    </style>
+    <path d="M39 439C168 524 420 530 582 390" fill="none" stroke="${seasonHue}" stroke-opacity=".075" stroke-width="1"/>
+    <path d="M57 463C196 535 423 532 569 418" fill="none" stroke="#E7B85A" stroke-opacity=".055" stroke-width="1"/>
+    <path d="M546 154V176M535 165H557" stroke="#E7B85A" stroke-opacity=".52" stroke-width="1"/>
+    <circle cx="546" cy="165" r="2.5" fill="#E7B85A" fill-opacity=".72"/>
+    <circle cx="572" cy="194" r="1.75" fill="${seasonHue}" fill-opacity=".62"/>
+    <text x="91" y="286" fill="${INK}" font-family="Editorial,serif" font-size="108" font-weight="500" letter-spacing="-2.1">${copy.title}</text>
+    <text x="98" y="333" fill="#B8B3AA" font-family="Instrument,sans-serif" font-size="22" font-weight="430" letter-spacing=".7">${copy.caption}</text>
+    <text x="176" y="391" fill="#8F8C86" font-family="Mono,monospace" font-size="11" font-weight="520" letter-spacing="2.1">${copy.status} · ${copy.sequence}</text>
+    <text x="174" y="428" fill="${seasonHue}" font-family="Editorial,serif" font-size="34" font-weight="500" font-style="italic">${copy.season}</text>
+    <text x="176" y="455" fill="#A6A29A" font-family="Mono,monospace" font-size="11" font-weight="440" letter-spacing="1.4">${copy.dateRange} · ${copy.timeZone}</text>
   </svg>`);
 }
 
-async function composeAstrofolioOg(avatar, fontData, season) {
+async function composeSeasonSeal(rootDirectory, season) {
+  const size = 64;
+  const hue = PASTELS[SIGN_ORDER.indexOf(season)];
+  const icon = await sharp(resolve(rootDirectory, `public/assets/zodiac-icons/128/${season}.webp`))
+    .resize(48, 48, { kernel: 'lanczos3' })
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
+    .toBuffer();
+  const rings = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="32" cy="32" r="30" fill="none" stroke="${hue}" stroke-width="1" opacity=".45"/><circle cx="32" cy="32" r="26.5" fill="#060709" stroke="#F4EFE6" stroke-width="1" opacity=".92"/></svg>`);
+  return sharp({ create: { width: size, height: size, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
+    .composite([
+      { input: rings, left: 0, top: 0 },
+      { input: icon, left: 8, top: 8 },
+    ])
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
+    .toBuffer();
+}
+
+async function composeAstrofolioOg(rootDirectory, avatar, fonts, season, seasonIndex) {
   const motif = await sharp(avatar)
     .resize(520, 520, { kernel: 'lanczos3' })
     .png({ compressionLevel: 9, adaptiveFiltering: true })
     .toBuffer();
-  const atmosphere = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><defs><radialGradient id="a"><stop stop-color="#C88B39" stop-opacity=".09"/><stop offset="1" stop-color="#060709" stop-opacity="0"/></radialGradient></defs><ellipse cx="925" cy="315" rx="315" ry="300" fill="url(#a)"/></svg>`);
+  const seasonSeal = await composeSeasonSeal(rootDirectory, season.sign);
+  const seasonHue = PASTELS[SIGN_ORDER.indexOf(season.sign)];
+  const atmosphere = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><defs><radialGradient id="a"><stop stop-color="#C88B39" stop-opacity=".09"/><stop offset="1" stop-color="#060709" stop-opacity="0"/></radialGradient><radialGradient id="s"><stop stop-color="${seasonHue}" stop-opacity=".105"/><stop offset=".48" stop-color="${seasonHue}" stop-opacity=".035"/><stop offset="1" stop-color="#060709" stop-opacity="0"/></radialGradient></defs><ellipse cx="925" cy="315" rx="315" ry="300" fill="url(#a)"/><ellipse cx="270" cy="355" rx="285" ry="270" fill="url(#s)"/></svg>`);
   return sharp({ create: { width: 1200, height: 630, channels: 4, background: VOID } })
     .composite([
       { input: atmosphere, left: 0, top: 0 },
-      { input: ogTextSvg(fontData, PASTELS[SIGN_ORDER.indexOf(season)]), left: 0, top: 0 },
+      { input: ogTextSvg(fonts, season, seasonIndex), left: 0, top: 0 },
+      { input: seasonSeal, left: 96, top: 376 },
       { input: motif, left: 660, top: 55 },
     ])
     .png({ compressionLevel: 9, adaptiveFiltering: true, palette: true, colours: 256, dither: 0.55 })
@@ -240,11 +305,11 @@ export async function buildAstrofolioIdentity({
 } = {}) {
   const registry = await loadRegistry(rootDirectory);
   const seasons = seasonsFromRegistry(registry);
-  const fontData = await loadInstrumentFont(rootDirectory);
+  const fonts = await loadIdentityFonts(rootDirectory);
   const records = [];
 
   await mkdir(outputDirectory, { recursive: true });
-  for (const season of seasons) {
+  for (const [seasonIndex, season] of seasons.entries()) {
     const signDirectory = resolve(outputDirectory, season.sign);
     await mkdir(signDirectory, { recursive: true });
     const avatar = await composeAvatar(rootDirectory, season.sign);
@@ -257,7 +322,7 @@ export async function buildAstrofolioIdentity({
       sharp(avatar).resize(192, 192, { kernel: 'lanczos3' }).png({ compressionLevel: 9 }).toBuffer(),
       sharp(avatar).resize(512, 512, { kernel: 'lanczos3' }).png({ compressionLevel: 9 }).toBuffer(),
       sharp(avatar).resize(512, 512, { kernel: 'lanczos3' }).png({ compressionLevel: 9 }).toBuffer(),
-      composeAstrofolioOg(avatar, fontData, season.sign),
+      composeAstrofolioOg(rootDirectory, avatar, fonts, season, seasonIndex),
     ]);
     const manifest = seasonManifest(season.sign, season.displayName);
     const files = {
@@ -280,12 +345,13 @@ export async function buildAstrofolioIdentity({
       sign: season.sign,
       displayName: season.displayName,
       dateRange: season.dateRange,
+      ogCopy: astrofolioOgCopy(season, seasonIndex),
       base: `${ASTROFOLIO_IDENTITY_BASE}/${season.sign}`,
       sha256: Object.fromEntries(Object.entries(files).map(([name, bytes]) => [name, hash(bytes)])),
     });
   }
 
-  const terminal = await composeTerminalOg(fontData);
+  const terminal = await composeTerminalOg(fonts.instrument);
   await mkdir(dirname(terminalOutput), { recursive: true });
   await writeFile(terminalOutput, terminal);
   const familyManifest = {

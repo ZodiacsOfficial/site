@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { afterAll, describe, expect, it } from 'vitest';
 import {
   ASTROFOLIO_IDENTITY_VERSION,
+  astrofolioOgCopy,
   buildAstrofolioIdentity,
 } from './build-astrofolio-identity.mjs';
 import { resolveAstrofolioSeasonUtc, seasonsFromRegistry } from './astrofolio-season.mjs';
@@ -62,6 +63,25 @@ describe('Astrofolio UTC season resolver', () => {
 });
 
 describe('Astrofolio seasonal identity generator', () => {
+  it('derives legible OG season copy from canonical Registry metadata', () => {
+    expect(astrofolioOgCopy(seasons[4], 4)).toEqual({
+      title: 'Astrofolio',
+      caption: 'The Twelve Official Zodiacs',
+      status: 'NOW IN SEASON',
+      season: 'Leo',
+      sequence: '05 / 12',
+      dateRange: 'JUL 23 – AUG 22',
+      timeZone: 'UTC',
+    });
+    expect(astrofolioOgCopy(seasons[8], 8)).toMatchObject({
+      season: 'Sagittarius',
+      sequence: '09 / 12',
+      dateRange: 'NOV 22 – DEC 21',
+    });
+    expect(astrofolioOgCopy(seasons[11], 11).sequence).toBe('12 / 12');
+    expect(() => astrofolioOgCopy(seasons[0], 12)).toThrow('season index');
+  });
+
   it('replays byte-for-byte from canonical sources', async () => {
     const temporaryRoot = await mkdtemp(resolve(tmpdir(), 'astrofolio-identity-'));
     tempDirectories.push(temporaryRoot);

@@ -8,6 +8,7 @@ import {
   ASTROFOLIO_IDENTITY_BASE,
   ASTROFOLIO_IDENTITY_VERSION,
   TERMINAL_OG_V6_PATH,
+  astrofolioOgCopy,
 } from './build-astrofolio-identity.mjs';
 import { seasonsFromRegistry } from './astrofolio-season.mjs';
 
@@ -81,6 +82,10 @@ if (manifest && registry) {
       continue;
     }
     if (record.dateRange !== season.dateRange) failures.push(`${season.sign}: Registry date-range drift`);
+    const expectedOgCopy = astrofolioOgCopy(season, SIGN_ORDER.indexOf(season.sign));
+    if (JSON.stringify(record.ogCopy) !== JSON.stringify(expectedOgCopy)) {
+      failures.push(`${season.sign}: seasonal OG copy drift`);
+    }
     if (record.base !== `${ASTROFOLIO_IDENTITY_BASE}/${season.sign}`) failures.push(`${season.sign}: public base drift`);
     const exactFiles = [
       'apple-touch-icon-180.png', 'astrofolio.webmanifest', 'avatar-1024.png',
@@ -135,6 +140,9 @@ try {
   const svgSource = await readFile(resolve(root, 'scripts/build-astrofolio-identity.mjs'), 'utf8');
   if (!svgSource.includes('>Terminal</text>')) failures.push('Terminal v6 OG: exact visible title is not locked');
   if (svgSource.includes('>Zodiac Terminal</text>')) failures.push('Terminal v6 OG: banned legacy title returned');
+  if (!svgSource.includes('eb-garamond-latin-500-normal.woff2')) failures.push('Astrofolio OG: editorial wordmark font is not locked');
+  if (!svgSource.includes('${copy.status} · ${copy.sequence}')) failures.push('Astrofolio OG: visible season status is not locked');
+  if (!svgSource.includes('${copy.dateRange} · ${copy.timeZone}')) failures.push('Astrofolio OG: visible UTC date range is not locked');
 } catch {
   failures.push('Terminal v6 OG: generator missing');
 }
