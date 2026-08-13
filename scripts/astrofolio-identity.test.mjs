@@ -3,10 +3,14 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
 import { afterAll, describe, expect, it } from 'vitest';
 import {
+  ASTROFOLIO_OG_MOTIF_GEOMETRY,
   ASTROFOLIO_IDENTITY_VERSION,
   astrofolioOgCopy,
+  astrofolioOgIdentitySources,
+  astrofolioSeasonTitleLayout,
   buildAstrofolioIdentity,
 } from './build-astrofolio-identity.mjs';
 import { resolveAstrofolioSeasonUtc, seasonsFromRegistry } from './astrofolio-season.mjs';
@@ -63,6 +67,18 @@ describe('Astrofolio UTC season resolver', () => {
 });
 
 describe('Astrofolio seasonal identity generator', () => {
+  it('publishes the redesign as immutable v2 artwork', async () => {
+    expect(ASTROFOLIO_IDENTITY_VERSION).toBe('v2');
+    const historical = JSON.parse(await readFile(
+      resolve(root, 'public/assets/astrofolio/v1/manifest.json'),
+      'utf8',
+    ));
+    expect(historical).toMatchObject({
+      schema: 'zodiacs.astrofolio-identity.v1',
+      version: 'v1',
+    });
+  });
+
   it('derives legible OG season copy from canonical Registry metadata', () => {
     expect(astrofolioOgCopy(seasons[4], 4)).toEqual({
       title: 'Astrofolio',
@@ -80,6 +96,52 @@ describe('Astrofolio seasonal identity generator', () => {
     });
     expect(astrofolioOgCopy(seasons[11], 11).sequence).toBe('12 / 12');
     expect(() => astrofolioOgCopy(seasons[0], 12)).toThrow('season index');
+  });
+
+  it('maps every OG season to its own Registry name, hue, date, icon, and sculpture', () => {
+    const expectedHues = [
+      '#DE8E79', '#B9D4BE', '#B29DD0', '#B6D4E4', '#E0A9B4', '#B7D9B0',
+      '#D3A9DE', '#B9DCE8', '#E0B080', '#C0DEA8', '#AE8FC9', '#A9D4C4',
+    ];
+    expect(seasons.map(astrofolioOgIdentitySources)).toEqual(seasons.map((season, index) => ({
+      sign: season.sign,
+      displayName: season.displayName,
+      dateRange: season.dateRange,
+      hue: expectedHues[index],
+      icon: `/assets/zodiac-icons/128/${season.sign}.webp`,
+      sculpture: `/assets/sculptures/1024/${season.sign}.webp`,
+    })));
+    expect(() => astrofolioOgIdentitySources({ sign: 'ophiuchus' })).toThrow('Registry season metadata');
+  });
+
+  it('uses the enlarged, left-shifted OG motif geometry', () => {
+    expect(ASTROFOLIO_OG_MOTIF_GEOMETRY).toEqual({
+      size: 636,
+      centerX: 877,
+      centerY: 315,
+      sculptureBox: 334,
+    });
+  });
+
+  it('keeps seasonal OG copy secondary for short and long sign names', () => {
+    expect(astrofolioSeasonTitleLayout('Leo')).toEqual({
+      ogTitleSize: 50,
+      ogIconSize: 38,
+      ogGap: 12,
+    });
+    expect(astrofolioSeasonTitleLayout('Sagittarius')).toEqual({
+      ogTitleSize: 36,
+      ogIconSize: 32,
+      ogGap: 10,
+    });
+    expect(astrofolioSeasonTitleLayout('Capricorn')).toEqual({
+      ogTitleSize: 42,
+      ogIconSize: 34,
+      ogGap: 10,
+    });
+    expect(astrofolioSeasonTitleLayout('Sagittarius').ogTitleSize)
+      .toBeLessThan(astrofolioSeasonTitleLayout('Leo').ogTitleSize);
+    expect(() => astrofolioSeasonTitleLayout('')).toThrow('display name');
   });
 
   it('replays byte-for-byte from canonical sources', async () => {
@@ -100,7 +162,64 @@ describe('Astrofolio seasonal identity generator', () => {
           .toBe(sha256);
       }
     }
-  }, 30_000);
+  }, 60_000);
+
+  it('keeps avatars ring-only while OG cards restore the seasonal gold sculpture', async () => {
+    for (const sign of ['leo', 'sagittarius', 'capricorn']) {
+      const directory = resolve(root, `public/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}/${sign}`);
+      const [avatar, seal, icon, og] = await Promise.all([
+        sharp(resolve(directory, 'avatar-1024.png')).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
+        sharp(resolve(directory, 'season-seal-192.png')).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
+        sharp(resolve(directory, 'icon-192.png')).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
+        sharp(resolve(directory, 'og-1200x630.png')).raw().toBuffer({ resolveWithObject: true }),
+      ]);
+      const alphaAt = ({ data, info }, x, y) => data[(y * info.width + x) * info.channels + 3];
+      expect(alphaAt(avatar, 0, 0), `${sign} avatar corner`).toBe(0);
+      expect(alphaAt(avatar, 512, 512), `${sign} avatar center`).toBe(0);
+      for (const [x, y] of [[384, 384], [640, 384], [384, 640], [640, 640]]) {
+        expect(alphaAt(avatar, x, y), `${sign} avatar inner field ${x},${y}`).toBe(0);
+      }
+      expect(alphaAt(seal, 0, 0), `${sign} seal corner`).toBe(0);
+      expect(alphaAt(seal, 96, 96), `${sign} seal center`).toBeGreaterThan(220);
+      expect(alphaAt(icon, 0, 0), `${sign} app icon corner`).toBe(255);
+
+      let goldPixels = 0;
+      for (let y = 180; y < 450; y += 1) {
+        for (let x = 760; x < 1030; x += 1) {
+          if (Math.hypot(x - ASTROFOLIO_OG_MOTIF_GEOMETRY.centerX, y - ASTROFOLIO_OG_MOTIF_GEOMETRY.centerY) > 142) continue;
+          const offset = (y * og.info.width + x) * og.info.channels;
+          const [red, green, blue] = og.data.subarray(offset, offset + 3);
+          if (red > 95 && green > 55 && red > green * 1.12 && green > blue * 1.18) {
+            goldPixels += 1;
+          }
+        }
+      }
+      expect(goldPixels, `${sign} OG seasonal sculpture`).toBeGreaterThan(8_000);
+
+      let visibleOrbitSamples = 0;
+      const discRadius = 334 * ASTROFOLIO_OG_MOTIF_GEOMETRY.size / 1024;
+      for (let index = 0; index < 12; index += 1) {
+        const angle = -Math.PI / 2 + (index + 0.5) * Math.PI / 6;
+        const x = Math.round(ASTROFOLIO_OG_MOTIF_GEOMETRY.centerX + Math.cos(angle) * discRadius);
+        const y = Math.round(ASTROFOLIO_OG_MOTIF_GEOMETRY.centerY + Math.sin(angle) * discRadius);
+        const offset = (y * og.info.width + x) * og.info.channels;
+        const luminance = og.data[offset] * 0.2126 + og.data[offset + 1] * 0.7152 + og.data[offset + 2] * 0.0722;
+        if (luminance > 28) visibleOrbitSamples += 1;
+      }
+      expect(visibleOrbitSamples, `${sign} OG connecting orbit`).toBe(0);
+    }
+  });
+
+  it('publishes one sculpture-free transparent ring for the on-page lockup', async () => {
+    const ring = await sharp(resolve(
+      root,
+      `public/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}/zodiac-ring-192.png`,
+    )).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+    const alphaAt = (x, y) => ring.data[(y * ring.info.width + x) * ring.info.channels + 3];
+    expect(alphaAt(0, 0)).toBe(0);
+    expect(alphaAt(96, 96)).toBe(0);
+    expect(alphaAt(96, 24)).toBeGreaterThan(200);
+  });
 
   it('keeps one installed-app identity while seasonal artwork rotates', async () => {
     for (const season of seasons) {
@@ -114,6 +233,16 @@ describe('Astrofolio seasonal identity generator', () => {
         start_url: '/astrofolio/',
         scope: '/astrofolio/',
       });
+      const family = JSON.parse(await readFile(resolve(
+        root,
+        `public/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}/manifest.json`,
+      ), 'utf8'));
+      const record = family.seasons.find(({ sign: candidate }) => candidate === season.sign);
+      expect(family.ogSculptureSource).toBe('/assets/sculptures/1024/{sign}.webp');
+      expect(record?.ogSources).toEqual(astrofolioOgIdentitySources(season));
+      expect(record?.artwork?.seasonSeal).toBe(
+        `/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}/${season.sign}/season-seal-192.png`,
+      );
     }
   });
 });

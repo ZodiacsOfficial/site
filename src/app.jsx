@@ -1579,24 +1579,26 @@
         <>
           <div className="wnav-wrap">
             <nav className="wnav" aria-label="Primary">
-              <a className="wnav__mark" href="/">
-                <span className="wnav__name">Zodiacs<span className="wnav__sep">·</span><span className="wnav__dim">org</span></span>
-              </a>
-              <div className="wnav__links">
-                <a className="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></a>
-                <button className="wnav__link wnav__signs-btn" type="button" aria-expanded={signsOpen} aria-controls="wnav-signs" onClick={() => setSignsOpen((v) => !v)}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
-                <a className="wnav__link" href="/learn/">Learn</a>
-                <a className="wnav__link" href="/horoscopes/">Horoscopes</a>
-                <a className="wnav__link" href="/profile/">Saved charts</a>
+              <div className="wnav__pill">
+                <a className="wnav__mark" href="/">
+                  <span className="wnav__name">Zodiacs<span className="wnav__sep">·</span><span className="wnav__dim">org</span></span>
+                </a>
+                <div className="wnav__links">
+                  <a className="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></a>
+                  <button className="wnav__link wnav__signs-btn" type="button" aria-expanded={signsOpen} aria-controls="wnav-signs" onClick={() => setSignsOpen((v) => !v)}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+                  <a className="wnav__link" href="/learn/">Learn</a>
+                  <a className="wnav__link" href="/horoscopes/">Horoscopes</a>
+                  <a className="wnav__link" href="/profile/">Saved charts</a>
+                </div>
+                <a className="wnav__search" href="/?search=1" aria-label="Search the site">
+                  <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+                  <kbd className="wnav__search-kbd" aria-hidden="true">/</kbd>
+                </a>
+                <a className="wnav__chip" href={terminalNav.href} aria-current={REGISTRY_VIEW === 'terminal' || REGISTRY_VIEW === 'terminal-pro' ? 'page' : undefined}>{terminalNav.label}</a>
+                <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
+                  <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
+                </button>
               </div>
-              <a className="wnav__search" href="/?search=1" aria-label="Search the site">
-                <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
-                <kbd className="wnav__search-kbd" aria-hidden="true">/</kbd>
-              </a>
-              <a className="wnav__chip" href={terminalNav.href} aria-current={REGISTRY_VIEW === 'terminal' || REGISTRY_VIEW === 'terminal-pro' ? 'page' : undefined}>{terminalNav.label}</a>
-              <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
-                <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
-              </button>
             </nav>
             <div className={signsOpen ? 'wnav-signs is-open' : 'wnav-signs'} id="wnav-signs" hidden={!signsOpen}>
               <div className="wnav-signs__grid">
@@ -4551,13 +4553,12 @@
 
     function ConsumerIdentityHeader() {
       const season = useCurrentSeason()?.sign ?? SIGNS[0];
-      const identityBase = `/assets/astrofolio/v1/${season.asset.sign}`;
       return (
         <header className="terminal-consumer-hero" aria-labelledby="consumer-explorer-title">
           <div className="astrofolio-lockup">
             <img
               className="astrofolio-lockup__avatar"
-              src={`${identityBase}/icon-192.png`}
+              src="/assets/astrofolio/v2/zodiac-ring-192.png"
               width="84"
               height="84"
               alt=""
@@ -4565,7 +4566,7 @@
             />
             <span className="astrofolio-lockup__copy">
               <em className="terminal-consumer-hero__kicker">Astrofolio</em>
-              <small>The Twelve Official Zodiacs</small>
+              <small><strong style={{ color: season.hue }}>{season.name}</strong> Season<span aria-hidden="true"> · </span>The Twelve</small>
             </span>
           </div>
           <h1 id="consumer-explorer-title">Choose your sign</h1>
@@ -5827,20 +5828,48 @@
     function ConsumerBuyGuide({ sign }) {
       const reveal = useReveal();
       return (
-        <section ref={reveal} id="buy" className="consumer-buy reveal" aria-labelledby="consumer-buy-title" data-vitrine-rule>
+        <section
+          ref={reveal}
+          id="buy"
+          className="consumer-buy reveal"
+          aria-labelledby="consumer-buy-title"
+          data-vitrine-rule
+          style={{ '--guide-sign': sign.hue }}
+        >
           <header className="consumer-section-head">
             <h2 id="consumer-buy-title">How to buy your sign</h2>
           </header>
-          <p className="consumer-buy__intro">
-            Buying happens on an independent service, from your own wallet.<br />
-            Zodiacs.org shows you the official token and the route to it. It never holds your money or your crypto.
-          </p>
+          <div className="consumer-buy__opening">
+            <p className="consumer-buy__intro">
+              Buying happens on an independent service, from your own wallet.<br />
+              Zodiacs.org shows you the official token and the route to it. It never holds your money or your crypto.
+            </p>
+            <aside className="consumer-buy__selection" aria-label={`Currently viewing ${sign.name}`}>
+              <img
+                src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`}
+                width="48"
+                height="48"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span><small>Currently viewing</small><strong>{sign.name}</strong></span>
+            </aside>
+          </div>
           <ol className="consumer-buy__steps">
-            <li><span>1.</span><p>Pick your sign.</p></li>
-            <li><span>2.</span><p>Open its buying options on the sign&rsquo;s official record.</p></li>
-            <li><span>3.</span><p>Check before you approve: in your wallet, confirm the address, the network, the amount, and the fee.</p></li>
+            <li>
+              <span aria-hidden="true">1.</span>
+              <div><strong>Choose your sign</strong><p>Pick your sign.</p><small>Move through all twelve and start with the one that feels like yours.</small></div>
+            </li>
+            <li>
+              <span aria-hidden="true">2.</span>
+              <div><strong>Start with its record</strong><p>Open its buying options on the sign&rsquo;s official record.</p><small>The record is the reliable route when names and tickers look alike.</small></div>
+            </li>
+            <li>
+              <span aria-hidden="true">3.</span>
+              <div><strong>Review in your wallet</strong><p>Check before you approve: in your wallet, confirm the address, the network, the amount, and the fee.</p><small>Nothing proceeds until you review and approve it yourself.</small></div>
+            </li>
           </ol>
-          <p className="consumer-buy__reassurance">Nothing on this page connects to a wallet.</p>
           <div className="consumer-buy__disclosures">
             <details className="consumer-disclosure">
               <summary>What you&rsquo;ll need</summary>
@@ -5928,25 +5957,54 @@
       );
     }
 
-    function ConsumerHowItWorks() {
+    function ConsumerHowItWorks({ sign }) {
       const reveal = useReveal();
       return (
         <section ref={reveal} id="registry" className="consumer-how reveal" aria-labelledby="consumer-how-title" data-vitrine-rule>
           <header className="consumer-section-head">
             <h2 id="consumer-how-title">What is a Zodiac?</h2>
           </header>
-          <div className="consumer-how__copy">
-            <p>A Zodiac is the official token for one of the twelve signs. Its gold sculpture is collection artwork, not a physical object or a one-of-one NFT.</p>
-            <p>The token begins on Solana, with an official Base counterpart recorded in the Registry. The record lets anyone check the exact addresses.</p>
+          <p className="consumer-how__intro">A Zodiac pairs one familiar sign with two things: a recognizable gold artwork and an official digital token. The public Registry tells you which exact address is official. The sculpture is collection artwork, not a physical object or a one-of-one NFT.</p>
+          <ol id="identity" className="consumer-steps" aria-label="The parts of a Zodiac">
+            <li>
+              <span className="consumer-step__visual consumer-step__constellation" aria-hidden="true">
+                {['aries', 'leo', 'pisces'].map((slug, index) => (
+                  <img key={slug} className={index === 1 ? 'is-primary' : ''} src={`/assets/zodiac-icons/48/${slug}.webp`} width="38" height="38" alt="" loading="lazy" decoding="async" />
+                ))}
+              </span>
+              <span className="consumer-step__copy">
+                <strong>One token for each sign</strong>
+                <small>Twelve familiar identities, each with its own pastel sign and gold artwork.</small>
+              </span>
+            </li>
+            <li>
+              <span className="consumer-step__visual consumer-step__record" aria-hidden="true">
+                <img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="30" height="30" alt="" loading="lazy" decoding="async" />
+                <code>{truncateAddress(sign.representations.solana.address, 5, 4)}</code>
+              </span>
+              <span className="consumer-step__copy">
+                <strong>The address is the identity</strong>
+                <small>Names and tickers can be copied. The exact address in the public record identifies the official token.</small>
+              </span>
+            </li>
+            <li>
+              <span className="consumer-step__visual consumer-step__transfer" aria-hidden="true">
+                <span><img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="34" height="34" alt="" loading="lazy" decoding="async" /></span>
+                <i>→</i>
+                <span><img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="34" height="34" alt="" loading="lazy" decoding="async" /></span>
+              </span>
+              <span className="consumer-step__copy">
+                <strong>Keep it, send it, or gift it</strong>
+                <small>A Zodiac can sit in your wallet, be sent to someone else, or be given as a gift. Its market price can rise or fall, and you may not always find a buyer when you want to sell.</small>
+              </span>
+            </li>
+          </ol>
+          <div className="consumer-proof" aria-label="Registry facts">
+            <span><strong>12</strong> official tokens</span>
+            <span><strong>Solana origin + Base counterpart</strong> in the record</span>
+            <span><strong>Read-only</strong> no wallet required</span>
           </div>
           <div className="consumer-how__disclosures">
-            <details className="consumer-disclosure">
-              <summary>Read the story</summary>
-              <div className="consumer-disclosure__body">
-                <p>The twelve signs are old cultural symbols. The story explains why this collection gives each one a public record.</p>
-                <a href="/thesis/">Open the story</a>
-              </div>
-            </details>
             <details className="consumer-disclosure">
               <summary>How verification works</summary>
               <div className="consumer-disclosure__body">
@@ -5968,17 +6026,22 @@
 
     function ConsumerPurpose() {
       const reveal = useReveal();
+      // The same curator's sample shown inside the real Cabinet: Aries Crown
+      // Gold, Cancer pastel, Leo bronze, Scorpio silver, and Aquarius Gold.
+      const cabinetSample = Object.freeze({
+        aries: { finish: 'crown', numeral: 'V', count: '×12' },
+        cancer: { finish: 'pastel', numeral: 'I' },
+        leo: { finish: 'bronze', numeral: 'II' },
+        scorpio: { finish: 'silver', numeral: 'III' },
+        aquarius: { finish: 'gold', numeral: 'IV', count: '×3' },
+      });
       return (
         <section ref={reveal} id="thesis" className="consumer-purpose reveal" aria-labelledby="consumer-purpose-title">
           <article className="consumer-thesis">
             <a className="consumer-thesis__link" href="/thesis/">
               <div className="consumer-thesis__visual">
                 <picture>
-                  <source
-                    srcSet="/assets/art/zodiac-clock-768.avif 768w, /assets/art/zodiac-clock-960.avif 960w, /assets/art/zodiac-clock-1280.avif 1280w"
-                    sizes="(max-width: 640px) calc(100vw - 40px), 52vw"
-                    type="image/avif"
-                  />
+                  <source srcSet="/assets/art/zodiac-clock-1280.avif" type="image/avif" />
                   <img
                     src="/assets/art/zodiac-clock-1280.jpg"
                     width="1280"
@@ -5992,16 +6055,56 @@
               <div className="consumer-purpose__essay">
                 <h2 id="consumer-purpose-title">The story behind the collection</h2>
                 <p>The twelve signs have travelled through calendars, charts, jewellery, and screens. This is the story of giving their token records one public home.</p>
-                <span className="consumer-purpose__cta">Read the story <span aria-hidden="true">→</span></span>
+                <span className="consumer-purpose__cta"><span>Read the story</span><span className="consumer-purpose__arrow" aria-hidden="true">→</span></span>
               </div>
             </a>
           </article>
           {REGISTRY_AURA_ENABLED && (
-            <aside className="consumer-collection" data-registry-collection>
-              <h3>Cabinet of Twelve</h3>
-              <p>See the signs held by a public address. No wallet connection is required.</p>
-              <a href={REGISTRY_AURA_PATH}>Open the Cabinet</a>
-            </aside>
+            <article className="consumer-collection" data-registry-collection>
+              <a className="consumer-collection__link" href={REGISTRY_AURA_PATH}>
+                <div className="consumer-collection__copy">
+                  <small className="consumer-collection__eyebrow">A public collection</small>
+                  <h3>Cabinet of Twelve</h3>
+                  <p>See the signs held by a public address. No wallet connection is required.</p>
+                </div>
+                <div className="consumer-collection__art" aria-hidden="true">
+                  <div className="consumer-cabinet">
+                    <div className="consumer-cabinet__seats">
+                      {SIGNS.map((item, index) => {
+                        const edition = cabinetSample[item.asset.sign];
+                        const occupied = Boolean(edition);
+                        const sculpture = edition?.finish === 'gold' || edition?.finish === 'crown';
+                        const imagePath = sculpture
+                          ? `/assets/cabinet-materials/gold/${item.asset.sign}`
+                          : `/assets/zodiac-icons/128/${item.asset.sign}`;
+                        return (
+                          <span
+                            key={item.ticker}
+                            className={'consumer-cabinet__seat' + (occupied ? ` is-filled is-${edition.finish}` : ' is-empty')}
+                            style={{ '--seat-i': index }}
+                            data-cabinet-sample-finish={edition?.finish}
+                          >
+                            <span className="consumer-cabinet__number">{String(index + 1).padStart(2, '0')}</span>
+                            {occupied ? (
+                              <>
+                                <picture>
+                                  <source srcSet={`${imagePath}.avif`} type="image/avif" />
+                                  <img src={`${imagePath}.webp`} width="128" height="128" alt="" loading="lazy" decoding="async" />
+                                </picture>
+                                <span className="consumer-cabinet__edition">{edition.numeral}</span>
+                                {edition.count && <span className="consumer-cabinet__count">{edition.count}</span>}
+                              </>
+                            ) : <span className="consumer-cabinet__glyph">{item.symbol}</span>}
+                          </span>
+                        );
+                      })}
+                    </div>
+                    <span className="consumer-cabinet__plaque"><strong>5 / 12</strong><span>Curator&rsquo;s sample</span></span>
+                  </div>
+                </div>
+                <span className="consumer-purpose__cta consumer-collection__cta"><span>Open the Cabinet</span><span className="consumer-purpose__arrow" aria-hidden="true">→</span></span>
+              </a>
+            </article>
           )}
         </section>
       );
@@ -6576,13 +6679,13 @@
               batch={consumerMarket}
             />
             <ConsumerBuyGuide sign={sign} />
+            <ConsumerPurpose />
             <ConsumerMarketSnapshot
               batch={consumerMarket}
               onRetry={() => setConsumerMarketRetry(value => value + 1)}
             />
-            <ConsumerHowItWorks />
+            <ConsumerHowItWorks sign={sign} />
             <ConsumerVerifier />
-            <ConsumerPurpose />
             <ConsumerFaq />
             <ConsumerClosing sign={sign} />
             <span id="market" className="terminal-compat-target" aria-hidden="true" />

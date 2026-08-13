@@ -72,6 +72,13 @@ describe('registry pastel polish', () => {
     expect(staticGlow).toContain('var(--disc) 28%');
     expect(staticGlow).toContain('opacity: .45;');
     expect(html).toContain('.static-vitrine__disc::before { opacity: 1; }');
+    expect(cssRule(lit, '.consumer-registry .astrofolio-lockup__avatar {')).toContain('radial-gradient(circle, #010204');
+    expect(cssRule(html, '.static-astrofolio-lockup > img {')).toContain('radial-gradient(circle, #010204');
+    const snapshotIcon = cssRule(lit, '.consumer-registry .consumer-snapshot__identity img {');
+    expect(snapshotIcon).toContain('opacity: .96;');
+    expect(snapshotIcon).toContain('filter: none;');
+    expect(snapshotIcon).toContain('var(--row-sign)');
+    expect(html.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp" width="32" height="32"/gu)).toHaveLength(12);
     expect(lit).not.toContain('var(--gold)');
     expect(lit).not.toContain('var(--gold-bright)');
     expect(lit).not.toContain('var(--gold-deep)');
@@ -84,9 +91,11 @@ describe('registry pastel polish', () => {
     const buttons = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn {');
     expect(halo).toContain('radial-gradient');
     expect(halo).toContain('rgba(215, 173, 105, .15)');
-    expect(primary).toContain('background: var(--ink);');
-    expect(primary).toContain('color: var(--bg);');
-    expect(buttons).toContain('background: transparent;');
+    expect(primary).toContain('border-color: rgba(238,241,247,.3);');
+    expect(primary).toContain('color: var(--ink);');
+    expect(buttons).toContain('rgba(10,12,17,.66)');
+    expect(buttons).toContain('inset 0 1px 0 rgba(238,241,247,.1)');
+    expect(css).toContain('.consumer-registry .vitrine-placard__actions .btn--primary::after {');
     expect(buttons).not.toMatch(/--active-sign|--sign|215, 173, 105/u);
   });
 
@@ -132,7 +141,7 @@ describe('registry pastel polish', () => {
   it('pins the 0.98 press response and disables all consumer motion on request', async () => {
     const css = await read('src/terminal/split-styles.css');
     const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
-    expect(lit).toContain('transition: transform 80ms ease, border-color 120ms linear, background-color 120ms linear;');
+    expect(lit).toContain('transition: transform 80ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);');
     expect(lit).toContain('.consumer-registry .vitrine-placard__actions .btn:active { transform: scale(.98); }');
     expect(lit).toContain('.consumer-registry .vrf__submit:active,');
     expect(lit).toContain('.consumer-registry .vrf__example:active { transform: scale(.98); }');
@@ -141,7 +150,8 @@ describe('registry pastel polish', () => {
     expect(reduced).toContain('transition: none !important;');
     expect(reduced).toContain('.consumer-registry .reveal { opacity: 1; }');
     expect(reduced).toContain('.consumer-registry .vitrine-placard__actions .btn:active,');
-    expect(reduced).toContain('.consumer-registry .vrf__example:active { transform: none; }');
+    expect(reduced).toContain('.consumer-registry .vrf__example:active,');
+    expect(reduced).toContain('.consumer-registry .consumer-purpose__arrow { transform: none; }');
   });
 
   it('limits the unfolding composition to three major hairlines and no dashboard boxes', async () => {
@@ -161,11 +171,12 @@ describe('registry pastel polish', () => {
     expect(css).toContain('.consumer-registry .astrofolio-vitrine::after { content: none; }');
     expect(css).toContain('outline-color: var(--ink-2);');
     expect(css).not.toContain('outline-color: var(--active-sign');
-    expect(css).toContain('grid-template-columns: none;');
+    expect(css).toContain('grid-template-columns: minmax(0, 1.28fr) minmax(300px, .72fr);');
     expect(css).toContain('isolation: auto;');
     expect(css).toContain('.consumer-registry .consumer-closing__registry:hover .consumer-closing__arrow { transform: none; }');
     expect(css).toContain('.consumer-registry .ftr .mark .g { color: var(--ink-2); }');
     expect(css).toContain('.consumer-registry .consumer-thesis__link:hover .consumer-thesis__visual img { transform: none; }');
+    expect(cssRule(css, '.consumer-registry .consumer-thesis__visual img {')).not.toContain('grayscale');
   });
 
   it('keeps the committed collection flag off and its generator slots inert', async () => {
@@ -196,7 +207,7 @@ describe('registry pastel polish', () => {
       expect(value).toContain('translate(-50%, calc(-50% - 5px))');
       expect(value).toContain('translate(-50%, calc(-50% + 5px))');
       expect(value).toContain('transform 220ms cubic-bezier(0.77,0,0.175,1)');
-      expect(value).toContain('letter-spacing: 0.08em;');
+      expect(value).toContain('letter-spacing: 0.14em;');
       expect(value).toContain('@media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }');
       expect(value).toContain('@media (max-width: 819.5px) { .wnav__sep, .wnav__dim { display: none; } }');
       expect(value).toContain('padding-top: env(safe-area-inset-top);');

@@ -1,0 +1,519 @@
+{
+  "schema": "zodiacs.astrofolio-identity.v2",
+  "version": "v2",
+  "background": "#060709",
+  "iconSource": "/assets/zodiac-icons/128/{sign}.webp",
+  "ogSculptureSource": "/assets/sculptures/1024/{sign}.webp",
+  "cropSafeArea": 0.8,
+  "onPageSeal": "season-seal-192.png",
+  "onPageRing": "zodiac-ring-192.png",
+  "onPageRingSha256": "9ec560e9de114613339bf69377286b1fad1c7b08b91953918876414371c9a2e2",
+  "terminalOg": "/assets/og/v6/terminal.png",
+  "terminalOgSha256": "bce0a74f6754351e33be359532386e65dbdab223989fbae9d583d90ee691c292",
+  "seasons": [
+    {
+      "sign": "aries",
+      "displayName": "Aries",
+      "dateRange": "03-21 to 04-19",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Aries",
+        "sequence": "01 / 12",
+        "dateRange": "MAR 21 – APR 19",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "aries",
+        "displayName": "Aries",
+        "dateRange": "03-21 to 04-19",
+        "hue": "#DE8E79",
+        "icon": "/assets/zodiac-icons/128/aries.webp",
+        "sculpture": "/assets/sculptures/1024/aries.webp"
+      },
+      "base": "/assets/astrofolio/v2/aries",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/aries/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/aries/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/aries/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "79b664f0714c199e78d6a1c2e29d016cbfcbfd8cdf26a67f591060ceceae02ac",
+        "favicon.svg": "8762608f708b22ad263e4bf055668d76f6bc7bfd2be58f52e600068ba92b6631",
+        "favicon-16.png": "1b5f2037577c77d6bce8c39e777e6a9e87b0918e5323eefa7e96b7a4af1bc00d",
+        "favicon-32.png": "71fd13be505f192914a8c60255c24bfc889e6075df6fca1487879c067f5d3a2f",
+        "favicon-96.png": "d9f8cadc3074604aef97585325094b2f1642daf4ca23c73d004bdaeaa171e7db",
+        "apple-touch-icon-180.png": "0d97ab8d55b58c3320688c7618bbcd00f8e91d5e9df4c3ff28dfaf3a983b7437",
+        "icon-192.png": "7ccebca349768c704fb572aed86ad0f22e62f5307a34b1c31d3f2151d15fc8c8",
+        "icon-512.png": "0874e921d901e64563a9d8e13e975e3f5018ee1986aad8e67ea56823dd81e456",
+        "maskable-512.png": "0874e921d901e64563a9d8e13e975e3f5018ee1986aad8e67ea56823dd81e456",
+        "astrofolio.webmanifest": "2d20f3286afaec9ae19453818026ce45cd74959c8b84ac655a4ea9549081d968",
+        "og-1200x630.png": "1537fcc448dec91fd72aafe2bf137410fe1157c08e30672fc60311544aa04620",
+        "season-seal-192.png": "851f83a6e2c8bf4d4edaebf1063f54e13ce13ab17952aae21ab49d646515ba96"
+      }
+    },
+    {
+      "sign": "taurus",
+      "displayName": "Taurus",
+      "dateRange": "04-20 to 05-20",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Taurus",
+        "sequence": "02 / 12",
+        "dateRange": "APR 20 – MAY 20",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "taurus",
+        "displayName": "Taurus",
+        "dateRange": "04-20 to 05-20",
+        "hue": "#B9D4BE",
+        "icon": "/assets/zodiac-icons/128/taurus.webp",
+        "sculpture": "/assets/sculptures/1024/taurus.webp"
+      },
+      "base": "/assets/astrofolio/v2/taurus",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/taurus/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/taurus/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/taurus/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "1d1e12c8db8c3a9950986f1ae1b90e865da0e4297ab68f8ddec9436d73a291fe",
+        "favicon.svg": "554f18a2c8b7c927bdd6c5571873f786ee9b80385566696d990779d3e25b936f",
+        "favicon-16.png": "19810e96163db247d8af5594ad38493127085d9edc0a32ebc7c3c74cadadb984",
+        "favicon-32.png": "1dcdba66f57ba6bcebc789c3ba69e5dae42cfed68a55906ce17842418094bdc3",
+        "favicon-96.png": "16644d0ef73287c62101f403855c3e90e291c1e40b858315bcd2b6352834a72e",
+        "apple-touch-icon-180.png": "14be12f3b02cdf300d4e100e8dcde12ca7d25613f483ceb0a0516961e2d6e54d",
+        "icon-192.png": "38ef79cad18c1057e06a238e85a7fba6345a09bd557ba9105a71fa3e79ed0b0f",
+        "icon-512.png": "536bff19a1c7c343b853bc638fa1d3f4f816dc3a4c7d3dafa5da80d67edc55d5",
+        "maskable-512.png": "536bff19a1c7c343b853bc638fa1d3f4f816dc3a4c7d3dafa5da80d67edc55d5",
+        "astrofolio.webmanifest": "555bd447d61cc6ae64c8036e7553a8812c93357360676abad6bf5c058019ed5c",
+        "og-1200x630.png": "41d47ef09ed9bca603840ac9c39990e7b02415b9fb010ef3ebe8c542ecc0c0ab",
+        "season-seal-192.png": "878c40a18f7b51139bc8e7dad7fe0ea15488ca983ab2bb379030c2a778d5370f"
+      }
+    },
+    {
+      "sign": "gemini",
+      "displayName": "Gemini",
+      "dateRange": "05-21 to 06-20",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Gemini",
+        "sequence": "03 / 12",
+        "dateRange": "MAY 21 – JUN 20",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "gemini",
+        "displayName": "Gemini",
+        "dateRange": "05-21 to 06-20",
+        "hue": "#B29DD0",
+        "icon": "/assets/zodiac-icons/128/gemini.webp",
+        "sculpture": "/assets/sculptures/1024/gemini.webp"
+      },
+      "base": "/assets/astrofolio/v2/gemini",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/gemini/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/gemini/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/gemini/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "e77019dc6ffe7322b756375e3164994be827b03bbf49b2f6f2f400e14d2ead82",
+        "favicon.svg": "b53b205127f7eb8c9c56fb89813dec2382f1a4b8f26d5bddf81617ee9caeb9d6",
+        "favicon-16.png": "d71ab2cd291d90a1b99506a649e586ad30a81cc5aefe9ef7fe3220a1d37c46ed",
+        "favicon-32.png": "a87d9a5e0b6c5fde684cad095408fe22a691c00476e2ff21597023daa9aa85ae",
+        "favicon-96.png": "3ca313593d01b052f8ada4bc576688aaa18be3b2665d30f574790914551012ff",
+        "apple-touch-icon-180.png": "e1f81566831f34361bb1799006aa9219acfb9214a73bc056540acba91acf4d26",
+        "icon-192.png": "4aea5c3c5140754eec517b78bcdc1449b321f97933aaee8cca16f6bdea27c93a",
+        "icon-512.png": "4269c56e9362a431a015ca9ce952bd6a0ea629234b9ec02e293e2e0a072453e0",
+        "maskable-512.png": "4269c56e9362a431a015ca9ce952bd6a0ea629234b9ec02e293e2e0a072453e0",
+        "astrofolio.webmanifest": "d12d228ac21cee652e676925d08e6fb80fc02ceb383373246a0beb40fc9eb2ed",
+        "og-1200x630.png": "9fab19c23f8fad2bce46448ac6a78ae6d193903ece538957265e9abb332e9d1a",
+        "season-seal-192.png": "2aa0561d7e4c268b0d38a3c02357380088dcd53ce1d21bd917b99277cc481b2d"
+      }
+    },
+    {
+      "sign": "cancer",
+      "displayName": "Cancer",
+      "dateRange": "06-21 to 07-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Cancer",
+        "sequence": "04 / 12",
+        "dateRange": "JUN 21 – JUL 22",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "cancer",
+        "displayName": "Cancer",
+        "dateRange": "06-21 to 07-22",
+        "hue": "#B6D4E4",
+        "icon": "/assets/zodiac-icons/128/cancer.webp",
+        "sculpture": "/assets/sculptures/1024/cancer.webp"
+      },
+      "base": "/assets/astrofolio/v2/cancer",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/cancer/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/cancer/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/cancer/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "396073ef21e7b5c1ed9f661c0f8c449df5c48a0bd1aa5f62423b590f4062ba95",
+        "favicon.svg": "744efe956aa975e4c438d9f58f1d3e2049a932fd5a09f7600a24d54d58ee5f02",
+        "favicon-16.png": "b94aa9701c34becf0bb3c2fc686ee52730e596731b8899d68569522c38018a6d",
+        "favicon-32.png": "ba585c44275f03193ad72d58e84457dcd2817bcc5446b11973a893f5e054f1ef",
+        "favicon-96.png": "2254d7254d74c2d81a40b63b247c9f88df59e736c2818cebff75ed03ff66e9b8",
+        "apple-touch-icon-180.png": "8ed21bb162a3baafd19e5dbcb9fe78bffeb0cb72346ef8a2904f7e1fb1f7d7a8",
+        "icon-192.png": "51a1e1cc762a3914e0fd69a9a88553ad273e0c2b19f202a2883635e91ae76728",
+        "icon-512.png": "b5255198d66b3dfcfe669b7ebb509c322252225f850b83586a4fc318a8ed585e",
+        "maskable-512.png": "b5255198d66b3dfcfe669b7ebb509c322252225f850b83586a4fc318a8ed585e",
+        "astrofolio.webmanifest": "692f79f66c7038905eb0f3ecb0f6c8b9372bd8767a86d0e9deaa33002d181059",
+        "og-1200x630.png": "f365c8393ecd849d240ca472499f35cda6b74cb63ca0faee86e314bcf92a0425",
+        "season-seal-192.png": "01d474499fd9a674739671cf1cc1145f6b1401206d578f9bac5cf32a181331e1"
+      }
+    },
+    {
+      "sign": "leo",
+      "displayName": "Leo",
+      "dateRange": "07-23 to 08-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Leo",
+        "sequence": "05 / 12",
+        "dateRange": "JUL 23 – AUG 22",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "leo",
+        "displayName": "Leo",
+        "dateRange": "07-23 to 08-22",
+        "hue": "#E0A9B4",
+        "icon": "/assets/zodiac-icons/128/leo.webp",
+        "sculpture": "/assets/sculptures/1024/leo.webp"
+      },
+      "base": "/assets/astrofolio/v2/leo",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/leo/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/leo/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/leo/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "7f87c17cafac490f43a2d78602bd0e613fe4baf1dfc259ab19d741498c57128d",
+        "favicon.svg": "a1fc6ce0fa9bdc19fdb93629152529214900360960b603739e304e597fff13e6",
+        "favicon-16.png": "9a9f0011047e1ea83c901bfd5727ad6454fbdbc8e118a965cd5cff2abb08b5e8",
+        "favicon-32.png": "ceb8d673f250694e5bc5e4a1bc42f0ba96119107228e98d2fc186b810207e606",
+        "favicon-96.png": "cfde97a1583ff063ff5dc4be4d825b98dc9d95c54bc7bc0ae2bc7ba7e7ccb8c6",
+        "apple-touch-icon-180.png": "c9c56b20836b7a6d6b8c806281c8856f92cdcd26ecd92fecff5dbcdfe809b2cb",
+        "icon-192.png": "9dadf2fb2c1388d836f80c3a315e0c4b19ad0ace847f25c78d878c9faede4035",
+        "icon-512.png": "a939febb75c14eb61b19f4606807972e837c89c72fa6787c51334cf29d5d8092",
+        "maskable-512.png": "a939febb75c14eb61b19f4606807972e837c89c72fa6787c51334cf29d5d8092",
+        "astrofolio.webmanifest": "91da3d93f74ef433fbb5646ca3109f6624d3e6f6e43846bdab9fd08a5b350c70",
+        "og-1200x630.png": "6b0d9f21b0e976bfb1a0d36f6392e49f1e798fbee8ff8edf0d44d7b9ec7fba19",
+        "season-seal-192.png": "81be6cbbd93c6d06b0b43d3c42acc8172a7c479b9bab2729a6f901f2bede27cf"
+      }
+    },
+    {
+      "sign": "virgo",
+      "displayName": "Virgo",
+      "dateRange": "08-23 to 09-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Virgo",
+        "sequence": "06 / 12",
+        "dateRange": "AUG 23 – SEP 22",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "virgo",
+        "displayName": "Virgo",
+        "dateRange": "08-23 to 09-22",
+        "hue": "#B7D9B0",
+        "icon": "/assets/zodiac-icons/128/virgo.webp",
+        "sculpture": "/assets/sculptures/1024/virgo.webp"
+      },
+      "base": "/assets/astrofolio/v2/virgo",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/virgo/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/virgo/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/virgo/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "4f2bec78bb8fdc4885e43157bf8875a23c6fc90de13b3a4a42d334a60574596e",
+        "favicon.svg": "04c65fa29ce298ad5e3187dc4ed664b24297fa002631a8ab2bfa1dbb61de377e",
+        "favicon-16.png": "820a096c59da15de505e1ac557c142c8b12c4ec0a0d517376b3bce2da175d3fe",
+        "favicon-32.png": "804071b541b8cd6ada729fd16014ef492721b095eac47d1aa8faef036d008f64",
+        "favicon-96.png": "7ed1c11ff94324c14bb8366aae7220b5b6ac4ce9e258d2c38e30560740941969",
+        "apple-touch-icon-180.png": "282ef889b69e077e6f5ad8619a6a6d76bf1d75d4fcd71af633065603cac52b15",
+        "icon-192.png": "338b0577b31ca177dc34af6c094c21463a0ab4c3a9a505305fe230165411d6ef",
+        "icon-512.png": "f8d23da61be1e2e62050dfdfa36cee6a1b6d4dcda38ca2b7ca49038e0cebbc6f",
+        "maskable-512.png": "f8d23da61be1e2e62050dfdfa36cee6a1b6d4dcda38ca2b7ca49038e0cebbc6f",
+        "astrofolio.webmanifest": "ff7dee4f95b17acd8839696870dc4a6befd16058daa87fa4ab1553a2c6448084",
+        "og-1200x630.png": "e07b771aca9084f95c5959b2bf52c4ef87aff2f3403fcbf6763c0edd38920213",
+        "season-seal-192.png": "83cd0521c866945fcd785380023177a75db3be5230cc3227c7be8a50af95f936"
+      }
+    },
+    {
+      "sign": "libra",
+      "displayName": "Libra",
+      "dateRange": "09-23 to 10-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Libra",
+        "sequence": "07 / 12",
+        "dateRange": "SEP 23 – OCT 22",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "libra",
+        "displayName": "Libra",
+        "dateRange": "09-23 to 10-22",
+        "hue": "#D3A9DE",
+        "icon": "/assets/zodiac-icons/128/libra.webp",
+        "sculpture": "/assets/sculptures/1024/libra.webp"
+      },
+      "base": "/assets/astrofolio/v2/libra",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/libra/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/libra/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/libra/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "4bcfb55294262ff0b46fb9077d1ddc354722731fb11f46c3372746fe050485f5",
+        "favicon.svg": "f8ceeb6c17a04d2b7aa02b8495a1257ab666a27711cabbe0e64a395d77995771",
+        "favicon-16.png": "5f062eb9d10a90a43fec346dbb861cbff495a8cd5343d2943a35c8c75aaf4e6d",
+        "favicon-32.png": "4e994e4dd197ebd94a9cbae48ffc07c4bfcdd1114e24a6c47dcb6399d3ab2bbf",
+        "favicon-96.png": "a64bad32f3cbf38aa3af424e5df3e2aa70b6d64fa7df05e08a5e3ebb5f89b5a8",
+        "apple-touch-icon-180.png": "18e3c19d3d542bd62b5c9c345889b1fffbf05f514e63797bd52a27d8f1d8b0a7",
+        "icon-192.png": "ed02a9c672e31a9b649b0d77ec5e6d0aff2e3ac50f6ddaae0185868de514041c",
+        "icon-512.png": "3a981882c93510f9d49f3076ad97615c5efaf2809ef77c2dbdec0070150baa3c",
+        "maskable-512.png": "3a981882c93510f9d49f3076ad97615c5efaf2809ef77c2dbdec0070150baa3c",
+        "astrofolio.webmanifest": "0f995f0693e73a76a29a6f735a040c448d65a7d24355787b1dcf6389d044efcb",
+        "og-1200x630.png": "085e76b9a30c48f8c2624f2adf82b0d88b6cf215c846d2542002ee778fbb19d7",
+        "season-seal-192.png": "c72758e0c1c40b3f59ba9eaf6b558e74afe94252c5cf817248a6900adb831e0d"
+      }
+    },
+    {
+      "sign": "scorpio",
+      "displayName": "Scorpio",
+      "dateRange": "10-23 to 11-21",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Scorpio",
+        "sequence": "08 / 12",
+        "dateRange": "OCT 23 – NOV 21",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "scorpio",
+        "displayName": "Scorpio",
+        "dateRange": "10-23 to 11-21",
+        "hue": "#B9DCE8",
+        "icon": "/assets/zodiac-icons/128/scorpio.webp",
+        "sculpture": "/assets/sculptures/1024/scorpio.webp"
+      },
+      "base": "/assets/astrofolio/v2/scorpio",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/scorpio/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/scorpio/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/scorpio/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "78c025321d6196750e100a07c69dcf7ed7699536f32a0d457c4297cb25b40c8c",
+        "favicon.svg": "6d502d29f91047d2b04c660b911f942ec76a427c5416ccf8a3065c727daf571a",
+        "favicon-16.png": "fc75e9a4015b885ac28756af717902705bf5ceabe0c76a81939fd49714b9e2d5",
+        "favicon-32.png": "a9b4c0f5f12ce1e1031e66b942da2b0fa4dd5ad0c71567d45cb2fd0e11829b1b",
+        "favicon-96.png": "b5bc79864a65ac9f3799e73da21ef8a8f8079e021c761e8937ceed375a1f8512",
+        "apple-touch-icon-180.png": "c376467e9f3b3cabea758f5d59b5ff5cfd2b77d323c4a266da7d66ef614b4d2a",
+        "icon-192.png": "1294c86d78fed805ac2ceb40421376dc936fa3b8b041585a37673222b955ce42",
+        "icon-512.png": "6ef0088930255b6b93eacc47eceb755e402d589fe25742e51e524e806b9c5503",
+        "maskable-512.png": "6ef0088930255b6b93eacc47eceb755e402d589fe25742e51e524e806b9c5503",
+        "astrofolio.webmanifest": "371fb75d9c54b08ae316259901f21faa25a9e41f61ec07c39c7492a40ce31820",
+        "og-1200x630.png": "0ee2c015681ce49d83cbe69646b5a2df839fe547c58c14961c1f4c94cf1b429e",
+        "season-seal-192.png": "3a4e3d8e3c0a138d6edc85c6456c7f605e3d57a09d7c658946f57a8fe3973062"
+      }
+    },
+    {
+      "sign": "sagittarius",
+      "displayName": "Sagittarius",
+      "dateRange": "11-22 to 12-21",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Sagittarius",
+        "sequence": "09 / 12",
+        "dateRange": "NOV 22 – DEC 21",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "sagittarius",
+        "displayName": "Sagittarius",
+        "dateRange": "11-22 to 12-21",
+        "hue": "#E0B080",
+        "icon": "/assets/zodiac-icons/128/sagittarius.webp",
+        "sculpture": "/assets/sculptures/1024/sagittarius.webp"
+      },
+      "base": "/assets/astrofolio/v2/sagittarius",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/sagittarius/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/sagittarius/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/sagittarius/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "79226a86659925ea0872edd285fa51f0797e85280a6d67146030b10b9ba46eae",
+        "favicon.svg": "13b700dd6243b7f2c099e2ec5c834019cef8c8162532361a90c0268d4ca1670d",
+        "favicon-16.png": "d059c13cb9f0fbbab33dde58daabae1e24f02bcff648b68930ccabc1973dfbf5",
+        "favicon-32.png": "7136f2d8c5e764cbcf6ccc31317dc5ac4355bafc180bc0b204574d1a5a0dcf79",
+        "favicon-96.png": "823e343b105818f7639e4afddbf7807626563a0c359b8cbc609c41955040828a",
+        "apple-touch-icon-180.png": "c0bd90f66539688f5b6c88342d0c8a905210d13aab5cb655e2be0c84a0cfe5a1",
+        "icon-192.png": "8f0ff17d8adff82ef398482c64be336df46a9bda5c0558f3b7aad9293c865158",
+        "icon-512.png": "c2a968958d6be8e7fb5546b32bd4f3e0d86af75cbc67c396b72c250b3d8c6e04",
+        "maskable-512.png": "c2a968958d6be8e7fb5546b32bd4f3e0d86af75cbc67c396b72c250b3d8c6e04",
+        "astrofolio.webmanifest": "05829b9eeb9f583e2a14e7f944e66552bf0d43ae00f0374865c9342194b5dc33",
+        "og-1200x630.png": "042649790867a5b3029af0b4fbba7345f66a5fab9aa1d06e18f0e0da9b4f7472",
+        "season-seal-192.png": "b79518da71d5bd0c6d51ef80d3e6779c173d350a23ddca3a9ea8398a222d9308"
+      }
+    },
+    {
+      "sign": "capricorn",
+      "displayName": "Capricorn",
+      "dateRange": "12-22 to 01-19",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Capricorn",
+        "sequence": "10 / 12",
+        "dateRange": "DEC 22 – JAN 19",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "capricorn",
+        "displayName": "Capricorn",
+        "dateRange": "12-22 to 01-19",
+        "hue": "#C0DEA8",
+        "icon": "/assets/zodiac-icons/128/capricorn.webp",
+        "sculpture": "/assets/sculptures/1024/capricorn.webp"
+      },
+      "base": "/assets/astrofolio/v2/capricorn",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/capricorn/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/capricorn/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/capricorn/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "bcf4c6a727ef6d3ad56fb96222d2ce18c5010ba3c557f6982389a601bd275a86",
+        "favicon.svg": "2bbbb54c69f30e00cae135a367c41a682f5accaf8e254cb5315f7cd25a748587",
+        "favicon-16.png": "e55b2b58e216745d187deefc48cd0833ecc56bf8fa694407ee8da043c65a1300",
+        "favicon-32.png": "294565ae243f4919110670ab85b64721bad2f76f0a48ab77a2eab02aa0e49e9f",
+        "favicon-96.png": "51e9de79374d34da0db997714415dcc5102cbfc953166f653153fc234d059d32",
+        "apple-touch-icon-180.png": "ee54c5522f23a82396c71847c02c5797524602146df6de2d7eafe6ebc588a9b3",
+        "icon-192.png": "cc6b9e1157676d8767b16f58393c932cadf611e113dd167d955aa5babc8a1346",
+        "icon-512.png": "ab755bbd38c037d862942d57a4ec4e77992f5e544e78d116a6d086d5f5ab9dfa",
+        "maskable-512.png": "ab755bbd38c037d862942d57a4ec4e77992f5e544e78d116a6d086d5f5ab9dfa",
+        "astrofolio.webmanifest": "e58d4451cc596cdcfe52e592a1c5c98c21ff00f5d4fc17f9cbc1f35f00ec6ca8",
+        "og-1200x630.png": "05aab097d0604f2da011a0fef0cc12a3ab3e193f23e1c7a2a85ea1f034222476",
+        "season-seal-192.png": "c1751663513ca0c1e50dff60941cb460beee804b708623169289add1c3a2243e"
+      }
+    },
+    {
+      "sign": "aquarius",
+      "displayName": "Aquarius",
+      "dateRange": "01-20 to 02-18",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Aquarius",
+        "sequence": "11 / 12",
+        "dateRange": "JAN 20 – FEB 18",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "aquarius",
+        "displayName": "Aquarius",
+        "dateRange": "01-20 to 02-18",
+        "hue": "#AE8FC9",
+        "icon": "/assets/zodiac-icons/128/aquarius.webp",
+        "sculpture": "/assets/sculptures/1024/aquarius.webp"
+      },
+      "base": "/assets/astrofolio/v2/aquarius",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/aquarius/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/aquarius/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/aquarius/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "f52dc4b77a9cf838adb8a5493202a7cf256359641914f244eab3a512e4294a17",
+        "favicon.svg": "65212c5409ae2fab37fb0d0483d1cd9d361e1dd2846e875f92513f9ae4a717e5",
+        "favicon-16.png": "7a398fe20eb21a937341c55bf26c8aeec694aab7bb6b212c316a1160a0ff22a5",
+        "favicon-32.png": "9a8af92f7cf5f723c1cd79148d241b51bd60dfd9ec0899cb2df557e4d67309fb",
+        "favicon-96.png": "1c62bb45494b3303ff3ee3c7e727d17314b17fcf5524ab57dbbfb4e660ea3ab7",
+        "apple-touch-icon-180.png": "c46e0bf3d27dc52737fcdc795a27eb8ab1cf7e91374916f1c945edc23472c217",
+        "icon-192.png": "d54b382b8ded2f53f63dee894fd87507b0124872aa1d11e41db4e992156239e9",
+        "icon-512.png": "8cf8c9ef0891cfb0138427cdec55db7b9de419c2308897866032bc7e984360d5",
+        "maskable-512.png": "8cf8c9ef0891cfb0138427cdec55db7b9de419c2308897866032bc7e984360d5",
+        "astrofolio.webmanifest": "d3d21c5558a5ce3afe105fe486e2d7353140152fb00c74db4a0e7435569f80bf",
+        "og-1200x630.png": "9ca0b7ecb3c20354b503394e0d7cbe0ba54aa41105ced15988826998bbf1ea1d",
+        "season-seal-192.png": "6565f286c4556ad7b4300270c086acff22d030ddee8629b04f0c0b3752c43319"
+      }
+    },
+    {
+      "sign": "pisces",
+      "displayName": "Pisces",
+      "dateRange": "02-19 to 03-20",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Pisces",
+        "sequence": "12 / 12",
+        "dateRange": "FEB 19 – MAR 20",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "pisces",
+        "displayName": "Pisces",
+        "dateRange": "02-19 to 03-20",
+        "hue": "#A9D4C4",
+        "icon": "/assets/zodiac-icons/128/pisces.webp",
+        "sculpture": "/assets/sculptures/1024/pisces.webp"
+      },
+      "base": "/assets/astrofolio/v2/pisces",
+      "artwork": {
+        "avatar": "/assets/astrofolio/v2/pisces/avatar-1024.png",
+        "seasonSeal": "/assets/astrofolio/v2/pisces/season-seal-192.png",
+        "og": "/assets/astrofolio/v2/pisces/og-1200x630.png"
+      },
+      "sha256": {
+        "avatar-1024.png": "603755dd465ca5041c58ee91892bca276a5d8a91b89683b4947e502acf25424b",
+        "favicon.svg": "1e57351c99b16d1c2ceacb43c4dd30288414fade58de79fa590cb4bb111a9eb2",
+        "favicon-16.png": "547a06429ff37855aed55bdb1ea0044d7a8102fcdfc89cf654b16ea8459d68a8",
+        "favicon-32.png": "61755e468152f445eac18e17fee79eecf6d1e701adf07f6daebdce8383dc5c90",
+        "favicon-96.png": "8228d6d69ff16fa0c8fa4a3bf90b2c4a386a9a1eb0a1d2d11c9f039b77f68ec2",
+        "apple-touch-icon-180.png": "a82a88188a807e906bf6ef691f29088f8c8b0064ce1ae25c7e4a3acd9c939fff",
+        "icon-192.png": "ccf91e61c27209166a3ad104e6f4e9a764d341871322dfdc1255e63c20359da0",
+        "icon-512.png": "b740758ebe3f9e87ba998bfa4b467185f0529a95f4b1e73ad37dc0d2327ab8b8",
+        "maskable-512.png": "b740758ebe3f9e87ba998bfa4b467185f0529a95f4b1e73ad37dc0d2327ab8b8",
+        "astrofolio.webmanifest": "4be1f260227516a18cada82a01822f93fae82fefbb7f12f3cb6ea35c394ae7a8",
+        "og-1200x630.png": "09a2a897e85dac6f65dde009de4190ae08eb3a44a724cc18f9cf8c20108c9614",
+        "season-seal-192.png": "d557a77e052ad931e7999a65a123a4550b8369f2790e2491ca64295ccbc48c31"
+      }
+    }
+  ]
+}

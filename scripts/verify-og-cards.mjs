@@ -22,7 +22,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'public/assets/og/v2');
 const wingOut = resolve(root, 'public/assets/og/v5');
 const wingCard = 'the-twelve.png';
-const astrofolioOut = resolve(root, 'public/assets/astrofolio/v1/leo');
+const astrofolioOut = resolve(root, 'public/assets/astrofolio/v2/leo');
 const terminalOut = resolve(root, 'public/assets/og/v6');
 const legacyRegistryCardSha256 = 'f7b9e9e801e390f2ef3671755d1f3754a7e45bb9db026699f5381764aab5a08a';
 const homepageCard = 'share-pastel-wheel-20260809.png';
@@ -131,7 +131,7 @@ for (const slug of signSlugs) {
 }
 
 for (const relativePath of expected) await validatePng(relativePath);
-const expectedAstrofolioPath = '/assets/astrofolio/v1/leo/og-1200x630.png';
+const expectedAstrofolioPath = '/assets/astrofolio/v2/leo/og-1200x630.png';
 const expectedTerminalPath = '/assets/og/v6/terminal.png';
 if (OG_EN.astrofolio.image !== expectedAstrofolioPath) {
   failures.push(`Astrofolio image: expected ${expectedAstrofolioPath}, received ${OG_EN.astrofolio.image}`);
@@ -139,7 +139,7 @@ if (OG_EN.astrofolio.image !== expectedAstrofolioPath) {
 if (OG_EN.terminal.image !== expectedTerminalPath) {
   failures.push(`Terminal image: expected ${expectedTerminalPath}, received ${OG_EN.terminal.image}`);
 }
-await validatePng('og-1200x630.png', { base: astrofolioOut, label: 'astrofolio/v1/leo/og-1200x630.png' });
+await validatePng('og-1200x630.png', { base: astrofolioOut, label: 'astrofolio/v2/leo/og-1200x630.png' });
 await validatePng('terminal.png', { base: terminalOut, label: 'v6/terminal.png' });
 await validatePng(wingCard, { unique: false, base: wingOut, label: `historical v5/${wingCard}` });
 try {
@@ -239,4 +239,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`verify-og-cards: OK — homepage on the cache-busted void card; Astrofolio seasonal v1 and Terminal v6 identities are distinct; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
+console.log(`verify-og-cards: OK — homepage on the cache-busted void card; Astrofolio seasonal v2 and Terminal v6 identities are distinct; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);

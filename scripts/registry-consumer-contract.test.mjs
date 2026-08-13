@@ -82,17 +82,17 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ordered(html, [
       'id="official-twelve"',
       'id="buy"',
+      'id="thesis"',
       'id="market-snapshot"',
       'id="registry"',
       'id="verify"',
-      'id="thesis"',
       'id="faq"',
       'class="static-astrofolio-closing"',
       'data-terminal-market-notice',
     ]);
 
     const opening = section(html, 'official-twelve');
-    expect(normalizedText(opening)).toContain(`Astrofolio The Twelve Official Zodiacs Choose your sign ${SUPPORT_COPY}`);
+    expect(normalizedText(opening)).toContain(`Astrofolio Leo Season · The Twelve Choose your sign ${SUPPORT_COPY}`);
     expect(opening.match(/class="static-vitrine__choice"/gu)).toHaveLength(12);
     expect(opening.match(/data-static-sign="[a-z]+"/gu)).toHaveLength(12);
     expect(opening).toContain('id="astrofolio-leo" checked');
@@ -122,10 +122,10 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ordered(mounted, [
       '<ConsumerExplorer',
       '<ConsumerBuyGuide sign={sign} />',
-      '<ConsumerMarketSnapshot',
-      '<ConsumerHowItWorks />',
-      '<ConsumerVerifier />',
       '<ConsumerPurpose />',
+      '<ConsumerMarketSnapshot',
+      '<ConsumerHowItWorks sign={sign} />',
+      '<ConsumerVerifier />',
       '<ConsumerFaq />',
       '<ConsumerClosing sign={sign} />',
       '<Footer />',
@@ -141,7 +141,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const explorer = functionBlock(source, 'ConsumerExplorer');
     const placard = functionBlock(source, 'VitrinePlacard');
 
-    expect(normalizedText(identity)).toContain(`Astrofolio The Twelve Official Zodiacs Choose your sign ${SUPPORT_COPY}`);
+    expect(normalizedText(identity)).toContain(`Astrofolio {season.name} Season · The Twelve Choose your sign ${SUPPORT_COPY}`);
     expect(identity).not.toContain('<TerminalViewLink');
     expect(explorer).toContain('className="consumer-explorer astrofolio-vitrine"');
     expect(explorer).toContain('aria-label="Astrofolio sign collection"');
@@ -217,7 +217,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
 
     const staticSnapshot = section(await read('public/astrofolio/index.html'), 'market-snapshot');
     ordered(staticSnapshot, SIGNS.map((slug) => `href="/registry/${slug}/"`));
-    expect(staticSnapshot.match(/<li>/gu)).toHaveLength(12);
+    expect(staticSnapshot.match(/<li(?:\s|>)/gu)).toHaveLength(12);
+    expect(staticSnapshot.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp/gu)).toHaveLength(12);
     expect(staticSnapshot).not.toMatch(/rank|spark|chart|market cap|liquidity|volume/iu);
   });
 
@@ -232,7 +233,6 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       'Pick your sign.',
       "Open its buying options on the sign's official record.",
       'Check before you approve: in your wallet, confirm the address, the network, the amount, and the fee.',
-      'Nothing on this page connects to a wallet.',
       "What you'll need",
       'A Solana-compatible wallet and enough SOL for your amount plus the network fee.',
       'Before you spend anything',
@@ -249,9 +249,15 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
   it('keeps the explanatory disclosures, verifier, story, four FAQs, and close exact', async () => {
     const source = await read('src/app.jsx');
     const how = functionBlock(source, 'ConsumerHowItWorks');
-    for (const copy of ['What is a Zodiac?', 'Read the story', 'How verification works', 'See market details']) {
+    for (const copy of ['What is a Zodiac?', 'One token for each sign', 'The address is the identity', 'Keep it, send it, or gift it', 'Its market price can rise or fall', 'How verification works', 'See market details']) {
       expect(how).toContain(copy);
     }
+    expect(how).not.toContain('Read the story');
+    expect(how).toContain('className="consumer-proof"');
+    const purpose = functionBlock(source, 'ConsumerPurpose');
+    expect(purpose).toContain('{SIGNS.map((item, index) =>');
+    expect(purpose).toContain("aries: { finish: 'crown', numeral: 'V', count: '×12' }");
+    expect(purpose).toContain("aquarius: { finish: 'gold', numeral: 'IV', count: '×3' }");
     const verifier = functionBlock(source, 'ConsumerVerifier');
     expect(verifier).toContain('id="verify" className="consumer-verify reveal"');
     expect(verifier).toContain('Check a Zodiac token address');

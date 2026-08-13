@@ -60,7 +60,7 @@ export const OG_EN = Object.freeze({
   },
   astrofolio: {
     path: '/astrofolio/',
-    image: '/assets/astrofolio/v1/leo/og-1200x630.png',
+    image: '/assets/astrofolio/v2/leo/og-1200x630.png',
     alt: 'Astrofolio: the collection of gold sculptures and official tokens for the twelve Zodiac signs.',
   },
   terminal: {
