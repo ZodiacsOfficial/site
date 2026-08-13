@@ -35,7 +35,8 @@ const COMPARISON_ROWS = [
   ['Permissionless online transfer', ['×', '✓', '✓']],
   ['Programmable', ['×', '✓', '✓']],
   ['Base-layer settlement in seconds', ['×', '×', '✓']],
-  ['Everyday identity in profiles and conversation', ['×', '×', '✓']],
+  ['Built-in monthly cultural seasonality', ['×', '×', '✓']],
+  ['Everyday cultural participation', ['×', '×', '✓']],
 ];
 const LEO_MINT = '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm';
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
