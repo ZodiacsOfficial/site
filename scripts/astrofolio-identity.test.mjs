@@ -3,6 +3,7 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import pixelmatch from 'pixelmatch';
 import sharp from 'sharp';
 import { afterAll, describe, expect, it } from 'vitest';
 import {
@@ -28,6 +29,65 @@ const monthDayIso = (year, value) => {
 };
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const tempDirectories = [];
+const PLATFORM_RENDERED_ARTWORK = new Set([
+  'avatar-1024.png',
+  'og-1200x630.png',
+  'season-seal-192.png',
+]);
+
+function semanticIdentityManifest(manifest) {
+  const semantic = structuredClone(manifest);
+  delete semantic.terminalOgSha256;
+  for (const season of semantic.seasons) {
+    for (const name of PLATFORM_RENDERED_ARTWORK) delete season.sha256[name];
+  }
+  return semantic;
+}
+
+async function expectPixelEquivalent(actualPath, expectedPath, label) {
+  const comparisonSize = 256;
+  const [actual, expected] = await Promise.all([
+    sharp(actualPath)
+      .ensureAlpha()
+      .resize({ width: comparisonSize, height: comparisonSize, fit: 'inside', kernel: 'lanczos3' })
+      .raw()
+      .toBuffer({ resolveWithObject: true }),
+    sharp(expectedPath)
+      .ensureAlpha()
+      .resize({ width: comparisonSize, height: comparisonSize, fit: 'inside', kernel: 'lanczos3' })
+      .raw()
+      .toBuffer({ resolveWithObject: true }),
+  ]);
+  expect(actual.info, `${label}: decoded image geometry`).toMatchObject({
+    width: expected.info.width,
+    height: expected.info.height,
+    channels: expected.info.channels,
+  });
+
+  const pixelCount = expected.info.width * expected.info.height;
+  const differentPixels = pixelmatch(
+    expected.data,
+    actual.data,
+    null,
+    expected.info.width,
+    expected.info.height,
+    { threshold: 0.1, includeAA: false },
+  );
+  let absoluteChannelError = 0;
+  for (let offset = 0; offset < expected.data.length; offset += 1) {
+    absoluteChannelError += Math.abs(expected.data[offset] - actual.data[offset]);
+  }
+  const differentPixelRatio = differentPixels / pixelCount;
+  const normalizedMeanAbsoluteError = absoluteChannelError / (expected.data.length * 255);
+  expect(
+    differentPixelRatio,
+    `${label}: ${(differentPixelRatio * 100).toFixed(3)}% perceptually different pixels`,
+  ).toBeLessThanOrEqual(0.015);
+  expect(
+    normalizedMeanAbsoluteError,
+    `${label}: ${normalizedMeanAbsoluteError.toFixed(6)} normalized decoded-channel MAE`,
+  ).toBeLessThanOrEqual(0.006);
+}
 
 afterAll(async () => {
   await Promise.all(tempDirectories.map((directory) => rm(directory, { recursive: true, force: true })));
@@ -144,7 +204,7 @@ describe('Astrofolio seasonal identity generator', () => {
     expect(() => astrofolioSeasonTitleLayout('')).toThrow('display name');
   });
 
-  it('replays byte-for-byte from canonical sources', async () => {
+  it('replays semantically from canonical sources with platform-safe artwork comparison', async () => {
     const temporaryRoot = await mkdtemp(resolve(tmpdir(), 'astrofolio-identity-'));
     tempDirectories.push(temporaryRoot);
     const outputDirectory = resolve(temporaryRoot, 'identity');
@@ -154,12 +214,28 @@ describe('Astrofolio seasonal identity generator', () => {
       resolve(root, `public/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}/manifest.json`),
       'utf8',
     ));
-    expect(replay).toEqual(committed);
-    expect(digest(await readFile(terminalOutput))).toBe(committed.terminalOgSha256);
+    expect(semanticIdentityManifest(replay)).toEqual(semanticIdentityManifest(committed));
+    const committedTerminal = resolve(root, 'public/assets/og/v6/terminal.png');
+    expect(digest(await readFile(committedTerminal)), 'committed Terminal OG manifest integrity')
+      .toBe(committed.terminalOgSha256);
+    await expectPixelEquivalent(terminalOutput, committedTerminal, 'Terminal OG replay');
     for (const season of replay.seasons) {
       for (const [name, sha256] of Object.entries(season.sha256)) {
-        expect(digest(await readFile(resolve(outputDirectory, season.sign, name))), `${season.sign}/${name}`)
-          .toBe(sha256);
+        const replayPath = resolve(outputDirectory, season.sign, name);
+        const committedPath = resolve(
+          root,
+          `public/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}/${season.sign}/${name}`,
+        );
+        const committedSha256 = committed.seasons
+          .find(({ sign }) => sign === season.sign)?.sha256[name];
+        expect(digest(await readFile(committedPath)), `${season.sign}/${name}: committed manifest integrity`)
+          .toBe(committedSha256);
+        if (PLATFORM_RENDERED_ARTWORK.has(name)) {
+          await expectPixelEquivalent(replayPath, committedPath, `${season.sign}/${name}`);
+        } else {
+          expect(digest(await readFile(replayPath)), `${season.sign}/${name}: byte-exact replay`)
+            .toBe(sha256);
+        }
       }
     }
   }, 60_000);
