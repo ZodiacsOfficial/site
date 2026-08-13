@@ -33,6 +33,30 @@ provider boundary, compensation controls, and rollback behavior remain
 unchanged; this amendment does not authorize a replacement acquisition entry
 on Astrofolio or the expert Terminal view.
 
+## Addendum — 2026-08-13: beginner Consumer record handoff
+
+Authorized: 2026-08-13
+
+The owner further amends the scope for the beginner Consumer handoff. This is
+a narrow exception to the final sentence above: `/terminal/`
+may show exactly one selected-sign educational action that links only to the
+already-authorized, same-origin record at
+`/registry/<canonical-sign>/#acquire`. The action is a handoff to the record's
+existing explanation and point-of-action warnings, not a venue or execution
+surface. Consumer still carries no trade or exchange flag or meta, no embedded
+trade interface, no direct venue URL, and no link to `/terminal/markets/`.
+Mounting or focusing the action, or changing the selected sign, must not
+connect a wallet or request anything from Jupiter, another execution provider,
+or a wallet provider. The record's existing complete-loss, irreversibility,
+mint-verification, independent-provider, fee, and liquidity controls continue
+to apply at the point of action.
+
+This 2026-08-13 amendment does not authorize an acquisition action on Pro,
+alter the Zodiac Markets discovery or execution decision, or extend its pilot
+deadline. It adds no authority for custody, transaction construction,
+execution, referral fees, platform fees, or other compensation. Every other
+part of the 2026-08-12 narrowing remains in force.
+
 ## Decision
 
 The site owner has chosen not to obtain outside legal advice for this
@@ -135,11 +159,12 @@ page — one click from the landing to the page that will carry the trade
 panel. MASTER-PLAN risk R1 (YMYL contagion from the wing) assumed swap
 deep-links two clicks from consumer pages; with the redesign plus the panel,
 an execution surface sits one click behind an SEO-targeted landing. The
-containment defenses stay as designed — market and crypto language confined
-to `/registry/**`, consumer surfaces clean, graph separation — and the
-owner's approval of this decision explicitly accepts the sharpened R1
-posture. The redesign's FAQ answer "How do I buy a zodiac token?" is worded
-flag-agnostically so it stays true in both flag states.
+containment defenses stay as designed — financial interaction and its detailed
+risk language remain confined to `/registry/**`, while the Consumer may carry
+only the selected-sign educational record handoff authorized on 2026-08-13 —
+and the owner's approval of this decision explicitly accepts the sharpened R1
+posture. The Consumer buying guide ends at the selected sign record and stays
+true in both record-panel flag states.
 
 ## Fresh operator attestation (ratified 2026-08-02)
 
@@ -203,5 +228,8 @@ never presented as independently verified.
 This document, once approved, clears exactly one gate: setting
 `PUBLIC_REGISTRY_TRADE_ENABLED=1` in production after the panel PR merges
 with every control above satisfied. It does not authorize Base-chain
-trading, fees of any kind, acquisition surfaces outside the twelve catalogue
-pages, embedding any third-party script, or the thesis §VII claim surface.
+trading, fees of any kind, direct or embedded acquisition surfaces outside the
+twelve catalogue pages, embedding any third-party script, or the thesis §VII
+claim surface. The sole exception is the 2026-08-13 Consumer educational
+handoff to a selected sign's already-authorized record; it does not itself
+quote, connect, or execute.

@@ -131,8 +131,9 @@ describe('the legacy shared gallery band', () => {
     // section anchors; a slug is read on arrival only.
     expect(scene).not.toContain('replaceState');
     expect(scene).toContain('signFromHash(window.location.hash');
-    // Vertical wheel input remains page scrolling; horizontal trackpad input
-    // and direct drag/swipe walk the sculpture row.
+    // The consumer spotlight is defensive even if a future caller mounts it:
+    // every wheel/trackpad gesture belongs to the document.
+    expect(scene).toContain('if (spotlight) return;');
     expect(scene).toContain('if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;');
     // A sculpture opens its record in place — never a navigation.
     expect(scene).not.toContain('location.assign');

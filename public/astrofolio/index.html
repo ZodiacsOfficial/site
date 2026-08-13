@@ -7468,6 +7468,176 @@
       .consumer-signs,
       .static-sign-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
+
+    /* ── Consumer left-curve pass · 13 August 2026 ───────────────
+       One stable artwork, one live price, one safe next step. Deeper
+       Registry and market mechanics stay available through disclosure. */
+    .consumer-registry > .consumer-explorer {
+      width: min(calc(100% - 24px), 1120px);
+      margin: 18px auto 0;
+    }
+    .consumer-registry .gband--flat {
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      border-radius: 24px;
+      contain: layout paint;
+    }
+    /* Practical Consumer content is present immediately. The technical wing
+       keeps its staged reveals, but onboarding must never turn into a blank
+       viewport when IntersectionObserver delivery is delayed by a browser. */
+    .consumer-registry .reveal {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+      will-change: auto;
+    }
+    .consumer-registry .gband--flat .gband__rail-top { grid-row: 1; padding-top: 14px; }
+    .consumer-registry .gband--flat .stage-carousel {
+      grid-row: 2;
+      height: clamp(300px, 34vw, 410px);
+      flex: none;
+    }
+    /* Let diagonal mouse-wheel and trackpad gestures chain to the document.
+       The shared carousel contains horizontal overscroll for standalone
+       embeds, which can otherwise hold a mostly-vertical gesture over the
+       artwork in Chromium and mobile desktop-mode browsers. */
+    .consumer-registry .stage-carousel__track {
+      overscroll-behavior-x: auto;
+    }
+    .consumer-registry .gband--flat .stage-placard {
+      grid-row: 3;
+      width: calc(100% - 32px);
+      max-width: 980px;
+      grid-template-columns: minmax(210px, .62fr) minmax(260px, 1fr) minmax(180px, .55fr);
+      gap: 18px;
+      margin: 0 auto 16px;
+      padding: 16px 18px;
+    }
+    .consumer-registry .stage-placard__dates { display: inline; }
+    .consumer-registry .stage-placard__meta {
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      white-space: normal;
+      text-transform: none;
+    }
+    .consumer-registry .stage-placard__quote {
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      white-space: normal;
+      text-transform: none;
+    }
+    .consumer-registry .stage-placard__change { letter-spacing: 0; }
+    .consumer-registry .stage-placard__identity {
+      padding-inline: 18px;
+      font-family: var(--sans);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .consumer-registry .stage-placard__identity > span { font: 8px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .consumer-registry .stage-placard__identity strong {
+      overflow: visible;
+      font: 400 13px/1.5 var(--sans);
+      text-overflow: clip;
+      white-space: normal;
+    }
+    .consumer-buy-guide {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, .86fr) minmax(320px, 1.14fr);
+      gap: clamp(32px, 7vw, 90px);
+      padding: clamp(62px, 8vw, 104px) clamp(20px, 6vw, 72px);
+      border-bottom: 1px solid var(--hair-2);
+    }
+    .consumer-buy-guide > .consumer-section-head { grid-column: 1; }
+    .consumer-buy-guide > .consumer-section-head > p { max-width: 54ch; margin: 18px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+    .consumer-buy-guide__steps {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--hair-2);
+    }
+    .consumer-buy-guide__steps li {
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .consumer-buy-guide__steps li > span { color: var(--active-sign, var(--ink-mute)); font: 9px/1 var(--mono); }
+    .consumer-buy-guide__steps strong { color: var(--ink); font: 500 14px/1.45 var(--sans); }
+    .consumer-buy-guide__action { grid-column: 1; display: grid; justify-items: start; gap: 9px; margin-top: 25px; }
+    .consumer-buy-guide__action .btn { min-height: 48px; display: inline-flex; align-items: center; padding: 0 19px; border: 1px solid var(--hair-3); border-radius: 999px; color: var(--ink); text-decoration: none; }
+    .consumer-buy-guide__action small { color: var(--ink-mute); font: 9px/1.4 var(--mono); }
+    .consumer-buy-guide__risk { grid-column: 1 / -1; max-width: 92ch; margin: 32px 0 0; color: var(--ink-dim); font: 10px/1.65 var(--mono); }
+    .consumer-buy-guide > .consumer-disclosure { grid-column: 1 / -1; margin-top: 0; }
+    .consumer-snapshot { padding-block: clamp(56px, 7vw, 88px); }
+    .consumer-snapshot__details { margin-top: 28px; border-top: 1px solid var(--hair-2); }
+    .consumer-snapshot__details > summary,
+    .consumer-snapshot__source > summary {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--ink);
+      font: 500 13px/1 var(--sans);
+      cursor: pointer;
+      list-style: none;
+    }
+    .consumer-snapshot__details > summary::after,
+    .consumer-snapshot__source > summary::after { content: '+'; color: var(--active-sign, var(--ink-dim)); }
+    .consumer-snapshot__details[open] > summary::after,
+    .consumer-snapshot__source[open] > summary::after { content: '−'; }
+    .consumer-snapshot__rows { margin-top: 0; }
+    .consumer-snapshot__source { margin-top: 18px; border-block: 1px solid var(--hair); }
+    .consumer-snapshot__source p { max-width: 86ch; margin: 0; padding: 0 0 18px; color: var(--ink-mute); font: 10px/1.65 var(--mono); }
+    .consumer-how .consumer-disclosure + .consumer-disclosure { margin-top: -1px; }
+    .consumer-purpose--simple { grid-template-columns: minmax(0, 820px); justify-content: center; }
+    .consumer-faq__item { display: block; padding: 0; }
+    .consumer-faq__item summary {
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--ink);
+      font: 500 14px/1.35 var(--sans);
+      cursor: pointer;
+      list-style: none;
+    }
+    .consumer-faq__item summary::after { content: '+'; color: var(--active-sign, var(--ink-dim)); }
+    .consumer-faq__item[open] summary::after { content: '−'; }
+    .consumer-faq__item p { max-width: 66ch; margin: 0; padding: 0 0 20px; color: var(--ink-dim); font: 13px/1.6 var(--sans); }
+    .static-buy-guide,
+    .static-snapshot { border-block: 1px solid var(--hair); }
+    .consumer-static details > summary { min-height: 48px; display: flex; align-items: center; cursor: pointer; }
+    .static-collection-section:not(:has([data-registry-collection-entry])) { display: none; }
+
+    @media (max-width: 760px) {
+      .consumer-registry > .consumer-explorer { width: calc(100% - 12px); }
+      .consumer-registry .gband--flat { border-radius: 20px; }
+      .consumer-registry .gband--flat .stage-carousel { height: clamp(250px, 72vw, 320px); }
+      .consumer-registry .gband--flat .stage-placard {
+        width: calc(100% - 16px);
+        grid-template-columns: minmax(0, 1fr);
+        gap: 9px;
+        padding: 14px;
+      }
+      .consumer-registry .stage-placard__who { align-items: center; text-align: center; }
+      .consumer-registry .stage-placard__identity { padding: 11px 0; border-inline: 0; border-block: 1px solid var(--hair-2); text-align: center; }
+      .consumer-registry .stage-placard__actions { grid-template-columns: 1fr; }
+      .consumer-buy-guide { grid-template-columns: 1fr; gap: 26px; }
+      .consumer-buy-guide__steps,
+      .consumer-buy-guide__action,
+      .consumer-buy-guide__risk,
+      .consumer-buy-guide > .consumer-disclosure { grid-column: 1; grid-row: auto; }
+      .consumer-buy-guide__action .btn { width: 100%; justify-content: center; }
+      .consumer-snapshot { padding-inline: 20px; }
+    }
     @media (prefers-reduced-motion: reduce) {
       .consumer-registry *,
       .technical-registry * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -9313,6 +9483,6 @@
   <!-- ?v= evicts browsers still holding a prior immutable-cached /assets/app.js;
        the bundle now revalidates (see vercel.json). Bump if a future build must
        reach clients before the next revalidation. -->
-  <script defer src="/assets/app.js?v=z3"></script>
+  <script defer src="/assets/app.js?v=z4"></script>
 </body>
 </html>

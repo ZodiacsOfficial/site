@@ -50,7 +50,7 @@ describe('official Zodiac token records', () => {
     expect(attribution).toContain('SIMBAD M44');
   });
 
-  it('uses plain-language headings and explains what the token and artwork are', async () => {
+  it('puts the live price, buying guide, and verified address before optional catalogue detail', async () => {
     for (const [index, sign] of signs.entries()) {
       const html = await read(`public/registry/${sign}/index.html`);
       const visible = visibleMarkup(html);
@@ -58,30 +58,56 @@ describe('official Zodiac token records', () => {
 
       expect((visible.match(/<h1\b/gu) || [])).toHaveLength(1);
       expect(visible).toContain(`Official Zodiac Token <span class="g">·</span> Sign ${index + 1} of 12`);
-      expect(visible).toContain(`${name} is the transferable token for the ${name} sign.`);
-      expect(visible).toContain('The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.');
-      expect(visible).toContain('Token facts');
-      expect(visible).toContain(`What ${name} represents`);
-      expect(visible).toContain(`Why ${name} has a place in the set`);
-      expect(visible).toContain(`The ${name} constellation`);
-      expect(visible).toContain(`The story behind ${name}`);
+      expect(visible).toContain(`${name} is the official digital token for the ${name} zodiac sign. See today’s price, verify the address, and learn how buying works.`);
+      expect(visible).not.toContain('class="lot__epithet"');
+      expect(visible).not.toContain('not a physical sculpture or a one-of-one NFT');
+      expect(html).not.toContain('/terminal/markets/');
+      expect(visible).toContain(`${name} price now`);
+      expect(visible).toContain('<section class="quick" aria-labelledby="quick-title" data-live-quote>');
+      expect(visible).toContain(`href="#acquire"><span>How to buy ${name}</span>`);
+      expect(visible).toContain('You can browse this page without a wallet.');
+      expect(visible).toContain('Key facts');
+      expect(visible).toContain(`About ${name}`);
+      expect(visible).toContain(`Why ${name} is in the collection`);
+      expect(visible).toContain(`See the ${name} constellation`);
+      expect(visible).toContain(`Read the ${name} story`);
       expect(visible).toContain('Official addresses');
-      expect(visible).toContain(`Get ${name}`);
+      expect(visible).toContain(`How to buy ${name}`);
+      expect(visible).toContain('Daily price archive');
       expect(visible).toContain('Explore all 12');
       expect(visible).not.toMatch(/>Museum label<|>Catalogue note<|>Provenance<|>Acquisition<|>The catalogue</u);
+      expect((visible.match(/<details\b/gu) || []).length).toBeGreaterThanOrEqual(7);
+
+      const quickIndex = visible.indexOf(`${name} price now`);
+      const buyIndex = visible.indexOf(`id="acquire"`);
+      const addressIndex = visible.indexOf(`id="record"`);
+      const storyIndex = visible.indexOf(`Read the ${name} story`);
+      expect(quickIndex).toBeGreaterThan(-1);
+      expect(buyIndex).toBeGreaterThan(quickIndex);
+      expect(addressIndex).toBeGreaterThan(buyIndex);
+      expect(storyIndex).toBeGreaterThan(addressIndex);
     }
   });
 
-  it('uses the Registry archive for honest charts and keeps valuation fields separate', async () => {
+  it('separates a live selected-token quote from the honestly labelled daily archive', async () => {
     const [source, leo] = await Promise.all([
       read('scripts/build-sign-pages.mjs'),
       read('public/registry/leo/index.html'),
     ]);
 
     for (const value of [source, leo]) {
+      expect(value).toContain('https://api.dexscreener.com/tokens/v1/solana/');
+      expect(value).toContain('data-live-price');
+      expect(value).toContain('data-live-change');
+      expect(value).toContain("pair.baseToken.address !== MINT");
+      expect(value).toContain('if (!document.hidden) loadLiveQuote();');
+      expect(value).toContain('Last live price shown · refresh temporarily unavailable');
       expect(value).toContain('/assets/data/registry-market-history.v1.json');
       expect(value).toContain("archive.schema !== 'zodiacs.registry-market-history.v1'");
-      expect(value).toContain('One dated observation');
+      expect(value).toContain("'Archive through '");
+      expect(value).toContain("' daily close.'");
+      expect(value).toContain('A trend line will appear after 8 honest daily closes.');
+      expect(value).toContain('if (finite.length < 8)');
       expect(value).toContain('Price history unavailable.');
       expect(value).toContain("var required = range === '7d' ? 7 : 30");
       expect(value).toContain('gap > 1.5 * 86400000');
@@ -93,6 +119,8 @@ describe('official Zodiac token records', () => {
     expect(leo).toContain('data-market-range="30d"');
     expect(leo).toContain('data-market-range="all"');
     expect(leo).toContain('Open live chart ↗');
+    expect(leo).toContain('Daily closes—not the live price above');
+    expect(leo).toContain('<noscript><style>.reveal { opacity: 1 !important;');
   });
 
   it('links every record to its constellation and sign-filtered research', async () => {

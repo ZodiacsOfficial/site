@@ -1874,23 +1874,21 @@
     /* The placard's price: one number and its day, small enough to sit on a
        museum label. Reads from the same single batched market call the rest
        of the page shares. */
-    function PlacardQuote({ sign }) {
-      const [ref, inView] = useInView();
-      const batch = useTwelveQuotes(inView);
+    function PlacardQuote({ sign, batch }) {
       const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
       const changeClass = marketChangeClass(quote?.priceChange24h);
       return (
-        <span ref={ref} className="stage-placard__quote">
+        <span className="stage-placard__quote" aria-live="polite">
           {quote ? (
             <>
               <span className="stage-placard__price">{formatPriceUsd(quote.priceUsd)}</span>
-              {formatPercent(quote.priceChange24h) !== '—' && (
-                <span className={'stage-placard__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
-              )}
+              <span className={'stage-placard__change' + changeClass}>
+                {plainMarketMovement(quote.priceChange24h)}
+              </span>
             </>
           ) : (
             <span className="stage-placard__price stage-placard__price--waiting">
-              {batch.status === 'ok' ? 'Not indexed' : 'Live price…'}
+              {batch.status === 'ok' ? 'Price not indexed' : batch.status === 'unavailable' ? 'Live price unavailable' : 'Reading live price…'}
             </span>
           )}
         </span>
@@ -2602,8 +2600,7 @@
       consumer = false,
       carousel = false,
       identityOnly = false,
-      personalSlug = '',
-      setPersonalSlug = () => {},
+      marketBatch = { status: 'idle' },
     }) {
       const stageRef = useRef(null);
       // The slug the scene last announced — the guard that keeps the
@@ -2826,14 +2823,14 @@
             data-gallery-spotlight={consumer && !carousel ? '' : undefined}
             data-gallery-paused={consumer && (carousel || sheetVisible) ? '' : undefined}
           >
-          {consumer && <StageConstellation slug={slug} />}
+          {consumer && !identityOnly && <StageConstellation slug={slug} />}
           {/* The stage picks with the rail at the top and shows one piece
               large below it, so the twelve read as the choice and the chosen
               sculpture as the answer. The rail deliberately does NOT wear
               .gband__chrome: the scene measures the band it may fill by that
               element's offsetTop, and chrome above the canvas would leave it
               nothing. */}
-          {consumer && (
+          {consumer && !identityOnly && (
             <SeasonNow season={season} />
           )}
           {consumer && (
@@ -2877,26 +2874,21 @@
                 <span id="stage-placard-name" className="stage-placard__name">{sign.name}</span>
                 <span className="stage-placard__meta">
                   <span className="stage-placard__dates">{signDateLabel(sign)}</span>
-                  {!identityOnly && <PlacardQuote sign={sign} />}
+                  <PlacardQuote sign={sign} batch={marketBatch} />
                 </span>
               </span>
               {identityOnly && (
                 <span className="stage-placard__identity">
-                  <span>{sign.element} · {sign.modality}</span>
-                  <strong>{sign.archetype}</strong>
+                  <span>Official {sign.name} token</span>
+                  <strong>Gold artwork and today&rsquo;s price. No wallet needed to browse.</strong>
                 </span>
               )}
               {!identityOnly && <PlacardMarketPanel sign={sign} />}
               <span className="stage-placard__actions">
                 {identityOnly ? (
-                  <button
-                    type="button"
-                    className="btn btn--primary stage-placard__pill"
-                    aria-pressed={personalSlug === slug}
-                    onClick={() => setPersonalSlug(slug)}
-                  >
-                    <span>{personalSlug === slug ? `${sign.name} is my sign` : 'This is my sign'}</span>
-                  </button>
+                  <a className="btn btn--primary stage-placard__pill" href="#buying-guide">
+                    <span>How to buy {sign.name}</span>
+                  </a>
                 ) : tradingEnabled ? (
                   <button
                     ref={tradePillRef}
@@ -2911,8 +2903,8 @@
                     <span>Buy {sign.name}</span>
                   </a>
                 )}
-                <a className="btn btn--ghost stage-placard__pill" href={registryProfilePath(sign)}>
-                  <span>Official record</span>
+                <a className="btn btn--ghost stage-placard__pill" href={`${registryProfilePath(sign)}#record`}>
+                  <span>Official details</span>
                 </a>
               </span>
             </div>
@@ -3045,12 +3037,12 @@
       return (
         <section ref={reveal} id="verify" className="sec consumer-verify reveal" aria-labelledby="verify-title">
           <div className="consumer-section-head">
-            <span className="consumer-section-head__eyebrow">Check the public list</span>
-            <h2 id="verify-title">Check a Zodiac token address.</h2>
+            <span className="consumer-section-head__eyebrow">A quick safety check</span>
+            <h2 id="verify-title">Check if a token is official.</h2>
           </div>
           <p className="consumer-verify__intro">
-            Paste the mint or contract address shown by a wallet or marketplace.
-            We&rsquo;ll tell you whether it appears in the official list. Never paste a seed phrase.
+            Copy the token address from your wallet or the site where you found it, then paste it here.
+            We&rsquo;ll compare it with the official list. Never paste a seed phrase or recovery phrase.
           </p>
           <p className="consumer-verify__distinction">
             This checks a Zodiac&rsquo;s token address, not your public wallet address.
@@ -3065,7 +3057,7 @@
               autoComplete="off"
               spellCheck={false}
               inputMode="text"
-              placeholder="Mint or contract address"
+              placeholder="Paste token address"
               value={input}
               onChange={e => {
                 setInput(e.target.value);
@@ -4617,7 +4609,7 @@
                     <strong>{item.name}</strong>
                   </span>
                   <span className="consumer-snapshot__price">{quote ? formatPriceUsd(quote.priceUsd) : batch.status === 'loading' ? 'Reading…' : '—'}</span>
-                  <span className="consumer-snapshot__move">
+                  <span className={'consumer-snapshot__move' + marketChangeClass(quote?.priceChange24h)}>
                     {quote ? plainMarketMovement(quote.priceChange24h) : 'movement unavailable'}
                   </span>
                 </li>
@@ -6041,14 +6033,14 @@
           <header className="consumer-section-head">
             <h2 id="consumer-faq-title">Questions</h2>
           </header>
-          <dl className="consumer-faq__list">
+          <div className="consumer-faq__list">
             {CONSUMER_FAQS.map(item => (
-              <div className="consumer-faq__item" key={item.q}>
-                <dt>{item.q}</dt>
-                <dd>{item.a}</dd>
-              </div>
+              <details className="consumer-faq__item" key={item.q}>
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
             ))}
-          </dl>
+          </div>
         </section>
       );
     }

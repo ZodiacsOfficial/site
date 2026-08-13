@@ -273,13 +273,16 @@ describe('registry pastel polish', () => {
     expect(html).not.toContain('<span class="glyph">');
     expect(html).toContain('padding: calc(94px + env(safe-area-inset-top)) 0 36px;');
     expect(html).toContain(`<span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign`);
-    expect(html).toContain(`${name} is the transferable token for the ${name} sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.`);
+    expect(html).toContain(`${name} is the official digital token for the ${name} zodiac sign. See today’s price, verify the address, and learn how buying works.`);
+    expect(html).not.toContain('not a physical sculpture or a one-of-one NFT');
     for (const heading of [
-      'Token facts',
-      `What ${name} represents`,
-      `The story behind ${name}`,
+      `${name} price now`,
+      'Key facts',
+      `About ${name}`,
+      `Read the ${name} story`,
       'Official addresses',
-      `Get ${name}`,
+      `How to buy ${name}`,
+      'Daily price archive',
       'Explore all 12',
     ]) expect(html).toContain(heading);
     for (const retired of ['Museum label', 'Catalogue note', '>Provenance<', '>Acquisition<']) {
@@ -290,6 +293,9 @@ describe('registry pastel polish', () => {
     expect(html).toContain('CC BY-SA 4.0');
     expect(html).toContain('they are not official IAU boundaries');
     expect(html).toContain('data-market-chart');
+    expect(html).toContain('data-live-quote');
+    expect(html).toContain('https://api.dexscreener.com/tokens/v1/solana/');
+    expect(html).toContain(`href="#acquire"><span>How to buy ${name}</span>`);
     expect(html).toContain('Open live chart');
     expect(html).toContain('class="lot__meta"');
     expect(html).toContain('min-height: 44px;');

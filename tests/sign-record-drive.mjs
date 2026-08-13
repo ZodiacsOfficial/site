@@ -52,6 +52,9 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             intro: document.querySelector('.lot__intro')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
             sectionHeadings: [...document.querySelectorAll('.sec__title')]
               .map((heading) => heading.textContent?.replace(/\s+/g, ' ').trim() ?? ''),
+            detailHeadings: [...document.querySelectorAll('.record-detail__title')]
+              .map((heading) => heading.textContent?.replace(/\s+/g, ' ').trim() ?? ''),
+            quickAction: document.querySelector('.quick__action')?.getAttribute('href') ?? '',
             constellation: document.querySelector('#constellation img')?.getAttribute('src') ?? '',
             constellationCopy: document.querySelector('#constellation')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           };
@@ -62,13 +65,14 @@ await withPreview({ port: 4396 }, async (baseURL) => {
           state.icon === `/assets/zodiac-icons/48/${record.next}.webp`, state.icon);
         check(`${record.slug} at ${width}px keeps complete record context`,
           /^Official Zodiac Token · Sign \d+ of 12$/.test(state.eyebrow)
-            && state.intro === `${record.current} is the transferable token for the ${record.current} sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.`
-            && state.sectionHeadings.includes('Token facts')
-            && state.sectionHeadings.includes(`What ${record.current} represents`)
-            && state.sectionHeadings.includes(`The story behind ${record.current}`)
+            && state.intro === `${record.current} is the official digital token for the ${record.current} zodiac sign. See today’s price, verify the address, and learn how buying works.`
+            && state.detailHeadings.includes('Key facts')
+            && state.detailHeadings.includes(`About ${record.current}`)
+            && state.detailHeadings.includes(`Read the ${record.current} story`)
             && state.sectionHeadings.includes('Official addresses')
-            && state.sectionHeadings.includes(`Get ${record.current}`)
+            && state.sectionHeadings.includes(`How to buy ${record.current}`)
             && state.sectionHeadings.includes('Explore all 12')
+            && state.quickAction === '#acquire'
             && state.constellation === `/assets/constellations/${record.slug}.svg`
             && /HYG Database v4\.0/.test(state.constellationCopy)
             && /not official IAU boundaries/.test(state.constellationCopy),
@@ -95,6 +99,28 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         await page.close();
       }
     }
+
+    const noJs = await browser.newPage({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
+    await noJs.goto(`${baseURL}/registry/leo/`, { waitUntil: 'domcontentloaded' });
+    const noJsState = await noJs.evaluate(() => {
+      const quick = document.querySelector('[data-live-quote]');
+      const detail = document.querySelector('details.record-detail');
+      return {
+        quickVisible: quick ? getComputedStyle(quick).opacity === '1' : false,
+        action: quick?.querySelector('.quick__action')?.getAttribute('href') ?? '',
+        status: quick?.querySelector('[data-live-state]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        detailVisible: detail ? getComputedStyle(detail).opacity === '1' : false,
+        risk: document.querySelector('#acquire .acq__copy')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      };
+    });
+    check('no-JavaScript record keeps the simple path and disclosures visible',
+      noJsState.quickVisible
+        && noJsState.action === '#acquire'
+        && /Live price loads when JavaScript is available/.test(noJsState.status)
+        && noJsState.detailVisible
+        && /You could lose all money used to acquire a Zodiac/.test(noJsState.risk),
+      JSON.stringify(noJsState));
+    await noJs.close();
 
     const chart = await browser.newPage({ viewport: { width: 781, height: 900 } });
     const chartErrors = [];
@@ -124,11 +150,34 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         })),
       },
     }));
+    await chart.route('https://api.dexscreener.com/tokens/v1/solana/**', (route) => {
+      const mint = decodeURIComponent(route.request().url().split('/').pop() ?? '');
+      return route.fulfill({ json: [{
+        chainId: 'solana', pairAddress: 'live-leo',
+        baseToken: { address: mint }, liquidity: { usd: 42000 },
+        priceUsd: '0.0000724', priceChange: { h24: 1.25 },
+        url: 'https://dexscreener.com/solana/live-leo',
+      }] });
+    });
     await chart.goto(`${baseURL}/registry/leo/`, { waitUntil: 'domcontentloaded' });
+    await chart.locator('[data-live-price]').waitFor({ state: 'visible' });
+    await chart.waitForFunction(() => document.querySelector('[data-live-price]')?.textContent !== '—');
+    const liveState = await chart.locator('[data-live-quote]').evaluate((panel) => ({
+      price: panel.querySelector('[data-live-price]')?.textContent?.trim() ?? '',
+      change: panel.querySelector('[data-live-change]')?.textContent?.trim() ?? '',
+      status: panel.querySelector('[data-live-state]')?.textContent?.trim() ?? '',
+    }));
+    check('selected-token quote is live, signed, and clearly sourced',
+      liveState.price === '$0.0000724'
+        && liveState.change === '24h +1.25%'
+        && /Live via DexScreener/.test(liveState.status),
+      JSON.stringify(liveState));
+    await chart.locator('#market > summary').click();
     await chart.locator('[data-market]').scrollIntoViewIfNeeded();
     await chart.locator('[data-market-chart]:not([hidden])').waitFor({ timeout: 15_000 });
     const chartState = await chart.locator('[data-market]').evaluate((panel) => ({
       note: panel.querySelector('[data-market-chart-note]')?.textContent?.trim() ?? '',
+      empty: panel.querySelector('.market__chart-empty')?.textContent?.trim() ?? '',
       paths: panel.querySelectorAll('[data-market-chart-canvas] path').length,
       points: panel.querySelectorAll('[data-market-chart-canvas] circle').length,
       sevenDisabled: panel.querySelector('[data-market-range="7d"]')?.disabled ?? false,
@@ -138,9 +187,10 @@ await withPreview({ port: 4396 }, async (baseURL) => {
       live: panel.querySelector('[data-market-live-link]')?.getAttribute('href') ?? '',
     }));
     check('archive charts preserve nulls and calendar gaps until coverage is honest',
-      /^5 dated observations/.test(chartState.note)
-        && chartState.paths === 2
-        && chartState.points === 5
+      /^Archive through .* · 5 daily closes\.$/.test(chartState.note)
+        && /5 daily closes recorded\. A trend line will appear after 8 honest daily closes\./.test(chartState.empty)
+        && chartState.paths === 0
+        && chartState.points === 0
         && chartState.sevenDisabled
         && chartState.thirtyDisabled
         && chartState.allPressed === 'true'

@@ -47,6 +47,17 @@ function pair({
 }
 
 describe('Registry market snapshot archive', () => {
+  it('runs after a completed Daily Sky attempt and lets the dated artifact check decide freshness', async () => {
+    const workflow = await readFile(
+      resolve(repositoryRoot, '.github/workflows/registry-market-snapshot.yml'),
+      'utf8',
+    );
+    expect(workflow).toContain('workflows: ["Daily Sky"]');
+    expect(workflow).toContain("types: [completed]");
+    expect(workflow).toContain("Require today's committed Daily Sky");
+    expect(workflow).not.toContain("workflow_run.conclusion == 'success'");
+  });
+
   it('uses the canonical twelve Solana mints from the Registry', async () => {
     const registry = JSON.parse(
       await readFile(resolve(repositoryRoot, 'public/registry/zodiacs.registry.json'), 'utf8'),
