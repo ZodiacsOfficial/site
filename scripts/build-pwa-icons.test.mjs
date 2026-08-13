@@ -347,9 +347,9 @@ describe('PWA icon compositor', () => {
 
     const astrofolio = await readFile(resolve('public/astrofolio/index.html'), 'utf8');
     for (const name of ['favicon.svg', 'favicon-16.png', 'favicon-32.png', 'favicon-96.png', 'apple-touch-icon-180.png']) {
-      expect(astrofolio).toContain(`/assets/astrofolio/v1/leo/${name}`);
+      expect(astrofolio).toContain(`/assets/astrofolio/v2/leo/${name}`);
     }
-    expect(astrofolio).toContain('href="/assets/astrofolio/v1/leo/astrofolio.webmanifest"');
+    expect(astrofolio).toContain('href="/assets/astrofolio/v2/leo/astrofolio.webmanifest"');
     expect(astrofolio).not.toContain('href="/site.webmanifest"');
   });
 

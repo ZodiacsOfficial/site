@@ -5,10 +5,12 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { SIGN_ORDER } from './sign-data.mjs';
 import {
+  ASTROFOLIO_OG_MOTIF_GEOMETRY,
   ASTROFOLIO_IDENTITY_BASE,
   ASTROFOLIO_IDENTITY_VERSION,
   TERMINAL_OG_V6_PATH,
   astrofolioOgCopy,
+  astrofolioOgIdentitySources,
 } from './build-astrofolio-identity.mjs';
 import { seasonsFromRegistry } from './astrofolio-season.mjs';
 
@@ -33,7 +35,10 @@ async function image(path, expected, label) {
 }
 
 async function verifyBrightContentCropSafety(bytes, label) {
-  const { data, info } = await sharp(bytes).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { data, info } = await sharp(bytes)
+    .flatten({ background: '#060709' })
+    .raw()
+    .toBuffer({ resolveWithObject: true });
   const center = info.width / 2;
   const safeRadius = info.width * 0.4;
   for (let y = 0; y < info.height; y += 1) {
@@ -49,6 +54,83 @@ async function verifyBrightContentCropSafety(bytes, label) {
   }
 }
 
+async function verifyTransparentCircularFade(bytes, label) {
+  const { data, info } = await sharp(bytes).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const alphaAt = (x, y) => data[(y * info.width + x) * info.channels + 3];
+  const lastX = info.width - 1;
+  const lastY = info.height - 1;
+  const cornerAlpha = [
+    alphaAt(0, 0), alphaAt(lastX, 0), alphaAt(0, lastY), alphaAt(lastX, lastY),
+  ];
+  if (cornerAlpha.some((alpha) => alpha > 3)) {
+    failures.push(`${label}: corners must remain transparent for circular integration`);
+  }
+  if (alphaAt(Math.floor(info.width / 2), Math.floor(info.height / 2)) < 220) {
+    failures.push(`${label}: center is unexpectedly transparent`);
+  }
+  const center = info.width / 2;
+  let featheredPixels = 0;
+  for (let y = 0; y < info.height; y += 1) {
+    for (let x = 0; x < info.width; x += 1) {
+      const normalizedRadius = Math.hypot(x + 0.5 - center, y + 0.5 - center) / info.width;
+      if (normalizedRadius < 0.43 || normalizedRadius > 0.495) continue;
+      const alpha = alphaAt(x, y);
+      if (alpha > 3 && alpha < 245) featheredPixels += 1;
+    }
+  }
+  if (featheredPixels < info.width) {
+    failures.push(`${label}: outer edge does not contain a visible alpha fade`);
+  }
+}
+
+async function verifyTransparentRingField(bytes, label) {
+  const { data, info } = await sharp(bytes).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const center = info.width / 2;
+  const quietRadius = info.width * 0.19;
+  let opaquePixels = 0;
+  for (let y = 0; y < info.height; y += 1) {
+    for (let x = 0; x < info.width; x += 1) {
+      if (Math.hypot(x + 0.5 - center, y + 0.5 - center) > quietRadius) continue;
+      const offset = (y * info.width + x) * info.channels;
+      if (data[offset + 3] > 3) opaquePixels += 1;
+    }
+  }
+  if (opaquePixels > 0) failures.push(`${label}: inner field must remain fully transparent`);
+}
+
+async function verifyOgSculpture(bytes, label) {
+  const { data, info } = await sharp(bytes).raw().toBuffer({ resolveWithObject: true });
+  let goldPixels = 0;
+  for (let y = 180; y < 450; y += 1) {
+    for (let x = 760; x < 1030; x += 1) {
+      if (Math.hypot(
+        x - ASTROFOLIO_OG_MOTIF_GEOMETRY.centerX,
+        y - ASTROFOLIO_OG_MOTIF_GEOMETRY.centerY,
+      ) > 142) continue;
+      const offset = (y * info.width + x) * info.channels;
+      const red = data[offset];
+      const green = data[offset + 1];
+      const blue = data[offset + 2];
+      if (red > 95 && green > 55 && red > green * 1.12 && green > blue * 1.18) {
+        goldPixels += 1;
+      }
+    }
+  }
+  if (goldPixels < 8_000) failures.push(`${label}: seasonal gold sculpture is missing from the OG ring`);
+
+  let visibleOrbitSamples = 0;
+  const discRadius = 334 * ASTROFOLIO_OG_MOTIF_GEOMETRY.size / 1024;
+  for (let index = 0; index < 12; index += 1) {
+    const angle = -Math.PI / 2 + (index + 0.5) * Math.PI / 6;
+    const x = Math.round(ASTROFOLIO_OG_MOTIF_GEOMETRY.centerX + Math.cos(angle) * discRadius);
+    const y = Math.round(ASTROFOLIO_OG_MOTIF_GEOMETRY.centerY + Math.sin(angle) * discRadius);
+    const offset = (y * info.width + x) * info.channels;
+    const luminance = data[offset] * 0.2126 + data[offset + 1] * 0.7152 + data[offset + 2] * 0.0722;
+    if (luminance > 28) visibleOrbitSamples += 1;
+  }
+  if (visibleOrbitSamples > 0) failures.push(`${label}: connecting orbit circle returned`);
+}
+
 let manifest;
 let registry;
 try {
@@ -62,10 +144,21 @@ try {
 
 if (manifest && registry) {
   const registrySeasons = seasonsFromRegistry(registry);
-  if (manifest.schema !== 'zodiacs.astrofolio-identity.v1') failures.push('family manifest: schema drift');
+  if (manifest.schema !== 'zodiacs.astrofolio-identity.v2') failures.push('family manifest: schema drift');
   if (manifest.version !== ASTROFOLIO_IDENTITY_VERSION) failures.push('family manifest: version drift');
   if (manifest.background !== '#060709') failures.push('family manifest: background drift');
+  if (manifest.ogSculptureSource !== '/assets/sculptures/1024/{sign}.webp') failures.push('family manifest: OG sculpture source drift');
   if (manifest.cropSafeArea !== 0.8) failures.push('family manifest: crop-safe area drift');
+  if (manifest.onPageSeal !== 'season-seal-192.png') failures.push('family manifest: on-page seal drift');
+  if (manifest.onPageRing !== 'zodiac-ring-192.png') failures.push('family manifest: transparent ring drift');
+  const ringPath = resolve(output, 'zodiac-ring-192.png');
+  const ring = await image(ringPath, { width: 192, height: 192, format: 'png' }, 'Astrofolio transparent ring');
+  if (ring && manifest.onPageRingSha256 !== digest(ring)) failures.push('Astrofolio transparent ring: digest drift');
+  if (ring) {
+    const { data, info } = await sharp(ring).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+    const alphaAt = (x, y) => data[(y * info.width + x) * info.channels + 3];
+    if (alphaAt(0, 0) > 3 || alphaAt(96, 96) > 3) failures.push('Astrofolio transparent ring: black plate returned');
+  }
   if (manifest.terminalOg !== TERMINAL_OG_V6_PATH) failures.push('family manifest: Terminal OG path drift');
   if (JSON.stringify(manifest.seasons.map(({ sign }) => sign)) !== JSON.stringify(SIGN_ORDER)) {
     failures.push('family manifest: seasonal sign order drift');
@@ -74,6 +167,7 @@ if (manifest && registry) {
 
   const ogHashes = new Set();
   const avatarHashes = new Set();
+  const sealHashes = new Set();
   for (const season of registrySeasons) {
     const record = manifest.seasons.find(({ sign }) => sign === season.sign);
     const directory = resolve(output, season.sign);
@@ -86,11 +180,22 @@ if (manifest && registry) {
     if (JSON.stringify(record.ogCopy) !== JSON.stringify(expectedOgCopy)) {
       failures.push(`${season.sign}: seasonal OG copy drift`);
     }
+    const expectedOgSources = astrofolioOgIdentitySources(season);
+    if (JSON.stringify(record.ogSources) !== JSON.stringify(expectedOgSources)) {
+      failures.push(`${season.sign}: Registry-backed OG name, hue, date, icon, or sculpture drift`);
+    }
     if (record.base !== `${ASTROFOLIO_IDENTITY_BASE}/${season.sign}`) failures.push(`${season.sign}: public base drift`);
+    const expectedArtwork = {
+      avatar: `${ASTROFOLIO_IDENTITY_BASE}/${season.sign}/avatar-1024.png`,
+      seasonSeal: `${ASTROFOLIO_IDENTITY_BASE}/${season.sign}/season-seal-192.png`,
+      og: `${ASTROFOLIO_IDENTITY_BASE}/${season.sign}/og-1200x630.png`,
+    };
+    if (JSON.stringify(record.artwork) !== JSON.stringify(expectedArtwork)) failures.push(`${season.sign}: artwork routes drift`);
     const exactFiles = [
       'apple-touch-icon-180.png', 'astrofolio.webmanifest', 'avatar-1024.png',
       'favicon-16.png', 'favicon-32.png', 'favicon-96.png', 'favicon.svg',
       'icon-192.png', 'icon-512.png', 'maskable-512.png', 'og-1200x630.png',
+      'season-seal-192.png',
     ];
     const found = (await readdir(directory)).sort();
     if (JSON.stringify(found) !== JSON.stringify(exactFiles)) failures.push(`${season.sign}: file inventory drift`);
@@ -106,6 +211,7 @@ if (manifest && registry) {
       'icon-512.png': { width: 512, height: 512, format: 'png' },
       'maskable-512.png': { width: 512, height: 512, format: 'png' },
       'og-1200x630.png': { width: 1200, height: 630, format: 'png' },
+      'season-seal-192.png': { width: 192, height: 192, format: 'png' },
     };
     for (const [name, expected] of Object.entries(specs)) {
       const bytes = await image(resolve(directory, name), expected, `${season.sign}/${name}`);
@@ -113,8 +219,19 @@ if (manifest && registry) {
       if (bytes && name === 'avatar-1024.png') {
         avatarHashes.add(digest(bytes));
         await verifyBrightContentCropSafety(bytes, `${season.sign}/${name}`);
+        await verifyTransparentRingField(bytes, `${season.sign}/${name}`);
       }
-      if (bytes && name === 'og-1200x630.png') ogHashes.add(digest(bytes));
+      if (bytes && ['icon-192.png', 'icon-512.png', 'maskable-512.png'].includes(name)) {
+        await verifyBrightContentCropSafety(bytes, `${season.sign}/${name}`);
+      }
+      if (bytes && name === 'og-1200x630.png') {
+        ogHashes.add(digest(bytes));
+        await verifyOgSculpture(bytes, `${season.sign}/${name}`);
+      }
+      if (bytes && name === 'season-seal-192.png') {
+        sealHashes.add(digest(bytes));
+        await verifyTransparentCircularFade(bytes, `${season.sign}/${name}`);
+      }
     }
 
     try {
@@ -130,7 +247,17 @@ if (manifest && registry) {
     }
   }
   if (avatarHashes.size !== 12) failures.push(`avatars: expected 12 byte-distinct images, found ${avatarHashes.size}`);
+  if (sealHashes.size !== 12) failures.push(`season seals: expected 12 byte-distinct images, found ${sealHashes.size}`);
   if (ogHashes.size !== 12) failures.push(`Astrofolio OG: expected 12 byte-distinct cards, found ${ogHashes.size}`);
+}
+
+try {
+  const historical = JSON.parse(await readFile(resolve(root, 'public/assets/astrofolio/v1/manifest.json'), 'utf8'));
+  if (historical.version !== 'v1' || historical.schema !== 'zodiacs.astrofolio-identity.v1') {
+    failures.push('historical v1 identity: immutable manifest drift');
+  }
+} catch {
+  failures.push('historical v1 identity: immutable package missing');
 }
 
 const terminalPath = resolve(root, 'public', TERMINAL_OG_V6_PATH.replace(/^\//, ''));
@@ -141,8 +268,16 @@ try {
   if (!svgSource.includes('>Terminal</text>')) failures.push('Terminal v6 OG: exact visible title is not locked');
   if (svgSource.includes('>Zodiac Terminal</text>')) failures.push('Terminal v6 OG: banned legacy title returned');
   if (!svgSource.includes('eb-garamond-latin-500-normal.woff2')) failures.push('Astrofolio OG: editorial wordmark font is not locked');
-  if (!svgSource.includes('${copy.status} · ${copy.sequence}')) failures.push('Astrofolio OG: visible season status is not locked');
+  if (!svgSource.includes('font-size="118"') || !svgSource.includes('font-style="italic" letter-spacing="-2.4">${copy.title}')) failures.push('Astrofolio OG: enlarged italic editorial wordmark is not locked');
+  if (!svgSource.includes('composeOgSeasonLockup') || !svgSource.includes("renderOgEditorialWord(fonts.serifItalic, 'Season'") || !svgSource.includes('seasonLeft = iconLeft + layout.ogIconSize + layout.ogGap')) failures.push('Astrofolio OG: exact sign, pastel icon, Season lockup order is not locked');
   if (!svgSource.includes('${copy.dateRange} · ${copy.timeZone}')) failures.push('Astrofolio OG: visible UTC date range is not locked');
+  if (svgSource.includes('${copy.status} · ${copy.sequence}') || svgSource.includes('ONE SEASON · ONE OFFICIAL RECORD')) failures.push('Astrofolio OG: retired microcopy returned');
+  if (!svgSource.includes("'season-seal-192.png': seasonSeal")) failures.push('Astrofolio identity: transparent on-page seal is not locked');
+  if (!svgSource.includes('normalizeOgSculpture') || !svgSource.includes('input: sculpture') || !svgSource.includes('composeAstrofolioOg(rootDirectory, fonts')) failures.push('Astrofolio OG: seasonal sculpture is not isolated to the social-card composition');
+  if (!svgSource.includes('composeOgZodiacDiscs') || !svgSource.includes('withAtmosphere: false') || !svgSource.includes('withSelectedHalo: false')) failures.push('Astrofolio OG: twelve-disc motif without circle treatments is not locked');
+  if (ASTROFOLIO_OG_MOTIF_GEOMETRY.size !== 636 || ASTROFOLIO_OG_MOTIF_GEOMETRY.centerX !== 877 || ASTROFOLIO_OG_MOTIF_GEOMETRY.sculptureBox !== 334) failures.push('Astrofolio OG: enlarged left-shifted motif geometry drift');
+  if (svgSource.includes('avatarTitleSvg') || svgSource.includes('classicAvatarTitleBandSvg') || svgSource.includes('ringBackdropSvg')) failures.push('Astrofolio avatar: filled field or seasonal title returned');
+  if (!svgSource.includes("'zodiac-ring-192.png'")) failures.push('Astrofolio identity: sculpture-free transparent ring is not locked');
 } catch {
   failures.push('Terminal v6 OG: generator missing');
 }
@@ -152,5 +287,5 @@ if (failures.length) {
   for (const failure of failures) console.error(`- ${failure}`);
   process.exitCode = 1;
 } else {
-  console.log('verify-astrofolio-identity: OK — 12 deterministic seasonal packages + distinct Terminal v6 card');
+  console.log('verify-astrofolio-identity: OK — 12 deterministic v2 seasonal packages + transparent seals + distinct Terminal v6 card');
 }

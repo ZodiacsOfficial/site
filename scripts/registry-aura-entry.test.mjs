@@ -60,10 +60,13 @@ describe('Registry Collection build flag', () => {
     const on = configure(HTML, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output;
     expect(on).toContain('content="1"');
     expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(1);
-    expect(on).toContain('class="static-site__card static-site__card--aura"');
+    expect(on).toContain('class="static-collection" data-registry-collection-entry data-registry-collection');
     expect(on).toContain('Cabinet of Twelve');
-    expect(on).toContain('Dated seal');
-    expect(on).toContain('The record');
+    expect(on.match(/class="consumer-cabinet__seat /g)).toHaveLength(12);
+    expect(on.match(/class="consumer-cabinet__seat is-filled /g)).toHaveLength(5);
+    expect(on).toContain('/assets/cabinet-materials/gold/aries.webp');
+    expect(on).toContain('/assets/zodiac-icons/128/cancer.webp');
+    expect(on).toContain('<strong>5 / 12</strong><span>Curator’s sample</span>');
     expect(on).toContain(REGISTRY_CONSUMER_ENTRY_COPY.description);
     expect(on).toContain('Open collection view');
     expect(on).not.toContain('data-registry-collection-hero');
@@ -74,6 +77,21 @@ describe('Registry Collection build flag', () => {
     expect(off).not.toContain(REGISTRY_AURA_PATH);
     expect(off).not.toContain('no wallet needed');
     expect(configure(off, {}).output).toBe(off);
+  });
+
+  it('reveals the illustrated fallback beside a hidden canonical slot only while enabled', () => {
+    const hidden = HTML
+      .replace(`<div>${REGISTRY_AURA_ENTRY_SLOT}</div>`, `<div hidden aria-hidden="true">${REGISTRY_AURA_ENTRY_SLOT}</div>`)
+      .replace(REGISTRY_AURA_HERO_SLOT, `<div hidden aria-hidden="true">${REGISTRY_AURA_HERO_SLOT}</div>`);
+    const on = configure(hidden, { PUBLIC_REGISTRY_COLLECTION_ENABLED: '1' }).output;
+    expect(on).toContain(`<div hidden aria-hidden="true">${REGISTRY_AURA_ENTRY_SLOT}</div>`);
+    expect(on).toMatch(/registry-collection-entry:slot --><\/div>\s*<!-- registry-collection-entry:start -->\s*<article class="static-collection"/u);
+    expect(on).not.toContain('<div hidden aria-hidden="true"><!-- registry-collection-entry:slot --><article');
+    expect(configure(on, { PUBLIC_REGISTRY_COLLECTION_ENABLED: '1' }).output).toBe(on);
+
+    const off = configure(on, {}).output;
+    expect(off).toBe(hidden);
+    expect(off).not.toContain('class="static-collection"');
   });
 
   it('keeps the optional collection out of the hero in every flag state', () => {

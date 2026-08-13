@@ -161,7 +161,7 @@ await withPreview({ port: 4418 }, async (baseURL) => {
     check(await mobilePage.locator('[data-mobile-menu]').isVisible(), 'mobile menu is not visible after keyboard open');
     check(await mobilePage.locator('[data-mobile-menu] a[href="/birthday/"]').count() === 0, 'deferred birthday tool leaked into Russian mobile menu');
     check(await mobilePage.locator('[data-mobile-menu] a[href="/learn/"][hreflang="en"]').count() === 1, 'Russian mobile Learn seam is not declared English');
-    check(await mobilePage.locator('[data-mobile-menu] a[href="/terminal/"][hreflang="en"]').count() === 1, 'Russian mobile Terminal seam is not declared English');
+    check(await mobilePage.locator('[data-mobile-menu] a[href="/astrofolio/"][hreflang="en"]').count() === 1, 'Russian mobile Astrofolio seam is not declared English');
     const focusOutline = await menu.evaluate((node) => getComputedStyle(node).outlineStyle);
     check(focusOutline !== 'none', 'mobile menu focus is not visible');
     await mobile.close();

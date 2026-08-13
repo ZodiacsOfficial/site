@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
+import { REGISTRY_AURA_ENTRY_COPY, injectRegistryAuraLanding } from '../src/lib/registry-aura-entry.mjs';
+import { consumerizeRegistryCollection } from '../scripts/registry-consumer-entry.mjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
@@ -74,6 +76,20 @@ async function installExchangeFlag(context) {
       '<meta name="zodiacs-registry-exchange-enabled" content="1" />',
     );
     assert.notEqual(body, source, 'the flag simulation must stamp the Pro landing marker');
+    return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
+  });
+}
+
+async function installCollectionFlag(context) {
+  await context.route('**/astrofolio/**', async (route) => {
+    if (route.request().resourceType() !== 'document') return route.continue();
+    const response = await route.fetch();
+    const source = await response.text();
+    const body = consumerizeRegistryCollection(
+      injectRegistryAuraLanding(source, { PUBLIC_REGISTRY_COLLECTION_ENABLED: '1' }).output,
+      REGISTRY_AURA_ENTRY_COPY,
+    );
+    assert.notEqual(body, source, 'the flag simulation must stamp the Astrofolio collection marker');
     return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
   });
 }
@@ -205,9 +221,47 @@ try {
     const errors = watchErrors(page, 'Astrofolio mobile');
     await page.goto(`${baseURL}/astrofolio/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
     await waitForTerminal(page, '#consumer-explorer-title');
-    assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), 'The Twelve Official Zodiacs');
-    assert.match(await page.locator('.astrofolio-lockup__avatar').getAttribute('src') ?? '', /\/assets\/astrofolio\/v1\/leo\/icon-192\.png$/u);
+    assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), 'Leo Season · The Twelve');
+    assert.equal(await page.locator('.astrofolio-lockup__copy small strong').innerText(), 'Leo');
+    assert.match(await page.locator('.astrofolio-lockup__avatar').getAttribute('src') ?? '', /\/assets\/astrofolio\/v2\/zodiac-ring-192\.png$/u);
+    assert.match(await page.locator('.astrofolio-lockup__avatar').evaluate((node) => getComputedStyle(node).backgroundImage), /#010204|rgb\(1, 2, 4\)/u);
     assert.equal(await page.locator('.terminal-consumer-hero__kicker').innerText(), 'Astrofolio');
+    assert.equal(await page.locator('.wnav__pill .wnav__mark').count(), 1);
+    assert.equal(await page.locator('.wnav__pill .wnav__chip').innerText(), 'ASTROFOLIO');
+    assert.equal(await page.locator('.wnav__pill .wnav__burger').count(), 1);
+    assert.equal(await page.locator('.wnav__pill > .wnav__search').count(), 1);
+    assert.equal(await page.locator('.wnav > .wnav__search').count(), 0);
+    await page.setViewportSize({ width: 320, height: 844 });
+    const compactNav = await page.locator('.wnav').evaluate((nav) => {
+      const box = nav.getBoundingClientRect();
+      const navStyle = getComputedStyle(nav);
+      const search = nav.querySelector('.wnav__search');
+      const searchStyle = search ? getComputedStyle(search) : null;
+      return {
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        left: box.left,
+        right: box.right,
+        width: box.width,
+        navBackground: navStyle.backgroundColor,
+        navBackdrop: navStyle.backdropFilter,
+        navBorder: navStyle.borderTopWidth,
+        navRadius: navStyle.borderRadius,
+        searchBackground: searchStyle?.backgroundColor,
+        searchBorder: searchStyle?.borderTopWidth,
+        searchWidth: searchStyle?.width,
+      };
+    });
+    assert.ok(compactNav.overflow <= 0, 'the 320px navigation does not create horizontal overflow');
+    assert.ok(compactNav.left >= 0 && compactNav.right <= 320, 'the single glass capsule stays inside the 320px viewport');
+    assert.ok(Math.abs(compactNav.width - 309.5) <= 2, `the capsule matches the live Zodiacs width (${compactNav.width}px)`);
+    assert.notEqual(compactNav.navBackground, 'rgba(0, 0, 0, 0)', 'the navigation keeps its liquid-glass tint');
+    assert.notEqual(compactNav.navBackdrop, 'none', 'the navigation keeps its refractive or frosted backdrop');
+    assert.equal(compactNav.navBorder, '1px', 'the glass capsule keeps its optical hairline');
+    assert.equal(compactNav.navRadius, '999px', 'the navigation remains one capsule');
+    assert.equal(compactNav.searchBackground, 'rgba(0, 0, 0, 0)', 'search has no separate circle background');
+    assert.equal(compactNav.searchBorder, '0px', 'search has no separate circle border');
+    assert.equal(compactNav.searchWidth, '34px', 'search remains a compact control inside the capsule');
+    await page.setViewportSize({ width: 390, height: 844 });
 
     await page.waitForFunction(() => document.querySelector('[data-consumer-market-snapshot]')?.getAttribute('aria-busy') === 'false');
     assert.equal(counts.dex, 1, 'the first-screen placard and list share one batched quote request');
@@ -218,6 +272,16 @@ try {
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').innerText(), 'See Pisces');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'How to buy Pisces');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').innerText(), 'View official record');
+    const primaryCtaStyle = await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').evaluate((node) => {
+      const style = getComputedStyle(node);
+      const orb = getComputedStyle(node, '::after');
+      return { background: style.backgroundImage, radius: style.borderRadius, shadow: style.boxShadow, orb: orb.content, orbShape: orb.borderRadius };
+    });
+    assert.notEqual(primaryCtaStyle.background, 'none', 'the primary action uses the shared glass surface');
+    assert.equal(primaryCtaStyle.radius, '999px');
+    assert.notEqual(primaryCtaStyle.shadow, 'none');
+    assert.equal(primaryCtaStyle.orb, '"↗"');
+    assert.equal(primaryCtaStyle.orbShape, '50%');
     assert.equal(await page.locator('[data-terminal-preference-banner]').count(), 0);
     assert.equal(await page.locator('.terminal-consumer-hero [data-terminal-view-link="pro"]').count(), 0);
     assert.equal(await page.locator('a[href^="/terminal/"]').count(), 1);
@@ -426,7 +490,7 @@ try {
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#static-astrofolio-title').innerText(), 'Choose your sign');
     assert.equal(await noJsPage.locator('.static-astrofolio-kicker').innerText(), 'Astrofolio');
-    assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), 'The Twelve Official Zodiacs');
+    assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), 'Leo Season · The Twelve');
     assert.equal(await noJsPage.locator('.static-vitrine__choice').count(), 12);
     assert.equal(await noJsPage.locator('.static-vitrine__panel').count(), 12);
     assert.equal(await noJsPage.locator('#market-snapshot li').count(), 12);
@@ -443,9 +507,10 @@ try {
         filter: image ? getComputedStyle(image).filter : '',
       };
     });
-    assert.equal(staticStoryStyle.background, 'rgba(0, 0, 0, 0)');
-    assert.equal(staticStoryStyle.overflow, 'visible');
+    assert.equal(staticStoryStyle.background, 'rgb(8, 10, 14)');
+    assert.equal(staticStoryStyle.overflow, 'hidden');
     assert.notEqual(staticStoryStyle.filter, 'none');
+    assert.doesNotMatch(staticStoryStyle.filter, /grayscale/u);
     await assertStaticFirstScreen(noJsPage, { width: 390, height: 844 });
     await assertPastelSelectorGeometry(noJsPage, { width: 390, height: 844, staticView: true });
     const staticStageBefore = await noJsPage.locator('[data-static-sign="leo"] .static-vitrine__stage').boundingBox();
@@ -462,6 +527,19 @@ try {
     await noJsPage.emulateMedia({ reducedMotion: 'reduce' });
     const staticMotion = await noJsPage.locator('#astrofolio-pisces-label').evaluate((node) => getComputedStyle(node).transitionDuration);
     assert.match(staticMotion, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
+
+    const noJsCollection = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+    await installCollectionFlag(noJsCollection);
+    const noJsCollectionPage = await noJsCollection.newPage();
+    await noJsCollectionPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
+    const staticCabinet = noJsCollectionPage.locator('[data-registry-collection-entry]');
+    assert.equal(await staticCabinet.count(), 1);
+    assert.equal(await staticCabinet.isVisible(), true);
+    assert.equal(await staticCabinet.locator('.consumer-cabinet__seat').count(), 12);
+    assert.equal(await staticCabinet.locator('.consumer-cabinet__seat.is-filled').count(), 5);
+    assert.equal(await staticCabinet.locator('a').getAttribute('href'), '/registry/collection/');
+    assert.equal(await noJsCollectionPage.locator('[aria-hidden="true"] [data-registry-collection-entry]').count(), 0);
+    await noJsCollection.close();
 
     for (const viewport of [
       { width: 768, height: 1024 },
@@ -484,6 +562,22 @@ try {
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
     assert.equal(await noJsPage.locator('a[href^="/terminal/markets/"]').count(), 0);
     await noJs.close();
+
+    const collection = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    await installNetworkHarness(collection);
+    await installCollectionFlag(collection);
+    const collectionPage = await collection.newPage();
+    await collectionPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
+    await waitForTerminal(collectionPage, '#consumer-explorer-title');
+    assert.equal(await collectionPage.locator('[data-registry-collection]').count(), 1);
+    assert.equal(await collectionPage.locator('[data-registry-collection] .consumer-cabinet__seat').count(), 12);
+    assert.equal(await collectionPage.locator('[data-registry-collection] .consumer-cabinet__seat.is-filled').count(), 5);
+    assert.equal(await collectionPage.locator('[data-registry-collection] .consumer-purpose__cta > span').first().innerText(), 'Open the Cabinet');
+    const storyOrder = await collectionPage.locator('#thesis, .consumer-snapshot, #registry').evaluateAll((nodes) => (
+      nodes.map((node) => node.id || [...node.classList].find((name) => name === 'consumer-snapshot'))
+    ));
+    assert.deepEqual(storyOrder, ['thesis', 'consumer-snapshot', 'registry']);
+    await collection.close();
 
     const flagged = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     await installNetworkHarness(flagged);

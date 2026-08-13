@@ -53,14 +53,14 @@ describe('Terminal public-route split', () => {
     ]);
     expect(consumer).toContain('<title>Astrofolio · Choose your sign and see its official Zodiac token · Zodiacs.org</title>');
     expect(consumer).toContain('aria-label="Astrofolio navigation"');
-    expect(consumer).toContain('/assets/astrofolio/v1/leo/icon-192.png');
-    expect(consumer).toContain('/assets/astrofolio/v1/leo/astrofolio.webmanifest');
-    expect(consumer).toContain('/assets/astrofolio/v1/leo/og-1200x630.png');
+    expect(consumer).toContain('/assets/astrofolio/v2/zodiac-ring-192.png');
+    expect(consumer).toContain('/assets/astrofolio/v2/leo/astrofolio.webmanifest');
+    expect(consumer).toContain('/assets/astrofolio/v2/leo/og-1200x630.png');
     expect(consumer).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
     expect(pro).toContain('<title>Terminal · Live Prices, Liquidity &amp; Research · Zodiacs.org</title>');
     expect(pro).toContain('<h1 id="pro-static-title">Terminal</h1>');
     expect(pro).toContain('/assets/og/v6/terminal.png');
-    expect(pro).not.toContain('/assets/astrofolio/v1/');
+    expect(pro).not.toContain('/assets/astrofolio/v2/');
     expect(pro).toContain('title="Zodiacs.org Markets Research"');
     expect(pro).not.toContain('Zodiac Markets Research');
     expect(pro).toContain('<a class="pro-static-hero__switch" href="/astrofolio/" data-terminal-static-view="consumer">Astrofolio');

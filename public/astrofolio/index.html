@@ -57,7 +57,7 @@
   <meta property="og:url" content="https://zodiacs.org/astrofolio/" />
   <!-- og:image / twitter:image use the canonical zodiacs.org host so
        unfurlers can fetch the page-specific share image from the public site. -->
-  <meta property="og:image" content="https://zodiacs.org/assets/astrofolio/v1/leo/og-1200x630.png" />
+  <meta property="og:image" content="https://zodiacs.org/assets/astrofolio/v2/leo/og-1200x630.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Astrofolio, the collection of gold sculptures and official tokens for the twelve zodiac signs." />
@@ -66,7 +66,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Astrofolio · Zodiacs" />
   <meta name="twitter:description" content="Choose your sign, see its gold sculpture and official token, and find a simple guide to buying it." />
-  <meta name="twitter:image" content="https://zodiacs.org/assets/astrofolio/v1/leo/og-1200x630.png" />
+  <meta name="twitter:image" content="https://zodiacs.org/assets/astrofolio/v2/leo/og-1200x630.png" />
   <meta name="twitter:image:alt" content="Astrofolio, the collection of gold sculptures and official tokens for the twelve zodiac signs." />
 
   <title>Astrofolio · Choose your sign and see its official Zodiac token · Zodiacs.org</title>
@@ -113,7 +113,7 @@
         "description": "Choose your sign, see its gold sculpture and official token, check today's price, and find a simple guide to buying it.",
         "primaryImageOfPage": {
           "@type": "ImageObject",
-          "url": "https://zodiacs.org/assets/astrofolio/v1/leo/og-1200x630.png",
+          "url": "https://zodiacs.org/assets/astrofolio/v2/leo/og-1200x630.png",
           "width": 1200,
           "height": 630
         },
@@ -181,12 +181,12 @@
   }
   </script>
 
-  <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/astrofolio/v1/leo/favicon.svg" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/astrofolio/v1/leo/favicon-16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/astrofolio/v1/leo/favicon-32.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/assets/astrofolio/v1/leo/favicon-96.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/astrofolio/v1/leo/apple-touch-icon-180.png" />
-  <link rel="manifest" href="/assets/astrofolio/v1/leo/astrofolio.webmanifest" />
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/astrofolio/v2/leo/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/astrofolio/v2/leo/favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/astrofolio/v2/leo/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/astrofolio/v2/leo/favicon-96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/astrofolio/v2/leo/apple-touch-icon-180.png" />
+  <link rel="manifest" href="/assets/astrofolio/v2/leo/astrofolio.webmanifest" />
 
   <style>
     @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
@@ -7683,7 +7683,7 @@
     .consumer-static p,
     .consumer-static li { font-family: var(--sans); }
 
-    .static-astrofolio-opening { padding: clamp(26px, 2.5vw, 32px) 0 clamp(88px, 11vw, 142px); }
+    .static-astrofolio-opening { padding: clamp(18px, 2vw, 24px) 0 clamp(88px, 11vw, 142px); }
     .static-astrofolio-header { max-width: 790px; }
     .static-astrofolio-lockup {
       display: flex;
@@ -7692,12 +7692,17 @@
       margin: 0 0 13px;
     }
     .static-astrofolio-lockup > img {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #010204 0 50%, rgba(3,4,6,.98) 64%, rgba(6,7,9,.88) 74%, transparent 86%);
+      filter: drop-shadow(0 0 14px rgba(224,169,180,.24));
+      -webkit-mask-image: radial-gradient(circle, #000 0 66%, rgba(0,0,0,.94) 75%, transparent 100%);
+      mask-image: radial-gradient(circle, #000 0 66%, rgba(0,0,0,.94) 75%, transparent 100%);
     }
     .static-astrofolio-lockup > span { display: grid; gap: 4px; text-transform: none; }
     .static-astrofolio-lockup small { color: var(--ink-mute); font: 500 11px/1.2 var(--sans); text-transform: none; }
+    .static-astrofolio-lockup small strong { color: var(--season-hue, #e0a9b4); font-weight: 600; }
     .static-astrofolio-kicker {
       margin: 0;
       color: var(--ink-dim);
@@ -7924,26 +7929,39 @@
     .consumer-static .static-vitrine__actions .btn {
       width: 100%;
       height: 48px;
-      justify-content: center;
-      padding: 0 18px;
+      justify-content: space-between;
+      padding: 0 9px 0 17px;
       border-radius: 999px;
       color: var(--ink);
       font: 600 13px/1 var(--sans);
       letter-spacing: 0;
       text-transform: none;
-      box-shadow: none;
-      transition: transform 80ms ease, background-color 180ms var(--ease-soft), border-color 180ms var(--ease-soft);
+      border: 1px solid rgba(198,204,218,.22);
+      background: linear-gradient(180deg, rgba(238,241,247,.06), rgba(238,241,247,.015)), rgba(10,12,17,.66);
+      box-shadow: inset 0 1px 0 rgba(238,241,247,.1), inset 0 -1px 0 rgba(0,0,0,.28), 0 12px 30px -20px rgba(0,0,0,.82);
+      transition: transform 80ms cubic-bezier(.23,1,.32,1), background-color 180ms var(--ease-soft), border-color 180ms var(--ease-soft);
     }
     .consumer-static .static-vitrine__actions .btn::before,
     .consumer-static .static-vitrine__actions .btn::after { display: none; }
     .consumer-static .static-vitrine__actions .btn--primary {
-      border-color: var(--ink);
-      background: var(--ink);
+      border-color: rgba(238,241,247,.3);
+      color: var(--ink);
+    }
+    .consumer-static .static-vitrine__actions .btn--primary::after {
+      content: "↗";
+      display: grid;
+      place-items: center;
+      flex: 0 0 30px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
       color: var(--bg);
+      background: var(--ink);
+      font: 600 14px/1 var(--sans);
     }
     .consumer-static .static-vitrine__actions .btn--ghost {
-      border: 1px solid var(--hair-3);
-      background: transparent;
+      padding-inline: 17px;
+      justify-content: center;
       color: var(--ink-2);
     }
     .consumer-static .static-vitrine__actions .btn:active { transform: scale(.98); }
@@ -7959,20 +7977,55 @@
     }
 
     .static-buy__intro,
-    .static-how__copy,
+    .static-how__intro,
     .static-verifier > p { max-width: 66ch; }
     .static-buy__steps {
+      position: relative;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(22px, 4vw, 54px);
-      margin: 42px 0 0;
-      padding: 0;
+      gap: 0;
+      margin: 46px 0 0;
+      padding: 8px;
+      overflow: hidden;
+      border: 1px solid var(--hair-2);
+      border-radius: 30px;
+      background:
+        radial-gradient(70% 130% at 0% 0%, rgba(224, 169, 180, .08), transparent 72%),
+        linear-gradient(145deg, rgba(238, 241, 247, .035), rgba(238, 241, 247, .012));
+      box-shadow: inset 0 1px rgba(255, 255, 255, .035);
       list-style: none;
     }
-    .static-buy__steps li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; }
-    .static-buy__steps li > span { color: var(--ink-dim); font: italic 400 25px/1 var(--serif); }
-    .static-buy__steps p { margin: 0; color: var(--ink-2); font-size: 15px; }
-    .static-buy__reassurance { margin: 38px 0 0; color: var(--ink) !important; font-weight: 600; }
+    .static-buy__steps li {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 16px;
+      padding: clamp(22px, 3vw, 34px);
+    }
+    .static-buy__steps li + li::before {
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--hair-2), transparent);
+      content: '';
+    }
+    .static-buy__steps li > span {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, #E0A9B4 55%, var(--hair-2));
+      border-radius: 50%;
+      color: #e6b7c0;
+      background: rgba(224, 169, 180, .08);
+      font: italic 500 17px/1 var(--serif);
+      box-shadow: 0 0 0 5px rgba(224, 169, 180, .04);
+    }
+    .static-buy__steps strong { display: block; color: var(--ink); font: 550 15px/1.25 var(--sans); }
+    .static-buy__steps p { margin: 12px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.55; }
+    .static-buy__steps small { display: block; margin-top: 14px; color: var(--ink-mute); font: 400 12px/1.5 var(--sans); }
     .static-disclosures { display: grid; gap: 9px; margin-top: 30px; }
     .consumer-static details {
       margin-top: 0;
@@ -7989,39 +8042,262 @@
     .consumer-static details p { margin: 0; color: var(--ink-dim); font-size: 13px; line-height: 1.6; }
     .consumer-static details a { display: inline-flex; margin-top: 12px; font: 500 12px/1.4 var(--sans); }
     .static-snapshot > p { max-width: 60ch; }
+    .consumer-static .static-snapshot__rows a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+    .consumer-static .static-snapshot__rows a img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      opacity: .96;
+      filter: none;
+      box-shadow:
+        0 0 0 5px color-mix(in srgb, var(--row-sign) 7%, transparent),
+        0 10px 22px -14px color-mix(in srgb, var(--row-sign) 85%, transparent);
+    }
+    .consumer-static .static-snapshot__rows a strong { font-weight: 550; }
     .consumer-static .static-snapshot__rows span:last-child {
       color: var(--ink-dim);
       font: 400 12px/1.4 var(--sans);
     }
     .static-snapshot .static-disclosure { margin-top: 24px; }
-    .static-how__copy { display: grid; gap: 12px; }
-    .static-how__copy p { margin: 0; }
+    .static-how__intro { color: var(--ink-2); font-size: clamp(17px, 1.6vw, 21px); line-height: 1.6; }
+    .static-how__anatomy {
+      counter-reset: static-zodiac-anatomy;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 46px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .static-how__anatomy > li {
+      counter-increment: static-zodiac-anatomy;
+      position: relative;
+      min-width: 0;
+      min-height: 268px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 34px;
+      overflow: hidden;
+      padding: clamp(20px, 3vw, 30px);
+      border: 1px solid var(--hair-2);
+      border-radius: 24px;
+      background:
+        radial-gradient(90% 70% at 50% 0%, rgba(224, 169, 180, .075), transparent 72%),
+        rgba(238, 241, 247, .018);
+      box-shadow: inset 0 1px rgba(255, 255, 255, .025);
+    }
+    .static-how__anatomy > li::before {
+      position: absolute;
+      top: 16px;
+      right: 17px;
+      color: var(--ink-mute);
+      font: 500 9px/1 var(--mono);
+      letter-spacing: .1em;
+      content: '0' counter(static-zodiac-anatomy);
+    }
+    .static-how__visual {
+      width: 100%;
+      min-width: 0;
+      height: 104px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-dim);
+    }
+    .static-how__constellation { gap: 4px; }
+    .static-how__constellation img { width: 38px; height: 38px; border-radius: 50%; opacity: .62; transform: translateY(8px) scale(.86); }
+    .static-how__constellation img.is-primary { width: 58px; height: 58px; opacity: 1; transform: translateY(-4px); box-shadow: 0 14px 28px -18px rgba(224, 169, 180, .9); }
+    .static-how__record {
+      width: min(100%, 212px);
+      height: 48px;
+      gap: 10px;
+      margin: auto;
+      padding: 0 13px 0 9px;
+      border: 1px solid var(--hair-2);
+      border-radius: 999px;
+      background: rgba(6, 7, 9, .62);
+      box-shadow: 0 16px 34px -25px rgba(182, 212, 228, .7);
+    }
+    .static-how__record img { width: 30px; height: 30px; border-radius: 50%; }
+    .static-how__record code { color: var(--ink-2); font: 500 10px/1 var(--mono); letter-spacing: .04em; }
+    .static-how__transfer { gap: 13px; }
+    .static-how__transfer > span {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--hair-2);
+      border-radius: 50%;
+      background: rgba(224, 169, 180, .055);
+      box-shadow: 0 0 32px -19px rgba(224, 169, 180, .78);
+    }
+    .static-how__transfer img { display: block; width: 34px; height: 34px; border-radius: 50%; }
+    .static-how__transfer i { color: var(--ink-mute); font: 400 19px/1 var(--serif); }
+    .static-how__item-copy { display: grid; gap: 10px; }
+    .static-how__item-copy strong { color: var(--ink); font: 550 16px/1.3 var(--sans); }
+    .static-how__item-copy small { color: var(--ink-dim); font: 400 13px/1.55 var(--sans); }
+    .static-how__proof {
+      display: grid;
+      grid-template-columns: .7fr 1.5fr 1fr;
+      margin-top: 12px;
+      overflow: hidden;
+      border: 1px solid var(--hair);
+      border-radius: 16px;
+      background: rgba(238, 241, 247, .012);
+    }
+    .static-how__proof span { min-width: 0; padding: 15px 18px; color: var(--ink-mute); font: 400 11px/1.4 var(--sans); }
+    .static-how__proof span + span { border-left: 1px solid var(--hair); }
+    .static-how__proof strong { display: block; margin-bottom: 3px; color: var(--ink-2); font-weight: 550; }
     .static-verifier { max-width: 820px; }
 
     .static-story-band__link {
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
-      align-items: stretch;
-      overflow: visible;
-      border: 0 !important;
-      background: transparent;
+      position: relative;
+      min-height: 508px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      border: 6px solid rgba(238, 241, 247, .035) !important;
+      border-radius: 34px 34px 10px 34px;
+      color: inherit;
+      background: #080a0e;
+      box-shadow: inset 0 0 0 1px rgba(238, 241, 247, .11), 0 40px 96px -72px rgba(0, 0, 0, .95);
+      text-decoration: none;
     }
-    .static-story-band picture,
+    .static-story-band picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+    .static-story-band picture::after {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5, 6, 8, .02) 4%, rgba(5, 6, 8, .08) 38%, rgba(5, 6, 8, .76) 75%, #060709 100%),
+        radial-gradient(120% 86% at 78% 18%, transparent 34%, rgba(5, 6, 8, .34) 100%);
+      content: '';
+    }
     .static-story-band img { display: block; width: 100%; height: 100%; }
     .static-story-band img {
-      min-height: 320px;
       object-fit: cover;
-      filter: grayscale(1) saturate(.05) contrast(.92) brightness(.72);
+      object-position: 50% 45%;
+      filter: saturate(1.02) contrast(1.04) brightness(.84);
+      transform: none;
+      transition: opacity 180ms linear;
     }
     .static-story-band__copy {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 760px);
       display: grid;
-      align-content: center;
-      gap: 16px;
-      padding: clamp(28px, 5vw, 58px);
+      gap: 18px;
+      padding: clamp(32px, 5vw, 56px);
     }
-    .static-story-band__copy strong { color: var(--ink); font: 400 clamp(34px, 4vw, 54px)/.95 var(--serif); }
-    .static-story-band__copy > span { color: var(--ink-dim); font: 400 14px/1.6 var(--sans); }
-    .static-story-band__copy b { color: var(--ink-2); font: 500 13px/1 var(--sans); }
+    .static-story-band__copy strong { max-width: 15ch; color: var(--ink); font: 500 clamp(46px, 6vw, 78px)/.92 var(--serif); letter-spacing: -.042em; }
+    .static-story-band__copy > span { max-width: 47ch; color: rgba(238, 241, 247, .74); font: 400 16px/1.65 var(--sans); }
+    .static-story-band__copy b {
+      width: fit-content;
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 8px;
+      padding: 5px 6px 5px 20px;
+      border: 1px solid rgba(255, 255, 255, .36);
+      border-radius: 999px;
+      color: #111318;
+      background: #f0eee8;
+      font: 600 13px/1.3 var(--sans);
+      box-shadow: 0 18px 42px -26px rgba(0, 0, 0, .9);
+      transition: transform 80ms ease;
+    }
+    .static-story-band__arrow {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #f5f2eb;
+      background: #111318;
+      font-size: 17px;
+      transition: none;
+    }
+    .static-story-band__link:active b { transform: scale(.98); }
+    .static-story-band__link:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+    .static-collection {
+      width: min(100%, 620px);
+      margin: clamp(16px, 3vw, 32px) auto 0;
+      overflow: hidden;
+      border: 1px solid var(--hair-2);
+      border-radius: 8px 30px 30px 30px;
+      background:
+        radial-gradient(85% 55% at 50% 8%, rgba(224, 169, 180, .085), transparent 74%),
+        rgba(12, 14, 20, .92);
+      box-shadow: 0 40px 96px -72px rgba(0, 0, 0, .95);
+    }
+    .static-collection__link {
+      min-height: 580px;
+      display: flex;
+      flex-direction: column;
+      color: inherit;
+      text-decoration: none;
+    }
+    .static-collection__copy { padding: clamp(26px, 5vw, 42px) clamp(24px, 5vw, 42px) 18px; }
+    .static-collection__eyebrow {
+      display: block;
+      margin-bottom: 11px;
+      color: #E0A9B4;
+      font: 500 9px/1 var(--mono);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .consumer-static .static-collection h3 {
+      max-width: 8ch;
+      margin: 0;
+      color: var(--ink);
+      font: 500 clamp(38px, 6vw, 58px)/.92 var(--serif);
+      letter-spacing: -.035em;
+    }
+    .static-collection p { max-width: 48ch; margin: 16px 0 0; color: var(--ink-dim); font: 400 14px/1.55 var(--sans); }
+    .static-collection__art {
+      margin: auto 18px 0;
+      padding: 9px;
+      border: 1px solid color-mix(in srgb, #E0A9B4 34%, var(--hair-2));
+      border-radius: 12px 12px 3px 12px;
+      background: rgba(6, 7, 9, .76);
+      box-shadow: inset 0 0 0 4px rgba(198, 204, 218, .025);
+    }
+    .static-collection .consumer-cabinet {
+      background:
+        radial-gradient(90% 70% at 50% 0%, rgba(224, 169, 180, .08), transparent 70%),
+        #090a0e;
+    }
+    .static-collection .consumer-cabinet__seat::after { background: linear-gradient(90deg, transparent, rgba(224, 169, 180, .38), transparent); }
+    .static-collection .consumer-cabinet__seat.is-crown {
+      border-color: color-mix(in srgb, #E0A9B4 38%, var(--hair-2));
+      background: color-mix(in srgb, #E0A9B4 5%, rgba(6, 7, 9, .92));
+    }
+    .static-collection .consumer-cabinet__plaque { border-color: color-mix(in srgb, #E0A9B4 28%, var(--hair-2)); }
+    .static-collection .consumer-cabinet__plaque strong,
+    .static-collection .consumer-cabinet__edition,
+    .static-collection .consumer-cabinet__count { color: var(--ink-2); }
+    .static-collection__cta {
+      width: fit-content;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      margin: 18px clamp(24px, 5vw, 42px) 28px;
+      padding: 0 20px;
+      border: 1px solid rgba(255, 255, 255, .36);
+      border-radius: 999px;
+      color: #111318;
+      background: #f0eee8;
+      font: 600 13px/1.3 var(--sans);
+      transition: transform 80ms ease;
+    }
+    .static-collection__link:active .static-collection__cta { transform: scale(.98); }
+    .static-collection__link:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
     .static-astrofolio-closing {
       padding: clamp(84px, 12vw, 150px) 0;
@@ -8062,6 +8338,7 @@
         margin-top: 0;
       }
       .static-vitrine__stage { width: min(100%, 416px); aspect-ratio: 4 / 5; }
+      .static-vitrine__stage img { width: 84%; height: 84%; transform: translateY(-7%); }
       .static-vitrine__placard {
         z-index: 2;
         grid-area: stage;
@@ -8077,9 +8354,28 @@
       .static-vitrine__actions { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); justify-items: stretch; }
       .consumer-static .static-vitrine__actions .btn { width: 100%; }
       .static-vitrine__record { grid-column: 1 / -1; justify-self: start; }
-      .static-buy__steps { grid-template-columns: 1fr; }
-      .static-story-band__link { grid-template-columns: 1fr; }
-      .static-story-band img { min-height: 230px; aspect-ratio: 16 / 10; }
+      .static-buy__steps { grid-template-columns: 1fr; padding: 6px; }
+      .static-buy__steps li { padding: 22px 18px; }
+      .static-buy__steps li + li::before {
+        top: 0;
+        right: 18px;
+        bottom: auto;
+        left: 18px;
+        width: auto;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--hair-2), transparent);
+      }
+      .static-how__anatomy,
+      .static-how__proof { grid-template-columns: minmax(0, 1fr); }
+      .static-how__anatomy > li { min-height: 236px; }
+      .static-how__proof span + span { border-top: 1px solid var(--hair); border-left: 0; }
+      .static-story-band__link { min-height: 488px; }
+      .static-story-band__copy { padding: 28px 24px; }
+      .static-story-band__copy b { min-height: 50px; padding-left: 18px; }
+      .static-story-band__arrow { width: 38px; height: 38px; }
+      .static-collection { width: 100%; }
+      .static-collection__link { min-height: 520px; }
+      .static-collection__art { margin-inline: 12px; }
       .static-astrofolio-closing__actions { flex-direction: column; align-items: center; gap: 6px; }
     }
     @media (max-width: 480px) and (max-height: 860px) {
@@ -8099,7 +8395,10 @@
         scroll-behavior: auto !important;
         transition: none !important;
       }
-      .consumer-static .static-vitrine__actions .btn:active { transform: none; }
+      .consumer-static .static-vitrine__actions .btn:active,
+      .static-story-band__link:active b,
+      .static-collection__link:active .static-collection__cta,
+      .static-story-band__arrow { transform: none; }
     }
   </style>
 
@@ -8386,11 +8685,14 @@
       margin: 0 0 16px;
     }
     .consumer-registry .astrofolio-lockup__avatar {
-      width: 52px;
-      height: 52px;
-      flex: 0 0 52px;
-      border-radius: 14px;
-      box-shadow: 0 0 28px color-mix(in srgb, var(--active-sign) 12%, transparent);
+      width: 60px;
+      height: 60px;
+      flex: 0 0 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #010204 0 50%, rgba(3,4,6,.98) 64%, rgba(6,7,9,.88) 74%, transparent 86%);
+      filter: drop-shadow(0 0 14px color-mix(in srgb, var(--active-sign) 24%, transparent));
+      -webkit-mask-image: radial-gradient(circle, #000 0 66%, rgba(0,0,0,.94) 75%, transparent 100%);
+      mask-image: radial-gradient(circle, #000 0 66%, rgba(0,0,0,.94) 75%, transparent 100%);
     }
     .consumer-registry .astrofolio-lockup__copy {
       display: grid;
@@ -8403,6 +8705,9 @@
       letter-spacing: 0;
       text-transform: none;
     }
+    .consumer-registry .astrofolio-lockup__copy small strong { font-weight: 600; }
+
+    .wnav__pill { display: contents; }
     .consumer-registry .terminal-consumer-hero h1 {
       max-width: none;
       margin: 0;
@@ -8623,26 +8928,40 @@
       margin-top: 24px;
     }
     .consumer-registry .vitrine-placard__actions .btn {
-      min-height: 46px;
-      padding: 0 15px;
-      justify-content: center;
-      border: 1px solid var(--hair-2);
+      height: 48px;
+      min-height: 48px;
+      padding: 0 9px 0 17px;
+      justify-content: space-between;
+      border: 1px solid rgba(198,204,218,.22);
       border-radius: 999px;
       color: var(--ink);
-      background: transparent;
+      background: linear-gradient(180deg, rgba(238,241,247,.06), rgba(238,241,247,.015)), rgba(10,12,17,.66);
+      box-shadow: inset 0 1px 0 rgba(238,241,247,.1), inset 0 -1px 0 rgba(0,0,0,.28), 0 12px 30px -20px rgba(0,0,0,.82);
       font: 550 13px/1 var(--sans);
       letter-spacing: 0;
       text-transform: none;
-      transition: transform 80ms ease, border-color 120ms linear, background-color 120ms linear;
+      transition: transform 80ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);
     }
     .consumer-registry .vitrine-placard__actions .btn::before,
     .consumer-registry .vitrine-placard__actions .btn::after { display: none; }
     .consumer-registry .vitrine-placard__actions .btn--primary {
-      border-color: var(--ink);
-      background: var(--ink);
-      color: var(--bg);
+      border-color: rgba(238,241,247,.3);
+      color: var(--ink);
     }
-    .consumer-registry .vitrine-placard__actions .btn:hover { border-color: var(--ink); }
+    .consumer-registry .vitrine-placard__actions .btn--primary::after {
+      content: "↗";
+      display: grid;
+      place-items: center;
+      flex: 0 0 30px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      color: var(--bg);
+      background: var(--ink);
+      font: 600 14px/1 var(--sans);
+    }
+    .consumer-registry .vitrine-placard__actions .btn--ghost { padding-inline: 17px; justify-content: center; color: var(--ink-2); }
+    .consumer-registry .vitrine-placard__actions .btn:hover { border-color: rgba(238,241,247,.5); background-color: rgba(14,16,22,.84); }
     .consumer-registry .vitrine-placard__actions .btn:active { transform: scale(.98); }
     .consumer-registry .vitrine-placard__record {
       grid-column: 1 / -1;
@@ -8711,35 +9030,112 @@
       font: 400 16px/1.6 var(--sans);
     }
 
+    .consumer-registry .consumer-buy__opening {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: clamp(24px, 5vw, 72px);
+      align-items: end;
+      margin-top: clamp(28px, 4vw, 48px);
+    }
     .consumer-registry .consumer-buy__intro {
       max-width: 64ch;
-      margin: clamp(28px, 4vw, 48px) 0 0;
+      margin: 0;
       color: var(--ink-2);
       font: 400 clamp(17px, 1.55vw, 21px)/1.6 var(--sans);
     }
+    .consumer-registry .consumer-buy__selection {
+      --selection-wash: color-mix(in srgb, var(--guide-sign) 17%, transparent);
+      min-width: 190px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 10px 16px 10px 11px;
+      border: 1px solid var(--hair-2);
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 18% 50%, var(--selection-wash), transparent 48%),
+        rgba(238, 241, 247, .025);
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, .04),
+        0 16px 38px -30px color-mix(in srgb, var(--guide-sign) 65%, #000);
+    }
+    .consumer-registry .consumer-buy__selection img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      filter: drop-shadow(0 6px 12px color-mix(in srgb, var(--guide-sign) 44%, transparent));
+    }
+    .consumer-registry .consumer-buy__selection > span { display: grid; gap: 4px; }
+    .consumer-registry .consumer-buy__selection small {
+      color: var(--ink-mute);
+      font: 500 9px/1 var(--sans);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .consumer-registry .consumer-buy__selection strong { color: var(--ink); font: 550 14px/1 var(--sans); }
     .consumer-registry .consumer-buy__steps {
+      position: relative;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(26px, 4vw, 64px);
-      margin: clamp(54px, 7vw, 86px) 0 0;
-      padding: 0;
+      gap: 0;
+      margin: clamp(48px, 6vw, 72px) 0 0;
+      padding: 8px;
+      overflow: hidden;
+      border: 1px solid var(--hair-2);
+      border-radius: 30px;
+      background:
+        radial-gradient(70% 130% at 0% 0%, color-mix(in srgb, var(--guide-sign) 9%, transparent), transparent 72%),
+        linear-gradient(145deg, rgba(238, 241, 247, .035), rgba(238, 241, 247, .012));
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, .035),
+        0 34px 80px -68px color-mix(in srgb, var(--guide-sign) 54%, #000);
       list-style: none;
     }
-    .consumer-registry .consumer-buy__steps li { display: block; }
+    .consumer-registry .consumer-buy__steps li {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 16px;
+      min-width: 0;
+      padding: clamp(22px, 3vw, 34px);
+    }
+    .consumer-registry .consumer-buy__steps li + li::before {
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--hair-2), transparent);
+      content: "";
+    }
     .consumer-registry .consumer-buy__steps li > span {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--guide-sign) 55%, var(--hair-2));
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--guide-sign) 10%, rgba(6, 7, 9, .8));
+      color: color-mix(in srgb, var(--guide-sign) 70%, var(--ink));
+      font: italic 500 17px/1 var(--serif);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--guide-sign) 5%, transparent);
+    }
+    .consumer-registry .consumer-buy__steps li > div { min-width: 0; }
+    .consumer-registry .consumer-buy__steps strong {
       display: block;
-      color: var(--ink-mute);
-      font: italic 500 24px/1 var(--serif);
+      color: var(--ink);
+      font: 550 15px/1.25 var(--sans);
     }
     .consumer-registry .consumer-buy__steps p {
-      margin: 18px 0 0;
+      margin: 12px 0 0;
       color: var(--ink-2);
-      font: 400 16px/1.6 var(--sans);
+      font: 400 15px/1.55 var(--sans);
     }
-    .consumer-registry .consumer-buy__reassurance {
-      margin: clamp(44px, 6vw, 70px) 0 0;
-      color: var(--ink);
-      font: 550 15px/1.5 var(--sans);
+    .consumer-registry .consumer-buy__steps small {
+      display: block;
+      margin-top: 14px;
+      color: var(--ink-mute);
+      font: 400 12px/1.5 var(--sans);
     }
     .consumer-registry .consumer-buy__disclosures,
     .consumer-registry .consumer-how__disclosures {
@@ -8796,8 +9192,12 @@
     .consumer-registry .consumer-snapshot__identity img {
       width: 32px;
       height: 32px;
-      opacity: .5;
-      filter: grayscale(1) saturate(0);
+      border-radius: 50%;
+      opacity: .96;
+      filter: none;
+      box-shadow:
+        0 0 0 5px color-mix(in srgb, var(--row-sign) 7%, transparent),
+        0 10px 22px -14px color-mix(in srgb, var(--row-sign) 85%, transparent);
     }
     .consumer-registry .consumer-snapshot__identity strong {
       color: var(--ink);
@@ -8817,18 +9217,126 @@
     }
     .consumer-registry .consumer-snapshot__details { margin-top: 36px; }
 
-    .consumer-registry .consumer-how__copy {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(28px, 6vw, 76px);
-      max-width: 980px;
-      margin-top: clamp(36px, 5vw, 58px);
-    }
-    .consumer-registry .consumer-how__copy p {
-      margin: 0;
+    .consumer-registry .consumer-how__intro {
+      max-width: 68ch;
+      margin: clamp(28px, 4vw, 46px) 0 0;
       color: var(--ink-2);
       font: 400 clamp(17px, 1.6vw, 21px)/1.6 var(--sans);
     }
+    .consumer-registry .consumer-steps {
+      counter-reset: zodiac-anatomy;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: clamp(44px, 6vw, 70px) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .consumer-registry .consumer-steps > li {
+      counter-increment: zodiac-anatomy;
+      position: relative;
+      min-width: 0;
+      min-height: 268px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 34px;
+      overflow: hidden;
+      padding: clamp(20px, 3vw, 30px);
+      border: 1px solid var(--hair-2);
+      border-radius: 24px;
+      background:
+        radial-gradient(90% 70% at 50% 0%, rgba(224, 169, 180, .075), transparent 72%),
+        rgba(238, 241, 247, .018);
+      box-shadow: inset 0 1px rgba(255, 255, 255, .025);
+    }
+    .consumer-registry .consumer-steps > li::before {
+      position: absolute;
+      top: 16px;
+      right: 17px;
+      color: var(--ink-mute);
+      font: 500 9px/1 var(--mono);
+      letter-spacing: .1em;
+      content: "0" counter(zodiac-anatomy);
+    }
+    .consumer-registry .consumer-step__visual {
+      width: 100%;
+      min-width: 0;
+      height: 104px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-dim);
+    }
+    .consumer-registry .consumer-step__constellation { gap: 4px; }
+    .consumer-registry .consumer-step__constellation img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      opacity: .62;
+      transform: translateY(8px) scale(.86);
+    }
+    .consumer-registry .consumer-step__constellation img.is-primary {
+      width: 58px;
+      height: 58px;
+      opacity: 1;
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px -18px rgba(224, 169, 180, .9);
+    }
+    .consumer-registry .consumer-step__record {
+      width: min(100%, 212px);
+      height: 48px;
+      gap: 10px;
+      margin: auto;
+      padding: 0 13px 0 9px;
+      border: 1px solid var(--hair-2);
+      border-radius: 999px;
+      background: rgba(6, 7, 9, .62);
+      box-shadow: 0 16px 34px -25px rgba(182, 212, 228, .7);
+    }
+    .consumer-registry .consumer-step__record img { width: 30px; height: 30px; border-radius: 50%; }
+    .consumer-registry .consumer-step__record code {
+      min-width: 0;
+      overflow: hidden;
+      color: var(--ink-2);
+      font: 500 10px/1 var(--mono);
+      letter-spacing: .04em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .consumer-registry .consumer-step__transfer { gap: 13px; }
+    .consumer-registry .consumer-step__transfer > span {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--hair-2);
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--active-sign) 7%, rgba(6, 7, 9, .72));
+      box-shadow: 0 0 32px -19px color-mix(in srgb, var(--active-sign) 78%, transparent);
+    }
+    .consumer-registry .consumer-step__transfer img { display: block; width: 34px; height: 34px; border-radius: 50%; }
+    .consumer-registry .consumer-step__transfer i { color: var(--ink-mute); font: 400 19px/1 var(--serif); }
+    .consumer-registry .consumer-step__copy { display: grid; gap: 10px; }
+    .consumer-registry .consumer-step__copy strong { color: var(--ink); font: 550 16px/1.3 var(--sans); }
+    .consumer-registry .consumer-step__copy small { color: var(--ink-dim); font: 400 13px/1.55 var(--sans); }
+    .consumer-registry .consumer-proof {
+      display: grid;
+      grid-template-columns: .7fr 1.5fr 1fr;
+      margin-top: 12px;
+      overflow: hidden;
+      border: 1px solid var(--hair);
+      border-radius: 16px;
+      background: rgba(238, 241, 247, .012);
+    }
+    .consumer-registry .consumer-proof span {
+      min-width: 0;
+      padding: 15px 18px;
+      color: var(--ink-mute);
+      font: 400 11px/1.4 var(--sans);
+    }
+    .consumer-registry .consumer-proof span + span { border-left: 1px solid var(--hair); }
+    .consumer-registry .consumer-proof strong { display: block; margin-bottom: 3px; color: var(--ink-2); font-weight: 550; }
 
     .consumer-registry > .consumer-verify {
       max-width: 860px;
@@ -8897,59 +9405,172 @@
     .consumer-registry .vrf__result .mono { font-family: var(--sans); }
 
     .consumer-registry > .consumer-purpose {
-      display: block;
-      grid-template-columns: none;
-      gap: 0;
-      justify-content: normal;
-      padding: clamp(80px, 11vw, 144px) 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.28fr) minmax(300px, .72fr);
+      gap: clamp(16px, 2.5vw, 28px);
+      align-items: stretch;
+      padding: clamp(64px, 8vw, 110px) 0 clamp(78px, 10vw, 130px);
     }
+    .consumer-registry > .consumer-purpose:not(:has(.consumer-collection)) { grid-template-columns: minmax(0, 1fr); }
     .consumer-registry .consumer-thesis {
       width: 100%;
-      overflow: visible;
-      padding: 0;
+      min-height: clamp(520px, 50vw, 620px);
+      overflow: hidden;
+      padding: 6px;
       border: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
+      border-radius: 34px 34px 10px 34px;
+      background: rgba(238, 241, 247, .035);
+      box-shadow: inset 0 0 0 1px rgba(238, 241, 247, .11), 0 40px 96px -72px rgba(0, 0, 0, .95);
     }
     .consumer-registry .consumer-thesis__link {
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr);
-      gap: clamp(34px, 7vw, 94px);
-      align-items: center;
+      position: relative;
+      min-height: clamp(508px, calc(50vw - 12px), 608px);
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      border-radius: 28px 28px 6px 28px;
       color: inherit;
       text-decoration: none;
     }
     .consumer-registry .consumer-thesis__visual {
-      min-height: 0;
-      aspect-ratio: auto;
+      position: absolute;
+      inset: 0;
+      min-height: 100%;
       border: 0;
-      background: transparent;
+      background: #080a0e;
+    }
+    .consumer-registry .consumer-thesis__visual picture { display: block; width: 100%; height: 100%; }
+    .consumer-registry .consumer-thesis__visual::after {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5, 6, 8, .02) 4%, rgba(5, 6, 8, .08) 38%, rgba(5, 6, 8, .76) 75%, #060709 100%),
+        radial-gradient(120% 86% at 78% 18%, transparent 34%, rgba(5, 6, 8, .34) 100%);
+      content: "";
     }
     .consumer-registry .consumer-thesis__visual img {
-      aspect-ratio: 16 / 10;
       width: 100%;
+      height: 100%;
       object-fit: cover;
-      filter: grayscale(1) saturate(.05) contrast(.92) brightness(.72);
+      object-position: 50% 45%;
+      filter: saturate(1.02) contrast(1.04) brightness(.84);
       transform: none;
-      transition: none;
+      transition: opacity 180ms linear;
     }
-    .consumer-registry .consumer-purpose__essay { padding: 0; }
+    .consumer-registry .consumer-thesis__line { position: absolute; z-index: 2; top: 25px; left: 27px; color: rgba(255, 255, 255, .64); }
+    .consumer-registry .consumer-purpose__essay {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 760px);
+      padding: clamp(32px, 5vw, 56px);
+    }
     .consumer-registry .consumer-purpose__essay p {
-      max-width: 45ch;
-      margin: 27px 0 0;
-      color: var(--ink-dim);
+      max-width: 47ch;
+      margin: 22px 0 0;
+      color: rgba(238, 241, 247, .74);
       font: 400 16px/1.65 var(--sans);
     }
     .consumer-registry .consumer-purpose__cta {
-      min-height: 0;
+      min-height: 52px;
       display: inline-flex;
-      margin: 25px 0 0;
-      color: var(--ink-2);
-      font: 550 13px/1.3 var(--sans);
+      align-items: center;
+      gap: 15px;
+      margin: 28px 0 0;
+      padding: 5px 6px 5px 20px;
+      border: 1px solid rgba(255, 255, 255, .36);
+      border-radius: 999px;
+      color: #111318;
+      background: #f0eee8;
+      font: 600 13px/1.3 var(--sans);
+      box-shadow: 0 18px 42px -26px rgba(0, 0, 0, .9);
+      transition: transform 80ms ease;
+    }
+    .consumer-registry .consumer-purpose__arrow {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #f5f2eb;
+      background: #111318;
+      font-size: 17px;
+      transition: none;
     }
     .consumer-registry .consumer-thesis__link:hover .consumer-thesis__visual img { transform: none; }
-    .consumer-registry .consumer-thesis__link:hover .consumer-purpose__cta { color: var(--ink-2); }
+    .consumer-registry .consumer-thesis__link:active .consumer-purpose__cta,
+    .consumer-registry .consumer-collection__link:active .consumer-purpose__cta { transform: scale(.98); }
+    .consumer-registry .consumer-thesis__link:focus-visible,
+    .consumer-registry .consumer-collection__link:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+    .consumer-registry .consumer-collection {
+      min-width: 0;
+      min-height: 580px;
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid var(--hair-2);
+      border-radius: 8px 30px 30px 30px;
+      background:
+        radial-gradient(85% 55% at 50% 8%, rgba(219, 188, 119, .085), transparent 74%),
+        rgba(12, 14, 20, .92);
+      box-shadow: 0 40px 96px -72px rgba(0, 0, 0, .95);
+    }
+    .consumer-registry .consumer-collection__link {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      color: inherit;
+      text-decoration: none;
+    }
+    .consumer-registry .consumer-collection__copy { padding: clamp(26px, 3vw, 34px) clamp(24px, 3vw, 34px) 18px; }
+    .consumer-registry .consumer-collection__eyebrow {
+      display: block;
+      margin-bottom: 11px;
+      color: color-mix(in srgb, var(--active-sign) 78%, var(--ink));
+      font: 500 9px/1 var(--mono);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .consumer-registry .consumer-collection h3 {
+      max-width: 8ch;
+      margin: 0;
+      color: var(--ink);
+      font: 500 clamp(35px, 4vw, 49px)/.92 var(--serif);
+      letter-spacing: -.035em;
+    }
+    .consumer-registry .consumer-collection p { margin: 16px 0 0; color: var(--ink-dim); font: 400 14px/1.55 var(--sans); }
+    .consumer-registry .consumer-collection__art {
+      margin: auto 18px 0;
+      border-color: color-mix(in srgb, var(--active-sign) 34%, var(--hair-2));
+    }
+    .consumer-registry .consumer-collection__cta { margin: 18px 24px 24px; align-self: flex-start; }
+    .consumer-registry .consumer-cabinet {
+      background:
+        radial-gradient(90% 70% at 50% 0%, color-mix(in srgb, var(--active-sign) 8%, transparent), transparent 70%),
+        #090a0e;
+    }
+    .consumer-registry .consumer-cabinet__seat { min-width: 0; }
+    .consumer-registry .consumer-cabinet__seat::after {
+      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--active-sign) 38%, transparent), transparent);
+    }
+    .consumer-registry .consumer-cabinet__seat.is-crown {
+      border-color: color-mix(in srgb, var(--active-sign) 38%, var(--hair-2));
+      background: color-mix(in srgb, var(--active-sign) 5%, rgba(6, 7, 9, .92));
+    }
+    .consumer-registry .consumer-cabinet__edition,
+    .consumer-registry .consumer-cabinet__count {
+      position: absolute;
+      z-index: 3;
+      right: 4px;
+      padding: 2px 3px;
+      color: var(--ink-2);
+      background: rgba(6, 7, 9, .72);
+      font: 500 6px/1 var(--mono);
+    }
+    .consumer-registry .consumer-cabinet__edition { top: 4px; }
+    .consumer-registry .consumer-cabinet__count { bottom: 4px; }
+    .consumer-registry .consumer-cabinet__plaque { border-color: color-mix(in srgb, var(--active-sign) 28%, var(--hair-2)); }
+    .consumer-registry .consumer-cabinet__plaque strong { color: var(--ink-2); }
+    .consumer-registry .consumer-collection__link:hover .consumer-collection__art { border-color: color-mix(in srgb, var(--active-sign) 52%, var(--hair-2)); }
 
     .consumer-registry .consumer-faq__list {
       display: grid;
@@ -9053,8 +9674,9 @@
         aspect-ratio: 4 / 5;
       }
       .consumer-registry .vitrine-stage__layer img {
-        width: 100%;
-        height: 100%;
+        width: 90%;
+        height: 90%;
+        transform: translateY(calc(var(--art-y) - 7%)) scale(var(--art-scale));
       }
       .consumer-registry .vitrine-placard {
         z-index: 2;
@@ -9079,19 +9701,40 @@
       .consumer-registry > .consumer-faq,
       .consumer-registry > .consumer-closing,
       .consumer-registry > .ftr { width: min(calc(100% - 32px), 620px); }
+      .consumer-registry .consumer-buy__opening { grid-template-columns: minmax(0, 1fr); align-items: start; }
+      .consumer-registry .consumer-buy__selection { width: fit-content; min-width: 0; }
       .consumer-registry .consumer-buy__steps,
       .consumer-registry .consumer-snapshot__rows,
-      .consumer-registry .consumer-how__copy,
+      .consumer-registry .consumer-steps,
       .consumer-registry .consumer-faq__list { grid-template-columns: minmax(0, 1fr); }
-      .consumer-registry .consumer-buy__steps { gap: 34px; }
-      .consumer-registry .consumer-thesis__link { grid-template-columns: minmax(0, 1fr); }
-      .consumer-registry .consumer-purpose__essay { padding-top: 8px; }
+      .consumer-registry .consumer-buy__steps { padding: 6px; }
+      .consumer-registry .consumer-buy__steps li { padding: 22px 18px; }
+      .consumer-registry .consumer-buy__steps li + li::before {
+        top: 0;
+        right: 18px;
+        bottom: auto;
+        left: 18px;
+        width: auto;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--hair-2), transparent);
+      }
+      .consumer-registry .consumer-steps > li { min-height: 236px; }
+      .consumer-registry .consumer-proof { grid-template-columns: minmax(0, 1fr); }
+      .consumer-registry .consumer-proof span + span { border-top: 1px solid var(--hair); border-left: 0; }
+      .consumer-registry > .consumer-purpose { grid-template-columns: minmax(0, 1fr); }
+      .consumer-registry .consumer-thesis,
+      .consumer-registry .consumer-collection { min-height: 520px; }
+      .consumer-registry .consumer-thesis { min-height: 500px; }
+      .consumer-registry .consumer-thesis__link { min-height: 488px; }
+      .consumer-registry .consumer-purpose__essay { padding: 30px 24px 34px; }
+      .consumer-registry .consumer-collection__art { margin-inline: 12px; }
+      .consumer-registry .consumer-collection__cta { margin-inline: 20px; }
     }
 
     @media (max-width: 480px) {
       .consumer-registry .astrofolio-vitrine { padding-top: 84px; }
       .consumer-registry .astrofolio-lockup { gap: 10px; margin-bottom: 11px; }
-      .consumer-registry .astrofolio-lockup__avatar { width: 44px; height: 44px; flex-basis: 44px; border-radius: 12px; }
+      .consumer-registry .astrofolio-lockup__avatar { width: 52px; height: 52px; flex-basis: 52px; }
       .consumer-registry .astrofolio-lockup__copy small { font-size: 10px; }
       .consumer-registry .terminal-consumer-hero h1 { font-size: clamp(51px, 15vw, 64px); }
       .consumer-registry .terminal-consumer-hero p { font-size: 15px; line-height: 1.5; }
@@ -9105,6 +9748,8 @@
       .consumer-registry .vitrine-placard__record { grid-column: 1 / -1; margin-top: 5px; }
       .consumer-registry .vitrine-placard { min-height: 244px; }
       .consumer-registry .consumer-snapshot__rows li { grid-template-columns: minmax(114px, 1fr) auto; }
+      .consumer-registry .consumer-purpose__cta { min-height: 50px; padding-left: 18px; }
+      .consumer-registry .consumer-purpose__arrow { width: 38px; height: 38px; }
       .consumer-registry .vrf { grid-template-columns: minmax(0, 1fr); }
       .consumer-registry .vrf__submit { width: 100%; }
     }
@@ -9120,7 +9765,10 @@
       .consumer-registry .reveal { opacity: 1; }
       .consumer-registry .vitrine-placard__actions .btn:active,
       .consumer-registry .vrf__submit:active,
-      .consumer-registry .vrf__example:active { transform: none; }
+      .consumer-registry .vrf__example:active,
+      .consumer-registry .consumer-thesis__link:active .consumer-purpose__cta,
+      .consumer-registry .consumer-collection__link:active .consumer-purpose__cta,
+      .consumer-registry .consumer-purpose__arrow { transform: none; }
     }
 </style>
 <!-- zodiacs-analytics:start -->
@@ -9164,8 +9812,8 @@
       <section class="static-astrofolio-opening" id="official-twelve" aria-labelledby="static-astrofolio-title">
         <header class="static-astrofolio-header">
           <div class="static-astrofolio-lockup">
-            <img src="/assets/astrofolio/v1/leo/icon-192.png" width="52" height="52" alt="">
-            <span><em class="static-astrofolio-kicker">Astrofolio</em><small>The Twelve Official Zodiacs</small></span>
+            <img src="/assets/astrofolio/v2/zodiac-ring-192.png" width="52" height="52" alt="">
+            <span><em class="static-astrofolio-kicker">Astrofolio</em><small><strong data-astrofolio-season-name style="--season-hue:#E0A9B4">Leo</strong> Season<span aria-hidden="true"> · </span>The Twelve</small></span>
           </div>
           <h1 id="static-astrofolio-title">Choose your sign</h1>
           <p>Each sign has one gold sculpture and one official token. See yours, with today's price and a simple guide to buying it.</p>
@@ -9294,45 +9942,57 @@
         <h2 id="static-buy-title">How to buy your sign</h2>
         <p class="static-buy__intro">Buying happens on an independent service, from your own wallet.<br>Zodiacs.org shows you the official token and the route to it. It never holds your money or your crypto.</p>
         <ol class="static-buy__steps">
-          <li><span>1.</span><p>Pick your sign.</p></li>
-          <li><span>2.</span><p>Open its buying options on the sign's official record.</p></li>
-          <li><span>3.</span><p>Check before you approve: in your wallet, confirm the address, the network, the amount, and the fee.</p></li>
+          <li><span aria-hidden="true">1.</span><div><strong>Choose your sign</strong><p>Pick your sign.</p><small>Move through all twelve and start with the one that feels like yours.</small></div></li>
+          <li><span aria-hidden="true">2.</span><div><strong>Start with its record</strong><p>Open its buying options on the sign's official record.</p><small>The record is the reliable route when names and tickers look alike.</small></div></li>
+          <li><span aria-hidden="true">3.</span><div><strong>Review in your wallet</strong><p>Check before you approve: in your wallet, confirm the address, the network, the amount, and the fee.</p><small>Nothing proceeds until you review and approve it yourself.</small></div></li>
         </ol>
-        <p class="static-buy__reassurance">Nothing on this page connects to a wallet.</p>
         <div class="static-disclosures">
           <details><summary>What you'll need</summary><div><p>A Solana-compatible wallet and enough SOL for your amount plus the network fee.</p></div></details>
           <details><summary>Before you spend anything</summary><div><p>Zodiac tokens are speculative, thinly traded digital assets. Prices can be volatile, liquidity may disappear, and you could lose all money used to acquire one. Astrology has no established predictive relationship with asset prices.</p></div></details>
         </div>
       </section>
 
+      <section class="static-site__section static-story-band" id="thesis" aria-labelledby="static-story-title">
+        <a class="static-story-band__link" href="/thesis/">
+          <picture>
+            <source srcset="/assets/art/zodiac-clock-1280.avif" type="image/avif">
+            <img src="/assets/art/zodiac-clock-1280.jpg" width="1280" height="720" alt="Astronomical clock encircled by the twelve zodiac signs" loading="lazy" decoding="async">
+          </picture>
+          <span class="static-story-band__copy"><strong id="static-story-title">The story behind the collection</strong><span>The twelve signs have travelled through calendars, charts, jewellery, and screens. This is the story of giving their token records one public home.</span><b><span>Read the story</span><span class="static-story-band__arrow" aria-hidden="true">→</span></b></span>
+        </a>
+      </section>
+      <div hidden aria-hidden="true"><!-- registry-collection-entry:slot --></div>
+
       <section class="static-site__section static-snapshot" id="market-snapshot">
         <h2>All twelve, today</h2>
         <p>The collection stays in zodiac order, with price and movement in plain language.</p>
         <ul class="static-snapshot__rows" aria-label="The twelve in zodiac order">
-          <li><a href="/registry/aries/">Aries</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/taurus/">Taurus</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/gemini/">Gemini</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/cancer/">Cancer</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/leo/">Leo</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/virgo/">Virgo</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/libra/">Libra</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/scorpio/">Scorpio</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/sagittarius/">Sagittarius</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/capricorn/">Capricorn</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/aquarius/">Aquarius</a><span>Price unavailable</span><span>movement unavailable</span></li>
-          <li><a href="/registry/pisces/">Pisces</a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#DE8E79"><a href="/registry/aries/"><img src="/assets/zodiac-icons/48/aries.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Aries</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#B9D4BE"><a href="/registry/taurus/"><img src="/assets/zodiac-icons/48/taurus.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Taurus</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#B29DD0"><a href="/registry/gemini/"><img src="/assets/zodiac-icons/48/gemini.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Gemini</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#B6D4E4"><a href="/registry/cancer/"><img src="/assets/zodiac-icons/48/cancer.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Cancer</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#E0A9B4"><a href="/registry/leo/"><img src="/assets/zodiac-icons/48/leo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Leo</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#B7D9B0"><a href="/registry/virgo/"><img src="/assets/zodiac-icons/48/virgo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Virgo</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#D3A9DE"><a href="/registry/libra/"><img src="/assets/zodiac-icons/48/libra.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Libra</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#B9DCE8"><a href="/registry/scorpio/"><img src="/assets/zodiac-icons/48/scorpio.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Scorpio</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#E0B080"><a href="/registry/sagittarius/"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Sagittarius</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#C0DEA8"><a href="/registry/capricorn/"><img src="/assets/zodiac-icons/48/capricorn.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Capricorn</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#AE8FC9"><a href="/registry/aquarius/"><img src="/assets/zodiac-icons/48/aquarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Aquarius</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
+          <li style="--row-sign:#A9D4C4"><a href="/registry/pisces/"><img src="/assets/zodiac-icons/48/pisces.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Pisces</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
         </ul>
         <details class="static-disclosure"><summary>See market details</summary><div><p>Price and movement use the deepest indexed Solana pool. DexScreener is independent third-party context, may be incomplete, and is not a recommendation.</p><a href="/registry/technical/#market-transparency">See the sourcing method</a></div></details>
       </section>
 
       <section class="static-site__section static-how" id="registry" aria-labelledby="static-how-title">
         <h2 id="static-how-title">What is a Zodiac?</h2>
-        <div class="static-how__copy">
-          <p>A Zodiac is the official token for one of the twelve signs. Its gold sculpture is collection artwork, not a physical object or a one-of-one NFT.</p>
-          <p>The token begins on Solana, with an official Base counterpart recorded in the Registry. The record lets anyone check the exact addresses.</p>
-        </div>
+        <p class="static-how__intro">A Zodiac pairs one familiar sign with two things: a recognizable gold artwork and an official digital token. The public Registry tells you which exact address is official. The sculpture is collection artwork, not a physical object or a one-of-one NFT.</p>
+        <ol class="static-how__anatomy" aria-label="The parts of a Zodiac">
+          <li><span class="static-how__visual static-how__constellation" aria-hidden="true"><img src="/assets/zodiac-icons/48/aries.webp" width="38" height="38" alt="" loading="lazy" decoding="async"><img class="is-primary" src="/assets/zodiac-icons/48/leo.webp" width="58" height="58" alt="" loading="lazy" decoding="async"><img src="/assets/zodiac-icons/48/pisces.webp" width="38" height="38" alt="" loading="lazy" decoding="async"></span><span class="static-how__item-copy"><strong>One token for each sign</strong><small>Twelve familiar identities, each with its own pastel sign and gold artwork.</small></span></li>
+          <li><span class="static-how__visual static-how__record" aria-hidden="true"><img src="/assets/zodiac-icons/48/leo.webp" width="30" height="30" alt="" loading="lazy" decoding="async"><code>8Cd7…b8Qm</code></span><span class="static-how__item-copy"><strong>The address is the identity</strong><small>Names and tickers can be copied. The exact address in the public record identifies the official token.</small></span></li>
+          <li><span class="static-how__visual static-how__transfer" aria-hidden="true"><span><img src="/assets/zodiac-icons/48/leo.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></span><i>→</i><span><img src="/assets/zodiac-icons/48/leo.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></span></span><span class="static-how__item-copy"><strong>Keep it, send it, or gift it</strong><small>A Zodiac can sit in your wallet, be sent to someone else, or be given as a gift. Its market price can rise or fall, and you may not always find a buyer when you want to sell.</small></span></li>
+        </ol>
+        <div class="static-how__proof" aria-label="Registry facts"><span><strong>12</strong> official tokens</span><span><strong>Solana origin + Base counterpart</strong> in the record</span><span><strong>Read-only</strong> no wallet required</span></div>
         <div class="static-disclosures">
-          <details><summary>Read the story</summary><div><p>The twelve signs are old cultural symbols. The story explains why this collection gives each one a public record.</p><a href="/thesis/">Open the story</a></div></details>
           <details><summary>How verification works</summary><div><p>Names and tickers can be copied. Verification compares the exact address with the published Registry.</p><a href="/registry/technical/#records-networks">See the records</a></div></details>
           <details><summary>See market details</summary><div><p>Price is independent third-party context. It can be delayed or unavailable and never changes the official record.</p><a href="/registry/technical/#market-transparency">See the sourcing method</a></div></details>
         </div>
@@ -9343,16 +10003,6 @@
         <p>Compare the mint or contract address shown by a wallet or marketplace with the official list. Never paste a seed phrase.</p>
         <p>This checks a Zodiac asset address, not your public wallet address. Open the official address list, then use your browser's Find command to search for the complete address.</p>
         <p><strong>Nothing connects, signs, or moves.</strong> <a href="/registry/zodiacs.registry.json">Open the official address list</a>.</p>
-      </section>
-
-      <section class="static-site__section static-story-band" id="thesis" aria-labelledby="static-story-title">
-        <a class="static-story-band__link" href="/thesis/">
-          <picture>
-            <source srcset="/assets/art/zodiac-clock-768.avif 768w, /assets/art/zodiac-clock-960.avif 960w, /assets/art/zodiac-clock-1280.avif 1280w" sizes="(max-width: 640px) calc(100vw - 40px), 52vw" type="image/avif">
-            <img src="/assets/art/zodiac-clock-1280.jpg" width="1280" height="720" alt="Astronomical clock encircled by the twelve zodiac signs" loading="lazy" decoding="async">
-          </picture>
-          <span class="static-story-band__copy"><strong id="static-story-title">The story behind the collection</strong><span>The twelve signs have travelled through calendars, charts, jewellery, and screens. This is the story of giving their token records one public home.</span><b>Read the story</b></span>
-        </a>
       </section>
 
       <section class="static-site__section" id="faq" aria-labelledby="static-faq-title">
@@ -9370,8 +10020,6 @@
         <p>The Registry is the public record for every sign in the collection.</p>
         <div class="static-astrofolio-closing__actions"><a href="/registry/">Open the Registry</a><a href="/terminal/" data-terminal-static-view="pro">Market view</a></div>
       </section>
-
-      <div hidden aria-hidden="true"><!-- registry-collection-entry:slot --></div>
 
       <span id="market" class="terminal-compat-target" aria-hidden="true"></span>
       <span id="briefing" class="terminal-compat-target" aria-hidden="true"></span>
