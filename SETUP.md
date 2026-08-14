@@ -182,11 +182,12 @@ hours are deleted. Durable quota storage contains only opaque HMACs, the UTC
 quota day, and a reservation timestamp—never message text, chart context, raw
 protocol IDs, or a raw network address.
 
-Guide calls the OpenAI Responses API with the exact Luna model. Every generation
-and pre/post safety-classification request sets `store: false` and
-`background: false`; Guide does not use the separate Moderations endpoint. It
-fails closed if Luna or the independent safety boundary is unavailable and
-never falls back to Anthropic or another model. Signed-out conversations stay
+Guide calls the OpenAI Responses API with the exact Luna model for user-facing
+generation. Its hidden pre/post safety classifier uses the pinned OpenAI
+`gpt-5.4-nano-2026-03-17` classification model. Every request sets `store: false`
+and `background: false`; Guide does not use the separate Moderations endpoint.
+It fails closed if Luna or the independent safety boundary is unavailable and
+never substitutes another answer-generating model. Signed-out conversations stay
 in the browser session; Zodiacs.org persists only non-content quota counters.
 Never put conversation text, chart facts, source titles, or subject names in
 logs, analytics, provider metadata, URLs, notifications, or crash reports.
@@ -542,7 +543,7 @@ the canary allowlist and hourly cleanup path.
 1. Reuse the existing encrypted `OPENAI_API_KEY`; do not read, duplicate, or expose it.
 2. Review and explicitly approve the pending Guide atomic-quota migration, then verify its replay, functional, and two-session concurrency suites before applying it. Deploying Guide code before the RPC exists must remain fail-closed.
 3. Configure the existing `ASSISTANT_SALT`, Supabase URL, and service-role secret in Vercel server scope. A future dedicated `GUIDE_SESSION_SECRET` may be introduced through a reviewed rotation.
-4. In an access-controlled preview, verify exact Luna access with one non-sensitive request, `store: false` on generation and both safety passes, returned-model validation, no fallback, and provider budget alerts.
+4. In an access-controlled preview, verify exact Luna generation and the pinned GPT-5.4 nano safety classifier with one non-sensitive request, `store: false` on all three calls, returned-model validation, no generation fallback, and provider budget alerts.
 5. Verify same-origin enforcement, signed anonymous sessions, per-minute/per-day/global limits, cancellation, session-local conversation behavior, scoped cloud/chart consent, and absence of content in logs and analytics.
 6. Keep `LEGACY_ASSISTANT_COMPAT_ENABLED` unset. Set `GUIDE_KILL_SWITCH=1` only for an emergency stop; the completed website Guide is otherwise available by default.
 

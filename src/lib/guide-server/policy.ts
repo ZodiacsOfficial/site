@@ -1,10 +1,11 @@
 /** Server-owned Guide provider policy. Never include this module in a browser bundle. */
 export const GUIDE_PROVIDER_MODEL = 'gpt-5.6-luna' as const;
+export const GUIDE_SAFETY_CLASSIFIER_MODEL = 'gpt-5.4-nano-2026-03-17' as const;
 export const GUIDE_PROVIDER_PROMPT_VERSION = 'guide-policy-2026-08-12.1' as const;
 export const GUIDE_PROVIDER_POLICY_VERSION = 'guide-safety-2026-08-12.1' as const;
-export const GUIDE_CLOUD_DISCLOSURE_POLICY_VERSION = 'guide-cloud-processing.draft.v1' as const;
+export const GUIDE_CLOUD_DISCLOSURE_POLICY_VERSION = 'guide-cloud-processing-2026-08-14.2' as const;
 export const GUIDE_PROVIDER_MAX_OUTPUT_TOKENS = 700 as const;
-export const GUIDE_SAFETY_CLASSIFIER_VERSION = 'guide-safety-classifier-2026-08-13.2' as const;
+export const GUIDE_SAFETY_CLASSIFIER_VERSION = 'guide-safety-classifier-2026-08-14.2' as const;
 export const GUIDE_SAFETY_RESPONSE_MODEL = 'zodiacs-guide-safety-policy' as const;
 export const GUIDE_SAFETY_RESPONSE_VERSION = 'guide-safety-response-2026-08-13.1' as const;
 

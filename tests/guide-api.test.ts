@@ -909,6 +909,40 @@ describe('POST /v1/guide/turn protected web endpoint', () => {
     expect(response.text).not.toContain('fallback-model');
   });
 
+  it('reports only allowlisted provider diagnostics and keeps them out of SSE', async () => {
+    const reportProviderDiagnostic = vi.fn();
+    const sensitive = 'private provider detail that must never leave the boundary';
+    const handler = createGuideHandler({
+      env: ENV,
+      authorizeTurn: async () => allowedTurn(),
+      reportProviderDiagnostic,
+      streamProvider: vi.fn(async () => {
+        void sensitive;
+        throw new GuideProviderFailure('invalid_response', {
+          event: 'guide_provider_diagnostic_v1',
+          stage: 'classifier_input',
+          reason: 'invalid_payload',
+          privateDetail: sensitive,
+        } as any);
+      }) as any,
+    });
+    const response = new MockResponse();
+    await handler(request(), response);
+
+    expect(reportProviderDiagnostic).toHaveBeenCalledExactlyOnceWith({
+      event: 'guide_provider_diagnostic_v1',
+      stage: 'classifier_input',
+      reason: 'invalid_payload',
+    });
+    expect(events(response).at(-1)).toMatchObject({
+      type: 'error',
+      code: 'invalid_response',
+      retryable: false,
+    });
+    expect(response.text).not.toContain('guide_provider_diagnostic_v1');
+    expect(response.text).not.toContain(sensitive);
+  });
+
   it('turns pre-stream admission failures into retryable rejections', async () => {
     const handler = createGuideHandler({
       env: ENV,

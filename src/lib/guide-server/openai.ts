@@ -31,13 +31,34 @@ export type GuideProviderFailureCode =
   | 'invalid_response'
   | 'unavailable';
 
+export type GuideProviderStage =
+  | 'classifier_input'
+  | 'generation'
+  | 'classifier_output';
+
+export type GuideProviderDiagnosticV1 = Readonly<
+  | {
+      event: 'guide_provider_diagnostic_v1';
+      stage: GuideProviderStage;
+      reason: 'timeout' | 'transport' | 'provider_status' | 'model_mismatch' | 'invalid_payload';
+    }
+  | {
+      event: 'guide_provider_diagnostic_v1';
+      stage: GuideProviderStage;
+      reason: 'http';
+      status: number;
+    }
+>;
+
 export class GuideProviderFailure extends Error {
   readonly code: GuideProviderFailureCode;
+  readonly diagnostic?: GuideProviderDiagnosticV1;
 
-  constructor(code: GuideProviderFailureCode) {
+  constructor(code: GuideProviderFailureCode, diagnostic?: GuideProviderDiagnosticV1) {
     super('Guide provider request failed');
     this.name = 'GuideProviderFailure';
     this.code = code;
+    this.diagnostic = diagnostic;
   }
 }
 

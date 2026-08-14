@@ -146,9 +146,11 @@ const jsonLd = [
 
       <h2>Guide</h2>
       <p>
-        Quando você envia uma pergunta ao Guide, essa mensagem e o contexto
-        visível do Guide são enviados à OpenAI para verificações de segurança e
-        para gerar a resposta. Cada solicitação à API Responses usa
+        Quando você envia uma pergunta ao Guide, essa mensagem, as mensagens
+        recentes e o contexto visível do Guide são enviados à OpenAI para uma
+        verificação de segurança da entrada e para gerar um rascunho de resposta.
+        Esse rascunho gerado é enviado depois de volta à OpenAI para uma segunda
+        verificação de segurança antes de ser mostrado. Cada solicitação à API Responses usa
         <code>store: false</code>. A conversa atual do Guide na
         web fica apenas nesta sessão do navegador, não é sincronizada com uma
         conta e não é armazenada como texto nos servidores do Zodiacs.org,

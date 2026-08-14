@@ -5,6 +5,7 @@ import {
 } from './openai';
 import {
   GUIDE_PROVIDER_MODEL,
+  GUIDE_SAFETY_CLASSIFIER_MODEL,
   GUIDE_SAFETY_RESPONSE_MODEL,
 } from './policy';
 import {
@@ -65,7 +66,7 @@ function projection(overrides: Partial<GuideProviderProjection> = {}): GuideProv
 
 function classifierResponse(
   classificationText: string,
-  model: string = GUIDE_PROVIDER_MODEL,
+  model: string = GUIDE_SAFETY_CLASSIFIER_MODEL,
 ): Response {
   return new Response(JSON.stringify({
     status: 'completed',
@@ -122,7 +123,7 @@ function deferred<T>() {
 }
 
 describe('Guide pre/post-generation safety boundary', () => {
-  it('uses exact Luna with store false and background false for every OpenAI request', async () => {
+  it('uses pinned OpenAI models with store false and background false for every request', async () => {
     const postClassifier = deferred<Response>();
     const postClassifierStarted = deferred<void>();
     const fetcher = vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit) => {
@@ -151,13 +152,24 @@ describe('Guide pre/post-generation safety boundary', () => {
       'guide',
       'guide_safety',
     ]);
+    expect(bodies.map(({ model }) => model)).toEqual([
+      GUIDE_SAFETY_CLASSIFIER_MODEL,
+      GUIDE_PROVIDER_MODEL,
+      GUIDE_SAFETY_CLASSIFIER_MODEL,
+    ]);
     for (const body of bodies) {
       expect(body).toMatchObject({
-        model: GUIDE_PROVIDER_MODEL,
         store: false,
         background: false,
       });
     }
+    expect(bodies[2].input.at(-1)).toMatchObject({
+      role: 'user',
+      content: [{
+        type: 'input_text',
+        text: 'Untrusted candidate Guide output to classify:\nA grounded next step.',
+      }],
+    });
     for (const [url] of fetcher.mock.calls) {
       expect(String(url)).toBe(GUIDE_OPENAI_RESPONSES_URL);
     }
@@ -297,5 +309,139 @@ describe('Guide pre/post-generation safety boundary', () => {
       { fetcher: fetcher as typeof fetch },
     )).rejects.toMatchObject({ code: 'unavailable' });
     expect(deltas).toEqual([]);
+  });
+
+  it('reports the bounded classifier deadline as a timeout', async () => {
+    const fetcher = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => (
+      new Promise<Response>((_resolve, reject) => {
+        const rejectAbort = () => reject(new DOMException('Aborted', 'AbortError'));
+        if (init?.signal?.aborted) rejectAbort();
+        else init?.signal?.addEventListener('abort', rejectAbort, { once: true });
+      })
+    ));
+
+    await expect(classifyGuideSafety(
+      API_KEY,
+      projection(),
+      'input',
+      null,
+      new AbortController().signal,
+      { fetcher: fetcher as typeof fetch, classifierTimeoutMs: 100 },
+    )).rejects.toMatchObject({
+      code: 'timeout',
+      diagnostic: {
+        event: 'guide_provider_diagnostic_v1',
+        stage: 'classifier_input',
+        reason: 'timeout',
+      },
+    });
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+
+  it('reports a classifier model mismatch without exposing the returned model', async () => {
+    const fetcher = vi.fn(async () => classifierResponse(
+      '{"category":"allowed"}',
+      'provider-model-that-must-not-be-logged',
+    ));
+
+    await expect(classifyGuideSafety(
+      API_KEY,
+      projection(),
+      'input',
+      null,
+      new AbortController().signal,
+      { fetcher: fetcher as typeof fetch },
+    )).rejects.toMatchObject({
+      code: 'invalid_response',
+      diagnostic: {
+        event: 'guide_provider_diagnostic_v1',
+        stage: 'classifier_input',
+        reason: 'model_mismatch',
+      },
+    });
+  });
+
+  it('reserves bounded post-classifier headroom before starting generation', async () => {
+    const denseMessage = '🌙'.repeat(2_250);
+    const fetcher = vi.fn(async () => classified('allowed'));
+
+    await expect(classifyGuideSafety(
+      API_KEY,
+      projection({
+        history: Array.from({ length: 5 }, (_, index) => ({
+          author: index % 2 === 0 ? 'user' as const : 'guide' as const,
+          content: denseMessage,
+        })),
+      }),
+      'input',
+      null,
+      new AbortController().signal,
+      { fetcher: fetcher as typeof fetch },
+    )).rejects.toMatchObject({ code: 'invalid_input' });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('caps injected generation deadlines below the Function ceiling', async () => {
+    vi.useFakeTimers();
+    try {
+      const fetcher = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+        if (fetcher.mock.calls.length === 1) return classified('allowed');
+        return new Promise<Response>((_resolve, reject) => {
+          const rejectAbort = () => reject(new DOMException('Aborted', 'AbortError'));
+          if (init?.signal?.aborted) rejectAbort();
+          else init?.signal?.addEventListener('abort', rejectAbort, { once: true });
+        });
+      });
+      const running = streamSafeGuideOpenAIResponse(
+        API_KEY,
+        projection(),
+        () => {},
+        new AbortController().signal,
+        {
+          fetcher: fetcher as typeof fetch,
+          providerDependencies: {
+            connectTimeoutMs: 60_000,
+            idleTimeoutMs: 60_000,
+            totalTimeoutMs: 60_000,
+          },
+        },
+      );
+      const outcome = expect(running).rejects.toMatchObject({
+        code: 'timeout',
+        diagnostic: {
+          event: 'guide_provider_diagnostic_v1',
+          stage: 'generation',
+          reason: 'timeout',
+        },
+      });
+      await vi.advanceTimersByTimeAsync(28_001);
+      await outcome;
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('reports generation rate limits as an HTTP 429 diagnostic', async () => {
+    const fetcher = vi.fn(async () => (
+      fetcher.mock.calls.length === 1
+        ? classified('allowed')
+        : new Response(null, { status: 429 })
+    ));
+
+    await expect(streamSafeGuideOpenAIResponse(
+      API_KEY,
+      projection(),
+      () => {},
+      new AbortController().signal,
+      { fetcher: fetcher as typeof fetch },
+    )).rejects.toMatchObject({
+      code: 'rate_limited',
+      diagnostic: {
+        event: 'guide_provider_diagnostic_v1',
+        stage: 'generation',
+        reason: 'http',
+        status: 429,
+      },
+    });
   });
 });

@@ -166,9 +166,9 @@ const COPY: Record<AssistantLocale, Copy> = {
     disabled: 'Guide is resting right now. The rest of Zodiacs.org still works.',
     rateLimited: 'Guide is busy or has reached a fair-use limit. Wait a minute; if it continues, come back tomorrow.',
     user: 'You', assistant: 'Guide',
-    privacy: 'Guide can be wrong. This web conversation stays in this browser session and is not synced to an account; submitted content is processed by OpenAI.',
+    privacy: 'Guide can be wrong. This web conversation stays in this browser session and is not synced to an account; submitted content and generated draft replies are processed by OpenAI.',
     cloudTitle: 'Before Guide answers',
-    cloudBody: 'Guide sends your question, recent Guide messages, and the visible sources above to OpenAI. This web Guide conversation stays in this browser session and is not synced to your account. Under standard API controls, OpenAI may retain abuse-monitoring data for up to 30 days. Continue for this Guide day?',
+    cloudBody: 'Guide sends your question, recent Guide messages, and the visible sources above to OpenAI for an input safety check and to generate a draft reply. It then sends that generated draft reply back to OpenAI for a second safety check before showing it. This web Guide conversation stays only in this browser session, is not synced to your account, and is not stored as text by Zodiacs.org. Under standard API controls, OpenAI may retain abuse-monitoring data for up to 30 days. Continue for this Guide day?',
     cloudConfirm: 'Continue with Guide', cloudCancel: 'Not now', consentTitle: 'Before your chart is attached',
     consentBody: 'This is the one chart you explicitly marked as your own. The exact placement lines below will be sent to OpenAI with your question. Zodiacs.org does not attach its saved name, birth date, time, place, or coordinates, and does not store the signed-out conversation.',
     consentConfirm: 'Attach my chart', consentCancel: 'Keep it private', sources: 'From this site:',
@@ -187,9 +187,9 @@ const COPY: Record<AssistantLocale, Copy> = {
     unavailable: 'Guide no está disponible temporalmente. Inténtalo de nuevo más tarde.',
     disabled: 'Guide está descansando ahora. El resto de Zodiacs.org sigue funcionando.',
     rateLimited: 'Guide está ocupado o alcanzó un límite de uso justo. Espera un minuto; si continúa, vuelve mañana.', user: 'Tú', assistant: 'Guide',
-    privacy: 'Guide puede equivocarse. Esta conversación web permanece en esta sesión del navegador y no se sincroniza con una cuenta; OpenAI procesa el contenido enviado.',
+    privacy: 'Guide puede equivocarse. Esta conversación web permanece en esta sesión del navegador y no se sincroniza con una cuenta; OpenAI procesa el contenido enviado y los borradores de respuesta generados.',
     cloudTitle: 'Antes de que Guide responda',
-    cloudBody: 'Guide envía tu pregunta, los mensajes recientes y las fuentes visibles a OpenAI. Esta conversación web permanece en esta sesión del navegador y no se sincroniza con tu cuenta. Con los controles estándar de la API, OpenAI puede conservar datos de control de abusos hasta 30 días. ¿Continuar durante este día de Guide?',
+    cloudBody: 'Guide envía tu pregunta, los mensajes recientes y las fuentes visibles a OpenAI para una revisión de seguridad de la entrada y para generar un borrador de respuesta. Después envía ese borrador de respuesta generado de nuevo a OpenAI para una segunda revisión de seguridad antes de mostrártelo. Esta conversación web permanece solo en esta sesión del navegador, no se sincroniza con tu cuenta y Zodiacs.org no almacena su texto. Con los controles estándar de la API, OpenAI puede conservar datos de control de abusos hasta 30 días. ¿Continuar durante este día de Guide?',
     cloudConfirm: 'Continuar con Guide', cloudCancel: 'Ahora no', consentTitle: 'Antes de adjuntar tu carta',
     consentBody: 'Las posiciones exactas que aparecen abajo se enviarán a OpenAI con tu pregunta. Zodiacs.org no adjunta tu nombre, fecha, hora, lugar de nacimiento ni coordenadas guardados, y no guarda la conversación.',
     consentConfirm: 'Adjuntar mi carta', consentCancel: 'Mantenerla privada', sources: 'De este sitio:',
@@ -208,9 +208,9 @@ const COPY: Record<AssistantLocale, Copy> = {
     unavailable: 'O Guide está temporariamente indisponível. Tente novamente mais tarde.',
     disabled: 'O Guide está descansando agora. O restante do Zodiacs.org continua funcionando.',
     rateLimited: 'O Guide está ocupado ou atingiu um limite de uso justo. Espere um minuto; se continuar, volte amanhã.', user: 'Você', assistant: 'Guide',
-    privacy: 'O Guide pode errar. Esta conversa na web fica nesta sessão do navegador e não é sincronizada com uma conta; o conteúdo enviado é processado pela OpenAI.',
+    privacy: 'O Guide pode errar. Esta conversa na web fica nesta sessão do navegador e não é sincronizada com uma conta; o conteúdo enviado e os rascunhos de resposta gerados são processados pela OpenAI.',
     cloudTitle: 'Antes de o Guide responder',
-    cloudBody: 'O Guide envia sua pergunta, mensagens recentes e as fontes visíveis à OpenAI. Esta conversa na web fica nesta sessão do navegador e não é sincronizada com sua conta. Nos controles padrão da API, a OpenAI pode reter dados de monitoramento de abuso por até 30 dias. Continuar neste dia do Guide?',
+    cloudBody: 'O Guide envia sua pergunta, as mensagens recentes e as fontes visíveis à OpenAI para uma verificação de segurança da entrada e para gerar um rascunho de resposta. Depois, envia esse rascunho de resposta gerado de volta à OpenAI para uma segunda verificação de segurança antes de mostrá-lo. Esta conversa do Guide na web fica apenas nesta sessão do navegador, não é sincronizada com sua conta e não é armazenada como texto pelo Zodiacs.org. Nos controles padrão da API, a OpenAI pode reter dados de monitoramento de abuso por até 30 dias. Continuar neste dia do Guide?',
     cloudConfirm: 'Continuar com o Guide', cloudCancel: 'Agora não', consentTitle: 'Antes de anexar seu mapa',
     consentBody: 'As posições exatas abaixo serão enviadas à OpenAI com sua pergunta. O Zodiacs.org não anexa nome, data, hora, local de nascimento nem coordenadas salvos e não armazena a conversa.',
     consentConfirm: 'Anexar meu mapa', consentCancel: 'Manter privado', sources: 'Deste site:',
@@ -229,9 +229,9 @@ const COPY: Record<AssistantLocale, Copy> = {
     unavailable: 'Guide est temporairement indisponible. Réessaie plus tard.',
     disabled: 'Guide se repose pour le moment. Le reste de Zodiacs.org fonctionne toujours.',
     rateLimited: 'Guide est occupé ou a atteint une limite d’utilisation équitable. Attends une minute ; si cela continue, reviens demain.', user: 'Toi', assistant: 'Guide',
-    privacy: 'Guide peut se tromper. Cette conversation web reste dans cette session du navigateur et n’est pas synchronisée avec un compte ; OpenAI traite le contenu envoyé.',
+    privacy: 'Guide peut se tromper. Cette conversation web reste dans cette session du navigateur et n’est pas synchronisée avec un compte ; OpenAI traite le contenu envoyé et les brouillons de réponse générés.',
     cloudTitle: 'Avant la réponse de Guide',
-    cloudBody: 'Guide envoie ta question, les messages récents et les sources visibles à OpenAI. Cette conversation web reste dans cette session du navigateur et n’est pas synchronisée avec ton compte. Avec les contrôles API standard, OpenAI peut garder des données de surveillance des abus jusqu’à 30 jours. Continuer pour cette journée Guide ?',
+    cloudBody: 'Guide envoie ta question, les messages récents et les sources visibles à OpenAI pour un contrôle de sécurité de l’entrée et pour produire un brouillon de réponse. Guide renvoie ensuite ce brouillon de réponse généré à OpenAI pour un second contrôle de sécurité avant de te l’afficher. Cette conversation Guide web reste uniquement dans cette session du navigateur, n’est pas synchronisée avec ton compte et n’est pas stockée sous forme de texte par Zodiacs.org. Avec les contrôles API standard, OpenAI peut garder des données de surveillance des abus jusqu’à 30 jours. Continuer pour cette journée Guide ?',
     cloudConfirm: 'Continuer avec Guide', cloudCancel: 'Pas maintenant', consentTitle: 'Avant de joindre ton thème',
     consentBody: 'Les positions exactes ci-dessous seront envoyées à OpenAI avec ta question. Zodiacs.org ne joint aucun nom, date, heure, lieu de naissance ou coordonnée enregistrés et ne conserve pas la conversation.',
     consentConfirm: 'Joindre mon thème', consentCancel: 'Le garder privé', sources: 'Depuis ce site :',
@@ -250,9 +250,9 @@ const COPY: Record<AssistantLocale, Copy> = {
     unavailable: 'Guide non è disponibile temporaneamente. Riprova più tardi.',
     disabled: 'Guide sta riposando. Il resto di Zodiacs.org continua a funzionare.',
     rateLimited: 'Guide è occupato o ha raggiunto un limite di utilizzo equo. Aspetta un minuto; se continua, torna domani.', user: 'Tu', assistant: 'Guide',
-    privacy: 'Guide può sbagliare. Questa conversazione web resta nella sessione del browser e non viene sincronizzata con un account; OpenAI elabora i contenuti inviati.',
+    privacy: 'Guide può sbagliare. Questa conversazione web resta nella sessione del browser e non viene sincronizzata con un account; OpenAI elabora i contenuti inviati e le bozze di risposta generate.',
     cloudTitle: 'Prima che Guide risponda',
-    cloudBody: 'Guide invia la tua domanda, i messaggi recenti e le fonti visibili a OpenAI. Questa conversazione web resta nella sessione del browser e non viene sincronizzata con il tuo account. Con i controlli API standard, OpenAI può conservare dati di monitoraggio degli abusi fino a 30 giorni. Continuare per questa giornata Guide?',
+    cloudBody: 'Guide invia la tua domanda, i messaggi recenti e le fonti visibili a OpenAI per un controllo di sicurezza dell’input e per generare una bozza di risposta. Poi invia di nuovo a OpenAI la bozza di risposta generata per un secondo controllo di sicurezza prima di mostrartela. Questa conversazione web con Guide resta soltanto in questa sessione del browser, non viene sincronizzata con il tuo account e non viene archiviata come testo da Zodiacs.org. Con i controlli API standard, OpenAI può conservare dati di monitoraggio degli abusi fino a 30 giorni. Continuare per questa giornata Guide?',
     cloudConfirm: 'Continua con Guide', cloudCancel: 'Non ora', consentTitle: 'Prima di allegare il tuo tema',
     consentBody: 'Le posizioni esatte qui sotto saranno inviate a OpenAI con la tua domanda. Zodiacs.org non allega nome, data, ora, luogo di nascita o coordinate salvati e non conserva la conversazione.',
     consentConfirm: 'Allega il mio tema', consentCancel: 'Tienilo privato', sources: 'Da questo sito:',
@@ -266,7 +266,7 @@ const MAX_CHART_CONTEXT = 3_500;
 const SESSION_KEY = 'zodiacs.guide.daily-session.v1';
 const AUTH_BOUNDARY_KEY = 'zodiacs.guide.auth-boundary.v1';
 const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';
-const CONSENT_POLICY_VERSION = 'guide-cloud-processing.draft.v1';
+const CONSENT_POLICY_VERSION = 'guide-cloud-processing-2026-08-14.2';
 const STYLESHEET_HREF = '/assets/assistant-ui.css';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
 const STREAM_SCHEMA = 'zodiacs.guide.stream-event.draft.v1';

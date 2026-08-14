@@ -675,10 +675,13 @@ The website now has a deliberately narrower live runtime than the complete
 shared draft. `/ask/` remains the canonical Guide page, and the same browser
 client may open Guide from eligible site surfaces. It sends only an exact,
 bounded `ephemeral` turn to `POST /v1/guide/turn` after the person submits a
-message and accepts the displayed cloud-processing disclosure. The greeting
-and invitation are local UI and make no provider call. The browser may retain
-the current local-day conversation in session storage, but Zodiacs does not
-persist signed-out transcript or context on the server.
+message and accepts the displayed cloud-processing disclosure. That disclosure
+states that the question, recent Guide messages, and visible sources are sent
+to OpenAI for an input safety check and reply generation, and that the generated
+draft reply is sent back to OpenAI for a second safety check before display. The
+greeting and invitation are local UI and make no provider call. The browser may
+retain the current local-day conversation in session storage, but Zodiacs does
+not persist signed-out transcript or context on the server.
 
 The anonymous website authority is not account authority. It accepts only a
 server-signed, HttpOnly, same-site browser-session principal, the exact
@@ -688,9 +691,11 @@ only an opaque selector; its supplied facts are discarded and the server
 hydrates a bounded projection from the reviewed public Guide catalog. The
 server validates raw bytes before JSON parsing, applies privacy-preserving
 quota keys, streams the app-owned event envelope, cancels on disconnect, and
-calls only the pinned `gpt-5.6-luna` Responses model with server-owned policy,
-`background: false`, and `store: false`. Failure to obtain that exact model is
-a terminal availability failure, never a fallback to another model.
+uses a pinned OpenAI classifier before and after calling the pinned
+`gpt-5.6-luna` model for user-facing generation. Every provider request uses
+server-owned policy, `background: false`, and `store: false`. Failure to obtain
+Luna for generation is a terminal availability failure, never a fallback to
+another generation model.
 
 The website ephemeral path is available when its server prerequisites are
 correctly provisioned and is disabled only by the emergency negative switch

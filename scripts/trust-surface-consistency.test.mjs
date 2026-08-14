@@ -22,6 +22,7 @@ describe('public trust-surface claims', () => {
       expect(copy).toMatch(/OpenAI/);
       expect(copy).toMatch(/store:false/);
       expect(copy).toMatch(/Attach my chart/);
+      expect(copy).toMatch(/generated draft reply.*second safety check/s);
       expect(copy).toMatch(/birth date.*time.*place.*coordinates/s);
       expect(copy).toMatch(/IANA\/ICU.*(?:browser|runtime)/s);
       expect(copy).toMatch(/raw IP.*user agent.*24 hours/s);
@@ -64,11 +65,22 @@ describe('public trust-surface claims', () => {
   });
 
   it('names assistant consent and bounded analytics processing on every privacy page', async () => {
+    const guideSafetyDisclosure = new Map([
+      ['src/pages/privacy/index.astro', [/generated draft reply/, /second safety check/]],
+      ['src/pages/es/privacy/index.astro', [/borrador generado/, /segunda\s+revisión de seguridad/s]],
+      ['src/pages/pt/privacy/index.astro', [/rascunho gerado/, /segunda\s+verificação de segurança/s]],
+      ['src/pages/fr/privacy/index.astro', [/brouillon généré/, /second contrôle de\s+sécurité/s]],
+      ['src/pages/it/privacy/index.astro', [/bozza\s+generata/s, /secondo controllo di\s+sicurezza/s]],
+      ['src/pages/ru/privacy/index.astro', [/сгенерированный черновик ответа/, /второй проверки безопасности/]],
+    ]);
     for (const path of localeFiles('privacy')) {
       const copy = await text(path);
       expect(copy, path).toMatch(/OpenAI/);
       expect(copy, path).toMatch(/Plausible/);
       expect(copy, path).toMatch(/24 (?:hours|horas|heures|ore|часа)/u);
+      for (const pattern of guideSafetyDisclosure.get(path) ?? []) {
+        expect(copy, `${path}: ${pattern}`).toMatch(pattern);
+      }
     }
     const assistant = await text('src/lib/assistant/open-assistant.ts');
     expect(assistant).toMatch(/OpenAI/);

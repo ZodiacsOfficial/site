@@ -156,9 +156,11 @@ const jsonLd = [
 
       <h2>Guide</h2>
       <p>
-        Lorsque tu envoies une question à Guide, ce message et le contexte
-        visible de Guide sont transmis à OpenAI pour effectuer des contrôles de
-        sécurité et produire la réponse. Chaque requête à l’API Responses utilise
+        Lorsque tu envoies une question à Guide, ce message, les messages récents
+        et le contexte visible de Guide sont transmis à OpenAI pour un contrôle
+        de sécurité de l’entrée et pour produire un brouillon de réponse. Ce
+        brouillon généré est ensuite renvoyé à OpenAI pour un second contrôle de
+        sécurité avant de t’être affiché. Chaque requête à l’API Responses utilise
         <code>store: false</code>. La conversation Guide web
         actuelle reste uniquement dans cette session du navigateur, n’est pas
         synchronisée avec un compte et n’est pas stockée sous forme de texte

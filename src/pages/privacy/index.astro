@@ -59,8 +59,10 @@ const jsonLd = [
 
       <h2>Guide</h2>
       <p>
-        When you send a question to Guide, that message and the visible Guide
-        context are sent to OpenAI to run safety checks and generate the reply.
+        When you send a question to Guide, that message, recent Guide messages,
+        and the visible Guide context are sent to OpenAI for an input safety
+        check and to generate a draft reply. That generated draft reply is then
+        sent back to OpenAI for a second safety check before you see it.
         Every Responses API request uses <code>store: false</code>. The current web Guide conversation stays only
         in this browser session, is not synced to an account, and is not stored
         as text on Zodiacs.org servers, whether or not you are signed in.

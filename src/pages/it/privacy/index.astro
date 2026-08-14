@@ -151,9 +151,11 @@ const jsonLd = [
 
       <h2>Guide</h2>
       <p>
-        Quando invii una domanda a Guide, quel messaggio e il contesto visibile
-        di Guide vengono inviati a OpenAI per i controlli di sicurezza e per
-        generare la risposta. Ogni richiesta all’API Responses usa
+        Quando invii una domanda a Guide, quel messaggio, i messaggi recenti e il
+        contesto visibile di Guide vengono inviati a OpenAI per un controllo di
+        sicurezza dell’input e per generare una bozza di risposta. La bozza
+        generata viene poi inviata di nuovo a OpenAI per un secondo controllo di
+        sicurezza prima di mostrartela. Ogni richiesta all’API Responses usa
         <code>store: false</code>. La conversazione web corrente con Guide
         resta soltanto in questa sessione del browser, non viene sincronizzata
         con un account e non viene archiviata come testo sui server di

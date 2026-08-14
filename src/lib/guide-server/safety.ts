@@ -8,11 +8,13 @@ import {
   streamGuideOpenAIResponse,
   type GuideProviderCompletion,
   type GuideProviderDependencies,
+  type GuideProviderDiagnosticV1,
   type GuideProviderProjection,
+  type GuideProviderStage,
 } from './openai.js';
 import {
-  GUIDE_PROVIDER_MODEL,
   GUIDE_PROVIDER_POLICY_VERSION,
+  GUIDE_SAFETY_CLASSIFIER_MODEL,
   GUIDE_SAFETY_CLASSIFIER_VERSION,
   GUIDE_SAFETY_RESPONSE_MODEL,
   GUIDE_SAFETY_RESPONSE_VERSION,
@@ -22,9 +24,12 @@ import {
   classifyGuideLocalOutputSafety,
 } from './local-safety.js';
 
-const CLASSIFIER_TIMEOUT_MS = 7_000;
-const GENERATION_TIMEOUT_MS = 35_000;
+// Leave bounded headroom inside the Function's 60-second ceiling for the
+// durable quota reservation, request parsing, stream framing, and cleanup.
+const CLASSIFIER_TIMEOUT_MS = 8_000;
+const GENERATION_TIMEOUT_MS = 28_000;
 const MAX_CLASSIFIER_RESPONSE_BYTES = 32 * 1024;
+const OUTPUT_CLASSIFIER_RESERVE_BYTES = (GUIDE_LIMITS.messageBytes * 2) + 512;
 const encoder = new TextEncoder();
 
 export const GUIDE_SAFETY_CATEGORIES = [
@@ -52,7 +57,7 @@ Use crisis for a credible present self-harm, suicide, overdose, or immediate-dan
 For phase output, a concise refusal, agency-preserving boundary, or direction to qualified/emergency help is allowed.`;
 
 interface GuideSafetyClassifierBody {
-  model: typeof GUIDE_PROVIDER_MODEL;
+  model: typeof GUIDE_SAFETY_CLASSIFIER_MODEL;
   instructions: typeof GUIDE_SAFETY_CLASSIFIER_POLICY;
   input: Array<{
     role: 'user' | 'assistant';
@@ -95,9 +100,36 @@ function validApiKey(apiKey: unknown): apiKey is string {
 }
 
 function classifierTimeout(value: number | undefined): number {
-  return Number.isSafeInteger(value) && Number(value) >= 100 && Number(value) <= 15_000
+  return Number.isSafeInteger(value) && Number(value) >= 100 && Number(value) <= CLASSIFIER_TIMEOUT_MS
     ? Number(value)
     : CLASSIFIER_TIMEOUT_MS;
+}
+
+function generationTimeout(value: number | undefined): number {
+  return Number.isSafeInteger(value) && Number(value) >= 100 && Number(value) <= GENERATION_TIMEOUT_MS
+    ? Number(value)
+    : GENERATION_TIMEOUT_MS;
+}
+
+function classifierStage(phase: 'input' | 'output'): GuideProviderStage {
+  return phase === 'input' ? 'classifier_input' : 'classifier_output';
+}
+
+function diagnostic(
+  stage: GuideProviderStage,
+  reason: Exclude<GuideProviderDiagnosticV1['reason'], 'http'>,
+): GuideProviderDiagnosticV1 {
+  return { event: 'guide_provider_diagnostic_v1', stage, reason };
+}
+
+function classifierInvalidReason(value: unknown): 'provider_status' | 'model_mismatch' | 'invalid_payload' {
+  const response = record(value);
+  if (!response) return 'invalid_payload';
+  if (response.status !== 'completed') return typeof response.status === 'string'
+    ? 'provider_status'
+    : 'invalid_payload';
+  if (response.model !== GUIDE_SAFETY_CLASSIFIER_MODEL) return 'model_mismatch';
+  return 'invalid_payload';
 }
 
 function classifierBody(
@@ -121,14 +153,19 @@ function classifierBody(
   ];
   if (phase === 'output') {
     // Output safety is context-dependent: “do it now” cannot be judged without
-    // the exact request and context that prompted it.
+    // the exact request and context that prompted it. Keep the candidate in an
+    // explicitly labelled user data item: a synthetic assistant input message
+    // is not a prior Responses output item and can be rejected by the API.
     input.push({
-      role: 'assistant',
-      content: [{ type: 'input_text', text: outputText ?? '' }],
+      role: 'user',
+      content: [{
+        type: 'input_text',
+        text: `Untrusted candidate Guide output to classify:\n${outputText ?? ''}`,
+      }],
     });
   }
   const body: GuideSafetyClassifierBody = {
-    model: GUIDE_PROVIDER_MODEL,
+    model: GUIDE_SAFETY_CLASSIFIER_MODEL,
     instructions: GUIDE_SAFETY_CLASSIFIER_POLICY,
     input,
     max_output_tokens: 80,
@@ -155,7 +192,11 @@ function classifierBody(
       classifier_version: GUIDE_SAFETY_CLASSIFIER_VERSION,
     },
   };
-  if (encoder.encode(JSON.stringify(body)).byteLength > GUIDE_LIMITS.requestBytes) {
+  const bodyBytes = encoder.encode(JSON.stringify(body)).byteLength;
+  const requestLimit = phase === 'input'
+    ? GUIDE_LIMITS.requestBytes - OUTPUT_CLASSIFIER_RESERVE_BYTES
+    : GUIDE_LIMITS.requestBytes;
+  if (bodyBytes > requestLimit) {
     throw new GuideProviderFailure('invalid_input');
   }
   return body;
@@ -197,7 +238,7 @@ function record(value: unknown): Record<string, unknown> | null {
 
 export function parseGuideSafetyClassification(value: unknown): GuideSafetyCategory | null {
   const response = record(value);
-  if (!response || response.status !== 'completed' || response.model !== GUIDE_PROVIDER_MODEL
+  if (!response || response.status !== 'completed' || response.model !== GUIDE_SAFETY_CLASSIFIER_MODEL
     || !Array.isArray(response.output)) return null;
   const texts: string[] = [];
   for (const itemValue of response.output) {
@@ -228,10 +269,17 @@ export async function classifyGuideSafety(
   signal: AbortSignal,
   dependencies: GuideSafetyDependencies = {},
 ): Promise<GuideSafetyCategory> {
-  if (!validApiKey(apiKey)) throw new GuideProviderFailure('unavailable');
+  const stage = classifierStage(phase);
+  if (!validApiKey(apiKey)) {
+    throw new GuideProviderFailure('unavailable', diagnostic(stage, 'transport'));
+  }
   if (signal.aborted) throw new GuideProviderFailure('cancelled');
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), classifierTimeout(dependencies.classifierTimeoutMs));
+  let timeoutElapsed = false;
+  const timeout = setTimeout(() => {
+    timeoutElapsed = true;
+    controller.abort();
+  }, classifierTimeout(dependencies.classifierTimeoutMs));
   const abort = () => controller.abort(signal.reason);
   signal.addEventListener('abort', abort, { once: true });
   try {
@@ -246,15 +294,36 @@ export async function classifyGuideSafety(
       signal: controller.signal,
     });
     if (!response.ok) {
-      throw new GuideProviderFailure(response.status === 429 ? 'rate_limited' : 'unavailable');
+      throw new GuideProviderFailure(
+        response.status === 429 ? 'rate_limited' : 'unavailable',
+        {
+          event: 'guide_provider_diagnostic_v1',
+          stage,
+          reason: 'http',
+          status: response.status,
+        },
+      );
     }
-    const category = parseGuideSafetyClassification(await boundedJson(response));
-    if (!category) throw new GuideProviderFailure('invalid_response');
+    const value = await boundedJson(response);
+    const category = parseGuideSafetyClassification(value);
+    if (!category) {
+      throw new GuideProviderFailure(
+        'invalid_response',
+        diagnostic(stage, classifierInvalidReason(value)),
+      );
+    }
     return category;
   } catch (error) {
-    if (error instanceof GuideProviderFailure) throw error;
+    if (error instanceof GuideProviderFailure) {
+      throw error.diagnostic
+        ? error
+        : new GuideProviderFailure(error.code, diagnostic(stage, 'invalid_payload'));
+    }
     if (signal.aborted) throw new GuideProviderFailure('cancelled');
-    throw new GuideProviderFailure('unavailable');
+    if (timeoutElapsed) {
+      throw new GuideProviderFailure('timeout', diagnostic(stage, 'timeout'));
+    }
+    throw new GuideProviderFailure('unavailable', diagnostic(stage, 'transport'));
   } finally {
     clearTimeout(timeout);
     signal.removeEventListener('abort', abort);
@@ -333,17 +402,38 @@ export async function streamSafeGuideOpenAIResponse(
   }
 
   const buffered: string[] = [];
-  const completion = await streamGuideOpenAIResponse(
-    apiKey,
-    projection,
-    (delta) => { buffered.push(delta); },
-    signal,
-    {
-      fetcher: dependencies.fetcher,
-      totalTimeoutMs: GENERATION_TIMEOUT_MS,
-      ...dependencies.providerDependencies,
-    },
-  );
+  let completion: GuideProviderCompletion;
+  try {
+    completion = await streamGuideOpenAIResponse(
+      apiKey,
+      projection,
+      (delta) => { buffered.push(delta); },
+      signal,
+      {
+        ...dependencies.providerDependencies,
+        fetcher: dependencies.fetcher ?? dependencies.providerDependencies?.fetcher,
+        totalTimeoutMs: generationTimeout(dependencies.providerDependencies?.totalTimeoutMs),
+      },
+    );
+  } catch (error) {
+    if (!(error instanceof GuideProviderFailure) || error.code === 'cancelled') throw error;
+    const generationDiagnostic = error.code === 'rate_limited'
+      ? {
+          event: 'guide_provider_diagnostic_v1' as const,
+          stage: 'generation' as const,
+          reason: 'http' as const,
+          status: 429,
+        }
+      : diagnostic(
+          'generation',
+          error.code === 'timeout'
+            ? 'timeout'
+            : error.code === 'unavailable'
+              ? 'transport'
+              : 'invalid_payload',
+        );
+    throw new GuideProviderFailure(error.code, generationDiagnostic);
+  }
   const localOutputCategory = classifyGuideLocalOutputSafety(
     completion.outputText,
     projection.userMessage,

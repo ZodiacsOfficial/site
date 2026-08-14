@@ -9,6 +9,7 @@ import {
   placementSummaryForChart,
   selectedSelfChartFromJson,
 } from './open-assistant';
+import { GUIDE_CLOUD_DISCLOSURE_POLICY_VERSION } from '../guide-server/policy';
 
 const ACCOUNT_ID = '11111111-1111-4111-8111-111111111111';
 const OLDER_ID = '22222222-2222-4222-8222-222222222222';
@@ -161,6 +162,42 @@ describe('Guide day and retry boundaries', () => {
     expect(run).toContain('if (rotateGuideDayIfNeeded())');
     expect(retry).toContain('prior.body.contextEpoch !== state.contextEpoch');
     expect(retry).toContain('prior.body.baseRevision !== state.revision');
+  });
+});
+
+describe('Guide cloud-processing disclosure', () => {
+  it('keeps the browser consent version aligned with the server after the disclosure change', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    expect(GUIDE_CLOUD_DISCLOSURE_POLICY_VERSION)
+      .toBe('guide-cloud-processing-2026-08-14.2');
+    expect(source).toContain(
+      `const CONSENT_POLICY_VERSION = '${GUIDE_CLOUD_DISCLOSURE_POLICY_VERSION}';`,
+    );
+    expect(source).not.toContain('guide-cloud-processing.draft.v1');
+  });
+
+  it('discloses both safety passes, generated draft processing, and local-only state in all locales', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    const cloudBodies = [...source.matchAll(/cloudBody: '([^'\n]+)'/gu)]
+      .map((match) => match[1] ?? '');
+    expect(cloudBodies).toHaveLength(5);
+
+    const localizedRequirements = [
+      ['recent Guide messages', 'visible sources above', 'generated draft reply back to OpenAI', 'second safety check', 'stays only in this browser session', 'not stored as text by Zodiacs.org'],
+      ['los mensajes recientes', 'las fuentes visibles', 'borrador de respuesta generado de nuevo a OpenAI', 'segunda revisión de seguridad', 'permanece solo en esta sesión del navegador', 'Zodiacs.org no almacena su texto'],
+      ['as mensagens recentes', 'as fontes visíveis', 'rascunho de resposta gerado de volta à OpenAI', 'segunda verificação de segurança', 'fica apenas nesta sessão do navegador', 'não é armazenada como texto pelo Zodiacs.org'],
+      ['les messages récents', 'les sources visibles', 'brouillon de réponse généré à OpenAI', 'second contrôle de sécurité', 'reste uniquement dans cette session du navigateur', 'n’est pas stockée sous forme de texte par Zodiacs.org'],
+      ['i messaggi recenti', 'le fonti visibili', 'bozza di risposta generata', 'secondo controllo di sicurezza', 'resta soltanto in questa sessione del browser', 'non viene archiviata come testo da Zodiacs.org'],
+    ] as const;
+
+    for (const [index, requirements] of localizedRequirements.entries()) {
+      const body = cloudBodies[index] ?? '';
+      expect((body.match(/OpenAI/gu) ?? []).length, `locale ${index} names both provider passes`)
+        .toBeGreaterThanOrEqual(2);
+      for (const requirement of requirements) {
+        expect(body, `locale ${index}: ${requirement}`).toContain(requirement);
+      }
+    }
   });
 });
 

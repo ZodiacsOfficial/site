@@ -16,6 +16,7 @@ import {
   type GuideHydratedModelSource,
   type GuideProviderCompletion,
   type GuideProviderFailureCode,
+  type GuideProviderDiagnosticV1,
   type GuideProviderProjection,
   GuideProviderFailure,
 } from './openai.js';
@@ -83,6 +84,7 @@ interface GuideHandlerDependencies {
   quotaController?: GuideQuotaController;
   fetcher: typeof fetch;
   uuid: () => string;
+  reportProviderDiagnostic: (diagnostic: GuideProviderDiagnosticV1) => void;
 }
 
 const DEFAULT_DEPENDENCIES: GuideHandlerDependencies = {
@@ -92,7 +94,44 @@ const DEFAULT_DEPENDENCIES: GuideHandlerDependencies = {
   streamProvider: streamSafeGuideOpenAIResponse,
   fetcher: fetch,
   uuid: randomUUID,
+  reportProviderDiagnostic: (diagnostic) => {
+    // This fixed-shape object contains no request, response, identity, model,
+    // prompt, output, header, stack, or provider identifier.
+    console.warn(JSON.stringify(diagnostic));
+  },
 };
+
+function sanitizedProviderDiagnostic(value: unknown): GuideProviderDiagnosticV1 | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const record = value as Record<string, unknown>;
+  if (record.event !== 'guide_provider_diagnostic_v1'
+    || (record.stage !== 'classifier_input'
+      && record.stage !== 'generation'
+      && record.stage !== 'classifier_output')) return null;
+  if (record.reason === 'http') {
+    return Number.isSafeInteger(record.status)
+      && Number(record.status) >= 400
+      && Number(record.status) <= 599
+      ? {
+          event: 'guide_provider_diagnostic_v1',
+          stage: record.stage,
+          reason: 'http',
+          status: Number(record.status),
+        }
+      : null;
+  }
+  return record.reason === 'timeout'
+    || record.reason === 'transport'
+    || record.reason === 'provider_status'
+    || record.reason === 'model_mismatch'
+    || record.reason === 'invalid_payload'
+    ? {
+        event: 'guide_provider_diagnostic_v1',
+        stage: record.stage,
+        reason: record.reason,
+      }
+    : null;
+}
 
 function action(req: any): typeof GUIDE_ACTION | null {
   const query = req.query;
@@ -749,6 +788,10 @@ export function createGuideHandler(overrides: Partial<GuideHandlerDependencies> 
             reason: 'client_cancelled',
           });
         } else {
+          if (error instanceof GuideProviderFailure && error.diagnostic) {
+            const safeDiagnostic = sanitizedProviderDiagnostic(error.diagnostic);
+            if (safeDiagnostic) dependencies.reportProviderDiagnostic(safeDiagnostic);
+          }
           const mapped = providerError(
             error instanceof GuideProviderFailure ? error.code : 'unavailable',
           );
