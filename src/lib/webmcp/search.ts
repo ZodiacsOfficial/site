@@ -101,7 +101,8 @@ export function rankConsumerSearchEntries(
   ));
   return searchIndex(
     entries.filter((entry) => (
-      entry.kind !== 'terminal'
+      entry.kind !== 'astrofolio'
+      && entry.kind !== 'terminal'
       && entry.kind !== 'registry'
       && !/^\/(?:terminal|registry|thesis|sdk|archive|collect)(?:\/|$)/.test(entry.path)
     )),

@@ -12,7 +12,8 @@ describe('Zodiacs Registry authority hub', () => {
     expect(html).toContain('one for every Zodiac sign');
     expect(html).toContain('one Solana origin and one Base counterpart per sign');
     expect(html).toContain('data-registry-established');
-    expect(html).not.toContain('<h1>Zodiac Terminal</h1>');
+    expect(html).not.toContain('<h1>Astrofolio</h1>');
+    expect(html).not.toContain('<h1>Terminal</h1>');
   });
 
   test('prints every canonical address from the source Registry', async () => {
@@ -34,14 +35,18 @@ describe('Zodiacs Registry authority hub', () => {
     }
   });
 
-  test('keeps the page first-party, static, and free of market runtime', async () => {
+  test('keeps the page first-party and free of market or analytics runtime', async () => {
     const [html, analyticsBuild] = await Promise.all([
       read('public/registry/index.html'),
       read('scripts/configure-legacy-analytics.mjs'),
     ]);
-    expect(html).toContain("connect-src 'none'");
+    expect(html).toContain("script-src 'self' 'unsafe-inline'");
+    expect(html).toContain("connect-src 'self'");
     expect(html).not.toMatch(/<script[^>]+src=/iu);
     expect(html).not.toContain('/assets/app.js');
+    expect(html).toContain("mod.bootstrapGuide('en')");
+    expect(html).not.toContain('plausible.io');
+    expect(html).not.toContain('zodiacs-analytics:start');
     expect(html).not.toMatch(/api\.(?:dexscreener|geckoterminal)/iu);
     expect(html).not.toMatch(/market-tape|market-board|leaderboard|Buy [A-Z]/u);
     expect(html).toContain('<noscript>');
@@ -59,10 +64,10 @@ describe('Zodiacs Registry authority hub', () => {
     expect(html).not.toMatch(/fetch\s*\(/u);
   });
 
-  test('separates Registry authority from the market-facing Terminal', async () => {
+  test('separates Registry authority from the expert Terminal', async () => {
     const html = await read('public/registry/index.html');
     expect(html).toContain('href="/terminal/"');
-    expect(html).toContain('Open Zodiac Terminal');
+    expect(html).toContain('Open Terminal');
     for (const path of [
       '/registry/zodiacs.registry.json',
       '/registry/technical/',
@@ -74,11 +79,14 @@ describe('Zodiacs Registry authority hub', () => {
     expect(html).toContain('It is not government, regulator, wallet, or exchange approval');
   });
 
-  test('hands old market state to Terminal without hijacking Registry state', async () => {
+  test('hands old identity and market state to Astrofolio or Terminal without hijacking Registry state', async () => {
     const html = await read('public/registry/index.html');
-    expect(html).toContain("['sign','rank','outlook']");
-    expect(html).toContain("'market','outlook','sign-gallery','gallery','aries'");
-    expect(html).toContain("location.replace('/terminal/'+location.search+location.hash)");
+    expect(html).toContain("var proQuery=['rank','outlook']");
+    expect(html).toContain("var proHash=['market','briefing','research','outlook']");
+    expect(html).toContain("'sign-gallery','gallery','aries'");
+    expect(html).toContain("var proHashValue=hash==='outlook'?'briefing':hash");
+    expect(html).toContain("location.replace('/terminal/'+location.search+(proHashValue?'#'+proHashValue:''))");
+    expect(html).toContain("location.replace('/astrofolio/'+location.search+location.hash)");
     expect(html).toContain('id="verify"');
     expect(html).not.toContain("'address'].some");
   });
@@ -96,6 +104,6 @@ describe('Zodiacs Registry authority hub', () => {
     expect(technical).toContain('<title>Registry Data &amp; Methodology | Zodiacs Registry</title>');
     expect(technical).toContain('<li><a href="/registry/">Zodiacs Registry</a></li>');
     expect(technical).toContain('href="/registry/">← Return to Zodiacs Registry</a>');
-    expect(technical).not.toContain('href="/registry/">← Return to Zodiac Terminal</a>');
+    expect(technical).not.toContain('href="/registry/">← Return to Astrofolio</a>');
   });
 });

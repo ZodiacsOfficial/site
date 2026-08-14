@@ -41,7 +41,6 @@ import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseName } from '../lib/engine/lite';
 import { registryAuraChartAnalytics, registryAuraChartLink } from '../lib/registry-aura-entry.mjs';
-import { trackAnalytics } from '../lib/analytics';
 import { decodeChartLink, NAME_MAX } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import {
@@ -2071,7 +2070,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 : registryAuraCopy.discover}{' '}
               <a href={registryAuraLink.href} onClick={() => {
                 for (const event of registryAuraChartAnalytics(registryAuraLink.context)) {
-                  trackAnalytics(event.name, event.properties);
+                  track(event.name, event.properties);
                 }
               }}>
                 {registryAuraLink.context === 'return'

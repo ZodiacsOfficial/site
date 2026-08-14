@@ -6,7 +6,7 @@ const terminal = await readFile(new URL('../src/exchange/terminal.mjs', import.m
 const chart = await readFile(new URL('../src/exchange/chart.mjs', import.meta.url), 'utf8');
 const page = await readFile(new URL('../public/terminal/markets/index.html', import.meta.url), 'utf8');
 
-describe('Zodiac Markets mobile terminal contract', () => {
+describe('Terminal venue-route mobile contract', () => {
   it('keeps the redesign inside the mobile breakpoint', () => {
     expect(ZX_CSS).toContain('@media (max-width: 800px)');
     expect(ZX_CSS).toContain(".zme__grid[data-mobile-tab='chart'] .zme__desk");

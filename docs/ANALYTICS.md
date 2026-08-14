@@ -56,11 +56,17 @@ Provider sources: [Plausible data policy](https://plausible.io/data-policy) and
 | `widget_embed_copied` | `widget`, `mode` | Embed code is copied from the widget generator |
 | `registry_visit` | — | The Registry catalogue loads |
 | `verifier_used` | `chain`, `outcome` | Paste-address verification completes |
+| `terminal_view_switch` | `surface`, `direction` | A visitor follows the visible Terminal view switch or the saved-preference banner |
 | `sdk_click` | `source`, `destination` | A Registry or astrology surface opens SDK documentation |
 | `wallet_chart_computed` | `chain`, `holds_registry_asset` | A feature-flagged wallet chart renders |
 
 `verifier_used` never includes the pasted address, and `email_subscribed`
 never includes the email or selected sign.
+
+`terminal_view_switch` accepts only `header` or `preference_banner` for
+`surface`, and only `consumer_to_pro` or `pro_to_consumer` for `direction`.
+It never records the selected sign, destination URL, stored preference, or
+banner-dismissal state.
 
 ## Existing product vocabulary
 
@@ -102,4 +108,4 @@ page use the directive taxonomy above.
 1. Provision Plausible cloud or a compatible self-hosted endpoint.
 2. Set `PUBLIC_PLAUSIBLE_SCRIPT_URL`; optionally set
    `PUBLIC_PLAUSIBLE_ENDPOINT` and `PUBLIC_PLAUSIBLE_DOMAIN`.
-3. Redeploy and verify the ten directive events without adding properties.
+3. Redeploy and verify the eleven directive events without adding properties.

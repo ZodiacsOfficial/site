@@ -5,816 +5,337 @@ import { describe, expect, it } from 'vitest';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (path) => readFile(resolve(root, path), 'utf8');
-const signs = [
-  'aries',
-  'taurus',
-  'gemini',
-  'cancer',
-  'leo',
-  'virgo',
-  'libra',
-  'scorpio',
-  'sagittarius',
-  'capricorn',
-  'aquarius',
-  'pisces',
+const SIGNS = [
+  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
-const movedHashes = [
-  ['pulse', 'market-transparency'],
-  ['standings', 'market-transparency'],
-  ['onchain-access', 'access-third-parties'],
-  ['builders', 'builder-tools'],
-  ['sdk', 'builder-tools'],
-  ['security', 'safety-evidence'],
-];
+const SUPPORT_COPY = "Each sign has one gold sculpture and one official token. See yours, with today's price and a simple guide to buying it.";
+const RISK_COPY = 'Zodiac tokens are speculative, thinly traded digital assets. Prices can be volatile, liquidity may disappear, and you could lose all money used to acquire one. Astrology has no established predictive relationship with asset prices.';
 
-function visibleMarkup(html) {
-  return html
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/giu, '')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/giu, '')
-    .replace(/<!--([\s\S]*?)-->/gu, '');
+function functionBlock(source, name) {
+  const start = source.indexOf(`    function ${name}(`);
+  expect(start, `${name} exists`).toBeGreaterThanOrEqual(0);
+  const end = source.indexOf('\n    function ', start + 1);
+  return source.slice(start, end < 0 ? source.length : end);
 }
 
-function consumerRoot(source) {
-  const start = source.indexOf('<main id="main" className="zd consumer-registry">');
-  const end = source.indexOf('</main>', start);
-  if (start < 0 || end < 0) return '';
-  return source.slice(start, end);
+function ordered(source, needles) {
+  let cursor = -1;
+  for (const needle of needles) {
+    const next = source.indexOf(needle, cursor + 1);
+    expect(next, `${needle} follows the previous item`).toBeGreaterThan(cursor);
+    cursor = next;
+  }
 }
 
-describe('Registry consumer and technical information architecture', () => {
-  it('keeps the canonical record at twelve signs and twenty-four representations', async () => {
-    const registry = JSON.parse(await read('public/registry/zodiacs.registry.json'));
-    expect(registry.assets.map((asset) => asset.sign)).toEqual(signs);
-    expect(registry.assets).toHaveLength(12);
-    expect(registry.assets.flatMap((asset) => asset.representations)).toHaveLength(24);
-    for (const asset of registry.assets) {
-      expect(asset.representations.map((representation) => representation.chain)).toEqual([
-        'solana',
-        'base',
-      ]);
-    }
-  });
+function section(html, id) {
+  const marker = html.indexOf(`id="${id}"`);
+  expect(marker, `#${id} exists`).toBeGreaterThanOrEqual(0);
+  const start = html.lastIndexOf('<section', marker);
+  const end = html.indexOf('</section>', marker);
+  expect(start, `#${id} is a section`).toBeGreaterThanOrEqual(0);
+  expect(end, `#${id} closes`).toBeGreaterThan(marker);
+  return html.slice(start, end + '</section>'.length);
+}
 
-  it('opens with one market identity, a plain-language promise, and the verification path', async () => {
-    const [source, html] = await Promise.all([
-      read('src/app.jsx'),
+function normalizedText(value) {
+  return value
+    .replace(/<br\s*\/?\s*>/giu, ' ')
+    .replace(/<[^>]+>/gu, ' ')
+    .replace(/&(?:rsquo|#39);/gu, "'")
+    .replace(/&(?:ldquo|rdquo);/gu, '"')
+    .replace(/&amp;/gu, '&')
+    .replace(/\s+/gu, ' ')
+    .trim();
+}
+
+describe('Astrofolio consumer and Terminal market-desk split', () => {
+  it('pins the indexed routes and their owner-directed names', async () => {
+    const [consumer, pro] = await Promise.all([
+      read('public/astrofolio/index.html'),
       read('public/terminal/index.html'),
     ]);
-    const visible = visibleMarkup(html);
 
-    for (const value of [source, visible]) {
-      expect(value).toContain('Zodiac Terminal');
-      expect(value).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
-      expect(value).not.toMatch(/<h1[^>]*>\s*Astrofolio\s*<\/h1>/iu);
-    }
-    expect(html).toContain('<meta name="zodiacs-registry-view" content="terminal" />');
-    expect(html).toContain('<link rel="canonical" href="https://zodiacs.org/terminal/" />');
-    expect(html).toContain('<meta property="og:url" content="https://zodiacs.org/terminal/" />');
-    expect(html).not.toContain('"alternateName": ["Zodiac Capital Markets", "The Zodiacs Registry"]');
-    expect(source).toContain('const REGISTRY_VIEW = document.querySelector');
-    expect(source).toContain("const technical = REGISTRY_VIEW === 'technical';");
-    expect(source).not.toContain("/^\\/registry\\/technical\\/?$/.test(window.location.pathname)");
-    for (const value of [source, visible]) {
-      // The verifier is reachable in plain words. "Check an address" named
-      // the mechanism, and "Check a token is official" dropped its "that".
-      expect(value).toContain('Verify a token');
-      expect(value).not.toContain('Check an address');
-      expect(value).not.toContain('Check a token is official');
-    }
-    expect(visible).toContain('The 12 Official Zodiac Tokens');
-    expect(visible).toMatch(/href="#official-twelve"[^>]*>[\s\S]*?The twelve/iu);
-    expect(visible).toMatch(/href="#verify"[^>]*>[\s\S]*?Verify a token/iu);
-    expect(visible).not.toContain('Open the Cabinet');
+    expect(consumer).toContain('<link rel="canonical" href="https://zodiacs.org/astrofolio/" />');
+    expect(consumer).toContain('<meta name="zodiacs-registry-view" content="terminal" />');
+    expect(consumer).toContain('<title>Astrofolio · Choose your sign and see its official Zodiac token · Zodiacs.org</title>');
+    expect(consumer).toContain('<meta property="og:title" content="Astrofolio · Zodiacs" />');
+    expect(consumer).toContain('<meta name="twitter:title" content="Astrofolio · Zodiacs" />');
+    expect(consumer).toContain('"position": 2, "name": "Astrofolio"');
+    expect(consumer).not.toContain('zodiacs-registry-exchange-enabled');
+    expect(consumer).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
+    expect(consumer).not.toMatch(/<meta\s+name="robots"[^>]*noindex/u);
+
+    expect(pro).toContain('<link rel="canonical" href="https://zodiacs.org/terminal/" />');
+    expect(pro).toContain('<meta name="zodiacs-registry-view" content="terminal-pro" />');
+    expect(pro).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
+    expect(pro).toContain('<title>Terminal · Live Prices, Liquidity &amp; Research · Zodiacs.org</title>');
+    expect(pro).toContain('<meta property="og:title" content="Terminal · Zodiacs" />');
+    expect(pro).toContain('<meta name="twitter:title" content="Terminal · Zodiacs" />');
+    expect(pro).toContain('"position": 2, "name": "Terminal"');
+    expect(pro).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
+    expect(pro).not.toMatch(/<meta\s+name="robots"[^>]*noindex/u);
   });
 
-  it('renders one H1 before the tape, aggregate metrics, sculpture, compact market board, and briefing', async () => {
+  it('keeps the no-JS Astrofolio journey complete and in the locked order', async () => {
+    const html = await read('public/astrofolio/index.html');
+    ordered(html, [
+      'id="official-twelve"',
+      'id="buy"',
+      'id="thesis"',
+      'id="market-snapshot"',
+      'id="registry"',
+      'id="verify"',
+      'id="faq"',
+      'class="static-astrofolio-closing"',
+      'data-terminal-market-notice',
+    ]);
+
+    const opening = section(html, 'official-twelve');
+    expect(normalizedText(opening)).toContain(`Astrofolio Leo Season · The Twelve Choose your sign ${SUPPORT_COPY}`);
+    expect(opening.match(/class="static-vitrine__choice"/gu)).toHaveLength(12);
+    expect(opening.match(/data-static-sign="[a-z]+"/gu)).toHaveLength(12);
+    expect(opening).toContain('id="astrofolio-leo" checked');
+    expect(opening).toContain('<h2 id="static-leo-title">Leo</h2><p class="static-vitrine__dates">July 23 to August 22</p>');
+    expect(opening).toContain('<span class="static-vitrine__figure">Price unavailable</span>');
+    expect(opening).toContain('<span class="static-vitrine__movement">movement unavailable</span>');
+    expect(opening).toContain('>See Leo</a>');
+    expect(opening).toContain('>How to buy Leo</a>');
+    expect(opening).toContain('>View official record</a>');
+    expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
+
+    const marketLinks = html.match(/href="\/terminal\/(?:\?[^"#]*)?"/gu) ?? [];
+    expect(marketLinks).toHaveLength(1);
+    expect(html).toContain('<a href="/terminal/" data-terminal-static-view="pro">Market view</a>');
+    expect(html).not.toContain('data-terminal-preference-banner');
+
+    const verifier = section(html, 'verify');
+    expect(normalizedText(verifier)).toContain('Compare the mint or contract address shown by a wallet or marketplace with the official list. Never paste a seed phrase.');
+    expect(normalizedText(verifier)).toContain("use your browser's Find command to search for the complete address");
+    expect(verifier).toContain('href="/registry/zodiacs.registry.json">Open the official address list</a>');
+  });
+
+  it('pins the hydrated consumer composition in the same order', async () => {
     const source = await read('src/app.jsx');
-    const mounted = consumerRoot(source);
-    const explorer = source.slice(
-      source.indexOf('function ConsumerExplorer('),
-      source.indexOf('function ConsumerHowItWorks('),
-    );
-
-    const mountedH1 = source.match(/<h1 id="consumer-explorer-title"/gu) ?? [];
-    const masthead = source.slice(
-      source.indexOf('function ConsumerCapitalHeader('),
-      source.indexOf('function ConsumerMarketSection('),
-    );
-    expect(mountedH1, 'mounted consumer Registry h1').toHaveLength(1);
-    expect(masthead).toContain('<header');
-    expect(masthead).toContain('className="capital-masthead"');
-    expect(masthead).toContain('<h1 id="consumer-explorer-title">Zodiac Terminal</h1>');
-    expect(masthead).toContain('<MarketTape season={season} />');
-    expect(masthead).toContain('className="capital-pulse"');
-    expect(source).toContain('<ConsumerCapitalHeader sign={sign} />');
-    expect(source.indexOf('<ConsumerCapitalHeader sign={sign} />')).toBeLessThan(source.indexOf('className="consumer-capital-opening"'));
-    expect(source.indexOf('className="consumer-capital-opening"')).toBeLessThan(source.indexOf('<ConsumerMarketBriefing active={activeTicker} />'));
-    expect(source.indexOf('<ConsumerMarketBriefing active={activeTicker} />')).toBeLessThan(source.indexOf('<ConsumerHowItWorks />'));
-    expect(source).toContain('id="official-twelve"');
-    expect(explorer).toContain('aria-label="Interactive gallery of the twelve official Zodiac tokens"');
-    // In stage mode the section is also the page's opening scene.
-    expect(source).toContain("'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')");
-    expect(source).toContain('data-consumer-sign=');
-    expect(source).toContain('aria-pressed={isActive}');
-    expect(source).toContain('tabIndex={isActive ? 0 : -1}');
-    expect(source).toContain('data-consumer-preview');
-    expect(source).toContain('data-consumer-live');
-    expect(source).toContain('/assets/zodiac-icons/');
-    expect(mounted).not.toContain('className="close__sigil"');
-  });
-
-  it('ends with one clear Registry action and a restrained essential footer', async () => {
-    const [source, html, bundle] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-      read('public/assets/app.js'),
+    const start = source.indexOf('<main id="main" className="zd consumer-registry">');
+    const mounted = source.slice(start, source.indexOf('</main>', start));
+    ordered(mounted, [
+      '<ConsumerExplorer',
+      '<ConsumerBuyGuide sign={sign} />',
+      '<ConsumerPurpose />',
+      '<ConsumerMarketSnapshot',
+      '<ConsumerHowItWorks sign={sign} />',
+      '<ConsumerVerifier />',
+      '<ConsumerFaq />',
+      '<ConsumerClosing sign={sign} />',
+      '<Footer />',
     ]);
-    const closing = source.slice(
-      source.indexOf('function ConsumerClosing()'),
-      source.indexOf('function TechnicalRecordsSection()'),
-    );
-    const footer = source.slice(
-      source.indexOf('function Footer('),
-      source.indexOf('// Root', source.indexOf('function Footer(')),
-    );
-    const directory = footer.slice(
-      footer.indexOf('className="ftr__directory"'),
-      footer.indexOf('className="ftr__market-notice"'),
-    );
-    const marketNotice = footer.slice(
-      footer.indexOf('className="ftr__market-notice"'),
-      footer.indexOf('className="ftr__row ftr__row--origin"'),
-    );
-    const technicalFooter = source.slice(
-      source.indexOf('function TechnicalFooter()'),
-      source.indexOf('function Footer('),
-    );
-    const staticClosing = html.slice(
-      html.indexOf('<div class="static-closing">'),
-      html.indexOf('</div>', html.indexOf('<div class="static-closing">')),
-    );
-    const staticFooter = html.slice(
-      html.indexOf('<footer class="static-site__footer">'),
-      html.indexOf('</footer>', html.indexOf('<footer class="static-site__footer">')),
-    );
-
-    expect(closing.match(/<a\b/gu) ?? []).toHaveLength(1);
-    expect(closing).toContain('href="/registry/"');
-    expect(closing).toContain('Open the Zodiacs Registry');
-    expect(closing).toContain('aria-hidden="true">→</span>');
-    expect(closing).not.toContain('aria-hidden="true">↗</span>');
-    expect(closing).not.toContain('btn btn--primary');
-    expect(closing).not.toContain('Explore all 12');
-    expect(staticClosing).toContain('href="/registry/"');
-    expect(staticClosing).toContain('Open the Zodiacs Registry →');
-    expect(staticClosing).not.toContain('Open the Zodiacs Registry ↗');
-    expect(staticClosing).not.toContain('btn btn--primary');
-    expect(staticClosing).not.toContain('Explore all 12');
-
-    expect(footer).toContain('className="ftr__directory"');
-    expect(footer).toContain('aria-label="Explore Zodiacs"');
-    expect(footer).toContain('aria-label="Trust and policies"');
-    expect(directory.match(/<a\b/gu) ?? []).toHaveLength(6);
-    for (const destination of [
-      '/registry/',
-      '/registry/#verify',
-      '/terminal/research/',
-      '/disclosure/',
-      '/privacy/',
-      '/terms/',
-    ]) {
-      expect(directory).toContain(`href="${destination}"`);
-      expect(staticFooter).toContain(`href="${destination}"`);
-    }
-    expect(staticFooter.match(/<a\b/gu) ?? []).toHaveLength(6);
-    for (const retired of [
-      'The Twelve',
-      'How it works',
-      'Official channels',
-      'Ask Zodiacs',
-      'Technical record',
-      'astrofoliosol',
-      'astrofolioonsol',
-      'tiktok.com/@astrofolio',
-    ]) expect(directory).not.toContain(retired);
-    for (const anchor of ['#records-networks', '#market-transparency', '#onchain-access', '#builders', '#security']) {
-      expect(technicalFooter).toContain(`href="${anchor}"`);
-    }
-    expect(technicalFooter).not.toContain('data-terminal-market-notice');
-    expect(marketNotice).toContain('role="note"');
-    expect(marketNotice).toContain('aria-labelledby="terminal-market-notice-title"');
-    expect(marketNotice).toContain('data-terminal-market-notice');
-    expect(marketNotice.match(/<a\b/gu) ?? []).toHaveLength(0);
-    expect(staticFooter.match(/data-terminal-market-notice/gu) ?? []).toHaveLength(1);
-    expect(staticFooter).toContain('role="note"');
-    expect(staticFooter).toContain('aria-labelledby="static-terminal-market-notice-title"');
-    for (const disclosure of [marketNotice, staticFooter, bundle]) {
-      const copy = disclosure.replace(/\s+/gu, ' ');
-      expect(copy).toContain('speculative, thinly traded digital assets');
-      expect(copy).toContain('could lose all money used to acquire');
-      expect(copy).toContain('no established predictive relationship with asset prices');
-      expect(copy).toContain('does not operate a DEX, exchange, broker, or custodial service');
-      expect(copy).toContain('Jupiter, an independent third-party liquidity aggregator');
-      expect(copy).toContain('wallet reviews, approves, and signs');
-      expect(copy).toContain('holds no keys or funds');
-      expect(copy).toContain('receives no trading or referral compensation');
-      expect(copy).toContain('do not imply affiliation or endorsement');
-      expect(copy).toContain('not an offer or solicitation');
-      expect(copy).toContain('accounting, legal, tax, or financial advice');
-      expect(copy).toContain('may not be available in all regions');
-    }
-    expect(marketNotice).not.toMatch(/Coinbase|Bermuda/iu);
-    expect(staticFooter).not.toMatch(/Coinbase|Bermuda/iu);
-    expect(footer.indexOf('className="ftr__directory"')).toBeLessThan(footer.indexOf('className="ftr__market-notice"'));
-    expect(footer.indexOf('className="ftr__market-notice"')).toBeLessThan(footer.indexOf('className="ftr__row ftr__row--origin"'));
-    expect(html).toContain('.ftr__directory {');
-    expect(html).toContain('.ftr__market-notice {');
-    expect(html).toContain('.static-site__market-notice {');
-    expect(html).toContain('.consumer-closing__registry {');
-    expect(html).toContain('.static-site__footer nav a { min-height: 44px;');
-    expect(html).toContain('.ftr:not(.ftr--technical) .ftr__row--origin a {');
+    expect(mounted).not.toMatch(/ConsumerMarketSection|ConsumerMarketBriefing|MarketTape|StandingsSection|PulseSection|ProMarketsGateway/gu);
   });
 
-  it('keeps builder detail out of the market-led consumer journey', async () => {
-    const [source, html] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-    ]);
-    const mounted = consumerRoot(source);
-    const fallback = visibleMarkup(html);
-
-    expect(mounted).not.toBe('');
-    for (const component of [
-      'PulseSection',
-      'StandingsSection',
-      'OnchainAccessSection',
-      'ForBuildersSection',
-      'BuiltWithZodiacsSection',
-      'SdkSection',
-      'SecuritySection',
-    ]) {
-      expect(mounted).not.toContain(`<${component}`);
-    }
-    for (const id of ['pulse', 'standings', 'onchain-access', 'builders', 'sdk', 'security']) {
-      expect(fallback).not.toMatch(new RegExp(`id=["']${id}["']`, 'u'));
-    }
-    expect(fallback).not.toMatch(/Market snapshot|npm i @zodiacs\/sdk|Acquisition venues/iu);
-  });
-
-  it('uses plain verifier instructions and distinguishes official, unknown, and invalid input', async () => {
+  it('builds the first screen as an accessible, interruptible Lit Vitrine', async () => {
     const source = await read('src/app.jsx');
+    const identity = functionBlock(source, 'ConsumerIdentityHeader');
+    const rail = functionBlock(source, 'VitrineDiscRail');
+    const layers = functionBlock(source, 'useConsumerSelectionLayers');
+    const explorer = functionBlock(source, 'ConsumerExplorer');
+    const placard = functionBlock(source, 'VitrinePlacard');
 
-    for (const sentence of [
-      'Check a Zodiac token address',
-      'Paste the mint or contract address shown by a wallet or marketplace.',
-      'Never paste a seed phrase.',
-      'Official ',
-      ' address on ',
-      'This address isn’t in the official Zodiac list.',
-      'That doesn’t look like a Solana or Base address.',
-    ]) expect(source).toContain(sentence);
-    expect(source).toContain('data-verifier-state=');
-    expect(source).toContain('role="status"');
-    expect(source).toContain('aria-live="polite"');
+    expect(normalizedText(identity)).toContain(`Astrofolio {season.name} Season · The Twelve Choose your sign ${SUPPORT_COPY}`);
+    expect(identity).not.toContain('<TerminalViewLink');
+    expect(explorer).toContain('className="consumer-explorer astrofolio-vitrine"');
+    expect(explorer).toContain('aria-label="Astrofolio sign collection"');
+    expect(explorer).toContain('/assets/sculptures/512/${layer.slug}.webp');
+    expect(explorer).toContain('data-vitrine-stage');
+    expect(explorer).toContain('{layers.map(renderSculpture)}');
+    expect(rail).toContain('role="group" aria-label="Choose your zodiac sign"');
+    expect(rail).toContain('ArrowRight: Math.min(SIGNS.length - 1, activeIndex + 1)');
+    expect(rail).toContain('ArrowLeft: Math.max(0, activeIndex - 1)');
+    expect(rail).toContain('Home: 0');
+    expect(rail).toContain('End: SIGNS.length - 1');
+    expect(rail).toContain('tabIndex={selected ? 0 : -1}');
+    expect(rail).toContain('aria-pressed={selected}');
+    expect(rail).toContain("trackAnalytics('registry_sign_selected', { sign: next.asset.sign, source: 'consumer_explorer' })");
+    expect(rail).toContain("url.searchParams.set('sign', next.asset.sign)");
+    expect(rail).toContain("window.history.replaceState(null, '', `${url.pathname}?${url.searchParams}${url.hash}`)");
+    expect(layers).toContain("matchMedia('(prefers-reduced-motion: reduce)')");
+    expect(layers).toContain('pendingIdRef.current = id');
+    expect(layers).toContain('const markLayerReady = useCallback((id) =>');
+    expect(layers).toContain('current.filter((layer) => layer.ready)');
+    expect(layers).toContain('layer.id === id ? { ...layer, ready: true } : layer');
+    expect(layers).toContain('transitionIdRef.current = null');
+    expect(layers).toContain('if (transitionIdRef.current !== id) return');
+    expect(layers).toContain('setTransitionId(id)');
+    expect(layers).toContain('if (transitionId === null) return undefined');
+    expect(layers).toContain('window.clearTimeout(timerRef.current)');
+    expect(layers).toContain('window.setTimeout(() => settleLayer(transitionId), 240)');
+    expect(explorer).toContain("event.propertyName === 'opacity'");
+    expect(explorer).toContain('const decoded = image.decode?.()');
+    expect(explorer).toContain('decoded.then(() => markLayerReady(layer.id), () => markLayerReady(layer.id))');
+    expect(explorer).toContain("image.src = `/assets/sculptures/512/${layer.slug}.webp`");
+    expect(explorer).toContain("image.src = `/assets/cabinet-materials/gold/${layer.slug}.webp`");
+    expect(explorer).toContain('markLayerFailed(layer.id)');
+    expect(explorer).toContain('vitrine-stage__fallback');
+    expect(explorer).toContain("'--vitrine-stage-height': `${desktopStageHeight}px`");
+    expect(placard).toContain('{layers.map(renderLayer)}');
+    expect(placard).toContain('See {item.name}');
+    expect(placard).toContain('How to buy {item.name}');
+    expect(placard).toContain('View official record');
   });
 
-  it('keeps the mounted and no-JavaScript first paint on the same non-cinematic identity', async () => {
-    const [source, html] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-    ]);
-
-    const visible = visibleMarkup(html);
-    expect(source).not.toContain('function CineHero(');
-    expect(source).not.toContain('className="cine__frame"');
-    expect(visible).toContain('<h1 id="static-capital-title">Zodiac Terminal</h1>');
-    expect(visible).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
-    expect(visible).not.toContain('The official Registry · Est. MMXXIV');
-    expect(visible).not.toContain('Twelve signs. One register.');
-    expect(visible).not.toContain('Astrofolio');
-    expect(html).toContain('@media (prefers-reduced-motion: reduce)');
-    expect(source).toContain('new IntersectionObserver');
-  });
-
-  it('mounts the sculpture stage on every capable viewport and keeps the bundle lazy', async () => {
+  it('uses query, saved sign, then current season without saving ordinary selection', async () => {
     const source = await read('src/app.jsx');
-    // Phones and desktops share the real stage whenever WebGL exists. The
-    // flat carousel is now a capability fallback, not a width breakpoint.
-    expect(source).toContain('return GALLERY_LIVE;');
-    expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
-    expect(source).toContain("'/assets/gallery.js'");
-    expect(source).toContain('carousel={!stageMode}');
-    expect(source).not.toContain('data-consumer-gallery-toggle');
-    expect(source).toContain('RAIL_PLACEHOLDER_HTML');
-  });
-
-  it('shows the current season as a gold sculpture, countdown, and progress instrument', async () => {
-    const [source, html, bundle] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-      read('public/assets/app.js'),
+    const rootBlock = functionBlock(source, 'Zodiacs');
+    ordered(rootBlock, [
+      "new URLSearchParams(window.location.search).get('sign')",
+      "window.localStorage.getItem('zodiacs:today-sun-sign:v1')",
+      'currentSeason()?.sign.ticker',
     ]);
-
-    const seasonNow = source.slice(
-      source.indexOf('function SeasonNow({ season })'),
-      source.indexOf("/* The placard's price"),
-    );
-    for (const marker of [
-      'function SeasonNow({ season })',
-      '<SeasonNow season={season} />',
-      'Now in season',
-      "remaining === 1 ? '' : 's'",
-      'Date.UTC(year, month - 1, day)',
-      'remaining: Math.max(0, total - day)',
-    ]) expect(source).toContain(marker);
-    expect(seasonNow).toContain('src={`/assets/sculptures/512/${sign.asset.sign}.webp`}');
-    expect(seasonNow).toContain('className="season-now__progress season-now__progress-track"');
-    expect(seasonNow).toContain('role="progressbar"');
-    expect(seasonNow).toContain('aria-valuenow={day}');
-    expect(seasonNow).not.toContain('useTwelveQuotes');
-    expect(seasonNow).not.toContain('formatPriceUsd');
-    expect(seasonNow).not.toContain('season-now__market-row');
-    expect(seasonNow).not.toMatch(/\bprice\b/iu);
-    expect(html).toContain('.season-now {');
-    expect(html).toContain('.season-now__progress > span');
-    for (const marker of ['season-now', 'Now in season', 'remaining']) {
-      expect(bundle).toContain(marker);
-    }
+    expect(functionBlock(source, 'ConsumerExplorer')).not.toContain('localStorage.setItem');
+    expect(functionBlock(source, 'VitrineDiscRail')).not.toContain('localStorage.setItem');
+    expect(rootBlock).not.toContain("window.localStorage.setItem('zodiacs:today-sun-sign:v1'");
   });
 
-  it('keeps the top market tape display-only and duplicates only for the visual loop', async () => {
+  it('reuses one first-screen market read for the placard and all-twelve list', async () => {
     const source = await read('src/app.jsx');
-    const tape = source.slice(
-      source.indexOf('function MarketTape('),
-      source.indexOf('function SeasonNow('),
-    );
-    const masthead = source.slice(
-      source.indexOf('function ConsumerCapitalHeader('),
-      source.indexOf('function ConsumerMarketSection('),
-    );
+    const rootBlock = functionBlock(source, 'Zodiacs');
+    const snapshot = functionBlock(source, 'ConsumerMarketSnapshot');
+    expect(rootBlock).toContain('const consumerMarket = useTwelveQuotes(!technical && !pro, consumerMarketRetry);');
+    expect(rootBlock.match(/batch=\{consumerMarket\}/gu)).toHaveLength(2);
+    expect(snapshot).not.toContain('useTwelveQuotes(');
+    expect(snapshot).toContain('<h2 id="consumer-snapshot-title">All twelve, today</h2>');
+    expect(snapshot).toContain('{SIGNS.map((item) =>');
+    expect(snapshot).toContain('plainMarketMovement(quote.priceChange24h)');
+    expect(snapshot).toContain('<summary>See market details</summary>');
+    expect(snapshot).not.toMatch(/sort\(|rankBy|marketCap|liquidityUsd|volume24h|SelectedTokenMiniChart|PlacardMarketPanel/gu);
 
-    expect(tape).toContain('className="market-tape__viewport" aria-hidden="true"');
-    expect(tape).toContain("{renderItems('primary')}");
-    expect(tape).toContain("{renderItems('echo')}");
-    expect(tape).toContain('data-market-tape-sign={item.asset.sign}');
-    expect(tape).not.toContain('<button');
-    expect(tape).not.toContain('<a ');
-    expect(tape).not.toContain('onClick=');
-    expect(tape).not.toContain('aria-pressed=');
-    expect(masthead).toContain('<MarketTape season={season} />');
-    expect(source.slice(source.indexOf('function GalleryBand('), source.indexOf('function VerifierSection(')))
-      .not.toContain('<MarketTape');
+    const movement = functionBlock(source, 'plainMarketMovement');
+    expect(movement).toContain("up ${formatPercent(movement).replace('+', '')} today");
+    expect(movement).toContain("down ${formatPercent(Math.abs(movement)).replace('+', '')} today");
+    expect(movement).toContain("return 'unchanged today'");
+    expect(movement).toContain("return 'movement unavailable'");
+
+    const staticSnapshot = section(await read('public/astrofolio/index.html'), 'market-snapshot');
+    ordered(staticSnapshot, SIGNS.map((slug) => `href="/registry/${slug}/"`));
+    expect(staticSnapshot.match(/<li(?:\s|>)/gu)).toHaveLength(12);
+    expect(staticSnapshot.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp/gu)).toHaveLength(12);
+    expect(staticSnapshot).not.toMatch(/rank|spark|chart|market cap|liquidity|volume/iu);
   });
 
-  it('lets the season materialize inside the scene without another framed card', async () => {
-    const html = await read('public/terminal/index.html');
-    const seasonBase = html.slice(
-      html.indexOf('.season-now {'),
-      html.indexOf('.season-now__identity {'),
-    );
-    const controlPass = html.slice(html.indexOf('Registry control pass'));
-    const seasonTransition = controlPass.slice(
-      controlPass.indexOf('.season-now {'),
-      controlPass.indexOf('.season-now__identity,'),
-    );
-    const railRule = controlPass.slice(
-      controlPass.indexOf('.gband--consumer .rail {'),
-      controlPass.indexOf('.gband--consumer .rail__tick img'),
-    );
-
-    expect(seasonBase).toContain('border: 0;');
-    expect(seasonBase).toContain('border-radius: 0;');
-    expect(seasonBase).toContain('background: transparent;');
-    expect(seasonTransition).toContain('opacity: 1;');
-    expect(seasonTransition).toContain('opacity 240ms cubic-bezier(0.23, 1, 0.32, 1) 50ms');
-    expect(seasonTransition).toContain('transform 280ms cubic-bezier(0.23, 1, 0.32, 1) 50ms');
-    expect(controlPass).toMatch(/@starting-style \{\s*\.season-now \{\s*opacity: 0;\s*transform: translateY\(7px\);/u);
-    expect(controlPass).toMatch(/@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?\.consumer-registry \.season-now \{[\s\S]*?transition-property: opacity !important;/u);
-    expect(railRule).toContain('border: 0;');
-    expect(railRule).toContain('border-radius: 0;');
-    expect(railRule).toContain('background: transparent;');
-    expect(railRule).toContain('backdrop-filter: none;');
-  });
-
-  it('presents the selected sign with archived market context and two explicit doors', async () => {
+  it('pins the exact buying guidance and risk paragraph in both render paths', async () => {
     const source = await read('src/app.jsx');
-    const mounted = consumerRoot(source);
-
-    const placard = source.slice(
-      source.indexOf('className="stage-placard"'),
-      source.indexOf('className="stage-sheet"'),
-    );
-    expect(placard).toContain('className="stage-placard__name"');
-    expect(placard).toContain('{signDateLabel(sign)}');
-    expect(placard).toContain('<PlacardQuote sign={sign} />');
-    expect(placard).toContain('<PlacardMarketPanel sign={sign} />');
-    expect(placard).toContain('Buy {sign.name}');
-    expect(placard).toContain('<span>Official record</span>');
-    expect(placard).toContain('href={registryProfilePath(sign)}');
-    // Flag-off the pill is the door to the catalogue page's own panel.
-    expect(placard).toContain('href={`${registryProfilePath(sign)}#acquire`}');
-    expect(mounted).toContain('<ConsumerMarketSection');
-    expect(mounted).toContain('<ConsumerMarketBriefing active={activeTicker} />');
+    const hydrated = functionBlock(source, 'ConsumerBuyGuide');
+    const fallback = section(await read('public/astrofolio/index.html'), 'buy');
+    const required = [
+      'How to buy your sign',
+      'Buying happens on an independent service, from your own wallet.',
+      'Zodiacs.org shows you the official token and the route to it. It never holds your money or your crypto.',
+      'Pick your sign.',
+      "Open its buying options on the sign's official record.",
+      'Check before you approve: in your wallet, confirm the address, the network, the amount, and the fee.',
+      "What you'll need",
+      'A Solana-compatible wallet and enough SOL for your amount plus the network fee.',
+      'Before you spend anything',
+      RISK_COPY,
+    ];
+    const hydratedText = normalizedText(hydrated);
+    const fallbackText = normalizedText(fallback);
+    for (const copy of required) {
+      expect(hydratedText, copy).toContain(copy);
+      expect(fallbackText, copy).toContain(copy);
+    }
   });
 
-  it('says one thing about a sign, in one place, at every width', async () => {
+  it('keeps the explanatory disclosures, verifier, story, four FAQs, and close exact', async () => {
     const source = await read('src/app.jsx');
-    // Both flavours of the plate render the same placard and sheet — only
-    // the artwork differs. The old editorial hero no longer sits above it.
-    expect(source).toContain('function GalleryBand({ active, setActive, consumer = false, carousel = false })');
-    for (const once of [
-      'className="stage-placard"',
-      '<PlacardQuote sign={sign} />',
-      '<PlacardMarketPanel sign={sign} />',
-    ]) {
-      expect(source.split(once), once).toHaveLength(2);
+    const how = functionBlock(source, 'ConsumerHowItWorks');
+    for (const copy of ['What is a Zodiac?', 'One token for each sign', 'The address is the identity', 'Keep it, send it, or gift it', 'Its market price can rise or fall', 'How verification works', 'See market details']) {
+      expect(how).toContain(copy);
     }
-    expect(source).not.toContain('className="stage-hero__head"');
-    expect(source).not.toContain('className="stage-hero__title"');
-    expect(source).not.toContain('className="stage-hero__eyebrow"');
-    expect(source).not.toContain('className="stage-hero__line"');
-    // The flag-on and flag-off pill faces use the same explicit purchase verb.
-    expect(source.split('Buy {sign.name}')).toHaveLength(3);
-    expect(source).toContain('Acquisition Desk — buy {sign.name}');
-    // The record card and its quote are gone; the placard carries the price.
-    expect(source).not.toContain('function ConsumerSignPanel(');
-    expect(source).not.toContain('data-token-quote');
-    expect(source).not.toContain('className="consumer-preview"');
+    expect(how).not.toContain('Read the story');
+    expect(how).toContain('className="consumer-proof"');
+    const purpose = functionBlock(source, 'ConsumerPurpose');
+    ordered(purpose, ['className="consumer-thesis"', 'className="consumer-collection"']);
+    expect(purpose).toContain('Symbol · record · identity');
+    expect(purpose).toContain('<span>Read the story</span><span className="consumer-purpose__arrow"');
+    expect(purpose).toContain('<span>Open the Cabinet</span><span className="consumer-purpose__arrow"');
+    expect(purpose).toContain('{SIGNS.map((item, index) =>');
+    expect(purpose).toContain("aries: { finish: 'crown', numeral: 'V', count: '×12' }");
+    expect(purpose).toContain("aquarius: { finish: 'gold', numeral: 'IV', count: '×3' }");
+    const verifier = functionBlock(source, 'ConsumerVerifier');
+    expect(verifier).toContain('id="verify" className="consumer-verify reveal"');
+    expect(verifier).toContain('Check a Zodiac token address');
+    expect(verifier).toContain('Paste the mint or contract address shown by a wallet or marketplace. We&rsquo;ll tell you whether it appears in the official list. Never paste a seed phrase.');
+    expect(verifier).toContain('Read-only: this checker never connects a wallet, requests a signature, or starts a transaction.');
+    expect(verifier).not.toContain('vrf__examples');
+    expect(verifier).not.toContain('mono');
+    const faqStart = source.indexOf('    const CONSUMER_FAQS = [');
+    const faqSource = source.slice(faqStart, source.indexOf('    function ConsumerFaq(', faqStart));
+    expect(faqSource.match(/\n\s*q:/gu)).toHaveLength(4);
+    expect(section(await read('public/astrofolio/index.html'), 'faq').match(/<dt>/gu)).toHaveLength(4);
+
+    const close = functionBlock(source, 'ConsumerClosing');
+    expect(close).toContain('See all twelve records');
+    expect(close.match(/<TerminalViewLink view="pro"/gu)).toHaveLength(1);
+    expect(close).toContain('view="pro" sign={sign}');
+    expect(functionBlock(source, 'TerminalViewLink')).toContain("{pro ? 'Market view' : 'Astrofolio'}");
+    expect(source).not.toContain('function ConsumerPreferenceBanner(');
+    expect(source).not.toContain('data-terminal-preference-banner');
+    expect(source).not.toContain('TERMINAL_PRO_BANNER_DISMISSED_KEY');
   });
 
-  it('drops the second chain and the guide detour from the record box', async () => {
-    const [source, html] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-    ]);
-    // The landing is about a sign's official token on its native network. The
-    // Base counterpart is a fact of the catalogue page, not of choosing; and
-    // the astrology guide is a whole other wing.
-    expect(source).not.toContain('Also recorded on Base');
-    expect(source).not.toContain('astrology guide');
-    expect(html).not.toContain('astrology guide');
-    // Their styles go with them rather than lingering as dead selectors.
-    for (const dead of [
-      '.consumer-preview__base', '.consumer-preview__guide',
-      '.consumer-preview__links', '.consumer-preview__trade',
-    ]) {
-      expect(html, dead).not.toContain(dead);
-    }
-  });
-
-  it('opens on the gallery itself where the stage is live, film hero standing down', async () => {
+  it('keeps consumer navigation on Astrofolio and market depth on Terminal', async () => {
     const source = await read('src/app.jsx');
-    // The film and old title card are retired; the sculpture-led stage opens
-    // the page without repeating the Registry lockup already in navigation.
-    expect(source).not.toContain('<CineHero');
-    expect(source).toContain('carousel={!stageMode}');
-    expect(source).not.toContain('className="stage-hero__head"');
-    expect(source).not.toContain('className="stage-hero__title"');
-    expect(source).not.toContain('The Official Registry · Est.');
-    expect(source).not.toContain('Twelve signs.<br />');
-    // The placard says what a museum label says — name, dates, price — and
-    // holds the two doors; everything longer waits in the sheet.
-    expect(source).toContain('className="stage-placard"');
-    expect(source).toContain('function PlacardQuote(');
-    expect(source).toContain('<span>Official record</span>');
-    // The sheet is a dialog portalled above the floating nav, and closing it
-    // returns focus to the pill that opened it.
-    expect(source).toContain('ReactDOM.createPortal');
-    expect(source).toContain('aria-modal="true"');
-    expect(source).toContain("if (event.key === 'Escape') {");
-    expect(source).toContain('closeSheet();');
-    expect(source).toContain('entry.node.inert = true;');
-    expect(source).toContain("body.style.position = 'fixed';");
-    expect(source).toContain('tradePillRef.current?.focus({ preventScroll: true });');
-    // The compact season instrument belongs directly to the stage; the old
-    // nested hero container does not.
-    const plate = source.slice(source.indexOf('function GalleryBand('), source.indexOf('</section>', source.indexOf('function GalleryBand(')));
-    expect(plate).toContain('<SeasonNow season={season} />');
-    expect(plate).not.toContain('className="stage-hero__head"');
-    expect(plate).toContain('className="gband__rail-top"');
+    const header = functionBlock(source, 'Header');
+    expect(header).toContain("? { href: '/terminal/', label: 'Terminal', description: 'The market desk for the twelve official tokens' }");
+    expect(header).toContain(": { href: '/astrofolio/', label: 'Astrofolio', description: 'Choose a sign and see its official token' }");
+
+    const proStart = source.indexOf('<main id="main" className="zd terminal-pro">');
+    const proMounted = source.slice(proStart, source.indexOf('</main>', proStart));
+    ordered(proMounted, [
+      '<ProMasthead sign={sign} batch={proMarket} />',
+      '<ProMarketBoard active={activeTicker} setActive={setActiveTicker} batch={proMarket} />',
+      '<ProSelectedSign sign={sign} batch={proMarket} />',
+      '<ProMarketsGateway sign={sign} />',
+      '<ConsumerMarketBriefing active={activeTicker} sharedMarket={proMarket} />',
+      '<ProResearchSection sign={sign} />',
+      '<ProVerifierLink sign={sign} />',
+      '<Footer pro />',
+    ]);
+    expect(functionBlock(source, 'ProMasthead')).toContain('<h1 id="pro-terminal-title">Terminal</h1>');
+    expect(source).toContain('const proMarket = useTwelveQuotes(pro);');
   });
 
-  it('opens the sheet on the thing the reader asked for', async () => {
+  it('preserves view-switch analytics enums and resilient storage', async () => {
     const source = await read('src/app.jsx');
-    const sheet = source.slice(
-      source.indexOf('className="stage-sheet__panel"'),
-      source.indexOf('document.body,'),
-    );
-    // The panel names itself — disc, sign, and the venue it trades through —
-    // so a second identity block above it would only push the trade down.
-    expect(sheet).toContain('<LandingTrade sign={sign} />');
-    expect(sheet).not.toContain('ConsumerSignPanel');
-    expect(sheet).toContain('className="stage-sheet__record"');
-    expect(sheet).toContain('The full record');
+    const link = functionBlock(source, 'TerminalViewLink');
+    const remember = functionBlock(source, 'rememberTerminalView');
+    expect(link).toContain("const direction = pro ? 'consumer_to_pro' : 'pro_to_consumer'");
+    expect(link).toContain('data-terminal-view-link={view}');
+    expect(link).not.toMatch(/role=["']switch/gu);
+    expect(remember).toContain('window.localStorage.setItem(TERMINAL_VIEW_STORAGE_KEY, view)');
+    expect(remember).toMatch(/try \{[\s\S]*?\} catch/gu);
+    expect(remember).toContain("trackAnalytics('terminal_view_switch', { surface, direction })");
   });
 
-  it('keeps the trade panel behind its flag and its own lazy bundle', async () => {
-    const [source, html] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-    ]);
-    // Flag-off the landing carries the door to the catalogue page's panel;
-    // flag-on it carries the panel. Never a runtime read of the venue.
-    expect(source).toContain('REGISTRY_TRADE_ENABLED');
-    expect(source).toContain('data-landing-trade');
-    expect(source).toContain("'/assets/trade.js'");
-    expect(source).toContain("rootMargin: '400px 0px'");
-    expect(html).toContain('<meta name="zodiacs-registry-trade-enabled" content="0" />');
-    expect(html).not.toContain('/assets/trade.js');
-  });
-
-  it('ranks a compact market board before expanding all twelve, with one batched read', async () => {
-    const [source, html] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-    ]);
-    const visible = visibleMarkup(html);
-
-    expect(source).toContain('<span className="consumer-section-head__eyebrow">Live market board</span>');
-    expect(source).toContain('<h2 id="consumer-market-title">The twelve, ranked live.</h2>');
-    expect(source).not.toContain('Live Zodiac market');
-    expect(visible).toContain('<p class="static-site__eyebrow">Live market board</p>');
-    expect(visible).toContain('<h2>The twelve, ranked live.</h2>');
-    expect(source).toContain('const compactLimit = useCompactMarketLimit();');
-    expect(source).toContain('window.matchMedia(query).matches ? 3 : 6');
-    expect(source).toContain('setLimit(media.matches ? 3 : 6)');
-    expect(source).toContain('const visibleRows = expanded ? rows : rows.slice(0, compactLimit);');
-    expect(source).toContain("{expanded ? 'Show leaders only' : `Show all ${rows.length}`}");
-    expect(source).toContain('aria-expanded={expanded}');
-    expect(source).toContain('aria-controls="market-ranked-twelve"');
-    expect(source).toContain('function loadTwelveMarketQuotes()');
-    expect(source).toContain('https://api.dexscreener.com/tokens/v1/solana/');
-    expect(source).toContain("marketCap: { label: 'Market cap'");
-    expect(source).toContain("liquidity: { label: 'Indexed liquidity'");
-    expect(source).toContain("change: { label: '24h move'");
-    expect(source).toContain('if (av === null) return 1;');
-    expect(source).toContain('marketCap: toFiniteNumber(pair.marketCap)');
-    expect(source).toContain('fdv: toFiniteNumber(pair.fdv)');
-    expect(source).toContain('market.liquidityUsd += liquidity;');
-    expect(source).toContain("if (indexedPairs === 0) return unavailableMarketContext('no-pair');");
-    expect(source).toContain('const MARKET_REFRESH_MS = 120_000;');
-    expect(source).toContain('aria-label="Share snapshot"');
-    expect(source).toContain('<MarketSocialIcon network="share" /><span>Share</span>');
-    expect(source).toContain('function MarketSocialIcon({ network })');
-    expect(source).toContain("['x', 'X']");
-    expect(source).toContain("['telegram', 'Telegram']");
-    expect(source).toContain("['whatsapp', 'WhatsApp']");
-    expect(source).toContain("new URL('https://x.com/intent/post')");
-    expect(source).toContain("new URL('https://t.me/share/url')");
-    expect(source).toContain("new URL('https://wa.me/')");
-    expect(source).toContain('aria-label={`Share on ${label}`}');
-    expect(source).not.toContain('Post to X');
-    expect(source).toContain("url.searchParams.set('rank', rankBy)");
-    expect(source).toContain("url.searchParams.set('sign', activeSign.asset.sign)");
-    expect(source).not.toContain('galleryFocusRequest');
-    expect(source).not.toContain('showInGallery');
-    expect(source).not.toContain('className="market-row__view');
-    expect(source).not.toContain('market-glass');
-    expect(source).toContain('className="registry-pill registry-pill--segment"');
-    expect(source).toContain('className="registry-pill registry-pill--share market-board__share-primary"');
-    expect(source).toContain('className="registry-pill registry-pill--icon market-board__social"');
-    expect(source).toContain('className="market-row__record registry-pill registry-pill--record"');
-    expect(source).toContain('<span className="market-row__record-label">Official record</span>');
-    expect(source).toContain('aria-label={`Open the official ${item.name} record`}');
-    expect(source).not.toContain("shared.searchParams.set('outlook', horizon)");
-    expect(source).toContain('href={`/terminal/research/?sign=${activeSign.asset.sign}`}');
-    // The static fallback carries the crawlable twelve with truncated mints.
-    expect(visible).toContain('The interactive edition ranks the twelve');
-    expect((visible.match(/class="static-token-list"/gu) ?? [])).toHaveLength(1);
-    expect(visible).toContain('Live figures and sharing appear with JavaScript');
-  });
-
-  it('keeps archived chart gaps honest and unlocks 7D and 30D only with enough observations', async () => {
+  it('keeps legacy market intent mapped to the canonical Terminal URL', async () => {
     const source = await read('src/app.jsx');
-    const chart = source.slice(
-      source.indexOf('function MarketHistoryChart('),
-      source.indexOf('function PlacardMarketPanel('),
-    );
-
-    expect(source).toContain("const REGISTRY_MARKET_HISTORY_URL = '/assets/data/registry-market-history.v1.json';");
-    expect(chart).toContain("{ id: '7d', label: '7D', count: 7 }");
-    expect(chart).toContain("{ id: '30d', label: '30D', count: 30 }");
-    expect(chart).toContain('disabled={Number.isFinite(option.count) && pricedAvailable.length < option.count}');
-    expect(chart).toContain('const priced = selected.filter(point => point.priceUsd !== null);');
-    expect(chart).toContain('const calendarGap = index > 0');
-    expect(chart).toContain('currentDay - previousDay !== 86_400_000');
-    expect(chart).toContain('if (point.priceUsd === null || calendarGap)');
-    expect(chart).toContain("'Archived price unavailable.'");
-    expect(chart).toContain("'Archive building from this dated point.'");
-    expect(chart).toContain('Archive building · a line begins at 8 daily observations.');
-    expect(chart).toContain('has ${priced.length} archived daily price observations');
-    expect(chart).not.toMatch(/interpolat/iu);
-  });
-
-  it('loads the selected-token chart only near view and gates the advanced market rail', async () => {
-    const [source, html, buildApp, chartBuild] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-      read('scripts/build-app.mjs'),
-      read('scripts/build-registry-token-chart.mjs'),
-    ]);
-
-    expect(source).toContain('let selectedTokenChartRuntimePromise = null;');
-    expect(source).toContain("import('/assets/registry-token-chart.js')");
-    expect(source).toContain("const [hostRef, inView] = useInView('160px 0px 160px 0px');");
-    expect(source).toContain('if (!inView || !token) return undefined;');
-    expect(source).toContain('<SelectedTokenMiniChart');
-    expect(source).toContain('key={sign.asset.sign}');
-    expect(source).toContain('pool={chartPool}');
-    expect(source).toContain('{endpointMoment(model.first)} · one observation');
-    expect(source).toContain("'Hourly endpoints'");
-    expect(source).toContain("'First open'");
-    expect(source).toContain("'Latest close'");
-    expect(source).toContain('`${model.coverage.activePointCount} active · ${model.coverage.idlePointCount} no-swap`');
-    expect(source).toContain("' · '}{elapsedLabel}");
-    expect(source).toContain('Open live chart');
-    expect(html).not.toMatch(/<script[^>]+src=["']\/assets\/registry-token-chart\.js["']/iu);
-    expect(chartBuild).toContain("format: 'esm'");
-    expect(chartBuild).toContain("!path.endsWith('src/exchange/gecko.mjs')");
-    expect(chartBuild).toContain('Registry token chart pulled unexpected modules');
-
-    expect(source).toContain('{REGISTRY_EXCHANGE_ENABLED && (');
-    expect(source).toContain('className="capital-advanced"');
-    expect(source).toContain('href={`${REGISTRY_EXCHANGE_PATH}#${sign.asset.sign}`}');
-    expect(source).toContain('REGISTRY_EXCHANGE_LANDING_COPY.description');
-    expect(buildApp).toContain('REGISTRY_EXCHANGE_ENABLED=document.querySelector');
-    expect(buildApp).toContain('injectRegistryExchangeLanding(');
-    expect(buildApp).toContain("resolve(root, 'public/terminal/index.html')");
-    expect(buildApp).not.toContain("resolve(root, 'public/registry/index.html')");
-    expect(html).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
-  });
-
-  it('publishes the route-versioned Terminal card at v4 while freezing the cached v2 Registry card', async () => {
-    const [html, generator, verifier] = await Promise.all([
-      read('public/terminal/index.html'),
-      read('scripts/build-og-void.mjs'),
-      read('scripts/verify-og-cards.mjs'),
-    ]);
-    expect(html).toContain('https://zodiacs.org/assets/og/v4/zodiac-terminal.png');
-    expect(generator).toContain('const LEGACY_REGISTRY_CARD_COPY = Object.freeze({');
-    expect(generator).toContain("await shoot(registryCard(LEGACY_REGISTRY_CARD_COPY), 'registry.png');");
-    expect(verifier).toContain("const legacyRegistryCardSha256 = 'f7b9e9e801e390f2ef3671755d1f3754a7e45bb9db026699f5381764aab5a08a';");
-    expect(verifier).toContain('legacy v2 card bytes changed');
-  });
-
-  it('consolidates landing research into one selected-sign market briefing', async () => {
-    const [source, html, bundle] = await Promise.all([
-      read('src/app.jsx'),
-      read('public/terminal/index.html'),
-      read('public/assets/app.js'),
-    ]);
-    const mounted = consumerRoot(source);
-    const visible = visibleMarkup(html);
-    const briefing = source.slice(
-      source.indexOf('function visibleBriefingHeadlines('),
-      source.indexOf('function useStageMode('),
-    );
-
-    expect(briefing).toContain('function ConsumerMarketBriefing({ active })');
-    expect(briefing).toContain('<h2 id="consumer-briefing-title">Today’s market briefing</h2>');
-    for (const hook of [
-      'data-briefing-sign={activeSign.asset.sign}',
-      'data-briefing-event',
-      'data-briefing-reading',
-      'data-briefing-market',
-      'data-briefing-next-event',
-      'data-briefing-headlines',
-      'data-briefing-headline',
-    ]) {
-      expect(briefing).toContain(hook);
-    }
-    expect(briefing.match(/<dt>[^<]+<\/dt>/gu)?.map(label => label.replace(/<\/?dt>/gu, ''))).toEqual([
-      'Price', '24H change', 'Liquidity', '24H volume',
-    ]);
-    expect(briefing).toContain('.slice(0, 2)');
-    expect(briefing).toContain('newsLoading && [0, 1].map');
-    expect(briefing).toContain('consumer-briefing__headline--placeholder');
-    expect(briefing).toContain("factor.kind === 'occupancy'");
-    expect(briefing).toContain('<time dateTime={nextFactor.at}>{formatBriefingEventMoment(nextFactor.at)}</time>');
-    expect(briefing).toContain('{formatBriefingCountdown(nextFactor.at, nowMs)}');
-    expect(briefing).toContain('aria-label={`${activeSign.name} next exact event`}');
-    expect(briefing).toContain('Next-event schedule unavailable.');
-    expect(briefing).toContain('Loading the published seven-day schedule…');
-    expect(briefing).toContain('Market and source feeds load independently.');
-    expect(briefing).not.toContain('market briefing selected.');
-    expect(briefing).toContain('useTwelveQuotes(inView)');
-    expect(briefing).toContain('useRegistryNews(inView)');
-    expect(source).toContain("const REGISTRY_OUTLOOK_URL = '/assets/registry-outlook.json';");
-    expect(briefing).toContain("fetch(REGISTRY_OUTLOOK_URL, {\n          cache: 'no-cache',");
-    expect(bundle).toContain("const REGISTRY_OUTLOOK_URL='/assets/registry-outlook.json';");
-    expect(bundle).toContain("fetch(REGISTRY_OUTLOOK_URL,{cache:'no-cache',headers:{accept:'application/json'}})");
-    expect(briefing).toContain('href={`/terminal/research/?sign=${activeSign.asset.sign}`}');
-    expect(briefing).toContain('<span>Open Markets Research</span>');
-    expect(mounted.match(/<ConsumerMarketBriefing active=\{activeTicker\} \/>/gu) ?? []).toHaveLength(1);
-    expect(mounted.indexOf('<ConsumerMarketBriefing active={activeTicker} />')).toBeGreaterThan(mounted.indexOf('className="consumer-capital-opening"'));
-    expect(mounted.indexOf('<ConsumerMarketBriefing active={activeTicker} />')).toBeLessThan(mounted.indexOf('<ConsumerHowItWorks />'));
-
-    for (const removed of [
-      'function ConsumerResearchPulse(',
-      'function ConsumerResearchSection(',
-      'function ConsumerOutlookSection(',
-      'function useQueuedRegistryNews(',
-      'function useRegistryResearch(',
-      'const REGISTRY_RESEARCH_URL',
-      'Show new source update',
-    ]) {
-      expect(source).not.toContain(removed);
-    }
-    for (const removed of [
-      'research-pulse',
-      'consumer-research',
-      'outlook-wheel',
-      'outlook-score',
-      'Share signal',
-      'Sky signals. Market checks.',
-    ]) {
-      expect(mounted).not.toContain(removed);
-      expect(visible).not.toContain(removed);
-    }
-
-    expect((visible.match(/id="briefing"/gu) ?? [])).toHaveLength(1);
-    expect(visible).toContain('<span id="research" aria-hidden="true"></span>');
-    expect(visible).toContain('<span id="outlook" aria-hidden="true"></span>');
-    expect(visible).toContain('<h2>Today’s market briefing</h2>');
-    expect(visible).toContain('href="/terminal/research/?sign=leo"');
-  });
-
-  it('keeps the five source filters in the dedicated Research Desk, not the landing page', async () => {
-    const [source, researchPage] = await Promise.all([
-      read('src/app.jsx'),
-      read('src/pages/terminal/research/index.astro'),
-    ]);
-    const mounted = consumerRoot(source);
-
-    for (const [filter, label] of [
-      ['all', 'All'],
-      ['zodiacs-research', 'Zodiacs Research'],
-      ['astrology-news', 'Astrology News'],
-      ['astronomy', 'Astronomy'],
-      ['calendar', 'Calendar'],
-    ]) {
-      expect(researchPage).toContain(`data-filter="${filter}"`);
-      expect(researchPage).toContain(`>${label}</button>`);
-    }
-    expect(researchPage).toContain('href="/assets/registry-research-feed.json"');
-    expect(mounted).not.toContain('/assets/registry-research-feed.json');
-    expect(mounted).not.toContain('consumer-research__filters');
-  });
-
-  it('publishes a useful no-JavaScript technical record from the canonical addresses', async () => {
-    const [registryRaw, html] = await Promise.all([
-      read('public/registry/zodiacs.registry.json'),
-      read('public/registry/technical/index.html'),
-    ]);
-    const registry = JSON.parse(registryRaw);
-    const visible = visibleMarkup(html);
-
-    expect(visible).toContain('data-registry-technical-fallback');
-    expect((visible.match(/data-technical-sign(?:=|\s)/gu) ?? [])).toHaveLength(12);
-    expect((visible.match(/data-technical-representation(?:=|\s)/gu) ?? [])).toHaveLength(24);
-    for (const id of [
-      'records-networks',
-      'market-transparency',
-      'access-third-parties',
-      'builder-tools',
-      'safety-evidence',
-    ]) {
-      expect(visible).toMatch(new RegExp(`id=["']${id}["']`, 'u'));
-    }
-    for (const heading of [
-      'Records and networks',
-      'Market and transparency',
-      'Access and third parties',
-      'Builders',
-      'Safety and evidence',
-    ]) expect(visible).toContain(heading);
-    for (const asset of registry.assets) {
-      expect(visible).toContain(asset.displayName);
-      for (const representation of asset.representations) {
-        expect(visible).toContain(representation.address);
-      }
+    expect(source).toContain("market: 'market'");
+    expect(source).toContain("briefing: 'briefing'");
+    expect(source).toContain("research: 'research'");
+    expect(source).toContain("outlook: 'briefing'");
+    expect(source).toContain('window.location.replace(`/terminal/${clean.size ? `?${clean}` : \'\'}#${proDestination}`)');
+    const html = await read('public/astrofolio/index.html');
+    for (const id of ['market', 'briefing', 'research', 'outlook']) {
+      expect(html).toContain(`<span id="${id}" class="terminal-compat-target" aria-hidden="true"></span>`);
     }
   });
 
-  it('maps every moved consumer hash to the matching technical destination', async () => {
+  it('leaves technical Registry instruments on the technical branch', async () => {
     const source = await read('src/app.jsx');
-    const start = source.indexOf('const LEGACY_TECHNICAL_HASHES');
-    const end = source.indexOf('function Zodiacs()', start);
-    const mapping = source.slice(start, end);
-    for (const [legacy, destination] of movedHashes) {
-      expect(mapping).toMatch(new RegExp(`["']?${legacy}["']?\\s*:\\s*["']${destination}["']`, 'u'));
-    }
-    expect(source).toContain('window.location.replace(`/registry/technical/');
-  });
-
-  it('uses image artwork instead of visible zodiac Unicode in both registry shells', async () => {
-    const [consumer, technical] = await Promise.all([
-      read('public/terminal/index.html'),
-      read('public/registry/technical/index.html'),
-    ]);
-    const zodiacUnicode = /[♈♉♊♋♌♍♎♏♐♑♒♓]/u;
-    expect(visibleMarkup(consumer)).not.toMatch(zodiacUnicode);
-    expect(visibleMarkup(technical)).not.toMatch(zodiacUnicode);
+    const start = source.indexOf('<main id="main" className="zd technical-registry">');
+    const mounted = source.slice(start, source.indexOf('</main>', start));
+    expect(mounted).toContain('<PulseSection />');
+    expect(mounted).toContain('<StandingsSection />');
   });
 });

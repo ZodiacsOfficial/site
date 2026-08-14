@@ -1,5 +1,5 @@
 /**
- * Saved charts — the local-first chart library. Renders
+ * Saved charts — the local-first chart library and profile surface. Renders
  * saved charts from localStorage, supports rename/delete, and frames
  * the local-first sync model honestly.
  */

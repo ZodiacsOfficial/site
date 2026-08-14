@@ -1,4 +1,4 @@
-// The gallery band — the twelve as Zodiac Terminal's selector.
+// The legacy shared gallery band. Astrofolio uses the lean Lit Vitrine instead.
 //
 // The contract has three parties: the Terminal page (pre-paint WebGL probe + the
 // band's CSS), the Terminal application (the skeleton, the strip gate, the lazy
@@ -32,8 +32,8 @@ function functionBody(source, name) {
   return '';
 }
 
-describe('the gallery band on Zodiac Terminal', () => {
-  it('renders the embedded stage skeleton and gates the strip on the probe', async () => {
+describe('the legacy shared gallery band', () => {
+  it('keeps the legacy embedded stage available without mounting it in Astrofolio', async () => {
     const source = await read('src/app.jsx');
     for (const marker of [
       'data-gallery-embed',
@@ -43,11 +43,14 @@ describe('the gallery band on Zodiac Terminal', () => {
       "'/assets/gallery.js'",
       "classList.contains('gallery-live')",
     ]) expect(source).toContain(marker);
-    // Capable phones keep the same live stage as desktop. Only a missing
-    // WebGL probe falls back to the flat carousel; loading remains lazy.
-    expect(source).toContain('return GALLERY_LIVE;');
+    // The shared gallery implementation remains available to its legacy
+    // consumers, while Astrofolio mounts the lean opacity-only vitrine and
+    // therefore never requests the WebGL shelf from its opening experience.
+    expect(source).toContain("const GALLERY_LIVE = document.documentElement.classList.contains('gallery-live');");
+    expect(source).not.toContain('<GalleryBand');
+    expect(source).toContain('<ConsumerExplorer');
+    expect(source).toContain('batch={consumerMarket}');
     expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
-    expect(source).toContain('carousel={!stageMode}');
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
     expect(source).toContain('const [posterSlug, setPosterSlug] = useState(slug);');
     expect(source).toContain('if (!galleryReady) setPosterSlug(slug);');
@@ -112,7 +115,7 @@ describe('the gallery band on Zodiac Terminal', () => {
   });
 
   it('probes WebGL before first paint and dresses the live page', async () => {
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     expect(html).toContain("documentElement.classList.add('gallery-live')");
     expect(html).toContain('network.saveData');
     expect(html).toContain("/(^|-)2g$/.test(network.effectiveType || '')");
@@ -128,8 +131,9 @@ describe('the gallery band on Zodiac Terminal', () => {
     // section anchors; a slug is read on arrival only.
     expect(scene).not.toContain('replaceState');
     expect(scene).toContain('signFromHash(window.location.hash');
-    // Vertical wheel input remains page scrolling; horizontal trackpad input
-    // and direct drag/swipe walk the sculpture row.
+    // The consumer spotlight is defensive even if a future caller mounts it:
+    // every wheel/trackpad gesture belongs to the document.
+    expect(scene).toContain('if (spotlight) return;');
     expect(scene).toContain('if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;');
     // A sculpture opens its record in place — never a navigation.
     expect(scene).not.toContain('location.assign');
@@ -262,7 +266,7 @@ describe('the gallery band on Zodiac Terminal', () => {
 
   it('keeps the rectangle’s rail out of the band the scene measures', async () => {
     const [app, html] = await Promise.all([
-      read('src/app.jsx'), read('public/terminal/index.html'),
+      read('src/app.jsx'), read('public/astrofolio/index.html'),
     ]);
     // bandRects() treats .gband__chrome's offsetTop as the FLOOR of the band
     // it may paint into, so chrome above the canvas would leave the figures a
@@ -336,14 +340,17 @@ describe('the gallery band on Zodiac Terminal', () => {
       'Open Jupiter route',
       'View market data',
     ]) expect(source).toContain(marker);
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     expect(html).toContain('.gcard {');
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
-    // The static explorer keeps all twelve token destinations useful without
-    // JavaScript; every grid link opens the sign's official record.
+    // The static vitrine keeps all twelve destinations useful without
+    // JavaScript and mirrors the three hydrated placard actions.
     for (const slug of ['aries', 'virgo', 'pisces']) {
-      expect(html).toContain(`href="/registry/${slug}/" aria-label="View the `);
+      const title = slug[0].toUpperCase() + slug.slice(1);
+      expect(html).toContain(`href="/registry/${slug}/">See ${title}</a>`);
+      expect(html).toContain(`href="/registry/${slug}/#acquire">How to buy ${title}</a>`);
+      expect(html).toContain(`href="/registry/${slug}/#record">View official record</a>`);
     }
     expect(source).toContain('Drag to browse · Choose a sign to open.');
     expect(html).not.toContain('?gallery=gold');
@@ -357,7 +364,7 @@ describe('the gallery band on Zodiac Terminal', () => {
     const card = await read('src/shelf/card.mjs');
     expect(card).toContain('/assets/zodiac-icons/128/');
     expect(card).toContain('As it appears in wallets.');
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     expect(html).toContain('.gcard .rec__disc');
     expect(html).toContain('.gband .rail__tick img');
     const bundle = await read('public/assets/gallery.js');
@@ -374,7 +381,7 @@ describe('the gallery band on Zodiac Terminal', () => {
     // The pointer-following wave is paint-only: hit targets keep a stable
     // pitch while the picture grows inside them, avoiding layout work during
     // a WebGL interaction.
-    const html = await read('public/terminal/index.html');
+    const html = await read('public/astrofolio/index.html');
     expect(html).toContain('width: var(--tick); height: var(--tick)');
     expect(html).not.toContain('width: calc(var(--tick) * var(--mag))');
     expect(html).toContain('transform: scale(var(--mag)); transform-origin: bottom center;');

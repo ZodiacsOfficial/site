@@ -15,6 +15,7 @@ const KIND_LABEL: Record<string, string> = {
   pairing: 'Pairing',
   horoscope: 'Horoscope',
   page: 'Page',
+  astrofolio: 'Astrofolio',
   terminal: 'Terminal',
   registry: 'Registry',
 };

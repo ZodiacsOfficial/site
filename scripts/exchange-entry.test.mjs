@@ -17,6 +17,8 @@ import {
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ON = { [REGISTRY_EXCHANGE_FLAG]: '1' };
 const page = () => readFile(resolve(root, 'public/terminal/markets/index.html'), 'utf8');
+const proPage = () => readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
+const consumerPage = () => readFile(resolve(root, 'public/astrofolio/index.html'), 'utf8');
 const landing = () => [
   '<!doctype html>',
   '<html><head>',
@@ -33,14 +35,14 @@ describe('the flag', () => {
     expect(registryExchangeEnabled({})).toBe(false);
   });
 
-  it('exports one stable public integration contract for the Registry landing', () => {
+  it('exports one stable public integration contract for the expert Terminal gateway', () => {
     expect(REGISTRY_EXCHANGE_PATH).toBe('/terminal/markets/');
-    expect(REGISTRY_EXCHANGE_PUBLIC_NAME).toBe('Zodiac Markets');
+    expect(REGISTRY_EXCHANGE_PUBLIC_NAME).toBe('Terminal');
     expect(REGISTRY_EXCHANGE_LANDING_COPY).toEqual({
-      eyebrow: 'Advanced market view',
-      action: 'Open Zodiac Markets',
+      eyebrow: 'Terminal',
+      action: 'Open venue route',
       description: 'All 12 · charts · recent trades · independent venue quotes',
-      ariaLabel: 'Open Zodiac Markets for the selected Zodiac token',
+      ariaLabel: 'Open the Terminal venue route for the selected Zodiac token',
     });
     expect(Object.isFrozen(REGISTRY_EXCHANGE_LANDING_COPY)).toBe(true);
   });
@@ -78,7 +80,7 @@ describe('stamping', () => {
     expect(enabled).toBe(true);
     expect(output).toContain('<meta name="zodiacs-registry-exchange-enabled" content="1" />');
     expect(output.match(/data-zme-terminal/g)).toHaveLength(1);
-    expect(output).toContain('aria-label="Zodiac Markets terminal"');
+    expect(output).toContain('aria-label="Terminal venue route"');
     expect(output).not.toContain('Registry Trading Room');
     expect(output).not.toContain('aria-label="Exchange terminal"');
     expect(output.match(/src="\/assets\/exchange\.js"/g)).toHaveLength(1);
@@ -113,8 +115,15 @@ describe('stamping', () => {
   });
 });
 
-describe('Registry landing flag synchronization', () => {
-  it('stamps the landing marker from the exact same flag', () => {
+describe('Terminal gateway flag synchronization', () => {
+  it('commits the expert marker off and leaves Astrofolio unmarked', async () => {
+    const [pro, consumer] = await Promise.all([proPage(), consumerPage()]);
+    expect(pro.match(new RegExp(REGISTRY_EXCHANGE_META, 'g'))).toHaveLength(1);
+    expect(pro).toContain(`<meta name="${REGISTRY_EXCHANGE_META}" content="0" />`);
+    expect(consumer).not.toContain(REGISTRY_EXCHANGE_META);
+  });
+
+  it('stamps the Terminal marker from the exact same flag', () => {
     const committed = landing();
     const on = injectRegistryExchangeLanding(committed, ON);
     expect(on.enabled).toBe(true);
@@ -123,15 +132,22 @@ describe('Registry landing flag synchronization', () => {
     expect(injectRegistryExchangeLanding(on.output, {}).output).toBe(committed);
   });
 
-  it('is idempotent and fails closed when the landing marker is missing', () => {
+  it('is idempotent and fails closed when the Terminal marker is missing', () => {
     const committed = landing();
     const on = injectRegistryExchangeLanding(committed, ON).output;
     expect(injectRegistryExchangeLanding(on, ON).output).toBe(on);
     expect(injectRegistryExchangeLanding(committed, {}).output).toBe(committed);
     expect(() => injectRegistryExchangeLanding('<html><head></head></html>', ON))
-      .toThrow(/hub is missing its flag marker/);
+      .toThrow(/Terminal landing is missing its flag marker/);
     expect(() => injectRegistryExchangeLanding(`${committed}\n${committed}`, ON))
-      .toThrow(/hub must contain exactly one flag marker/);
+      .toThrow(/Terminal landing must contain exactly one flag marker/);
+  });
+
+  it('is byte-reversible on the committed Terminal page', async () => {
+    const committed = await proPage();
+    const on = injectRegistryExchangeLanding(committed, ON).output;
+    expect(on).not.toBe(committed);
+    expect(injectRegistryExchangeLanding(on, {}).output).toBe(committed);
   });
 });
 
@@ -157,6 +173,7 @@ describe('the committed-off drift invariant', () => {
     const configure = await readFile(resolve(root, 'scripts/configure-registry-exchange.mjs'), 'utf8');
     expect(configure).toContain("resolve(root, 'public/terminal/markets/index.html')");
     expect(configure).toContain("resolve(root, 'public/terminal/index.html')");
+    expect(configure).not.toContain("resolve(root, 'public/terminal/pro/index.html')");
     expect(configure).toContain('injectRegistryExchange(exchangeSource, process.env)');
     expect(configure).toContain('injectRegistryExchangeLanding(terminalSource, process.env)');
     expect(configure.indexOf('const exchangeOutput =')).toBeLessThan(configure.indexOf('const writes ='));

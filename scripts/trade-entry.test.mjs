@@ -5,7 +5,6 @@ import { describe, expect, it } from 'vitest';
 import {
   REGISTRY_TRADE_FLAG,
   injectRegistryTrade,
-  injectRegistryTradeLanding,
   registryTradeEnabled,
   renderTradeRegion,
 } from '../src/trade/entry.mjs';
@@ -17,6 +16,10 @@ const SIGNS = [
 ];
 const ON = { [REGISTRY_TRADE_FLAG]: '1' };
 const page = (sign) => readFile(resolve(root, `public/registry/${sign}/index.html`), 'utf8');
+const decision = () => readFile(
+  resolve(root, 'docs/REGISTRY-TRADE-OWNER-RISK-DECISION.md'),
+  'utf8',
+);
 
 describe('the flag', () => {
   it('turns on for exactly one value', () => {
@@ -131,39 +134,56 @@ describe('the rendered region', () => {
 });
 
 describe('the landing', () => {
-  const hub = () => readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
+  const hub = () => readFile(resolve(root, 'public/astrofolio/index.html'), 'utf8');
 
-  it('ships flag-off, carrying nothing of the panel', async () => {
+  it('is identity-first and carries no trade flag or panel surface', async () => {
     const html = await hub();
-    expect(html).toContain('<meta name="zodiacs-registry-trade-enabled" content="0" />');
+    expect(html).not.toContain('zodiacs-registry-trade-enabled');
+    expect(html).not.toContain('zodiacs-registry-exchange-enabled');
     expect(html).not.toContain('data-trade-panel');
     expect(html).not.toContain('/assets/trade.js');
   });
 
-  it('flips only the flag — the explorer mounts the panel itself', async () => {
-    const committed = await hub();
-    const { output, enabled } = injectRegistryTradeLanding(committed, ON);
-    expect(enabled).toBe(true);
-    expect(output).toContain('<meta name="zodiacs-registry-trade-enabled" content="1" />');
-    // Exactly one line differs. Anything else here would be markup the drift
-    // gate has to un-write, and this is what makes the flag reversible.
-    const changed = output.split('\n')
-      .filter((line, i) => line !== committed.split('\n')[i]);
-    expect(changed).toHaveLength(1);
-  });
+  it('offers one visible handoff across twelve no-JS sign states', async () => {
+    const html = await hub();
+    const vitrine = html.match(/<fieldset class="static-vitrine">([\s\S]*?)<\/fieldset>/)?.[1];
+    expect(vitrine).toBeDefined();
 
-  it('is byte-reversible and idempotent, both ways', async () => {
-    const committed = await hub();
-    const on = injectRegistryTradeLanding(committed, ON).output;
-    expect(on).not.toBe(committed);
-    expect(injectRegistryTradeLanding(on, ON).output).toBe(on);
-    expect(injectRegistryTradeLanding(on, {}).output).toBe(committed);
-    expect(injectRegistryTradeLanding(committed, {}).output).toBe(committed);
-  });
+    const choices = [...vitrine.matchAll(/<input\b[^>]*>/g)]
+      .map(([tag]) => tag)
+      .filter((tag) => /\bclass="[^"]*\bstatic-vitrine__choice\b[^"]*"/.test(tag));
+    const choiceSign = (tag) => tag.match(/\bid="astrofolio-([a-z]+)"/)?.[1];
+    const checked = choices.filter((tag) => /\schecked(?:\s|>)/.test(tag));
 
-  it('refuses a shell whose marker is missing rather than writing blind', () => {
-    expect(() => injectRegistryTradeLanding('<html><head></head></html>', ON))
-      .toThrow(/hub is missing its flag marker/);
+    expect(choices).toHaveLength(12);
+    expect(choices.map(choiceSign)).toEqual(SIGNS);
+    expect(choices.every((tag) => /\btype="radio"/.test(tag))).toBe(true);
+    expect(choices.every((tag) => /\bname="astrofolio-sign"/.test(tag))).toBe(true);
+    expect(checked).toHaveLength(1);
+
+    const panels = [...vitrine.matchAll(
+      /<article\b[^>]*\bdata-static-sign="([a-z]+)"[^>]*>([\s\S]*?)<\/article>/g,
+    )];
+    expect(panels.map(([, sign]) => sign)).toEqual(SIGNS);
+    for (const [, sign, panel] of panels) {
+      const handoffs = [...panel.matchAll(/href="\/registry\/([a-z]+)\/#acquire"/g)];
+      expect(handoffs, sign).toHaveLength(1);
+      expect(handoffs[0][1], sign).toBe(sign);
+      expect(html, sign).toContain(
+        `.static-vitrine:has(#astrofolio-${sign}:checked) [data-static-sign="${sign}"]`,
+      );
+    }
+
+    // Every panel is dormant by default. A single-name radio group can select
+    // only one sign, and its matching :has() rule is the only reveal path.
+    expect(html).toMatch(/\.static-vitrine__panel\s*\{\s*display:\s*none;/);
+    expect(panels.some(([, sign]) => sign === choiceSign(checked[0]))).toBe(true);
+
+    // The beginner handoff ends at the record. It is not a second Markets
+    // gateway, a venue deep-link, or an embedded execution panel.
+    expect(html).not.toContain('href="/terminal/markets/');
+    expect(html).not.toMatch(/href="https:\/\/(?:[^"/]+\.)?jup\.ag\//);
+    expect(html).not.toContain('data-trade-panel');
   });
 
   // The Registry's own risk test forbids a swap deep-link in the shell. The
@@ -172,5 +192,28 @@ describe('the landing', () => {
     const html = await hub();
     expect(html).not.toContain('jup.ag/swap/');
     expect(html).not.toContain('lite-api.jup.ag');
+  });
+});
+
+describe('the 2026-08-13 Consumer handoff decision', () => {
+  it('authorizes only the selected-sign record handoff', async () => {
+    const text = await decision();
+    expect(text).toContain('Addendum — 2026-08-13: beginner Consumer record handoff');
+    expect(text).toContain('Authorized: 2026-08-13');
+    expect(text).toContain('exactly one selected-sign educational action');
+    expect(text).toContain('`/registry/<canonical-sign>/#acquire`');
+    expect(text).toContain('no link to `/terminal/markets/`');
+    expect(text).toMatch(/no embedded\s+trade interface/);
+    expect(text).toMatch(/no direct venue URL/);
+  });
+
+  it('pins the inertness, compensation, custody, and pilot boundaries', async () => {
+    const text = await decision();
+    expect(text).toContain('Mounting or focusing the action, or changing the selected sign');
+    expect(text).toContain('must not\nconnect a wallet or request anything from Jupiter');
+    expect(text).toContain('does not authorize an acquisition action on Pro');
+    expect(text).toContain('extend its pilot\ndeadline');
+    expect(text).toContain('It adds no authority for custody');
+    expect(text).toMatch(/referral fees,\s+platform fees, or other compensation/);
   });
 });

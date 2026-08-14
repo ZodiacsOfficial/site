@@ -7,7 +7,9 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   share_card_downloaded: ['variant'],
   widget_embed_copied: ['widget', 'mode'],
   registry_visit: [],
+  registry_sign_selected: ['sign', 'source'],
   verifier_used: ['chain', 'outcome'],
+  terminal_view_switch: ['surface', 'direction'],
   sdk_click: ['source', 'destination'],
   wallet_chart_computed: ['chain', 'holds_registry_asset'],
   aura_view: [],
@@ -62,8 +64,12 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   comm_read_view: [],
 });
 
-/** Closed-value contracts for the sharing loop's non-identifying dimensions. */
+/** Closed-value contracts for non-identifying product dimensions. */
 export const ANALYTICS_EVENT_VALUES = Object.freeze({
+  terminal_view_switch: Object.freeze({
+    surface: Object.freeze(['header', 'preference_banner']),
+    direction: Object.freeze(['consumer_to_pro', 'pro_to_consumer']),
+  }),
   invite_opened: Object.freeze({
     state: Object.freeze(['ready', 'invalid', 'closed', 'used', 'unavailable', 'offline']),
   }),

@@ -39,12 +39,22 @@ const displayDate = (value: string) => new Intl.DateTimeFormat('en-US', {
 const sectionList = [item.sections.skyFact, item.sections.traditionalReading, item.sections.marketObservation];
 const scheduled = item.status === 'scheduled' && item.visibleAt > publication.generatedAt;
 const jsonUrl = `/assets/data/registry-research/items/${item.id}.json`;
+const terminalResearchBreadcrumb = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+    { '@type': 'ListItem', position: 2, name: 'Terminal', item: 'https://zodiacs.org/terminal/' },
+    { '@type': 'ListItem', position: 3, name: 'Markets Research', item: 'https://zodiacs.org/terminal/research/' },
+    { '@type': 'ListItem', position: 4, name: item.title, item: `https://zodiacs.org${item.url}` },
+  ],
+};
 ---
 <Base
   title={`${item.title} | Zodiacs.org Markets Research`}
   description={item.summary}
   path={item.url}
   type="article"
+  jsonLd={[terminalResearchBreadcrumb]}
   noindex={scheduled}
   rssFeed={{ href: '/feeds/market-research.xml', title: 'Zodiacs.org Markets Research' }}
   stableTypography
@@ -109,7 +119,7 @@ const jsonUrl = `/assets/data/registry-research/items/${item.id}.json`;
       <div class="research-note__actions">
         <a href={jsonUrl}>Open immutable JSON ↗</a>
         <a href="/assets/registry-outlook.json">Open symbolic method data ↗</a>
-        <a href="/terminal/">Return to Zodiac Terminal →</a>
+        <a href="/terminal/">Return to Terminal →</a>
       </div>
     </div>
   </main>

@@ -741,8 +741,8 @@ ${renderPressKit()}
     </section>
 
     <nav class="back" aria-label="Return">
-      <a class="btn btn--primary" href="/terminal/">
-        <span>Zodiac Terminal</span><span class="arr">→</span>
+      <a class="btn btn--primary" href="/astrofolio/">
+        <span>Astrofolio</span><span class="arr">→</span>
       </a>
       <a class="btn" href="/thesis/">
         <span>Read the thesis</span><span class="arr">→</span>
@@ -756,7 +756,7 @@ ${renderPressKit()}
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/terminal/">Terminal</a>
+          <a href="/astrofolio/">Astrofolio</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/disclosure/">${esc(EN['disclosure.linkLabel'])}</a>

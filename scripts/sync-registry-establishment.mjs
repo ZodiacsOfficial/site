@@ -19,7 +19,7 @@ const root = resolve(here, '..');
 
 export const ESTABLISHMENT_HTML_FILES = [
   'public/registry/index.html',
-  'public/terminal/index.html',
+  'public/astrofolio/index.html',
   'public/sdk/index.html',
 ];
 
@@ -41,7 +41,7 @@ export async function syncRegistryEstablishment(env = process.env) {
     const path = resolve(root, relativePath);
     const source = await readFile(path, 'utf8');
     const established = injectRegistryEstablishment(source);
-    const output = relativePath === 'public/terminal/index.html'
+    const output = relativePath === 'public/astrofolio/index.html'
       ? injectRegistryAuraLanding(established.output, env).output
       : established.output;
     const { count } = established;

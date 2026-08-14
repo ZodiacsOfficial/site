@@ -184,7 +184,7 @@ function jsonLd(m) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
-          { '@type': 'ListItem', position: 2, name: 'Zodiac Terminal', item: 'https://zodiacs.org/terminal/' },
+          { '@type': 'ListItem', position: 2, name: 'Astrofolio', item: 'https://zodiacs.org/astrofolio/' },
           { '@type': 'ListItem', position: 3, name: 'Zodiacs Registry', item: 'https://zodiacs.org/registry/' },
           { '@type': 'ListItem', position: 4, name: m.name, item: signUrl(m.slug) }
         ]
@@ -194,7 +194,7 @@ function jsonLd(m) {
         '@id': `${signUrl(m.slug)}#page`,
         url: signUrl(m.slug),
         name: `${m.name} — Official ${m.ticker} Zodiac Token · Sign ${m.order} of 12`,
-        description: `${m.name} is the transferable token for the ${m.name} sign. Verify its official addresses, market history, constellation, and collection artwork.`,
+        description: `${m.name} is the official digital token for the ${m.name} zodiac sign. See its live price, verify the address, and learn how buying works.`,
         inLanguage: 'en',
         isPartOf: { '@type': 'WebSite', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
         primaryImageOfPage: `https://zodiacs.org/assets/nuggets/${m.slug}.png`,
@@ -243,11 +243,11 @@ function render(m) {
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
   <title>${esc(m.name)} — Official ${esc(m.ticker)} Zodiac Token · Sign ${m.order} of 12 | Zodiacs.org</title>
-  <meta name="description" content="${esc(`${m.name} is the transferable token for the ${m.name} sign. Verify its official addresses, market history, constellation, and collection artwork.`)}" />
+  <meta name="description" content="${esc(`${m.name} is the official digital token for the ${m.name} zodiac sign. See its live price, verify the address, and learn how buying works.`)}" />
   <link rel="canonical" href="${signUrl(m.slug)}" />
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="${esc(m.name)} · Official ${esc(m.ticker)} Token — Zodiacs" />
-  <meta property="og:description" content="${esc(`The official ${m.name} zodiac token: verified addresses, market history, constellation, and collection artwork.`)}" />
+  <meta property="og:description" content="${esc(`The official ${m.name} zodiac token: live price, verified addresses, a simple buying guide, and collection artwork.`)}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="${signUrl(m.slug)}" />
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
@@ -256,7 +256,7 @@ function render(m) {
   <meta property="og:image:alt" content="${esc(ogImageAlt)}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${esc(m.name)} · Official ${esc(m.ticker)} Token — Zodiacs" />
-  <meta name="twitter:description" content="${esc(`The official ${m.name} zodiac token: verified addresses, market history, constellation, and collection artwork.`)}" />
+  <meta name="twitter:description" content="${esc(`The official ${m.name} zodiac token: live price, verified addresses, a simple buying guide, and collection artwork.`)}" />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
   <meta name="twitter:image:alt" content="${esc(ogImageAlt)}" />
 
@@ -445,9 +445,12 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
     /* ── Editorial split ── */
     .split { display: grid; grid-template-columns: 1fr; gap: 40px; padding-bottom: 24px; }
+    .split__figure { order: 2; }
+    .split__content { order: 1; }
     @media (min-width: 960px) {
       .split { grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: start; }
-      .split__figure { position: sticky; top: 86px; }
+      .split__figure { order: 1; position: sticky; top: 86px; }
+      .split__content { order: 2; }
     }
     .figure__gallery {
       display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin-top: 8px;
@@ -457,6 +460,51 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       transition: color 200ms ease, border-color 200ms ease;
     }
     .figure__gallery:hover { color: var(--gold-bright); border-color: var(--gold); }
+
+    /* The first screen answers the three questions a new visitor is most
+       likely to have: what this is, what it costs now, and where to start. */
+    .quick {
+      border: 1px solid var(--hair-2);
+      background: linear-gradient(180deg, rgba(198,204,218,0.055), transparent 58%), var(--surface);
+      padding: 22px 20px 20px;
+    }
+    .quick__label {
+      display: block; margin-bottom: 10px;
+      font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ink-dim);
+    }
+    .quick__quote {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end; gap: 8px 18px; padding-bottom: 18px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .quick__price {
+      font-family: var(--mono); font-size: clamp(25px, 5vw, 36px);
+      line-height: 1; letter-spacing: -0.03em; color: var(--ink);
+    }
+    .quick__change {
+      font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em;
+      color: var(--ink-dim); white-space: nowrap;
+    }
+    .quick__change--up { color: var(--gold-bright); }
+    .quick__change--down { color: var(--vermilion); }
+    .quick__state {
+      grid-column: 1 / -1; margin: 2px 0 0;
+      font-family: var(--serif); font-size: 13.5px; line-height: 1.45; color: var(--ink-mute);
+    }
+    .quick__actions { display: grid; gap: 10px; margin-top: 18px; }
+    .quick__action {
+      display: inline-flex; min-height: 48px; align-items: center; justify-content: space-between;
+      gap: 14px; padding: 0 16px; border: 1px solid var(--hair-2);
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+      text-transform: uppercase; text-decoration: none; color: var(--ink-2);
+      transition: border-color 220ms var(--ease), color 220ms var(--ease), transform 180ms var(--ease);
+    }
+    .quick__action:first-child { color: var(--gold-bright); border-color: var(--hair-3); }
+    .quick__action:hover { color: var(--gold-bright); border-color: var(--gold); }
+    .quick__action:active { transform: scale(0.985); }
+    .quick__help { margin: 14px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-mute); }
+    @media (min-width: 560px) { .quick__actions { grid-template-columns: 1fr 1fr; } }
 
     /* Museum plinth card */
     .card {
@@ -511,6 +559,37 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       margin: 0; font-family: var(--mono); font-weight: 400; font-size: 10.5px;
       letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
     }
+
+    /* Longer catalogue material stays available without competing with the
+       price, verified record, and buying guide above it. Native details work
+       with a keyboard and without JavaScript. */
+    .record-detail { border-top: 1px solid var(--hair); }
+    .record-detail + .record-detail { margin-top: 8px; }
+    .record-detail__summary {
+      display: flex; min-height: 64px; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 0 2px; cursor: pointer; list-style: none;
+      color: var(--gold); user-select: none;
+    }
+    .record-detail__summary::-webkit-details-marker { display: none; }
+    .record-detail__summary::after {
+      content: "+"; flex: 0 0 auto; font-family: var(--mono); font-size: 18px;
+      line-height: 1; color: var(--ink-dim); transition: transform 220ms var(--ease), color 220ms var(--ease);
+    }
+    .record-detail[open] > .record-detail__summary::after { content: "−"; color: var(--gold-bright); }
+    .record-detail__summary:hover::after { color: var(--gold-bright); }
+    .record-detail__title {
+      font-family: var(--serif); font-size: clamp(19px, 2.6vw, 24px);
+      font-weight: 400; line-height: 1.2; color: var(--ink);
+    }
+    .record-detail__hint {
+      margin-left: auto; font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
+    }
+    .record-detail__body { padding: 6px 0 34px; }
+    .record-detail[open] > .record-detail__body { animation: detail-in 260ms var(--ease) both; }
+    @keyframes detail-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    @media (max-width: 560px) { .record-detail__hint { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .record-detail[open] > .record-detail__body { animation: none; } }
 
     /* Token fact rows */
     .rows { border-top: 1px solid var(--hair); }
@@ -742,6 +821,33 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     @media (min-width: 700px) { .research-links { grid-template-columns: 1fr 1fr; } }
 
     /* Get the token */
+    .acq__intro {
+      margin: 0 0 18px; max-width: 58ch;
+      font-family: var(--serif); font-size: clamp(18px, 2.4vw, 22px);
+      line-height: 1.45; color: var(--ink);
+    }
+    .acq__steps {
+      display: grid; grid-template-columns: 1fr; gap: 1px;
+      margin-bottom: 22px; border: 1px solid var(--hair); background: var(--hair);
+      counter-reset: buy-step;
+    }
+    .acq__step {
+      position: relative; min-height: 96px; padding: 18px 18px 18px 52px;
+      background: var(--bg); counter-increment: buy-step;
+    }
+    .acq__step::before {
+      content: counter(buy-step); position: absolute; left: 18px; top: 19px;
+      display: grid; place-items: center; width: 22px; height: 22px;
+      border: 1px solid var(--hair-3); border-radius: 50%;
+      font-family: var(--mono); font-size: 9px; color: var(--gold);
+    }
+    .acq__step strong { display: block; margin-bottom: 6px; font-size: 16px; font-weight: 400; color: var(--ink); }
+    .acq__step span { display: block; font-size: 13.5px; line-height: 1.45; color: var(--ink-mute); }
+    @media (min-width: 760px) { .acq__steps { grid-template-columns: repeat(3, 1fr); } }
+    .acq__risk-label {
+      display: block; margin-bottom: 8px; font-family: var(--mono); font-size: 9px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim);
+    }
     .acq__copy {
       margin: 0 0 22px; max-width: 52ch;
       font-family: var(--serif); font-size: 16px; line-height: 1.58; color: var(--ink-2);
@@ -850,6 +956,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       .lot__next:active { transform: none; }
     }
   </style>
+  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; filter: none !important; }</style></noscript>
 </head>
 <body>
   <a href="#main" class="skip">Skip to content</a>
@@ -860,11 +967,10 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
-      <nav aria-label="Breadcrumb"><ol class="lot__crumbs"><li><a href="/terminal/">Zodiac Terminal</a></li><li><a href="/registry/">Zodiacs Registry</a></li><li aria-current="page">${esc(m.name)}</li></ol></nav>
+      <nav aria-label="Breadcrumb"><ol class="lot__crumbs"><li><a href="/astrofolio/">Astrofolio</a></li><li><a href="/registry/">Zodiacs Registry</a></li><li aria-current="page">${esc(m.name)}</li></ol></nav>
       <span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign ${m.order} of 12</span>
       <h1 class="lot__title" id="lot-title">${esc(m.name)} <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/${m.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/${m.slug}.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
-      <p class="lot__epithet">${esc(p.epithet)}</p>
-      <p class="lot__intro">${esc(m.name)} is the transferable token for the ${esc(m.name)} sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.</p>
+      <p class="lot__intro">${esc(m.name)} is the official digital token for the ${esc(m.name)} zodiac sign. See today’s price, verify the address, and learn how buying works.</p>
       <div class="lot__meta">
         <div class="lot__dates">${esc(p.datesDisplay)} · ${esc(titleCase(meta.element))} · ${esc(meta.rulingPlanet)}</div>
         <a class="lot__next" href="${signPath(m.next.slug)}" aria-label="Next record, ${esc(m.next.name)}">
@@ -890,61 +996,77 @@ ${JSON.stringify(jsonLd(m), null, 2)}
             <figcaption class="card__caption">${esc(m.name)} <span class="g">·</span> ${esc(meta.archetype)}</figcaption>
           </div>
         </figure>
-        <a class="figure__gallery" href="/terminal/#${m.slug}">
-          <span>View ${esc(m.name)} on the market stage</span><span aria-hidden="true">→</span>
+        <a class="figure__gallery" href="/astrofolio/?sign=${m.slug}">
+          <span>View ${esc(m.name)} in Astrofolio</span><span aria-hidden="true">→</span>
         </a>
       </div>
 
-      <div>
-        <section class="sec reveal" style="padding-top:8px" aria-label="Token facts">
-          <div class="sec__head"><h2 class="sec__title">Token facts</h2><span class="line"></span></div>
-          <div class="rows">
-${specRows.map(([k, v, mono]) => `            <div class="row"><span class="k">${esc(k)}</span><span class="v${mono ? ' mono' : ''}">${esc(v)}</span></div>`).join('\n')}
+      <div class="split__content">
+        <section class="quick" aria-labelledby="quick-title" data-live-quote>
+          <span class="quick__label" id="quick-title">${esc(m.name)} price now</span>
+          <div class="quick__quote" aria-live="polite">
+            <strong class="quick__price" data-live-price>—</strong>
+            <span class="quick__change" data-live-change>24h —</span>
+            <p class="quick__state" data-live-state>Live price loads when JavaScript is available. You can still verify the address and read the buying guide below.</p>
           </div>
+          <div class="quick__actions">
+            <a class="quick__action" href="#acquire"><span>How to buy ${esc(m.name)}</span><span aria-hidden="true">↓</span></a>
+            <a class="quick__action" href="#record"><span>Verify the address</span><span aria-hidden="true">↓</span></a>
+          </div>
+          <p class="quick__help">You can browse this page without a wallet. Buying happens only after you choose an external service below.</p>
         </section>
 
-        <section class="sec reveal" aria-label="What ${esc(m.name)} represents">
-          <div class="sec__head"><h2 class="sec__title">What ${esc(m.name)} represents</h2><span class="line"></span></div>
-          <div class="note">
+        <details class="record-detail reveal">
+          <summary class="record-detail__summary"><span class="record-detail__title">Key facts</span><span class="record-detail__hint">Dates, network, and identity</span></summary>
+          <div class="record-detail__body rows">
+${specRows.map(([k, v, mono]) => `            <div class="row"><span class="k">${esc(k)}</span><span class="v${mono ? ' mono' : ''}">${esc(v)}</span></div>`).join('\n')}
+          </div>
+        </details>
+
+        <details class="record-detail reveal">
+          <summary class="record-detail__summary"><span class="record-detail__title">About ${esc(m.name)}</span><span class="record-detail__hint">Meaning and character</span></summary>
+          <div class="record-detail__body note">
             <p class="note__lede">${esc(p.lede)}</p>
 ${p.note.map((para) => `            <p>${esc(para)}</p>`).join('\n')}
           </div>
-        </section>
+        </details>
       </div>
     </div>
 
-    <section class="sec reveal" aria-labelledby="value-title">
-      <div class="sec__head"><h2 class="sec__title" id="value-title">Why ${esc(m.name)} has a place in the set</h2><span class="line"></span></div>
-      <div class="value">
-        <div class="value__item"><span class="value__k">Verified identity</span><p class="value__v">The Registry connects ${esc(m.name)} to one original Solana mint and its official Base counterpart, so the token can be checked before it is viewed or acquired.</p></div>
-        <div class="value__item"><span class="value__k">Comparable market context</span><p class="value__v">Price, market cap, FDV, liquidity, volume, and pool coverage use the same published method across all twelve signs.</p></div>
-        <div class="value__item"><span class="value__k">A complete system</span><p class="value__v">${esc(m.name)} is one identity in a twelve-token set. Its place comes from the zodiac structure—not a promise that its market price will rise.</p></div>
-        <div class="value__item"><span class="value__k">A distinct visual record</span><p class="value__v">The pastel sign, plotted constellation, seasonal dates, and gold sculpture make the token recognizable beyond its contract address.</p></div>
+    <section class="sec reveal" id="acquire" aria-label="How to buy ${esc(m.name)}">
+      <div class="sec__head"><h2 class="sec__title">How to buy ${esc(m.name)}</h2><span class="line"></span></div>
+      <p class="acq__intro">Buying takes three steps. Nothing happens until you approve the final amount in your wallet.</p>
+      <div class="acq__steps" aria-label="Three steps to buy ${esc(m.name)}">
+        <div class="acq__step"><strong>Get a Solana wallet</strong><span>A wallet is the app that holds your digital tokens.</span></div>
+        <div class="acq__step"><strong>Add SOL</strong><span>SOL is used for the purchase and the small Solana network fee.</span></div>
+        <div class="acq__step"><strong>Buy through Jupiter</strong><span>Open the verified route below, choose an amount, check the details, and approve in your wallet.</span></div>
       </div>
-    </section>
-
-    <section class="sec reveal" id="constellation" aria-labelledby="constellation-title">
-      <div class="sec__head"><h2 class="sec__title" id="constellation-title">The ${esc(m.name)} constellation</h2><span class="line"></span></div>
-      <div class="constellation">
-        <div class="constellation__map">
-          <img src="/assets/constellations/${m.slug}.svg" width="720" height="460" loading="lazy" decoding="async" alt="Map of the brighter ${esc(m.name)} constellation stars, with ${esc(focusObject.name)} highlighted" />
-        </div>
-        <div class="constellation__copy">
-          <p class="constellation__lede">${esc(focusObject.name)} is the ${esc(focusKind)} marked in ${esc(m.name)}’s pastel color.</p>
-          <p class="constellation__body">The map plots J2000 right ascension and declination for the brighter stars in the constellation. Dot size reflects apparent brightness. The connecting lines help the figure read at a glance; they are not official IAU boundaries.</p>
-          <p class="constellation__source">Star catalogue: <a href="${HYG_ATTRIBUTION.url}" rel="noopener noreferrer">${HYG_ATTRIBUTION.title}</a>, <a href="${HYG_ATTRIBUTION.licenseUrl}" rel="noopener noreferrer">${HYG_ATTRIBUTION.license}</a>.${focusObject.kind === 'open-cluster' ? ' Praesepe’s supplemental J2000 cluster centre is linked to <a href="https://simbad.cds.unistra.fr/simbad/sim-id?Ident=M44" rel="noopener noreferrer">SIMBAD M44</a>.' : ''} Guide segments authored by Zodiacs.org.</p>
-        </div>
+      <span class="acq__risk-label">Please read before continuing</span>
+      <p class="acq__copy">
+        The links below open independent third-party services; they are not
+        endorsements or recommendations, and Zodiacs.org does not sell or
+        execute transactions. A service may request a wallet connection, token
+        approval, signature, and an onchain transaction that cannot be reversed.
+        Digital assets are speculative, may become illiquid, and can lose all
+        market value. You could lose all money used to acquire a Zodiac. Verify
+        the official mint, network, amount, and destination before continuing.
+        Operator and economic-interest statements remain pending confirmation;
+        see the <a href="/disclosure/">Disclosure</a>.
+      </p>
+      ${renderTradeRegion({ sign: m.slug, name: m.name, mint: m.solana.address, hue: m.hue, enabled: false })}
+      <div class="acq__cta">
+        <a class="btn" href="${esc(m.jupiter)}" rel="noopener noreferrer external nofollow">
+          <span>Open Jupiter route</span><span class="arr">↗</span>
+        </a>
+        <a class="btn" href="${esc(m.dexscreener)}" rel="noopener noreferrer external nofollow">
+          <span>View market data</span><span class="arr">↗</span>
+        </a>
       </div>
-    </section>
-
-    <section class="sec reveal" id="provenance" aria-label="The story behind ${esc(m.name)}">
-      <div class="sec__head"><h2 class="sec__title">The story behind ${esc(m.name)}</h2><span class="line"></span></div>
-      <div class="prov">
-${beats.map((b) => `        <div class="prov__item">
-          <div class="prov__era">${esc(b.era)} <span class="place">· ${esc(b.place)}</span></div>
-          <p class="prov__body">${esc(b.body)}</p>
-        </div>`).join('\n')}
-      </div>
+      <a class="acq__related" href="https://astrofolio.xyz/" rel="noopener noreferrer">Related product: view ${esc(m.name)} in Astrofolio.xyz <span aria-hidden="true">↗</span></a>
+      <p class="acq__note">
+        Official mint: <a href="/registry/zodiacs.registry.json">${esc(m.solana.address.slice(0, 8))}…${esc(m.solana.address.slice(-6))}</a> ·
+        This Registry page does not request custody, signing, approvals, or transactions.
+      </p>
     </section>
 
     <section class="sec reveal" id="record" aria-label="Official addresses">
@@ -975,13 +1097,47 @@ ${beats.map((b) => `        <div class="prov__item">
       </div>
     </section>
 
-    <section class="sec reveal" id="market" aria-label="Market context">
-      <div class="sec__head"><h2 class="sec__title">Market context</h2><span class="line"></span></div>
-      <aside class="market" data-market>
+    <details class="record-detail reveal" aria-labelledby="value-title">
+      <summary class="record-detail__summary"><span class="record-detail__title" id="value-title">Why ${esc(m.name)} is in the collection</span><span class="record-detail__hint">Identity, context, and artwork</span></summary>
+      <div class="record-detail__body value">
+        <div class="value__item"><span class="value__k">Verified identity</span><p class="value__v">The Registry connects ${esc(m.name)} to one original Solana mint and its official Base counterpart, so the token can be checked before it is viewed or acquired.</p></div>
+        <div class="value__item"><span class="value__k">Comparable market context</span><p class="value__v">Price, market cap, FDV, liquidity, volume, and pool coverage use the same published method across all twelve signs.</p></div>
+        <div class="value__item"><span class="value__k">A complete system</span><p class="value__v">${esc(m.name)} is one identity in a twelve-token set. Its place comes from the zodiac structure—not a promise that its market price will rise.</p></div>
+        <div class="value__item"><span class="value__k">A distinct visual record</span><p class="value__v">The pastel sign, plotted constellation, seasonal dates, and gold sculpture make the token recognizable beyond its contract address.</p></div>
+      </div>
+    </details>
+
+    <details class="record-detail reveal" id="constellation" aria-labelledby="constellation-title">
+      <summary class="record-detail__summary"><span class="record-detail__title" id="constellation-title">See the ${esc(m.name)} constellation</span><span class="record-detail__hint">Star map and source notes</span></summary>
+      <div class="record-detail__body constellation">
+        <div class="constellation__map">
+          <img src="/assets/constellations/${m.slug}.svg" width="720" height="460" loading="lazy" decoding="async" alt="Map of the brighter ${esc(m.name)} constellation stars, with ${esc(focusObject.name)} highlighted" />
+        </div>
+        <div class="constellation__copy">
+          <p class="constellation__lede">${esc(focusObject.name)} is the ${esc(focusKind)} marked in ${esc(m.name)}’s pastel color.</p>
+          <p class="constellation__body">The map plots J2000 right ascension and declination for the brighter stars in the constellation. Dot size reflects apparent brightness. The connecting lines help the figure read at a glance; they are not official IAU boundaries.</p>
+          <p class="constellation__source">Star catalogue: <a href="${HYG_ATTRIBUTION.url}" rel="noopener noreferrer">${HYG_ATTRIBUTION.title}</a>, <a href="${HYG_ATTRIBUTION.licenseUrl}" rel="noopener noreferrer">${HYG_ATTRIBUTION.license}</a>.${focusObject.kind === 'open-cluster' ? ' Praesepe’s supplemental J2000 cluster centre is linked to <a href="https://simbad.cds.unistra.fr/simbad/sim-id?Ident=M44" rel="noopener noreferrer">SIMBAD M44</a>.' : ''} Guide segments authored by Zodiacs.org.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="record-detail reveal" id="provenance" aria-label="The story behind ${esc(m.name)}">
+      <summary class="record-detail__summary"><span class="record-detail__title">Read the ${esc(m.name)} story</span><span class="record-detail__hint">From ancient sky to public record</span></summary>
+      <div class="record-detail__body prov">
+${beats.map((b) => `        <div class="prov__item">
+          <div class="prov__era">${esc(b.era)} <span class="place">· ${esc(b.place)}</span></div>
+          <p class="prov__body">${esc(b.body)}</p>
+        </div>`).join('\n')}
+      </div>
+    </details>
+
+    <details class="record-detail reveal" id="market" aria-label="Daily price archive">
+      <summary class="record-detail__summary"><span class="record-detail__title">Daily price archive</span><span class="record-detail__hint">Historical closes and market detail</span></summary>
+      <div class="record-detail__body"><aside class="market" data-market>
         <div class="market__head">
           <div>
             <span class="market__label">Registry market archive</span>
-            <p class="market__copy">Daily observations indexed from exact-mint Solana pools. Independent third-party data, not a valuation or recommendation. It may be delayed or unavailable, and a Zodiac can lose all market value.</p>
+            <p class="market__copy">Daily closes—not the live price above—indexed from exact-mint Solana pools. Independent third-party data, not a valuation or recommendation. It may be delayed or unavailable, and a Zodiac can lose all market value.</p>
           </div>
           <a class="market__source" data-market-live-link href="${esc(m.dexscreener)}" rel="noopener noreferrer">Open live chart ↗</a>
         </div>
@@ -999,45 +1155,16 @@ ${beats.map((b) => `        <div class="prov__item">
         </div>
         <div class="market__grid" data-market-grid hidden></div>
         <div class="market__foot" data-market-foot hidden></div>
-      </aside>
-    </section>
+      </aside></div>
+    </details>
 
-    <section class="sec reveal" aria-labelledby="research-title">
-      <div class="sec__head"><h2 class="sec__title" id="research-title">${esc(m.name)} research</h2><span class="line"></span></div>
-      <nav class="research-links" aria-label="Research related to ${esc(m.name)}">
+    <details class="record-detail reveal" aria-labelledby="research-title">
+      <summary class="record-detail__summary"><span class="record-detail__title" id="research-title">${esc(m.name)} research</span><span class="record-detail__hint">Sky briefs and published notes</span></summary>
+      <div class="record-detail__body"><nav class="research-links" aria-label="Research related to ${esc(m.name)}">
         <a href="/terminal/research/?sign=${m.slug}&amp;type=daily"><span class="research-links__glyph" aria-hidden="true">☉</span><span><strong>Latest ${esc(m.name)} sky brief</strong><small>Sky fact · traditional reading · market observation</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
         <a href="/terminal/research/?sign=${m.slug}"><span class="research-links__glyph" aria-hidden="true">✦</span><span><strong>All ${esc(m.name)} research</strong><small>Calendar events, observation updates, and outside reporting</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
-      </nav>
-    </section>
-
-    <section class="sec reveal" id="acquire" aria-label="Get ${esc(m.name)}">
-      <div class="sec__head"><h2 class="sec__title">Get ${esc(m.name)}</h2><span class="line"></span></div>
-      <p class="acq__copy">
-        The links below open independent third-party services; they are not
-        endorsements or recommendations, and Zodiacs.org does not sell or
-        execute transactions. A service may request a wallet connection, token
-        approval, signature, and an onchain transaction that cannot be reversed.
-        Digital assets are speculative, may become illiquid, and can lose all
-        market value. You could lose all money used to acquire a Zodiac. Verify
-        the official mint, network, amount, and destination before continuing.
-        Operator and economic-interest statements remain pending confirmation;
-        see the <a href="/disclosure/">Disclosure</a>.
-      </p>
-      ${renderTradeRegion({ sign: m.slug, name: m.name, mint: m.solana.address, hue: m.hue, enabled: false })}
-      <div class="acq__cta">
-        <a class="btn" href="${esc(m.jupiter)}" rel="noopener noreferrer external nofollow">
-          <span>Open Jupiter route</span><span class="arr">↗</span>
-        </a>
-        <a class="btn" href="${esc(m.dexscreener)}" rel="noopener noreferrer external nofollow">
-          <span>View market data</span><span class="arr">↗</span>
-        </a>
-      </div>
-      <a class="acq__related" href="https://astrofolio.xyz/" rel="noopener noreferrer">Related product: view ${esc(m.name)} in Astrofolio <span aria-hidden="true">↗</span></a>
-      <p class="acq__note">
-        Official mint: <a href="/registry/zodiacs.registry.json">${esc(m.solana.address.slice(0, 8))}…${esc(m.solana.address.slice(-6))}</a> ·
-        This Registry page does not request custody, signing, approvals, or transactions.
-      </p>
-    </section>
+      </nav></div>
+    </details>
 
     <section class="sec reveal" aria-label="Explore all 12">
       <div class="sec__head"><h2 class="sec__title">Explore all 12</h2><span class="line"></span></div>
@@ -1065,7 +1192,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/terminal/">Terminal</a>
+          <a href="/astrofolio/">Astrofolio</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>
@@ -1074,7 +1201,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
           <a href="/terms/">${esc(EN['disclosure.linkTerms'])}</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
           <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
-          <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio ↗</a>
+          <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio.xyz ↗</a>
         </div>
         <div>Registry lookup/display tools: read-only</div>
       </div>
@@ -1158,11 +1285,21 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
       });
     });
 
-    // Market context comes from the Registry-owned daily archive. The archive
-    // preserves nulls and keeps market cap separate from FDV.
+    // The first-screen quote is a single selected-token read. It never loads
+    // Jupiter, connects a wallet, or starts a transaction. Longer history comes
+    // separately from the Registry-owned daily archive below.
     var SIGN = ${JSON.stringify(m.slug)};
+    var MINT = ${JSON.stringify(m.solana.address)};
     var ACCENT = ${JSON.stringify(m.hue)};
+    var LIVE_URL = 'https://api.dexscreener.com/tokens/v1/solana/' + encodeURIComponent(MINT);
     var ARCHIVE_URL = '/assets/data/registry-market-history.v1.json';
+    var liveQuote = document.querySelector('[data-live-quote]');
+    var livePrice = liveQuote && liveQuote.querySelector('[data-live-price]');
+    var liveChange = liveQuote && liveQuote.querySelector('[data-live-change]');
+    var liveState = liveQuote && liveQuote.querySelector('[data-live-state]');
+    var liveLoading = false;
+    var hasLiveQuote = false;
+    var liveCheckedAt = null;
     var panel = document.querySelector('[data-market]');
     var stateEl = panel.querySelector('[data-market-state]');
     var gridEl = panel.querySelector('[data-market-grid]');
@@ -1211,7 +1348,7 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
       if (!v) return '—';
       var d = new Date(v);
       if (isNaN(d.getTime())) return '—';
-      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
     }
     function fmtTimestamp(v) {
       if (!v) return 'Time unavailable';
@@ -1220,6 +1357,61 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
       return d.toLocaleString(undefined, {
         year: 'numeric', month: 'short', day: 'numeric',
         hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+      });
+    }
+
+    function setLiveUnavailable() {
+      if (!liveQuote) return;
+      if (hasLiveQuote) {
+        liveState.textContent = 'Last live price shown · refresh temporarily unavailable · checked ' + liveCheckedAt + ' · independent market data, not a recommendation.';
+        return;
+      }
+      livePrice.textContent = '—';
+      liveChange.textContent = '24h —';
+      liveChange.classList.remove('quick__change--up', 'quick__change--down');
+      liveState.textContent = 'Live price is temporarily unavailable. The buying guide and verified address are still available.';
+    }
+
+    function renderLiveQuote(payload) {
+      var pairs = Array.isArray(payload) ? payload : payload && payload.pairs;
+      if (!Array.isArray(pairs)) { setLiveUnavailable(); return; }
+      var best = null;
+      var bestLiquidity = -1;
+      pairs.forEach(function (pair) {
+        if (!pair || pair.chainId !== 'solana' || !pair.pairAddress) return;
+        if (!pair.baseToken || pair.baseToken.address !== MINT) return;
+        var liquidity = finiteNumber(pair.liquidity && pair.liquidity.usd);
+        var depth = liquidity === null ? 0 : Math.max(0, liquidity);
+        if (depth > bestLiquidity) { best = pair; bestLiquidity = depth; }
+      });
+      if (!best || finiteNumber(best.priceUsd) === null) { setLiveUnavailable(); return; }
+      var change = finiteNumber(best.priceChange && best.priceChange.h24);
+      hasLiveQuote = true;
+      liveCheckedAt = new Date().toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+      livePrice.textContent = fmtPrice(best.priceUsd);
+      liveChange.textContent = '24h ' + fmtPct(change);
+      liveChange.classList.remove('quick__change--up', 'quick__change--down');
+      if (change !== null && change > 0) liveChange.classList.add('quick__change--up');
+      if (change !== null && change < 0) liveChange.classList.add('quick__change--down');
+      liveState.textContent = 'Live via DexScreener · checked ' + liveCheckedAt + ' · independent market data, not a recommendation.';
+      if (typeof best.url === 'string' && /^https:\\/\\/dexscreener\\.com\\//i.test(best.url)) liveLink.href = best.url;
+    }
+
+    function loadLiveQuote() {
+      if (!liveQuote || liveLoading) return;
+      liveLoading = true;
+      var controller = new AbortController();
+      var timeout = setTimeout(function () { controller.abort(); }, 8000);
+      fetch(LIVE_URL, {
+        cache: 'no-store',
+        headers: { accept: 'application/json' },
+        signal: controller.signal
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      }).then(renderLiveQuote).catch(setLiveUnavailable).finally(function () {
+        liveLoading = false;
+        clearTimeout(timeout);
       });
     }
     function make(tag, className, text) {
@@ -1293,8 +1485,8 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
     function chartDescription(points) {
       var finite = points.filter(function (point) { return point.price !== null; });
       if (!finite.length) return 'Price history unavailable.';
-      if (finite.length === 1) return 'One dated observation — ' + fmtDate(finite[0].date) + '.';
-      return finite.length + ' dated observations · ' + fmtDate(finite[0].date) + '–' + fmtDate(finite[finite.length - 1].date) + '.';
+      var latestDate = fmtDate(finite[finite.length - 1].date);
+      return 'Archive through ' + latestDate + ' · ' + finite.length + (finite.length === 1 ? ' daily close.' : ' daily closes.');
     }
 
     function renderChart(range) {
@@ -1307,6 +1499,14 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
       });
       if (!finite.length) {
         chartCanvas.append(make('div', 'market__chart-empty', 'No dated price observations are available for this token.'));
+        return;
+      }
+      if (finite.length < 8) {
+        chartCanvas.append(make(
+          'div',
+          'market__chart-empty',
+          finite.length + (finite.length === 1 ? ' daily close recorded. ' : ' daily closes recorded. ') + 'A trend line will appear after 8 honest daily closes.'
+        ));
         return;
       }
 
@@ -1386,7 +1586,7 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
         var required = range === '7d' ? 7 : 30;
         var available = observationsForRange(range).filter(function (point) { return point.price !== null; }).length;
         button.disabled = available < required;
-        if (button.disabled) button.title = 'Available after ' + required + ' dated observations in this range';
+        if (button.disabled) button.title = 'Available after ' + required + ' daily closes in this range';
       });
       rangeButtons.forEach(function (button) {
         button.addEventListener('click', function () {
@@ -1438,6 +1638,14 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
         setUnavailable('Registry market archive is temporarily unavailable.');
       });
     }
+
+    loadLiveQuote();
+    setInterval(function () {
+      if (!document.hidden) loadLiveQuote();
+    }, 120000);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) loadLiveQuote();
+    });
 
     if ('IntersectionObserver' in window) {
       var mio = new IntersectionObserver(function (entries) {

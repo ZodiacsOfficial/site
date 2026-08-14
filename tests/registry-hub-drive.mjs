@@ -81,17 +81,18 @@ await withPreview({ port: 4412 }, async (baseURL) => {
     check('no-JS page retains all records and fits 320px', noJsState.records === 12 && noJsState.addresses === 24 && noJsState.noScript && noJsState.documentWidth <= noJsState.viewportWidth + 1, JSON.stringify(noJsState));
     await noJsContext.close();
 
-    for (const legacy of [
-      '/registry/?sign=leo#market',
-      '/registry/?rank=liquidity',
-      '/registry/#outlook',
-      '/registry/#aquarius',
+    for (const [legacy, expectedPath, expectedHash] of [
+      ['/registry/?sign=leo#market', '/terminal/', '#market'],
+      ['/registry/?rank=liquidity', '/terminal/', ''],
+      ['/registry/#outlook', '/terminal/', '#briefing'],
+      ['/registry/#aquarius', '/astrofolio/', '#aquarius'],
     ]) {
       const redirect = await browser.newPage();
       await redirect.goto(baseURL + legacy, { waitUntil: 'domcontentloaded' });
-      await redirect.waitForURL('**/terminal/**');
+      await redirect.waitForURL((url) => url.pathname === expectedPath);
       const url = new URL(redirect.url());
-      check(`${legacy} hands off to Terminal`, url.pathname === '/terminal/', redirect.url());
+      check(`${legacy} hands off to the matching wing view`,
+        url.pathname === expectedPath && url.hash === expectedHash, redirect.url());
       await redirect.close();
     }
 

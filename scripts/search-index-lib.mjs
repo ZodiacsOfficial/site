@@ -6,6 +6,7 @@ export const SEARCH_KINDS = Object.freeze([
   'pairing',
   'page',
   'term',
+  'astrofolio',
   'terminal',
   'registry',
 ]);
@@ -38,7 +39,7 @@ const TOOL_ROOTS = new Set([
   'transits',
   'widgets',
 ]);
-const EXCLUDED_PREFIXES = ['/es/', '/terminal/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
+const EXCLUDED_PREFIXES = ['/es/', '/astrofolio/', '/terminal/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
 const NAMED_ENTITIES = Object.freeze({
   amp: '&',
   apos: "'",
@@ -69,13 +70,24 @@ function freezeCuratedEntry(entry) {
  */
 export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
+    path: '/astrofolio/',
+    title: 'Astrofolio',
+    description: 'Choose your sign, see its gold sculpture and official token, check its Registry record, and follow a simple guide to buying it.',
+    kind: 'astrofolio',
+    keywords: [
+      'astrofolio', 'collection', 'choose your sign', 'official zodiac',
+      'token', 'gold sculpture', 'artwork', 'gallery', 'verifier', 'buying guide',
+    ],
+  }),
+  freezeCuratedEntry({
     path: '/terminal/',
-    title: 'Zodiac Terminal',
-    description: 'Live markets, rotating gold sculptures, price history, and reviewed research for the twelve Zodiac tokens.',
+    title: 'Terminal',
+    description: 'A dense ranked view of all twelve Zodiac tokens with price, 24-hour change, liquidity, a selected-sign chart, market tape, briefings, and research.',
     kind: 'terminal',
     keywords: [
-      'terminal', 'zodiac terminal', 'zodiac capital markets',
-      'astrofolio', 'market', 'markets', 'token', 'tokens', 'research',
+      'terminal', 'market desk', 'zodiac capital markets',
+      'ranked zodiac tokens', 'market', 'markets', 'price', 'liquidity',
+      'selected-sign chart', 'market tape', 'briefing', 'research',
     ],
   }),
   freezeCuratedEntry({

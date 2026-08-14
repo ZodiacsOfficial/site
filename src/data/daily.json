@@ -1,140 +1,84 @@
 {
   "schema": "zodiacs.daily-facts.v1",
-  "date": "2026-08-12",
-  "snapshotAt": "2026-08-12T12:00:00.000Z",
+  "date": "2026-08-14",
+  "snapshotAt": "2026-08-14T12:00:00.000Z",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 136.65242153066538,
-      "sign": "leo",
-      "degree": 16.65242153066538,
+      "lon": 165.0381393949599,
+      "sign": "virgo",
+      "degree": 15.038139394959899,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 139.80802514467382,
+      "lon": 141.7290448046383,
       "sign": "leo",
-      "degree": 19.80802514467382,
+      "degree": 21.729044804638306,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 124.69719664436047,
+      "lon": 128.3186785736434,
       "sign": "leo",
-      "degree": 4.697196644360474,
+      "degree": 8.31867857364341,
       "retrograde": false
     },
     {
       "body": "Venus",
-      "lon": 185.66293571068715,
+      "lon": 187.60365611255034,
       "sign": "libra",
-      "degree": 5.662935710687179,
+      "degree": 7.603656112550311,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 90.75824893567261,
+      "lon": 92.07832686797724,
       "sign": "cancer",
-      "degree": 0.7582489356726114,
+      "degree": 2.078326867977239,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 129.49888220114224,
+      "lon": 129.93729423078497,
       "sign": "leo",
-      "degree": 9.498882201142237,
+      "degree": 9.937294230784971,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.511969288245439,
+      "lon": 14.452668992706492,
       "sign": "aries",
-      "degree": 14.511969288245439,
+      "degree": 14.452668992706492,
       "retrograde": true
     },
     {
       "body": "Uranus",
-      "lon": 65.33668308074294,
+      "lon": 65.383446237751,
       "sign": "gemini",
-      "degree": 5.336683080742944,
+      "degree": 5.383446237751002,
       "retrograde": false
     },
     {
       "body": "Neptune",
-      "lon": 4.086365858077272,
+      "lon": 4.049866831881161,
       "sign": "aries",
-      "degree": 4.086365858077272,
+      "degree": 4.049866831881161,
       "retrograde": true
     },
     {
       "body": "Pluto",
-      "lon": 303.9113104669027,
+      "lon": 303.8668825050854,
       "sign": "aquarius",
-      "degree": 3.9113104669027052,
+      "degree": 3.866882505085414,
       "retrograde": true
     }
   ],
   "moon": {
-    "phase": "New Moon",
-    "illumination": 0.001
+    "phase": "Waxing Crescent",
+    "illumination": 0.041
   },
   "eventsCoverage": "complete",
   "eventsSource": "src/data/transits-2026-08.json",
-  "events": [
-    {
-      "kind": "aspect",
-      "a": "Mercury",
-      "b": "Pluto",
-      "type": "opposition",
-      "orb": 0,
-      "at": "2026-08-12T01:19:36.991Z",
-      "aSign": "leo",
-      "aDegree": 3.9212605617491363,
-      "bSign": "aquarius",
-      "bDegree": 3.921258970960025
-    },
-    {
-      "kind": "aspect",
-      "a": "Mercury",
-      "b": "Neptune",
-      "type": "trine",
-      "orb": 0,
-      "at": "2026-08-12T03:41:46.694Z",
-      "aSign": "leo",
-      "aDegree": 4.092508861355668,
-      "bSign": "aries",
-      "bDegree": 4.092508225966128
-    },
-    {
-      "kind": "aspect",
-      "a": "Venus",
-      "b": "Uranus",
-      "type": "trine",
-      "orb": 0,
-      "at": "2026-08-12T03:47:20.074Z",
-      "aSign": "libra",
-      "aDegree": 5.3283682743367535,
-      "bSign": "gemini",
-      "bDegree": 5.328367748118183
-    },
-    {
-      "kind": "lunation",
-      "type": "new",
-      "at": "2026-08-12T17:36:35.369Z",
-      "sign": "leo",
-      "degree": 20.0324835212694
-    },
-    {
-      "kind": "aspect",
-      "a": "Mercury",
-      "b": "Uranus",
-      "type": "sextile",
-      "orb": 0,
-      "at": "2026-08-12T20:47:59.762Z",
-      "aSign": "leo",
-      "aDegree": 5.345493892020386,
-      "bSign": "gemini",
-      "bDegree": 5.345492644870092
-    }
-  ]
+  "events": []
 }

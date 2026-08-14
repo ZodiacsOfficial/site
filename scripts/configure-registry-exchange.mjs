@@ -1,5 +1,5 @@
-// Stamps Zodiac Markets into (or out of) /terminal/markets/ and synchronizes
-// the discovery rail on /terminal/ from
+// Stamps Terminal's venue route into (or out of) /terminal/markets/ and synchronizes
+// the single discovery gateway on /terminal/ from
 // PUBLIC_REGISTRY_EXCHANGE_ENABLED in the SHELL env. Plain-node generators do
 // not read .env files — set the flag in the shell, the way
 // configure-registry-trade does, or the halves skew.
@@ -30,8 +30,8 @@ const [exchangeSource, terminalSource] = await Promise.all([
 ]);
 
 // Validate and render both surfaces before writing either one. A malformed or
-// missing Terminal marker must fail the build without leaving route and entry in
-// different flag states.
+// missing Terminal marker must fail the build without leaving the venue route and
+// its only discovery entry in different flag states.
 const exchangeOutput = injectRegistryExchange(exchangeSource, process.env).output;
 const terminalOutput = injectRegistryExchangeLanding(terminalSource, process.env).output;
 const writes = [
@@ -41,6 +41,6 @@ const writes = [
 await Promise.all(writes);
 
 console.log(
-  `Registry exchange terminal: ${enabled ? 'enabled' : 'disabled'} `
+  `Terminal venue route: ${enabled ? 'enabled' : 'disabled'} `
   + `(${writes.length} of 2 surfaces rewritten, Terminal landing included)`,
 );

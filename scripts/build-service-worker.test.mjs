@@ -70,12 +70,13 @@ describe('offline service worker posture', () => {
     expect(source).toMatch(/if \(registryAuthority\(url\) \|\| registryVolatileSurface\(url\)\) \{\s*event\.respondWith\(fetch\(request\)\)/);
   });
 
-  it('never caches or stale-serves Registry authority or either build-time Terminal flag surface', async () => {
+  it('never caches or stale-serves Registry authority or any build-time Terminal flag surface', async () => {
     const worker = runWorker(await builtWorker(false));
     const handler = worker.handlers.get('fetch');
     const volatilePaths = [
       '/registry', '/registry/', '/registry/index.html',
       '/registry/exchange', '/registry/exchange/', '/registry/exchange/index.html',
+      '/astrofolio', '/astrofolio/', '/astrofolio/index.html',
       '/terminal', '/terminal/', '/terminal/index.html',
       '/terminal/markets', '/terminal/markets/', '/terminal/markets/index.html',
     ];
@@ -88,13 +89,15 @@ describe('offline service worker posture', () => {
     expect(worker.networkFetch).toHaveBeenCalledTimes(volatilePaths.length);
     expect(worker.caches.open).not.toHaveBeenCalled();
 
-    worker.networkFetch.mockRejectedValueOnce(new TypeError('offline'));
-    let offline;
-    handler({
-      request: { method: 'GET', mode: 'navigate', url: 'https://zodiacs.org/terminal/markets/' },
-      respondWith: (promise) => { offline = Promise.resolve(promise); },
-    });
-    await expect(offline).rejects.toThrow('offline');
+    for (const path of ['/astrofolio/', '/terminal/', '/terminal/markets/']) {
+      worker.networkFetch.mockRejectedValueOnce(new TypeError('offline'));
+      let offline;
+      handler({
+        request: { method: 'GET', mode: 'navigate', url: `https://zodiacs.org${path}` },
+        respondWith: (promise) => { offline = Promise.resolve(promise); },
+      });
+      await expect(offline, path).rejects.toThrow('offline');
+    }
     expect(worker.caches.open).not.toHaveBeenCalled();
   });
 

@@ -214,6 +214,7 @@
   @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
   .wnav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; pointer-events: none; padding-top: env(safe-area-inset-top); }
   .wnav { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 10px 0 20px; border-radius: 999px; background: rgba(10,12,17,0.66); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); border: 1px solid rgba(198,204,218,0.16); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 12px 32px -14px rgba(0,0,0,0.7); }
+  .wnav__pill { display: contents; }
   @media (min-width: 820px) { .wnav { gap: 18px; } }
   .wnav__mark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; white-space: nowrap; }
   .wnav__brand { display: block; flex-shrink: 0; }
@@ -618,22 +619,24 @@
 
   <div class="wnav-wrap">
     <nav class="wnav" aria-label="Primary" data-wnav>
-      <a class="wnav__mark" href="/"><span class="wnav__name">Zodiacs<span class="wnav__sep">·</span><span class="wnav__dim">org</span></span></a>
-      <div class="wnav__links">
-        <a class="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <button class="wnav__link wnav__signs-btn" type="button" data-wnav-signs aria-expanded="false" aria-controls="wnav-signs">Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <a class="wnav__link" href="/learn/">Learn</a>
-        <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
-        <a class="wnav__link" href="/profile/">Saved charts</a>
-      </div>
-      <a class="wnav__search" href="/?search=1" aria-label="Search the site">
+      <div class="wnav__pill">
+        <a class="wnav__mark" href="/"><span class="wnav__name">Zodiacs<span class="wnav__sep">·</span><span class="wnav__dim">org</span></span></a>
+        <div class="wnav__links">
+          <a class="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <button class="wnav__link wnav__signs-btn" type="button" data-wnav-signs aria-expanded="false" aria-controls="wnav-signs">Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <a class="wnav__link" href="/learn/">Learn</a>
+          <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
+          <a class="wnav__link" href="/profile/">Saved charts</a>
+        </div>
+        <a class="wnav__search" href="/?search=1" aria-label="Search the site">
         <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         <kbd class="wnav__search-kbd" aria-hidden="true">/</kbd>
       </a>
-      <a class="wnav__chip" href="/terminal/">Terminal</a>
-      <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
-        <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
-      </button>
+        <a class="wnav__chip" href="/astrofolio/">Astrofolio</a>
+        <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
+          <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
+        </button>
+      </div>
     </nav>
     <div class="wnav-signs" id="wnav-signs" data-wnav-signs-menu hidden>
       <div class="wnav-signs__grid"><a class="wnav-signs__item" href="/aries/" style="--sign:#DE8E79"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/aries.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/aries.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Aries</span><span class="wnav-signs__dates">Mar 21 – Apr 19</span></a><a class="wnav-signs__item" href="/taurus/" style="--sign:#B9D4BE"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/taurus.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/taurus.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Taurus</span><span class="wnav-signs__dates">Apr 20 – May 20</span></a><a class="wnav-signs__item" href="/gemini/" style="--sign:#B29DD0"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/gemini.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/gemini.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Gemini</span><span class="wnav-signs__dates">May 21 – Jun 20</span></a><a class="wnav-signs__item" href="/cancer/" style="--sign:#B6D4E4"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/cancer.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/cancer.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Cancer</span><span class="wnav-signs__dates">Jun 21 – Jul 22</span></a><a class="wnav-signs__item" href="/leo/" style="--sign:#E0A9B4"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/leo.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/leo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Leo</span><span class="wnav-signs__dates">Jul 23 – Aug 22</span></a><a class="wnav-signs__item" href="/virgo/" style="--sign:#B7D9B0"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/virgo.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/virgo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Virgo</span><span class="wnav-signs__dates">Aug 23 – Sep 22</span></a><a class="wnav-signs__item" href="/libra/" style="--sign:#D3A9DE"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/libra.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/libra.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Libra</span><span class="wnav-signs__dates">Sep 23 – Oct 22</span></a><a class="wnav-signs__item" href="/scorpio/" style="--sign:#B9DCE8"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/scorpio.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/scorpio.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Scorpio</span><span class="wnav-signs__dates">Oct 23 – Nov 21</span></a><a class="wnav-signs__item" href="/sagittarius/" style="--sign:#E0B080"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/sagittarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/sagittarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Sagittarius</span><span class="wnav-signs__dates">Nov 22 – Dec 21</span></a><a class="wnav-signs__item" href="/capricorn/" style="--sign:#C0DEA8"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/capricorn.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/capricorn.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Capricorn</span><span class="wnav-signs__dates">Dec 22 – Jan 19</span></a><a class="wnav-signs__item" href="/aquarius/" style="--sign:#AE8FC9"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/aquarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/aquarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Aquarius</span><span class="wnav-signs__dates">Jan 20 – Feb 18</span></a><a class="wnav-signs__item" href="/pisces/" style="--sign:#A9D4C4"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/pisces.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/pisces.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Pisces</span><span class="wnav-signs__dates">Feb 19 – Mar 20</span></a></div>
@@ -646,7 +649,7 @@
         <a class="wnav-menu__link" style="--i:0" href="/learn/">Learn</a>
         <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
         <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
-        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/terminal/"><span>Terminal</span><small>Live markets, gold sculptures, and research</small></a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/astrofolio/"><span>Astrofolio</span><small>The collection of twelve gold Zodiac sculptures</small></a>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">Tools</span>
@@ -924,8 +927,8 @@
     </section>
 
     <nav class="back" aria-label="Return">
-      <a class="btn btn--primary" href="/terminal/">
-        <span>Zodiac Terminal</span><span class="arr">→</span>
+      <a class="btn btn--primary" href="/astrofolio/">
+        <span>Astrofolio</span><span class="arr">→</span>
       </a>
       <a class="btn" href="/thesis/">
         <span>Read the thesis</span><span class="arr">→</span>
@@ -939,7 +942,7 @@
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/terminal/">Terminal</a>
+          <a href="/astrofolio/">Astrofolio</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/disclosure/">Disclosure</a>

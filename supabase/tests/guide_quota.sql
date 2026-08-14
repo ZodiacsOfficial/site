@@ -12,6 +12,17 @@ begin
 end;
 $$;
 
+select pg_temp.assert_true(
+  (
+    select pg_catalog.array_agg(attribute.attname order by attribute.attnum)
+    from pg_catalog.pg_attribute as attribute
+    where attribute.attrelid = 'public.assistant_quota'::regclass
+      and attribute.attnum > 0
+      and not attribute.attisdropped
+  ) = array['visitor_hash', 'quota_day', 'request_count']::name[],
+  'assistant quota storage must expose only the canonical column shape'
+);
+
 -- Guide quota persistence stays RPC-only. service_role may reserve but has no
 -- direct row authority; browser roles have neither path.
 select pg_temp.assert_true(

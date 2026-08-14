@@ -11,14 +11,17 @@ import { withPreview } from './visual/preview-server.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const queries = [
-  ['terminal', 'Zodiac Terminal', 'Terminal'],
+  ['terminal', 'Terminal', 'Terminal'],
   ['registry', 'Zodiacs Registry', 'Registry'],
-  ['zodiac capital markets', 'Zodiac Terminal', 'Terminal'],
-  ['astrofolio', 'Zodiac Terminal', 'Terminal'],
-  ['thesis', 'The Registry Thesis', 'Registry'],
+  ['zodiac capital markets', 'Terminal', 'Terminal'],
+  ['market tape liquidity', 'Terminal', 'Terminal'],
+  ['ranked zodiac tokens', 'Terminal', 'Terminal'],
+  ['zodiac gallery verifier', 'Astrofolio', 'Astrofolio'],
+  ['astrofolio', 'Astrofolio', 'Astrofolio'],
+  ['thesis', 'Why Zodiacs Matter — the Registry thesis', 'Registry'],
   ['aries record', 'Aries — official Zodiac record', 'Registry'],
 ];
-const wingPaths = ['/terminal/', '/registry/', '/thesis/', '/sdk/', '/registry/aries/'];
+const wingPaths = ['/astrofolio/', '/terminal/', '/registry/', '/thesis/', '/sdk/', '/registry/aries/'];
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 
@@ -54,7 +57,7 @@ await withPreview({ port: 4403 }, async (baseURL) => {
       const resultTitle = await result.locator('.zsearch__title').textContent();
       const resultKind = await result.locator('.zsearch__kind').textContent();
       check(
-        `${query}: returns the expected Terminal-badged entry`,
+        `${query}: returns the expected wing entry`,
         resultTitle === expectedTitle && resultKind === expectedKind,
         `${resultTitle} · ${resultKind}`,
       );
@@ -65,7 +68,7 @@ await withPreview({ port: 4403 }, async (baseURL) => {
     const wing = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
     for (const path of wingPaths) {
       await wing.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
-      const searchLinks = wing.locator('a[href="/?search=1"]', { hasText: 'Search' });
+      const searchLinks = wing.locator('a[href="/?search=1"][aria-label="Search the site"]');
       await searchLinks.first().waitFor({ state: 'visible' });
       check(`${path}: wing nav exposes Search`, await searchLinks.count() >= 1, String(await searchLinks.count()));
     }

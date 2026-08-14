@@ -18,7 +18,8 @@ const MATRIX = [
   ['Permissionless online transfer', '×', '✓', '✓'],
   ['Programmable', '×', '✓', '✓'],
   ['Base-layer settlement in seconds', '×', '×', '✓'],
-  ['Everyday identity in profiles and conversation', '×', '×', '✓'],
+  ['Built-in monthly cultural seasonality', '×', '×', '✓'],
+  ['Everyday cultural participation', '×', '×', '✓'],
 ];
 
 const MANUSCRIPT_MOVEMENTS = [
@@ -591,7 +592,7 @@ describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
     expect(fig3).toMatch(/class=["'][^"']*\bcomparison-panel\b/);
   });
 
-  it('uses accessible column and row headers for exactly eleven approved properties', () => {
+  it('uses accessible column and row headers for exactly twelve approved properties', () => {
     const thead = sliceElement(table, /<thead\b[^>]*>/i, 'thead');
     const tbody = sliceElement(table, /<tbody\b[^>]*>/i, 'tbody');
     const columnHeaders = tagParts(thead, 'th');
@@ -600,8 +601,8 @@ describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
     expect(columnHeaders).toHaveLength(4);
     expect(columnHeaders.every(({ attrs }) => /\bscope=["']col["']/i.test(attrs))).toBe(true);
     expect(columnHeaders.map(({ inner }) => textOf(inner))).toEqual(['Property', 'Gold', '₿ Bitcoin', 'Zodiacs']);
-    expect(rows).toHaveLength(11);
-    expect(textOf(tagParts(table, 'caption')[0]?.inner ?? '')).toMatch(/eleven yes-or-no properties/i);
+    expect(rows).toHaveLength(12);
+    expect(textOf(tagParts(table, 'caption')[0]?.inner ?? '')).toMatch(/twelve yes-or-no properties/i);
     expect(rows.map(({ inner }) => textOf(tagParts(inner, 'th')[0]?.inner ?? '')))
       .toEqual(MATRIX.map(([property]) => property));
     for (const { inner } of rows) {

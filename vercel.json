@@ -32,16 +32,6 @@
       "permanent": true
     },
     {
-      "source": "/astrofolio",
-      "destination": "/sdk/#astrofolio",
-      "statusCode": 301
-    },
-    {
-      "source": "/astrofolio/",
-      "destination": "/sdk/#astrofolio",
-      "statusCode": 301
-    },
-    {
       "source": "/astrofolio-sdk",
       "destination": "/sdk/#astrofolio",
       "statusCode": 301
@@ -113,12 +103,12 @@
     },
     {
       "source": "/collect",
-      "destination": "/terminal/",
+      "destination": "/astrofolio/",
       "permanent": true
     },
     {
       "source": "/collect/",
-      "destination": "/terminal/",
+      "destination": "/astrofolio/",
       "permanent": true
     },
     {
@@ -128,21 +118,31 @@
     },
     {
       "source": "/registry/shelf",
-      "destination": "/terminal/",
+      "destination": "/astrofolio/",
       "permanent": true
     },
     {
       "source": "/registry/shelf/",
-      "destination": "/terminal/",
+      "destination": "/astrofolio/",
       "permanent": true
     },
     {
       "source": "/registry/gallery",
-      "destination": "/terminal/",
+      "destination": "/astrofolio/",
       "permanent": true
     },
     {
       "source": "/registry/gallery/",
+      "destination": "/astrofolio/",
+      "permanent": true
+    },
+    {
+      "source": "/terminal/pro",
+      "destination": "/terminal/",
+      "permanent": true
+    },
+    {
+      "source": "/terminal/pro/",
       "destination": "/terminal/",
       "permanent": true
     },

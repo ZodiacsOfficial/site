@@ -17,12 +17,12 @@
 export const REGISTRY_EXCHANGE_FLAG = 'PUBLIC_REGISTRY_EXCHANGE_ENABLED';
 export const REGISTRY_EXCHANGE_META = 'zodiacs-registry-exchange-enabled';
 export const REGISTRY_EXCHANGE_PATH = '/terminal/markets/';
-export const REGISTRY_EXCHANGE_PUBLIC_NAME = 'Zodiac Markets';
+export const REGISTRY_EXCHANGE_PUBLIC_NAME = 'Terminal';
 export const REGISTRY_EXCHANGE_LANDING_COPY = Object.freeze({
-  eyebrow: 'Advanced market view',
-  action: 'Open Zodiac Markets',
+  eyebrow: 'Terminal',
+  action: 'Open venue route',
   description: 'All 12 · charts · recent trades · independent venue quotes',
-  ariaLabel: 'Open Zodiac Markets for the selected Zodiac token',
+  ariaLabel: 'Open the Terminal venue route for the selected Zodiac token',
 });
 
 const START = '<!-- registry-exchange:start -->';
@@ -48,7 +48,7 @@ export function renderExchangeRegion({ enabled }) {
   return [
     START,
     `      ${slot}`,
-    `      <section class="zme" data-zme-terminal aria-label="${REGISTRY_EXCHANGE_PUBLIC_NAME} terminal">`,
+    `      <section class="zme" data-zme-terminal aria-label="${REGISTRY_EXCHANGE_PUBLIC_NAME} venue route">`,
     '        <noscript>',
     '          <p class="zme__noscript">The terminal needs JavaScript. Each record page under',
     '          <a href="/registry/">the Registry</a> lists the venue route directly.</p>',
@@ -88,18 +88,18 @@ export function injectRegistryExchange(html, env = {}) {
 }
 
 /**
- * The Registry landing owns only a build marker for this surface. Its React
- * shell decides whether and where to render the single discovery entry. This
- * keeps the route and landing on one flag without baking terminal markup or a
- * venue URL into the committed hub.
+ * The expert Terminal landing owns only a build marker for this surface. Its
+ * React shell decides whether and where to render the single discovery entry.
+ * This keeps the venue route and expert landing on one flag without baking
+ * terminal markup or a venue URL into the committed reading surface.
  */
 export function injectRegistryExchangeLanding(html, env = {}) {
   const enabled = registryExchangeEnabled(env);
   const source = `<meta name="${REGISTRY_EXCHANGE_META}" content="[01]" />`;
   const matches = html.match(new RegExp(source, 'g')) ?? [];
-  if (matches.length === 0) throw new Error('registry-exchange: hub is missing its flag marker');
+  if (matches.length === 0) throw new Error('registry-exchange: Terminal landing is missing its flag marker');
   if (matches.length !== 1) {
-    throw new Error('registry-exchange: hub must contain exactly one flag marker');
+    throw new Error('registry-exchange: Terminal landing must contain exactly one flag marker');
   }
   const meta = new RegExp(source);
   return { output: html.replace(meta, metaFor(enabled)), enabled };

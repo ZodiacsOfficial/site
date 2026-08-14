@@ -77,7 +77,7 @@ function ogEntries() {
   const entries = [{ key: 'og.fallbackAlt', english: OG_EN.fallbackAlt }];
   entries.push(...entriesFromObject('og.signNames', OG_EN.signNames));
   for (const group of [
-    'share', 'signGuide', 'registryLot', 'registry', 'thesis', 'disclosure',
+    'share', 'signGuide', 'registryLot', 'wing', 'astrofolio', 'terminal', 'thesis', 'disclosure',
     'horoscope', 'rising', 'placements', 'compatibility',
   ]) {
     for (const [key, english] of Object.entries(OG_EN[group])) {

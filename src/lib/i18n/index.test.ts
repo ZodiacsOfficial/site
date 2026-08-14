@@ -54,6 +54,12 @@ describe('i18n helpers', () => {
     expect(Object.keys(UI.en).filter((key) => key.startsWith('privacyDevice'))).toEqual(['privacyDevice']);
   });
 
+  it('uses Astrofolio as the collection navigation label in every catalog', () => {
+    expect(CATALOG_LOCALES.map((locale) => UI[locale].navCollect)).toEqual(
+      CATALOG_LOCALES.map(() => 'Astrofolio'),
+    );
+  });
+
   it('localizes only supported core paths', () => {
     expect(localizePath('es', '/birth-chart/')).toBe('/es/birth-chart/');
     expect(localizePath('pt', '/birth-chart/')).toBe('/pt/birth-chart/');
@@ -196,7 +202,7 @@ describe('i18n helpers', () => {
   });
 
   it('uses the approved Brazilian Portuguese registry register', () => {
-    expect(UI.pt.navCollect).toBe('Terminal');
+    expect(UI.pt.navCollect).toBe('Astrofolio');
     expect(UI.pt.recordLabel).toBe('Ala do acervo');
     expect(UI.pt.recordOneOfTwelve).toBe(
       'também integra os Doze — um registro canônico no acervo.',
@@ -205,7 +211,7 @@ describe('i18n helpers', () => {
   });
 
   it('uses the approved French registry register', () => {
-    expect(UI.fr.navCollect).toBe('Terminal');
+    expect(UI.fr.navCollect).toBe('Astrofolio');
     expect(UI.fr.footerRegistry).toBe('Registry');
     expect(UI.fr.recordLabel).toBe('Aile des collections');
     expect(UI.fr.recordOneOfTwelve).toBe(
@@ -215,7 +221,7 @@ describe('i18n helpers', () => {
   });
 
   it('uses the approved Italian registry register', () => {
-    expect(UI.it.navCollect).toBe('Terminal');
+    expect(UI.it.navCollect).toBe('Astrofolio');
     expect(UI.it.footerRegistry).toBe('Registry');
     expect(UI.it.recordLabel).toBe('Ala della collezione');
     expect(UI.it.recordOneOfTwelve).toBe(

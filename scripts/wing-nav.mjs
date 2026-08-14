@@ -9,7 +9,7 @@
 // mobile burger overlay) — in the wing's inlined-token form (no hashed bundle).
 //
 // Link set (owner-directed): Signs ▾ · Tools · Learn · Horoscopes · Saved charts
-// on the left, a "Terminal" chip on the right. The verification Registry remains
+// on the left, an "Astrofolio" chip on the right. The verification Registry remains
 // a separate read-only destination linked from records and the footer.
 //
 // Sign table mirrors src/lib/signs.ts (slug/name/glyph/dates/hue); keep in sync
@@ -55,8 +55,8 @@ export function brandMarkSvg(size = 17) {
   return `<svg class="wnav__brand" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" aria-hidden="true">${dots}</svg>`;
 }
 
-// The full nav markup (bar + Signs dropdown + mobile overlay). Terminal is the
-// consumer market destination even when the current wing page is a Registry record.
+// The full nav markup (bar + Signs dropdown + mobile overlay). Astrofolio is the
+// consumer collection destination even when the current wing page is a Registry record.
 export function wingNavHtml({ includeSearch = true } = {}) {
   const signGrid = NAV_SIGNS.map((s) => (
     `<a class="wnav-signs__item" href="/${s.slug}/" style="--sign:${s.hue}">` +
@@ -82,19 +82,21 @@ export function wingNavHtml({ includeSearch = true } = {}) {
     : '';
   return `<div class="wnav-wrap">
     <nav class="wnav" aria-label="Primary" data-wnav>
-      <a class="wnav__mark" href="/"><span class="wnav__name">Zodiacs<span class="wnav__sep">·</span><span class="wnav__dim">org</span></span></a>
-      <div class="wnav__links">
-        <a class="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <button class="wnav__link wnav__signs-btn" type="button" data-wnav-signs aria-expanded="false" aria-controls="wnav-signs">Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <a class="wnav__link" href="/learn/">Learn</a>
-        <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
-        <a class="wnav__link" href="/profile/">Saved charts</a>
+      <div class="wnav__pill">
+        <a class="wnav__mark" href="/"><span class="wnav__name">Zodiacs<span class="wnav__sep">·</span><span class="wnav__dim">org</span></span></a>
+        <div class="wnav__links">
+          <a class="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <button class="wnav__link wnav__signs-btn" type="button" data-wnav-signs aria-expanded="false" aria-controls="wnav-signs">Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <a class="wnav__link" href="/learn/">Learn</a>
+          <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
+          <a class="wnav__link" href="/profile/">Saved charts</a>
+        </div>
+        <a class="wnav__chip" href="/astrofolio/">Astrofolio</a>
+        <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
+          <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
+        </button>
       </div>
       ${search}
-      <a class="wnav__chip" href="/terminal/">Terminal</a>
-      <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
-        <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
-      </button>
     </nav>
     <div class="wnav-signs" id="wnav-signs" data-wnav-signs-menu hidden>
       <div class="wnav-signs__grid">${signGrid}</div>
@@ -107,7 +109,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <a class="wnav-menu__link" style="--i:0" href="/learn/">Learn</a>
         <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
         <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
-        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/terminal/"><span>Terminal</span><small>Live markets, gold sculptures, and research</small></a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/astrofolio/"><span>Astrofolio</span><small>The collection of twelve gold Zodiac sculptures</small></a>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">Tools</span>
@@ -160,6 +162,7 @@ export function wingNavCss() {
   @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
   .wnav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; pointer-events: none; padding-top: env(safe-area-inset-top); }
   .wnav { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 10px 0 20px; border-radius: 999px; background: rgba(10,12,17,0.66); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); border: 1px solid rgba(198,204,218,0.16); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 12px 32px -14px rgba(0,0,0,0.7); }
+  .wnav__pill { display: contents; }
   @media (min-width: 820px) { .wnav { gap: 18px; } }
   .wnav__mark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; white-space: nowrap; }
   .wnav__brand { display: block; flex-shrink: 0; }
@@ -170,7 +173,12 @@ export function wingNavCss() {
   @media (max-width: 819.5px) { .wnav__sep, .wnav__dim { display: none; } }
   .wnav__search { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; border: none; border-radius: 999px; background: none; color: var(--ink-2, #C6CCDA); cursor: pointer; text-decoration: none; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__search:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
-  @media (max-width: 819.5px) { .wnav__search { display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; } }
+  @media (max-width: 819.5px) {
+    .wnav-wrap { align-items: stretch; padding-inline: 12px; }
+    .wnav { justify-content: center; width: 100%; height: 54px; gap: 9px; padding: 0; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .wnav__pill { display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; padding: 0 8px 0 18px; border: 1px solid rgba(198,204,218,0.18); border-radius: 999px; background: rgba(10,12,17,0.78); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 14px 34px -18px rgba(0,0,0,0.82); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); }
+    .wnav__search { display: inline-grid; place-items: center; flex: 0 0 46px; width: 46px; height: 46px; padding: 0; border: 1px solid rgba(198,204,218,0.18); background: rgba(10,12,17,0.78); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 14px 34px -18px rgba(0,0,0,0.82); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); }
+  }
   .wnav__search-kbd { display: none; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; line-height: 1; padding: 3px 5px; border: 1px solid rgba(198,204,218,0.16); border-radius: 4px; color: var(--ink-mute, #8A93A6); }
   @media (min-width: 820px) { .wnav__search-kbd { display: inline-block; } }
   .wnav__links { display: none; align-items: center; gap: 2px; }
@@ -180,11 +188,16 @@ export function wingNavCss() {
   .wnav__link[aria-current='page'] { color: var(--ink, #EEF1F7); }
   .wnav__signs-btn svg { transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
-  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid rgba(198,204,218,0.16); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid rgba(198,204,218,0.16); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__chip:hover { color: var(--ink, #EEF1F7); }
   @media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }
-  
-  
+  @media (max-width: 359.5px) {
+    .wnav-wrap { padding-inline: 8px; }
+    .wnav__pill { gap: 8px; padding-left: 14px; }
+    .wnav__chip { padding-left: 12px; font-size: 12px; }
+  }
+
+
   .wnav__burger { position: relative; display: inline-block; flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; transition: transform 140ms cubic-bezier(0.23,1,0.32,1); }
   .wnav__burger:active { transform: scale(0.97); }
   @media (min-width: 820px) { .wnav__burger { display: none; } }

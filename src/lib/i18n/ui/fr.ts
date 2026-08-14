@@ -7,7 +7,7 @@ const fr = {
   navTools: 'Outils',
   navLearn: 'Comprendre',
   navHoroscopes: 'Horoscopes',
-  navCollect: 'Terminal',
+  navCollect: 'Astrofolio',
   navSavedCharts: 'Thèmes enregistrés',
   navMenu: 'Menu',
   navSite: 'Le site',

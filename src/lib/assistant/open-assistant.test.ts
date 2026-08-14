@@ -374,6 +374,8 @@ describe('assistant profile-access privacy fence', () => {
     expect(base).toContain('&& !accountSyncV2Enabled && !guideRuntimeEnabled');
     for (const path of [
       'public/archive/index.html',
+      'public/astrofolio/index.html',
+      'public/registry/index.html',
       'public/registry/aries/index.html',
       'public/registry/technical/index.html',
       'public/sdk/index.html',
@@ -383,6 +385,8 @@ describe('assistant profile-access privacy fence', () => {
     ]) {
       const html = await readFile(new URL(path, root), 'utf8');
       expect(html, path).not.toContain('plausible.io/js');
+      expect(html, path).not.toContain('zodiacs-analytics:start');
+      expect(html, path).not.toContain('window.plausible = window.plausible');
       expect(html, path).toContain("mod.bootstrapGuide('en')");
     }
   });

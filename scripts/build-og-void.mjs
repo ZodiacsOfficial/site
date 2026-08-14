@@ -23,7 +23,7 @@
  *   npm run data:og
  *   npm run data:og -- --only-horoscopes  # refresh the horoscope family
  *   npm run data:og -- --only-homepage    # refresh the cache-busted homepage card
- *   npm run data:og -- --only-terminal    # refresh the Zodiac Terminal card
+ *   npm run data:og -- --only-wing        # refresh the shared Astrofolio / Terminal card
  *
  * Deterministic and offline: fonts and disc art are inlined as data:
  * URIs; Chromium comes from playwright-core (PLAYWRIGHT_MODULE and
@@ -51,17 +51,17 @@ const {
 const { HOROSCOPE_OG_SURFACES, OG_EN } = await import(
   pathToFileURL(resolve(root, 'src/strings/seo.en.mjs')).href
 );
-const TERMINAL_OUT = resolve(root, 'public/assets/og/v4');
-const TERMINAL_CARD = 'zodiac-terminal.png';
+const WING_OUT = resolve(root, 'public/assets/og/v5');
+// The immutable v5 card is retained as historical output. Astrofolio and
+// Terminal now have distinct v6-era identities built by the dedicated
+// Astrofolio identity generator.
+const WING_CARD = 'the-twelve.png';
 const LEGACY_REGISTRY_CARD_COPY = Object.freeze({
   kicker: 'The Official Registry',
   title: 'Twelve signs. One register.',
   subtitle: 'A read-only catalogue of the twelve official Zodiac records.',
   data: 'Nº 01–12 / 12 · read-only by design',
 });
-if (OG_EN.registry.image !== `/assets/og/v4/${TERMINAL_CARD}`) {
-  throw new Error(`Zodiac Terminal OG path must be /assets/og/v4/${TERMINAL_CARD}`);
-}
 const {
   RU_OG_COPY_DIGEST_INPUT,
   RU_OG_REQUIRED_CARDS,
@@ -357,7 +357,7 @@ function registryLotCard(s, index) {
   return shell(body, `zodiacs.org/registry/${s.slug}/`);
 }
 
-function registryCard(copy = OG_EN.registry) {
+function wingCard(copy = OG_EN.wing, footer = 'zodiacs.org · Astrofolio · Registry · Terminal') {
   const body = `
   <div class="stage">
     <div class="left">
@@ -368,7 +368,7 @@ function registryCard(copy = OG_EN.registry) {
     </div>
     ${wheelMark(330, 38)}
   </div>`;
-  return shell(body, copy.path === '/terminal/' ? 'zodiacs.org/terminal/' : 'zodiacs.org/registry/');
+  return shell(body, footer);
 }
 
 function disclosureCard() {
@@ -648,7 +648,7 @@ async function writeEnglishManifest() {
 for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'events', 'people', 'pin', 'ru', 'ru/sign', 'ru/tool']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
-await mkdir(TERMINAL_OUT, { recursive: true });
+await mkdir(WING_OUT, { recursive: true });
 
 const browser = await chromium.launch({ executablePath });
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
@@ -657,7 +657,9 @@ const onlyInvite = process.argv.includes('--only-compatibility-invite');
 const onlyRussian = process.argv.includes('--only-ru');
 const onlyPeople = process.argv.includes('--only-people');
 const onlyHomepage = process.argv.includes('--only-homepage');
-const onlyTerminal = process.argv.includes('--only-terminal');
+// --only-terminal remains an undocumented compatibility alias for release
+// tooling that predates the split identities.
+const onlyWing = process.argv.includes('--only-wing') || process.argv.includes('--only-terminal');
 
 let total = 0;
 let count = 0;
@@ -752,11 +754,11 @@ async function renderRussianCards() {
   }
 }
 
-if (onlyTerminal) {
-  console.log('Rendering the Zodiac Terminal social card…');
-  await shoot(registryCard(), TERMINAL_CARD, TERMINAL_OUT);
-  console.log(`Done: ${count} Zodiac Terminal card, ${(total / 1024).toFixed(0)}KB.`);
+if (onlyWing) {
   await browser.close();
+  const { buildAstrofolioIdentity } = await import('./build-astrofolio-identity.mjs');
+  const identity = await buildAstrofolioIdentity();
+  console.log(`Done: ${identity.seasons.length} seasonal Astrofolio cards + distinct Terminal card.`);
   process.exit(0);
 }
 
@@ -859,8 +861,8 @@ if (onlyHoroscopes) {
     await shoot(registryLotCard(SIGNS[i], i), `registry/${SIGNS[i].slug}.png`);
   }
   // The v2 URL has a long-lived social-cache history. Preserve its original
-  // Registry bytes; the consumer rename owns only the versioned v3 URL.
-  await shoot(registryCard(LEGACY_REGISTRY_CARD_COPY), 'registry.png');
+  // Registry bytes; the active products share the neutral versioned v4 URL.
+  await shoot(wingCard(LEGACY_REGISTRY_CARD_COPY, 'zodiacs.org/registry/'), 'registry.png');
   await shoot(disclosureCard(), 'disclosure.png');
   await shoot(compatibilityInviteCard(), 'tool/compatibility-invite.png');
   for (const t of TOOLS) await shoot(toolCard(t), `tool/${t.key}.png`);

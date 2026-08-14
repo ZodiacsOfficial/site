@@ -1,7 +1,7 @@
 // Generates the quiet authority hub at /registry/.
 //
-// The Registry is deliberately separate from the market-facing Zodiac
-// Terminal. It is a static, first-party verification surface: twelve records,
+// The Registry is deliberately separate from consumer-facing Astrofolio and the
+// expert Terminal. It is a static, first-party verification surface: twelve records,
 // twenty-four official addresses, two networks, and links to the canonical
 // data and methodology. The address verifier is a progressive enhancement;
 // every address remains readable and searchable when JavaScript is disabled.
@@ -123,10 +123,10 @@ function renderRecord(asset) {
 }
 
 function renderNav() {
-  // The wing navigation's public chip leads to the market-facing Terminal.
-  // Registry is an authority page, so Terminal is intentionally not current.
+  // The wing navigation's public chip leads to consumer-facing Astrofolio.
+  // Registry is an authority page, so Astrofolio is intentionally not current.
   return wingNavHtml({ includeSearch: true })
-    .replaceAll('href="/registry/"', 'href="/terminal/"')
+    .replaceAll('href="/registry/"', 'href="/astrofolio/"')
     .replaceAll(' aria-current="page"', '');
 }
 
@@ -175,7 +175,7 @@ const html = `<!doctype html>
   <meta name="theme-color" content="#08090c" />
   <meta name="color-scheme" content="dark" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>Zodiacs Registry · Official Token Records</title>
   <meta name="description" content="Verify the twelve official Zodiac token identities and all twenty-four canonical Solana and Base addresses." />
   <link rel="canonical" href="https://zodiacs.org/registry/" />
@@ -188,10 +188,16 @@ const html = `<!doctype html>
   <script>
     (function(){
       var query=new URLSearchParams(location.search);
-      var legacyQuery=['sign','rank','outlook'].some(function(key){return query.has(key);});
+      var proQuery=['rank','outlook'].some(function(key){return query.has(key);});
+      var consumerQuery=query.has('sign');
       var hash=location.hash.slice(1).toLowerCase();
-      var legacyHash=['market','outlook','sign-gallery','gallery',${SIGN_ORDER.map((sign) => `'${sign}'`).join(',')}].includes(hash);
-      if(legacyQuery||legacyHash) location.replace('/terminal/'+location.search+location.hash);
+      var proHash=['market','briefing','research','outlook'].includes(hash);
+      var consumerHash=['sign-gallery','gallery',${SIGN_ORDER.map((sign) => `'${sign}'`).join(',')}].includes(hash);
+      if(proQuery||proHash){
+        var proHashValue=hash==='outlook'?'briefing':hash;
+        location.replace('/terminal/'+location.search+(proHashValue?'#'+proHashValue:''));
+      }
+      else if(consumerQuery||consumerHash) location.replace('/astrofolio/'+location.search+location.hash);
     })();
   </script>
 
@@ -452,8 +458,8 @@ const html = `<!doctype html>
     </section>
 
     <aside class="terminal" aria-labelledby="terminal-title">
-      <div><p class="eyebrow">Market experience</p><h2 id="terminal-title">Looking for live markets?</h2><p>Prices, sculpture browsing, rankings, charts, and research live in Zodiac Terminal. The Registry stays focused on proof.</p></div>
-      <a class="terminal-link" href="/terminal/"><b>Open Zodiac Terminal</b><span aria-hidden="true">↗</span></a>
+      <div><p class="eyebrow">Market experience</p><h2 id="terminal-title">Looking for live markets?</h2><p>Rankings, charts, liquidity, market tape, and research live in the Terminal. The Registry stays focused on proof.</p></div>
+      <a class="terminal-link" href="/terminal/"><b>Open Terminal</b><span aria-hidden="true">↗</span></a>
     </aside>
 
     <footer class="footer">
@@ -506,6 +512,12 @@ const html = `<!doctype html>
     var initial=new URLSearchParams(location.search).get('address');
     if(initial){ input.value=initial; verify(initial,false); }
   })();
+  </script>
+
+  <script type="module">
+    import('/assets/assistant-ui.js')
+      .then(function (mod) { return mod.bootstrapGuide('en'); })
+      .catch(function () {});
   </script>
 </body>
 </html>

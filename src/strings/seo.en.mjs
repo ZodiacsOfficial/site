@@ -52,14 +52,21 @@ export const OG_EN = Object.freeze({
     numberLine: 'Nº {number} / 12 · Lot {lot} of XII',
     subtitle: 'Official record · native Solana origin · bridged Base representation',
   },
-  registry: {
-    kicker: 'Verified by the Zodiacs Registry',
-    title: 'Zodiac Terminal',
-    subtitle: 'Twelve signs. Twelve transferable tokens. One live public market.',
-    data: 'Live markets · official token records · reviewed research',
+  wing: {
+    kicker: 'Zodiacs.org',
+    title: 'The Twelve',
+    subtitle: 'Gold sculptures, official records, and public market context.',
+    data: 'Astrofolio · Registry · Terminal',
+  },
+  astrofolio: {
+    path: '/astrofolio/',
+    image: '/assets/astrofolio/v2/leo/og-1200x630.png',
+    alt: 'Astrofolio: the collection of gold sculptures and official tokens for the twelve Zodiac signs.',
+  },
+  terminal: {
     path: '/terminal/',
-    image: '/assets/og/v4/zodiac-terminal.png',
-    alt: 'Zodiac Terminal — live market context, official token records, and reviewed research for the twelve Zodiac signs.',
+    image: '/assets/og/v6/terminal.png',
+    alt: 'Terminal: expert market context and reviewed research for the twelve official Zodiac tokens.',
   },
   thesis: {
     kicker: 'The Thesis',
@@ -197,7 +204,7 @@ export const BREADCRUMB_LABELS = Object.freeze({
   horoscopes: 'Horoscopes',
   houses: 'Houses',
   learn: 'Learn astrology',
-  markets: 'Zodiac Markets',
+  markets: 'Terminal venue route',
   'mercury-retrograde': 'Mercury retrograde',
   methodology: 'Methodology',
   'moon-phase': 'Moon phase',
@@ -213,7 +220,8 @@ export const BREADCRUMB_LABELS = Object.freeze({
   'saturn-return': 'Saturn return',
   sdk: 'SDK',
   terms: 'Terms',
-  terminal: 'Zodiac Terminal',
+  astrofolio: 'Astrofolio',
+  terminal: 'Terminal',
   thesis: 'The Thesis',
   today: 'Today',
   tools: 'Astrology tools',
@@ -226,25 +234,41 @@ function normalizedPath(path) {
   return value === '/' ? value : `/${value.replace(/^\/+|\/+$/g, '')}/`;
 }
 
+const TERMINAL_OG_PREFIXES = Object.freeze([
+  '/terminal/',
+  '/terminal/markets/',
+  '/terminal/research/',
+]);
+
+/** Resolve route-specific copy while the two products share one neutral card asset. */
+export function ogSpecialForPath(path) {
+  const normalized = normalizedPath(path);
+  if (normalized === OG_EN.astrofolio.path) {
+    return { key: 'astrofolio', value: OG_EN.astrofolio };
+  }
+  if (TERMINAL_OG_PREFIXES.some((prefix) => normalized.startsWith(prefix))) {
+    return { key: 'terminal', value: OG_EN.terminal };
+  }
+  for (const key of ['thesis', 'disclosure']) {
+    const value = OG_EN[key];
+    if (value.path === normalized) return { key, value };
+  }
+  return null;
+}
+
 /** Return a generated card for a known page, or null for the global fallback. */
 export function ogImageForPath(path) {
   const normalized = normalizedPath(path);
   const tool = OG_EN.tools.find((entry) => entry.path === normalized);
   if (tool) return `/assets/og/v2/tool/${tool.key}.png`;
-  for (const special of [OG_EN.registry, OG_EN.thesis, OG_EN.disclosure]) {
-    if (special.path === normalized) return special.image;
-  }
-  return null;
+  return ogSpecialForPath(normalized)?.value.image ?? null;
 }
 
 export function ogAltForPath(path) {
   const normalized = normalizedPath(path);
   const tool = OG_EN.tools.find((entry) => entry.path === normalized);
   if (tool) return `${tool.title} — Zodiacs.org`;
-  for (const special of [OG_EN.registry, OG_EN.thesis, OG_EN.disclosure]) {
-    if (special.path === normalized) return special.alt;
-  }
-  return OG_EN.fallbackAlt;
+  return ogSpecialForPath(normalized)?.value.alt ?? OG_EN.fallbackAlt;
 }
 
 export function breadcrumbLabel(segment) {

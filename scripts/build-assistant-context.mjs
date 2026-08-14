@@ -61,6 +61,9 @@ export const BANNED_CONSUMER_VOCABULARY = Object.freeze([
   'wallet',
 ]);
 
+const WING_INVENTORY_HEADING = 'ASTROFOLIO, TERMINAL, AND REGISTRY';
+const WING_INVENTORY_END_HEADING = 'GLOSSARY TERMS';
+
 const COLLAPSE = /\s+/g;
 // The assistant inventory is English-only. Exclude every declared locale,
 // including staged noindex trees such as /ru/, so preview pages can never
@@ -315,6 +318,18 @@ function bannedVocabulary(text) {
   ));
 }
 
+/**
+ * The Astrofolio/Terminal/Registry inventory intentionally uses its own records
+ * and market register. Remove that bounded section before enforcing the
+ * consumer astrology vocabulary rule on the rest of the assistant guide.
+ */
+export function consumerVocabularyScope(context) {
+  const start = context.indexOf(`\n${WING_INVENTORY_HEADING}\n`);
+  const end = context.indexOf(`\n${WING_INVENTORY_END_HEADING}\n`, start + 1);
+  if (start === -1 || end === -1) return context;
+  return `${context.slice(0, start)}${context.slice(end)}`;
+}
+
 export async function generateAssistantContext({ repoRoot = repo } = {}) {
   const contentRoot = resolve(repoRoot, 'src/content');
   const horoscopeData = await loadHoroscopes(resolve(contentRoot, 'horoscopes'));
@@ -432,14 +447,16 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     `Every route below is a live date guide. Each one-line description names the sign or boundary signs from that page's meta description. The pages verify the Sun sign across 1940–2030, give degree spans and decans, and include year tables on sign-boundary dates.`,
     birthdayLines(birthdays, signNames),
     '',
-    'ZODIAC TERMINAL AND REGISTRY',
-    '- /terminal/ — Zodiac Terminal: the separate consumer interface for the twelve official Zodiac assets, their rotating gold artwork, public activity context, and reviewed research.',
+    WING_INVENTORY_HEADING,
+    'Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.',
+    '- /astrofolio/: Astrofolio is the consumer collection for choosing a sign, seeing its gold sculpture and official token, checking its Registry record, and following a simple guide to buying it.',
+    '- /terminal/: Terminal is the expert market desk for all twelve, ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart, market tape, briefing, season context, and research headlines.',
     '- /terminal/research/ — Research desk: reviewed sky facts, traditional readings, and separately timestamped public-activity observations.',
     '- /registry/ — Zodiacs Registry: the read-only verification hub for canonical identities, official addresses, records, datasets, and methodology.',
     '- /thesis/ — The Nº 09 essay: zodiac history and identity meet public digital ownership and Solana performance; supporting disclosures follow.',
     '- /sdk/ — Open tools for charts, icons, and the registry interface.',
     '',
-    'GLOSSARY TERMS',
+    WING_INVENTORY_END_HEADING,
     'The definitions live at /learn/glossary/#slug. These are the names available there:',
     routeList(glossaryNames, 12),
     '',
@@ -461,7 +478,7 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
   if (missingDescriptions.length) {
     throw new Error(`Assistant context has routes without descriptions: ${missingDescriptions.join(', ')}`);
   }
-  const banned = bannedVocabulary(context);
+  const banned = bannedVocabulary(consumerVocabularyScope(context));
   if (banned.length) throw new Error(`Assistant context contains banned vocabulary: ${banned.join(', ')}`);
   const size = Buffer.byteLength(context);
   if (size < MIN_CONTEXT_BYTES || size > MAX_CONTEXT_BYTES) {

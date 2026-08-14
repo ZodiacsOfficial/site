@@ -1,8 +1,10 @@
 # zodiacs.org — Product, UX, SEO & Technical Strategy
 
-**The plan: make zodiacs.org one of the most-visited free astrology destinations by giving people genuinely useful tools, guides, and visual experiences — with Astrofolio as the optional identity, save, and collect layer behind it, and the token registry as one dignified wing of the house rather than the house itself.**
+**The plan: make zodiacs.org one of the most-visited free astrology destinations by giving people genuinely useful tools, guides, and visual experiences, with saved charts as an optional local-first profile layer, Astrofolio as the consumer collection experience, and the token Registry as one dignified wing of the house rather than the house itself.**
 
 This document is the operating strategy for the Learn / Explore / Collect restructure. The companion implementation record lives in the repo history; the design contract lives in `src/styles/tokens.css` and the component library.
+
+**Owner decision · 2026-08-13:** Astrofolio now names the consumer collection experience at `/astrofolio/`. Saved charts at `/profile/` are called simply “saved charts” or “your profile”; their product behavior does not change. Terminal is reserved for the expert market desk at `/terminal/`; the former `/terminal/pro/` URL redirects there. **Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.**
 
 ---
 
@@ -17,13 +19,13 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 
 **What's weak or dangerous — stated plainly:**
 
-1. **The crypto elephant.** The Registry and Terminal cover tradeable tokens. The mass astrology audience is the audience most allergic to token-shilling, and search engines treat crypto as YMYL. Keep those surfaces clearly separated from personal astrology and maintain their read-only/facts-only discipline. Astrofolio is a related but separate consumer product; it is never the name of a Zodiacs account, saved chart, or profile.
-2. **The Astrofolio promise gap.** "Saved charts" CTAs need somewhere real to land. That's why the MVP ships local-first saved charts on zodiacs.org itself; accounts come only when sync is a real need.
+1. **The crypto elephant.** The Collect layer is tradeable tokens. The mass astrology audience is the audience most allergic to token-shilling, and search engines treat crypto as YMYL. If token language leaks into Learn/Explore or saved-chart surfaces it poisons both trust and SEO. The fix is hard separation: token language stays inside Astrofolio at `/astrofolio/`, the Terminal market desk at `/terminal/`, the Registry, and their collector/builder pages. Astrofolio stays plain-language and consumer-oriented; the Registry keeps its proof/read-only discipline; the Terminal holds the dense market detail. Astrofolio is a related but separate consumer product; it is never the name of a Zodiacs account, saved chart, or profile.
+2. **The saved-charts promise gap.** "Saved charts" CTAs need somewhere real to land. That's why the MVP ships local-first saved charts on zodiacs.org itself; accounts come only when sync is a real need.
 3. **SEO is a 6–18 month compounding game** from near-zero consumer authority. Expect quiet months. The counter is correct cluster architecture from day one plus AEO/AI-answer citation, where this repo already has real infrastructure.
 4. **Horoscopes are a treadmill.** Daily × 12 is the classic content mill. Only do it with the transit-grounded pipeline (Phase 2) — real sky dates in, structured editorial out — or not at all.
 5. **Ploy.ai is a loaded gun.** Programmatic AI content at scale is exactly what scaled-content-abuse policies target. Use it as a research/draft/monitoring engine gated by human review and an embedded-tool quality bar. Never as an autopublisher.
 
-**Never do:** token CTAs outside `/registry/` · thin 200-word SEO pages · fake urgency · gating basic results behind signup (the anti-Co-Star move is the differentiator) · mystical clip-art · letting any tool autopublish to the domain.
+**Never do:** token CTAs on Learn/Explore or saved-chart surfaces · thin 200-word SEO pages · fake urgency · gating basic results behind signup (the anti-Co-Star move is the differentiator) · mystical clip-art · letting any tool autopublish to the domain.
 
 ---
 
@@ -47,7 +49,9 @@ This document is the operating strategy for the Learn / Explore / Collect restru
 /synastry/ /moon-phase/ /saturn-return/ /transits/    Phase 2–3
 /horoscopes/{sign}/        Phase 2: weekly + monthly first; daily in Phase 3
 /compatibility/{a}-{b}/    Phase 2/3: 78 pair pages, only after the synastry tool exists
-/profile/                  Saved charts (local-first; the Astrofolio surface)
+/profile/                  Saved charts (local-first profile)
+/astrofolio/               Astrofolio (consumer collection experience)
+/terminal/                 Terminal (expert market desk)
 /registry/                  Collect wing landing (the registry experience, preserved)
   /registry/{sign}/           token catalogue pages (moved from /{sign}/)
 /thesis/ /archive/ /sdk/   Unchanged URLs (collector/builder wing)
@@ -66,20 +70,20 @@ Conversion arc (layout rhythm inspired by ploy.ai; execution fully zodiac-native
 3. **Tool cards** — Birth Chart ("what it means") · Moon Sign ("how you feel") · Rising Sign ("how people first meet you") · Compatibility. Only live features get cards.
 4. **Demo chart** — a real annotated chart (Frida Kahlo, public birth data), three plain-language callouts, "Yours takes about 20 seconds."
 5. **The Twelve** — pastel icon grid → guides (the internal-link hub).
-6. **Three pillars** — Learn · Tools · **Saved charts (Astrofolio)**: "Learn your signs. Save what matters."
+6. **Three pillars** — Learn · Tools · **Saved charts**: "Learn your signs. Save what matters."
 7. **Persona doors** — New here? → Big Three · Chart-literate? → full calculator · A collector? → the Registry wing.
 8. **FAQ** (free? accurate? what happens to my birth data? what is Astrofolio? what is the registry?) with FAQPage schema.
 9. **Close** — "Start with your birth chart."
 
 ## 3. Navigation
 
-**Signs · Tools · Learn · Horoscopes (Phase 2) · Collect** + profile glyph (fills when something is saved). The Signs menu is a 12-icon pastel grid — the icons are the navigation. Sign pages tint the accent with their disc hue. Footer: full tree + methodology + SDK + socials; crypto disclosure lives only in the Collect column.
+**Signs · Tools · Learn · Horoscopes (Phase 2) · Saved charts** + profile glyph (fills when something is saved) + **Astrofolio** collection chip. The Signs menu is a 12-icon pastel grid — the icons are the navigation. Sign pages tint the accent with their disc hue. Footer: full tree + methodology + SDK + socials; crypto disclosure lives only in the collector/builder wing.
 
 ## 4. Voice & microcopy
 
 Plain language first; jargon translated inline ("Rising sign — how people first meet you"). Confident and warm; never woo-woo, never salesy. Technical facts stay available where they build trust.
 
-Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Saved charts" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · nav wing label: "Registry" / ES "Registro" (the collector's wing; the URL stays `/registry/`) · "the Twelve" = the twelve signs as canonical records in the registry · records bridge (sign guides EN+ES + the birth-chart result): "{sign} also exists as one of the Twelve — a canonical record in the registry" → "View the record →" (records register, never market language) · profile empty state: "Nothing saved yet. Charts you save will live here, on your device first." · Astrofolio one-liner: "The optional companion app the free tools feed into — your saved charts and the signs you care about become a cosmic identity you keep."
+Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved · on this device" · "Saved charts" · "Find your moon sign" / "Find your rising sign" · "Read your sign" · nav collection label: "Astrofolio" (the consumer collection at `/astrofolio/`) · "the Twelve" = the twelve signs as canonical records in the Registry · records bridge (sign guides EN+ES + the birth-chart result): "{sign} also exists as one of the Twelve — a canonical record in the Registry" → "View the record →" (records register, never market language) · profile empty state: "Nothing saved yet. Charts you save will live here, on your device first." · Astrofolio one-liner: "Choose your sign and meet its gold sculpture and official identity through one calm collection view."
 
 ## 5. MVP feature set (shipped in this restructure)
 
@@ -98,7 +102,7 @@ Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved ·
 - Compatibility calculator (instant sun-sign + full synastry) → then 78 pair pages with the tool embedded.
 - Weekly + monthly horoscopes, transit-grounded: a cron computes real transits (same engine in Node), drafts against a strict editorial template with transit data cited inline, human review, commit → rebuild.
 - Moon phase tool · Saturn-return calculator · planets/houses/aspects clusters (~30 pages).
-- **Astrofolio accounts** (Supabase): sync the local profile losslessly; relationship tracking.
+- **Saved-chart accounts** (Supabase): sync the local profile losslessly; relationship tracking.
 - Collect wing retheme onto shared tokens (museum character kept); shareable chart OG cards.
 
 **Phase 3 (months ~3–6+): compound**
@@ -126,22 +130,22 @@ Canonical labels: "Get your free birth chart" · "Save this chart" → "Saved ·
 
 **AEO throughout:** every tool page carries a quotable computed fact box (structured, dated sky data); FAQPage/HowTo schema wherever honest; llms.txt covers the consumer surface; the existing AI-crawler posture extends to all new content.
 
-## 9. How Astrofolio is introduced
+## 9. How saved charts are introduced
 
-**Principle: Astrofolio only ever offers to keep something the user just created. It never sells.**
+**Principle: saved charts only offer to keep something the user just created. They never sell.**
 
 - Calculator result → **"Save this chart"** (one tap, local, no signup) → profile glyph fills.
 - Second saved chart → "Compare these two →" (P2 synastry) → **"Track this relationship."**
 - Guide footer → "Is {Sign} your sun sign? Add it to your profile."
 - Horoscopes (P2) → "Get this for *your* placements."
 - `/profile/` is the only surface that upsells accounts (P2): "Keep this on every device."
-- **Collecting is the last rung, never the first** — inside `/registry/` and the profile's Collection tab only.
+- **Token collecting is a separate path, never a save-flow upsell:** Astrofolio, the Registry, and the Terminal stay outside the saved-charts funnel.
 
-Funnel: anonymous tool use → local save (zero friction) → accumulation → account at a real sync-need moment → (optional deep end) the registry.
+Funnel: anonymous tool use → local save (zero friction) → accumulation → account at a real sync-need moment. Astrofolio is an independently entered consumer collection experience, not the final rung of this funnel.
 
 ## 10. The registry's place
 
-The registry is **the collector's wing**: the prior homepage experience lives intact at `/registry/` (film hero, verifier, Pulse, Standings, shelf viewer, FAQ); catalogue pages at `/registry/{sign}/`; thesis/archive/sdk unchanged. Museum voice and Warm Gilt aesthetic are preserved inside the wing. Market data never renders outside it. The wing keeps its anti-hype/read-only discipline — that discipline is why this coexistence works.
+The Registry is **the record**: its verification experience lives at `/registry/`; catalogue pages live at `/registry/{sign}/`; thesis/archive/sdk URLs stay unchanged. Astrofolio at `/astrofolio/` is the consumer collection, while the Terminal at `/terminal/` is the expert market desk. The Registry keeps its anti-hype/read-only discipline and remains the canonical source of identity, addresses, datasets, and methodology.
 
 ## 11. Calculations & APIs (own the math, client-side)
 
@@ -171,7 +175,7 @@ Astro 5 static + Preact islands · TypeScript engine lib shared browser/Node · 
 1. **Chart → Save:** result → "Save this chart" → local → glyph fills → return visit greets "Sun {sign} ☉".
 2. **Two charts → Relationship:** ≥2 charts → "Compare these two →" → synastry (P2) → "Track this relationship."
 3. **Guide → Identity:** "your sign?" → add to profile → profile suggests the full chart ("know your moon too?").
-4. **Profile → Account (P2):** ≥2 saves or second device → "Keep this on every device" → Astrofolio account → sync → (quiet, last) the registry wing.
+4. **Profile → Account (P2):** ≥2 saves or second device → "Keep this on every device" → saved-chart account → sync.
 
 ## 15. Ploy.ai — the traffic engine, with a muzzle
 

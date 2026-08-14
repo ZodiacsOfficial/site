@@ -9,6 +9,9 @@ const exists = async (path) => access(resolve(root, path)).then(() => true, () =
 
 describe('Terminal public-route split', () => {
   it('serves the advanced market and research sources only from Terminal paths', async () => {
+    expect(await exists('public/astrofolio/index.html')).toBe(true);
+    expect(await exists('public/terminal/index.html')).toBe(true);
+    expect(await exists('public/terminal/pro/index.html')).toBe(false);
     expect(await exists('public/terminal/markets/index.html')).toBe(true);
     expect(await exists('public/registry/exchange/index.html')).toBe(false);
     expect(await exists('src/pages/terminal/research/index.astro')).toBe(true);
@@ -22,19 +25,60 @@ describe('Terminal public-route split', () => {
     expect(markets).not.toContain('https://zodiacs.org/registry/exchange/');
 
     const research = await read('src/pages/terminal/research/index.astro');
+    const researchNote = await read('src/pages/terminal/research/[slug].astro');
     expect(research).toContain('path="/terminal/research/"');
     expect(research).toContain('href="/terminal/"');
+    expect(researchNote).toContain('href="/terminal/"');
     expect(research).not.toContain('/registry/research/');
   });
 
-  it('redirects legacy consumer routes directly to their Terminal destinations', async () => {
+  it('keeps the indexed Pro reading surface separate from the protected Markets route', async () => {
+    const [consumer, pro, markets] = await Promise.all([
+      read('public/astrofolio/index.html'),
+      read('public/terminal/index.html'),
+      read('public/terminal/markets/index.html'),
+    ]);
+    expect(pro).toContain('<link rel="canonical" href="https://zodiacs.org/terminal/" />');
+    expect(pro).toContain('<meta name="zodiacs-registry-view" content="terminal-pro" />');
+    expect(pro).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
+    expect(pro).not.toMatch(/<meta\s+name=["']robots["'][^>]*noindex/iu);
+    expect(consumer).not.toContain('zodiacs-registry-exchange-enabled');
+    expect(markets).toContain('<meta name="robots" content="noindex" />');
+  });
+
+  it('publishes Astrofolio for consumers and reserves Terminal for the market desk', async () => {
+    const [consumer, pro] = await Promise.all([
+      read('public/astrofolio/index.html'),
+      read('public/terminal/index.html'),
+    ]);
+    expect(consumer).toContain('<title>Astrofolio · Choose your sign and see its official Zodiac token · Zodiacs.org</title>');
+    expect(consumer).toContain('aria-label="Astrofolio navigation"');
+    expect(consumer).toContain('/assets/astrofolio/v2/zodiac-ring-192.png');
+    expect(consumer).toContain('/assets/astrofolio/v2/leo/astrofolio.webmanifest');
+    expect(consumer).toContain('/assets/astrofolio/v2/leo/og-1200x630.png');
+    expect(consumer).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
+    expect(pro).toContain('<title>Terminal · Live Prices, Liquidity &amp; Research · Zodiacs.org</title>');
+    expect(pro).toContain('<h1 id="pro-static-title">Terminal</h1>');
+    expect(pro).toContain('/assets/og/v6/terminal.png');
+    expect(pro).not.toContain('/assets/astrofolio/v2/');
+    expect(pro).toContain('title="Zodiacs.org Markets Research"');
+    expect(pro).not.toContain('Zodiac Markets Research');
+    expect(pro).toContain('<a class="pro-static-hero__switch" href="/astrofolio/" data-terminal-static-view="consumer">Astrofolio');
+    expect(pro).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
+  });
+
+  it('redirects legacy consumer routes directly to Astrofolio and legacy Pro to Terminal', async () => {
     const config = JSON.parse(await read('vercel.json'));
     const redirects = new Map(config.redirects.map((rule) => [rule.source, rule]));
     const expected = {
-      '/registry/shelf': '/terminal/',
-      '/registry/shelf/': '/terminal/',
-      '/registry/gallery': '/terminal/',
-      '/registry/gallery/': '/terminal/',
+      '/collect': '/astrofolio/',
+      '/collect/': '/astrofolio/',
+      '/registry/shelf': '/astrofolio/',
+      '/registry/shelf/': '/astrofolio/',
+      '/registry/gallery': '/astrofolio/',
+      '/registry/gallery/': '/astrofolio/',
+      '/terminal/pro': '/terminal/',
+      '/terminal/pro/': '/terminal/',
       '/registry/exchange': '/terminal/markets/',
       '/registry/exchange/': '/terminal/markets/',
       '/registry/exchange/:path(.*)': '/terminal/markets/:path',
@@ -47,6 +91,16 @@ describe('Terminal public-route split', () => {
       expect(redirects.get(source)?.destination, source).toBe(destination);
       expect(redirects.get(source)?.permanent, source).toBe(true);
     }
+  });
+
+  it('hands old consumer-only Terminal hashes to Astrofolio without dropping state', async () => {
+    const terminal = await read('public/terminal/index.html');
+    expect(terminal).toContain("'verify', 'buy', 'faq', 'the-twelve', 'thesis'");
+    expect(terminal).toContain("'official-twelve', 'market-snapshot', 'registry'");
+    for (const sign of ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces']) {
+      expect(terminal).toContain(`'${sign}'`);
+    }
+    expect(terminal).toContain("location.replace('/astrofolio/' + location.search + location.hash)");
   });
 
   it('keeps no-store, noindex, and the provider allowlist on the new markets route', async () => {
@@ -69,8 +123,25 @@ describe('Terminal public-route split', () => {
 
     const feed = await read('src/pages/feeds/market-research.json.ts');
     const sitemap = await read('src/pages/sitemap.xml.ts');
+    const legacyUrls = await read('src/lib/legacy/urls.ts');
     expect(feed).toContain("home_page_url: 'https://zodiacs.org/terminal/research/'");
     expect(sitemap).toContain("'/terminal/research/'");
+    expect(sitemap).toContain("['/astrofolio/', '2026-08-13']");
+    expect(sitemap).toContain("['/terminal/', '2026-08-13']");
+    expect(legacyUrls).toContain("{ path: '/astrofolio/', priority: 0.8 }");
+    expect(legacyUrls).toContain("{ path: '/terminal/', priority: 0.78 }");
     expect(sitemap).not.toContain("'/registry/research/'");
+  });
+
+  it('keeps research breadcrumbs inside the Terminal identity', async () => {
+    const [index, article] = await Promise.all([
+      read('src/pages/terminal/research/index.astro'),
+      read('src/pages/terminal/research/[slug].astro'),
+    ]);
+    for (const source of [index, article]) {
+      expect(source).toContain("name: 'Terminal', item: 'https://zodiacs.org/terminal/'");
+      expect(source).toContain('jsonLd={[terminalResearchBreadcrumb]}');
+      expect(source).not.toContain("name: 'Astrofolio'");
+    }
   });
 });

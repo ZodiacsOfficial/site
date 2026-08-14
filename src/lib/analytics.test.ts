@@ -10,6 +10,7 @@ const REQUIRED_EVENTS = [
   'widget_embed_copied',
   'registry_visit',
   'verifier_used',
+  'terminal_view_switch',
   'sdk_click',
   'wallet_chart_computed',
   'aura_view',
@@ -123,5 +124,21 @@ describe('analytics event contract', () => {
       method: 'copy',
       url: 'never',
     })).toEqual({ method: 'copy' });
+  });
+
+  it('keeps Terminal view switches inside the fixed surface and direction enums', () => {
+    expect(sanitizeAnalyticsProperties('terminal_view_switch', {
+      surface: 'header',
+      direction: 'consumer_to_pro',
+      url: '/terminal/pro/',
+    })).toEqual({ surface: 'header', direction: 'consumer_to_pro' });
+    expect(sanitizeAnalyticsProperties('terminal_view_switch', {
+      surface: 'preference_banner',
+      direction: 'consumer_to_pro',
+    })).toEqual({ surface: 'preference_banner', direction: 'consumer_to_pro' });
+    expect(sanitizeAnalyticsProperties('terminal_view_switch', {
+      surface: 'consumer',
+      direction: 'to_pro',
+    })).toEqual({});
   });
 });

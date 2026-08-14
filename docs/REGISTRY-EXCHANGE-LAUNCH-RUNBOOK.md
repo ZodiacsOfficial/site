@@ -1,9 +1,13 @@
-# Zodiac Markets launch runbook
+# Terminal venue-route launch runbook
 
-This runbook carries Zodiac Markets at `/terminal/markets/` from
-merged-but-flag-off to a
-time-limited production pilot. It does not ratify the owner decision, enable a
+This runbook carries Terminal's protected venue route at `/terminal/markets/`
+from merged-but-flag-off to a time-limited production pilot. It does not ratify the owner decision, enable a
 Vercel environment, approve a PR, or authorize a real trade by itself.
+
+Current public labels since 2026-08-13 are Astrofolio for `/astrofolio/` and
+Terminal for the expert desk at `/terminal/`, reviewed research, and this
+venue route. The earlier owner record preserves “Zodiac Markets” as a
+historical label; internal `exchange` identifiers remain unchanged.
 
 ## Hard gates
 
@@ -52,9 +56,11 @@ git diff --exit-code
 ```
 
 Before any flag-on QA, verify that both the route and `/terminal/` landing
-markers are `0`, the terminal and its script are absent, and Zodiac Terminal has
-no Zodiac Markets discovery entry. The round trip above must stamp both
-markers to `1` from the same environment flag, then restore both to `0`.
+markers are `0`, the terminal and its script are absent, and neither the
+Terminal page nor Astrofolio has a venue-route discovery entry. `/astrofolio/`
+must have no exchange flag marker in either state. The round trip above must stamp the route and Terminal
+markers to `1` from the same environment flag while leaving `/astrofolio/`
+clean, then restore the two stamped surfaces to `0` byte-for-byte.
 
 ## Protected flag-on QA
 
@@ -64,9 +70,10 @@ production alias. Remove the branch override after QA.
 
 Verify:
 
-- the enabled meta marker is `1` on both Zodiac Markets and `/terminal/`, the
-  terminal mounts, and the twelve records remain below it;
-- exactly one Zodiac Markets discovery entry appears on `/terminal/`; it is
+- the enabled meta marker is `1` on both the Terminal venue route and `/terminal/`,
+  the terminal mounts, and the twelve records remain below it;
+- `/astrofolio/` has no exchange marker and no venue-route discovery entry;
+- exactly one Terminal venue-route discovery entry appears on `/terminal/`; it is
   same-origin, points to `/terminal/markets/#<selected-sign>`, contains no
   venue URL, and causes no provider or wallet request merely by rendering or
   receiving focus;
@@ -83,13 +90,15 @@ Verify:
 - requests are limited to self, `lite-api.jup.ag`, `api.dexscreener.com`,
   `api.geckoterminal.com`, and `plausible.io`; a wallet address appears only
   after the visitor explicitly asks the panel to trade;
-- the service worker has no CacheStorage entry for any Zodiac Markets navigation.
+- the service worker has no CacheStorage entry for any Terminal venue-route or
+  expert Terminal navigation, including the extensionless, trailing-slash, and
+  `index.html` forms.
 
 ## Merge and production pilot
 
 Open the PR as draft. Describe the flag-off guarantee, audit fixes, legacy
-Ultra constraint, Zodiac Markets public name, CSP/cache controls, and rollback target. Do
-not merge around a red required check. Merge only after owner PR approval.
+Ultra constraint, Terminal public name, CSP/cache controls, and rollback target.
+Do not merge around a red required check. Merge only after owner PR approval.
 
 Confirm the merge deploy is flag-off first. Then the owner may set
 `PUBLIC_REGISTRY_EXCHANGE_ENABLED=1` for Production only and create a new
@@ -122,8 +131,10 @@ requires a dated owner decision.
 
 1. Use Vercel Instant Rollback to the retained flag-off production deployment.
 2. Confirm both the production route and Terminal landing meta markers are
-   `0`, the terminal/script and sole Terminal discovery entry are absent, and
-   an offline request cannot recover a cached flag-on page.
+   `0`, the terminal/script and sole expert discovery entry are absent, and
+   Astrofolio has neither an exchange marker nor a discovery entry.
+   Confirm an offline request cannot recover a cached flag-on venue route or
+   expert Terminal page.
 3. Remove the Production environment variable and deploy the current `main` to
    make flag-off durable.
 4. If Vercel paused automatic domain assignment during rollback, restore it
