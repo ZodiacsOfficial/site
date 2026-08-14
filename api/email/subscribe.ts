@@ -5,6 +5,8 @@ import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email
 import { emailStatusPage } from '../../src/lib/email/server-page.js';
 import { dailyEmailFeatureEnabled, hasDailySunEmailProvider } from '../../src/lib/email/daily-config.js';
 import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
+import confirmHandler from './_confirm.js';
+import unsubscribeHandler from './_unsubscribe.js';
 
 function sendJson(res: any, status: number, body: Record<string, string | boolean>): void {
   res.statusCode = status;
@@ -28,7 +30,7 @@ function wantsJson(req: any): boolean {
   return requestHeader(req, 'accept').includes('application/json');
 }
 
-export default async function handler(req: any, res: any): Promise<void> {
+export async function handleEmailSubscribe(req: any, res: any): Promise<void> {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     sendJson(res, 405, { error: 'method' });
@@ -96,4 +98,28 @@ export default async function handler(req: any, res: any): Promise<void> {
     if (wantsJson(req)) sendJson(res, 502, { error: 'unavailable' });
     else sendHtml(res, 502, emailStatusPage(input.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
   }
+}
+
+export function emailLifecycleRoute(req: any): 'subscribe' | 'confirm' | 'unsubscribe' | 'invalid' {
+  const route = req?.query?.__zodiacs_email_route;
+  if (route === undefined) return 'subscribe';
+  if (route === 'confirm' || route === 'unsubscribe') return route;
+  return 'invalid';
+}
+
+export default async function handler(req: any, res: any): Promise<void> {
+  const route = emailLifecycleRoute(req);
+  if (route === 'confirm') {
+    await confirmHandler(req, res);
+    return;
+  }
+  if (route === 'unsubscribe') {
+    await unsubscribeHandler(req, res);
+    return;
+  }
+  if (route === 'invalid') {
+    sendJson(res, 404, { error: 'route' });
+    return;
+  }
+  await handleEmailSubscribe(req, res);
 }

@@ -1,8 +1,8 @@
 import { createHash } from 'node:crypto';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import chartPreferenceHandler from '../../../api/email/chart-preference';
-import confirmHandler from '../../../api/email/confirm';
-import unsubscribeHandler from '../../../api/email/unsubscribe';
+import confirmHandler from '../../../api/email/_confirm';
+import unsubscribeHandler from '../../../api/email/_unsubscribe';
 import { createDailyChartOptInToken } from './daily-chart-token';
 import { createDailyUnsubscribeToken } from './daily-unsubscribe-token';
 import { createEmailOptInToken } from './opt-in-token';

@@ -448,7 +448,7 @@ export function createGuideHandler(overrides: Partial<GuideHandlerDependencies> 
     const connection = requestAbort(req, res);
     try {
       const decoded = await readGuideHttpTurnRequest(req);
-      if (!decoded.ok) {
+      if (decoded.ok === false) {
         sendJson(res, decoded.status, {
           error: decoded.status === 413 ? 'request_too_large' : 'invalid_request',
         });
@@ -495,7 +495,7 @@ export function createGuideHandler(overrides: Partial<GuideHandlerDependencies> 
         }
         return;
       }
-      if (!authority.ok) {
+      if (authority.ok === false) {
         if (authority.status === 429) res.setHeader('Retry-After', '60');
         sendJson(res, authority.status, rejection(request, authority.code, authority.retryable));
         return;

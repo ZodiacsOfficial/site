@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import adminBootstrapHandler from '../../../api/email/admin-bootstrap';
 import chartPreferenceHandler from '../../../api/email/chart-preference';
-import confirmHandler from '../../../api/email/confirm';
+import confirmHandler from '../../../api/email/_confirm';
 import { dailyRecipientHash } from '../daily-email/identity';
 import {
   DAILY_EMAIL_ADMIN_BOOTSTRAP_HEADER,

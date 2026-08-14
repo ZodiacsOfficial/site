@@ -204,6 +204,14 @@
   ],
   "rewrites": [
     {
+      "source": "/api/email/confirm",
+      "destination": "/api/email/subscribe?__zodiacs_email_route=confirm"
+    },
+    {
+      "source": "/api/email/unsubscribe",
+      "destination": "/api/email/subscribe?__zodiacs_email_route=unsubscribe"
+    },
+    {
       "source": "/v1/guide/turn",
       "destination": "/api/guide?action=turn"
     },

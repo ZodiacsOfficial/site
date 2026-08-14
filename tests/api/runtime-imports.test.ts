@@ -14,9 +14,7 @@ const EXPECTED_HANDLERS = [
   'api/compatibility.ts',
   'api/email/admin-bootstrap.ts',
   'api/email/chart-preference.ts',
-  'api/email/confirm.ts',
   'api/email/subscribe.ts',
-  'api/email/unsubscribe.ts',
   'api/guide.ts',
   'api/push/subscribe.ts',
   'api/unsubscribe.ts',
@@ -189,7 +187,7 @@ function auditRuntimeGraphs(): { violations: string[]; catalogs: string[] } {
 describe('Vercel API runtime packaging', () => {
   it('exposes only the intended function handlers', () => {
     expect(deployedFunctionFiles(API_ROOT).sort()).toEqual([...EXPECTED_HANDLERS].sort());
-    expect(EXPECTED_HANDLERS).toHaveLength(14);
+    expect(EXPECTED_HANDLERS).toHaveLength(12);
   });
 
   it('routes Registry news through the existing compatibility function', () => {
@@ -205,6 +203,18 @@ describe('Vercel API runtime packaging', () => {
     expect(vercel.rewrites).toContainEqual({
       source: '/api/account/:action',
       destination: '/api/account?action=:action',
+    });
+  });
+
+  it('keeps the public email lifecycle URLs on one bundled function', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/email/confirm',
+      destination: '/api/email/subscribe?__zodiacs_email_route=confirm',
+    });
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/email/unsubscribe',
+      destination: '/api/email/subscribe?__zodiacs_email_route=unsubscribe',
     });
   });
 
@@ -233,7 +243,7 @@ describe('Vercel API runtime packaging', () => {
   it('packages the shared admin bootstrap guard in both daily enrollment graphs', () => {
     for (const handler of [
       'api/email/chart-preference.ts',
-      'api/email/confirm.ts',
+      'api/email/_confirm.ts',
     ]) {
       expect(runtimeImports(join(ROOT, handler))).toContainEqual({
         specifier: '../../src/lib/email/daily-admin-bootstrap.js',

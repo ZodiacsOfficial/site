@@ -1,3 +1,4 @@
+// Bundled by the public email lifecycle entrypoint; not a standalone Function.
 import { createHash, randomUUID } from 'node:crypto';
 import {
   createEmailSubscriptionAdapter,

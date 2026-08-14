@@ -11,8 +11,8 @@ vi.mock('@vercel/functions', () => ({
 }));
 
 import subscribeHandler from '../../../api/email/subscribe';
-import confirmHandler from '../../../api/email/confirm';
-import unsubscribeHandler from '../../../api/email/unsubscribe';
+import confirmHandler from '../../../api/email/_confirm';
+import unsubscribeHandler from '../../../api/email/_unsubscribe';
 import { createDailyUnsubscribeToken } from './daily-unsubscribe-token';
 import { dailySunRecipientHash, dailySunTokenHash } from './daily-sun-server';
 
