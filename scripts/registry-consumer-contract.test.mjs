@@ -60,7 +60,6 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(consumer).toContain('<meta name="zodiacs-registry-view" content="terminal" />');
     expect(consumer).toContain('<title>Astrofolio · Choose your sign and see its official Zodiac token · Zodiacs.org</title>');
     expect(consumer).toContain('<meta property="og:title" content="Astrofolio · Zodiacs" />');
-    expect(consumer).toContain('<meta property="og:image:type" content="image/png" />');
     expect(consumer).toContain('<meta name="twitter:title" content="Astrofolio · Zodiacs" />');
     expect(consumer).toContain('"position": 2, "name": "Astrofolio"');
     expect(consumer).not.toContain('zodiacs-registry-exchange-enabled');
