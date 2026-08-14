@@ -8779,10 +8779,62 @@
     src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
     integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"></script>
   <script defer src="/assets/app.js?v=z4"></script>
-  <script type="module">
-    import('/assets/assistant-ui.js')
-      .then(function (mod) { return mod.bootstrapGuide('en'); })
-      .catch(function () {});
+
+  <script data-guide-loader="zodiacs-guide-loader-v1">
+(function () {
+    var modulePromise;
+    var timer = 0;
+    var intentPending = false;
+    var defaultLocale = "en";
+    function loadGuide() {
+      if (!modulePromise) {
+        modulePromise = import('/assets/assistant-ui.js').catch(function (error) {
+          modulePromise = null;
+          throw error;
+        });
+      }
+      return modulePromise;
+    }
+    function stopIntentListener() {
+      document.removeEventListener('click', onGuideIntent, true);
+    }
+    function stopScheduledMount() {
+      window.clearTimeout(timer);
+      window.removeEventListener('load', scheduleGuide);
+    }
+    function mountGuide() {
+      loadGuide().then(function (mod) {
+        return mod.bootstrapGuide(defaultLocale).then(stopIntentListener);
+      }).catch(function () {});
+    }
+    function scheduleGuide() {
+      timer = window.setTimeout(mountGuide, 500);
+    }
+    function onGuideIntent(event) {
+      var target = event.target && event.target.closest
+        ? event.target.closest('[data-assistant-open]')
+        : null;
+      if (!target) return;
+      if (intentPending) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+      intentPending = true;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      stopScheduledMount();
+      loadGuide().then(function (mod) {
+        return mod.openAssistant(
+          target.getAttribute('data-assistant-locale') || defaultLocale,
+          target
+        ).then(stopIntentListener);
+      }).catch(function () { intentPending = false; });
+    }
+    document.addEventListener('click', onGuideIntent, true);
+    if (document.readyState === 'complete') scheduleGuide();
+    else window.addEventListener('load', scheduleGuide, { once: true });
+  })();
   </script>
 </body>
 </html>

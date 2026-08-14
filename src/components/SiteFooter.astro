@@ -3,6 +3,7 @@ import { SIGNS, signName } from '../lib/signs';
 import BrandMark from './BrandMark.astro';
 import EmailCapture from './EmailCapture.astro';
 import TerminalMarketVenueNotice from './TerminalMarketVenueNotice.astro';
+import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../lib/assistant/guide-loader.mjs';
 import {
   LOCALE_META,
   LEGACY_HOME_SELECTOR_LOCALES,
@@ -135,17 +136,9 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
   </div>
 </footer>
 
-<script is:inline>
-  /* Guide stays outside Astro's module graph. Bootstrap mounts the local
-     launcher and quiet welcome; it does not read a chart or call the cloud. */
-  (function () {
-    var footerButton = document.querySelector('[data-assistant-open][data-assistant-locale]');
-    var locale = footerButton && footerButton.getAttribute('data-assistant-locale');
-    import('/assets/assistant-ui.js').then(function (mod) {
-      return mod.bootstrapGuide(locale || undefined);
-    }).catch(function () {});
-  })();
-</script>
+<!-- Guide stays outside Astro's module graph. Before its post-load mount, the
+     inline loader reacts only to a deliberate Guide CTA click. -->
+<script is:inline data-guide-loader={GUIDE_LOADER_MARKER} set:html={guideLoaderSource(locale)} />
 
 <style>
   .footer {

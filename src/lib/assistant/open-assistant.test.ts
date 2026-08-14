@@ -422,15 +422,37 @@ describe('assistant profile-access privacy fence', () => {
   });
 
   it('bootstraps a quiet launcher without reading a chart or calling Guide', async () => {
-    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
-    const bootstrapStart = source.indexOf('export async function bootstrapGuide(');
-    const openStart = source.indexOf('export async function openAssistant(');
-    const bootstrap = source.slice(bootstrapStart, openStart);
+    const [shell, loader, drawer, buildScript] = await Promise.all([
+      readFile(new URL('./guide-bootstrap.ts', import.meta.url), 'utf8'),
+      readFile(new URL('./guide-loader.mjs', import.meta.url), 'utf8'),
+      readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8'),
+      readFile(new URL('../../../scripts/build-assistant-ui.mjs', import.meta.url), 'utf8'),
+    ]);
+    const bootstrapStart = shell.indexOf('export async function bootstrapGuide(');
+    const bootstrap = shell.slice(bootstrapStart);
 
-    expect(bootstrap).toContain('window.setTimeout(showInvite, 2_000);');
+    expect(shell).toContain("const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js';");
+    expect(shell).toContain('const INVITE_DELAY_MS = 2_000;');
+    expect(shell).toContain("const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';");
+    expect(shell).toContain('context.drawImage(image, 0, 0, size, size);');
+    expect(shell).toContain("canvas.setAttribute('aria-hidden', 'true');");
+    expect(shell).toContain('drawerModulePromise ??= import(DRAWER_MODULE_HREF)');
+    expect(loader).toContain('export const GUIDE_POST_LOAD_DELAY_MS = 500;');
+    expect(loader).toContain("window.addEventListener('load', scheduleGuide, { once: true });");
+    expect(loader).toContain("document.addEventListener('click', onGuideIntent, true);");
+    expect(loader).toContain('event.stopImmediatePropagation();');
+    expect(loader).toContain('return mod.openAssistant(');
+    expect(bootstrap).not.toContain('loadDrawer(');
     expect(bootstrap).not.toContain('readSelectedSelfChart');
     expect(bootstrap).not.toContain('fetch(');
     expect(bootstrap).not.toContain('.focus()');
+    expect(shell).not.toContain('/v1/guide/turn');
+    expect(shell).not.toContain('zodiacs.guide.daily-session.v1');
+    expect(drawer).toContain("const STYLESHEET_HREF = '/assets/assistant-drawer.css';");
+    expect(drawer).toContain("document.querySelector<HTMLButtonElement>('[data-guide-launcher]')");
+    expect(drawer).not.toContain('function wireOpeners(');
+    expect(buildScript).toContain("'assistant-ui': resolve(repo, 'src/lib/assistant/guide-bootstrap.ts')");
+    expect(buildScript).toContain("'assistant-drawer': resolve(repo, 'src/lib/assistant/open-assistant.ts')");
   });
 
   it('keeps remote analytics out of every surface that hosts Guide state', async () => {
@@ -453,7 +475,8 @@ describe('assistant profile-access privacy fence', () => {
       expect(html, path).not.toContain('plausible.io/js');
       expect(html, path).not.toContain('zodiacs-analytics:start');
       expect(html, path).not.toContain('window.plausible = window.plausible');
-      expect(html, path).toContain("mod.bootstrapGuide('en')");
+      expect(html, path).toContain('data-guide-loader="zodiacs-guide-loader-v1"');
+      expect(html, path).toContain('return mod.bootstrapGuide(defaultLocale)');
     }
   });
 });

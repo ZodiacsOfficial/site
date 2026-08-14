@@ -26,6 +26,7 @@ import { NAV_SIGNS, wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mj
 import { brandIconLinkMarkup } from '../src/lib/brand-icons.mjs';
 import { renderTradeRegion } from '../src/trade/entry.mjs';
 import { EN } from '../src/strings/en.mjs';
+import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../src/lib/assistant/guide-loader.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -1214,12 +1215,8 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
     </footer>
   </main>
 
-  <script>
-  (function () {
-    import('/assets/assistant-ui.js')
-      .then(function (mod) { return mod.bootstrapGuide('en'); })
-      .catch(function () {});
-  })();
+  <script data-guide-loader="${GUIDE_LOADER_MARKER}">
+${guideLoaderSource('en')}
   </script>
 
   <script>

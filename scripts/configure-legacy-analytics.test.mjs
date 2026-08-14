@@ -95,7 +95,7 @@ describe('legacy analytics build injection', () => {
       bridgeExistingProvider: true,
     });
 
-    expect(result).toContain("mod.bootstrapGuide('en')");
+    expect(result).toContain('/assets/assistant-ui.js');
     expect(result).not.toContain('plausible.io');
     expect(result).not.toContain('analytics.example');
     expect(result).not.toContain('window.plausible = window.plausible');
@@ -123,8 +123,11 @@ describe('legacy analytics build injection', () => {
     );
 
     const result = ensureDefaultGuideBootstrap(clickOnly);
-    expect(result).toContain("mod.bootstrapGuide('en')");
-    expect(result).not.toContain("mod.openAssistant('en', button)");
+    expect(result).toContain('data-guide-loader="zodiacs-guide-loader-v1"');
+    expect(result).toContain('return mod.bootstrapGuide(defaultLocale)');
+    expect(result).toContain('return mod.openAssistant(');
+    expect(result).toContain("window.addEventListener('load', scheduleGuide, { once: true });");
+    expect(result).toContain('event.stopImmediatePropagation();');
     expect(ensureDefaultGuideBootstrap(result)).toBe(result);
   });
 

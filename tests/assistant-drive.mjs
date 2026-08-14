@@ -196,8 +196,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     const page = await context.newPage();
     const requests = [];
+    const assistantAssets = [];
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
+    page.on('request', (request) => {
+      const pathname = new URL(request.url()).pathname;
+      if (pathname.startsWith('/assets/assistant-') || pathname === '/assets/guide-avatar.webp') {
+        assistantAssets.push(pathname);
+      }
+    });
     await installGuideRoute(page, requests);
     await page.goto(`${baseURL}/ask/?private=must-not-leak`, { waitUntil: 'networkidle' });
     await page.evaluate(() => {
@@ -207,19 +214,28 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     const launcher = page.locator('[data-guide-launcher]');
     await launcher.waitFor({ state: 'visible', timeout: 15_000 });
+    await page.evaluate(() => { window.__initialGuideLauncher = document.querySelector('[data-guide-launcher]'); });
     check('Guide launcher is visible by default', (await launcher.textContent())?.trim() === 'Guide');
+    check('pre-action shell does not fetch the private drawer graph',
+      !assistantAssets.some((path) => path === '/assets/assistant-drawer.js'
+        || path === '/assets/assistant-drawer.css'
+        || path.startsWith('/assets/assistant-chunks/')),
+      assistantAssets.join(' | '));
     const launcherAvatar = launcher.locator('.zguide-launcher__avatar');
+    await launcherAvatar.waitFor({ state: 'visible' });
+    await page.waitForFunction(() => document.querySelector('.zguide-launcher__avatar')
+      ?.getAttribute('data-guide-portrait') === 'ready');
     check('launcher uses the bounded local Guide avatar accessibly',
-      await launcherAvatar.getAttribute('src') === '/assets/guide-avatar.webp'
-      && await launcherAvatar.getAttribute('alt') === ''
-      && await launcherAvatar.getAttribute('loading') === 'lazy'
-      && await launcherAvatar.getAttribute('fetchpriority') === 'low'
-      && await launcherAvatar.evaluate((node) => node.naturalWidth === 256 && node.naturalHeight === 256));
+      await launcherAvatar.evaluate((node) => node.tagName === 'CANVAS'
+        && node.getAttribute('aria-hidden') === 'true'
+        && node.getAttribute('role') === 'presentation'
+        && node.getAttribute('data-guide-portrait') === 'ready'
+        && node.width > 0 && node.height > 0));
     await page.waitForTimeout(2_200);
     const welcome = page.locator('.zguide-invite');
     await welcome.waitFor({ state: 'visible' });
-    check('welcome carries the Guide identity avatar',
-      await welcome.locator('.zguide-invite__avatar[src="/assets/guide-avatar.webp"]').count() === 1);
+    const welcomeAvatar = welcome.locator('canvas.zguide-invite__avatar[data-guide-portrait="ready"]');
+    check('welcome carries the Guide identity avatar', await welcomeAvatar.count() === 1);
     check('welcome is non-modal and has no live region', await welcome.getAttribute('role') === null
       && await welcome.getAttribute('aria-live') === null);
     check('welcome neither calls Guide nor reads a chart', requests.length === 0
@@ -230,6 +246,14 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const dialog = page.locator('.zassistant__panel');
     const input = page.locator('.zassistant__input');
     await dialog.waitFor({ state: 'visible' });
+    check('first action fetches the drawer graph exactly once',
+      assistantAssets.filter((path) => path === '/assets/assistant-drawer.js').length === 1
+      && assistantAssets.filter((path) => path === '/assets/assistant-drawer.css').length === 1
+      && assistantAssets.some((path) => path.startsWith('/assets/assistant-chunks/')),
+      assistantAssets.join(' | '));
+    check('drawer adopts the stable launcher without duplicating it',
+      await page.evaluate(() => document.querySelectorAll('[data-guide-launcher]').length === 1
+        && document.querySelector('[data-guide-launcher]') === window.__initialGuideLauncher));
     check('drawer header carries the Guide identity avatar',
       await dialog.locator('.zassistant__avatar[src="/assets/guide-avatar.webp"]').count() === 1);
     check('user action opens Guide and focuses the composer', await input.evaluate((node) => document.activeElement === node));
@@ -344,6 +368,43 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       && analytics.some(([name]) => name === 'guide_reply'), JSON.stringify(analytics));
     if (OUT) await page.screenshot({ path: `${OUT}/guide-mobile.png`, fullPage: false });
     await context.close();
+
+    const early = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    const earlyPage = await early.newPage();
+    const earlyAssets = [];
+    earlyPage.on('request', (request) => {
+      const pathname = new URL(request.url()).pathname;
+      if (pathname.startsWith('/assets/assistant-')) earlyAssets.push(pathname);
+    });
+    await installGuideRoute(earlyPage, []);
+    await earlyPage.goto(`${baseURL}/ask/`, { waitUntil: 'domcontentloaded' });
+    await earlyPage.locator('[data-assistant-open]').first().click();
+    await earlyPage.locator('.zassistant__panel').waitFor({ state: 'visible' });
+    check('an explicit CTA opens Guide before the scheduled shell mount without double loading',
+      earlyAssets.filter((path) => path === '/assets/assistant-ui.js').length === 1
+      && earlyAssets.filter((path) => path === '/assets/assistant-drawer.js').length === 1
+      && await earlyPage.locator('[data-guide-launcher]').count() === 1,
+      earlyAssets.join(' | '));
+    await early.close();
+
+    const stalled = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    const stalledPage = await stalled.newPage();
+    let releaseShellCss;
+    const shellCssGate = new Promise((resolve) => { releaseShellCss = resolve; });
+    await stalledPage.route('**/assets/assistant-ui.css', async (route) => {
+      await shellCssGate;
+      await route.continue();
+    });
+    await installGuideRoute(stalledPage, []);
+    const shellCssRequest = stalledPage.waitForRequest('**/assets/assistant-ui.css');
+    await stalledPage.goto(`${baseURL}/ask/`, { waitUntil: 'domcontentloaded' });
+    await shellCssRequest;
+    await stalledPage.locator('[data-assistant-open]').first().click();
+    releaseShellCss();
+    await stalledPage.locator('.zassistant__panel').waitFor({ state: 'visible' });
+    check('CTA remains live while the scheduled shell is waiting for its stylesheet',
+      await stalledPage.locator('[data-guide-launcher]').count() === 1);
+    await stalled.close();
 
     const desktop = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     const desktopPage = await desktop.newPage();

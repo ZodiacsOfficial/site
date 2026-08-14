@@ -44,7 +44,8 @@ describe('Zodiacs Registry authority hub', () => {
     expect(html).toContain("connect-src 'self'");
     expect(html).not.toMatch(/<script[^>]+src=/iu);
     expect(html).not.toContain('/assets/app.js');
-    expect(html).toContain("mod.bootstrapGuide('en')");
+    expect(html).toContain('data-guide-loader="zodiacs-guide-loader-v1"');
+    expect(html).toContain('return mod.bootstrapGuide(defaultLocale)');
     expect(html).not.toContain('plausible.io');
     expect(html).not.toContain('zodiacs-analytics:start');
     expect(html).not.toMatch(/api\.(?:dexscreener|geckoterminal)/iu);

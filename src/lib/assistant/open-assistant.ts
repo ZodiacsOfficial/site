@@ -267,7 +267,7 @@ const SESSION_KEY = 'zodiacs.guide.daily-session.v1';
 const AUTH_BOUNDARY_KEY = 'zodiacs.guide.auth-boundary.v1';
 const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';
 const CONSENT_POLICY_VERSION = 'guide-cloud-processing-2026-08-14.2';
-const STYLESHEET_HREF = '/assets/assistant-ui.css';
+const STYLESHEET_HREF = '/assets/assistant-drawer.css';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
 const STREAM_SCHEMA = 'zodiacs.guide.stream-event.draft.v1';
 const GUIDE_LINK_PATHS = new Set([
@@ -1823,15 +1823,23 @@ function build(): void {
   panel.append(header, intro, sourcesRegion, transcript, status, form, privacy);
   root.append(panel);
   document.body.append(root);
-  launcher = document.createElement('button');
-  launcher.type = 'button';
-  launcher.className = 'zguide-launcher';
-  launcher.dataset.guideLauncher = '';
-  const launcherLabel = document.createElement('span');
-  launcherLabel.textContent = 'Guide';
-  launcher.append(createGuideAvatar('zguide-launcher__avatar', 32), launcherLabel);
-  launcher.addEventListener('click', () => void openAssistant(undefined, launcher));
-  document.body.append(launcher);
+  const shellLauncher = document.querySelector<HTMLButtonElement>('[data-guide-launcher]');
+  if (shellLauncher) {
+    // The privacy-neutral shell owns this listener and node. Adopting it keeps
+    // the visible control stable and preserves focus restoration after the
+    // drawer is loaded on demand.
+    launcher = shellLauncher;
+  } else {
+    launcher = document.createElement('button');
+    launcher.type = 'button';
+    launcher.className = 'zguide-launcher';
+    launcher.dataset.guideLauncher = '';
+    const launcherLabel = document.createElement('span');
+    launcherLabel.textContent = 'Guide';
+    launcher.append(createGuideAvatar('zguide-launcher__avatar', 32), launcherLabel);
+    launcher.addEventListener('click', () => void openAssistant(undefined, launcher));
+    document.body.append(launcher);
+  }
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && root && !root.hidden) {
       event.preventDefault(); event.stopPropagation(); closeAssistant();
@@ -1842,13 +1850,6 @@ function build(): void {
   window.addEventListener('storage', onGuideStorageChange);
   window.addEventListener('pagehide', suspendGuideForPageCache);
   window.addEventListener('pageshow', restoreGuideAfterPageCache);
-}
-
-function wireOpeners(): void {
-  document.querySelectorAll<HTMLElement>('[data-assistant-open]:not([data-guide-wired])').forEach((button) => {
-    button.dataset.guideWired = '';
-    button.addEventListener('click', () => void openAssistant(button.dataset.assistantLocale, button));
-  });
 }
 
 function showInvite(): void {
@@ -1888,8 +1889,6 @@ export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
   if (!root) build();
   syncPageBoundary();
   applyCopy();
-  wireOpeners();
-  window.setTimeout(showInvite, 2_000);
 }
 
 /** Open the Guide drawer. Safe to call repeatedly on the same page. */

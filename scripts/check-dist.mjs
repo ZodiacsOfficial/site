@@ -645,29 +645,59 @@ for (const relativePath of [
   }
 }
 
-// The assistant follows the same stable, lazy-bundle contract as search. A
-// missing artifact would leave every static launcher inert without a build
-// error, so keep it inside the distribution gate.
+// Guide's stable public entrypoint is deliberately only the privacy-neutral
+// launcher/invite shell. The conversation/auth/chart graph must remain in the
+// separately fingerprinted drawer and load only after an explicit action.
 const assistantUiPath = resolve(root, 'assets/assistant-ui.js');
 const assistantCssPath = resolve(root, 'assets/assistant-ui.css');
+const assistantDrawerPath = resolve(root, 'assets/assistant-drawer.js');
+const assistantDrawerCssPath = resolve(root, 'assets/assistant-drawer.css');
 if (!(await exists(assistantUiPath))) {
   fail('assistant-ui: missing assets/assistant-ui.js');
 } else {
   const assistantUi = await readFile(assistantUiPath, 'utf8');
   if (
     !assistantUi.includes('openAssistant') ||
-    !assistantUi.includes('zassistant') ||
-    !assistantUi.includes('/assets/assistant-ui.css')
+    !assistantUi.includes('zguide-launcher') ||
+    !assistantUi.includes('/assets/assistant-ui.css') ||
+    !assistantUi.includes('/assets/assistant-drawer.js')
   ) {
-    fail('assistant-ui: assets/assistant-ui.js does not look like the assistant dialog bundle');
+    fail('assistant-ui: assets/assistant-ui.js does not look like the Guide shell');
+  }
+  for (const forbidden of [
+    'zassistant__panel',
+    '/v1/guide/turn',
+    'zodiacs.guide.daily-session.v1',
+    'PUBLIC_SUPABASE_URL',
+    'assistant-chunks/',
+  ]) {
+    if (assistantUi.includes(forbidden)) {
+      fail(`assistant-ui: Guide shell contains deferred drawer marker ${forbidden}`);
+    }
   }
 }
 if (!(await exists(assistantCssPath))) {
   fail('assistant-ui: missing assets/assistant-ui.css');
 } else {
   const assistantCss = await readFile(assistantCssPath, 'utf8');
-  if (!assistantCss.includes('.zassistant') || !assistantCss.includes('.zassistant__panel')) {
-    fail('assistant-ui: assets/assistant-ui.css does not look like the assistant dialog stylesheet');
+  if (!assistantCss.includes('.zguide-launcher') || assistantCss.includes('.zassistant__panel')) {
+    fail('assistant-ui: assets/assistant-ui.css does not look like the Guide shell stylesheet');
+  }
+}
+if (!(await exists(assistantDrawerPath))) {
+  fail('assistant-ui: missing assets/assistant-drawer.js');
+} else {
+  const assistantDrawer = await readFile(assistantDrawerPath, 'utf8');
+  if (!assistantDrawer.includes('zassistant__panel') || !assistantDrawer.includes('/v1/guide/turn')) {
+    fail('assistant-ui: assets/assistant-drawer.js does not look like the Guide drawer');
+  }
+}
+if (!(await exists(assistantDrawerCssPath))) {
+  fail('assistant-ui: missing assets/assistant-drawer.css');
+} else {
+  const assistantDrawerCss = await readFile(assistantDrawerCssPath, 'utf8');
+  if (!assistantDrawerCss.includes('.zassistant') || !assistantDrawerCss.includes('.zassistant__panel')) {
+    fail('assistant-ui: assets/assistant-drawer.css does not look like the Guide drawer stylesheet');
   }
 }
 

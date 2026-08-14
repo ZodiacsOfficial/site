@@ -143,7 +143,9 @@ describe('official Zodiac token records', () => {
         .map((match) => match[1])
         .filter((script) => script.trim());
       const guideBootstrap = scripts.find((script) => script.includes("import('/assets/assistant-ui.js')"));
-      expect(guideBootstrap).toContain("mod.bootstrapGuide('en')");
+      expect(guideBootstrap).toContain('return mod.bootstrapGuide(defaultLocale)');
+      expect(guideBootstrap).toContain('return mod.openAssistant(');
+      expect(html).toContain('data-guide-loader="zodiacs-guide-loader-v1"');
       expect(scripts).toEqual(expect.arrayContaining([
         expect.stringContaining("trackWingEvent('wing_record_view')"),
         expect.stringContaining("var ARCHIVE_URL = '/assets/data/registry-market-history.v1.json'"),

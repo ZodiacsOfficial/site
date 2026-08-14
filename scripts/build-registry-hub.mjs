@@ -15,6 +15,7 @@ import { dirname, resolve } from 'node:path';
 import { SIGN_ORDER } from './sign-data.mjs';
 import { NAV_SIGNS, wingNavCss, wingNavHtml, wingNavScript } from './wing-nav.mjs';
 import { REGISTRY_ESTABLISHED } from '../src/lib/registry-establishment.mjs';
+import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../src/lib/assistant/guide-loader.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -514,10 +515,8 @@ const html = `<!doctype html>
   })();
   </script>
 
-  <script type="module">
-    import('/assets/assistant-ui.js')
-      .then(function (mod) { return mod.bootstrapGuide('en'); })
-      .catch(function () {});
+  <script data-guide-loader="${GUIDE_LOADER_MARKER}">
+${guideLoaderSource('en')}
   </script>
 </body>
 </html>

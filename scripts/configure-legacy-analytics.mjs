@@ -5,6 +5,7 @@ import {
   ANALYTICS_EVENT_PROPS,
   ANALYTICS_EVENT_VALUES,
 } from '../src/lib/analytics-config.mjs';
+import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../src/lib/assistant/guide-loader.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -24,10 +25,8 @@ const CLICK_ONLY_GUIDE = `  <script>
     });
   })();
   </script>`;
-const DEFAULT_GUIDE = `  <script type="module">
-    import('/assets/assistant-ui.js')
-      .then(function (mod) { return mod.bootstrapGuide('en'); })
-      .catch(function () {});
+const DEFAULT_GUIDE = `  <script data-guide-loader="${GUIDE_LOADER_MARKER}">
+${guideLoaderSource('en')}
   </script>`;
 
 export const TERMINAL_ANALYTICS_PATHS = Object.freeze([
@@ -45,7 +44,13 @@ function stripRemoteAnalytics(html) {
 }
 
 export function ensureDefaultGuideBootstrap(html) {
-  if (html.includes("mod.bootstrapGuide('en')")) return html;
+  let found = false;
+  const upgraded = html.replace(SCRIPT_BLOCK, (script) => {
+    if (!script.includes('/assets/assistant-ui.js')) return script;
+    found = true;
+    return `\n${DEFAULT_GUIDE}\n`;
+  });
+  if (found) return upgraded;
   if (!html.includes(CLICK_ONLY_GUIDE)) return html;
   return html.replace(CLICK_ONLY_GUIDE, DEFAULT_GUIDE);
 }
@@ -150,6 +155,7 @@ export async function configureLegacyAnalytics(config = {}) {
     resolve(root, 'public/terminal/markets/index.html'),
     resolve(root, 'public/archive/index.html'),
     resolve(root, 'public/sdk/index.html'),
+    resolve(root, 'public/sdk/examples/simastry-aura/index.html'),
     resolve(root, 'public/thesis/index.html'),
   ];
   let changed = 0;

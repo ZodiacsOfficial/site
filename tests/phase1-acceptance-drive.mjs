@@ -119,6 +119,10 @@ try {
           document.fonts.ready,
           new Promise((resolveReady) => setTimeout(resolveReady, 10_000)),
         ]));
+        // Guide deliberately mounts 500 ms after `load` so its resources stay
+        // outside LCP. Evidence still requires the settled launcher, so wait
+        // for that explicit product boundary instead of racing the timer.
+        await page.locator('.zguide-launcher').waitFor({ state: 'visible', timeout: 5_000 });
         // Durable evidence represents a settled page, not a random frame of
         // an infinite ornament or an IntersectionObserver transition. Motion
         // cadence has its own Phase 1 gate; make this pixel receipt repeatable.
