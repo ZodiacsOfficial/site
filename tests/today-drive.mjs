@@ -249,18 +249,49 @@ async function drive(BASE, browser) {
 
   const failedMainIsland = await newTodayPage(browser, { viewport: { width: 900, height: 1400 } });
   await observeLayoutShifts(failedMainIsland);
-  await failedMainIsland.route('**/_astro/TodayBrief.*.js', (route) => route.abort());
+  let failedMainAborts = 0;
+  let resolveFailedMainRetry;
+  let rejectFailedMainRetry;
+  const failedMainRetry = new Promise((resolve, reject) => {
+    resolveFailedMainRetry = resolve;
+    rejectFailedMainRetry = reject;
+  });
+  const failedMainRetryTimeout = setTimeout(() => {
+    rejectFailedMainRetry(new Error('TodayBrief retry was not intercepted within 3 seconds.'));
+  }, 3_000);
+  await failedMainIsland.context().route('**/_astro/TodayBrief.*.js*', (route) => {
+    failedMainAborts += 1;
+    if (failedMainAborts >= 2) resolveFailedMainRetry();
+    return route.abort();
+  });
   await failedMainIsland.addInitScript((value) => {
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
   }, profile);
   await failedMainIsland.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
+  await failedMainRetry;
+  clearTimeout(failedMainRetryTimeout);
   const savedChartFallback = failedMainIsland.locator('.today-returning-chart-placeholder');
+  const failedMainEvidence = {
+    aborts: failedMainAborts,
+    profilePresent: await failedMainIsland.evaluate(() => localStorage.getItem('zodiacs.profile.v1') !== null),
+    savedChart: await failedMainIsland.locator('html').getAttribute('data-today-saved-chart'),
+    chartSign: await failedMainIsland.locator('html').getAttribute('data-today-chart-sun-sign'),
+    fallback: await savedChartFallback.isVisible(),
+    aries: await failedMainIsland.locator('[data-today-chart-sun="aries"]').isVisible(),
+    label: await failedMainIsland.getByText('Aries Sun-sign baseline', { exact: true }).isVisible(),
+    link: await failedMainIsland.locator('[data-today-chart-sun="aries"] a[href="/horoscopes/aries/"]').isVisible(),
+  };
   check(
     'failed Today island keeps a useful Aries Sun-sign baseline in the reserved shell',
-    await savedChartFallback.isVisible()
-      && await failedMainIsland.locator('[data-today-chart-sun="aries"]').isVisible()
-      && await failedMainIsland.getByText('Aries Sun-sign baseline', { exact: true }).isVisible()
-      && await failedMainIsland.locator('[data-today-chart-sun="aries"] a[href="/horoscopes/aries/"]').isVisible(),
+    failedMainEvidence.aborts >= 2
+      && failedMainEvidence.profilePresent
+      && failedMainEvidence.savedChart === ''
+      && failedMainEvidence.chartSign === 'aries'
+      && failedMainEvidence.fallback
+      && failedMainEvidence.aries
+      && failedMainEvidence.label
+      && failedMainEvidence.link,
+    JSON.stringify(failedMainEvidence),
   );
   const failedMainCls = await measuredCls(failedMainIsland);
   check('failed Today island fallback has exactly zero CLS', failedMainCls === 0, String(failedMainCls));
