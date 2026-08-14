@@ -31,26 +31,6 @@
   <link rel="canonical" href="https://zodiacs.org/terminal/" />
   <link rel="alternate" type="application/rss+xml" title="Zodiacs.org Markets Research" href="/feeds/market-research.xml" />
   <link rel="alternate" type="application/feed+json" title="Zodiacs.org Markets Research" href="/feeds/market-research.json" />
-  <script>
-    window.plausible = window.plausible || function () {
-      (window.plausible.q = window.plausible.q || []).push(arguments);
-    };
-    window.plausible.init = window.plausible.init || function (options) {
-      window.plausible.o = options || {};
-    };
-    window.plausible.init({
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    });
-  </script>
-  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
-
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="Terminal · Zodiacs" />
   <meta property="og:description" content="The data-forward view of all twelve Zodiac tokens: live prices, 24-hour movement, indexed liquidity, market context, and reviewed research." />
@@ -10065,30 +10045,6 @@
       .consumer-registry .consumer-purpose__arrow { transform: none; }
     }
 </style>
-<!-- zodiacs-analytics:start -->
-<script>
-  (function () {
-
-    var eventProps = Object.freeze({"chart_computed":["mode"],"chart_saved":["source"],"compat_computed":["source"],"email_subscribed":["placement"],"share_card_downloaded":["variant"],"widget_embed_copied":["widget","mode"],"registry_visit":[],"registry_sign_selected":["sign","source"],"verifier_used":["chain","outcome"],"terminal_view_switch":["surface","direction"],"sdk_click":["source","destination"],"wallet_chart_computed":["chain","holds_registry_asset"],"aura_view":[],"aura_compose":["outcome","held_bucket"],"aura_share":["outcome"],"aura_refresh":["outcome"],"aura_calculator":["direction"],"aura_entry":["source"],"aura_return":["interval"],"aura_response":["value"],"aura_cabinet_select":[],"aura_cabinet_reveal":["outcome"],"aura_talisman_personalize":["state"],"invite_created":["notify"],"invite_opened":["state"],"invite_completed":[],"invite_returned":["method"],"invite_converted":["action"],"invite_revoked":[],"result_rendered":["mode"],"explorer_interaction":["mode","source"],"tour_start":["variant"],"tour_complete":["variant"],"tour_step":["step"],"context_help_opened":["term","surface"],"first_reading_prompt":["action"],"first_reading_step":["step"],"first_reading_completed":[],"next_action_clicked":["state","action"],"email_capture_viewed":["placement"],"search_open":[],"search_go":["kind"],"assistant_open":[],"assistant_reply":[],"push_prompt":[],"push_subscribe":[],"today_view":[],"calendar_subscribe":[],"chart_save":["source"],"chart_share":["variant"],"wing_entry":["source"],"lens_change":["lens"],"transit_search":["span","bodies"],"srchart_view":["via"],"composite_view":[],"grid_select":[],"chiron_toggle":["on"],"detail_toggle":["to"],"chart_name_set":["via"],"comm_read_view":[]});
-    var eventValues = Object.freeze({"terminal_view_switch":{"surface":["header","preference_banner"],"direction":["consumer_to_pro","pro_to_consumer"]},"invite_opened":{"state":["ready","invalid","closed","used","unavailable","offline"]},"invite_returned":{"method":["share","copy","download"]},"invite_converted":{"action":["saved_chart","saved_pair","own_chart"]}});
-    window.zodiacsAnalytics = Object.freeze({
-      track: function (name, props) {
-        var allowed = eventProps[name];
-        if (!allowed) return;
-        var safe = {};
-        allowed.forEach(function (key) {
-          var value = (props || {})[key];
-          var enumValues = eventValues[name] && eventValues[name][key];
-          if (enumValues && (typeof value !== 'string' || enumValues.indexOf(value) === -1)) return;
-          if (typeof value === 'number' || typeof value === 'boolean' ||
-              (typeof value === 'string' && value.length <= 32)) safe[key] = value;
-        });
-        window.plausible(name, { props: safe });
-      }
-    });
-  }());
-</script>
-<!-- zodiacs-analytics:end -->
 </head>
 <body>
   <div id="root">
@@ -10273,15 +10229,60 @@
   }());
   </script>
 
-  <script>
-  (function () {
+  <script data-guide-loader="zodiacs-guide-loader-v1">
+(function () {
     var modulePromise;
-    document.addEventListener('click', function (event) {
-      var button = event.target.closest && event.target.closest('[data-assistant-open]');
-      if (!button) return;
-      modulePromise = modulePromise || import('/assets/assistant-ui.js');
-      modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
-    });
+    var timer = 0;
+    var intentPending = false;
+    var defaultLocale = "en";
+    function loadGuide() {
+      if (!modulePromise) {
+        modulePromise = import('/assets/assistant-ui.js').catch(function (error) {
+          modulePromise = null;
+          throw error;
+        });
+      }
+      return modulePromise;
+    }
+    function stopIntentListener() {
+      document.removeEventListener('click', onGuideIntent, true);
+    }
+    function stopScheduledMount() {
+      window.clearTimeout(timer);
+      window.removeEventListener('load', scheduleGuide);
+    }
+    function mountGuide() {
+      loadGuide().then(function (mod) {
+        return mod.bootstrapGuide(defaultLocale).then(stopIntentListener);
+      }).catch(function () {});
+    }
+    function scheduleGuide() {
+      timer = window.setTimeout(mountGuide, 500);
+    }
+    function onGuideIntent(event) {
+      var target = event.target && event.target.closest
+        ? event.target.closest('[data-assistant-open]')
+        : null;
+      if (!target) return;
+      if (intentPending) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+      intentPending = true;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      stopScheduledMount();
+      loadGuide().then(function (mod) {
+        return mod.openAssistant(
+          target.getAttribute('data-assistant-locale') || defaultLocale,
+          target
+        ).then(stopIntentListener);
+      }).catch(function () { intentPending = false; });
+    }
+    document.addEventListener('click', onGuideIntent, true);
+    if (document.readyState === 'complete') scheduleGuide();
+    else window.addEventListener('load', scheduleGuide, { once: true });
   })();
   </script>
 

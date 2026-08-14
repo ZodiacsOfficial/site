@@ -19,26 +19,6 @@
   <title>Why Zodiacs Matter — The Thesis | Zodiacs.org</title>
   <meta name="description" content="The twelve signs already carry identity, ritual, and daily attention. Zodiacs gives that shared language a public form people can own and carry." />
   <link rel="canonical" href="https://zodiacs.org/thesis/" />
-  <script>
-    window.plausible = window.plausible || function () {
-      (window.plausible.q = window.plausible.q || []).push(arguments);
-    };
-    window.plausible.init = window.plausible.init || function (options) {
-      window.plausible.o = options || {};
-    };
-    window.plausible.init({
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    });
-  </script>
-  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
-
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="Why Zodiacs Matter" />
   <meta property="og:description" content="The twelve signs already carry identity, ritual, and daily attention. Zodiacs gives that shared language a public form people can own and carry." />
@@ -2543,23 +2523,66 @@
           <a href="/registry/zodiacs.registry.json">Registry JSON</a>
           <a href="/disclosure/" data-i18n="disclosure.linkLabel">Disclosure</a>
           <a href="/llms.txt">llms.txt</a>
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
         </span>
       </div>
     </footer>
   </main>
 
-  <script>
-  (function () {
-    var buttons = document.querySelectorAll('[data-assistant-open]');
-    if (!buttons.length) return;
+  <script data-guide-loader="zodiacs-guide-loader-v1">
+(function () {
     var modulePromise;
-    buttons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        modulePromise = modulePromise || import('/assets/assistant-ui.js');
-        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
-      });
-    });
+    var timer = 0;
+    var intentPending = false;
+    var defaultLocale = "en";
+    function loadGuide() {
+      if (!modulePromise) {
+        modulePromise = import('/assets/assistant-ui.js').catch(function (error) {
+          modulePromise = null;
+          throw error;
+        });
+      }
+      return modulePromise;
+    }
+    function stopIntentListener() {
+      document.removeEventListener('click', onGuideIntent, true);
+    }
+    function stopScheduledMount() {
+      window.clearTimeout(timer);
+      window.removeEventListener('load', scheduleGuide);
+    }
+    function mountGuide() {
+      loadGuide().then(function (mod) {
+        return mod.bootstrapGuide(defaultLocale).then(stopIntentListener);
+      }).catch(function () {});
+    }
+    function scheduleGuide() {
+      timer = window.setTimeout(mountGuide, 500);
+    }
+    function onGuideIntent(event) {
+      var target = event.target && event.target.closest
+        ? event.target.closest('[data-assistant-open]')
+        : null;
+      if (!target) return;
+      if (intentPending) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+      intentPending = true;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      stopScheduledMount();
+      loadGuide().then(function (mod) {
+        return mod.openAssistant(
+          target.getAttribute('data-assistant-locale') || defaultLocale,
+          target
+        ).then(stopIntentListener);
+      }).catch(function () { intentPending = false; });
+    }
+    document.addEventListener('click', onGuideIntent, true);
+    if (document.readyState === 'complete') scheduleGuide();
+    else window.addEventListener('load', scheduleGuide, { once: true });
   })();
   </script>
 

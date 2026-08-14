@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#08090c" />
   <meta name="color-scheme" content="dark" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>Zodiacs Registry · Official Token Records</title>
   <meta name="description" content="Verify the twelve official Zodiac token identities and all twenty-four canonical Solana and Base addresses." />
   <link rel="canonical" href="https://zodiacs.org/registry/" />
@@ -751,6 +751,63 @@
     form.addEventListener('submit',function(event){ event.preventDefault(); verify(input.value,true); });
     var initial=new URLSearchParams(location.search).get('address');
     if(initial){ input.value=initial; verify(initial,false); }
+  })();
+  </script>
+
+  <script data-guide-loader="zodiacs-guide-loader-v1">
+(function () {
+    var modulePromise;
+    var timer = 0;
+    var intentPending = false;
+    var defaultLocale = "en";
+    function loadGuide() {
+      if (!modulePromise) {
+        modulePromise = import('/assets/assistant-ui.js').catch(function (error) {
+          modulePromise = null;
+          throw error;
+        });
+      }
+      return modulePromise;
+    }
+    function stopIntentListener() {
+      document.removeEventListener('click', onGuideIntent, true);
+    }
+    function stopScheduledMount() {
+      window.clearTimeout(timer);
+      window.removeEventListener('load', scheduleGuide);
+    }
+    function mountGuide() {
+      loadGuide().then(function (mod) {
+        return mod.bootstrapGuide(defaultLocale).then(stopIntentListener);
+      }).catch(function () {});
+    }
+    function scheduleGuide() {
+      timer = window.setTimeout(mountGuide, 500);
+    }
+    function onGuideIntent(event) {
+      var target = event.target && event.target.closest
+        ? event.target.closest('[data-assistant-open]')
+        : null;
+      if (!target) return;
+      if (intentPending) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+      intentPending = true;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      stopScheduledMount();
+      loadGuide().then(function (mod) {
+        return mod.openAssistant(
+          target.getAttribute('data-assistant-locale') || defaultLocale,
+          target
+        ).then(stopIntentListener);
+      }).catch(function () { intentPending = false; });
+    }
+    document.addEventListener('click', onGuideIntent, true);
+    if (document.readyState === 'complete') scheduleGuide();
+    else window.addEventListener('load', scheduleGuide, { once: true });
   })();
   </script>
 </body>

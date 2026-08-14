@@ -3,11 +3,17 @@
  * `zodiacs:profile` on window so the nav glyph and any open islands
  * stay in sync without a framework store.
  */
-import { EMPTY_PROFILE, MAX_CHARTS, PROFILE_KEY } from './schema';
+import { MAX_CHARTS, PROFILE_KEY } from './schema';
 import type { Profile, SavedChart } from './schema';
 import { clearChartDeletion, recordChartDeletion } from './deletions';
+import { accountSyncV2Enabled } from '../account-v2/feature-flags';
+import { profileAccessAllowed } from '../account-v2/profile-access-reader';
+import { loadProfile } from './read-store';
+
+export { loadProfile } from './read-store';
 
 const YEAR_AHEAD_CACHE_KEY = 'zodiacs.yearahead.v1';
+const ACCOUNT_SYNC_V2_ENABLED = accountSyncV2Enabled();
 
 interface PersistOptions {
   sync?: boolean;
@@ -17,22 +23,11 @@ export type StoredChartIdentity = Pick<SavedChart, 'birth'> & {
   summary: Pick<SavedChart['summary'], 'houseSystem'>;
 };
 
-export function loadProfile(): Profile {
-  try {
-    const raw = localStorage.getItem(PROFILE_KEY);
-    if (!raw) return structuredClone(EMPTY_PROFILE);
-    const parsed = JSON.parse(raw);
-    if (parsed?.version !== 1 || !Array.isArray(parsed.charts)) {
-      return structuredClone(EMPTY_PROFILE);
-    }
-    return parsed as Profile;
-  } catch {
-    return structuredClone(EMPTY_PROFILE);
-  }
-}
-
 function queueCloudSync() {
   if (typeof window === 'undefined') return;
+  // V2 is selection-only. Never fall through to the legacy "upload every
+  // local chart" path when the gated account foundation is enabled.
+  if (ACCOUNT_SYNC_V2_ENABLED) return;
   // Build-time gate: without Supabase env the sync chunk (and the
   // supabase-js dependency inside it) is never even fetched.
   if (!import.meta.env.PUBLIC_SUPABASE_URL) return;
@@ -42,6 +37,7 @@ function queueCloudSync() {
 }
 
 function persist(profile: Profile, options: PersistOptions = { sync: true }): boolean {
+  if (!profileAccessAllowed()) return false;
   try {
     localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
     window.dispatchEvent(new CustomEvent('zodiacs:profile', { detail: profile }));
@@ -107,6 +103,7 @@ export function saveChart(
 }
 
 function pruneYearAheadCacheEntries(shouldRemove: (id: string) => boolean): void {
+  if (!profileAccessAllowed()) return;
   try {
     const raw = localStorage.getItem(YEAR_AHEAD_CACHE_KEY);
     if (!raw) return;
@@ -119,7 +116,9 @@ function pruneYearAheadCacheEntries(shouldRemove: (id: string) => boolean): void
       delete cache[id];
       changed = true;
     }
-    if (changed) localStorage.setItem(YEAR_AHEAD_CACHE_KEY, JSON.stringify(cache));
+    if (changed && profileAccessAllowed()) {
+      localStorage.setItem(YEAR_AHEAD_CACHE_KEY, JSON.stringify(cache));
+    }
   } catch {
     // The profile deletion is authoritative; this derived cache is best-effort.
   }

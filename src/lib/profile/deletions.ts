@@ -1,3 +1,5 @@
+import { profileAccessAllowed } from '../account-v2/profile-access-reader';
+
 export const PROFILE_DELETIONS_KEY = 'zodiacs.profile.deletions.v1';
 
 export interface ChartDeletion {
@@ -6,6 +8,7 @@ export interface ChartDeletion {
 }
 
 export function loadChartDeletions(): ChartDeletion[] {
+  if (!profileAccessAllowed()) return [];
   try {
     const raw = localStorage.getItem(PROFILE_DELETIONS_KEY);
     if (!raw) return [];
@@ -18,6 +21,7 @@ export function loadChartDeletions(): ChartDeletion[] {
 }
 
 export function replaceChartDeletions(deletions: ChartDeletion[]): boolean {
+  if (!profileAccessAllowed()) return false;
   try {
     localStorage.setItem(PROFILE_DELETIONS_KEY, JSON.stringify(normalizeDeletions(deletions)));
     return true;

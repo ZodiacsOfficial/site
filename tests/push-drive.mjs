@@ -13,6 +13,8 @@ import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
+const GUIDE_INVITE_SESSION_KEY = 'zodiacs.guide.welcome-seen.v1';
+
 const profile = {
   version: 1,
   settings: { houseSystem: 'whole' },
@@ -82,8 +84,12 @@ async function openFixture(browser, baseURL, {
     installed,
     startsSubscribed,
     browserUnsubscribeResult,
+    guideInviteSessionKey,
   }) => {
     localStorage.clear();
+    // Push acceptance owns the sky-alert overlay. Suppress the unrelated,
+    // delayed Guide welcome using the same per-tab preference as dismiss.
+    sessionStorage.setItem(guideInviteSessionKey, '1');
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(savedProfile));
     if (startsSubscribed) localStorage.setItem('zodiacs.push.v1', 'subscribed');
     if (hasReturned) {
@@ -185,6 +191,7 @@ async function openFixture(browser, baseURL, {
     installed: standalone,
     startsSubscribed: preSubscribed,
     browserUnsubscribeResult: unsubscribeResult,
+    guideInviteSessionKey: GUIDE_INVITE_SESSION_KEY,
   });
 
   const page = await context.newPage();
@@ -219,6 +226,13 @@ await withPreview({ port: Number(process.env.PUSH_DRIVE_PORT ?? 4399) }, async (
 
     const denied = await openFixture(browser, baseURL, { returning: true });
     await denied.page.waitForSelector('[data-push-optin][data-push-context="today-return"]');
+    await denied.page.waitForTimeout(2_100);
+    check('returning Today suppresses the unrelated one-time Guide welcome',
+      await denied.page.locator('.zguide-invite').count() === 0
+        && await denied.page.evaluate(
+          (inviteSessionKey) => sessionStorage.getItem(inviteSessionKey) === '1',
+          GUIDE_INVITE_SESSION_KEY,
+        ));
     await denied.page.evaluate(() => new Promise((resolvePaint) => {
       requestAnimationFrame(() => requestAnimationFrame(resolvePaint));
     }));

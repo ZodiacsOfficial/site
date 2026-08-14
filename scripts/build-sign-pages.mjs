@@ -26,6 +26,7 @@ import { NAV_SIGNS, wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mj
 import { brandIconLinkMarkup } from '../src/lib/brand-icons.mjs';
 import { renderTradeRegion } from '../src/trade/entry.mjs';
 import { EN } from '../src/strings/en.mjs';
+import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../src/lib/assistant/guide-loader.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -245,26 +246,6 @@ function render(m) {
   <title>${esc(m.name)} — Official ${esc(m.ticker)} Zodiac Token · Sign ${m.order} of 12 | Zodiacs.org</title>
   <meta name="description" content="${esc(`${m.name} is the official digital token for the ${m.name} zodiac sign. See its live price, verify the address, and learn how buying works.`)}" />
   <link rel="canonical" href="${signUrl(m.slug)}" />
-  <script>
-    window.plausible = window.plausible || function () {
-      (window.plausible.q = window.plausible.q || []).push(arguments);
-    };
-    window.plausible.init = window.plausible.init || function (options) {
-      window.plausible.o = options || {};
-    };
-    window.plausible.init({
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    });
-  </script>
-  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
-
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="${esc(m.name)} · Official ${esc(m.ticker)} Token — Zodiacs" />
   <meta property="og:description" content="${esc(`The official ${m.name} zodiac token: live price, verified addresses, a simple buying guide, and collection artwork.`)}" />
@@ -1220,7 +1201,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
           <a href="/privacy/">${esc(EN['disclosure.linkPrivacy'])}</a>
           <a href="/terms/">${esc(EN['disclosure.linkTerms'])}</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
           <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio.xyz ↗</a>
         </div>
         <div>Registry lookup/display tools: read-only</div>
@@ -1234,18 +1215,8 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
     </footer>
   </main>
 
-  <script>
-  (function () {
-    var buttons = document.querySelectorAll('[data-assistant-open]');
-    if (!buttons.length) return;
-    var modulePromise;
-    buttons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        modulePromise = modulePromise || import('/assets/assistant-ui.js');
-        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
-      });
-    });
-  })();
+  <script data-guide-loader="${GUIDE_LOADER_MARKER}">
+${guideLoaderSource('en')}
   </script>
 
   <script>

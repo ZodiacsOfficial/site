@@ -30,6 +30,7 @@ import { signBySlug, signForLongitude } from '../lib/signs';
 import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import daily from '../data/daily.json';
+import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
 
 /** Each transiting body's current-sign hue, for the leading receipt glyph. */
 const SKY_HUE: Record<string, string> = Object.fromEntries(
@@ -48,6 +49,7 @@ const YEAR_MS = 366 * 86400_000;
 type YearCacheFile = Record<string, YearScanCache>;
 
 const readYearCache = (): YearCacheFile => {
+  if (!profileAccessAllowed()) return {};
   try {
     return JSON.parse(localStorage.getItem(YEAR_AHEAD_CACHE_KEY) ?? '{}') as YearCacheFile;
   } catch {
@@ -108,12 +110,14 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
           to: to.toISOString(),
           scan,
         };
-        if (cancelled) return;
+        if (cancelled || !profileAccessAllowed()) return;
         try {
           const file = readYearCache();
           file[chart.id] = entry;
+          if (!profileAccessAllowed()) return;
           localStorage.setItem(YEAR_AHEAD_CACHE_KEY, JSON.stringify(file));
         } catch { /* cache is best-effort */ }
+        if (!profileAccessAllowed()) return;
         setYear(entry);
       } catch { /* engine failed to load — the card shows the quiet line */ }
       if (!cancelled) setYearBusy(false);

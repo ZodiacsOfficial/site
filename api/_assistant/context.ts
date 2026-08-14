@@ -27,7 +27,7 @@ Use these labels from docs/STRATEGY.md §4 when they fit:
 
 TOOLS AND UTILITIES
 These lines use each live page’s meta description to state what it computes or provides:
-- /ask/ — Ask about this site's tools, general astrology, or your own saved chart. Answers come from Zodiacs.org pages, with sources named and nothing stored.
+- /ask/ — Ask Guide about birth charts, astrology, Zodiacs.org, or published Astrofolio facts. Signed-out conversations stay in the browser session.
 - /baby-zodiac/ — Enter a due date: the near-certain sun sign (cusp caveats computed, not guessed), the week's possible moon signs, and what has to wait for the birth minute. Free.
 - /birth-chart/ — Calculate your free birth chart: sun, moon, rising, planets, houses, and what they mean — private in your browser and explained in plain language.
 - /birthday/ — Choose your birthday for a date-specific reading of character, relationships, work, and growth, with an exact Sun-sign answer when the birth year matters.

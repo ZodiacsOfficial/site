@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import subscribeHandler from '../../../api/email/subscribe';
-import confirmHandler from '../../../api/email/confirm';
+import confirmHandler from '../../../api/email/_confirm';
 import { hasEmailCaptureProvider } from './config';
 import { createEmailSubscriptionAdapter } from './provider';
 import { createEmailOptInToken, EMAIL_OPT_IN_TTL_MS, verifyEmailOptInToken } from './opt-in-token';

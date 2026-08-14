@@ -15,6 +15,7 @@ import { dirname, resolve } from 'node:path';
 import { SIGN_ORDER } from './sign-data.mjs';
 import { NAV_SIGNS, wingNavCss, wingNavHtml, wingNavScript } from './wing-nav.mjs';
 import { REGISTRY_ESTABLISHED } from '../src/lib/registry-establishment.mjs';
+import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../src/lib/assistant/guide-loader.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -175,7 +176,7 @@ const html = `<!doctype html>
   <meta name="theme-color" content="#08090c" />
   <meta name="color-scheme" content="dark" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>Zodiacs Registry · Official Token Records</title>
   <meta name="description" content="Verify the twelve official Zodiac token identities and all twenty-four canonical Solana and Base addresses." />
   <link rel="canonical" href="https://zodiacs.org/registry/" />
@@ -512,6 +513,10 @@ const html = `<!doctype html>
     var initial=new URLSearchParams(location.search).get('address');
     if(initial){ input.value=initial; verify(initial,false); }
   })();
+  </script>
+
+  <script data-guide-loader="${GUIDE_LOADER_MARKER}">
+${guideLoaderSource('en')}
   </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 import { createHash } from 'node:crypto';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import chartPreferenceHandler from '../../../api/email/chart-preference';
-import confirmHandler from '../../../api/email/confirm';
-import unsubscribeHandler from '../../../api/email/unsubscribe';
+import confirmHandler from '../../../api/email/_confirm';
+import unsubscribeHandler from '../../../api/email/_unsubscribe';
 import { createDailyChartOptInToken } from './daily-chart-token';
 import { createDailyUnsubscribeToken } from './daily-unsubscribe-token';
 import { createEmailOptInToken } from './opt-in-token';
@@ -144,11 +144,18 @@ describe('daily sun confirmation', () => {
         requestState = 'confirmed';
         return json({ outcome: 'completed', active_sign: 'libra' });
       }
+      if (url.endsWith('/rest/v1/rpc/account_v2_begin_daily_sun_provider_mutation')) {
+        return json({ outcome: 'ready' });
+      }
+      if (url.endsWith('/rest/v1/rpc/account_v2_finish_daily_sun_provider_mutation')) {
+        return json({ outcome: 'released' });
+      }
       if (url.includes('/rest/v1/daily_sun_preferences?') && !init?.method) {
         return json(requestState === 'confirmed' ? [{
           recipient_hash: RECIPIENT_HASH,
           sign: 'libra',
           confirmed_at: '2026-07-20T12:00:00.000Z',
+          confirmed_by_attempt_id: USER_ID,
         }] : []);
       }
       if (url === 'https://api.resend.com/contacts' && init?.method === 'POST') {
@@ -213,11 +220,18 @@ describe('daily sun confirmation', () => {
         requestState = 'confirmed';
         return json({ outcome: 'completed', active_sign: 'libra' });
       }
+      if (url.endsWith('/rest/v1/rpc/account_v2_begin_daily_sun_provider_mutation')) {
+        return json({ outcome: 'ready' });
+      }
+      if (url.endsWith('/rest/v1/rpc/account_v2_finish_daily_sun_provider_mutation')) {
+        return json({ outcome: 'released' });
+      }
       if (url.includes('/rest/v1/daily_sun_preferences?') && !init?.method) {
         return json(requestState === 'confirmed' ? [{
           recipient_hash: RECIPIENT_HASH,
           sign: 'libra',
           confirmed_at: '2026-07-20T12:00:00.000Z',
+          confirmed_by_attempt_id: USER_ID,
         }] : []);
       }
       if (url === 'https://api.resend.com/contacts' && init?.method === 'POST') {

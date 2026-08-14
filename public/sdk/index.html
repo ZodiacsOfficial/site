@@ -7,25 +7,6 @@
   <title>Zodiacs SDK · Official Zodiacs.org Interface</title>
   <meta name="description" content="Build astrology apps with verified Zodiac ownership. The official read-only SDK for registry verification, public ownership, symbolic resonance, identity context, and Zodiac icon assets." />
   <link rel="canonical" href="https://zodiacs.org/sdk/" />
-  <script>
-    window.plausible = window.plausible || function () {
-      (window.plausible.q = window.plausible.q || []).push(arguments);
-    };
-    window.plausible.init = window.plausible.init || function (options) {
-      window.plausible.o = options || {};
-    };
-    window.plausible.init({
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    });
-  </script>
-  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
   <link rel="alternate" href="https://zodiacs.org/llms.txt" type="text/plain" />
   <meta property="og:title" content="Zodiacs SDK" />
   <meta property="og:description" content="Build astrology apps with verified Zodiac ownership, public reads, symbolic resonance, identity context, and official Zodiac icon assets." />
@@ -2578,24 +2559,67 @@ const promptContext = {
       </a>
 
       <footer>
-        <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+        <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
         · Zodiacs.org · Official registry · Est. <span data-registry-established>MMXXIV</span> ·
         <a href="/disclosure/" data-i18n="disclosure.linkLabel">Disclosure</a> ·
         <a href="/disclosure/#origin" data-i18n="disclosure.provenanceShort">Origin receipts — 5 Jul 2024</a>
       </footer>
     </main>
   </div>
-  <script>
-  (function () {
-    var buttons = document.querySelectorAll('[data-assistant-open]');
-    if (!buttons.length) return;
+  <script data-guide-loader="zodiacs-guide-loader-v1">
+(function () {
     var modulePromise;
-    buttons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        modulePromise = modulePromise || import('/assets/assistant-ui.js');
-        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
-      });
-    });
+    var timer = 0;
+    var intentPending = false;
+    var defaultLocale = "en";
+    function loadGuide() {
+      if (!modulePromise) {
+        modulePromise = import('/assets/assistant-ui.js').catch(function (error) {
+          modulePromise = null;
+          throw error;
+        });
+      }
+      return modulePromise;
+    }
+    function stopIntentListener() {
+      document.removeEventListener('click', onGuideIntent, true);
+    }
+    function stopScheduledMount() {
+      window.clearTimeout(timer);
+      window.removeEventListener('load', scheduleGuide);
+    }
+    function mountGuide() {
+      loadGuide().then(function (mod) {
+        return mod.bootstrapGuide(defaultLocale).then(stopIntentListener);
+      }).catch(function () {});
+    }
+    function scheduleGuide() {
+      timer = window.setTimeout(mountGuide, 500);
+    }
+    function onGuideIntent(event) {
+      var target = event.target && event.target.closest
+        ? event.target.closest('[data-assistant-open]')
+        : null;
+      if (!target) return;
+      if (intentPending) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+      intentPending = true;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      stopScheduledMount();
+      loadGuide().then(function (mod) {
+        return mod.openAssistant(
+          target.getAttribute('data-assistant-locale') || defaultLocale,
+          target
+        ).then(stopIntentListener);
+      }).catch(function () { intentPending = false; });
+    }
+    document.addEventListener('click', onGuideIntent, true);
+    if (document.readyState === 'complete') scheduleGuide();
+    else window.addEventListener('load', scheduleGuide, { once: true });
   })();
   </script>
   <script>

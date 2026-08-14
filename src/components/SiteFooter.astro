@@ -3,6 +3,7 @@ import { SIGNS, signName } from '../lib/signs';
 import BrandMark from './BrandMark.astro';
 import EmailCapture from './EmailCapture.astro';
 import TerminalMarketVenueNotice from './TerminalMarketVenueNotice.astro';
+import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../lib/assistant/guide-loader.mjs';
 import {
   LOCALE_META,
   LEGACY_HOME_SELECTOR_LOCALES,
@@ -28,12 +29,12 @@ const languageLinks = (routeLanguageLinks.length ? routeLanguageLinks : availabl
   meta: LOCALE_META[entry.locale],
 }));
 const FOOTER_COPY = {
-  en: { assistant: 'Ask Zodiacs', today: 'Today' },
-  es: { assistant: 'Pregúntale a Zodiacs', today: 'Hoy (en inglés)' },
-  pt: { assistant: 'Pergunte ao Zodiacs', today: 'Hoje (em inglês)' },
-  fr: { assistant: 'Demander à Zodiacs', today: 'Aujourd’hui (en anglais)' },
-  it: { assistant: 'Chiedi a Zodiacs', today: 'Oggi (in inglese)' },
-  ru: { assistant: 'Спросить Zodiacs — пока по-английски', today: 'Сегодня — пока по-английски' },
+  en: { assistant: 'Guide', today: 'Today' },
+  es: { assistant: 'Guide', today: 'Hoy (en inglés)' },
+  pt: { assistant: 'Guide', today: 'Hoje (em inglês)' },
+  fr: { assistant: 'Guide', today: 'Aujourd’hui (en anglais)' },
+  it: { assistant: 'Guide', today: 'Oggi (in inglese)' },
+  ru: { assistant: 'Guide — пока по-английски', today: 'Сегодня — пока по-английски' },
 } as const satisfies Record<Locale, { assistant: string; today: string }>;
 const englishSuffix = locale === 'ru' ? ' — пока по-английски' : '';
 const englishOnlyAria = locale === 'ru' ? 'Материал пока доступен по-английски' : undefined;
@@ -53,17 +54,15 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
           <span class="footer__name">Zodiacs</span><span class="footer__tld">.org</span>
         </a>
         <p class="footer__tag">{t(locale, 'footerTag')}</p>
-        {locale !== 'ru' && (
-          <button
-            class="footer__assistant"
-            type="button"
-            data-assistant-open
-            data-assistant-locale={locale}
-            aria-haspopup="dialog"
-          >
-            {FOOTER_COPY[locale].assistant}
-          </button>
-        )}
+        <button
+          class="footer__assistant"
+          type="button"
+          data-assistant-open
+          data-assistant-locale={locale}
+          aria-haspopup="dialog"
+        >
+          {FOOTER_COPY[locale].assistant}
+        </button>
       </div>
 
       <nav class="footer__col" aria-label={t(locale, 'navTools')}>
@@ -137,24 +136,9 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
   </div>
 </footer>
 
-<script is:inline>
-  /* The assistant stays outside Astro's module graph. Its dialog and chart
-     summary code load only after an explicit click, from one stable bundle. */
-  (function () {
-    var buttons = document.querySelectorAll('[data-assistant-open]');
-    if (!buttons.length) return;
-    var modulePromise;
-    function open(button) {
-      modulePromise = modulePromise || import('/assets/assistant-ui.js');
-      modulePromise.then(function (mod) {
-        mod.openAssistant(button.getAttribute('data-assistant-locale') || undefined, button);
-      }).catch(function () {});
-    }
-    buttons.forEach(function (button) {
-      button.addEventListener('click', function () { open(button); });
-    });
-  })();
-</script>
+<!-- Guide stays outside Astro's module graph. Before its post-load mount, the
+     inline loader reacts only to a deliberate Guide CTA click. -->
+<script is:inline data-guide-loader={GUIDE_LOADER_MARKER} set:html={guideLoaderSource(locale)} />
 
 <style>
   .footer {

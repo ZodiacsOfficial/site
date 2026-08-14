@@ -1,3 +1,4 @@
+// Bundled by the public email lifecycle entrypoint; not a standalone Function.
 import { createHash, randomUUID } from 'node:crypto';
 import {
   createEmailSubscriptionAdapter,
@@ -19,8 +20,10 @@ import {
 } from '../../src/lib/email/daily-server.js';
 import { verifyDailySunOptInToken } from '../../src/lib/email/daily-sun-token.js';
 import {
+  beginDailySunProviderMutation,
   claimPendingDailySunConfirmation,
   completeClaimedDailySunConfirmation,
+  finishDailySunProviderMutation,
   getDailySunPreference,
   inspectDailySunConfirmation,
   keepCurrentDailySunSign,
@@ -116,13 +119,41 @@ async function synchronizeDailySunProvider(
 ) {
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const before = await currentDailySunAuthority(email);
-    if (before) await confirm(email, before.sign, 'daily');
-    else await removeDailySunSegment({ email });
+    if (before) {
+      const leaseId = randomUUID();
+      const lease = await beginDailySunProviderMutation(before, leaseId);
+      if (lease !== 'ready') {
+        throw new Error('Daily Sun provider authority is busy or no longer current.');
+      }
 
-    const after = await currentDailySunAuthority(email);
-    if (before?.sign === after?.sign && before?.confirmedAt === after?.confirmedAt) {
-      return after;
+      // A thrown/ambiguous provider response deliberately leaves the bounded
+      // lease behind. Deletion cleanup will wait for expiry before it can make
+      // a successful removal claim.
+      let providerFailure: unknown;
+      for (let providerAttempt = 0; providerAttempt < 2; providerAttempt += 1) {
+        try {
+          await confirm(email, before.sign, 'daily');
+          providerFailure = undefined;
+          break;
+        } catch (error) {
+          providerFailure = error;
+        }
+      }
+      if (providerFailure) throw providerFailure;
+      const after = await currentDailySunAuthority(email);
+      if (before.sign === after?.sign
+        && before.confirmedAt === after?.confirmedAt
+        && before.confirmedByAttemptId === after?.confirmedByAttemptId) {
+        await finishDailySunProviderMutation(before, leaseId);
+        return after;
+      }
+      await finishDailySunProviderMutation(before, leaseId);
+      continue;
     }
+
+    await removeDailySunSegment({ email });
+    const after = await currentDailySunAuthority(email);
+    if (!after) return null;
   }
   throw new Error('Daily Sun provider authority changed during reconciliation.');
 }

@@ -14,6 +14,13 @@ import { hasDailyChartEmailProvider } from '../lib/email/daily-config';
 import { BRAND_ICON_PATHS } from '../lib/brand-icons.mjs';
 import { LOCALE_META, UI, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { RUSSIAN_RUNTIME } from '../lib/i18n/ru-runtime/server';
+import AccountProfileAccessBootstrap from '../islands/AccountProfileAccessBootstrap';
+import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../lib/account-v2/feature-flags';
+import { ACCOUNT_V2_PROFILE_ACCESS_KEY } from '../lib/account-v2/profile-access';
+import {
+  ACCOUNT_V2_LOCAL_OWNER_KEY,
+  ACCOUNT_V2_RETAINED_OWNER_KEY,
+} from '../lib/account-v2/storage-identity';
 
 interface Props {
   title: string;
@@ -43,6 +50,8 @@ interface Props {
   localTypography?: boolean;
   /** UTC edition rendered by a daily surface; relative wording is enabled only while current. */
   editionDate?: string;
+  /** Suppress third-party runtime scripts on pages handling private account data. */
+  privateSurface?: boolean;
   /** Render the Terminal-only market and venue boundary in the shared footer. */
   terminalMarketNotice?: boolean;
 }
@@ -54,7 +63,17 @@ const russianRuntime = props.clientUi && locale === 'ru' ? RUSSIAN_RUNTIME : nul
 const plausibleScriptUrl = import.meta.env.PUBLIC_PLAUSIBLE_SCRIPT_URL?.trim();
 const plausibleEndpoint = import.meta.env.PUBLIC_PLAUSIBLE_ENDPOINT?.trim() ?? '';
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN?.trim() ?? '';
-const plausibleEnabled = Boolean(plausibleScriptUrl && !props.noindex);
+const accountSyncV2Enabled = isAccountSyncV2Enabled({
+  PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
+  PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
+});
+// Guide is a site-wide private transcript surface. Remote analytics must not
+// coexist with its DOM/session state, even when account-v2 itself is off.
+const guideRuntimeEnabled = true;
+const plausibleEnabled = Boolean(
+  plausibleScriptUrl && !props.noindex && !props.privateSurface
+  && !accountSyncV2Enabled && !guideRuntimeEnabled,
+);
 const dailyEmailLifecycleEnabled = hasDailyChartEmailProvider(process.env);
 const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ? direction : undefined;
 
@@ -68,12 +87,58 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
   data-stable-typography={props.stableTypography ? '' : undefined}
   data-local-typography={props.localTypography ? '' : undefined}
   data-daily-email-lifecycle={dailyEmailLifecycleEnabled ? '' : undefined}
+  data-account-sync-v2={accountSyncV2Enabled ? '' : undefined}
 >
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#060709" />
     <meta name="color-scheme" content="dark" />
+    {accountSyncV2Enabled && (
+      <script is:inline define:vars={{
+        profileAccessKey: ACCOUNT_V2_PROFILE_ACCESS_KEY,
+        profileOwnerKey: ACCOUNT_V2_LOCAL_OWNER_KEY,
+        profileRetainedOwnerKey: ACCOUNT_V2_RETAINED_OWNER_KEY,
+      }}>
+        /* A full navigation always starts locked. The auth bootstrap below
+           re-grants this tab only after it verifies signed-out or matching-owner state. */
+        try { sessionStorage.removeItem(profileAccessKey); } catch (error) {}
+        var profileAccountId = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+        var exactProfileRecord = function (value, expectedLength) {
+          return Boolean(value && typeof value === 'object' && !Array.isArray(value)
+            && Object.keys(value).length === expectedLength);
+        };
+        var profileLeaseActive = false;
+        window.zodiacsProfileAccess = Object.freeze({
+          activateLease: function () { profileLeaseActive = true; },
+          revokeLease: function () { profileLeaseActive = false; },
+          canRead: function () {
+            try {
+              if (!profileLeaseActive) return false;
+              var grant = JSON.parse(sessionStorage.getItem(profileAccessKey) || 'null');
+              var ownerRaw = localStorage.getItem(profileOwnerKey);
+              var retainedRaw = localStorage.getItem(profileRetainedOwnerKey);
+              if (exactProfileRecord(grant, 2)
+                && grant.version === 1 && grant.mode === 'unowned') {
+                return ownerRaw === null && retainedRaw === null;
+              }
+              if (!exactProfileRecord(grant, 3) || grant.version !== 1
+                || !profileAccountId.test(grant.accountId)) return false;
+              var owner = JSON.parse(ownerRaw || 'null');
+              if (!exactProfileRecord(owner, 2) || owner.version !== 1
+                || !profileAccountId.test(owner.accountId)
+                || owner.accountId !== grant.accountId) return false;
+              if (grant.mode === 'account') return true;
+              if (grant.mode !== 'retained') return false;
+              var retained = JSON.parse(retainedRaw || 'null');
+              return Boolean(exactProfileRecord(retained, 2) && retained.version === 1
+                && profileAccountId.test(retained.accountId)
+                && retained.accountId === grant.accountId);
+            } catch (error) { return false; }
+          }
+        });
+      </script>
+    )}
     <script is:inline>
       /* Chromium paints SVG url() backdrop filters; Safari reports support but
          renders nothing. Mark Chromium so the glass lens applies only there —
@@ -264,6 +329,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
     <slot name="head" />
   </head>
   <body>
+    {accountSyncV2Enabled && <AccountProfileAccessBootstrap client:load />}
     <!-- Keep the route catalog ahead of every island, but out of <head> so
          its ~20KB inline payload cannot delay CSS and LCP-font discovery. -->
     {clientUi && (

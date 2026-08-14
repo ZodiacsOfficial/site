@@ -684,13 +684,22 @@ const visibleNavTools = locale === 'ru'
     restore?.focus();
   });
 
-  // Profile glyph fills once anything is saved on this device.
-  try {
-    const raw = localStorage.getItem('zodiacs.profile.v1');
-    if (raw && JSON.parse(raw)?.charts?.length) {
-      document.querySelector('[data-profile-glyph]')?.classList.add('has-saves');
-    }
-  } catch { /* private mode etc. — glyph stays empty */ }
+  // Profile glyph fills once anything is saved on this verified browser surface.
+  const syncProfileGlyph = () => {
+    const glyph = document.querySelector('[data-profile-glyph]');
+    glyph?.classList.remove('has-saves');
+    try {
+      const profileAccess = Reflect.get(window, 'zodiacsProfileAccess') as
+        { canRead?: () => boolean } | undefined;
+      if (document.documentElement.hasAttribute('data-account-sync-v2')
+        && profileAccess?.canRead?.() !== true) return;
+      const raw = localStorage.getItem('zodiacs.profile.v1');
+      if (raw && JSON.parse(raw)?.charts?.length) glyph?.classList.add('has-saves');
+    } catch { /* private mode etc. — glyph stays empty */ }
+  };
+  syncProfileGlyph();
+  window.addEventListener('zodiacs:profile-access', syncProfileGlyph);
+  window.addEventListener('zodiacs:profile', syncProfileGlyph);
 
 </script>
 

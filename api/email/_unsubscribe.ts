@@ -1,3 +1,4 @@
+// Bundled by the public email lifecycle entrypoint; not a standalone Function.
 import { hasDailyEmailRevocation } from '../../src/lib/email/daily-config.js';
 import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
 import { getDailyContactEmail, removeDailySunSegment } from '../../src/lib/email/daily-resend.js';

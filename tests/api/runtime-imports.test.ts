@@ -7,15 +7,15 @@ import * as ts from 'typescript';
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const API_ROOT = join(ROOT, 'api');
 const EXPECTED_HANDLERS = [
+  'api/account.ts',
   'api/aura-holdings.ts',
   'api/assistant.ts',
   'api/calendar/transits.ts',
   'api/compatibility.ts',
   'api/email/admin-bootstrap.ts',
   'api/email/chart-preference.ts',
-  'api/email/confirm.ts',
   'api/email/subscribe.ts',
-  'api/email/unsubscribe.ts',
+  'api/guide.ts',
   'api/push/subscribe.ts',
   'api/unsubscribe.ts',
   'api/wallet-birth.ts',
@@ -198,6 +198,42 @@ describe('Vercel API runtime packaging', () => {
     });
   });
 
+  it('keeps account lifecycle actions on one scoped function route', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/account/:action',
+      destination: '/api/account?action=:action',
+    });
+  });
+
+  it('keeps the public email lifecycle URLs on one bundled function', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/email/confirm',
+      destination: '/api/email/subscribe?__zodiacs_email_route=confirm',
+    });
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/email/unsubscribe',
+      destination: '/api/email/subscribe?__zodiacs_email_route=unsubscribe',
+    });
+  });
+
+  it('routes the dormant Guide transport without creating a user-facing route', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/v1/guide/turn',
+      destination: '/api/guide?action=turn',
+    });
+    const trailingSlashRedirect = vercel.redirects.find(
+      (rule: { destination?: string }) => rule.destination === '/:path/',
+    );
+    expect(trailingSlashRedirect).toBeDefined();
+    const parameterPattern = trailingSlashRedirect.source.slice('/:path('.length, -1);
+    expect(new RegExp(`^(?:${parameterPattern})$`, 'u').test('v1/guide/turn')).toBe(false);
+    expect(new RegExp(`^(?:${parameterPattern})$`, 'u').test('learn/aspects')).toBe(true);
+    expect(existsSync(join(ROOT, 'src/pages/guide'))).toBe(false);
+  });
+
   it('uses Node ESM-safe relative imports through every handler graph', () => {
     const audit = auditRuntimeGraphs();
     expect(audit.violations).toEqual([]);
@@ -207,7 +243,7 @@ describe('Vercel API runtime packaging', () => {
   it('packages the shared admin bootstrap guard in both daily enrollment graphs', () => {
     for (const handler of [
       'api/email/chart-preference.ts',
-      'api/email/confirm.ts',
+      'api/email/_confirm.ts',
     ]) {
       expect(runtimeImports(join(ROOT, handler))).toContainEqual({
         specifier: '../../src/lib/email/daily-admin-bootstrap.js',

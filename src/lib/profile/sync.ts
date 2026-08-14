@@ -1,9 +1,10 @@
-import type { Session } from '@supabase/supabase-js';
+import { isAuthSessionMissingError, type Session } from '@supabase/supabase-js';
 import { getSupabaseClient, isSupabaseConfigured } from '../supabase/client';
 import { loadChartDeletions, recordChartDeletion, replaceChartDeletions } from './deletions';
 import { mergeSyncState } from './merge';
 import { loadProfile, replaceProfile } from './store';
 import type { RemoteChartSnapshot, RemoteDeletionSnapshot } from './merge';
+import { accountSyncV2Enabled } from '../account-v2/feature-flags';
 
 interface RemoteChartDbRow {
   id: string;
@@ -22,13 +23,15 @@ interface RemoteDigestPreferenceRow {
 
 let timer: number | undefined;
 let inFlight: Promise<boolean> | null = null;
+const ACCOUNT_SYNC_V2_ENABLED = accountSyncV2Enabled();
 
 export { isSupabaseConfigured };
 
 export async function getSyncSession(): Promise<Session | null> {
   const client = getSupabaseClient();
   if (!client) return null;
-  const { data } = await client.auth.getSession();
+  const { data, error } = await client.auth.getSession();
+  if (error && !isAuthSessionMissingError(error)) throw error;
   return data.session ?? null;
 }
 
@@ -37,7 +40,7 @@ export function onSyncAuthChange(callback: (session: Session | null) => void): (
   if (!client) return () => {};
   const { data } = client.auth.onAuthStateChange((_event, session) => {
     callback(session);
-    if (session) scheduleCloudSync(0);
+    if (session && !ACCOUNT_SYNC_V2_ENABLED) scheduleCloudSync(0);
   });
   return () => data.subscription.unsubscribe();
 }
@@ -60,7 +63,16 @@ export async function sendMagicLink(email: string): Promise<{ ok: true } | { ok:
 export async function signOutOfSync(): Promise<void> {
   const client = getSupabaseClient();
   if (!client) return;
-  await client.auth.signOut();
+  const { error } = await client.auth.signOut();
+  if (error) throw error;
+}
+
+/** Removes only this browser session; other signed-in devices remain active. */
+export async function signOutOfSyncLocal(): Promise<void> {
+  const client = getSupabaseClient();
+  if (!client) return;
+  const { error } = await client.auth.signOut({ scope: 'local' });
+  if (error) throw error;
 }
 
 export async function getDigestOptIn(): Promise<boolean> {
@@ -103,6 +115,7 @@ export async function setDigestOptIn(digestOptIn: boolean): Promise<boolean> {
 }
 
 export function scheduleCloudSync(delay = 500): void {
+  if (ACCOUNT_SYNC_V2_ENABLED) return;
   if (!isSupabaseConfigured() || typeof window === 'undefined') return;
   window.clearTimeout(timer);
   timer = window.setTimeout(() => {
@@ -116,6 +129,7 @@ export async function deleteRemoteChart(id: string): Promise<void> {
 }
 
 export async function syncNow(): Promise<boolean> {
+  if (ACCOUNT_SYNC_V2_ENABLED) return false;
   if (inFlight) return inFlight;
   inFlight = syncProfile().finally(() => {
     inFlight = null;

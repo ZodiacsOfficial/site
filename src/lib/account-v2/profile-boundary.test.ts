@@ -1,0 +1,376 @@
+import { describe, expect, it } from 'vitest';
+import {
+  ACCOUNT_V2_LOCAL_OWNER_KEY,
+  ACCOUNT_V2_RETAINED_OWNER_KEY,
+  accountSyncMetadataKey,
+  inspectLocalAccountBoundary,
+  retainedProfileAccessAllowed,
+  type AccountV2Storage,
+} from './local-state';
+import {
+  ACCOUNT_BOUNDARY_PROFILE_KEYS,
+  clearAccountBoundLocalProfileData,
+  clearAccountBoundLocalProfileEverywhere,
+  clearAccountDataFromDevice,
+  clearAllZodiacsDataFromDevice,
+  completeAccountBoundaryDecision,
+  completeDeletedAccountLocalData,
+  hasAccountBoundLocalProfileData,
+  isolateLocalProfileForAccountSwitch,
+  localProfileArchiveKey,
+  retainAccountBoundProfileAfterDeletion,
+} from './profile-boundary';
+
+const ACCOUNT_A = '11111111-1111-4111-8111-111111111111';
+const ACCOUNT_B = '22222222-2222-4222-8222-222222222222';
+const ACCOUNT_C = '33333333-3333-4333-8333-333333333333';
+const FIRST_READING_STORAGE_KEY = 'zodiacs.first-reading.v1';
+
+class MemoryStorage implements AccountV2Storage {
+  readonly values = new Map<string, string>();
+  get length() { return this.values.size; }
+  getItem(key: string) { return this.values.get(key) ?? null; }
+  key(index: number) { return [...this.values.keys()][index] ?? null; }
+  removeItem(key: string) { this.values.delete(key); }
+  setItem(key: string, value: string) { this.values.set(key, value); }
+}
+
+class FailingOwnerStorage extends MemoryStorage {
+  failOwnerWrites = false;
+  override setItem(key: string, value: string) {
+    if (this.failOwnerWrites && key === ACCOUNT_V2_LOCAL_OWNER_KEY) throw new Error('blocked');
+    super.setItem(key, value);
+  }
+}
+
+class FailingFirstReadingStorage extends MemoryStorage {
+  failFirstReadingWrites = false;
+  override setItem(key: string, value: string) {
+    if (this.failFirstReadingWrites && key === FIRST_READING_STORAGE_KEY) {
+      throw new Error('blocked');
+    }
+    super.setItem(key, value);
+  }
+}
+
+function profile(label: string) {
+  return JSON.stringify({ version: 1, settings: { houseSystem: 'whole' }, charts: [{ id: label }] });
+}
+
+describe('account-bound local profile data', () => {
+  it('treats malformed or non-profile account surfaces conservatively', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], JSON.stringify({ version: 1, charts: [] }));
+    expect(hasAccountBoundLocalProfileData(storage)).toBe(false);
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], '{private but malformed');
+    expect(hasAccountBoundLocalProfileData(storage)).toBe(true);
+  });
+
+  it('leaves account-free first-reading progress byte-identical and non-triggering', () => {
+    const storage = new MemoryStorage();
+    const progress = JSON.stringify({
+      version: 1,
+      status: 'in_progress',
+      step: 2,
+      updatedAt: '2026-07-17T00:00:00.000Z',
+    });
+    storage.setItem(FIRST_READING_STORAGE_KEY, progress);
+
+    expect(hasAccountBoundLocalProfileData(storage)).toBe(false);
+    expect(storage.getItem(FIRST_READING_STORAGE_KEY)).toBe(progress);
+  });
+
+  it('scrubs legacy exact first-reading identity before isolation and never archives it', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+    storage.setItem(FIRST_READING_STORAGE_KEY, JSON.stringify({
+      version: 1,
+      status: 'in_progress',
+      step: 2,
+      chartKey: '1990-06-15T16:30:00.000Z|1|40.7128|-74.0060',
+      updatedAt: '2026-07-17T00:00:00.000Z',
+    }));
+
+    expect(isolateLocalProfileForAccountSwitch(storage, ACCOUNT_A, ACCOUNT_B)).toEqual({
+      ok: true,
+      restoredPreviousArchive: false,
+    });
+    expect(JSON.parse(storage.getItem(FIRST_READING_STORAGE_KEY)!)).toEqual({
+      version: 1,
+      status: 'in_progress',
+      step: 2,
+      updatedAt: '2026-07-17T00:00:00.000Z',
+    });
+    const archive = storage.getItem(localProfileArchiveKey(ACCOUNT_A)!)!;
+    expect(archive).not.toContain('chartKey');
+    expect(archive).not.toContain(FIRST_READING_STORAGE_KEY);
+  });
+
+  it('scrubs legacy exact first-reading identity before clearing account data', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(FIRST_READING_STORAGE_KEY, JSON.stringify({
+      version: 1,
+      status: 'complete',
+      step: 3,
+      chartKey: '1990-06-15T16:30:00.000Z|1|40.7128|-74.0060',
+      updatedAt: '2026-07-17T00:00:00.000Z',
+    }));
+
+    expect(clearAccountBoundLocalProfileData(storage)).toEqual({
+      ok: true,
+      restoredPreviousArchive: false,
+    });
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBeNull();
+    expect(JSON.parse(storage.getItem(FIRST_READING_STORAGE_KEY)!)).toEqual({
+      version: 1,
+      status: 'complete',
+      step: 3,
+      updatedAt: '2026-07-17T00:00:00.000Z',
+    });
+  });
+
+  it('fails a boundary transition closed when legacy first-reading identity cannot be scrubbed', () => {
+    const storage = new FailingFirstReadingStorage();
+    const activeProfile = profile('account-a');
+    const owner = JSON.stringify({ version: 1, accountId: ACCOUNT_A });
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], activeProfile);
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, owner);
+    const boundary = inspectLocalAccountBoundary(storage, ACCOUNT_B, true);
+    const legacyProgress = JSON.stringify({
+      version: 1,
+      status: 'in_progress',
+      step: 1,
+      chartKey: '1990-06-15T16:30:00.000Z|1|40.7128|-74.0060',
+      updatedAt: '2026-07-17T00:00:00.000Z',
+    });
+    storage.setItem(FIRST_READING_STORAGE_KEY, legacyProgress);
+    storage.failFirstReadingWrites = true;
+
+    expect(completeAccountBoundaryDecision(storage, boundary, 'isolate')).toEqual({
+      ok: false,
+      restoredPreviousArchive: false,
+    });
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBe(activeProfile);
+    expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toBe(owner);
+    expect(storage.getItem(localProfileArchiveKey(ACCOUNT_A)!)).toBeNull();
+    expect(storage.getItem(FIRST_READING_STORAGE_KEY)).toBe(legacyProgress);
+  });
+
+  it('archives one account and restores the other without touching ownership metadata', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[2], '[{"id":"pair-a"}]');
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+
+    expect(isolateLocalProfileForAccountSwitch(storage, ACCOUNT_A, ACCOUNT_B)).toEqual({
+      ok: true,
+      restoredPreviousArchive: false,
+    });
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBeNull();
+    expect(storage.getItem(localProfileArchiveKey(ACCOUNT_A)!)).toContain('account-a');
+    expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toContain(ACCOUNT_A);
+
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-b'));
+    expect(isolateLocalProfileForAccountSwitch(storage, ACCOUNT_B, ACCOUNT_A)).toEqual({
+      ok: true,
+      restoredPreviousArchive: true,
+    });
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBe(profile('account-a'));
+    expect(storage.getItem(localProfileArchiveKey(ACCOUNT_B)!)).toContain('account-b');
+  });
+
+  it('clears only account-sensitive profile surfaces', () => {
+    const storage = new MemoryStorage();
+    for (const key of ACCOUNT_BOUNDARY_PROFILE_KEYS) storage.setItem(key, 'private');
+    storage.setItem('unrelated', 'keep');
+    expect(clearAccountBoundLocalProfileData(storage).ok).toBe(true);
+    expect(ACCOUNT_BOUNDARY_PROFILE_KEYS.every((key) => storage.getItem(key) === null)).toBe(true);
+    expect(storage.getItem('unrelated')).toBe('keep');
+  });
+
+  it('can remove the current account archive during sign-out or deletion', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(localProfileArchiveKey(ACCOUNT_A)!, 'archived-private-data');
+    storage.setItem('unrelated', 'keep');
+    expect(clearAccountBoundLocalProfileEverywhere(storage, ACCOUNT_A).ok).toBe(true);
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBeNull();
+    expect(storage.getItem(localProfileArchiveKey(ACCOUNT_A)!)).toBeNull();
+    expect(storage.getItem('unrelated')).toBe('keep');
+  });
+
+  it('atomically removes active charts, owner archive, and account sync metadata', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(localProfileArchiveKey(ACCOUNT_A)!, 'archived-private-data');
+    storage.setItem(`zodiacs.account-sync-v2.account.${ACCOUNT_A}.v1`, '{"metadata":true}');
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+    storage.setItem('unrelated', 'keep');
+
+    expect(clearAccountDataFromDevice(storage, ACCOUNT_A).ok).toBe(true);
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBeNull();
+    expect(storage.getItem(localProfileArchiveKey(ACCOUNT_A)!)).toBeNull();
+    expect(storage.getItem(`zodiacs.account-sync-v2.account.${ACCOUNT_A}.v1`)).toBeNull();
+    expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toBeNull();
+    expect(storage.getItem('unrelated')).toBe('keep');
+  });
+
+  it('refuses device deletion unless the current owner exactly matches', () => {
+    for (const owner of [null, ACCOUNT_B]) {
+      const storage = new MemoryStorage();
+      storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+      storage.setItem(accountSyncMetadataKey(ACCOUNT_A)!, '{"metadata":true}');
+      if (owner) {
+        storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: owner }));
+      }
+
+      expect(clearAccountDataFromDevice(storage, ACCOUNT_A).ok).toBe(false);
+      expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBe(profile('account-a'));
+      expect(storage.getItem(accountSyncMetadataKey(ACCOUNT_A)!)).toBe('{"metadata":true}');
+      expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toBe(
+        owner ? JSON.stringify({ version: 1, accountId: owner }) : null,
+      );
+    }
+  });
+
+  it('does not let a cleared prior-account archive reappear on a later switch', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a-active'));
+    storage.setItem(localProfileArchiveKey(ACCOUNT_A)!, JSON.stringify({
+      version: 1,
+      accountId: ACCOUNT_A,
+      values: { [ACCOUNT_BOUNDARY_PROFILE_KEYS[0]]: profile('account-a-archive') },
+    }));
+    expect(clearAccountBoundLocalProfileEverywhere(storage, ACCOUNT_A).ok).toBe(true);
+
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-b'));
+    expect(isolateLocalProfileForAccountSwitch(storage, ACCOUNT_B, ACCOUNT_A)).toEqual({
+      ok: true,
+      restoredPreviousArchive: false,
+    });
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBeNull();
+    expect(storage.getItem(localProfileArchiveKey(ACCOUNT_A)!)).toBeNull();
+  });
+
+  it('rejects invalid owners and malformed target archives without clearing active data', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    expect(isolateLocalProfileForAccountSwitch(storage, 'invalid', ACCOUNT_B).ok).toBe(false);
+    storage.setItem(localProfileArchiveKey(ACCOUNT_B)!, '{bad');
+    expect(isolateLocalProfileForAccountSwitch(storage, ACCOUNT_A, ACCOUNT_B).ok).toBe(false);
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBe(profile('account-a'));
+  });
+
+  it('rolls back archive changes when owner rebinding fails', () => {
+    const storage = new FailingOwnerStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+    const boundary = inspectLocalAccountBoundary(storage, ACCOUNT_B, true);
+    storage.failOwnerWrites = true;
+
+    expect(completeAccountBoundaryDecision(storage, boundary, 'isolate').ok).toBe(false);
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBe(profile('account-a'));
+    expect(storage.getItem(localProfileArchiveKey(ACCOUNT_A)!)).toBeNull();
+    expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toContain(ACCOUNT_A);
+  });
+
+  it('rejects a stale boundary snapshot before changing charts or ownership', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+    const boundary = inspectLocalAccountBoundary(storage, ACCOUNT_B, true);
+
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_C }));
+    expect(completeAccountBoundaryDecision(storage, boundary, 'isolate')).toEqual({
+      ok: false,
+      restoredPreviousArchive: false,
+    });
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBe(profile('account-a'));
+    expect(storage.getItem(localProfileArchiveKey(ACCOUNT_A)!)).toBeNull();
+    expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toContain(ACCOUNT_C);
+  });
+
+  it('keeps deleted-account charts bound to their former owner when retained', () => {
+    const storage = new MemoryStorage();
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(accountSyncMetadataKey(ACCOUNT_A)!, '{"metadata":true}');
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+
+    expect(retainAccountBoundProfileAfterDeletion(storage, ACCOUNT_A)).toEqual({
+      ok: true,
+      restoredPreviousArchive: false,
+    });
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBe(profile('account-a'));
+    expect(storage.getItem(accountSyncMetadataKey(ACCOUNT_A)!)).toBeNull();
+    expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toBe(
+      JSON.stringify({ version: 1, accountId: ACCOUNT_A }),
+    );
+    expect(storage.getItem(ACCOUNT_V2_RETAINED_OWNER_KEY)).toBe(
+      JSON.stringify({ version: 1, accountId: ACCOUNT_A }),
+    );
+    expect(retainedProfileAccessAllowed(storage, ACCOUNT_A)).toBe(true);
+    expect(retainedProfileAccessAllowed(storage, ACCOUNT_B)).toBe(false);
+    expect(inspectLocalAccountBoundary(storage, ACCOUNT_B, true)).toMatchObject({
+      status: 'decision-required',
+      reason: 'owner-mismatch',
+      localOwnerAccountId: ACCOUNT_A,
+    });
+  });
+
+  it('keeps an inactive deleted-account archive tagged without touching the active owner', () => {
+    const storage = new MemoryStorage();
+    const archive = localProfileArchiveKey(ACCOUNT_B)!;
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(archive, profile('account-b-archive'));
+    storage.setItem(accountSyncMetadataKey(ACCOUNT_B)!, '{"metadata":true}');
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+
+    expect(completeDeletedAccountLocalData(storage, ACCOUNT_B, false).ok).toBe(true);
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBe(profile('account-a'));
+    expect(storage.getItem(archive)).toBe(profile('account-b-archive'));
+    expect(storage.getItem(accountSyncMetadataKey(ACCOUNT_B)!)).toBeNull();
+    expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toContain(ACCOUNT_A);
+  });
+
+  it('removes only an inactive deleted-account archive when device cleanup is selected', () => {
+    const storage = new MemoryStorage();
+    const archive = localProfileArchiveKey(ACCOUNT_B)!;
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(archive, profile('account-b-archive'));
+    storage.setItem(accountSyncMetadataKey(ACCOUNT_B)!, '{"metadata":true}');
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+
+    expect(completeDeletedAccountLocalData(storage, ACCOUNT_B, true).ok).toBe(true);
+    expect(storage.getItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0])).toBe(profile('account-a'));
+    expect(storage.getItem(archive)).toBeNull();
+    expect(storage.getItem(accountSyncMetadataKey(ACCOUNT_B)!)).toBeNull();
+    expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toContain(ACCOUNT_A);
+  });
+
+  it('enumerates and removes all Zodiacs local and session keys only', () => {
+    const local = new MemoryStorage();
+    const session = new MemoryStorage();
+    for (const key of [
+      'zodiacs.profile.v1',
+      `zodiacs.local-profile.account.${ACCOUNT_A}.v1`,
+      `zodiacs.account-sync-v2.account.${ACCOUNT_A}.v1`,
+      'zodiacs.daily-chart-selection.v1',
+      'zodiacs:today-sun-sign:v1',
+    ]) local.setItem(key, 'private');
+    session.setItem('zodiacs.account-sync-v2.profile-access.v1', 'private');
+    session.setItem('zodiacs.transient', 'private');
+    local.setItem('unrelated', 'keep-local');
+    session.setItem('unrelated', 'keep-session');
+
+    expect(clearAllZodiacsDataFromDevice(local, session)).toEqual({
+      ok: true,
+      restoredPreviousArchive: false,
+    });
+    expect([...local.values.keys()].filter((key) => key.startsWith('zodiacs'))).toEqual([]);
+    expect([...session.values.keys()].filter((key) => key.startsWith('zodiacs'))).toEqual([]);
+    expect(local.getItem('unrelated')).toBe('keep-local');
+    expect(session.getItem('unrelated')).toBe('keep-session');
+  });
+});

@@ -147,23 +147,32 @@ const jsonLd = [
         intervienen datos de nacimiento ni de la carta.
       </p>
 
-      <h2>Asistente de IA</h2>
+      <h2>Guide</h2>
       <p>
-        Cuando usas el asistente, tus mensajes de chat se envían a nuestro
-        proveedor de IA, Anthropic, para generar la respuesta. Una carta guardada
+        Cuando envías una pregunta a Guide, ese mensaje, los mensajes recientes y
+        el contexto visible de Guide se envían a OpenAI para una revisión de
+        seguridad de la entrada y para generar un borrador de respuesta. Ese
+        borrador generado se envía después de nuevo a OpenAI para una segunda
+        revisión de seguridad antes de mostrártelo. Cada solicitud a la API Responses usa
+        <code>store: false</code>. La conversación web actual permanece solo en
+        esta sesión del navegador, no se sincroniza con una cuenta y no se
+        almacena como texto en los servidores de Zodiacs.org, hayas iniciado
+        sesión o no. OpenAI indica que, de forma predeterminada, los
+        datos de la API no se usan para entrenar sus modelos; sus registros
+        estándar contra abusos pueden conservar el contenido enviado hasta 30
+        días, salvo que se apliquen controles de datos más estrictos. Una carta guardada
         solo se incluye después de que pulses «Adjuntar mi carta»; la pantalla de
         consentimiento muestra el resumen solo de posiciones antes de enviarlo.
         El resumen acompaña cada pregunta mientras «Usando mi carta» siga activo;
         puedes desactivarlo.
-        No guardamos las conversaciones; Anthropic afirma que el tráfico de la
-        API no se usa para entrenar modelos. El asistente nunca adjunta tu nombre,
+        Guide nunca adjunta tu nombre,
         fecha, hora, lugar de nacimiento o coordenadas
         guardados; todo lo que escribas en el chat forma parte del mensaje que
         envías. Para aplicar el límite diario, conservamos un identificador
         unidireccional con sal derivado de tu dirección IP y su recuento diario,
         nunca la IP original; las comprobaciones de cuota borran los registros
-        de más de 35 días. Enviamos ese mismo identificador seudónimo a Anthropic
-        como metadato de la solicitud.
+        anteriores al día UTC previo. No enviamos ese identificador a OpenAI ni
+        incluimos texto de la conversación en los metadatos del proveedor.
       </p>
 
       <h2>Resumen diario, calendario y notificaciones</h2>

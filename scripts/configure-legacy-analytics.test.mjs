@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   TERMINAL_ANALYTICS_PATHS,
+  ensureDefaultGuideBootstrap,
   injectLegacyAnalytics,
 } from './configure-legacy-analytics.mjs';
 
@@ -75,6 +76,59 @@ describe('legacy analytics build injection', () => {
     expect(result).toContain('window.zodiacsAnalytics');
     expect(result).toContain('terminal_view_switch');
     expect(injectLegacyAnalytics(result, { bridgeExistingProvider: true })).toBe(result);
+  });
+
+  it('removes every remote analytics runtime from a Guide-enabled surface', () => {
+    const guideHtml = HTML
+      .replace(
+        '</head>',
+        '<script>window.plausible = window.plausible || function () {};</script>'
+          + '<script async src="https://plausible.io/js/site.js"></script></head>',
+      )
+      .replace(
+        '</body>',
+        '<script type="module">import(\'/assets/assistant-ui.js\')'
+          + '.then(function (mod) { return mod.bootstrapGuide(\'en\'); });</script></body>',
+      );
+    const result = injectLegacyAnalytics(guideHtml, {
+      scriptUrl: 'https://analytics.example/script.js',
+      bridgeExistingProvider: true,
+    });
+
+    expect(result).toContain('/assets/assistant-ui.js');
+    expect(result).not.toContain('plausible.io');
+    expect(result).not.toContain('analytics.example');
+    expect(result).not.toContain('window.plausible = window.plausible');
+    expect(result).not.toContain('window.zodiacsAnalytics');
+    expect(injectLegacyAnalytics(result, {
+      scriptUrl: 'https://analytics.example/script.js',
+      bridgeExistingProvider: true,
+    })).toBe(result);
+  });
+
+  it('upgrades the reviewed click-only Guide hook to the default-visible bootstrap', () => {
+    const clickOnly = HTML.replace(
+      '</body>',
+      `  <script>
+  (function () {
+    var modulePromise;
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest && event.target.closest('[data-assistant-open]');
+      if (!button) return;
+      modulePromise = modulePromise || import('/assets/assistant-ui.js');
+      modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
+    });
+  })();
+  </script></body>`,
+    );
+
+    const result = ensureDefaultGuideBootstrap(clickOnly);
+    expect(result).toContain('data-guide-loader="zodiacs-guide-loader-v1"');
+    expect(result).toContain('return mod.bootstrapGuide(defaultLocale)');
+    expect(result).toContain('return mod.openAssistant(');
+    expect(result).toContain("window.addEventListener('load', scheduleGuide, { once: true });");
+    expect(result).toContain('event.stopImmediatePropagation();');
+    expect(ensureDefaultGuideBootstrap(result)).toBe(result);
   });
 
   it('is idempotent', () => {

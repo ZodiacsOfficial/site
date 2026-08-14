@@ -362,7 +362,10 @@ export function createAssistantHandler(overrides: Partial<HandlerDependencies> =
     }
 
     const env = dependencies.env;
-    if (env.ASSISTANT_ENABLED !== '1') {
+    // Retired first-party transport. The public Guide uses /v1/guide/turn.
+    // Requiring a second, new compatibility acknowledgement prevents an old
+    // production ASSISTANT_ENABLED value from silently keeping Anthropic live.
+    if (env.ASSISTANT_ENABLED !== '1' || env.LEGACY_ASSISTANT_COMPAT_ENABLED !== '1') {
       sendJson(res, 503, { error: 'disabled' });
       return;
     }

@@ -66,13 +66,13 @@ begin
   if stale <> 0 then raise exception 'stale rows survived: %', stale; end if;
 end $$;
 
--- 5. Definer function pins its search path.
+-- 5. The Guide repair keeps the rollback function fail-closed.
 do $$
 declare cfg text[];
 begin
   select proconfig into cfg from pg_proc
     where oid = 'public.assistant_quota_bump(text)'::regprocedure;
-  if cfg is null or not (array_to_string(cfg, ';') like '%search_path=public, pg_temp%') then
+  if cfg is null or not ('search_path=""' = any(cfg)) then
     raise exception 'search_path not pinned: %', cfg;
   end if;
 end $$;
@@ -116,13 +116,13 @@ begin
   end;
 end $$;
 
--- 7. v2 pins its search path exactly as v1 does.
+-- 7. v2 pins its empty search path exactly as v1 does.
 do $$
 declare cfg text[];
 begin
   select proconfig into cfg from pg_proc
     where oid = 'public.assistant_quota_bump_v2(text)'::regprocedure;
-  if cfg is null or not (array_to_string(cfg, ';') like '%search_path=public, pg_temp%') then
+  if cfg is null or not ('search_path=""' = any(cfg)) then
     raise exception 'v2 search_path not pinned: %', cfg;
   end if;
 end $$;

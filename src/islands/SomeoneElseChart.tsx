@@ -9,9 +9,11 @@ import {
   chartHandoffFragment,
   compatibilityHandoffPath,
   mineHandoffFromHash,
+  profileHandoffOriginsFromHash,
   type MineHandoff,
 } from '../lib/chart-handoff';
 import { useProfile } from '../lib/hooks/useProfile';
+import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import { bigThree } from '../lib/interpretations';
 import { SIGNS, SIGN_SLUGS, signBySlug, signForLongitude, signName } from '../lib/signs';
 import '../styles/someone-else.css';
@@ -175,8 +177,15 @@ export default function SomeoneElseChart() {
   const [linkError, setLinkError] = useState('');
   const [manualReadOpen, setManualReadOpen] = useState(false);
   const [currentMine, setCurrentMine] = useState<MineHandoff | null>(null);
+  const [pendingProfileMineId, setPendingProfileMineId] = useState<string | null>(null);
+  const currentMineProfileOrigin = useRef(false);
   const manualReadHeading = useRef<HTMLHeadingElement>(null);
   const { profile, ready: profileReady } = useProfile();
+  useProfileAccessGeneration(() => {
+    if (!currentMineProfileOrigin.current) return;
+    currentMineProfileOrigin.current = false;
+    setCurrentMine(null);
+  });
 
   const latestChart = useMemo(() => profile.charts.reduce((latest, chart) => (
     !latest || chart.updatedAt > latest.updatedAt ? chart : latest
@@ -186,9 +195,12 @@ export default function SomeoneElseChart() {
     return position ? signForLongitude(position.lon).slug : null;
   }, [latestChart]);
   const ownSun = savedOwnSun ?? (isSign(manualOwnSun) ? manualOwnSun : null);
-  const comparisonMine = currentMine ?? (latestChart
+  const comparisonMine = currentMine ?? (!pendingProfileMineId && latestChart
     ? { kind: 'saved' as const, id: latestChart.id }
     : null);
+  const comparisonMineProfileOrigin = currentMine !== null
+    ? currentMineProfileOrigin.current
+    : pendingProfileMineId === null && latestChart !== null;
   const manualReadings = useMemo(
     () => manualBigThreeReadings({ sun, moon, rising }),
     [sun, moon, rising],
@@ -201,9 +213,25 @@ export default function SomeoneElseChart() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.hash.slice(1));
     if (!params.has('mine') && !params.has('mineId')) return;
-    setCurrentMine(mineHandoffFromHash(window.location.hash));
+    const mine = mineHandoffFromHash(window.location.hash);
+    const profileOrigin = profileHandoffOriginsFromHash(window.location.hash).mine;
+    if (profileOrigin && mine?.kind === 'saved') {
+      setPendingProfileMineId(mine.id);
+    } else {
+      currentMineProfileOrigin.current = false;
+      setCurrentMine(mine);
+    }
     history.replaceState(null, '', window.location.pathname + window.location.search);
   }, []);
+
+  useEffect(() => {
+    const id = pendingProfileMineId;
+    if (!profileReady || !id) return;
+    setPendingProfileMineId(null);
+    if (!profile.charts.some((chart) => chart.id === id)) return;
+    currentMineProfileOrigin.current = true;
+    setCurrentMine({ kind: 'saved', id });
+  }, [pendingProfileMineId, profile, profileReady]);
 
   const permission = (
     <label class="other-chart__permission">
@@ -241,6 +269,7 @@ export default function SomeoneElseChart() {
     go(`/birth-chart/#${chartHandoffFragment(input, {
       subjectMode: 'other',
       mine: comparisonMine,
+      mineProfileOrigin: comparisonMineProfileOrigin,
     })}`);
   }
 
@@ -273,6 +302,7 @@ export default function SomeoneElseChart() {
     go(`/birth-chart/#${chartHandoffFragment(input, {
       subjectMode: 'other',
       mine: comparisonMine,
+      mineProfileOrigin: comparisonMineProfileOrigin,
     })}`);
   }
 

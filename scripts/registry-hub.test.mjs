@@ -35,14 +35,19 @@ describe('Zodiacs Registry authority hub', () => {
     }
   });
 
-  test('keeps the page first-party, static, and free of market runtime', async () => {
+  test('keeps the page first-party and free of market or analytics runtime', async () => {
     const [html, analyticsBuild] = await Promise.all([
       read('public/registry/index.html'),
       read('scripts/configure-legacy-analytics.mjs'),
     ]);
-    expect(html).toContain("connect-src 'none'");
+    expect(html).toContain("script-src 'self' 'unsafe-inline'");
+    expect(html).toContain("connect-src 'self'");
     expect(html).not.toMatch(/<script[^>]+src=/iu);
     expect(html).not.toContain('/assets/app.js');
+    expect(html).toContain('data-guide-loader="zodiacs-guide-loader-v1"');
+    expect(html).toContain('return mod.bootstrapGuide(defaultLocale)');
+    expect(html).not.toContain('plausible.io');
+    expect(html).not.toContain('zodiacs-analytics:start');
     expect(html).not.toMatch(/api\.(?:dexscreener|geckoterminal)/iu);
     expect(html).not.toMatch(/market-tape|market-board|leaderboard|Buy [A-Z]/u);
     expect(html).toContain('<noscript>');

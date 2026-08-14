@@ -3,9 +3,23 @@
     "api/assistant.ts": {
       "supportsCancellation": true,
       "maxDuration": 60
+    },
+    "api/guide.ts": {
+      "supportsCancellation": true,
+      "maxDuration": 60
     }
   },
   "redirects": [
+    {
+      "source": "/guide",
+      "destination": "/ask/",
+      "statusCode": 301
+    },
+    {
+      "source": "/guide/",
+      "destination": "/ask/",
+      "statusCode": 301
+    },
     {
       "source": "/:path(.*)",
       "has": [
@@ -178,7 +192,7 @@
       "permanent": true
     },
     {
-      "source": "/:path((?!api(?:/|$)|\\.well-known(?:/|$)|.*\\.[^/]+$).*[^/])",
+      "source": "/:path((?!api(?:/|$)|v1(?:/|$)|\\.well-known(?:/|$)|.*\\.[^/]+$).*[^/])",
       "destination": "/:path/",
       "permanent": true
     },
@@ -189,6 +203,22 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/email/confirm",
+      "destination": "/api/email/subscribe?__zodiacs_email_route=confirm"
+    },
+    {
+      "source": "/api/email/unsubscribe",
+      "destination": "/api/email/subscribe?__zodiacs_email_route=unsubscribe"
+    },
+    {
+      "source": "/v1/guide/turn",
+      "destination": "/api/guide?action=turn"
+    },
+    {
+      "source": "/api/account/:action",
+      "destination": "/api/account?action=:action"
+    },
     {
       "source": "/api/registry/news",
       "destination": "/api/compatibility?action=registry-news"

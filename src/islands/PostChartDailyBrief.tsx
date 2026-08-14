@@ -1,5 +1,7 @@
 import type { Session } from '@supabase/supabase-js';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
+import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import {
   derivePostChartDailyState,
   postChartStateShowsSunCapture,
@@ -59,6 +61,13 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
   const contextRef = useRef<PostChartContext | null>(null);
   const sessionRef = useRef<Session | null>(null);
   const generationRef = useRef(0);
+  const profileAccessGeneration = useProfileAccessGeneration(() => {
+    generationRef.current += 1;
+    sessionRef.current = null;
+    setView({ kind: 'idle' });
+    setResendBusy(false);
+    setResendStatus('');
+  });
 
   async function resolveContext(
     context: PostChartContext,
@@ -67,6 +76,13 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
   ): Promise<void> {
     if (!document.documentElement.hasAttribute('data-daily-email-lifecycle')) return;
     const generation = ++generationRef.current;
+    const accessGeneration = profileAccessGeneration.current;
+    const requestIsCurrent = () => (
+      generation === generationRef.current
+      && accessGeneration === profileAccessGeneration.current
+      && context.contextId === contextRef.current?.contextId
+      && profileAccessAllowed()
+    );
     if (!options.preserveStable) setView({ kind: 'idle' });
     setResendStatus('');
     try {
@@ -78,7 +94,7 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
       const session = suppliedSession === undefined
         ? await sync.getSyncSession()
         : suppliedSession;
-      if (generation !== generationRef.current || context.contextId !== contextRef.current?.contextId) return;
+      if (!requestIsCurrent()) return;
       sessionRef.current = session;
 
       if (!session) {
@@ -90,7 +106,7 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
         daily.getSyncedChartIds(session.user.id),
         daily.getDailyChartPreference(session.access_token),
       ]);
-      if (generation !== generationRef.current || context.contextId !== contextRef.current?.contextId) return;
+      if (!requestIsCurrent()) return;
       const state = derivePostChartDailyState({
         authenticated: true,
         currentChartId: context.chartId,
@@ -121,7 +137,7 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
         setResendStatus(options.pendingStatus);
       }
     } catch {
-      if (generation === generationRef.current) setView({ kind: 'unavailable' });
+      if (requestIsCurrent()) setView({ kind: 'unavailable' });
     }
   }
 
@@ -148,10 +164,17 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
       const context = contextRef.current;
       if (context) void resolveContext(context, sessionRef.current, { preserveStable: true });
     };
+    const onProfileAccess = () => {
+      const context = contextRef.current;
+      if (context && profileAccessAllowed()) {
+        void resolveContext(context, undefined, { preserveStable: true });
+      }
+    };
 
     window.addEventListener('zodiacs:chart-computed', onComputed);
     window.addEventListener('zodiacs:chart-context', onContext);
     window.addEventListener('zodiacs:profile-synced', refresh);
+    window.addEventListener('zodiacs:profile-access', onProfileAccess);
 
     const initial = currentPostChartContext();
     if (initial) {
@@ -175,6 +198,7 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
       window.removeEventListener('zodiacs:chart-computed', onComputed);
       window.removeEventListener('zodiacs:chart-context', onContext);
       window.removeEventListener('zodiacs:profile-synced', refresh);
+      window.removeEventListener('zodiacs:profile-access', onProfileAccess);
     };
   }, []);
 
@@ -221,26 +245,34 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
     if (view.kind !== 'pending' || !sessionRef.current || !contextRef.current) return;
     const startingContext = contextRef.current;
     const startingSession = sessionRef.current;
+    const accessGeneration = profileAccessGeneration.current;
+    const requestIsCurrent = () => (
+      accessGeneration === profileAccessGeneration.current
+      && contextRef.current?.contextId === startingContext.contextId
+      && profileAccessAllowed()
+    );
     let restoreFocus = false;
     setResendBusy(true);
     setResendStatus('');
     try {
       const daily = await import('../lib/profile/daily-email-client');
+      if (!requestIsCurrent()) return;
       await daily.resendDailyChartPreference(startingSession.access_token);
-      if (contextRef.current?.contextId !== startingContext.contextId) return;
+      if (!requestIsCurrent()) return;
       await resolveContext(startingContext, startingSession, {
         preserveStable: true,
         pendingStatus: COPY.pendingAgain,
       });
       restoreFocus = contextRef.current?.contextId === startingContext.contextId;
     } catch {
-      if (contextRef.current?.contextId !== startingContext.contextId) return;
+      if (!requestIsCurrent()) return;
       await resolveContext(startingContext, startingSession, {
         preserveStable: true,
         pendingStatus: COPY.error,
       });
       restoreFocus = contextRef.current?.contextId === startingContext.contextId;
     } finally {
+      if (!requestIsCurrent()) return;
       setResendBusy(false);
       if (restoreFocus) {
         requestAnimationFrame(() => resendButtonRef.current?.focus({ preventScroll: true }));

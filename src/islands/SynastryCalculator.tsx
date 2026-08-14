@@ -29,6 +29,7 @@ import type { City } from '../lib/geo/search';
 import { LOCALE_META, localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
+import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 
 interface SlotState {
   source: 'saved' | 'form' | 'link' | 'positions';
@@ -542,6 +543,23 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const inviteCompletionRef = useRef<number | null>(null);
   const inviteOpenTrackedRef = useRef(false);
   const inviteArrivalHandleRef = useRef('');
+  const profileAccessGeneration = useProfileAccessGeneration(() => {
+    compareInFlightRef.current = false;
+    focusAfterComputeRef.current = false;
+    setSlotA(emptySlot());
+    setSlotB(emptySlot());
+    setResult(null);
+    setInvite(null);
+    setInviteState('idle');
+    setInvitePanelExpanded(false);
+    setPairs([]);
+    setPairSave('idle');
+    setPairAnnounce('');
+    setAutoRan(false);
+    setRestoreTick(0);
+    setBusy(false);
+    setError('');
+  });
 
   // Result-only actions stay outside the entry form's initial closure.
   useEffect(() => {
@@ -797,8 +815,13 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   useEffect(() => {
     setPairs(loadPairs());
     const onPairs = (e: Event) => setPairs((e as CustomEvent<SavedPair[]>).detail);
+    const onProfileAccess = () => setPairs(loadPairs());
     window.addEventListener('zodiacs:pairs', onPairs);
-    return () => window.removeEventListener('zodiacs:pairs', onPairs);
+    window.addEventListener('zodiacs:profile-access', onProfileAccess);
+    return () => {
+      window.removeEventListener('zodiacs:pairs', onPairs);
+      window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+    };
   }, []);
 
   // Pairs are only read here, so this is where orphans get cleaned up:
@@ -985,11 +1008,13 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     if (slotB.source === 'saved') return charts.some((chart) => chart.id === slotB.savedId);
     if (slotB.source !== 'form' || !slotB.city || !slotB.date) return false;
     const timeKnown = slotB.timeKnown && slotB.time !== '';
+    const accessGeneration = profileAccessGeneration.current;
     try {
       const [{ resolveLocalToUtc }, { saveChart }] = await Promise.all([
         import('../lib/time/localToUtc'),
         import('../lib/profile/store'),
       ]);
+      if (accessGeneration !== profileAccessGeneration.current) return false;
       const resolved = resolveLocalToUtc(
         slotB.date,
         timeKnown ? slotB.time : '12:00',
@@ -1120,6 +1145,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     focusAfterComputeRef.current = e !== undefined;
     setBusy(true);
     setError('');
+    const accessGeneration = profileAccessGeneration.current;
     try {
       const resolve = (slot: SlotState, fallback: string) =>
         slot.source === 'saved' ? resolveSaved(charts.find((c) => c.id === slot.savedId)!, loadEngine)
@@ -1132,6 +1158,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         wheelMod ? Promise.resolve(wheelMod) : import('./synastry/RelationshipWheel'),
         import('../lib/engine/synastry'),
       ]);
+      if (accessGeneration !== profileAccessGeneration.current) return;
       const summary = summarizePair(a.bodies, b.bodies, 8);
       const resultSource = comparisonResultSource(
         slotA.source,
@@ -1156,9 +1183,11 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           : slotA.source === 'form' && slotB.source === 'form' ? 'form' : 'restored',
       });
     } catch (err) {
+      if (accessGeneration !== profileAccessGeneration.current) return;
       setError(t(locale, 'compareError'));
       console.error(err);
     } finally {
+      if (accessGeneration !== profileAccessGeneration.current) return;
       compareInFlightRef.current = false;
       setBusy(false);
     }

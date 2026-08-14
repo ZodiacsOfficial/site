@@ -37,13 +37,14 @@ Do not put credentials in `.env` files that can be committed, Markdown, fixtures
 
 | Service | State | Purpose | Provisioning rule |
 | --- | --- | --- | --- |
-| Vercel | Existing | Static hosting, previews, and `api/` serverless functions | Keep Production, Preview, and Development env scopes aligned. Deploy `main`. |
+| Vercel | Existing | Static hosting, previews, and `api/` serverless functions | Keep shared dependencies aligned across Production, Preview, and Development. Canary gates are deliberate exceptions: keep account sync v2 off/unconfigured in Production and ordinary Development, and scope any later flags-on build to an explicitly approved, access-controlled Preview. Deploy `main` only after approval. |
 | GitHub Actions | Existing | CI, daily/monthly data generation, digest, push, and refresh jobs | Give only the permissions declared by each workflow. Store secrets as Actions secrets and non-secret switches as variables. |
 | Supabase | Existing | Magic-link auth, RLS chart sync, digest preferences, daily-chart consent and delivery receipts, assistant quota, push subscriptions, and released Phase 4 compatibility invitations | Apply migrations, keep RLS on, and never expose the service-role key. |
 | Resend | Selected standard | Double-opt-in capture, weekly/daily email, unsubscribe-compatible delivery | Authenticate `zodiacs.org` with SPF/DKIM and use a domain sender. |
 | Google Workspace | Existing | Monitored public contact and correction mailboxes | `people@zodiacs.org` is an alternate address for the monitored `admin@zodiacs.org` account, not a separate inbox. Keep the alias active and monitor Spam as well as Inbox. |
 | Buttondown or Loops | Supported alternatives | Standalone capture only | Configure exactly one provider. Do not combine providers in one deployment. |
-| Anthropic | Existing optional integration | Ask Zodiacs; optional future Phase 1 prose build | Use server/CI-only keys. Keep daily-prose and assistant budgets independently revocable. |
+| OpenAI | Existing server-only integration | Website Guide generation with the Luna model | Reuse the encrypted server credential only through the protected Guide endpoint; pin `store: false`, set provider budgets, and never expose the key to a browser. |
+| Anthropic | Retired optional integration | Legacy assistant transport and optional future Phase 1 prose build | Keep `LEGACY_ASSISTANT_COMPAT_ENABLED` unset. Any CI prose key remains server/CI-only and independently revocable. |
 | Plausible-compatible analytics | Optional, approved | Cookieless allowlisted product events | No script is emitted when unconfigured. Never send birth data, email, chart positions, wallet addresses, free text, query strings, or fragments. |
 | Web Push / VAPID | Scaffolded, off | Phase 3 opt-in notifications | Generate a VAPID pair, store subscriptions in Supabase, and enable client/server/schedule flags together only after verification. |
 | Solana/Base RPC providers | Existing optional Registry integrations | Wallet-chart and Registry Collection reads | Out of scope for this six-phase program; preserve their flags and server-only endpoints. |
@@ -74,6 +75,8 @@ These values may appear in client bundles. They must never contain a secret.
 | `PUBLIC_PLAUSIBLE_SCRIPT_URL` | Analytics enabled | Full cookieless analytics script URL. Unset means no provider script. |
 | `PUBLIC_PLAUSIBLE_ENDPOINT` | Optional analytics override | First-party or self-hosted Plausible-compatible event endpoint. |
 | `PUBLIC_PLAUSIBLE_DOMAIN` | Optional analytics override | Analytics site/domain identifier. |
+| `PUBLIC_ACCOUNT_SYNC_V2_ENABLED` | Approved account-v2 client preview, first interlock | Must equal exactly `1` together with `PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK=1`; either value missing or malformed leaves the v1 client intact. Keep unset in Production and ordinary Development. |
+| `PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK` | Approved account-v2 client preview, second interlock | Must equal exactly `1` together with `PUBLIC_ACCOUNT_SYNC_V2_ENABLED=1`. This acknowledges that the statically rendered client is global within that deployment, so set it only on an access-controlled Preview whose protection has been verified first. |
 | `PUBLIC_WEB_PUSH_ENABLED` | Browser push prompt enabled | Must equal `1`; one half of the push kill switch. |
 | `PUBLIC_VAPID_KEY` | Browser push enabled | Browser-visible VAPID public key. |
 | `PUBLIC_COMPAT_INVITES_ENABLED` | Phase 4 invitation UI enabled | Must equal `1`; exposes the English invitation, arrival, profile-register, send-back, and return-link UI. This is public configuration, not a secret. |
@@ -91,6 +94,13 @@ These values may appear in client bundles. They must never contain a secret.
 | `COMPAT_INVITE_TEST_USER_IDS` | Vercel server configuration | Comma-separated list of exact Auth user UUIDs allowed to create invitations while public authorization is off. Missing or empty fails closed: nobody can create. Retain the approved canary owner after launch so disabling `COMPAT_INVITES_PUBLIC_ENABLED` restores the reviewed private boundary. Clearing this value never launches the feature. |
 | `COMPAT_INVITE_BASE_URL` | Vercel server configuration, optional | HTTPS site origin used in the one-time creation URL; defaults to `https://zodiacs.org`. |
 | `COMPAT_INVITE_SWEEP_SECRET` | Vercel + GitHub Actions secret | At least 32 characters. The same value authenticates the hourly cleanup workflow to the server endpoint. |
+| `ACCOUNT_SYNC_V2_API_ENABLED` | Vercel server flag | Must equal exactly `1` for new enrollment and ordinary v2 sync. Missing or any other value fails closed. It is a sync-canary switch, not a privacy-rights switch: export, deletion recovery, consent withdrawal, and removal of an existing remote chart remain available during rollback. |
+| `ACCOUNT_SYNC_V2_CANARY_USER_IDS` | Vercel server configuration | Comma-separated list of 1–100 exact Auth user UUIDs admitted to the private sync canary. Missing, empty, malformed, or oversized configuration denies enrollment, upload, and read calls; it never creates public access. |
+| `ACCOUNT_SYNC_V2_ENCRYPTION_KEYS` | Vercel server secret | JSON object containing 1–16 positive numeric key versions mapped to canonical base64 32-byte service-managed encryption keys. Retain older keys until every envelope using them has been re-encrypted or deleted. Never use a `PUBLIC_` prefix. |
+| `ACCOUNT_SYNC_V2_ACTIVE_KEY_VERSION` | Vercel server configuration | Positive version present in `ACCOUNT_SYNC_V2_ENCRYPTION_KEYS`; new chart and provider-locator envelopes use this version. Change it only as part of a reviewed key-rotation plan. |
+| `ACCOUNT_SYNC_V2_FINGERPRINT_KEYS` | Vercel server secret | Separate JSON keyring containing 1–4 positive numeric versions mapped to canonical base64 32-byte HMAC keys for mutation and deletion-recovery verifiers. It must not reuse an encryption key or enter a browser bundle. |
+| `ACCOUNT_SYNC_V2_ACTIVE_FINGERPRINT_KEY_VERSION` | Vercel server configuration | Positive version present in `ACCOUNT_SYNC_V2_FINGERPRINT_KEYS`; new verifiers use this version while retries may use retained versions during rotation. |
+| `ACCOUNT_SYNC_V2_CLEANUP_SECRET` | Vercel + GitHub Actions secret | 32–512 characters. The same value authenticates the hourly, fixed-256-row deletion-receipt cleanup request. It grants no account/user API access and must not use a `PUBLIC_` prefix. Do not provision it until the account-v2 migration and endpoint are approved for deployment. |
 | `COMPAT_INVITE_RECIPIENT_HASH_SECRET` | Vercel server secret | At least 32 characters. HMACs the resolved account email for the one-shot completion-email delivery claim; raw email is never stored in the Phase 4 tables. |
 
 ### Standalone email capture
@@ -144,17 +154,48 @@ The Vercel daily-email endpoints require `EMAIL_PROVIDER=resend`, distinct `RESE
 
 `RESEND_DAILY_SEGMENT_ID` is provider routing metadata, not sign or consent authority. After double opt-in commits `daily_sun_preferences`, the endpoint idempotently adds the contact to this one segment. Sign changes update only the Supabase preference. The sender pages the segment, HMACs each normalized address, intersects it with confirmed `daily_sun_preferences`, and takes the sign only from that row. Unsubscribe revokes Supabase first and then removes this membership on a best-effort basis. Weekly-digest consent remains separate and must never be inferred, added, or removed by a daily-email action.
 
-### Ask Zodiacs
+### Guide and retired Ask transport
 
 | Variable | Scope | Meaning |
 | --- | --- | --- |
-| `ASSISTANT_ENABLED` | Vercel server flag | Must equal `1`; enables model calls. Unset/off returns a disabled response. |
-| `ANTHROPIC_API_KEY` | Vercel server secret | Server-only model API key. |
-| `ASSISTANT_SALT` | Vercel server secret | Salt used to hash a visitor address for quota enforcement. Rotate deliberately because it resets hash continuity. |
+| `OPENAI_API_KEY` | Vercel server secret | Existing encrypted server-only key used only by the protected Guide endpoint. Never expose or duplicate it. |
+| `GUIDE_KILL_SWITCH` | Vercel emergency switch | Literal `1` disables Guide generation. Missing or any other value leaves the public website Guide available by default. |
+| `GUIDE_GLOBAL_DAILY_LIMIT` | Vercel server configuration, optional | Positive integer global UTC-day ceiling; defaults to `3000`. |
+| `GUIDE_SESSION_SECRET` | Vercel server secret, optional | Dedicated signing/HMAC key for anonymous Guide sessions. If absent, the existing `ASSISTANT_SALT` is reused with Guide-specific domain separation. |
+| `ASSISTANT_SALT` | Vercel server secret | Existing at-least-32-character key used as the Guide session/quota fallback. Rotate deliberately because it resets anonymous sessions and hash continuity. |
 | `PUBLIC_SUPABASE_URL` | Vercel server/public config | Supabase origin used by the quota RPC. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server secret | Calls `assistant_quota_bump`; never included in the client bundle. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server secret | Calls the service-role-only `guide_quota_reserve_v1` RPC; never included in the client bundle. |
+| `LEGACY_ASSISTANT_COMPAT_ENABLED` | Vercel server flag | Must equal `1` together with legacy `ASSISTANT_ENABLED=1` to expose the retired Anthropic transport. Keep unset; this prevents an old flag from silently keeping two providers live. |
 
-The current endpoint enforces five requests per minute per function instance and thirty per day through Supabase. The committed migration `20260727050000_phase6_assistant_quota.sql` supplies `assistant_quota` and the `assistant_quota_bump` definer function; apply and verify it through the reviewed live path before `ASSISTANT_ENABLED=1`.
+Guide enforces five accepted requests per minute, thirty per visitor per UTC day,
+and a default global ceiling of 3,000 through Supabase. The pending additive
+migration `20260813102035_guide_atomic_quota_reservation.sql` supplies the
+service-role-only `guide_quota_reserve_v1` RPC, which serializes each UTC day's
+reservations before checking either ceiling. It first serializes a server-HMAC
+operation key and keeps an RPC-only receipt for 48 hours, so the same logical
+turn cannot be charged or sent to Luna again by another serverless instance,
+including across UTC midnight. Replays fail closed as a non-retryable revision
+conflict because signed-out output is intentionally not persisted. The Guide
+endpoint fails closed until that migration is explicitly approved and applied.
+Quota rows older than the previous UTC day and replay receipts older than 48
+hours are deleted. Durable quota storage contains only opaque HMACs, the UTC
+quota day, and a reservation timestamp—never message text, chart context, raw
+protocol IDs, or a raw network address.
+
+Guide calls the OpenAI Responses API with the exact Luna model for user-facing
+generation. Its hidden pre/post safety classifier uses the pinned OpenAI
+`gpt-5.4-nano-2026-03-17` classification model. Every request sets `store: false`
+and `background: false`; Guide does not use the separate Moderations endpoint.
+It fails closed if Luna or the independent safety boundary is unavailable and
+never substitutes another answer-generating model. Signed-out conversations stay
+in the browser session; Zodiacs.org persists only non-content quota counters.
+Never put conversation text, chart facts, source titles, or subject names in
+logs, analytics, provider metadata, URLs, notifications, or crash reports.
+After the same-origin, schema, consent, and context checks pass, a
+high-confidence current-turn crisis disclosure receives fixed local emergency
+guidance before any provider-key or quota dependency. That path performs no
+OpenAI or Supabase call and stores no message content, while retaining the
+process-local burst, principal/conversation concurrency, and replay guards.
 
 ### Phase 1 optional model-assisted prose
 
@@ -287,7 +328,11 @@ These are outside this program and should remain off unless separately authorize
 | Phase 4 create/open | `COMPAT_INVITES_ENABLED=1` + Supabase server contract | Creation, token exchange, and session reads fail closed. Existing status, revocation, hiding, completion replay, and cleanup remain available when the contract exists. |
 | Phase 4 public creation | `COMPAT_INVITES_PUBLIC_ENABLED=1` | Creation remains limited to exact Auth UUIDs in the canary allowlist. Authentication and owned synchronized-chart checks apply in either mode. |
 | Phase 4 canary creation | `COMPAT_INVITE_TEST_USER_IDS` | Only exact listed Auth user UUIDs may create. Missing or empty denies every creator; clearing it never creates public access. |
-| Ask Zodiacs model call | `ASSISTANT_ENABLED=1` + key/quota config | Static/disabled experience; no model request. |
+| Account sync v2 client | `PUBLIC_ACCOUNT_SYNC_V2_ENABLED=1` + `PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK=1` | Either interlock missing or malformed preserves the v1 client and legacy synchronization path. Both flags must remain off in Production and may be paired only in a verified access-controlled Preview. |
+| Account sync v2 enrollment/ordinary sync | `ACCOUNT_SYNC_V2_API_ENABLED=1` + complete server keyrings + pending private schema | New enrollment and ordinary sync return disabled. Export, account deletion prepare/status/finish, consent withdrawal, and deletion of an existing remote chart remain available privacy controls. |
+| Account sync v2 canary admission | `ACCOUNT_SYNC_V2_CANARY_USER_IDS` | Missing, empty, malformed, or more than 100 UUIDs denies admission, upload, and reads. It does not restrict rollback privacy controls. |
+| Account deletion receipt cleanup | `ACCOUNT_SYNC_V2_CLEANUP_SECRET` in Vercel and GitHub Actions | The endpoint is indistinguishable from not found and performs no database call; the hourly workflow exits without sending a request. Provision before deletion receipts can exist, then retain through the recovery window even if sync flags are turned off. |
+| Guide model call | default-on with complete server key/quota configuration; `GUIDE_KILL_SWITCH=1` is the emergency stop | The launcher remains useful without an account. If configuration or Luna access is unavailable, generation fails closed without a provider fallback. |
 | Registry Collection | `PUBLIC_REGISTRY_COLLECTION_ENABLED=1` + RPCs + firewall rule | No entry point, sitemap entry, or Aura route exposure. |
 | Wallet chart | `PUBLIC_WALLET_CHART_ENABLED=1` + a supported provider | Endpoint returns disabled; ordinary birth chart is unaffected. |
 
@@ -311,6 +356,28 @@ Required released migrations:
 Phase 4 adds one released migration that is live and verified:
 
 6. `supabase/migrations/20260724003109_phase4_compat_invites.sql`
+
+Account sync v2 adds one pending additive migration that is local only and has
+not been applied to the live project:
+
+7. `supabase/migrations/20260811153303_account_sync_v2_foundation.sql`
+
+Nothing in this file authorizes applying that migration, deploying the account
+API, provisioning its secrets, or enabling either client interlock. After
+explicit approval, verify the migration first in disposable PostgreSQL 17 and
+a non-production Supabase project. It may then be applied with every account-v2
+gate still off; its private tables keep RLS enabled and grant no browser Data
+API access. Deploy and verify the API before enabling the cleanup schedule, and
+provision the same `ACCOUNT_SYNC_V2_CLEANUP_SECRET` in Vercel and GitHub Actions
+before any deletion receipt can exist.
+
+Before setting either public client flag, verify Vercel Deployment Protection
+on the exact Preview URL from a signed-out browser and an unauthenticated HTTP
+request. The request must be challenged before it can reach the site. Do not
+use a production alias, public custom domain, or an unprotected Preview. Then
+confirm both public flags are absent from Production, scope the exact pair only
+to that protected Preview, keep the API allowlist limited to reviewed internal
+Auth UUIDs, and verify the flags-on build emits no remote analytics script.
 
 Before either Phase 3 daily-email flag or any push flag is enabled, apply and
 verify both Phase 3 migrations. The habit-layer migration creates service-owned
@@ -471,14 +538,14 @@ The ladder completed on 2026-07-25. PR `#159` merged as
 `2026-07-25T07:34:10.644Z`. Keep the three production flags aligned and retain
 the canary allowlist and hourly cleanup path.
 
-## Ask Zodiacs provisioning
+## Guide provisioning
 
-1. Create a dedicated Anthropic key and set a hard provider budget/alert.
-2. Apply the committed assistant-quota migration and test its atomic daily increment.
-3. Configure `ANTHROPIC_API_KEY`, `ASSISTANT_SALT`, Supabase URL, and service-role secret in Vercel server scope.
-4. Keep `ASSISTANT_ENABLED` off while running the red-team and source-link sample.
-5. Verify same-origin enforcement, per-minute and per-day limits, cancellation, disabled fallback, no conversation persistence, and chart-summary disclosure.
-6. Enable the flag only after Phase 6's DoD evidence is logged.
+1. Reuse the existing encrypted `OPENAI_API_KEY`; do not read, duplicate, or expose it.
+2. Review and explicitly approve the pending Guide atomic-quota migration, then verify its replay, functional, and two-session concurrency suites before applying it. Deploying Guide code before the RPC exists must remain fail-closed.
+3. Configure the existing `ASSISTANT_SALT`, Supabase URL, and service-role secret in Vercel server scope. A future dedicated `GUIDE_SESSION_SECRET` may be introduced through a reviewed rotation.
+4. In an access-controlled preview, verify exact Luna generation and the pinned GPT-5.4 nano safety classifier with one non-sensitive request, `store: false` on all three calls, returned-model validation, no generation fallback, and provider budget alerts.
+5. Verify same-origin enforcement, signed anonymous sessions, per-minute/per-day/global limits, cancellation, session-local conversation behavior, scoped cloud/chart consent, and absence of content in logs and analytics.
+6. Keep `LEGACY_ASSISTANT_COMPAT_ENABLED` unset. Set `GUIDE_KILL_SWITCH=1` only for an emergency stop; the completed website Guide is otherwise available by default.
 
 ## Scheduled jobs
 
@@ -489,6 +556,7 @@ All schedules are UTC.
 | `.github/workflows/daily-horoscopes.yml` | Daily 00:00 | Builds facts/publication, verifies, replays 30 days, commits changes, waits for live edition, pings IndexNow. GitHub may start the runner after the declared boundary. | Always on. Phase 1 covers all daily cuts and Monday weekly generation. |
 | `.github/workflows/daily-email.yml` | Hourly at UTC minute 13 | Runs a credential-free fixture smoke; when explicitly enabled, verifies the exact live edition and selects eligible test-list recipients. | Off by default; real delivery requires GitHub `DAILY_EMAIL_ENABLED=1`. Workflow is hardcoded to `test`; no general-audience path exists. |
 | `.github/workflows/compat-invite-sweep.yml` | Hourly at UTC minute 17 | Closes overdue Phase 4 invitations in bounded batches and prunes 30-day evidence; missing configuration exits cleanly. | Released, provisioned, and required while invitations can exist. |
+| `.github/workflows/account-deletion-receipt-cleanup.yml` | Hourly at UTC minute 37 | Sends one authenticated request that removes at most 256 expired account-deletion receipts and 256 expired provider leases; missing configuration exits without a request. | Committed only; leave unprovisioned until account sync v2 is approved. Required once deletion receipts can exist. |
 | `.github/workflows/weekly-digest.yml` | Monday 06:00 | Fixture smoke always; real send only when `DIGEST_ENABLED=true`. | Off by default. |
 | `.github/workflows/pulse-refresh.yml` | Monday 06:17 | Refreshes Wikipedia/Trends pulse data and commits changes. | Existing, best effort. |
 | `.github/workflows/distribution-refresh.yml` | Monday 06:31 | Refreshes Registry ownership distribution and commits changes. | Existing Registry operation. |

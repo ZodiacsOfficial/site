@@ -90,6 +90,9 @@ describe('Phase 1 durable acceptance evidence', () => {
         expect(capture.status).toBe(200);
         expect(capture.errors).toEqual([]);
         expect(capture.layout.overlay).toBe(false);
+        expect(capture.layout.guideLauncher).toBe(true);
+        expect(capture.layout.guideInvite).toBe(false);
+        expect(capture.layout.guideInviteSeen).toBe(true);
         expect(capture.layout.contentLength).toBeGreaterThan(100);
         expect(capture.layout.clientWidth).toBe(capture.viewport.width);
         expect(capture.layout.scrollWidth).toBeLessThanOrEqual(capture.layout.clientWidth);

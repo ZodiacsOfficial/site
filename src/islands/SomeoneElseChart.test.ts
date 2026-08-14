@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 import { encodeChartLink } from '../lib/share';
 import { encodePositionsLink, POSITION_BODY_ORDER } from '../lib/share-positions';
@@ -83,5 +84,23 @@ describe('manual Big Three profile', () => {
       { kind: 'moon', slug: 'taurus' },
     ]);
     expect(readings[0].reading).toContain('Your core engine is ignition');
+  });
+});
+
+describe('someone-else private mine handoff', () => {
+  it('preserves public mine input but scrubs a marked profile-origin handoff on revoke', async () => {
+    const source = await readFile(new URL('./SomeoneElseChart.tsx', import.meta.url), 'utf8');
+    const revoke = source.slice(
+      source.indexOf('useProfileAccessGeneration(() => {'),
+      source.indexOf('const latestChart = useMemo'),
+    );
+    expect(revoke).toContain('if (!currentMineProfileOrigin.current) return;');
+    expect(revoke).toContain('currentMineProfileOrigin.current = false;');
+    expect(revoke).toContain('setCurrentMine(null);');
+    expect(source).toContain('const profileOrigin = profileHandoffOriginsFromHash(window.location.hash).mine;');
+    expect(source).toContain('setPendingProfileMineId(mine.id);');
+    expect(source).toContain('if (!profile.charts.some((chart) => chart.id === id)) return;');
+    expect(source).toContain('mineProfileOrigin: comparisonMineProfileOrigin');
+    expect(source).toContain('const comparisonMineProfileOrigin = currentMine !== null');
   });
 });

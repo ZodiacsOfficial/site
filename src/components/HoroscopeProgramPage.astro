@@ -161,22 +161,29 @@ const skyMarkers = reading.skyStrip.markers;
       /* Route-local first-paint hint for DailyForYou. Only the current sign is
          tested, and no chart data is copied out of local storage. */
       try {
-        var rawProfile = localStorage.getItem('zodiacs.profile.v1');
-        var profile = rawProfile ? JSON.parse(rawProfile) : null;
-        var signNames = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
-        var matchingChart = profile && profile.version === 1 && Array.isArray(profile.charts)
-          && profile.charts.some(function (chart) {
-            if (!chart || typeof chart.name !== 'string' || typeof chart.updatedAt !== 'string') return false;
-            var bodies = chart && chart.summary && chart.summary.bodies;
-            if (!Array.isArray(bodies)) return false;
-            var sun = bodies.find(function (body) {
-              return body && body.body === 'Sun' && Number.isFinite(body.lon);
+        var syncDailyForYouHint = function () {
+          document.documentElement.removeAttribute('data-dfy-saved-chart');
+          if (document.documentElement.hasAttribute('data-account-sync-v2')
+            && (!window.zodiacsProfileAccess || !window.zodiacsProfileAccess.canRead())) return;
+          var rawProfile = localStorage.getItem('zodiacs.profile.v1');
+          var profile = rawProfile ? JSON.parse(rawProfile) : null;
+          var signNames = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
+          var matchingChart = profile && profile.version === 1 && Array.isArray(profile.charts)
+            && profile.charts.some(function (chart) {
+              if (!chart || typeof chart.name !== 'string' || typeof chart.updatedAt !== 'string') return false;
+              var bodies = chart && chart.summary && chart.summary.bodies;
+              if (!Array.isArray(bodies)) return false;
+              var sun = bodies.find(function (body) {
+                return body && body.body === 'Sun' && Number.isFinite(body.lon);
+              });
+              if (!sun) return false;
+              var longitude = ((sun.lon % 360) + 360) % 360;
+              return signNames[Math.floor(longitude / 30)] === dailyEnhancementSign;
             });
-            if (!sun) return false;
-            var longitude = ((sun.lon % 360) + 360) % 360;
-            return signNames[Math.floor(longitude / 30)] === dailyEnhancementSign;
-          });
-        if (matchingChart) document.documentElement.setAttribute('data-dfy-saved-chart', '');
+          if (matchingChart) document.documentElement.setAttribute('data-dfy-saved-chart', '');
+        };
+        syncDailyForYouHint();
+        window.addEventListener('zodiacs:profile-access', syncDailyForYouHint);
       } catch (error) {}
     </script>
   )}

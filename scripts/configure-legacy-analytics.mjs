@@ -5,17 +5,55 @@ import {
   ANALYTICS_EVENT_PROPS,
   ANALYTICS_EVENT_VALUES,
 } from '../src/lib/analytics-config.mjs';
+import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../src/lib/assistant/guide-loader.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const START = '<!-- zodiacs-analytics:start -->';
 const END = '<!-- zodiacs-analytics:end -->';
 const BLOCK = new RegExp(`\\n?${START}[\\s\\S]*?${END}\\n?`, 'g');
+const SCRIPT_BLOCK = /\n?[ \t]*<script(?:\s[^>]*)?>[\s\S]*?<\/script>[ \t]*\n?/giu;
+const PLAUSIBLE_PROVIDER = /\n?[ \t]*<script\b[^>]*\bsrc=["'][^"']*plausible[^"']*["'][^>]*>\s*<\/script>[ \t]*\n?/giu;
+const CLICK_ONLY_GUIDE = `  <script>
+  (function () {
+    var modulePromise;
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest && event.target.closest('[data-assistant-open]');
+      if (!button) return;
+      modulePromise = modulePromise || import('/assets/assistant-ui.js');
+      modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
+    });
+  })();
+  </script>`;
+const DEFAULT_GUIDE = `  <script data-guide-loader="${GUIDE_LOADER_MARKER}">
+${guideLoaderSource('en')}
+  </script>`;
 
 export const TERMINAL_ANALYTICS_PATHS = Object.freeze([
   'public/astrofolio/index.html',
   'public/terminal/index.html',
 ]);
+
+function stripRemoteAnalytics(html) {
+  return html
+    .replace(BLOCK, '')
+    .replace(SCRIPT_BLOCK, (script) => (
+      script.includes('window.plausible = window.plausible') ? '\n' : script
+    ))
+    .replace(PLAUSIBLE_PROVIDER, '');
+}
+
+export function ensureDefaultGuideBootstrap(html) {
+  let found = false;
+  const upgraded = html.replace(SCRIPT_BLOCK, (script) => {
+    if (!script.includes('/assets/assistant-ui.js')) return script;
+    found = true;
+    return `\n${DEFAULT_GUIDE}\n`;
+  });
+  if (found) return upgraded;
+  if (!html.includes(CLICK_ONLY_GUIDE)) return html;
+  return html.replace(CLICK_ONLY_GUIDE, DEFAULT_GUIDE);
+}
 
 function escapeAttribute(value) {
   return value
@@ -27,6 +65,10 @@ function escapeAttribute(value) {
 
 export function injectLegacyAnalytics(html, config = {}) {
   const clean = html.replace(BLOCK, '');
+  // Guide owns a private transcript in the DOM and sessionStorage. Keep every
+  // surface that imports it free of a remote analytics runtime, including
+  // hand-authored pages that previously carried their own Plausible loader.
+  if (clean.includes('/assets/assistant-ui.js')) return stripRemoteAnalytics(clean);
   const scriptUrl = config.scriptUrl?.trim();
   // Several hand-authored wing pages carry the standard Plausible loader in
   // their source. Add only the bounded event bridge there so a configured
@@ -113,13 +155,14 @@ export async function configureLegacyAnalytics(config = {}) {
     resolve(root, 'public/terminal/markets/index.html'),
     resolve(root, 'public/archive/index.html'),
     resolve(root, 'public/sdk/index.html'),
+    resolve(root, 'public/sdk/examples/simastry-aura/index.html'),
     resolve(root, 'public/thesis/index.html'),
   ];
   let changed = 0;
   const terminalTargets = new Set(TERMINAL_ANALYTICS_PATHS.map((path) => resolve(root, path)));
   for (const target of targets) {
     const before = await readFile(target, 'utf8');
-    const after = injectLegacyAnalytics(before, {
+    const after = injectLegacyAnalytics(ensureDefaultGuideBootstrap(before), {
       ...config,
       bridgeExistingProvider: terminalTargets.has(target),
     });

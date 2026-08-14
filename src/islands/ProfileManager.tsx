@@ -1,5 +1,5 @@
 /**
- * Saved charts: the local-first profile surface. Renders
+ * Saved charts — the local-first chart library and profile surface. Renders
  * saved charts from localStorage, supports rename/delete, and frames
  * the local-first sync model honestly.
  */
@@ -10,7 +10,7 @@ import type { SavedPair } from '../lib/profile/pairs';
 import type { SavedChart } from '../lib/profile/schema';
 import { useProfile } from '../lib/hooks/useProfile';
 import { signForLongitude, formatLongitude, signName } from '../lib/signs';
-import { encodeChartLink } from '../lib/share';
+import { profileChartHandoffFragment } from '../lib/chart-handoff';
 import type { Session } from '@supabase/supabase-js';
 import type * as Sync from '../lib/profile/sync';
 import { localizePath, normalizeCatalogLocale, t, tf, tp, type CatalogLocale as Locale, type UiKey } from '../lib/i18n';
@@ -200,6 +200,8 @@ interface ProfileManagerProps {
   locale?: Locale;
   /** Server-computed only; the island cannot infer or enable this feature. */
   dailyEmailEnabled?: boolean;
+  /** Server-computed exact flag; suppresses the legacy upload-everything sync UI. */
+  accountSyncV2Enabled?: boolean;
 }
 
 function ChipRow({ chart, locale }: { chart: SavedChart; locale: Locale }) {
@@ -237,6 +239,7 @@ function ChipRow({ chart, locale }: { chart: SavedChart; locale: Locale }) {
 export default function ProfileManager({
   locale: rawLocale = 'en',
   dailyEmailEnabled = false,
+  accountSyncV2Enabled = false,
 }: ProfileManagerProps) {
   const locale = normalizeCatalogLocale(rawLocale);
   const showDailyEmail = dailyEmailEnabled && locale === 'en';
@@ -340,7 +343,7 @@ export default function ProfileManager({
 
   useEffect(() => {
     let unsubscribe = () => {};
-    if (!HAS_PROFILE_SYNC) return () => unsubscribe();
+    if (!HAS_PROFILE_SYNC || accountSyncV2Enabled) return () => unsubscribe();
     import('../lib/profile/sync')
       .then(async (api) => {
         if (!api.isSupabaseConfigured()) return;
@@ -370,13 +373,18 @@ export default function ProfileManager({
       })
       .catch(() => {});
     return () => unsubscribe();
-  }, []);
+  }, [accountSyncV2Enabled]);
 
   useEffect(() => {
     setPairs(loadPairs());
     const onPairs = (e: Event) => setPairs((e as CustomEvent<SavedPair[]>).detail);
+    const onProfileAccess = () => setPairs(loadPairs());
     window.addEventListener('zodiacs:pairs', onPairs);
-    return () => window.removeEventListener('zodiacs:pairs', onPairs);
+    window.addEventListener('zodiacs:profile-access', onProfileAccess);
+    return () => {
+      window.removeEventListener('zodiacs:pairs', onPairs);
+      window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+    };
   }, []);
 
   // Same read-time cleanup the compatibility island does — this page is
@@ -878,7 +886,7 @@ export default function ProfileManager({
     </section>
   );
 
-  const syncPanel = HAS_PROFILE_SYNC && (
+  const syncPanel = HAS_PROFILE_SYNC && !accountSyncV2Enabled && (
     <aside class="pf-sync shell" id="profile-sync">
       <div class="core pf-sync__core">
         <div>
@@ -995,17 +1003,7 @@ export default function ProfileManager({
                   {chart.birth.place && (
                     <a
                       class="pf-chart__action"
-                      href={`${localizePath(locale, '/birth-chart/')}#c=${encodeChartLink({
-                        date: chart.birth.date,
-                        time: chart.birth.time,
-                        timeKnown: chart.birth.timeKnown,
-                        lat: chart.birth.place.lat,
-                        lon: chart.birth.place.lon,
-                        tz: chart.birth.place.tz,
-                        name: chart.name,
-                        place: chart.birth.place.name,
-                        houseSystem: chart.summary.houseSystem,
-                      })}`}
+                      href={`${localizePath(locale, '/birth-chart/')}#${profileChartHandoffFragment(chart.id) ?? ''}`}
                     >
                       {t(locale, 'openChart')}
                     </a>
