@@ -124,7 +124,7 @@ const englishLeakPhrases = [
   'The twelve signs', 'Start with your chart', 'Compatibility calculator',
   'Moon sign calculator', 'Rising sign calculator', 'Check your transits',
   'Your profile', 'Privacy policy', 'How we calculate', 'Page not found',
-  'This page does not exist', 'Read the pair', 'Ask Zodiacs',
+  'This page does not exist', 'Read the pair',
 ];
 const publicCorePaths = new Set(core.filter((path) => path !== '/'));
 

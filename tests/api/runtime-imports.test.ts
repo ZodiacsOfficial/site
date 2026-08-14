@@ -17,6 +17,7 @@ const EXPECTED_HANDLERS = [
   'api/email/confirm.ts',
   'api/email/subscribe.ts',
   'api/email/unsubscribe.ts',
+  'api/guide.ts',
   'api/push/subscribe.ts',
   'api/unsubscribe.ts',
   'api/wallet-birth.ts',
@@ -188,7 +189,7 @@ function auditRuntimeGraphs(): { violations: string[]; catalogs: string[] } {
 describe('Vercel API runtime packaging', () => {
   it('exposes only the intended function handlers', () => {
     expect(deployedFunctionFiles(API_ROOT).sort()).toEqual([...EXPECTED_HANDLERS].sort());
-    expect(EXPECTED_HANDLERS).toHaveLength(13);
+    expect(EXPECTED_HANDLERS).toHaveLength(14);
   });
 
   it('routes Registry news through the existing compatibility function', () => {
@@ -205,6 +206,22 @@ describe('Vercel API runtime packaging', () => {
       source: '/api/account/:action',
       destination: '/api/account?action=:action',
     });
+  });
+
+  it('routes the dormant Guide transport without creating a user-facing route', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/v1/guide/turn',
+      destination: '/api/guide?action=turn',
+    });
+    const trailingSlashRedirect = vercel.redirects.find(
+      (rule: { destination?: string }) => rule.destination === '/:path/',
+    );
+    expect(trailingSlashRedirect).toBeDefined();
+    const parameterPattern = trailingSlashRedirect.source.slice('/:path('.length, -1);
+    expect(new RegExp(`^(?:${parameterPattern})$`, 'u').test('v1/guide/turn')).toBe(false);
+    expect(new RegExp(`^(?:${parameterPattern})$`, 'u').test('learn/aspects')).toBe(true);
+    expect(existsSync(join(ROOT, 'src/pages/guide'))).toBe(false);
   });
 
   it('uses Node ESM-safe relative imports through every handler graph', () => {

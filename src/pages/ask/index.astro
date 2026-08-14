@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Faq from '../../components/Faq.astro';
 
 /**
- * Ask Zodiacs — the grounded assistant's home. The page is deliberately a
+ * Guide — the grounded astrology assistant's home. The page is deliberately a
  * useful static guide first: everything above the fold reads without
  * JavaScript and stays useful when the assistant is resting. The
  * conversation itself is the existing reviewed panel, opened by the same
@@ -13,7 +13,7 @@ import Faq from '../../components/Faq.astro';
 const faq = [
   {
     q: 'Where do the answers come from?',
-    a: 'From this site. The assistant carries a guide built from Zodiacs.org pages — the calculators, the sign guides, Learn, the calendars — and answers from that material, naming the pages it drew on. When the site does not cover something, it says so instead of improvising.',
+    a: 'Guide uses a curated reference built from Zodiacs.org pages — the calculators, sign guides, Learn, calendars, Registry, Terminal, and published Astrofolio facts. When the site does not cover an exact product claim, Guide says it cannot verify it instead of improvising.',
   },
   {
     q: 'Are the answers generated?',
@@ -21,15 +21,15 @@ const faq = [
   },
   {
     q: 'What happens to my conversation?',
-    a: 'It lives in your browser tab and nowhere else. We do not store conversations or chart summaries. The service keeps a daily counter against an anonymous, salted hash so one visitor cannot exhaust it for everyone; the counter clears itself after two days.',
+    a: 'While you are signed out, it lives only in this browser tab for your local day. Zodiacs.org does not store the conversation or chart summary. The service keeps privacy-preserving fair-use counters so one visitor cannot exhaust Guide for everyone.',
   },
   {
     q: 'How does it use my birth chart?',
-    a: 'Only if you attach it, and you see exactly what is sent first. If you have a saved chart on this device, the assistant can include a placements-only summary — computed in your browser — after you confirm a preview of the precise text. No birth date, time, or place travels with it, and it is not stored.',
+    a: 'Only if you attach it, and you see exactly what is sent first. If you have a saved chart on this device, Guide can include a placements-only summary — computed in your browser — after you confirm a preview of the precise text. No saved name, birth date, time, place, or coordinates travel with it, and Zodiacs.org does not store it while you are signed out.',
   },
   {
     q: 'What will it not do?',
-    a: 'No medical, mental-health, legal, financial, or investment advice. No predictions of specific events or dates. No readings about third parties. A chart is the wrong instrument for those decisions, and the assistant will say so.',
+    a: 'No medical, mental-health, legal, financial, investment, buy, sell, valuation, or market-timing advice. No predictions of specific events or dates. No claims about another person’s private thoughts or future behavior. Guide uses practical language and preserves your agency.',
   },
 ];
 
@@ -38,15 +38,15 @@ const jsonLd = [
     '@type': 'WebPage',
     '@id': 'https://zodiacs.org/ask/#page',
     url: 'https://zodiacs.org/ask/',
-    name: 'Ask Zodiacs — a grounded astrology assistant',
-    description: 'Ask about this site’s tools, general astrology, or your own saved chart. Answers are generated from Zodiacs.org pages, with sources named and nothing stored.',
+    name: 'Guide — astrology and birth-chart help from Zodiacs.org',
+    description: 'Ask Guide about birth charts, astrology, Zodiacs.org, or published Astrofolio facts. Signed-out conversations stay in the browser session.',
     isPartOf: { '@id': 'https://zodiacs.org/#site' },
   },
   {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
-      { '@type': 'ListItem', position: 2, name: 'Ask Zodiacs', item: 'https://zodiacs.org/ask/' },
+      { '@type': 'ListItem', position: 2, name: 'Guide', item: 'https://zodiacs.org/ask/' },
     ],
   },
   {
@@ -60,30 +60,30 @@ const jsonLd = [
 ];
 ---
 <Base
-  title="Ask Zodiacs — a grounded astrology assistant"
-  description="Ask about this site's tools, general astrology, or your own saved chart. Answers come from Zodiacs.org pages, with sources named and nothing stored."
+  title="Guide — astrology and birth-chart help from Zodiacs.org"
+  description="Ask Guide about birth charts, astrology, Zodiacs.org, or published Astrofolio facts. Signed-out conversations stay in the browser session."
   path="/ask/"
   image="/assets/og/v2/tool/ask.png"
-  imageAlt="Ask Zodiacs — a grounded astrology assistant"
+  imageAlt="Guide — astrology and birth-chart help from Zodiacs.org"
   jsonLd={jsonLd}
 >
-  <section class="container container--narrow ask">
+  <section class="container container--narrow ask" data-guide-page-id="guide">
     <header class="ask__hero reveal">
-      <em class="kicker">Ask Zodiacs</em>
-      <h1 class="display">A question, answered from this site.</h1>
+      <em class="kicker">Guide</em>
+      <h1 class="display">Astrology help, right when you need it.</h1>
       <p class="ask__lede">
-        Ask how a tool works, what a placement means, or what your own saved
-        chart is doing — and get an answer drawn from Zodiacs.org pages, with
-        the sources named so you can read further.
+        Ask how a tool works, what a placement means, what your own saved chart
+        is doing, or what Zodiacs.org publishes about Astrofolio. Guide answers
+        in practical, plain language and points you toward the relevant pages.
       </p>
       <div class="ask__cta">
         <button type="button" class="btn btn--primary" data-assistant-open>
-          <span>Start asking</span><span class="orb" aria-hidden="true">↗</span>
+          <span>Open Guide</span><span class="orb" aria-hidden="true">↗</span>
         </button>
         <noscript>
           <p class="ask__nojs">
-            Asking needs JavaScript. Everything the assistant knows lives on
-            this site's own pages, so the guides below answer without it.
+            Guide needs JavaScript. The site's tools and published guides do
+            not, so the guides below remain available without it.
           </p>
         </noscript>
       </div>
@@ -93,8 +93,8 @@ const jsonLd = [
       <section class="tile ask__card" aria-labelledby="ask-site">
         <h2 id="ask-site">About the site</h2>
         <p>“How do I save a chart?” “What house system does the calculator
-        use?” “Where are the eclipse dates?” The assistant knows every tool
-        here and points at the page instead of paraphrasing it.</p>
+        use?” “Where are the eclipse dates?” Guide can explain the supported
+        tools and point you to the relevant published page.</p>
         <p class="ask__links"><a href="/birth-chart/">Birth chart</a> · <a href="/tools/">All tools</a> · <a href="/methodology/">How we compute</a></p>
       </section>
       <section class="tile ask__card" aria-labelledby="ask-astro">
@@ -106,7 +106,7 @@ const jsonLd = [
       </section>
       <section class="tile ask__card" aria-labelledby="ask-chart">
         <h2 id="ask-chart">Your own chart</h2>
-        <p>With a chart saved on this device, the assistant can read your
+        <p>With a chart saved on this device, Guide can read your
         actual placements — after you approve a preview of exactly what will
         be sent. Placements only; nothing stored; your call every time.</p>
         <p class="ask__links"><a href="/birth-chart/">Compute a chart</a> · <a href="/profile/">Saved charts</a></p>
@@ -117,17 +117,17 @@ const jsonLd = [
       <div class="core tinted ask__contract-core">
         <h2>The contract, plainly</h2>
         <ul>
-          <li><strong>Grounded.</strong> Answers come from this site's pages and name their sources. When the site doesn't cover it, the assistant says so.</li>
+          <li><strong>Grounded.</strong> Exact site, Registry, Terminal, and Astrofolio claims come from a curated Zodiacs.org reference. When it cannot verify a product fact, Guide says so.</li>
           <li><strong>Generated.</strong> Replies are produced on the spot and can be wrong. Astrology here is symbolic, not deterministic.</li>
-          <li><strong>Private.</strong> Conversations and chart summaries are never stored. A chart is attached only after you confirm a preview of the exact text.</li>
+          <li><strong>Private.</strong> Signed-out conversations stay in this browser session and are not stored by Zodiacs.org. A chart is attached only after you confirm a preview of the exact placement text.</li>
           <li><strong>Bounded.</strong> No medical, legal, or financial advice; no event predictions; no third-party readings. Fair-use limits keep it available: a short per-minute pace and thirty questions a day.</li>
         </ul>
-        <p class="ask__rest">When the assistant is resting — off, or over its daily budget — this page and the site's own guides remain the answer. Nothing here requires it.</p>
+        <p class="ask__rest">When Guide is resting — unavailable, or over its daily fair-use budget — this page and the site's own guides remain useful. Nothing else here requires Guide or an account.</p>
       </div>
     </section>
 
     <section class="reveal">
-      <Faq items={faq} heading="Ask Zodiacs, answered" />
+      <Faq items={faq} heading="Guide, answered" />
     </section>
   </section>
 </Base>

@@ -66,26 +66,6 @@
   }
   </script>
 
-  <script>
-    window.plausible = window.plausible || function () {
-      (window.plausible.q = window.plausible.q || []).push(arguments);
-    };
-    window.plausible.init = window.plausible.init || function (options) {
-      window.plausible.o = options || {};
-    };
-    window.plausible.init({
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    });
-  </script>
-  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
-
   <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/app-icons/v3/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/app-icons/v3/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/app-icons/v3/apple-touch-icon.png" />
@@ -7869,5 +7849,10 @@
     src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
     integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"></script>
   <script defer src="/assets/app.js?v=z2"></script>
+  <script type="module">
+    import('/assets/assistant-ui.js')
+      .then(function (mod) { return mod.bootstrapGuide('en'); })
+      .catch(function () {});
+  </script>
 </body>
 </html>

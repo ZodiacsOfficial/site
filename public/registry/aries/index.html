@@ -9,26 +9,6 @@
   <title>Aries — Official ARIES Zodiac Token · Sign 1 of 12 | Zodiacs.org</title>
   <meta name="description" content="Aries is the transferable token for the Aries sign. Verify its official addresses, market history, constellation, and collection artwork." />
   <link rel="canonical" href="https://zodiacs.org/registry/aries/" />
-  <script>
-    window.plausible = window.plausible || function () {
-      (window.plausible.q = window.plausible.q || []).push(arguments);
-    };
-    window.plausible.init = window.plausible.init || function (options) {
-      window.plausible.o = options || {};
-    };
-    window.plausible.init({
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    });
-  </script>
-  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
-
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="Aries · Official ARIES Token — Zodiacs" />
   <meta property="og:description" content="The official Aries zodiac token: verified addresses, market history, constellation, and collection artwork." />
@@ -1088,7 +1068,7 @@
           <a href="/privacy/">Privacy</a>
           <a href="/terms/">Terms</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
           <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio ↗</a>
         </div>
         <div>Registry lookup/display tools: read-only</div>
@@ -1107,15 +1087,9 @@
 
   <script>
   (function () {
-    var buttons = document.querySelectorAll('[data-assistant-open]');
-    if (!buttons.length) return;
-    var modulePromise;
-    buttons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        modulePromise = modulePromise || import('/assets/assistant-ui.js');
-        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
-      });
-    });
+    import('/assets/assistant-ui.js')
+      .then(function (mod) { return mod.bootstrapGuide('en'); })
+      .catch(function () {});
   })();
   </script>
 

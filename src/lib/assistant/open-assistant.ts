@@ -1,21 +1,41 @@
 /**
- * Lazy, framework-free assistant dialog. The classic page loader imports the
- * stable /assets/assistant-ui.js bundle only after a visitor asks for it.
- * Saved-chart birth inputs are used locally when houses need recomputing; the
- * request contains placement lines only, never a name or birth detail.
+ * Site-wide Guide drawer. Signed-out conversation state lives only in this
+ * browser tab. Saved-chart birth inputs are used locally when houses need
+ * recomputing; cloud requests contain placement lines, never birth details.
  */
 import './assistant.css';
 import { houseOf, wholeSignCusps } from '../engine/houses';
 import { normalizeLocale as normalizeSiteLocale, type ReleasedLocale as Locale } from '../i18n/core';
 import { PROFILE_KEY } from '../profile/schema';
 import { profileAccessAllowed } from '../account-v2/profile-access-reader';
+import {
+  ACCOUNT_V2_LOCAL_OWNER_KEY,
+  ACCOUNT_V2_STORAGE_PREFIX,
+  isAccountV2Id,
+} from '../account-v2/storage-identity';
 import { degreeInSign, signForLongitude } from '../signs';
 
 export type AssistantLocale = Locale;
 
-interface AssistantMessage {
-  role: 'user' | 'assistant';
+type GuideAuthor = 'user' | 'guide';
+
+interface GuideGeneration {
+  modelId: string;
+  promptVersion: string;
+  policyVersion: string;
+  protocolSchema: 'zodiacs.guide.conversation.draft.v1';
+  generatedAt: string;
+}
+
+interface GuideMessage {
+  messageId: string;
+  turnId: string;
+  sequence: number;
+  author: GuideAuthor;
   content: string;
+  contextRevision: number;
+  createdAt: string;
+  generation: GuideGeneration | null;
 }
 
 interface StoredBody {
@@ -25,16 +45,15 @@ interface StoredBody {
 }
 
 interface StoredChart {
+  id: string;
+  name: string;
+  accountRevision: number;
   updatedAt: string;
   birth: {
     date: string;
     time: string | null;
     timeKnown: boolean;
-    place: {
-      lat: number;
-      lon: number;
-      tz: string;
-    } | null;
+    place: { lat: number; lon: number; tz: string } | null;
   };
   summary: {
     houseSystem: 'whole' | 'placidus';
@@ -43,16 +62,70 @@ interface StoredChart {
   };
 }
 
+interface GuideSession {
+  version: 1;
+  authBoundary: string;
+  localDate: string;
+  timeZone: string;
+  conversationId: string;
+  localOwnerId: string;
+  dailySessionId: string;
+  disclosureId: string;
+  consentPolicyVersion: string;
+  cloudConsentGranted: boolean;
+  revision: number;
+  contextRevision: number;
+  contextEpoch: number;
+  nextSequence: number;
+  modelHistoryStartSequence: number;
+  lastPageSourceId: string | null;
+  removedPageSourceIds: string[];
+  messages: GuideMessage[];
+}
+
+interface PageInfo {
+  sourceId: string;
+  title: string;
+  facts: string;
+}
+
+interface GuideContextSource {
+  sourceId: string;
+  kind: 'owner_chart' | 'site_page';
+  sourceRevision: number;
+  title: string;
+  facts: string;
+  subject: {
+    boundary: 'root_user' | 'public_reference';
+    subjectId: string;
+    subjectName: string | null;
+    subjectIsUser: boolean;
+  };
+  containsThirdPartyData: false;
+  persistence: 'local_only';
+  contentDigest: string;
+}
+
 interface Copy {
   title: string;
+  open: string;
   close: string;
+  clear: string;
   intro: string;
+  invite: string;
+  inviteAction: string;
+  dismissInvite: string;
   log: string;
   input: string;
   placeholder: string;
   send: string;
   stop: string;
+  retry: string;
   newline: string;
+  context: string;
+  pageSource: string;
+  addPage: string;
+  removeSource: string;
   chartOn: string;
   chartOff: string;
   chartReading: string;
@@ -66,198 +139,232 @@ interface Copy {
   user: string;
   assistant: string;
   privacy: string;
+  cloudTitle: string;
+  cloudBody: string;
+  cloudConfirm: string;
+  cloudCancel: string;
   consentTitle: string;
   consentBody: string;
   consentConfirm: string;
   consentCancel: string;
   sources: string;
+  contextUpdated: string;
 }
 
 const COPY: Record<AssistantLocale, Copy> = {
   en: {
-    title: 'Ask Zodiacs',
-    close: 'Close assistant',
-    intro: 'Ask about signs, houses, aspects, timing, or a saved chart.',
-    log: 'Conversation',
-    input: 'Your question',
-    placeholder: 'Ask an astrology question…',
-    send: 'Send',
-    stop: 'Stop',
-    newline: 'Shift + Enter for a new line',
-    chartOn: 'Using my chart',
-    chartOff: 'Use my chart',
-    chartReading: 'Reading the placements in your saved chart…',
-    thinking: 'Writing an answer…',
-    stopped: 'Stopped.',
-    complete: 'Answer complete.',
-    empty: 'Write a question first.',
-    unavailable: 'The assistant is unavailable right now. Please try again later.',
-    disabled: 'The assistant is not available on this site right now.',
-    rateLimited: "That's everything for today — the assistant caps out at 30 messages a day.",
-    user: 'You',
-    assistant: 'Zodiacs',
-    privacy: "The assistant can be wrong. Answers are generated; astrology here is symbolic, not deterministic. Conversations aren't stored by us.",
-    consentTitle: 'Before your chart is attached',
-    consentBody: "While “Using my chart” is on, each question and the placement lines below will be sent to Anthropic. Zodiacs.org does not attach your saved name, birth date, time, place, or coordinates, and does not store the conversation.",
-    consentConfirm: 'Attach my chart',
-    consentCancel: 'Keep it private',
-    sources: 'From this site:',
+    title: 'Guide', open: 'Open Guide', close: 'Close Guide', clear: "Clear today's conversation",
+    intro: 'Ask about this page, astrology, your birth chart, or published Astrofolio facts.',
+    invite: 'I can help with this page, astrology, your birth chart, or Astrofolio.',
+    inviteAction: 'Ask Guide', dismissInvite: 'Dismiss Guide welcome', log: 'Guide conversation',
+    input: 'Your question', placeholder: 'What would you like help with?', send: 'Send', stop: 'Stop', retry: 'Retry',
+    newline: 'Shift + Enter for a new line', context: 'Visible sources', pageSource: 'This page',
+    addPage: 'Use this page', removeSource: 'Remove source', chartOn: 'Using my chart', chartOff: 'Use my chart',
+    chartReading: 'Reading the placements in your saved chart…', thinking: 'Guide is thinking…',
+    stopped: 'Stopped.', complete: 'Answer complete.', empty: 'Write a question first.',
+    unavailable: 'Guide is temporarily unavailable. Please try again later.',
+    disabled: 'Guide is resting right now. The rest of Zodiacs.org still works.',
+    rateLimited: 'Guide is busy or has reached a fair-use limit. Wait a minute; if it continues, come back tomorrow.',
+    user: 'You', assistant: 'Guide',
+    privacy: 'Guide can be wrong. This web conversation stays in this browser session and is not synced to an account; submitted content is processed by OpenAI.',
+    cloudTitle: 'Before Guide answers',
+    cloudBody: 'Guide sends your question, recent Guide messages, and the visible sources above to OpenAI. This web Guide conversation stays in this browser session and is not synced to your account. Under standard API controls, OpenAI may retain abuse-monitoring data for up to 30 days. Continue for this Guide day?',
+    cloudConfirm: 'Continue with Guide', cloudCancel: 'Not now', consentTitle: 'Before your chart is attached',
+    consentBody: 'This is the one chart you explicitly marked as your own. The exact placement lines below will be sent to OpenAI with your question. Zodiacs.org does not attach its saved name, birth date, time, place, or coordinates, and does not store the signed-out conversation.',
+    consentConfirm: 'Attach my chart', consentCancel: 'Keep it private', sources: 'From this site:',
+    contextUpdated: 'Source removed. Earlier messages remain visible, but Guide will not use them in future answers.',
   },
   es: {
-    title: 'Pregúntale a Zodiacs',
-    close: 'Cerrar asistente',
-    intro: 'Pregunta sobre signos, casas, aspectos, ciclos o una carta guardada.',
-    log: 'Conversación',
-    input: 'Tu pregunta',
-    placeholder: 'Haz una pregunta de astrología…',
-    send: 'Enviar',
-    stop: 'Detener',
-    newline: 'Mayús + Intro para una línea nueva',
-    chartOn: 'Usando mi carta',
-    chartOff: 'Usar mi carta',
-    chartReading: 'Leyendo las posiciones de tu carta guardada…',
-    thinking: 'Escribiendo una respuesta…',
-    stopped: 'Detenido.',
-    complete: 'Respuesta completa.',
-    empty: 'Escribe una pregunta primero.',
-    unavailable: 'El asistente no está disponible ahora. Inténtalo de nuevo más tarde.',
-    disabled: 'El asistente no está disponible en este sitio ahora mismo.',
-    rateLimited: 'Eso es todo por hoy: el asistente tiene un límite de 30 mensajes al día.',
-    user: 'Tú',
-    assistant: 'Zodiacs',
-    privacy: "El asistente puede equivocarse. Las respuestas son generadas; aquí la astrología es simbólica, no determinista. Nosotros no guardamos las conversaciones.",
-    consentTitle: 'Antes de adjuntar tu carta',
-    consentBody: 'Mientras «Usando mi carta» esté activo, cada pregunta y las posiciones que aparecen abajo se enviarán a Anthropic. Zodiacs.org no adjunta tu nombre, fecha, hora, lugar de nacimiento ni coordenadas guardados, y no conserva la conversación.',
-    consentConfirm: 'Adjuntar mi carta',
-    consentCancel: 'Mantenerla privada',
-    sources: 'De este sitio:',
+    title: 'Guide', open: 'Abrir Guide', close: 'Cerrar Guide', clear: 'Borrar la conversación de hoy',
+    intro: 'Pregunta sobre esta página, astrología, tu carta natal o datos publicados de Astrofolio.',
+    invite: 'Puedo ayudarte con esta página, astrología, tu carta natal o Astrofolio.',
+    inviteAction: 'Preguntar a Guide', dismissInvite: 'Cerrar la bienvenida de Guide', log: 'Conversación con Guide',
+    input: 'Tu pregunta', placeholder: '¿En qué te puedo ayudar?', send: 'Enviar', stop: 'Detener', retry: 'Reintentar',
+    newline: 'Mayús + Intro para una línea nueva', context: 'Fuentes visibles', pageSource: 'Esta página',
+    addPage: 'Usar esta página', removeSource: 'Quitar fuente', chartOn: 'Usando mi carta', chartOff: 'Usar mi carta',
+    chartReading: 'Leyendo las posiciones de tu carta guardada…', thinking: 'Guide está pensando…',
+    stopped: 'Detenido.', complete: 'Respuesta completa.', empty: 'Escribe una pregunta primero.',
+    unavailable: 'Guide no está disponible temporalmente. Inténtalo de nuevo más tarde.',
+    disabled: 'Guide está descansando ahora. El resto de Zodiacs.org sigue funcionando.',
+    rateLimited: 'Guide está ocupado o alcanzó un límite de uso justo. Espera un minuto; si continúa, vuelve mañana.', user: 'Tú', assistant: 'Guide',
+    privacy: 'Guide puede equivocarse. Esta conversación web permanece en esta sesión del navegador y no se sincroniza con una cuenta; OpenAI procesa el contenido enviado.',
+    cloudTitle: 'Antes de que Guide responda',
+    cloudBody: 'Guide envía tu pregunta, los mensajes recientes y las fuentes visibles a OpenAI. Esta conversación web permanece en esta sesión del navegador y no se sincroniza con tu cuenta. Con los controles estándar de la API, OpenAI puede conservar datos de control de abusos hasta 30 días. ¿Continuar durante este día de Guide?',
+    cloudConfirm: 'Continuar con Guide', cloudCancel: 'Ahora no', consentTitle: 'Antes de adjuntar tu carta',
+    consentBody: 'Las posiciones exactas que aparecen abajo se enviarán a OpenAI con tu pregunta. Zodiacs.org no adjunta tu nombre, fecha, hora, lugar de nacimiento ni coordenadas guardados, y no guarda la conversación.',
+    consentConfirm: 'Adjuntar mi carta', consentCancel: 'Mantenerla privada', sources: 'De este sitio:',
+    contextUpdated: 'Fuente eliminada. Los mensajes anteriores siguen visibles, pero Guide no los usará en respuestas futuras.',
   },
   pt: {
-    title: 'Pergunte ao Zodiacs',
-    close: 'Fechar assistente',
-    intro: 'Pergunte sobre signos, casas, aspectos, ciclos ou um mapa salvo.',
-    log: 'Conversa',
-    input: 'Sua pergunta',
-    placeholder: 'Faça uma pergunta sobre astrologia…',
-    send: 'Enviar',
-    stop: 'Parar',
-    newline: 'Shift + Enter para uma nova linha',
-    chartOn: 'Usando meu mapa',
-    chartOff: 'Usar meu mapa',
-    chartReading: 'Lendo as posições do seu mapa salvo…',
-    thinking: 'Escrevendo uma resposta…',
-    stopped: 'Interrompido.',
-    complete: 'Resposta concluída.',
-    empty: 'Escreva uma pergunta primeiro.',
-    unavailable: 'O assistente não está disponível agora. Tente novamente mais tarde.',
-    disabled: 'O assistente não está disponível neste site agora.',
-    rateLimited: 'Isso é tudo por hoje — o assistente tem um limite de 30 mensagens por dia.',
-    user: 'Você',
-    assistant: 'Zodiacs',
-    privacy: "O assistente pode errar. As respostas são geradas; aqui a astrologia é simbólica, não determinista. Não armazenamos as conversas.",
-    consentTitle: 'Antes de anexar seu mapa',
-    consentBody: 'Enquanto “Usando meu mapa” estiver ativo, cada pergunta e as posições abaixo serão enviadas à Anthropic. O Zodiacs.org não anexa seu nome, data, hora, local de nascimento nem coordenadas salvos e não armazena a conversa.',
-    consentConfirm: 'Anexar meu mapa',
-    consentCancel: 'Manter privado',
-    sources: 'Deste site:',
+    title: 'Guide', open: 'Abrir Guide', close: 'Fechar Guide', clear: 'Limpar a conversa de hoje',
+    intro: 'Pergunte sobre esta página, astrologia, seu mapa natal ou fatos publicados do Astrofolio.',
+    invite: 'Posso ajudar com esta página, astrologia, seu mapa natal ou Astrofolio.',
+    inviteAction: 'Perguntar ao Guide', dismissInvite: 'Fechar boas-vindas do Guide', log: 'Conversa com o Guide',
+    input: 'Sua pergunta', placeholder: 'Como posso ajudar?', send: 'Enviar', stop: 'Parar', retry: 'Tentar de novo',
+    newline: 'Shift + Enter para uma nova linha', context: 'Fontes visíveis', pageSource: 'Esta página',
+    addPage: 'Usar esta página', removeSource: 'Remover fonte', chartOn: 'Usando meu mapa', chartOff: 'Usar meu mapa',
+    chartReading: 'Lendo as posições do seu mapa salvo…', thinking: 'Guide está pensando…',
+    stopped: 'Interrompido.', complete: 'Resposta concluída.', empty: 'Escreva uma pergunta primeiro.',
+    unavailable: 'O Guide está temporariamente indisponível. Tente novamente mais tarde.',
+    disabled: 'O Guide está descansando agora. O restante do Zodiacs.org continua funcionando.',
+    rateLimited: 'O Guide está ocupado ou atingiu um limite de uso justo. Espere um minuto; se continuar, volte amanhã.', user: 'Você', assistant: 'Guide',
+    privacy: 'O Guide pode errar. Esta conversa na web fica nesta sessão do navegador e não é sincronizada com uma conta; o conteúdo enviado é processado pela OpenAI.',
+    cloudTitle: 'Antes de o Guide responder',
+    cloudBody: 'O Guide envia sua pergunta, mensagens recentes e as fontes visíveis à OpenAI. Esta conversa na web fica nesta sessão do navegador e não é sincronizada com sua conta. Nos controles padrão da API, a OpenAI pode reter dados de monitoramento de abuso por até 30 dias. Continuar neste dia do Guide?',
+    cloudConfirm: 'Continuar com o Guide', cloudCancel: 'Agora não', consentTitle: 'Antes de anexar seu mapa',
+    consentBody: 'As posições exatas abaixo serão enviadas à OpenAI com sua pergunta. O Zodiacs.org não anexa nome, data, hora, local de nascimento nem coordenadas salvos e não armazena a conversa.',
+    consentConfirm: 'Anexar meu mapa', consentCancel: 'Manter privado', sources: 'Deste site:',
+    contextUpdated: 'Fonte removida. As mensagens anteriores continuam visíveis, mas o Guide não as usará nas próximas respostas.',
   },
   fr: {
-    title: 'Pose une question à Zodiacs',
-    close: 'Fermer l’assistant',
-    intro: 'Pose une question sur les signes, les maisons, les aspects, les cycles ou un thème enregistré.',
-    log: 'Conversation',
-    input: 'Ta question',
-    placeholder: 'Pose une question sur l’astrologie…',
-    send: 'Envoyer',
-    stop: 'Arrêter',
-    newline: 'Maj + Entrée pour aller à la ligne',
-    chartOn: 'Avec mon thème',
-    chartOff: 'Utiliser mon thème',
-    chartReading: 'Lecture des positions de ton thème enregistré…',
-    thinking: 'Rédaction de la réponse…',
-    stopped: 'Interrompu.',
-    complete: 'Réponse terminée.',
-    empty: 'Écris d’abord une question.',
-    unavailable: 'L’assistant est indisponible pour le moment. Réessaie plus tard.',
-    disabled: 'L’assistant n’est pas disponible sur ce site pour le moment.',
-    rateLimited: 'C’est tout pour aujourd’hui — l’assistant est limité à 30 messages par jour.',
-    user: 'Toi',
-    assistant: 'Zodiacs',
-    privacy: "L’assistant peut se tromper. Les réponses sont générées ; l’astrologie est ici symbolique, non déterministe. Nous ne conservons pas les conversations.",
-    consentTitle: 'Avant de joindre votre thème',
-    consentBody: 'Tant que « Avec mon thème » est activé, chaque question et les positions ci-dessous sont envoyées à Anthropic. Zodiacs.org ne joint aucun nom, date, heure, lieu de naissance ou coordonnée provenant du thème enregistré, et ne conserve pas la conversation.',
-    consentConfirm: 'Joindre mon thème',
-    consentCancel: 'Le garder privé',
-    sources: 'Depuis ce site :',
+    title: 'Guide', open: 'Ouvrir Guide', close: 'Fermer Guide', clear: 'Effacer la conversation du jour',
+    intro: 'Pose une question sur cette page, l’astrologie, ton thème natal ou les faits publiés d’Astrofolio.',
+    invite: 'Je peux aider avec cette page, l’astrologie, ton thème natal ou Astrofolio.',
+    inviteAction: 'Demander à Guide', dismissInvite: 'Fermer l’accueil de Guide', log: 'Conversation avec Guide',
+    input: 'Ta question', placeholder: 'Comment puis-je aider ?', send: 'Envoyer', stop: 'Arrêter', retry: 'Réessayer',
+    newline: 'Maj + Entrée pour aller à la ligne', context: 'Sources visibles', pageSource: 'Cette page',
+    addPage: 'Utiliser cette page', removeSource: 'Retirer la source', chartOn: 'Avec mon thème', chartOff: 'Utiliser mon thème',
+    chartReading: 'Lecture des positions de ton thème enregistré…', thinking: 'Guide réfléchit…',
+    stopped: 'Interrompu.', complete: 'Réponse terminée.', empty: 'Écris d’abord une question.',
+    unavailable: 'Guide est temporairement indisponible. Réessaie plus tard.',
+    disabled: 'Guide se repose pour le moment. Le reste de Zodiacs.org fonctionne toujours.',
+    rateLimited: 'Guide est occupé ou a atteint une limite d’utilisation équitable. Attends une minute ; si cela continue, reviens demain.', user: 'Toi', assistant: 'Guide',
+    privacy: 'Guide peut se tromper. Cette conversation web reste dans cette session du navigateur et n’est pas synchronisée avec un compte ; OpenAI traite le contenu envoyé.',
+    cloudTitle: 'Avant la réponse de Guide',
+    cloudBody: 'Guide envoie ta question, les messages récents et les sources visibles à OpenAI. Cette conversation web reste dans cette session du navigateur et n’est pas synchronisée avec ton compte. Avec les contrôles API standard, OpenAI peut garder des données de surveillance des abus jusqu’à 30 jours. Continuer pour cette journée Guide ?',
+    cloudConfirm: 'Continuer avec Guide', cloudCancel: 'Pas maintenant', consentTitle: 'Avant de joindre ton thème',
+    consentBody: 'Les positions exactes ci-dessous seront envoyées à OpenAI avec ta question. Zodiacs.org ne joint aucun nom, date, heure, lieu de naissance ou coordonnée enregistrés et ne conserve pas la conversation.',
+    consentConfirm: 'Joindre mon thème', consentCancel: 'Le garder privé', sources: 'Depuis ce site :',
+    contextUpdated: 'Source retirée. Les anciens messages restent visibles, mais Guide ne les utilisera plus dans ses réponses.',
   },
   it: {
-    title: 'Chiedi a Zodiacs',
-    close: 'Chiudi l’assistente',
-    intro: 'Fai una domanda su segni, case, aspetti, cicli o un tema salvato.',
-    log: 'Conversazione',
-    input: 'La tua domanda',
-    placeholder: 'Fai una domanda di astrologia…',
-    send: 'Invia',
-    stop: 'Interrompi',
-    newline: 'Maiusc + Invio per andare a capo',
-    chartOn: 'Con il mio tema',
-    chartOff: 'Usa il mio tema',
-    chartReading: 'Lettura delle posizioni nel tuo tema salvato…',
-    thinking: 'Scrittura della risposta…',
-    stopped: 'Interrotto.',
-    complete: 'Risposta completata.',
-    empty: 'Prima scrivi una domanda.',
-    unavailable: 'L’assistente non è disponibile in questo momento. Riprova più tardi.',
-    disabled: 'L’assistente non è disponibile su questo sito in questo momento.',
-    rateLimited: 'Per oggi è tutto — l’assistente ha un limite di 30 messaggi al giorno.',
-    user: 'Tu',
-    assistant: 'Zodiacs',
-    privacy: "L’assistente può sbagliare. Le risposte sono generate; qui l’astrologia è simbolica, non deterministica. Non conserviamo le conversazioni.",
-    consentTitle: 'Prima di allegare il tuo tema',
-    consentBody: 'Finché “Con il mio tema” è attivo, ogni domanda e le posizioni qui sotto vengono inviate ad Anthropic. Zodiacs.org non allega il nome, la data, l’ora, il luogo di nascita o le coordinate salvati e non conserva la conversazione.',
-    consentConfirm: 'Allega il mio tema',
-    consentCancel: 'Tienilo privato',
-    sources: 'Da questo sito:',
+    title: 'Guide', open: 'Apri Guide', close: 'Chiudi Guide', clear: 'Cancella la conversazione di oggi',
+    intro: 'Chiedi di questa pagina, astrologia, il tuo tema natale o fatti pubblicati di Astrofolio.',
+    invite: 'Posso aiutarti con questa pagina, astrologia, il tuo tema natale o Astrofolio.',
+    inviteAction: 'Chiedi a Guide', dismissInvite: 'Chiudi il benvenuto di Guide', log: 'Conversazione con Guide',
+    input: 'La tua domanda', placeholder: 'Come posso aiutarti?', send: 'Invia', stop: 'Interrompi', retry: 'Riprova',
+    newline: 'Maiusc + Invio per andare a capo', context: 'Fonti visibili', pageSource: 'Questa pagina',
+    addPage: 'Usa questa pagina', removeSource: 'Rimuovi fonte', chartOn: 'Con il mio tema', chartOff: 'Usa il mio tema',
+    chartReading: 'Lettura delle posizioni nel tuo tema salvato…', thinking: 'Guide sta pensando…',
+    stopped: 'Interrotto.', complete: 'Risposta completata.', empty: 'Prima scrivi una domanda.',
+    unavailable: 'Guide non è disponibile temporaneamente. Riprova più tardi.',
+    disabled: 'Guide sta riposando. Il resto di Zodiacs.org continua a funzionare.',
+    rateLimited: 'Guide è occupato o ha raggiunto un limite di utilizzo equo. Aspetta un minuto; se continua, torna domani.', user: 'Tu', assistant: 'Guide',
+    privacy: 'Guide può sbagliare. Questa conversazione web resta nella sessione del browser e non viene sincronizzata con un account; OpenAI elabora i contenuti inviati.',
+    cloudTitle: 'Prima che Guide risponda',
+    cloudBody: 'Guide invia la tua domanda, i messaggi recenti e le fonti visibili a OpenAI. Questa conversazione web resta nella sessione del browser e non viene sincronizzata con il tuo account. Con i controlli API standard, OpenAI può conservare dati di monitoraggio degli abusi fino a 30 giorni. Continuare per questa giornata Guide?',
+    cloudConfirm: 'Continua con Guide', cloudCancel: 'Non ora', consentTitle: 'Prima di allegare il tuo tema',
+    consentBody: 'Le posizioni esatte qui sotto saranno inviate a OpenAI con la tua domanda. Zodiacs.org non allega nome, data, ora, luogo di nascita o coordinate salvati e non conserva la conversazione.',
+    consentConfirm: 'Allega il mio tema', consentCancel: 'Tienilo privato', sources: 'Da questo sito:',
+    contextUpdated: 'Fonte rimossa. I messaggi precedenti restano visibili, ma Guide non li userà nelle risposte future.',
   },
 };
 
-const MAX_INPUT = 1_200;
+const MAX_INPUT = 2_400;
 const MAX_MESSAGES = 12;
-const MAX_CHART_CONTEXT = 2_000;
+const MAX_CHART_CONTEXT = 3_500;
+const SESSION_KEY = 'zodiacs.guide.daily-session.v1';
+const AUTH_BOUNDARY_KEY = 'zodiacs.guide.auth-boundary.v1';
+const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';
+const CONSENT_POLICY_VERSION = 'guide-cloud-processing.draft.v1';
 const STYLESHEET_HREF = '/assets/assistant-ui.css';
+const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
+const STREAM_SCHEMA = 'zodiacs.guide.stream-event.draft.v1';
+const GUIDE_LINK_PATHS = new Set([
+  '/ask/',
+  '/birth-chart/',
+  '/methodology/',
+  '/transits/',
+  '/compatibility/',
+  '/learn/',
+  '/horoscopes/',
+  '/profile/',
+  '/registry/',
+  '/terminal/',
+  '/sdk/',
+  '/sdk/#astrofolio',
+  '/disclosure/',
+]);
 let stylesheetPromise: Promise<void> | null = null;
 
 let root: HTMLDivElement | null = null;
 let panel: HTMLDivElement | null = null;
 let title: HTMLHeadingElement | null = null;
 let closeButton: HTMLButtonElement | null = null;
+let clearButton: HTMLButtonElement | null = null;
 let intro: HTMLParagraphElement | null = null;
+let sourcesRegion: HTMLDivElement | null = null;
+let pageSourceChip: HTMLDivElement | null = null;
+let pageSourceText: HTMLSpanElement | null = null;
+let pageSourceRemove: HTMLButtonElement | null = null;
+let pageSourceAdd: HTMLButtonElement | null = null;
 let transcript: HTMLDivElement | null = null;
 let status: HTMLParagraphElement | null = null;
 let form: HTMLFormElement | null = null;
 let textarea: HTMLTextAreaElement | null = null;
 let sendButton: HTMLButtonElement | null = null;
 let stopButton: HTMLButtonElement | null = null;
+let retryButton: HTMLButtonElement | null = null;
 let chartButton: HTMLButtonElement | null = null;
 let newlineHint: HTMLSpanElement | null = null;
 let privacy: HTMLParagraphElement | null = null;
+let launcher: HTMLButtonElement | null = null;
+let invite: HTMLElement | null = null;
 let opener: HTMLElement | null = null;
 let activeRequest: AbortController | null = null;
 let previousOverflow = '';
 let locale: AssistantLocale = 'en';
-let messages: AssistantMessage[] = [];
+let session: GuideSession | null = null;
+let currentPage: PageInfo | null = null;
 let savedChart: StoredChart | null = null;
 let chartEnabled = false;
+let chartConsented = false;
+let chartSourceId: string | null = null;
 let chartSummaryPromise: Promise<string | null> | null = null;
 let profileAccessGeneration = 0;
+let interactionPending = false;
+let hasUserOpened = false;
+let inviteSeenInMemory = false;
+let pendingRetry: PendingTurn | null = null;
+let authFencePromise: Promise<void> | null = null;
+let authFenceCleanup: (() => void) | null = null;
+let authFenceVersion = 0;
+
+interface PendingTurn {
+  body: Record<string, unknown>;
+  question: string;
+  requestHistory: GuideMessage[];
+  userMessage: GuideMessage;
+  turnId: string;
+  attemptId: string;
+  userArticle: HTMLElement;
+  assistantArticle: HTMLElement;
+  assistantBody: HTMLParagraphElement;
+  chartAuthority: StoredChart | null;
+}
 
 class AssistantFailure extends Error {
-  constructor(public code: string) {
+  constructor(public code: string, public retryable = false, public accepted = false) {
     super(code);
   }
 }
 
 const currentCopy = () => COPY[locale];
+
+function createGuideAvatar(className: string, size: number): HTMLImageElement {
+  const image = document.createElement('img');
+  image.className = `zguide-avatar ${className}`;
+  image.src = GUIDE_AVATAR_SRC;
+  image.alt = '';
+  image.width = size;
+  image.height = size;
+  image.loading = 'lazy';
+  image.decoding = 'async';
+  image.draggable = false;
+  image.setAttribute('aria-hidden', 'true');
+  image.setAttribute('fetchpriority', 'low');
+  return image;
+}
 
 function ensureStylesheet(): Promise<void> {
   if (stylesheetPromise) return stylesheetPromise;
@@ -269,13 +376,8 @@ function ensureStylesheet(): Promise<void> {
     link.dataset.assistantStyles = '';
   }
   stylesheetPromise = new Promise((resolve) => {
-    if (link.sheet) {
-      resolve();
-      return;
-    }
+    if (link.sheet) return resolve();
     link.addEventListener('load', () => resolve(), { once: true });
-    // A missing build artifact is caught by check-dist. Resolve here so a
-    // transient stylesheet error cannot leave the launcher permanently inert.
     link.addEventListener('error', () => resolve(), { once: true });
   });
   if (!existing) document.head.appendChild(link);
@@ -287,9 +389,282 @@ function normalizeLocale(value?: string): AssistantLocale {
 }
 
 function track(name: string): void {
-  (window as unknown as {
-    zodiacsAnalytics?: { track?: (event: string) => void };
-  }).zodiacsAnalytics?.track?.(name);
+  (window as unknown as { zodiacsAnalytics?: { track?: (event: string) => void } })
+    .zodiacsAnalytics?.track?.(name);
+}
+
+function uuid(): string {
+  if (typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = [...bytes].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
+
+function localDate(now = new Date()): string {
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function localTimeZone(): string {
+  try { return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'; } catch { return 'UTC'; }
+}
+
+export function guideDayAnchorMatches(
+  storedDate: string,
+  storedTimeZone: string,
+  currentDate: string,
+  currentTimeZone: string,
+): boolean {
+  return storedDate === currentDate && storedTimeZone === currentTimeZone;
+}
+
+function safeSessionGet(key: string): string | null {
+  try { return sessionStorage.getItem(key); } catch { return null; }
+}
+
+function safeSessionSet(key: string, value: string): boolean {
+  try { sessionStorage.setItem(key, value); return true; } catch { return false; }
+}
+
+function rememberedAuthBoundary(): string {
+  const value = safeSessionGet(AUTH_BOUNDARY_KEY);
+  return value && /^(?:signed_out|account:[0-9a-f-]{36}|blocked:[0-9a-f-]{36})$/u.test(value)
+    ? value
+    : 'signed_out';
+}
+
+function isGuideMessage(value: unknown): value is GuideMessage {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const message = value as Partial<GuideMessage>;
+  return typeof message.messageId === 'string'
+    && typeof message.turnId === 'string'
+    && Number.isSafeInteger(message.sequence)
+    && (message.author === 'user' || message.author === 'guide')
+    && typeof message.content === 'string'
+    && typeof message.contextRevision === 'number'
+    && typeof message.createdAt === 'string';
+}
+
+function createSession(): GuideSession {
+  return {
+    version: 1,
+    authBoundary: rememberedAuthBoundary(),
+    localDate: localDate(),
+    timeZone: localTimeZone(),
+    conversationId: uuid(),
+    localOwnerId: uuid(),
+    dailySessionId: uuid(),
+    disclosureId: uuid(),
+    consentPolicyVersion: CONSENT_POLICY_VERSION,
+    cloudConsentGranted: false,
+    revision: 0,
+    contextRevision: 0,
+    contextEpoch: 0,
+    nextSequence: 1,
+    modelHistoryStartSequence: 1,
+    lastPageSourceId: null,
+    removedPageSourceIds: [],
+    messages: [],
+  };
+}
+
+function parseSession(raw: string | null): GuideSession | null {
+  if (!raw) return null;
+  try {
+    const value = JSON.parse(raw) as Partial<GuideSession>;
+    if (value.version !== 1 || value.authBoundary !== rememberedAuthBoundary()
+      || value.localDate !== localDate() || value.timeZone !== localTimeZone()
+      || typeof value.conversationId !== 'string' || typeof value.localOwnerId !== 'string'
+      || typeof value.dailySessionId !== 'string' || typeof value.disclosureId !== 'string'
+      || !Number.isSafeInteger(value.revision) || !Number.isSafeInteger(value.contextRevision)
+      || !Number.isSafeInteger(value.contextEpoch) || !Number.isSafeInteger(value.nextSequence)
+      || !Number.isSafeInteger(value.modelHistoryStartSequence) || !Array.isArray(value.messages)
+      || !value.messages.every(isGuideMessage) || !Array.isArray(value.removedPageSourceIds)) return null;
+    return {
+      ...value,
+      consentPolicyVersion: CONSENT_POLICY_VERSION,
+      cloudConsentGranted: value.consentPolicyVersion === CONSENT_POLICY_VERSION
+        && value.cloudConsentGranted === true,
+      messages: value.messages.slice(-MAX_MESSAGES),
+      removedPageSourceIds: value.removedPageSourceIds.filter((id): id is string => typeof id === 'string').slice(-20),
+    } as GuideSession;
+  } catch {
+    return null;
+  }
+}
+
+function saveSession(): void {
+  if (!session) return;
+  let serialized = JSON.stringify(session);
+  while (new TextEncoder().encode(serialized).byteLength > 48_000 && session.messages.length > 2) {
+    session.messages = session.messages.slice(2);
+    serialized = JSON.stringify(session);
+  }
+  safeSessionSet(SESSION_KEY, serialized);
+}
+
+function getSession(): GuideSession {
+  session ??= parseSession(safeSessionGet(SESSION_KEY)) ?? createSession();
+  saveSession();
+  return session;
+}
+
+const PAGE_CATALOG = {
+  guide: { title: 'Guide', facts: 'The current page is the canonical Guide home at /ask/.' },
+  'birth-chart': { title: 'Birth chart', facts: 'The current page is part of the Zodiacs.org birth-chart calculator.' },
+  'astrology-method': { title: 'Astrology method', facts: 'The current page explains how Zodiacs.org separates astronomical calculation from astrological interpretation.' },
+  transits: { title: 'Transits', facts: 'The current page is part of the Zodiacs.org current-sky and transit tools.' },
+  compatibility: { title: 'Compatibility', facts: 'The current page is part of the Zodiacs.org chart-comparison and compatibility guides.' },
+  learn: { title: 'Learn astrology', facts: 'The current page is part of the Zodiacs.org Learn astrology reference.' },
+  horoscopes: { title: 'Horoscopes and Today', facts: 'The current page is part of the dated Zodiacs.org horoscope or Today editions.' },
+  account: { title: 'Optional Zodiacs account', facts: 'The current page is part of the optional Zodiacs account and saved-chart area.' },
+  registry: { title: 'Zodiacs Registry', facts: 'The current page is part of the read-only Zodiacs Registry.' },
+  terminal: { title: 'Zodiac Terminal', facts: 'The current page is part of the Zodiacs.org market-and-research interface.' },
+  astrofolio: { title: 'Astrofolio', facts: 'The current page is the published Zodiacs.org SDK context for the separate Astrofolio product.' },
+  sdk: { title: 'Zodiacs SDK', facts: 'The current page is part of the public Zodiacs SDK documentation.' },
+  disclosure: { title: 'Ownership and market disclosure', facts: 'The current page is the dated Zodiacs.org ownership and market disclosure.' },
+} as const;
+
+type PageCatalogId = keyof typeof PAGE_CATALOG;
+
+function approvedPageId(pathname: string): PageCatalogId | null {
+  const path = pathname.replace(/^\/(?:es|pt|fr|it|ru)(?=\/|$)/, '') || '/';
+  if (path === '/ask/' || path === '/ask') return 'guide';
+  if (/^\/(?:birth-chart|moon-sign|rising-sign|solar-return|saturn-return|baby-zodiac)(?:\/|$)/.test(path)) return 'birth-chart';
+  if (/^\/methodology(?:\/|$)/.test(path)) return 'astrology-method';
+  if (/^\/(?:transits|events|moon-phase|full-moon-calendar|eclipses|retrogrades|mercury-retrograde)(?:\/|$)/.test(path)) return 'transits';
+  if (/^\/compatibility(?:\/|$)/.test(path)) return 'compatibility';
+  if (/^\/learn(?:\/|$)/.test(path)) return 'learn';
+  if (/^\/(?:horoscopes|today)(?:\/|$)/.test(path)) return 'horoscopes';
+  if (/^\/(?:profile|account)(?:\/|$)/.test(path)) return 'account';
+  if (/^\/registry(?:\/|$)/.test(path)) return 'registry';
+  if (/^\/terminal(?:\/|$)/.test(path)) return 'terminal';
+  if (/^\/sdk(?:\/|$)/.test(path)) return 'sdk';
+  if (/^\/disclosure(?:\/|$)/.test(path)) return 'disclosure';
+  return null;
+}
+
+function pageInfo(): PageInfo | null {
+  // Only the pathname selects a fixed public catalog entry. Queries,
+  // referrers, DOM text, and document titles are never read into context.
+  const id = approvedPageId(location.pathname);
+  if (!id) return null;
+  const approved = PAGE_CATALOG[id];
+  return { sourceId: `page:${id}`, title: approved.title, facts: approved.facts };
+}
+
+function clearPendingRetry(): void {
+  pendingRetry = null;
+  if (retryButton) retryButton.hidden = true;
+}
+
+function invalidateContext(cutOffHistory: boolean, renewCloudConsent = false): void {
+  const state = getSession();
+  state.revision += 1;
+  state.contextRevision += 1;
+  state.contextEpoch += 1;
+  if (cutOffHistory) state.modelHistoryStartSequence = state.nextSequence;
+  if (renewCloudConsent) state.cloudConsentGranted = false;
+  clearPendingRetry();
+  saveSession();
+}
+
+function syncPageBoundary(): void {
+  currentPage = pageInfo();
+  const state = getSession();
+  if (!currentPage) {
+    if (state.lastPageSourceId !== null) {
+      state.lastPageSourceId = null;
+      invalidateContext(true);
+    }
+    syncSourceControls();
+    return;
+  }
+  if (state.lastPageSourceId === null) {
+    state.lastPageSourceId = currentPage.sourceId;
+    invalidateContext(false);
+  } else if (state.lastPageSourceId !== currentPage.sourceId) {
+    state.lastPageSourceId = currentPage.sourceId;
+    invalidateContext(true, true);
+  }
+  syncSourceControls();
+}
+
+function pageSourceEnabled(): boolean {
+  const state = getSession();
+  return Boolean(currentPage && !state.removedPageSourceIds.includes(currentPage.sourceId));
+}
+
+function canonicalJson(value: unknown): string {
+  if (value === null || typeof value !== 'object') return JSON.stringify(value) ?? 'null';
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
+  const record = value as Record<string, unknown>;
+  return `{${Object.keys(record).sort().map((key) => `${JSON.stringify(key)}:${canonicalJson(record[key])}`).join(',')}}`;
+}
+
+async function sha256Hex(value: string): Promise<string> {
+  if (!crypto.subtle) throw new AssistantFailure('unavailable');
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+async function localSource(candidate: Omit<GuideContextSource, 'contentDigest'>): Promise<GuideContextSource> {
+  const contentDigest = await sha256Hex(canonicalJson({
+    domain: 'zodiacs.guide.source-content.draft.v1',
+    kind: candidate.kind,
+    sourceId: candidate.sourceId,
+    sourceRevision: candidate.sourceRevision,
+    title: candidate.title,
+    facts: candidate.facts,
+    subject: candidate.subject,
+    containsThirdPartyData: candidate.containsThirdPartyData,
+  }));
+  return { ...candidate, contentDigest };
+}
+
+function sourceScope(source: GuideContextSource | null) {
+  return source === null ? null : {
+    kind: source.kind,
+    sourceId: source.sourceId,
+    sourceRevision: source.sourceRevision,
+    contentDigest: source.contentDigest,
+    subject: {
+      boundary: source.subject.boundary,
+      subjectId: source.subject.subjectId,
+      subjectIsUser: source.subject.subjectIsUser,
+    },
+  };
+}
+
+async function contextScopeDigest(
+  history: GuideMessage[],
+  ownerChart: GuideContextSource | null,
+  attachments: GuideContextSource[],
+): Promise<string> {
+  const state = getSession();
+  const historyProjection = await Promise.all(history.map(async (message) => ({
+    sequence: message.sequence,
+    messageId: message.messageId,
+    author: message.author,
+    contentDigest: await sha256Hex(message.content),
+  })));
+  return sha256Hex(canonicalJson({
+    domain: 'zodiacs.guide.context-scope.draft.v1',
+    conversationId: state.conversationId,
+    contextEpoch: state.contextEpoch,
+    modelHistoryStartSequence: state.modelHistoryStartSequence,
+    history: historyProjection,
+    base: [
+      { slot: 'owner_chart', state: ownerChart ? 'active' : 'unavailable', source: sourceScope(ownerChart) },
+      { slot: 'today_sky', state: 'unavailable', source: null },
+    ],
+    attachments: attachments.map(sourceScope),
+  }));
 }
 
 function finiteLongitude(value: unknown): value is number {
@@ -303,41 +678,33 @@ function parseStoredChart(value: unknown): StoredChart | null {
   const rawSummary = candidate.summary;
   if (!rawBirth || typeof rawBirth !== 'object' || Array.isArray(rawBirth)) return null;
   if (!rawSummary || typeof rawSummary !== 'object' || Array.isArray(rawSummary)) return null;
-
   const birth = rawBirth as Record<string, unknown>;
   const summary = rawSummary as Record<string, unknown>;
-  const bodies = Array.isArray(summary.bodies)
-    ? summary.bodies.flatMap((body): StoredBody[] => {
-        if (!body || typeof body !== 'object' || Array.isArray(body)) return [];
-        const record = body as Record<string, unknown>;
-        if (typeof record.body !== 'string' || !record.body.trim() || !finiteLongitude(record.lon)) return [];
-        return [{ body: record.body.trim(), lon: record.lon, retrograde: record.retrograde === true }];
-      })
-    : [];
+  const bodies = Array.isArray(summary.bodies) ? summary.bodies.flatMap((body): StoredBody[] => {
+    if (!body || typeof body !== 'object' || Array.isArray(body)) return [];
+    const record = body as Record<string, unknown>;
+    if (typeof record.body !== 'string' || !record.body.trim() || !finiteLongitude(record.lon)) return [];
+    return [{ body: record.body.trim(), lon: record.lon, retrograde: record.retrograde === true }];
+  }) : [];
   if (!bodies.length) return null;
-
   let angles: StoredChart['summary']['angles'] = null;
   if (summary.angles && typeof summary.angles === 'object' && !Array.isArray(summary.angles)) {
-    const rawAngles = summary.angles as Record<string, unknown>;
-    if (finiteLongitude(rawAngles.asc) && finiteLongitude(rawAngles.mc)) {
-      angles = { asc: rawAngles.asc, mc: rawAngles.mc };
-    }
+    const value = summary.angles as Record<string, unknown>;
+    if (finiteLongitude(value.asc) && finiteLongitude(value.mc)) angles = { asc: value.asc, mc: value.mc };
   }
-
   let place: StoredChart['birth']['place'] = null;
   if (birth.place && typeof birth.place === 'object' && !Array.isArray(birth.place)) {
-    const rawPlace = birth.place as Record<string, unknown>;
-    if (
-      typeof rawPlace.lat === 'number' && Number.isFinite(rawPlace.lat)
-      && typeof rawPlace.lon === 'number' && Number.isFinite(rawPlace.lon)
-      && typeof rawPlace.tz === 'string' && rawPlace.tz.trim()
-    ) {
-      place = { lat: rawPlace.lat, lon: rawPlace.lon, tz: rawPlace.tz };
+    const value = birth.place as Record<string, unknown>;
+    if (typeof value.lat === 'number' && Number.isFinite(value.lat)
+      && typeof value.lon === 'number' && Number.isFinite(value.lon)
+      && typeof value.tz === 'string' && value.tz.trim()) {
+      place = { lat: value.lat, lon: value.lon, tz: value.tz };
     }
   }
-
-  const houseSystem = summary.houseSystem === 'placidus' ? 'placidus' : 'whole';
   return {
+    id: typeof candidate.id === 'string' ? candidate.id : '',
+    name: typeof candidate.name === 'string' ? candidate.name : '',
+    accountRevision: -1,
     updatedAt: typeof candidate.updatedAt === 'string' ? candidate.updatedAt : '',
     birth: {
       date: typeof birth.date === 'string' ? birth.date : '',
@@ -345,32 +712,71 @@ function parseStoredChart(value: unknown): StoredChart | null {
       timeKnown: birth.timeKnown === true,
       place,
     },
-    summary: { houseSystem, bodies, angles },
+    summary: { houseSystem: summary.houseSystem === 'placidus' ? 'placidus' : 'whole', bodies, angles },
   };
 }
 
-/** Newest saved chart, matching the site's returning-visitor heuristic. */
-export function latestSavedChartFromJson(raw: string | null): StoredChart | null {
+function parseLocalOwner(raw: string | null): string | null {
   if (!raw) return null;
   try {
-    const profile = JSON.parse(raw) as { version?: unknown; charts?: unknown };
-    if (profile?.version !== 1 || !Array.isArray(profile.charts)) return null;
-    return profile.charts
-      .map(parseStoredChart)
-      .filter((chart): chart is StoredChart => chart !== null)
-      .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))[0] ?? null;
-  } catch {
-    return null;
-  }
+    const owner = JSON.parse(raw) as Record<string, unknown>;
+    return Object.keys(owner).length === 2 && owner.version === 1 && isAccountV2Id(owner.accountId)
+      ? owner.accountId
+      : null;
+  } catch { return null; }
 }
 
-function readLatestSavedChart(): StoredChart | null {
+/** Resolve only the one chart explicitly selected under account-v2's self attestation. */
+export function selectedSelfChartFromJson(
+  profileRaw: string | null,
+  ownerRaw: string | null,
+  metadataRaw: string | null,
+): StoredChart | null {
+  if (!profileRaw || !metadataRaw) return null;
+  const accountId = parseLocalOwner(ownerRaw);
+  if (!accountId) return null;
+  try {
+    const profile = JSON.parse(profileRaw) as { version?: unknown; charts?: unknown };
+    const metadata = JSON.parse(metadataRaw) as Record<string, unknown>;
+    if (profile?.version !== 1 || !Array.isArray(profile.charts)
+      || metadata.version !== 1 || metadata.accountId !== accountId
+      || !Array.isArray(metadata.charts) || metadata.charts.length > 64) return null;
+    const selected = metadata.charts.filter((entry): entry is Record<string, unknown> => (
+      Boolean(entry) && typeof entry === 'object' && !Array.isArray(entry)
+      && isAccountV2Id((entry as Record<string, unknown>).chartId)
+      && (entry as Record<string, unknown>).selectedForSync === true
+      && Number.isSafeInteger((entry as Record<string, unknown>).serverRevision)
+      && Number((entry as Record<string, unknown>).serverRevision) >= 0
+    ));
+    if (selected.length !== 1) return null;
+    const selectedId = selected[0].chartId;
+    const chart = profile.charts.map(parseStoredChart).find((candidate) => (
+      candidate !== null && candidate.id === selectedId
+      && isAccountV2Id(candidate.id) && candidate.name.trim().length > 0
+    )) ?? null;
+    return chart ? { ...chart, accountRevision: Number(selected[0].serverRevision) } : null;
+  } catch { return null; }
+}
+
+function sameSelfChartAuthority(left: StoredChart | null, right: StoredChart | null): boolean {
+  return left !== null && right !== null
+    && left.id === right.id
+    && left.updatedAt === right.updatedAt
+    && left.accountRevision === right.accountRevision;
+}
+
+function readSelectedSelfChart(): StoredChart | null {
   if (!profileAccessAllowed()) return null;
   try {
-    return latestSavedChartFromJson(localStorage.getItem(PROFILE_KEY));
-  } catch {
-    return null;
-  }
+    const ownerRaw = localStorage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY);
+    const ownerId = parseLocalOwner(ownerRaw);
+    if (!ownerId || getSession().authBoundary !== `account:${ownerId}`) return null;
+    return selectedSelfChartFromJson(
+      localStorage.getItem(PROFILE_KEY),
+      ownerRaw,
+      localStorage.getItem(`${ACCOUNT_V2_STORAGE_PREFIX}account.${ownerId}.v1`),
+    );
+  } catch { return null; }
 }
 
 function placementLabel(lon: number): string {
@@ -384,52 +790,31 @@ function validCusps(value: unknown): value is number[] {
   return Array.isArray(value) && value.length === 12 && value.every(finiteLongitude);
 }
 
-/**
- * Resolve a saved chart to body/angle + sign + degree + house lines. Birth
- * inputs are read only to compute Placidus locally and never enter the result.
- */
+/** Resolve a saved chart to placement lines without returning birth inputs. */
 export async function placementSummaryForChart(chart: StoredChart): Promise<string | null> {
   let bodies = chart.summary.bodies;
   let angles = chart.birth.timeKnown ? chart.summary.angles : null;
   let cusps: number[] | null = null;
-
-  if (chart.birth.timeKnown && angles && chart.summary.houseSystem === 'whole') {
-    cusps = wholeSignCusps(angles.asc);
-  }
-
-  const canResolvePlacidus = chart.summary.houseSystem === 'placidus'
-    && chart.birth.timeKnown
-    && chart.birth.place !== null
-    && /^\d{4}-\d{2}-\d{2}$/.test(chart.birth.date)
-    && typeof chart.birth.time === 'string'
-    && /^\d{2}:\d{2}$/.test(chart.birth.time);
-
+  if (chart.birth.timeKnown && angles && chart.summary.houseSystem === 'whole') cusps = wholeSignCusps(angles.asc);
+  const canResolvePlacidus = chart.summary.houseSystem === 'placidus' && chart.birth.timeKnown
+    && chart.birth.place !== null && /^\d{4}-\d{2}-\d{2}$/.test(chart.birth.date)
+    && typeof chart.birth.time === 'string' && /^\d{2}:\d{2}$/.test(chart.birth.time);
   if (canResolvePlacidus) {
     try {
       const [{ computeChart }, { resolveLocalToUtc }] = await Promise.all([
-        import('../engine/full'),
-        import('../time/localToUtc'),
+        import('../engine/full'), import('../time/localToUtc'),
       ]);
       const place = chart.birth.place!;
       const resolved = resolveLocalToUtc(chart.birth.date, chart.birth.time!, place.tz);
       const computed = computeChart({
-        utc: resolved.utc,
-        latitude: place.lat,
-        longitude: place.lon,
-        houseSystem: 'placidus',
-        timeKnown: true,
-        flags: resolved.flags,
+        utc: resolved.utc, latitude: place.lat, longitude: place.lon,
+        houseSystem: 'placidus', timeKnown: true, flags: resolved.flags,
       });
       bodies = computed.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde }));
       angles = computed.angles ? { asc: computed.angles.asc, mc: computed.angles.mc } : null;
       cusps = validCusps(computed.houses?.cusps) ? computed.houses.cusps : null;
-    } catch {
-      // Stored placements remain usable. Without a local house result, omit
-      // houses instead of guessing from a Placidus ASC.
-      cusps = null;
-    }
+    } catch { cusps = null; }
   }
-
   const lines = bodies.map(({ body, lon, retrograde }) => {
     const house = cusps ? houseOf(lon, cusps) : null;
     return `${body}: ${placementLabel(lon)}${house ? ` · house ${house}` : ''}${retrograde ? ' · retrograde' : ''}`;
@@ -448,43 +833,80 @@ export interface ParsedAssistantFrame {
   delta?: string;
   done?: boolean;
   error?: string;
+  event?: Record<string, unknown>;
 }
 
 /** Parse one SSE frame without trusting or rendering server HTML. */
 export function parseAssistantSseFrame(frame: string): ParsedAssistantFrame {
-  const data = frame
-    .split(/\r?\n/)
-    .filter((line) => line.startsWith('data:'))
-    .map((line) => line.slice(5).replace(/^ /, ''))
-    .join('\n');
+  const data = frame.split(/\r?\n/).filter((line) => line.startsWith('data:'))
+    .map((line) => line.slice(5).replace(/^ /, '')).join('\n');
   if (!data) return {};
   if (data === '[DONE]') return { done: true };
   try {
-    const parsed = JSON.parse(data) as { t?: unknown; error?: unknown };
+    const parsed = JSON.parse(data) as Record<string, unknown>;
     if (typeof parsed.error === 'string') return { error: parsed.error };
     if (typeof parsed.t === 'string') return { delta: parsed.t };
-  } catch {
-    return { error: 'unavailable' };
-  }
+    if (typeof parsed.type === 'string') return { event: parsed };
+  } catch { return { error: 'temporarily_unavailable' }; }
   return {};
 }
 
-export async function consumeAssistantStream(
+interface StreamResult {
+  message: GuideMessage;
+  conversationRevision: number;
+}
+
+async function consumeGuideStream(
   response: Response,
+  pending: PendingTurn,
   onDelta: (delta: string) => void,
-): Promise<void> {
-  if (!response.body) throw new AssistantFailure('unavailable');
+): Promise<StreamResult> {
+  if (!response.body) throw new AssistantFailure('temporarily_unavailable');
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = '';
-
+  let expectedSequence = 0;
+  let acceptedRevision: number | null = null;
+  let completed: StreamResult | null = null;
   const consumeFrame = (frame: string): boolean => {
     const parsed = parseAssistantSseFrame(frame);
-    if (parsed.error) throw new AssistantFailure(parsed.error);
-    if (parsed.delta) onDelta(parsed.delta);
-    return parsed.done === true;
+    if (parsed.error) throw new AssistantFailure(parsed.error, false, acceptedRevision !== null);
+    const event = parsed.event;
+    if (!event) return false;
+    if (event.schema !== STREAM_SCHEMA || event.conversationId !== getSession().conversationId
+      || event.turnId !== pending.turnId || event.attemptId !== pending.attemptId
+      || event.eventSequence !== expectedSequence) {
+      throw new AssistantFailure('invalid_response', false, acceptedRevision !== null);
+    }
+    expectedSequence += 1;
+    if (event.type === 'accepted') {
+      if (acceptedRevision !== null || event.conversationRevision !== getSession().revision + 1) {
+        throw new AssistantFailure('invalid_response', false, true);
+      }
+      acceptedRevision = event.conversationRevision as number;
+      return false;
+    }
+    if (acceptedRevision === null) throw new AssistantFailure('invalid_response');
+    if (event.type === 'delta' && typeof event.delta === 'string') {
+      onDelta(event.delta);
+      return false;
+    }
+    if (event.type === 'error' && typeof event.code === 'string') {
+      throw new AssistantFailure(event.code, false, true);
+    }
+    if (event.type === 'cancelled') throw new AssistantFailure('cancelled', false, true);
+    if (event.type === 'completed') {
+      const message = event.message;
+      if (!isGuideMessage(message) || message.author !== 'guide' || message.turnId !== pending.turnId
+        || message.sequence !== pending.userMessage.sequence + 1
+        || event.conversationRevision !== acceptedRevision + 1) {
+        throw new AssistantFailure('invalid_response', false, true);
+      }
+      completed = { message, conversationRevision: event.conversationRevision as number };
+      return true;
+    }
+    throw new AssistantFailure('invalid_response', false, true);
   };
-
   while (true) {
     const { done, value } = await reader.read();
     buffer += decoder.decode(value, { stream: !done });
@@ -494,20 +916,45 @@ export async function consumeAssistantStream(
       buffer = buffer.slice(boundary.index + boundary[0].length);
       if (consumeFrame(frame)) {
         await reader.cancel().catch(() => {});
-        return;
+        return completed!;
       }
       boundary = buffer.match(/\r?\n\r?\n/);
     }
     if (done) break;
   }
-  if (buffer.trim() && consumeFrame(buffer)) return;
-  throw new AssistantFailure('unavailable');
+  if (buffer.trim() && consumeFrame(buffer)) return completed!;
+  throw new AssistantFailure('temporarily_unavailable', false, acceptedRevision !== null);
 }
 
-/**
- * Turn bare same-site /paths/ into anchors after streaming completes. Text is
- * always inserted with text nodes; model output is never assigned to HTML.
- */
+/** Legacy test helper retained while first-party callers move to Guide events. */
+export async function consumeAssistantStream(response: Response, onDelta: (delta: string) => void): Promise<void> {
+  if (!response.body) throw new AssistantFailure('temporarily_unavailable');
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  const consume = (frame: string) => {
+    const parsed = parseAssistantSseFrame(frame);
+    if (parsed.error) throw new AssistantFailure(parsed.error);
+    if (parsed.delta) onDelta(parsed.delta);
+    return parsed.done === true;
+  };
+  while (true) {
+    const { done, value } = await reader.read();
+    buffer += decoder.decode(value, { stream: !done });
+    let boundary = buffer.match(/\r?\n\r?\n/);
+    while (boundary?.index !== undefined) {
+      const frame = buffer.slice(0, boundary.index);
+      buffer = buffer.slice(boundary.index + boundary[0].length);
+      if (consume(frame)) { await reader.cancel().catch(() => {}); return; }
+      boundary = buffer.match(/\r?\n\r?\n/);
+    }
+    if (done) break;
+  }
+  if (buffer.trim() && consume(buffer)) return;
+  throw new AssistantFailure('temporarily_unavailable');
+}
+
+/** Model text is always inserted as text nodes; only same-site paths become links. */
 export function renderAssistantText(container: HTMLElement, text: string): void {
   container.textContent = '';
   const pattern = /(^|[\s([])(\/(?!\/)[^\s<>"`]+)/g;
@@ -517,13 +964,14 @@ export function renderAssistantText(container: HTMLElement, text: string): void 
     const start = match.index + match[1].length;
     let path = match[2];
     while (/[.,!?;:)\]]$/.test(path)) path = path.slice(0, -1);
-    if (!path || path.includes('\\')) continue;
+    if (!path || path.includes('\\') || path.includes('?')) continue;
     let valid = false;
     try {
-      valid = new URL(path, window.location.origin).origin === window.location.origin;
-    } catch {
-      valid = false;
-    }
+      const url = new URL(path, location.origin);
+      valid = url.origin === location.origin
+        && url.search === ''
+        && GUIDE_LINK_PATHS.has(`${url.pathname}${url.hash}`);
+    } catch { valid = false; }
     if (!valid) continue;
     container.append(document.createTextNode(text.slice(cursor, start)));
     const anchor = document.createElement('a');
@@ -537,20 +985,22 @@ export function renderAssistantText(container: HTMLElement, text: string): void 
 }
 
 function scrollTranscript(): void {
-  requestAnimationFrame(() => {
-    if (transcript) transcript.scrollTop = transcript.scrollHeight;
-  });
+  requestAnimationFrame(() => { if (transcript) transcript.scrollTop = transcript.scrollHeight; });
 }
 
-function appendMessage(role: AssistantMessage['role'], content: string): {
-  article: HTMLElement;
-  body: HTMLParagraphElement;
-} {
+function appendMessage(role: GuideAuthor, content: string): { article: HTMLElement; body: HTMLParagraphElement } {
   const article = document.createElement('article');
-  article.className = `zassistant__message zassistant__message--${role}`;
+  article.className = `zassistant__message zassistant__message--${role === 'guide' ? 'assistant' : 'user'}`;
   const label = document.createElement('span');
   label.className = 'zassistant__speaker mono';
-  label.textContent = role === 'user' ? currentCopy().user : currentCopy().assistant;
+  if (role === 'guide') {
+    label.append(
+      createGuideAvatar('zassistant__message-avatar', 20),
+      document.createTextNode(currentCopy().assistant),
+    );
+  } else {
+    label.textContent = currentCopy().user;
+  }
   const body = document.createElement('p');
   body.className = 'zassistant__message-body';
   body.textContent = content;
@@ -561,9 +1011,19 @@ function appendMessage(role: AssistantMessage['role'], content: string): {
   return { article, body };
 }
 
-function setStatus(message = ''): void {
-  if (status) status.textContent = message;
+function renderTranscript(): void {
+  transcript?.replaceChildren();
+  for (const message of getSession().messages) {
+    const bubble = appendMessage(message.author, message.content);
+    if (message.author === 'guide') {
+      renderAssistantText(bubble.body, message.content);
+      appendSourcesRow(bubble.body, message.content);
+    }
+  }
+  if (intro) intro.hidden = getSession().messages.length > 0;
 }
+
+function setStatus(message = ''): void { if (status) status.textContent = message; }
 
 function syncTextareaHeight(): void {
   if (!textarea) return;
@@ -573,16 +1033,26 @@ function syncTextareaHeight(): void {
 
 function syncSendState(): void {
   if (!sendButton || !textarea) return;
-  sendButton.disabled = Boolean(activeRequest) || !textarea.value.trim();
+  sendButton.disabled = Boolean(activeRequest) || interactionPending || !textarea.value.trim();
 }
 
 function syncChartButton(): void {
   if (!chartButton) return;
   chartButton.hidden = !savedChart;
-  chartButton.disabled = Boolean(activeRequest);
+  chartButton.disabled = Boolean(activeRequest) || interactionPending;
   chartButton.setAttribute('aria-pressed', String(chartEnabled));
   chartButton.classList.toggle('is-active', chartEnabled);
   chartButton.textContent = chartEnabled ? currentCopy().chartOn : currentCopy().chartOff;
+}
+
+function syncSourceControls(): void {
+  const enabled = pageSourceEnabled();
+  if (pageSourceChip) pageSourceChip.hidden = !enabled;
+  if (pageSourceText && currentPage) pageSourceText.textContent = `${currentCopy().pageSource}: ${currentPage.title}`;
+  if (pageSourceAdd) pageSourceAdd.hidden = enabled;
+  if (pageSourceRemove) pageSourceRemove.disabled = Boolean(activeRequest) || interactionPending;
+  if (pageSourceAdd) pageSourceAdd.disabled = Boolean(activeRequest) || interactionPending;
+  syncChartButton();
 }
 
 function setBusy(busy: boolean): void {
@@ -590,161 +1060,308 @@ function setBusy(busy: boolean): void {
   panel?.setAttribute('aria-busy', String(busy));
   if (stopButton) stopButton.hidden = !busy;
   syncSendState();
-  syncChartButton();
+  syncSourceControls();
 }
 
 function refreshSavedChart(): void {
-  // A consent card on screen previews the chart that was saved when it
-  // opened. Once the saved chart changes, that preview no longer describes
-  // what a later confirmation would send, so the card is withdrawn rather
-  // than left to grant consent for text the visitor never saw.
   dismissPendingConsent?.();
-  savedChart = readLatestSavedChart();
+  const next = readSelectedSelfChart();
+  if (chartEnabled) invalidateContext(true);
+  savedChart = next;
   chartEnabled = false;
   chartConsented = false;
+  chartSourceId = null;
   chartSummaryPromise = null;
-  syncChartButton();
+  syncSourceControls();
 }
 
 function friendlyFailure(code: string): string {
-  if (code === 'limit' || code === '429') return currentCopy().rateLimited;
+  if (code === 'rate_limited' || code === 'limit' || code === '429') return currentCopy().rateLimited;
   if (code === 'disabled') return currentCopy().disabled;
+  if (code === 'cancelled') return currentCopy().stopped;
   return currentCopy().unavailable;
 }
 
-async function failureCode(response: Response): Promise<string> {
-  if (response.status === 429) return 'limit';
+async function failure(response: Response): Promise<AssistantFailure> {
   try {
-    const data = await response.json() as { error?: unknown };
-    if (typeof data.error === 'string') return data.error;
+    const data = await response.json() as { code?: unknown; error?: unknown; retryable?: unknown };
+    const code = typeof data.code === 'string' ? data.code
+      : typeof data.error === 'string' ? data.error : String(response.status);
+    return new AssistantFailure(code, data.retryable === true, false);
   } catch {
-    // Status is enough for the generic state.
+    return new AssistantFailure(response.status === 429 ? 'rate_limited' : 'temporarily_unavailable', response.status >= 500);
   }
-  return response.status === 503 ? 'unavailable' : String(response.status);
 }
 
-function abortRequest(): void {
-  if (!activeRequest) return;
-  activeRequest.abort();
-}
+function abortRequest(): void { activeRequest?.abort(); }
 
-let chartConsented = false;
-/** Withdraws an on-screen consent card, declining it, when set. */
 let dismissPendingConsent: (() => void) | null = null;
+let dismissPendingCloudConsent: (() => void) | null = null;
 
 function currentProfileAccessGeneration(generation: number): boolean {
   return generation === profileAccessGeneration;
 }
 
+function replaceWithFreshSession(): void {
+  session = createSession();
+  syncPageBoundary();
+  saveSession();
+}
+
 function clearAssistantForProfileRevocation(): void {
   abortRequest();
   dismissPendingConsent?.();
+  dismissPendingCloudConsent?.();
   dismissPendingConsent = null;
+  dismissPendingCloudConsent = null;
   savedChart = null;
   chartSummaryPromise = null;
   chartConsented = false;
   chartEnabled = false;
-  messages = [];
+  chartSourceId = null;
+  pendingRetry = null;
+  replaceWithFreshSession();
   transcript?.replaceChildren();
   if (intro) intro.hidden = false;
-  if (textarea) {
-    textarea.value = '';
-    syncTextareaHeight();
-  }
+  if (textarea) { textarea.value = ''; syncTextareaHeight(); }
+  if (retryButton) retryButton.hidden = true;
   setStatus();
   setBusy(false);
+}
+
+function rotateGuideDayIfNeeded(): boolean {
+  const state = getSession();
+  if (guideDayAnchorMatches(state.localDate, state.timeZone, localDate(), localTimeZone())) return false;
+  profileAccessGeneration += 1;
+  clearAssistantForProfileRevocation();
+  return true;
+}
+
+function applyGuideAuthBoundary(next: string, invalidateEpoch: boolean): void {
+  const state = getSession();
+  const changed = state.authBoundary !== next;
+  if (invalidateEpoch || changed) profileAccessGeneration += 1;
+  if (!changed) return;
+  safeSessionSet(AUTH_BOUNDARY_KEY, next);
+  clearAssistantForProfileRevocation();
+}
+
+/** Resolve account identity only when Guide is opened; the generic welcome stays lightweight. */
+async function ensureGuideAuthFence(): Promise<void> {
+  authFencePromise ??= (async () => {
+    const fenceVersion = authFenceVersion;
+    try {
+      const { getSupabaseClient } = await import('../supabase/client');
+      if (fenceVersion !== authFenceVersion) return;
+      const client = getSupabaseClient();
+      if (!client) {
+        applyGuideAuthBoundary('signed_out', false);
+        return;
+      }
+      let authEventVersion = 0;
+      const { data: { subscription } } = client.auth.onAuthStateChange((_event, nextSession) => {
+        if (fenceVersion !== authFenceVersion) return;
+        authEventVersion += 1;
+        const accountId = nextSession?.user?.id;
+        applyGuideAuthBoundary(
+          isAccountV2Id(accountId) ? `account:${accountId}` : 'signed_out',
+          false,
+        );
+      });
+      if (fenceVersion !== authFenceVersion) {
+        subscription.unsubscribe();
+        return;
+      }
+      authFenceCleanup = () => subscription.unsubscribe();
+      const snapshotVersion = authEventVersion;
+      const { data, error } = await client.auth.getSession();
+      if (fenceVersion !== authFenceVersion || snapshotVersion !== authEventVersion) return;
+      if (error) {
+        applyGuideAuthBoundary(`blocked:${uuid()}`, true);
+        return;
+      }
+      const accountId = data.session?.user?.id;
+      applyGuideAuthBoundary(
+        isAccountV2Id(accountId) ? `account:${accountId}` : 'signed_out',
+        false,
+      );
+    } catch {
+      if (fenceVersion !== authFenceVersion) return;
+      applyGuideAuthBoundary(`blocked:${uuid()}`, true);
+    }
+  })();
+  await authFencePromise;
+}
+
+function suspendGuideForPageCache(): void {
+  profileAccessGeneration += 1;
+  authFenceVersion += 1;
+  authFenceCleanup?.();
+  authFenceCleanup = null;
+  authFencePromise = null;
+  abortRequest();
+  dismissPendingConsent?.();
+  dismissPendingCloudConsent?.();
+  dismissPendingConsent = null;
+  dismissPendingCloudConsent = null;
+  savedChart = null;
+  chartSummaryPromise = null;
+  chartConsented = false;
+  chartEnabled = false;
+  chartSourceId = null;
+  clearPendingRetry();
+  interactionPending = false;
+  transcript?.replaceChildren();
+  if (intro) intro.hidden = false;
+  if (textarea) { textarea.value = ''; syncTextareaHeight(); }
+  if (root) root.hidden = true;
+  document.documentElement.style.overflow = previousOverflow;
+  launcher?.removeAttribute('aria-expanded');
+  opener = null;
+  setStatus();
+  setBusy(false);
+}
+
+function restoreGuideAfterPageCache(event: PageTransitionEvent): void {
+  if (!event.persisted) return;
+  // The private drawer remains hidden until a fresh auth snapshot resolves.
+  void ensureGuideAuthFence();
 }
 
 function onProfileAccessChange(): void {
   profileAccessGeneration += 1;
   if (profileAccessAllowed()) {
-    refreshSavedChart();
+    if (hasUserOpened) refreshSavedChart();
     return;
   }
   clearAssistantForProfileRevocation();
 }
 
-/**
- * Plain-language consent with an exact preview of the payload. Resolves
- * true only when the visitor confirms; the summary shown is the same
- * string the request will carry.
- */
-async function requestChartConsent(
-  expectedGeneration = profileAccessGeneration,
-): Promise<boolean> {
-  if (!currentProfileAccessGeneration(expectedGeneration) || !profileAccessAllowed()) return false;
-  if (chartConsented) return true;
-  const log = transcript;
-  const chart = savedChart;
-  if (!chart || !log) return false;
-  chartSummaryPromise ??= placementSummaryForChart(chart);
-  const summary = await chartSummaryPromise;
-  if (
-    !summary
-    || !currentProfileAccessGeneration(expectedGeneration)
-    || !profileAccessAllowed()
-    || savedChart !== chart
-  ) return false;
-  return new Promise((resolve) => {
-    const copy = currentCopy();
-    const card = document.createElement('section');
-    card.className = 'zassistant__consent';
-    const heading = document.createElement('h3');
-    heading.textContent = copy.consentTitle;
-    const body = document.createElement('p');
-    body.textContent = copy.consentBody;
-    const preview = document.createElement('pre');
-    preview.className = 'zassistant__consent-preview';
-    preview.textContent = summary;
-    const row = document.createElement('div');
-    row.className = 'zassistant__consent-actions';
-    const confirm = document.createElement('button');
-    confirm.type = 'button';
-    confirm.className = 'zassistant__consent-confirm';
-    confirm.textContent = copy.consentConfirm;
-    const cancel = document.createElement('button');
-    cancel.type = 'button';
-    cancel.className = 'zassistant__consent-cancel';
-    cancel.textContent = copy.consentCancel;
-    let settled = false;
-    let dismiss = () => {};
-    const settle = (granted: boolean) => {
-      if (settled) return;
-      settled = true;
-      card.remove();
-      if (dismissPendingConsent === dismiss) dismissPendingConsent = null;
-      const current = currentProfileAccessGeneration(expectedGeneration)
-        && profileAccessAllowed()
-        && savedChart === chart;
-      if (current) {
-        chartConsented = granted;
-        if (!granted) chartEnabled = false;
-        syncChartButton();
-      }
-      resolve(current && granted);
-    };
-    dismiss = () => settle(false);
-    dismissPendingConsent = dismiss;
-    confirm.addEventListener('click', () => settle(true));
-    cancel.addEventListener('click', () => settle(false));
-    row.append(confirm, cancel);
-    card.append(heading, body, preview, row);
-    log.append(card);
-    scrollTranscript();
-    confirm.focus();
-  });
+function onProfileDataChange(): void {
+  profileAccessGeneration += 1;
+  clearPendingRetry();
+  abortRequest();
+  dismissPendingConsent?.();
+  dismissPendingConsent = null;
+  if (hasUserOpened) refreshSavedChart();
 }
 
-/** Append the internal-source row beneath a completed answer. */
+function onGuideStorageChange(event: StorageEvent): void {
+  try {
+    if (event.storageArea !== localStorage) return;
+    if (event.key === null || event.key === PROFILE_KEY || event.key === ACCOUNT_V2_LOCAL_OWNER_KEY
+      || event.key?.startsWith(`${ACCOUNT_V2_STORAGE_PREFIX}account.`)) onProfileDataChange();
+  } catch {
+    onProfileDataChange();
+  }
+}
+
+function consentCard(
+  headingText: string,
+  bodyText: string,
+  confirmText: string,
+  cancelText: string,
+  previewText?: string,
+): { card: HTMLElement; promise: Promise<boolean>; dismiss: () => void } {
+  const card = document.createElement('section');
+  card.className = 'zassistant__consent';
+  const heading = document.createElement('h3');
+  heading.textContent = headingText;
+  const body = document.createElement('p');
+  body.textContent = bodyText;
+  card.append(heading, body);
+  if (previewText) {
+    const preview = document.createElement('pre');
+    preview.className = 'zassistant__consent-preview';
+    preview.textContent = previewText;
+    card.append(preview);
+  }
+  const actions = document.createElement('div');
+  actions.className = 'zassistant__consent-actions';
+  const confirm = document.createElement('button');
+  confirm.type = 'button';
+  confirm.className = 'zassistant__consent-confirm';
+  confirm.textContent = confirmText;
+  const cancel = document.createElement('button');
+  cancel.type = 'button';
+  cancel.className = 'zassistant__consent-cancel';
+  cancel.textContent = cancelText;
+  actions.append(confirm, cancel);
+  card.append(actions);
+  transcript?.append(card);
+  scrollTranscript();
+  let settle!: (value: boolean) => void;
+  const promise = new Promise<boolean>((resolve) => { settle = resolve; });
+  let settled = false;
+  const finish = (value: boolean) => {
+    if (settled) return;
+    settled = true;
+    card.remove();
+    settle(value);
+  };
+  confirm.addEventListener('click', () => finish(true));
+  cancel.addEventListener('click', () => finish(false));
+  confirm.focus();
+  return { card, promise, dismiss: () => finish(false) };
+}
+
+async function requestCloudConsent(): Promise<boolean> {
+  const state = getSession();
+  if (state.cloudConsentGranted && state.consentPolicyVersion === CONSENT_POLICY_VERSION) return true;
+  const copy = currentCopy();
+  const card = consentCard(copy.cloudTitle, copy.cloudBody, copy.cloudConfirm, copy.cloudCancel);
+  dismissPendingCloudConsent = card.dismiss;
+  const granted = await card.promise;
+  if (dismissPendingCloudConsent === card.dismiss) dismissPendingCloudConsent = null;
+  if (granted) {
+    state.cloudConsentGranted = true;
+    state.consentPolicyVersion = CONSENT_POLICY_VERSION;
+    saveSession();
+  }
+  return granted;
+}
+
+async function requestChartConsent(expectedGeneration = profileAccessGeneration): Promise<boolean> {
+  if (!currentProfileAccessGeneration(expectedGeneration) || !profileAccessAllowed()) return false;
+  if (chartConsented && chartEnabled) return true;
+  const chart = savedChart;
+  if (!chart || !transcript) return false;
+  chartSummaryPromise ??= placementSummaryForChart(chart);
+  const summary = await chartSummaryPromise;
+  if (!summary || !currentProfileAccessGeneration(expectedGeneration)
+    || !profileAccessAllowed() || savedChart !== chart) return false;
+  const copy = currentCopy();
+  const localLabel = chart.name.trim().slice(0, 120);
+  const preview = `${localLabel ? `Selected self chart (kept on this device): ${localLabel}\n\n` : ''}${summary}`;
+  const card = consentCard(copy.consentTitle, copy.consentBody, copy.consentConfirm, copy.consentCancel, preview);
+  dismissPendingConsent = card.dismiss;
+  const granted = await card.promise;
+  if (dismissPendingConsent === card.dismiss) dismissPendingConsent = null;
+  const current = currentProfileAccessGeneration(expectedGeneration)
+    && profileAccessAllowed() && savedChart === chart;
+  if (current && granted) {
+    chartConsented = true;
+    chartEnabled = true;
+    chartSourceId = uuid();
+    invalidateContext(false);
+  } else if (current) {
+    chartConsented = false;
+    chartEnabled = false;
+  }
+  syncSourceControls();
+  return current && granted;
+}
+
 function appendSourcesRow(container: HTMLElement, text: string): void {
   const paths = [...new Set([...text.matchAll(/(?:^|[\s([])(\/(?!\/)[a-z0-9-]+(?:\/[a-z0-9-]+)*\/?)/g)]
-    .map((match) => match[1].endsWith('/') ? match[1] : `${match[1]}/`))].slice(0, 4);
-  if (paths.length === 0) return;
-  const row = document.createElement('p');
+    .map((match) => match[1].endsWith('/') ? match[1] : `${match[1]}/`)
+    .filter((path) => GUIDE_LINK_PATHS.has(path)))].slice(0, 4);
+  if (!paths.length) return;
+  const row = document.createElement('span');
   row.className = 'zassistant__sources';
   row.append(document.createTextNode(`${currentCopy().sources} `));
   paths.forEach((path, index) => {
-    if (index > 0) row.append(document.createTextNode(' · '));
+    if (index) row.append(document.createTextNode(' · '));
     const anchor = document.createElement('a');
     anchor.href = path;
     anchor.textContent = path;
@@ -754,106 +1371,233 @@ function appendSourcesRow(container: HTMLElement, text: string): void {
 }
 
 function questionRequestsMyChart(question: string): boolean {
-  const normalized = question
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
-  return /\b(?:my (?:birth )?chart|mi carta(?: natal)?)\b/.test(normalized);
+  const normalized = question.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  return /\b(?:my (?:birth )?chart|mi carta(?: natal)?|meu mapa(?: natal)?|mon theme(?: natal)?|mio tema(?: natale)?)\b/.test(normalized);
 }
 
-async function submitQuestion(): Promise<void> {
-  if (!textarea || activeRequest) return;
-  const expectedGeneration = profileAccessGeneration;
-  const question = textarea.value.trim();
-  if (!question) {
-    setStatus(currentCopy().empty);
+async function buildTurnBody(
+  question: string,
+  ids: { turnId: string; operationId: string; attemptId: string; messageId: string },
+  retryOfAttemptId: string | null,
+  chartFacts?: string,
+): Promise<{ body: Record<string, unknown>; history: GuideMessage[]; userMessage: GuideMessage }> {
+  const state = getSession();
+  const history = state.messages.filter((message) => message.sequence >= state.modelHistoryStartSequence).slice(-11);
+  const attachments: GuideContextSource[] = [];
+  if (currentPage && pageSourceEnabled()) {
+    attachments.push(await localSource({
+      sourceId: currentPage.sourceId,
+      kind: 'site_page', sourceRevision: 1, title: currentPage.title, facts: currentPage.facts,
+      subject: { boundary: 'public_reference', subjectId: currentPage.sourceId, subjectName: null, subjectIsUser: false },
+      containsThirdPartyData: false, persistence: 'local_only',
+    }));
+  }
+  const ownerChart = chartFacts && chartSourceId ? await localSource({
+    sourceId: chartSourceId,
+    kind: 'owner_chart', sourceRevision: 1, title: 'My chart', facts: chartFacts,
+    subject: { boundary: 'root_user', subjectId: 'self', subjectName: 'You', subjectIsUser: true },
+    containsThirdPartyData: false, persistence: 'local_only',
+  }) : null;
+  const digest = await contextScopeDigest(history, ownerChart, attachments);
+  const now = new Date().toISOString();
+  const userMessage: GuideMessage = {
+    messageId: ids.messageId, turnId: ids.turnId, sequence: state.nextSequence,
+    author: 'user', content: question, contextRevision: state.contextRevision,
+    createdAt: now, generation: null,
+  };
+  return {
+    history,
+    userMessage,
+    body: {
+      schema: 'zodiacs.guide.ephemeral-turn.draft.v1',
+      mode: 'ephemeral',
+      conversationId: state.conversationId,
+      turnId: ids.turnId,
+      operationId: ids.operationId,
+      attemptId: ids.attemptId,
+      retryOfAttemptId,
+      baseRevision: state.revision,
+      contextEpoch: state.contextEpoch,
+      clientAuthEpoch: 0,
+      userMessage: { messageId: ids.messageId, content: question },
+      consent: {
+        purpose: 'guide_cloud_processing',
+        policyVersion: CONSENT_POLICY_VERSION,
+        consentRevision: 1,
+        disclosureId: state.disclosureId,
+        disclosedContextEpoch: state.contextEpoch,
+        contextScopeDigest: digest,
+      },
+      ephemeralContext: {
+        baseContext: {
+          ownerChart: { slot: 'owner_chart', state: ownerChart ? 'active' : 'unavailable', source: ownerChart },
+          todaySky: { slot: 'today_sky', state: 'unavailable', source: null },
+        },
+        attachments,
+        history,
+        modelHistoryStartSequence: state.modelHistoryStartSequence,
+      },
+    },
+  };
+}
+
+async function runTurn(pending: PendingTurn): Promise<void> {
+  // Consent, chart calculation, or a queued retry may have remained open over
+  // local midnight or a time-zone change. Never send an old Guide-day body.
+  if (rotateGuideDayIfNeeded()) {
+    pending.userArticle.remove();
+    pending.assistantArticle.remove();
     return;
   }
-
-  const userMessage: AssistantMessage = { role: 'user', content: question };
-  const requestMessages = messages.concat(userMessage).slice(-MAX_MESSAGES);
-  appendMessage('user', question);
-  textarea.value = '';
-  syncTextareaHeight();
-  const assistantMessage = appendMessage('assistant', '');
-  assistantMessage.article.setAttribute('aria-busy', 'true');
-
+  if (pending.chartAuthority && !sameSelfChartAuthority(
+    pending.chartAuthority,
+    readSelectedSelfChart(),
+  )) {
+    pending.userArticle.remove();
+    pending.assistantArticle.remove();
+    refreshSavedChart();
+    setStatus(currentCopy().contextUpdated);
+    return;
+  }
+  const expectedGeneration = profileAccessGeneration;
   const request = new AbortController();
   activeRequest = request;
+  pendingRetry = null;
+  if (retryButton) retryButton.hidden = true;
   setBusy(true);
-
-  const requestIsCurrent = () => (
-    currentProfileAccessGeneration(expectedGeneration)
-    && activeRequest === request
-  );
-
+  pending.assistantArticle.setAttribute('aria-busy', 'true');
+  if (!pending.assistantArticle.isConnected) transcript?.append(pending.assistantArticle);
+  pending.assistantBody.textContent = '';
+  pending.assistantArticle.classList.remove('is-partial', 'is-error');
+  setStatus(currentCopy().thinking);
   let answer = '';
+  const requestIsCurrent = () => currentProfileAccessGeneration(expectedGeneration) && activeRequest === request;
+  const authorityTimer = pending.chartAuthority ? window.setInterval(() => {
+    if (!sameSelfChartAuthority(pending.chartAuthority, readSelectedSelfChart())) onProfileDataChange();
+  }, 250) : 0;
   try {
-    let chart: string | undefined;
-    const wantsChart = Boolean(savedChart) && (chartEnabled || questionRequestsMyChart(question));
-    if (wantsChart && savedChart) {
-      setStatus(currentCopy().chartReading);
-      const granted = await requestChartConsent(expectedGeneration);
-      if (!requestIsCurrent()) return;
-      if (granted) {
-        chartEnabled = true;
-        syncChartButton();
-        chartSummaryPromise ??= placementSummaryForChart(savedChart);
-        const resolved = await chartSummaryPromise;
-        if (!requestIsCurrent()) return;
-        if (chartEnabled && resolved) chart = resolved;
-      }
-    }
-    if (!requestIsCurrent()) return;
-    setStatus(currentCopy().thinking);
-
-    const response = await fetch('/api/assistant', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ messages: requestMessages, ...(chart ? { chart } : {}) }),
-      signal: request.signal,
+    const response = await fetch('/v1/guide/turn', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(pending.body), signal: request.signal,
     });
-    if (!requestIsCurrent()) {
-      await response.body?.cancel().catch(() => {});
-      return;
-    }
-    if (!response.ok) {
-      const code = await failureCode(response);
-      if (!requestIsCurrent()) return;
-      throw new AssistantFailure(code);
-    }
-
-    await consumeAssistantStream(response, (delta) => {
+    if (!requestIsCurrent()) { await response.body?.cancel().catch(() => {}); return; }
+    if (!response.ok) throw await failure(response);
+    const completed = await consumeGuideStream(response, pending, (delta) => {
       if (!requestIsCurrent()) return;
       answer += delta;
-      assistantMessage.body.textContent = answer;
+      pending.assistantBody.textContent = answer;
       scrollTranscript();
     });
     if (!requestIsCurrent()) return;
-    if (!answer.trim()) throw new AssistantFailure('unavailable');
-
-    renderAssistantText(assistantMessage.body, answer);
-    appendSourcesRow(assistantMessage.body, answer);
-    assistantMessage.article.removeAttribute('aria-busy');
-    messages = [...requestMessages, { role: 'assistant' as const, content: answer }].slice(-MAX_MESSAGES);
+    if (!completed.message.content.trim() || (answer && answer !== completed.message.content)) {
+      throw new AssistantFailure('invalid_response', false, true);
+    }
+    renderAssistantText(pending.assistantBody, completed.message.content);
+    appendSourcesRow(pending.assistantBody, completed.message.content);
+    pending.assistantArticle.removeAttribute('aria-busy');
+    const state = getSession();
+    state.messages = [...state.messages, pending.userMessage, completed.message].slice(-MAX_MESSAGES);
+    state.nextSequence = completed.message.sequence + 1;
+    state.revision = completed.conversationRevision;
+    saveSession();
     setStatus(currentCopy().complete);
-    track('assistant_reply');
+    track('guide_reply');
   } catch (error) {
     if (!requestIsCurrent()) return;
-    assistantMessage.article.removeAttribute('aria-busy');
+    pending.assistantArticle.removeAttribute('aria-busy');
     const aborted = error instanceof DOMException && error.name === 'AbortError';
-    if (!answer) assistantMessage.article.remove();
-    else assistantMessage.article.classList.add('is-partial');
-    if (aborted) {
-      setStatus(currentCopy().stopped);
-    } else {
-      const code = error instanceof AssistantFailure ? error.code : 'unavailable';
-      setStatus(friendlyFailure(code));
+    const guideFailure = error instanceof AssistantFailure ? error : new AssistantFailure('temporarily_unavailable');
+    if (!answer) pending.assistantArticle.remove();
+    else pending.assistantArticle.classList.add('is-partial');
+    setStatus(aborted ? currentCopy().stopped : friendlyFailure(guideFailure.code));
+    if (!aborted && guideFailure.retryable && !guideFailure.accepted && !answer) {
+      pendingRetry = pending;
+      if (retryButton) retryButton.hidden = false;
     }
   } finally {
+    if (authorityTimer) window.clearInterval(authorityTimer);
     if (activeRequest === request) setBusy(false);
-    if (currentProfileAccessGeneration(expectedGeneration) && root && !root.hidden) textarea.focus();
+    if (currentProfileAccessGeneration(expectedGeneration) && root && !root.hidden) textarea?.focus();
   }
+}
+
+async function submitQuestion(): Promise<void> {
+  if (!textarea || activeRequest || interactionPending) return;
+  if (rotateGuideDayIfNeeded()) return;
+  const question = textarea.value.trim();
+  if (!question) { setStatus(currentCopy().empty); return; }
+  interactionPending = true;
+  syncSendState();
+  syncSourceControls();
+  const expectedGeneration = profileAccessGeneration;
+  try {
+    if (!await requestCloudConsent()) return;
+    if (rotateGuideDayIfNeeded()) return;
+    if (!currentProfileAccessGeneration(expectedGeneration)) return;
+    let chartFacts: string | undefined;
+    let chartAuthority: StoredChart | null = null;
+    const wantsChart = Boolean(savedChart) && (chartEnabled || questionRequestsMyChart(question));
+    if (wantsChart && !chartEnabled) {
+      setStatus(currentCopy().chartReading);
+      await requestChartConsent(expectedGeneration);
+    }
+    if (rotateGuideDayIfNeeded()) return;
+    if (!currentProfileAccessGeneration(expectedGeneration)) return;
+    if (chartEnabled && savedChart) {
+      const current = readSelectedSelfChart();
+      if (!sameSelfChartAuthority(savedChart, current)) {
+        refreshSavedChart();
+        setStatus(currentCopy().contextUpdated);
+        return;
+      }
+      chartSummaryPromise ??= placementSummaryForChart(savedChart);
+      chartFacts = (await chartSummaryPromise) ?? undefined;
+      const currentAfterSummary = readSelectedSelfChart();
+      if (!chartFacts || !sameSelfChartAuthority(savedChart, currentAfterSummary)) {
+        refreshSavedChart();
+        setStatus(currentCopy().contextUpdated);
+        return;
+      }
+      chartAuthority = currentAfterSummary;
+    }
+    if (rotateGuideDayIfNeeded()) return;
+    if (!currentProfileAccessGeneration(expectedGeneration)) return;
+    const ids = { turnId: uuid(), operationId: uuid(), attemptId: uuid(), messageId: uuid() };
+    const built = await buildTurnBody(question, ids, null, chartFacts);
+    const user = appendMessage('user', question);
+    const guide = appendMessage('guide', '');
+    textarea.value = '';
+    syncTextareaHeight();
+    const pending: PendingTurn = {
+      body: built.body, question, requestHistory: built.history, userMessage: built.userMessage,
+      turnId: ids.turnId, attemptId: ids.attemptId, userArticle: user.article,
+      assistantArticle: guide.article, assistantBody: guide.body,
+      chartAuthority,
+    };
+    interactionPending = false;
+    await runTurn(pending);
+  } catch (error) {
+    setStatus(friendlyFailure(error instanceof AssistantFailure ? error.code : 'temporarily_unavailable'));
+  } finally {
+    interactionPending = false;
+    syncSendState();
+    syncSourceControls();
+  }
+}
+
+async function retryTurn(): Promise<void> {
+  if (rotateGuideDayIfNeeded()) return;
+  const prior = pendingRetry;
+  if (!prior || activeRequest) return;
+  const state = getSession();
+  if (prior.body.contextEpoch !== state.contextEpoch || prior.body.baseRevision !== state.revision) {
+    clearPendingRetry();
+    setStatus(currentCopy().contextUpdated);
+    return;
+  }
+  const nextAttemptId = uuid();
+  const body = { ...prior.body, attemptId: nextAttemptId, retryOfAttemptId: prior.attemptId };
+  await runTurn({ ...prior, body, attemptId: nextAttemptId });
 }
 
 function focusableControls(): HTMLElement[] {
@@ -862,132 +1606,204 @@ function focusableControls(): HTMLElement[] {
     .filter((element) => element.getClientRects().length > 0);
 }
 
+function dismissInvite(markSeen = true): void {
+  invite?.remove();
+  invite = null;
+  if (markSeen) {
+    inviteSeenInMemory = true;
+    safeSessionSet(INVITE_KEY, '1');
+  }
+}
+
 function closeAssistant(): void {
   if (!root || root.hidden) return;
   abortRequest();
+  dismissPendingConsent?.();
+  dismissPendingCloudConsent?.();
   root.hidden = true;
   document.documentElement.style.overflow = previousOverflow;
+  launcher?.removeAttribute('aria-expanded');
   opener?.focus();
   opener = null;
+}
+
+function clearConversation(): void {
+  abortRequest();
+  const state = getSession();
+  state.messages = [];
+  state.nextSequence = 1;
+  state.modelHistoryStartSequence = 1;
+  state.revision += 1;
+  state.contextRevision += 1;
+  state.contextEpoch += 1;
+  pendingRetry = null;
+  saveSession();
+  renderTranscript();
+  setStatus();
+  if (retryButton) retryButton.hidden = true;
 }
 
 function applyCopy(): void {
   const copy = currentCopy();
   if (title) title.textContent = copy.title;
+  launcher?.setAttribute('aria-label', copy.open);
   if (closeButton) closeButton.setAttribute('aria-label', copy.close);
+  if (clearButton) clearButton.setAttribute('aria-label', copy.clear);
   if (intro) intro.textContent = copy.intro;
+  if (sourcesRegion) sourcesRegion.setAttribute('aria-label', copy.context);
+  if (pageSourceRemove) pageSourceRemove.setAttribute('aria-label', `${copy.removeSource}: ${copy.pageSource}`);
+  if (pageSourceAdd) pageSourceAdd.textContent = `＋ ${copy.addPage}`;
   if (transcript) transcript.setAttribute('aria-label', copy.log);
-  if (textarea) {
-    textarea.setAttribute('aria-label', copy.input);
-    textarea.placeholder = copy.placeholder;
-  }
+  if (textarea) { textarea.setAttribute('aria-label', copy.input); textarea.placeholder = copy.placeholder; }
   if (sendButton) sendButton.textContent = copy.send;
   if (stopButton) stopButton.textContent = copy.stop;
+  if (retryButton) retryButton.textContent = copy.retry;
   if (newlineHint) newlineHint.textContent = copy.newline;
   if (privacy) privacy.textContent = copy.privacy;
-  syncChartButton();
+  syncSourceControls();
+}
+
+function removePageSource(): void {
+  if (!currentPage || activeRequest || interactionPending) return;
+  const state = getSession();
+  if (!state.removedPageSourceIds.includes(currentPage.sourceId)) {
+    state.removedPageSourceIds.push(currentPage.sourceId);
+    state.removedPageSourceIds = state.removedPageSourceIds.slice(-20);
+    invalidateContext(true);
+  }
+  syncSourceControls();
+  setStatus(currentCopy().contextUpdated);
+}
+
+function addPageSource(): void {
+  if (!currentPage || activeRequest || interactionPending) return;
+  const state = getSession();
+  state.removedPageSourceIds = state.removedPageSourceIds.filter((id) => id !== currentPage!.sourceId);
+  invalidateContext(false, true);
+  syncSourceControls();
+  setStatus();
+}
+
+function toggleChart(): void {
+  if (activeRequest || interactionPending) return;
+  if (chartEnabled) {
+    chartEnabled = false;
+    chartConsented = false;
+    chartSourceId = null;
+    invalidateContext(true);
+    syncSourceControls();
+    setStatus(currentCopy().contextUpdated);
+    return;
+  }
+  interactionPending = true;
+  syncSendState();
+  syncSourceControls();
+  const expectedGeneration = profileAccessGeneration;
+  void requestChartConsent(expectedGeneration).finally(() => {
+    interactionPending = false;
+    syncSendState();
+    syncSourceControls();
+  });
 }
 
 function build(): void {
   root = document.createElement('div');
   root.className = 'zassistant';
   root.hidden = true;
-  root.addEventListener('click', (event) => {
-    if (event.target === root) closeAssistant();
-  });
+  root.addEventListener('click', (event) => { if (event.target === root) closeAssistant(); });
   root.addEventListener('keydown', (event) => {
     if (event.key !== 'Tab') return;
     const controls = focusableControls();
     if (!controls.length) return;
     const first = controls[0];
     const last = controls[controls.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   });
-
   panel = document.createElement('div');
   panel.className = 'zassistant__panel';
   panel.setAttribute('role', 'dialog');
   panel.setAttribute('aria-modal', 'true');
   panel.setAttribute('aria-labelledby', 'zassistant-title');
-
   const header = document.createElement('header');
   header.className = 'zassistant__head';
+  const headerIdentity = document.createElement('div');
+  headerIdentity.className = 'zassistant__identity';
   title = document.createElement('h2');
   title.id = 'zassistant-title';
   title.className = 'zassistant__title';
+  headerIdentity.append(createGuideAvatar('zassistant__avatar', 38), title);
+  const headerActions = document.createElement('div');
+  headerActions.className = 'zassistant__head-actions';
+  clearButton = document.createElement('button');
+  clearButton.type = 'button';
+  clearButton.className = 'zassistant__clear';
+  clearButton.textContent = '⌫';
+  clearButton.addEventListener('click', clearConversation);
   closeButton = document.createElement('button');
   closeButton.type = 'button';
   closeButton.className = 'zassistant__close';
   closeButton.textContent = '✕';
   closeButton.addEventListener('click', closeAssistant);
-  header.append(title, closeButton);
-
+  headerActions.append(clearButton, closeButton);
+  header.append(headerIdentity, headerActions);
   intro = document.createElement('p');
   intro.className = 'zassistant__intro';
-
+  sourcesRegion = document.createElement('div');
+  sourcesRegion.className = 'zassistant__context';
+  pageSourceChip = document.createElement('div');
+  pageSourceChip.className = 'zassistant__source-chip';
+  pageSourceText = document.createElement('span');
+  pageSourceRemove = document.createElement('button');
+  pageSourceRemove.type = 'button';
+  pageSourceRemove.className = 'zassistant__source-remove';
+  pageSourceRemove.textContent = '×';
+  pageSourceRemove.addEventListener('click', removePageSource);
+  pageSourceChip.append(pageSourceText, pageSourceRemove);
+  pageSourceAdd = document.createElement('button');
+  pageSourceAdd.type = 'button';
+  pageSourceAdd.className = 'zassistant__source-add';
+  pageSourceAdd.addEventListener('click', addPageSource);
   chartButton = document.createElement('button');
   chartButton.type = 'button';
   chartButton.className = 'zassistant__chart-chip';
   chartButton.hidden = true;
-  chartButton.addEventListener('click', () => {
-    if (chartEnabled) {
-      chartEnabled = false;
-      syncChartButton();
-      return;
-    }
-    const expectedGeneration = profileAccessGeneration;
-    void requestChartConsent(expectedGeneration).then((granted) => {
-      if (!currentProfileAccessGeneration(expectedGeneration)) return;
-      chartEnabled = granted;
-      syncChartButton();
-    });
-  });
-
+  chartButton.addEventListener('click', toggleChart);
+  sourcesRegion.append(pageSourceChip, pageSourceAdd, chartButton);
   transcript = document.createElement('div');
   transcript.className = 'zassistant__log';
   transcript.setAttribute('role', 'log');
   transcript.setAttribute('aria-live', 'polite');
   transcript.setAttribute('aria-relevant', 'additions text');
-
   status = document.createElement('p');
   status.className = 'zassistant__status';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   status.setAttribute('aria-atomic', 'true');
-
   form = document.createElement('form');
   form.className = 'zassistant__form';
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void submitQuestion();
-  });
+  form.addEventListener('submit', (event) => { event.preventDefault(); void submitQuestion(); });
   textarea = document.createElement('textarea');
   textarea.className = 'zassistant__input';
   textarea.rows = 2;
   textarea.maxLength = MAX_INPUT;
   textarea.autocomplete = 'off';
   textarea.spellcheck = true;
-  textarea.addEventListener('input', () => {
-    syncTextareaHeight();
-    syncSendState();
-  });
+  textarea.addEventListener('input', () => { syncTextareaHeight(); syncSendState(); });
   textarea.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
-      event.preventDefault();
-      form?.requestSubmit();
+      event.preventDefault(); form?.requestSubmit();
     }
   });
-
   const actions = document.createElement('div');
   actions.className = 'zassistant__actions';
   newlineHint = document.createElement('span');
   newlineHint.className = 'zassistant__hint mono';
+  retryButton = document.createElement('button');
+  retryButton.type = 'button';
+  retryButton.className = 'zassistant__retry';
+  retryButton.hidden = true;
+  retryButton.addEventListener('click', () => void retryTurn());
   sendButton = document.createElement('button');
   sendButton.type = 'submit';
   sendButton.className = 'zassistant__send';
@@ -996,47 +1812,101 @@ function build(): void {
   stopButton.type = 'button';
   stopButton.className = 'zassistant__stop';
   stopButton.hidden = true;
-  stopButton.addEventListener('click', () => abortRequest());
-  actions.append(newlineHint, sendButton, stopButton);
+  stopButton.addEventListener('click', abortRequest);
+  actions.append(newlineHint, retryButton, sendButton, stopButton);
   form.append(textarea, actions);
-
   privacy = document.createElement('p');
   privacy.className = 'zassistant__privacy';
-
-  panel.append(header, intro, chartButton, transcript, status, form, privacy);
-  root.appendChild(panel);
-  document.body.appendChild(root);
-
+  panel.append(header, intro, sourcesRegion, transcript, status, form, privacy);
+  root.append(panel);
+  document.body.append(root);
+  launcher = document.createElement('button');
+  launcher.type = 'button';
+  launcher.className = 'zguide-launcher';
+  launcher.dataset.guideLauncher = '';
+  const launcherLabel = document.createElement('span');
+  launcherLabel.textContent = 'Guide';
+  launcher.append(createGuideAvatar('zguide-launcher__avatar', 32), launcherLabel);
+  launcher.addEventListener('click', () => void openAssistant(undefined, launcher));
+  document.body.append(launcher);
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && root && !root.hidden) {
-      event.preventDefault();
-      event.stopPropagation();
-      closeAssistant();
+      event.preventDefault(); event.stopPropagation(); closeAssistant();
     }
   }, true);
-  window.addEventListener('zodiacs:profile', () => {
-    if (!activeRequest) refreshSavedChart();
-  });
+  window.addEventListener('zodiacs:profile', onProfileDataChange);
   window.addEventListener('zodiacs:profile-access', onProfileAccessChange);
+  window.addEventListener('storage', onGuideStorageChange);
+  window.addEventListener('pagehide', suspendGuideForPageCache);
+  window.addEventListener('pageshow', restoreGuideAfterPageCache);
 }
 
-/** Open the assistant dialog. Safe to call repeatedly on the same page. */
-export async function openAssistant(
-  requestedLocale?: string,
-  from?: HTMLElement | null,
-): Promise<void> {
+function wireOpeners(): void {
+  document.querySelectorAll<HTMLElement>('[data-assistant-open]:not([data-guide-wired])').forEach((button) => {
+    button.dataset.guideWired = '';
+    button.addEventListener('click', () => void openAssistant(button.dataset.assistantLocale, button));
+  });
+}
+
+function showInvite(): void {
+  if (invite || !root?.hidden || inviteSeenInMemory || safeSessionGet(INVITE_KEY) === '1') return;
+  inviteSeenInMemory = true;
+  safeSessionSet(INVITE_KEY, '1');
+  const copy = currentCopy();
+  invite = document.createElement('aside');
+  invite.className = 'zguide-invite';
+  const dismiss = document.createElement('button');
+  dismiss.type = 'button';
+  dismiss.className = 'zguide-invite__dismiss';
+  dismiss.setAttribute('aria-label', copy.dismissInvite);
+  dismiss.textContent = '×';
+  const identity = document.createElement('div');
+  identity.className = 'zguide-invite__identity';
+  const label = document.createElement('strong');
+  label.textContent = 'Guide';
+  identity.append(createGuideAvatar('zguide-invite__avatar', 44), label);
+  const message = document.createElement('p');
+  message.textContent = copy.invite;
+  const action = document.createElement('button');
+  action.type = 'button';
+  action.className = 'zguide-invite__action';
+  action.textContent = copy.inviteAction;
+  dismiss.addEventListener('click', () => dismissInvite());
+  action.addEventListener('click', () => void openAssistant(undefined, action));
+  invite.append(dismiss, identity, message, action);
+  document.body.append(invite);
+}
+
+/** Mount the default-visible launcher and one quiet, non-modal welcome. */
+export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
   await ensureStylesheet();
   locale = normalizeLocale(requestedLocale);
+  getSession();
   if (!root) build();
+  syncPageBoundary();
+  applyCopy();
+  wireOpeners();
+  window.setTimeout(showInvite, 2_000);
+}
+
+/** Open the Guide drawer. Safe to call repeatedly on the same page. */
+export async function openAssistant(requestedLocale?: string, from?: HTMLElement | null): Promise<void> {
+  await bootstrapGuide(requestedLocale);
+  rotateGuideDayIfNeeded();
+  await ensureGuideAuthFence();
+  hasUserOpened = true;
+  dismissInvite();
   applyCopy();
   refreshSavedChart();
+  renderTranscript();
   if (root!.hidden) {
     opener = from ?? (document.activeElement as HTMLElement | null);
     previousOverflow = document.documentElement.style.overflow;
   }
   root!.hidden = false;
+  launcher?.setAttribute('aria-expanded', 'true');
   document.documentElement.style.overflow = 'hidden';
   setStatus();
   textarea!.focus();
-  track('assistant_open');
+  track('guide_open');
 }

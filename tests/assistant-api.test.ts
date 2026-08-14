@@ -14,6 +14,7 @@ import {
 
 const ENV = {
   ASSISTANT_ENABLED: '1',
+  LEGACY_ASSISTANT_COMPAT_ENABLED: '1',
   ANTHROPIC_API_KEY: 'anthropic-test-key',
   ASSISTANT_SALT: 'assistant-test-salt',
   PUBLIC_SUPABASE_URL: 'https://example.supabase.co',

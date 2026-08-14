@@ -95,5 +95,18 @@ run_phase6_sql_file \
   "${phase6_repo_root}/supabase/migrations/20260727050000_phase6_assistant_quota.sql"
 
 run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/migrations/20260813102035_guide_atomic_quota_reservation.sql"
+
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/migrations/20260813102035_guide_atomic_quota_reservation.sql"
+
+run_phase6_sql_file \
   "${phase6_repo_root}/supabase/tests/phase6_assistant_quota.sql"
+
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/tests/guide_quota.sql"
+
+run_phase6_sql_file \
+  "${phase6_repo_root}/supabase/tests/guide_quota_concurrency.sql"
+
 echo "PostgreSQL 17 Phase 6 assistant-quota SQL tests passed."

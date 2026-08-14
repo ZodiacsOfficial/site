@@ -9,25 +9,6 @@
   <meta name="description" content="Charts, recent trades, and independent venue quotes for the twelve official Zodiac tokens. Every order is built, executed, and charged for by Jupiter, an independent venue." />
   <link rel="canonical" href="https://zodiacs.org/terminal/markets/" />
   <meta name="robots" content="noindex" />
-  <script>
-    window.plausible = window.plausible || function () {
-      (window.plausible.q = window.plausible.q || []).push(arguments);
-    };
-    window.plausible.init = window.plausible.init || function (options) {
-      window.plausible.o = options || {};
-    };
-    window.plausible.init({
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    });
-  </script>
-  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Zodiac Markets" />
   <meta property="og:description" content="Charts, recent trades, and independent venue quotes for the twelve official Zodiac tokens. Zodiacs.org operates no market." />
@@ -473,7 +454,7 @@
       </aside>
 
       <footer>
-        <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+        <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
         · Zodiacs.org · Official registry ·
         <a href="/terminal/">Terminal</a> ·
         <a href="/disclosure/">Disclosure</a> ·
@@ -483,15 +464,9 @@
   </div>
   <script>
   (function () {
-    var buttons = document.querySelectorAll('[data-assistant-open]');
-    if (!buttons.length) return;
-    var modulePromise;
-    buttons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        modulePromise = modulePromise || import('/assets/assistant-ui.js');
-        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
-      });
-    });
+    import('/assets/assistant-ui.js')
+      .then(function (mod) { return mod.bootstrapGuide('en'); })
+      .catch(function () {});
   })();
   </script>
   <script>

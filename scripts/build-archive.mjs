@@ -266,26 +266,6 @@ function renderPage() {
   <link rel="canonical" href="${ARCHIVE_META.url}" />
   <link rel="alternate" type="application/rss+xml" title="Zodiacs — The Archive" href="/archive/rss.xml" />
   <link rel="alternate" type="application/feed+json" title="Zodiacs — The Archive" href="/archive/feed.json" />
-  <script>
-    window.plausible = window.plausible || function () {
-      (window.plausible.q = window.plausible.q || []).push(arguments);
-    };
-    window.plausible.init = window.plausible.init || function (options) {
-      window.plausible.o = options || {};
-    };
-    window.plausible.init({
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    });
-  </script>
-  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
-
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="The Archive — Zodiacs" />
   <meta property="og:description" content="${escAttr(ARCHIVE_META.description)}" />
@@ -782,7 +762,7 @@ ${renderPressKit()}
           <a href="/disclosure/">${esc(EN['disclosure.linkLabel'])}</a>
           <a href="/sdk/">SDK</a>
           <a href="/registry/zodiacs.registry.json">Record</a>
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
         </div>
         <div>Read-only</div>
       </div>
@@ -797,15 +777,9 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
 
   <script>
   (function () {
-    var buttons = document.querySelectorAll('[data-assistant-open]');
-    if (!buttons.length) return;
-    var modulePromise;
-    buttons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        modulePromise = modulePromise || import('/assets/assistant-ui.js');
-        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
-      });
-    });
+    import('/assets/assistant-ui.js')
+      .then(function (mod) { return mod.bootstrapGuide('en'); })
+      .catch(function () {});
   })();
   </script>
 

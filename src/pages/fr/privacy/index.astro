@@ -154,23 +154,31 @@ const jsonLd = [
         opérations, et aucune donnée de naissance ou de thème n’y intervient.
       </p>
 
-      <h2>Assistant IA</h2>
+      <h2>Guide</h2>
       <p>
-        Lorsque tu utilises l’assistant, tes messages sont envoyés à notre
-        fournisseur d’IA, Anthropic, afin de produire la réponse. Un thème
+        Lorsque tu envoies une question à Guide, ce message et le contexte
+        visible de Guide sont transmis à OpenAI pour effectuer des contrôles de
+        sécurité et produire la réponse. Chaque requête à l’API Responses utilise
+        <code>store: false</code>. La conversation Guide web
+        actuelle reste uniquement dans cette session du navigateur, n’est pas
+        synchronisée avec un compte et n’est pas stockée sous forme de texte
+        sur les serveurs de Zodiacs.org, même si tu es connecté. OpenAI indique
+        que les données de l’API ne servent pas par défaut à entraîner ses
+        modèles ; ses journaux standard de détection des abus peuvent conserver
+        le contenu envoyé jusqu’à 30 jours, sauf si des contrôles de données plus
+        stricts s’appliquent. Un thème
         enregistré n’est inclus qu’après un appui sur « Joindre mon thème » ;
         l’écran de consentement montre le résumé limité aux positions avant son
         envoi. Ce résumé accompagne chaque question tant que « Avec mon thème »
-        reste activé ; tu peux le désactiver. Nous ne conservons pas les conversations ; Anthropic indique que
-        le trafic de l’API ne sert pas à entraîner ses modèles. L’assistant ne
+        reste activé ; tu peux le désactiver. Guide ne
         joint jamais ton nom, ta date, ton heure ou ton lieu de naissance, ni
         tes coordonnées enregistrées ; tout ce que tu écris dans la
         discussion fait partie du message envoyé. Pour appliquer la limite
         quotidienne, nous conservons un identifiant irréversible calculé avec
         un sel à partir de ton adresse IP et son compteur journalier, jamais l’adresse IP
         d’origine ; les contrôles de quota effacent les entrées de plus de
-        35 jours. Ce même identifiant pseudonyme est transmis à Anthropic dans
-        les métadonnées de la demande.
+        la veille UTC. Cet identifiant n’est pas transmis à OpenAI et le texte
+        des conversations n’est pas placé dans les métadonnées du fournisseur.
       </p>
 
       <h2>Résumé quotidien, calendrier et notifications</h2>

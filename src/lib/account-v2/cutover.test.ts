@@ -138,11 +138,11 @@ describe('account sync v2 cutover guards', () => {
     expect(reader).not.toContain("from './storage-identity';");
   });
 
-  it('suppresses remote analytics across the private preview build', async () => {
+  it('suppresses remote analytics across Guide and the private preview build', async () => {
     const base = await readFile(new URL('../../layouts/Base.astro', import.meta.url), 'utf8');
-    expect(base).toContain(
-      'plausibleScriptUrl && !props.noindex && !props.privateSurface && !accountSyncV2Enabled',
-    );
+    expect(base).toContain('const guideRuntimeEnabled = true;');
+    expect(base).toContain('plausibleScriptUrl && !props.noindex && !props.privateSurface');
+    expect(base).toContain('&& !accountSyncV2Enabled && !guideRuntimeEnabled,');
     expect(base).toContain('Object.keys(value).length === expectedLength');
     expect(base).toContain("profileAccountId.test(grant.accountId)");
     expect(base).toContain("profileAccountId.test(owner.accountId)");

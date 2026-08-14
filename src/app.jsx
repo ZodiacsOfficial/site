@@ -5485,7 +5485,7 @@
               <a href="/sdk/">SDK</a>
               <a href="/registry/zodiacs.registry.json">Record</a>
               <a href="/archive/">Archive</a>
-              <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+              <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
               <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
               <a href="/privacy/">Privacy</a>
               <a href="/terms/">Terms</a>

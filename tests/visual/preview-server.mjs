@@ -71,7 +71,10 @@ export async function startPreview({ port }) {
     [astro, 'preview', '--host', '127.0.0.1', '--port', String(selectedPort)],
     {
       cwd: projectRoot,
-      env: { ...process.env, NODE_ENV: 'production' },
+      // Astro 7 detects agent runners and otherwise daemonizes preview, while
+      // this harness owns and terminates the foreground child explicitly. Any
+      // non-empty override disables that auto-detection branch.
+      env: { ...process.env, NODE_ENV: 'production', ASTRO_PREVIEW_BACKGROUND: '0' },
       stdio: ['ignore', 'pipe', 'pipe'],
     },
   );

@@ -67,10 +67,12 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
-// The private account preview does not execute any remote analytics script on
-// any route: local birth records are site-wide state, not profile-page state.
+// Guide is a site-wide private transcript surface. Remote analytics must not
+// coexist with its DOM/session state, even when account-v2 itself is off.
+const guideRuntimeEnabled = true;
 const plausibleEnabled = Boolean(
-  plausibleScriptUrl && !props.noindex && !props.privateSurface && !accountSyncV2Enabled,
+  plausibleScriptUrl && !props.noindex && !props.privateSurface
+  && !accountSyncV2Enabled && !guideRuntimeEnabled,
 );
 const dailyEmailLifecycleEnabled = hasDailyChartEmailProvider(process.env);
 const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ? direction : undefined;

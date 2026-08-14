@@ -107,13 +107,18 @@ describe('official Zodiac token records', () => {
     }
   });
 
-  it('emits parseable executable inline scripts on every record', async () => {
+  it('emits the Guide bootstrap and parseable executable inline scripts on every record', async () => {
     for (const sign of signs) {
       const html = await read(`public/registry/${sign}/index.html`);
       const scripts = [...html.matchAll(/<script(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/giu)]
         .map((match) => match[1])
         .filter((script) => script.trim());
-      expect(scripts.length).toBeGreaterThan(3);
+      const guideBootstrap = scripts.find((script) => script.includes("import('/assets/assistant-ui.js')"));
+      expect(guideBootstrap).toContain("mod.bootstrapGuide('en')");
+      expect(scripts).toEqual(expect.arrayContaining([
+        expect.stringContaining("trackWingEvent('wing_record_view')"),
+        expect.stringContaining("var ARCHIVE_URL = '/assets/data/registry-market-history.v1.json'"),
+      ]));
       for (const script of scripts) {
         expect(() => new Function(script)).not.toThrow();
       }

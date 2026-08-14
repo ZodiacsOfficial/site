@@ -1,37 +1,43 @@
-/* ── Lazy assistant dialog (src/lib/assistant/open-assistant.ts) ── */
+/* Site-wide Guide launcher, welcome, drawer and bottom sheet. */
 .zassistant {
-  /* The assistant also opens on the hand-authored registry wing, whose
-     equivalent design tokens use older names. Keep the lazy stylesheet
-     self-contained without adding a second palette. */
   --za-void-0: var(--void-0, var(--bg, #060709));
-  --za-void-1: var(--void-1, var(--bg-2, #0A0C11));
-  --za-void-2: var(--void-2, var(--surface, #0F121A));
+  --za-void-1: var(--void-1, var(--bg-2, #0a0c11));
+  --za-void-2: var(--void-2, var(--surface, #0f121a));
   --za-void-3: var(--void-3, var(--surface-2, #151925));
-  --za-ink-0: var(--ink-0, var(--ink, #EEF1F7));
-  --za-ink-1: var(--ink-1, var(--ink-2, #C6CCDA));
-  --za-muted: var(--muted, var(--ink-dim, #8E96AB));
-  --za-faint: var(--faint, var(--ink-mute, #7A8397));
+  --za-ink-0: var(--ink-0, var(--ink, #eef1f7));
+  --za-ink-1: var(--ink-1, var(--ink-2, #c6ccda));
+  --za-muted: var(--muted, var(--ink-dim, #8e96ab));
+  --za-faint: var(--faint, var(--ink-mute, #7a8397));
   --za-hair-1: var(--hair-1, var(--hair, rgba(198, 204, 218, 0.08)));
   --za-hair-2: var(--hair-2, rgba(198, 204, 218, 0.16));
   --za-hair-3: var(--hair-3, rgba(198, 204, 218, 0.28));
   position: fixed;
   inset: 0;
-  /* Hand-authored wing navigation tops out at 60. The assistant is a true
-     modal layer and must win both paint order and hit testing there. */
   z-index: max(var(--z-overlay, 70), 70);
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: max(7vh, 48px) 16px 16px;
-  background: rgba(6, 7, 9, 0.68);
+  justify-content: flex-end;
+  align-items: stretch;
+  padding: 12px;
+  background: rgba(6, 7, 9, 0.5);
   color: var(--za-ink-0);
   font-family: var(--font-sans, 'Instrument Sans', system-ui, -apple-system, sans-serif);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
-.zassistant[hidden] { display: none; }
+.zassistant[hidden],
+.zassistant [hidden] { display: none !important; }
 .zassistant,
 .zassistant * { box-sizing: border-box; }
+.zguide-avatar {
+  display: block;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  border: 1px solid rgba(238, 241, 247, 0.18);
+  border-radius: 50%;
+  background: #060709;
+  object-fit: cover;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.08);
+}
 .zassistant :where(button) {
   appearance: none;
   margin: 0;
@@ -47,69 +53,100 @@
 .zassistant__panel {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 640px;
-  max-height: min(84dvh, 760px);
+  width: min(440px, 100%);
+  height: 100%;
   overflow: hidden;
   border: 1px solid var(--za-hair-2);
   border-radius: var(--r-lg, 22px);
-  background: var(--za-void-1);
-  box-shadow: inset 0 1px 0 rgba(238, 241, 247, 0.05), 0 24px 64px -24px rgba(0, 0, 0, 0.86);
+  background: color-mix(in srgb, var(--za-void-1) 96%, transparent);
+  box-shadow: inset 0 1px 0 rgba(238, 241, 247, 0.05), 0 30px 80px -24px rgba(0, 0, 0, 0.9);
 }
 .zassistant__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 58px;
+  min-height: 62px;
   padding: 7px 8px 7px 18px;
   border-bottom: 1px solid var(--za-hair-1);
 }
+.zassistant__head-actions { display: flex; align-items: center; }
+.zassistant__identity {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 10px;
+}
+.zassistant__avatar { width: 38px; height: 38px; }
 .zassistant__title {
   margin: 0;
   color: var(--za-ink-0);
   font-family: var(--font-serif, var(--serif, 'EB Garamond', Georgia, serif));
-  font-size: clamp(21px, 4vw, 25px);
+  font-size: clamp(22px, 4vw, 26px);
   font-weight: 500;
   line-height: 1.1;
 }
-.zassistant__close {
+.zassistant__close,
+.zassistant__clear {
   display: grid;
   place-items: center;
   flex: 0 0 44px;
   width: 44px;
   height: 44px;
+  border-radius: 50%;
   color: var(--za-muted);
   font-size: 16px;
   line-height: 1;
 }
+.zassistant__clear { font-size: 18px; }
+.zassistant__close:hover,
+.zassistant__clear:hover { background: var(--za-void-2); color: var(--za-ink-0); }
 .zassistant__intro {
   margin: 0;
-  padding: 18px 18px 4px;
+  padding: 16px 18px 5px;
   color: var(--za-muted);
   font-size: var(--text-sm, 0.875rem);
+  line-height: 1.5;
 }
-.zassistant__intro[hidden] { display: none; }
-.zassistant__chart-chip {
-  align-self: flex-start;
-  min-height: 44px;
-  margin: 10px 18px 4px;
-  padding: 8px 12px;
+.zassistant__context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 10px 18px 5px;
+}
+.zassistant__source-chip,
+.zassistant__chart-chip,
+.zassistant__source-add {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
   border: 1px solid var(--za-hair-2);
   border-radius: var(--r-full, 999px);
   color: var(--za-muted);
+  background: var(--za-void-2);
   font-size: var(--text-xs, 0.75rem);
   line-height: 1.25;
-  transition: border-color 140ms ease, color 140ms ease, transform 140ms ease;
 }
+.zassistant__source-chip { max-width: 100%; padding-left: 12px; }
+.zassistant__source-chip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zassistant__source-remove {
+  display: grid;
+  place-items: center;
+  flex: 0 0 38px;
+  width: 38px;
+  min-height: 38px;
+  color: var(--za-faint);
+  font-size: 17px;
+}
+.zassistant__chart-chip,
+.zassistant__source-add { padding: 8px 12px; }
 .zassistant__chart-chip.is-active {
   border-color: var(--za-hair-3);
   color: var(--za-ink-0);
-  background: var(--za-void-2);
 }
-.zassistant__chart-chip:active,
-.zassistant__send:active,
-.zassistant__stop:active,
-.zassistant__close:active { transform: scale(0.97); }
 .zassistant__log {
   display: grid;
   align-content: start;
@@ -123,24 +160,25 @@
 .zassistant__message {
   display: grid;
   gap: 4px;
-  width: min(92%, 520px);
+  width: min(94%, 380px);
   padding: 11px 13px;
   border: 1px solid var(--za-hair-1);
   border-radius: var(--r-md, 14px);
   background: var(--za-void-2);
 }
-.zassistant__message--user {
-  justify-self: end;
-  background: var(--za-void-3);
-}
+.zassistant__message--user { justify-self: end; background: var(--za-void-3); }
 .zassistant__message--assistant { justify-self: start; }
 .zassistant__message.is-partial { border-style: dashed; }
 .zassistant__speaker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--za-faint);
   font-size: 9.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+.zassistant__message-avatar { width: 20px; height: 20px; }
 .zassistant__message-body {
   margin: 0;
   color: var(--za-ink-0);
@@ -149,7 +187,8 @@
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
-.zassistant__link {
+.zassistant__link,
+.zassistant__sources a {
   color: var(--za-ink-1);
   text-decoration-color: var(--za-hair-3);
   text-underline-offset: 3px;
@@ -186,11 +225,7 @@
   line-height: 1.5;
 }
 .zassistant__input::placeholder { color: var(--za-faint); }
-.zassistant__actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.zassistant__actions { display: flex; align-items: center; gap: 8px; }
 .zassistant__hint {
   margin-right: auto;
   color: var(--za-faint);
@@ -198,8 +233,9 @@
   letter-spacing: 0.02em;
 }
 .zassistant__send,
-.zassistant__stop {
-  min-width: 72px;
+.zassistant__stop,
+.zassistant__retry {
+  min-width: 68px;
   min-height: 44px;
   padding: 9px 14px;
   border: 1px solid var(--za-hair-3);
@@ -210,79 +246,158 @@
   font-weight: 650;
   transition: opacity 140ms ease, transform 140ms ease;
 }
-.zassistant__stop {
-  background: transparent;
-  color: var(--za-ink-0);
-}
-.zassistant__send:disabled {
-  cursor: default;
-  opacity: 0.42;
-}
+.zassistant__stop,
+.zassistant__retry { background: transparent; color: var(--za-ink-0); }
+.zassistant__send:disabled,
+.zassistant button:disabled { cursor: default; opacity: 0.42; }
 .zassistant__privacy {
   margin: 0;
-  padding: 10px 18px 13px;
+  padding: 10px 18px max(13px, env(safe-area-inset-bottom));
   color: var(--za-faint);
   font-size: 10.5px;
   line-height: 1.45;
 }
-.zassistant button:focus-visible,
-.zassistant textarea:focus-visible,
-.zassistant a:focus-visible {
-  outline: 2px solid var(--za-ink-1);
-  outline-offset: 2px;
-}
-@media (max-width: 560px) {
-  .zassistant {
-    align-items: flex-end;
-    padding: 12px;
-  }
-  .zassistant__panel {
-    max-height: calc(100dvh - 24px);
-    border-radius: var(--r-lg, 22px);
-  }
-  .zassistant__hint { display: none; }
-  .zassistant__message { width: 96%; }
-}
-
-/* Phase 6 — consent card and internal-source row */
 .zassistant__consent {
-  margin: 10px 0;
+  margin: 4px 0;
   padding: 14px 16px;
-  border: 1px solid rgba(198, 204, 218, 0.22);
-  border-left: 2px solid var(--zassistant-accent, #b6d4e4);
+  border: 1px solid var(--za-hair-2);
+  border-left: 2px solid #b6d4e4;
   border-radius: 12px;
-  background: rgba(21, 25, 37, 0.9);
+  background: var(--za-void-3);
 }
-.zassistant__consent h3 { margin: 0 0 6px; font: 600 13px/1.3 inherit; color: #eef1f7; }
-.zassistant__consent p { margin: 0 0 10px; font-size: 12.5px; line-height: 1.55; color: #c6ccda; }
+.zassistant__consent h3 { margin: 0 0 6px; font: 600 13px/1.3 inherit; color: var(--za-ink-0); }
+.zassistant__consent p { margin: 0 0 10px; font-size: 12.5px; line-height: 1.55; color: var(--za-ink-1); }
 .zassistant__consent-preview {
   margin: 0 0 12px;
   padding: 10px 12px;
   max-height: 180px;
   overflow: auto;
-  border: 1px solid rgba(198, 204, 218, 0.14);
+  border: 1px solid var(--za-hair-2);
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.3);
   font: 11px/1.6 ui-monospace, Menlo, monospace;
-  color: #c6ccda;
+  color: var(--za-ink-1);
   white-space: pre-wrap;
 }
 .zassistant__consent-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .zassistant__consent-confirm,
 .zassistant__consent-cancel {
-  min-height: 40px;
+  min-height: 44px;
   padding: 8px 16px;
   border-radius: 999px;
   font: 500 13px/1 inherit;
-  cursor: pointer;
 }
-.zassistant__consent-confirm { border: 0; background: #eef1f7; color: #10131a; }
-.zassistant__consent-cancel { border: 1px solid rgba(198, 204, 218, 0.3); background: none; color: #c6ccda; }
+.zassistant__consent-confirm { background: var(--za-ink-0) !important; color: var(--za-void-1) !important; }
+.zassistant__consent-cancel { border: 1px solid var(--za-hair-3) !important; color: var(--za-ink-1) !important; }
 .zassistant__sources {
+  display: block;
   margin: 10px 0 0;
   padding-top: 8px;
-  border-top: 1px solid rgba(198, 204, 218, 0.12);
+  border-top: 1px solid var(--za-hair-1);
   font-size: 11.5px;
-  color: #8e96ab;
+  color: var(--za-muted);
 }
-.zassistant__sources a { color: #c6ccda; text-underline-offset: 3px; }
+.zassistant button:focus-visible,
+.zassistant textarea:focus-visible,
+.zassistant a:focus-visible,
+.zguide-launcher:focus-visible,
+.zguide-invite button:focus-visible {
+  outline: 2px solid #c6ccda;
+  outline-offset: 2px;
+}
+.zassistant__chart-chip:active,
+.zassistant__send:active,
+.zassistant__stop:active,
+.zassistant__retry:active,
+.zassistant__close:active,
+.zguide-launcher:active { transform: scale(0.97); }
+
+.zguide-launcher {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 66;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 7px 17px 7px 7px;
+  border: 1px solid rgba(198, 204, 218, 0.25);
+  border-radius: 999px;
+  background: rgba(15, 18, 26, 0.94);
+  box-shadow: 0 15px 40px -16px rgba(0, 0, 0, 0.9), inset 0 1px rgba(255, 255, 255, 0.05);
+  color: #eef1f7;
+  font: 600 14px/1 'Instrument Sans', system-ui, sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.zguide-launcher__avatar { width: 32px; height: 32px; }
+.zguide-invite {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 60px);
+  z-index: 65;
+  width: min(310px, calc(100vw - 36px));
+  padding: 16px;
+  border: 1px solid rgba(198, 204, 218, 0.18);
+  border-radius: 18px;
+  background: rgba(15, 18, 26, 0.97);
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.9);
+  color: #eef1f7;
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: zguide-welcome-in 240ms ease-out both;
+}
+.zguide-invite__identity { display: flex; align-items: center; gap: 11px; padding-right: 36px; }
+.zguide-invite__avatar { width: 44px; height: 44px; }
+.zguide-invite strong { display: block; font: 500 20px/1.2 'EB Garamond', Georgia, serif; }
+.zguide-invite p { margin: 10px 24px 13px 0; color: #c6ccda; font-size: 13px; line-height: 1.5; }
+.zguide-invite__dismiss {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: #8e96ab;
+  font-size: 18px;
+  cursor: pointer;
+}
+.zguide-invite__action {
+  min-height: 44px;
+  padding: 0 15px;
+  border: 1px solid rgba(198, 204, 218, 0.25);
+  border-radius: 999px;
+  background: #eef1f7;
+  color: #060709;
+  font: 650 12px/1 'Instrument Sans', system-ui, sans-serif;
+  cursor: pointer;
+}
+@keyframes zguide-welcome-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 560px) {
+  .zassistant { align-items: flex-end; padding: 0; background: rgba(6, 7, 9, 0.58); }
+  .zassistant__panel {
+    width: 100%;
+    height: min(88dvh, 760px);
+    border-width: 1px 0 0;
+    border-radius: 22px 22px 0 0;
+  }
+  .zassistant__hint { display: none; }
+  .zassistant__message { width: 96%; }
+  .zguide-launcher { right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); }
+  .zguide-invite { right: 12px; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 60px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zguide-invite { animation: none; }
+  .zassistant *, .zguide-launcher { scroll-behavior: auto; transition: none !important; }
+}

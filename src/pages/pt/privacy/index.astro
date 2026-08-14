@@ -144,23 +144,30 @@ const jsonLd = [
         participa dele.
       </p>
 
-      <h2>Assistente de IA</h2>
+      <h2>Guide</h2>
       <p>
-        Quando você usa o assistente, suas mensagens são enviadas ao nosso
-        provedor de IA, a Anthropic, para gerar a resposta. Um mapa salvo só é
+        Quando você envia uma pergunta ao Guide, essa mensagem e o contexto
+        visível do Guide são enviados à OpenAI para verificações de segurança e
+        para gerar a resposta. Cada solicitação à API Responses usa
+        <code>store: false</code>. A conversa atual do Guide na
+        web fica apenas nesta sessão do navegador, não é sincronizada com uma
+        conta e não é armazenada como texto nos servidores do Zodiacs.org,
+        mesmo se você estiver conectado. A OpenAI informa que, por padrão, os
+        dados da API não são usados para treinar seus modelos; os registros
+        padrão de monitoramento de abuso podem reter o conteúdo enviado por até
+        30 dias, salvo quando controles de dados mais restritos se aplicarem. Um mapa salvo só é
         incluído depois que você pressiona “Anexar meu mapa”; a tela de
         consentimento mostra o resumo apenas das posições antes do envio. O
         resumo acompanha cada pergunta enquanto “Usando meu mapa” estiver ativo;
-        você pode desativá-lo. Não
-        armazenamos as conversas; a Anthropic afirma que o tráfego da API não é
-        usado para treinar modelos. O assistente nunca anexa seu nome nem a data,
+        você pode desativá-lo. O Guide nunca anexa seu nome nem a data,
         a hora, o local de nascimento ou as coordenadas
         nascimento salvos; tudo o que você digitar no chat fará parte da
         mensagem enviada. Para aplicar o limite diário, mantemos um
         identificador unidirecional com sal derivado do seu endereço IP e a
         contagem do dia, nunca o IP original; as verificações de cota apagam
-        registros com mais de 35 dias. Enviamos esse mesmo identificador
-        pseudônimo à Anthropic como metadado da solicitação.
+        registros anteriores ao dia UTC anterior. Não enviamos esse
+        identificador à OpenAI nem incluímos texto da conversa nos metadados do
+        provedor.
       </p>
 
       <h2>Resumo diário, calendário e notificações</h2>

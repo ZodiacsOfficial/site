@@ -149,25 +149,30 @@ const jsonLd = [
         nascita o del tema vi partecipa.
       </p>
 
-      <h2>Assistente IA</h2>
+      <h2>Guide</h2>
       <p>
-        Quando usi l’assistente, i tuoi messaggi vengono inviati al nostro
-        fornitore di IA, Anthropic, per generare la risposta. Un tema salvato
+        Quando invii una domanda a Guide, quel messaggio e il contesto visibile
+        di Guide vengono inviati a OpenAI per i controlli di sicurezza e per
+        generare la risposta. Ogni richiesta all’API Responses usa
+        <code>store: false</code>. La conversazione web corrente con Guide
+        resta soltanto in questa sessione del browser, non viene sincronizzata
+        con un account e non viene archiviata come testo sui server di
+        Zodiacs.org, anche se hai effettuato l’accesso. OpenAI dichiara che i dati API non vengono usati per
+        addestrare i modelli per impostazione predefinita; i normali registri
+        contro gli abusi possono conservare i contenuti inviati fino a 30 giorni,
+        salvo controlli dei dati più restrittivi. Un tema salvato
         viene incluso solo dopo che premi “Allega il mio tema”; la schermata di
         consenso mostra il riepilogo delle sole posizioni prima dell’invio. Il
         riepilogo accompagna ogni domanda finché “Con il mio tema” resta attivo;
-        puoi disattivarlo. Non
-        conserviamo le conversazioni; Anthropic dichiara che il traffico API non
-        viene usato per addestrare i modelli. L’assistente non allega mai il tuo
+        puoi disattivarlo. Guide non allega mai il tuo
         nome né la data, l’ora, il luogo di nascita o le coordinate salvati;
         tutto ciò che scrivi nella chat fa parte del messaggio
         inviato. Per applicare il limite giornaliero, conserviamo un
         identificatore irreversibile derivato dal tuo indirizzo IP con
         l’aggiunta di un valore casuale e il relativo conteggio quotidiano, mai
         l’IP originale; i controlli del limite eliminano le voci più vecchie di
-        35 giorni. Lo stesso identificatore pseudonimo viene inviato ad
-        Anthropic nei metadati della
-        richiesta.
+        il giorno UTC precedente. Non inviamo tale identificatore a OpenAI e
+        non inseriamo il testo delle conversazioni nei metadati del fornitore.
       </p>
 
       <h2>Riepilogo quotidiano, calendario e notifiche</h2>

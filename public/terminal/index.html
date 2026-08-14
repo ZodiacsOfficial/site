@@ -34,26 +34,6 @@
   <link rel="alternate" type="application/feed+json" title="Zodiacs — The Archive" href="/archive/feed.json" />
   <link rel="alternate" type="application/rss+xml" title="Zodiac Markets Research" href="/feeds/market-research.xml" />
   <link rel="alternate" type="application/feed+json" title="Zodiac Markets Research" href="/feeds/market-research.json" />
-  <script>
-    window.plausible = window.plausible || function () {
-      (window.plausible.q = window.plausible.q || []).push(arguments);
-    };
-    window.plausible.init = window.plausible.init || function (options) {
-      window.plausible.o = options || {};
-    };
-    window.plausible.init({
-      hashBasedRouting: false,
-      transformRequest: function (payload) {
-        var canonical = document.querySelector('link[rel="canonical"]');
-        payload.u = canonical ? canonical.href : location.origin + location.pathname;
-        payload.r = null;
-        if (payload.p && payload.p.url) delete payload.p.url;
-        return payload;
-      }
-    });
-  </script>
-  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
-
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="Zodiac Terminal · Zodiacs" />
   <meta property="og:description" content="Twelve signs. Twelve transferable tokens. One live public market—with verified records, price history, artwork, and markets research." />
@@ -7662,13 +7642,9 @@
 
   <script>
   (function () {
-    var modulePromise;
-    document.addEventListener('click', function (event) {
-      var button = event.target.closest && event.target.closest('[data-assistant-open]');
-      if (!button) return;
-      modulePromise = modulePromise || import('/assets/assistant-ui.js');
-      modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
-    });
+    import('/assets/assistant-ui.js')
+      .then(function (mod) { return mod.bootstrapGuide('en'); })
+      .catch(function () {});
   })();
   </script>
 
