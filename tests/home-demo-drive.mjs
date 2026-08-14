@@ -57,6 +57,16 @@ async function documentTop(locator) {
   return locator.evaluate((element) => element.getBoundingClientRect().top + window.scrollY);
 }
 
+async function settleGuideShell(page) {
+  // This drive owns chart hit-testing, not the one-time proactive welcome.
+  // Seed the existing preference before navigation, then wait for the
+  // intentionally post-load launcher so its fixed compositing layer cannot
+  // arrive in the middle of an elementFromPoint assertion.
+  await page.addInitScript(() => {
+    try { sessionStorage.setItem('zodiacs.guide.welcome-seen.v1', '1'); } catch { /* memory-only browser */ }
+  });
+}
+
 await withPreview({ port: 4394 }, async (baseURL) => {
   const browser = await chromium.launch({
     executablePath: await findChromium(),
@@ -68,7 +78,9 @@ await withPreview({ port: 4394 }, async (baseURL) => {
       const page = await browser.newPage({
         viewport: { width, height: 1000 },
       });
+      await settleGuideShell(page);
       await page.goto(`${baseURL}/`, { waitUntil: 'networkidle' });
+      await page.locator('.zguide-launcher').waitFor({ state: 'visible', timeout: 5_000 });
       const demo = page.locator('[data-demo-preview]');
       const stage = page.locator('.demo__wheel-stage');
       await stage.evaluate((element) => element.scrollIntoView({ block: 'center' }));
@@ -323,7 +335,9 @@ await withPreview({ port: 4394 }, async (baseURL) => {
       viewport: { width: 1440, height: 1000 },
       reducedMotion: 'reduce',
     });
+    await settleGuideShell(reducedPage);
     await reducedPage.goto(`${baseURL}/`, { waitUntil: 'networkidle' });
+    await reducedPage.locator('.zguide-launcher').waitFor({ state: 'visible', timeout: 5_000 });
     const reducedDemo = reducedPage.locator('[data-demo-preview]');
     const reducedTaurus = reducedPage.locator('[data-demo-id="sign:taurus"]');
     await reducedTaurus.click();
