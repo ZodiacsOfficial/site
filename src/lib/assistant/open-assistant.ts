@@ -147,6 +147,9 @@ interface Copy {
   consentBody: string;
   consentConfirm: string;
   consentCancel: string;
+  chooseTitle: string;
+  chooseBody: string;
+  chooseCancel: string;
   sources: string;
   contextUpdated: string;
 }
@@ -171,7 +174,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     cloudBody: 'Guide sends your question, recent Guide messages, and the visible sources above to OpenAI for an input safety check and to generate a draft reply. It then sends that generated draft reply back to OpenAI for a second safety check before showing it. This web Guide conversation stays only in this browser session, is not synced to your account, and is not stored as text by Zodiacs.org. Under standard API controls, OpenAI may retain abuse-monitoring data for up to 30 days. Continue for this Guide day?',
     cloudConfirm: 'Continue with Guide', cloudCancel: 'Not now', consentTitle: 'Before your chart is attached',
     consentBody: 'This is the one chart you explicitly marked as your own. The exact placement lines below will be sent to OpenAI with your question. Zodiacs.org does not attach its saved name, birth date, time, place, or coordinates, and does not store the signed-out conversation.',
-    consentConfirm: 'Attach my chart', consentCancel: 'Keep it private', sources: 'From this site:',
+    consentConfirm: 'Attach my chart', consentCancel: 'Keep it private',
+    chooseTitle: 'Which saved chart is yours?',
+    chooseBody: 'Guide only uses the one chart you mark as your own. The exact placements are shown for approval before anything is sent.',
+    chooseCancel: 'Not now', sources: 'From this site:',
     contextUpdated: 'Source removed. Earlier messages remain visible, but Guide will not use them in future answers.',
   },
   es: {
@@ -192,7 +198,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     cloudBody: 'Guide envía tu pregunta, los mensajes recientes y las fuentes visibles a OpenAI para una revisión de seguridad de la entrada y para generar un borrador de respuesta. Después envía ese borrador de respuesta generado de nuevo a OpenAI para una segunda revisión de seguridad antes de mostrártelo. Esta conversación web permanece solo en esta sesión del navegador, no se sincroniza con tu cuenta y Zodiacs.org no almacena su texto. Con los controles estándar de la API, OpenAI puede conservar datos de control de abusos hasta 30 días. ¿Continuar durante este día de Guide?',
     cloudConfirm: 'Continuar con Guide', cloudCancel: 'Ahora no', consentTitle: 'Antes de adjuntar tu carta',
     consentBody: 'Las posiciones exactas que aparecen abajo se enviarán a OpenAI con tu pregunta. Zodiacs.org no adjunta tu nombre, fecha, hora, lugar de nacimiento ni coordenadas guardados, y no guarda la conversación.',
-    consentConfirm: 'Adjuntar mi carta', consentCancel: 'Mantenerla privada', sources: 'De este sitio:',
+    consentConfirm: 'Adjuntar mi carta', consentCancel: 'Mantenerla privada',
+    chooseTitle: '¿Qué carta guardada es la tuya?',
+    chooseBody: 'Guide solo usa la carta que marques como tuya. Las posiciones exactas se muestran para su aprobación antes de enviar nada.',
+    chooseCancel: 'Ahora no', sources: 'De este sitio:',
     contextUpdated: 'Fuente eliminada. Los mensajes anteriores siguen visibles, pero Guide no los usará en respuestas futuras.',
   },
   pt: {
@@ -213,7 +222,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     cloudBody: 'O Guide envia sua pergunta, as mensagens recentes e as fontes visíveis à OpenAI para uma verificação de segurança da entrada e para gerar um rascunho de resposta. Depois, envia esse rascunho de resposta gerado de volta à OpenAI para uma segunda verificação de segurança antes de mostrá-lo. Esta conversa do Guide na web fica apenas nesta sessão do navegador, não é sincronizada com sua conta e não é armazenada como texto pelo Zodiacs.org. Nos controles padrão da API, a OpenAI pode reter dados de monitoramento de abuso por até 30 dias. Continuar neste dia do Guide?',
     cloudConfirm: 'Continuar com o Guide', cloudCancel: 'Agora não', consentTitle: 'Antes de anexar seu mapa',
     consentBody: 'As posições exatas abaixo serão enviadas à OpenAI com sua pergunta. O Zodiacs.org não anexa nome, data, hora, local de nascimento nem coordenadas salvos e não armazena a conversa.',
-    consentConfirm: 'Anexar meu mapa', consentCancel: 'Manter privado', sources: 'Deste site:',
+    consentConfirm: 'Anexar meu mapa', consentCancel: 'Manter privado',
+    chooseTitle: 'Qual mapa salvo é o seu?',
+    chooseBody: 'O Guide usa apenas o mapa que você marcar como seu. As posições exatas são mostradas para aprovação antes de qualquer envio.',
+    chooseCancel: 'Agora não', sources: 'Deste site:',
     contextUpdated: 'Fonte removida. As mensagens anteriores continuam visíveis, mas o Guide não as usará nas próximas respostas.',
   },
   fr: {
@@ -234,7 +246,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     cloudBody: 'Guide envoie ta question, les messages récents et les sources visibles à OpenAI pour un contrôle de sécurité de l’entrée et pour produire un brouillon de réponse. Guide renvoie ensuite ce brouillon de réponse généré à OpenAI pour un second contrôle de sécurité avant de te l’afficher. Cette conversation Guide web reste uniquement dans cette session du navigateur, n’est pas synchronisée avec ton compte et n’est pas stockée sous forme de texte par Zodiacs.org. Avec les contrôles API standard, OpenAI peut garder des données de surveillance des abus jusqu’à 30 jours. Continuer pour cette journée Guide ?',
     cloudConfirm: 'Continuer avec Guide', cloudCancel: 'Pas maintenant', consentTitle: 'Avant de joindre ton thème',
     consentBody: 'Les positions exactes ci-dessous seront envoyées à OpenAI avec ta question. Zodiacs.org ne joint aucun nom, date, heure, lieu de naissance ou coordonnée enregistrés et ne conserve pas la conversation.',
-    consentConfirm: 'Joindre mon thème', consentCancel: 'Le garder privé', sources: 'Depuis ce site :',
+    consentConfirm: 'Joindre mon thème', consentCancel: 'Le garder privé',
+    chooseTitle: 'Quel thème enregistré est le tien ?',
+    chooseBody: 'Guide n’utilise que le thème que tu marques comme le tien. Les positions exactes sont affichées pour validation avant tout envoi.',
+    chooseCancel: 'Pas maintenant', sources: 'Depuis ce site :',
     contextUpdated: 'Source retirée. Les anciens messages restent visibles, mais Guide ne les utilisera plus dans ses réponses.',
   },
   it: {
@@ -255,7 +270,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     cloudBody: 'Guide invia la tua domanda, i messaggi recenti e le fonti visibili a OpenAI per un controllo di sicurezza dell’input e per generare una bozza di risposta. Poi invia di nuovo a OpenAI la bozza di risposta generata per un secondo controllo di sicurezza prima di mostrartela. Questa conversazione web con Guide resta soltanto in questa sessione del browser, non viene sincronizzata con il tuo account e non viene archiviata come testo da Zodiacs.org. Con i controlli API standard, OpenAI può conservare dati di monitoraggio degli abusi fino a 30 giorni. Continuare per questa giornata Guide?',
     cloudConfirm: 'Continua con Guide', cloudCancel: 'Non ora', consentTitle: 'Prima di allegare il tuo tema',
     consentBody: 'Le posizioni esatte qui sotto saranno inviate a OpenAI con la tua domanda. Zodiacs.org non allega nome, data, ora, luogo di nascita o coordinate salvati e non conserva la conversazione.',
-    consentConfirm: 'Allega il mio tema', consentCancel: 'Tienilo privato', sources: 'Da questo sito:',
+    consentConfirm: 'Allega il mio tema', consentCancel: 'Tienilo privato',
+    chooseTitle: 'Quale tema salvato è il tuo?',
+    chooseBody: 'Guide usa solo il tema che indichi come tuo. Le posizioni esatte vengono mostrate per l’approvazione prima di inviare qualcosa.',
+    chooseCancel: 'Non ora', sources: 'Da questo sito:',
     contextUpdated: 'Fonte rimossa. I messaggi precedenti restano visibili, ma Guide non li userà nelle risposte future.',
   },
 };
@@ -264,12 +282,16 @@ const MAX_INPUT = 2_400;
 const MAX_MESSAGES = 12;
 const MAX_CHART_CONTEXT = 3_500;
 const SESSION_KEY = 'zodiacs.guide.daily-session.v1';
+const SELF_CHART_KEY = 'zodiacs.guide.self-chart.v1';
 const AUTH_BOUNDARY_KEY = 'zodiacs.guide.auth-boundary.v1';
 const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';
 const CONSENT_POLICY_VERSION = 'guide-cloud-processing-2026-08-14.2';
 const STYLESHEET_HREF = '/assets/assistant-drawer.css';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
 const STREAM_SCHEMA = 'zodiacs.guide.stream-event.draft.v1';
+// Below this width the drawer is a modal bottom sheet; above it, a docked
+// companion panel that leaves the page interactive.
+const SHEET_VIEWPORT_QUERY = '(max-width: 560px)';
 const GUIDE_LINK_PATHS = new Set([
   '/ask/',
   '/birth-chart/',
@@ -318,6 +340,7 @@ let locale: AssistantLocale = 'en';
 let session: GuideSession | null = null;
 let currentPage: PageInfo | null = null;
 let savedChart: StoredChart | null = null;
+let localChartCandidates: LocalChartCandidate[] = [];
 let chartEnabled = false;
 let chartConsented = false;
 let chartSourceId: string | null = null;
@@ -330,6 +353,7 @@ let pendingRetry: PendingTurn | null = null;
 let authFencePromise: Promise<void> | null = null;
 let authFenceCleanup: (() => void) | null = null;
 let authFenceVersion = 0;
+let sheetViewport: MediaQueryList | null = null;
 
 interface PendingTurn {
   body: Record<string, unknown>;
@@ -761,6 +785,55 @@ export function selectedSelfChartFromJson(
   } catch { return null; }
 }
 
+/**
+ * Resolve the chart a signed-out (or pre-account-v2) visitor explicitly marked
+ * as their own inside Guide. Self ownership is never inferred from chart
+ * order, name, or count — only the stored designation resolves.
+ */
+export function designatedLocalSelfChartFromJson(
+  profileRaw: string | null,
+  designationRaw: string | null,
+): StoredChart | null {
+  if (!profileRaw || !designationRaw) return null;
+  try {
+    const designation = JSON.parse(designationRaw) as Record<string, unknown>;
+    if (!designation || typeof designation !== 'object' || Array.isArray(designation)
+      || designation.version !== 1 || typeof designation.chartId !== 'string'
+      || !designation.chartId) return null;
+    const profile = JSON.parse(profileRaw) as { version?: unknown; charts?: unknown };
+    if (profile?.version !== 1 || !Array.isArray(profile.charts)) return null;
+    return profile.charts.map(parseStoredChart).find((candidate) => (
+      candidate !== null && candidate.id === designation.chartId
+      && candidate.name.trim().length > 0
+    )) ?? null;
+  } catch { return null; }
+}
+
+interface LocalChartCandidate { id: string; name: string; }
+
+function localChartCandidatesFromProfile(profileRaw: string | null): LocalChartCandidate[] {
+  if (!profileRaw) return [];
+  try {
+    const profile = JSON.parse(profileRaw) as { version?: unknown; charts?: unknown };
+    if (profile?.version !== 1 || !Array.isArray(profile.charts)) return [];
+    return profile.charts.map(parseStoredChart)
+      .filter((candidate): candidate is StoredChart => (
+        candidate !== null && candidate.id.length > 0 && candidate.name.trim().length > 0
+      ))
+      .map(({ id, name }) => ({ id, name: name.trim() }))
+      .slice(0, 12);
+  } catch { return []; }
+}
+
+/** The local designation applies only outside account-v2's own selection flow. */
+function localSelfChartAllowed(): boolean {
+  if (!profileAccessAllowed()) return false;
+  try {
+    if (parseLocalOwner(localStorage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)) !== null) return false;
+  } catch { return false; }
+  return !getSession().authBoundary.startsWith('blocked:');
+}
+
 function sameSelfChartAuthority(left: StoredChart | null, right: StoredChart | null): boolean {
   return left !== null && right !== null
     && left.id === right.id
@@ -773,7 +846,14 @@ function readSelectedSelfChart(): StoredChart | null {
   try {
     const ownerRaw = localStorage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY);
     const ownerId = parseLocalOwner(ownerRaw);
-    if (!ownerId || getSession().authBoundary !== `account:${ownerId}`) return null;
+    if (!ownerId) {
+      if (getSession().authBoundary.startsWith('blocked:')) return null;
+      return designatedLocalSelfChartFromJson(
+        localStorage.getItem(PROFILE_KEY),
+        localStorage.getItem(SELF_CHART_KEY),
+      );
+    }
+    if (getSession().authBoundary !== `account:${ownerId}`) return null;
     return selectedSelfChartFromJson(
       localStorage.getItem(PROFILE_KEY),
       ownerRaw,
@@ -987,6 +1067,23 @@ export function renderAssistantText(container: HTMLElement, text: string): void 
   container.append(document.createTextNode(text.slice(cursor)));
 }
 
+function isSheetViewport(): boolean {
+  if (typeof matchMedia !== 'function') return false;
+  sheetViewport ??= matchMedia(SHEET_VIEWPORT_QUERY);
+  return sheetViewport.matches;
+}
+
+/** The bottom sheet is modal and locks scroll; the docked panel is neither. */
+function applyDrawerViewportMode(): void {
+  if (!root || !panel) return;
+  const sheet = isSheetViewport();
+  if (sheet) panel.setAttribute('aria-modal', 'true');
+  else panel.removeAttribute('aria-modal');
+  if (!root.hidden) {
+    document.documentElement.style.overflow = sheet ? 'hidden' : previousOverflow;
+  }
+}
+
 function scrollTranscript(): void {
   requestAnimationFrame(() => { if (transcript) transcript.scrollTop = transcript.scrollHeight; });
 }
@@ -1041,7 +1138,7 @@ function syncSendState(): void {
 
 function syncChartButton(): void {
   if (!chartButton) return;
-  chartButton.hidden = !savedChart;
+  chartButton.hidden = !savedChart && !localChartCandidates.length;
   chartButton.disabled = Boolean(activeRequest) || interactionPending;
   chartButton.setAttribute('aria-pressed', String(chartEnabled));
   chartButton.classList.toggle('is-active', chartEnabled);
@@ -1066,11 +1163,20 @@ function setBusy(busy: boolean): void {
   syncSourceControls();
 }
 
+function refreshLocalChartCandidates(): void {
+  localChartCandidates = [];
+  if (!localSelfChartAllowed()) return;
+  try {
+    localChartCandidates = localChartCandidatesFromProfile(localStorage.getItem(PROFILE_KEY));
+  } catch { localChartCandidates = []; }
+}
+
 function refreshSavedChart(): void {
   dismissPendingConsent?.();
   const next = readSelectedSelfChart();
   if (chartEnabled) invalidateContext(true);
   savedChart = next;
+  refreshLocalChartCandidates();
   chartEnabled = false;
   chartConsented = false;
   chartSourceId = null;
@@ -1118,6 +1224,7 @@ function clearAssistantForProfileRevocation(): void {
   dismissPendingConsent = null;
   dismissPendingCloudConsent = null;
   savedChart = null;
+  localChartCandidates = [];
   chartSummaryPromise = null;
   chartConsented = false;
   chartEnabled = false;
@@ -1208,6 +1315,7 @@ function suspendGuideForPageCache(): void {
   dismissPendingConsent = null;
   dismissPendingCloudConsent = null;
   savedChart = null;
+  localChartCandidates = [];
   chartSummaryPromise = null;
   chartConsented = false;
   chartEnabled = false;
@@ -1220,6 +1328,7 @@ function suspendGuideForPageCache(): void {
   if (root) root.hidden = true;
   document.documentElement.style.overflow = previousOverflow;
   launcher?.removeAttribute('aria-expanded');
+  launcher?.setAttribute('aria-label', currentCopy().open);
   opener = null;
   setStatus();
   setBusy(false);
@@ -1252,7 +1361,8 @@ function onProfileDataChange(): void {
 function onGuideStorageChange(event: StorageEvent): void {
   try {
     if (event.storageArea !== localStorage) return;
-    if (event.key === null || event.key === PROFILE_KEY || event.key === ACCOUNT_V2_LOCAL_OWNER_KEY
+    if (event.key === null || event.key === PROFILE_KEY || event.key === SELF_CHART_KEY
+      || event.key === ACCOUNT_V2_LOCAL_OWNER_KEY
       || event.key?.startsWith(`${ACCOUNT_V2_STORAGE_PREFIX}account.`)) onProfileDataChange();
   } catch {
     onProfileDataChange();
@@ -1324,9 +1434,86 @@ async function requestCloudConsent(): Promise<boolean> {
   return granted;
 }
 
+function persistLocalSelfChartDesignation(chartId: string): boolean {
+  if (!localSelfChartAllowed()) return false;
+  try {
+    localStorage.setItem(SELF_CHART_KEY, JSON.stringify({ version: 1, chartId }));
+    return true;
+  } catch { return false; }
+}
+
+function clearLocalSelfChartDesignation(): void {
+  try { localStorage.removeItem(SELF_CHART_KEY); } catch { /* designation is best-effort local state */ }
+  savedChart = null;
+  chartSummaryPromise = null;
+  refreshLocalChartCandidates();
+}
+
+function chartPickerCard(
+  candidates: LocalChartCandidate[],
+): { promise: Promise<string | null>; dismiss: () => void } {
+  const copy = currentCopy();
+  const card = document.createElement('section');
+  card.className = 'zassistant__consent';
+  const heading = document.createElement('h3');
+  heading.textContent = copy.chooseTitle;
+  const body = document.createElement('p');
+  body.textContent = copy.chooseBody;
+  const choices = document.createElement('div');
+  choices.className = 'zassistant__consent-choices';
+  let settle!: (value: string | null) => void;
+  const promise = new Promise<string | null>((resolve) => { settle = resolve; });
+  let settled = false;
+  const finish = (value: string | null) => {
+    if (settled) return;
+    settled = true;
+    card.remove();
+    settle(value);
+  };
+  for (const candidate of candidates) {
+    const choice = document.createElement('button');
+    choice.type = 'button';
+    choice.className = 'zassistant__consent-choice';
+    choice.textContent = candidate.name;
+    choice.addEventListener('click', () => finish(candidate.id));
+    choices.append(choice);
+  }
+  const actions = document.createElement('div');
+  actions.className = 'zassistant__consent-actions';
+  const cancel = document.createElement('button');
+  cancel.type = 'button';
+  cancel.className = 'zassistant__consent-cancel';
+  cancel.textContent = copy.chooseCancel;
+  cancel.addEventListener('click', () => finish(null));
+  actions.append(cancel);
+  card.append(heading, body, choices, actions);
+  transcript?.append(card);
+  scrollTranscript();
+  (choices.firstElementChild as HTMLElement | null)?.focus();
+  return { promise, dismiss: () => finish(null) };
+}
+
+/** Ask which local chart is the visitor's own; picking is the self attestation. */
+async function requestLocalChartPick(expectedGeneration: number): Promise<boolean> {
+  if (savedChart) return true;
+  if (!transcript || !localChartCandidates.length || !localSelfChartAllowed()) return false;
+  const card = chartPickerCard(localChartCandidates);
+  dismissPendingConsent = card.dismiss;
+  const pickedId = await card.promise;
+  if (dismissPendingConsent === card.dismiss) dismissPendingConsent = null;
+  if (!pickedId || !currentProfileAccessGeneration(expectedGeneration)
+    || !localSelfChartAllowed()) return false;
+  if (!persistLocalSelfChartDesignation(pickedId)) return false;
+  savedChart = readSelectedSelfChart();
+  chartSummaryPromise = null;
+  syncSourceControls();
+  return savedChart !== null;
+}
+
 async function requestChartConsent(expectedGeneration = profileAccessGeneration): Promise<boolean> {
   if (!currentProfileAccessGeneration(expectedGeneration) || !profileAccessAllowed()) return false;
   if (chartConsented && chartEnabled) return true;
+  if (!savedChart && !await requestLocalChartPick(expectedGeneration)) return false;
   const chart = savedChart;
   if (!chart || !transcript) return false;
   chartSummaryPromise ??= placementSummaryForChart(chart);
@@ -1350,6 +1537,9 @@ async function requestChartConsent(expectedGeneration = profileAccessGeneration)
   } else if (current) {
     chartConsented = false;
     chartEnabled = false;
+    // Declining the preview of a locally designated chart also withdraws the
+    // designation, so a wrong pick can be corrected on the next attempt.
+    if (chart.accountRevision < 0) clearLocalSelfChartDesignation();
   }
   syncSourceControls();
   return current && granted;
@@ -1539,7 +1729,8 @@ async function submitQuestion(): Promise<void> {
     if (!currentProfileAccessGeneration(expectedGeneration)) return;
     let chartFacts: string | undefined;
     let chartAuthority: StoredChart | null = null;
-    const wantsChart = Boolean(savedChart) && (chartEnabled || questionRequestsMyChart(question));
+    const wantsChart = Boolean(savedChart || localChartCandidates.length)
+      && (chartEnabled || questionRequestsMyChart(question));
     if (wantsChart && !chartEnabled) {
       setStatus(currentCopy().chartReading);
       await requestChartConsent(expectedGeneration);
@@ -1618,7 +1809,8 @@ function dismissInvite(markSeen = true): void {
   }
 }
 
-function closeAssistant(): void {
+/** Close the Guide drawer; the launcher stays put so it can reopen in place. */
+export function closeAssistant(): void {
   if (!root || root.hidden) return;
   abortRequest();
   dismissPendingConsent?.();
@@ -1626,6 +1818,7 @@ function closeAssistant(): void {
   root.hidden = true;
   document.documentElement.style.overflow = previousOverflow;
   launcher?.removeAttribute('aria-expanded');
+  launcher?.setAttribute('aria-label', currentCopy().open);
   opener?.focus();
   opener = null;
 }
@@ -1715,7 +1908,7 @@ function build(): void {
   root.hidden = true;
   root.addEventListener('click', (event) => { if (event.target === root) closeAssistant(); });
   root.addEventListener('keydown', (event) => {
-    if (event.key !== 'Tab') return;
+    if (event.key !== 'Tab' || !isSheetViewport()) return;
     const controls = focusableControls();
     if (!controls.length) return;
     const first = controls[0];
@@ -1726,8 +1919,12 @@ function build(): void {
   panel = document.createElement('div');
   panel.className = 'zassistant__panel';
   panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-modal', 'true');
   panel.setAttribute('aria-labelledby', 'zassistant-title');
+  applyDrawerViewportMode();
+  if (typeof matchMedia === 'function') {
+    sheetViewport ??= matchMedia(SHEET_VIEWPORT_QUERY);
+    sheetViewport.addEventListener?.('change', applyDrawerViewportMode);
+  }
   const header = document.createElement('header');
   header.className = 'zassistant__head';
   const headerIdentity = document.createElement('div');
@@ -1837,7 +2034,10 @@ function build(): void {
     const launcherLabel = document.createElement('span');
     launcherLabel.textContent = 'Guide';
     launcher.append(createGuideAvatar('zguide-launcher__avatar', 32), launcherLabel);
-    launcher.addEventListener('click', () => void openAssistant(undefined, launcher));
+    launcher.addEventListener('click', () => {
+      if (root && !root.hidden) closeAssistant();
+      else void openAssistant(undefined, launcher);
+    });
     document.body.append(launcher);
   }
   document.addEventListener('keydown', (event) => {
@@ -1907,7 +2107,8 @@ export async function openAssistant(requestedLocale?: string, from?: HTMLElement
   }
   root!.hidden = false;
   launcher?.setAttribute('aria-expanded', 'true');
-  document.documentElement.style.overflow = 'hidden';
+  launcher?.setAttribute('aria-label', currentCopy().close);
+  applyDrawerViewportMode();
   setStatus();
   textarea!.focus();
   track('guide_open');

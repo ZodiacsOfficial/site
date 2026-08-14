@@ -16,6 +16,7 @@ interface ShellCopy {
 
 interface DrawerModule {
   openAssistant(locale?: string, from?: HTMLElement | null): Promise<void>;
+  closeAssistant?(): void;
 }
 
 const COPY: Record<AssistantLocale, ShellCopy> = {
@@ -191,6 +192,15 @@ async function loadDrawer(): Promise<DrawerModule> {
   }
 }
 
+/** Launcher clicks toggle the drawer so the sidekick closes as easily as it opens. */
+async function toggleAssistant(): Promise<void> {
+  if (launcher?.getAttribute('aria-expanded') === 'true' && drawerModulePromise) {
+    (await loadDrawer()).closeAssistant?.();
+    return;
+  }
+  await openAssistant(undefined, launcher);
+}
+
 /** Backward-compatible public facade for legacy Guide openers. */
 export async function openAssistant(
   requestedLocale?: string,
@@ -217,7 +227,7 @@ function buildLauncher(): void {
   const label = document.createElement('span');
   label.textContent = 'Guide';
   launcher.append(createPortrait('zguide-launcher__avatar', 32), label);
-  launcher.addEventListener('click', () => void openAssistant(undefined, launcher));
+  launcher.addEventListener('click', () => void toggleAssistant());
   document.body.append(launcher);
 }
 

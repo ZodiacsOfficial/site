@@ -4,6 +4,7 @@ import sharp from 'sharp';
 import { describe, expect, it } from 'vitest';
 import {
   consumeAssistantStream,
+  designatedLocalSelfChartFromJson,
   guideDayAnchorMatches,
   parseAssistantSseFrame,
   placementSummaryForChart,
@@ -131,6 +132,44 @@ describe('saved-chart assistant context', () => {
     expect(summary).toMatch(/Sun: \d+°\d{2}′ [A-Z][a-z]+ · house \d+/);
     expect(summary).toMatch(/ASC: .* · house 1/);
     expect(summary).not.toMatch(/Secret Person|1990-04-17|08:45|Bangkok|13\.7563|100\.5018|Asia\/Bangkok/);
+  });
+});
+
+describe('locally designated self chart (no account-v2 selection)', () => {
+  const designation = (chartId: string) => JSON.stringify({ version: 1, chartId });
+
+  it('resolves only the chart the visitor explicitly designated in Guide', async () => {
+    const chart = designatedLocalSelfChartFromJson(profileJson(), designation(NEWER_ID));
+    expect(chart?.id).toBe(NEWER_ID);
+    expect(chart?.accountRevision).toBe(-1);
+    const summary = await placementSummaryForChart(chart!);
+    expect(summary).toContain('Sun: 15°00′ Aries');
+    expect(summary).not.toMatch(/Secret Person|1990-04-17|08:45|Bangkok|13\.7563|100\.5018|Asia\/Bangkok/);
+  });
+
+  it('never infers self ownership from order, name, count, or a stale designation', () => {
+    expect(designatedLocalSelfChartFromJson(profileJson(), null)).toBeNull();
+    expect(designatedLocalSelfChartFromJson(null, designation(NEWER_ID))).toBeNull();
+    expect(designatedLocalSelfChartFromJson(profileJson(), JSON.stringify({ version: 1 }))).toBeNull();
+    expect(designatedLocalSelfChartFromJson(profileJson(), JSON.stringify({ version: 2, chartId: NEWER_ID }))).toBeNull();
+    expect(designatedLocalSelfChartFromJson(
+      profileJson(),
+      designation('99999999-9999-4999-8999-999999999999'),
+    )).toBeNull();
+    expect(designatedLocalSelfChartFromJson(profileJson(), 'not json')).toBeNull();
+  });
+
+  it('keeps the account-v2 boundary: with a local owner, only sync selection resolves', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    const reader = source.slice(
+      source.indexOf('function readSelectedSelfChart()'),
+      source.indexOf('function placementLabel('),
+    );
+    expect(reader).toContain('if (!ownerId) {');
+    expect(reader).toContain("if (getSession().authBoundary.startsWith('blocked:')) return null;");
+    expect(reader).toContain('designatedLocalSelfChartFromJson(');
+    expect(reader).toContain('getSession().authBoundary !== `account:${ownerId}`');
+    expect(reader).toContain('selectedSelfChartFromJson(');
   });
 });
 
