@@ -2,7 +2,7 @@
   "version": 1,
   "id": "guide-account-privacy-and-astrofolio-integration-2026-08-14",
   "reason": "Owner-approved default-on Guide and optional account-v2 privacy integration: keep Guide available across the core site, Registry, SDK, Astrofolio, and localized surfaces without sharing private transcript runtime with third-party analytics; preserve Registry/Astrofolio restoration; and keep account-bound profile state fail-closed across account access transitions. Account-v2 flags remain off by default.",
-  "baseCommit": "beb04a29a542712c764889e8b20e5f050107704d",
+  "baseCommit": "291cce47e5b43e151fba7a113391b84780685fa1",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/aquarius/index.html",

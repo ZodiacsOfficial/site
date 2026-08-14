@@ -120,11 +120,12 @@ function allowedTurn(release = vi.fn()): GuideAuthorityDecision {
 
 function request(body: unknown = ephemeralTurn(), overrides: Record<PropertyKey, unknown> = {}) {
   const encoded = typeof body === 'string' ? body : JSON.stringify(body);
+  const bytes = Buffer.from(encoded, 'utf8');
   const emitter = new EventEmitter() as EventEmitter & Record<PropertyKey, any>;
   Object.assign(emitter, {
     method: 'POST',
     query: { action: 'turn' },
-    body: encoded,
+    body: bytes,
     headers: {
       origin: 'https://zodiacs.org',
       host: 'zodiacs.org',
@@ -133,11 +134,95 @@ function request(body: unknown = ephemeralTurn(), overrides: Record<PropertyKey,
       'x-forwarded-for': '203.0.113.42',
       'sec-fetch-site': 'same-origin',
       'content-type': 'application/json',
-      'content-length': String(Buffer.byteLength(encoded, 'utf8')),
+      'content-length': String(bytes.byteLength),
     },
     signal: new AbortController().signal,
   }, overrides);
   return emitter;
+}
+
+type ReplayTerminal = 'end' | 'error' | 'aborted' | 'close';
+
+function replayingRequest(
+  chunks: unknown[],
+  options: {
+    contentLength?: number | null;
+    contentEncoding?: unknown;
+    contentType?: unknown;
+    endAfterTerminal?: boolean;
+    lazyBody?: () => unknown;
+    terminal?: ReplayTerminal;
+  } = {},
+) {
+  const value = ephemeralTurn();
+  const candidate = request(value, { body: undefined, read: () => null });
+  const byteLength = chunks.reduce((total, chunk) => (
+    Buffer.isBuffer(chunk) || chunk instanceof Uint8Array
+      ? total + chunk.byteLength
+      : total
+  ), 0);
+  const contentLength = options.contentLength === undefined ? byteLength : options.contentLength;
+  if (contentLength === null) delete candidate.headers['content-length'];
+  else candidate.headers['content-length'] = String(contentLength);
+  if (options.contentEncoding !== undefined) {
+    candidate.headers['content-encoding'] = options.contentEncoding;
+  }
+  if (options.contentType !== undefined) {
+    candidate.headers['content-type'] = options.contentType;
+  }
+
+  let bodyReads = 0;
+  let asyncIteratorReads = 0;
+  let replayedChunks = 0;
+  Object.defineProperty(candidate, 'body', {
+    configurable: true,
+    get() {
+      bodyReads += 1;
+      return (options.lazyBody ?? (() => value))();
+    },
+  });
+
+  const nativeOn = candidate.on.bind(candidate);
+  const replayEmitter = new EventEmitter();
+  const replayPrototype = Object.create(Object.getPrototypeOf(candidate));
+  Object.defineProperty(replayPrototype, Symbol.asyncIterator, {
+    configurable: true,
+    value: async function* inheritedAsyncIterator() {
+      asyncIteratorReads += 1;
+      yield Buffer.from('the inherited iterator must never be consumed');
+    },
+  });
+  Object.setPrototypeOf(candidate, replayPrototype);
+  let replayScheduled = false;
+  candidate.on = function on(event: string, listener: (...args: any[]) => void) {
+    // Vercel restoreBody routes only data/end through a private replay emitter.
+    // Its normal off/removeListener methods do not detach these virtual listeners.
+    if (event === 'data' || event === 'end') replayEmitter.on(event, listener);
+    else nativeOn(event, listener);
+    if (event === 'data' && !replayScheduled) {
+      replayScheduled = true;
+      queueMicrotask(() => {
+        for (const chunk of chunks) {
+          replayedChunks += 1;
+          replayEmitter.emit('data', chunk);
+        }
+        const terminal = options.terminal ?? 'end';
+        if (terminal === 'error') candidate.emit('error', new Error('replayed request failed'));
+        else if (terminal === 'end') replayEmitter.emit('end');
+        else candidate.emit(terminal);
+        if (terminal !== 'end' && options.endAfterTerminal) replayEmitter.emit('end');
+      });
+    }
+    return candidate;
+  };
+
+  return {
+    candidate,
+    asyncIteratorReads: () => asyncIteratorReads,
+    bodyReads: () => bodyReads,
+    replayedChunks: () => replayedChunks,
+    virtualListenerCount: (event: 'data' | 'end') => replayEmitter.listenerCount(event),
+  };
 }
 
 class MockResponse extends EventEmitter {
@@ -466,74 +551,274 @@ describe('POST /v1/guide/turn protected web endpoint', () => {
     expect(authorizeTurn).not.toHaveBeenCalled();
   });
 
-  it('bounds raw bytes before JSON parse and accepts bounded chunked UTF-8', async () => {
-    let bodyRead = false;
-    const tooLarge = request();
-    Object.defineProperty(tooLarge, 'body', { get() { bodyRead = true; return '{}'; } });
-    tooLarge.headers['content-length'] = String(GUIDE_LIMITS.requestBytes + 1);
-    expect(await readGuideHttpTurnRequest(tooLarge)).toEqual({ ok: false, status: 413 });
-    expect(bodyRead).toBe(false);
-
-    const value = ephemeralTurn();
-    const encoded = JSON.stringify(value);
-    const chunked = request(value, { body: undefined });
-    delete chunked.headers['content-length'];
-    chunked[Symbol.asyncIterator] = async function* () {
-      yield Buffer.from(encoded.slice(0, 20));
-      yield Buffer.from(encoded.slice(20));
-    };
-    const decoded = await readGuideHttpTurnRequest(chunked);
-    expect(decoded.ok && decoded.request.conversationId).toBe(GUIDE_TEST_IDS.conversation);
-  });
-
-  it('prefers the raw Vercel stream over lazy body parsing at the byte and UTF-8 bounds', async () => {
+  it('reads the restored Vercel event stream without touching its lazy body getter', async () => {
     const value = ephemeralTurn();
     const encoded = Buffer.from(JSON.stringify(value), 'utf8');
-    const streamedRequest = (raw: Buffer, lazyBody: () => unknown) => {
-      let bodyReads = 0;
-      const candidate = request(value, { body: undefined });
-      candidate.headers['content-length'] = String(raw.byteLength);
-      Object.defineProperty(candidate, 'body', {
-        configurable: true,
-        get() {
-          bodyReads += 1;
-          return lazyBody();
-        },
-      });
-      candidate[Symbol.asyncIterator] = async function* () {
-        yield raw.subarray(0, Math.ceil(raw.byteLength / 2));
-        yield raw.subarray(Math.ceil(raw.byteLength / 2));
-      };
-      return { candidate, bodyReads: () => bodyReads };
-    };
-
     for (const lazyBody of [
       () => { throw new Error('Vercel lazy parser must stay untouched'); },
       () => value,
     ]) {
-      const streamed = streamedRequest(encoded, lazyBody);
-      const decoded = await readGuideHttpTurnRequest(streamed.candidate);
+      const replay = replayingRequest([
+        encoded.subarray(0, 20),
+        encoded.subarray(20),
+      ], { lazyBody });
+      const decoded = await readGuideHttpTurnRequest(replay.candidate);
       expect(decoded.ok && decoded.request.conversationId).toBe(GUIDE_TEST_IDS.conversation);
-      expect(streamed.bodyReads()).toBe(0);
+      expect(replay.replayedChunks()).toBe(2);
+      expect(replay.bodyReads()).toBe(0);
+      expect(replay.asyncIteratorReads()).toBe(0);
     }
+  });
+
+  it('accepts only JSON with no parameter or a single UTF-8 charset parameter', async () => {
+    const encoded = Buffer.from(JSON.stringify(ephemeralTurn()), 'utf8');
+    for (const contentType of [
+      'application/json',
+      ' Application/JSON ; charset=UTF-8 ',
+      'application/json;charset="utf-8"',
+    ]) {
+      const accepted = replayingRequest([encoded], { contentType });
+      expect((await readGuideHttpTurnRequest(accepted.candidate)).ok).toBe(true);
+      expect(accepted.replayedChunks()).toBe(1);
+      expect(accepted.bodyReads()).toBe(0);
+    }
+
+    for (const contentType of [
+      'application/json; charset=iso-8859-1',
+      'application/json; profile=guide',
+      'application/json; charset=utf-8; profile=guide',
+      ['application/json'],
+    ]) {
+      const rejected = replayingRequest([encoded], { contentType });
+      expect(await readGuideHttpTurnRequest(rejected.candidate)).toEqual({ ok: false, status: 400 });
+      expect(rejected.replayedChunks()).toBe(0);
+      expect(rejected.bodyReads()).toBe(0);
+    }
+  });
+
+  it('rejects encoded bodies before replay and permits only an explicit identity encoding', async () => {
+    const encoded = Buffer.from(JSON.stringify(ephemeralTurn()), 'utf8');
+    for (const contentEncoding of ['gzip', 'br', ['identity', 'gzip'], 42]) {
+      const rejected = replayingRequest([encoded], { contentEncoding });
+      expect(await readGuideHttpTurnRequest(rejected.candidate)).toEqual({ ok: false, status: 400 });
+      expect(rejected.replayedChunks()).toBe(0);
+      expect(rejected.bodyReads()).toBe(0);
+    }
+
+    const identity = replayingRequest([encoded], { contentEncoding: ' Identity ' });
+    expect((await readGuideHttpTurnRequest(identity.candidate)).ok).toBe(true);
+    expect(identity.replayedChunks()).toBe(1);
+    expect(identity.bodyReads()).toBe(0);
+  });
+
+  it('enforces declared and streamed byte bounds, mismatch, and fatal UTF-8', async () => {
+    const encoded = Buffer.from(JSON.stringify(ephemeralTurn()), 'utf8');
+    const declaredTooLarge = replayingRequest([encoded], {
+      contentLength: GUIDE_LIMITS.requestBytes + 1,
+    });
+    expect(await readGuideHttpTurnRequest(declaredTooLarge.candidate)).toEqual({ ok: false, status: 413 });
+    expect(declaredTooLarge.replayedChunks()).toBe(0);
+    expect(declaredTooLarge.bodyReads()).toBe(0);
+
+    const duplicateLength = replayingRequest([encoded]);
+    duplicateLength.candidate.headers['content-length'] = [
+      String(encoded.byteLength),
+      String(encoded.byteLength),
+    ];
+    expect(await readGuideHttpTurnRequest(duplicateLength.candidate)).toEqual({ ok: false, status: 400 });
+    expect(duplicateLength.replayedChunks()).toBe(0);
+    expect(duplicateLength.bodyReads()).toBe(0);
+
+    const nonDecimalLength = replayingRequest([encoded]);
+    nonDecimalLength.candidate.headers['content-length'] = '12x';
+    expect(await readGuideHttpTurnRequest(nonDecimalLength.candidate)).toEqual({ ok: false, status: 400 });
+    expect(nonDecimalLength.replayedChunks()).toBe(0);
+    expect(nonDecimalLength.bodyReads()).toBe(0);
+
+    const millionByteLength = replayingRequest([encoded]);
+    millionByteLength.candidate.headers['content-length'] = '1000000';
+    expect(await readGuideHttpTurnRequest(millionByteLength.candidate)).toEqual({ ok: false, status: 413 });
+    expect(millionByteLength.replayedChunks()).toBe(0);
+    expect(millionByteLength.bodyReads()).toBe(0);
 
     const exactLimit = Buffer.alloc(GUIDE_LIMITS.requestBytes, 0x20);
     encoded.copy(exactLimit);
-    const exact = streamedRequest(exactLimit, () => value);
+    const exact = replayingRequest([exactLimit]);
     expect((await readGuideHttpTurnRequest(exact.candidate)).ok).toBe(true);
-    expect(exact.bodyReads()).toBe(0);
 
-    const overLimit = streamedRequest(
-      Buffer.concat([exactLimit, Buffer.from(' ')]),
-      () => value,
-    );
-    delete overLimit.candidate.headers['content-length'];
+    const overLimit = replayingRequest([
+      exactLimit,
+      Buffer.from(' '),
+      Buffer.from('drained'),
+    ], { contentLength: null });
     expect(await readGuideHttpTurnRequest(overLimit.candidate)).toEqual({ ok: false, status: 413 });
+    expect(overLimit.replayedChunks()).toBe(3);
     expect(overLimit.bodyReads()).toBe(0);
 
-    const malformedUtf8 = streamedRequest(Buffer.from([0xc3, 0x28]), () => value);
+    const oversizedChunk = Buffer.alloc(GUIDE_LIMITS.requestBytes + 1);
+    const singleChunkOverLimit = replayingRequest([oversizedChunk], { contentLength: null });
+    const bufferFrom = vi.spyOn(Buffer, 'from');
+    try {
+      expect(await readGuideHttpTurnRequest(singleChunkOverLimit.candidate)).toEqual({
+        ok: false,
+        status: 413,
+      });
+      expect(bufferFrom.mock.calls.some(([input]) => input === oversizedChunk)).toBe(false);
+    } finally {
+      bufferFrom.mockRestore();
+    }
+
+    const mismatch = replayingRequest([encoded], { contentLength: encoded.byteLength + 1 });
+    expect(await readGuideHttpTurnRequest(mismatch.candidate)).toEqual({ ok: false, status: 400 });
+
+    const multibyteValue = ephemeralTurn();
+    multibyteValue.userMessage.content = 'Café under a crescent moon.';
+    const multibyte = Buffer.from(JSON.stringify(multibyteValue), 'utf8');
+    const accented = Buffer.from('é', 'utf8');
+    const splitAt = multibyte.indexOf(accented) + 1;
+    const split = replayingRequest([
+      multibyte.subarray(0, splitAt),
+      multibyte.subarray(splitAt),
+    ]);
+    expect((await readGuideHttpTurnRequest(split.candidate)).ok).toBe(true);
+
+    const malformedUtf8 = replayingRequest([Buffer.from([0xc3, 0x28])]);
     expect(await readGuideHttpTurnRequest(malformedUtf8.candidate)).toEqual({ ok: false, status: 400 });
-    expect(malformedUtf8.bodyReads()).toBe(0);
+
+    const stringChunk = replayingRequest(['not raw bytes'], { contentLength: null });
+    expect(await readGuideHttpTurnRequest(stringChunk.candidate)).toEqual({ ok: false, status: 400 });
+  });
+
+  it('settles stream failures once and cleans native event listeners', async () => {
+    const encoded = Buffer.from(JSON.stringify(ephemeralTurn()), 'utf8');
+    for (const terminal of ['error', 'aborted', 'close'] as const) {
+      const failed = replayingRequest([encoded.subarray(0, 8)], {
+        contentLength: null,
+        endAfterTerminal: true,
+        terminal,
+      });
+      expect(await readGuideHttpTurnRequest(failed.candidate)).toEqual({ ok: false, status: 400 });
+      for (const event of ['data', 'end', 'error', 'aborted', 'close']) {
+        expect(failed.candidate.listenerCount(event)).toBe(0);
+      }
+      expect(failed.virtualListenerCount('data')).toBe(1);
+      expect(failed.virtualListenerCount('end')).toBe(1);
+      expect(failed.bodyReads()).toBe(0);
+    }
+
+    const complete = replayingRequest([encoded]);
+    expect((await readGuideHttpTurnRequest(complete.candidate)).ok).toBe(true);
+    for (const event of ['data', 'end', 'error', 'aborted', 'close']) {
+      expect(complete.candidate.listenerCount(event)).toBe(0);
+    }
+    expect(complete.virtualListenerCount('data')).toBe(1);
+    expect(complete.virtualListenerCount('end')).toBe(1);
+  });
+
+  it('uses only an own data property for the non-stream fallback', async () => {
+    const value = ephemeralTurn();
+    const encoded = Buffer.from(JSON.stringify(value), 'utf8');
+    const fallback = request(value);
+    expect((await readGuideHttpTurnRequest(fallback)).ok).toBe(true);
+
+    const stringFallback = request(value, { body: encoded.toString('utf8') });
+    expect(await readGuideHttpTurnRequest(stringFallback)).toEqual({ ok: false, status: 400 });
+
+    let bodyReads = 0;
+    const accessorFallback = request(value, { body: undefined });
+    Object.defineProperty(accessorFallback, 'body', {
+      configurable: true,
+      get() {
+        bodyReads += 1;
+        return encoded;
+      },
+    });
+    expect(await readGuideHttpTurnRequest(accessorFallback)).toEqual({ ok: false, status: 400 });
+    expect(bodyReads).toBe(0);
+
+    const inheritedFallback = Object.create({
+      body: encoded,
+      headers: fallback.headers,
+    });
+    expect(await readGuideHttpTurnRequest(inheritedFallback)).toEqual({ ok: false, status: 400 });
+
+    const oversizedPreset = Buffer.alloc(GUIDE_LIMITS.requestBytes + 1);
+    const oversizedFallback = request(value, { body: oversizedPreset });
+    delete oversizedFallback.headers['content-length'];
+    const bufferFrom = vi.spyOn(Buffer, 'from');
+    try {
+      expect(await readGuideHttpTurnRequest(oversizedFallback)).toEqual({ ok: false, status: 413 });
+      expect(bufferFrom.mock.calls.some(([input]) => input === oversizedPreset)).toBe(false);
+    } finally {
+      bufferFrom.mockRestore();
+    }
+  });
+
+  it('fails an already-consumed non-replayed request instead of waiting indefinitely', async () => {
+    const value = ephemeralTurn();
+    const encoded = Buffer.from(JSON.stringify(value), 'utf8');
+    const candidate = request(value, {
+      body: undefined,
+      complete: true,
+      destroyed: true,
+      read: () => null,
+      readableEnded: true,
+    });
+    let bodyReads = 0;
+    Object.defineProperty(candidate, 'body', {
+      configurable: true,
+      get() {
+        bodyReads += 1;
+        return value;
+      },
+    });
+
+    expect(await readGuideHttpTurnRequest(candidate)).toEqual({ ok: false, status: 400 });
+    expect(bodyReads).toBe(0);
+    expect(candidate.listenerCount('data')).toBe(0);
+    expect(candidate.listenerCount('end')).toBe(0);
+    expect(candidate.listenerCount('error')).toBe(0);
+    expect(candidate.listenerCount('aborted')).toBe(0);
+    expect(candidate.listenerCount('close')).toBe(0);
+    expect(candidate.headers['content-length']).toBe(String(encoded.byteLength));
+  });
+
+  it('rejects raw-envelope failures before authority, quota reservation, or provider work', async () => {
+    const quotaReserve = vi.fn();
+    const authorizeTurn = vi.fn(async () => ({
+      ok: true,
+      turn: {
+        projection: projection(),
+        reserve: quotaReserve,
+      },
+    }) as GuideAuthorityDecision);
+    const streamProvider = vi.fn(async () => completion());
+    const handler = createGuideHandler({ env: ENV, authorizeTurn, streamProvider });
+    const encoded = Buffer.from(JSON.stringify(ephemeralTurn()), 'utf8');
+    const duplicateLength = replayingRequest([encoded]);
+    duplicateLength.candidate.headers['content-length'] = ['100', '100'];
+    const nonDecimalLength = replayingRequest([encoded]);
+    nonDecimalLength.candidate.headers['content-length'] = '12x';
+    const cases = [
+      replayingRequest([encoded], { contentEncoding: 'gzip' }),
+      replayingRequest([encoded], { contentType: 'application/json; charset=iso-8859-1' }),
+      replayingRequest([encoded], { contentLength: GUIDE_LIMITS.requestBytes + 1 }),
+      duplicateLength,
+      nonDecimalLength,
+      replayingRequest([Buffer.alloc(GUIDE_LIMITS.requestBytes), Buffer.from('x')], {
+        contentLength: null,
+      }),
+    ];
+
+    for (const replay of cases) {
+      const response = new MockResponse();
+      await handler(replay.candidate, response);
+      expect(response.statusCode).toBeGreaterThanOrEqual(400);
+      expect(replay.bodyReads()).toBe(0);
+    }
+    expect(authorizeTurn).not.toHaveBeenCalled();
+    expect(quotaReserve).not.toHaveBeenCalled();
+    expect(streamProvider).not.toHaveBeenCalled();
   });
 
   it('rejects wrong method, action, origin, media type, and runtime-parsed bodies', async () => {

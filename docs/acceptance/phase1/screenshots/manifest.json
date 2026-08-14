@@ -6,11 +6,11 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-08-14T06:43:43.567Z",
+  "capturedAt": "2026-08-14T09:05:14.880Z",
   "browser": "Chromium 149.0.7827.55",
   "dailyDate": "2026-08-14",
   "publicationCanonicalSha256": "d9f61dc11eade3747a7fdc6362d06b763769b1f26f52dfc3bf206576439256cb",
-  "templateSourceSha256": "52d5032709ab6f987ccd30c67a2d7509d45eae288d371d21170547d3b6047a38",
+  "templateSourceSha256": "2a3ceb064d93d6834da69dc4015973c06740b473926b92a7c5fee0a794e9321e",
   "renderPayloadSha256": {
     "daily": "23e0e4f2481f88fac2f61f0a5366a1859faf27dcba14a18814db4d2890c87180",
     "dailyPublication": "82615713ea192d717ab17165d411aa6caf0a62e085e3484ab01b6affc4ba8383",
@@ -19,8 +19,8 @@
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-08-14T06:39:31.888Z",
-    "templateSourceSha256": "52d5032709ab6f987ccd30c67a2d7509d45eae288d371d21170547d3b6047a38",
+    "builtAt": "2026-08-14T09:04:53.612Z",
+    "templateSourceSha256": "2a3ceb064d93d6834da69dc4015973c06740b473926b92a7c5fee0a794e9321e",
     "dailyDate": "2026-08-14",
     "publicationCanonicalSha256": "d9f61dc11eade3747a7fdc6362d06b763769b1f26f52dfc3bf206576439256cb",
     "renderPayloadSha256": {
@@ -49,7 +49,10 @@
         "scrollWidth": 360,
         "scrollHeight": 5593,
         "contentLength": 3930,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -72,7 +75,10 @@
         "scrollWidth": 1280,
         "scrollHeight": 3402,
         "contentLength": 3978,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -95,7 +101,10 @@
         "scrollWidth": 360,
         "scrollHeight": 5287,
         "contentLength": 3799,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -118,7 +127,10 @@
         "scrollWidth": 1280,
         "scrollHeight": 2425,
         "contentLength": 3847,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -141,7 +153,10 @@
         "scrollWidth": 360,
         "scrollHeight": 3560,
         "contentLength": 2315,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -157,14 +172,17 @@
         "file": "daily-1280.png",
         "width": 1280,
         "height": 2856,
-        "sha256": "1d134cc4b6ba5d430f7aed2c41dd2b5963849244f417d58e0f5fb848ada6713f"
+        "sha256": "a0c9f23d5d9f5c95daaa24203d8ef62df7d5a6e34db417ab1c535434086f2e80"
       },
       "layout": {
         "clientWidth": 1280,
         "scrollWidth": 1280,
         "scrollHeight": 2856,
         "contentLength": 2363,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -180,14 +198,17 @@
         "file": "tomorrow-360.png",
         "width": 360,
         "height": 3693,
-        "sha256": "9127b028b3ebcb403e67dd8edfb9481d9e748d108c6c31b9f50231f6972c49a5"
+        "sha256": "61d82ffe46be2d8d586ff329e10187a28ebce3ab3e483338fdcd4a4ac3ee8dc2"
       },
       "layout": {
         "clientWidth": 360,
         "scrollWidth": 360,
         "scrollHeight": 3693,
         "contentLength": 2408,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -210,7 +231,10 @@
         "scrollWidth": 1280,
         "scrollHeight": 2962,
         "contentLength": 2456,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -233,7 +257,10 @@
         "scrollWidth": 360,
         "scrollHeight": 4435,
         "contentLength": 3275,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -249,14 +276,17 @@
         "file": "weekly-1280.png",
         "width": 1280,
         "height": 3301,
-        "sha256": "952a65f5ec8584db4a0468555af8248a4a956a7d12dc14f9f138b01814b3e01b"
+        "sha256": "7bdfd94f4a8efa1075e65886ef952bd01951d2f0b9e14bdc3bfa69ead8365fb0"
       },
       "layout": {
         "clientWidth": 1280,
         "scrollWidth": 1280,
         "scrollHeight": 3301,
         "contentLength": 3323,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -272,14 +302,17 @@
         "file": "monthly-360.png",
         "width": 360,
         "height": 4248,
-        "sha256": "3b470d4861a87ef49da273098362c51cb84797b0fe328fc8b206bab06ca30589"
+        "sha256": "10d1a7cc387e71cc4d691eafefaa2b9edaf6a13c15b57f9eb233f150957762be"
       },
       "layout": {
         "clientWidth": 360,
         "scrollWidth": 360,
         "scrollHeight": 4248,
         "contentLength": 3450,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -302,7 +335,10 @@
         "scrollWidth": 1280,
         "scrollHeight": 3120,
         "contentLength": 3498,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -325,7 +361,10 @@
         "scrollWidth": 360,
         "scrollHeight": 3364,
         "contentLength": 2129,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -348,7 +387,10 @@
         "scrollWidth": 1280,
         "scrollHeight": 2699,
         "contentLength": 2177,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -371,7 +413,10 @@
         "scrollWidth": 360,
         "scrollHeight": 3341,
         "contentLength": 2146,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -387,14 +432,17 @@
         "file": "career-1280.png",
         "width": 1280,
         "height": 2745,
-        "sha256": "12865af712dbfc96f0700633d793202c51b3e9e61ec73e8b383f73a24e8a4581"
+        "sha256": "9420204642bf1cfd5f6df545dfbea193184519a567da327853037850db4a9a7f"
       },
       "layout": {
         "clientWidth": 1280,
         "scrollWidth": 1280,
         "scrollHeight": 2745,
         "contentLength": 2194,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -417,7 +465,10 @@
         "scrollWidth": 360,
         "scrollHeight": 11910,
         "contentLength": 12815,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200
@@ -440,7 +491,10 @@
         "scrollWidth": 1280,
         "scrollHeight": 7239,
         "contentLength": 12863,
-        "overlay": false
+        "overlay": false,
+        "guideLauncher": true,
+        "guideInvite": false,
+        "guideInviteSeen": true
       },
       "errors": [],
       "status": 200

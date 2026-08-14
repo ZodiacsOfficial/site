@@ -93,6 +93,27 @@ function guideEvents(body, answer) {
 }
 
 async function installGuideRoute(page, requests) {
+  // CI intentionally builds with account-v2 rollout off and no deploy-time
+  // Supabase public config. Supply only the authenticated identity boundary
+  // this Guide drive owns; account-v2 auth behavior has separate regressions.
+  await page.route('**/assets/assistant-chunks/client-*.js', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/javascript',
+      body: `export function getSupabaseClient() {
+        return {
+          auth: {
+            onAuthStateChange() {
+              return { data: { subscription: { unsubscribe() {} } } };
+            },
+            async getSession() {
+              return { data: { session: { user: { id: ${JSON.stringify(ACCOUNT_ID)} } } }, error: null };
+            },
+          },
+        };
+      }`,
+    });
+  });
   await page.route('**/v1/guide/turn', async (route) => {
     const body = route.request().postDataJSON();
     requests.push(body);
@@ -255,6 +276,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     const conversationId = first.conversationId;
     await page.goto(`${baseURL}/learn/`, { waitUntil: 'networkidle' });
+    // A full navigation restores the real flag-off HTML, so re-establish the
+    // simulated account-v2 boundary before exercising its selected self chart.
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-account-sync-v2', '');
+    });
     await page.locator('[data-guide-launcher]').click();
     await page.locator('.zassistant__panel').waitFor({ state: 'visible' });
     check('daily session restores earlier bubbles after navigation',

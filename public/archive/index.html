@@ -225,7 +225,12 @@
   @media (max-width: 819.5px) { .wnav__sep, .wnav__dim { display: none; } }
   .wnav__search { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; border: none; border-radius: 999px; background: none; color: var(--ink-2, #C6CCDA); cursor: pointer; text-decoration: none; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__search:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
-  @media (max-width: 819.5px) { .wnav__search { display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; } }
+  @media (max-width: 819.5px) {
+    .wnav-wrap { align-items: stretch; padding-inline: 12px; }
+    .wnav { justify-content: center; width: 100%; height: 54px; gap: 9px; padding: 0; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .wnav__pill { display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; padding: 0 8px 0 18px; border: 1px solid rgba(198,204,218,0.18); border-radius: 999px; background: rgba(10,12,17,0.78); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 14px 34px -18px rgba(0,0,0,0.82); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); }
+    .wnav__search { display: inline-grid; place-items: center; flex: 0 0 46px; width: 46px; height: 46px; padding: 0; border: 1px solid rgba(198,204,218,0.18); background: rgba(10,12,17,0.78); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 14px 34px -18px rgba(0,0,0,0.82); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); }
+  }
   .wnav__search-kbd { display: none; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; line-height: 1; padding: 3px 5px; border: 1px solid rgba(198,204,218,0.16); border-radius: 4px; color: var(--ink-mute, #8A93A6); }
   @media (min-width: 820px) { .wnav__search-kbd { display: inline-block; } }
   .wnav__links { display: none; align-items: center; gap: 2px; }
@@ -235,11 +240,16 @@
   .wnav__link[aria-current='page'] { color: var(--ink, #EEF1F7); }
   .wnav__signs-btn svg { transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
-  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid rgba(198,204,218,0.16); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid rgba(198,204,218,0.16); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
   .wnav__chip:hover { color: var(--ink, #EEF1F7); }
   @media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }
-  
-  
+  @media (max-width: 359.5px) {
+    .wnav-wrap { padding-inline: 8px; }
+    .wnav__pill { gap: 8px; padding-left: 14px; }
+    .wnav__chip { padding-left: 12px; font-size: 12px; }
+  }
+
+
   .wnav__burger { position: relative; display: inline-block; flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; transition: transform 140ms cubic-bezier(0.23,1,0.32,1); }
   .wnav__burger:active { transform: scale(0.97); }
   @media (min-width: 820px) { .wnav__burger { display: none; } }
@@ -628,15 +638,15 @@
           <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
           <a class="wnav__link" href="/profile/">Saved charts</a>
         </div>
-        <a class="wnav__search" href="/?search=1" aria-label="Search the site">
-        <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-        <kbd class="wnav__search-kbd" aria-hidden="true">/</kbd>
-      </a>
         <a class="wnav__chip" href="/astrofolio/">Astrofolio</a>
         <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
           <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
         </button>
       </div>
+      <a class="wnav__search" href="/?search=1" aria-label="Search the site">
+        <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <kbd class="wnav__search-kbd" aria-hidden="true">/</kbd>
+      </a>
     </nav>
     <div class="wnav-signs" id="wnav-signs" data-wnav-signs-menu hidden>
       <div class="wnav-signs__grid"><a class="wnav-signs__item" href="/aries/" style="--sign:#DE8E79"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/aries.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/aries.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Aries</span><span class="wnav-signs__dates">Mar 21 – Apr 19</span></a><a class="wnav-signs__item" href="/taurus/" style="--sign:#B9D4BE"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/taurus.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/taurus.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Taurus</span><span class="wnav-signs__dates">Apr 20 – May 20</span></a><a class="wnav-signs__item" href="/gemini/" style="--sign:#B29DD0"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/gemini.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/gemini.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Gemini</span><span class="wnav-signs__dates">May 21 – Jun 20</span></a><a class="wnav-signs__item" href="/cancer/" style="--sign:#B6D4E4"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/cancer.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/cancer.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Cancer</span><span class="wnav-signs__dates">Jun 21 – Jul 22</span></a><a class="wnav-signs__item" href="/leo/" style="--sign:#E0A9B4"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/leo.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/leo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Leo</span><span class="wnav-signs__dates">Jul 23 – Aug 22</span></a><a class="wnav-signs__item" href="/virgo/" style="--sign:#B7D9B0"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/virgo.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/virgo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Virgo</span><span class="wnav-signs__dates">Aug 23 – Sep 22</span></a><a class="wnav-signs__item" href="/libra/" style="--sign:#D3A9DE"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/libra.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/libra.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Libra</span><span class="wnav-signs__dates">Sep 23 – Oct 22</span></a><a class="wnav-signs__item" href="/scorpio/" style="--sign:#B9DCE8"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/scorpio.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/scorpio.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Scorpio</span><span class="wnav-signs__dates">Oct 23 – Nov 21</span></a><a class="wnav-signs__item" href="/sagittarius/" style="--sign:#E0B080"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/sagittarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/sagittarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Sagittarius</span><span class="wnav-signs__dates">Nov 22 – Dec 21</span></a><a class="wnav-signs__item" href="/capricorn/" style="--sign:#C0DEA8"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/capricorn.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/capricorn.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Capricorn</span><span class="wnav-signs__dates">Dec 22 – Jan 19</span></a><a class="wnav-signs__item" href="/aquarius/" style="--sign:#AE8FC9"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/aquarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/aquarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Aquarius</span><span class="wnav-signs__dates">Jan 20 – Feb 18</span></a><a class="wnav-signs__item" href="/pisces/" style="--sign:#A9D4C4"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/pisces.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/pisces.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Pisces</span><span class="wnav-signs__dates">Feb 19 – Mar 20</span></a></div>

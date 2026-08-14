@@ -45,6 +45,7 @@ const playwrightPackage = JSON.parse(
   await readFile(resolve(root, 'node_modules/playwright-core/package.json'), 'utf8'),
 );
 const fixedNow = `${daily.date}T12:00:00.000Z`;
+const guideInviteSessionKey = 'zodiacs.guide.welcome-seen.v1';
 
 const templates = [
   { name: 'today', path: '/today/' },
@@ -95,7 +96,7 @@ try {
           if (message.type() === 'error') errors.push(`console: ${message.text()}`);
         });
         page.on('pageerror', (error) => errors.push(`page: ${error.message}`));
-        await page.addInitScript((isoNow) => {
+        await page.addInitScript(({ isoNow, inviteSessionKey }) => {
           const NativeDate = Date;
           const fixed = new NativeDate(isoNow).valueOf();
           class FixedDate extends NativeDate {
@@ -106,7 +107,11 @@ try {
           }
           Object.setPrototypeOf(FixedDate, NativeDate);
           globalThis.Date = FixedDate;
-        }, fixedNow);
+          // Phase 1 reviews settled template geometry, not the two-second
+          // proactive welcome. Seed the same per-tab preference written by
+          // its dismiss control; the Guide launcher remains visible below.
+          sessionStorage.setItem(inviteSessionKey, '1');
+        }, { isoNow: fixedNow, inviteSessionKey: guideInviteSessionKey });
 
         console.log(`CAPTURE ${template.name} @ ${viewport.width}: ${template.path}`);
         const response = await page.goto(`${baseURL}${template.path}`, { waitUntil: 'load' });
@@ -161,13 +166,16 @@ try {
           errors.push(`zodiac icons failed to load: ${missingZodiacIcons.join(', ')}`);
         }
 
-        const layout = await page.evaluate(() => ({
+        const layout = await page.evaluate((inviteSessionKey) => ({
           clientWidth: document.documentElement.clientWidth,
           scrollWidth: document.documentElement.scrollWidth,
           scrollHeight: document.documentElement.scrollHeight,
           contentLength: document.body.innerText.trim().length,
           overlay: Boolean(document.querySelector('.vite-error-overlay, #webpack-dev-server-client-overlay')),
-        }));
+          guideLauncher: Boolean(document.querySelector('.zguide-launcher')),
+          guideInvite: Boolean(document.querySelector('.zguide-invite')),
+          guideInviteSeen: sessionStorage.getItem(inviteSessionKey) === '1',
+        }), guideInviteSessionKey);
         const filename = `${template.name}-${viewport.name}.png`;
         const image = await page.screenshot({ fullPage: true, animations: 'disabled' });
         const png = PNG.sync.read(image);
@@ -193,6 +201,9 @@ try {
           ...(!response?.ok() ? [`HTTP ${response?.status() ?? 'unknown'}`] : []),
           ...(layout.contentLength < 100 ? ['meaningful content missing'] : []),
           ...(layout.overlay ? ['error overlay present'] : []),
+          ...(!layout.guideLauncher ? ['Guide launcher missing'] : []),
+          ...(layout.guideInvite ? ['proactive Guide invitation present'] : []),
+          ...(!layout.guideInviteSeen ? ['Guide invitation session preference missing'] : []),
           ...(layout.clientWidth !== viewport.width ? [`layout width ${layout.clientWidth} != ${viewport.width}`] : []),
           ...(layout.scrollWidth > layout.clientWidth ? [`horizontal overflow ${layout.scrollWidth} > ${layout.clientWidth}`] : []),
           ...(png.width !== viewport.width ? [`screenshot width ${png.width} != ${viewport.width}`] : []),

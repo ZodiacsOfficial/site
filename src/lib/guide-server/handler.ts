@@ -94,11 +94,6 @@ const DEFAULT_DEPENDENCIES: GuideHandlerDependencies = {
   uuid: randomUUID,
 };
 
-function firstHeader(value: unknown): string {
-  if (Array.isArray(value)) return value.length === 1 && typeof value[0] === 'string' ? value[0] : '';
-  return typeof value === 'string' ? value : '';
-}
-
 function action(req: any): typeof GUIDE_ACTION | null {
   const query = req.query;
   if (!query || typeof query !== 'object' || Array.isArray(query)) return null;
@@ -161,57 +156,196 @@ type RawTurnResult =
   | { ok: true; request: GuideTurnRequestDraftV1 }
   | { ok: false; status: 400 | 413 };
 
-function declaredBodyBytes(req: any): number | null | 'invalid' {
-  const value = accountRequestHeader(req, 'content-length').trim();
+const INVALID_GUIDE_HEADER = Symbol('invalid-guide-header');
+
+function guideRequestHeader(
+  req: any,
+  name: string,
+): string | null | typeof INVALID_GUIDE_HEADER {
+  let value: unknown;
+  try {
+    value = req?.headers?.[name.toLowerCase()];
+    if (value === undefined || value === null) {
+      value = typeof req?.get === 'function' ? req.get(name) : undefined;
+    }
+  } catch {
+    return INVALID_GUIDE_HEADER;
+  }
+  if (value === undefined || value === null) return null;
+  // Node normally rejects duplicate Content-Length itself. Treat every array
+  // representation as ambiguous rather than silently collapsing duplicates.
+  if (Array.isArray(value) || typeof value !== 'string') return INVALID_GUIDE_HEADER;
+  return value;
+}
+
+function hasGuideJsonContentType(req: any): boolean {
+  const value = guideRequestHeader(req, 'content-type');
+  if (value === null || value === INVALID_GUIDE_HEADER) return false;
+  const parts = value.split(';');
+  if (parts.shift()?.trim().toLowerCase() !== 'application/json') return false;
+  if (parts.length === 0) return true;
+  if (parts.length !== 1) return false;
+  return /^charset\s*=\s*(?:utf-8|"utf-8")$/iu.test(parts[0]?.trim() ?? '');
+}
+
+function declaredBodyBytes(req: any): number | null | 'invalid' | 'too_large' {
+  const header = guideRequestHeader(req, 'content-length');
+  if (header === INVALID_GUIDE_HEADER) return 'invalid';
+  const value = header?.trim() ?? '';
   if (!value) return null;
-  if (!/^\d{1,6}$/u.test(value)) return 'invalid';
-  const bytes = Number(value);
+  if (!/^\d+$/u.test(value)) return 'invalid';
+  const normalized = value.replace(/^0+/u, '') || '0';
+  const maximum = String(GUIDE_LIMITS.requestBytes);
+  if (normalized.length > maximum.length
+    || (normalized.length === maximum.length && normalized > maximum)) {
+    return 'too_large';
+  }
+  const bytes = Number(normalized);
   return Number.isSafeInteger(bytes) && bytes > 1 ? bytes : 'invalid';
 }
 
-/** Reads and bounds raw UTF-8 before parsing JSON. api/guide.ts disables helpers. */
+function hasOnlyIdentityContentEncoding(req: any): boolean {
+  const value = guideRequestHeader(req, 'content-encoding');
+  if (value === null) return true;
+  if (value === INVALID_GUIDE_HEADER) return false;
+  const normalized = value.trim().toLowerCase();
+  return normalized === '' || normalized === 'identity';
+}
+
+type RawBodyReadResult =
+  | { ok: true; bytes: Buffer }
+  | { ok: false; status: 400 | 413 };
+
+function hasIncomingMessageEventApi(req: any): boolean {
+  return req !== null
+    && typeof req === 'object'
+    && typeof req.on === 'function'
+    && typeof req.read === 'function';
+}
+
+function readGuideEventBody(req: any): Promise<RawBodyReadResult> {
+  return new Promise((resolve) => {
+    const chunks: Buffer[] = [];
+    let total = 0;
+    let deferredFailure: 400 | 413 | null = null;
+    let settled = false;
+    let endedReplayGuard: ReturnType<typeof setImmediate> | null = null;
+
+    const listeners: Array<[string, (...args: any[]) => void]> = [];
+    const cleanup = () => {
+      if (endedReplayGuard !== null) {
+        clearImmediate(endedReplayGuard);
+        endedReplayGuard = null;
+      }
+      const remove = typeof req.off === 'function'
+        ? req.off
+        : typeof req.removeListener === 'function'
+          ? req.removeListener
+          : null;
+      if (!remove) return;
+      for (const [event, listener] of listeners) {
+        try {
+          remove.call(req, event, listener);
+        } catch {
+          // Vercel's restored-body listeners are virtual. Correctness does not
+          // depend on their removal, but native IncomingMessage listeners are
+          // cleaned up when the runtime supports it.
+        }
+      }
+    };
+    const settle = (result: RawBodyReadResult) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      resolve(result);
+    };
+    const failNow = () => settle({ ok: false, status: 400 });
+    const onData = (chunk: unknown) => {
+      if (settled) return;
+      if (!Buffer.isBuffer(chunk) && !(chunk instanceof Uint8Array)) {
+        if (deferredFailure !== 413) deferredFailure = 400;
+        return;
+      }
+      if (deferredFailure !== null) return;
+      const partLength = chunk.byteLength;
+      if (partLength > GUIDE_LIMITS.requestBytes - total) {
+        deferredFailure = 413;
+        chunks.length = 0;
+        return;
+      }
+      const part = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+      total += partLength;
+      chunks.push(part);
+    };
+    const onEnd = () => {
+      if (deferredFailure !== null) {
+        settle({ ok: false, status: deferredFailure });
+        return;
+      }
+      settle({ ok: true, bytes: Buffer.concat(chunks, total) });
+    };
+    const onError = () => failNow();
+    const onAborted = () => failNow();
+    const onClose = () => failNow();
+
+    listeners.push(
+      ['end', onEnd],
+      ['error', onError],
+      ['aborted', onAborted],
+      ['close', onClose],
+      ['data', onData],
+    );
+    try {
+      // Vercel restoreBody replays through on('data')/on('end'). Attach every
+      // terminal listener first, use `on` rather than `once`, and let an
+      // over-limit replay drain through `end` before settling.
+      req.on('end', onEnd);
+      req.on('error', onError);
+      req.on('aborted', onAborted);
+      req.on('close', onClose);
+      req.on('data', onData);
+      // Vercel's already-ended PassThrough replay completes in the same event
+      // loop turn. A consumed IncomingMessage without restoreBody has the same
+      // terminal flags but will never emit another data/end event; fail it
+      // closed on the next turn instead of leaving the invocation pending.
+      if (!settled && (req.readableEnded === true || req.complete === true || req.destroyed === true)) {
+        endedReplayGuard = setImmediate(failNow);
+      }
+    } catch {
+      failNow();
+    }
+  });
+}
+
+/**
+ * Reads and bounds raw UTF-8 before parsing JSON. api/guide.ts disables body
+ * parsing; Vercel restores the buffered raw bytes through data/end listeners.
+ */
 export async function readGuideHttpTurnRequest(req: any): Promise<RawTurnResult> {
-  const contentType = firstHeader(req.headers?.['content-type'])
-    || (typeof req.get === 'function' ? req.get('content-type') : '');
-  if (typeof contentType !== 'string'
-    || contentType.split(';', 1)[0]?.trim().toLowerCase() !== 'application/json') {
-    return { ok: false, status: 400 };
-  }
+  if (!hasGuideJsonContentType(req)) return { ok: false, status: 400 };
+  if (!hasOnlyIdentityContentEncoding(req)) return { ok: false, status: 400 };
   const declared = declaredBodyBytes(req);
   if (declared === 'invalid') return { ok: false, status: 400 };
+  if (declared === 'too_large') return { ok: false, status: 413 };
   if (declared !== null && declared > GUIDE_LIMITS.requestBytes) return { ok: false, status: 413 };
 
   let bytes: Buffer;
-  if (req && typeof req[Symbol.asyncIterator] === 'function') {
-    const chunks: Buffer[] = [];
-    let total = 0;
-    try {
-      for await (const chunk of req as AsyncIterable<unknown>) {
-        const part = typeof chunk === 'string'
-          ? Buffer.from(chunk, 'utf8')
-          : Buffer.isBuffer(chunk) || chunk instanceof Uint8Array
-            ? Buffer.from(chunk)
-            : null;
-        if (!part) return { ok: false, status: 400 };
-        total += part.byteLength;
-        if (total > GUIDE_LIMITS.requestBytes) return { ok: false, status: 413 };
-        chunks.push(part);
-      }
-    } catch {
-      return { ok: false, status: 400 };
-    }
-    bytes = Buffer.concat(chunks, total);
+  if (hasIncomingMessageEventApi(req)) {
+    const streamed = await readGuideEventBody(req);
+    if (streamed.ok === false) return streamed;
+    bytes = streamed.bytes;
   } else {
-    let preset: unknown;
+    let bodyDescriptor: PropertyDescriptor | undefined;
     try {
-      preset = req.body;
+      bodyDescriptor = Object.getOwnPropertyDescriptor(req, 'body');
     } catch {
       return { ok: false, status: 400 };
     }
-    if (typeof preset === 'string') {
-      bytes = Buffer.from(preset, 'utf8');
-    } else if (Buffer.isBuffer(preset) || preset instanceof Uint8Array) {
-      bytes = Buffer.from(preset);
+    if (!bodyDescriptor || !('value' in bodyDescriptor)) return { ok: false, status: 400 };
+    const preset: unknown = bodyDescriptor.value;
+    if (Buffer.isBuffer(preset) || preset instanceof Uint8Array) {
+      if (preset.byteLength > GUIDE_LIMITS.requestBytes) return { ok: false, status: 413 };
+      bytes = Buffer.isBuffer(preset) ? preset : Buffer.from(preset);
     } else {
       // A parsed object means the runtime touched JSON before this guard.
       return { ok: false, status: 400 };
