@@ -256,9 +256,6 @@ async function drive(BASE, browser) {
     resolveFailedMainRetry = resolve;
     rejectFailedMainRetry = reject;
   });
-  const failedMainRetryTimeout = setTimeout(() => {
-    rejectFailedMainRetry(new Error('TodayBrief retry was not intercepted within 3 seconds.'));
-  }, 3_000);
   await failedMainIsland.context().route('**/_astro/TodayBrief.*.js*', (route) => {
     failedMainAborts += 1;
     if (failedMainAborts >= 2) resolveFailedMainRetry();
@@ -268,8 +265,14 @@ async function drive(BASE, browser) {
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
   }, profile);
   await failedMainIsland.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
-  await failedMainRetry;
-  clearTimeout(failedMainRetryTimeout);
+  const failedMainRetryTimeout = setTimeout(() => {
+    rejectFailedMainRetry(new Error('TodayBrief retry was not intercepted within 3 seconds.'));
+  }, 3_000);
+  try {
+    await failedMainRetry;
+  } finally {
+    clearTimeout(failedMainRetryTimeout);
+  }
   const savedChartFallback = failedMainIsland.locator('.today-returning-chart-placeholder');
   const failedMainEvidence = {
     aborts: failedMainAborts,
