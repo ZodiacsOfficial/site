@@ -8,6 +8,9 @@
 import { spawnSync } from 'node:child_process';
 import { resolve } from 'node:path';
 
+const astro = resolve('node_modules/astro/bin/astro.mjs');
+const assistantUi = resolve('scripts/build-assistant-ui.mjs');
+
 const fixtureEnv = {
   ...process.env,
   DAILY_EMAIL_ENABLED: '1',
@@ -43,7 +46,10 @@ function run(args, env = process.env, quiet = false) {
   }
 }
 
-run([resolve('node_modules/astro/bin/astro.mjs'), 'build'], fixtureEnv, true);
+run([astro, 'build'], fixtureEnv, true);
+// A raw Astro build recreates dist; restore the stable Guide bundle before
+// the browser driver starts the fixture preview.
+run([assistantUi], fixtureEnv, true);
 console.log('Phase 3 post-chart fixture build: PASS');
 const driverEnv = { ...process.env };
 delete driverEnv.ZODIACS_TEST_BASE_URL;

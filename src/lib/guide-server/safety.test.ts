@@ -123,7 +123,7 @@ function deferred<T>() {
 }
 
 describe('Guide pre/post-generation safety boundary', () => {
-  it('uses pinned OpenAI models with store false and background false for every request', async () => {
+  it('uses exact two-turn history across all three pinned, non-persistent OpenAI requests', async () => {
     const postClassifier = deferred<Response>();
     const postClassifierStarted = deferred<void>();
     const fetcher = vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit) => {
@@ -134,9 +134,13 @@ describe('Guide pre/post-generation safety boundary', () => {
       return postClassifier.promise;
     });
     const deltas: string[] = [];
+    const replayHistory = [
+      { author: 'user' as const, content: 'What should I notice today?' },
+      { author: 'guide' as const, content: 'Start with one practical priority.' },
+    ];
     const running = streamSafeGuideOpenAIResponse(
       API_KEY,
-      projection(),
+      projection({ history: replayHistory }),
       (delta) => { deltas.push(delta); },
       new AbortController().signal,
       { fetcher: fetcher as typeof fetch },
@@ -162,7 +166,25 @@ describe('Guide pre/post-generation safety boundary', () => {
         store: false,
         background: false,
       });
+      expect(body.input.filter(({ role }: { role: string }) => role === 'assistant')).toEqual([{
+        type: 'message',
+        role: 'assistant',
+        phase: 'final_answer',
+        content: 'Start with one practical priority.',
+      }]);
     }
+    const easyHistory = [
+      { role: 'user', content: 'What should I notice today?' },
+      {
+        type: 'message',
+        role: 'assistant',
+        phase: 'final_answer',
+        content: 'Start with one practical priority.',
+      },
+    ];
+    expect(bodies[0].input.slice(1, 3)).toEqual(easyHistory);
+    expect(bodies[1].input.slice(0, 2)).toEqual(easyHistory);
+    expect(bodies[2].input.slice(1, 3)).toEqual(easyHistory);
     expect(bodies[2].input.at(-1)).toMatchObject({
       role: 'user',
       content: [{
@@ -443,5 +465,53 @@ describe('Guide pre/post-generation safety boundary', () => {
         status: 429,
       },
     });
+  });
+
+  it('preserves a content-free HTTP 400 generation diagnostic', async () => {
+    const fetcher = vi.fn(async () => (
+      fetcher.mock.calls.length === 1
+        ? classified('allowed')
+        : new Response(null, { status: 400 })
+    ));
+
+    await expect(streamSafeGuideOpenAIResponse(
+      API_KEY,
+      projection(),
+      () => {},
+      new AbortController().signal,
+      { fetcher: fetcher as typeof fetch },
+    )).rejects.toMatchObject({
+      code: 'unavailable',
+      diagnostic: {
+        event: 'guide_provider_diagnostic_v1',
+        stage: 'generation',
+        reason: 'http',
+        status: 400,
+      },
+    });
+  });
+
+  it('preserves the content-free output-policy diagnostic through the safety boundary', async () => {
+    const fetcher = vi.fn(async () => (
+      fetcher.mock.calls.length === 1
+        ? classified('allowed')
+        : providerStream(['Visit /terminal/ now.'])
+    ));
+
+    await expect(streamSafeGuideOpenAIResponse(
+      API_KEY,
+      projection(),
+      () => {},
+      new AbortController().signal,
+      { fetcher: fetcher as typeof fetch },
+    )).rejects.toMatchObject({
+      code: 'invalid_response',
+      diagnostic: {
+        event: 'guide_provider_diagnostic_v1',
+        stage: 'generation',
+        reason: 'output_policy',
+      },
+    });
+    expect(fetcher).toHaveBeenCalledTimes(2);
   });
 });

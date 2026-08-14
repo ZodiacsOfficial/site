@@ -106,9 +106,48 @@ describe('Guide OpenAI provider boundary', () => {
         prompt_version: GUIDE_PROVIDER_PROMPT_VERSION,
       },
     });
-    expect(body.input.at(-1)?.content[0]?.text).toContain('untrusted_context_data');
-    expect(body.input.at(-1)?.content[0]?.text).toContain('Sun in Leo');
+    const currentInput = body.input.at(-1);
+    if (!currentInput || currentInput.role !== 'user' || !Array.isArray(currentInput.content)) {
+      throw new Error('Expected the current user turn to use multipart Responses input');
+    }
+    expect(currentInput.content[0]?.text).toContain('untrusted_context_data');
+    expect(currentInput.content[0]?.text).toContain('Sun in Leo');
     expect(JSON.stringify(body)).not.toContain('11111111-1111');
+  });
+
+  it('replays a two-turn transcript with documented Responses EasyInputMessage history', () => {
+    const body = buildGuideOpenAIRequestBody(projection());
+
+    expect(body.input.slice(0, -1)).toEqual([
+      {
+        role: 'user',
+        content: 'What should I notice today?',
+      },
+      {
+        type: 'message',
+        role: 'assistant',
+        phase: 'final_answer',
+        content: 'Slow down and check the practical details.',
+      },
+    ]);
+    const currentInput = body.input.at(-1);
+    if (!currentInput || currentInput.role !== 'user' || !Array.isArray(currentInput.content)) {
+      throw new Error('Expected the current user turn to use multipart Responses input');
+    }
+    expect(currentInput.content).toHaveLength(2);
+    expect(currentInput.content[0]).toMatchObject({ type: 'input_text' });
+    expect(currentInput.content[1]).toEqual({
+      type: 'input_text',
+      text: 'What is one useful next step?',
+    });
+    expect(body.input.filter(({ role }) => role === 'assistant')).toEqual([
+      {
+        type: 'message',
+        role: 'assistant',
+        phase: 'final_answer',
+        content: 'Slow down and check the practical details.',
+      },
+    ]);
   });
 
   it('keeps the reused server key only in the outbound Authorization header', () => {
@@ -138,9 +177,24 @@ describe('Guide OpenAI provider boundary', () => {
     expect(parseGuideOpenAIProviderEvent(
       'data: {"type":"response.created","response":{"id":"private-provider-id"}}',
     )).toBeNull();
-    expect(() => parseGuideOpenAIProviderEvent(
-      'data: {"type":"response.completed","response":{"status":"completed","model":"fallback-model","usage":{"input_tokens":10,"output_tokens":2}}}',
-    )).toThrow(GuideProviderFailure);
+    let mismatch: unknown;
+    try {
+      parseGuideOpenAIProviderEvent(
+        'data: {"type":"response.completed","response":{"status":"completed","model":"fallback-model","usage":{"input_tokens":10,"output_tokens":2}}}',
+      );
+    } catch (error) {
+      mismatch = error;
+    }
+    expect(mismatch).toBeInstanceOf(GuideProviderFailure);
+    expect(mismatch).toMatchObject({
+      code: 'invalid_response',
+      diagnostic: {
+        event: 'guide_provider_diagnostic_v1',
+        stage: 'generation',
+        reason: 'model_mismatch',
+      },
+    });
+    expect(JSON.stringify(mismatch)).not.toContain('fallback-model');
   });
 
   it('streams sanitized text without exposing provider IDs or raw events', async () => {
@@ -191,7 +245,14 @@ describe('Guide OpenAI provider boundary', () => {
       () => {},
       new AbortController().signal,
       { fetcher: fetcher as typeof fetch },
-    )).rejects.toMatchObject({ code: 'invalid_response' });
+    )).rejects.toMatchObject({
+      code: 'invalid_response',
+      diagnostic: {
+        event: 'guide_provider_diagnostic_v1',
+        stage: 'generation',
+        reason: 'provider_status',
+      },
+    });
   });
 
   it('allows only server-selected Zodiacs links in completed output', async () => {
@@ -222,7 +283,14 @@ describe('Guide OpenAI provider boundary', () => {
       () => {},
       new AbortController().signal,
       { fetcher: disallowedFetcher as typeof fetch },
-    )).rejects.toMatchObject({ code: 'invalid_response' });
+    )).rejects.toMatchObject({
+      code: 'invalid_response',
+      diagnostic: {
+        event: 'guide_provider_diagnostic_v1',
+        stage: 'generation',
+        reason: 'output_policy',
+      },
+    });
 
     const allowedBareFetcher = openAIFetch(() => streamWithText('Read /methodology/ for details.'));
     await expect(streamGuideOpenAIResponse(

@@ -17,6 +17,7 @@ const manifest = JSON.parse(await readFile(
 ));
 const daily = JSON.parse(await readFile(new URL('../src/data/daily.json', import.meta.url), 'utf8'));
 const MAJOR_ASPECT_ANGLES = [0, 60, 90, 120, 180];
+const GUIDE_INVITE_SESSION_KEY = 'zodiacs.guide.welcome-seen.v1';
 
 function quietAriesLongitude() {
   const candidates = Array.from({ length: 300 }, (_, index) => index / 10).map((lon) => {
@@ -89,6 +90,16 @@ const quietMobileProfile = {
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 
+async function newTodayPage(browser, options) {
+  const page = await browser.newPage(options);
+  await page.addInitScript((inviteSessionKey) => {
+    // Today acceptance measures settled reading geometry, not the Guide's
+    // one-time proactive welcome. Use the same per-tab preference as dismiss.
+    sessionStorage.setItem(inviteSessionKey, '1');
+  }, GUIDE_INVITE_SESSION_KEY);
+  return page;
+}
+
 async function observeLayoutShifts(page) {
   await page.addInitScript(() => {
     globalThis.__zdxLayoutShifts = [];
@@ -108,7 +119,7 @@ async function measuredCls(page) {
 }
 
 async function inspectReturningMobile(BASE, browser, fixtureProfile, state, expectedContacts) {
-  const page = await browser.newPage({
+  const page = await newTodayPage(browser, {
     // Tall enough that content after the card participates in the CLS impact
     // region; a placeholder collapse cannot hide below the fold.
     viewport: { width: 360, height: 1800 },
@@ -203,7 +214,7 @@ async function drive(BASE, browser) {
   if (OUT) await mkdir(OUT, { recursive: true });
   // The tall viewport keeps the SSR reading grid inside the impact region, so
   // a returning-user collapse cannot hide below the fold and evade CLS.
-  const desktop = await browser.newPage({ viewport: { width: 1440, height: 1400 } });
+  const desktop = await newTodayPage(browser, { viewport: { width: 1440, height: 1400 } });
   await observeLayoutShifts(desktop);
   await desktop.addInitScript((value) => {
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
@@ -215,6 +226,15 @@ async function drive(BASE, browser) {
   });
   await desktop.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await desktop.waitForSelector('[data-today-state="chart"]');
+  await desktop.waitForTimeout(2_100);
+  check(
+    'Today geometry keeps the one-time Guide welcome suppressed',
+    await desktop.locator('.zguide-invite').count() === 0
+      && await desktop.evaluate(
+        (inviteSessionKey) => sessionStorage.getItem(inviteSessionKey) === '1',
+        GUIDE_INVITE_SESSION_KEY,
+      ),
+  );
   const savedChartHeight = await desktop.locator('.today-reading').evaluate((node) => node.getBoundingClientRect().height);
   const savedChartCls = await measuredCls(desktop);
   check('saved-chart hydration has exactly zero CLS', savedChartCls === 0, `${savedChartCls} · ${savedChartHeight}px reading`);
@@ -227,7 +247,7 @@ async function drive(BASE, browser) {
   if (OUT) await desktop.screenshot({ path: `${OUT}/today-1440.png`, fullPage: true });
   await desktop.close();
 
-  const failedMainIsland = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  const failedMainIsland = await newTodayPage(browser, { viewport: { width: 900, height: 1400 } });
   await observeLayoutShifts(failedMainIsland);
   await failedMainIsland.route('**/_astro/TodayBrief.*.js', (route) => route.abort());
   await failedMainIsland.addInitScript((value) => {
@@ -246,7 +266,7 @@ async function drive(BASE, browser) {
   check('failed Today island fallback has exactly zero CLS', failedMainCls === 0, String(failedMainCls));
   await failedMainIsland.close();
 
-  const failedTransits = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  const failedTransits = await newTodayPage(browser, { viewport: { width: 900, height: 1400 } });
   await observeLayoutShifts(failedTransits);
   const failedTransitsErrors = [];
   failedTransits.on('pageerror', (error) => failedTransitsErrors.push(error.message));
@@ -276,7 +296,7 @@ async function drive(BASE, browser) {
   check('failed transit chunk has exactly zero CLS', failedTransitsCls === 0, String(failedTransitsCls));
   await failedTransits.close();
 
-  const invalidProfile = await browser.newPage({ viewport: { width: 900, height: 1000 } });
+  const invalidProfile = await newTodayPage(browser, { viewport: { width: 900, height: 1000 } });
   const invalidProfileErrors = [];
   invalidProfile.on('pageerror', (error) => invalidProfileErrors.push(error.message));
   await invalidProfile.addInitScript(() => {
@@ -297,7 +317,7 @@ async function drive(BASE, browser) {
   );
   await invalidProfile.close();
 
-  const hintedInvalidProfile = await browser.newPage({
+  const hintedInvalidProfile = await newTodayPage(browser, {
     viewport: { width: 360, height: 1800 },
     deviceScaleFactor: 2,
     hasTouch: true,
@@ -336,7 +356,7 @@ async function drive(BASE, browser) {
   );
   await hintedInvalidProfile.close();
 
-  const returningSign = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  const returningSign = await newTodayPage(browser, { viewport: { width: 900, height: 1400 } });
   await observeLayoutShifts(returningSign);
   await returningSign.addInitScript(() => {
     localStorage.setItem('zodiacs:today-sun-sign:v1', 'leo');
@@ -348,7 +368,7 @@ async function drive(BASE, browser) {
   check('stored Sun sign restores the Leo reading', await returningSign.locator('#today-sun-sign-reading [data-today-sun-sign="leo"]').count() === 1);
   await returningSign.close();
 
-  const empty = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  const empty = await newTodayPage(browser, { viewport: { width: 900, height: 1400 } });
   await observeLayoutShifts(empty);
   await empty.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await empty.waitForSelector('[data-today-state="empty"]');
@@ -381,7 +401,7 @@ async function drive(BASE, browser) {
   check('enhanced sign link keeps native hash navigation', selectedHash === '#today-sun-sign-leo', selectedHash);
   await empty.close();
 
-  const noJs = await browser.newPage({
+  const noJs = await newTodayPage(browser, {
     viewport: { width: 900, height: 800 },
     javaScriptEnabled: false,
   });
@@ -409,7 +429,7 @@ async function drive(BASE, browser) {
   if (OUT) await noJs.screenshot({ path: `${OUT}/today-nojs-900.png`, fullPage: true });
   await noJs.close();
 
-  const fallbackMobile = await browser.newPage({
+  const fallbackMobile = await newTodayPage(browser, {
     // Match Lighthouse's default mobile screen so its zero-CLS contract is
     // covered by the browser drive as well as the performance audit.
     viewport: { width: 412, height: 823 },
@@ -468,7 +488,7 @@ async function drive(BASE, browser) {
   if (OUT) await fallbackMobile.screenshot({ path: `${OUT}/today-empty-375.png`, fullPage: true });
   await fallbackMobile.close();
 
-  const reduced = await browser.newPage({
+  const reduced = await newTodayPage(browser, {
     viewport: { width: 900, height: 800 },
     reducedMotion: 'reduce',
   });
@@ -484,7 +504,7 @@ async function drive(BASE, browser) {
   check('reduced motion makes the streak instant', animation.name === 'none' || animation.duration === '0s', JSON.stringify(animation));
   await reduced.close();
 
-  const mobile = await browser.newPage({
+  const mobile = await newTodayPage(browser, {
     viewport: { width: 375, height: 812 },
     deviceScaleFactor: 2,
     hasTouch: true,

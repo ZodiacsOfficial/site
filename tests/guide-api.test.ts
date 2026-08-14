@@ -869,6 +869,96 @@ describe('POST /v1/guide/turn protected web endpoint', () => {
     expect(response.text).not.toContain('resp_');
   });
 
+  it('projects a valid second-turn history privately and completes the Guide reply at sequence 4', async () => {
+    const base = ephemeralTurn();
+    const history = [
+      {
+        ...base.ephemeralContext.history[0],
+        content: 'What should I pay attention to today?',
+      },
+      {
+        ...base.ephemeralContext.history[1],
+        content: 'Start with one practical priority.',
+        generation: {
+          ...base.ephemeralContext.history[1].generation!,
+          modelId: GUIDE_PROVIDER_MODEL,
+          promptVersion: GUIDE_PROVIDER_PROMPT_VERSION,
+          policyVersion: GUIDE_PROVIDER_POLICY_VERSION,
+        },
+      },
+    ];
+    const turn = await consentedTurn({
+      ephemeralContext: { ...base.ephemeralContext, history },
+      userMessage: {
+        ...base.userMessage,
+        content: 'How can I make that concrete?',
+      },
+    });
+    const privateProviderResponseId = 'resp_private_second_turn';
+    const privateProviderStatus = 'provider_completed_private';
+    let providerProjection: GuideProviderProjection | undefined;
+    const streamProvider = vi.fn(async (_key, candidate, onDelta) => {
+      providerProjection = candidate;
+      await onDelta('Choose one small task.');
+      return {
+        ...completion('Choose one small task.'),
+        providerResponseId: privateProviderResponseId,
+        providerStatus: privateProviderStatus,
+      };
+    });
+    const handler = createGuideHandler({
+      env: ENV,
+      fetcher: quotaFetcher(),
+      streamProvider: streamProvider as any,
+      uuid: () => GUIDE_TEST_IDS.messageSix,
+    });
+    const response = new MockResponse();
+
+    await handler(request(turn), response);
+
+    expect(response.statusCode).toBe(200);
+    expect(providerProjection?.history).toEqual([
+      { author: 'user', content: 'What should I pay attention to today?' },
+      { author: 'guide', content: 'Start with one practical priority.' },
+    ]);
+    expect(providerProjection?.userMessage).toBe('How can I make that concrete?');
+    expect(providerProjection?.history.map((message) => Object.keys(message).sort())).toEqual([
+      ['author', 'content'],
+      ['author', 'content'],
+    ]);
+    const serializedProjection = JSON.stringify(providerProjection);
+    expect(serializedProjection).not.toContain(history[0].messageId);
+    expect(serializedProjection).not.toContain(history[1].turnId);
+    expect(serializedProjection).not.toContain(history[1].generation!.generatedAt);
+
+    const streamedEvents = events(response);
+    expect(streamedEvents.map(({ type }) => type)).toEqual(['accepted', 'delta', 'completed']);
+    const completed = streamedEvents.at(-1);
+    expect(completed).toMatchObject({
+      type: 'completed',
+      message: {
+        sequence: 4,
+        author: 'guide',
+        content: 'Choose one small task.',
+        generation: {
+          modelId: GUIDE_PROVIDER_MODEL,
+          promptVersion: GUIDE_PROVIDER_PROMPT_VERSION,
+          policyVersion: GUIDE_PROVIDER_POLICY_VERSION,
+        },
+      },
+    });
+    expect(Object.keys(completed.message.generation).sort()).toEqual([
+      'generatedAt',
+      'modelId',
+      'policyVersion',
+      'promptVersion',
+      'protocolSchema',
+    ]);
+    expect(response.text).not.toContain(privateProviderResponseId);
+    expect(response.text).not.toContain(privateProviderStatus);
+    expect(response.text).not.toContain(history[1].generation!.generatedAt);
+  });
+
   it('accepts only Luna or the server-owned deterministic safety response', async () => {
     const safetyProvider = vi.fn(async (_key, _projection, onDelta) => {
       await onDelta('Please use qualified help.');
@@ -909,39 +999,43 @@ describe('POST /v1/guide/turn protected web endpoint', () => {
     expect(response.text).not.toContain('fallback-model');
   });
 
-  it('reports only allowlisted provider diagnostics and keeps them out of SSE', async () => {
-    const reportProviderDiagnostic = vi.fn();
-    const sensitive = 'private provider detail that must never leave the boundary';
-    const handler = createGuideHandler({
-      env: ENV,
-      authorizeTurn: async () => allowedTurn(),
-      reportProviderDiagnostic,
-      streamProvider: vi.fn(async () => {
-        void sensitive;
-        throw new GuideProviderFailure('invalid_response', {
-          event: 'guide_provider_diagnostic_v1',
-          stage: 'classifier_input',
-          reason: 'invalid_payload',
-          privateDetail: sensitive,
-        } as any);
-      }) as any,
-    });
-    const response = new MockResponse();
-    await handler(request(), response);
+  it.each(['invalid_payload', 'output_policy'] as const)(
+    'reports only the allowlisted %s provider diagnostic and keeps it out of SSE',
+    async (reason) => {
+      const reportProviderDiagnostic = vi.fn();
+      const sensitive = 'private provider detail that must never leave the boundary';
+      const stage = reason === 'output_policy' ? 'generation' : 'classifier_input';
+      const handler = createGuideHandler({
+        env: ENV,
+        authorizeTurn: async () => allowedTurn(),
+        reportProviderDiagnostic,
+        streamProvider: vi.fn(async () => {
+          void sensitive;
+          throw new GuideProviderFailure('invalid_response', {
+            event: 'guide_provider_diagnostic_v1',
+            stage,
+            reason,
+            privateDetail: sensitive,
+          } as any);
+        }) as any,
+      });
+      const response = new MockResponse();
+      await handler(request(), response);
 
-    expect(reportProviderDiagnostic).toHaveBeenCalledExactlyOnceWith({
-      event: 'guide_provider_diagnostic_v1',
-      stage: 'classifier_input',
-      reason: 'invalid_payload',
-    });
-    expect(events(response).at(-1)).toMatchObject({
-      type: 'error',
-      code: 'invalid_response',
-      retryable: false,
-    });
-    expect(response.text).not.toContain('guide_provider_diagnostic_v1');
-    expect(response.text).not.toContain(sensitive);
-  });
+      expect(reportProviderDiagnostic).toHaveBeenCalledExactlyOnceWith({
+        event: 'guide_provider_diagnostic_v1',
+        stage,
+        reason,
+      });
+      expect(events(response).at(-1)).toMatchObject({
+        type: 'error',
+        code: 'invalid_response',
+        retryable: false,
+      });
+      expect(response.text).not.toContain('guide_provider_diagnostic_v1');
+      expect(response.text).not.toContain(sensitive);
+    },
+  );
 
   it('turns pre-stream admission failures into retryable rejections', async () => {
     const handler = createGuideHandler({

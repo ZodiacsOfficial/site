@@ -40,7 +40,7 @@ export type GuideProviderDiagnosticV1 = Readonly<
   | {
       event: 'guide_provider_diagnostic_v1';
       stage: GuideProviderStage;
-      reason: 'timeout' | 'transport' | 'provider_status' | 'model_mismatch' | 'invalid_payload';
+      reason: 'timeout' | 'transport' | 'provider_status' | 'model_mismatch' | 'invalid_payload' | 'output_policy';
     }
   | {
       event: 'guide_provider_diagnostic_v1';
@@ -60,6 +60,16 @@ export class GuideProviderFailure extends Error {
     this.code = code;
     this.diagnostic = diagnostic;
   }
+}
+
+function generationDiagnostic(
+  reason: Exclude<GuideProviderDiagnosticV1['reason'], 'http'>,
+): GuideProviderDiagnosticV1 {
+  return { event: 'guide_provider_diagnostic_v1', stage: 'generation', reason };
+}
+
+function generationHttpDiagnostic(status: number): GuideProviderDiagnosticV1 {
+  return { event: 'guide_provider_diagnostic_v1', stage: 'generation', reason: 'http', status };
 }
 
 export interface GuideHydratedModelSource {
@@ -88,20 +98,27 @@ export interface GuideProviderProjection {
   userMessage: string;
 }
 
-interface OpenAIInputText {
+export interface GuideOpenAIInputText {
   type: 'input_text';
   text: string;
 }
 
-interface OpenAIInputMessage {
-  role: 'user' | 'assistant';
-  content: OpenAIInputText[];
-}
+export type GuideOpenAIInputMessage =
+  | {
+      role: 'user';
+      content: string | GuideOpenAIInputText[];
+    }
+  | {
+      type: 'message';
+      role: 'assistant';
+      phase: 'final_answer';
+      content: string;
+    };
 
 export interface GuideOpenAIRequestBody {
   model: typeof GUIDE_PROVIDER_MODEL;
   instructions: typeof GUIDE_SERVER_POLICY;
-  input: OpenAIInputMessage[];
+  input: GuideOpenAIInputMessage[];
   max_output_tokens: typeof GUIDE_PROVIDER_MAX_OUTPUT_TOKENS;
   stream: true;
   store: false;
@@ -347,10 +364,16 @@ export function buildGuideOpenAIRequestBody(
     },
   });
 
-  const input: OpenAIInputMessage[] = projection.history.map((message) => ({
-    role: message.author === 'guide' ? 'assistant' : 'user',
-    content: [{ type: 'input_text', text: message.content }],
-  }));
+  const input: GuideOpenAIInputMessage[] = projection.history.map((message) => (
+    message.author === 'guide'
+      ? {
+          type: 'message',
+          role: 'assistant',
+          phase: 'final_answer',
+          content: message.content,
+        }
+      : { role: 'user', content: message.content }
+  ));
   input.push({
     role: 'user',
     content: [
@@ -360,10 +383,12 @@ export function buildGuideOpenAIRequestBody(
   });
 
   const modelBytes = input.reduce(
-    (total, message) => total + message.content.reduce(
-      (subtotal, part) => subtotal + utf8Bytes(part.text),
-      0,
-    ),
+    (total, message) => total + (typeof message.content === 'string'
+      ? utf8Bytes(message.content)
+      : message.content.reduce(
+          (subtotal, part) => subtotal + utf8Bytes(part.text),
+          0,
+        )),
     0,
   );
   if (modelBytes > GUIDE_LIMITS.modelWindowBytes) {
@@ -438,26 +463,60 @@ export function parseGuideOpenAIProviderEvent(rawEvent: string): ParsedProviderE
   try {
     value = JSON.parse(data);
   } catch {
-    throw new GuideProviderFailure('invalid_response');
+    throw new GuideProviderFailure(
+      'invalid_response',
+      generationDiagnostic('invalid_payload'),
+    );
   }
   if (!isRecord(value) || typeof value.type !== 'string') {
-    throw new GuideProviderFailure('invalid_response');
+    throw new GuideProviderFailure(
+      'invalid_response',
+      generationDiagnostic('invalid_payload'),
+    );
   }
   if (value.type === 'response.output_text.delta') {
     return typeof value.delta === 'string' && value.delta.length > 0 && wellFormed(value.delta)
       ? { type: 'delta', text: value.delta }
-      : (() => { throw new GuideProviderFailure('invalid_response'); })();
+      : (() => {
+          throw new GuideProviderFailure(
+            'invalid_response',
+            generationDiagnostic('invalid_payload'),
+          );
+        })();
   }
   if (value.type === 'response.completed') {
     const response = value.response;
-    if (!isRecord(response) || response.status !== 'completed'
-      || response.model !== GUIDE_PROVIDER_MODEL
-      || !isRecord(response.usage)
+    if (!isRecord(response)) {
+      throw new GuideProviderFailure(
+        'invalid_response',
+        generationDiagnostic('invalid_payload'),
+      );
+    }
+    if (response.status !== 'completed') {
+      throw new GuideProviderFailure(
+        'invalid_response',
+        generationDiagnostic(typeof response.status === 'string'
+          ? 'provider_status'
+          : 'invalid_payload'),
+      );
+    }
+    if (response.model !== GUIDE_PROVIDER_MODEL) {
+      throw new GuideProviderFailure(
+        'invalid_response',
+        generationDiagnostic(typeof response.model === 'string'
+          ? 'model_mismatch'
+          : 'invalid_payload'),
+      );
+    }
+    if (!isRecord(response.usage)
       || !Number.isSafeInteger(response.usage.input_tokens)
       || Number(response.usage.input_tokens) < 0
       || !Number.isSafeInteger(response.usage.output_tokens)
       || Number(response.usage.output_tokens) < 0) {
-      throw new GuideProviderFailure('invalid_response');
+      throw new GuideProviderFailure(
+        'invalid_response',
+        generationDiagnostic('invalid_payload'),
+      );
     }
     return {
       type: 'completed',
@@ -583,18 +642,33 @@ export async function streamGuideOpenAIResponse(
     cleanup();
     if (error instanceof GuideProviderFailure) throw error;
     if (signal.aborted) throw new GuideProviderFailure('cancelled');
-    if (timeoutKind) throw new GuideProviderFailure('timeout');
-    throw new GuideProviderFailure('unavailable');
+    if (timeoutKind) {
+      throw new GuideProviderFailure('timeout', generationDiagnostic('timeout'));
+    }
+    throw new GuideProviderFailure('unavailable', generationDiagnostic('transport'));
   }
   clearTimeout(connectTimer);
-  if (!response.ok || !response.body) {
+  if (!response.ok) {
     cleanup();
-    throw new GuideProviderFailure(response.status === 429 ? 'rate_limited' : 'unavailable');
+    throw new GuideProviderFailure(
+      response.status === 429 ? 'rate_limited' : 'unavailable',
+      generationHttpDiagnostic(response.status),
+    );
+  }
+  if (!response.body) {
+    cleanup();
+    throw new GuideProviderFailure(
+      'invalid_response',
+      generationDiagnostic('invalid_payload'),
+    );
   }
   const contentType = response.headers.get('content-type')?.toLowerCase() ?? '';
   if (contentType.split(';', 1)[0]?.trim() !== 'text/event-stream') {
     cleanup();
-    throw new GuideProviderFailure('invalid_response');
+    throw new GuideProviderFailure(
+      'invalid_response',
+      generationDiagnostic('invalid_payload'),
+    );
   }
 
   const reader = response.body.getReader();
@@ -611,7 +685,10 @@ export async function streamGuideOpenAIResponse(
       resetIdle();
       buffer += decoder.decode(value, { stream: true });
       if (utf8Bytes(buffer) > MAX_PROVIDER_EVENT_BUFFER_BYTES) {
-        throw new GuideProviderFailure('invalid_response');
+        throw new GuideProviderFailure(
+          'invalid_response',
+          generationDiagnostic('invalid_payload'),
+        );
       }
       const extracted = extractEvents(buffer);
       buffer = extracted.remainder;
@@ -619,7 +696,12 @@ export async function streamGuideOpenAIResponse(
         const event = parseGuideOpenAIProviderEvent(rawEvent);
         if (!event) continue;
         if (event.type === 'failed' || completed) {
-          throw new GuideProviderFailure('invalid_response');
+          throw new GuideProviderFailure(
+            'invalid_response',
+            generationDiagnostic(event.type === 'failed'
+              ? 'provider_status'
+              : 'invalid_payload'),
+          );
         }
         if (event.type === 'delta') {
           output += event.text;
@@ -629,16 +711,27 @@ export async function streamGuideOpenAIResponse(
             GUIDE_LIMITS.messageBytes,
             false,
           )) {
-            throw new GuideProviderFailure('response_too_large');
+            throw new GuideProviderFailure(
+              'response_too_large',
+              generationDiagnostic('invalid_payload'),
+            );
           }
           // Provider text is buffered until the exact model completion and
           // link allowlist are validated. Raw/partial unsafe output is never
           // forwarded merely because it appeared in an early provider delta.
           pendingDeltas.push(event.text);
         } else {
-          if (!output.trim()) throw new GuideProviderFailure('invalid_response');
+          if (!output.trim()) {
+            throw new GuideProviderFailure(
+              'invalid_response',
+              generationDiagnostic('invalid_payload'),
+            );
+          }
           if (!outputLinksAllowed(output, projection.publicKnowledge.allowedPaths)) {
-            throw new GuideProviderFailure('invalid_response');
+            throw new GuideProviderFailure(
+              'invalid_response',
+              generationDiagnostic('output_policy'),
+            );
           }
           for (const delta of pendingDeltas) await onDelta(delta);
           completed = {
@@ -652,16 +745,31 @@ export async function streamGuideOpenAIResponse(
       }
     }
     buffer += decoder.decode();
-    if (buffer.trim()) throw new GuideProviderFailure('invalid_response');
-    if (!completed) throw new GuideProviderFailure('invalid_response');
+    if (buffer.trim()) {
+      throw new GuideProviderFailure(
+        'invalid_response',
+        generationDiagnostic('invalid_payload'),
+      );
+    }
+    if (!completed) {
+      throw new GuideProviderFailure(
+        'invalid_response',
+        generationDiagnostic('invalid_payload'),
+      );
+    }
     return completed;
   } catch (error) {
     controller.abort();
     await reader.cancel().catch(() => {});
     if (error instanceof GuideProviderFailure) throw error;
     if (signal.aborted) throw new GuideProviderFailure('cancelled');
-    if (timeoutKind) throw new GuideProviderFailure('timeout');
-    throw new GuideProviderFailure('invalid_response');
+    if (timeoutKind) {
+      throw new GuideProviderFailure('timeout', generationDiagnostic('timeout'));
+    }
+    throw new GuideProviderFailure(
+      'invalid_response',
+      generationDiagnostic('invalid_payload'),
+    );
   } finally {
     cleanup();
   }

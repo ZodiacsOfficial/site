@@ -928,6 +928,14 @@ async function verifyCardMatchesPage(browser, baseURL) {
   await page.getByRole('button', { name: 'Show my collection', exact: true }).click();
   await waitForStageSettled(page);
 
+  // This comparison isolates the cabinet renderer. Guide is deliberately
+  // fixed above page content in production, so exclude its launcher/invite
+  // from the live element capture just as the exported cabinet excludes all
+  // surrounding site chrome.
+  await page.addStyleTag({
+    content: '.zassistant, .zguide-launcher, .zguide-invite { display: none !important; }',
+  });
+
   // A focus ring belongs to the page, not to a still of it.
   await page.evaluate(() => document.activeElement?.blur());
   const caseElement = page.locator('.aura-stage .aura-collection-cabinet__frame');

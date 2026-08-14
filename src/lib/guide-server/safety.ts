@@ -6,6 +6,7 @@ import {
   GuideProviderFailure,
   buildGuideOpenAIRequestBody,
   streamGuideOpenAIResponse,
+  type GuideOpenAIInputMessage,
   type GuideProviderCompletion,
   type GuideProviderDependencies,
   type GuideProviderDiagnosticV1,
@@ -59,10 +60,7 @@ For phase output, a concise refusal, agency-preserving boundary, or direction to
 interface GuideSafetyClassifierBody {
   model: typeof GUIDE_SAFETY_CLASSIFIER_MODEL;
   instructions: typeof GUIDE_SAFETY_CLASSIFIER_POLICY;
-  input: Array<{
-    role: 'user' | 'assistant';
-    content: Array<{ type: 'input_text'; text: string }>;
-  }>;
+  input: GuideOpenAIInputMessage[];
   max_output_tokens: 80;
   store: false;
   background: false;
@@ -377,11 +375,12 @@ export async function streamSafeGuideOpenAIResponse(
 ): Promise<GuideProviderCompletion> {
   const providerInput = buildGuideOpenAIRequestBody(projection).input;
   const finalInput = providerInput.at(-1);
+  if (!finalInput || finalInput.role !== 'user' || !Array.isArray(finalInput.content)) {
+    throw new GuideProviderFailure('invalid_input');
+  }
   const priorModelVisibleInput = JSON.stringify([
     ...providerInput.slice(0, -1),
-    ...(finalInput
-      ? [{ ...finalInput, content: finalInput.content.slice(0, -1) }]
-      : []),
+    { ...finalInput, content: finalInput.content.slice(0, -1) },
   ]);
   const localInputCategory = classifyGuideLocalInputSafety(
     projection.userMessage,
@@ -417,7 +416,7 @@ export async function streamSafeGuideOpenAIResponse(
     );
   } catch (error) {
     if (!(error instanceof GuideProviderFailure) || error.code === 'cancelled') throw error;
-    const generationDiagnostic = error.code === 'rate_limited'
+    const fallbackDiagnostic = error.code === 'rate_limited'
       ? {
           event: 'guide_provider_diagnostic_v1' as const,
           stage: 'generation' as const,
@@ -432,7 +431,7 @@ export async function streamSafeGuideOpenAIResponse(
               ? 'transport'
               : 'invalid_payload',
         );
-    throw new GuideProviderFailure(error.code, generationDiagnostic);
+    throw new GuideProviderFailure(error.code, error.diagnostic ?? fallbackDiagnostic);
   }
   const localOutputCategory = classifyGuideLocalOutputSafety(
     completion.outputText,

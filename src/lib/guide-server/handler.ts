@@ -125,6 +125,7 @@ function sanitizedProviderDiagnostic(value: unknown): GuideProviderDiagnosticV1 
     || record.reason === 'provider_status'
     || record.reason === 'model_mismatch'
     || record.reason === 'invalid_payload'
+    || record.reason === 'output_policy'
     ? {
         event: 'guide_provider_diagnostic_v1',
         stage: record.stage,
