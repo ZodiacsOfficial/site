@@ -55,7 +55,8 @@ describe('Terminal public-route split', () => {
     expect(consumer).toContain('aria-label="Astrofolio navigation"');
     expect(consumer).toContain('/assets/astrofolio/v2/zodiac-ring-192.png');
     expect(consumer).toContain('/assets/astrofolio/v2/leo/astrofolio.webmanifest');
-    expect(consumer).toContain('/assets/astrofolio/v2/leo/og-1200x630.png');
+    expect(consumer).toContain('/assets/og/astrofolio/v3/leo.png');
+    expect(consumer).toContain('<meta property="og:image:type" content="image/png" />');
     expect(consumer).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
     expect(pro).toContain('<title>Terminal · Live Prices, Liquidity &amp; Research · Zodiacs.org</title>');
     expect(pro).toContain('<h1 id="pro-static-title">Terminal</h1>');

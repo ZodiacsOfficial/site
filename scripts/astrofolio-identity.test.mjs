@@ -7,12 +7,15 @@ import pixelmatch from 'pixelmatch';
 import sharp from 'sharp';
 import { afterAll, describe, expect, it } from 'vitest';
 import {
+  ASTROFOLIO_OG_BASE,
   ASTROFOLIO_OG_MOTIF_GEOMETRY,
+  ASTROFOLIO_OG_VERSION,
   ASTROFOLIO_IDENTITY_VERSION,
   astrofolioOgCopy,
   astrofolioOgIdentitySources,
   astrofolioSeasonTitleLayout,
   buildAstrofolioIdentity,
+  buildAstrofolioOgFamily,
 } from './build-astrofolio-identity.mjs';
 import { resolveAstrofolioSeasonUtc, seasonsFromRegistry } from './astrofolio-season.mjs';
 
@@ -41,6 +44,12 @@ function semanticIdentityManifest(manifest) {
   for (const season of semantic.seasons) {
     for (const name of PLATFORM_RENDERED_ARTWORK) delete season.sha256[name];
   }
+  return semantic;
+}
+
+function semanticOgManifest(manifest) {
+  const semantic = structuredClone(manifest);
+  for (const season of semantic.seasons) delete season.sha256;
   return semantic;
 }
 
@@ -141,6 +150,31 @@ describe('Astrofolio seasonal identity generator', () => {
       schema: 'zodiacs.astrofolio-identity.v1',
       version: 'v1',
     });
+    expect(digest(await readFile(
+      resolve(root, 'public/assets/astrofolio/v2/manifest.json'),
+    ))).toBe('3a8022db544394d6676518ce664150f68478eab6a6a345ce37cb006a5316c981');
+  });
+
+  it('publishes cache-fresh social cards independently from the historical v2 identity', async () => {
+    expect(ASTROFOLIO_OG_VERSION).toBe('v3');
+    expect(ASTROFOLIO_OG_BASE).toBe('/assets/og/astrofolio/v3');
+    const social = JSON.parse(await readFile(
+      resolve(root, 'public/assets/og/astrofolio/v3/manifest.json'),
+      'utf8',
+    ));
+    expect(social).toMatchObject({
+      schema: 'zodiacs.astrofolio-og.v3',
+      version: 'v3',
+      base: ASTROFOLIO_OG_BASE,
+      type: 'image/png',
+      width: 1200,
+      height: 630,
+    });
+    expect(social.seasons).toHaveLength(12);
+    for (const season of seasons) {
+      const record = social.seasons.find(({ sign }) => sign === season.sign);
+      expect(record?.artwork?.og).toBe(`${ASTROFOLIO_OG_BASE}/${season.sign}.png`);
+    }
   });
 
   it('derives legible OG season copy from canonical Registry metadata', () => {
@@ -255,6 +289,31 @@ describe('Astrofolio seasonal identity generator', () => {
     }
   }, 60_000);
 
+  it('replays every v3 social card from the same deterministic seasonal composition', async () => {
+    const temporaryRoot = await mkdtemp(resolve(tmpdir(), 'astrofolio-og-'));
+    tempDirectories.push(temporaryRoot);
+    const outputDirectory = resolve(temporaryRoot, 'v3');
+    const replay = await buildAstrofolioOgFamily({ rootDirectory: root, outputDirectory });
+    const committed = JSON.parse(await readFile(
+      resolve(root, 'public/assets/og/astrofolio/v3/manifest.json'),
+      'utf8',
+    ));
+    expect(semanticOgManifest(replay)).toEqual(semanticOgManifest(committed));
+    for (const season of replay.seasons) {
+      const committedPath = resolve(root, `public/assets/og/astrofolio/v3/${season.sign}.png`);
+      expect(digest(await readFile(committedPath)), `${season.sign}: committed v3 OG integrity`)
+        .toBe(committed.seasons.find(({ sign }) => sign === season.sign)?.sha256);
+      await expectPixelEquivalent(
+        resolve(outputDirectory, `${season.sign}.png`),
+        committedPath,
+        `${season.sign}: v3 OG replay`,
+        {
+          crop: { left: 540, top: 0, width: 660, height: 630 },
+        },
+      );
+    }
+  }, 60_000);
+
   it('keeps avatars ring-only while OG cards restore the seasonal gold sculpture', async () => {
     for (const sign of ['leo', 'sagittarius', 'capricorn']) {
       const directory = resolve(root, `public/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}/${sign}`);
@@ -262,7 +321,7 @@ describe('Astrofolio seasonal identity generator', () => {
         sharp(resolve(directory, 'avatar-1024.png')).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
         sharp(resolve(directory, 'season-seal-192.png')).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
         sharp(resolve(directory, 'icon-192.png')).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
-        sharp(resolve(directory, 'og-1200x630.png')).raw().toBuffer({ resolveWithObject: true }),
+        sharp(resolve(root, `public/assets/og/astrofolio/v3/${sign}.png`)).raw().toBuffer({ resolveWithObject: true }),
       ]);
       const alphaAt = ({ data, info }, x, y) => data[(y * info.width + x) * info.channels + 3];
       expect(alphaAt(avatar, 0, 0), `${sign} avatar corner`).toBe(0);
@@ -313,6 +372,10 @@ describe('Astrofolio seasonal identity generator', () => {
   });
 
   it('keeps one installed-app identity while seasonal artwork rotates', async () => {
+    const social = JSON.parse(await readFile(resolve(
+      root,
+      `public/assets/og/astrofolio/${ASTROFOLIO_OG_VERSION}/manifest.json`,
+    ), 'utf8'));
     for (const season of seasons) {
       const manifest = JSON.parse(await readFile(resolve(
         root,
@@ -333,6 +396,9 @@ describe('Astrofolio seasonal identity generator', () => {
       expect(record?.ogSources).toEqual(astrofolioOgIdentitySources(season));
       expect(record?.artwork?.seasonSeal).toBe(
         `/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}/${season.sign}/season-seal-192.png`,
+      );
+      expect(social.seasons.find(({ sign }) => sign === season.sign)?.artwork?.og).toBe(
+        `${ASTROFOLIO_OG_BASE}/${season.sign}.png`,
       );
     }
   });

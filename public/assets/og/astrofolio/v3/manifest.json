@@ -1,0 +1,329 @@
+{
+  "schema": "zodiacs.astrofolio-og.v3",
+  "version": "v3",
+  "base": "/assets/og/astrofolio/v3",
+  "type": "image/png",
+  "width": 1200,
+  "height": 630,
+  "identityBase": "/assets/astrofolio/v2",
+  "motifGeometry": {
+    "size": 636,
+    "centerX": 877,
+    "centerY": 315,
+    "sculptureBox": 334
+  },
+  "seasons": [
+    {
+      "sign": "aries",
+      "displayName": "Aries",
+      "dateRange": "03-21 to 04-19",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Aries",
+        "sequence": "01 / 12",
+        "dateRange": "MAR 21 – APR 19",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "aries",
+        "displayName": "Aries",
+        "dateRange": "03-21 to 04-19",
+        "hue": "#DE8E79",
+        "icon": "/assets/zodiac-icons/128/aries.webp",
+        "sculpture": "/assets/sculptures/1024/aries.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/aries.png"
+      },
+      "sha256": "1537fcc448dec91fd72aafe2bf137410fe1157c08e30672fc60311544aa04620"
+    },
+    {
+      "sign": "taurus",
+      "displayName": "Taurus",
+      "dateRange": "04-20 to 05-20",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Taurus",
+        "sequence": "02 / 12",
+        "dateRange": "APR 20 – MAY 20",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "taurus",
+        "displayName": "Taurus",
+        "dateRange": "04-20 to 05-20",
+        "hue": "#B9D4BE",
+        "icon": "/assets/zodiac-icons/128/taurus.webp",
+        "sculpture": "/assets/sculptures/1024/taurus.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/taurus.png"
+      },
+      "sha256": "41d47ef09ed9bca603840ac9c39990e7b02415b9fb010ef3ebe8c542ecc0c0ab"
+    },
+    {
+      "sign": "gemini",
+      "displayName": "Gemini",
+      "dateRange": "05-21 to 06-20",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Gemini",
+        "sequence": "03 / 12",
+        "dateRange": "MAY 21 – JUN 20",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "gemini",
+        "displayName": "Gemini",
+        "dateRange": "05-21 to 06-20",
+        "hue": "#B29DD0",
+        "icon": "/assets/zodiac-icons/128/gemini.webp",
+        "sculpture": "/assets/sculptures/1024/gemini.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/gemini.png"
+      },
+      "sha256": "9fab19c23f8fad2bce46448ac6a78ae6d193903ece538957265e9abb332e9d1a"
+    },
+    {
+      "sign": "cancer",
+      "displayName": "Cancer",
+      "dateRange": "06-21 to 07-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Cancer",
+        "sequence": "04 / 12",
+        "dateRange": "JUN 21 – JUL 22",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "cancer",
+        "displayName": "Cancer",
+        "dateRange": "06-21 to 07-22",
+        "hue": "#B6D4E4",
+        "icon": "/assets/zodiac-icons/128/cancer.webp",
+        "sculpture": "/assets/sculptures/1024/cancer.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/cancer.png"
+      },
+      "sha256": "f365c8393ecd849d240ca472499f35cda6b74cb63ca0faee86e314bcf92a0425"
+    },
+    {
+      "sign": "leo",
+      "displayName": "Leo",
+      "dateRange": "07-23 to 08-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Leo",
+        "sequence": "05 / 12",
+        "dateRange": "JUL 23 – AUG 22",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "leo",
+        "displayName": "Leo",
+        "dateRange": "07-23 to 08-22",
+        "hue": "#E0A9B4",
+        "icon": "/assets/zodiac-icons/128/leo.webp",
+        "sculpture": "/assets/sculptures/1024/leo.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/leo.png"
+      },
+      "sha256": "6b0d9f21b0e976bfb1a0d36f6392e49f1e798fbee8ff8edf0d44d7b9ec7fba19"
+    },
+    {
+      "sign": "virgo",
+      "displayName": "Virgo",
+      "dateRange": "08-23 to 09-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Virgo",
+        "sequence": "06 / 12",
+        "dateRange": "AUG 23 – SEP 22",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "virgo",
+        "displayName": "Virgo",
+        "dateRange": "08-23 to 09-22",
+        "hue": "#B7D9B0",
+        "icon": "/assets/zodiac-icons/128/virgo.webp",
+        "sculpture": "/assets/sculptures/1024/virgo.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/virgo.png"
+      },
+      "sha256": "e07b771aca9084f95c5959b2bf52c4ef87aff2f3403fcbf6763c0edd38920213"
+    },
+    {
+      "sign": "libra",
+      "displayName": "Libra",
+      "dateRange": "09-23 to 10-22",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Libra",
+        "sequence": "07 / 12",
+        "dateRange": "SEP 23 – OCT 22",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "libra",
+        "displayName": "Libra",
+        "dateRange": "09-23 to 10-22",
+        "hue": "#D3A9DE",
+        "icon": "/assets/zodiac-icons/128/libra.webp",
+        "sculpture": "/assets/sculptures/1024/libra.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/libra.png"
+      },
+      "sha256": "085e76b9a30c48f8c2624f2adf82b0d88b6cf215c846d2542002ee778fbb19d7"
+    },
+    {
+      "sign": "scorpio",
+      "displayName": "Scorpio",
+      "dateRange": "10-23 to 11-21",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Scorpio",
+        "sequence": "08 / 12",
+        "dateRange": "OCT 23 – NOV 21",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "scorpio",
+        "displayName": "Scorpio",
+        "dateRange": "10-23 to 11-21",
+        "hue": "#B9DCE8",
+        "icon": "/assets/zodiac-icons/128/scorpio.webp",
+        "sculpture": "/assets/sculptures/1024/scorpio.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/scorpio.png"
+      },
+      "sha256": "0ee2c015681ce49d83cbe69646b5a2df839fe547c58c14961c1f4c94cf1b429e"
+    },
+    {
+      "sign": "sagittarius",
+      "displayName": "Sagittarius",
+      "dateRange": "11-22 to 12-21",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Sagittarius",
+        "sequence": "09 / 12",
+        "dateRange": "NOV 22 – DEC 21",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "sagittarius",
+        "displayName": "Sagittarius",
+        "dateRange": "11-22 to 12-21",
+        "hue": "#E0B080",
+        "icon": "/assets/zodiac-icons/128/sagittarius.webp",
+        "sculpture": "/assets/sculptures/1024/sagittarius.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/sagittarius.png"
+      },
+      "sha256": "042649790867a5b3029af0b4fbba7345f66a5fab9aa1d06e18f0e0da9b4f7472"
+    },
+    {
+      "sign": "capricorn",
+      "displayName": "Capricorn",
+      "dateRange": "12-22 to 01-19",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Capricorn",
+        "sequence": "10 / 12",
+        "dateRange": "DEC 22 – JAN 19",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "capricorn",
+        "displayName": "Capricorn",
+        "dateRange": "12-22 to 01-19",
+        "hue": "#C0DEA8",
+        "icon": "/assets/zodiac-icons/128/capricorn.webp",
+        "sculpture": "/assets/sculptures/1024/capricorn.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/capricorn.png"
+      },
+      "sha256": "05aab097d0604f2da011a0fef0cc12a3ab3e193f23e1c7a2a85ea1f034222476"
+    },
+    {
+      "sign": "aquarius",
+      "displayName": "Aquarius",
+      "dateRange": "01-20 to 02-18",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Aquarius",
+        "sequence": "11 / 12",
+        "dateRange": "JAN 20 – FEB 18",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "aquarius",
+        "displayName": "Aquarius",
+        "dateRange": "01-20 to 02-18",
+        "hue": "#AE8FC9",
+        "icon": "/assets/zodiac-icons/128/aquarius.webp",
+        "sculpture": "/assets/sculptures/1024/aquarius.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/aquarius.png"
+      },
+      "sha256": "9ca0b7ecb3c20354b503394e0d7cbe0ba54aa41105ced15988826998bbf1ea1d"
+    },
+    {
+      "sign": "pisces",
+      "displayName": "Pisces",
+      "dateRange": "02-19 to 03-20",
+      "ogCopy": {
+        "title": "Astrofolio",
+        "caption": "The Twelve Official Zodiacs",
+        "status": "NOW IN SEASON",
+        "season": "Pisces",
+        "sequence": "12 / 12",
+        "dateRange": "FEB 19 – MAR 20",
+        "timeZone": "UTC"
+      },
+      "ogSources": {
+        "sign": "pisces",
+        "displayName": "Pisces",
+        "dateRange": "02-19 to 03-20",
+        "hue": "#A9D4C4",
+        "icon": "/assets/zodiac-icons/128/pisces.webp",
+        "sculpture": "/assets/sculptures/1024/pisces.webp"
+      },
+      "artwork": {
+        "og": "/assets/og/astrofolio/v3/pisces.png"
+      },
+      "sha256": "09a2a897e85dac6f65dde009de4190ae08eb3a44a724cc18f9cf8c20108c9614"
+    }
+  ]
+}

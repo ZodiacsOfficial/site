@@ -18,6 +18,8 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 export const ASTROFOLIO_IDENTITY_VERSION = 'v2';
 export const ASTROFOLIO_IDENTITY_BASE = `/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}`;
+export const ASTROFOLIO_OG_VERSION = 'v3';
+export const ASTROFOLIO_OG_BASE = `/assets/og/astrofolio/${ASTROFOLIO_OG_VERSION}`;
 export const TERMINAL_OG_V6_PATH = '/assets/og/v6/terminal.png';
 export const ASTROFOLIO_OG_MOTIF_GEOMETRY = Object.freeze({
   size: 636,
@@ -428,6 +430,53 @@ async function composeAstrofolioOg(rootDirectory, fonts, season, seasonIndex) {
     .toBuffer();
 }
 
+/**
+ * Publish social cards independently from the installed-app identity package.
+ * A new versioned URL is intentional: social crawlers cache both successful
+ * and failed fetches, while the historical v2 icon and OG routes are immutable.
+ */
+export async function buildAstrofolioOgFamily({
+  rootDirectory = root,
+  outputDirectory = resolve(rootDirectory, `public/assets/og/astrofolio/${ASTROFOLIO_OG_VERSION}`),
+} = {}) {
+  const registry = await loadRegistry(rootDirectory);
+  const seasons = seasonsFromRegistry(registry);
+  const fonts = await loadIdentityFonts(rootDirectory);
+  const records = [];
+
+  await mkdir(outputDirectory, { recursive: true });
+  for (const [seasonIndex, season] of seasons.entries()) {
+    const bytes = await composeAstrofolioOg(rootDirectory, fonts, season, seasonIndex);
+    const filename = `${season.sign}.png`;
+    await writeFile(resolve(outputDirectory, filename), bytes);
+    records.push({
+      sign: season.sign,
+      displayName: season.displayName,
+      dateRange: season.dateRange,
+      ogCopy: astrofolioOgCopy(season, seasonIndex),
+      ogSources: astrofolioOgIdentitySources(season),
+      artwork: {
+        og: `${ASTROFOLIO_OG_BASE}/${filename}`,
+      },
+      sha256: hash(bytes),
+    });
+  }
+
+  const manifest = {
+    schema: 'zodiacs.astrofolio-og.v3',
+    version: ASTROFOLIO_OG_VERSION,
+    base: ASTROFOLIO_OG_BASE,
+    type: 'image/png',
+    width: 1200,
+    height: 630,
+    identityBase: ASTROFOLIO_IDENTITY_BASE,
+    motifGeometry: ASTROFOLIO_OG_MOTIF_GEOMETRY,
+    seasons: records,
+  };
+  await writeFile(resolve(outputDirectory, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
+  return manifest;
+}
+
 function terminalSvg(fontData) {
   const columns = Array.from({ length: 9 }, (_, index) => (
     `<path d="M${708 + index * 48} 108V520" stroke="#FFFFFF" stroke-opacity=".045"/>`
@@ -569,6 +618,14 @@ export async function buildAstrofolioIdentity({
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const manifest = await buildAstrofolioIdentity();
-  console.log(`Astrofolio identity: ${manifest.seasons.length} seasonal packages + Terminal v6 card written.`);
+  if (process.argv.includes('--og-only')) {
+    const manifest = await buildAstrofolioOgFamily();
+    console.log(`Astrofolio social cards: ${manifest.seasons.length} seasonal ${manifest.version} cards written.`);
+  } else {
+    const [identity, social] = await Promise.all([
+      buildAstrofolioIdentity(),
+      buildAstrofolioOgFamily(),
+    ]);
+    console.log(`Astrofolio identity: ${identity.seasons.length} seasonal packages + ${social.version} social cards + Terminal v6 card written.`);
+  }
 }

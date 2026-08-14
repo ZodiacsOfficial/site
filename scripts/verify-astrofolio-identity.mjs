@@ -6,6 +6,8 @@ import sharp from 'sharp';
 import { SIGN_ORDER } from './sign-data.mjs';
 import {
   ASTROFOLIO_OG_MOTIF_GEOMETRY,
+  ASTROFOLIO_OG_BASE,
+  ASTROFOLIO_OG_VERSION,
   ASTROFOLIO_IDENTITY_BASE,
   ASTROFOLIO_IDENTITY_VERSION,
   TERMINAL_OG_V6_PATH,
@@ -16,8 +18,10 @@ import { seasonsFromRegistry } from './astrofolio-season.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const output = resolve(root, `public/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}`);
+const ogOutput = resolve(root, `public/assets/og/astrofolio/${ASTROFOLIO_OG_VERSION}`);
 const failures = [];
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const HISTORICAL_V2_MANIFEST_SHA256 = '3a8022db544394d6676518ce664150f68478eab6a6a345ce37cb006a5316c981';
 
 async function image(path, expected, label) {
   let bytes;
@@ -252,6 +256,79 @@ if (manifest && registry) {
 }
 
 try {
+  const historicalV2Manifest = await readFile(resolve(output, 'manifest.json'));
+  if (digest(historicalV2Manifest) !== HISTORICAL_V2_MANIFEST_SHA256) {
+    failures.push('historical v2 identity: immutable manifest drift');
+  }
+} catch {
+  // The family-input check above reports the missing manifest.
+}
+
+let ogManifest;
+try {
+  ogManifest = JSON.parse(await readFile(resolve(ogOutput, 'manifest.json'), 'utf8'));
+} catch (error) {
+  failures.push(`Astrofolio v3 OG manifest: ${error instanceof Error ? error.message : 'missing or invalid'}`);
+}
+
+if (ogManifest && registry) {
+  const registrySeasons = seasonsFromRegistry(registry);
+  if (ogManifest.schema !== 'zodiacs.astrofolio-og.v3') failures.push('Astrofolio v3 OG manifest: schema drift');
+  if (ogManifest.version !== ASTROFOLIO_OG_VERSION) failures.push('Astrofolio v3 OG manifest: version drift');
+  if (ogManifest.base !== ASTROFOLIO_OG_BASE) failures.push('Astrofolio v3 OG manifest: base drift');
+  if (ogManifest.type !== 'image/png') failures.push('Astrofolio v3 OG manifest: MIME type drift');
+  if (ogManifest.width !== 1200 || ogManifest.height !== 630) failures.push('Astrofolio v3 OG manifest: dimensions drift');
+  if (ogManifest.identityBase !== ASTROFOLIO_IDENTITY_BASE) failures.push('Astrofolio v3 OG manifest: identity base drift');
+  if (JSON.stringify(ogManifest.motifGeometry) !== JSON.stringify(ASTROFOLIO_OG_MOTIF_GEOMETRY)) {
+    failures.push('Astrofolio v3 OG manifest: motif geometry drift');
+  }
+  if (JSON.stringify(ogManifest.seasons.map(({ sign }) => sign)) !== JSON.stringify(SIGN_ORDER)) {
+    failures.push('Astrofolio v3 OG manifest: seasonal sign order drift');
+  }
+
+  const expectedFiles = [...SIGN_ORDER.map((sign) => `${sign}.png`), 'manifest.json'].sort();
+  try {
+    const found = (await readdir(ogOutput)).sort();
+    if (JSON.stringify(found) !== JSON.stringify(expectedFiles)) {
+      failures.push(`Astrofolio v3 OG: expected exactly ${expectedFiles.length} files; found ${found.length}`);
+    }
+  } catch {
+    failures.push('Astrofolio v3 OG: output directory missing');
+  }
+
+  const hashes = new Set();
+  for (const season of registrySeasons) {
+    const record = ogManifest.seasons.find(({ sign }) => sign === season.sign);
+    if (!record) {
+      failures.push(`${season.sign}: missing Astrofolio v3 OG record`);
+      continue;
+    }
+    if (record.displayName !== season.displayName || record.dateRange !== season.dateRange) {
+      failures.push(`${season.sign}: Astrofolio v3 OG Registry metadata drift`);
+    }
+    if (JSON.stringify(record.ogCopy) !== JSON.stringify(astrofolioOgCopy(season, SIGN_ORDER.indexOf(season.sign)))) {
+      failures.push(`${season.sign}: Astrofolio v3 OG copy drift`);
+    }
+    if (JSON.stringify(record.ogSources) !== JSON.stringify(astrofolioOgIdentitySources(season))) {
+      failures.push(`${season.sign}: Astrofolio v3 OG sources drift`);
+    }
+    const expectedRoute = `${ASTROFOLIO_OG_BASE}/${season.sign}.png`;
+    if (record.artwork?.og !== expectedRoute) failures.push(`${season.sign}: Astrofolio v3 OG artwork route drift`);
+    const bytes = await image(
+      resolve(ogOutput, `${season.sign}.png`),
+      { width: 1200, height: 630, format: 'png' },
+      `Astrofolio v3 OG/${season.sign}.png`,
+    );
+    if (!bytes) continue;
+    const sha256 = digest(bytes);
+    if (record.sha256 !== sha256) failures.push(`${season.sign}: Astrofolio v3 OG digest drift`);
+    hashes.add(sha256);
+    await verifyOgSculpture(bytes, `Astrofolio v3 OG/${season.sign}.png`);
+  }
+  if (hashes.size !== 12) failures.push(`Astrofolio v3 OG: expected 12 byte-distinct cards, found ${hashes.size}`);
+}
+
+try {
   const historical = JSON.parse(await readFile(resolve(root, 'public/assets/astrofolio/v1/manifest.json'), 'utf8'));
   if (historical.version !== 'v1' || historical.schema !== 'zodiacs.astrofolio-identity.v1') {
     failures.push('historical v1 identity: immutable manifest drift');
@@ -274,6 +351,7 @@ try {
   if (svgSource.includes('${copy.status} · ${copy.sequence}') || svgSource.includes('ONE SEASON · ONE OFFICIAL RECORD')) failures.push('Astrofolio OG: retired microcopy returned');
   if (!svgSource.includes("'season-seal-192.png': seasonSeal")) failures.push('Astrofolio identity: transparent on-page seal is not locked');
   if (!svgSource.includes('normalizeOgSculpture') || !svgSource.includes('input: sculpture') || !svgSource.includes('composeAstrofolioOg(rootDirectory, fonts')) failures.push('Astrofolio OG: seasonal sculpture is not isolated to the social-card composition');
+  if (!svgSource.includes('buildAstrofolioOgFamily') || !svgSource.includes('public/assets/og/astrofolio/${ASTROFOLIO_OG_VERSION}')) failures.push('Astrofolio OG: dedicated immutable v3 family is not locked');
   if (!svgSource.includes('composeOgZodiacDiscs') || !svgSource.includes('withAtmosphere: false') || !svgSource.includes('withSelectedHalo: false')) failures.push('Astrofolio OG: twelve-disc motif without circle treatments is not locked');
   if (ASTROFOLIO_OG_MOTIF_GEOMETRY.size !== 636 || ASTROFOLIO_OG_MOTIF_GEOMETRY.centerX !== 877 || ASTROFOLIO_OG_MOTIF_GEOMETRY.sculptureBox !== 334) failures.push('Astrofolio OG: enlarged left-shifted motif geometry drift');
   if (svgSource.includes('avatarTitleSvg') || svgSource.includes('classicAvatarTitleBandSvg') || svgSource.includes('ringBackdropSvg')) failures.push('Astrofolio avatar: filled field or seasonal title returned');
@@ -287,5 +365,5 @@ if (failures.length) {
   for (const failure of failures) console.error(`- ${failure}`);
   process.exitCode = 1;
 } else {
-  console.log('verify-astrofolio-identity: OK — 12 deterministic v2 seasonal packages + transparent seals + distinct Terminal v6 card');
+  console.log('verify-astrofolio-identity: OK — immutable v2 identity + 12 deterministic v3 social cards + distinct Terminal v6 card');
 }
