@@ -52,7 +52,7 @@ function projection(overrides: Partial<GuideProviderProjection> = {}): GuideProv
     },
     attachments: [],
     publicKnowledge: {
-      version: 'guide-public-knowledge-2026-08-13.1',
+      version: 'guide-public-knowledge-2026-08-14.1',
       entries: [{
         id: 'astrology-method',
         title: 'How Zodiacs.org treats astrology',
@@ -275,6 +275,48 @@ describe('Guide OpenAI provider boundary', () => {
       new AbortController().signal,
       { fetcher: allowedFetcher as typeof fetch },
     )).resolves.toMatchObject({ outputText: 'See [Methodology](/methodology/).' });
+
+    const moonProjection = projection({
+      publicKnowledge: {
+        version: 'guide-public-knowledge-2026-08-14.1',
+        entries: [{
+          id: 'moon-sign',
+          title: 'Moon sign',
+          canonicalPath: '/moon-sign/',
+          topics: ['moon sign', 'sun sign'],
+          facts: 'The Sun and Moon signs describe different parts of a chart.',
+        }],
+        allowedPaths: ['/moon-sign/'],
+      },
+    });
+    const allowedMoonFetcher = openAIFetch(() => streamWithText(
+      'Compare the two at /moon-sign/.',
+    ));
+    await expect(streamGuideOpenAIResponse(
+      'sk-server-only-example-value',
+      moonProjection,
+      () => {},
+      new AbortController().signal,
+      { fetcher: allowedMoonFetcher as typeof fetch },
+    )).resolves.toMatchObject({ outputText: 'Compare the two at /moon-sign/.' });
+
+    const unselectedMoonFetcher = openAIFetch(() => streamWithText(
+      'Compare the two at /moon-sign/.',
+    ));
+    await expect(streamGuideOpenAIResponse(
+      'sk-server-only-example-value',
+      projection(),
+      () => {},
+      new AbortController().signal,
+      { fetcher: unselectedMoonFetcher as typeof fetch },
+    )).rejects.toMatchObject({
+      code: 'invalid_response',
+      diagnostic: {
+        event: 'guide_provider_diagnostic_v1',
+        stage: 'generation',
+        reason: 'output_policy',
+      },
+    });
 
     const disallowedFetcher = openAIFetch(() => streamWithText('Visit https://evil.example now.'));
     await expect(streamGuideOpenAIResponse(

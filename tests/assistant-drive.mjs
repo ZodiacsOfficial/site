@@ -136,7 +136,7 @@ async function installGuideRoute(page, requests) {
     const chart = body.ephemeralContext.baseContext.ownerChart.source;
     const answer = chart
       ? 'Your placements can be read practically. Continue at /birth-chart/.'
-      : 'A practical answer grounded in Zodiacs.org. Continue at /learn/.';
+      : 'A practical answer grounded in Zodiacs.org. Continue at /learn/ or /moon-sign/.';
     await route.fulfill({ status: 200, contentType: 'text/event-stream', body: guideEvents(body, answer) });
   });
 }
@@ -272,7 +272,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       && first.ephemeralContext.attachments[0].kind === 'site_page'
       && first.ephemeralContext.attachments[0].sourceId === 'page:guide');
     check('request leaks no query or saved PII', !/must-not-leak|Secret Person|private-chart-id|1990-04-17|08:45|Bangkok|13\.7563|100\.5018/.test(JSON.stringify(first)));
-    check('approved response paths become safe links', await page.locator('.zassistant__link[href="/learn/"]').count() === 1);
+    check('approved response paths become safe links',
+      await page.locator('.zassistant__link[href="/learn/"]').count() === 1
+        && await page.locator('.zassistant__link[href="/moon-sign/"]').count() === 1);
 
     const conversationId = first.conversationId;
     await page.goto(`${baseURL}/learn/`, { waitUntil: 'networkidle' });

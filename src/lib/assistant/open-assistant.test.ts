@@ -10,6 +10,7 @@ import {
   selectedSelfChartFromJson,
 } from './open-assistant';
 import { GUIDE_CLOUD_DISCLOSURE_POLICY_VERSION } from '../guide-server/policy';
+import { GUIDE_KNOWLEDGE_ENTRIES } from '../guide-knowledge/catalog';
 
 const ACCOUNT_ID = '11111111-1111-4111-8111-111111111111';
 const OLDER_ID = '22222222-2222-4222-8222-222222222222';
@@ -236,10 +237,23 @@ describe('Guide response links', () => {
       source.indexOf('export function renderAssistantText'),
       source.indexOf('function scrollTranscript'),
     );
+    const moonPath = GUIDE_KNOWLEDGE_ENTRIES.find(({ id }) => id === 'moon-sign')?.canonicalPath;
+    expect(moonPath).toBe('/moon-sign/');
+    expect(allowlist).toContain(`'${moonPath}'`);
     expect(allowlist).toContain("'/sdk/#astrofolio'");
     expect(allowlist).not.toContain("'/private/'");
     expect(renderer).toContain('GUIDE_LINK_PATHS.has(`${url.pathname}${url.hash}`)');
     expect(renderer).toContain("url.search === ''");
+  });
+
+  it('uses a dedicated fixed catalog selector for Moon-sign pages', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    const pageCatalog = source.slice(
+      source.indexOf('const PAGE_CATALOG'),
+      source.indexOf('function clearPendingRetry'),
+    );
+    expect(pageCatalog).toContain("'moon-sign': { title: 'Moon sign'");
+    expect(pageCatalog).toContain("if (/^\\/moon-sign(?:\\/|$)/.test(path)) return 'moon-sign';");
   });
 });
 

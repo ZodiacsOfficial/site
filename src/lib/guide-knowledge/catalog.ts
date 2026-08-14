@@ -2,7 +2,7 @@
  * Public, server-curated facts for Guide. This catalog contains no user data
  * and is deliberately separate from visible/private conversation sources.
  */
-export const GUIDE_KNOWLEDGE_VERSION = 'guide-public-knowledge-2026-08-13.1' as const;
+export const GUIDE_KNOWLEDGE_VERSION = 'guide-public-knowledge-2026-08-14.1' as const;
 
 export interface GuideKnowledgeEntry {
   id: string;
@@ -26,6 +26,13 @@ export const GUIDE_KNOWLEDGE_ENTRIES: readonly GuideKnowledgeEntry[] = Object.fr
     canonicalPath: '/birth-chart/',
     topics: ['birth', 'natal', 'chart', 'sun', 'moon', 'rising', 'ascendant', 'houses', 'aspects'],
     facts: 'The Zodiacs.org birth-chart calculator computes planetary positions in the browser. A complete chart can include the Sun, Moon, rising sign, houses, and aspects. If birth time is unknown, the site uses 12:00 local civil time as a reference for body positions and omits the rising sign, angles, and houses.',
+  },
+  {
+    id: 'moon-sign',
+    title: 'Moon sign',
+    canonicalPath: '/moon-sign/',
+    topics: ['moon sign', 'sun sign', 'sun versus moon', 'big three', 'emotional needs', 'instincts', 'birth time', 'calculator'],
+    facts: 'The Sun sign is the tropical sign containing the Sun at a birth instant, while the Moon sign is the tropical sign containing the Moon. In Zodiacs.org’s traditional interpretive language, the Sun describes identity, vitality, and direction, while the Moon describes emotional needs, instincts, memory, and habits. Neither is more accurate; they describe different parts of a chart. Because the Moon moves quickly, birth time can decide the Moon sign on a sign-boundary day. The canonical calculator and explanation are at /moon-sign/.',
   },
   {
     id: 'astrology-method',

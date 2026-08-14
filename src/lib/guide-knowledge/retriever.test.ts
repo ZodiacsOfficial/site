@@ -20,6 +20,27 @@ describe('Guide public knowledge', () => {
     expect(resolveGuidePageKnowledge('page:not-published')).toBeNull();
   });
 
+  it('grounds Sun-versus-Moon questions in the canonical Moon-sign page', () => {
+    const result = selectGuideKnowledge(
+      'What is the difference between a sun sign and a moon sign?',
+    );
+    expect(result.entries[0]).toMatchObject({
+      id: 'moon-sign',
+      canonicalPath: '/moon-sign/',
+    });
+    expect(result.entries[0]?.facts).toContain('Neither is more accurate');
+    expect(result.allowedPaths).toContain('/moon-sign/');
+    const fromGuidePage = selectGuideKnowledge(
+      'How is that different from a Moon sign?',
+      'page:guide',
+    );
+    expect(fromGuidePage.entries.some(({ id }) => id === 'moon-sign')).toBe(true);
+    expect(fromGuidePage.allowedPaths).toContain('/moon-sign/');
+    expect(resolveGuidePageKnowledge('page:moon-sign')?.canonicalPath).toBe('/moon-sign/');
+    expect(selectGuideKnowledge('Help me understand this', 'page:moon-sign').entries[0]?.id)
+      .toBe('moon-sign');
+  });
+
   it('grounds unknown astrology questions in method rather than inventing site facts', () => {
     const result = selectGuideKnowledge('quincunx');
     expect(result.entries).toHaveLength(1);

@@ -273,6 +273,7 @@ const STREAM_SCHEMA = 'zodiacs.guide.stream-event.draft.v1';
 const GUIDE_LINK_PATHS = new Set([
   '/ask/',
   '/birth-chart/',
+  '/moon-sign/',
   '/methodology/',
   '/transits/',
   '/compatibility/',
@@ -517,6 +518,7 @@ function getSession(): GuideSession {
 const PAGE_CATALOG = {
   guide: { title: 'Guide', facts: 'The current page is the canonical Guide home at /ask/.' },
   'birth-chart': { title: 'Birth chart', facts: 'The current page is part of the Zodiacs.org birth-chart calculator.' },
+  'moon-sign': { title: 'Moon sign', facts: 'The current page is the canonical Zodiacs.org Moon-sign calculator and explanation at /moon-sign/.' },
   'astrology-method': { title: 'Astrology method', facts: 'The current page explains how Zodiacs.org separates astronomical calculation from astrological interpretation.' },
   transits: { title: 'Transits', facts: 'The current page is part of the Zodiacs.org current-sky and transit tools.' },
   compatibility: { title: 'Compatibility', facts: 'The current page is part of the Zodiacs.org chart-comparison and compatibility guides.' },
@@ -535,7 +537,8 @@ type PageCatalogId = keyof typeof PAGE_CATALOG;
 function approvedPageId(pathname: string): PageCatalogId | null {
   const path = pathname.replace(/^\/(?:es|pt|fr|it|ru)(?=\/|$)/, '') || '/';
   if (path === '/ask/' || path === '/ask') return 'guide';
-  if (/^\/(?:birth-chart|moon-sign|rising-sign|solar-return|saturn-return|baby-zodiac)(?:\/|$)/.test(path)) return 'birth-chart';
+  if (/^\/moon-sign(?:\/|$)/.test(path)) return 'moon-sign';
+  if (/^\/(?:birth-chart|rising-sign|solar-return|saturn-return|baby-zodiac)(?:\/|$)/.test(path)) return 'birth-chart';
   if (/^\/methodology(?:\/|$)/.test(path)) return 'astrology-method';
   if (/^\/(?:transits|events|moon-phase|full-moon-calendar|eclipses|retrogrades|mercury-retrograde)(?:\/|$)/.test(path)) return 'transits';
   if (/^\/compatibility(?:\/|$)/.test(path)) return 'compatibility';

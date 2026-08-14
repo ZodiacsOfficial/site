@@ -28,7 +28,7 @@ const ENV = {
 };
 
 const PUBLIC_KNOWLEDGE = {
-  version: 'guide-public-knowledge-2026-08-13.1' as const,
+  version: 'guide-public-knowledge-2026-08-14.1' as const,
   entries: [],
   allowedPaths: [],
 };
