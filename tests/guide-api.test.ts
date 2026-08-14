@@ -486,6 +486,56 @@ describe('POST /v1/guide/turn protected web endpoint', () => {
     expect(decoded.ok && decoded.request.conversationId).toBe(GUIDE_TEST_IDS.conversation);
   });
 
+  it('prefers the raw Vercel stream over lazy body parsing at the byte and UTF-8 bounds', async () => {
+    const value = ephemeralTurn();
+    const encoded = Buffer.from(JSON.stringify(value), 'utf8');
+    const streamedRequest = (raw: Buffer, lazyBody: () => unknown) => {
+      let bodyReads = 0;
+      const candidate = request(value, { body: undefined });
+      candidate.headers['content-length'] = String(raw.byteLength);
+      Object.defineProperty(candidate, 'body', {
+        configurable: true,
+        get() {
+          bodyReads += 1;
+          return lazyBody();
+        },
+      });
+      candidate[Symbol.asyncIterator] = async function* () {
+        yield raw.subarray(0, Math.ceil(raw.byteLength / 2));
+        yield raw.subarray(Math.ceil(raw.byteLength / 2));
+      };
+      return { candidate, bodyReads: () => bodyReads };
+    };
+
+    for (const lazyBody of [
+      () => { throw new Error('Vercel lazy parser must stay untouched'); },
+      () => value,
+    ]) {
+      const streamed = streamedRequest(encoded, lazyBody);
+      const decoded = await readGuideHttpTurnRequest(streamed.candidate);
+      expect(decoded.ok && decoded.request.conversationId).toBe(GUIDE_TEST_IDS.conversation);
+      expect(streamed.bodyReads()).toBe(0);
+    }
+
+    const exactLimit = Buffer.alloc(GUIDE_LIMITS.requestBytes, 0x20);
+    encoded.copy(exactLimit);
+    const exact = streamedRequest(exactLimit, () => value);
+    expect((await readGuideHttpTurnRequest(exact.candidate)).ok).toBe(true);
+    expect(exact.bodyReads()).toBe(0);
+
+    const overLimit = streamedRequest(
+      Buffer.concat([exactLimit, Buffer.from(' ')]),
+      () => value,
+    );
+    delete overLimit.candidate.headers['content-length'];
+    expect(await readGuideHttpTurnRequest(overLimit.candidate)).toEqual({ ok: false, status: 413 });
+    expect(overLimit.bodyReads()).toBe(0);
+
+    const malformedUtf8 = streamedRequest(Buffer.from([0xc3, 0x28]), () => value);
+    expect(await readGuideHttpTurnRequest(malformedUtf8.candidate)).toEqual({ ok: false, status: 400 });
+    expect(malformedUtf8.bodyReads()).toBe(0);
+  });
+
   it('rejects wrong method, action, origin, media type, and runtime-parsed bodies', async () => {
     const authorizeTurn = vi.fn();
     const handler = createGuideHandler({ env: ENV, authorizeTurn });

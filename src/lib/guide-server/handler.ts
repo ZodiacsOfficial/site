@@ -182,20 +182,7 @@ export async function readGuideHttpTurnRequest(req: any): Promise<RawTurnResult>
   if (declared !== null && declared > GUIDE_LIMITS.requestBytes) return { ok: false, status: 413 };
 
   let bytes: Buffer;
-  let preset: unknown;
-  try {
-    preset = req.body;
-  } catch {
-    return { ok: false, status: 400 };
-  }
-  if (typeof preset === 'string') {
-    bytes = Buffer.from(preset, 'utf8');
-  } else if (Buffer.isBuffer(preset) || preset instanceof Uint8Array) {
-    bytes = Buffer.from(preset);
-  } else if (preset !== undefined && preset !== null) {
-    // A parsed object means the runtime touched JSON before this guard.
-    return { ok: false, status: 400 };
-  } else if (req && typeof req[Symbol.asyncIterator] === 'function') {
+  if (req && typeof req[Symbol.asyncIterator] === 'function') {
     const chunks: Buffer[] = [];
     let total = 0;
     try {
@@ -215,7 +202,20 @@ export async function readGuideHttpTurnRequest(req: any): Promise<RawTurnResult>
     }
     bytes = Buffer.concat(chunks, total);
   } else {
-    return { ok: false, status: 400 };
+    let preset: unknown;
+    try {
+      preset = req.body;
+    } catch {
+      return { ok: false, status: 400 };
+    }
+    if (typeof preset === 'string') {
+      bytes = Buffer.from(preset, 'utf8');
+    } else if (Buffer.isBuffer(preset) || preset instanceof Uint8Array) {
+      bytes = Buffer.from(preset);
+    } else {
+      // A parsed object means the runtime touched JSON before this guard.
+      return { ok: false, status: 400 };
+    }
   }
   if (bytes.byteLength > GUIDE_LIMITS.requestBytes) return { ok: false, status: 413 };
   if (declared !== null && declared !== bytes.byteLength) return { ok: false, status: 400 };
