@@ -40,6 +40,7 @@
     "data:i18n-additions": "node scripts/build-i18n-additions.mjs",
     "data:pwa-icons": "node scripts/build-pwa-icons.mjs",
     "data:astrofolio-identity": "node scripts/build-astrofolio-identity.mjs",
+    "data:astrofolio-og": "node scripts/build-astrofolio-identity.mjs --og-only",
     "data:astrofolio-identity:verify": "node scripts/verify-astrofolio-identity.mjs",
     "data:widgets": "node scripts/build-widget-loader.mjs",
     "data:sky": "node scripts/build-sky.mjs",
