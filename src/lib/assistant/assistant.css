@@ -327,7 +327,7 @@
   background: rgba(15, 18, 26, 0.94);
   box-shadow: 0 15px 40px -16px rgba(0, 0, 0, 0.9), inset 0 1px rgba(255, 255, 255, 0.05);
   color: #eef1f7;
-  font: 600 14px/1 'Instrument Sans', system-ui, sans-serif;
+  font: 600 14px/1 var(--font-sans);
   cursor: pointer;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -345,14 +345,14 @@
   background: rgba(15, 18, 26, 0.97);
   box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.9);
   color: #eef1f7;
-  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-family: var(--font-sans);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   animation: zguide-welcome-in 240ms ease-out both;
 }
 .zguide-invite__identity { display: flex; align-items: center; gap: 11px; padding-right: 36px; }
 .zguide-invite__avatar { width: 44px; height: 44px; }
-.zguide-invite strong { display: block; font: 500 20px/1.2 'EB Garamond', Georgia, serif; }
+.zguide-invite strong { display: block; font: 500 20px/1.2 var(--font-serif); }
 .zguide-invite p { margin: 10px 24px 13px 0; color: #c6ccda; font-size: 13px; line-height: 1.5; }
 .zguide-invite__dismiss {
   position: absolute;
@@ -375,7 +375,7 @@
   border-radius: 999px;
   background: #eef1f7;
   color: #060709;
-  font: 650 12px/1 'Instrument Sans', system-ui, sans-serif;
+  font: 650 12px/1 var(--font-sans);
   cursor: pointer;
 }
 @keyframes zguide-welcome-in {

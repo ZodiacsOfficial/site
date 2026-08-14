@@ -257,6 +257,21 @@ describe('Guide response links', () => {
   });
 });
 
+describe('Guide typography boundary', () => {
+  it('keeps launcher and welcome fonts on the page-owned no-swap tokens', async () => {
+    const css = await readFile(new URL('./assistant.css', import.meta.url), 'utf8');
+    const proactiveSurfaces = css.slice(
+      css.indexOf('.zguide-launcher {'),
+      css.indexOf('@keyframes zguide-welcome-in'),
+    );
+    expect(proactiveSurfaces).toContain('font: 600 14px/1 var(--font-sans);');
+    expect(proactiveSurfaces).toContain('font-family: var(--font-sans);');
+    expect(proactiveSurfaces).toContain('font: 500 20px/1.2 var(--font-serif);');
+    expect(proactiveSurfaces).toContain('font: 650 12px/1 var(--font-sans);');
+    expect(proactiveSurfaces).not.toMatch(/['"](?:Instrument Sans|EB Garamond)['"]/u);
+  });
+});
+
 describe('Guide avatar identity', () => {
   it('ships one bounded local derivative and uses it accessibly across Guide surfaces', async () => {
     const root = new URL('../../../', import.meta.url);
