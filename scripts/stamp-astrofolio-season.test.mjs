@@ -7,6 +7,8 @@ describe('Astrofolio build-season stamp', () => {
       '<link rel="icon" href="/assets/astrofolio/v1/leo/favicon.svg" />',
       '<link rel="manifest" href="/assets/astrofolio/v1/leo/astrofolio.webmanifest" />',
       '<meta property="og:image" content="https://zodiacs.org/assets/astrofolio/v1/leo/og-1200x630.png" />',
+      '<meta name="twitter:image" content="https://zodiacs.org/assets/og/astrofolio/v3/leo.png" />',
+      '<script type="application/ld+json">{"image":"https://zodiacs.org/assets/og/astrofolio/v3/leo.png"}</script>',
       '<img src="/assets/astrofolio/v1/leo/icon-192.png" alt="">',
       '<img src="/assets/astrofolio/v2/zodiac-ring-192.png" alt="">',
       '<strong data-astrofolio-season-name style="--season-hue:#E0A9B4">Leo</strong> Season',
@@ -16,7 +18,8 @@ describe('Astrofolio build-season stamp', () => {
     ].join('\n');
     const stamped = stampAstrofolioSeason(source, 'virgo');
     expect(stamped).not.toContain('/leo/');
-    expect(stamped.match(/\/assets\/astrofolio\/v2\/virgo\//gu)).toHaveLength(4);
+    expect(stamped.match(/\/assets\/astrofolio\/v2\/virgo\//gu)).toHaveLength(3);
+    expect(stamped.match(/\/assets\/og\/astrofolio\/v3\/virgo\.png/gu)).toHaveLength(3);
     expect(stamped).toContain('/assets/astrofolio/v2/zodiac-ring-192.png');
     expect(stamped).toContain('style="--season-hue:#B7D9B0">Virgo</strong> Season');
     expect(stamped).not.toContain('id="astrofolio-leo" checked');
@@ -24,7 +27,8 @@ describe('Astrofolio build-season stamp', () => {
 
     const restamped = stampAstrofolioSeason(stamped, 'libra');
     expect(restamped).not.toContain('/virgo/');
-    expect(restamped.match(/\/assets\/astrofolio\/v2\/libra\//gu)).toHaveLength(4);
+    expect(restamped.match(/\/assets\/astrofolio\/v2\/libra\//gu)).toHaveLength(3);
+    expect(restamped.match(/\/assets\/og\/astrofolio\/v3\/libra\.png/gu)).toHaveLength(3);
     expect(restamped).toContain('style="--season-hue:#D3A9DE">Libra</strong> Season');
     expect(restamped).not.toContain('id="astrofolio-virgo" checked');
     expect(restamped).toContain('id="astrofolio-libra" checked');

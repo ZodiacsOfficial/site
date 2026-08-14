@@ -6,7 +6,10 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ASTROFOLIO_IDENTITY_BASE } from './build-astrofolio-identity.mjs';
+import {
+  ASTROFOLIO_IDENTITY_BASE,
+  ASTROFOLIO_OG_BASE,
+} from './build-astrofolio-identity.mjs';
 import { resolveAstrofolioSeasonUtc, seasonsFromRegistry } from './astrofolio-season.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -21,6 +24,14 @@ export function stampAstrofolioSeason(html, sign) {
   const source = String(html);
   const seasonName = `${sign.charAt(0).toUpperCase()}${sign.slice(1)}`;
   const next = source
+    .replace(
+      /\/assets\/astrofolio\/v\d+\/[a-z]+\/og-1200x630\.png/gu,
+      `${ASTROFOLIO_OG_BASE}/${sign}.png`,
+    )
+    .replace(
+      /\/assets\/og\/astrofolio\/v\d+\/[a-z]+\.png/gu,
+      `${ASTROFOLIO_OG_BASE}/${sign}.png`,
+    )
     .replace(
       /\/assets\/astrofolio\/v\d+\/[a-z]+\//gu,
       `${ASTROFOLIO_IDENTITY_BASE}/${sign}/`,
@@ -39,6 +50,9 @@ export function stampAstrofolioSeason(html, sign) {
     );
   if (!next.includes(`${ASTROFOLIO_IDENTITY_BASE}/${sign}/`)) {
     throw new Error(`Astrofolio season stamp could not find the ${sign} identity package`);
+  }
+  if (!next.includes(`${ASTROFOLIO_OG_BASE}/${sign}.png`)) {
+    throw new Error(`Astrofolio season stamp could not find the ${sign} social card`);
   }
   if (!next.includes(`id="astrofolio-${sign}" checked`)) {
     throw new Error(`Astrofolio season stamp could not select ${sign} in the no-JavaScript vitrine`);
