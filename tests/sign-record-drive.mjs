@@ -186,7 +186,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
     });
     check('no-JavaScript record keeps the simple path and disclosures visible',
       noJsState.quickVisible
-        && /Daily snapshot shown/.test(noJsState.status)
+        && /Showing the latest saved price/.test(noJsState.status)
         && noJsState.detailVisible
         && /only shows information/.test(noJsState.recordSafety)
         && noJsState.acquireAliases === 1
@@ -234,7 +234,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
     await chart.goto(`${baseURL}/registry/leo/`, { waitUntil: 'domcontentloaded' });
     await chart.locator('[data-market]').scrollIntoViewIfNeeded();
     await chart.locator('[data-live-price]').waitFor({ state: 'visible' });
-    await chart.waitForFunction(() => document.querySelector('[data-live-price]')?.textContent !== '—');
+    await chart.waitForFunction(() => document.querySelector('[data-live-state]')?.textContent?.includes('Current price checked at'));
     const liveState = await chart.locator('[data-live-quote]').evaluate((panel) => {
       const label = panel.querySelector('[data-live-price-label]');
       return {
@@ -288,7 +288,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         && chartState.metrics.length === 2
         && chartState.metrics.includes('Total market value')
         && chartState.metrics.includes('Traded in 24 hours')
-        && chartState.live === 'https://dexscreener.com/solana/fixture-leo',
+        && chartState.live === 'https://dexscreener.com/solana/live-leo',
       JSON.stringify(chartState));
     check('archive chart runtime is error free', chartErrors.length === 0, chartErrors.join(' | '));
     await chart.close();

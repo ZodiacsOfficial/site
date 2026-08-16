@@ -74,7 +74,7 @@ await withPreview({ port: 4412 }, async (baseURL) => {
     const noJsState = await noJs.evaluate(() => ({
       records: document.querySelectorAll('[data-registry-record]').length,
       addresses: document.querySelectorAll('.record__network code').length,
-      noScript: document.querySelector('noscript')?.textContent.includes('browser’s Find command'),
+      noScript: document.querySelector('noscript')?.textContent.includes('The complete list is still shown above.'),
       documentWidth: document.documentElement.scrollWidth,
       viewportWidth: innerWidth,
     }));
