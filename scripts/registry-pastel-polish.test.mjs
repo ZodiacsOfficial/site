@@ -208,7 +208,7 @@ describe('registry pastel polish', () => {
       expect(value).toContain('gap: 10px;');
       expect(value).toContain('@media (min-width: 820px) { .wnav { gap: 18px; } }');
       expect(value).toContain('rgba(198,204,218,0.16)');
-      expect(value).toContain('width: 34px; height: 34px;');
+      expect(cssRule(value, '.wnav__burger {')).toContain('width: 34px; height: 34px;');
       expect(value).toContain('width: 18px; height: 1.5px;');
       expect(value).toContain('position: absolute; top: 50%; left: 50%;');
       expect(value).toContain('translate(-50%, calc(-50% - 5px))');
@@ -280,8 +280,6 @@ describe('registry pastel polish', () => {
   it.each(signs)('renders the %s token record in plain language with market and constellation context', async (slug, name) => {
     const html = await read(`public/registry/${slug}/index.html`);
     const title = `<h1 class="lot__title" id="lot-title">${name} <picture class="lot__title-icon" aria-hidden="true">`;
-    const nextIndex = (signs.findIndex(([candidate]) => candidate === slug) + 1) % signs.length;
-    const [nextSlug, nextName] = signs[nextIndex];
 
     expect(html).toContain(title);
     expect(html).toContain(`srcset="/assets/zodiac-icons/400/${slug}.avif"`);
@@ -290,38 +288,71 @@ describe('registry pastel polish', () => {
     expect(html).not.toContain('class="lot__icon"');
     expect(html).not.toContain('<span class="glyph">');
     expect(html).toContain('padding: calc(94px + env(safe-area-inset-top)) 0 36px;');
-    expect(html).toContain(`<span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign`);
-    expect(html).toContain(`${name} is the official digital token for the ${name} zodiac sign. See today’s price, verify the address, and learn how buying works.`);
+    expect(html).toContain(`<span class="lot__eyebrow">Zodiac sign <span class="g">·</span>`);
+    expect(html).toContain(`aria-label="Share ${name} pride"`);
+    expect(html).toContain("@font-face { font-family: 'Instrument Sans';");
+    expect(html).not.toContain("@font-face { font-family: 'EB Garamond';");
+    expect(cssRule(html, 'html, body {')).toContain('font-family: var(--sans);');
+    expect(cssRule(html, '.lot__title {')).toContain('font-family: var(--sans);');
+    expect(cssRule(html, '.sec__title {')).toContain('font-family: var(--sans);');
+    expect(cssRule(html, '.sec__title {')).toContain('text-transform: none;');
+    expect(cssRule(html, '.record-detail__title {')).toContain('font-family: var(--sans);');
+    expect(cssRule(html, '.ftr {')).toContain('font-family: var(--sans);');
+    expect(cssRule(html, '.ftr {')).toContain('letter-spacing: 0;');
+    expect(html).toContain('.lot__eyebrow, .lot__intro, .lot__dates, .sec__title,');
+    expect(html).toContain('font-family: var(--sans); font-style: normal;');
     expect(html).not.toContain('not a physical sculpture or a one-of-one NFT');
     for (const heading of [
-      `${name} price now`,
-      'Key facts',
-      `About ${name}`,
-      `Read the ${name} story`,
-      'Official addresses',
-      `How to buy ${name}`,
-      'Daily price archive',
+      `${name} at a glance`,
+      `The ${name} token`,
+      `Born under ${name}`,
+      `${name} market snapshot`,
+      'Market standings',
+      'Check the token',
+      `${name} in the sky`,
+      `The story of ${name}`,
       'Explore all 12',
     ]) expect(html).toContain(heading);
-    for (const retired of ['Museum label', 'Catalogue note', '>Provenance<', '>Acquisition<']) {
+    for (const retired of [
+      'Museum label', 'Catalogue note', '>Provenance<', '>Acquisition<',
+      `Why ${name} is in the collection`, 'recognizable artwork', 'It pairs a familiar sign',
+    ]) {
       expect(html).not.toContain(retired);
     }
     expect(html).toContain(`src="/assets/constellations/${slug}.svg"`);
     expect(html).toContain('HYG Database v4.0');
     expect(html).toContain('CC BY-SA 4.0');
-    expect(html).toContain('they are not official IAU boundaries');
+    expect(html).toContain('not official constellation boundaries');
     expect(html).toContain('data-market-chart');
     expect(html).toContain('data-live-quote');
+    expect(html).toContain('data-market-standings');
+    expect(html).toContain('<details class="standings__all"><summary>See all 12 market standings</summary>');
+    expect(html).toContain('This market snapshot does not measure popularity or participation.');
+    expect(html).not.toContain('The Zodiac Race');
+    expect(html).toContain('Public attention');
+    expect(html).toContain(`the English Wikipedia page for ${name} was viewed about`);
+    expect(html).not.toContain('Ethereum');
+    expect(html).not.toContain('Dogecoin');
+    expect(html).not.toContain('meme coins');
     expect(html).toContain('https://api.dexscreener.com/tokens/v1/solana/');
-    expect(html).toContain(`href="#acquire"><span>How to buy ${name}</span>`);
-    expect(html).toContain('Open live chart');
+    expect(html).not.toMatch(/href="https:\/\/jup\.ag\//u);
+    expect(html).not.toContain('Continue to Jupiter');
+    expect(html).toContain('View live chart');
     expect(html).toContain('class="lot__meta"');
     expect(html).toContain('min-height: 44px;');
-    expect(html).toContain(`class="lot__next" href="/registry/${nextSlug}/" aria-label="Next record, ${nextName}"`);
-    expect(html).toContain(`/assets/zodiac-icons/48/${nextSlug}.avif`);
-    expect(html).toContain(`/assets/zodiac-icons/48/${nextSlug}.webp`);
-    expect(html).toContain(`<span>Next record <strong>· ${nextName}</strong></span>`);
-    expect(html).not.toContain('.lot__next { position: absolute;');
+    expect(html).toContain('.standings__list a { display: grid;');
+    expect(html).toContain('min-height: 56px;');
+    expect(html).toContain('.strip picture, .strip img { flex: 0 0 auto; width: 44px; height: 44px; }');
+
+    const standings = html.match(/<ol class="standings__list" data-standings-list>([\s\S]*?)<\/ol>/u)?.[1] ?? '';
+    expect(standings.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp/gu)).toHaveLength(12);
+    expect(standings).toContain('class="is-current" aria-current="true"');
+
+    expect(html.match(/<nav class="strip" aria-label="All twelve signs">/gu)).toHaveLength(1);
+    const strip = html.match(/<nav class="strip" aria-label="All twelve signs">([\s\S]*?)<\/nav>/u)?.[1] ?? '';
+    expect(strip.match(/class="strip__name"/gu)).toHaveLength(12);
+    expect(strip.match(/\/assets\/zodiac-icons\/128\/[a-z-]+\.webp/gu)).toHaveLength(12);
+    for (const [, signName] of signs) expect(strip).toContain(`>${signName}</span>`);
   });
 
   it('adds one decorative pastel disc after every thesis sign name', async () => {

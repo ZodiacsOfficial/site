@@ -269,9 +269,11 @@ try {
     assert.equal(await page.locator('[data-vitrine-sculpture="pisces"].is-active').count(), 1);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active').count(), 1);
     assert.match(await page.locator('[data-vitrine-placard="pisces"].is-active').innerText(), /Pisces[\s\S]*February 19 to March 20[\s\S]*\$0\.000012[\s\S]*down 11\.50% today/u);
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').innerText(), 'See Pisces');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'How to buy Pisces');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').innerText(), 'View official record');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').innerText(), 'View Pisces');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').getAttribute('href'), '/registry/pisces/');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'Check the token');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').getAttribute('href'), '/registry/pisces/#record');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').count(), 0);
     const primaryCtaStyle = await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').evaluate((node) => {
       const style = getComputedStyle(node);
       const orb = getComputedStyle(node, '::after');

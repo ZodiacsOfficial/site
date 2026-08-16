@@ -393,7 +393,17 @@
   }
   .zassistant__hint { display: none; }
   .zassistant__message { width: 96%; }
-  .zguide-launcher { right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); }
+  .zguide-launcher {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: 48px;
+    height: 48px;
+    min-height: 48px;
+    gap: 0;
+    padding: 7px;
+    overflow: hidden;
+    font-size: 0;
+  }
   .zguide-invite { right: 12px; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 60px); }
 }
 

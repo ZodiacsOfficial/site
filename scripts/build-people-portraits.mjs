@@ -210,6 +210,6 @@ await writeFile(manifestPath, `${JSON.stringify({
     reason: person.portrait.reason,
     sourceFile: person.portrait.file ?? null,
   })).sort((a, b) => a.slug.localeCompare(b.slug)),
-}, null, 2)}\n`, 'utf8');
+}, null, 1)}\n`, 'utf8');
 
 await checkManifest();

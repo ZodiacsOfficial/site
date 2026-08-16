@@ -505,13 +505,25 @@
   "zhou-enlai"
  ],
  "protectedLivingProfiles": [
+  "bill-gates",
+  "leonardo-dicaprio",
   "rigoberta-menchu",
   "serena-williams"
  ],
  "expansion": {
   "authorizedBy": "owner instruction of 2026-07-27 — Phase 5 completion authorizes public indexing of complete deceased-person profiles and qualifying directory pages after all gates pass",
   "authorizedAtUtc": "2026-07-27T00:00:00Z",
-  "livingBoundary": "living-person profiles remain noindex/nofollow and excluded from sitemap, search, and cross-links without a separate person-specific owner authorization"
+  "livingBoundary": "living-person profiles remain noindex/nofollow and excluded from sitemap, search, directory, birthday links, and automatic related-person links",
+  "personSpecificLinkAuthorization": {
+   "authorizedBy": "owner instruction of 2026-08-16",
+   "authorizedAtUtc": "2026-08-16T00:00:00Z",
+   "profiles": [
+    "bill-gates",
+    "leonardo-dicaprio"
+   ],
+   "surface": "/registry/scorpio/",
+   "scope": "Direct, nofollow name links are authorized. The protected profiles remain noindex/nofollow and excluded from the directory, sitemap, search, birthday links, and automatic related-person rails."
+  }
  },
  "withdrawn": [
   {

@@ -8107,6 +8107,11 @@
    "sourceFile": null
   },
   {
+   "slug": "bill-gates",
+   "reason": "portrait deliberately omitted from this protected living-person profile",
+   "sourceFile": "File:Bill Gates at the European Commission - 2025 - P067383-987995 (cropped).jpg"
+  },
+  {
    "slug": "blaise-pascal",
    "reason": "creator credit too long to render legibly",
    "sourceFile": "File:Blaise Pascal Versailles.JPG"
@@ -8230,6 +8235,11 @@
    "slug": "lao-she",
    "reason": "no creator recorded on the file page",
    "sourceFile": "File:LaoShe.jpg"
+  },
+  {
+   "slug": "leonardo-dicaprio",
+   "reason": "portrait deliberately omitted from this protected living-person profile",
+   "sourceFile": "File:Leonardo DiCaprio - BFI Southbank 3 (crop).jpg"
   },
   {
    "slug": "leonora-carrington",

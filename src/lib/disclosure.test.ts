@@ -31,8 +31,9 @@ const ROW_IDS = [
 ] as const;
 const ATTESTED_IDS = ['operator', 'economic-interest'] as const;
 const VERIFIED_IDS = ['origin', 'separation', 'read-only', 'trade-panel', 'financial-advice'] as const;
-// The trade panel shipped and its served page code makes the row checkable,
-// so nothing is pending. The chip machinery stays for future rows.
+// The retired catalogue panel and no-venue replacement are checkable in the
+// generated pages, so nothing is pending. The chip machinery stays for future
+// rows.
 const PENDING_IDS = [] as const;
 const ROUTE_TEXT_KEYS = [
   'metaTitle',
@@ -227,7 +228,8 @@ describe('registry disclosure contract', () => {
       expect(text).not.toMatch(/did not authorize|declined/i);
       expect(text).not.toMatch(/evenly distributed/i);
     }
-    // Nothing is pending now the panel has shipped; no operator scaffolding remains.
+    // Nothing is pending now the catalogue transaction boundary is verifiable;
+    // no operator scaffolding remains.
     expect(DISCLOSURE_ROWS.filter((row) => row.status === 'pending').map((row) => row.id))
       .toEqual([...PENDING_IDS]);
     expect(DISCLOSURE_ROWS.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR'))).toBe(true);
@@ -258,30 +260,30 @@ describe('registry disclosure contract', () => {
     expect(row.statement).toContain('request signatures or approvals');
     expect(row.statement).toContain('construct or submit transactions');
     expect(row.statement).toContain('switch networks');
+    expect(row.statement).toContain('Catalogue profiles stay read-only');
+    expect(row.statement).toContain('contain no purchase route or external trading link');
+    expect(row.statement).not.toContain('offer one external link to Jupiter');
     expect(row.statement).not.toContain('do not connect wallets');
     expect(row.evidence).toContain('forwards only the one address used for its holdings lookup');
     expect(row.evidence).toContain('not proof of identity, control, or legal ownership');
   });
 
-  it('describes the trade panel as the site’s own interface over a venue-run trade', () => {
+  it('describes the catalogue as read-only, with no purchase or venue path', () => {
     const row = DISCLOSURE_ROWS.find((candidate) => candidate.id === 'trade-panel')!;
     expect(row.status).toBe('verified');
-    expect(row.statement).toContain('When the trade panel is enabled');
-    // The panel is ours; the trade is not. Both halves must stay said.
-    expect(row.statement).toContain('Zodiacs.org’s own interface');
-    expect(row.statement).toContain('Jupiter builds the transaction');
-    expect(row.statement).toContain('Jupiter submits it to the network');
-    // The site's four negations, including the two the custom panel adds.
+    expect(row.statement).toContain('Catalogue profiles contain no embedded trade panel, purchase route, or external venue link');
+    expect(row.statement).toContain('public market context and verified token addresses only');
+    expect(row.statement).not.toContain('Each profile has one external Jupiter link');
+    expect(row.statement).not.toContain('visitor’s wallet software handle the quote');
     expect(row.statement).toContain('never holds keys or funds');
     expect(row.statement).toContain('never builds, signs, or sends a transaction');
     expect(row.statement).toContain('cannot reverse one');
-    expect(row.statement).toContain('no referral account or platform fee');
+    expect(row.statement).toContain('configures no referral account or platform fee');
     expect(row.statement).toContain('receives nothing from any trade');
-    // The venue's fee is named rather than left for the visitor to discover.
-    expect(row.statement).toContain('Jupiter charges a fee of 0.10%');
-    expect(row.evidence).toContain('enabled by an operator switch');
-    expect(row.evidence).not.toContain('not yet enabled');
-    expect(row.evidence).toContain('holds no signing key and calls no write endpoint of its own');
+    expect(row.evidence).toContain('no wallet host, trade flag, trade runtime, transaction instructions, or venue deep-link');
+    expect(row.evidence).toContain('full trading interface, where enabled, remains outside the catalogue');
+    expect(row.evidence).not.toContain('one mint-pinned jup.ag link');
+    expect(row.evidence).not.toMatch(/enabled by an operator switch|not yet enabled/iu);
     expect(row.links.map((link) => link.href)).toEqual(['/registry/aries/', '/terms/']);
   });
 

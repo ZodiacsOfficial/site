@@ -1,0 +1,132 @@
+{
+  "schema": "zodiacs.phase5.evidence.v1",
+  "slug": "bill-gates",
+  "qid": "Q5284",
+  "displayName": "Bill Gates",
+  "wikidataLabel": "Bill Gates",
+  "wikidataDescription": "American businessman, investor, and philanthropist (born 1955)",
+  "retrievedAtUtc": "2026-08-16T06:48:15.050Z",
+  "sources": {
+    "wikidata": {
+      "entityUrl": "https://www.wikidata.org/wiki/Q5284",
+      "propertiesUsed": [
+        "P569",
+        "P19",
+        "P625",
+        "P106",
+        "P18",
+        "P570",
+        "P17",
+        "P131"
+      ],
+      "lastrevid": 2529414437
+    },
+    "wikipedia": {
+      "language": "en",
+      "title": "Bill Gates",
+      "articleUrl": "https://en.wikipedia.org/wiki/Bill_Gates",
+      "pageId": 3747,
+      "revisionId": 1365924229,
+      "revisionTimestamp": "2026-07-25T06:14:22Z"
+    }
+  },
+  "birth": {
+    "claimCount": 1,
+    "distinctDayPrecisionValues": [
+      "+1955-10-28T00:00:00Z|proleptic-gregorian"
+    ],
+    "allValues": [
+      {
+        "time": "+1955-10-28T00:00:00Z",
+        "precision": 11,
+        "calendar": "proleptic-gregorian",
+        "rank": "normal"
+      }
+    ],
+    "time": "+1955-10-28T00:00:00Z",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "timeOfDay": null,
+    "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+  },
+  "death": null,
+  "living": true,
+  "birthPlace": {
+    "entity": "Q5083",
+    "label": "Seattle",
+    "entityUrl": "https://www.wikidata.org/wiki/Q5083",
+    "country": {
+      "entity": "Q30",
+      "label": "United States"
+    },
+    "claimCount": 1,
+    "coordinates": {
+      "sourceEntity": "Q5083",
+      "sourceEntityLabel": "Seattle",
+      "latitude": 47.605,
+      "longitude": -122.33,
+      "precision": 0.0002777777777777778,
+      "escalationSteps": 0
+    }
+  },
+  "occupations": [
+    {
+      "entity": "Q131524",
+      "label": "entrepreneur"
+    },
+    {
+      "entity": "Q5482740",
+      "label": "programmer"
+    },
+    {
+      "entity": "Q82594",
+      "label": "computer scientist"
+    },
+    {
+      "entity": "Q18437198",
+      "label": "bridge player"
+    },
+    {
+      "entity": "Q557880",
+      "label": "investor"
+    },
+    {
+      "entity": "Q12362622",
+      "label": "philanthropist"
+    },
+    {
+      "entity": "Q36180",
+      "label": "writer"
+    },
+    {
+      "entity": "Q911554",
+      "label": "business magnate"
+    },
+    {
+      "entity": "Q133253419",
+      "label": "technology entrepreneur"
+    },
+    {
+      "entity": "Q15472169",
+      "label": "patron of the arts"
+    },
+    {
+      "entity": "Q4479442",
+      "label": "founder"
+    }
+  ],
+  "portrait": {
+    "file": "File:Bill Gates at the European Commission - 2025 - P067383-987995 (cropped).jpg",
+    "filePage": "https://commons.wikimedia.org/wiki/File:Bill%20Gates%20at%20the%20European%20Commission%20-%202025%20-%20P067383-987995%20(cropped).jpg",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bill_Gates_at_the_European_Commission_-_2025_-_P067383-987995_(cropped).jpg",
+    "width": 642,
+    "height": 962,
+    "licenseShortName": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "artist": "Bogdan Hoyaux / European Union",
+    "credit": "https://audiovisual.ec.europa.eu/en/photo/P-067383~2F00-01",
+    "usageTerms": "Creative Commons Attribution 4.0",
+    "attributionRequired": "true",
+    "restrictions": ""
+  }
+}

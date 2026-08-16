@@ -5371,5 +5371,27 @@
       "television actor",
       "racing automobile driver"
     ]
+  },
+  {
+    "slug": "bill-gates",
+    "enwiki": "Bill Gates",
+    "displayName": "Bill Gates",
+    "role": "pilot",
+    "note": "Owner-authorized protected living profile · technology and philanthropy · United States",
+    "disciplines": [
+      "computer scientist",
+      "philanthropist"
+    ]
+  },
+  {
+    "slug": "leonardo-dicaprio",
+    "enwiki": "Leonardo DiCaprio",
+    "displayName": "Leonardo DiCaprio",
+    "role": "pilot",
+    "note": "Owner-authorized protected living profile · film · United States",
+    "disciplines": [
+      "film actor",
+      "film producer"
+    ]
   }
 ]

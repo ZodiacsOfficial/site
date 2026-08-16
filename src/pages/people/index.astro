@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import PeopleCard from '../../components/people/PeopleCard.astro';
 import {
-  PEOPLE,
+  DIRECTORY_PEOPLE,
   PEOPLE_DIRECTORY_INDEXABLE,
   PEOPLE_DISCIPLINE_FILTERS,
   peopleDisciplineGroups,
@@ -13,11 +13,11 @@ import { SIGNS } from '../../lib/signs';
 
 const disciplines = PEOPLE_DISCIPLINE_FILTERS.map((discipline) => ({
   ...discipline,
-  count: PEOPLE.filter((person) => peopleDisciplineGroups(person).includes(discipline.slug)).length,
+  count: DIRECTORY_PEOPLE.filter((person) => peopleDisciplineGroups(person).includes(discipline.slug)).length,
 }));
 const signCounts = new Map(SIGNS.map((sign) => [
   sign.slug,
-  PEOPLE.filter((person) => person.sunSign.slug === sign.slug).length,
+  DIRECTORY_PEOPLE.filter((person) => person.sunSign.slug === sign.slug).length,
 ]));
 
 const filterCss = [
@@ -50,8 +50,8 @@ const jsonLd = [
   {
     '@type': 'ItemList',
     '@id': 'https://zodiacs.org/people/#list',
-    numberOfItems: PEOPLE.length,
-    itemListElement: PEOPLE.map((person, index) => ({
+    numberOfItems: DIRECTORY_PEOPLE.length,
+    itemListElement: DIRECTORY_PEOPLE.map((person, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: person.displayName,
@@ -128,21 +128,21 @@ const jsonLd = [
       </div>
       <noscript><style>.people-search-slot{display:none}</style></noscript>
 
-      <p class="people-count people-count--default">{PEOPLE.length} people. All birth times unknown.</p>
+      <p class="people-count people-count--default">{DIRECTORY_PEOPLE.length} people. All birth times unknown.</p>
       {SIGNS.map((sign) => (
         <p class:list={['people-count', 'people-count--filter', `people-count--sign-${sign.slug}`]}>
-          {signCounts.get(sign.slug)} of {PEOPLE.length} people · {sign.name}
+          {signCounts.get(sign.slug)} of {DIRECTORY_PEOPLE.length} people · {sign.name}
         </p>
       ))}
       {disciplines.map((discipline) => (
         <p class:list={['people-count', 'people-count--filter', `people-count--discipline-${discipline.slug}`]}>
-          {discipline.count} of {PEOPLE.length} people · {discipline.name}
+          {discipline.count} of {DIRECTORY_PEOPLE.length} people · {discipline.name}
         </p>
       ))}
       <p class="people-count people-count--js" aria-live="polite" data-people-count></p>
 
       <div class="people-grid" data-people-grid>
-        {PEOPLE.map((person) => <PeopleCard person={person} />)}
+        {DIRECTORY_PEOPLE.map((person) => <PeopleCard person={person} />)}
       </div>
 
       <div class="people-empty" data-people-empty>

@@ -24,31 +24,38 @@ function compact(value) {
 }
 
 describe('Registry risk and trust copy', () => {
-  it('keeps loss and third-party transaction warnings beside acquisition in both canonical sources', async () => {
+  it('keeps Consumer risk copy while the catalogue remains a read-only information surface', async () => {
     const [landingSource, signSource] = await Promise.all([
       readFile(resolve(root, 'src/app.jsx'), 'utf8'),
       readFile(resolve(root, 'scripts/build-sign-pages.mjs'), 'utf8'),
     ]);
 
-    for (const source of [landingSource, signSource]) {
-      const text = compact(source);
-      expect(text).toContain('independent third-party');
-      expect(text).toContain('can lose all market value');
-      expect(text).toContain('lose all money');
-      expect(text).toContain('cannot be reversed');
-      expect(text).toContain('Verify the official mint, network, amount, and destination');
-      expect(text).toContain('/privacy/');
-      expect(text).toContain('/terms/');
-    }
-
-    expect(compact(landingSource)).toContain('third-party onchain services');
+    const landingText = compact(landingSource);
+    expect(landingText).toContain('independent third-party');
+    expect(landingText).toContain('can lose all market value');
+    expect(landingText).toContain('lose all money');
+    expect(landingText).toContain('cannot be reversed');
+    expect(landingText).toContain('Verify the official mint, network, amount, and destination');
+    expect(landingText).toContain('third-party onchain services');
+    expect(landingText).toContain('/privacy/');
+    expect(landingText).toContain('/terms/');
     expect(landingSource).not.toContain('leading onchain apps');
-    expect(compact(landingSource)).toContain('Operator and economic-interest statements remain pending confirmation');
-    expect(compact(landingSource)).toContain('Shown in zodiac order');
+    expect(landingText).toContain('Operator and economic-interest statements remain pending confirmation');
+    expect(landingText).toContain('Shown in zodiac order');
     expect(landingSource).not.toContain('The Standings');
     expect(landingSource).not.toContain('aria-label="Rank"');
     expect(landingSource).not.toMatch(/\.sort\(\(a, b\) => \(b\.marketCap/);
-    expect(signSource).not.toContain('Acquire via Jupiter');
+
+    const signText = compact(signSource);
+    expect(signText).toContain('These numbers can move up or down');
+    expect(signText).toContain('The price can fall to zero');
+    expect(signText).toContain('This page only shows information. It cannot make a purchase or move money');
+    expect(signText).not.toMatch(/Continue to Jupiter|jupiterSwapUrl|What do I need before I continue/);
+    expect(signText).toContain('/disclosure/');
+    expect(signText).toContain('/privacy/');
+    expect(signText).toContain('/terms/');
+    expect(signSource).not.toMatch(/Acquire via Jupiter|Open Jupiter route/);
+    expect(signSource).not.toMatch(/renderTradeRegion|data-trade-panel|registry-trade:(?:start|slot|end)|\/assets\/trade\.js/);
   });
 
   it("keeps the gallery card's acquisition copy on the approved wording", async () => {
@@ -107,25 +114,25 @@ describe('Registry risk and trust copy', () => {
     expect(html).not.toMatch(/Verified Ownership|public ownership|Read-only site/i);
   });
 
-  it('regenerates all twelve catalogue pages with the same contextual boundary', async () => {
+  it('regenerates all twelve catalogue pages without a purchase route or venue link', async () => {
     for (const sign of signs) {
-      const html = compact(await readFile(
+      const raw = await readFile(
         resolve(root, `public/registry/${sign}/index.html`),
         'utf8',
-      ));
-      expect(html, sign).toContain('Independent third-party data, not a valuation or recommendation');
-      expect(html, sign).toContain('can lose all market value');
-      expect(html, sign).toContain('could lose all money used to acquire a Zodiac');
-      expect(html, sign).toContain('an onchain transaction that cannot be reversed');
-      expect(html, sign).toContain('Open Jupiter route');
-      expect(html, sign).toContain('View market data');
-      expect(html, sign).toContain('This Registry page does not request custody, signing, approvals, or transactions');
-      expect(html, sign).toContain('Operator and economic-interest statements remain pending confirmation');
-      expect(html, sign).toContain('Date pending provenance');
-      expect(html, sign).not.toContain('AD 2024');
+      );
+      const html = compact(raw);
+      const handoffs = [...raw.matchAll(
+        /<a\b[^>]*href="(https:\/\/jup\.ag\/[^"]*)"[^>]*>/giu,
+      )];
+
+      expect(handoffs, sign).toHaveLength(0);
+      expect(html, sign).toContain('These numbers can move up or down');
+      expect(html, sign).toContain('The price can fall to zero');
+      expect(html, sign).toContain('This page only shows information. It cannot make a purchase or move money');
+      expect(html, sign).toContain('<span class="anchor-alias" id="acquire" aria-hidden="true"></span>');
       expect(html, sign).toContain('href="/privacy/"');
       expect(html, sign).toContain('href="/terms/"');
-      expect(html, sign).not.toMatch(/Acquire via Jupiter|Read-only site|Hold what you are content to hold/i);
+      expect(html, sign).not.toMatch(/Continue to Jupiter|Acquire via Jupiter|Open Jupiter route|data-trade-panel|zodiacs-registry-trade-enabled|registry-trade:(?:start|slot|end)|\/assets\/trade\.js/i);
     }
   });
 

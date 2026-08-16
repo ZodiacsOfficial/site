@@ -72,7 +72,7 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
     path: '/astrofolio/',
     title: 'Astrofolio',
-    description: 'Choose your sign, see its gold sculpture and official token, check its Registry record, and follow a simple guide to buying it.',
+    description: 'Choose your sign and explore the twelve-part Zodiac collection.',
     kind: 'astrofolio',
     keywords: [
       'astrofolio', 'collection', 'choose your sign', 'official zodiac',
@@ -82,7 +82,7 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
     path: '/terminal/',
     title: 'Terminal',
-    description: 'A dense ranked view of all twelve Zodiac tokens with price, 24-hour change, liquidity, a selected-sign chart, market tape, briefings, and research.',
+    description: 'See current prices, charts, standings, and research for all twelve Zodiac tokens.',
     kind: 'terminal',
     keywords: [
       'terminal', 'market desk', 'zodiac capital markets',
@@ -92,15 +92,15 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   }),
   freezeCuratedEntry({
     path: '/registry/',
-    title: 'Zodiacs Registry',
-    description: 'Official Zodiac identities, verified addresses, canonical datasets, and methodology for all twelve signs.',
+    title: 'The 12 Zodiac Profiles',
+    description: 'Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today.',
     kind: 'registry',
     keywords: ['registry', 'zodiacs registry', 'verify', 'verification', 'address', 'addresses', 'canonical', 'dataset', 'methodology', 'record'],
   }),
   freezeCuratedEntry({
     path: '/thesis/',
-    title: 'Why Zodiacs Matter — the Registry thesis',
-    description: 'Gold carries history. Bitcoin made ownership digital. Solana makes it fast. Zodiacs brings those qualities to a sign you already know.',
+    title: 'Why Zodiacs Matter',
+    description: 'Why a sign people already know can become a shared digital identity.',
     kind: 'registry',
     keywords: ['registry', 'thesis', 'record', 'zodiac', 'history', 'identity', 'ownership', 'bitcoin', 'solana'],
   }),
@@ -113,8 +113,8 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   }),
   ...SIGN_NAMES.map((sign) => freezeCuratedEntry({
     path: `/registry/${sign.toLowerCase()}/`,
-    title: `${sign} — official Zodiac record`,
-    description: `Official ${sign} identity, addresses, artwork, provenance, and verification.`,
+    title: `${sign} Zodiac profile`,
+    description: `${sign} dates, symbol, famous birthdays, current market snapshot, and verified token address.`,
     kind: 'registry',
     keywords: ['registry', 'astrofolio', 'record', sign.toLowerCase()],
   })),

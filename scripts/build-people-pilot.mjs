@@ -111,7 +111,7 @@ for (const source of manifest.people) {
 
 const output = `${JSON.stringify({
   schema: 'zodiacs.phase5.people.v1',
-  status: 'Phase 5 public release — 497 indexable deceased records, 2 protected living records, 1 withdrawn',
+  status: 'Phase 5 public release — 497 indexable deceased records, 4 protected living records, 1 withdrawn',
   reviewedAtUtc: '2026-07-25T00:00:00Z',
   sourceManifestSha256: createHash('sha256')
     .update(await readFile(resolve(pilot, 'manifest.json')))

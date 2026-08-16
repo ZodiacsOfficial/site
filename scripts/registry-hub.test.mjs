@@ -3,20 +3,26 @@ import { describe, expect, test } from 'vitest';
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
-describe('Zodiacs Registry authority hub', () => {
-  test('is a distinct, self-canonical Registry page', async () => {
+describe('Zodiacs Registry catalogue hub', () => {
+  test('is a distinct, self-canonical, identity-first catalogue page', async () => {
     const html = await read('public/registry/index.html');
     expect(html).toContain('<link rel="canonical" href="https://zodiacs.org/registry/"');
     expect(html.match(/<h1\b/giu)).toHaveLength(1);
-    expect(html).toContain('<h1>Zodiacs <em>Registry</em></h1>');
+    expect(html).toContain('<title>The 12 Zodiac Profiles | Zodiacs.org</title>');
+    expect(html).toContain('<h1>Find your sign.</h1>');
+    expect(html).toContain('Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today.');
     expect(html).toContain('one for every Zodiac sign');
-    expect(html).toContain('one Solana origin and one Base counterpart per sign');
+    expect(html).toContain('one familiar emoji for each sign');
+    expect(html).toContain('plain facts, people, and today’s snapshot');
+    expect(html.indexOf('id="records-title"')).toBeLessThan(html.indexOf('id="verify"'));
+    expect(html).toContain("--serif:'Instrument Sans',system-ui,sans-serif");
+    expect(html).not.toMatch(/@font-face\s*\{\s*font-family:\s*['"]EB Garamond/iu);
     expect(html).toContain('data-registry-established');
     expect(html).not.toContain('<h1>Astrofolio</h1>');
     expect(html).not.toContain('<h1>Terminal</h1>');
   });
 
-  test('prints every canonical address from the source Registry', async () => {
+  test('keeps every verified address available behind the twelve profile disclosures', async () => {
     const [html, registryRaw] = await Promise.all([
       read('public/registry/index.html'),
       read('public/registry/zodiacs.registry.json'),
@@ -29,7 +35,14 @@ describe('Zodiacs Registry authority hub', () => {
     expect(registry.assets).toHaveLength(12);
     expect(official).toHaveLength(24);
     expect(html.match(/data-registry-record/gu)).toHaveLength(12);
+    expect(html.match(/<details class="record__details">/gu)).toHaveLength(12);
+    expect(html.match(/<summary>Verified token addresses<\/summary>/gu)).toHaveLength(12);
     expect(html.match(/class="record__network"/gu)).toHaveLength(24);
+    expect(html).toContain('<span><small>♈ · fire sign</small><strong>Aries</strong></span>');
+    expect(html).toContain('<span>View profile</span>');
+    expect(html).not.toContain('Solana · SPL');
+    expect(html).not.toContain('Base · ERC-20');
+    expect(html).not.toContain('Official counterpart');
     for (const representation of official) {
       expect(html).toContain(`<code>${representation.address}</code>`);
     }
@@ -58,17 +71,24 @@ describe('Zodiacs Registry authority hub', () => {
   test('offers an exact local address check with honest unknown state', async () => {
     const html = await read('public/registry/index.html');
     expect(html).toContain('data-address-verifier');
+    expect(html).toContain('<h2 id="verify-title">Check a token address.</h2>');
+    expect(html).toContain('This check only shows information.');
     expect(html).toContain("entry.normalized===normalized");
     expect(html).toContain("value.toLowerCase()");
-    expect(html).toContain('Not found in the official Registry. Check the network and every character before continuing.');
+    expect(html).toContain("result.textContent='Paste a complete token address.'");
+    expect(html).toContain('This address is not in the Zodiacs Registry. Check every character before continuing.');
     expect(html).toContain("link.href='/registry/'+match.sign+'/#record'");
+    expect(html).toContain("link.textContent='Open '+match.name+' profile →'");
     expect(html).not.toMatch(/fetch\s*\(/u);
   });
 
-  test('separates Registry authority from the expert Terminal', async () => {
+  test('keeps detailed market data and technical resources subordinate to the catalogue', async () => {
     const html = await read('public/registry/index.html');
     expect(html).toContain('href="/terminal/"');
-    expect(html).toContain('Open Terminal');
+    expect(html).toContain('Want the full market view?');
+    expect(html).toContain('View market data');
+    expect(html).toContain('<details class="authority__details">');
+    expect(html).toContain('<summary>Technical records and tools</summary>');
     for (const path of [
       '/registry/zodiacs.registry.json',
       '/registry/technical/',
@@ -77,7 +97,8 @@ describe('Zodiacs Registry authority hub', () => {
       '/registry/collection/',
       '/registry/wallet-chart/',
     ]) expect(html).toContain(`href="${path}"`);
-    expect(html).toContain('It is not government, regulator, wallet, or exchange approval');
+    expect(html).toContain('“Verified” only means an address matches this published list.');
+    expect(html).toContain('It does not prove who owns it, that it is safe, or that it will keep its value.');
   });
 
   test('hands old identity and market state to Astrofolio or Terminal without hijacking Registry state', async () => {

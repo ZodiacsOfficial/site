@@ -499,5 +499,7 @@
   "sukarno": "Asia/Jakarta",
   "buster-keaton": "America/Chicago",
   "arthur-miller": "America/New_York",
-  "paul-newman": "America/New_York"
+  "paul-newman": "America/New_York",
+  "bill-gates": "America/Los_Angeles",
+  "leonardo-dicaprio": "America/Los_Angeles"
 }

@@ -4,10 +4,11 @@ import { resolve } from 'node:path';
 import peopleData from '../src/data/people.json';
 
 describe('Phase 5 People pilot contract', () => {
-  it('contains exactly 499 distinct records with the policy-driven release boundary', () => {
+  it('contains exactly 501 distinct records with the policy-driven release boundary', () => {
     // 500 were published; one was withdrawn on 2026-07-27 because its Sun
-    // sign proved undeterminable. See src/data/corrections.json.
-    expect(peopleData.people).toHaveLength(499);
+    // sign proved undeterminable. Two owner-authorized protected living
+    // records were added on 2026-08-16. See index-policy.json.
+    expect(peopleData.people).toHaveLength(501);
     expect(new Set(peopleData.people.map((person) => person.slug)).size).toBe(peopleData.people.length);
     expect(new Set(peopleData.people.map((person) => person.qid)).size).toBe(peopleData.people.length);
     const indexable = peopleData.people.filter((person) => person.indexEligibility.eligible);
@@ -15,6 +16,8 @@ describe('Phase 5 People pilot contract', () => {
     expect(indexable).toHaveLength(peopleData.people.filter((person) => !person.living).length);
     expect(indexable.every((person) => !person.living && person.indexEligibility.blockedBy.length === 0)).toBe(true);
     expect(protectedLiving.map((person) => person.slug).sort()).toEqual([
+      'bill-gates',
+      'leonardo-dicaprio',
       'rigoberta-menchu',
       'serena-williams',
     ]);

@@ -348,10 +348,11 @@ describe('the legacy shared gallery band', () => {
     // JavaScript and mirrors the three hydrated placard actions.
     for (const slug of ['aries', 'virgo', 'pisces']) {
       const title = slug[0].toUpperCase() + slug.slice(1);
-      expect(html).toContain(`href="/registry/${slug}/">See ${title}</a>`);
-      expect(html).toContain(`href="/registry/${slug}/#acquire">How to buy ${title}</a>`);
-      expect(html).toContain(`href="/registry/${slug}/#record">View official record</a>`);
+      expect(html).toContain(`href="/registry/${slug}/">View ${title}</a>`);
+      expect(html).toContain(`href="/registry/${slug}/#record">Check the token</a>`);
     }
+    expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
+    expect(html).not.toMatch(/href="\/registry\/[a-z-]+\/#acquire"/u);
     expect(source).toContain('Drag to browse · Choose a sign to open.');
     expect(html).not.toContain('?gallery=gold');
   });

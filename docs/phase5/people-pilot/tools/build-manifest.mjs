@@ -78,8 +78,15 @@ function portraitRecord(evidence, displayName) {
   };
 }
 
+const policy = JSON.parse(await readFile(join(PILOT, 'index-policy.json'), 'utf8'));
+const withdrawnSlugs = new Set((policy.withdrawn ?? []).map((entry) => entry.slug));
+const protectedLinkSlugs = new Set(
+  policy.expansion?.personSpecificLinkAuthorization?.profiles ?? [],
+);
 const candidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'))
-  .filter((candidate) => candidate.role === 'pilot');
+  .filter((candidate) => candidate.role === 'pilot' && !withdrawnSlugs.has(candidate.slug));
+const existingManifest = JSON.parse(await readFile(join(PILOT, 'manifest.json'), 'utf8'));
+const existingBySlug = new Map(existingManifest.people.map((person) => [person.slug, person]));
 const depth = JSON.parse(await readFile(join(PILOT, 'depth-report.json'), 'utf8'));
 const thresholds = JSON.parse(await readFile(join(PILOT, 'thresholds.json'), 'utf8'));
 
@@ -91,12 +98,23 @@ for (const pair of depth.topPairs) {
 
 const people = [];
 for (const candidate of candidates) {
+  const existing = existingBySlug.get(candidate.slug);
+  if (existing && !protectedLinkSlugs.has(candidate.slug)) {
+    people.push(existing);
+    continue;
+  }
   const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));
   const computed = JSON.parse(await readFile(join(PILOT, 'computed', `${candidate.slug}.json`), 'utf8'));
   const copy = JSON.parse(await readFile(join(PILOT, 'copy', `${candidate.slug}.json`), 'utf8'));
   const month = Number(computed.gregorianDate.slice(5, 7));
   const day = Number(computed.gregorianDate.slice(8, 10));
-  const portrait = portraitRecord(evidence, computed.displayName);
+  const portrait = protectedLinkSlugs.has(candidate.slug)
+    ? {
+        available: false,
+        reason: 'portrait deliberately omitted from this protected living-person profile',
+        file: evidence.portrait?.file,
+      }
+    : portraitRecord(evidence, computed.displayName);
 
   const failures = [];
   if (copy.measurements.originalWords < thresholds.originalWordFloor) {
@@ -180,11 +198,11 @@ for (const candidate of candidates) {
     },
     portrait,
     living: evidence.living,
-    reviewedAtUtc: '2026-07-25T00:00:00Z',
+    reviewedAtUtc: '2026-08-16T00:00:00Z',
     computationInputVersion: {
       ephemeris: 'astronomy-engine (repository dependency)',
       aspectTable: '@zodiacs/engine/internal/math',
-      pilotTools: 'docs/phase5/people-pilot/tools @ phase5a',
+      pilotTools: 'docs/phase5/people-pilot/tools @ protected-living-maintenance',
     },
     contentDepth: {
       originalWords: copy.measurements.originalWords,
@@ -192,10 +210,10 @@ for (const candidate of candidates) {
       highestPairwiseSimilarity: perPageSimilarity[candidate.slug] ?? 0,
     },
     indexEligibility: {
-      // Phase 5A ships nothing. Every record is deliberately withheld from
-      // indexing until Sol's noindex pilot passes its own gate.
       eligible: false,
-      blockedBy: ['phase-5a-is-design-only — no People route exists yet'],
+      blockedBy: evidence.living
+        ? ['phase-5c-living-person-protection — noindex/nofollow; excluded from sitemap, search, directory, birthday and automatic related-person links']
+        : ['phase-5-completion-candidate — release gates pending'],
       contentChecksPassed: failures.length === 0,
       contentCheckFailures: failures,
     },
@@ -204,18 +222,12 @@ for (const candidate of candidates) {
 }
 
 const manifest = {
-  schema: 'zodiacs.phase5.people-manifest.v1',
-  status: 'design pilot — not published, not indexed, no route exists',
-  julianRule: 'Option A — Julian-dated births are excluded from the Phase 5A pilot',
+  ...existingManifest,
+  status: `Phase 5 complete — ${people.length + withdrawnSlugs.size} reviewed records`,
   thresholds,
-  generatedFrom: [
-    'docs/phase5/people-pilot/evidence/*.json (Wikidata, Wikipedia, Wikimedia Commons)',
-    'docs/phase5/people-pilot/computed/*.json (repository ephemeris)',
-    'docs/phase5/people-pilot/copy/*.json (composed copy)',
-  ],
   people: people.sort((a, b) => a.slug.localeCompare(b.slug)),
 };
-await writeFile(join(PILOT, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+await writeFile(join(PILOT, 'manifest.json'), `${JSON.stringify(manifest, null, 1)}\n`, 'utf8');
 
 console.log(`Manifest: ${people.length} people.`);
 console.log(`Portraits available: ${people.filter((person) => person.portrait.available).length}`);

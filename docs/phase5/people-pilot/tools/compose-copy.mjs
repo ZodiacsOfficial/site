@@ -628,8 +628,10 @@ const FREEZE = process.env.FREEZE_EXISTING === '1';
    A bumped round changes every pooled pick on that one page. */
 let reseeds = {};
 try { reseeds = JSON.parse(await readFile(join(PILOT, 'reseeds.json'), 'utf8')); } catch {}
+const policy = JSON.parse(await readFile(join(PILOT, 'index-policy.json'), 'utf8'));
+const withdrawnSlugs = new Set((policy.withdrawn ?? []).map((entry) => entry.slug));
 const candidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'))
-  .filter((candidate) => candidate.role === 'pilot');
+  .filter((candidate) => candidate.role === 'pilot' && !withdrawnSlugs.has(candidate.slug));
 await mkdir(join(PILOT, 'copy'), { recursive: true });
 const existingCopy = new Set((await readdir(join(PILOT, 'copy'))).map((file) => file.replace(/\.json$/u, '')));
 
@@ -746,7 +748,7 @@ const report = {
   topPairs: matrix.slice(0, 10),
   perSlugMax,
 };
-await writeFile(join(PILOT, 'depth-report.json'), `${JSON.stringify(report, null, 2)}\n`, 'utf8');
+await writeFile(join(PILOT, 'depth-report.json'), `${JSON.stringify(report, null, 1)}\n`, 'utf8');
 
 console.log(`Composed ${FREEZE ? composed : pages.length} new pages; measured ${allPages.length} total.`);
 console.log(`Original words: min ${report.originalWords.min}, median ${report.originalWords.median}, max ${report.originalWords.max}`);

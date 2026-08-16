@@ -9,9 +9,6 @@ const SIGNS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
-const SUPPORT_COPY = "Each sign has one gold sculpture and one official token. See yours, with today's price and a simple guide to buying it.";
-const RISK_COPY = 'Zodiac tokens are speculative, thinly traded digital assets. Prices can be volatile, liquidity may disappear, and you could lose all money used to acquire one. Astrology has no established predictive relationship with asset prices.';
-
 function functionBlock(source, name) {
   const start = source.indexOf(`    function ${name}(`);
   expect(start, `${name} exists`).toBeGreaterThanOrEqual(0);
@@ -81,7 +78,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const html = await read('public/astrofolio/index.html');
     ordered(html, [
       'id="official-twelve"',
-      'id="buy"',
+      'id="buying-guide"',
       'id="thesis"',
       'id="market-snapshot"',
       'id="registry"',
@@ -92,16 +89,17 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ]);
 
     const opening = section(html, 'official-twelve');
-    expect(normalizedText(opening)).toContain(`Astrofolio Leo Season · The Twelve Choose your sign ${SUPPORT_COPY}`);
+    expect(normalizedText(opening)).toContain('Astrofolio Leo Season · The Twelve Choose your sign');
     expect(opening.match(/class="static-vitrine__choice"/gu)).toHaveLength(12);
     expect(opening.match(/data-static-sign="[a-z]+"/gu)).toHaveLength(12);
     expect(opening).toContain('id="astrofolio-leo" checked');
     expect(opening).toContain('<h2 id="static-leo-title">Leo</h2><p class="static-vitrine__dates">July 23 to August 22</p>');
     expect(opening).toContain('<span class="static-vitrine__figure">Price unavailable</span>');
     expect(opening).toContain('<span class="static-vitrine__movement">movement unavailable</span>');
-    expect(opening).toContain('>See Leo</a>');
-    expect(opening).toContain('>How to buy Leo</a>');
-    expect(opening).toContain('>View official record</a>');
+    expect(opening).toContain('href="/registry/leo/">View Leo</a>');
+    expect(opening).toContain('href="/registry/leo/#record">Check the token</a>');
+    expect(opening).not.toContain('/registry/leo/#acquire');
+    expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
     expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
 
     const marketLinks = html.match(/href="\/terminal\/(?:\?[^"#]*)?"/gu) ?? [];
@@ -110,9 +108,9 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(html).not.toContain('data-terminal-preference-banner');
 
     const verifier = section(html, 'verify');
-    expect(normalizedText(verifier)).toContain('Compare the mint or contract address shown by a wallet or marketplace with the official list. Never paste a seed phrase.');
-    expect(normalizedText(verifier)).toContain("use your browser's Find command to search for the complete address");
-    expect(verifier).toContain('href="/registry/zodiacs.registry.json">Open the official address list</a>');
+    expect(normalizedText(verifier)).toContain('Compare the token address shown where you found it with the verified list. Never paste a recovery phrase.');
+    expect(normalizedText(verifier)).toContain('This checks a token address, not a personal account.');
+    expect(verifier).toContain('href="/registry/zodiacs.registry.json">Open the verified address list</a>');
   });
 
   it('pins the hydrated consumer composition in the same order', async () => {
@@ -141,7 +139,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const explorer = functionBlock(source, 'ConsumerExplorer');
     const placard = functionBlock(source, 'VitrinePlacard');
 
-    expect(normalizedText(identity)).toContain(`Astrofolio {season.name} Season · The Twelve Choose your sign ${SUPPORT_COPY}`);
+    expect(normalizedText(identity)).toContain('Astrofolio {season.name} Season · The Twelve Choose your sign');
     expect(identity).not.toContain('<TerminalViewLink');
     expect(explorer).toContain('className="consumer-explorer astrofolio-vitrine"');
     expect(explorer).toContain('aria-label="Astrofolio sign collection"');
@@ -178,9 +176,10 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(explorer).toContain('vitrine-stage__fallback');
     expect(explorer).toContain("'--vitrine-stage-height': `${desktopStageHeight}px`");
     expect(placard).toContain('{layers.map(renderLayer)}');
-    expect(placard).toContain('See {item.name}');
-    expect(placard).toContain('How to buy {item.name}');
-    expect(placard).toContain('View official record');
+    expect(placard).toContain('View {item.name}');
+    expect(placard).toContain('`${registryProfilePath(item)}#record`');
+    expect(placard).toContain('Check the token');
+    expect(placard).not.toContain('#acquire');
   });
 
   it('uses query, saved sign, then current season without saving ordinary selection', async () => {
@@ -222,21 +221,17 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(staticSnapshot).not.toMatch(/rank|spark|chart|market cap|liquidity|volume/iu);
   });
 
-  it('pins the exact buying guidance and risk paragraph in both render paths', async () => {
+  it('keeps the optional Astrofolio doorway separate and plain in both render paths', async () => {
     const source = await read('src/app.jsx');
     const hydrated = functionBlock(source, 'ConsumerBuyGuide');
-    const fallback = section(await read('public/astrofolio/index.html'), 'buy');
+    const fallback = section(await read('public/astrofolio/index.html'), 'buying-guide');
     const required = [
-      'How to buy your sign',
-      'Buying happens on an independent service, from your own wallet.',
-      'Zodiacs.org shows you the official token and the route to it. It never holds your money or your crypto.',
-      'Pick your sign.',
-      "Open its buying options on the sign's official record.",
-      'Check before you approve: in your wallet, confirm the address, the network, the amount, and the fee.',
-      "What you'll need",
-      'A Solana-compatible wallet and enough SOL for your amount plus the network fee.',
-      'Before you spend anything',
-      RISK_COPY,
+      'If you want to go further',
+      'Most people stop at browsing, and that is fine.',
+      'Astrofolio.xyz is a separate website.',
+      'Zodiacs.org does not take payment or complete purchases.',
+      'Prices can rise or fall quickly. You can lose what you spend.',
+      'Visit Astrofolio.xyz',
     ];
     const hydratedText = normalizedText(hydrated);
     const fallbackText = normalizedText(fallback);
@@ -244,14 +239,18 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       expect(hydratedText, copy).toContain(copy);
       expect(fallbackText, copy).toContain(copy);
     }
+    expect(hydrated).toContain('href="https://astrofolio.xyz/"');
+    expect(fallback).toContain('href="https://astrofolio.xyz/"');
+    expect(`${hydratedText} ${fallbackText}`).not.toMatch(/Jupiter|\bSOL\b|Solana-compatible|liquidity|seed phrase/iu);
   });
 
   it('keeps the explanatory disclosures, verifier, story, four FAQs, and close exact', async () => {
     const source = await read('src/app.jsx');
     const how = functionBlock(source, 'ConsumerHowItWorks');
-    for (const copy of ['What is a Zodiac?', 'One token for each sign', 'The address is the identity', 'Keep it, send it, or gift it', 'Its market price can rise or fall', 'How verification works', 'See market details']) {
+    for (const copy of ['What is a Zodiac?', 'Zodiacs has twelve tokens, one for each sign.', 'One token for each sign', 'The address tells them apart', 'Keep it, send it, or gift it', 'Its price can rise or fall', 'How verification works', 'See market details']) {
       expect(how).toContain(copy);
     }
+    expect(how).not.toMatch(/recognizable gold artwork|sculpture is collection artwork|one-of-one NFT/iu);
     expect(how).not.toContain('Read the story');
     expect(how).toContain('className="consumer-proof"');
     const purpose = functionBlock(source, 'ConsumerPurpose');
@@ -265,8 +264,9 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const verifier = functionBlock(source, 'ConsumerVerifier');
     expect(verifier).toContain('id="verify" className="consumer-verify reveal"');
     expect(verifier).toContain('Check a Zodiac token address');
-    expect(verifier).toContain('Paste the mint or contract address shown by a wallet or marketplace. We&rsquo;ll tell you whether it appears in the official list. Never paste a seed phrase.');
-    expect(verifier).toContain('Read-only: this checker never connects a wallet, requests a signature, or starts a transaction.');
+    expect(verifier).toContain('Paste the token address shown where you found it. We&rsquo;ll tell you whether it appears in the verified list. Never paste a recovery phrase.');
+    expect(verifier).toContain('This checks a token address, not a personal account.');
+    expect(verifier).toContain('This checker only shows information. It cannot move money or approve anything.');
     expect(verifier).not.toContain('vrf__examples');
     expect(verifier).not.toContain('mono');
     const faqStart = source.indexOf('    const CONSUMER_FAQS = [');
