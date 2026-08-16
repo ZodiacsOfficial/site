@@ -35,11 +35,26 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         await page.goto(`${baseURL}/registry/${record.slug}/`, { waitUntil: 'domcontentloaded' });
         const action = page.locator('[data-share-sign]');
         await action.waitFor({ state: 'visible' });
+        // Capture the header at its natural scroll position. Clicking the
+        // standings disclosure below intentionally scrolls it into view.
+        const headerState = await page.evaluate(() => {
+          const nav = document.querySelector('.wnav');
+          const navWrap = document.querySelector('.wnav-wrap');
+          const firstContent = document.querySelector('.lot__crumbs');
+          const navBox = nav?.getBoundingClientRect();
+          const firstContentBox = firstContent?.getBoundingClientRect();
+          return {
+            clearance: navBox && firstContentBox ? firstContentBox.top - navBox.bottom : -1,
+            firstContentTop: firstContentBox?.top ?? -1,
+            navBottom: navBox?.bottom ?? -1,
+            navPosition: navWrap ? getComputedStyle(navWrap).position : '',
+            scrollY,
+          };
+        });
         await page.locator('.standings__all summary').click();
         const state = await page.evaluate(() => {
           const share = document.querySelector('[data-share-sign]');
           const shareBox = share?.getBoundingClientRect();
-          const nav = document.querySelector('.wnav');
           const eyebrow = document.querySelector('.lot__eyebrow');
           const standingsTargets = [...document.querySelectorAll('[data-standings-list] a')]
             .map((element) => element.getBoundingClientRect().height);
@@ -47,9 +62,6 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             .map((element) => element.getBoundingClientRect().height);
           return {
             shareHeight: shareBox?.height ?? 0,
-            navGap: eyebrow && nav
-              ? eyebrow.getBoundingClientRect().top - nav.getBoundingClientRect().bottom
-              : -1,
             pageWidth: document.documentElement.scrollWidth,
             viewportWidth: innerWidth,
             eyebrow: eyebrow?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
@@ -120,15 +132,29 @@ await withPreview({ port: 4396 }, async (baseURL) => {
           state.acquisitionSections === 0 && state.jupiterLinks === 0,
           `${state.acquisitionSections}/${state.jupiterLinks}`);
         check(`${record.slug} at ${width}px clears the fixed navigation`,
-          state.navGap >= 15.5, String(state.navGap));
-        await action.focus();
-        const focusVisible = await action.evaluate((element) => {
+          headerState.navPosition === 'fixed'
+            && headerState.scrollY === 0
+            && headerState.clearance >= 15.5,
+          JSON.stringify(headerState));
+        // Move from the preceding control with an actual keyboard event so
+        // Chromium applies the same :focus-visible modality a visitor gets.
+        await page.locator('[data-copy-identity]').focus();
+        await page.keyboard.press('Tab');
+        const focusState = await action.evaluate((element) => {
           const style = getComputedStyle(element);
-          return element === document.activeElement
-            && style.outlineStyle !== 'none'
-            && parseFloat(style.outlineWidth) > 0;
+          return {
+            active: element === document.activeElement,
+            focusVisible: element.matches(':focus-visible'),
+            outlineStyle: style.outlineStyle,
+            outlineWidth: style.outlineWidth,
+          };
         });
-        check(`${record.slug} at ${width}px shows keyboard focus`, focusVisible);
+        check(`${record.slug} at ${width}px shows keyboard focus`,
+          focusState.active
+            && focusState.focusVisible
+            && focusState.outlineStyle !== 'none'
+            && parseFloat(focusState.outlineWidth) > 0,
+          JSON.stringify(focusState));
         check(`${record.slug} at ${width}px has no horizontal overflow`,
           state.pageWidth <= state.viewportWidth + 1,
           `${state.pageWidth}/${state.viewportWidth}`);
@@ -209,16 +235,25 @@ await withPreview({ port: 4396 }, async (baseURL) => {
     await chart.locator('[data-market]').scrollIntoViewIfNeeded();
     await chart.locator('[data-live-price]').waitFor({ state: 'visible' });
     await chart.waitForFunction(() => document.querySelector('[data-live-price]')?.textContent !== '—');
-    const liveState = await chart.locator('[data-live-quote]').evaluate((panel) => ({
-      price: panel.querySelector('[data-live-price]')?.textContent?.trim() ?? '',
-      change: panel.querySelector('[data-live-change]')?.textContent?.trim() ?? '',
-      status: panel.querySelector('[data-live-state]')?.textContent?.trim() ?? '',
-    }));
+    const liveState = await chart.locator('[data-live-quote]').evaluate((panel) => {
+      const label = panel.querySelector('[data-live-price-label]');
+      return {
+        price: panel.querySelector('[data-live-price]')?.textContent?.trim() ?? '',
+        change: panel.querySelector('[data-live-change]')?.textContent?.trim() ?? '',
+        status: panel.querySelector('[data-live-state]')?.textContent?.trim() ?? '',
+        label: label?.textContent?.trim() ?? '',
+        labelId: label?.id ?? '',
+        labelledBy: panel.getAttribute('aria-labelledby') ?? '',
+      };
+    });
     check('selected-token quote is live, signed, and plainly labelled',
       liveState.price === '$0.0000724'
         && liveState.change === 'Past 24 hours +1.25%'
         && /Fresh public market data/.test(liveState.status)
-        && !/DexScreener/.test(liveState.status),
+        && !/DexScreener/.test(liveState.status)
+        && liveState.label === 'Current price'
+        && liveState.labelId !== ''
+        && liveState.labelledBy === liveState.labelId,
       JSON.stringify(liveState));
     await chart.locator('[data-market-chart]:not([hidden])').waitFor({ timeout: 15_000 });
     const chartState = await chart.locator('[data-market]').evaluate((panel) => ({
@@ -226,6 +261,9 @@ await withPreview({ port: 4396 }, async (baseURL) => {
       empty: panel.querySelector('.market__chart-empty')?.textContent?.trim() ?? '',
       paths: panel.querySelectorAll('[data-market-chart-canvas] path').length,
       points: panel.querySelectorAll('[data-market-chart-canvas] circle').length,
+      chartRole: panel.querySelector('[data-market-chart-canvas] svg')?.getAttribute('role') ?? '',
+      chartLabel: panel.querySelector('[data-market-chart-canvas] svg')?.getAttribute('aria-label') ?? '',
+      chartTitle: panel.querySelector('[data-market-chart-canvas] svg > title')?.textContent?.trim() ?? '',
       sevenDisabled: panel.querySelector('[data-market-range="7d"]')?.disabled ?? false,
       sevenPressed: panel.querySelector('[data-market-range="7d"]')?.getAttribute('aria-pressed') ?? '',
       thirtyHidden: panel.querySelector('[data-market-range="30d"]')?.hidden ?? false,
@@ -239,12 +277,15 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         && chartState.empty === ''
         && chartState.paths === 1
         && chartState.points === 2
+        && chartState.chartRole === 'img'
+        && chartState.chartLabel === chartState.note
+        && chartState.chartTitle === chartState.note
         && !chartState.sevenDisabled
         && chartState.sevenPressed === 'true'
         && chartState.thirtyHidden
         && chartState.allHidden
         && chartState.summaryRows === 4
-        && chartState.metrics.includes('Current price')
+        && chartState.metrics.length === 2
         && chartState.metrics.includes('Total market value')
         && chartState.metrics.includes('Traded in 24 hours')
         && chartState.live === 'https://dexscreener.com/solana/fixture-leo',

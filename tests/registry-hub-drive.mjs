@@ -45,7 +45,7 @@ await withPreview({ port: 4412 }, async (baseURL) => {
           height: element.getBoundingClientRect().height,
         })),
       }));
-      check(`${width}px has one Registry H1 and complete records`, geometry.h1 === 1 && geometry.title === 'Zodiacs Registry' && geometry.records === 12 && geometry.addresses === 24, JSON.stringify(geometry));
+      check(`${width}px has one Registry H1 and complete records`, geometry.h1 === 1 && geometry.title === 'Find your sign.' && geometry.records === 12 && geometry.addresses === 24, JSON.stringify(geometry));
       check(`${width}px has no horizontal overflow`, geometry.documentWidth <= geometry.viewportWidth + 1, JSON.stringify(geometry));
       check(`${width}px controls meet the 44px floor`, geometry.controls.every((control) => control.height >= 43.5), JSON.stringify(geometry.controls.filter((control) => control.height < 43.5)));
       check(`${width}px makes no third-party requests`, externalRequests.length === 0, externalRequests.join(', '));
@@ -59,10 +59,10 @@ await withPreview({ port: 4412 }, async (baseURL) => {
     const result = page.locator('#verify-result');
     await input.fill(leoSolana);
     await page.locator('[data-address-verifier] button').click();
-    check('Solana exact match verifies Leo', await result.getAttribute('data-state') === 'verified' && /Leo · Solana · Canonical origin/.test(await result.textContent()), await result.textContent());
+    check('Solana exact match verifies Leo', await result.getAttribute('data-state') === 'verified' && /Leo · verified original address/.test(await result.textContent()), await result.textContent());
     await input.fill(leoBase.toLowerCase());
     await page.locator('[data-address-verifier] button').click();
-    check('Base match accepts canonical address casing', await result.getAttribute('data-state') === 'verified' && /Leo · Base · Official representation/.test(await result.textContent()), await result.textContent());
+    check('Base match accepts canonical address casing', await result.getAttribute('data-state') === 'verified' && /Leo · verified Base address/.test(await result.textContent()), await result.textContent());
     await input.fill(`${leoSolana.slice(0, -1)}X`);
     await page.locator('[data-address-verifier] button').click();
     check('near match is rejected', await result.getAttribute('data-state') === 'unknown', await result.textContent());
