@@ -1,9 +1,8 @@
 {
   "version": 1,
-  "id": "catalogue-emotional-redesign-2026-08-16",
-  "baseCommit": "695e3ce0b858f78a677f8e3ac6338b3188a0c9be",
+  "id": "registry-shell-parity-2026-08-16",
+  "baseCommit": "87e2cb4e31636d293aa71e0dc6afe1cac8656d7b",
   "protectedPaths": [
-    "public/assets/app.js",
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",
     "public/registry/cancer/index.html",
@@ -18,19 +17,8 @@
     "public/registry/taurus/index.html",
     "public/registry/virgo/index.html",
     "scripts/build-sign-pages.mjs",
-    "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-gallery-band.test.mjs",
     "scripts/registry-hub.test.mjs",
     "scripts/registry-pastel-polish.test.mjs",
-    "scripts/registry-risk.test.mjs",
-    "src/app.jsx",
-    "src/pages/es/privacy/index.astro",
-    "src/pages/fr/privacy/index.astro",
-    "src/pages/it/privacy/index.astro",
-    "src/pages/pt/privacy/index.astro",
-    "src/strings/additions.es.mjs",
-    "src/strings/additions.fr.mjs",
-    "src/strings/additions.it.mjs",
-    "src/strings/additions.pt.mjs"
+    "scripts/registry-shell-parity.test.mjs"
   ]
 }

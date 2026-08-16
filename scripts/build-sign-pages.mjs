@@ -437,7 +437,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       --gold: #C6CCDA; --gold-bright: #EEF1F7; --gold-deep: #8E96AB;
       --live: #C6CCDA;
       --ink: #EEF1F7; --ink-2: #C6CCDA; --ink-dim: #8E96AB; --ink-mute: #7A8397;
-      --sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --sans: 'Instrument Sans', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
       --serif: var(--sans);
       --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
       --display: var(--sans);
@@ -1052,7 +1052,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .lot__crumbs, .quick__label, .rec__k, .rec__link {
       letter-spacing: 0; text-transform: none;
     }
-    .wnav__burger { width: 44px; height: 44px; }
     .lot__eyebrow { margin-bottom: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: none; }
     .lot__intro { max-width: 46ch; font-size: clamp(19px, 2.5vw, 24px); line-height: 1.4; }
     .lot__dates { font-size: 13px; letter-spacing: 0.02em; text-transform: none; }
