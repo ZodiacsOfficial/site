@@ -21,7 +21,6 @@
     "scripts/registry-consumer-contract.test.mjs",
     "scripts/registry-gallery-band.test.mjs",
     "scripts/registry-hub.test.mjs",
-    "scripts/registry-market-snapshot.test.mjs",
     "scripts/registry-pastel-polish.test.mjs",
     "scripts/registry-risk.test.mjs",
     "src/app.jsx",

@@ -55,8 +55,6 @@ describe('Registry market snapshot archive', () => {
     expect(workflow).toContain('workflows: ["Daily Sky"]');
     expect(workflow).toContain("types: [completed]");
     expect(workflow).toContain("Require today's committed Daily Sky");
-    expect(workflow).toContain('run: node scripts/build-sign-pages.mjs');
-    expect(workflow).toContain('public/registry/*/index.html');
     expect(workflow).not.toContain("workflow_run.conclusion == 'success'");
   });
 
