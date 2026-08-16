@@ -5,7 +5,7 @@
  */
 import './assistant.css';
 import { houseOf, wholeSignCusps } from '../engine/houses';
-import { normalizeLocale as normalizeSiteLocale, type ReleasedLocale as Locale } from '../i18n/core';
+import { normalizeCatalogLocale as normalizeSiteLocale, type CatalogLocale as Locale } from '../i18n/core';
 import { PROFILE_KEY } from '../profile/schema';
 import { profileAccessAllowed } from '../account-v2/profile-access-reader';
 import {
@@ -84,6 +84,7 @@ interface GuideSession {
 }
 
 interface PageInfo {
+  catalogId: PageCatalogId;
   sourceId: string;
   title: string;
   facts: string;
@@ -111,6 +112,9 @@ interface Copy {
   open: string;
   close: string;
   clear: string;
+  clearAction: string;
+  clearConfirm: string;
+  clearConfirmStatus: string;
   intro: string;
   invite: string;
   inviteAction: string;
@@ -139,6 +143,8 @@ interface Copy {
   user: string;
   assistant: string;
   privacy: string;
+  privacyLearnMore: string;
+  preparing: string;
   cloudTitle: string;
   cloudBody: string;
   cloudConfirm: string;
@@ -151,14 +157,24 @@ interface Copy {
   contextUpdated: string;
 }
 
+interface StarterCopy {
+  label: string;
+  default: readonly [string, string, string];
+  sign: readonly [string, string, string];
+  birthChart: readonly [string, string, string];
+  tools: readonly [string, string, string];
+  astrofolio: readonly [string, string, string];
+}
+
 const COPY: Record<AssistantLocale, Copy> = {
   en: {
     title: 'Guide', open: 'Open Guide', close: 'Close Guide', clear: "Clear today's conversation",
+    clearAction: 'Clear', clearConfirm: 'Clear?', clearConfirmStatus: 'Select Clear again to erase this conversation.',
     intro: 'Ask about this page, astrology, your birth chart, or published Astrofolio facts.',
     invite: 'I can help with this page, astrology, your birth chart, or Astrofolio.',
     inviteAction: 'Ask Guide', dismissInvite: 'Dismiss Guide welcome', log: 'Guide conversation',
     input: 'Your question', placeholder: 'What would you like help with?', send: 'Send', stop: 'Stop', retry: 'Retry',
-    newline: 'Shift + Enter for a new line', context: 'Visible sources', pageSource: 'This page',
+    newline: 'Shift + Enter for a new line', context: 'Visible sources', pageSource: 'Using',
     addPage: 'Use this page', removeSource: 'Remove source', chartOn: 'Using my chart', chartOff: 'Use my chart',
     chartReading: 'Reading the placements in your saved chart…', thinking: 'Guide is thinking…',
     stopped: 'Stopped.', complete: 'Answer complete.', empty: 'Write a question first.',
@@ -166,97 +182,181 @@ const COPY: Record<AssistantLocale, Copy> = {
     disabled: 'Guide is resting right now. The rest of Zodiacs.org still works.',
     rateLimited: 'Guide is busy or has reached a fair-use limit. Wait a minute; if it continues, come back tomorrow.',
     user: 'You', assistant: 'Guide',
-    privacy: 'Guide can be wrong. This web conversation stays in this browser session and is not synced to an account; submitted content and generated draft replies are processed by OpenAI.',
+    privacy: 'This conversation stays in this browser session and is not synced to your Zodiacs account. Questions, visible sources, and draft replies are processed by OpenAI. Guide can be wrong.',
+    privacyLearnMore: 'Privacy details', preparing: 'Preparing Guide…',
     cloudTitle: 'Before Guide answers',
     cloudBody: 'Guide sends your question, recent Guide messages, and the visible sources above to OpenAI for an input safety check and to generate a draft reply. It then sends that generated draft reply back to OpenAI for a second safety check before showing it. This web Guide conversation stays only in this browser session, is not synced to your account, and is not stored as text by Zodiacs.org. Under standard API controls, OpenAI may retain abuse-monitoring data for up to 30 days. Continue for this Guide day?',
     cloudConfirm: 'Continue with Guide', cloudCancel: 'Not now', consentTitle: 'Before your chart is attached',
-    consentBody: 'This is the one chart you explicitly marked as your own. The exact placement lines below will be sent to OpenAI with your question. Zodiacs.org does not attach its saved name, birth date, time, place, or coordinates, and does not store the signed-out conversation.',
+    consentBody: 'This is the one chart you explicitly marked as your own. The exact placement lines below will be sent to OpenAI with your question. Zodiacs.org does not attach its saved name, birth date, time, place, or coordinates, and does not store this conversation.',
     consentConfirm: 'Attach my chart', consentCancel: 'Keep it private', sources: 'From this site:',
     contextUpdated: 'Source removed. Earlier messages remain visible, but Guide will not use them in future answers.',
   },
   es: {
     title: 'Guide', open: 'Abrir Guide', close: 'Cerrar Guide', clear: 'Borrar la conversación de hoy',
+    clearAction: 'Borrar', clearConfirm: '¿Borrar?', clearConfirmStatus: 'Selecciona Borrar otra vez para eliminar esta conversación.',
     intro: 'Pregunta sobre esta página, astrología, tu carta natal o datos publicados de Astrofolio.',
     invite: 'Puedo ayudarte con esta página, astrología, tu carta natal o Astrofolio.',
     inviteAction: 'Preguntar a Guide', dismissInvite: 'Cerrar la bienvenida de Guide', log: 'Conversación con Guide',
     input: 'Tu pregunta', placeholder: '¿En qué te puedo ayudar?', send: 'Enviar', stop: 'Detener', retry: 'Reintentar',
-    newline: 'Mayús + Intro para una línea nueva', context: 'Fuentes visibles', pageSource: 'Esta página',
+    newline: 'Mayús + Intro para una línea nueva', context: 'Fuentes visibles', pageSource: 'En uso',
     addPage: 'Usar esta página', removeSource: 'Quitar fuente', chartOn: 'Usando mi carta', chartOff: 'Usar mi carta',
     chartReading: 'Leyendo las posiciones de tu carta guardada…', thinking: 'Guide está pensando…',
     stopped: 'Detenido.', complete: 'Respuesta completa.', empty: 'Escribe una pregunta primero.',
     unavailable: 'Guide no está disponible temporalmente. Inténtalo de nuevo más tarde.',
     disabled: 'Guide está descansando ahora. El resto de Zodiacs.org sigue funcionando.',
     rateLimited: 'Guide está ocupado o alcanzó un límite de uso justo. Espera un minuto; si continúa, vuelve mañana.', user: 'Tú', assistant: 'Guide',
-    privacy: 'Guide puede equivocarse. Esta conversación web permanece en esta sesión del navegador y no se sincroniza con una cuenta; OpenAI procesa el contenido enviado y los borradores de respuesta generados.',
+    privacy: 'Esta conversación permanece en esta sesión del navegador y no se sincroniza con tu cuenta de Zodiacs. OpenAI procesa las preguntas, las fuentes visibles y los borradores de respuesta. Guide puede equivocarse.',
+    privacyLearnMore: 'Detalles de privacidad', preparing: 'Preparando Guide…',
     cloudTitle: 'Antes de que Guide responda',
     cloudBody: 'Guide envía tu pregunta, los mensajes recientes y las fuentes visibles a OpenAI para una revisión de seguridad de la entrada y para generar un borrador de respuesta. Después envía ese borrador de respuesta generado de nuevo a OpenAI para una segunda revisión de seguridad antes de mostrártelo. Esta conversación web permanece solo en esta sesión del navegador, no se sincroniza con tu cuenta y Zodiacs.org no almacena su texto. Con los controles estándar de la API, OpenAI puede conservar datos de control de abusos hasta 30 días. ¿Continuar durante este día de Guide?',
     cloudConfirm: 'Continuar con Guide', cloudCancel: 'Ahora no', consentTitle: 'Antes de adjuntar tu carta',
-    consentBody: 'Las posiciones exactas que aparecen abajo se enviarán a OpenAI con tu pregunta. Zodiacs.org no adjunta tu nombre, fecha, hora, lugar de nacimiento ni coordenadas guardados, y no guarda la conversación.',
+    consentBody: 'Esta es la única carta que marcaste explícitamente como tuya. Las posiciones exactas que aparecen abajo se enviarán a OpenAI con tu pregunta. Zodiacs.org no adjunta tu nombre, fecha, hora, lugar de nacimiento ni coordenadas guardados, y no guarda la conversación.',
     consentConfirm: 'Adjuntar mi carta', consentCancel: 'Mantenerla privada', sources: 'De este sitio:',
     contextUpdated: 'Fuente eliminada. Los mensajes anteriores siguen visibles, pero Guide no los usará en respuestas futuras.',
   },
   pt: {
     title: 'Guide', open: 'Abrir Guide', close: 'Fechar Guide', clear: 'Limpar a conversa de hoje',
+    clearAction: 'Limpar', clearConfirm: 'Limpar?', clearConfirmStatus: 'Selecione Limpar novamente para apagar esta conversa.',
     intro: 'Pergunte sobre esta página, astrologia, seu mapa natal ou fatos publicados do Astrofolio.',
     invite: 'Posso ajudar com esta página, astrologia, seu mapa natal ou Astrofolio.',
     inviteAction: 'Perguntar ao Guide', dismissInvite: 'Fechar boas-vindas do Guide', log: 'Conversa com o Guide',
     input: 'Sua pergunta', placeholder: 'Como posso ajudar?', send: 'Enviar', stop: 'Parar', retry: 'Tentar de novo',
-    newline: 'Shift + Enter para uma nova linha', context: 'Fontes visíveis', pageSource: 'Esta página',
+    newline: 'Shift + Enter para uma nova linha', context: 'Fontes visíveis', pageSource: 'Em uso',
     addPage: 'Usar esta página', removeSource: 'Remover fonte', chartOn: 'Usando meu mapa', chartOff: 'Usar meu mapa',
     chartReading: 'Lendo as posições do seu mapa salvo…', thinking: 'Guide está pensando…',
     stopped: 'Interrompido.', complete: 'Resposta concluída.', empty: 'Escreva uma pergunta primeiro.',
     unavailable: 'O Guide está temporariamente indisponível. Tente novamente mais tarde.',
     disabled: 'O Guide está descansando agora. O restante do Zodiacs.org continua funcionando.',
     rateLimited: 'O Guide está ocupado ou atingiu um limite de uso justo. Espere um minuto; se continuar, volte amanhã.', user: 'Você', assistant: 'Guide',
-    privacy: 'O Guide pode errar. Esta conversa na web fica nesta sessão do navegador e não é sincronizada com uma conta; o conteúdo enviado e os rascunhos de resposta gerados são processados pela OpenAI.',
+    privacy: 'Esta conversa fica nesta sessão do navegador e não é sincronizada com sua conta Zodiacs. Perguntas, fontes visíveis e rascunhos de resposta são processados pela OpenAI. O Guide pode errar.',
+    privacyLearnMore: 'Detalhes de privacidade', preparing: 'Preparando o Guide…',
     cloudTitle: 'Antes de o Guide responder',
     cloudBody: 'O Guide envia sua pergunta, as mensagens recentes e as fontes visíveis à OpenAI para uma verificação de segurança da entrada e para gerar um rascunho de resposta. Depois, envia esse rascunho de resposta gerado de volta à OpenAI para uma segunda verificação de segurança antes de mostrá-lo. Esta conversa do Guide na web fica apenas nesta sessão do navegador, não é sincronizada com sua conta e não é armazenada como texto pelo Zodiacs.org. Nos controles padrão da API, a OpenAI pode reter dados de monitoramento de abuso por até 30 dias. Continuar neste dia do Guide?',
     cloudConfirm: 'Continuar com o Guide', cloudCancel: 'Agora não', consentTitle: 'Antes de anexar seu mapa',
-    consentBody: 'As posições exatas abaixo serão enviadas à OpenAI com sua pergunta. O Zodiacs.org não anexa nome, data, hora, local de nascimento nem coordenadas salvos e não armazena a conversa.',
+    consentBody: 'Este é o único mapa que você marcou explicitamente como seu. As posições exatas abaixo serão enviadas à OpenAI com sua pergunta. O Zodiacs.org não anexa nome, data, hora, local de nascimento nem coordenadas salvos e não armazena a conversa.',
     consentConfirm: 'Anexar meu mapa', consentCancel: 'Manter privado', sources: 'Deste site:',
     contextUpdated: 'Fonte removida. As mensagens anteriores continuam visíveis, mas o Guide não as usará nas próximas respostas.',
   },
   fr: {
     title: 'Guide', open: 'Ouvrir Guide', close: 'Fermer Guide', clear: 'Effacer la conversation du jour',
+    clearAction: 'Effacer', clearConfirm: 'Effacer ?', clearConfirmStatus: 'Sélectionne encore Effacer pour supprimer cette conversation.',
     intro: 'Pose une question sur cette page, l’astrologie, ton thème natal ou les faits publiés d’Astrofolio.',
     invite: 'Je peux aider avec cette page, l’astrologie, ton thème natal ou Astrofolio.',
     inviteAction: 'Demander à Guide', dismissInvite: 'Fermer l’accueil de Guide', log: 'Conversation avec Guide',
     input: 'Ta question', placeholder: 'Comment puis-je aider ?', send: 'Envoyer', stop: 'Arrêter', retry: 'Réessayer',
-    newline: 'Maj + Entrée pour aller à la ligne', context: 'Sources visibles', pageSource: 'Cette page',
+    newline: 'Maj + Entrée pour aller à la ligne', context: 'Sources visibles', pageSource: 'Utilisée',
     addPage: 'Utiliser cette page', removeSource: 'Retirer la source', chartOn: 'Avec mon thème', chartOff: 'Utiliser mon thème',
     chartReading: 'Lecture des positions de ton thème enregistré…', thinking: 'Guide réfléchit…',
     stopped: 'Interrompu.', complete: 'Réponse terminée.', empty: 'Écris d’abord une question.',
     unavailable: 'Guide est temporairement indisponible. Réessaie plus tard.',
     disabled: 'Guide se repose pour le moment. Le reste de Zodiacs.org fonctionne toujours.',
     rateLimited: 'Guide est occupé ou a atteint une limite d’utilisation équitable. Attends une minute ; si cela continue, reviens demain.', user: 'Toi', assistant: 'Guide',
-    privacy: 'Guide peut se tromper. Cette conversation web reste dans cette session du navigateur et n’est pas synchronisée avec un compte ; OpenAI traite le contenu envoyé et les brouillons de réponse générés.',
+    privacy: 'Cette conversation reste dans cette session du navigateur et n’est pas synchronisée avec ton compte Zodiacs. OpenAI traite les questions, les sources visibles et les brouillons de réponse. Guide peut se tromper.',
+    privacyLearnMore: 'Détails de confidentialité', preparing: 'Préparation de Guide…',
     cloudTitle: 'Avant la réponse de Guide',
     cloudBody: 'Guide envoie ta question, les messages récents et les sources visibles à OpenAI pour un contrôle de sécurité de l’entrée et pour produire un brouillon de réponse. Guide renvoie ensuite ce brouillon de réponse généré à OpenAI pour un second contrôle de sécurité avant de te l’afficher. Cette conversation Guide web reste uniquement dans cette session du navigateur, n’est pas synchronisée avec ton compte et n’est pas stockée sous forme de texte par Zodiacs.org. Avec les contrôles API standard, OpenAI peut garder des données de surveillance des abus jusqu’à 30 jours. Continuer pour cette journée Guide ?',
     cloudConfirm: 'Continuer avec Guide', cloudCancel: 'Pas maintenant', consentTitle: 'Avant de joindre ton thème',
-    consentBody: 'Les positions exactes ci-dessous seront envoyées à OpenAI avec ta question. Zodiacs.org ne joint aucun nom, date, heure, lieu de naissance ou coordonnée enregistrés et ne conserve pas la conversation.',
+    consentBody: 'C’est le seul thème que tu as explicitement indiqué comme étant le tien. Les positions exactes ci-dessous seront envoyées à OpenAI avec ta question. Zodiacs.org ne joint aucun nom, date, heure, lieu de naissance ou coordonnée enregistrés et ne conserve pas la conversation.',
     consentConfirm: 'Joindre mon thème', consentCancel: 'Le garder privé', sources: 'Depuis ce site :',
     contextUpdated: 'Source retirée. Les anciens messages restent visibles, mais Guide ne les utilisera plus dans ses réponses.',
   },
   it: {
     title: 'Guide', open: 'Apri Guide', close: 'Chiudi Guide', clear: 'Cancella la conversazione di oggi',
+    clearAction: 'Cancella', clearConfirm: 'Cancellare?', clearConfirmStatus: 'Seleziona di nuovo Cancella per eliminare questa conversazione.',
     intro: 'Chiedi di questa pagina, astrologia, il tuo tema natale o fatti pubblicati di Astrofolio.',
     invite: 'Posso aiutarti con questa pagina, astrologia, il tuo tema natale o Astrofolio.',
     inviteAction: 'Chiedi a Guide', dismissInvite: 'Chiudi il benvenuto di Guide', log: 'Conversazione con Guide',
     input: 'La tua domanda', placeholder: 'Come posso aiutarti?', send: 'Invia', stop: 'Interrompi', retry: 'Riprova',
-    newline: 'Maiusc + Invio per andare a capo', context: 'Fonti visibili', pageSource: 'Questa pagina',
+    newline: 'Maiusc + Invio per andare a capo', context: 'Fonti visibili', pageSource: 'In uso',
     addPage: 'Usa questa pagina', removeSource: 'Rimuovi fonte', chartOn: 'Con il mio tema', chartOff: 'Usa il mio tema',
     chartReading: 'Lettura delle posizioni nel tuo tema salvato…', thinking: 'Guide sta pensando…',
     stopped: 'Interrotto.', complete: 'Risposta completata.', empty: 'Prima scrivi una domanda.',
     unavailable: 'Guide non è disponibile temporaneamente. Riprova più tardi.',
     disabled: 'Guide sta riposando. Il resto di Zodiacs.org continua a funzionare.',
     rateLimited: 'Guide è occupato o ha raggiunto un limite di utilizzo equo. Aspetta un minuto; se continua, torna domani.', user: 'Tu', assistant: 'Guide',
-    privacy: 'Guide può sbagliare. Questa conversazione web resta nella sessione del browser e non viene sincronizzata con un account; OpenAI elabora i contenuti inviati e le bozze di risposta generate.',
+    privacy: 'Questa conversazione resta nella sessione del browser e non viene sincronizzata con il tuo account Zodiacs. OpenAI elabora domande, fonti visibili e bozze di risposta. Guide può sbagliare.',
+    privacyLearnMore: 'Dettagli sulla privacy', preparing: 'Preparazione di Guide…',
     cloudTitle: 'Prima che Guide risponda',
     cloudBody: 'Guide invia la tua domanda, i messaggi recenti e le fonti visibili a OpenAI per un controllo di sicurezza dell’input e per generare una bozza di risposta. Poi invia di nuovo a OpenAI la bozza di risposta generata per un secondo controllo di sicurezza prima di mostrartela. Questa conversazione web con Guide resta soltanto in questa sessione del browser, non viene sincronizzata con il tuo account e non viene archiviata come testo da Zodiacs.org. Con i controlli API standard, OpenAI può conservare dati di monitoraggio degli abusi fino a 30 giorni. Continuare per questa giornata Guide?',
     cloudConfirm: 'Continua con Guide', cloudCancel: 'Non ora', consentTitle: 'Prima di allegare il tuo tema',
-    consentBody: 'Le posizioni esatte qui sotto saranno inviate a OpenAI con la tua domanda. Zodiacs.org non allega nome, data, ora, luogo di nascita o coordinate salvati e non conserva la conversazione.',
+    consentBody: 'Questo è l’unico tema che hai indicato esplicitamente come tuo. Le posizioni esatte qui sotto saranno inviate a OpenAI con la tua domanda. Zodiacs.org non allega nome, data, ora, luogo di nascita o coordinate salvati e non conserva la conversazione.',
     consentConfirm: 'Allega il mio tema', consentCancel: 'Tienilo privato', sources: 'Da questo sito:',
     contextUpdated: 'Fonte rimossa. I messaggi precedenti restano visibili, ma Guide non li userà nelle risposte future.',
+  },
+  ru: {
+    title: 'Guide', open: 'Открыть Guide', close: 'Закрыть Guide', clear: 'Очистить сегодняшний разговор',
+    clearAction: 'Очистить', clearConfirm: 'Очистить?', clearConfirmStatus: 'Нажмите «Очистить» ещё раз, чтобы удалить этот разговор.',
+    intro: 'Спросите об этой странице, астрологии, вашей натальной карте или опубликованных материалах Astrofolio.',
+    invite: 'Я могу помочь с этой страницей, астрологией, вашей натальной картой или Astrofolio.',
+    inviteAction: 'Спросить Guide', dismissInvite: 'Закрыть приветствие Guide', log: 'Разговор с Guide',
+    input: 'Ваш вопрос', placeholder: 'Чем вам помочь?', send: 'Отправить', stop: 'Остановить', retry: 'Повторить',
+    newline: 'Shift + Enter для новой строки', context: 'Видимые источники', pageSource: 'Используется',
+    addPage: 'Использовать эту страницу', removeSource: 'Удалить источник', chartOn: 'Используется моя карта', chartOff: 'Использовать мою карту',
+    chartReading: 'Читаю положения в вашей сохранённой карте…', thinking: 'Guide думает…',
+    stopped: 'Остановлено.', complete: 'Ответ готов.', empty: 'Сначала напишите вопрос.',
+    unavailable: 'Guide временно недоступен. Повторите попытку позже.',
+    disabled: 'Guide сейчас отдыхает. Остальная часть Zodiacs.org продолжает работать.',
+    rateLimited: 'Guide занят или достиг лимита добросовестного использования. Подождите минуту; если это продолжается, вернитесь завтра.',
+    user: 'Вы', assistant: 'Guide',
+    privacy: 'Этот разговор остаётся в этой сессии браузера и не синхронизируется с вашей учётной записью Zodiacs. OpenAI обрабатывает вопросы, видимые источники и черновики ответов. Guide может ошибаться.',
+    privacyLearnMore: 'Подробнее о конфиденциальности', preparing: 'Подготавливаем Guide…',
+    cloudTitle: 'Перед ответом Guide',
+    cloudBody: 'Guide отправляет ваш вопрос, недавние сообщения Guide и видимые выше источники в OpenAI для проверки безопасности входных данных и создания черновика ответа. Затем Guide снова отправляет созданный черновик ответа в OpenAI для второй проверки безопасности, прежде чем показать его. Эта веб-беседа Guide остаётся только в этой сессии браузера, не синхронизируется с вашей учётной записью и не хранится Zodiacs.org в виде текста. При стандартных настройках API OpenAI может хранить данные мониторинга злоупотреблений до 30 дней. Продолжить на этот день Guide?',
+    cloudConfirm: 'Продолжить с Guide', cloudCancel: 'Не сейчас', consentTitle: 'Перед добавлением вашей карты',
+    consentBody: 'Это единственная карта, которую вы явно отметили как свою. Точные строки положений ниже будут отправлены в OpenAI вместе с вашим вопросом. Zodiacs.org не добавляет сохранённые имя, дату, время, место рождения или координаты и не сохраняет этот разговор.',
+    consentConfirm: 'Добавить мою карту', consentCancel: 'Оставить приватной', sources: 'С этого сайта:',
+    contextUpdated: 'Источник удалён. Предыдущие сообщения остаются видимыми, но Guide не будет использовать их в будущих ответах.',
+  },
+};
+
+const STARTER_COPY: Record<AssistantLocale, StarterCopy> = {
+  en: {
+    label: 'Try asking',
+    default: ['What can I do on Zodiacs.org?', 'How do I find my Sun, Moon, and rising signs?', 'Which astrology tool should I start with?'],
+    sign: ['What does this zodiac sign represent?', 'How is this sign different as a Sun sign and rising sign?', 'What should I explore after this guide?'],
+    birthChart: ['Explain what I can do on this page.', 'What changes without an exact birth time?', 'What are the Sun, Moon, and rising sign?'],
+    tools: ['Which tool should I start with?', 'What changes without an exact birth time?', 'How do I compare two charts?'],
+    astrofolio: ['What is Astrofolio?', 'How is it different from the Registry?', 'Where can I verify an official Zodiac token?'],
+  },
+  es: {
+    label: 'Prueba a preguntar',
+    default: ['¿Qué puedo hacer en Zodiacs.org?', '¿Cómo encuentro mis signos solar, lunar y ascendente?', '¿Con qué herramienta de astrología debería empezar?'],
+    sign: ['¿Qué representa este signo del zodiaco?', '¿Cómo cambia este signo como signo solar o ascendente?', '¿Qué debería explorar después de esta guía?'],
+    birthChart: ['Explícame qué puedo hacer en esta página.', '¿Qué cambia sin una hora de nacimiento exacta?', '¿Qué son el Sol, la Luna y el ascendente?'],
+    tools: ['¿Con qué herramienta debería empezar?', '¿Qué cambia sin una hora de nacimiento exacta?', '¿Cómo comparo dos cartas?'],
+    astrofolio: ['¿Qué es Astrofolio?', '¿En qué se diferencia del Registry?', '¿Dónde puedo verificar un token Zodiac oficial?'],
+  },
+  pt: {
+    label: 'Experimente perguntar',
+    default: ['O que posso fazer no Zodiacs.org?', 'Como encontro meus signos solar, lunar e ascendente?', 'Com qual ferramenta de astrologia devo começar?'],
+    sign: ['O que este signo do zodíaco representa?', 'Como este signo muda como signo solar ou ascendente?', 'O que devo explorar depois deste guia?'],
+    birthChart: ['Explique o que posso fazer nesta página.', 'O que muda sem um horário exato de nascimento?', 'O que são Sol, Lua e ascendente?'],
+    tools: ['Com qual ferramenta devo começar?', 'O que muda sem um horário exato de nascimento?', 'Como comparo dois mapas?'],
+    astrofolio: ['O que é Astrofolio?', 'Como ele difere do Registry?', 'Onde verifico um token Zodiac oficial?'],
+  },
+  fr: {
+    label: 'Essaie de demander',
+    default: ['Que puis-je faire sur Zodiacs.org ?', 'Comment trouver mes signes solaire, lunaire et ascendant ?', 'Par quel outil astrologique commencer ?'],
+    sign: ['Que représente ce signe du zodiaque ?', 'Comment ce signe diffère-t-il comme signe solaire ou ascendant ?', 'Que devrais-je explorer après ce guide ?'],
+    birthChart: ['Explique-moi ce que je peux faire sur cette page.', 'Que change l’absence d’heure de naissance exacte ?', 'Que sont le Soleil, la Lune et l’ascendant ?'],
+    tools: ['Par quel outil commencer ?', 'Que change l’absence d’heure de naissance exacte ?', 'Comment comparer deux thèmes ?'],
+    astrofolio: ['Qu’est-ce qu’Astrofolio ?', 'En quoi diffère-t-il du Registry ?', 'Où vérifier un jeton Zodiac officiel ?'],
+  },
+  it: {
+    label: 'Prova a chiedere',
+    default: ['Cosa posso fare su Zodiacs.org?', 'Come trovo i miei segni solare, lunare e ascendente?', 'Con quale strumento astrologico dovrei iniziare?'],
+    sign: ['Cosa rappresenta questo segno zodiacale?', 'Come cambia questo segno come segno solare o ascendente?', 'Cosa dovrei esplorare dopo questa guida?'],
+    birthChart: ['Spiegami cosa posso fare in questa pagina.', 'Cosa cambia senza un’ora di nascita esatta?', 'Cosa sono Sole, Luna e ascendente?'],
+    tools: ['Con quale strumento dovrei iniziare?', 'Cosa cambia senza un’ora di nascita esatta?', 'Come confronto due temi?'],
+    astrofolio: ['Cos’è Astrofolio?', 'In cosa differisce dal Registry?', 'Dove posso verificare un token Zodiac ufficiale?'],
+  },
+  ru: {
+    label: 'Можно спросить',
+    default: ['Что можно делать на Zodiacs.org?', 'Как узнать свои солнечный, лунный и восходящий знаки?', 'С какого астрологического инструмента начать?'],
+    sign: ['Что означает этот знак зодиака?', 'Чем этот знак отличается как солнечный и восходящий?', 'Что изучить после этого руководства?'],
+    birthChart: ['Объясните, что можно делать на этой странице.', 'Что меняется без точного времени рождения?', 'Что такое Солнце, Луна и восходящий знак?'],
+    tools: ['С какого инструмента начать?', 'Что меняется без точного времени рождения?', 'Как сравнить две натальные карты?'],
+    astrofolio: ['Что такое Astrofolio?', 'Чем он отличается от Registry?', 'Где проверить официальный токен Zodiac?'],
   },
 };
 
@@ -270,7 +370,9 @@ const CONSENT_POLICY_VERSION = 'guide-cloud-processing-2026-08-14.2';
 const STYLESHEET_HREF = '/assets/assistant-drawer.css';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
 const STREAM_SCHEMA = 'zodiacs.guide.stream-event.draft.v1';
+const MOBILE_GUIDE_QUERY = '(max-width: 560px), (max-height: 620px) and (pointer: coarse)';
 const GUIDE_LINK_PATHS = new Set([
+  '/',
   '/ask/',
   '/birth-chart/',
   '/moon-sign/',
@@ -283,7 +385,20 @@ const GUIDE_LINK_PATHS = new Set([
   '/registry/',
   '/terminal/',
   '/sdk/',
-  '/sdk/#astrofolio',
+  '/astrofolio/',
+  '/tools/',
+  '/aries/',
+  '/taurus/',
+  '/gemini/',
+  '/cancer/',
+  '/leo/',
+  '/virgo/',
+  '/libra/',
+  '/scorpio/',
+  '/sagittarius/',
+  '/capricorn/',
+  '/aquarius/',
+  '/pisces/',
   '/disclosure/',
 ]);
 let stylesheetPromise: Promise<void> | null = null;
@@ -300,6 +415,7 @@ let pageSourceText: HTMLSpanElement | null = null;
 let pageSourceRemove: HTMLButtonElement | null = null;
 let pageSourceAdd: HTMLButtonElement | null = null;
 let transcript: HTMLDivElement | null = null;
+let starters: HTMLDivElement | null = null;
 let status: HTMLParagraphElement | null = null;
 let form: HTMLFormElement | null = null;
 let textarea: HTMLTextAreaElement | null = null;
@@ -324,12 +440,19 @@ let chartSourceId: string | null = null;
 let chartSummaryPromise: Promise<string | null> | null = null;
 let profileAccessGeneration = 0;
 let interactionPending = false;
+let interactionGeneration = 0;
 let hasUserOpened = false;
 let inviteSeenInMemory = false;
 let pendingRetry: PendingTurn | null = null;
 let authFencePromise: Promise<void> | null = null;
 let authFenceCleanup: (() => void) | null = null;
 let authFenceVersion = 0;
+let authReady = false;
+let openGeneration = 0;
+let clearArmed = false;
+let clearConfirmationTimer = 0;
+let backgroundSnapshot: Array<{ node: HTMLElement; inert: boolean; ariaHidden: string | null }> = [];
+let backgroundObserver: MutationObserver | null = null;
 
 interface PendingTurn {
   body: Record<string, unknown>;
@@ -516,8 +639,10 @@ function getSession(): GuideSession {
 }
 
 const PAGE_CATALOG = {
+  home: { title: 'Zodiacs.org home', facts: 'The current page is the Zodiacs.org home and starting point for its astrology references and tools.' },
   guide: { title: 'Guide', facts: 'The current page is the canonical Guide home at /ask/.' },
   'birth-chart': { title: 'Birth chart', facts: 'The current page is part of the Zodiacs.org birth-chart calculator.' },
+  tools: { title: 'Astrology tools', facts: 'The current page is the Zodiacs.org directory of free astrology tools.' },
   'moon-sign': { title: 'Moon sign', facts: 'The current page is the canonical Zodiacs.org Moon-sign calculator and explanation at /moon-sign/.' },
   'astrology-method': { title: 'Astrology method', facts: 'The current page explains how Zodiacs.org separates astronomical calculation from astrological interpretation.' },
   transits: { title: 'Transits', facts: 'The current page is part of the Zodiacs.org current-sky and transit tools.' },
@@ -527,20 +652,72 @@ const PAGE_CATALOG = {
   account: { title: 'Optional Zodiacs account', facts: 'The current page is part of the optional Zodiacs account and saved-chart area.' },
   registry: { title: 'Zodiacs Registry', facts: 'The current page is part of the read-only Zodiacs Registry.' },
   terminal: { title: 'Zodiac Terminal', facts: 'The current page is part of the Zodiacs.org market-and-research interface.' },
-  astrofolio: { title: 'Astrofolio', facts: 'The current page is the published Zodiacs.org SDK context for the separate Astrofolio product.' },
+  astrofolio: { title: 'Astrofolio', facts: 'The current page is the Zodiacs.org Astrofolio collection and its public acquisition guide.' },
   sdk: { title: 'Zodiacs SDK', facts: 'The current page is part of the public Zodiacs SDK documentation.' },
   disclosure: { title: 'Ownership and market disclosure', facts: 'The current page is the dated Zodiacs.org ownership and market disclosure.' },
+  'sign-aries': { title: 'Aries sign guide', facts: 'The current page is the canonical Zodiacs.org Aries sign guide.' },
+  'sign-taurus': { title: 'Taurus sign guide', facts: 'The current page is the canonical Zodiacs.org Taurus sign guide.' },
+  'sign-gemini': { title: 'Gemini sign guide', facts: 'The current page is the canonical Zodiacs.org Gemini sign guide.' },
+  'sign-cancer': { title: 'Cancer sign guide', facts: 'The current page is the canonical Zodiacs.org Cancer sign guide.' },
+  'sign-leo': { title: 'Leo sign guide', facts: 'The current page is the canonical Zodiacs.org Leo sign guide.' },
+  'sign-virgo': { title: 'Virgo sign guide', facts: 'The current page is the canonical Zodiacs.org Virgo sign guide.' },
+  'sign-libra': { title: 'Libra sign guide', facts: 'The current page is the canonical Zodiacs.org Libra sign guide.' },
+  'sign-scorpio': { title: 'Scorpio sign guide', facts: 'The current page is the canonical Zodiacs.org Scorpio sign guide.' },
+  'sign-sagittarius': { title: 'Sagittarius sign guide', facts: 'The current page is the canonical Zodiacs.org Sagittarius sign guide.' },
+  'sign-capricorn': { title: 'Capricorn sign guide', facts: 'The current page is the canonical Zodiacs.org Capricorn sign guide.' },
+  'sign-aquarius': { title: 'Aquarius sign guide', facts: 'The current page is the canonical Zodiacs.org Aquarius sign guide.' },
+  'sign-pisces': { title: 'Pisces sign guide', facts: 'The current page is the canonical Zodiacs.org Pisces sign guide.' },
 } as const;
 
 type PageCatalogId = keyof typeof PAGE_CATALOG;
 
-function approvedPageId(pathname: string): PageCatalogId | null {
+const RUSSIAN_PAGE_TITLES: Partial<Record<PageCatalogId, string>> = {
+  home: 'Главная Zodiacs.org',
+  guide: 'Guide',
+  'birth-chart': 'Натальная карта',
+  tools: 'Астрологические инструменты',
+  'moon-sign': 'Лунный знак',
+  'astrology-method': 'Метод астрологии',
+  transits: 'Транзиты',
+  compatibility: 'Совместимость',
+  learn: 'Изучение астрологии',
+  horoscopes: 'Гороскопы и Сегодня',
+  account: 'Необязательная учётная запись Zodiacs',
+  registry: 'Реестр Zodiacs',
+  terminal: 'Терминал Zodiac',
+  astrofolio: 'Astrofolio',
+  sdk: 'Zodiacs SDK',
+  disclosure: 'Раскрытие информации о владении и рынке',
+  'sign-aries': 'Руководство по знаку Овен',
+  'sign-taurus': 'Руководство по знаку Телец',
+  'sign-gemini': 'Руководство по знаку Близнецы',
+  'sign-cancer': 'Руководство по знаку Рак',
+  'sign-leo': 'Руководство по знаку Лев',
+  'sign-virgo': 'Руководство по знаку Дева',
+  'sign-libra': 'Руководство по знаку Весы',
+  'sign-scorpio': 'Руководство по знаку Скорпион',
+  'sign-sagittarius': 'Руководство по знаку Стрелец',
+  'sign-capricorn': 'Руководство по знаку Козерог',
+  'sign-aquarius': 'Руководство по знаку Водолей',
+  'sign-pisces': 'Руководство по знаку Рыбы',
+};
+
+function localizedPageTitle(id: PageCatalogId): string {
+  return locale === 'ru' ? RUSSIAN_PAGE_TITLES[id] ?? PAGE_CATALOG[id].title : PAGE_CATALOG[id].title;
+}
+
+export function approvedPageId(pathname: string): PageCatalogId | null {
   const path = pathname.replace(/^\/(?:es|pt|fr|it|ru)(?=\/|$)/, '') || '/';
+  if (path === '/') return 'home';
   if (path === '/ask/' || path === '/ask') return 'guide';
+  const sign = path.match(/^\/(aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)\/?$/u)?.[1];
+  if (sign) return `sign-${sign}` as PageCatalogId;
+  if (/^\/tools(?:\/|$)/.test(path)) return 'tools';
+  if (/^\/astrofolio(?:\/|$)/.test(path)) return 'astrofolio';
   if (/^\/moon-sign(?:\/|$)/.test(path)) return 'moon-sign';
   if (/^\/(?:birth-chart|rising-sign|solar-return|saturn-return|baby-zodiac)(?:\/|$)/.test(path)) return 'birth-chart';
   if (/^\/methodology(?:\/|$)/.test(path)) return 'astrology-method';
-  if (/^\/(?:transits|events|moon-phase|full-moon-calendar|eclipses|retrogrades|mercury-retrograde)(?:\/|$)/.test(path)) return 'transits';
+  if (/^\/(?:transits|events|moon-phase|full-moon-calendar|full-moon|new-moon|eclipses|retrogrades|mercury-retrograde|mars-retrograde|venus-retrograde)(?:\/|$)/.test(path)) return 'transits';
   if (/^\/compatibility(?:\/|$)/.test(path)) return 'compatibility';
   if (/^\/learn(?:\/|$)/.test(path)) return 'learn';
   if (/^\/(?:horoscopes|today)(?:\/|$)/.test(path)) return 'horoscopes';
@@ -558,7 +735,7 @@ function pageInfo(): PageInfo | null {
   const id = approvedPageId(location.pathname);
   if (!id) return null;
   const approved = PAGE_CATALOG[id];
-  return { sourceId: `page:${id}`, title: approved.title, facts: approved.facts };
+  return { catalogId: id, sourceId: `page:${id}`, title: localizedPageTitle(id), facts: approved.facts };
 }
 
 function clearPendingRetry(): void {
@@ -590,7 +767,7 @@ function syncPageBoundary(): void {
   }
   if (state.lastPageSourceId === null) {
     state.lastPageSourceId = currentPage.sourceId;
-    invalidateContext(false);
+    invalidateContext(false, state.cloudConsentGranted);
   } else if (state.lastPageSourceId !== currentPage.sourceId) {
     state.lastPageSourceId = currentPage.sourceId;
     invalidateContext(true, true);
@@ -991,7 +1168,55 @@ function scrollTranscript(): void {
   requestAnimationFrame(() => { if (transcript) transcript.scrollTop = transcript.scrollHeight; });
 }
 
+function mobileGuideMode(): boolean {
+  return window.matchMedia(MOBILE_GUIDE_QUERY).matches;
+}
+
+function starterQuestions(): readonly [string, string, string] {
+  const copy = STARTER_COPY[locale];
+  const id = currentPage?.catalogId;
+  if (id?.startsWith('sign-')) return copy.sign;
+  if (id === 'birth-chart') return copy.birthChart;
+  if (id === 'tools') return copy.tools;
+  if (id === 'astrofolio') return copy.astrofolio;
+  return copy.default;
+}
+
+function removeStarters(): void {
+  starters?.closest('.zassistant__empty')?.remove();
+  starters = null;
+}
+
+function renderStarters(): void {
+  removeStarters();
+  if (!authReady || !transcript || getSession().messages.length > 0) return;
+  const empty = document.createElement('div');
+  empty.className = 'zassistant__empty';
+  const label = document.createElement('p');
+  label.className = 'zassistant__empty-label mono';
+  label.textContent = STARTER_COPY[locale].label;
+  starters = document.createElement('div');
+  starters.className = 'zassistant__starters';
+  for (const prompt of starterQuestions()) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'zassistant__starter';
+    button.textContent = prompt;
+    button.addEventListener('click', () => {
+      if (!authReady || !textarea || !form || activeRequest || interactionPending) return;
+      textarea.value = prompt;
+      syncTextareaHeight();
+      syncSendState();
+      form.requestSubmit();
+    });
+    starters.append(button);
+  }
+  empty.append(label, starters);
+  transcript.append(empty);
+}
+
 function appendMessage(role: GuideAuthor, content: string): { article: HTMLElement; body: HTMLParagraphElement } {
+  removeStarters();
   const article = document.createElement('article');
   article.className = `zassistant__message zassistant__message--${role === 'guide' ? 'assistant' : 'user'}`;
   const label = document.createElement('span');
@@ -1010,6 +1235,7 @@ function appendMessage(role: GuideAuthor, content: string): { article: HTMLEleme
   article.append(label, body);
   transcript?.appendChild(article);
   if (intro) intro.hidden = true;
+  syncClearButton();
   scrollTranscript();
   return { article, body };
 }
@@ -1023,7 +1249,10 @@ function renderTranscript(): void {
       appendSourcesRow(bubble.body, message.content);
     }
   }
-  if (intro) intro.hidden = getSession().messages.length > 0;
+  const hasMessages = getSession().messages.length > 0;
+  if (!hasMessages) renderStarters();
+  if (intro) intro.hidden = hasMessages;
+  syncClearButton();
 }
 
 function setStatus(message = ''): void { if (status) status.textContent = message; }
@@ -1036,7 +1265,42 @@ function syncTextareaHeight(): void {
 
 function syncSendState(): void {
   if (!sendButton || !textarea) return;
-  sendButton.disabled = Boolean(activeRequest) || interactionPending || !textarea.value.trim();
+  sendButton.disabled = !authReady || Boolean(activeRequest) || interactionPending || !textarea.value.trim();
+}
+
+function beginInteraction(): number {
+  const generation = ++interactionGeneration;
+  interactionPending = true;
+  return generation;
+}
+
+function releaseInteraction(generation: number): void {
+  if (generation === interactionGeneration) interactionPending = false;
+}
+
+function cancelPendingInteraction(): void {
+  interactionGeneration += 1;
+  interactionPending = false;
+}
+
+function cancelClearConfirmation(): void {
+  clearArmed = false;
+  if (clearConfirmationTimer) window.clearTimeout(clearConfirmationTimer);
+  clearConfirmationTimer = 0;
+  clearButton?.classList.remove('is-armed');
+  if (clearButton) {
+    clearButton.textContent = currentCopy().clearAction;
+    clearButton.setAttribute('aria-label', currentCopy().clear);
+  }
+}
+
+function syncClearButton(): void {
+  if (!clearButton) return;
+  const hasMessages = Boolean(transcript?.querySelector('.zassistant__message'))
+    || (authReady && getSession().messages.length > 0);
+  clearButton.hidden = !authReady || !hasMessages;
+  clearButton.disabled = !authReady || Boolean(activeRequest) || interactionPending;
+  if (!hasMessages) cancelClearConfirmation();
 }
 
 function syncChartButton(): void {
@@ -1049,18 +1313,30 @@ function syncChartButton(): void {
 }
 
 function syncSourceControls(): void {
+  if (!authReady) {
+    if (pageSourceChip) pageSourceChip.hidden = true;
+    if (pageSourceAdd) pageSourceAdd.hidden = true;
+    if (chartButton) chartButton.hidden = true;
+    return;
+  }
   const enabled = pageSourceEnabled();
   if (pageSourceChip) pageSourceChip.hidden = !enabled;
   if (pageSourceText && currentPage) pageSourceText.textContent = `${currentCopy().pageSource}: ${currentPage.title}`;
-  if (pageSourceAdd) pageSourceAdd.hidden = enabled;
+  if (pageSourceRemove && currentPage) {
+    pageSourceRemove.setAttribute('aria-label', `${currentCopy().removeSource}: ${currentPage.title}`);
+  }
+  if (pageSourceAdd) pageSourceAdd.hidden = !currentPage || enabled;
   if (pageSourceRemove) pageSourceRemove.disabled = Boolean(activeRequest) || interactionPending;
   if (pageSourceAdd) pageSourceAdd.disabled = Boolean(activeRequest) || interactionPending;
   syncChartButton();
+  syncClearButton();
 }
 
 function setBusy(busy: boolean): void {
   activeRequest = busy ? activeRequest : null;
   panel?.setAttribute('aria-busy', String(busy));
+  transcript?.setAttribute('aria-busy', String(busy));
+  transcript?.setAttribute('aria-live', busy ? 'off' : 'polite');
   if (stopButton) stopButton.hidden = !busy;
   syncSendState();
   syncSourceControls();
@@ -1123,13 +1399,25 @@ function clearAssistantForProfileRevocation(): void {
   chartEnabled = false;
   chartSourceId = null;
   pendingRetry = null;
+  cancelPendingInteraction();
   replaceWithFreshSession();
-  transcript?.replaceChildren();
+  if (authReady) renderTranscript();
+  else transcript?.replaceChildren();
   if (intro) intro.hidden = false;
   if (textarea) { textarea.value = ''; syncTextareaHeight(); }
   if (retryButton) retryButton.hidden = true;
-  setStatus();
-  setBusy(false);
+  if (authReady) {
+    setStatus();
+    setBusy(false);
+  } else {
+    activeRequest = null;
+    panel?.setAttribute('aria-busy', 'true');
+    transcript?.setAttribute('aria-busy', 'true');
+    transcript?.setAttribute('aria-live', 'off');
+    setStatus(root && !root.hidden ? currentCopy().preparing : '');
+    syncSendState();
+    syncSourceControls();
+  }
 }
 
 function rotateGuideDayIfNeeded(): boolean {
@@ -1196,12 +1484,18 @@ async function ensureGuideAuthFence(): Promise<void> {
   await authFencePromise;
 }
 
-function suspendGuideForPageCache(): void {
-  profileAccessGeneration += 1;
+function resetGuideAuthFence(): void {
   authFenceVersion += 1;
   authFenceCleanup?.();
   authFenceCleanup = null;
   authFencePromise = null;
+}
+
+function suspendGuideForPageCache(): void {
+  profileAccessGeneration += 1;
+  openGeneration += 1;
+  authReady = false;
+  resetGuideAuthFence();
   abortRequest();
   dismissPendingConsent?.();
   dismissPendingCloudConsent?.();
@@ -1213,13 +1507,16 @@ function suspendGuideForPageCache(): void {
   chartEnabled = false;
   chartSourceId = null;
   clearPendingRetry();
-  interactionPending = false;
+  cancelClearConfirmation();
+  cancelPendingInteraction();
   transcript?.replaceChildren();
   if (intro) intro.hidden = false;
   if (textarea) { textarea.value = ''; syncTextareaHeight(); }
   if (root) root.hidden = true;
+  stopVisualViewportTracking();
   document.documentElement.style.overflow = previousOverflow;
   launcher?.removeAttribute('aria-expanded');
+  restoreBackground();
   opener = null;
   setStatus();
   setBusy(false);
@@ -1233,8 +1530,14 @@ function restoreGuideAfterPageCache(event: PageTransitionEvent): void {
 
 function onProfileAccessChange(): void {
   profileAccessGeneration += 1;
+  cancelPendingInteraction();
+  abortRequest();
+  dismissPendingConsent?.();
+  dismissPendingCloudConsent?.();
+  dismissPendingConsent = null;
+  dismissPendingCloudConsent = null;
   if (profileAccessAllowed()) {
-    if (hasUserOpened) refreshSavedChart();
+    if (hasUserOpened && authReady) refreshSavedChart();
     return;
   }
   clearAssistantForProfileRevocation();
@@ -1242,11 +1545,14 @@ function onProfileAccessChange(): void {
 
 function onProfileDataChange(): void {
   profileAccessGeneration += 1;
+  cancelPendingInteraction();
   clearPendingRetry();
   abortRequest();
   dismissPendingConsent?.();
+  dismissPendingCloudConsent?.();
   dismissPendingConsent = null;
-  if (hasUserOpened) refreshSavedChart();
+  dismissPendingCloudConsent = null;
+  if (hasUserOpened && authReady) refreshSavedChart();
 }
 
 function onGuideStorageChange(event: StorageEvent): void {
@@ -1325,13 +1631,18 @@ async function requestCloudConsent(): Promise<boolean> {
 }
 
 async function requestChartConsent(expectedGeneration = profileAccessGeneration): Promise<boolean> {
-  if (!currentProfileAccessGeneration(expectedGeneration) || !profileAccessAllowed()) return false;
+  const expectedOpenGeneration = openGeneration;
+  const consentIsCurrent = () => authReady
+    && currentProfileAccessGeneration(expectedGeneration)
+    && expectedOpenGeneration === openGeneration
+    && Boolean(root && !root.hidden);
+  if (!consentIsCurrent() || !profileAccessAllowed()) return false;
   if (chartConsented && chartEnabled) return true;
   const chart = savedChart;
   if (!chart || !transcript) return false;
   chartSummaryPromise ??= placementSummaryForChart(chart);
   const summary = await chartSummaryPromise;
-  if (!summary || !currentProfileAccessGeneration(expectedGeneration)
+  if (!summary || !consentIsCurrent()
     || !profileAccessAllowed() || savedChart !== chart) return false;
   const copy = currentCopy();
   const localLabel = chart.name.trim().slice(0, 120);
@@ -1340,7 +1651,7 @@ async function requestChartConsent(expectedGeneration = profileAccessGeneration)
   dismissPendingConsent = card.dismiss;
   const granted = await card.promise;
   if (dismissPendingConsent === card.dismiss) dismissPendingConsent = null;
-  const current = currentProfileAccessGeneration(expectedGeneration)
+  const current = consentIsCurrent()
     && profileAccessAllowed() && savedChart === chart;
   if (current && granted) {
     chartConsented = true;
@@ -1375,7 +1686,7 @@ function appendSourcesRow(container: HTMLElement, text: string): void {
 
 function questionRequestsMyChart(question: string): boolean {
   const normalized = question.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  return /\b(?:my (?:birth )?chart|mi carta(?: natal)?|meu mapa(?: natal)?|mon theme(?: natal)?|mio tema(?: natale)?)\b/.test(normalized);
+  return /(?:\b(?:my (?:birth )?chart|mi carta(?: natal)?|meu mapa(?: natal)?|mon theme(?: natal)?|mio tema(?: natale)?)\b|м(?:оя|ою) (?:натальн(?:ая|ую) )?карт(?:а|у))/u.test(normalized);
 }
 
 async function buildTurnBody(
@@ -1463,6 +1774,7 @@ async function runTurn(pending: PendingTurn): Promise<void> {
     return;
   }
   const expectedGeneration = profileAccessGeneration;
+  const expectedOpenGeneration = openGeneration;
   const request = new AbortController();
   activeRequest = request;
   pendingRetry = null;
@@ -1474,7 +1786,11 @@ async function runTurn(pending: PendingTurn): Promise<void> {
   pending.assistantArticle.classList.remove('is-partial', 'is-error');
   setStatus(currentCopy().thinking);
   let answer = '';
-  const requestIsCurrent = () => currentProfileAccessGeneration(expectedGeneration) && activeRequest === request;
+  const requestIsCurrent = () => authReady
+    && expectedOpenGeneration === openGeneration
+    && currentProfileAccessGeneration(expectedGeneration)
+    && Boolean(root && !root.hidden)
+    && activeRequest === request;
   const authorityTimer = pending.chartAuthority ? window.setInterval(() => {
     if (!sameSelfChartAuthority(pending.chartAuthority, readSelectedSelfChart())) onProfileDataChange();
   }, 250) : 0;
@@ -1519,33 +1835,45 @@ async function runTurn(pending: PendingTurn): Promise<void> {
     }
   } finally {
     if (authorityTimer) window.clearInterval(authorityTimer);
-    if (activeRequest === request) setBusy(false);
-    if (currentProfileAccessGeneration(expectedGeneration) && root && !root.hidden) textarea?.focus();
+    if (activeRequest === request) {
+      if (authReady && expectedOpenGeneration === openGeneration && root && !root.hidden) setBusy(false);
+      else activeRequest = null;
+    }
+    if (authReady && currentProfileAccessGeneration(expectedGeneration)
+      && expectedOpenGeneration === openGeneration
+      && root && !root.hidden && !mobileGuideMode()) textarea?.focus();
   }
 }
 
 async function submitQuestion(): Promise<void> {
-  if (!textarea || activeRequest || interactionPending) return;
+  if (!authReady || !textarea || activeRequest || interactionPending) return;
   if (rotateGuideDayIfNeeded()) return;
   const question = textarea.value.trim();
   if (!question) { setStatus(currentCopy().empty); return; }
-  interactionPending = true;
+  const interaction = beginInteraction();
   syncSendState();
   syncSourceControls();
   const expectedGeneration = profileAccessGeneration;
+  const expectedOpenGeneration = openGeneration;
+  const interactionIsCurrent = () => authReady
+    && currentProfileAccessGeneration(expectedGeneration)
+    && expectedOpenGeneration === openGeneration
+    && Boolean(root && !root.hidden);
   try {
     if (!await requestCloudConsent()) return;
+    if (!interactionIsCurrent()) return;
     if (rotateGuideDayIfNeeded()) return;
-    if (!currentProfileAccessGeneration(expectedGeneration)) return;
+    if (!interactionIsCurrent()) return;
     let chartFacts: string | undefined;
     let chartAuthority: StoredChart | null = null;
     const wantsChart = Boolean(savedChart) && (chartEnabled || questionRequestsMyChart(question));
     if (wantsChart && !chartEnabled) {
       setStatus(currentCopy().chartReading);
       await requestChartConsent(expectedGeneration);
+      if (!interactionIsCurrent()) return;
     }
     if (rotateGuideDayIfNeeded()) return;
-    if (!currentProfileAccessGeneration(expectedGeneration)) return;
+    if (!interactionIsCurrent()) return;
     if (chartEnabled && savedChart) {
       const current = readSelectedSelfChart();
       if (!sameSelfChartAuthority(savedChart, current)) {
@@ -1555,6 +1883,7 @@ async function submitQuestion(): Promise<void> {
       }
       chartSummaryPromise ??= placementSummaryForChart(savedChart);
       chartFacts = (await chartSummaryPromise) ?? undefined;
+      if (!interactionIsCurrent()) return;
       const currentAfterSummary = readSelectedSelfChart();
       if (!chartFacts || !sameSelfChartAuthority(savedChart, currentAfterSummary)) {
         refreshSavedChart();
@@ -1564,9 +1893,10 @@ async function submitQuestion(): Promise<void> {
       chartAuthority = currentAfterSummary;
     }
     if (rotateGuideDayIfNeeded()) return;
-    if (!currentProfileAccessGeneration(expectedGeneration)) return;
+    if (!interactionIsCurrent()) return;
     const ids = { turnId: uuid(), operationId: uuid(), attemptId: uuid(), messageId: uuid() };
     const built = await buildTurnBody(question, ids, null, chartFacts);
+    if (rotateGuideDayIfNeeded() || !interactionIsCurrent()) return;
     const user = appendMessage('user', question);
     const guide = appendMessage('guide', '');
     textarea.value = '';
@@ -1577,18 +1907,21 @@ async function submitQuestion(): Promise<void> {
       assistantArticle: guide.article, assistantBody: guide.body,
       chartAuthority,
     };
-    interactionPending = false;
+    releaseInteraction(interaction);
     await runTurn(pending);
   } catch (error) {
-    setStatus(friendlyFailure(error instanceof AssistantFailure ? error.code : 'temporarily_unavailable'));
+    if (interactionIsCurrent()) {
+      setStatus(friendlyFailure(error instanceof AssistantFailure ? error.code : 'temporarily_unavailable'));
+    }
   } finally {
-    interactionPending = false;
+    releaseInteraction(interaction);
     syncSendState();
     syncSourceControls();
   }
 }
 
 async function retryTurn(): Promise<void> {
+  if (!authReady) return;
   if (rotateGuideDayIfNeeded()) return;
   const prior = pendingRetry;
   if (!prior || activeRequest) return;
@@ -1618,19 +1951,79 @@ function dismissInvite(markSeen = true): void {
   }
 }
 
+function syncVisualViewport(): void {
+  if (!root || root.hidden) return;
+  const height = window.visualViewport?.height ?? window.innerHeight;
+  root.style.setProperty('--zassistant-viewport-height', `${Math.max(1, Math.round(height))}px`);
+}
+
+function startVisualViewportTracking(): void {
+  syncVisualViewport();
+  window.addEventListener('resize', syncVisualViewport);
+  window.visualViewport?.addEventListener('resize', syncVisualViewport);
+  window.visualViewport?.addEventListener('scroll', syncVisualViewport);
+}
+
+function stopVisualViewportTracking(): void {
+  window.removeEventListener('resize', syncVisualViewport);
+  window.visualViewport?.removeEventListener('resize', syncVisualViewport);
+  window.visualViewport?.removeEventListener('scroll', syncVisualViewport);
+  root?.style.removeProperty('--zassistant-viewport-height');
+}
+
+function isolateBackgroundNode(node: Node): void {
+  if (!(node instanceof HTMLElement) || node === root
+    || backgroundSnapshot.some((entry) => entry.node === node)) return;
+  backgroundSnapshot.push({ node, inert: node.inert, ariaHidden: node.getAttribute('aria-hidden') });
+  node.inert = true;
+  node.setAttribute('aria-hidden', 'true');
+}
+
+function isolateBackground(): void {
+  if (!root || backgroundObserver) return;
+  for (const node of document.body.children) isolateBackgroundNode(node);
+  backgroundObserver = new MutationObserver((records) => {
+    for (const record of records) {
+      for (const node of record.addedNodes) isolateBackgroundNode(node);
+    }
+  });
+  backgroundObserver.observe(document.body, { childList: true });
+}
+
+function restoreBackground(): void {
+  backgroundObserver?.disconnect();
+  backgroundObserver = null;
+  for (const { node, inert, ariaHidden } of backgroundSnapshot) {
+    node.inert = inert;
+    if (ariaHidden === null) node.removeAttribute('aria-hidden');
+    else node.setAttribute('aria-hidden', ariaHidden);
+  }
+  backgroundSnapshot = [];
+}
+
 function closeAssistant(): void {
   if (!root || root.hidden) return;
+  openGeneration += 1;
+  authReady = false;
+  resetGuideAuthFence();
   abortRequest();
   dismissPendingConsent?.();
   dismissPendingCloudConsent?.();
+  cancelPendingInteraction();
+  clearPendingRetry();
+  cancelClearConfirmation();
   root.hidden = true;
+  panel?.style.removeProperty('transform');
+  stopVisualViewportTracking();
   document.documentElement.style.overflow = previousOverflow;
   launcher?.removeAttribute('aria-expanded');
+  restoreBackground();
   opener?.focus();
   opener = null;
 }
 
 function clearConversation(): void {
+  if (!authReady) return;
   abortRequest();
   const state = getSession();
   state.messages = [];
@@ -1646,12 +2039,33 @@ function clearConversation(): void {
   if (retryButton) retryButton.hidden = true;
 }
 
+function requestClearConversation(): void {
+  if (!authReady || !clearButton || clearButton.hidden) return;
+  if (!clearArmed) {
+    clearArmed = true;
+    clearButton!.textContent = currentCopy().clearConfirm;
+    clearButton!.classList.add('is-armed');
+    clearButton!.setAttribute('aria-label', currentCopy().clearConfirmStatus);
+    setStatus(currentCopy().clearConfirmStatus);
+    clearConfirmationTimer = window.setTimeout(() => {
+      cancelClearConfirmation();
+      setStatus();
+    }, 4_000);
+    return;
+  }
+  cancelClearConfirmation();
+  clearConversation();
+}
+
 function applyCopy(): void {
   const copy = currentCopy();
   if (title) title.textContent = copy.title;
   launcher?.setAttribute('aria-label', copy.open);
   if (closeButton) closeButton.setAttribute('aria-label', copy.close);
-  if (clearButton) clearButton.setAttribute('aria-label', copy.clear);
+  if (clearButton) {
+    clearButton.setAttribute('aria-label', clearArmed ? copy.clearConfirmStatus : copy.clear);
+    clearButton.textContent = clearArmed ? copy.clearConfirm : copy.clearAction;
+  }
   if (intro) intro.textContent = copy.intro;
   if (sourcesRegion) sourcesRegion.setAttribute('aria-label', copy.context);
   if (pageSourceRemove) pageSourceRemove.setAttribute('aria-label', `${copy.removeSource}: ${copy.pageSource}`);
@@ -1662,12 +2076,18 @@ function applyCopy(): void {
   if (stopButton) stopButton.textContent = copy.stop;
   if (retryButton) retryButton.textContent = copy.retry;
   if (newlineHint) newlineHint.textContent = copy.newline;
-  if (privacy) privacy.textContent = copy.privacy;
+  if (privacy) {
+    const link = document.createElement('a');
+    link.className = 'zassistant__privacy-link';
+    link.href = locale === 'en' ? '/privacy/' : `/${locale}/privacy/`;
+    link.textContent = copy.privacyLearnMore;
+    privacy.replaceChildren(document.createTextNode(`${copy.privacy} `), link);
+  }
   syncSourceControls();
 }
 
 function removePageSource(): void {
-  if (!currentPage || activeRequest || interactionPending) return;
+  if (!authReady || !currentPage || activeRequest || interactionPending) return;
   const state = getSession();
   if (!state.removedPageSourceIds.includes(currentPage.sourceId)) {
     state.removedPageSourceIds.push(currentPage.sourceId);
@@ -1679,16 +2099,16 @@ function removePageSource(): void {
 }
 
 function addPageSource(): void {
-  if (!currentPage || activeRequest || interactionPending) return;
+  if (!authReady || !currentPage || activeRequest || interactionPending) return;
   const state = getSession();
   state.removedPageSourceIds = state.removedPageSourceIds.filter((id) => id !== currentPage!.sourceId);
   invalidateContext(false, true);
   syncSourceControls();
-  setStatus();
+  setStatus(`${currentCopy().pageSource}: ${currentPage.title}`);
 }
 
 function toggleChart(): void {
-  if (activeRequest || interactionPending) return;
+  if (!authReady || activeRequest || interactionPending) return;
   if (chartEnabled) {
     chartEnabled = false;
     chartConsented = false;
@@ -1698,15 +2118,67 @@ function toggleChart(): void {
     setStatus(currentCopy().contextUpdated);
     return;
   }
-  interactionPending = true;
+  const interaction = beginInteraction();
   syncSendState();
   syncSourceControls();
   const expectedGeneration = profileAccessGeneration;
   void requestChartConsent(expectedGeneration).finally(() => {
-    interactionPending = false;
+    releaseInteraction(interaction);
     syncSendState();
     syncSourceControls();
   });
+}
+
+function wireMobileSheetGesture(header: HTMLElement, handle: HTMLElement): void {
+  let startY = 0;
+  let lastY = 0;
+  let startTime = 0;
+  let dragging = false;
+  let captureSurface: HTMLElement | null = null;
+  const finish = (event: PointerEvent) => {
+    if (!dragging || !panel) return;
+    dragging = false;
+    const distance = Math.max(0, lastY - startY);
+    const velocity = distance / Math.max(1, performance.now() - startTime);
+    try { captureSurface?.releasePointerCapture(event.pointerId); } catch { /* capture can already be released */ }
+    captureSurface = null;
+    if (distance >= 96 || (distance >= 40 && velocity > 0.65)) {
+      panel.style.removeProperty('transition');
+      panel.style.removeProperty('transform');
+      closeAssistant();
+      return;
+    }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    panel.style.transition = reducedMotion ? 'none' : 'transform 160ms ease-out';
+    panel.style.transform = 'translateY(0)';
+    window.setTimeout(() => {
+      panel?.style.removeProperty('transition');
+      panel?.style.removeProperty('transform');
+    }, reducedMotion ? 0 : 170);
+  };
+  const start = (event: PointerEvent) => {
+    if (event.pointerType !== 'touch' || !mobileGuideMode()
+      || event.target instanceof Element && event.target.closest('button')) return;
+    dragging = true;
+    startY = event.clientY;
+    lastY = event.clientY;
+    startTime = performance.now();
+    panel?.style.setProperty('transition', 'none');
+    captureSurface = event.currentTarget as HTMLElement;
+    captureSurface.setPointerCapture(event.pointerId);
+  };
+  const move = (event: PointerEvent) => {
+    if (!dragging || !panel) return;
+    lastY = event.clientY;
+    const distance = Math.max(0, lastY - startY);
+    panel.style.transform = `translateY(${distance}px)`;
+  };
+  for (const surface of [header, handle]) {
+    surface.addEventListener('pointerdown', start);
+    surface.addEventListener('pointermove', move);
+    surface.addEventListener('pointerup', finish);
+    surface.addEventListener('pointercancel', finish);
+  }
 }
 
 function build(): void {
@@ -1720,7 +2192,9 @@ function build(): void {
     if (!controls.length) return;
     const first = controls[0];
     const last = controls[controls.length - 1];
-    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === title)) {
+      event.preventDefault(); last.focus();
+    }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   });
   panel = document.createElement('div');
@@ -1728,6 +2202,9 @@ function build(): void {
   panel.setAttribute('role', 'dialog');
   panel.setAttribute('aria-modal', 'true');
   panel.setAttribute('aria-labelledby', 'zassistant-title');
+  const dragHandle = document.createElement('div');
+  dragHandle.className = 'zassistant__drag-handle';
+  dragHandle.setAttribute('aria-hidden', 'true');
   const header = document.createElement('header');
   header.className = 'zassistant__head';
   const headerIdentity = document.createElement('div');
@@ -1735,14 +2212,15 @@ function build(): void {
   title = document.createElement('h2');
   title.id = 'zassistant-title';
   title.className = 'zassistant__title';
+  title.tabIndex = -1;
   headerIdentity.append(createGuideAvatar('zassistant__avatar', 38), title);
   const headerActions = document.createElement('div');
   headerActions.className = 'zassistant__head-actions';
   clearButton = document.createElement('button');
   clearButton.type = 'button';
   clearButton.className = 'zassistant__clear';
-  clearButton.textContent = '⌫';
-  clearButton.addEventListener('click', clearConversation);
+  clearButton.hidden = true;
+  clearButton.addEventListener('click', requestClearConversation);
   closeButton = document.createElement('button');
   closeButton.type = 'button';
   closeButton.className = 'zassistant__close';
@@ -1750,6 +2228,7 @@ function build(): void {
   closeButton.addEventListener('click', closeAssistant);
   headerActions.append(clearButton, closeButton);
   header.append(headerIdentity, headerActions);
+  wireMobileSheetGesture(header, dragHandle);
   intro = document.createElement('p');
   intro.className = 'zassistant__intro';
   sourcesRegion = document.createElement('div');
@@ -1791,10 +2270,11 @@ function build(): void {
   textarea.rows = 2;
   textarea.maxLength = MAX_INPUT;
   textarea.autocomplete = 'off';
+  textarea.enterKeyHint = 'enter';
   textarea.spellcheck = true;
   textarea.addEventListener('input', () => { syncTextareaHeight(); syncSendState(); });
   textarea.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
+    if (event.key === 'Enter' && !event.shiftKey && !event.isComposing && !mobileGuideMode()) {
       event.preventDefault(); form?.requestSubmit();
     }
   });
@@ -1820,7 +2300,7 @@ function build(): void {
   form.append(textarea, actions);
   privacy = document.createElement('p');
   privacy.className = 'zassistant__privacy';
-  panel.append(header, intro, sourcesRegion, transcript, status, form, privacy);
+  panel.append(dragHandle, header, intro, sourcesRegion, transcript, status, form, privacy);
   root.append(panel);
   document.body.append(root);
   const shellLauncher = document.querySelector<HTMLButtonElement>('[data-guide-launcher]');
@@ -1841,8 +2321,19 @@ function build(): void {
     document.body.append(launcher);
   }
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && root && !root.hidden) {
-      event.preventDefault(); event.stopPropagation(); closeAssistant();
+    if (!root || root.hidden) return;
+    if (event.key === 'Escape') {
+      event.preventDefault(); event.stopPropagation(); closeAssistant(); return;
+    }
+    const target = event.target;
+    const typing = target instanceof HTMLElement
+      && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA'
+        || target.tagName === 'SELECT' || target.isContentEditable);
+    const searchShortcut = (event.key === '/' && !typing && !event.metaKey && !event.ctrlKey && !event.altKey)
+      || ((event.key === 'k' || event.key === 'K') && (event.metaKey || event.ctrlKey));
+    if (searchShortcut) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
     }
   }, true);
   window.addEventListener('zodiacs:profile', onProfileDataChange);
@@ -1885,30 +2376,70 @@ function showInvite(): void {
 export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
   await ensureStylesheet();
   locale = normalizeLocale(requestedLocale);
-  getSession();
   if (!root) build();
-  syncPageBoundary();
   applyCopy();
 }
 
 /** Open the Guide drawer. Safe to call repeatedly on the same page. */
 export async function openAssistant(requestedLocale?: string, from?: HTMLElement | null): Promise<void> {
+  const generation = ++openGeneration;
+  authReady = false;
+  resetGuideAuthFence();
+  abortRequest();
+  dismissPendingConsent?.();
+  dismissPendingCloudConsent?.();
+  dismissPendingConsent = null;
+  dismissPendingCloudConsent = null;
+  cancelPendingInteraction();
+  clearPendingRetry();
+  const authFence = ensureGuideAuthFence();
   await bootstrapGuide(requestedLocale);
-  rotateGuideDayIfNeeded();
-  await ensureGuideAuthFence();
-  hasUserOpened = true;
   dismissInvite();
   applyCopy();
-  refreshSavedChart();
-  renderTranscript();
   if (root!.hidden) {
     opener = from ?? (document.activeElement as HTMLElement | null);
     previousOverflow = document.documentElement.style.overflow;
   }
+  savedChart = null;
+  chartEnabled = false;
+  chartConsented = false;
+  chartSourceId = null;
+  chartSummaryPromise = null;
+  currentPage = null;
+  transcript?.replaceChildren();
+  starters = null;
+  if (intro) intro.hidden = false;
+  if (textarea) {
+    textarea.value = '';
+    textarea.disabled = true;
+    syncTextareaHeight();
+  }
+  if (clearButton) clearButton.hidden = true;
+  syncSourceControls();
   root!.hidden = false;
   launcher?.setAttribute('aria-expanded', 'true');
   document.documentElement.style.overflow = 'hidden';
-  setStatus();
-  textarea!.focus();
+  title?.focus({ preventScroll: true });
+  isolateBackground();
+  startVisualViewportTracking();
+  panel?.setAttribute('aria-busy', 'true');
+  setStatus(currentCopy().preparing);
   track('guide_open');
+
+  await authFence;
+  if (generation !== openGeneration || !root || root.hidden) return;
+  rotateGuideDayIfNeeded();
+  if (generation !== openGeneration || root.hidden) return;
+  authReady = true;
+  hasUserOpened = true;
+  syncPageBoundary();
+  refreshSavedChart();
+  renderTranscript();
+  if (textarea) textarea.disabled = false;
+  setBusy(false);
+  applyCopy();
+  setStatus();
+  syncSendState();
+  syncSourceControls();
+  if (!mobileGuideMode()) textarea?.focus({ preventScroll: true });
 }

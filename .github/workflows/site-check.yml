@@ -76,6 +76,20 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Temporary release-evidence refresh. The generated files are uploaded
+      # from the pinned CI browser, then committed in the follow-up release
+      # commit before this capture step is removed.
+      - name: Capture refreshed Phase 1 acceptance evidence
+        run: npm run test:phase1:acceptance
+
+      - name: Upload refreshed Phase 1 acceptance evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-1-acceptance-refresh-${{ github.run_id }}
+          path: docs/acceptance/phase1/screenshots/
+          if-no-files-found: error
+          retention-days: 1
+
       - name: Typecheck
         run: npm run check
 

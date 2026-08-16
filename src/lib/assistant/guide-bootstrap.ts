@@ -5,7 +5,7 @@
  */
 import './guide-bootstrap.css';
 
-export type AssistantLocale = 'en' | 'es' | 'pt' | 'fr' | 'it';
+export type AssistantLocale = 'en' | 'es' | 'pt' | 'fr' | 'it' | 'ru';
 
 interface ShellCopy {
   open: string;
@@ -49,19 +49,26 @@ const COPY: Record<AssistantLocale, ShellCopy> = {
     inviteAction: 'Chiedi a Guide',
     dismissInvite: 'Chiudi il benvenuto di Guide',
   },
+  ru: {
+    open: 'Открыть Guide',
+    invite: 'Я могу помочь с этой страницей, астрологией, вашей натальной картой или Astrofolio.',
+    inviteAction: 'Спросить Guide',
+    dismissInvite: 'Закрыть приветствие Guide',
+  },
 };
 
 const STYLESHEET_HREF = '/assets/assistant-ui.css';
 const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
 const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';
-const INVITE_DELAY_MS = 2_000;
+const INVITE_DELAY_MS = 7_000;
 
 let stylesheetPromise: Promise<void> | null = null;
 let drawerModulePromise: Promise<DrawerModule> | null = null;
 let launcher: HTMLButtonElement | null = null;
 let invite: HTMLElement | null = null;
 let inviteTimer = 0;
+let inviteVisibilityWired = false;
 let inviteSeenInMemory = false;
 let locale: AssistantLocale = 'en';
 let openersWired = false;
@@ -69,7 +76,7 @@ let portraitPromise: Promise<HTMLImageElement> | null = null;
 
 function normalizeLocale(value?: string): AssistantLocale {
   const candidate = (value ?? document.documentElement.lang).trim().toLowerCase();
-  for (const released of ['en', 'es', 'pt', 'fr', 'it'] as const) {
+  for (const released of ['en', 'es', 'pt', 'fr', 'it', 'ru'] as const) {
     if (candidate === released || candidate.startsWith(`${released}-`)) return released;
   }
   return 'en';
@@ -174,9 +181,20 @@ function currentCopy(): ShellCopy {
   return COPY[locale];
 }
 
+function stopInviteScheduling(): void {
+  if (inviteTimer) window.clearTimeout(inviteTimer);
+  inviteTimer = 0;
+  if (inviteVisibilityWired) {
+    document.removeEventListener('visibilitychange', onInviteVisibilityChange);
+    inviteVisibilityWired = false;
+  }
+}
+
 function dismissInvite(): void {
+  stopInviteScheduling();
   invite?.remove();
   invite = null;
+  launcher?.removeAttribute('hidden');
   inviteSeenInMemory = true;
   safeSessionSet(INVITE_KEY, '1');
 }
@@ -239,8 +257,10 @@ function wireOpeners(): void {
 function showInvite(): void {
   if (
     invite || inviteSeenInMemory || safeSessionGet(INVITE_KEY) === '1'
+    || document.visibilityState !== 'visible'
     || !launcher || launcher.getAttribute('aria-expanded') === 'true'
   ) return;
+  stopInviteScheduling();
   inviteSeenInMemory = true;
   safeSessionSet(INVITE_KEY, '1');
   const copy = currentCopy();
@@ -255,7 +275,7 @@ function showInvite(): void {
   identity.className = 'zguide-invite__identity';
   const label = document.createElement('strong');
   label.textContent = 'Guide';
-  identity.append(createPortrait('zguide-invite__avatar', 44), label);
+  identity.append(createPortrait('zguide-invite__avatar', 38), label);
   const message = document.createElement('p');
   message.textContent = copy.invite;
   const action = document.createElement('button');
@@ -265,7 +285,34 @@ function showInvite(): void {
   dismiss.addEventListener('click', dismissInvite);
   action.addEventListener('click', () => void openAssistant(undefined, launcher));
   invite.append(dismiss, identity, message, action);
+  launcher.setAttribute('hidden', '');
   document.body.append(invite);
+}
+
+function scheduleInvite(): void {
+  if (
+    invite || inviteTimer || inviteSeenInMemory || safeSessionGet(INVITE_KEY) === '1'
+    || document.visibilityState !== 'visible'
+  ) return;
+  inviteTimer = window.setTimeout(() => {
+    inviteTimer = 0;
+    if (document.visibilityState === 'visible') showInvite();
+  }, INVITE_DELAY_MS);
+}
+
+function onInviteVisibilityChange(): void {
+  if (document.visibilityState === 'visible') {
+    scheduleInvite();
+    return;
+  }
+  if (inviteTimer) window.clearTimeout(inviteTimer);
+  inviteTimer = 0;
+}
+
+function wireInviteVisibility(): void {
+  if (inviteVisibilityWired) return;
+  inviteVisibilityWired = true;
+  document.addEventListener('visibilitychange', onInviteVisibilityChange);
 }
 
 /** Mount the default-visible launcher and one quiet, non-modal welcome. */
@@ -275,7 +322,8 @@ export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
   buildLauncher();
   launcher?.setAttribute('aria-label', currentCopy().open);
   wireOpeners();
-  if (!inviteTimer && !inviteSeenInMemory && safeSessionGet(INVITE_KEY) !== '1') {
-    inviteTimer = window.setTimeout(showInvite, Math.max(0, INVITE_DELAY_MS - performance.now()));
+  if (!inviteSeenInMemory && safeSessionGet(INVITE_KEY) !== '1') {
+    wireInviteVisibility();
+    scheduleInvite();
   }
 }

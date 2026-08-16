@@ -37,15 +37,16 @@
   cursor: pointer;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  transition: opacity 140ms ease, visibility 140ms ease, transform 140ms ease;
 }
 .zguide-launcher__avatar { width: 32px; height: 32px; }
 .zguide-invite {
   position: fixed;
   right: max(18px, env(safe-area-inset-right));
-  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 60px);
+  bottom: max(18px, env(safe-area-inset-bottom));
   z-index: 65;
-  width: min(310px, calc(100vw - 36px));
-  padding: 16px;
+  width: min(286px, calc(100vw - 36px));
+  padding: 12px;
   border: 1px solid rgba(198, 204, 218, 0.18);
   border-radius: 18px;
   background: rgba(15, 18, 26, 0.97);
@@ -56,10 +57,10 @@
   -webkit-backdrop-filter: blur(16px);
   animation: zguide-welcome-in 240ms ease-out both;
 }
-.zguide-invite__identity { display: flex; align-items: center; gap: 11px; padding-right: 36px; }
-.zguide-invite__avatar { width: 44px; height: 44px; }
+.zguide-invite__identity { display: flex; align-items: center; gap: 9px; padding-right: 34px; }
+.zguide-invite__avatar { width: 38px; height: 38px; }
 .zguide-invite strong { display: block; font: 500 20px/1.2 var(--font-serif); }
-.zguide-invite p { margin: 10px 24px 13px 0; color: #c6ccda; font-size: 13px; line-height: 1.5; }
+.zguide-invite p { margin: 7px 20px 9px 0; color: #c6ccda; font-size: 12.5px; line-height: 1.4; }
 .zguide-invite__dismiss {
   position: absolute;
   top: 5px;
@@ -84,13 +85,24 @@
   font: 650 12px/1 var(--font-sans);
   cursor: pointer;
 }
+body:has(.zguide-invite) .zguide-launcher {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
 @keyframes zguide-welcome-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @media (max-width: 560px) {
   .zguide-launcher { right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); }
-  .zguide-invite { right: 12px; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 60px); }
+  .zguide-invite {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: min(280px, calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .zguide-invite { animation: none; }

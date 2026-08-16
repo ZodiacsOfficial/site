@@ -54,7 +54,7 @@ function projection(overrides: Partial<GuideProviderProjection> = {}): GuideProv
     },
     attachments: [],
     publicKnowledge: {
-      version: 'guide-public-knowledge-2026-08-14.1',
+      version: 'guide-public-knowledge-2026-08-16.1',
       entries: [],
       allowedPaths: [],
     },

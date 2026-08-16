@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { GUIDE_KNOWLEDGE_VERSION } from './catalog';
+import { GUIDE_KNOWLEDGE_ENTRIES, GUIDE_KNOWLEDGE_VERSION } from './catalog';
 import { resolveGuidePageKnowledge, selectGuideKnowledge } from './retriever';
 
 describe('Guide public knowledge', () => {
@@ -8,7 +8,7 @@ describe('Guide public knowledge', () => {
     expect(result.version).toBe(GUIDE_KNOWLEDGE_VERSION);
     expect(result.entries[0]?.id).toBe('astrofolio');
     expect(result.entries.map(({ facts }) => facts).join(' ')).toContain('never the name of a Zodiacs account');
-    expect(result.allowedPaths).toContain('/sdk/#astrofolio');
+    expect(result.allowedPaths).toContain('/astrofolio/');
     expect(result.entries.length).toBeLessThanOrEqual(4);
   });
 
@@ -18,6 +18,49 @@ describe('Guide public knowledge', () => {
     expect(resolveGuidePageKnowledge('page:birth-chart')?.canonicalPath).toBe('/birth-chart/');
     expect(resolveGuidePageKnowledge('page:/birth-chart/?name=private')).toBeNull();
     expect(resolveGuidePageKnowledge('page:not-published')).toBeNull();
+  });
+
+  it('resolves every newly supported top-level page to server-curated knowledge', () => {
+    const expectedPages = new Map([
+      ['home', '/'],
+      ['tools', '/tools/'],
+      ['astrofolio', '/astrofolio/'],
+      ['sign-aries', '/aries/'],
+      ['sign-taurus', '/taurus/'],
+      ['sign-gemini', '/gemini/'],
+      ['sign-cancer', '/cancer/'],
+      ['sign-leo', '/leo/'],
+      ['sign-virgo', '/virgo/'],
+      ['sign-libra', '/libra/'],
+      ['sign-scorpio', '/scorpio/'],
+      ['sign-sagittarius', '/sagittarius/'],
+      ['sign-capricorn', '/capricorn/'],
+      ['sign-aquarius', '/aquarius/'],
+      ['sign-pisces', '/pisces/'],
+    ] as const);
+
+    for (const [id, canonicalPath] of expectedPages) {
+      expect(resolveGuidePageKnowledge(`page:${id}`), id).toMatchObject({ id, canonicalPath });
+      expect(selectGuideKnowledge('Help me understand this page', `page:${id}`).entries[0]?.id, id)
+        .toBe(id);
+    }
+    expect(resolveGuidePageKnowledge('page:sign-ophiuchus')).toBeNull();
+  });
+
+  it('keeps page selectors and canonical routes unique', () => {
+    const ids = GUIDE_KNOWLEDGE_ENTRIES.map(({ id }) => id);
+    const canonicalPaths = GUIDE_KNOWLEDGE_ENTRIES.map(({ canonicalPath }) => canonicalPath);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(new Set(canonicalPaths).size).toBe(canonicalPaths.length);
+  });
+
+  it('grounds each sign page without reducing a person to one Sun-sign placement', () => {
+    const signEntries = GUIDE_KNOWLEDGE_ENTRIES.filter(({ id }) => id.startsWith('sign-'));
+    expect(signEntries).toHaveLength(12);
+    for (const entry of signEntries) {
+      expect(entry.facts, entry.id).toContain('traditional astrological interpretations');
+      expect(entry.facts, entry.id).toContain('one chart placement, not the whole person');
+    }
   });
 
   it('grounds Sun-versus-Moon questions in the canonical Moon-sign page', () => {

@@ -107,7 +107,11 @@ async function installGuideRoute(page, requests) {
               return { data: { subscription: { unsubscribe() {} } } };
             },
             async getSession() {
-              return { data: { session: { user: { id: ${JSON.stringify(ACCOUNT_ID)} } } }, error: null };
+              if (window.__guideHoldAuthSnapshot) {
+                await new Promise((resolve) => { window.__releaseGuideAuthSnapshot = resolve; });
+              }
+              const accountId = window.__guideAuthAccountId || ${JSON.stringify(ACCOUNT_ID)};
+              return { data: { session: { user: { id: accountId } } }, error: null };
             },
           },
         };
@@ -214,7 +218,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     const launcher = page.locator('[data-guide-launcher]');
     await launcher.waitFor({ state: 'visible', timeout: 15_000 });
-    await page.evaluate(() => { window.__initialGuideLauncher = document.querySelector('[data-guide-launcher]'); });
+    await page.evaluate(() => {
+      window.__initialGuideLauncher = document.querySelector('[data-guide-launcher]');
+    });
     check('Guide launcher is visible by default', (await launcher.textContent())?.trim() === 'Guide');
     check('pre-action shell does not fetch the private drawer graph',
       !assistantAssets.some((path) => path === '/assets/assistant-drawer.js'
@@ -231,9 +237,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && node.getAttribute('role') === 'presentation'
         && node.getAttribute('data-guide-portrait') === 'ready'
         && node.width > 0 && node.height > 0));
-    await page.waitForTimeout(2_200);
     const welcome = page.locator('.zguide-invite');
-    await welcome.waitFor({ state: 'visible' });
+    await welcome.waitFor({ state: 'visible', timeout: 12_000 });
     const welcomeAvatar = welcome.locator('canvas.zguide-invite__avatar[data-guide-portrait="ready"]');
     check('welcome carries the Guide identity avatar', await welcomeAvatar.count() === 1);
     check('welcome is non-modal and has no live region', await welcome.getAttribute('role') === null
@@ -242,10 +247,22 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       && await page.evaluate(() => window.__profileReads) === 0);
     check('welcome does not steal focus', await welcome.evaluate((node) => !node.contains(document.activeElement)));
 
+    await page.evaluate(() => {
+      window.__guideBackground = [...document.body.children]
+        .filter((node) => !node.matches('.zguide-invite'))
+        .map((node) => ({
+          node,
+          inert: node.inert,
+          ariaHidden: node.getAttribute('aria-hidden'),
+        }));
+    });
+
     await page.getByRole('button', { name: 'Ask Guide' }).click();
     const dialog = page.locator('.zassistant__panel');
     const input = page.locator('.zassistant__input');
     await dialog.waitFor({ state: 'visible' });
+    await page.waitForFunction(() =>
+      document.querySelector('.zassistant__panel')?.getAttribute('aria-busy') === 'false');
     check('first action fetches the drawer graph exactly once',
       assistantAssets.filter((path) => path === '/assets/assistant-drawer.js').length === 1
       && assistantAssets.filter((path) => path === '/assets/assistant-drawer.css').length === 1
@@ -256,7 +273,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && document.querySelector('[data-guide-launcher]') === window.__initialGuideLauncher));
     check('drawer header carries the Guide identity avatar',
       await dialog.locator('.zassistant__avatar[src="/assets/guide-avatar.webp"]').count() === 1);
-    check('user action opens Guide and focuses the composer', await input.evaluate((node) => document.activeElement === node));
+    check('mobile Guide opens without autofocusing the composer', await page.evaluate(() =>
+      document.activeElement?.id === 'zassistant-title'
+      && document.activeElement !== document.querySelector('.zassistant__input')));
     if (!GUIDE_AVATAR_ONLY) {
       check('opening is the first saved-chart read', await page.evaluate(() => window.__profileReads) > 0);
     }
@@ -264,12 +283,43 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check('mobile Guide is a bottom sheet', Boolean(mobileBox)
       && Math.abs((mobileBox.y + mobileBox.height) - 844) <= 2
       && mobileBox.width >= 389, JSON.stringify(mobileBox));
+    check('open Guide makes the page background inert', await page.evaluate(() =>
+      window.__guideBackground.every(({ node }) => node.isConnected
+        && node.inert === true && node.getAttribute('aria-hidden') === 'true')));
+    await page.keyboard.press('Control+K');
+    check('Guide suppresses the global search shortcut while its modal is open',
+      await page.locator('.zsearch').count() === 0);
+    await page.evaluate(() => {
+      window.__guideLateSibling = document.createElement('button');
+      window.__guideLateSibling.textContent = 'Late body control';
+      document.body.append(window.__guideLateSibling);
+    });
+    await page.waitForFunction(() => window.__guideLateSibling?.inert === true
+      && window.__guideLateSibling?.getAttribute('aria-hidden') === 'true');
+    check('Guide isolates body-level UI inserted after it opens', true);
     check('fixed current-page source ignores private query data',
       (await page.locator('.zassistant__source-chip').textContent() ?? '').includes('Guide')
       && !(await page.locator('.zassistant__source-chip').textContent() ?? '').includes('must-not-leak'));
+    check('empty Guide shows exactly three contextual starters',
+      await page.locator('.zassistant__starter').count() === 3
+      && await page.locator('.zassistant__message').count() === 0);
+
+    await page.getByRole('button', { name: 'Close Guide' }).click();
+    check('closing Guide restores every background accessibility state', await page.evaluate(() =>
+      window.__guideBackground.every(({ node, inert, ariaHidden }) => node.isConnected
+        && node.inert === inert && node.getAttribute('aria-hidden') === ariaHidden)
+      && window.__guideLateSibling?.inert === false
+      && window.__guideLateSibling?.getAttribute('aria-hidden') === null));
+    await page.evaluate(() => window.__guideLateSibling?.remove());
+    await launcher.click();
+    await dialog.waitFor({ state: 'visible' });
 
     await input.fill('What is a square aspect?');
     await input.press('Enter');
+    check('mobile Return inserts a newline without submitting', requests.length === 0
+      && await input.inputValue() === 'What is a square aspect?\n'
+      && await page.locator('.zassistant__consent').count() === 0);
+    await page.getByRole('button', { name: 'Send' }).click();
     const cloud = page.locator('.zassistant__consent');
     await cloud.waitFor({ state: 'visible' });
     check('first send pauses for accurate OpenAI disclosure', requests.length === 0
@@ -279,6 +329,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const firstGuideMessage = page.locator('.zassistant__message--assistant')
       .filter({ hasText: 'practical answer' });
     await firstGuideMessage.waitFor();
+    check('starters disappear as soon as conversation messages exist',
+      await page.locator('.zassistant__starter').count() === 0);
     check('Guide messages carry the same decorative identity avatar',
       await firstGuideMessage.locator('.zassistant__message-avatar[src="/assets/guide-avatar.webp"]')
         .count() === 1);
@@ -300,6 +352,69 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await page.locator('.zassistant__link[href="/learn/"]').count() === 1
         && await page.locator('.zassistant__link[href="/moon-sign/"]').count() === 1);
 
+    const requestsBeforeClosedHash = requests.length;
+    await page.evaluate(() => {
+      const subtle = crypto.subtle;
+      const original = subtle.digest.bind(subtle);
+      let release;
+      let idleTimer = 0;
+      const gate = new Promise((resolve) => { release = resolve; });
+      window.__releaseGuideDigest = release;
+      window.__guideDigestReached = false;
+      window.__guideDigestIdle = false;
+      window.__restoreGuideDigest = () => {
+        Object.defineProperty(subtle, 'digest', { configurable: true, value: original });
+      };
+      Object.defineProperty(subtle, 'digest', {
+        configurable: true,
+        value: async (...args) => {
+          if (idleTimer) clearTimeout(idleTimer);
+          window.__guideDigestIdle = false;
+          window.__guideDigestReached = true;
+          await gate;
+          const result = await original(...args);
+          idleTimer = setTimeout(() => { window.__guideDigestIdle = true; }, 0);
+          return result;
+        },
+      });
+    });
+    await input.fill('This closed turn must never be sent.');
+    await page.getByRole('button', { name: 'Send' }).click();
+    await page.waitForFunction(() => window.__guideDigestReached === true);
+    await page.getByRole('button', { name: 'Close Guide' }).click();
+    await page.evaluate(() => window.__releaseGuideDigest?.());
+    await page.waitForFunction(() => document.querySelector('.zassistant')?.hidden === true
+      && window.__guideDigestIdle === true);
+    check('closing during context hashing discards the stale turn before fetch or DOM writes',
+      requests.length === requestsBeforeClosedHash
+      && await page.locator('.zassistant__message').filter({ hasText: 'This closed turn' }).count() === 0);
+    await page.evaluate(() => window.__restoreGuideDigest?.());
+    await launcher.click();
+    await dialog.waitFor({ state: 'visible' });
+    await page.waitForFunction(() =>
+      document.querySelector('.zassistant__panel')?.getAttribute('aria-busy') === 'false');
+
+    await page.waitForFunction(() => {
+      const button = document.querySelector('.zassistant__clear');
+      return button instanceof HTMLButtonElement && !button.hidden && !button.disabled;
+    });
+    const preservedSession = await page.evaluate(() =>
+      sessionStorage.getItem('zodiacs.guide.daily-session.v1'));
+    const clear = page.locator('.zassistant__clear');
+    await clear.click();
+    check('first Clear action only arms an explicit confirmation',
+      await page.locator('.zassistant__message').count() > 0
+      && (await clear.textContent() ?? '').includes('Clear?')
+      && (await page.locator('.zassistant__status').textContent() ?? '').includes('again'));
+    await clear.click();
+    check('second Clear action erases messages and restores the empty state',
+      await page.locator('.zassistant__message').count() === 0
+      && await page.locator('.zassistant__starter').count() === 3
+      && await clear.isHidden());
+    await page.evaluate((saved) => {
+      if (saved) sessionStorage.setItem('zodiacs.guide.daily-session.v1', saved);
+    }, preservedSession);
+
     const conversationId = first.conversationId;
     await page.goto(`${baseURL}/learn/`, { waitUntil: 'networkidle' });
     // A full navigation restores the real flag-off HTML, so re-establish the
@@ -309,10 +424,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     await page.locator('[data-guide-launcher]').click();
     await page.locator('.zassistant__panel').waitFor({ state: 'visible' });
+    await page.waitForFunction(() =>
+      document.querySelector('.zassistant__panel')?.getAttribute('aria-busy') === 'false');
     check('daily session restores earlier bubbles after navigation',
       (await page.locator('.zassistant__log').textContent() ?? '').includes('What is a square aspect?'));
     await page.locator('.zassistant__input').fill('How should I start learning?');
-    await page.locator('.zassistant__input').press('Enter');
+    await page.getByRole('button', { name: 'Send' }).click();
     const changedScopeConsent = page.locator('.zassistant__consent');
     await changedScopeConsent.waitFor({ state: 'visible' });
     check('a replaced page source renews the visible-scope cloud consent', requests.length === 1);
@@ -342,7 +459,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       && !/1990-04-17|08:45|Bangkok/.test(previewText));
     await page.getByRole('button', { name: 'Attach my chart' }).click();
     await page.locator('.zassistant__input').fill('What does my chart emphasize?');
-    await page.locator('.zassistant__input').press('Enter');
+    await page.getByRole('button', { name: 'Send' }).click();
     await page.locator('.zassistant__message--assistant').filter({ hasText: 'Your placements' }).waitFor();
     const chartRequest = requests.at(-1);
     const chartSource = chartRequest.ephemeralContext.baseContext.ownerChart.source;
@@ -351,6 +468,21 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check('chart request contains no saved birth PII', !/Secret Person|private-chart-id|1990-04-17|08:45|Bangkok|13\.7563|100\.5018|Asia\/Bangkok/.test(JSON.stringify(chartRequest))
       && !JSON.stringify(chartRequest).includes(CHART_ID)
       && !JSON.stringify(chartRequest).includes(ACCOUNT_ID));
+
+    await page.locator('.zassistant__input').fill('[limit] chart retry boundary');
+    await page.getByRole('button', { name: 'Send' }).click();
+    const retry = page.getByRole('button', { name: 'Retry' });
+    await retry.waitFor({ state: 'visible' });
+    const requestsBeforeRetryReopen = requests.length;
+    await page.getByRole('button', { name: 'Close Guide' }).click();
+    await launcher.click();
+    await dialog.waitFor({ state: 'visible' });
+    await page.waitForFunction(() =>
+      document.querySelector('.zassistant__panel')?.getAttribute('aria-busy') === 'false');
+    check('close and reopen discards a failed chart turn retry with its stale source authority',
+      await retry.isHidden()
+      && requests.length === requestsBeforeRetryReopen
+      && (await page.locator('.zassistant__chart-chip').textContent() ?? '').includes('Use my chart'));
 
     await page.evaluate(() => {
       document.documentElement.setAttribute('data-account-sync-v2', '');
@@ -405,6 +537,142 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check('CTA remains live while the scheduled shell is waiting for its stylesheet',
       await stalledPage.locator('[data-guide-launcher]').count() === 1);
     await stalled.close();
+
+    const authContext = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await authContext.addInitScript(() => {
+      try { sessionStorage.setItem('zodiacs.guide.welcome-seen.v1', '1'); } catch { /* opaque origin */ }
+    });
+    const authPage = await authContext.newPage();
+    const authRequests = [];
+    await installGuideRoute(authPage, authRequests);
+    await authPage.goto(`${baseURL}/ask/`, { waitUntil: 'domcontentloaded' });
+    const authLauncher = authPage.locator('[data-guide-launcher]');
+    await authLauncher.click();
+    await authPage.waitForFunction(() =>
+      document.querySelector('.zassistant__panel')?.getAttribute('aria-busy') === 'false');
+    await authPage.locator('.zassistant__input').fill('Account A private transcript marker.');
+    await authPage.getByRole('button', { name: 'Send' }).click();
+    await authPage.getByRole('button', { name: 'Continue with Guide' }).click();
+    await authPage.locator('.zassistant__message--assistant').filter({ hasText: 'practical answer' }).waitFor();
+    await authPage.getByRole('button', { name: 'Close Guide' }).click();
+    await authPage.evaluate(() => {
+      window.__guideAuthAccountId = '22222222-2222-4222-8222-222222222222';
+      window.__guideHoldAuthSnapshot = true;
+    });
+    await authLauncher.click();
+    const authDialog = authPage.locator('.zassistant__panel');
+    await authDialog.waitFor({ state: 'visible' });
+    await authPage.waitForFunction(() => typeof window.__releaseGuideAuthSnapshot === 'function');
+    check('reopen waits behind a fresh account snapshot without flashing Account A history',
+      await authDialog.getAttribute('aria-busy') === 'true'
+      && await authPage.locator('.zassistant__input').isDisabled()
+      && !(await authPage.locator('.zassistant__log').textContent() ?? '').includes('Account A private transcript marker'));
+    await authPage.evaluate(() => {
+      window.__guideHoldAuthSnapshot = false;
+      window.__releaseGuideAuthSnapshot?.();
+    });
+    await authPage.waitForFunction(() =>
+      document.querySelector('.zassistant__panel')?.getAttribute('aria-busy') === 'false');
+    check('fresh Account B boundary hydrates a clean usable drawer with no extra Guide request',
+      !(await authPage.locator('.zassistant__log').textContent() ?? '').includes('Account A private transcript marker')
+      && await authPage.locator('.zassistant__input').isEnabled()
+      && authRequests.length === 1);
+    await authContext.close();
+
+    const sourceContext = await browser.newContext({ viewport: { width: 900, height: 800 } });
+    await sourceContext.addInitScript(() => {
+      try { sessionStorage.setItem('zodiacs.guide.welcome-seen.v1', '1'); } catch { /* opaque origin */ }
+    });
+    const sourcePage = await sourceContext.newPage();
+    const sourceRequests = [];
+    await installGuideRoute(sourcePage, sourceRequests);
+    for (const [pathname, expectedSource] of [
+      ['/', 'Using: Zodiacs.org home'],
+      ['/aries/', 'Using: Aries sign guide'],
+      ['/astrofolio/', 'Using: Astrofolio'],
+      ['/tools/', 'Using: Astrology tools'],
+    ]) {
+      await sourcePage.goto(`${baseURL}${pathname}`, { waitUntil: 'domcontentloaded' });
+      const sourceLauncher = sourcePage.locator('[data-guide-launcher]');
+      await sourceLauncher.waitFor({ state: 'visible', timeout: 15_000 });
+      await sourceLauncher.click();
+      const sourceChip = sourcePage.locator('.zassistant__source-chip');
+      await sourceChip.waitFor({ state: 'visible' });
+      check(`Guide exposes fixed current-page context on ${pathname}`,
+        (await sourceChip.textContent() ?? '').includes(expectedSource),
+        (await sourceChip.textContent() ?? '').trim());
+      await sourcePage.getByRole('button', { name: 'Close Guide' }).click();
+    }
+    await sourcePage.goto(`${baseURL}/ru/tools/`, { waitUntil: 'domcontentloaded' });
+    await sourcePage.locator('[data-guide-launcher]').click();
+    await sourcePage.locator('.zassistant__source-chip').waitFor({ state: 'visible' });
+    check('Russian Guide localizes its source, composer, prompts, and privacy UI',
+      (await sourcePage.locator('.zassistant__source-chip').textContent() ?? '')
+        .includes('Используется: Астрологические инструменты')
+      && await sourcePage.locator('.zassistant__input').getAttribute('placeholder') === 'Чем вам помочь?'
+      && /[А-Яа-яЁё]/u.test(await sourcePage.locator('.zassistant__starter').first().textContent() ?? '')
+      && (await sourcePage.locator('.zassistant__privacy-link').textContent() ?? '')
+        .includes('конфиденциальности'));
+    await sourcePage.getByRole('button', { name: 'Закрыть Guide' }).click();
+    check('page-source UI checks make no Guide turn requests', sourceRequests.length === 0);
+    await sourceContext.close();
+
+    const landscape = await browser.newContext({
+      viewport: { width: 568, height: 320 },
+      hasTouch: true,
+      isMobile: true,
+    });
+    await landscape.addInitScript(() => {
+      try { sessionStorage.setItem('zodiacs.guide.welcome-seen.v1', '1'); } catch { /* opaque origin */ }
+    });
+    const landscapePage = await landscape.newPage();
+    const landscapeRequests = [];
+    await installGuideRoute(landscapePage, landscapeRequests);
+    await landscapePage.goto(`${baseURL}/ask/`, { waitUntil: 'domcontentloaded' });
+    await landscapePage.locator('[data-guide-launcher]').click();
+    const landscapeDialog = landscapePage.locator('.zassistant__panel');
+    await landscapeDialog.waitFor({ state: 'visible' });
+    await landscapePage.waitForFunction(() =>
+      document.querySelector('.zassistant__panel')?.getAttribute('aria-busy') === 'false');
+    const landscapeBox = await landscapeDialog.boundingBox();
+    const landscapeState = await landscapePage.evaluate(() => {
+      const dialog = document.querySelector('.zassistant__panel');
+      const input = document.querySelector('.zassistant__input');
+      const hint = document.querySelector('.zassistant__hint');
+      const root = document.querySelector('.zassistant');
+      const handle = document.querySelector('.zassistant__drag-handle');
+      const intro = document.querySelector('.zassistant__intro');
+      const form = document.querySelector('.zassistant__form');
+      const privacy = document.querySelector('.zassistant__privacy');
+      return {
+        coarseShort: matchMedia('(max-height: 620px) and (pointer: coarse)').matches,
+        radius: dialog ? getComputedStyle(dialog).borderTopLeftRadius : null,
+        fontSize: input ? getComputedStyle(input).fontSize : null,
+        hintDisplay: hint ? getComputedStyle(hint).display : null,
+        handleDisplay: handle ? getComputedStyle(handle).display : null,
+        introDisplay: intro ? getComputedStyle(intro).display : null,
+        formBottom: form?.getBoundingClientRect().bottom ?? null,
+        privacyBottom: privacy?.getBoundingClientRect().bottom ?? null,
+        viewportHeight: root?.style.getPropertyValue('--zassistant-viewport-height') ?? '',
+        inputFocused: document.activeElement === input,
+      };
+    });
+    check('short touch landscape uses the full keyboard-safe sheet', Boolean(landscapeBox)
+      && landscapeState.coarseShort
+      && Math.abs(landscapeBox.x) <= 2 && Math.abs(landscapeBox.y) <= 2
+      && Math.abs(landscapeBox.width - 568) <= 2 && Math.abs(landscapeBox.height - 320) <= 2
+      && landscapeState.radius === '0px'
+      && landscapeState.handleDisplay === 'block'
+      && landscapeState.introDisplay === 'none'
+      && (landscapeState.formBottom ?? 321) <= 320
+      && (landscapeState.privacyBottom ?? 321) <= 320
+      && landscapeState.viewportHeight.endsWith('px'),
+    JSON.stringify({ landscapeBox, landscapeState }));
+    check('short landscape preserves mobile input behavior', landscapeState.fontSize === '16px'
+      && landscapeState.hintDisplay === 'none' && !landscapeState.inputFocused,
+    JSON.stringify(landscapeState));
+    check('short landscape UI makes no Guide turn requests', landscapeRequests.length === 0);
+    await landscape.close();
 
     const desktop = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     const desktopPage = await desktop.newPage();

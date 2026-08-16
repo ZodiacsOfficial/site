@@ -28,7 +28,7 @@ const ENV = {
 };
 
 const PUBLIC_KNOWLEDGE = {
-  version: 'guide-public-knowledge-2026-08-14.1' as const,
+  version: 'guide-public-knowledge-2026-08-16.1' as const,
   entries: [],
   allowedPaths: [],
 };
@@ -1167,7 +1167,7 @@ describe('POST /v1/guide/turn protected web endpoint', () => {
     expect(providerProjection?.attachments).toEqual([]);
     expect(providerProjection?.publicKnowledge.entries.some(({ id }) => id === 'astrofolio')).toBe(true);
     expect(JSON.stringify(providerProjection)).not.toContain('guarantees profit');
-    expect(providerProjection?.publicKnowledge.allowedPaths).toContain('/sdk/#astrofolio');
+    expect(providerProjection?.publicKnowledge.allowedPaths).toContain('/astrofolio/');
   });
 
   it('fails before quota/provider when consent evidence does not match context', async () => {

@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import sharp from 'sharp';
 import { describe, expect, it } from 'vitest';
 import {
+  approvedPageId,
   consumeAssistantStream,
   guideDayAnchorMatches,
   parseAssistantSseFrame,
@@ -158,8 +159,8 @@ describe('Guide day and retry boundaries', () => {
       source.indexOf('async function runTurn('),
       source.indexOf('async function submitQuestion()'),
     );
-    expect(submit).toContain('if (!await requestCloudConsent()) return;\n    if (rotateGuideDayIfNeeded()) return;');
-    expect(submit).toContain('await requestChartConsent(expectedGeneration);\n    }\n    if (rotateGuideDayIfNeeded()) return;');
+    expect(submit).toContain('if (!await requestCloudConsent()) return;\n    if (!interactionIsCurrent()) return;\n    if (rotateGuideDayIfNeeded()) return;');
+    expect(submit).toContain('await requestChartConsent(expectedGeneration);\n      if (!interactionIsCurrent()) return;\n    }\n    if (rotateGuideDayIfNeeded()) return;');
     expect(run).toContain('if (rotateGuideDayIfNeeded())');
     expect(retry).toContain('prior.body.contextEpoch !== state.contextEpoch');
     expect(retry).toContain('prior.body.baseRevision !== state.revision');
@@ -181,7 +182,7 @@ describe('Guide cloud-processing disclosure', () => {
     const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
     const cloudBodies = [...source.matchAll(/cloudBody: '([^'\n]+)'/gu)]
       .map((match) => match[1] ?? '');
-    expect(cloudBodies).toHaveLength(5);
+    expect(cloudBodies).toHaveLength(6);
 
     const localizedRequirements = [
       ['recent Guide messages', 'visible sources above', 'generated draft reply back to OpenAI', 'second safety check', 'stays only in this browser session', 'not stored as text by Zodiacs.org'],
@@ -189,6 +190,7 @@ describe('Guide cloud-processing disclosure', () => {
       ['as mensagens recentes', 'as fontes visíveis', 'rascunho de resposta gerado de volta à OpenAI', 'segunda verificação de segurança', 'fica apenas nesta sessão do navegador', 'não é armazenada como texto pelo Zodiacs.org'],
       ['les messages récents', 'les sources visibles', 'brouillon de réponse généré à OpenAI', 'second contrôle de sécurité', 'reste uniquement dans cette session du navigateur', 'n’est pas stockée sous forme de texte par Zodiacs.org'],
       ['i messaggi recenti', 'le fonti visibili', 'bozza di risposta generata', 'secondo controllo di sicurezza', 'resta soltanto in questa sessione del browser', 'non viene archiviata come testo da Zodiacs.org'],
+      ['недавние сообщения Guide', 'видимые выше источники', 'созданный черновик ответа', 'второй проверки безопасности', 'остаётся только в этой сессии браузера', 'не хранится Zodiacs.org в виде текста'],
     ] as const;
 
     for (const [index, requirements] of localizedRequirements.entries()) {
@@ -240,7 +242,8 @@ describe('Guide response links', () => {
     const moonPath = GUIDE_KNOWLEDGE_ENTRIES.find(({ id }) => id === 'moon-sign')?.canonicalPath;
     expect(moonPath).toBe('/moon-sign/');
     expect(allowlist).toContain(`'${moonPath}'`);
-    expect(allowlist).toContain("'/sdk/#astrofolio'");
+    expect(allowlist).toContain("'/astrofolio/'");
+    expect(allowlist).not.toContain("'/sdk/#astrofolio'");
     expect(allowlist).not.toContain("'/private/'");
     expect(renderer).toContain('GUIDE_LINK_PATHS.has(`${url.pathname}${url.hash}`)');
     expect(renderer).toContain("url.search === ''");
@@ -254,6 +257,48 @@ describe('Guide response links', () => {
     );
     expect(pageCatalog).toContain("'moon-sign': { title: 'Moon sign'");
     expect(pageCatalog).toContain("if (/^\\/moon-sign(?:\\/|$)/.test(path)) return 'moon-sign';");
+  });
+
+  it('recognizes the public pages that can supply Guide context and rejects unsupported paths', () => {
+    expect(approvedPageId('/')).toBe('home');
+    expect(approvedPageId('/ru/')).toBe('home');
+    expect(approvedPageId('/aries/')).toBe('sign-aries');
+    expect(approvedPageId('/ru/pisces/')).toBe('sign-pisces');
+    expect(approvedPageId('/tools/')).toBe('tools');
+    expect(approvedPageId('/ru/tools/')).toBe('tools');
+    expect(approvedPageId('/astrofolio/')).toBe('astrofolio');
+    expect(approvedPageId('/thesis/')).toBeNull();
+  });
+
+  it('never exposes a dead page-source action on unsupported routes', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    const controls = source.slice(
+      source.indexOf('function syncSourceControls()'),
+      source.indexOf('function setBusy('),
+    );
+    expect(controls).toContain('pageSourceAdd.hidden = !currentPage || enabled');
+    const boundary = source.slice(
+      source.indexOf('function syncPageBoundary()'),
+      source.indexOf('function pageSourceEnabled()'),
+    );
+    expect(boundary).toContain('invalidateContext(false, state.cloudConsentGranted);');
+  });
+});
+
+describe('Guide Russian catalog UI', () => {
+  it('keeps the shell, drawer, starters, and footer in Russian on catalog routes', async () => {
+    const [drawer, shell, footer] = await Promise.all([
+      readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8'),
+      readFile(new URL('./guide-bootstrap.ts', import.meta.url), 'utf8'),
+      readFile(new URL('../../components/SiteFooter.astro', import.meta.url), 'utf8'),
+    ]);
+    expect(drawer).toContain('normalizeCatalogLocale as normalizeSiteLocale');
+    expect(drawer).toContain("placeholder: 'Чем вам помочь?'");
+    expect(drawer).toContain("label: 'Можно спросить'");
+    expect(drawer).toContain("privacyLearnMore: 'Подробнее о конфиденциальности'");
+    expect(shell).toContain("inviteAction: 'Спросить Guide'");
+    expect(footer).toContain("ru: { assistant: 'Guide', today:");
+    expect(footer).not.toContain("assistant: 'Guide — пока по-английски'");
   });
 });
 
@@ -360,8 +405,7 @@ describe('assistant profile-access privacy fence', () => {
       source.indexOf('function onProfileAccessChange()'),
     );
     expect(suspend).toContain('profileAccessGeneration += 1;');
-    expect(suspend).toContain('authFenceCleanup?.();');
-    expect(suspend).toContain('authFencePromise = null;');
+    expect(suspend).toContain('resetGuideAuthFence();');
     expect(suspend).toContain('transcript?.replaceChildren();');
     expect(suspend).toContain('if (root) root.hidden = true;');
     expect(restore).toContain('if (!event.persisted) return;');
@@ -379,7 +423,8 @@ describe('assistant profile-access privacy fence', () => {
     const submit = source.slice(submitStart, focusStart);
 
     expect(consent).toContain('expectedGeneration = profileAccessGeneration');
-    expect(consent).toContain('!currentProfileAccessGeneration(expectedGeneration)');
+    expect(consent).toContain('currentProfileAccessGeneration(expectedGeneration)');
+    expect(consent).toContain('!consentIsCurrent()');
     expect(consent.indexOf('const summary = await chartSummaryPromise;'))
       .toBeLessThan(consent.indexOf('savedChart !== chart'));
     expect(consent).toContain('return current && granted;');
@@ -387,7 +432,7 @@ describe('assistant profile-access privacy fence', () => {
     expect(submit).toContain('const expectedGeneration = profileAccessGeneration;');
     expect(submit).toContain('await requestCloudConsent()');
     expect(submit).toContain('requestChartConsent(expectedGeneration)');
-    expect(submit).toContain('!currentProfileAccessGeneration(expectedGeneration)');
+    expect(submit).toContain('!interactionIsCurrent()');
 
     const runStart = source.indexOf('async function runTurn(');
     const submitEnd = source.indexOf('async function submitQuestion()');
@@ -397,7 +442,8 @@ describe('assistant profile-access privacy fence', () => {
     expect(run).toContain('signal: request.signal');
     expect(run).toContain('await response.body?.cancel().catch(() => {});');
     expect(run).toContain('if (!requestIsCurrent()) return;');
-    expect(run).toContain('if (activeRequest === request) setBusy(false);');
+    expect(run).toContain('if (activeRequest === request) {');
+    expect(run).toContain('expectedOpenGeneration === openGeneration');
     expect(run).toContain('sameSelfChartAuthority');
     expect(run).toContain('window.setInterval');
     expect(run).toContain('onProfileDataChange();');
@@ -407,6 +453,89 @@ describe('assistant profile-access privacy fence', () => {
     const toggle = source.slice(toggleStart, buildStart);
     expect(toggle).toContain('requestChartConsent(expectedGeneration)');
     expect(toggle).toContain('invalidateContext(true);');
+  });
+
+  it('reveals only a neutral disabled drawer before auth and hydrates private state afterward', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    const bootstrap = source.slice(
+      source.indexOf('export async function bootstrapGuide('),
+      source.indexOf('/** Open the Guide drawer.'),
+    );
+    const open = source.slice(source.indexOf('export async function openAssistant('));
+    const fenceStart = open.indexOf('const authFence = ensureGuideAuthFence();');
+    const fenceReset = open.indexOf('resetGuideAuthFence();');
+    const disableComposer = open.indexOf('textarea.disabled = true;');
+    const scrubTranscript = open.indexOf('transcript?.replaceChildren();');
+    const reveal = open.indexOf('root!.hidden = false;');
+    const waitForFence = open.indexOf('await authFence;');
+    const hydrate = open.indexOf('authReady = true;');
+
+    expect(bootstrap).not.toContain('getSession()');
+    expect(bootstrap).not.toContain('syncPageBoundary()');
+    for (const boundary of [fenceReset, fenceStart, disableComposer, scrubTranscript, reveal, waitForFence, hydrate]) {
+      expect(boundary).toBeGreaterThan(-1);
+    }
+    expect(fenceReset).toBeLessThan(fenceStart);
+    expect(disableComposer).toBeLessThan(reveal);
+    expect(scrubTranscript).toBeLessThan(reveal);
+    expect(reveal).toBeLessThan(waitForFence);
+    expect(open.indexOf('setStatus(currentCopy().preparing);')).toBeLessThan(waitForFence);
+    expect(waitForFence).toBeLessThan(hydrate);
+    expect(waitForFence).toBeLessThan(open.indexOf('syncPageBoundary();'));
+    expect(waitForFence).toBeLessThan(open.indexOf('refreshSavedChart();'));
+    expect(waitForFence).toBeLessThan(open.indexOf('renderTranscript();'));
+    expect(waitForFence).toBeLessThan(open.indexOf('textarea.disabled = false;'));
+    expect(open).toContain('if (generation !== openGeneration || !root || root.hidden) return;');
+
+    const scrub = source.slice(
+      source.indexOf('function clearAssistantForProfileRevocation()'),
+      source.indexOf('function rotateGuideDayIfNeeded()'),
+    );
+    expect(scrub).toContain("panel?.setAttribute('aria-busy', 'true');");
+    expect(scrub).toContain("setStatus(root && !root.hidden ? currentCopy().preparing : '');");
+
+    const submit = source.slice(
+      source.indexOf('async function submitQuestion()'),
+      source.indexOf('async function retryTurn()'),
+    );
+    expect(submit).toContain('const expectedOpenGeneration = openGeneration;');
+    expect(submit).toContain('expectedOpenGeneration === openGeneration');
+    expect(submit).toContain('const built = await buildTurnBody(question, ids, null, chartFacts);');
+    expect(submit.indexOf('if (rotateGuideDayIfNeeded() || !interactionIsCurrent()) return;'))
+      .toBeGreaterThan(submit.indexOf('const built = await buildTurnBody(question, ids, null, chartFacts);'));
+
+    const chartConsent = source.slice(
+      source.indexOf('async function requestChartConsent('),
+      source.indexOf('function appendSourcesRow('),
+    );
+    expect(chartConsent).toContain('const expectedOpenGeneration = openGeneration;');
+    expect(chartConsent).toContain('expectedOpenGeneration === openGeneration');
+    expect(chartConsent.indexOf('if (!summary || !consentIsCurrent()'))
+      .toBeGreaterThan(chartConsent.indexOf('const summary = await chartSummaryPromise;'));
+    expect(source).toContain('let interactionGeneration = 0;');
+    expect(source).toContain('function cancelPendingInteraction(): void');
+
+    const run = source.slice(
+      source.indexOf('async function runTurn('),
+      source.indexOf('async function submitQuestion()'),
+    );
+    expect(run).toContain('const expectedOpenGeneration = openGeneration;');
+    expect(run).toContain('expectedOpenGeneration === openGeneration');
+    expect(run).toContain('Boolean(root && !root.hidden)');
+
+    const close = source.slice(
+      source.indexOf('function closeAssistant()'),
+      source.indexOf('function clearConversation()'),
+    );
+    expect(close).toContain('clearPendingRetry();');
+    expect(open).toContain('clearPendingRetry();');
+    expect(close).toContain('resetGuideAuthFence();');
+
+    const suspend = source.slice(
+      source.indexOf('function suspendGuideForPageCache()'),
+      source.indexOf('function restoreGuideAfterPageCache('),
+    );
+    expect(suspend).toContain('cancelClearConfirmation();');
   });
 
   it('limits page context to a fixed public catalog and never reads private URL surfaces', async () => {
@@ -430,10 +559,22 @@ describe('assistant profile-access privacy fence', () => {
     ]);
     const bootstrapStart = shell.indexOf('export async function bootstrapGuide(');
     const bootstrap = shell.slice(bootstrapStart);
+    const scheduleInvite = shell.slice(
+      shell.indexOf('function scheduleInvite()'),
+      shell.indexOf('function onInviteVisibilityChange()'),
+    );
 
     expect(shell).toContain("const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js';");
-    expect(shell).toContain('const INVITE_DELAY_MS = 2_000;');
+    expect(shell).toContain('const INVITE_DELAY_MS = 7_000;');
     expect(shell).toContain("const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';");
+    expect(shell).toContain("open: 'Открыть Guide'");
+    expect(shell).not.toContain('INVITE_DELAY_MS - performance.now()');
+    expect(scheduleInvite).toContain("document.visibilityState !== 'visible'");
+    expect(scheduleInvite).toContain('}, INVITE_DELAY_MS);');
+    expect(shell).toContain("document.addEventListener('visibilitychange', onInviteVisibilityChange);");
+    expect(shell).toContain("document.removeEventListener('visibilitychange', onInviteVisibilityChange);");
+    expect(shell).toContain("launcher.setAttribute('hidden', '');");
+    expect(shell).toContain("launcher?.removeAttribute('hidden');");
     expect(shell).toContain('context.drawImage(image, 0, 0, size, size);');
     expect(shell).toContain("canvas.setAttribute('aria-hidden', 'true');");
     expect(shell).toContain('drawerModulePromise ??= import(DRAWER_MODULE_HREF)');
