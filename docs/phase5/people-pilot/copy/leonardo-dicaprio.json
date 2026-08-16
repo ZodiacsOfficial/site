@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "leonardo-dicaprio",
+  "seedRound": 0,
+  "qid": "Q38111",
+  "displayName": "Leonardo DiCaprio",
+  "identity": "Film actor and film producer · United States · born 1974",
+  "title": "Leonardo DiCaprio's birth chart",
+  "metaDescription": "Leonardo DiCaprio's chart, computed from a sourced birth date: Sun at 19.1° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.3° separates the Sun and Saturn from an exact trine; at that range identity and structure read as one mechanism. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Sun:Saturn:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.05",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun's position resolves to 19.1° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Scorpio:20.4°",
+        "personal:Mars:Scorpio:9.9°"
+      ],
+      "text": "Closer in, Venus stands at 20.4° Scorpio; Mars stands at 9.9° Scorpio. The tradition reads attraction that works by atmosphere from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:trine:0.26",
+        "aspect:Neptune:Pluto:sextile:0.36",
+        "aspect:Jupiter:Neptune:square:0.48"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a third of the circle apart from Saturn, 0.3° off exact. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Neptune sextile Pluto at 0.4°, and Jupiter square Neptune at 0.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Venus in Scorpio at 20.4° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 9.9° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 8.1° is in domicile; Saturn in Cancer at 18.8° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air3-fire1",
+        "modalities:cardinal4-fixed3-mutable2",
+        "settled-signs:9",
+        "retrograde:1",
+        "sign-uncertain:Mercury:libra:scorpio"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 5 water, 3 air, 1 fire by element and 4 cardinal, 3 fixed, 2 mutable by mode. Mercury crossed from Libra into Scorpio during that day, so its sign is left open. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Saturn was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-11/",
+    "label": "Everyone born on November 11"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Saturn:trine",
+    "sun-degree:19.05",
+    "decan:scorpio:second",
+    "personal:Venus:Scorpio:20.4°",
+    "personal:Mars:Scorpio:9.9°",
+    "aspect:Sun:Saturn:trine:0.26",
+    "aspect:Neptune:Pluto:sextile:0.36",
+    "aspect:Jupiter:Neptune:square:0.48",
+    "figure:unaspected:Moon",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:detriment",
+    "elements:water5-air3-fire1",
+    "modalities:cardinal4-fixed3-mutable2",
+    "settled-signs:9",
+    "retrograde:1",
+    "sign-uncertain:Mercury:libra:scorpio",
+    "moon-sign:libra",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 406,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

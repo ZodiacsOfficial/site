@@ -270,6 +270,21 @@ describe('Guide typography boundary', () => {
     expect(proactiveSurfaces).toContain('font: 650 12px/1 var(--font-sans);');
     expect(proactiveSurfaces).not.toMatch(/['"](?:Instrument Sans|EB Garamond)['"]/u);
   });
+
+  it('keeps the mobile launcher compact without removing its accessible name', async () => {
+    const [drawerCss, shellCss, shellSource] = await Promise.all([
+      readFile(new URL('./assistant.css', import.meta.url), 'utf8'),
+      readFile(new URL('./guide-bootstrap.css', import.meta.url), 'utf8'),
+      readFile(new URL('./guide-bootstrap.ts', import.meta.url), 'utf8'),
+    ]);
+    for (const css of [drawerCss, shellCss]) {
+      const mobile = css.slice(css.lastIndexOf('@media (max-width: 560px)'));
+      expect(mobile).toContain('width: 48px;');
+      expect(mobile).toContain('height: 48px;');
+      expect(mobile).toContain('font-size: 0;');
+    }
+    expect(shellSource).toContain("launcher.setAttribute('aria-label', currentCopy().open);");
+  });
 });
 
 describe('Guide avatar identity', () => {

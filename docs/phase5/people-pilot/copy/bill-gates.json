@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bill-gates",
+  "seedRound": 0,
+  "qid": "Q5284",
+  "displayName": "Bill Gates",
+  "identity": "Computer scientist and philanthropist · United States · born 1955",
+  "title": "Bill Gates's birth chart",
+  "metaDescription": "Bill Gates's chart, computed from a sourced birth date: Sun at 4.6° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Six of the nine placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. Fixed signs hold the middle of their seasons, and a fixed-heavy chart is read as one that consolidates and does not easily let go.",
+  "ledeFact": "modality:fixed:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.62",
+        "decan:scorpio:first"
+      ],
+      "text": "At noon on that date the Sun stood at 4.6° Scorpio, inside the first decan (0°–10°), whose traditional sub-ruler is Mars. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Libra:16.2°",
+        "personal:Venus:Scorpio:19.7°",
+        "personal:Mars:Libra:9.8°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Libra (16.2°), Venus in Scorpio (19.7°), Mars in Libra (9.8°): thought that travels by comparison, attraction that works by atmosphere, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:sextile:0.12",
+        "aspect:Jupiter:Neptune:sextile:0.5",
+        "aspect:Jupiter:Pluto:conjunction:0.61"
+      ],
+      "text": "Neptune to Pluto is the closest call of the day, a sextile within 0.1°. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Jupiter sextile Neptune at 0.5°, and Jupiter conjunction Pluto at 0.6° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment"
+      ],
+      "text": "Read against the old dignities, two placements stand out. Venus in Scorpio at 19.7° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 9.8° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air3-fire3",
+        "modalities:fixed6-cardinal3",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 water, 3 air, 3 fire by element and 6 fixed, 3 cardinal by mode. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Every body was moving forward that day — no apparent reversals anywhere in the chart."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 13.9° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-28/",
+    "label": "Everyone born on October 28"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:6",
+    "sun-degree:4.62",
+    "decan:scorpio:first",
+    "personal:Mercury:Libra:16.2°",
+    "personal:Venus:Scorpio:19.7°",
+    "personal:Mars:Libra:9.8°",
+    "aspect:Neptune:Pluto:sextile:0.12",
+    "aspect:Jupiter:Neptune:sextile:0.5",
+    "aspect:Jupiter:Pluto:conjunction:0.61",
+    "figure:none",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "elements:water3-air3-fire3",
+    "modalities:fixed6-cardinal3",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 394,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

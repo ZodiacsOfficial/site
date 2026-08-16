@@ -33,6 +33,40 @@ provider boundary, compensation controls, and rollback behavior remain
 unchanged; this amendment does not authorize a replacement acquisition entry
 on Astrofolio or the expert Terminal view.
 
+## Addendum — 2026-08-16: catalogue trade panel retired
+
+Authorized: 2026-08-16
+
+The owner retires the embedded trade panel from all twelve
+`/registry/{sign}/` catalogue profiles. Each profile is now read-only and may
+contain exactly one external, mint-pinned link to Jupiter after a plain-language
+explanation of Solana, a wallet, SOL, Jupiter, irreversibility, and complete-loss
+risk. The profile must not mount a wallet host, load the Registry trade runtime,
+request a Jupiter quote, construct a transaction, or ask for a signature.
+
+`PUBLIC_REGISTRY_TRADE_ENABLED` no longer controls catalogue output. The
+compatibility hook in predev/prebuild is a no-op so an older deployment setting
+cannot restore the embedded trade panel. The full trade interface remains
+confined to Zodiac Terminal markets. This addendum does not change the site's
+no-custody, no-referral, no-platform-fee, and no-compensation commitments.
+
+## Addendum — 2026-08-16: catalogue venue links removed
+
+Authorized: 2026-08-16
+
+The owner further narrows the catalogue posture. The twelve
+`/registry/{sign}/` profiles contain no purchase route, external venue link,
+wallet prompt, or transaction instructions. They remain read-only identity,
+market-context, and address-verification pages. The old `#acquire` fragment is
+kept only as an invisible compatibility alias beside the verified record so
+older same-origin links do not break; it does not expose an acquisition action.
+
+This addendum supersedes the preceding permission for one mint-pinned Jupiter
+link. No venue link or embedded trade surface may be restored to a catalogue
+profile through `PUBLIC_REGISTRY_TRADE_ENABLED` or any other deployment flag.
+Any future ownership doorway must be separately approved and must preserve the
+plain-language, separation, risk, and no-compensation commitments above.
+
 ## Addendum — 2026-08-13: beginner Consumer record handoff
 
 Authorized: 2026-08-13

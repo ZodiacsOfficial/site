@@ -131,27 +131,12 @@ const jsonLd = [
         confidentialité s’appliquent.
       </p>
       <p>
-        La page de catalogue d’un signe et l’explorateur de la page d’accueil
-        du Registre peuvent aussi comporter un panneau de négociation
-        optionnel. Sur la page d’accueil, le panneau ne s’ouvre que si vous le demandez —
-        depuis la pastille d’un signe ou en choisissant la sculpture exposée —
-        quelle que soit la taille de l’écran : la demande de prix est donc
-        faite quand vous l’ouvrez, puis à chaque changement de montant ou de
-        signe ; ce qui
-        quitte alors votre navigateur, c’est le montant, les deux identifiants
-        de jeton et les métadonnées ordinaires d’une requête web — pas votre
-        adresse, qui n’est envoyée que si vous choisissez d’opérer.
-        Le panneau est notre propre interface et
-        demande un prix à l’API publique de Jupiter, une plateforme
-        indépendante. Si tu choisis d’effectuer une opération, ton adresse
-        publique est envoyée à Jupiter pour qu’il construise la transaction,
-        et la transaction signée par ton portefeuille lui est renvoyée pour
-        être soumise au réseau ; ces requêtes, ainsi que toute invite du
-        portefeuille, relèvent des politiques de confidentialité propres à
-        Jupiter. Jupiter reçoit les métadonnées ordinaires d’une requête web,
-        telles que l’adresse IP, le navigateur et l’heure. Zodiacs.org ne
-        conserve de ce panneau ni ton adresse, ni tes soldes, ni tes
-        opérations, et aucune donnée de naissance ou de thème n’y intervient.
+        Le profil de chaque signe dans le Registre est en lecture seule. Il
+        affiche des données publiques de marché et des adresses vérifiées, mais
+        ne contient ni parcours d’achat ni lien vers une place de marché. Le
+        profil ne connecte pas de portefeuille, ne demande pas de prix, ne reçoit
+        pas ton adresse publique et ne demande aucune transaction. Ces requêtes
+        de données de marché n’incluent aucune donnée de naissance ou de thème.
       </p>
 
       <h2>Guide</h2>

@@ -1,9 +1,9 @@
 {
   "schema": "zodiacs.phase5.people.v1",
-  "status": "Phase 5 public release — 497 indexable deceased records, 2 protected living records, 1 withdrawn",
+  "status": "Phase 5 public release — 497 indexable deceased records, 4 protected living records, 1 withdrawn",
   "reviewedAtUtc": "2026-07-25T00:00:00Z",
-  "sourceManifestSha256": "7d676bfe7d8099261538186db1fdc1244c3a0ea69c81dc0d8f4353cdeb3039b2",
-  "sourceIndexPolicySha256": "cdcae1efd902b3bec062cb6377e4fd359a891a90e0fbf8e31509bc870d90c8f1",
+  "sourceManifestSha256": "11a29b0d706762fe3c0b205683708c348c1f1e63c3ae52afe7ee2c4ae00b56e3",
+  "sourceIndexPolicySha256": "fd2c15e6ea2d811e0d1addd9a246a315f5bfbd3c2e8d4127edb8bc1b538ef957",
   "indexPolicyApprovedAtUtc": "2026-07-26T16:50:40Z",
   "directoryIndexable": true,
   "people": [
@@ -29852,6 +29852,473 @@
         "measurements": {
           "originalWords": 449,
           "substantiveStatements": 19,
+          "blocks": 7
+        }
+      }
+    },
+    {
+      "qid": "Q5284",
+      "slug": "bill-gates",
+      "displayName": "Bill Gates",
+      "shortDescription": "Computer scientist and philanthropist · United States · born 1955",
+      "disciplines": [
+        "computer scientist",
+        "philanthropist"
+      ],
+      "birthDate": {
+        "storedValue": "1955-10-28",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1955-10-28",
+        "computedGregorianDate": "1955-10-28",
+        "birthdayCrossLinkKey": "1955-10-28",
+        "birthdayRoute": "/birthday/october-28/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q5083",
+        "entityLabel": "Seattle",
+        "normalisedLabel": "Seattle, United States",
+        "country": {
+          "entity": "Q30",
+          "label": "United States"
+        },
+        "coordinates": {
+          "latitude": 47.605,
+          "longitude": -122.33,
+          "sourceEntity": "Q5083",
+          "sourceEntityLabel": "Seattle",
+          "wikidataPrecision": 0.0002777777777777778,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "America/Los_Angeles"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "America/Los_Angeles",
+        "civilTime": "12:00",
+        "utcInstant": "1955-10-28T20:00:00.000Z",
+        "utcOffsetMinutesAtBirth": -480,
+        "civilDayStartUtc": "1955-10-28T08:00:00.000Z",
+        "civilDayEndUtc": "1955-10-29T08:00:00.000Z",
+        "latitude": 47.605,
+        "longitude": -122.33,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q5083",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": -9.32,
+        "meridianResidualMoonDegrees": 0.0854
+      },
+      "sunSign": {
+        "slug": "scorpio",
+        "name": "Scorpio",
+        "degree": 4.62,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 4.1245,
+          "degreesToNextBoundaryAtWindowEnd": 24.8772
+        }
+      },
+      "moon": {
+        "sign": "aries",
+        "signName": "Aries",
+        "degree": 2.44,
+        "uncertain": true,
+        "signAtCivilDayStart": "pisces",
+        "signAtCivilDayEnd": "aries"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 0.998,
+        "Moon": 13.858,
+        "Mercury": 0.934,
+        "Venus": 1.247,
+        "Mars": 0.642,
+        "Jupiter": 0.139,
+        "Saturn": 0.116,
+        "Uranus": 0.01,
+        "Neptune": 0.037,
+        "Pluto": 0.016
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q5284",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2529414437
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Bill Gates",
+          "articleUrl": "https://en.wikipedia.org/wiki/Bill_Gates",
+          "pageId": 3747,
+          "revisionId": 1365924229,
+          "revisionTimestamp": "2026-07-25T06:14:22Z"
+        },
+        "retrievedAtUtc": "2026-08-16T06:48:15.050Z"
+      },
+      "portrait": {
+        "available": false,
+        "reason": "portrait deliberately omitted from this protected living-person profile",
+        "file": "File:Bill Gates at the European Commission - 2025 - P067383-987995 (cropped).jpg"
+      },
+      "living": true,
+      "reviewedAtUtc": "2026-08-16T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ protected-living-maintenance"
+      },
+      "contentDepth": {
+        "originalWords": 394,
+        "substantiveStatements": 17,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5c-living-person-protection — separate consent or qualified review required"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      },
+      "placements": [
+        {
+          "body": "Sun",
+          "sign": "scorpio",
+          "signName": "Scorpio",
+          "degree": 4.62,
+          "retrograde": false,
+          "speedPerDay": 0.9983,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 214.62
+        },
+        {
+          "body": "Moon",
+          "sign": "aries",
+          "signName": "Aries",
+          "degree": 2.44,
+          "retrograde": false,
+          "speedPerDay": 13.8685,
+          "dignity": null,
+          "stableAcrossDay": false,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 2.44
+        },
+        {
+          "body": "Mercury",
+          "sign": "libra",
+          "signName": "Libra",
+          "degree": 16.2,
+          "retrograde": false,
+          "speedPerDay": 0.937,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 196.2
+        },
+        {
+          "body": "Venus",
+          "sign": "scorpio",
+          "signName": "Scorpio",
+          "degree": 19.71,
+          "retrograde": false,
+          "speedPerDay": 1.2469,
+          "dignity": "detriment",
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 229.71
+        },
+        {
+          "body": "Mars",
+          "sign": "libra",
+          "signName": "Libra",
+          "degree": 9.85,
+          "retrograde": false,
+          "speedPerDay": 0.6423,
+          "dignity": "detriment",
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 189.85
+        },
+        {
+          "body": "Jupiter",
+          "sign": "leo",
+          "signName": "Leo",
+          "degree": 27.73,
+          "retrograde": false,
+          "speedPerDay": 0.1393,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 147.73
+        },
+        {
+          "body": "Saturn",
+          "sign": "scorpio",
+          "signName": "Scorpio",
+          "degree": 21.54,
+          "retrograde": false,
+          "speedPerDay": 0.1158,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 231.54
+        },
+        {
+          "body": "Uranus",
+          "sign": "leo",
+          "signName": "Leo",
+          "degree": 2.28,
+          "retrograde": false,
+          "speedPerDay": 0.0096,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 122.28
+        },
+        {
+          "body": "Neptune",
+          "sign": "libra",
+          "signName": "Libra",
+          "degree": 28.22,
+          "retrograde": false,
+          "speedPerDay": 0.0372,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 208.22
+        },
+        {
+          "body": "Pluto",
+          "sign": "leo",
+          "signName": "Leo",
+          "degree": 28.34,
+          "retrograde": false,
+          "speedPerDay": 0.0161,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 148.34
+        }
+      ],
+      "aspectsStableAcrossCivilDay": [
+        {
+          "a": "Neptune",
+          "b": "Pluto",
+          "type": "sextile",
+          "orb": 0.12,
+          "applying": true
+        },
+        {
+          "a": "Moon",
+          "b": "Uranus",
+          "type": "trine",
+          "orb": 0.15,
+          "applying": false
+        },
+        {
+          "a": "Jupiter",
+          "b": "Neptune",
+          "type": "sextile",
+          "orb": 0.5,
+          "applying": true
+        },
+        {
+          "a": "Jupiter",
+          "b": "Pluto",
+          "type": "conjunction",
+          "orb": 0.61,
+          "applying": true
+        },
+        {
+          "a": "Venus",
+          "b": "Saturn",
+          "type": "conjunction",
+          "orb": 1.83,
+          "applying": true
+        },
+        {
+          "a": "Sun",
+          "b": "Uranus",
+          "type": "square",
+          "orb": 2.34,
+          "applying": false
+        },
+        {
+          "a": "Uranus",
+          "b": "Neptune",
+          "type": "square",
+          "orb": 4.06,
+          "applying": true
+        },
+        {
+          "a": "Jupiter",
+          "b": "Saturn",
+          "type": "square",
+          "orb": 6.18,
+          "applying": false
+        },
+        {
+          "a": "Mercury",
+          "b": "Mars",
+          "type": "conjunction",
+          "orb": 6.35,
+          "applying": false
+        },
+        {
+          "a": "Sun",
+          "b": "Neptune",
+          "type": "conjunction",
+          "orb": 6.4,
+          "applying": false
+        },
+        {
+          "a": "Saturn",
+          "b": "Pluto",
+          "type": "square",
+          "orb": 6.8,
+          "applying": true
+        }
+      ],
+      "patterns": {
+        "settledBodyCount": 9,
+        "stelliums": [
+          {
+            "sign": "scorpio",
+            "count": 3
+          },
+          {
+            "sign": "libra",
+            "count": 3
+          },
+          {
+            "sign": "leo",
+            "count": 3
+          }
+        ],
+        "elements": {
+          "water": 3,
+          "air": 3,
+          "fire": 3
+        },
+        "modalities": {
+          "fixed": 6,
+          "cardinal": 3
+        },
+        "retrograde": [],
+        "directionUncertain": []
+      },
+      "copy": {
+        "title": "Bill Gates's birth chart",
+        "metaDescription": "Bill Gates's chart, computed from a sourced birth date: Sun at 4.6° Scorpio. Birth time unknown, so no houses or rising sign.",
+        "lede": "Six of the nine placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. Fixed signs hold the middle of their seasons, and a fixed-heavy chart is read as one that consolidates and does not easily let go.",
+        "ledeFact": "modality:fixed:6",
+        "blocks": [
+          {
+            "key": "sun",
+            "title": "Where the Sun actually stood",
+            "facts": [
+              "sun-degree:4.62",
+              "decan:scorpio:first"
+            ],
+            "text": "At noon on that date the Sun stood at 4.6° Scorpio, inside the first decan (0°–10°), whose traditional sub-ruler is Mars. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+          },
+          {
+            "key": "personal",
+            "title": "The fast planets",
+            "facts": [
+              "personal:Mercury:Libra:16.2°",
+              "personal:Venus:Scorpio:19.7°",
+              "personal:Mars:Libra:9.8°"
+            ],
+            "text": "Day to day the chart speaks through Mercury in Libra (16.2°), Venus in Scorpio (19.7°), Mars in Libra (9.8°): thought that travels by comparison, attraction that works by atmosphere, effort aimed through strategy and words."
+          },
+          {
+            "key": "geometry",
+            "title": "The angles that hold",
+            "facts": [
+              "aspect:Neptune:Pluto:sextile:0.12",
+              "aspect:Jupiter:Neptune:sextile:0.5",
+              "aspect:Jupiter:Pluto:conjunction:0.61"
+            ],
+            "text": "Neptune to Pluto is the closest call of the day, a sextile within 0.1°. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Jupiter sextile Neptune at 0.5°, and Jupiter conjunction Pluto at 0.6° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+          },
+          {
+            "key": "figures",
+            "title": "Figures in the geometry",
+            "facts": [
+              "figure:none"
+            ],
+            "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+          },
+          {
+            "key": "dignity",
+            "title": "The classical map",
+            "facts": [
+              "dignity:Venus:detriment",
+              "dignity:Mars:detriment"
+            ],
+            "text": "Read against the old dignities, two placements stand out. Venus in Scorpio at 19.7° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 9.8° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+          },
+          {
+            "key": "shape",
+            "title": "The shape of the whole",
+            "facts": [
+              "elements:water3-air3-fire3",
+              "modalities:fixed6-cardinal3",
+              "settled-signs:9",
+              "retrograde:0"
+            ],
+            "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 water, 3 air, 3 fire by element and 6 fixed, 3 cardinal by mode. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Every body was moving forward that day — no apparent reversals anywhere in the chart."
+          },
+          {
+            "key": "moon",
+            "title": "The Moon is genuinely open",
+            "facts": [
+              "moon-uncertain:pisces:aries"
+            ],
+            "uncertain": true,
+            "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 13.9° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+          }
+        ],
+        "birthdayLink": {
+          "href": "/birthday/october-28/",
+          "label": "Everyone born on October 28"
+        },
+        "signLink": {
+          "href": "/scorpio/",
+          "label": "The Scorpio guide"
+        },
+        "measurements": {
+          "originalWords": 394,
+          "substantiveStatements": 17,
           "blocks": 7
         }
       }
@@ -144705,6 +145172,454 @@
         },
         "measurements": {
           "originalWords": 450,
+          "substantiveStatements": 20,
+          "blocks": 7
+        }
+      }
+    },
+    {
+      "qid": "Q38111",
+      "slug": "leonardo-dicaprio",
+      "displayName": "Leonardo DiCaprio",
+      "shortDescription": "Film actor and film producer · United States · born 1974",
+      "disciplines": [
+        "film actor",
+        "film producer"
+      ],
+      "birthDate": {
+        "storedValue": "1974-11-11",
+        "precision": "day",
+        "calendarModel": "proleptic-gregorian",
+        "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+        "displayedDate": "1974-11-11",
+        "computedGregorianDate": "1974-11-11",
+        "birthdayCrossLinkKey": "1974-11-11",
+        "birthdayRoute": "/birthday/november-11/"
+      },
+      "birthTime": null,
+      "timeQuality": "unknown",
+      "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+      "birthPlace": {
+        "entity": "Q65",
+        "entityLabel": "Los Angeles",
+        "normalisedLabel": "Los Angeles, United States",
+        "country": {
+          "entity": "Q30",
+          "label": "United States"
+        },
+        "coordinates": {
+          "latitude": 34.05223,
+          "longitude": -118.24368,
+          "sourceEntity": "Q65",
+          "sourceEntityLabel": "Los Angeles",
+          "wikidataPrecision": 0.10842311330607,
+          "escalationSteps": 0,
+          "precisionDowngrade": null
+        },
+        "timeZone": "America/Los_Angeles"
+      },
+      "computation": {
+        "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+        "timeZone": "America/Los_Angeles",
+        "civilTime": "12:00",
+        "utcInstant": "1974-11-11T20:00:00.000Z",
+        "utcOffsetMinutesAtBirth": -480,
+        "civilDayStartUtc": "1974-11-11T08:00:00.000Z",
+        "civilDayEndUtc": "1974-11-12T08:00:00.000Z",
+        "latitude": 34.05223,
+        "longitude": -118.24368,
+        "coordinateEscalationSteps": 0,
+        "coordinateSourceEntity": "Q65",
+        "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "anglesComputed": false,
+        "housesComputed": false,
+        "sectComputed": false,
+        "meridianResidualMinutes": 7.03,
+        "meridianResidualMoonDegrees": 0.0644
+      },
+      "sunSign": {
+        "slug": "scorpio",
+        "name": "Scorpio",
+        "degree": 19.05,
+        "determinable": true,
+        "cuspCheck": {
+          "ambiguous": false,
+          "boundaryUtc": null,
+          "degreesInsideAtWindowStart": 18.546,
+          "degreesToNextBoundaryAtWindowEnd": 10.448
+        }
+      },
+      "moon": {
+        "sign": "libra",
+        "signName": "Libra",
+        "degree": 21.1,
+        "uncertain": false,
+        "signAtCivilDayStart": "libra",
+        "signAtCivilDayEnd": "libra"
+      },
+      "unknownTimeErrorBandDegrees": {
+        "Sun": 1.006,
+        "Moon": 13.938,
+        "Mercury": 1.122,
+        "Venus": 1.256,
+        "Mars": 0.683,
+        "Jupiter": 0.028,
+        "Saturn": 0.021,
+        "Uranus": 0.06,
+        "Neptune": 0.036,
+        "Pluto": 0.031
+      },
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sources": {
+        "wikidata": {
+          "entityUrl": "https://www.wikidata.org/wiki/Q38111",
+          "propertiesUsed": [
+            "P569",
+            "P19",
+            "P625",
+            "P106",
+            "P18",
+            "P570",
+            "P17",
+            "P131"
+          ],
+          "lastrevid": 2529312104
+        },
+        "wikipedia": {
+          "language": "en",
+          "title": "Leonardo DiCaprio",
+          "articleUrl": "https://en.wikipedia.org/wiki/Leonardo_DiCaprio",
+          "pageId": 52711,
+          "revisionId": 1367410804,
+          "revisionTimestamp": "2026-08-02T23:12:22Z"
+        },
+        "retrievedAtUtc": "2026-08-16T06:48:15.050Z"
+      },
+      "portrait": {
+        "available": false,
+        "reason": "portrait deliberately omitted from this protected living-person profile",
+        "file": "File:Leonardo DiCaprio - BFI Southbank 3 (crop).jpg"
+      },
+      "living": true,
+      "reviewedAtUtc": "2026-08-16T00:00:00Z",
+      "computationInputVersion": {
+        "ephemeris": "astronomy-engine (repository dependency)",
+        "aspectTable": "@zodiacs/engine/internal/math",
+        "pilotTools": "docs/phase5/people-pilot/tools @ protected-living-maintenance"
+      },
+      "contentDepth": {
+        "originalWords": 406,
+        "substantiveStatements": 20,
+        "highestPairwiseSimilarity": 0
+      },
+      "indexEligibility": {
+        "eligible": false,
+        "blockedBy": [
+          "phase-5c-living-person-protection — separate consent or qualified review required"
+        ],
+        "contentChecksPassed": true,
+        "contentCheckFailures": []
+      },
+      "suppression": {
+        "status": "active",
+        "requestedBy": null,
+        "decidedAtUtc": null,
+        "note": null
+      },
+      "placements": [
+        {
+          "body": "Sun",
+          "sign": "scorpio",
+          "signName": "Scorpio",
+          "degree": 19.05,
+          "retrograde": false,
+          "speedPerDay": 1.006,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 229.05
+        },
+        {
+          "body": "Moon",
+          "sign": "libra",
+          "signName": "Libra",
+          "degree": 21.1,
+          "retrograde": false,
+          "speedPerDay": 13.937,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 201.1
+        },
+        {
+          "body": "Mercury",
+          "sign": "scorpio",
+          "signName": "Scorpio",
+          "degree": 0.18,
+          "retrograde": false,
+          "speedPerDay": 1.1243,
+          "dignity": null,
+          "stableAcrossDay": false,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 210.18
+        },
+        {
+          "body": "Venus",
+          "sign": "scorpio",
+          "signName": "Scorpio",
+          "degree": 20.37,
+          "retrograde": false,
+          "speedPerDay": 1.2556,
+          "dignity": "detriment",
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 230.37
+        },
+        {
+          "body": "Mars",
+          "sign": "scorpio",
+          "signName": "Scorpio",
+          "degree": 9.86,
+          "retrograde": false,
+          "speedPerDay": 0.6828,
+          "dignity": "domicile",
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 219.86
+        },
+        {
+          "body": "Jupiter",
+          "sign": "pisces",
+          "signName": "Pisces",
+          "degree": 8.11,
+          "retrograde": false,
+          "speedPerDay": 0.0283,
+          "dignity": "domicile",
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 338.11
+        },
+        {
+          "body": "Saturn",
+          "sign": "cancer",
+          "signName": "Cancer",
+          "degree": 18.79,
+          "retrograde": true,
+          "speedPerDay": -0.021,
+          "dignity": "detriment",
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 108.79
+        },
+        {
+          "body": "Uranus",
+          "sign": "libra",
+          "signName": "Libra",
+          "degree": 29.44,
+          "retrograde": false,
+          "speedPerDay": 0.0602,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 209.44
+        },
+        {
+          "body": "Neptune",
+          "sign": "sagittarius",
+          "signName": "Sagittarius",
+          "degree": 8.59,
+          "retrograde": false,
+          "speedPerDay": 0.0359,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 248.59
+        },
+        {
+          "body": "Pluto",
+          "sign": "libra",
+          "signName": "Libra",
+          "degree": 8.23,
+          "retrograde": false,
+          "speedPerDay": 0.0311,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 188.23
+        }
+      ],
+      "aspectsStableAcrossCivilDay": [
+        {
+          "a": "Sun",
+          "b": "Saturn",
+          "type": "trine",
+          "orb": 0.26,
+          "applying": false
+        },
+        {
+          "a": "Neptune",
+          "b": "Pluto",
+          "type": "sextile",
+          "orb": 0.36,
+          "applying": false
+        },
+        {
+          "a": "Jupiter",
+          "b": "Neptune",
+          "type": "square",
+          "orb": 0.48,
+          "applying": false
+        },
+        {
+          "a": "Mercury",
+          "b": "Uranus",
+          "type": "conjunction",
+          "orb": 0.75,
+          "applying": false
+        },
+        {
+          "a": "Sun",
+          "b": "Venus",
+          "type": "conjunction",
+          "orb": 1.32,
+          "applying": false
+        },
+        {
+          "a": "Venus",
+          "b": "Saturn",
+          "type": "trine",
+          "orb": 1.59,
+          "applying": false
+        },
+        {
+          "a": "Mars",
+          "b": "Jupiter",
+          "type": "trine",
+          "orb": 1.75,
+          "applying": false
+        },
+        {
+          "a": "Sun",
+          "b": "Mars",
+          "type": "conjunction",
+          "orb": 9.19,
+          "applying": false
+        }
+      ],
+      "patterns": {
+        "settledBodyCount": 9,
+        "stelliums": [
+          {
+            "sign": "scorpio",
+            "count": 3
+          },
+          {
+            "sign": "libra",
+            "count": 3
+          }
+        ],
+        "elements": {
+          "water": 5,
+          "air": 3,
+          "fire": 1
+        },
+        "modalities": {
+          "fixed": 3,
+          "cardinal": 4,
+          "mutable": 2
+        },
+        "retrograde": [
+          "Saturn"
+        ],
+        "directionUncertain": []
+      },
+      "copy": {
+        "title": "Leonardo DiCaprio's birth chart",
+        "metaDescription": "Leonardo DiCaprio's chart, computed from a sourced birth date: Sun at 19.1° Scorpio. Birth time unknown, so no houses or rising sign.",
+        "lede": "0.3° separates the Sun and Saturn from an exact trine; at that range identity and structure read as one mechanism. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+        "ledeFact": "aspect:Sun:Saturn:trine",
+        "blocks": [
+          {
+            "key": "sun",
+            "title": "Where the Sun actually stood",
+            "facts": [
+              "sun-degree:19.05",
+              "decan:scorpio:second"
+            ],
+            "text": "The Sun's position resolves to 19.1° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+          },
+          {
+            "key": "personal",
+            "title": "Closer to the ground",
+            "facts": [
+              "personal:Venus:Scorpio:20.4°",
+              "personal:Mars:Scorpio:9.9°"
+            ],
+            "text": "Closer in, Venus stands at 20.4° Scorpio; Mars stands at 9.9° Scorpio. The tradition reads attraction that works by atmosphere from Venus, effort that surges when it matters from Mars."
+          },
+          {
+            "key": "geometry",
+            "title": "The angles that hold",
+            "facts": [
+              "aspect:Sun:Saturn:trine:0.26",
+              "aspect:Neptune:Pluto:sextile:0.36",
+              "aspect:Jupiter:Neptune:square:0.48"
+            ],
+            "text": "The tightest geometry in the chart puts the Sun a third of the circle apart from Saturn, 0.3° off exact. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Neptune sextile Pluto at 0.4°, and Jupiter square Neptune at 0.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+          },
+          {
+            "key": "figures",
+            "title": "What the angles build",
+            "facts": [
+              "figure:unaspected:Moon"
+            ],
+            "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+          },
+          {
+            "key": "dignity",
+            "title": "The classical map",
+            "facts": [
+              "dignity:Venus:detriment",
+              "dignity:Mars:domicile",
+              "dignity:Jupiter:domicile",
+              "dignity:Saturn:detriment"
+            ],
+            "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Venus in Scorpio at 20.4° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 9.9° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 8.1° is in domicile; Saturn in Cancer at 18.8° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+          },
+          {
+            "key": "shape",
+            "title": "The shape of the whole",
+            "facts": [
+              "elements:water5-air3-fire1",
+              "modalities:cardinal4-fixed3-mutable2",
+              "settled-signs:9",
+              "retrograde:1",
+              "sign-uncertain:Mercury:libra:scorpio"
+            ],
+            "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 5 water, 3 air, 1 fire by element and 4 cardinal, 3 fixed, 2 mutable by mode. Mercury crossed from Libra into Scorpio during that day, so its sign is left open. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Saturn was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+          },
+          {
+            "key": "moon",
+            "title": "The Moon, and how far it can move",
+            "facts": [
+              "moon-sign:libra",
+              "moon-band:13.9"
+            ],
+            "uncertain": false,
+            "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.1°."
+          }
+        ],
+        "birthdayLink": {
+          "href": "/birthday/november-11/",
+          "label": "Everyone born on November 11"
+        },
+        "signLink": {
+          "href": "/scorpio/",
+          "label": "The Scorpio guide"
+        },
+        "measurements": {
+          "originalWords": 406,
           "substantiveStatements": 20,
           "blocks": 7
         }

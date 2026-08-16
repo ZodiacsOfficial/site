@@ -2882,14 +2882,14 @@
               {identityOnly && (
                 <span className="stage-placard__identity">
                   <span>Official {sign.name} token</span>
-                  <strong>Gold artwork and today&rsquo;s price. No wallet needed to browse.</strong>
+                  <strong>Your sign and today&rsquo;s market snapshot. Browse without connecting anything.</strong>
                 </span>
               )}
               {!identityOnly && <PlacardMarketPanel sign={sign} />}
               <span className="stage-placard__actions">
                 {identityOnly ? (
-                  <a className="btn btn--primary stage-placard__pill" href="#buying-guide">
-                    <span>How to buy {sign.name}</span>
+                  <a className="btn btn--primary stage-placard__pill" href="#registry">
+                    <span>About {sign.name}</span>
                   </a>
                 ) : tradingEnabled ? (
                   <button
@@ -2901,12 +2901,12 @@
                     <span>Buy {sign.name}</span>
                   </button>
                 ) : (
-                  <a className="btn btn--primary stage-placard__pill" href={`${registryProfilePath(sign)}#acquire`}>
-                    <span>Buy {sign.name}</span>
+                  <a className="btn btn--primary stage-placard__pill" href={registryProfilePath(sign)}>
+                    <span>View {sign.name}</span>
                   </a>
                 )}
                 <a className="btn btn--ghost stage-placard__pill" href={`${registryProfilePath(sign)}#record`}>
-                  <span>Official details</span>
+                  <span>Check the token</span>
                 </a>
               </span>
             </div>
@@ -4452,12 +4452,12 @@
         ]
       },
       {
-        label: 'Acquisition & Ownership',
+        label: 'Ownership and separate services',
         items: [
-          { q: 'How do I acquire a Zodiac?',
-            a: 'Each sign’s catalogue page links to independent third-party services, including Jupiter with the official Solana mint preloaded. Zodiacs.org does not sell, execute, or recommend a transaction. A service may request a wallet connection, token approval, signature, and an onchain transaction that cannot be reversed. Verify the mint, network, amount, and destination before continuing.' },
-          { q: 'Do I need a special wallet?',
-            a: 'Any wallet that holds SPL tokens on Solana or ERC-20 tokens on Base will do. The registry is wallet-neutral; the Onchain Access section lists familiar interfaces.' },
+          { q: 'Can I buy a Zodiac on Zodiacs.org?',
+            a: 'No. Catalogue profiles only show information and verified token addresses. Astrofolio.xyz is a separate website with its own steps, terms, and risks.' },
+          { q: 'Does the Registry ask me to connect anything?',
+            a: 'No. The Registry only shows public information. It cannot make a purchase, move money, or approve anything.' },
           { q: 'Does the registry prove presale or allocation history?',
             a: 'No. The registry verifies official addresses and provenance; it does not independently establish presale, allocation, or trading-history claims.' }
         ]
@@ -4570,10 +4570,7 @@
             </span>
           </div>
           <h1 id="consumer-explorer-title">Choose your sign</h1>
-          <p>
-            Each sign has one gold sculpture and one official token. See yours, with
-            today&rsquo;s price and a simple guide to buying it.
-          </p>
+          <p>Choose your sign. See today&rsquo;s market snapshot and check its verified token address.</p>
         </header>
       );
     }
@@ -5723,9 +5720,8 @@
             </div>
             <VitrinePrice sign={item} batch={batch} live={layer.current} />
             <div className="vitrine-placard__actions">
-              <a className="btn btn--primary" href={registryProfilePath(item)} tabIndex={layer.current ? undefined : -1}>See {item.name}</a>
-              <a className="btn btn--ghost" href={`${registryProfilePath(item)}#acquire`} tabIndex={layer.current ? undefined : -1}>How to buy {item.name}</a>
-              <a className="vitrine-placard__record" href={`${registryProfilePath(item)}#record`} tabIndex={layer.current ? undefined : -1}>View official record</a>
+              <a className="btn btn--primary" href={registryProfilePath(item)} tabIndex={layer.current ? undefined : -1}>View {item.name}</a>
+              <a className="btn btn--ghost" href={`${registryProfilePath(item)}#record`} tabIndex={layer.current ? undefined : -1}>Check the token</a>
             </div>
           </article>
         );
@@ -5830,19 +5826,18 @@
       return (
         <section
           ref={reveal}
-          id="buy"
+          id="buying-guide"
           className="consumer-buy reveal"
           aria-labelledby="consumer-buy-title"
           data-vitrine-rule
           style={{ '--guide-sign': sign.hue }}
         >
           <header className="consumer-section-head">
-            <h2 id="consumer-buy-title">How to buy your sign</h2>
+            <h2 id="consumer-buy-title">If you want to go further</h2>
           </header>
           <div className="consumer-buy__opening">
             <p className="consumer-buy__intro">
-              Buying happens on an independent service, from your own wallet.<br />
-              Zodiacs.org shows you the official token and the route to it. It never holds your money or your crypto.
+              Most people stop at browsing, and that is fine. If you want to own a token for your sign, Astrofolio.xyz is a separate website. Zodiacs.org does not take payment or complete purchases.
             </p>
             <aside className="consumer-buy__selection" aria-label={`Currently viewing ${sign.name}`}>
               <img
@@ -5856,35 +5851,8 @@
               <span><small>Currently viewing</small><strong>{sign.name}</strong></span>
             </aside>
           </div>
-          <ol className="consumer-buy__steps">
-            <li>
-              <span aria-hidden="true">1.</span>
-              <div><strong>Choose your sign</strong><p>Pick your sign.</p><small>Move through all twelve and start with the one that feels like yours.</small></div>
-            </li>
-            <li>
-              <span aria-hidden="true">2.</span>
-              <div><strong>Start with its record</strong><p>Open its buying options on the sign&rsquo;s official record.</p><small>The record is the reliable route when names and tickers look alike.</small></div>
-            </li>
-            <li>
-              <span aria-hidden="true">3.</span>
-              <div><strong>Review in your wallet</strong><p>Check before you approve: in your wallet, confirm the address, the network, the amount, and the fee.</p><small>Nothing proceeds until you review and approve it yourself.</small></div>
-            </li>
-          </ol>
-          <div className="consumer-buy__disclosures">
-            <details className="consumer-disclosure">
-              <summary>What you&rsquo;ll need</summary>
-              <div className="consumer-disclosure__body">
-                <p>A Solana-compatible wallet and enough SOL for your amount plus the network fee.</p>
-                <a href={registryProfilePath(sign)}>Open {sign.name}&rsquo;s official record</a>
-              </div>
-            </details>
-            <details className="consumer-disclosure">
-              <summary>Before you spend anything</summary>
-              <div className="consumer-disclosure__body">
-                <p>Zodiac tokens are speculative, thinly traded digital assets. Prices can be volatile, liquidity may disappear, and you could lose all money used to acquire one. Astrology has no established predictive relationship with asset prices.</p>
-              </div>
-            </details>
-          </div>
+          <p className="consumer-buy__intro">Prices can rise or fall quickly. You can lose what you spend.</p>
+          <a className="btn btn--primary" href="https://astrofolio.xyz/" rel="noopener noreferrer external">Visit Astrofolio.xyz</a>
         </section>
       );
     }
@@ -5916,8 +5884,8 @@
           <header className="consumer-section-head">
             <h2 id="consumer-verify-title">Check a Zodiac token address</h2>
           </header>
-          <p className="consumer-verify__intro">Paste the mint or contract address shown by a wallet or marketplace. We&rsquo;ll tell you whether it appears in the official list. Never paste a seed phrase.</p>
-          <p className="consumer-verify__distinction">This checks a Zodiac&rsquo;s token address, not your public wallet address.</p>
+          <p className="consumer-verify__intro">Paste the token address shown where you found it. We&rsquo;ll tell you whether it appears in the verified list. Never paste a recovery phrase.</p>
+          <p className="consumer-verify__distinction">This checks a token address, not a personal account.</p>
           <form className="vrf" onSubmit={onSubmit}>
             <label className="sr-only" htmlFor="consumer-vrf-input">Zodiac mint or contract address</label>
             <input
@@ -5948,11 +5916,11 @@
                 <div className="vrf__result-head"><span className="vrf__cross" aria-hidden="true">×</span><span>This address isn&rsquo;t in the official Zodiac list.</span></div>
               )}
               {result.state === 'invalid' && (
-                <div className="vrf__result-head"><span className="vrf__cross" aria-hidden="true">×</span><span>That doesn&rsquo;t look like a Solana or Base address.</span></div>
+                <div className="vrf__result-head"><span className="vrf__cross" aria-hidden="true">×</span><span>That doesn&rsquo;t look like a complete token address.</span></div>
               )}
             </div>
           )}
-          <p className="consumer-verify__safety">Read-only: this checker never connects a wallet, requests a signature, or starts a transaction.</p>
+          <p className="consumer-verify__safety">This checker only shows information. It cannot move money or approve anything.</p>
         </section>
       );
     }
@@ -5964,7 +5932,7 @@
           <header className="consumer-section-head">
             <h2 id="consumer-how-title">What is a Zodiac?</h2>
           </header>
-          <p className="consumer-how__intro">A Zodiac pairs one familiar sign with two things: a recognizable gold artwork and an official digital token. The public Registry tells you which exact address is official. The sculpture is collection artwork, not a physical object or a one-of-one NFT.</p>
+          <p className="consumer-how__intro">Zodiacs has twelve tokens, one for each sign. The public Registry lists the exact address that belongs to each one.</p>
           <ol id="identity" className="consumer-steps" aria-label="The parts of a Zodiac">
             <li>
               <span className="consumer-step__visual consumer-step__constellation" aria-hidden="true">
@@ -5974,7 +5942,7 @@
               </span>
               <span className="consumer-step__copy">
                 <strong>One token for each sign</strong>
-                <small>Twelve familiar identities, each with its own pastel sign and gold artwork.</small>
+                <small>Twelve signs. Twelve tokens.</small>
               </span>
             </li>
             <li>
@@ -5983,8 +5951,8 @@
                 <code>{truncateAddress(sign.representations.solana.address, 5, 4)}</code>
               </span>
               <span className="consumer-step__copy">
-                <strong>The address is the identity</strong>
-                <small>Names and tickers can be copied. The exact address in the public record identifies the official token.</small>
+                <strong>The address tells them apart</strong>
+                <small>Names can be copied. The exact address in the public record identifies the verified token.</small>
               </span>
             </li>
             <li>
@@ -5995,14 +5963,14 @@
               </span>
               <span className="consumer-step__copy">
                 <strong>Keep it, send it, or gift it</strong>
-                <small>A Zodiac can sit in your wallet, be sent to someone else, or be given as a gift. Its market price can rise or fall, and you may not always find a buyer when you want to sell.</small>
+                <small>You can keep a Zodiac, send it to someone else, or give it as a gift. Its price can rise or fall, and you may not always find a buyer.</small>
               </span>
             </li>
           </ol>
           <div className="consumer-proof" aria-label="Registry facts">
             <span><strong>12</strong> official tokens</span>
-            <span><strong>Solana origin + Base counterpart</strong> in the record</span>
-            <span><strong>Read-only</strong> no wallet required</span>
+            <span><strong>2 verified addresses</strong> for each sign</span>
+            <span><strong>Read-only</strong> only shows information</span>
           </div>
           <div className="consumer-how__disclosures">
             <details className="consumer-disclosure">
@@ -6114,19 +6082,19 @@
     const CONSUMER_FAQS = [
       {
         q: 'Is there an official token for my zodiac sign?',
-        a: 'Yes. Each of the twelve signs has exactly one official token — native on Solana, with an official counterpart on Base. Both addresses are published here.'
+        a: 'Yes. Each of the twelve signs has one verified token record. Its technical addresses are published in the sign’s profile.'
       },
       {
         q: 'What does “official” mean?',
-        a: 'The address appears in this Registry. It does not mean approval from a government, wallet, marketplace, or exchange.'
+        a: 'The address matches the published Registry list. It is not a promise of safety or value.'
       },
       {
-        q: 'How do I check whether a zodiac token is official?',
-        a: 'Paste the mint or contract address into the checker on this page. The check is read-only and needs no wallet; anything not in the list is only reported as not found.'
+        q: 'How do I check a zodiac token?',
+        a: 'Paste the complete token address into the checker on this page. It compares the address with the verified list.'
       },
       {
-        q: 'How do I buy a zodiac token?',
-        a: 'Each sign’s record page carries its acquisition route through independent third-party venues. Zodiacs.org itself sells nothing; digital assets can lose all market value.'
+        q: 'Can I buy a Zodiac on Zodiacs.org?',
+        a: 'No. Catalogue profiles only show information. Astrofolio.xyz is a separate website with its own steps, terms, and risks.'
       }
     ];
 
@@ -6303,9 +6271,9 @@
           <div className="ftr__mast">
             <div className="ftr__identity">
               <div className="mark">Zodiacs<span className="g">·</span>org</div>
-              <p>{pro ? 'Live market context, anchored to verified public records.' : 'Official tokens, artwork, and public records.'}</p>
+              <p>{pro ? 'Live market context, anchored to verified public records.' : 'Twelve signs. Twelve verified token records.'}</p>
             </div>
-            <div className="ftr__copyright">© MMXXVI</div>
+            <div className="ftr__copyright">© 2026</div>
           </div>
 
           <div className="ftr__directory">

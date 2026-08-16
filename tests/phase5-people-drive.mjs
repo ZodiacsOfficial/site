@@ -21,6 +21,8 @@ if (peopleData.directoryIndexable) indexablePaths.add('/people/');
 const representative = [
   '/people/ada-lovelace/',
   '/people/serena-williams/',
+  '/people/bill-gates/',
+  '/people/leonardo-dicaprio/',
   '/people/chien-shiung-wu/',
 ];
 
@@ -150,7 +152,7 @@ await withPreview({ port: 4425 }, async (baseURL) => {
     );
     check(
       protectedLiving.map((person) => person.slug).sort().join(',')
-        === 'rigoberta-menchu,serena-williams',
+        === 'bill-gates,leonardo-dicaprio,rigoberta-menchu,serena-williams',
       'protected living-person set drifted',
     );
     await inventoryContext.close();
@@ -164,7 +166,11 @@ await withPreview({ port: 4425 }, async (baseURL) => {
     const directoryErrors = [];
     directoryPage.on('pageerror', (error) => directoryErrors.push(error.message));
     await directoryPage.goto(`${baseURL}/people/`, { waitUntil: 'networkidle' });
-    check(await directoryPage.locator('[data-person-card]').count() === people.length, `directory does not show exactly ${people.length} people`);
+    check(await directoryPage.locator('[data-person-card]').count() === indexablePeople.length, `directory does not show exactly ${indexablePeople.length} indexable people`);
+    check(
+      await directoryPage.locator('a[href="/people/bill-gates/"], a[href="/people/leonardo-dicaprio/"]').count() === 0,
+      'protected living profiles entered the public People directory',
+    );
     check(
       await directoryPage.locator('[data-filter-discipline]').count() === 9,
       'directory does not use the nine approved discipline filters',
@@ -190,7 +196,7 @@ await withPreview({ port: 4425 }, async (baseURL) => {
     check(focus.style !== 'none' && focus.width !== '0px', 'sign filter keyboard focus is not visible');
 
     const uniqueNeedle = 'Ada Lovelace';
-    const expectedMatches = people.filter((person) => (
+    const expectedMatches = indexablePeople.filter((person) => (
       person.displayName.toLowerCase().includes(uniqueNeedle.toLowerCase())
     )).length;
     await directoryPage.locator('#people-name').fill(uniqueNeedle);
@@ -200,7 +206,7 @@ await withPreview({ port: 4425 }, async (baseURL) => {
       'name search did not narrow to the exact match set',
     );
     check(
-      (await directoryPage.locator('[data-people-count]').innerText()).startsWith(`${expectedMatches} of ${people.length}`),
+      (await directoryPage.locator('[data-people-count]').innerText()).startsWith(`${expectedMatches} of ${indexablePeople.length}`),
       'name-search result count is not announced',
     );
     await directoryPage.locator('#people-name').fill('not a pilot name');
@@ -217,7 +223,7 @@ await withPreview({ port: 4425 }, async (baseURL) => {
     await noJsDirectory.goto(`${baseURL}/people/?sign=leo#filter-sign-leo`, {
       waitUntil: 'domcontentloaded',
     });
-    const expectedLeo = people.filter((person) => person.sunSign.slug === 'leo').length;
+    const expectedLeo = indexablePeople.filter((person) => person.sunSign.slug === 'leo').length;
     check(
       await noJsDirectory.locator('[data-person-card]:visible').count() === expectedLeo,
       'no-JS Leo filter did not use the reviewed manifest',

@@ -1,6 +1,6 @@
 {
  "schema": "zodiacs.phase5.people-manifest.v1",
- "status": "Phase 5 complete — 500 reviewed records",
+ "status": "Phase 5 complete — 502 reviewed records",
  "julianRule": "Option A — Julian-dated births are excluded from the Phase 5A pilot",
  "thresholds": {
   "schema": "zodiacs.phase5.thresholds.v1",
@@ -10372,6 +10372,157 @@
     "eligible": false,
     "blockedBy": [
      "phase-5-completion-candidate — release gates pending"
+    ],
+    "contentChecksPassed": true,
+    "contentCheckFailures": []
+   },
+   "suppression": {
+    "status": "active",
+    "requestedBy": null,
+    "decidedAtUtc": null,
+    "note": null
+   }
+  },
+  {
+   "qid": "Q5284",
+   "slug": "bill-gates",
+   "displayName": "Bill Gates",
+   "shortDescription": "Computer scientist and philanthropist · United States · born 1955",
+   "disciplines": [
+    "computer scientist",
+    "philanthropist"
+   ],
+   "birthDate": {
+    "storedValue": "1955-10-28",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+    "displayedDate": "1955-10-28",
+    "computedGregorianDate": "1955-10-28",
+    "birthdayCrossLinkKey": "1955-10-28",
+    "birthdayRoute": "/birthday/october-28/"
+   },
+   "birthTime": null,
+   "timeQuality": "unknown",
+   "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+   "birthPlace": {
+    "entity": "Q5083",
+    "entityLabel": "Seattle",
+    "normalisedLabel": "Seattle, United States",
+    "country": {
+     "entity": "Q30",
+     "label": "United States"
+    },
+    "coordinates": {
+     "latitude": 47.605,
+     "longitude": -122.33,
+     "sourceEntity": "Q5083",
+     "sourceEntityLabel": "Seattle",
+     "wikidataPrecision": 0.0002777777777777778,
+     "escalationSteps": 0,
+     "precisionDowngrade": null
+    },
+    "timeZone": "America/Los_Angeles"
+   },
+   "computation": {
+    "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+    "timeZone": "America/Los_Angeles",
+    "civilTime": "12:00",
+    "utcInstant": "1955-10-28T20:00:00.000Z",
+    "utcOffsetMinutesAtBirth": -480,
+    "civilDayStartUtc": "1955-10-28T08:00:00.000Z",
+    "civilDayEndUtc": "1955-10-29T08:00:00.000Z",
+    "latitude": 47.605,
+    "longitude": -122.33,
+    "coordinateEscalationSteps": 0,
+    "coordinateSourceEntity": "Q5083",
+    "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "anglesComputed": false,
+    "housesComputed": false,
+    "sectComputed": false,
+    "meridianResidualMinutes": -9.32,
+    "meridianResidualMoonDegrees": 0.0854
+   },
+   "sunSign": {
+    "slug": "scorpio",
+    "name": "Scorpio",
+    "degree": 4.62,
+    "determinable": true,
+    "cuspCheck": {
+     "ambiguous": false,
+     "boundaryUtc": null,
+     "degreesInsideAtWindowStart": 4.1245,
+     "degreesToNextBoundaryAtWindowEnd": 24.8772
+    }
+   },
+   "moon": {
+    "sign": "aries",
+    "signName": "Aries",
+    "degree": 2.44,
+    "uncertain": true,
+    "signAtCivilDayStart": "pisces",
+    "signAtCivilDayEnd": "aries"
+   },
+   "unknownTimeErrorBandDegrees": {
+    "Sun": 0.998,
+    "Moon": 13.858,
+    "Mercury": 0.934,
+    "Venus": 1.247,
+    "Mars": 0.642,
+    "Jupiter": 0.139,
+    "Saturn": 0.116,
+    "Uranus": 0.01,
+    "Neptune": 0.037,
+    "Pluto": 0.016
+   },
+   "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+   "sources": {
+    "wikidata": {
+     "entityUrl": "https://www.wikidata.org/wiki/Q5284",
+     "propertiesUsed": [
+      "P569",
+      "P19",
+      "P625",
+      "P106",
+      "P18",
+      "P570",
+      "P17",
+      "P131"
+     ],
+     "lastrevid": 2529414437
+    },
+    "wikipedia": {
+     "language": "en",
+     "title": "Bill Gates",
+     "articleUrl": "https://en.wikipedia.org/wiki/Bill_Gates",
+     "pageId": 3747,
+     "revisionId": 1365924229,
+     "revisionTimestamp": "2026-07-25T06:14:22Z"
+    },
+    "retrievedAtUtc": "2026-08-16T06:48:15.050Z"
+   },
+   "portrait": {
+    "available": false,
+    "reason": "portrait deliberately omitted from this protected living-person profile",
+    "file": "File:Bill Gates at the European Commission - 2025 - P067383-987995 (cropped).jpg"
+   },
+   "living": true,
+   "reviewedAtUtc": "2026-08-16T00:00:00Z",
+   "computationInputVersion": {
+    "ephemeris": "astronomy-engine (repository dependency)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "pilotTools": "docs/phase5/people-pilot/tools @ protected-living-maintenance"
+   },
+   "contentDepth": {
+    "originalWords": 394,
+    "substantiveStatements": 17,
+    "highestPairwiseSimilarity": 0
+   },
+   "indexEligibility": {
+    "eligible": false,
+    "blockedBy": [
+     "phase-5c-living-person-protection — noindex/nofollow; excluded from sitemap, search, directory, birthday and automatic related-person links"
     ],
     "contentChecksPassed": true,
     "contentCheckFailures": []
@@ -49744,6 +49895,157 @@
     "eligible": false,
     "blockedBy": [
      "phase-5-completion-candidate — release gates pending"
+    ],
+    "contentChecksPassed": true,
+    "contentCheckFailures": []
+   },
+   "suppression": {
+    "status": "active",
+    "requestedBy": null,
+    "decidedAtUtc": null,
+    "note": null
+   }
+  },
+  {
+   "qid": "Q38111",
+   "slug": "leonardo-dicaprio",
+   "displayName": "Leonardo DiCaprio",
+   "shortDescription": "Film actor and film producer · United States · born 1974",
+   "disciplines": [
+    "film actor",
+    "film producer"
+   ],
+   "birthDate": {
+    "storedValue": "1974-11-11",
+    "precision": "day",
+    "calendarModel": "proleptic-gregorian",
+    "calendarConversion": "none required — the stored value is already proleptic Gregorian",
+    "displayedDate": "1974-11-11",
+    "computedGregorianDate": "1974-11-11",
+    "birthdayCrossLinkKey": "1974-11-11",
+    "birthdayRoute": "/birthday/november-11/"
+   },
+   "birthTime": null,
+   "timeQuality": "unknown",
+   "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
+   "birthPlace": {
+    "entity": "Q65",
+    "entityLabel": "Los Angeles",
+    "normalisedLabel": "Los Angeles, United States",
+    "country": {
+     "entity": "Q30",
+     "label": "United States"
+    },
+    "coordinates": {
+     "latitude": 34.05223,
+     "longitude": -118.24368,
+     "sourceEntity": "Q65",
+     "sourceEntityLabel": "Los Angeles",
+     "wikidataPrecision": 0.10842311330607,
+     "escalationSteps": 0,
+     "precisionDowngrade": null
+    },
+    "timeZone": "America/Los_Angeles"
+   },
+   "computation": {
+    "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+    "timeZone": "America/Los_Angeles",
+    "civilTime": "12:00",
+    "utcInstant": "1974-11-11T20:00:00.000Z",
+    "utcOffsetMinutesAtBirth": -480,
+    "civilDayStartUtc": "1974-11-11T08:00:00.000Z",
+    "civilDayEndUtc": "1974-11-12T08:00:00.000Z",
+    "latitude": 34.05223,
+    "longitude": -118.24368,
+    "coordinateEscalationSteps": 0,
+    "coordinateSourceEntity": "Q65",
+    "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "anglesComputed": false,
+    "housesComputed": false,
+    "sectComputed": false,
+    "meridianResidualMinutes": 7.03,
+    "meridianResidualMoonDegrees": 0.0644
+   },
+   "sunSign": {
+    "slug": "scorpio",
+    "name": "Scorpio",
+    "degree": 19.05,
+    "determinable": true,
+    "cuspCheck": {
+     "ambiguous": false,
+     "boundaryUtc": null,
+     "degreesInsideAtWindowStart": 18.546,
+     "degreesToNextBoundaryAtWindowEnd": 10.448
+    }
+   },
+   "moon": {
+    "sign": "libra",
+    "signName": "Libra",
+    "degree": 21.1,
+    "uncertain": false,
+    "signAtCivilDayStart": "libra",
+    "signAtCivilDayEnd": "libra"
+   },
+   "unknownTimeErrorBandDegrees": {
+    "Sun": 1.006,
+    "Moon": 13.938,
+    "Mercury": 1.122,
+    "Venus": 1.256,
+    "Mars": 0.683,
+    "Jupiter": 0.028,
+    "Saturn": 0.021,
+    "Uranus": 0.06,
+    "Neptune": 0.036,
+    "Pluto": 0.031
+   },
+   "dataQualityLabel": "Birth date sourced; birth time unknown",
+   "sources": {
+    "wikidata": {
+     "entityUrl": "https://www.wikidata.org/wiki/Q38111",
+     "propertiesUsed": [
+      "P569",
+      "P19",
+      "P625",
+      "P106",
+      "P18",
+      "P570",
+      "P17",
+      "P131"
+     ],
+     "lastrevid": 2529312104
+    },
+    "wikipedia": {
+     "language": "en",
+     "title": "Leonardo DiCaprio",
+     "articleUrl": "https://en.wikipedia.org/wiki/Leonardo_DiCaprio",
+     "pageId": 52711,
+     "revisionId": 1367410804,
+     "revisionTimestamp": "2026-08-02T23:12:22Z"
+    },
+    "retrievedAtUtc": "2026-08-16T06:48:15.050Z"
+   },
+   "portrait": {
+    "available": false,
+    "reason": "portrait deliberately omitted from this protected living-person profile",
+    "file": "File:Leonardo DiCaprio - BFI Southbank 3 (crop).jpg"
+   },
+   "living": true,
+   "reviewedAtUtc": "2026-08-16T00:00:00Z",
+   "computationInputVersion": {
+    "ephemeris": "astronomy-engine (repository dependency)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "pilotTools": "docs/phase5/people-pilot/tools @ protected-living-maintenance"
+   },
+   "contentDepth": {
+    "originalWords": 406,
+    "substantiveStatements": 20,
+    "highestPairwiseSimilarity": 0
+   },
+   "indexEligibility": {
+    "eligible": false,
+    "blockedBy": [
+     "phase-5c-living-person-protection — noindex/nofollow; excluded from sitemap, search, directory, birthday and automatic related-person links"
     ],
     "contentChecksPassed": true,
     "contentCheckFailures": []

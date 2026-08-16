@@ -9137,6 +9137,44 @@
         "degreesToNextBoundaryAtWindowEnd": 23.4433
       },
       "reasons": []
+    },
+    {
+      "slug": "bill-gates",
+      "qid": "Q5284",
+      "displayName": "Bill Gates",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1955-10-28",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1955-10-28",
+      "sun": "Scorpio 4.62°",
+      "moonUncertain": true,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 4.1245,
+        "degreesToNextBoundaryAtWindowEnd": 24.8772
+      },
+      "reasons": []
+    },
+    {
+      "slug": "leonardo-dicaprio",
+      "qid": "Q38111",
+      "displayName": "Leonardo DiCaprio",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1974-11-11",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1974-11-11",
+      "sun": "Scorpio 19.05°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 18.546,
+        "degreesToNextBoundaryAtWindowEnd": 10.448
+      },
+      "reasons": []
     }
   ]
 }

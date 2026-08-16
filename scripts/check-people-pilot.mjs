@@ -14,7 +14,7 @@ const signIndex = [
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
 
-if (data.people.length !== 499) failures.push(`expected 499 records, found ${data.people.length}`);
+if (data.people.length !== 501) failures.push(`expected 501 records, found ${data.people.length}`);
 if (new Set(data.people.map((person) => person.slug)).size !== data.people.length) failures.push('duplicate slug');
 if (new Set(data.people.map((person) => person.qid)).size !== data.people.length) failures.push('duplicate QID');
 

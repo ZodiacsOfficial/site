@@ -261,13 +261,13 @@ const personSchema = z.object({
 
 const peoplePilotSchema = z.object({
   schema: z.literal('zodiacs.phase5.people.v1'),
-  status: z.literal('Phase 5 public release — 497 indexable deceased records, 2 protected living records, 1 withdrawn'),
+  status: z.literal('Phase 5 public release — 497 indexable deceased records, 4 protected living records, 1 withdrawn'),
   reviewedAtUtc: isoInstantSchema,
   sourceManifestSha256: z.string().regex(/^[a-f0-9]{64}$/u),
   sourceIndexPolicySha256: z.string().regex(/^[a-f0-9]{64}$/u),
   indexPolicyApprovedAtUtc: isoInstantSchema,
   directoryIndexable: z.boolean(),
-  people: z.array(personSchema).min(20).max(500),
+  people: z.array(personSchema).length(501),
 }).strict();
 
 export const PEOPLE_PILOT = peoplePilotSchema.parse(rawPeople);
@@ -275,6 +275,7 @@ export type PersonRecord = z.infer<typeof personSchema>;
 export const PEOPLE = PEOPLE_PILOT.people;
 export const PEOPLE_BY_SLUG = new Map(PEOPLE.map((person) => [person.slug, person] as const));
 export const INDEXABLE_PEOPLE = PEOPLE.filter((person) => person.indexEligibility.eligible);
+export const DIRECTORY_PEOPLE = INDEXABLE_PEOPLE;
 export const PEOPLE_DIRECTORY_INDEXABLE = PEOPLE_PILOT.directoryIndexable;
 
 export const PEOPLE_DISCIPLINE_FILTERS = [

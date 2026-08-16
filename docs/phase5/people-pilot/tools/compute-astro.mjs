@@ -218,7 +218,21 @@ const CANDIDATES_FILE = EXPANSION ? 'candidates-expansion.json' : 'candidates.js
 const EVIDENCE_DIR = EXPANSION ? 'evidence-expansion' : 'evidence';
 const COMPUTED_DIR = EXPANSION ? 'computed-expansion' : 'computed';
 const SCREENING_FILE = EXPANSION ? 'screening-expansion.json' : 'screening.json';
-const candidates = JSON.parse(await readFile(join(PILOT, CANDIDATES_FILE), 'utf8'));
+const allCandidates = JSON.parse(await readFile(join(PILOT, CANDIDATES_FILE), 'utf8'));
+const requestedSlugs = process.argv
+  .filter((argument) => argument.startsWith('--slug='))
+  .flatMap((argument) => argument.slice('--slug='.length).split(','))
+  .map((slug) => slug.trim())
+  .filter(Boolean);
+const requestedSet = new Set(requestedSlugs);
+const candidates = requestedSet.size > 0
+  ? allCandidates.filter((candidate) => requestedSet.has(candidate.slug))
+  : allCandidates;
+const missingRequested = [...requestedSet]
+  .filter((slug) => !candidates.some((candidate) => candidate.slug === slug));
+if (missingRequested.length > 0) {
+  throw new Error(`Unknown People candidate slug(s): ${missingRequested.join(', ')}`);
+}
 const zones = EXPANSION ? {} : JSON.parse(await readFile(join(PILOT, 'timezones.json'), 'utf8'));
 let tzLookup = null;
 if (EXPANSION) {
@@ -235,7 +249,13 @@ if (EXPANSION) {
 }
 await mkdir(join(PILOT, COMPUTED_DIR), { recursive: true });
 
-const screening = [];
+let screening = [];
+if (requestedSet.size > 0) {
+  const existingScreening = JSON.parse(
+    await readFile(join(PILOT, SCREENING_FILE), 'utf8'),
+  );
+  screening = existingScreening.candidates.filter((row) => !requestedSet.has(row.slug));
+}
 for (const candidate of candidates) {
   const files = await readdir(join(PILOT, EVIDENCE_DIR));
   if (!files.includes(`${candidate.slug}.json`)) {

@@ -294,6 +294,24 @@
       ]
     },
     {
+      "source": "/people/bill-gates/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/people/leonardo-dicaprio/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/assets/people/rigoberta-menchu(.*)",
       "headers": [
         {
@@ -312,6 +330,24 @@
       ]
     },
     {
+      "source": "/assets/people/bill-gates(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noimageindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/assets/people/leonardo-dicaprio(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noimageindex, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/assets/og/v2/people/rigoberta-menchu.png",
       "headers": [
         {
@@ -322,6 +358,24 @@
     },
     {
       "source": "/assets/og/v2/people/serena-williams.png",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noimageindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/assets/og/v2/people/bill-gates.png",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noimageindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/assets/og/v2/people/leonardo-dicaprio.png",
       "headers": [
         {
           "key": "X-Robots-Tag",

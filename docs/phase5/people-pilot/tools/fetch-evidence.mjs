@@ -135,7 +135,21 @@ async function commonsFile(fileName) {
   };
 }
 
-const candidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'));
+const allCandidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'));
+const requestedSlugs = process.argv
+  .filter((argument) => argument.startsWith('--slug='))
+  .flatMap((argument) => argument.slice('--slug='.length).split(','))
+  .map((slug) => slug.trim())
+  .filter(Boolean);
+const requestedSet = new Set(requestedSlugs);
+const candidates = requestedSet.size > 0
+  ? allCandidates.filter((candidate) => requestedSet.has(candidate.slug))
+  : allCandidates;
+const missingRequested = [...requestedSet]
+  .filter((slug) => !candidates.some((candidate) => candidate.slug === slug));
+if (missingRequested.length > 0) {
+  throw new Error(`Unknown People candidate slug(s): ${missingRequested.join(', ')}`);
+}
 const titles = candidates.map((candidate) => candidate.enwiki);
 const retrievedAt = new Date().toISOString();
 

@@ -231,7 +231,7 @@ if (stage === 'post') {
     appended += 1;
   }
   manifest.people.sort((a, b) => a.slug.localeCompare(b.slug));
-  manifest.status = 'Phase 5 complete — 500 reviewed records';
+  manifest.status = `Phase 5 complete — ${manifest.people.length} reviewed records`;
   await writeFile(join(PILOT, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
 
   const policy = JSON.parse(await readFile(join(PILOT, 'index-policy.json'), 'utf8'));
