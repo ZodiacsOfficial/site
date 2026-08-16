@@ -10,10 +10,13 @@ describe('Zodiacs Registry catalogue hub', () => {
     expect(html.match(/<h1\b/giu)).toHaveLength(1);
     expect(html).toContain('<title>The 12 Zodiac Profiles | Zodiacs.org</title>');
     expect(html).toContain('<h1>Find your sign.</h1>');
-    expect(html).toContain('Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today.');
-    expect(html).toContain('one for every Zodiac sign');
-    expect(html).toContain('one familiar emoji for each sign');
-    expect(html).toContain('plain facts, people, and today’s snapshot');
+    expect(html).toContain('Choose your Zodiac sign, meet famous people who share it, compare recent Wikipedia views, and see today’s market standings.');
+    expect(html).toContain('<dt>Famous birthdays</dt><dd>48</dd>');
+    expect(html).toContain('<dt>Attention</dt><dd>30 days</dd>');
+    expect(html).toContain('<dt>Market standings</dt><dd>Daily</dd>');
+    expect(html).not.toContain('copy its emoji');
+    expect(html).not.toContain('one for every Zodiac sign');
+    expect(html).not.toContain('one familiar emoji for each sign');
     expect(html.indexOf('id="records-title"')).toBeLessThan(html.indexOf('id="verify"'));
     expect(html).toContain("--sans:'Instrument Sans','Instrument Sans Fallback','Instrument Sans Fallback Android',system-ui,-apple-system,sans-serif");
     expect(html).toContain('font-family:var(--sans);');
@@ -72,7 +75,8 @@ describe('Zodiacs Registry catalogue hub', () => {
     const html = await read('public/registry/index.html');
     expect(html).toContain('data-address-verifier');
     expect(html).toContain('<h2 id="verify-title">Check a token address.</h2>');
-    expect(html).toContain('This check only shows information.');
+    expect(html).toContain('Every token has a long address, like an account number.');
+    expect(html).toContain('we’ll check whether it matches the official list.');
     expect(html).toContain("entry.normalized===normalized");
     expect(html).toContain("value.toLowerCase()");
     expect(html).toContain("result.textContent='Paste a complete token address.'");

@@ -1,8 +1,9 @@
 {
   "version": 1,
-  "id": "registry-shell-parity-2026-08-16",
-  "baseCommit": "87e2cb4e31636d293aa71e0dc6afe1cac8656d7b",
+  "id": "plain-catalogue-copy-2026-08-16",
+  "baseCommit": "f21408868b1c012d486b6d5d44a8def787600adb",
   "protectedPaths": [
+    "public/assets/app.js",
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",
     "public/registry/cancer/index.html",
@@ -19,6 +20,8 @@
     "scripts/build-sign-pages.mjs",
     "scripts/registry-hub.test.mjs",
     "scripts/registry-pastel-polish.test.mjs",
-    "scripts/registry-shell-parity.test.mjs"
+    "scripts/registry-risk.test.mjs",
+    "scripts/sign-data.mjs",
+    "src/app.jsx"
   ]
 }

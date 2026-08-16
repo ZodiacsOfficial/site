@@ -33,7 +33,7 @@ describe('Zodiac token records', () => {
   it('keeps one validated, sign-specific rally line for every profile', () => {
     expect(Object.keys(SIGN_PROFILE_RALLY_LINES)).toEqual(signs);
     expect(validateSignProfileRallyLines(signs)).toEqual([]);
-    expect(SIGN_PROFILE_RALLY_LINES.scorpio).toBe('Scorpio does not do half-hearted.');
+    expect(SIGN_PROFILE_RALLY_LINES.scorpio).toBe('Scorpio never does anything halfway.');
     expect(new Set(Object.values(SIGN_PROFILE_RALLY_LINES)).size).toBe(12);
   });
 
@@ -75,7 +75,7 @@ describe('Zodiac token records', () => {
       expect(visible).toContain(`${name} at a glance`);
       expect(visible).toContain(`The ${name} token`);
       expect(visible).toContain(`Born under ${name}`);
-      expect(visible).toContain(`${name} market snapshot`);
+      expect(visible).toContain(`${name} today`);
       expect(visible).toContain('Market standings');
       expect(visible).not.toContain('The Zodiac Race');
       expect(visible).toContain('Check the token');
@@ -91,7 +91,8 @@ describe('Zodiac token records', () => {
       expect(visible).toContain('<section class="quick" aria-labelledby="quick-title" data-live-quote>');
       expect(visible).toContain('Latest recorded price');
       expect(visible).toContain('Price history');
-      expect(visible).toContain('A token is a digital item people can own and send.');
+      expect(visible).toContain(`The ${name} token is a digital item people can own or send.`);
+      expect(visible).toContain(`No new ${name} tokens can be created.`);
       expect(visible).toContain('This page only shows information. It cannot make a purchase or move money.');
       expect(visible).not.toMatch(/Continue to Jupiter|What do I need before I continue|How to buy/u);
       expect(html).not.toMatch(/href="https:\/\/jup\.ag\//u);
@@ -123,20 +124,22 @@ describe('Zodiac token records', () => {
       const visible = visibleMarkup(html);
       const name = sign.charAt(0).toUpperCase() + sign.slice(1);
 
-      expect(visible).toContain(`aria-label="Share ${name} pride"`);
-      expect(visible).toContain('data-copy-identity=');
-      expect(visible).toContain(`${name} for your bio</button>`);
       expect(visible).toContain('data-share-sign');
       expect(visible).toContain(SIGN_PROFILE_RALLY_LINES[sign]);
-      expect(visible).toContain('symbol works anywhere text does. Put it in your bio, a message or a birthday post.');
-      expect(visible).toContain('If birthdays were evenly spread across the signs');
-      expect(visible).toContain('hundreds of millions of people worldwide');
-      expect(visible).toContain('This is not a count of buyers or a measure of demand.');
-      expect(visible).toContain(`${name} season returns every year`);
-      expect(visible).toContain('Public attention');
-      expect(visible).toContain(`Over the 30 days from Jul 11 to Aug 9, 2026, the English Wikipedia page for ${name} was viewed about`);
-      expect(visible).toContain('Pageviews are not unique people.');
-      expect(visible).toContain('They measure curiosity, not buyers or token value.');
+      expect(visible).not.toContain('data-copy-identity=');
+      expect(visible).not.toContain('for your bio</button>');
+      expect(visible).not.toContain('symbol works anywhere text does');
+      expect(visible).not.toContain(`${name} season returns every year`);
+      expect(visible).not.toContain('Read about four people born during');
+      expect(visible).not.toContain('<dt>Symbol</dt>');
+      expect(visible).toContain(`People who share ${name}`);
+      expect(visible).toContain('Hundreds of millions');
+      expect(visible).toContain('A rough estimate based on one-twelfth of the world’s population.');
+      expect(visible).toContain('It describes the sign, not token ownership.');
+      expect(visible).toContain('Wikipedia views');
+      expect(visible).toContain(`The English Wikipedia page for ${name} averaged`);
+      expect(visible).toContain('One person may account for more than one view.');
+      expect(visible).toContain('This shows interest, not ownership or value.');
       expect(visible).not.toContain('Ethereum');
       expect(visible).not.toContain('Dogecoin');
       expect(visible).not.toContain('meme coins');
@@ -151,8 +154,8 @@ describe('Zodiac token records', () => {
       expect(visible).toContain('<details class="standings__all"><summary>See all 12 market standings</summary>');
       expect(standings.match(/<li\b/gu)).toHaveLength(12);
       expect(standings.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp/gu)).toHaveLength(12);
-      expect(visible).toMatch(/\d+(?:st|nd|rd|th) of 12 by reported total market value/u);
-      expect(visible).toContain('This market snapshot does not measure popularity or participation.');
+      expect(visible).toMatch(/\d+(?:st|nd|rd|th) of 12 by total market value/u);
+      expect(visible).toContain('This rank only compares total market value. It does not show how many people support each sign.');
       expect(visible).not.toContain('leads this snapshot');
       expect(visible).not.toContain('one place above');
       expect(visible).not.toContain('/race');
@@ -250,12 +253,12 @@ describe('Zodiac token records', () => {
       expect(value).toContain("pair.baseToken.address !== MINT");
       expect(value).toContain('if (marketStarted && !document.hidden) loadLiveQuote();');
       expect(value).toContain('function startMarketData()');
-      expect(value).toContain('Last live price shown · refresh temporarily unavailable');
+      expect(value).toContain('Last price shown. A newer price is temporarily unavailable.');
       expect(value).toContain('/assets/data/registry-market-history.v1.json');
       expect(value).toContain("archive.schema !== 'zodiacs.registry-market-history.v1'");
-      expect(value).toContain("' daily snapshot through '");
-      expect(value).toContain("' daily snapshots through '");
-      expect(value).toContain('One daily snapshot is available. A line will appear after the next dated price.');
+      expect(value).toContain("' daily price through '");
+      expect(value).toContain("' daily prices through '");
+      expect(value).toContain('One daily price is available. The chart will appear after the next one.');
       expect(value).toContain('if (finite.length < 2)');
       expect(value).not.toContain('if (finite.length < 8)');
       expect(value).toContain('Price history unavailable.');
@@ -270,9 +273,9 @@ describe('Zodiac token records', () => {
     expect(leo).toContain('data-market-range="30d"');
     expect(leo).toContain('data-market-range="all"');
     expect(leo).toContain('View live chart ↗');
-    expect(leo).toContain('These numbers come from public trading records.');
+    expect(leo).toContain('The source reports each sign’s price, trading activity and total market value.');
     expect(leo).toContain('Where do these numbers come from?');
-    expect(leo).toContain('Daily market snapshot ·');
+    expect(leo).toMatch(/data-market-foot>Updated [^<]+<\/div>/u);
     expect(leo).toContain('<noscript><style>.reveal { opacity: 1 !important;');
   });
 

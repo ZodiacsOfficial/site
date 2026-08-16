@@ -215,12 +215,12 @@ export const SIGN_PAGES = {
     lede:
       'A composite creature — goat above, fish below — that has kept its exact form longer than almost any image in human use: it appears unchanged on Babylonian boundary stones from the second millennium BC. This is the record of the Goat-Fish.',
     note: [
-      'The Goat-Fish belongs to Ea, Babylonian lord of the Abzu — the deep fresh waters of wisdom beneath the world. As SUḪUR.MAŠ it is carved on kudurru boundary stones from the second millennium BC, and the carving is the constellation we still draw: a figure transmitted without alteration across more than three thousand years.',
+      'The Goat-Fish belongs to Ea, Babylonian lord of the Abzu — the deep fresh waters of wisdom beneath the world. As SUḪUR.MAŠ it is carved on Babylonian boundary stones from the second millennium BC, and the carving is the constellation we still draw: a figure transmitted without alteration across more than three thousand years.',
       'Greece supplied an escape story: Pan, surprised by the monster Typhon at the Nile’s bank, dove — the half above water becoming goat, the half below becoming fish. The ancients placed the winter solstice here and named it the Gate of the Gods, the opening through which souls ascend, opposite Cancer’s gate of descent. The southern tropic still bears the sign’s name.',
       'Capricorn rules the long climb: structure, patience, authority earned against gravity. Its record is one canonical asset of twelve, native on Solana with an official representation on Base.'
     ],
     provenanceBabylon:
-      'Sacred to Ea as SUḪUR.MAŠ, the Goat-Fish; carved unchanged on kudurru boundary stones since the second millennium BC.',
+      'Sacred to Ea as SUḪUR.MAŠ, the Goat-Fish; carved unchanged on Babylonian boundary stones since the second millennium BC.',
     provenanceGreece:
       'Told as Pan’s dive from Typhon — goat above the water, fish below; the winter solstice set here as the Gate of the Gods.'
   },

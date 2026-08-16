@@ -1570,7 +1570,7 @@
         { href: '/rising-sign/', name: 'Rising sign', description: 'Find the sign people meet first. Birth time helps.' },
         { href: '/moon-phase/', name: 'Moon phase', description: 'Tonight’s moon, and the moon of any date you care about.' },
         { href: '/saturn-return/', name: 'Saturn return', description: 'When yours hits, exactly, and what it tends to ask.' },
-        { href: '/birthday/', name: 'Birthday', description: 'Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.' },
+        { href: '/birthday/', name: 'Birthday', description: 'Check the Zodiac sign for any birthday from 1940 to 2030, including birthdays close to a sign change.' },
       ];
       const terminalNav = REGISTRY_VIEW === 'terminal-pro'
         ? { href: '/terminal/', label: 'Terminal', description: 'The market desk for the twelve official tokens' }
@@ -2882,7 +2882,7 @@
               {identityOnly && (
                 <span className="stage-placard__identity">
                   <span>Official {sign.name} token</span>
-                  <strong>Your sign and today&rsquo;s market snapshot. Browse without connecting anything.</strong>
+                  <strong>Your sign, current price and rank. No sign-in required.</strong>
                 </span>
               )}
               {!identityOnly && <PlacardMarketPanel sign={sign} />}
@@ -4570,7 +4570,7 @@
             </span>
           </div>
           <h1 id="consumer-explorer-title">Choose your sign</h1>
-          <p>Choose your sign. See today&rsquo;s market snapshot and check its verified token address.</p>
+          <p>See its current price and rank, then check the official token.</p>
         </header>
       );
     }
@@ -5013,7 +5013,7 @@
         try {
           if (navigator.share) {
             try {
-              await navigator.share({ title: 'Zodiacs market snapshot', text: shareCopy(), url: shareUrl() });
+              await navigator.share({ title: 'Zodiacs prices and ranks', text: shareCopy(), url: shareUrl() });
               setShareState('Shared.');
               trackAnalytics('registry_market_shared', { rank: rankBy, destination: 'native' });
               return;

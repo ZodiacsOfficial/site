@@ -184,7 +184,10 @@ function pageModel(slug) {
   const solana = repFor(asset, 'solana');
   const base = repFor(asset, 'base');
   const idx = SIGN_ORDER.indexOf(slug);
-  const consumer = OG_SIGNS.find((sign) => sign.slug === slug);
+  const consumerSource = OG_SIGNS.find((sign) => sign.slug === slug);
+  const consumer = consumerSource && slug === 'pisces'
+    ? { ...consumerSource, essence: 'Imaginative, intuitive, tuned to what goes unspoken.' }
+    : consumerSource;
   const signViews = Number(pulse.wikipedia?.perSignAvgDay?.[slug]);
   const standings = marketStandings(latestMarketSnapshot);
   const marketAsset = standings.find((candidate) => candidate.sign === slug) ?? null;
@@ -305,7 +308,7 @@ function jsonLd(m) {
         '@id': `${signUrl(m.slug)}#page`,
         url: signUrl(m.slug),
         name: `${m.page.glyph.replace('︎', '')} ${m.name} · Zodiac sign ${m.order} of 12`,
-        description: `${m.name} dates, symbol, famous birthdays, today’s market snapshot, and verified token address.`,
+        description: `${m.name} dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.`,
         inLanguage: 'en',
         isPartOf: { '@type': 'WebSite', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
         primaryImageOfPage: `https://zodiacs.org/assets/nuggets/${m.slug}.png`,
@@ -378,15 +381,13 @@ function render(m) {
     ['Dates', m.consumer.dates],
     ['Element', titleCase(m.consumer.element)],
     ['Type', modalityMeaning],
-    ['Symbol', `${p.glyph.replace('︎', '')} ${m.name}`],
     [focusKind === 'open cluster' ? 'Key object' : 'Key star', p.principalStar.name],
   ];
   const rankedStandings = rankedMarketStandings(m.standings);
   const selectedStanding = rankedStandings.find((asset) => asset.sign === m.slug);
   const currentRank = m.rankStatus.available ? selectedStanding?.rank ?? null : null;
   const marketReadAt = m.marketSnapshot?.source?.readAt;
-  const marketCoverage = m.marketSnapshot?.coverage ?? {};
-  const standingsSummary = `This market snapshot does not measure popularity or participation.${m.rankStatus.available ? '' : ' A rank is not shown because some numbers are missing or out of date.'}`;
+  const standingsSummary = `This rank only compares total market value. It does not show how many people support each sign.${m.rankStatus.available ? '' : ' A rank is not shown because some numbers are missing or out of date.'}`;
   const staticMetrics = [
     ['Total market value', m.marketAsset ? compactUsd(m.marketAsset.marketCapUsd) : '—', ''],
     ['Traded in 24 hours', m.marketAsset ? compactUsd(m.marketAsset.volume24hUsd) : '—', ''],
@@ -400,11 +401,11 @@ function render(m) {
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
   <title>${esc(`${p.glyph.replace('︎', '')} ${m.name}`)} · Zodiac sign ${m.order} of 12 | Zodiacs.org</title>
-  <meta name="description" content="${esc(`${m.name} dates, symbol, famous birthdays, today’s market snapshot, and verified token address.`)}" />
+  <meta name="description" content="${esc(`${m.name} dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.`)}" />
   <link rel="canonical" href="${signUrl(m.slug)}" />
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="${esc(`${p.glyph.replace('︎', '')} ${m.name}`)} · Zodiac sign ${m.order} of 12 — Zodiacs" />
-  <meta property="og:description" content="${esc(`${m.name} dates, symbol, famous birthdays, today’s market snapshot, and verified token address.`)}" />
+  <meta property="og:description" content="${esc(`${m.name} dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.`)}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="${signUrl(m.slug)}" />
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
@@ -413,7 +414,7 @@ function render(m) {
   <meta property="og:image:alt" content="${esc(ogImageAlt)}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${esc(`${p.glyph.replace('︎', '')} ${m.name}`)} · Zodiac sign ${m.order} of 12 — Zodiacs" />
-  <meta name="twitter:description" content="${esc(`${m.name} dates, symbol, famous birthdays, today’s market snapshot, and verified token address.`)}" />
+  <meta name="twitter:description" content="${esc(`${m.name} dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.`)}" />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
   <meta name="twitter:image:alt" content="${esc(ogImageAlt)}" />
 
@@ -808,10 +809,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     }
     .constellation__map img { width: 100%; height: auto; border-radius: 23px; }
     .constellation__copy { max-width: 54ch; }
-    .constellation__lede {
-      margin: 0 0 18px; font-family: var(--serif); font-size: clamp(20px, 2.8vw, 27px);
-      line-height: 1.35; color: var(--ink); text-wrap: pretty;
-    }
     .constellation__body {
       margin: 0 0 18px; font-family: var(--serif); font-size: 15.5px;
       line-height: 1.58; color: var(--ink-2); text-wrap: pretty;
@@ -1042,7 +1039,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .record-detail__title, .record-detail__hint, .quick__state,
     .market__copy, .market__state, .market__chart-title,
     .market__chart-empty, .market__v,
-    .constellation__lede, .constellation__body, .research-links strong,
+    .constellation__body, .research-links strong,
     .research-links small { font-family: var(--sans); font-style: normal; }
     .lot__crumbs, .quick__label, .quick__price, .quick__change,
     .market__range, .market__v--mono, .chart-summary dd,
@@ -1082,7 +1079,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .sec__head { margin-bottom: 26px; }
     .sec__title { font-size: clamp(25px, 4vw, 36px); font-weight: 600; letter-spacing: -0.02em; text-transform: none; color: var(--ink); }
     .pride__rally { max-width: 32ch; margin: 0 0 12px; font-size: clamp(25px, 4vw, 40px); font-weight: 650; line-height: 1.15; letter-spacing: -0.025em; color: var(--ink); }
-    .pride__lede { max-width: 62ch; margin: 0 0 24px; font-size: clamp(19px, 2.6vw, 24px); line-height: 1.5; color: var(--ink); }
     .attention-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
     .attention-card { padding: 22px; border: 1px solid var(--hair-2); background: var(--surface); }
     .attention-card__label, .people-block__label {
@@ -1091,9 +1087,8 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .attention-card > strong { display: block; margin-bottom: 10px; font-size: clamp(23px, 3.6vw, 34px); line-height: 1.12; }
     .attention-card p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
     .attention-card small { display: block; margin-top: 14px; font-size: 12px; line-height: 1.5; color: var(--ink-mute); }
-    .pride__context { max-width: 64ch; margin: 22px 0 0; font-size: 17px; line-height: 1.6; color: var(--ink-2); }
     .people-block { margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--hair); }
-    .people-block > div p { margin: 0 0 16px; color: var(--ink-mute); }
+    .people-block__label { margin-bottom: 16px; }
     .people-block ul { display: grid; grid-template-columns: 1fr; gap: 8px; margin: 0; padding: 0; list-style: none; }
     .people-block a { display: flex; min-height: 56px; align-items: center; justify-content: space-between; gap: 14px; padding: 0 16px; border: 1px solid var(--hair-2); text-decoration: none; background: var(--surface); }
     .people-block a:hover { border-color: color-mix(in srgb, ${m.hue} 58%, transparent); }
@@ -1192,8 +1187,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       <p class="lot__intro">${esc(m.consumer.essence)}</p>
       <div class="lot__meta">
         <div class="lot__dates">${esc(m.consumer.dates)} · ${esc(titleCase(m.consumer.element))} sign</div>
-        <div class="identity-actions" aria-label="Share ${esc(m.name)} pride">
-          <button type="button" data-copy-identity="${esc(`${p.glyph.replace('︎', '')} ${m.name}`)}">Copy ${esc(p.glyph.replace('︎', ''))} ${esc(m.name)} for your bio</button>
+        <div class="identity-actions">
           <button type="button" data-share-sign>Share ${esc(m.name)}</button>
         </div>
       </div>
@@ -1219,14 +1213,12 @@ ${glanceRows.map(([key, value]) => `            <div><dt>${esc(key)}</dt><dd>${e
     <section class="sec reveal pride" id="identity" aria-labelledby="identity-title">
       <div class="sec__head"><h2 class="sec__title" id="identity-title">Born under ${esc(m.name)}</h2><span class="line"></span></div>
       <p class="pride__rally">${esc(m.rallyLine)}</p>
-      <p class="pride__lede">The ${esc(p.glyph.replace('︎', ''))} symbol works anywhere text does. Put it in your bio, a message or a birthday post.</p>
       <div class="attention-grid">
-        <article class="attention-card"><span class="attention-card__label">How many people share your sign?</span><strong>About 1 in 12 people</strong><p>If birthdays were evenly spread across the signs, hundreds of millions of people worldwide would share the ${esc(m.name)} sign. This is not a count of buyers or a measure of demand.</p></article>
-        <article class="attention-card" data-attention><span class="attention-card__label">Public attention</span><strong>${m.attention.signViews.toLocaleString('en-US')} views a day</strong><p>Over the 30 days from ${esc(m.attention.from)} to ${esc(m.attention.to)}, the English Wikipedia page for ${esc(m.name)} was viewed about ${m.attention.signViews.toLocaleString('en-US')} times a day.</p><small>Wikimedia pageviews · snapshot updated ${esc(m.attention.capturedAt)}. Pageviews are not unique people. They measure curiosity, not buyers or token value. <a href="/thesis/#pulse">See the thesis sources</a>.</small></article>
+        <article class="attention-card"><span class="attention-card__label">People who share ${esc(m.name)}</span><strong>Hundreds of millions</strong><p>A rough estimate based on one-twelfth of the world’s population. It describes the sign, not token ownership.</p></article>
+        <article class="attention-card" data-attention><span class="attention-card__label">Wikipedia views</span><strong>${m.attention.signViews.toLocaleString('en-US')} a day</strong><p>The English Wikipedia page for ${esc(m.name)} averaged ${m.attention.signViews.toLocaleString('en-US')} views a day from ${esc(m.attention.from)} to ${esc(m.attention.to)}.</p><small>Source: Wikimedia · updated ${esc(m.attention.capturedAt)}. One person may account for more than one view. This shows interest, not ownership or value. <a href="/thesis/#pulse">See the source</a>.</small></article>
       </div>
-      <p class="pride__context">${esc(m.name)} season returns every year, ${esc(m.consumer.dates)}.</p>
       <div class="people-block">
-        <div><span class="people-block__label">You’re in good company</span><p>Read about four people born during ${esc(m.name)} season.</p></div>
+        <div><span class="people-block__label">You’re in good company</span></div>
         <ul>
 ${m.people.map((person) => `          <li><a href="/people/${person.slug}/"${person.protectedLiving ? ' rel="nofollow"' : ''}><strong>${esc(person.name)}</strong><span>${esc(person.date)}</span></a></li>`).join('\n')}
         </ul>
@@ -1236,16 +1228,16 @@ ${m.people.map((person) => `          <li><a href="/people/${person.slug}/"${per
 
     <section class="sec reveal token-intro" id="token" aria-labelledby="token-title">
       <div class="sec__head"><h2 class="sec__title" id="token-title">The ${esc(m.name)} token</h2><span class="line"></span></div>
-      <p>A token is a digital item people can own and send. Zodiacs has twelve, one for each sign. ${esc(m.name)} is one of them. The number of tokens does not grow. Its price rises and falls as people buy and sell.</p>
+      <p>The ${esc(m.name)} token is a digital item people can own or send. No new ${esc(m.name)} tokens can be created.</p>
     </section>
 
     <section class="sec reveal market-section" id="market" aria-labelledby="market-title">
-      <div class="sec__head"><h2 class="sec__title" id="market-title">${esc(m.name)} market snapshot</h2><span class="line"></span></div>
+      <div class="sec__head"><h2 class="sec__title" id="market-title">${esc(m.name)} today</h2><span class="line"></span></div>
       <aside class="market" data-market>
-        <div class="market__head"><p class="market__copy">These numbers can move up or down. Nobody knows where they go next. The price can fall to zero.</p><a class="market__source" data-market-live-link href="${esc(m.dexscreener)}" rel="noopener noreferrer external nofollow">View live chart ↗</a></div>
+        <div class="market__head"><p class="market__copy">The price can change quickly and can fall to zero.</p><a class="market__source" data-market-live-link href="${esc(m.dexscreener)}" rel="noopener noreferrer external nofollow">View live chart ↗</a></div>
         <section class="quick" aria-labelledby="quick-title" data-live-quote>
           <span class="quick__label" id="quick-title" data-live-price-label>Latest recorded price</span>
-          <div class="quick__quote" aria-live="polite"><strong class="quick__price" data-live-price>${m.marketAsset ? formatPrice(m.marketAsset.priceUsd) : '—'}</strong><span class="quick__change" data-live-change>Past 24 hours ${m.marketAsset?.change24hPct == null ? '—' : `${Number(m.marketAsset.change24hPct) > 0 ? '+' : ''}${Number(m.marketAsset.change24hPct).toFixed(2)}%`}</span><p class="quick__state" data-live-state>Daily snapshot shown. A fresh price loads when available.</p></div>
+          <div class="quick__quote" aria-live="polite"><strong class="quick__price" data-live-price>${m.marketAsset ? formatPrice(m.marketAsset.priceUsd) : '—'}</strong><span class="quick__change" data-live-change>Past 24 hours ${m.marketAsset?.change24hPct == null ? '—' : `${Number(m.marketAsset.change24hPct) > 0 ? '+' : ''}${Number(m.marketAsset.change24hPct).toFixed(2)}%`}</span><p class="quick__state" data-live-state>Showing the latest saved price. Checking for a newer one…</p></div>
         </section>
         <div class="market__grid" data-market-grid>
 ${staticMetrics.map(([key, value, className]) => `          <div class="market__cell"><div class="market__k">${esc(key)}</div><div class="market__v ${className}">${esc(value)}</div></div>`).join('\n')}
@@ -1255,11 +1247,11 @@ ${staticMetrics.map(([key, value, className]) => `          <div class="market__
           <div class="market__chart-head"><div><h3 class="market__chart-title">Price history</h3><p class="market__chart-note" data-market-chart-note></p></div><div class="market__ranges" aria-label="Price chart range"><button class="market__range" type="button" data-market-range="7d" aria-pressed="true">7D</button><button class="market__range" type="button" data-market-range="30d" aria-pressed="false">30D</button><button class="market__range" type="button" data-market-range="all" aria-pressed="false">All</button></div></div>
           <div data-market-chart-canvas></div><dl class="chart-summary" data-chart-summary hidden></dl>
         </div>
-        <noscript><p class="market__state">Price history needs JavaScript. The verified token address remains available below.</p></noscript>
-        <div class="market__foot" data-market-foot>Daily market snapshot · ${esc(readableTimestamp(marketReadAt))}</div>
+        <noscript><p class="market__state">Price history is unavailable here. The latest recorded price and verified address are still shown.</p></noscript>
+        <div class="market__foot" data-market-foot>Updated ${esc(readableTimestamp(marketReadAt))}</div>
       </aside>
       <section class="standings" data-market-standings aria-labelledby="standings-title">
-        <div class="standings__head"><div><span>Market standings</span><h3 id="standings-title">${currentRank ? `${ordinal(currentRank)} of 12 by reported total market value` : 'Market rank unavailable'}</h3></div><p data-standings-summary>${esc(standingsSummary)}</p></div>
+        <div class="standings__head"><div><span>Market standings</span><h3 id="standings-title">${currentRank ? `${ordinal(currentRank)} of 12 by total market value` : 'Market rank unavailable'}</h3></div><p data-standings-summary>${esc(standingsSummary)}</p></div>
         <details class="standings__all"><summary>See all 12 market standings</summary>
           <ol class="standings__list" data-standings-list>
 ${rankedStandings.map((asset) => {
@@ -1268,8 +1260,8 @@ ${rankedStandings.map((asset) => {
 }).join('\n')}
           </ol>
         </details>
-        <p class="standings__time" data-standings-time>Daily market snapshot · ${esc(readableTimestamp(marketReadAt))}</p>
-        <details class="market-explainer"><summary>Where do these numbers come from?</summary><p>These numbers come from public trading records. Each sign is matched by its verified address, not just its name. This snapshot found market data for ${esc(marketCoverage.assetsWithIndexedPools ?? 0)} of ${esc(marketCoverage.canonicalAssetCount ?? 12)} signs. Market value is the figure supplied by the public data source. Zodiacs.org shows it as reported and leaves it blank when it is missing. A small amount of trading can move it quickly. It is not cash sitting in a bank. <a href="/registry/technical/#market-transparency">See sources and method details.</a></p></details>
+        <p class="standings__time" data-standings-time>Updated ${esc(readableTimestamp(marketReadAt))}</p>
+        <details class="market-explainer"><summary>Where do these numbers come from?</summary><p>The source reports each sign’s price, trading activity and total market value. Zodiacs.org matches each sign by its verified address. Total market value is a comparison, not money held in a bank, and light trading can move it quickly. <a href="/registry/technical/#market-transparency">See sources and method details.</a></p></details>
       </section>
     </section>
 
@@ -1302,7 +1294,6 @@ ${rankedStandings.map((asset) => {
           <img src="/assets/constellations/${m.slug}.svg" width="720" height="460" loading="lazy" decoding="async" alt="Map of the brighter ${esc(m.name)} constellation stars, with ${esc(focusObject.name)} highlighted" />
         </div>
         <div class="constellation__copy">
-          <p class="constellation__lede">${esc(focusObject.name)} is marked in ${esc(m.name)}’s pastel color.</p>
           <p class="constellation__body">The dots show brighter stars. The lines are a reading guide, not official constellation boundaries.</p>
           <details class="map-sources"><summary>Map sources</summary><p class="constellation__source"><a href="${HYG_ATTRIBUTION.url}" rel="noopener noreferrer">${HYG_ATTRIBUTION.title}</a> · <a href="${HYG_ATTRIBUTION.licenseUrl}" rel="noopener noreferrer">${HYG_ATTRIBUTION.license}</a>.${focusObject.kind === 'open-cluster' ? ' Praesepe’s cluster centre comes from <a href="https://simbad.cds.unistra.fr/simbad/sim-id?Ident=M44" rel="noopener noreferrer">SIMBAD M44</a>.' : ''}</p></details>
         </div>
@@ -1311,13 +1302,13 @@ ${rankedStandings.map((asset) => {
 
     <details class="record-detail reveal" id="provenance" aria-label="The story of ${esc(m.name)}">
       <summary class="record-detail__summary"><span class="record-detail__title">The story of ${esc(m.name)}</span><span class="record-detail__hint">A short history</span></summary>
-      <div class="record-detail__body story-copy"><p>${esc(p.provenanceBabylon)}</p><p>${esc(p.provenanceGreece)}</p><p>${esc(p.principalStar.name)} is the best-known ${focusKind === 'open cluster' ? 'sky object' : 'star'} in this profile.</p></div>
+      <div class="record-detail__body story-copy"><p>${esc(p.provenanceBabylon)}</p><p>${esc(p.provenanceGreece)}</p></div>
     </details>
 
     <details class="record-detail reveal" aria-labelledby="research-title">
-      <summary class="record-detail__summary"><span class="record-detail__title" id="research-title">More about ${esc(m.name)}</span><span class="record-detail__hint">Sky briefs and notes</span></summary>
+      <summary class="record-detail__summary"><span class="record-detail__title" id="research-title">More about ${esc(m.name)}</span><span class="record-detail__hint">Stories and sky notes</span></summary>
       <div class="record-detail__body"><nav class="research-links" aria-label="Research related to ${esc(m.name)}">
-        <a href="/terminal/research/?sign=${m.slug}&amp;type=daily"><span class="research-links__glyph" aria-hidden="true">☉</span><span><strong>Latest ${esc(m.name)} sky brief</strong><small>Sky facts and sources</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
+        <a href="/terminal/research/?sign=${m.slug}&amp;type=daily"><span class="research-links__glyph" aria-hidden="true">☉</span><span><strong>Latest ${esc(m.name)} sky notes</strong><small>Sky facts and sources</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
         <a href="/terminal/research/?sign=${m.slug}"><span class="research-links__glyph" aria-hidden="true">✦</span><span><strong>All ${esc(m.name)} notes</strong><small>Events, observations and sources</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
       </nav></div>
     </details>
@@ -1345,7 +1336,6 @@ ${NAV_SIGNS.map((sign) => `        <a href="${signPath(sign.slug)}" style="--sig
           <a href="/registry/technical/">Technical details</a>
           <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
         </div>
-        <div>These pages only show information.</div>
       </div>
       <div class="ftr__row">
         <div class="ftr__links" aria-label="Official channels">
@@ -1415,16 +1405,6 @@ ${guideLoaderSource('en')}
       });
     });
 
-    var identityButton = document.querySelector('[data-copy-identity]');
-    if (identityButton) identityButton.addEventListener('click', function () {
-      var identity = identityButton.getAttribute('data-copy-identity');
-      if (!navigator.clipboard || !navigator.clipboard.writeText) return;
-      navigator.clipboard.writeText(identity).then(function () {
-        var prior = identityButton.textContent;
-        identityButton.textContent = 'Copied';
-        setTimeout(function () { identityButton.textContent = prior; }, 1400);
-      });
-    });
     var shareButton = document.querySelector('[data-share-sign]');
     if (shareButton) shareButton.addEventListener('click', function () {
       var shareData = {
@@ -1482,7 +1462,7 @@ ${guideLoaderSource('en')}
       return isFinite(n) ? n : null;
     }
     function setUnavailable(message) {
-      stateEl.textContent = message || 'Price history is temporarily unavailable. View the live chart for current trading.';
+      stateEl.textContent = message || 'Price history is unavailable. The live chart may have a newer price.';
       stateEl.hidden = false;
       chartEl.hidden = true;
     }
@@ -1531,10 +1511,10 @@ ${guideLoaderSource('en')}
     function setLiveUnavailable() {
       if (!liveQuote) return;
       if (hasLiveQuote) {
-        liveState.textContent = 'Last live price shown · refresh temporarily unavailable · checked ' + liveCheckedAt + ' · independent market data, not a recommendation.';
+        liveState.textContent = 'Last price shown. A newer price is temporarily unavailable. Checked ' + liveCheckedAt + '.';
         return;
       }
-      liveState.textContent = 'A fresh price is temporarily unavailable. The daily snapshot and verified address are still available.';
+      liveState.textContent = 'A newer price is temporarily unavailable. The latest saved price remains shown.';
     }
 
     function renderLiveQuote(payload) {
@@ -1559,7 +1539,7 @@ ${guideLoaderSource('en')}
       liveChange.classList.remove('quick__change--up', 'quick__change--down');
       if (change !== null && change > 0) liveChange.classList.add('quick__change--up');
       if (change !== null && change < 0) liveChange.classList.add('quick__change--down');
-      liveState.textContent = 'Fresh public market data · checked ' + liveCheckedAt + ' · not a recommendation.';
+      liveState.textContent = 'Current price checked at ' + liveCheckedAt + '.';
       if (typeof best.url === 'string' && /^https:\\/\\/dexscreener\\.com\\//i.test(best.url)) liveLink.href = best.url;
     }
 
@@ -1640,9 +1620,9 @@ ${guideLoaderSource('en')}
       var publishRank = canPublishRank(snapshot, standings);
       standingsList.replaceChildren();
       standingsTitle.textContent = publishRank && selected
-        ? ordinalRank(selected.rank) + ' of 12 by reported total market value'
+        ? ordinalRank(selected.rank) + ' of 12 by total market value'
         : 'Market rank unavailable';
-      standingsSummary.textContent = 'This market snapshot does not measure popularity or participation.'
+      standingsSummary.textContent = 'This rank only compares total market value. It does not show how many people support each sign.'
         + (publishRank ? '' : ' A rank is not shown because some numbers are missing or out of date.');
       standings.forEach(function (asset) {
         var meta = SIGN_META[asset.sign];
@@ -1664,7 +1644,7 @@ ${guideLoaderSource('en')}
         item.append(link);
         standingsList.append(item);
       });
-      standingsTime.textContent = 'Daily market snapshot · ' + fmtTimestamp(snapshot.source && snapshot.source.readAt);
+      standingsTime.textContent = 'Updated ' + fmtTimestamp(snapshot.source && snapshot.source.readAt);
     }
 
     function renderMetrics(snapshot, asset) {
@@ -1681,12 +1661,12 @@ ${guideLoaderSource('en')}
       });
       stateEl.hidden = true;
       gridEl.hidden = false;
-      footEl.replaceChildren(make('span', '', 'Daily market snapshot · ' + fmtTimestamp(snapshot.source && snapshot.source.readAt)));
+      footEl.replaceChildren(make('span', '', 'Updated ' + fmtTimestamp(snapshot.source && snapshot.source.readAt)));
       footEl.hidden = false;
       renderStandings(snapshot);
 
       var deepUrl = asset.deepestPool && asset.deepestPool.url;
-      if (typeof deepUrl === 'string' && /^https:\\/\\/dexscreener\\.com\\//i.test(deepUrl)) liveLink.href = deepUrl;
+      if (!hasLiveQuote && typeof deepUrl === 'string' && /^https:\\/\\/dexscreener\\.com\\//i.test(deepUrl)) liveLink.href = deepUrl;
     }
 
     function renderArchiveQuote(snapshot, asset) {
@@ -1699,7 +1679,7 @@ ${guideLoaderSource('en')}
       liveChange.classList.remove('quick__change--up', 'quick__change--down');
       if (change !== null && change > 0) liveChange.classList.add('quick__change--up');
       if (change !== null && change < 0) liveChange.classList.add('quick__change--down');
-      liveState.textContent = 'Daily market snapshot · ' + fmtTimestamp(snapshot.source && snapshot.source.readAt) + '.';
+      liveState.textContent = 'Updated ' + fmtTimestamp(snapshot.source && snapshot.source.readAt) + '.';
     }
 
     function observationsForRange(range) {
@@ -1722,7 +1702,7 @@ ${guideLoaderSource('en')}
       var finite = points.filter(function (point) { return point.price !== null; });
       if (!finite.length) return 'Price history unavailable.';
       var latestDate = fmtDate(finite[finite.length - 1].date);
-      return finite.length + (finite.length === 1 ? ' daily snapshot through ' : ' daily snapshots through ') + latestDate + '.';
+      return finite.length + (finite.length === 1 ? ' daily price through ' : ' daily prices through ') + latestDate + '.';
     }
 
     function renderChart(range) {
@@ -1735,14 +1715,14 @@ ${guideLoaderSource('en')}
         button.setAttribute('aria-pressed', button.getAttribute('data-market-range') === range ? 'true' : 'false');
       });
       if (!finite.length) {
-        chartCanvas.append(make('div', 'market__chart-empty', 'No dated price observations are available for this token.'));
+        chartCanvas.append(make('div', 'market__chart-empty', 'No price history is available yet.'));
         return;
       }
       if (finite.length < 2) {
         chartCanvas.append(make(
           'div',
           'market__chart-empty',
-          'One daily snapshot is available. A line will appear after the next dated price.'
+          'One daily price is available. The chart will appear after the next one.'
         ));
         chartSummary.hidden = true;
         return;
@@ -1849,7 +1829,7 @@ ${guideLoaderSource('en')}
       var thirtyPoints = observationsForRange('30d').filter(function (point) { return point.price !== null; });
       var allPoints = observationsForRange('all').filter(function (point) { return point.price !== null; });
       seven.disabled = sevenPoints.length < 2;
-      if (seven.disabled) seven.title = 'Available after two dated prices';
+      if (seven.disabled) seven.title = 'Available after two daily prices';
       thirty.hidden = thirtyPoints.length < 30;
       all.hidden = allPoints.length < 2 || (
         sevenPoints.length === allPoints.length
@@ -1867,7 +1847,7 @@ ${guideLoaderSource('en')}
 
     function renderArchive(archive) {
       if (!archive || archive.schema !== 'zodiacs.registry-market-history.v1' || !Array.isArray(archive.snapshots)) {
-        setUnavailable('Price history is temporarily unavailable.');
+        setUnavailable('Price history is unavailable.');
         return;
       }
       var snapshots = archive.snapshots.slice().sort(function (a, b) {
@@ -1880,7 +1860,7 @@ ${guideLoaderSource('en')}
       var latest = snapshots[snapshots.length - 1];
       var asset = latestAsset(latest);
       if (!asset) {
-        setUnavailable('Price history is temporarily unavailable.');
+        setUnavailable('Price history is unavailable.');
         return;
       }
 
@@ -1895,7 +1875,7 @@ ${guideLoaderSource('en')}
       renderArchiveQuote(latest, asset);
       var defaultRange = configureRanges();
       if (defaultRange) renderChart(defaultRange);
-      else chartCanvas.replaceChildren(make('div', 'market__chart-empty', 'Price history is still being collected. View the live chart for current trading.'));
+      else chartCanvas.replaceChildren(make('div', 'market__chart-empty', 'Price history is still being collected.'));
       chartEl.hidden = false;
     }
 
@@ -1907,7 +1887,7 @@ ${guideLoaderSource('en')}
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
       }).then(renderArchive).catch(function () {
-        setUnavailable('Price history is temporarily unavailable.');
+        setUnavailable('Price history is unavailable.');
       });
     }
 

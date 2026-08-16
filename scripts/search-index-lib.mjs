@@ -93,7 +93,7 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
     path: '/registry/',
     title: 'The 12 Zodiac Profiles',
-    description: 'Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today.',
+    description: 'Choose your Zodiac sign, meet famous people who share it, compare recent Wikipedia views, and see today’s market standings.',
     kind: 'registry',
     keywords: ['registry', 'zodiacs registry', 'verify', 'verification', 'address', 'addresses', 'canonical', 'dataset', 'methodology', 'record'],
   }),
@@ -114,7 +114,7 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   ...SIGN_NAMES.map((sign) => freezeCuratedEntry({
     path: `/registry/${sign.toLowerCase()}/`,
     title: `${sign} Zodiac profile`,
-    description: `${sign} dates, symbol, famous birthdays, current market snapshot, and verified token address.`,
+    description: `${sign} dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.`,
     kind: 'registry',
     keywords: ['registry', 'astrofolio', 'record', sign.toLowerCase()],
   })),

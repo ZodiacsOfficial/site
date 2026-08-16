@@ -163,7 +163,7 @@ const jsonLd = {
       '@id': 'https://zodiacs.org/registry/#page',
       url: 'https://zodiacs.org/registry/',
       name: 'The 12 Zodiac Profiles',
-      description: 'Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today.',
+      description: 'Choose your Zodiac sign, meet famous people who share it, compare recent Wikipedia views, and see today’s market standings.',
       inLanguage: 'en',
       mainEntity: { '@id': 'https://zodiacs.org/registry/zodiacs.registry.json#dataset' },
       isPartOf: { '@type': 'WebSite', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
@@ -181,7 +181,7 @@ const html = `<!doctype html>
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <title>The 12 Zodiac Profiles | Zodiacs.org</title>
-  <meta name="description" content="Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today." />
+  <meta name="description" content="Choose your Zodiac sign, meet famous people who share it, compare recent Wikipedia views, and see today’s market standings." />
   <link rel="canonical" href="https://zodiacs.org/registry/" />
   <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/app-icons/v3/favicon.svg" />
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/app-icons/v3/favicon-16.png" />
@@ -208,13 +208,13 @@ const html = `<!doctype html>
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="The 12 Zodiac Profiles | Zodiacs.org" />
-  <meta property="og:description" content="Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today." />
+  <meta property="og:description" content="Choose your Zodiac sign, meet famous people who share it, compare recent Wikipedia views, and see today’s market standings." />
   <meta property="og:url" content="https://zodiacs.org/registry/" />
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
   <meta property="og:image:alt" content="The twelve Zodiac profiles on Zodiacs.org" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The 12 Zodiac Profiles | Zodiacs.org" />
-  <meta name="twitter:description" content="Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today." />
+  <meta name="twitter:description" content="Choose your Zodiac sign, meet famous people who share it, compare recent Wikipedia views, and see today’s market standings." />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
   <script type="application/ld+json">${JSON.stringify(jsonLd).replaceAll('<', '\\u003c')}</script>
 
@@ -410,19 +410,19 @@ const html = `<!doctype html>
       <div>
         <p class="hero__seal">All 12 Zodiac signs</p>
         <h1>Find your sign.</h1>
-        <p class="hero__deck">Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today.</p>
+        <p class="hero__deck">Choose your Zodiac sign, meet famous people who share it, compare recent Wikipedia views, and see today’s market standings.</p>
       </div>
-      <dl class="hero__facts" aria-label="Catalogue coverage">
-        <div><dt>Signs</dt><dd>12</dd><small>one for every Zodiac sign</small></div>
-        <div><dt>Symbols</dt><dd>12</dd><small>one familiar emoji for each sign</small></div>
-        <div><dt>Profiles</dt><dd>12</dd><small>plain facts, people, and today’s snapshot</small></div>
+      <dl class="hero__facts" aria-label="What the profiles include">
+        <div><dt>Famous birthdays</dt><dd>48</dd><small>four sourced names for each sign</small></div>
+        <div><dt>Attention</dt><dd>30 days</dd><small>average English Wikipedia views</small></div>
+        <div><dt>Market standings</dt><dd>Daily</dd><small>price history and current ranks</small></div>
       </dl>
     </header>
 
     <section class="section section--profiles" aria-labelledby="records-title">
       <header class="section__head">
         <div><p class="eyebrow">All 12 signs</p><h2 id="records-title">Choose your Zodiac.</h2></div>
-        <p>Start with the sign you already know. Each profile explains the rest in plain language.</p>
+        <p>Each profile brings together its dates, famous birthdays, recent Wikipedia views, price history and current rank.</p>
       </header>
       <div class="records" aria-label="Twelve Zodiac profiles">
         ${assets.map(renderRecord).join('\n')}
@@ -436,7 +436,7 @@ const html = `<!doctype html>
             <div>
               <p class="eyebrow">Token safety</p>
               <h2 id="verify-title">Check a token address.</h2>
-              <p class="verifier__copy">If someone sends you a token address, paste it here. We compare it with the verified list. This check only shows information.</p>
+              <p class="verifier__copy">Every token has a long address, like an account number. Paste one here and we’ll check whether it matches the official list.</p>
             </div>
             <div>
               <form class="verify-form" action="/registry/" method="get" role="search" data-address-verifier>
@@ -445,7 +445,7 @@ const html = `<!doctype html>
                 <button type="submit">Check <span aria-hidden="true">→</span></button>
               </form>
               <p class="verify-result" id="verify-result" aria-live="polite" data-verifier-result>Checks the verified addresses for all 12 signs.</p>
-              <noscript><p class="no-script">JavaScript is off. Use your browser’s Find command to compare an address with the complete list above.</p></noscript>
+              <noscript><p class="no-script">Address checking is unavailable here. The complete list is still shown above.</p></noscript>
             </div>
           </div>
         </div>
@@ -456,7 +456,7 @@ const html = `<!doctype html>
       <div class="authority__intro">
         <p class="eyebrow">For people who want the details</p>
         <h2 id="authority-title">How checking works.</h2>
-        <p>The list is public and read-only. Prices can move, but the verified addresses do not.</p>
+        <p>Anyone can view the list. This page cannot buy anything or move money.</p>
       </div>
       <details class="authority__details">
         <summary>Technical records and tools</summary>
