@@ -275,7 +275,7 @@ function showInvite(): void {
   identity.className = 'zguide-invite__identity';
   const label = document.createElement('strong');
   label.textContent = 'Guide';
-  identity.append(createPortrait('zguide-invite__avatar', 44), label);
+  identity.append(createPortrait('zguide-invite__avatar', 38), label);
   const message = document.createElement('p');
   message.textContent = copy.invite;
   const action = document.createElement('button');

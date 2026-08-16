@@ -187,7 +187,7 @@ const COPY: Record<AssistantLocale, Copy> = {
     cloudTitle: 'Before Guide answers',
     cloudBody: 'Guide sends your question, recent Guide messages, and the visible sources above to OpenAI for an input safety check and to generate a draft reply. It then sends that generated draft reply back to OpenAI for a second safety check before showing it. This web Guide conversation stays only in this browser session, is not synced to your account, and is not stored as text by Zodiacs.org. Under standard API controls, OpenAI may retain abuse-monitoring data for up to 30 days. Continue for this Guide day?',
     cloudConfirm: 'Continue with Guide', cloudCancel: 'Not now', consentTitle: 'Before your chart is attached',
-    consentBody: 'This is the one chart you explicitly marked as your own. The exact placement lines below will be sent to OpenAI with your question. Zodiacs.org does not attach its saved name, birth date, time, place, or coordinates, and does not store the signed-out conversation.',
+    consentBody: 'This is the one chart you explicitly marked as your own. The exact placement lines below will be sent to OpenAI with your question. Zodiacs.org does not attach its saved name, birth date, time, place, or coordinates, and does not store this conversation.',
     consentConfirm: 'Attach my chart', consentCancel: 'Keep it private', sources: 'From this site:',
     contextUpdated: 'Source removed. Earlier messages remain visible, but Guide will not use them in future answers.',
   },
@@ -303,7 +303,7 @@ const COPY: Record<AssistantLocale, Copy> = {
     cloudTitle: 'Перед ответом Guide',
     cloudBody: 'Guide отправляет ваш вопрос, недавние сообщения Guide и видимые выше источники в OpenAI для проверки безопасности входных данных и создания черновика ответа. Затем Guide снова отправляет созданный черновик ответа в OpenAI для второй проверки безопасности, прежде чем показать его. Эта веб-беседа Guide остаётся только в этой сессии браузера, не синхронизируется с вашей учётной записью и не хранится Zodiacs.org в виде текста. При стандартных настройках API OpenAI может хранить данные мониторинга злоупотреблений до 30 дней. Продолжить на этот день Guide?',
     cloudConfirm: 'Продолжить с Guide', cloudCancel: 'Не сейчас', consentTitle: 'Перед добавлением вашей карты',
-    consentBody: 'Это единственная карта, которую вы явно отметили как свою. Точные строки положений ниже будут отправлены в OpenAI вместе с вашим вопросом. Zodiacs.org не добавляет сохранённые имя, дату, время, место рождения или координаты и не хранит разговор без входа в аккаунт.',
+    consentBody: 'Это единственная карта, которую вы явно отметили как свою. Точные строки положений ниже будут отправлены в OpenAI вместе с вашим вопросом. Zodiacs.org не добавляет сохранённые имя, дату, время, место рождения или координаты и не сохраняет этот разговор.',
     consentConfirm: 'Добавить мою карту', consentCancel: 'Оставить приватной', sources: 'С этого сайта:',
     contextUpdated: 'Источник удалён. Предыдущие сообщения остаются видимыми, но Guide не будет использовать их в будущих ответах.',
   },
@@ -440,6 +440,7 @@ let chartSourceId: string | null = null;
 let chartSummaryPromise: Promise<string | null> | null = null;
 let profileAccessGeneration = 0;
 let interactionPending = false;
+let interactionGeneration = 0;
 let hasUserOpened = false;
 let inviteSeenInMemory = false;
 let pendingRetry: PendingTurn | null = null;
@@ -451,6 +452,7 @@ let openGeneration = 0;
 let clearArmed = false;
 let clearConfirmationTimer = 0;
 let backgroundSnapshot: Array<{ node: HTMLElement; inert: boolean; ariaHidden: string | null }> = [];
+let backgroundObserver: MutationObserver | null = null;
 
 interface PendingTurn {
   body: Record<string, unknown>;
@@ -765,7 +767,7 @@ function syncPageBoundary(): void {
   }
   if (state.lastPageSourceId === null) {
     state.lastPageSourceId = currentPage.sourceId;
-    invalidateContext(false);
+    invalidateContext(false, state.cloudConsentGranted);
   } else if (state.lastPageSourceId !== currentPage.sourceId) {
     state.lastPageSourceId = currentPage.sourceId;
     invalidateContext(true, true);
@@ -1266,6 +1268,21 @@ function syncSendState(): void {
   sendButton.disabled = !authReady || Boolean(activeRequest) || interactionPending || !textarea.value.trim();
 }
 
+function beginInteraction(): number {
+  const generation = ++interactionGeneration;
+  interactionPending = true;
+  return generation;
+}
+
+function releaseInteraction(generation: number): void {
+  if (generation === interactionGeneration) interactionPending = false;
+}
+
+function cancelPendingInteraction(): void {
+  interactionGeneration += 1;
+  interactionPending = false;
+}
+
 function cancelClearConfirmation(): void {
   clearArmed = false;
   if (clearConfirmationTimer) window.clearTimeout(clearConfirmationTimer);
@@ -1382,14 +1399,25 @@ function clearAssistantForProfileRevocation(): void {
   chartEnabled = false;
   chartSourceId = null;
   pendingRetry = null;
+  cancelPendingInteraction();
   replaceWithFreshSession();
   if (authReady) renderTranscript();
   else transcript?.replaceChildren();
   if (intro) intro.hidden = false;
   if (textarea) { textarea.value = ''; syncTextareaHeight(); }
   if (retryButton) retryButton.hidden = true;
-  setStatus();
-  setBusy(false);
+  if (authReady) {
+    setStatus();
+    setBusy(false);
+  } else {
+    activeRequest = null;
+    panel?.setAttribute('aria-busy', 'true');
+    transcript?.setAttribute('aria-busy', 'true');
+    transcript?.setAttribute('aria-live', 'off');
+    setStatus(root && !root.hidden ? currentCopy().preparing : '');
+    syncSendState();
+    syncSourceControls();
+  }
 }
 
 function rotateGuideDayIfNeeded(): boolean {
@@ -1456,14 +1484,18 @@ async function ensureGuideAuthFence(): Promise<void> {
   await authFencePromise;
 }
 
-function suspendGuideForPageCache(): void {
-  profileAccessGeneration += 1;
-  openGeneration += 1;
-  authReady = false;
+function resetGuideAuthFence(): void {
   authFenceVersion += 1;
   authFenceCleanup?.();
   authFenceCleanup = null;
   authFencePromise = null;
+}
+
+function suspendGuideForPageCache(): void {
+  profileAccessGeneration += 1;
+  openGeneration += 1;
+  authReady = false;
+  resetGuideAuthFence();
   abortRequest();
   dismissPendingConsent?.();
   dismissPendingCloudConsent?.();
@@ -1475,7 +1507,8 @@ function suspendGuideForPageCache(): void {
   chartEnabled = false;
   chartSourceId = null;
   clearPendingRetry();
-  interactionPending = false;
+  cancelClearConfirmation();
+  cancelPendingInteraction();
   transcript?.replaceChildren();
   if (intro) intro.hidden = false;
   if (textarea) { textarea.value = ''; syncTextareaHeight(); }
@@ -1497,6 +1530,12 @@ function restoreGuideAfterPageCache(event: PageTransitionEvent): void {
 
 function onProfileAccessChange(): void {
   profileAccessGeneration += 1;
+  cancelPendingInteraction();
+  abortRequest();
+  dismissPendingConsent?.();
+  dismissPendingCloudConsent?.();
+  dismissPendingConsent = null;
+  dismissPendingCloudConsent = null;
   if (profileAccessAllowed()) {
     if (hasUserOpened && authReady) refreshSavedChart();
     return;
@@ -1506,10 +1545,13 @@ function onProfileAccessChange(): void {
 
 function onProfileDataChange(): void {
   profileAccessGeneration += 1;
+  cancelPendingInteraction();
   clearPendingRetry();
   abortRequest();
   dismissPendingConsent?.();
+  dismissPendingCloudConsent?.();
   dismissPendingConsent = null;
+  dismissPendingCloudConsent = null;
   if (hasUserOpened && authReady) refreshSavedChart();
 }
 
@@ -1589,13 +1631,18 @@ async function requestCloudConsent(): Promise<boolean> {
 }
 
 async function requestChartConsent(expectedGeneration = profileAccessGeneration): Promise<boolean> {
-  if (!currentProfileAccessGeneration(expectedGeneration) || !profileAccessAllowed()) return false;
+  const expectedOpenGeneration = openGeneration;
+  const consentIsCurrent = () => authReady
+    && currentProfileAccessGeneration(expectedGeneration)
+    && expectedOpenGeneration === openGeneration
+    && Boolean(root && !root.hidden);
+  if (!consentIsCurrent() || !profileAccessAllowed()) return false;
   if (chartConsented && chartEnabled) return true;
   const chart = savedChart;
   if (!chart || !transcript) return false;
   chartSummaryPromise ??= placementSummaryForChart(chart);
   const summary = await chartSummaryPromise;
-  if (!summary || !currentProfileAccessGeneration(expectedGeneration)
+  if (!summary || !consentIsCurrent()
     || !profileAccessAllowed() || savedChart !== chart) return false;
   const copy = currentCopy();
   const localLabel = chart.name.trim().slice(0, 120);
@@ -1604,7 +1651,7 @@ async function requestChartConsent(expectedGeneration = profileAccessGeneration)
   dismissPendingConsent = card.dismiss;
   const granted = await card.promise;
   if (dismissPendingConsent === card.dismiss) dismissPendingConsent = null;
-  const current = currentProfileAccessGeneration(expectedGeneration)
+  const current = consentIsCurrent()
     && profileAccessAllowed() && savedChart === chart;
   if (current && granted) {
     chartConsented = true;
@@ -1727,6 +1774,7 @@ async function runTurn(pending: PendingTurn): Promise<void> {
     return;
   }
   const expectedGeneration = profileAccessGeneration;
+  const expectedOpenGeneration = openGeneration;
   const request = new AbortController();
   activeRequest = request;
   pendingRetry = null;
@@ -1738,7 +1786,11 @@ async function runTurn(pending: PendingTurn): Promise<void> {
   pending.assistantArticle.classList.remove('is-partial', 'is-error');
   setStatus(currentCopy().thinking);
   let answer = '';
-  const requestIsCurrent = () => currentProfileAccessGeneration(expectedGeneration) && activeRequest === request;
+  const requestIsCurrent = () => authReady
+    && expectedOpenGeneration === openGeneration
+    && currentProfileAccessGeneration(expectedGeneration)
+    && Boolean(root && !root.hidden)
+    && activeRequest === request;
   const authorityTimer = pending.chartAuthority ? window.setInterval(() => {
     if (!sameSelfChartAuthority(pending.chartAuthority, readSelectedSelfChart())) onProfileDataChange();
   }, 250) : 0;
@@ -1783,8 +1835,12 @@ async function runTurn(pending: PendingTurn): Promise<void> {
     }
   } finally {
     if (authorityTimer) window.clearInterval(authorityTimer);
-    if (activeRequest === request) setBusy(false);
+    if (activeRequest === request) {
+      if (authReady && expectedOpenGeneration === openGeneration && root && !root.hidden) setBusy(false);
+      else activeRequest = null;
+    }
     if (authReady && currentProfileAccessGeneration(expectedGeneration)
+      && expectedOpenGeneration === openGeneration
       && root && !root.hidden && !mobileGuideMode()) textarea?.focus();
   }
 }
@@ -1794,23 +1850,30 @@ async function submitQuestion(): Promise<void> {
   if (rotateGuideDayIfNeeded()) return;
   const question = textarea.value.trim();
   if (!question) { setStatus(currentCopy().empty); return; }
-  interactionPending = true;
+  const interaction = beginInteraction();
   syncSendState();
   syncSourceControls();
   const expectedGeneration = profileAccessGeneration;
+  const expectedOpenGeneration = openGeneration;
+  const interactionIsCurrent = () => authReady
+    && currentProfileAccessGeneration(expectedGeneration)
+    && expectedOpenGeneration === openGeneration
+    && Boolean(root && !root.hidden);
   try {
     if (!await requestCloudConsent()) return;
+    if (!interactionIsCurrent()) return;
     if (rotateGuideDayIfNeeded()) return;
-    if (!currentProfileAccessGeneration(expectedGeneration)) return;
+    if (!interactionIsCurrent()) return;
     let chartFacts: string | undefined;
     let chartAuthority: StoredChart | null = null;
     const wantsChart = Boolean(savedChart) && (chartEnabled || questionRequestsMyChart(question));
     if (wantsChart && !chartEnabled) {
       setStatus(currentCopy().chartReading);
       await requestChartConsent(expectedGeneration);
+      if (!interactionIsCurrent()) return;
     }
     if (rotateGuideDayIfNeeded()) return;
-    if (!currentProfileAccessGeneration(expectedGeneration)) return;
+    if (!interactionIsCurrent()) return;
     if (chartEnabled && savedChart) {
       const current = readSelectedSelfChart();
       if (!sameSelfChartAuthority(savedChart, current)) {
@@ -1820,6 +1883,7 @@ async function submitQuestion(): Promise<void> {
       }
       chartSummaryPromise ??= placementSummaryForChart(savedChart);
       chartFacts = (await chartSummaryPromise) ?? undefined;
+      if (!interactionIsCurrent()) return;
       const currentAfterSummary = readSelectedSelfChart();
       if (!chartFacts || !sameSelfChartAuthority(savedChart, currentAfterSummary)) {
         refreshSavedChart();
@@ -1829,9 +1893,10 @@ async function submitQuestion(): Promise<void> {
       chartAuthority = currentAfterSummary;
     }
     if (rotateGuideDayIfNeeded()) return;
-    if (!currentProfileAccessGeneration(expectedGeneration)) return;
+    if (!interactionIsCurrent()) return;
     const ids = { turnId: uuid(), operationId: uuid(), attemptId: uuid(), messageId: uuid() };
     const built = await buildTurnBody(question, ids, null, chartFacts);
+    if (rotateGuideDayIfNeeded() || !interactionIsCurrent()) return;
     const user = appendMessage('user', question);
     const guide = appendMessage('guide', '');
     textarea.value = '';
@@ -1842,12 +1907,14 @@ async function submitQuestion(): Promise<void> {
       assistantArticle: guide.article, assistantBody: guide.body,
       chartAuthority,
     };
-    interactionPending = false;
+    releaseInteraction(interaction);
     await runTurn(pending);
   } catch (error) {
-    setStatus(friendlyFailure(error instanceof AssistantFailure ? error.code : 'temporarily_unavailable'));
+    if (interactionIsCurrent()) {
+      setStatus(friendlyFailure(error instanceof AssistantFailure ? error.code : 'temporarily_unavailable'));
+    }
   } finally {
-    interactionPending = false;
+    releaseInteraction(interaction);
     syncSendState();
     syncSourceControls();
   }
@@ -1904,18 +1971,28 @@ function stopVisualViewportTracking(): void {
   root?.style.removeProperty('--zassistant-viewport-height');
 }
 
+function isolateBackgroundNode(node: Node): void {
+  if (!(node instanceof HTMLElement) || node === root
+    || backgroundSnapshot.some((entry) => entry.node === node)) return;
+  backgroundSnapshot.push({ node, inert: node.inert, ariaHidden: node.getAttribute('aria-hidden') });
+  node.inert = true;
+  node.setAttribute('aria-hidden', 'true');
+}
+
 function isolateBackground(): void {
-  if (!root || backgroundSnapshot.length) return;
-  backgroundSnapshot = [...document.body.children]
-    .filter((node): node is HTMLElement => node instanceof HTMLElement && node !== root)
-    .map((node) => ({ node, inert: node.inert, ariaHidden: node.getAttribute('aria-hidden') }));
-  for (const { node } of backgroundSnapshot) {
-    node.inert = true;
-    node.setAttribute('aria-hidden', 'true');
-  }
+  if (!root || backgroundObserver) return;
+  for (const node of document.body.children) isolateBackgroundNode(node);
+  backgroundObserver = new MutationObserver((records) => {
+    for (const record of records) {
+      for (const node of record.addedNodes) isolateBackgroundNode(node);
+    }
+  });
+  backgroundObserver.observe(document.body, { childList: true });
 }
 
 function restoreBackground(): void {
+  backgroundObserver?.disconnect();
+  backgroundObserver = null;
   for (const { node, inert, ariaHidden } of backgroundSnapshot) {
     node.inert = inert;
     if (ariaHidden === null) node.removeAttribute('aria-hidden');
@@ -1928,9 +2005,12 @@ function closeAssistant(): void {
   if (!root || root.hidden) return;
   openGeneration += 1;
   authReady = false;
+  resetGuideAuthFence();
   abortRequest();
   dismissPendingConsent?.();
   dismissPendingCloudConsent?.();
+  cancelPendingInteraction();
+  clearPendingRetry();
   cancelClearConfirmation();
   root.hidden = true;
   panel?.style.removeProperty('transform');
@@ -2038,28 +2118,30 @@ function toggleChart(): void {
     setStatus(currentCopy().contextUpdated);
     return;
   }
-  interactionPending = true;
+  const interaction = beginInteraction();
   syncSendState();
   syncSourceControls();
   const expectedGeneration = profileAccessGeneration;
   void requestChartConsent(expectedGeneration).finally(() => {
-    interactionPending = false;
+    releaseInteraction(interaction);
     syncSendState();
     syncSourceControls();
   });
 }
 
-function wireMobileSheetGesture(header: HTMLElement): void {
+function wireMobileSheetGesture(header: HTMLElement, handle: HTMLElement): void {
   let startY = 0;
   let lastY = 0;
   let startTime = 0;
   let dragging = false;
+  let captureSurface: HTMLElement | null = null;
   const finish = (event: PointerEvent) => {
     if (!dragging || !panel) return;
     dragging = false;
     const distance = Math.max(0, lastY - startY);
     const velocity = distance / Math.max(1, performance.now() - startTime);
-    try { header.releasePointerCapture(event.pointerId); } catch { /* capture can already be released */ }
+    try { captureSurface?.releasePointerCapture(event.pointerId); } catch { /* capture can already be released */ }
+    captureSurface = null;
     if (distance >= 96 || (distance >= 40 && velocity > 0.65)) {
       panel.style.removeProperty('transition');
       panel.style.removeProperty('transform');
@@ -2074,7 +2156,7 @@ function wireMobileSheetGesture(header: HTMLElement): void {
       panel?.style.removeProperty('transform');
     }, reducedMotion ? 0 : 170);
   };
-  header.addEventListener('pointerdown', (event) => {
+  const start = (event: PointerEvent) => {
     if (event.pointerType !== 'touch' || !mobileGuideMode()
       || event.target instanceof Element && event.target.closest('button')) return;
     dragging = true;
@@ -2082,16 +2164,21 @@ function wireMobileSheetGesture(header: HTMLElement): void {
     lastY = event.clientY;
     startTime = performance.now();
     panel?.style.setProperty('transition', 'none');
-    header.setPointerCapture(event.pointerId);
-  });
-  header.addEventListener('pointermove', (event) => {
+    captureSurface = event.currentTarget as HTMLElement;
+    captureSurface.setPointerCapture(event.pointerId);
+  };
+  const move = (event: PointerEvent) => {
     if (!dragging || !panel) return;
     lastY = event.clientY;
     const distance = Math.max(0, lastY - startY);
     panel.style.transform = `translateY(${distance}px)`;
-  });
-  header.addEventListener('pointerup', finish);
-  header.addEventListener('pointercancel', finish);
+  };
+  for (const surface of [header, handle]) {
+    surface.addEventListener('pointerdown', start);
+    surface.addEventListener('pointermove', move);
+    surface.addEventListener('pointerup', finish);
+    surface.addEventListener('pointercancel', finish);
+  }
 }
 
 function build(): void {
@@ -2115,6 +2202,9 @@ function build(): void {
   panel.setAttribute('role', 'dialog');
   panel.setAttribute('aria-modal', 'true');
   panel.setAttribute('aria-labelledby', 'zassistant-title');
+  const dragHandle = document.createElement('div');
+  dragHandle.className = 'zassistant__drag-handle';
+  dragHandle.setAttribute('aria-hidden', 'true');
   const header = document.createElement('header');
   header.className = 'zassistant__head';
   const headerIdentity = document.createElement('div');
@@ -2138,7 +2228,7 @@ function build(): void {
   closeButton.addEventListener('click', closeAssistant);
   headerActions.append(clearButton, closeButton);
   header.append(headerIdentity, headerActions);
-  wireMobileSheetGesture(header);
+  wireMobileSheetGesture(header, dragHandle);
   intro = document.createElement('p');
   intro.className = 'zassistant__intro';
   sourcesRegion = document.createElement('div');
@@ -2210,7 +2300,7 @@ function build(): void {
   form.append(textarea, actions);
   privacy = document.createElement('p');
   privacy.className = 'zassistant__privacy';
-  panel.append(header, intro, sourcesRegion, transcript, status, form, privacy);
+  panel.append(dragHandle, header, intro, sourcesRegion, transcript, status, form, privacy);
   root.append(panel);
   document.body.append(root);
   const shellLauncher = document.querySelector<HTMLButtonElement>('[data-guide-launcher]');
@@ -2231,8 +2321,19 @@ function build(): void {
     document.body.append(launcher);
   }
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && root && !root.hidden) {
-      event.preventDefault(); event.stopPropagation(); closeAssistant();
+    if (!root || root.hidden) return;
+    if (event.key === 'Escape') {
+      event.preventDefault(); event.stopPropagation(); closeAssistant(); return;
+    }
+    const target = event.target;
+    const typing = target instanceof HTMLElement
+      && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA'
+        || target.tagName === 'SELECT' || target.isContentEditable);
+    const searchShortcut = (event.key === '/' && !typing && !event.metaKey && !event.ctrlKey && !event.altKey)
+      || ((event.key === 'k' || event.key === 'K') && (event.metaKey || event.ctrlKey));
+    if (searchShortcut) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
     }
   }, true);
   window.addEventListener('zodiacs:profile', onProfileDataChange);
@@ -2283,6 +2384,14 @@ export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
 export async function openAssistant(requestedLocale?: string, from?: HTMLElement | null): Promise<void> {
   const generation = ++openGeneration;
   authReady = false;
+  resetGuideAuthFence();
+  abortRequest();
+  dismissPendingConsent?.();
+  dismissPendingCloudConsent?.();
+  dismissPendingConsent = null;
+  dismissPendingCloudConsent = null;
+  cancelPendingInteraction();
+  clearPendingRetry();
   const authFence = ensureGuideAuthFence();
   await bootstrapGuide(requestedLocale);
   dismissInvite();
@@ -2327,7 +2436,7 @@ export async function openAssistant(requestedLocale?: string, from?: HTMLElement
   refreshSavedChart();
   renderTranscript();
   if (textarea) textarea.disabled = false;
-  panel?.setAttribute('aria-busy', 'false');
+  setBusy(false);
   applyCopy();
   setStatus();
   syncSendState();

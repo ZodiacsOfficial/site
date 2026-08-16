@@ -277,6 +277,11 @@ describe('Guide response links', () => {
       source.indexOf('function setBusy('),
     );
     expect(controls).toContain('pageSourceAdd.hidden = !currentPage || enabled');
+    const boundary = source.slice(
+      source.indexOf('function syncPageBoundary()'),
+      source.indexOf('function pageSourceEnabled()'),
+    );
+    expect(boundary).toContain('invalidateContext(false, state.cloudConsentGranted);');
   });
 });
 
@@ -400,8 +405,7 @@ describe('assistant profile-access privacy fence', () => {
       source.indexOf('function onProfileAccessChange()'),
     );
     expect(suspend).toContain('profileAccessGeneration += 1;');
-    expect(suspend).toContain('authFenceCleanup?.();');
-    expect(suspend).toContain('authFencePromise = null;');
+    expect(suspend).toContain('resetGuideAuthFence();');
     expect(suspend).toContain('transcript?.replaceChildren();');
     expect(suspend).toContain('if (root) root.hidden = true;');
     expect(restore).toContain('if (!event.persisted) return;');
@@ -419,7 +423,8 @@ describe('assistant profile-access privacy fence', () => {
     const submit = source.slice(submitStart, focusStart);
 
     expect(consent).toContain('expectedGeneration = profileAccessGeneration');
-    expect(consent).toContain('!currentProfileAccessGeneration(expectedGeneration)');
+    expect(consent).toContain('currentProfileAccessGeneration(expectedGeneration)');
+    expect(consent).toContain('!consentIsCurrent()');
     expect(consent.indexOf('const summary = await chartSummaryPromise;'))
       .toBeLessThan(consent.indexOf('savedChart !== chart'));
     expect(consent).toContain('return current && granted;');
@@ -427,7 +432,7 @@ describe('assistant profile-access privacy fence', () => {
     expect(submit).toContain('const expectedGeneration = profileAccessGeneration;');
     expect(submit).toContain('await requestCloudConsent()');
     expect(submit).toContain('requestChartConsent(expectedGeneration)');
-    expect(submit).toContain('!currentProfileAccessGeneration(expectedGeneration)');
+    expect(submit).toContain('!interactionIsCurrent()');
 
     const runStart = source.indexOf('async function runTurn(');
     const submitEnd = source.indexOf('async function submitQuestion()');
@@ -437,7 +442,8 @@ describe('assistant profile-access privacy fence', () => {
     expect(run).toContain('signal: request.signal');
     expect(run).toContain('await response.body?.cancel().catch(() => {});');
     expect(run).toContain('if (!requestIsCurrent()) return;');
-    expect(run).toContain('if (activeRequest === request) setBusy(false);');
+    expect(run).toContain('if (activeRequest === request) {');
+    expect(run).toContain('expectedOpenGeneration === openGeneration');
     expect(run).toContain('sameSelfChartAuthority');
     expect(run).toContain('window.setInterval');
     expect(run).toContain('onProfileDataChange();');
@@ -457,6 +463,7 @@ describe('assistant profile-access privacy fence', () => {
     );
     const open = source.slice(source.indexOf('export async function openAssistant('));
     const fenceStart = open.indexOf('const authFence = ensureGuideAuthFence();');
+    const fenceReset = open.indexOf('resetGuideAuthFence();');
     const disableComposer = open.indexOf('textarea.disabled = true;');
     const scrubTranscript = open.indexOf('transcript?.replaceChildren();');
     const reveal = open.indexOf('root!.hidden = false;');
@@ -465,9 +472,10 @@ describe('assistant profile-access privacy fence', () => {
 
     expect(bootstrap).not.toContain('getSession()');
     expect(bootstrap).not.toContain('syncPageBoundary()');
-    for (const boundary of [fenceStart, disableComposer, scrubTranscript, reveal, waitForFence, hydrate]) {
+    for (const boundary of [fenceReset, fenceStart, disableComposer, scrubTranscript, reveal, waitForFence, hydrate]) {
       expect(boundary).toBeGreaterThan(-1);
     }
+    expect(fenceReset).toBeLessThan(fenceStart);
     expect(disableComposer).toBeLessThan(reveal);
     expect(scrubTranscript).toBeLessThan(reveal);
     expect(reveal).toBeLessThan(waitForFence);
@@ -478,6 +486,56 @@ describe('assistant profile-access privacy fence', () => {
     expect(waitForFence).toBeLessThan(open.indexOf('renderTranscript();'));
     expect(waitForFence).toBeLessThan(open.indexOf('textarea.disabled = false;'));
     expect(open).toContain('if (generation !== openGeneration || !root || root.hidden) return;');
+
+    const scrub = source.slice(
+      source.indexOf('function clearAssistantForProfileRevocation()'),
+      source.indexOf('function rotateGuideDayIfNeeded()'),
+    );
+    expect(scrub).toContain("panel?.setAttribute('aria-busy', 'true');");
+    expect(scrub).toContain("setStatus(root && !root.hidden ? currentCopy().preparing : '');");
+
+    const submit = source.slice(
+      source.indexOf('async function submitQuestion()'),
+      source.indexOf('async function retryTurn()'),
+    );
+    expect(submit).toContain('const expectedOpenGeneration = openGeneration;');
+    expect(submit).toContain('expectedOpenGeneration === openGeneration');
+    expect(submit).toContain('const built = await buildTurnBody(question, ids, null, chartFacts);');
+    expect(submit.indexOf('if (rotateGuideDayIfNeeded() || !interactionIsCurrent()) return;'))
+      .toBeGreaterThan(submit.indexOf('const built = await buildTurnBody(question, ids, null, chartFacts);'));
+
+    const chartConsent = source.slice(
+      source.indexOf('async function requestChartConsent('),
+      source.indexOf('function appendSourcesRow('),
+    );
+    expect(chartConsent).toContain('const expectedOpenGeneration = openGeneration;');
+    expect(chartConsent).toContain('expectedOpenGeneration === openGeneration');
+    expect(chartConsent.indexOf('if (!summary || !consentIsCurrent()'))
+      .toBeGreaterThan(chartConsent.indexOf('const summary = await chartSummaryPromise;'));
+    expect(source).toContain('let interactionGeneration = 0;');
+    expect(source).toContain('function cancelPendingInteraction(): void');
+
+    const run = source.slice(
+      source.indexOf('async function runTurn('),
+      source.indexOf('async function submitQuestion()'),
+    );
+    expect(run).toContain('const expectedOpenGeneration = openGeneration;');
+    expect(run).toContain('expectedOpenGeneration === openGeneration');
+    expect(run).toContain('Boolean(root && !root.hidden)');
+
+    const close = source.slice(
+      source.indexOf('function closeAssistant()'),
+      source.indexOf('function clearConversation()'),
+    );
+    expect(close).toContain('clearPendingRetry();');
+    expect(open).toContain('clearPendingRetry();');
+    expect(close).toContain('resetGuideAuthFence();');
+
+    const suspend = source.slice(
+      source.indexOf('function suspendGuideForPageCache()'),
+      source.indexOf('function restoreGuideAfterPageCache('),
+    );
+    expect(suspend).toContain('cancelClearConfirmation();');
   });
 
   it('limits page context to a fixed public catalog and never reads private URL surfaces', async () => {
