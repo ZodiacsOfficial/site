@@ -15,14 +15,18 @@
   inset: 0;
   z-index: max(var(--z-overlay, 70), 70);
   display: flex;
+  width: 100%;
+  height: var(--zassistant-viewport-height, 100dvh);
+  max-height: var(--zassistant-viewport-height, 100dvh);
   justify-content: flex-end;
   align-items: stretch;
+  overflow: hidden;
   padding: 12px;
   background: rgba(6, 7, 9, 0.5);
   color: var(--za-ink-0);
   font-family: var(--font-sans, 'Instrument Sans', system-ui, -apple-system, sans-serif);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 .zassistant[hidden],
 .zassistant [hidden] { display: none !important; }
@@ -55,6 +59,7 @@
   flex-direction: column;
   width: min(440px, 100%);
   height: 100%;
+  min-height: 0;
   overflow: hidden;
   border: 1px solid var(--za-hair-2);
   border-radius: var(--r-lg, 22px);
@@ -63,6 +68,7 @@
 }
 .zassistant__head {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: space-between;
   min-height: 62px;
@@ -97,10 +103,26 @@
   font-size: 16px;
   line-height: 1;
 }
-.zassistant__clear { font-size: 18px; }
+.zassistant__clear {
+  flex-basis: auto;
+  width: auto;
+  min-width: 44px;
+  padding: 0 12px;
+  border-radius: var(--r-full, 999px);
+  font-size: 12px;
+}
+.zassistant__panel:not(:has(.zassistant__message)) .zassistant__clear {
+  visibility: hidden;
+  pointer-events: none;
+}
 .zassistant__close:hover,
 .zassistant__clear:hover { background: var(--za-void-2); color: var(--za-ink-0); }
+.zassistant__clear.is-armed {
+  background: color-mix(in srgb, #b64b58 24%, var(--za-void-2));
+  color: var(--za-ink-0);
+}
 .zassistant__intro {
+  flex: 0 0 auto;
   margin: 0;
   padding: 16px 18px 5px;
   color: var(--za-muted);
@@ -109,6 +131,7 @@
 }
 .zassistant__context {
   display: flex;
+  flex: 0 0 auto;
   flex-wrap: wrap;
   gap: 7px;
   padding: 10px 18px 5px;
@@ -149,9 +172,10 @@
 }
 .zassistant__log {
   display: grid;
+  flex: 1 1 auto;
   align-content: start;
   gap: 12px;
-  min-height: 96px;
+  min-height: 0;
   padding: 14px 18px;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -194,6 +218,7 @@
   text-underline-offset: 3px;
 }
 .zassistant__status {
+  flex: 0 0 auto;
   min-height: 22px;
   margin: 0;
   padding: 0 18px 6px;
@@ -203,6 +228,7 @@
 .zassistant__status:empty { min-height: 8px; padding-bottom: 0; }
 .zassistant__form {
   display: grid;
+  flex: 0 0 auto;
   gap: 8px;
   margin: 0 12px;
   padding: 10px;
@@ -251,11 +277,57 @@
 .zassistant__send:disabled,
 .zassistant button:disabled { cursor: default; opacity: 0.42; }
 .zassistant__privacy {
+  flex: 0 0 auto;
   margin: 0;
   padding: 10px 18px max(13px, env(safe-area-inset-bottom));
   color: var(--za-faint);
-  font-size: 10.5px;
+  font-size: 12px;
   line-height: 1.45;
+}
+.zassistant__privacy-link {
+  color: var(--za-ink-1);
+  text-decoration: underline;
+  text-decoration-color: var(--za-hair-3);
+  text-underline-offset: 2px;
+}
+/* Empty-state prompts keep useful examples in the space reserved for the log. */
+.zassistant__empty {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  width: 100%;
+}
+.zassistant__empty-label {
+  margin: 0;
+  color: var(--za-faint);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.zassistant__starters {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 8px;
+  padding: 4px 18px 8px;
+}
+.zassistant__log .zassistant__starters,
+.zassistant__empty .zassistant__starters { padding: 0; }
+.zassistant__starter {
+  min-height: 44px;
+  padding: 10px 13px;
+  border: 1px solid var(--za-hair-2) !important;
+  border-radius: var(--r-md, 14px);
+  background: color-mix(in srgb, var(--za-void-2) 82%, transparent) !important;
+  color: var(--za-ink-1) !important;
+  font-size: 12.5px !important;
+  line-height: 1.35 !important;
+  text-align: left;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+.zassistant__starter:hover {
+  border-color: var(--za-hair-3) !important;
+  background: var(--za-void-3) !important;
+  color: var(--za-ink-0) !important;
 }
 .zassistant__consent {
   margin: 4px 0;
@@ -306,6 +378,7 @@
   outline-offset: 2px;
 }
 .zassistant__chart-chip:active,
+.zassistant__starter:active,
 .zassistant__send:active,
 .zassistant__stop:active,
 .zassistant__retry:active,
@@ -331,15 +404,16 @@
   cursor: pointer;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  transition: opacity 140ms ease, visibility 140ms ease, transform 140ms ease;
 }
 .zguide-launcher__avatar { width: 32px; height: 32px; }
 .zguide-invite {
   position: fixed;
   right: max(18px, env(safe-area-inset-right));
-  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 60px);
+  bottom: max(18px, env(safe-area-inset-bottom));
   z-index: 65;
-  width: min(310px, calc(100vw - 36px));
-  padding: 16px;
+  width: min(286px, calc(100vw - 36px));
+  padding: 12px;
   border: 1px solid rgba(198, 204, 218, 0.18);
   border-radius: 18px;
   background: rgba(15, 18, 26, 0.97);
@@ -350,10 +424,10 @@
   -webkit-backdrop-filter: blur(16px);
   animation: zguide-welcome-in 240ms ease-out both;
 }
-.zguide-invite__identity { display: flex; align-items: center; gap: 11px; padding-right: 36px; }
-.zguide-invite__avatar { width: 44px; height: 44px; }
+.zguide-invite__identity { display: flex; align-items: center; gap: 9px; padding-right: 34px; }
+.zguide-invite__avatar { width: 38px; height: 38px; }
 .zguide-invite strong { display: block; font: 500 20px/1.2 var(--font-serif); }
-.zguide-invite p { margin: 10px 24px 13px 0; color: #c6ccda; font-size: 13px; line-height: 1.5; }
+.zguide-invite p { margin: 7px 20px 9px 0; color: #c6ccda; font-size: 12.5px; line-height: 1.4; }
 .zguide-invite__dismiss {
   position: absolute;
   top: 5px;
@@ -378,23 +452,139 @@
   font: 650 12px/1 var(--font-sans);
   cursor: pointer;
 }
+body:has(.zguide-invite) .zguide-launcher {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
 @keyframes zguide-welcome-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 560px) {
-  .zassistant { align-items: flex-end; padding: 0; background: rgba(6, 7, 9, 0.58); }
+  .zassistant {
+    align-items: flex-end;
+    padding: 0;
+    background: rgba(6, 7, 9, 0.58);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+  }
   .zassistant__panel {
     width: 100%;
-    height: min(88dvh, 760px);
+    height: min(88dvh, var(--zassistant-viewport-height, 88dvh), 760px);
+    max-height: var(--zassistant-viewport-height, 100dvh);
     border-width: 1px 0 0;
     border-radius: 22px 22px 0 0;
   }
-  .zassistant__hint { display: none; }
+  .zassistant__head {
+    padding-right: max(8px, env(safe-area-inset-right));
+    padding-left: max(18px, env(safe-area-inset-left));
+  }
+  .zassistant__intro,
+  .zassistant__context,
+  .zassistant__log,
+  .zassistant__status,
+  .zassistant__starters,
+  .zassistant__privacy {
+    padding-right: max(18px, env(safe-area-inset-right));
+    padding-left: max(18px, env(safe-area-inset-left));
+  }
+  .zassistant__form {
+    margin-right: max(12px, env(safe-area-inset-right));
+    margin-left: max(12px, env(safe-area-inset-left));
+  }
   .zassistant__message { width: 96%; }
   .zguide-launcher { right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); }
-  .zguide-invite { right: 12px; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 60px); }
+  .zguide-invite {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: min(280px, calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* Keep phone inputs zoom-free and let Return remain a normal newline affordance. */
+@media (max-width: 560px), (max-height: 620px) and (pointer: coarse) {
+  .zassistant__head { touch-action: pan-x; }
+  .zassistant__panel::before {
+    content: '';
+    display: block;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 4px;
+    margin: 8px auto 0;
+    border-radius: 999px;
+    background: var(--za-hair-3);
+  }
+  .zassistant__input { font-size: 16px; }
+  .zassistant__hint { display: none; }
+}
+
+@media (pointer: coarse) {
+  .zassistant__source-chip,
+  .zassistant__chart-chip,
+  .zassistant__source-add,
+  .zassistant__source-remove {
+    min-height: 44px;
+  }
+  .zassistant__source-remove {
+    flex-basis: 44px;
+    width: 44px;
+  }
+}
+
+/* iPhone landscape and keyboard-reduced viewports become a full, safe-area-aware sheet. */
+@media (max-height: 620px) and (pointer: coarse) {
+  .zassistant {
+    align-items: stretch;
+    padding: 0;
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+  }
+  .zassistant__panel {
+    width: 100%;
+    height: var(--zassistant-viewport-height, 100dvh);
+    max-height: var(--zassistant-viewport-height, 100dvh);
+    border: 0;
+    border-radius: 0;
+  }
+  .zassistant__panel::before { margin-top: max(8px, env(safe-area-inset-top)); }
+  .zassistant__head {
+    min-height: 56px;
+    padding-right: max(8px, env(safe-area-inset-right));
+    padding-left: max(18px, env(safe-area-inset-left));
+  }
+  .zassistant__intro,
+  .zassistant__context,
+  .zassistant__log,
+  .zassistant__status,
+  .zassistant__starters,
+  .zassistant__privacy {
+    padding-right: max(18px, env(safe-area-inset-right));
+    padding-left: max(18px, env(safe-area-inset-left));
+  }
+  .zassistant__form {
+    margin-right: max(12px, env(safe-area-inset-right));
+    margin-left: max(12px, env(safe-area-inset-left));
+  }
+  .zassistant__intro { padding-top: 10px; }
+  .zassistant__context {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .zassistant__context::-webkit-scrollbar { display: none; }
+  .zassistant__source-chip,
+  .zassistant__chart-chip,
+  .zassistant__source-add { flex: 0 0 auto; }
+  .zassistant__input { min-height: 44px; max-height: 96px; }
+  .zassistant__privacy { padding-top: 6px; }
+}
+
+@media (max-width: 560px) and (max-height: 480px) and (pointer: coarse) {
+  .zassistant__intro { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,7 +2,7 @@
  * Public, server-curated facts for Guide. This catalog contains no user data
  * and is deliberately separate from visible/private conversation sources.
  */
-export const GUIDE_KNOWLEDGE_VERSION = 'guide-public-knowledge-2026-08-14.1' as const;
+export const GUIDE_KNOWLEDGE_VERSION = 'guide-public-knowledge-2026-08-16.1' as const;
 
 export interface GuideKnowledgeEntry {
   id: string;
@@ -12,7 +12,43 @@ export interface GuideKnowledgeEntry {
   facts: string;
 }
 
+const SIGN_GUIDE_FACTS = [
+  ['aries', 'Aries', 'fire', 'cardinal', 'Mars'],
+  ['taurus', 'Taurus', 'earth', 'fixed', 'Venus'],
+  ['gemini', 'Gemini', 'air', 'mutable', 'Mercury'],
+  ['cancer', 'Cancer', 'water', 'cardinal', 'the Moon'],
+  ['leo', 'Leo', 'fire', 'fixed', 'the Sun'],
+  ['virgo', 'Virgo', 'earth', 'mutable', 'Mercury'],
+  ['libra', 'Libra', 'air', 'cardinal', 'Venus'],
+  ['scorpio', 'Scorpio', 'water', 'fixed', 'Pluto, with Mars as its traditional ruler'],
+  ['sagittarius', 'Sagittarius', 'fire', 'mutable', 'Jupiter'],
+  ['capricorn', 'Capricorn', 'earth', 'cardinal', 'Saturn'],
+  ['aquarius', 'Aquarius', 'air', 'fixed', 'Uranus, with Saturn as its traditional ruler'],
+  ['pisces', 'Pisces', 'water', 'mutable', 'Neptune, with Jupiter as its traditional ruler'],
+] as const;
+
+const SIGN_GUIDE_ENTRIES: readonly GuideKnowledgeEntry[] = SIGN_GUIDE_FACTS.map(([
+  slug,
+  name,
+  element,
+  modality,
+  rulership,
+]) => ({
+  id: `sign-${slug}`,
+  title: `${name} sign guide`,
+  canonicalPath: `/${slug}/`,
+  topics: [slug, `${slug} sign`, 'zodiac sign', element, modality, 'ruling planet'],
+  facts: `The canonical /${slug}/ page is the Zodiacs.org sign guide for ${name}. It covers ${name} as a ${element} sign with ${modality} modality and rulership by ${rulership}, together with its symbolism, placements, and compatibility. These are traditional astrological interpretations, not scientific causation or certainty. A Sun sign is one chart placement, not the whole person.`,
+}));
+
 export const GUIDE_KNOWLEDGE_ENTRIES: readonly GuideKnowledgeEntry[] = Object.freeze([
+  {
+    id: 'home',
+    title: 'Zodiacs.org home',
+    canonicalPath: '/',
+    topics: ['zodiacs.org', 'home', 'start', 'astrology tools', 'birth chart', 'sign guides'],
+    facts: 'The Zodiacs.org homepage introduces the free astrology reference and links visitors to birth charts, Moon and rising signs, compatibility, horoscopes, sign guides, and the current-sky tools. Chart calculations start in the browser, no account is required for the core tools, and Astrofolio remains separate from the free astrology experience.',
+  },
   {
     id: 'guide',
     title: 'Guide',
@@ -26,6 +62,13 @@ export const GUIDE_KNOWLEDGE_ENTRIES: readonly GuideKnowledgeEntry[] = Object.fr
     canonicalPath: '/birth-chart/',
     topics: ['birth', 'natal', 'chart', 'sun', 'moon', 'rising', 'ascendant', 'houses', 'aspects'],
     facts: 'The Zodiacs.org birth-chart calculator computes planetary positions in the browser. A complete chart can include the Sun, Moon, rising sign, houses, and aspects. If birth time is unknown, the site uses 12:00 local civil time as a reference for body positions and omits the rising sign, angles, and houses.',
+  },
+  {
+    id: 'tools',
+    title: 'Astrology tools',
+    canonicalPath: '/tools/',
+    topics: ['tools', 'calculator', 'which tool', 'start', 'birth chart', 'moon sign', 'rising sign', 'compatibility'],
+    facts: 'The /tools/ page is the Zodiacs.org directory of free astrology tools. It groups starting points such as the birth-chart, Moon-sign, rising-sign, and compatibility calculators; current-sky tools such as transits, Moon phases, eclipses, and retrogrades; and milestone tools such as Saturn and solar returns. A visitor who wants the whole chart should start with /birth-chart/.',
   },
   {
     id: 'moon-sign',
@@ -62,6 +105,7 @@ export const GUIDE_KNOWLEDGE_ENTRIES: readonly GuideKnowledgeEntry[] = Object.fr
     topics: ['learn', 'signs', 'planets', 'houses', 'aspects', 'retrograde', 'beginner'],
     facts: 'The Learn section explains signs, planets, houses, aspects, placements, retrogrades, and chart reading in plain language. Guide may direct a visitor to the closest relevant Learn page when the catalog supports that path.',
   },
+  ...SIGN_GUIDE_ENTRIES,
   {
     id: 'horoscopes',
     title: 'Horoscopes and Today',
@@ -93,9 +137,9 @@ export const GUIDE_KNOWLEDGE_ENTRIES: readonly GuideKnowledgeEntry[] = Object.fr
   {
     id: 'astrofolio',
     title: 'Astrofolio',
-    canonicalPath: '/sdk/#astrofolio',
+    canonicalPath: '/astrofolio/',
     topics: ['astrofolio', 'shelf', 'collection', 'zodiac asset', 'consumer experience'],
-    facts: 'Astrofolio is a related but separate consumer experience. Zodiacs.org remains the astrology reference and official Registry and SDK source. The operator of Zodiacs.org states that they do not control astrofolio.xyz, its official channels, token deployment or administrative authorities, treasury, liquidity, or market activity. Astrofolio is never the name of a Zodiacs account or saved chart.',
+    facts: 'The /astrofolio/ page is the consumer collection for choosing one of twelve gold Zodiac sculptures, seeing the corresponding official token, opening its Registry record, and following the page’s public acquisition guide. Zodiacs.org remains the astrology reference and official Registry and SDK source. The operator of Zodiacs.org states that they do not control astrofolio.xyz, its official channels, token deployment or administrative authorities, treasury, liquidity, or market activity. Astrofolio is never the name of a Zodiacs account or saved chart, and Guide must not recommend buying, selling, timing, valuation, or a trade.',
   },
   {
     id: 'sdk',
