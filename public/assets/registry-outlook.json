@@ -115,12 +115,12 @@
       "suppliedSigns": 12,
       "medians": {
         "liquidityUsd": 12427.97,
-        "marketCapUsd": 69517.5
+        "marketCapUsd": 69510.5
       },
       "freshness": {
-        "asOf": "2026-08-16T04:01:32.303Z",
+        "asOf": "2026-08-16T07:19:53.993Z",
         "status": "current-for-horizon",
-        "ageHoursAtHorizonEnd": 20
+        "ageHoursAtHorizonEnd": 16.7
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
@@ -212,10 +212,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00006889,
-          "change24hPct": 5.31,
+          "change24hPct": 5.14,
           "marketCapUsd": 68876,
           "liquidityUsd": 12234.57,
-          "volume24hUsd": 2898.45,
+          "volume24hUsd": 2897.94,
           "liquidityVsCollectionMedian": 0.98,
           "marketCapVsCollectionMedian": 0.99,
           "turnover24h": 0.24,
@@ -240,10 +240,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007175,
-          "change24hPct": 5.31,
+          "change24hPct": 2.82,
           "marketCapUsd": 71753,
           "liquidityUsd": 12017.15,
-          "volume24hUsd": 3871.95,
+          "volume24hUsd": 3871.49,
           "liquidityVsCollectionMedian": 0.97,
           "marketCapVsCollectionMedian": 1.03,
           "turnover24h": 0.32,
@@ -304,10 +304,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.0001162,
-          "change24hPct": 8.2,
-          "marketCapUsd": 116273,
+          "change24hPct": 8.85,
+          "marketCapUsd": 116274,
           "liquidityUsd": 17021.58,
-          "volume24hUsd": 756.27,
+          "volume24hUsd": 745.12,
           "liquidityVsCollectionMedian": 1.37,
           "marketCapVsCollectionMedian": 1.67,
           "turnover24h": 0.04,
@@ -467,11 +467,11 @@
         ],
         "market": {
           "available": true,
-          "priceUsd": 0.0000699,
-          "change24hPct": 7.95,
-          "marketCapUsd": 69900,
-          "liquidityUsd": 12678.66,
-          "volume24hUsd": 708.47,
+          "priceUsd": 0.00006992,
+          "change24hPct": 7.68,
+          "marketCapUsd": 69916,
+          "liquidityUsd": 12677.63,
+          "volume24hUsd": 702.52,
           "liquidityVsCollectionMedian": 1.02,
           "marketCapVsCollectionMedian": 1.01,
           "turnover24h": 0.06,
@@ -643,11 +643,11 @@
         "factors": [],
         "market": {
           "available": true,
-          "priceUsd": 0.00006913,
-          "change24hPct": 3.75,
-          "marketCapUsd": 69135,
-          "liquidityUsd": 12081.09,
-          "volume24hUsd": 956.93,
+          "priceUsd": 0.00006893,
+          "change24hPct": 3.46,
+          "marketCapUsd": 68939,
+          "liquidityUsd": 12037.66,
+          "volume24hUsd": 961.56,
           "liquidityVsCollectionMedian": 0.97,
           "marketCapVsCollectionMedian": 0.99,
           "turnover24h": 0.08,
@@ -873,12 +873,12 @@
       "suppliedSigns": 12,
       "medians": {
         "liquidityUsd": 12427.97,
-        "marketCapUsd": 69517.5
+        "marketCapUsd": 69510.5
       },
       "freshness": {
-        "asOf": "2026-08-16T04:01:32.303Z",
+        "asOf": "2026-08-16T07:19:53.993Z",
         "status": "stale-for-horizon",
-        "ageHoursAtHorizonEnd": 164
+        "ageHoursAtHorizonEnd": 160.7
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
@@ -1056,10 +1056,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00006889,
-          "change24hPct": 5.31,
+          "change24hPct": 5.14,
           "marketCapUsd": 68876,
           "liquidityUsd": 12234.57,
-          "volume24hUsd": 2898.45,
+          "volume24hUsd": 2897.94,
           "liquidityVsCollectionMedian": 0.98,
           "marketCapVsCollectionMedian": 0.99,
           "turnover24h": 0.24,
@@ -1084,10 +1084,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007175,
-          "change24hPct": 5.31,
+          "change24hPct": 2.82,
           "marketCapUsd": 71753,
           "liquidityUsd": 12017.15,
-          "volume24hUsd": 3871.95,
+          "volume24hUsd": 3871.49,
           "liquidityVsCollectionMedian": 0.97,
           "marketCapVsCollectionMedian": 1.03,
           "turnover24h": 0.32,
@@ -1148,10 +1148,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.0001162,
-          "change24hPct": 8.2,
-          "marketCapUsd": 116273,
+          "change24hPct": 8.85,
+          "marketCapUsd": 116274,
           "liquidityUsd": 17021.58,
-          "volume24hUsd": 756.27,
+          "volume24hUsd": 745.12,
           "liquidityVsCollectionMedian": 1.37,
           "marketCapVsCollectionMedian": 1.67,
           "turnover24h": 0.04,
@@ -1405,11 +1405,11 @@
         ],
         "market": {
           "available": true,
-          "priceUsd": 0.0000699,
-          "change24hPct": 7.95,
-          "marketCapUsd": 69900,
-          "liquidityUsd": 12678.66,
-          "volume24hUsd": 708.47,
+          "priceUsd": 0.00006992,
+          "change24hPct": 7.68,
+          "marketCapUsd": 69916,
+          "liquidityUsd": 12677.63,
+          "volume24hUsd": 702.52,
           "liquidityVsCollectionMedian": 1.02,
           "marketCapVsCollectionMedian": 1.01,
           "turnover24h": 0.06,
@@ -1641,11 +1641,11 @@
         "factors": [],
         "market": {
           "available": true,
-          "priceUsd": 0.00006913,
-          "change24hPct": 3.75,
-          "marketCapUsd": 69135,
-          "liquidityUsd": 12081.09,
-          "volume24hUsd": 956.93,
+          "priceUsd": 0.00006893,
+          "change24hPct": 3.46,
+          "marketCapUsd": 68939,
+          "liquidityUsd": 12037.66,
+          "volume24hUsd": 961.56,
           "liquidityVsCollectionMedian": 0.97,
           "marketCapVsCollectionMedian": 0.99,
           "turnover24h": 0.08,

@@ -1966,7 +1966,7 @@
       "source": {
         "provider": "DexScreener",
         "url": "https://api.dexscreener.com/tokens/v1/solana/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv,EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp,ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc,CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ,8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm,Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso,7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe,J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1,8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3,3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2,C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt,3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
-        "readAt": "2026-08-16T04:01:32.303Z"
+        "readAt": "2026-08-16T07:19:53.993Z"
       },
       "coverage": {
         "canonicalAssetCount": 12,
@@ -1975,13 +1975,13 @@
         "assetsWithFdv": 12
       },
       "totals": {
-        "marketCapUsd": 889799,
+        "marketCapUsd": 889620,
         "marketCapAssetCount": 12,
-        "fdvUsd": 889799,
+        "fdvUsd": 889619,
         "fdvAssetCount": 12,
-        "liquidityUsd": 156908.09,
+        "liquidityUsd": 156863.63,
         "liquidityReportedPoolCount": 12,
-        "volume24hUsd": 35405.48,
+        "volume24hUsd": 35392.04,
         "volume24hReportedPoolCount": 12,
         "indexedPoolCount": 12
       },
@@ -1992,12 +1992,12 @@
           "symbol": "ARIES",
           "mint": "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
           "priceUsd": 0.00006889,
-          "change24hPct": 5.31,
+          "change24hPct": 5.14,
           "marketCapUsd": 68876,
           "fdvUsd": 68876,
           "liquidityUsd": 12234.57,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 2898.45,
+          "volume24hUsd": 2897.94,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -2013,12 +2013,12 @@
           "symbol": "TAURUS",
           "mint": "EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp",
           "priceUsd": 0.00007175,
-          "change24hPct": 5.31,
+          "change24hPct": 2.82,
           "marketCapUsd": 71753,
           "fdvUsd": 71753,
           "liquidityUsd": 12017.15,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 3871.95,
+          "volume24hUsd": 3871.49,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -2034,12 +2034,12 @@
           "symbol": "GEMINI",
           "mint": "ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc",
           "priceUsd": 0.0001162,
-          "change24hPct": 8.2,
-          "marketCapUsd": 116273,
+          "change24hPct": 8.85,
+          "marketCapUsd": 116274,
           "fdvUsd": 116273,
           "liquidityUsd": 17021.58,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 756.27,
+          "volume24hUsd": 745.12,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -2075,20 +2075,20 @@
           "displayName": "Leo",
           "symbol": "LEO",
           "mint": "8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm",
-          "priceUsd": 0.0000699,
-          "change24hPct": 7.95,
-          "marketCapUsd": 69900,
-          "fdvUsd": 69900,
-          "liquidityUsd": 12678.66,
+          "priceUsd": 0.00006992,
+          "change24hPct": 7.68,
+          "marketCapUsd": 69916,
+          "fdvUsd": 69916,
+          "liquidityUsd": 12677.63,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 708.47,
+          "volume24hUsd": 702.52,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "48ErBGMqiZekyLoCcebd7cS5KNQPzqr7QQAK9mzAPQGQ",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/48erbgmqizekyloccebd7cs5knqpzqr7qqak9mzapqgq",
-            "liquidityUsd": 12678.66
+            "liquidityUsd": 12677.63
           }
         },
         {
@@ -2180,20 +2180,20 @@
           "displayName": "Capricorn",
           "symbol": "CAPRICORN",
           "mint": "3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2",
-          "priceUsd": 0.00006913,
-          "change24hPct": 3.75,
-          "marketCapUsd": 69135,
-          "fdvUsd": 69135,
-          "liquidityUsd": 12081.09,
+          "priceUsd": 0.00006893,
+          "change24hPct": 3.46,
+          "marketCapUsd": 68939,
+          "fdvUsd": 68939,
+          "liquidityUsd": 12037.66,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 956.93,
+          "volume24hUsd": 961.56,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "549aknNCvxbiqmikS6sAnY6Dbg37MeENWn6ZFBfc7sin",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/549aknncvxbiqmiks6sany6dbg37meenwn6zfbfc7sin",
-            "liquidityUsd": 12081.09
+            "liquidityUsd": 12037.66
           }
         },
         {

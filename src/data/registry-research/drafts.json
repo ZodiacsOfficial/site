@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-drafts.v1",
-  "generatedAt": "2026-08-16T04:01:32.303Z",
+  "generatedAt": "2026-08-16T07:19:53.993Z",
   "generator": "zodiacs.registry-research.deterministic.v1",
   "method": {
     "id": "zodiacs.registry-research-method.v1",
@@ -2474,10 +2474,10 @@
       "kind": "observation-update",
       "templateId": "observation-update.v1",
       "parentId": "zrx-market-check-2026-08-14",
-      "issuedAt": "2026-08-16T04:01:32.303Z",
-      "visibleAt": "2026-08-16T04:01:32.303Z",
+      "issuedAt": "2026-08-16T07:19:53.993Z",
+      "visibleAt": "2026-08-16T07:19:53.993Z",
       "title": "Leo 24-hour observation update",
-      "summary": "24-hour follow-up using the first qualifying archived snapshot (43.95 actual hours elapsed).",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (47.26 actual hours elapsed).",
       "url": "/terminal/research/market-check-2026-08-14-observation-24h/",
       "signs": [
         "leo"
@@ -2511,7 +2511,7 @@
         },
         "marketObservation": {
           "heading": "Market observation",
-          "body": "43.95 hours after the original market observation, indexed price change was +0.1% and indexed liquidity change was -0.17%. This temporal comparison does not establish causation.",
+          "body": "47.26 hours after the original market observation, indexed price change was +0.13% and indexed liquidity change was -0.18%. This temporal comparison does not establish causation.",
           "evidence": [
             "public/assets/data/registry-market-history.v1.json"
           ]
@@ -2519,32 +2519,134 @@
       },
       "market": {
         "available": true,
-        "snapshotId": "registry-market:2026-08-16:2026-08-16T04:01:32.303Z",
-        "observedAt": "2026-08-16T04:01:32.303Z",
+        "snapshotId": "registry-market:2026-08-16:2026-08-16T07:19:53.993Z",
+        "observedAt": "2026-08-16T07:19:53.993Z",
         "provider": "DexScreener",
         "sign": "leo",
-        "priceUsd": 0.0000699,
-        "change24hPct": 7.95,
-        "marketCapUsd": 69900,
-        "fdvUsd": 69900,
-        "liquidityUsd": 12678.66,
-        "volume24hUsd": 708.47,
+        "priceUsd": 0.00006992,
+        "change24hPct": 7.68,
+        "marketCapUsd": 69916,
+        "fdvUsd": 69916,
+        "liquidityUsd": 12677.63,
+        "volume24hUsd": 702.52,
         "indexedPoolCount": 1,
         "deepestPoolUrl": "https://dexscreener.com/solana/48erbgmqizekyloccebd7cs5knqpzqr7qqak9mzapqgq",
         "baselineSnapshotId": "registry-market:2026-08-14:2026-08-14T08:04:28.910Z",
         "baselineObservedAt": "2026-08-14T08:04:28.910Z",
         "requestedElapsedHours": 24,
-        "actualElapsedHours": 43.95,
-        "priceChangePct": 0.1,
-        "liquidityChangePct": -0.17
+        "actualElapsedHours": 47.26,
+        "priceChangePct": 0.13,
+        "liquidityChangePct": -0.18
       },
       "evidence": {
         "parentId": "zrx-market-check-2026-08-14",
         "baselineSnapshotId": "registry-market:2026-08-14:2026-08-14T08:04:28.910Z",
-        "marketSnapshotId": "registry-market:2026-08-16:2026-08-16T04:01:32.303Z",
+        "marketSnapshotId": "registry-market:2026-08-16:2026-08-16T07:19:53.993Z",
         "coverage": "first-qualifying-archive-observation"
       },
-      "artifactHash": "216848036ad140ae7801a10ad6e17d3a492b9fbb7c20b7f00c66adc6e152d1b1"
+      "artifactHash": "0d0983a92c1b598f811bb64a8834c4f0e2002029d2e197c01f77da185e43a4ef"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [
+        {
+          "kind": "append-only-follow-up",
+          "parentId": "zrx-market-check-2026-08-15"
+        }
+      ],
+      "id": "zrx-market-check-2026-08-15-observation-24h",
+      "slug": "market-check-2026-08-15-observation-24h",
+      "kind": "observation-update",
+      "templateId": "observation-update.v1",
+      "parentId": "zrx-market-check-2026-08-15",
+      "issuedAt": "2026-08-16T07:19:53.993Z",
+      "visibleAt": "2026-08-16T07:19:53.993Z",
+      "title": "Leo 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (24.03 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-08-15-observation-24h/",
+      "signs": [
+        "leo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "symbolicScore": {
+        "sign": "leo",
+        "attention": 38,
+        "tone": 2,
+        "eventIntensity": 9,
+        "calculation": "18 attention / 2 tone / 10 event intensity × 0.8814 horizon multiplier",
+        "marketFieldsUsed": false
+      },
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "The original zrx-market-check-2026-08-15 sky score and traditional reading remain unchanged.",
+          "evidence": [
+            "/assets/data/registry-research/items/zrx-market-check-2026-08-15.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "This follow-up does not reinterpret the sky after observing the market.",
+          "evidence": [
+            "/assets/data/registry-research/items/zrx-market-check-2026-08-15.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "24.03 hours after the original market observation, indexed price change was +7.98% and indexed liquidity change was +3.93%. This temporal comparison does not establish causation.",
+          "evidence": [
+            "public/assets/data/registry-market-history.v1.json"
+          ]
+        }
+      },
+      "market": {
+        "available": true,
+        "snapshotId": "registry-market:2026-08-16:2026-08-16T07:19:53.993Z",
+        "observedAt": "2026-08-16T07:19:53.993Z",
+        "provider": "DexScreener",
+        "sign": "leo",
+        "priceUsd": 0.00006992,
+        "change24hPct": 7.68,
+        "marketCapUsd": 69916,
+        "fdvUsd": 69916,
+        "liquidityUsd": 12677.63,
+        "volume24hUsd": 702.52,
+        "indexedPoolCount": 1,
+        "deepestPoolUrl": "https://dexscreener.com/solana/48erbgmqizekyloccebd7cs5knqpzqr7qqak9mzapqgq",
+        "baselineSnapshotId": "registry-market:2026-08-15:2026-08-15T07:18:02.688Z",
+        "baselineObservedAt": "2026-08-15T07:18:02.688Z",
+        "requestedElapsedHours": 24,
+        "actualElapsedHours": 24.03,
+        "priceChangePct": 7.98,
+        "liquidityChangePct": 3.93
+      },
+      "evidence": {
+        "parentId": "zrx-market-check-2026-08-15",
+        "baselineSnapshotId": "registry-market:2026-08-15:2026-08-15T07:18:02.688Z",
+        "marketSnapshotId": "registry-market:2026-08-16:2026-08-16T07:19:53.993Z",
+        "coverage": "first-qualifying-archive-observation"
+      },
+      "artifactHash": "57a66f8b6bd04ba9b0cb8aa31dd1448122629f830fd1a3d021c6d1b4081b3ad5"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -2570,8 +2672,8 @@
       "slug": "market-check-2026-08-16",
       "kind": "market-check",
       "templateId": "market-check.v1",
-      "issuedAt": "2026-08-16T04:01:32.303Z",
-      "visibleAt": "2026-08-16T04:01:32.303Z",
+      "issuedAt": "2026-08-16T07:19:53.993Z",
+      "visibleAt": "2026-08-16T07:19:53.993Z",
       "title": "Leo market check · 2026-08-16",
       "summary": "Leo price, market cap, liquidity, volume, and collection medians at one archived observation.",
       "url": "/terminal/research/market-check-2026-08-16/",
@@ -2607,7 +2709,7 @@
         },
         "marketObservation": {
           "heading": "Market observation",
-          "body": "At 2026-08-16T04:01:32.303Z, Leo was indexed at $0.0000699, with +7.95% over 24 hours, $69.9K market cap, $69.9K FDV, $12.68K indexed liquidity, $708.47 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Leo market cap was 1.006× the collection median and indexed liquidity was 1.02× the collection median.",
+          "body": "At 2026-08-16T07:19:53.993Z, Leo was indexed at $0.00006992, with +7.68% over 24 hours, $69.92K market cap, $69.92K FDV, $12.68K indexed liquidity, $702.52 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Leo market cap was 1.006× the collection median and indexed liquidity was 1.02× the collection median.",
           "evidence": [
             "public/assets/data/registry-market-history.v1.json"
           ]
@@ -2615,20 +2717,20 @@
       },
       "market": {
         "available": true,
-        "snapshotId": "registry-market:2026-08-16:2026-08-16T04:01:32.303Z",
-        "observedAt": "2026-08-16T04:01:32.303Z",
+        "snapshotId": "registry-market:2026-08-16:2026-08-16T07:19:53.993Z",
+        "observedAt": "2026-08-16T07:19:53.993Z",
         "provider": "DexScreener",
         "sign": "leo",
-        "priceUsd": 0.0000699,
-        "change24hPct": 7.95,
-        "marketCapUsd": 69900,
-        "fdvUsd": 69900,
-        "liquidityUsd": 12678.66,
-        "volume24hUsd": 708.47,
+        "priceUsd": 0.00006992,
+        "change24hPct": 7.68,
+        "marketCapUsd": 69916,
+        "fdvUsd": 69916,
+        "liquidityUsd": 12677.63,
+        "volume24hUsd": 702.52,
         "indexedPoolCount": 1,
         "deepestPoolUrl": "https://dexscreener.com/solana/48erbgmqizekyloccebd7cs5knqpzqr7qqak9mzapqgq",
         "collectionMedian": {
-          "marketCapUsd": 69517.5,
+          "marketCapUsd": 69510.5,
           "liquidityUsd": 12427.965
         },
         "vsCollectionMedian": {
@@ -2638,7 +2740,7 @@
       },
       "evidence": {
         "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-16",
-        "marketSnapshotId": "registry-market:2026-08-16:2026-08-16T04:01:32.303Z",
+        "marketSnapshotId": "registry-market:2026-08-16:2026-08-16T07:19:53.993Z",
         "coverage": {
           "overall": "complete",
           "events": "complete",
@@ -2650,7 +2752,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "f7b582371e1d92411f1d014b2f102c79eec9d51193f2b93fddba3545eceb7a1c"
+      "artifactHash": "23a4cca528e71dcf6719e2c8cfa127e0c59e26cfa12eca58a7d1ef7f2925c989"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -2716,7 +2818,7 @@
         },
         "marketObservation": {
           "heading": "Market observation",
-          "body": "At 2026-08-16T04:01:32.303Z, Leo was indexed at $0.0000699, with +7.95% over 24 hours, $69.9K market cap, $69.9K FDV, $12.68K indexed liquidity, $708.47 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
+          "body": "At 2026-08-16T07:19:53.993Z, Leo was indexed at $0.00006992, with +7.68% over 24 hours, $69.92K market cap, $69.92K FDV, $12.68K indexed liquidity, $702.52 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
           "evidence": [
             "public/assets/data/registry-market-history.v1.json"
           ]
@@ -2724,23 +2826,23 @@
       },
       "market": {
         "available": true,
-        "snapshotId": "registry-market:2026-08-16:2026-08-16T04:01:32.303Z",
-        "observedAt": "2026-08-16T04:01:32.303Z",
+        "snapshotId": "registry-market:2026-08-16:2026-08-16T07:19:53.993Z",
+        "observedAt": "2026-08-16T07:19:53.993Z",
         "provider": "DexScreener",
         "sign": "leo",
-        "priceUsd": 0.0000699,
-        "change24hPct": 7.95,
-        "marketCapUsd": 69900,
-        "fdvUsd": 69900,
-        "liquidityUsd": 12678.66,
-        "volume24hUsd": 708.47,
+        "priceUsd": 0.00006992,
+        "change24hPct": 7.68,
+        "marketCapUsd": 69916,
+        "fdvUsd": 69916,
+        "liquidityUsd": 12677.63,
+        "volume24hUsd": 702.52,
         "indexedPoolCount": 1,
         "deepestPoolUrl": "https://dexscreener.com/solana/48erbgmqizekyloccebd7cs5knqpzqr7qqak9mzapqgq"
       },
       "evidence": {
         "dailyFacts": "src/data/daily.json#2026-08-16",
         "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-16",
-        "marketSnapshotId": "registry-market:2026-08-16:2026-08-16T04:01:32.303Z",
+        "marketSnapshotId": "registry-market:2026-08-16:2026-08-16T07:19:53.993Z",
         "coverage": {
           "overall": "complete",
           "events": "complete",
@@ -2752,7 +2854,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "8ef363fc34db396cd2c7b553fe82d72a9cd3d79e30850e5dd46aa458021eb039"
+      "artifactHash": "f5d300657bf6a9e4a91b3a9b479a0c0c17e3dc025cc780ca0d945a1bb95c9b69"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
