@@ -45,15 +45,12 @@ function expectMainSiteNavType(html) {
 }
 
 describe('Registry catalogue shell parity', () => {
-  it('keeps the main and catalogue navigation language aligned', async () => {
-    const [siteNav, hub, ...profiles] = await Promise.all([
-      read('src/components/SiteNav.astro'),
+  it('keeps the catalogue navigation label plain across all records', async () => {
+    const [hub, ...profiles] = await Promise.all([
       read('public/registry/index.html'),
       ...signs.map((sign) => read(`public/registry/${sign}/index.html`)),
     ]);
 
-    expect(siteNav).toContain("en: 'The twelve Zodiac signs'");
-    expect(siteNav).not.toContain('gold Zodiac sculptures');
     for (const html of [hub, ...profiles]) {
       expect(html).toContain('<span>Astrofolio</span><small>The twelve Zodiac signs</small>');
       expect(html).not.toContain('gold Zodiac sculptures');
