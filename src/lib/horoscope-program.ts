@@ -46,7 +46,7 @@ export type {
 } from './horoscope-program-types';
 
 export const HOROSCOPE_PROGRAM_SCHEMA = 'zodiacs.horoscope-program.v1' as const;
-export const HOROSCOPE_PROGRAM_RENDERER = 'zodiacs.horoscope-program-renderer.v7' as const;
+export const HOROSCOPE_PROGRAM_RENDERER = 'zodiacs.horoscope-program-renderer.v8' as const;
 
 export const HOROSCOPE_WORD_BOUNDS: Record<HoroscopeSurface, { min: number; max: number }> = {
   today: { min: 90, max: 140 },
@@ -990,13 +990,16 @@ function loveSurface(sign: HoroscopeSign, daily: Daily, catalog: EvidenceCatalog
   const moon = body(daily, 'Moon');
   const venusHouse = solarHouse(venus.sign, sign);
   const moonHouse = solarHouse(moon.sign, sign);
+  const moonPassage = moonHouse === venusHouse
+    ? `In the same relationship area, ${uncap(LOVE_RESPONSE[moonHouse])}. The Moon keeps ${HOUSE_THEME[moonHouse]} active in the emotional weather.`
+    : `${cap(LOVE_ACTION[moonHouse])}. ${LOVE_RESPONSE[moonHouse]}. The Moon shifts the emotional weather toward ${HOUSE_THEME[moonHouse]}.`;
   return reading('love', sign, { from: daily.date, through: daily.date }, `${cap(sign)} love horoscope for ${dateLabel(daily.date)}`, [
     passage(
       `${cap(LOVE_ACTION[venusHouse])}. For ${cap(sign)}, ${SIGN_REGISTER[sign].love}. Venus brings ${HOUSE_THEME[venusHouse]} into the relationship foreground.`,
       catalog.position(daily, venus, sign),
     ),
     passage(
-      `${cap(LOVE_ACTION[moonHouse])}. ${LOVE_RESPONSE[moonHouse]}. The Moon shifts the emotional weather toward ${HOUSE_THEME[moonHouse]}.`,
+      moonPassage,
       catalog.position(daily, moon, sign),
     ),
   ]);

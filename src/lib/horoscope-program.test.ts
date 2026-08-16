@@ -114,6 +114,16 @@ describe('horoscope program domain', () => {
     }
   });
 
+  it('keeps love actions distinct when Venus and the Moon share a sign', () => {
+    const anchor = input.dailySnapshots.find(({ date }) => date === input.anchorDate);
+    expect(anchor?.bodies.find(({ body }) => body === 'Moon')?.sign)
+      .toBe(anchor?.bodies.find(({ body }) => body === 'Venus')?.sign);
+
+    const failures = verifyHoroscopeProgramCopy(buildHoroscopeProgram(input))
+      .filter(({ path }) => path.includes('.readings.love.'));
+    expect(failures).toEqual([]);
+  });
+
   it('links every publishable passage to serializable source or derived evidence', () => {
     const program = buildHoroscopeProgram(input);
     const evidence = new Map(program.evidence.map((receipt) => [receipt.id, receipt]));
