@@ -40,7 +40,7 @@ export const NAV_TOOLS = [
   { href: '/rising-sign/', name: 'Rising sign', description: 'Find the sign people meet first. Birth time helps.' },
   { href: '/moon-phase/', name: 'Moon phase', description: 'Tonight’s moon, and the moon of any date you care about.' },
   { href: '/saturn-return/', name: 'Saturn return', description: 'When yours hits, exactly, and what it tends to ask.' },
-  { href: '/birthday/', name: 'Birthday', description: 'Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.' },
+  { href: '/birthday/', name: 'Birthday', description: 'Check the Zodiac sign for any birthday from 1940 to 2030, including birthdays close to a sign change.' },
 ];
 
 // BrandMark: twelve dots in a ring, one per sign hue (mirrors BrandMark.astro).

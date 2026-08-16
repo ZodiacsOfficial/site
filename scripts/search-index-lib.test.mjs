@@ -172,7 +172,7 @@ describe('curated wing search entries', () => {
       expect.objectContaining({
         path: '/registry/',
         title: 'The 12 Zodiac Profiles',
-        description: 'Choose your Zodiac sign, meet the people who share it, copy its emoji, and see where it stands today.',
+        description: 'Choose your Zodiac sign, meet famous people who share it, compare recent Wikipedia views, and see today’s market standings.',
       }),
       expect.objectContaining({
         path: '/thesis/',
@@ -188,7 +188,7 @@ describe('curated wing search entries', () => {
     expect(CURATED_WING_ENTRIES[5]).toEqual(expect.objectContaining({
       path: '/registry/aries/',
       title: 'Aries Zodiac profile',
-      description: 'Aries dates, symbol, famous birthdays, current market snapshot, and verified token address.',
+      description: 'Aries dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.',
     }));
     expect(searchIndexShapeFailures(
       sortSearchEntries(CURATED_WING_ENTRIES),
@@ -196,18 +196,18 @@ describe('curated wing search entries', () => {
     )).toEqual([]);
   });
 
-  it('keeps non-market destinations neutral while describing the profile market snapshots plainly', () => {
+  it('keeps non-market destinations neutral while describing profile prices plainly', () => {
     const profiles = CURATED_WING_ENTRIES.filter(({ path }) => SIGN_PROFILE_PATH.test(path));
     expect(profiles).toHaveLength(12);
 
     for (const entry of profiles) {
-      expect(entry.description).toMatch(/current market snapshot/iu);
+      expect(entry.description).toMatch(/current price and rank/iu);
       expect(`${entry.title} ${entry.description}`).not.toMatch(BANNED_TRANSACTION_WORDS);
       expect(`${entry.title} ${entry.description}`).not.toMatch(INFRASTRUCTURE_JARGON);
     }
 
     for (const entry of CURATED_WING_ENTRIES.filter(({ path }) => (
-      path !== '/terminal/' && !SIGN_PROFILE_PATH.test(path)
+      path !== '/terminal/' && path !== '/registry/' && !SIGN_PROFILE_PATH.test(path)
     ))) {
       expect(`${entry.title} ${entry.description}`).not.toMatch(BANNED_MARKET_WORDS);
     }

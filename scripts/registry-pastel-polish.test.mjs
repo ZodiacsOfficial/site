@@ -289,7 +289,8 @@ describe('registry pastel polish', () => {
     expect(html).not.toContain('<span class="glyph">');
     expect(html).toContain('padding: calc(94px + env(safe-area-inset-top)) 0 36px;');
     expect(html).toContain(`<span class="lot__eyebrow">Zodiac sign <span class="g">·</span>`);
-    expect(html).toContain(`aria-label="Share ${name} pride"`);
+    expect(html).toContain(`data-share-sign>Share ${name}</button>`);
+    expect(html).not.toContain('data-copy-identity');
     expect(html).toContain("@font-face { font-family: 'Instrument Sans';");
     expect(cssRule(html, 'html, body {')).toContain('font-family: var(--sans);');
     expect(cssRule(html, '.lot__title {')).toContain('font-family: var(--sans);');
@@ -305,7 +306,7 @@ describe('registry pastel polish', () => {
       `${name} at a glance`,
       `The ${name} token`,
       `Born under ${name}`,
-      `${name} market snapshot`,
+      `${name} today`,
       'Market standings',
       'Check the token',
       `${name} in the sky`,
@@ -326,10 +327,12 @@ describe('registry pastel polish', () => {
     expect(html).toContain('data-live-quote');
     expect(html).toContain('data-market-standings');
     expect(html).toContain('<details class="standings__all"><summary>See all 12 market standings</summary>');
-    expect(html).toContain('This market snapshot does not measure popularity or participation.');
+    expect(html).toContain('This rank only compares total market value. It does not show how many people support each sign.');
     expect(html).not.toContain('The Zodiac Race');
-    expect(html).toContain('Public attention');
-    expect(html).toContain(`the English Wikipedia page for ${name} was viewed about`);
+    expect(html).toContain('Wikipedia views');
+    expect(html).toContain(`The English Wikipedia page for ${name} averaged`);
+    expect(html).not.toContain('symbol works anywhere text does');
+    expect(html).not.toContain(`${name} season returns every year`);
     expect(html).not.toContain('Ethereum');
     expect(html).not.toContain('Dogecoin');
     expect(html).not.toContain('meme coins');

@@ -27,7 +27,7 @@ export const SIGN_PROFILE_RALLY_LINES = Object.freeze({
   leo: 'Leo brings the room to life.',
   virgo: 'Virgo notices what others miss.',
   libra: 'Libra knows balance takes work.',
-  scorpio: 'Scorpio does not do half-hearted.',
+  scorpio: 'Scorpio never does anything halfway.',
   sagittarius: 'Sagittarius keeps looking beyond the horizon.',
   capricorn: 'Capricorn keeps climbing.',
   aquarius: 'Aquarius sees another way.',

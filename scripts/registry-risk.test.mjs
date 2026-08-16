@@ -47,8 +47,7 @@ describe('Registry risk and trust copy', () => {
     expect(landingSource).not.toMatch(/\.sort\(\(a, b\) => \(b\.marketCap/);
 
     const signText = compact(signSource);
-    expect(signText).toContain('These numbers can move up or down');
-    expect(signText).toContain('The price can fall to zero');
+    expect(signText).toContain('The price can change quickly and can fall to zero');
     expect(signText).toContain('This page only shows information. It cannot make a purchase or move money');
     expect(signText).not.toMatch(/Continue to Jupiter|jupiterSwapUrl|What do I need before I continue/);
     expect(signText).toContain('/disclosure/');
@@ -126,8 +125,7 @@ describe('Registry risk and trust copy', () => {
       )];
 
       expect(handoffs, sign).toHaveLength(0);
-      expect(html, sign).toContain('These numbers can move up or down');
-      expect(html, sign).toContain('The price can fall to zero');
+      expect(html, sign).toContain('The price can change quickly and can fall to zero');
       expect(html, sign).toContain('This page only shows information. It cannot make a purchase or move money');
       expect(html, sign).toContain('<span class="anchor-alias" id="acquire" aria-hidden="true"></span>');
       expect(html, sign).toContain('href="/privacy/"');

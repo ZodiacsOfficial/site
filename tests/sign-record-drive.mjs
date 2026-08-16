@@ -99,14 +99,14 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             && state.glance === `${record.current} at a glance`
             && state.token === `The ${record.current} token`
             && state.sectionHeadings.includes(`Born under ${record.current}`)
-            && state.sectionHeadings.includes(`${record.current} market snapshot`)
+            && state.sectionHeadings.includes(`${record.current} today`)
             && state.sectionHeadings.includes('Check the token')
             && state.sectionHeadings.includes('Explore all 12')
             && state.detailHeadings.includes(`${record.current} in the sky`)
             && state.detailHeadings.includes(`The story of ${record.current}`)
             && state.standingsLabel === 'Market standings'
-            && /^\d+(st|nd|rd|th) of 12 by reported total market value$/.test(state.standingsTitle)
-            && /This market snapshot does not measure popularity or participation\./.test(state.standingsSummary)
+            && /^\d+(st|nd|rd|th) of 12 by total market value$/.test(state.standingsTitle)
+            && /This rank only compares total market value\. It does not show how many people support each sign\./.test(state.standingsSummary)
             && !/buy|purchase|swap/i.test(state.standingsSummary)
             && state.standingsRows === 12
             && state.standingsCurrent === 1
@@ -138,7 +138,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
           JSON.stringify(headerState));
         // Move from the preceding control with an actual keyboard event so
         // Chromium applies the same :focus-visible modality a visitor gets.
-        await page.locator('[data-copy-identity]').focus();
+        await page.locator('.lot__crumbs a').focus();
         await page.keyboard.press('Tab');
         const focusState = await action.evaluate((element) => {
           const style = getComputedStyle(element);
@@ -249,7 +249,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
     check('selected-token quote is live, signed, and plainly labelled',
       liveState.price === '$0.0000724'
         && liveState.change === 'Past 24 hours +1.25%'
-        && /Fresh public market data/.test(liveState.status)
+        && /Current price checked at/.test(liveState.status)
         && !/DexScreener/.test(liveState.status)
         && liveState.label === 'Current price'
         && liveState.labelId !== ''
@@ -272,8 +272,8 @@ await withPreview({ port: 4396 }, async (baseURL) => {
       metrics: [...panel.querySelectorAll('.market__k')].map((node) => node.textContent?.trim() ?? ''),
       live: panel.querySelector('[data-market-live-link]')?.getAttribute('href') ?? '',
     }));
-    check('archive charts draw as soon as two dated prices are available',
-      /^2 daily snapshots through .*\.$/.test(chartState.note)
+    check('archive charts draw as soon as two daily prices are available',
+      /^2 daily prices through .*\.$/.test(chartState.note)
         && chartState.empty === ''
         && chartState.paths === 1
         && chartState.points === 2
