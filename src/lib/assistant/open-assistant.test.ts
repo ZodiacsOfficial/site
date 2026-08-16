@@ -159,8 +159,8 @@ describe('Guide day and retry boundaries', () => {
       source.indexOf('async function runTurn('),
       source.indexOf('async function submitQuestion()'),
     );
-    expect(submit).toContain('if (!await requestCloudConsent()) return;\n    if (rotateGuideDayIfNeeded()) return;');
-    expect(submit).toContain('await requestChartConsent(expectedGeneration);\n    }\n    if (rotateGuideDayIfNeeded()) return;');
+    expect(submit).toContain('if (!await requestCloudConsent()) return;\n    if (!interactionIsCurrent()) return;\n    if (rotateGuideDayIfNeeded()) return;');
+    expect(submit).toContain('await requestChartConsent(expectedGeneration);\n      if (!interactionIsCurrent()) return;\n    }\n    if (rotateGuideDayIfNeeded()) return;');
     expect(run).toContain('if (rotateGuideDayIfNeeded())');
     expect(retry).toContain('prior.body.contextEpoch !== state.contextEpoch');
     expect(retry).toContain('prior.body.baseRevision !== state.revision');
