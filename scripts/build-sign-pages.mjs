@@ -1666,7 +1666,7 @@ ${guideLoaderSource('en')}
       renderStandings(snapshot);
 
       var deepUrl = asset.deepestPool && asset.deepestPool.url;
-      if (typeof deepUrl === 'string' && /^https:\\/\\/dexscreener\\.com\\//i.test(deepUrl)) liveLink.href = deepUrl;
+      if (!hasLiveQuote && typeof deepUrl === 'string' && /^https:\\/\\/dexscreener\\.com\\//i.test(deepUrl)) liveLink.href = deepUrl;
     }
 
     function renderArchiveQuote(snapshot, asset) {
