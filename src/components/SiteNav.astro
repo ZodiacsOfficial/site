@@ -17,12 +17,12 @@ interface Props { locale?: Locale }
 const locale = normalizeCatalogLocale(Astro.props.locale);
 const path = Astro.url.pathname;
 const astrofolioLabel: Record<Locale, string> = {
-  en: 'The collection of twelve gold Zodiac sculptures',
-  es: 'La colección de doce esculturas doradas del Zodiaco',
-  pt: 'A coleção de doze esculturas douradas do Zodíaco',
-  fr: 'La collection de douze sculptures dorées du Zodiaque',
-  it: 'La collezione di dodici sculture dorate dello Zodiaco',
-  ru: 'Коллекция двенадцати золотых скульптур Зодиака, пока по-английски',
+  en: 'The twelve Zodiac signs',
+  es: 'Los doce signos del Zodiaco',
+  pt: 'Os doze signos do Zodíaco',
+  fr: 'Les douze signes du Zodiaque',
+  it: 'I dodici segni dello Zodiaco',
+  ru: 'Двенадцать знаков Зодиака, пока по-английски',
 };
 const openMenuLabel: Record<Locale, string> = {
   en: 'Open menu',

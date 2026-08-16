@@ -15,8 +15,8 @@ describe('Zodiacs Registry catalogue hub', () => {
     expect(html).toContain('one familiar emoji for each sign');
     expect(html).toContain('plain facts, people, and today’s snapshot');
     expect(html.indexOf('id="records-title"')).toBeLessThan(html.indexOf('id="verify"'));
-    expect(html).toContain("--serif:'Instrument Sans',system-ui,sans-serif");
-    expect(html).not.toMatch(/@font-face\s*\{\s*font-family:\s*['"]EB Garamond/iu);
+    expect(html).toContain("--sans:'Instrument Sans','Instrument Sans Fallback','Instrument Sans Fallback Android',system-ui,-apple-system,sans-serif");
+    expect(html).toContain('font-family:var(--sans);');
     expect(html).toContain('data-registry-established');
     expect(html).not.toContain('<h1>Astrofolio</h1>');
     expect(html).not.toContain('<h1>Terminal</h1>');

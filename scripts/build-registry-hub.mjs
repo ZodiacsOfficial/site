@@ -225,8 +225,9 @@ const html = `<!doctype html>
     :root {
       --bg:#08090c; --surface:#0d0f14; --surface-2:#12141b; --ink:#eef1f7; --ink-2:#c6ccda;
       --ink-dim:#8e96ab; --ink-mute:#646c7e; --hair:rgba(198,204,218,.11); --hair-2:rgba(198,204,218,.18);
-      --silver:#d3d8e4; --pastel:#e0a9b4; --serif:'Instrument Sans',system-ui,sans-serif;
-      --sans:'Instrument Sans',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+      --silver:#d3d8e4; --pastel:#e0a9b4; --serif:var(--sans);
+      --sans:'Instrument Sans','Instrument Sans Fallback','Instrument Sans Fallback Android',system-ui,-apple-system,sans-serif;
+      --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
       --ease:cubic-bezier(.32,.72,0,1); --page:min(1180px,calc(100% - 40px));
     }
     * { box-sizing:border-box; }

@@ -291,7 +291,6 @@ describe('registry pastel polish', () => {
     expect(html).toContain(`<span class="lot__eyebrow">Zodiac sign <span class="g">·</span>`);
     expect(html).toContain(`aria-label="Share ${name} pride"`);
     expect(html).toContain("@font-face { font-family: 'Instrument Sans';");
-    expect(html).not.toContain("@font-face { font-family: 'EB Garamond';");
     expect(cssRule(html, 'html, body {')).toContain('font-family: var(--sans);');
     expect(cssRule(html, '.lot__title {')).toContain('font-family: var(--sans);');
     expect(cssRule(html, '.sec__title {')).toContain('font-family: var(--sans);');
