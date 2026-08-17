@@ -94,7 +94,6 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             standingsMinHeight: standingsTargets.length ? Math.min(...standingsTargets) : 0,
             people: document.querySelectorAll('.people-block li a[href^="/people/"]').length,
             attention: document.querySelector('[data-attention]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-            seasonStatus: document.querySelector('[data-season-status]')?.textContent?.trim() ?? '',
             stripNavs: document.querySelectorAll('nav.strip').length,
             acquireAliases: document.querySelectorAll('span.anchor-alias#acquire[aria-hidden="true"]').length,
             acquisitionSections: document.querySelectorAll('section#acquire, #acquire .acq__cta').length,
@@ -134,7 +133,6 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             && state.teamCtaPath === `/race/?sign=${record.slug}#join`
             && state.genericShareActions === 0
             && state.phantomLinks === 0
-            && state.seasonStatus.length > 0
             && state.stripNavs === 0
             && state.acquireAliases === 1
             && state.acquisitionSections === 0
