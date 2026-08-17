@@ -1,27 +1,20 @@
 {
   "version": 1,
-  "id": "plain-catalogue-copy-2026-08-16",
-  "baseCommit": "f21408868b1c012d486b6d5d44a8def787600adb",
+  "id": "pr250-registry-market-refresh-2026-08-17b",
+  "baseCommit": "6b1462c18b601101b63cb1fd81bb4d8a82bfd141",
+  "note": "Owner-approved (Dias, 2026-08-17, via Claude session): regenerate the 12 Registry sign pages so committed output matches the committed 2026-08-17 market snapshot. The Aug-17 snapshot commit on main updated registry-market-history.v1.json without re-running build-sign-pages, leaving the legacy-wing drift gate red on any ref of main. Content change is market numbers and the Updated timestamp only.",
   "protectedPaths": [
-    "public/assets/app.js",
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",
     "public/registry/cancer/index.html",
     "public/registry/capricorn/index.html",
     "public/registry/gemini/index.html",
-    "public/registry/index.html",
     "public/registry/leo/index.html",
     "public/registry/libra/index.html",
     "public/registry/pisces/index.html",
     "public/registry/sagittarius/index.html",
     "public/registry/scorpio/index.html",
     "public/registry/taurus/index.html",
-    "public/registry/virgo/index.html",
-    "scripts/build-sign-pages.mjs",
-    "scripts/registry-hub.test.mjs",
-    "scripts/registry-pastel-polish.test.mjs",
-    "scripts/registry-risk.test.mjs",
-    "scripts/sign-data.mjs",
-    "src/app.jsx"
+    "public/registry/virgo/index.html"
   ]
 }

@@ -74,7 +74,16 @@ export type AnalyticsEventName =
   | 'chiron_toggle'
   | 'detail_toggle'
   | 'chart_name_set'
-  | 'comm_read_view';
+  | 'comm_read_view'
+  | 'race_view'
+  | 'team_join'
+  | 'weekly_checkin'
+  | 'share_card'
+  | 'trophy_view'
+  | 'season_result_view'
+  | 'trophy_hall_view'
+  | 'race_to_astrofolio'
+  | 'ramp_click';
 export type AnalyticsPropertyValue = string | number | boolean;
 export type AnalyticsProperties = Record<string, AnalyticsPropertyValue>;
 

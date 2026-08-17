@@ -198,6 +198,14 @@ describe('Vercel API runtime packaging', () => {
     });
   });
 
+  it('routes the Zodiac Games through the existing compatibility function', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/games',
+      destination: '/api/compatibility?__zodiacs_games_route=1',
+    });
+  });
+
   it('keeps account lifecycle actions on one scoped function route', () => {
     const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
     expect(vercel.rewrites).toContainEqual({

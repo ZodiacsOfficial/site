@@ -74,7 +74,10 @@ const LOCALIZED_PAGE_PREFIXES = LOCALES
 // Reachable does not mean recommendable. Phase 5's reviewed pilot remains
 // deliberately absent from all discovery surfaces until its separate
 // indexing authorization; the assistant must honor that boundary too.
-const UNLISTED_ROUTE_PREFIXES = Object.freeze(['/people/']);
+// The Race stays unlisted while PUBLIC_ZODIAC_GAMES_ENABLED is off; the
+// launch packet that flips the flag also removes this entry so the guide
+// and the built site list the same routes.
+const UNLISTED_ROUTE_PREFIXES = Object.freeze(['/people/', '/race/']);
 
 function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;

@@ -1,0 +1,133 @@
+---
+import Base from '../../layouts/Base.astro';
+import RaceBoard from '../../islands/RaceBoard';
+import { SIGNS } from '../../lib/signs';
+import { daysLeftInSeason, isoWeekUtc, seasonInstanceAt } from '../../lib/games/season';
+import '../../styles/race.css';
+
+const gamesEnabled = (import.meta.env.PUBLIC_ZODIAC_GAMES_ENABLED
+  ?? process.env.PUBLIC_ZODIAC_GAMES_ENABLED) === '1';
+if (!gamesEnabled) {
+  return Astro.redirect('/404.html');
+}
+
+// Build-time season stamp: honest static fallback for no-JS readers. The
+// island recomputes the countdown and fetches live standings client-side.
+const buildInstant = new Date();
+const season = seasonInstanceAt(buildInstant);
+const buildDaysLeft = daysLeftInSeason(season, buildInstant);
+const buildWeek = isoWeekUtc(buildInstant);
+const raceSigns = SIGNS.map(({ slug, name, glyph, hue }) => ({ slug, name, glyph, hue }));
+
+const title = 'The Race — The Zodiac Games | Zodiacs.org';
+const description =
+  'Twelve signs. One race. Every season crowns a champion. Join your sign for free, check in weekly, and watch the standings.';
+---
+<Base
+  title={title}
+  description={description}
+  path="/race/"
+  noindex
+  nofollow
+>
+  <section class="section--tight container container--narrow">
+    <header class="race-hero">
+      <em class="kicker">The Zodiac Games</em>
+      <h1 class="display">The Race</h1>
+      <p class="race-hero__season">
+        {season.sign.name} Season · {buildDaysLeft} {buildDaysLeft === 1 ? 'day' : 'days'} left · Week {buildWeek.isoWeek}
+      </p>
+      <p>
+        Every sign has a team. You were born on one.
+        The Zodiac Games are a running competition between all twelve signs.
+        People join their sign, check in weekly, and push it up the standings.
+        Every zodiac season ends with one champion and one engraved trophy.
+        The Games are free. They always will be.
+      </p>
+    </header>
+
+    <RaceBoard
+      client:load
+      seasonId={season.id}
+      seasonName={season.sign.name}
+      seasonEndsAt={season.endUtcExclusive}
+      isoYear={buildWeek.isoYear}
+      isoWeek={buildWeek.isoWeek}
+      signs={raceSigns}
+    />
+
+    <noscript>
+      <p>
+        Live standings and joining need JavaScript. The season above is
+        current as of the last site build; the rest of this page works fine
+        without it.
+      </p>
+    </noscript>
+
+    <div class="race-explainer">
+      <h2>How it works</h2>
+      <ol>
+        <li><strong>Join your sign.</strong> Ten seconds. Free.</li>
+        <li><strong>Check in weekly.</strong> Every check-in scores.</li>
+        <li><strong>Watch the season.</strong> One champion. One trophy. Then it starts again.</li>
+      </ol>
+      <p>
+        People score the points: joins, weekly check-ins, and shares. Nothing
+        else counts.
+      </p>
+
+      <h2>How seasons work</h2>
+      <p>
+        Each zodiac season is one championship — about a month long, twelve a
+        year. All twelve signs compete in every season. When a season closes,
+        the leader becomes Season Champion, the trophy is engraved, and the
+        next season starts from zero.
+      </p>
+    </div>
+
+    <dl class="race-faq">
+      <dt>Is this free?</dt>
+      <dd>Yes. Completely. That’s the point.</dd>
+
+      <dt>How does my sign score?</dt>
+      <dd>
+        People score the points: joins, weekly check-ins, and shares. Nothing
+        else counts.
+      </dd>
+
+      <dt>Can someone buy a win?</dt>
+      <dd>
+        No. Money can’t add points. Not ours, not anyone’s. If anything ever
+        makes you think otherwise, tell us — we’ll treat it as a bug.
+      </dd>
+
+      <dt>What does the winner get?</dt>
+      <dd>
+        The trophy, engraved with the sign’s name, permanent in the Trophy
+        Hall. Pride. That’s the prize, and it’s the good kind.
+      </dd>
+
+      <dt>What’s a Zodiac token, then?</dt>
+      <dd>
+        Each sign also has one official token — a digital asset you can hold
+        in a wallet. Owning one is optional, separate, and doesn’t affect the
+        Games at all.
+      </dd>
+
+      <dt>Do you sell anything?</dt>
+      <dd>
+        No. The Games are free and nothing here is a store. Some people choose
+        to own their sign’s token; that happens elsewhere, on public
+        exchanges, and it’s never required.
+      </dd>
+
+      <dt>What happens to my data?</dt>
+      <dd>
+        Almost nothing. No cookies for tracking, no identities — we count, we
+        don’t watch. Joining sets one signed cookie so your check-ins count
+        for your team, and it identifies a browser, not a person. Email is
+        optional and only sends standings. Unsubscribe anytime.
+      </dd>
+    </dl>
+  </section>
+</Base>

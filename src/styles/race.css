@@ -1,0 +1,209 @@
+/* The Race — standings board, join, trophy, and bridge modules. */
+
+.race-hero {
+  max-width: 44ch;
+}
+
+.race-hero .race-hero__season {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  letter-spacing: 0.02em;
+  margin-block: 12px 0;
+}
+
+.race-board__lead {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+  color: var(--ink-1);
+  max-width: 38ch;
+  margin-block: 0 20px;
+}
+
+.race-board__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.race-board__table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--hair-2);
+}
+
+.race-board__table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--hair-3);
+  color: var(--ink-1);
+}
+
+.race-board__table tr[data-mine='true'] td {
+  background: color-mix(in oklab, var(--sign) 9%, transparent);
+}
+
+.race-board__rank {
+  font-family: var(--font-mono);
+  color: var(--ink-3);
+  width: 2.5ch;
+}
+
+.race-board__sign {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.race-board__disc {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 26px;
+  block-size: 26px;
+  border-radius: var(--r-full);
+  background: color-mix(in oklab, var(--sign) 22%, transparent);
+  color: var(--sign);
+  font-size: 0.85rem;
+}
+
+.race-board__yours {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sign);
+  border: 1px solid color-mix(in oklab, var(--sign) 45%, transparent);
+  border-radius: var(--r-full);
+  padding: 2px 8px;
+}
+
+.race-board__points {
+  font-family: var(--font-mono);
+  text-align: right;
+}
+
+.race-board__loading {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-3);
+  margin-block: 12px 0;
+}
+
+.race-board__module {
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  padding: clamp(20px, 3vw, 28px);
+  margin-block-start: clamp(24px, 4vw, 36px);
+}
+
+.race-board__module h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin-block: 0 12px;
+}
+
+.race-board__module p {
+  color: var(--ink-2);
+  max-width: 52ch;
+  margin-block: 0;
+}
+
+.race-board__signs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block-end: 16px;
+}
+
+.race-board__chip {
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--ink-1);
+  background: none;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+
+.race-board__chip span {
+  color: var(--sign);
+}
+
+.race-board__chip:hover {
+  border-color: color-mix(in oklab, var(--sign) 55%, transparent);
+}
+
+.race-board__chip[data-selected='true'] {
+  border-color: var(--sign);
+  background: color-mix(in oklab, var(--sign) 12%, transparent);
+}
+
+.race-board__cta {
+  margin-block-start: 4px;
+}
+
+.race-board__free {
+  font-size: 0.9rem;
+  color: var(--ink-3);
+  margin-block-start: 10px !important;
+}
+
+.race-board__counted {
+  font-size: 1.05rem;
+}
+
+.race-board__note {
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  margin-block-start: 12px !important;
+}
+
+.race-board__bridge-link {
+  display: inline-block;
+  margin-block-start: 14px;
+  color: var(--ink-1);
+  text-decoration-color: var(--hair-1);
+  text-underline-offset: 4px;
+}
+
+.race-explainer {
+  max-width: 60ch;
+}
+
+.race-explainer h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+}
+
+.race-faq dt {
+  font-weight: 600;
+  color: var(--ink-1);
+  margin-block-start: 20px;
+}
+
+.race-faq dd {
+  margin: 6px 0 0;
+  color: var(--ink-2);
+  max-width: 58ch;
+}
+
+@media (max-width: 540px) {
+  .race-board__table td,
+  .race-board__table th {
+    padding-inline: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .race-board__chip {
+    transition: none;
+  }
+}

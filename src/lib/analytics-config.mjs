@@ -23,6 +23,15 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   aura_cabinet_select: [],
   aura_cabinet_reveal: ['outcome'],
   aura_talisman_personalize: ['state'],
+  race_view: ['season'],
+  team_join: ['sign', 'season'],
+  weekly_checkin: ['sign', 'season'],
+  share_card: ['sign', 'platform', 'season'],
+  trophy_view: ['season', 'days_left'],
+  season_result_view: ['season', 'winner'],
+  trophy_hall_view: [],
+  race_to_astrofolio: ['sign', 'source'],
+  ramp_click: ['source'],
   invite_created: ['notify'],
   invite_opened: ['state'],
   invite_completed: [],
@@ -64,8 +73,21 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   comm_read_view: [],
 });
 
+const ZODIAC_SIGN_VALUES = Object.freeze([
+  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+]);
+
 /** Closed-value contracts for non-identifying product dimensions. */
 export const ANALYTICS_EVENT_VALUES = Object.freeze({
+  team_join: Object.freeze({ sign: ZODIAC_SIGN_VALUES }),
+  weekly_checkin: Object.freeze({ sign: ZODIAC_SIGN_VALUES }),
+  share_card: Object.freeze({ sign: ZODIAC_SIGN_VALUES }),
+  season_result_view: Object.freeze({ winner: ZODIAC_SIGN_VALUES }),
+  race_to_astrofolio: Object.freeze({
+    sign: ZODIAC_SIGN_VALUES,
+    source: Object.freeze(['race', 'champion']),
+  }),
   terminal_view_switch: Object.freeze({
     surface: Object.freeze(['header', 'preference_banner']),
     direction: Object.freeze(['consumer_to_pro', 'pro_to_consumer']),
