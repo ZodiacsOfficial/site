@@ -6,7 +6,7 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
-const updated = accountSyncV2Enabled ? '12 August 2026' : '2 August 2026';
+const updated = '17 August 2026';
 
 const jsonLd = [
   {
@@ -14,13 +14,13 @@ const jsonLd = [
     name: 'Privacy at Zodiacs.org',
     url: 'https://zodiacs.org/privacy/',
     description:
-      'How zodiacs.org handles birth charts, The Cabinet of Twelve public-address lookups, browser storage, sharing, analytics, accounts, and assistant messages.',
+      'How zodiacs.org handles birth charts, Zodiac Games, The Cabinet of Twelve public-address lookups, browser storage, sharing, analytics, accounts, and assistant messages.',
   },
 ];
 ---
 <Base
   title="Privacy — How Your Data Is Handled | Zodiacs.org"
-  description="How zodiacs.org handles birth charts, The Cabinet of Twelve public-address lookups, browser storage, sharing, analytics, accounts, and assistant messages."
+  description="How zodiacs.org handles birth charts, Zodiac Games, The Cabinet of Twelve public-address lookups, browser storage, sharing, analytics, accounts, and assistant messages."
   path="/privacy/"
   jsonLd={jsonLd}
 >
@@ -88,6 +88,37 @@ const jsonLd = [
         choose to create an account (below). Clearing your browser's site data
         removes saved charts. We cannot see them and cannot recover them for
         you.
+      </p>
+
+      <h2>Zodiac Games</h2>
+      <p>
+        You can join one Zodiac Games team and answer one three-choice
+        question each week without creating an account. We do not ask for an
+        email address, birth data, public profile, or written response.
+        Results show totals by team and choice, without names or public
+        profiles. If a new zodiac season starts midweek, the new
+        board may offer that week’s question again.
+      </p>
+      <p>
+        When you join, this browser receives a strictly necessary first-party
+        cookie containing a random code. Our database keeps a one-way copy so
+        the same join or weekly answer is not counted more than once on a
+        seasonal board. The original code cannot be recovered from that copy. The cookie
+        is marked HttpOnly, Secure, and SameSite=Strict and expires after one
+        year. Your selected team and last check-in are also saved in browser
+        storage so the page can restore its state. Clearing site data removes
+        those browser records,
+        but it does not remove the anonymous membership, weekly choices, or
+        points already counted in the standings. We keep those records while
+        the Games and their results are maintained.
+      </p>
+      <p>
+        To limit automated sign-ups, the site makes a protected daily code from
+        the request's network address. When a new browser tries to join, the
+        site removes protected codes older than the previous UTC date. The
+        network address itself is not stored in the Games tables. Vercel and
+        Supabase may still process ordinary request logs under their own
+        retention practices.
       </p>
 
       <h2>The Cabinet of Twelve and public wallet addresses</h2>

@@ -289,7 +289,7 @@ describe('registry pastel polish', () => {
     expect(html).not.toContain('<span class="glyph">');
     expect(html).toContain('padding: calc(94px + env(safe-area-inset-top)) 0 36px;');
     expect(html).toContain(`<span class="lot__eyebrow">Zodiac sign <span class="g">·</span>`);
-    expect(html).toContain(`data-share-sign>Share ${name}</button>`);
+    expect(html).not.toContain('data-share-sign');
     expect(html).not.toContain('data-copy-identity');
     expect(html).toContain("@font-face { font-family: 'Instrument Sans';");
     expect(cssRule(html, 'html, body {')).toContain('font-family: var(--sans);');
@@ -310,23 +310,30 @@ describe('registry pastel polish', () => {
       'Market standings',
       'Check the token',
       `${name} in the sky`,
-      `The story of ${name}`,
-      'Explore all 12',
+      ...(slug === 'scorpio' ? [] : [`The story of ${name}`]),
     ]) expect(html).toContain(heading);
+    if (slug === 'scorpio') expect(html).not.toContain('The story of Scorpio');
     for (const retired of [
       'Museum label', 'Catalogue note', '>Provenance<', '>Acquisition<',
       `Why ${name} is in the collection`, 'recognizable artwork', 'It pairs a familiar sign',
     ]) {
       expect(html).not.toContain(retired);
     }
-    expect(html).toContain(`src="/assets/constellations/${slug}.svg"`);
-    expect(html).toContain('HYG Database v4.0');
-    expect(html).toContain('CC BY-SA 4.0');
-    expect(html).toContain('not official constellation boundaries');
+    if (slug === 'scorpio') {
+      expect(html).toContain('class="legacy-crest"');
+      expect(html).toContain('Rival of Mars');
+      expect(html).not.toContain('/assets/constellations/scorpio.svg');
+    } else {
+      expect(html).toContain(`src="/assets/constellations/${slug}.svg"`);
+      expect(html).toContain('HYG Database v4.0');
+      expect(html).toContain('CC BY-SA 4.0');
+      expect(html).toContain('not official constellation boundaries');
+    }
     expect(html).toContain('data-market-chart');
     expect(html).toContain('data-live-quote');
     expect(html).toContain('data-market-standings');
-    expect(html).toContain('<details class="standings__all"><summary>See all 12 market standings</summary>');
+    expect(html).toContain('<div class="standings__all" aria-label="All 12 market standings">');
+    expect(html).not.toContain('<details class="standings__all">');
     expect(html).toContain('This rank only compares total market value. It does not show how many people support each sign.');
     expect(html).not.toContain('The Zodiac Race');
     expect(html).toContain('Wikipedia views');
@@ -336,6 +343,12 @@ describe('registry pastel polish', () => {
     expect(html).not.toContain('Ethereum');
     expect(html).not.toContain('Dogecoin');
     expect(html).not.toContain('meme coins');
+    expect(html).not.toContain('phantom.com');
+    expect(html).not.toContain('Phantom');
+    expect(html).toContain('data-zodiac-games');
+    expect(html).toContain('data-team-question');
+    const teamCta = html.match(/<a\b[^>]*data-team-cta[^>]*>/u)?.[0] ?? '';
+    expect(teamCta).toContain(`href="/race/?sign=${slug}#join"`);
     expect(html).toContain('https://api.dexscreener.com/tokens/v1/solana/');
     expect(html).not.toMatch(/href="https:\/\/jup\.ag\//u);
     expect(html).not.toContain('Continue to Jupiter');
@@ -344,17 +357,18 @@ describe('registry pastel polish', () => {
     expect(html).toContain('min-height: 44px;');
     expect(html).toContain('.standings__list a { display: grid;');
     expect(html).toContain('min-height: 56px;');
-    expect(html).toContain('.strip picture, .strip img { flex: 0 0 auto; width: 44px; height: 44px; }');
 
     const standings = html.match(/<ol class="standings__list" data-standings-list>([\s\S]*?)<\/ol>/u)?.[1] ?? '';
     expect(standings.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp/gu)).toHaveLength(12);
-    expect(standings).toContain('class="is-current" aria-current="true"');
+    expect(standings.match(/aria-current="page"/gu)).toHaveLength(1);
+    expect(standings).not.toContain('aria-current="true"');
+    const currentStanding = standings.match(/<li class="is-current">\s*<a\b[^>]*>/u)?.[0] ?? '';
+    expect(currentStanding).toContain(`href="/registry/${slug}/"`);
+    expect(currentStanding).toContain('aria-current="page"');
+    expect(cssRule(html, '.standings__list li.is-current a {')).toContain('box-shadow: inset 0 0 0 2px var(--sign);');
 
-    expect(html.match(/<nav class="strip" aria-label="All twelve signs">/gu)).toHaveLength(1);
-    const strip = html.match(/<nav class="strip" aria-label="All twelve signs">([\s\S]*?)<\/nav>/u)?.[1] ?? '';
-    expect(strip.match(/class="strip__name"/gu)).toHaveLength(12);
-    expect(strip.match(/\/assets\/zodiac-icons\/128\/[a-z-]+\.webp/gu)).toHaveLength(12);
-    for (const [, signName] of signs) expect(strip).toContain(`>${signName}</span>`);
+    expect(html).not.toContain('Explore all 12');
+    expect(html).not.toContain('<nav class="strip" aria-label="All twelve signs">');
   });
 
   it('adds one decorative pastel disc after every thesis sign name', async () => {

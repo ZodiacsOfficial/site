@@ -9,9 +9,12 @@ import {
 } from './constellation-data.mjs';
 import {
   SIGN_PROFILE_PEOPLE,
+  SIGN_PROFILE_LEGACY,
+  SIGN_PROFILE_PERSON_ROLES,
   SIGN_PROFILE_RALLY_LINES,
   SIGN_PROFILE_PROTECTED_LINKS,
   registryProfilePersonLinkRel,
+  validateSignProfileCommunityData,
   validateSignProfileRallyLines,
 } from './sign-profile-data.mjs';
 
@@ -30,11 +33,15 @@ function visibleMarkup(html) {
 }
 
 describe('Zodiac token records', () => {
-  it('keeps one validated, sign-specific rally line for every profile', () => {
+  it('keeps one validated pride line for every profile', () => {
     expect(Object.keys(SIGN_PROFILE_RALLY_LINES)).toEqual(signs);
     expect(validateSignProfileRallyLines(signs)).toEqual([]);
-    expect(SIGN_PROFILE_RALLY_LINES.scorpio).toBe('Scorpio never does anything halfway.');
+    expect(validateSignProfileCommunityData(signs)).toEqual([]);
+    expect(SIGN_PROFILE_RALLY_LINES.scorpio).toBe('Scorpio has never needed to be understood by everyone.');
     expect(new Set(Object.values(SIGN_PROFILE_RALLY_LINES)).size).toBe(12);
+    expect(Object.keys(SIGN_PROFILE_PERSON_ROLES)).toHaveLength(48);
+    expect(Object.keys(SIGN_PROFILE_LEGACY)).toEqual(['scorpio']);
+    expect(SIGN_PROFILE_LEGACY.scorpio.title).toBe('Rival of Mars');
   });
 
   it('commits a valid, attributed constellation subset for all twelve signs', async () => {
@@ -77,11 +84,12 @@ describe('Zodiac token records', () => {
       expect(visible).toContain(`Born under ${name}`);
       expect(visible).toContain(`${name} today`);
       expect(visible).toContain('Market standings');
-      expect(visible).not.toContain('The Zodiac Race');
+      expect(visible).toContain(`Zodiac Games · Team ${name}`);
       expect(visible).toContain('Check the token');
       expect(visible).toContain(`${name} in the sky`);
-      expect(visible).toContain(`The story of ${name}`);
-      expect(visible).toContain('Explore all 12');
+      if (sign === 'scorpio') expect(visible).not.toContain(`The story of ${name}`);
+      else expect(visible).toContain(`The story of ${name}`);
+      expect(visible).not.toContain('Explore all 12');
       expect(visible).not.toContain('class="lot__epithet"');
       expect(visible).not.toContain('not a physical sculpture or a one-of-one NFT');
       expect(visible).not.toContain(`Why ${name} is in the collection`);
@@ -114,7 +122,8 @@ describe('Zodiac token records', () => {
       expect(legacyAliasIndex).toBeGreaterThan(marketIndex);
       expect(addressIndex).toBeGreaterThan(marketIndex);
       expect(addressIndex).toBeGreaterThan(legacyAliasIndex);
-      expect(storyIndex).toBeGreaterThan(addressIndex);
+      if (sign === 'scorpio') expect(storyIndex).toBe(-1);
+      else expect(storyIndex).toBeGreaterThan(addressIndex);
     }
   });
 
@@ -123,19 +132,45 @@ describe('Zodiac token records', () => {
       const html = await read(`public/registry/${sign}/index.html`);
       const visible = visibleMarkup(html);
       const name = sign.charAt(0).toUpperCase() + sign.slice(1);
-
-      expect(visible).toContain('data-share-sign');
+      expect(visible).not.toContain('data-share-sign');
       expect(visible).toContain(SIGN_PROFILE_RALLY_LINES[sign]);
+      expect(visible).toContain('data-season-status');
+      expect(visible).toContain('Four lives, one sign');
+      expect(visible).toContain(`Zodiac Games · Team ${name}`);
+      expect(visible).toContain('data-zodiac-games');
+      expect(visible).toContain('data-team-question');
+      expect(visible).toContain(`Answer this week’s question for Team ${name}.`);
+      expect(visible).toContain('After you answer, compare your team’s choices with the overall result across all twelve teams.');
+      expect(visible).toContain(`data-team-cta href="/race/?sign=${sign}#join"`);
+      expect(visible).toContain(`Join Team ${name} →`);
+      expect(visible).toContain('Join and answer without an account.');
+      expect(visible).not.toContain('Phantom');
+      expect(visible).not.toContain('wallet');
+      expect(visible).not.toContain('public chat');
+      expect(visible).not.toContain(`People who share ${name}`);
+      expect(visible).not.toContain('Hundreds of millions');
+      expect(visible).not.toContain('A rough estimate based on one-twelfth of the world’s population.');
+      expect(visible).not.toContain('It describes the sign, not token ownership.');
+      if (sign === 'scorpio') {
+        expect(visible).toContain('class="legacy-crest"');
+        expect(visible).toContain('Rival of Mars');
+        expect(visible).toContain('Antares is the red star at the heart of the Scorpion.');
+        expect(visible).toContain('the scorpion defeats Orion');
+        expect(visible).toContain('scorpion guardians watch the gates of the Sun');
+        expect(visible).toContain('https://www.jpl.nasa.gov/videos/whats-up-january-2020/');
+        expect(visible).toContain('https://stardate.org/podcast/2026-05-03');
+        expect(visible).toContain('https://www.penn.museum/sites/expedition/highlands-and-lowlands/');
+        expect(visible).not.toContain('<dt>Key star</dt>');
+        expect(visible.indexOf('class="legacy-crest"')).toBeGreaterThan(visible.indexOf('id="constellation"'));
+      } else {
+        expect(visible).not.toContain('class="legacy-crest"');
+      }
       expect(visible).not.toContain('data-copy-identity=');
       expect(visible).not.toContain('for your bio</button>');
       expect(visible).not.toContain('symbol works anywhere text does');
       expect(visible).not.toContain(`${name} season returns every year`);
       expect(visible).not.toContain('Read about four people born during');
       expect(visible).not.toContain('<dt>Symbol</dt>');
-      expect(visible).toContain(`People who share ${name}`);
-      expect(visible).toContain('Hundreds of millions');
-      expect(visible).toContain('A rough estimate based on one-twelfth of the world’s population.');
-      expect(visible).toContain('It describes the sign, not token ownership.');
       expect(visible).toContain('Wikipedia views');
       expect(visible).toContain(`The English Wikipedia page for ${name} averaged`);
       expect(visible).toContain('One person may account for more than one view.');
@@ -143,32 +178,36 @@ describe('Zodiac token records', () => {
       expect(visible).not.toContain('Ethereum');
       expect(visible).not.toContain('Dogecoin');
       expect(visible).not.toContain('meme coins');
-      expect(visible).toContain('You’re in good company');
       expect(visible).toContain('Birth dates are sourced. These people did not endorse Zodiacs.org.');
       expect(visible).not.toContain('No endorsement is implied.');
       for (const person of SIGN_PROFILE_PEOPLE[sign]) {
         expect(visible).toContain(`href="/people/${person}/"`);
+        expect(visible).toContain(SIGN_PROFILE_PERSON_ROLES[person]);
       }
 
       const standings = visible.match(/<ol class="standings__list" data-standings-list>([\s\S]*?)<\/ol>/u)?.[1] ?? '';
-      expect(visible).toContain('<details class="standings__all"><summary>See all 12 market standings</summary>');
+      expect(visible).toContain('<div class="standings__all" aria-label="All 12 market standings">');
+      expect(visible).not.toContain('<details class="standings__all">');
       expect(standings.match(/<li\b/gu)).toHaveLength(12);
       expect(standings.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp/gu)).toHaveLength(12);
+      expect(standings).toContain(`href="/registry/${sign}/" style=`);
+      expect(standings).toContain('aria-current="page"');
+      expect(html).toContain('box-shadow: inset 0 0 0 2px var(--sign);');
       expect(visible).toMatch(/\d+(?:st|nd|rd|th) of 12 by total market value/u);
       expect(visible).toContain('This rank only compares total market value. It does not show how many people support each sign.');
       expect(visible).not.toContain('leads this snapshot');
       expect(visible).not.toContain('one place above');
-      expect(visible).not.toContain('/race');
-
-      const strip = visible.match(/<nav class="strip" aria-label="All twelve signs">([\s\S]*?)<\/nav>/u)?.[1] ?? '';
-      expect(strip.match(/class="strip__name"/gu)).toHaveLength(12);
-      expect(strip.match(/\/assets\/zodiac-icons\/128\/[a-z-]+\.webp/gu)).toHaveLength(12);
+      expect(visible).not.toContain('<nav class="strip"');
     }
 
     const scorpio = await read('public/registry/scorpio/index.html');
     for (const person of ['marie-curie', 'pablo-picasso', 'bill-gates', 'leonardo-dicaprio']) {
       expect(scorpio).toContain(`href="/people/${person}/"`);
     }
+    expect(scorpio).toContain('Physicist · Nov 7');
+    expect(scorpio).toContain('Painter · Oct 25');
+    expect(scorpio).toContain('Computer scientist and philanthropist · Oct 28');
+    expect(scorpio).toContain('Actor and producer · Nov 11');
   });
 
   it('allows only the two owner-authorized protected People links on Scorpio', async () => {
@@ -227,7 +266,7 @@ describe('Zodiac token records', () => {
 
     for (const sign of signs) {
       const html = await read(`public/registry/${sign}/index.html`);
-      const peopleMarkup = html.match(/<div class="people-block">([\s\S]*?)<\/div>\s*<\/section>/u)?.[1] ?? '';
+      const peopleMarkup = html.match(/<div class="people-block">([\s\S]*?)<article class="games-card"/u)?.[1] ?? '';
       const nofollowLinks = peopleMarkup.match(/<a href="\/people\/[a-z0-9-]+\/" rel="nofollow">/gu) ?? [];
       expect(nofollowLinks).toHaveLength(sign === 'scorpio' ? 2 : 0);
       if (sign === 'scorpio') {
@@ -280,22 +319,34 @@ describe('Zodiac token records', () => {
   });
 
   it('keeps small prices precise and emits no catalogue purchase handoff', async () => {
-    const [source, scorpio] = await Promise.all([
+    const [source, scorpio, historySource] = await Promise.all([
       read('scripts/build-sign-pages.mjs'),
       read('public/registry/scorpio/index.html'),
+      read('public/assets/data/registry-market-history.v1.json'),
     ]);
-    expect(scorpio).toContain('$0.00006807');
+    const latest = JSON.parse(historySource).snapshots.at(-1);
+    const price = Number(latest.assets.find((asset) => asset.sign === 'scorpio').priceUsd);
+    const digits = Math.abs(price) < 0.0001 ? 8 : Math.abs(price) < 0.01 ? 6 : 4;
+    const expectedPrice = `$${price.toFixed(digits).replace(/0+$/u, '').replace(/\.$/u, '')}`;
+    expect(scorpio).toContain(expectedPrice);
     expect(source).not.toContain('wing_acquisition_click');
     expect(scorpio).not.toMatch(/href="https:\/\/jup\.ag\//u);
     expect(source).toContain('function canPublishRank(snapshot, standings)');
     expect(source).toContain('assetsWithMarketCap');
     expect(source).toContain("'Market rank unavailable'");
+    expect(source).toContain("return bySign.get(sign) || { sign: sign, marketCapUsd: null };");
+    expect(source).toContain('standings.every(function (asset) { return finiteNumber(asset.marketCapUsd) !== null; })');
   });
 
   it('links every record to its constellation, collection, registry, and sign-filtered research', async () => {
     for (const sign of signs) {
       const html = await read(`public/registry/${sign}/index.html`);
-      expect(html).toContain(`/assets/constellations/${sign}.svg`);
+      if (sign === 'scorpio') {
+        expect(html).toContain('class="legacy-crest"');
+        expect(html).not.toContain('/assets/constellations/scorpio.svg');
+      } else {
+        expect(html).toContain(`/assets/constellations/${sign}.svg`);
+      }
       expect(html).toContain('<a href="/astrofolio/">Astrofolio</a>');
       expect(html).toContain('<a href="/registry/">All signs</a>');
       expect(html).toContain(`/terminal/research/?sign=${sign}&amp;type=daily`);

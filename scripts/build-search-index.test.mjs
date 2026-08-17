@@ -35,6 +35,10 @@ describe('buildSearchIndex', () => {
     fixtureRoot = await mkdtemp(join(tmpdir(), 'zodiacs-search-index-'));
     await addPage('index.html', { title: 'Home | Zodiacs.org' });
     await addPage('learn/orbs/index.html', { title: 'Orbs | Zodiacs.org' });
+    await addPage('race/index.html', {
+      title: 'Zodiac Games — Live Team Standings | Zodiacs.org',
+      description: 'Represent your zodiac sign, answer one weekly question, and follow all twelve teams on a live standings board.',
+    });
     await addPage('es/learn/orbs/index.html', { lang: 'es' });
     await addPage('registry/index.html');
     await addPage('private/index.html', { robots: 'nofollow, noindex' });
@@ -46,7 +50,8 @@ describe('buildSearchIndex', () => {
     const second = await buildSearchIndex({ distRoot: fixtureRoot, minEntries: 0 });
     const secondJson = await readFile(join(fixtureRoot, 'search-index.json'), 'utf8');
 
-    expect(first.entries.filter((entry) => !['astrofolio', 'terminal', 'registry', 'term'].includes(entry.kind))).toEqual([
+    const curatedPaths = new Set(CURATED_WING_ENTRIES.map((entry) => entry.path));
+    expect(first.entries.filter((entry) => entry.kind !== 'term' && !curatedPaths.has(entry.path))).toEqual([
       {
         path: '/',
         title: 'Home',
@@ -59,12 +64,18 @@ describe('buildSearchIndex', () => {
         description: 'A fixture page for search.',
         kind: 'learn',
       },
+      {
+        path: '/race/',
+        title: 'Zodiac Games — Live Team Standings',
+        description: 'Represent your zodiac sign, answer one weekly question, and follow all twelve teams on a live standings board.',
+        kind: 'page',
+      },
     ]);
-    expect(first.entries.filter((entry) => ['astrofolio', 'terminal', 'registry'].includes(entry.kind)))
+    expect(first.entries.filter((entry) => curatedPaths.has(entry.path)))
       .toEqual([...CURATED_WING_ENTRIES].sort((left, right) => left.path.localeCompare(right.path)));
     expect(first.entries.filter((entry) => entry.kind !== 'term'))
-      .toHaveLength(2 + 17);
-    expect(first.entries).toHaveLength(2 + 17 + GLOSSARY.length);
+      .toHaveLength(3 + 17);
+    expect(first.entries).toHaveLength(3 + 17 + GLOSSARY.length);
     expect(first.entries.filter((entry) => entry.kind === 'term')).toHaveLength(GLOSSARY.length);
     expect(searchIndex(first.entries, 'registry')[0]).toMatchObject({ kind: 'registry' });
     expect(searchIndex(first.entries, 'registry')).toContainEqual(expect.objectContaining({
@@ -94,6 +105,10 @@ describe('buildSearchIndex', () => {
     expect(searchIndex(first.entries, 'thesis')[0]).toMatchObject({
       path: '/thesis/',
       kind: 'registry',
+    });
+    expect(searchIndex(first.entries, 'zodiac games weekly question')[0]).toMatchObject({
+      path: '/race/',
+      kind: 'page',
     });
     expect(searchIndex(first.entries, 'aries record')[0]).toMatchObject({
       path: '/registry/aries/',

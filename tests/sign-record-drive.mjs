@@ -33,10 +33,10 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         const errors = [];
         page.on('pageerror', (error) => errors.push(String(error)));
         await page.goto(`${baseURL}/registry/${record.slug}/`, { waitUntil: 'domcontentloaded' });
-        const action = page.locator('[data-share-sign]');
+        const action = page.locator('[data-team-cta]');
         await action.waitFor({ state: 'visible' });
-        // Capture the header at its natural scroll position. Clicking the
-        // standings disclosure below intentionally scrolls it into view.
+        // Capture the header at its natural scroll position before reading
+        // the fully visible standings below.
         const headerState = await page.evaluate(() => {
           const nav = document.querySelector('.wnav');
           const navWrap = document.querySelector('.wnav-wrap');
@@ -51,17 +51,25 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             scrollY,
           };
         });
-        await page.locator('.standings__all summary').click();
         const state = await page.evaluate(() => {
-          const share = document.querySelector('[data-share-sign]');
-          const shareBox = share?.getBoundingClientRect();
+          const teamCta = document.querySelector('[data-team-cta]');
+          const teamCtaBox = teamCta?.getBoundingClientRect();
           const eyebrow = document.querySelector('.lot__eyebrow');
           const standingsTargets = [...document.querySelectorAll('[data-standings-list] a')]
             .map((element) => element.getBoundingClientRect().height);
-          const signTargets = [...document.querySelectorAll('nav.strip a')]
-            .map((element) => element.getBoundingClientRect().height);
+          const currentStanding = document.querySelector('[data-standings-list] a[aria-current="page"]');
+          const currentStandingStyle = currentStanding ? getComputedStyle(currentStanding) : null;
+          const teamUrl = teamCta instanceof HTMLAnchorElement
+            ? new URL(teamCta.href, location.href)
+            : null;
           return {
-            shareHeight: shareBox?.height ?? 0,
+            teamCtaHeight: teamCtaBox?.height ?? 0,
+            teamCtaPath: teamUrl ? `${teamUrl.pathname}${teamUrl.search}${teamUrl.hash}` : '',
+            teamCtaSameOrigin: teamUrl?.origin === location.origin,
+            teamModules: document.querySelectorAll('[data-zodiac-games]').length,
+            teamQuestion: document.querySelector('[data-team-question]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+            genericShareActions: document.querySelectorAll('[data-share-sign]').length,
+            phantomLinks: document.querySelectorAll('a[href*="phantom.com"]').length,
             pageWidth: document.documentElement.scrollWidth,
             viewportWidth: innerWidth,
             eyebrow: eyebrow?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
@@ -76,13 +84,17 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             standingsTitle: document.querySelector('#standings-title')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
             standingsSummary: document.querySelector('[data-standings-summary]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
             standingsRows: document.querySelectorAll('[data-standings-list] > li').length,
-            standingsCurrent: document.querySelectorAll('[data-standings-list] > li.is-current[aria-current="true"]').length,
+            standingsCurrent: document.querySelectorAll('[data-standings-list] a[aria-current="page"]').length,
+            standingsCurrentOutlined: currentStandingStyle
+              ? currentStandingStyle.boxShadow !== 'none'
+                || (currentStandingStyle.outlineStyle !== 'none' && parseFloat(currentStandingStyle.outlineWidth) > 0)
+                || (currentStandingStyle.borderStyle !== 'none' && parseFloat(currentStandingStyle.borderWidth) > 0)
+              : false,
+            standingsExpanded: document.querySelector('.standings__all')?.tagName === 'DIV',
             standingsMinHeight: standingsTargets.length ? Math.min(...standingsTargets) : 0,
             people: document.querySelectorAll('.people-block li a[href^="/people/"]').length,
             attention: document.querySelector('[data-attention]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
             stripNavs: document.querySelectorAll('nav.strip').length,
-            stripRows: document.querySelectorAll('nav.strip a').length,
-            stripMinHeight: signTargets.length ? Math.min(...signTargets) : 0,
             acquireAliases: document.querySelectorAll('span.anchor-alias#acquire[aria-hidden="true"]').length,
             acquisitionSections: document.querySelectorAll('section#acquire, #acquire .acq__cta').length,
             jupiterLinks: document.querySelectorAll('a[href*="jup.ag"], [data-market-jupiter]').length,
@@ -101,7 +113,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             && state.sectionHeadings.includes(`Born under ${record.current}`)
             && state.sectionHeadings.includes(`${record.current} today`)
             && state.sectionHeadings.includes('Check the token')
-            && state.sectionHeadings.includes('Explore all 12')
+            && !state.sectionHeadings.includes('Explore all 12')
             && state.detailHeadings.includes(`${record.current} in the sky`)
             && state.detailHeadings.includes(`The story of ${record.current}`)
             && state.standingsLabel === 'Market standings'
@@ -110,11 +122,18 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             && !/buy|purchase|swap/i.test(state.standingsSummary)
             && state.standingsRows === 12
             && state.standingsCurrent === 1
+            && state.standingsCurrentOutlined
+            && state.standingsExpanded
             && state.people === 4
             && /English Wikipedia page/.test(state.attention)
             && !/Ethereum|Dogecoin/.test(state.attention)
-            && state.stripNavs === 1
-            && state.stripRows === 12
+            && state.teamModules === 1
+            && state.teamQuestion.length > 0
+            && state.teamCtaSameOrigin
+            && state.teamCtaPath === `/race/?sign=${record.slug}#join`
+            && state.genericShareActions === 0
+            && state.phantomLinks === 0
+            && state.stripNavs === 0
             && state.acquireAliases === 1
             && state.acquisitionSections === 0
             && state.jupiterLinks === 0
@@ -125,9 +144,9 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             && /HYG Database v4\.0/.test(state.constellationCopy)
             && /not official constellation boundaries/.test(state.constellationCopy),
           JSON.stringify(state));
-        check(`${record.slug} at ${width}px keeps 44px pride, standings, and sign targets`,
-          state.shareHeight >= 44 && state.standingsMinHeight >= 44 && state.stripMinHeight >= 44,
-          `${state.shareHeight}/${state.standingsMinHeight}/${state.stripMinHeight}`);
+        check(`${record.slug} at ${width}px keeps 44px Games and standings targets`,
+          state.teamCtaHeight >= 44 && state.standingsMinHeight >= 44,
+          `${state.teamCtaHeight}/${state.standingsMinHeight}`);
         check(`${record.slug} at ${width}px has no purchase route or Jupiter link`,
           state.acquisitionSections === 0 && state.jupiterLinks === 0,
           `${state.acquisitionSections}/${state.jupiterLinks}`);
@@ -136,9 +155,11 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             && headerState.scrollY === 0
             && headerState.clearance >= 15.5,
           JSON.stringify(headerState));
-        // Move from the preceding control with an actual keyboard event so
-        // Chromium applies the same :focus-visible modality a visitor gets.
-        await page.locator('.lot__crumbs a').focus();
+        // Move away and back with real keyboard events so Chromium applies the
+        // same :focus-visible modality a visitor gets, without coupling this
+        // gate to the number of links preceding the Games call to action.
+        await action.focus();
+        await page.keyboard.press('Shift+Tab');
         await page.keyboard.press('Tab');
         const focusState = await action.evaluate((element) => {
           const style = getComputedStyle(element);
@@ -171,6 +192,12 @@ await withPreview({ port: 4396 }, async (baseURL) => {
     const noJsState = await noJs.evaluate(() => {
       const quick = document.querySelector('[data-live-quote]');
       const detail = document.querySelector('details.record-detail');
+      const teamCta = document.querySelector('[data-team-cta]');
+      const teamUrl = teamCta instanceof HTMLAnchorElement
+        ? new URL(teamCta.href, location.href)
+        : null;
+      const currentStanding = document.querySelector('[data-standings-list] a[aria-current="page"]');
+      const currentStandingStyle = currentStanding ? getComputedStyle(currentStanding) : null;
       return {
         quickVisible: quick ? getComputedStyle(quick).opacity === '1' : false,
         status: quick?.querySelector('[data-live-state]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
@@ -181,6 +208,20 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         jupiterLinks: document.querySelectorAll('a[href*="jup.ag"], [data-market-jupiter]').length,
         people: document.querySelectorAll('.people-block li a[href^="/people/"]').length,
         standingsRows: document.querySelectorAll('[data-standings-list] > li').length,
+        standingsCurrent: document.querySelectorAll('[data-standings-list] a[aria-current="page"]').length,
+        standingsCurrentOutlined: currentStandingStyle
+          ? currentStandingStyle.boxShadow !== 'none'
+            || (currentStandingStyle.outlineStyle !== 'none' && parseFloat(currentStandingStyle.outlineWidth) > 0)
+            || (currentStandingStyle.borderStyle !== 'none' && parseFloat(currentStandingStyle.borderWidth) > 0)
+          : false,
+        teamModules: document.querySelectorAll('[data-zodiac-games]').length,
+        teamQuestion: document.querySelector('[data-team-question]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        teamCtaHeight: teamCta?.getBoundingClientRect().height ?? 0,
+        teamCtaPath: teamUrl ? `${teamUrl.pathname}${teamUrl.search}${teamUrl.hash}` : '',
+        teamCtaSameOrigin: teamUrl?.origin === location.origin,
+        genericShareActions: document.querySelectorAll('[data-share-sign]').length,
+        phantomLinks: document.querySelectorAll('a[href*="phantom.com"]').length,
+        stripNavs: document.querySelectorAll('nav.strip').length,
         tradePanels: document.querySelectorAll('[data-trade-panel]').length,
       };
     });
@@ -194,6 +235,16 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         && noJsState.jupiterLinks === 0
         && noJsState.people === 4
         && noJsState.standingsRows === 12
+        && noJsState.standingsCurrent === 1
+        && noJsState.standingsCurrentOutlined
+        && noJsState.teamModules === 1
+        && noJsState.teamQuestion.length > 0
+        && noJsState.teamCtaHeight >= 44
+        && noJsState.teamCtaSameOrigin
+        && noJsState.teamCtaPath === '/race/?sign=leo#join'
+        && noJsState.genericShareActions === 0
+        && noJsState.phantomLinks === 0
+        && noJsState.stripNavs === 0
         && noJsState.tradePanels === 0,
       JSON.stringify(noJsState));
     await noJs.close();
@@ -256,22 +307,34 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         && liveState.labelledBy === liveState.labelId,
       JSON.stringify(liveState));
     await chart.locator('[data-market-chart]:not([hidden])').waitFor({ timeout: 15_000 });
-    const chartState = await chart.locator('[data-market]').evaluate((panel) => ({
-      note: panel.querySelector('[data-market-chart-note]')?.textContent?.trim() ?? '',
-      empty: panel.querySelector('.market__chart-empty')?.textContent?.trim() ?? '',
-      paths: panel.querySelectorAll('[data-market-chart-canvas] path').length,
-      points: panel.querySelectorAll('[data-market-chart-canvas] circle').length,
-      chartRole: panel.querySelector('[data-market-chart-canvas] svg')?.getAttribute('role') ?? '',
-      chartLabel: panel.querySelector('[data-market-chart-canvas] svg')?.getAttribute('aria-label') ?? '',
-      chartTitle: panel.querySelector('[data-market-chart-canvas] svg > title')?.textContent?.trim() ?? '',
-      sevenDisabled: panel.querySelector('[data-market-range="7d"]')?.disabled ?? false,
-      sevenPressed: panel.querySelector('[data-market-range="7d"]')?.getAttribute('aria-pressed') ?? '',
-      thirtyHidden: panel.querySelector('[data-market-range="30d"]')?.hidden ?? false,
-      allHidden: panel.querySelector('[data-market-range="all"]')?.hidden ?? false,
-      summaryRows: panel.querySelectorAll('[data-chart-summary] > div').length,
-      metrics: [...panel.querySelectorAll('.market__k')].map((node) => node.textContent?.trim() ?? ''),
-      live: panel.querySelector('[data-market-live-link]')?.getAttribute('href') ?? '',
-    }));
+    const chartState = await chart.locator('[data-market]').evaluate((panel) => {
+      const currentStanding = document.querySelector('[data-standings-list] a[aria-current="page"]');
+      const currentStandingStyle = currentStanding ? getComputedStyle(currentStanding) : null;
+      return {
+        note: panel.querySelector('[data-market-chart-note]')?.textContent?.trim() ?? '',
+        empty: panel.querySelector('.market__chart-empty')?.textContent?.trim() ?? '',
+        paths: panel.querySelectorAll('[data-market-chart-canvas] path').length,
+        points: panel.querySelectorAll('[data-market-chart-canvas] circle').length,
+        chartRole: panel.querySelector('[data-market-chart-canvas] svg')?.getAttribute('role') ?? '',
+        chartLabel: panel.querySelector('[data-market-chart-canvas] svg')?.getAttribute('aria-label') ?? '',
+        chartTitle: panel.querySelector('[data-market-chart-canvas] svg > title')?.textContent?.trim() ?? '',
+        sevenDisabled: panel.querySelector('[data-market-range="7d"]')?.disabled ?? false,
+        sevenPressed: panel.querySelector('[data-market-range="7d"]')?.getAttribute('aria-pressed') ?? '',
+        thirtyHidden: panel.querySelector('[data-market-range="30d"]')?.hidden ?? false,
+        allHidden: panel.querySelector('[data-market-range="all"]')?.hidden ?? false,
+        summaryRows: panel.querySelectorAll('[data-chart-summary] > div').length,
+        metrics: [...panel.querySelectorAll('.market__k')].map((node) => node.textContent?.trim() ?? ''),
+        live: panel.querySelector('[data-market-live-link]')?.getAttribute('href') ?? '',
+        standingsRows: document.querySelectorAll('[data-standings-list] > li').length,
+        standingsCurrent: document.querySelectorAll('[data-standings-list] a[aria-current="page"]').length,
+        standingsCurrentHref: currentStanding?.getAttribute('href') ?? '',
+        standingsCurrentOutlined: currentStandingStyle
+          ? currentStandingStyle.boxShadow !== 'none'
+            || (currentStandingStyle.outlineStyle !== 'none' && parseFloat(currentStandingStyle.outlineWidth) > 0)
+            || (currentStandingStyle.borderStyle !== 'none' && parseFloat(currentStandingStyle.borderWidth) > 0)
+          : false,
+      };
+    });
     check('archive charts draw as soon as two daily prices are available',
       /^2 daily prices through .*\.$/.test(chartState.note)
         && chartState.empty === ''
@@ -289,6 +352,12 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         && chartState.metrics.includes('Total market value')
         && chartState.metrics.includes('Traded in 24 hours')
         && chartState.live === 'https://dexscreener.com/solana/live-leo',
+      JSON.stringify(chartState));
+    check('an incomplete fetched snapshot never collapses the all-12 standings',
+      chartState.standingsRows === 12
+        && chartState.standingsCurrent === 1
+        && chartState.standingsCurrentHref === '/registry/leo/'
+        && chartState.standingsCurrentOutlined,
       JSON.stringify(chartState));
     check('archive chart runtime is error free', chartErrors.length === 0, chartErrors.join(' | '));
     await chart.close();

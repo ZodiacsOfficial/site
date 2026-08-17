@@ -1,0 +1,72 @@
+---
+import Base from '../../layouts/Base.astro';
+import RaceBoard from '../../games/RaceBoard';
+import { SIGNS } from '../../lib/signs';
+import { gamesQuestionForWeek } from '../../games/questions';
+import { isoWeekUtc, seasonInstanceAt } from '../../games/season';
+import '../../games/race.css';
+
+const buildInstant = new Date();
+const season = seasonInstanceAt(buildInstant);
+const buildWeek = isoWeekUtc(buildInstant);
+const question = gamesQuestionForWeek(buildWeek.isoYear, buildWeek.isoWeek);
+const raceSigns = SIGNS.map(({ slug, name, glyph, hue }) => ({ slug, name, glyph, hue }));
+
+const title = 'Zodiac Games — Live Team Standings | Zodiacs.org';
+const description =
+  'Represent your zodiac sign, answer one weekly question, and follow all twelve teams on a live standings board.';
+---
+<Base title={title} description={description} path="/race/" clientUi>
+  <section class="section--tight container container--narrow">
+    <header class="race-hero">
+      <em class="kicker">Zodiac Games</em>
+      <h1 class="display">All twelve signs on one live board.</h1>
+      <p>
+        Choose a team once, then answer the current board’s weekly question.
+        Your join and each answer add one point.
+      </p>
+    </header>
+
+    <RaceBoard
+      client:load
+      seasonId={season.id}
+      isoYear={buildWeek.isoYear}
+      isoWeek={buildWeek.isoWeek}
+      signs={raceSigns}
+      question={question}
+    />
+
+    <noscript>
+      <p>Live standings and team joining need JavaScript.</p>
+    </noscript>
+
+    <div class="race-explainer">
+      <h2>Every season starts at zero</h2>
+      <p>
+        When a new zodiac season begins, so does a new board. Only joins and
+        weekly answers move it. If a season starts midweek, the new board may
+        offer that week’s question again.
+      </p>
+
+      <h2>Compare the teams</h2>
+      <p>
+        After you answer, compare your team’s choices with the overall result
+        across all twelve teams. Each poll has three choices and no public comments.
+      </p>
+    </div>
+
+    <dl class="race-faq">
+      <dt>Can one person keep adding points?</dt>
+      <dd>
+        A browser can join one team and add one answer point to each seasonal
+        board per week. We also limit repeat joins from the same internet connection.
+      </dd>
+
+      <dt>What information do you keep?</dt>
+      <dd>
+        We save a random browser code so each join and answer counts once.
+        See the <a href="/privacy/">privacy policy</a> for details.
+      </dd>
+    </dl>
+  </section>
+</Base>

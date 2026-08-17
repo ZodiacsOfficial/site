@@ -130,7 +130,7 @@ describe('glossary search entries', () => {
 });
 
 describe('curated wing search entries', () => {
-  it('freezes Astrofolio, Terminal, and fifteen records-register destinations with validated kinds', () => {
+  it('freezes the curated wing destinations with validated kinds', () => {
     expect(SEARCH_KINDS).toContain('terminal');
     expect(SEARCH_KINDS).toContain('astrofolio');
     expect(SEARCH_KINDS).toContain('registry');

@@ -1,4 +1,5 @@
 import { sendInviteJson } from '../src/lib/invite/api.js';
+import { handleGamesApi } from '../src/games/server.js';
 import { handleRegistryNews } from './_registry/news-handler.js';
 import completeHandler from '../src/lib/invite/routes/invite-complete.js';
 import exchangeHandler from '../src/lib/invite/routes/invite-exchange.js';
@@ -41,6 +42,10 @@ export function compatibilityInviteHandlerForAction(value: unknown): InviteHandl
 }
 
 export default async function handler(req: any, res: any): Promise<void> {
+  if (req.query?.__zodiacs_games_route === '1') {
+    await handleGamesApi(req, res);
+    return;
+  }
   if (req.query?.action === 'registry-news') {
     await handleRegistryNews(req, res);
     return;
