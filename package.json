@@ -104,6 +104,7 @@
     "editorial:horoscopes:freshness": "node scripts/verify-horoscope-freshness.mjs",
     "editorial:transits:verify": "node scripts/verify-transits.mjs",
     "editorial:transits:verify-all": "node scripts/verify-transits.mjs --all",
+    "test:games:sql": "bash scripts/test-games-sql.sh",
     "test:phase6:assistant-sql": "bash scripts/test-phase6-assistant-sql.sh",
     "test:account:sync-sql": "bash scripts/test-account-sync-v2-sql.sh",
     "test:phase6:ask": "node tests/assistant-drive.mjs"
