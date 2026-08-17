@@ -7,6 +7,12 @@
  */
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { trackAnalytics } from '../lib/analytics';
+import {
+  downloadRaceCardBlob,
+  drawRaceShareCard,
+  raceShareSnapshot,
+  shareRaceCardBlob,
+} from '../lib/games/share-card';
 import '../styles/race.css';
 
 const API_PATH = '/api/games';
@@ -98,28 +104,30 @@ export default function RaceBoard({
     trackAnalytics('race_view', { season: seasonId });
 
     const controller = new AbortController();
-    (async () => {
-      try {
-        const response = await fetch(`${API_PATH}?action=standings`, {
-          signal: controller.signal,
-          credentials: 'same-origin',
-          cache: 'no-cache',
-        });
-        if (!response.ok) throw new Error(String(response.status));
-        const body = await response.json() as {
-          standings?: StandingRow[]; isoYear?: number; isoWeek?: number;
-        };
-        if (controller.signal.aborted) return;
-        if (Array.isArray(body.standings)) setStandings(body.standings);
-        if (typeof body.isoYear === 'number' && typeof body.isoWeek === 'number') {
-          setWeek({ isoYear: body.isoYear, isoWeek: body.isoWeek });
-        }
-      } catch {
-        if (!controller.signal.aborted) setStandings([]);
-      }
-    })();
+    refreshStandings(controller.signal);
     return () => controller.abort();
   }, [seasonId]);
+
+  const refreshStandings = async (signal?: AbortSignal) => {
+    try {
+      const response = await fetch(`${API_PATH}?action=standings`, {
+        signal,
+        credentials: 'same-origin',
+        cache: 'no-cache',
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      const body = await response.json() as {
+        standings?: StandingRow[]; isoYear?: number; isoWeek?: number;
+      };
+      if (signal?.aborted) return;
+      if (Array.isArray(body.standings)) setStandings(body.standings);
+      if (typeof body.isoYear === 'number' && typeof body.isoWeek === 'number') {
+        setWeek({ isoYear: body.isoYear, isoWeek: body.isoWeek });
+      }
+    } catch {
+      if (!signal?.aborted) setStandings((current) => current ?? []);
+    }
+  };
 
   useEffect(() => {
     const target = trophyRef.current;
@@ -162,6 +170,7 @@ export default function RaceBoard({
         setMembership(settled);
         setJustJoined(true);
         if (status === 'joined') trackAnalytics('team_join', { sign: settled.sign, season: seasonId });
+        void refreshStandings();
       } else if (result.status === 429) {
         setNote('Too many joins from this connection today. Tomorrow works.');
       } else {
@@ -192,6 +201,7 @@ export default function RaceBoard({
         if (body.status === 'checked_in') {
           trackAnalytics('weekly_checkin', { sign: membership.sign, season: seasonId });
         }
+        void refreshStandings();
       } else if (body.status === 'not_joined') {
         // The signed cookie is gone; the local mirror is stale.
         writeMembership(null);
@@ -202,6 +212,40 @@ export default function RaceBoard({
       }
     } catch {
       setNote('The Race did not answer. Try again in a moment.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const [shareNote, setShareNote] = useState('');
+
+  const shareCard = async () => {
+    if (busy || !membership || !standings || standings.length === 0) return;
+    setBusy(true);
+    setShareNote('');
+    try {
+      const snapshot = raceShareSnapshot({
+        sign: membership.sign,
+        seasonName,
+        daysLeft: daysLeftFrom(seasonEndsAt, Date.now()),
+        isoWeek: week.isoWeek,
+        standings,
+      });
+      const blob = await drawRaceShareCard(snapshot);
+      let outcome = await shareRaceCardBlob(blob);
+      if (outcome === 'unavailable') {
+        outcome = downloadRaceCardBlob(blob);
+        setShareNote('Card saved. Post it anywhere.');
+      }
+      if (outcome === 'shared' || outcome === 'downloaded') {
+        trackAnalytics('share_card', {
+          sign: membership.sign,
+          platform: outcome === 'shared' ? 'web-share' : 'download',
+          season: seasonId,
+        });
+      }
+    } catch {
+      setShareNote('The card did not render. Try again in a moment.');
     } finally {
       setBusy(false);
     }
@@ -302,6 +346,25 @@ export default function RaceBoard({
         )}
         {note && <p class="race-board__note" role="status">{note}</p>}
       </div>
+
+      {membership && (
+        <div class="race-board__module race-board__share">
+          <h3>
+            Post {memberSign?.name ?? membership.sign}’s standing. Rivalries
+            don’t run themselves.
+          </h3>
+          <button
+            type="button"
+            class="btn race-board__cta"
+            data-race-share
+            disabled={busy || !standings || standings.length === 0}
+            onClick={shareCard}
+          >
+            Share the card
+          </button>
+          {shareNote && <p class="race-board__note" role="status">{shareNote}</p>}
+        </div>
+      )}
 
       <div class="race-board__module race-board__trophy" ref={trophyRef}>
         <h3>The {seasonName} trophy.</h3>
