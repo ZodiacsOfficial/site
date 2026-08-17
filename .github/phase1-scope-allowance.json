@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "pr250-registry-market-refresh-2026-08-17",
-  "baseCommit": "9c05551cc462cf4150a180bab2f513c752e0b710",
+  "id": "pr250-registry-market-refresh-2026-08-17b",
+  "baseCommit": "6b1462c18b601101b63cb1fd81bb4d8a82bfd141",
   "note": "Owner-approved (Dias, 2026-08-17, via Claude session): regenerate the 12 Registry sign pages so committed output matches the committed 2026-08-17 market snapshot. The Aug-17 snapshot commit on main updated registry-market-history.v1.json without re-running build-sign-pages, leaving the legacy-wing drift gate red on any ref of main. Content change is market numbers and the Updated timestamp only.",
   "protectedPaths": [
     "public/registry/aquarius/index.html",
