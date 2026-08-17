@@ -65,6 +65,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ['/astrofolio/', '2026-08-13'],
   ['/terminal/', '2026-08-13'],
   ['/registry/', '2026-08-11'],
+  ['/race/', '2026-08-17'],
   ...[
     'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
     'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -169,6 +170,7 @@ export const GET: APIRoute = async () => {
     { loc: '/learn/', priority: 0.85 },
     { loc: '/tools/', priority: 0.8 },
     { loc: '/ask/', priority: 0.8 },
+    { loc: '/race/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
     { loc: '/registry/technical/', priority: 0.6 },
     { loc: '/terminal/research/', priority: 0.68 },

@@ -60,6 +60,9 @@ jobs:
       - name: Generate deterministic Registry Research drafts and approved feeds
         run: node scripts/build-registry-research.mjs
 
+      - name: Refresh the twelve catalogue profiles from the saved market snapshot
+        run: node scripts/build-sign-pages.mjs
+
       - name: Require current, internally paired artifacts
         run: |
           node --input-type=module <<'NODE'
@@ -92,7 +95,7 @@ jobs:
         env:
           TARGET_BRANCH: ${{ github.event_name == 'workflow_dispatch' && github.ref_name || github.event.repository.default_branch }}
         run: |
-          FILES="public/assets/data/registry-market-history.v1.json public/assets/registry-outlook.json src/data/registry-research/drafts.json src/data/registry-research/publication.json public/assets/registry-research-feed.json public/assets/data/registry-research"
+          FILES="public/assets/data/registry-market-history.v1.json public/assets/registry-outlook.json src/data/registry-research/drafts.json src/data/registry-research/publication.json public/assets/registry-research-feed.json public/assets/data/registry-research public/registry/*/index.html"
           if git diff --quiet -- $FILES; then
             echo "Registry market history and outlook unchanged"
             exit 0

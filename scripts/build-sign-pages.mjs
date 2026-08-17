@@ -25,9 +25,12 @@ import { NAV_SIGNS, wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mj
 import { OG_SIGNS } from '../src/strings/seo.signs.mjs';
 import {
   SIGN_PROFILE_PEOPLE,
+  SIGN_PROFILE_LEGACY,
+  SIGN_PROFILE_PERSON_ROLES,
   SIGN_PROFILE_RALLY_LINES,
   SIGN_PROFILE_PROTECTED_LINKS,
   registryProfilePersonLinkRel,
+  validateSignProfileCommunityData,
   validateSignProfileRallyLines,
 } from './sign-profile-data.mjs';
 import { brandIconLinkMarkup } from '../src/lib/brand-icons.mjs';
@@ -83,6 +86,10 @@ const rallyLineErrors = validateSignProfileRallyLines(SIGN_ORDER);
 if (rallyLineErrors.length) {
   throw new Error(`Invalid Registry profile rally lines:\n${rallyLineErrors.join('\n')}`);
 }
+const communityDataErrors = validateSignProfileCommunityData(SIGN_ORDER);
+if (communityDataErrors.length) {
+  throw new Error(`Invalid Registry profile community data:\n${communityDataErrors.join('\n')}`);
+}
 
 const titleCase = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 const esc = (s) => String(s)
@@ -103,13 +110,24 @@ function pulseDate(value, includeYear = false) {
 
 function marketStandings(snapshot) {
   const canonical = new Set(SIGN_ORDER);
-  return (snapshot?.assets ?? [])
-    .filter((asset) => canonical.has(asset?.sign) && Number.isFinite(Number(asset.marketCapUsd)))
-    .map((asset) => ({ ...asset, marketCapUsd: Number(asset.marketCapUsd) }))
-    .sort((a, b) => (
-      b.marketCapUsd - a.marketCapUsd
-      || SIGN_ORDER.indexOf(a.sign) - SIGN_ORDER.indexOf(b.sign)
-    ));
+  const bySign = new Map();
+  for (const asset of snapshot?.assets ?? []) {
+    if (!canonical.has(asset?.sign) || bySign.has(asset.sign)) continue;
+    const marketCapUsd = Number(asset.marketCapUsd);
+    if (!Number.isFinite(marketCapUsd) || marketCapUsd < 0) continue;
+    bySign.set(asset.sign, { ...asset, marketCapUsd });
+  }
+  return SIGN_ORDER
+    .map((sign) => bySign.get(sign) ?? { sign, marketCapUsd: null })
+    .sort((a, b) => {
+      const aKnown = Number.isFinite(a.marketCapUsd);
+      const bKnown = Number.isFinite(b.marketCapUsd);
+      if (aKnown !== bKnown) return aKnown ? -1 : 1;
+      if (aKnown && bKnown && b.marketCapUsd !== a.marketCapUsd) {
+        return b.marketCapUsd - a.marketCapUsd;
+      }
+      return SIGN_ORDER.indexOf(a.sign) - SIGN_ORDER.indexOf(b.sign);
+    });
 }
 
 const MARKET_RANK_MAX_AGE_MS = 48 * 60 * 60 * 1000;
@@ -118,6 +136,7 @@ function rankedMarketStandings(standings) {
   let previousValue = null;
   let previousRank = 0;
   return standings.map((asset, index) => {
+    if (!Number.isFinite(asset.marketCapUsd)) return { ...asset, rank: null };
     const rank = previousValue !== null && asset.marketCapUsd === previousValue
       ? previousRank
       : index + 1;
@@ -132,6 +151,7 @@ function marketRankStatus(snapshot, standings, now = Date.now()) {
   const readAt = new Date(snapshot?.source?.readAt ?? '').getTime();
   const age = now - readAt;
   const complete = standings.length === SIGN_ORDER.length
+    && standings.every((asset) => Number.isFinite(asset.marketCapUsd))
     && Number(coverage.canonicalAssetCount) === SIGN_ORDER.length
     && Number(coverage.assetsWithIndexedPools) === SIGN_ORDER.length
     && Number(coverage.assetsWithMarketCap) === SIGN_ORDER.length;
@@ -162,6 +182,7 @@ function profilePeopleFor(slug) {
     return {
       slug: person.slug,
       name: person.displayName,
+      role: SIGN_PROFILE_PERSON_ROLES[person.slug],
       date: shortDate(person.birthDate.displayedDate),
       protectedLiving: linkRel === 'nofollow',
     };
@@ -190,7 +211,9 @@ function pageModel(slug) {
     : consumerSource;
   const signViews = Number(pulse.wikipedia?.perSignAvgDay?.[slug]);
   const standings = marketStandings(latestMarketSnapshot);
-  const marketAsset = standings.find((candidate) => candidate.sign === slug) ?? null;
+  const marketAsset = standings.find((candidate) => (
+    candidate.sign === slug && Number.isFinite(candidate.marketCapUsd)
+  )) ?? null;
   if (!consumer) throw new Error(`Consumer sign data missing: ${slug}`);
   if (!Number.isFinite(signViews) || signViews <= 0) {
     throw new Error(`Attention snapshot incomplete: ${slug}`);
@@ -206,6 +229,7 @@ function pageModel(slug) {
     constellation: CONSTELLATIONS[slug],
     dexscreener: dexscreenerUrl(slug, solana.address),
     consumer,
+    legacy: SIGN_PROFILE_LEGACY[slug] ?? null,
     rallyLine: SIGN_PROFILE_RALLY_LINES[slug],
     people: profilePeopleFor(slug),
     attention: {
@@ -339,6 +363,7 @@ function compactUsd(value) {
 }
 
 function wholeUsd(value) {
+  if (value === null || value === undefined || value === '' || typeof value === 'boolean') return '—';
   const number = Number(value);
   if (!Number.isFinite(number)) return '—';
   return `$${Math.round(number).toLocaleString('en-US')}`;
@@ -367,6 +392,36 @@ function readableTimestamp(value) {
   }).format(date);
 }
 
+function renderLegacyCrest(m) {
+  if (!m.legacy) return '';
+  const sourceLinks = m.legacy.sources.map((source) => (
+    `<a href="${esc(source.href)}" rel="noopener noreferrer external">${esc(source.label)} ↗</a>`
+  )).join('');
+  return `
+      <article class="legacy-crest" aria-labelledby="legacy-title">
+        <div class="legacy-crest__copy">
+          <span class="legacy-crest__eyebrow">${esc(m.legacy.eyebrow)}</span>
+          <h3 id="legacy-title">${esc(m.legacy.title)}</h3>
+          <p class="legacy-crest__star">${esc(m.legacy.star)}</p>
+          <p>${esc(m.legacy.myth)}</p>
+          <p>${esc(m.legacy.older)}</p>
+          <details class="legacy-crest__sources"><summary>Story sources</summary><div>${sourceLinks}</div></details>
+        </div>
+        <div class="legacy-crest__sky" aria-hidden="true">
+          <svg viewBox="0 0 720 460" focusable="false">
+            <defs><filter id="scorpio-antares-glow" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="11"/></filter></defs>
+            <text class="legacy-crest__glyph" x="575" y="420">${esc(m.page.glyph)}</text>
+            <g class="legacy-crest__lines">
+              <path pathLength="1" d="M524.08 196.12L517.96 150.61"/><path pathLength="1" d="M517.96 150.61L513.36 99.34"/><path pathLength="1" d="M513.36 99.34L497.5 58"/><path pathLength="1" d="M513.36 99.34L448.55 142.96"/><path pathLength="1" d="M448.55 142.96L423.01 155.28"/><path pathLength="1" d="M423.01 155.28L402.89 181.46"/><path pathLength="1" d="M402.89 181.46L358.51 270.68"/><path pathLength="1" d="M358.51 270.68L353.21 325.79"/><path pathLength="1" d="M353.21 325.79L290.19 402"/><path pathLength="1" d="M290.19 402L211.99 398.46"/><path pathLength="1" d="M211.99 398.46L195.92 340.21"/><path pathLength="1" d="M195.92 340.21L223.52 311.93"/><path pathLength="1" d="M223.52 311.93L232.36 314.75"/>
+            </g>
+            <g class="legacy-crest__stars"><circle cx="524.08" cy="196.12" r="2.33"/><circle cx="517.96" cy="150.61" r="3.31"/><circle cx="513.36" cy="99.34" r="3.91"/><circle cx="497.5" cy="58" r="3.64"/><circle cx="448.55" cy="142.96" r="3.3"/><circle cx="402.89" cy="181.46" r="3.38"/><circle cx="358.51" cy="270.68" r="3.91"/><circle cx="353.21" cy="325.79" r="3.2"/><circle cx="290.19" cy="402" r="2.88"/><circle cx="232.36" cy="314.75" r="3.5"/><circle cx="223.52" cy="311.93" r="4.58"/><circle cx="211.99" cy="398.46" r="4.34"/><circle cx="195.92" cy="340.21" r="3.81"/></g>
+            <g class="legacy-crest__antares" transform="translate(423.01 155.28)"><circle class="legacy-crest__halo" r="28"/><circle class="legacy-crest__core" r="6.5"/></g>
+            <text class="legacy-crest__star-name" x="442" y="142">Antares · rival of Mars</text>
+          </svg>
+        </div>
+      </article>`;
+}
+
 function render(m) {
   const p = m.page;
   const modalityMeaning = {
@@ -382,7 +437,7 @@ function render(m) {
     ['Element', titleCase(m.consumer.element)],
     ['Type', modalityMeaning],
     [focusKind === 'open cluster' ? 'Key object' : 'Key star', p.principalStar.name],
-  ];
+  ].filter(([key]) => !(m.legacy && (key === 'Key star' || key === 'Key object')));
   const rankedStandings = rankedMarketStandings(m.standings);
   const selectedStanding = rankedStandings.find((asset) => asset.sign === m.slug);
   const currentRank = m.rankStatus.available ? selectedStanding?.rank ?? null : null;
@@ -986,20 +1041,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .nextlot .lt { font-family: var(--display); font-weight: 500; font-size: 9px; letter-spacing: 0.16em; color: var(--gold); text-transform: uppercase; }
     .nextlot a:last-child { text-align: right; align-items: flex-end; }
 
-    .strip {
-      display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
-      gap: 10px; padding: 26px 0 4px;
-    }
-    .strip a {
-      display: grid; place-items: center; width: 44px; height: 44px;
-      border-radius: 50%; border: 1px solid transparent;
-      transition: border-color 320ms var(--ease), transform 220ms var(--ease);
-    }
-    .strip a:hover { border-color: var(--hair-2); transform: translateY(-1px); }
-    .strip a.is-current { border-color: var(--gold); }
-    .strip img { width: 20px; height: 20px; object-fit: contain; opacity: 0.62; }
-    .strip a.is-current img, .strip a:hover img { opacity: 1; }
-
     /* Footer */
     .ftr {
       margin-top: 64px; padding: 36px 0 56px; border-top: 1px solid var(--hair);
@@ -1032,6 +1073,8 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       .reveal { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
       .lot__next { transition: none; }
       .lot__next:active { transform: none; }
+      .legacy-crest__lines path, .legacy-crest__halo { animation: none !important; }
+      .legacy-crest__lines path { stroke-dashoffset: 0; }
     }
 
     /* Consumer profile layer: familiar words first, technical detail later. */
@@ -1053,12 +1096,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .lot__intro { max-width: 46ch; font-size: clamp(19px, 2.5vw, 24px); line-height: 1.4; }
     .lot__dates { font-size: 13px; letter-spacing: 0.02em; text-transform: none; }
     .lot__meta { align-items: start; }
-    .identity-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-    .identity-actions button {
-      min-height: 44px; padding: 0 15px; border: 1px solid var(--hair-2); border-radius: 999px;
-      font-size: 14px; color: var(--ink-2); background: rgba(198,204,218,0.04);
-    }
-    .identity-actions button:hover { border-color: var(--hair-3); color: var(--ink); }
     .split { align-items: stretch; }
     .split__figure { position: static !important; }
     .profile-art { height: 100%; min-height: 440px; border-color: color-mix(in srgb, ${m.hue} 32%, transparent); }
@@ -1078,7 +1115,62 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .sec { padding-top: 72px; }
     .sec__head { margin-bottom: 26px; }
     .sec__title { font-size: clamp(25px, 4vw, 36px); font-weight: 600; letter-spacing: -0.02em; text-transform: none; color: var(--ink); }
-    .pride__rally { max-width: 32ch; margin: 0 0 12px; font-size: clamp(25px, 4vw, 40px); font-weight: 650; line-height: 1.15; letter-spacing: -0.025em; color: var(--ink); }
+    .pride-banner {
+      position: relative; isolation: isolate; overflow: hidden; display: grid; min-height: 260px; align-items: center;
+      grid-template-columns: minmax(0, 1fr) auto; padding: clamp(28px, 5vw, 52px); border: 1px solid color-mix(in srgb, ${m.hue} 54%, var(--hair));
+      border-radius: 28px; background: radial-gradient(circle at 78% 28%, color-mix(in srgb, ${m.hue} 23%, transparent), transparent 32%), linear-gradient(135deg, color-mix(in srgb, ${m.hue} 11%, #0b0c11), #090a0e 70%);
+    }
+    .pride-banner__copy { position: relative; z-index: 1; }
+    .pride__rally { max-width: 25ch; margin: 0; font-size: clamp(31px, 5.6vw, 58px); font-weight: 650; line-height: 1.04; letter-spacing: -0.045em; color: var(--ink); text-wrap: balance; }
+    .pride-banner__glyph { align-self: center; font: 400 clamp(130px, 23vw, 250px)/.8 var(--wing-serif); color: color-mix(in srgb, ${m.hue} 38%, transparent); transform: rotate(-5deg); user-select: none; }
+    .season-status { display: inline-flex; min-height: 34px; align-items: center; margin: 24px 0 0; padding: 0 13px; border: 1px solid color-mix(in srgb, ${m.hue} 42%, var(--hair)); border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-2); background: rgba(0,0,0,.18); }
+    .games-card { display: grid; gap: 18px; margin-top: 18px; padding: clamp(24px, 4vw, 38px); border: 1px solid color-mix(in srgb, ${m.hue} 36%, var(--hair)); border-radius: 22px; background: linear-gradient(135deg, color-mix(in srgb, ${m.hue} 8%, var(--surface)), var(--surface)); }
+    .games-card__label { display: block; margin-bottom: 10px; font-size: 12px; font-weight: 650; letter-spacing: .04em; color: ${m.hue}; }
+    .games-card h3 { margin: 0; max-width: 30ch; font: 650 clamp(25px, 4vw, 38px)/1.12 var(--sans); letter-spacing: -.03em; color: var(--ink); }
+    .games-card p { max-width: 38ch; margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+    .games-card__action { display: grid; align-content: center; gap: 10px; }
+    .games-card__action a { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 0 18px; border-radius: 999px; background: ${m.hue}; color: #111017; font-size: 15px; font-weight: 700; text-decoration: none; }
+    .games-card__action small { max-width: 35ch; font-size: 12px; line-height: 1.5; color: var(--ink-mute); }
+    @media (min-width: 760px) { .games-card { grid-template-columns: 1fr minmax(230px, .55fr); align-items: center; } }
+    @media (max-width: 560px) { .pride-banner { min-height: 230px; grid-template-columns: 1fr; } .pride-banner__glyph { position: absolute; right: -12px; bottom: -24px; opacity: .62; } .pride-banner__copy { padding-right: 38px; } }
+    .legacy-crest {
+      position: relative; isolation: isolate; overflow: hidden; display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr); min-height: 410px; margin-bottom: 14px;
+      border: 1px solid color-mix(in srgb, ${m.hue} 42%, var(--hair)); border-radius: 28px;
+      background: radial-gradient(circle at 72% 31%, rgba(255,128,108,.14), transparent 14%),
+        radial-gradient(80% 120% at 80% 50%, color-mix(in srgb, ${m.hue} 11%, transparent), transparent 65%),
+        linear-gradient(135deg, #170d19 0%, #0d0b13 54%, #08090d 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 28px 80px rgba(0,0,0,.24);
+    }
+    .legacy-crest__copy { position: relative; z-index: 1; align-self: center; padding: 40px 8px 40px 40px; }
+    .legacy-crest__eyebrow { display: block; margin-bottom: 12px; font-size: 12px; font-weight: 650; letter-spacing: .04em; color: ${m.hue}; }
+    .legacy-crest h3 { margin: 0 0 20px; font: 650 clamp(38px, 5vw, 62px)/.98 var(--sans); letter-spacing: -.04em; color: #f7f4f8; }
+    .legacy-crest__copy > p { max-width: 39ch; margin: 0 0 14px; font: 400 16px/1.58 var(--sans); color: rgba(239,237,244,.75); }
+    .legacy-crest__copy > .legacy-crest__star { font-size: 18px; line-height: 1.5; color: #f5f1f6; }
+    .legacy-crest__copy > p:nth-of-type(3) { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(185,220,232,.16); font-size: 14px; color: rgba(239,237,244,.58); }
+    .legacy-crest__sources { margin-top: 8px; }
+    .legacy-crest__sources summary { display: flex; min-height: 44px; align-items: center; cursor: pointer; font-size: 13px; font-weight: 600; color: rgba(239,237,244,.64); }
+    .legacy-crest__sources div { display: flex; flex-wrap: wrap; gap: 8px 14px; padding-bottom: 8px; }
+    .legacy-crest__sources a { font-size: 12px; color: rgba(239,237,244,.78); }
+    .legacy-crest__sky { align-self: stretch; min-width: 0; display: grid; place-items: center; padding: 18px 10px 10px; }
+    .legacy-crest__sky svg { width: 100%; height: 100%; min-height: 350px; overflow: visible; }
+    .legacy-crest__lines { fill: none; stroke: #b9dce8; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; opacity: .58; }
+    .legacy-crest__lines path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+    .reveal.is-in .legacy-crest__lines path { animation: legacyDraw 1.35s var(--ease) forwards; }
+    .legacy-crest__stars { fill: #eef1f7; opacity: .82; }
+    .legacy-crest__halo { fill: #ff806c; opacity: .28; filter: url(#scorpio-antares-glow); transform-origin: center; animation: antaresBreathe 4.8s ease-in-out infinite; }
+    .legacy-crest__core { fill: #ff806c; stroke: #ffd2c9; stroke-width: 1.5; }
+    .legacy-crest__star-name { fill: #ffd2c9; font: 600 13px var(--sans); letter-spacing: .02em; }
+    .legacy-crest__glyph { fill: #b9dce8; opacity: .065; font: 300 126px var(--wing-serif); }
+    @keyframes legacyDraw { to { stroke-dashoffset: 0; } }
+    @keyframes antaresBreathe { 50% { opacity: .46; transform: scale(1.13); } }
+    @media (max-width: 699px) {
+      .legacy-crest { grid-template-columns: 1fr; min-height: 0; border-radius: 22px; }
+      .legacy-crest__copy { padding: 28px 22px 4px; }
+      .legacy-crest__sky { padding: 0 4px 8px; }
+      .legacy-crest__sky svg { min-height: 270px; }
+      .legacy-crest__glyph { font-size: 110px; }
+    }
     .attention-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
     .attention-card { padding: 22px; border: 1px solid var(--hair-2); background: var(--surface); }
     .attention-card__label, .people-block__label {
@@ -1097,6 +1189,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .people-block > small { display: block; margin-top: 12px; color: var(--ink-mute); }
     @media (min-width: 700px) {
       .attention-grid, .people-block ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .attention-grid--single { grid-template-columns: 1fr; }
     }
 
     .market { background: var(--surface); }
@@ -1122,16 +1215,13 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .standings__head p { margin: 0; max-width: 50ch; font-size: 14px; line-height: 1.5; color: var(--ink-mute); }
     .standings__list { display: grid; grid-template-columns: 1fr; gap: 1px; margin: 0; padding: 0; list-style: none; background: var(--hair); }
     .standings__list a { display: grid; grid-template-columns: 34px 32px minmax(0, 1fr) auto; min-height: 56px; align-items: center; gap: 10px; padding: 7px 14px; background: var(--bg); text-decoration: none; }
-    .standings__list li.is-current a { background: color-mix(in srgb, var(--sign) 13%, var(--bg)); box-shadow: inset 3px 0 0 var(--sign); }
+    .standings__list li.is-current a { position: relative; z-index: 1; background: color-mix(in srgb, var(--sign) 14%, var(--bg)); box-shadow: inset 0 0 0 2px var(--sign); }
     .standings__rank { font-family: var(--mono); font-size: 12px; color: var(--ink-mute); }
     .standings__list picture, .standings__list img { width: 32px; height: 32px; }
     .standings__list strong { font-size: 15px; }
     .standings__list a > span:last-child { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
     .standings__time { margin: 0; padding: 12px 16px; border-top: 1px solid var(--hair); font-size: 12px; color: var(--ink-mute); }
-    .standings__all summary {
-      min-height: 52px; display: flex; align-items: center; padding: 0 16px; cursor: pointer;
-      font-family: var(--sans); font-size: 15px; font-weight: 600; letter-spacing: 0; color: var(--ink-2);
-    }
+    .standings__all { display: block; }
     .market-explainer { border-top: 1px solid var(--hair); }
     .market-explainer summary, .token-details summary, .map-sources summary {
       min-height: 48px; display: flex; align-items: center; cursor: pointer;
@@ -1153,14 +1243,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .record-detail__hint { font-size: 12px; letter-spacing: 0; text-transform: none; }
     .map-sources { margin-top: 12px; border-top: 1px solid var(--hair); }
 
-    .strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding-top: 8px; }
-    .strip a { display: flex; width: auto; min-width: 0; height: auto; min-height: 68px; align-items: center; justify-content: flex-start; gap: 12px; padding: 10px 12px; border-radius: 16px; border: 1px solid var(--hair); background: var(--surface); text-decoration: none; }
-    .strip a:hover { transform: none; border-color: color-mix(in srgb, var(--sign) 55%, transparent); }
-    .strip a.is-current { border-color: var(--sign); background: color-mix(in srgb, var(--sign) 12%, var(--surface)); }
-    .strip picture, .strip img { flex: 0 0 auto; width: 44px; height: 44px; }
-    .strip img { opacity: 1; }
-    .strip__name { min-width: 0; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
-    @media (min-width: 720px) { .strip { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (max-width: 520px) {
       .profile-art { min-height: 340px; }
       .profile-art .stage { min-height: 310px; }
@@ -1187,9 +1269,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       <p class="lot__intro">${esc(m.consumer.essence)}</p>
       <div class="lot__meta">
         <div class="lot__dates">${esc(m.consumer.dates)} · ${esc(titleCase(m.consumer.element))} sign</div>
-        <div class="identity-actions">
-          <button type="button" data-share-sign>Share ${esc(m.name)}</button>
-        </div>
       </div>
     </section>
 
@@ -1212,17 +1291,23 @@ ${glanceRows.map(([key, value]) => `            <div><dt>${esc(key)}</dt><dd>${e
 
     <section class="sec reveal pride" id="identity" aria-labelledby="identity-title">
       <div class="sec__head"><h2 class="sec__title" id="identity-title">Born under ${esc(m.name)}</h2><span class="line"></span></div>
-      <p class="pride__rally">${esc(m.rallyLine)}</p>
-      <div class="attention-grid">
-        <article class="attention-card"><span class="attention-card__label">People who share ${esc(m.name)}</span><strong>Hundreds of millions</strong><p>A rough estimate based on one-twelfth of the world’s population. It describes the sign, not token ownership.</p></article>
-        <article class="attention-card" data-attention><span class="attention-card__label">Wikipedia views</span><strong>${m.attention.signViews.toLocaleString('en-US')} a day</strong><p>The English Wikipedia page for ${esc(m.name)} averaged ${m.attention.signViews.toLocaleString('en-US')} views a day from ${esc(m.attention.from)} to ${esc(m.attention.to)}.</p><small>Source: Wikimedia · updated ${esc(m.attention.capturedAt)}. One person may account for more than one view. This shows interest, not ownership or value. <a href="/thesis/#pulse">See the source</a>.</small></article>
+      <div class="pride-banner">
+        <div class="pride-banner__copy"><p class="pride__rally">${esc(m.rallyLine)}</p><p class="season-status" data-season-status data-season-dates="${esc(m.consumer.dates)}" hidden></p></div>
+        <span class="pride-banner__glyph" aria-hidden="true">${esc(p.glyph)}</span>
       </div>
       <div class="people-block">
-        <div><span class="people-block__label">You’re in good company</span></div>
+        <div><span class="people-block__label">Four lives, one sign</span></div>
         <ul>
-${m.people.map((person) => `          <li><a href="/people/${person.slug}/"${person.protectedLiving ? ' rel="nofollow"' : ''}><strong>${esc(person.name)}</strong><span>${esc(person.date)}</span></a></li>`).join('\n')}
+${m.people.map((person) => `          <li><a href="/people/${person.slug}/"${person.protectedLiving ? ' rel="nofollow"' : ''}><strong>${esc(person.name)}</strong><span>${esc(person.role)} · ${esc(person.date)}</span></a></li>`).join('\n')}
         </ul>
         <small>Birth dates are sourced. These people did not endorse Zodiacs.org.</small>
+      </div>
+      <article class="games-card" data-zodiac-games aria-labelledby="games-title">
+        <div><span class="games-card__label">Zodiac Games · Team ${esc(m.name)}</span><h3 id="games-title" data-team-question>Answer this week’s question for Team ${esc(m.name)}.</h3><p>After you answer, compare your team’s choices with the overall result across all twelve teams.</p></div>
+        <div class="games-card__action"><a data-team-cta href="/race/?sign=${m.slug}#join">Join Team ${esc(m.name)} →</a><small>Join and answer without an account.</small></div>
+      </article>
+      <div class="attention-grid attention-grid--single">
+        <article class="attention-card" data-attention><span class="attention-card__label">Wikipedia views</span><strong>${m.attention.signViews.toLocaleString('en-US')} a day</strong><p>The English Wikipedia page for ${esc(m.name)} averaged ${m.attention.signViews.toLocaleString('en-US')} views a day from ${esc(m.attention.from)} to ${esc(m.attention.to)}.</p><small>Source: Wikimedia · updated ${esc(m.attention.capturedAt)}. One person may account for more than one view. This shows interest, not ownership or value. <a href="/thesis/#pulse">See the source</a>.</small></article>
       </div>
     </section>
 
@@ -1252,14 +1337,14 @@ ${staticMetrics.map(([key, value, className]) => `          <div class="market__
       </aside>
       <section class="standings" data-market-standings aria-labelledby="standings-title">
         <div class="standings__head"><div><span>Market standings</span><h3 id="standings-title">${currentRank ? `${ordinal(currentRank)} of 12 by total market value` : 'Market rank unavailable'}</h3></div><p data-standings-summary>${esc(standingsSummary)}</p></div>
-        <details class="standings__all"><summary>See all 12 market standings</summary>
+        <div class="standings__all" aria-label="All 12 market standings">
           <ol class="standings__list" data-standings-list>
 ${rankedStandings.map((asset) => {
   const sign = NAV_SIGNS.find((candidate) => candidate.slug === asset.sign);
-  return `          <li${asset.sign === m.slug ? ' class="is-current" aria-current="true"' : ''}><a href="${signPath(asset.sign)}" style="--sign:${sign.hue}"><span class="standings__rank">${m.rankStatus.available ? `#${asset.rank}` : '—'}</span><picture><source srcset="/assets/zodiac-icons/48/${asset.sign}.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/${asset.sign}.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>${esc(sign.name)}</strong><span>${wholeUsd(asset.marketCapUsd)}</span></a></li>`;
+  return `          <li${asset.sign === m.slug ? ' class="is-current"' : ''}><a href="${signPath(asset.sign)}" style="--sign:${sign.hue}"${asset.sign === m.slug ? ' aria-current="page"' : ''}><span class="standings__rank">${m.rankStatus.available && asset.rank ? `#${asset.rank}` : '—'}</span><picture><source srcset="/assets/zodiac-icons/48/${asset.sign}.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/${asset.sign}.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>${esc(sign.name)}</strong><span>${wholeUsd(asset.marketCapUsd)}</span></a></li>`;
 }).join('\n')}
           </ol>
-        </details>
+        </div>
         <p class="standings__time" data-standings-time>Updated ${esc(readableTimestamp(marketReadAt))}</p>
         <details class="market-explainer"><summary>Where do these numbers come from?</summary><p>The source reports each sign’s price, trading activity and total market value. Zodiacs.org matches each sign by its verified address. Total market value is a comparison, not money held in a bank, and light trading can move it quickly. <a href="/registry/technical/#market-transparency">See sources and method details.</a></p></details>
       </section>
@@ -1288,8 +1373,9 @@ ${rankedStandings.map((asset) => {
     </section>
 
     <details class="record-detail reveal" id="constellation" aria-labelledby="constellation-title">
-      <summary class="record-detail__summary"><span class="record-detail__title" id="constellation-title">${esc(m.name)} in the sky</span><span class="record-detail__hint">Constellation map</span></summary>
-      <div class="record-detail__body constellation">
+      <summary class="record-detail__summary"><span class="record-detail__title" id="constellation-title">${esc(m.name)} in the sky</span><span class="record-detail__hint">${m.legacy ? 'Antares and old stories' : 'Constellation map'}</span></summary>
+${m.legacy ? `      <div class="record-detail__body">${renderLegacyCrest(m)}
+      </div>` : `      <div class="record-detail__body constellation">
         <div class="constellation__map">
           <img src="/assets/constellations/${m.slug}.svg" width="720" height="460" loading="lazy" decoding="async" alt="Map of the brighter ${esc(m.name)} constellation stars, with ${esc(focusObject.name)} highlighted" />
         </div>
@@ -1297,13 +1383,13 @@ ${rankedStandings.map((asset) => {
           <p class="constellation__body">The dots show brighter stars. The lines are a reading guide, not official constellation boundaries.</p>
           <details class="map-sources"><summary>Map sources</summary><p class="constellation__source"><a href="${HYG_ATTRIBUTION.url}" rel="noopener noreferrer">${HYG_ATTRIBUTION.title}</a> · <a href="${HYG_ATTRIBUTION.licenseUrl}" rel="noopener noreferrer">${HYG_ATTRIBUTION.license}</a>.${focusObject.kind === 'open-cluster' ? ' Praesepe’s cluster centre comes from <a href="https://simbad.cds.unistra.fr/simbad/sim-id?Ident=M44" rel="noopener noreferrer">SIMBAD M44</a>.' : ''}</p></details>
         </div>
-      </div>
+      </div>`}
     </details>
 
-    <details class="record-detail reveal" id="provenance" aria-label="The story of ${esc(m.name)}">
+${m.legacy ? '' : `    <details class="record-detail reveal" id="provenance" aria-label="The story of ${esc(m.name)}">
       <summary class="record-detail__summary"><span class="record-detail__title">The story of ${esc(m.name)}</span><span class="record-detail__hint">A short history</span></summary>
       <div class="record-detail__body story-copy"><p>${esc(p.provenanceBabylon)}</p><p>${esc(p.provenanceGreece)}</p></div>
-    </details>
+    </details>`}
 
     <details class="record-detail reveal" aria-labelledby="research-title">
       <summary class="record-detail__summary"><span class="record-detail__title" id="research-title">More about ${esc(m.name)}</span><span class="record-detail__hint">Stories and sky notes</span></summary>
@@ -1312,13 +1398,6 @@ ${rankedStandings.map((asset) => {
         <a href="/terminal/research/?sign=${m.slug}"><span class="research-links__glyph" aria-hidden="true">✦</span><span><strong>All ${esc(m.name)} notes</strong><small>Events, observations and sources</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
       </nav></div>
     </details>
-
-    <section class="sec reveal" aria-label="Explore all 12">
-      <div class="sec__head"><h2 class="sec__title">Explore all 12</h2><span class="line"></span></div>
-      <nav class="strip" aria-label="All twelve signs">
-${NAV_SIGNS.map((sign) => `        <a href="${signPath(sign.slug)}" style="--sign:${sign.hue}"${sign.slug === m.slug ? ' class="is-current" aria-current="page"' : ''}><picture aria-hidden="true"><source srcset="/assets/zodiac-icons/128/${sign.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/${sign.slug}.webp" width="48" height="48" alt="" loading="lazy" decoding="async"/></picture><span class="strip__name">${esc(sign.name)}</span></a>`).join('\n')}
-      </nav>
-    </section>
 
     <footer class="ftr">
       <div class="ftr__row">
@@ -1405,21 +1484,40 @@ ${guideLoaderSource('en')}
       });
     });
 
-    var shareButton = document.querySelector('[data-share-sign]');
-    if (shareButton) shareButton.addEventListener('click', function () {
-      var shareData = {
-        title: ${JSON.stringify(`${m.name} · Zodiacs.org`)},
-        text: ${JSON.stringify(`${p.glyph.replace('︎', '')} I’m a ${m.name}.`)},
-        url: location.href
-      };
-      if (navigator.share) { navigator.share(shareData).catch(function () {}); return; }
-      if (!navigator.clipboard || !navigator.clipboard.writeText) return;
-      navigator.clipboard.writeText(shareData.text + ' ' + shareData.url).then(function () {
-        var prior = shareButton.textContent;
-        shareButton.textContent = 'Link copied';
-        setTimeout(function () { shareButton.textContent = prior; }, 1400);
-      });
-    });
+    var seasonStatus = document.querySelector('[data-season-status]');
+    if (seasonStatus) {
+      var monthNumbers = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+      var seasonMatch = String(seasonStatus.getAttribute('data-season-dates') || '').match(/^([A-Z][a-z]{2}) (\d{1,2}) – ([A-Z][a-z]{2}) (\d{1,2})$/);
+      if (seasonMatch) {
+        var todayNow = new Date();
+        var today = new Date(todayNow.getFullYear(), todayNow.getMonth(), todayNow.getDate());
+        var startMonth = monthNumbers[seasonMatch[1]];
+        var startDay = Number(seasonMatch[2]);
+        var endMonth = monthNumbers[seasonMatch[3]];
+        var endDay = Number(seasonMatch[4]);
+        var seasons = [-1, 0, 1].map(function (yearOffset) {
+          var startYear = today.getFullYear() + yearOffset;
+          var endYear = endMonth < startMonth ? startYear + 1 : startYear;
+          var start = new Date(startYear, startMonth, startDay);
+          var endExclusive = new Date(endYear, endMonth, endDay + 1);
+          return { start: start, endExclusive: endExclusive };
+        });
+        var activeSeason = seasons.find(function (season) { return today >= season.start && today < season.endExclusive; });
+        if (activeSeason) {
+          var seasonDay = Math.floor((today - activeSeason.start) / 86400000) + 1;
+          seasonStatus.textContent = ${JSON.stringify(m.name)} + ' season · Day ' + seasonDay;
+        } else {
+          var nextSeason = seasons.filter(function (season) { return season.start > today; }).sort(function (a, b) { return a.start - b.start; })[0];
+          if (nextSeason) {
+            var daysUntil = Math.ceil((nextSeason.start - today) / 86400000);
+            seasonStatus.textContent = daysUntil === 1
+              ? ${JSON.stringify(m.name)} + ' season begins tomorrow'
+              : ${JSON.stringify(m.name)} + ' season begins in ' + daysUntil + ' days';
+          }
+        }
+        seasonStatus.hidden = !seasonStatus.textContent;
+      }
+    }
 
     // The first-screen quote is a single selected-token read. It never connects
     // a wallet or starts a transaction. Longer history comes separately from
@@ -1571,16 +1669,21 @@ ${guideLoaderSource('en')}
       return assets.find(function (asset) { return asset && asset.sign === SIGN; }) || null;
     }
     function marketCapStandings(snapshot) {
-      var seen = new Set();
-      return (snapshot.assets || []).filter(function (candidate) {
-        if (!candidate || SIGN_ORDER.indexOf(candidate.sign) < 0 || seen.has(candidate.sign)) return false;
+      var bySign = new Map();
+      (snapshot && snapshot.assets || []).forEach(function (candidate) {
+        if (!candidate || SIGN_ORDER.indexOf(candidate.sign) < 0 || bySign.has(candidate.sign)) return;
         var value = finiteNumber(candidate.marketCapUsd);
-        if (value === null || value < 0) return false;
-        seen.add(candidate.sign);
-        return true;
-      }).slice().sort(function (a, b) {
-        return finiteNumber(b.marketCapUsd) - finiteNumber(a.marketCapUsd)
-          || SIGN_ORDER.indexOf(a.sign) - SIGN_ORDER.indexOf(b.sign);
+        if (value === null || value < 0) return;
+        bySign.set(candidate.sign, Object.assign({}, candidate, { marketCapUsd: value }));
+      });
+      return SIGN_ORDER.map(function (sign) {
+        return bySign.get(sign) || { sign: sign, marketCapUsd: null };
+      }).sort(function (a, b) {
+        var aValue = finiteNumber(a.marketCapUsd);
+        var bValue = finiteNumber(b.marketCapUsd);
+        if ((aValue === null) !== (bValue === null)) return aValue === null ? 1 : -1;
+        if (aValue !== null && bValue !== null && aValue !== bValue) return bValue - aValue;
+        return SIGN_ORDER.indexOf(a.sign) - SIGN_ORDER.indexOf(b.sign);
       });
     }
 
@@ -1589,6 +1692,7 @@ ${guideLoaderSource('en')}
       var previousRank = 0;
       return standings.map(function (asset, index) {
         var value = finiteNumber(asset.marketCapUsd);
+        if (value === null) return Object.assign({}, asset, { rank: null });
         var rank = previousValue !== null && value === previousValue ? previousRank : index + 1;
         previousValue = value;
         previousRank = rank;
@@ -1607,6 +1711,7 @@ ${guideLoaderSource('en')}
       var readAt = new Date(snapshot && snapshot.source && snapshot.source.readAt || '').getTime();
       var age = Date.now() - readAt;
       return standings.length === 12
+        && standings.every(function (asset) { return finiteNumber(asset.marketCapUsd) !== null; })
         && Number(coverage.canonicalAssetCount) === 12
         && Number(coverage.assetsWithIndexedPools) === 12
         && Number(coverage.assetsWithMarketCap) === 12
@@ -1627,11 +1732,11 @@ ${guideLoaderSource('en')}
       standings.forEach(function (asset) {
         var meta = SIGN_META[asset.sign];
         var item = make('li', asset.sign === SIGN ? 'is-current' : '');
-        if (asset.sign === SIGN) item.setAttribute('aria-current', 'true');
         var link = make('a');
         link.href = '/registry/' + asset.sign + '/';
         link.style.setProperty('--sign', meta.hue);
-        link.append(make('span', 'standings__rank', publishRank ? '#' + asset.rank : '—'));
+        if (asset.sign === SIGN) link.setAttribute('aria-current', 'page');
+        link.append(make('span', 'standings__rank', publishRank && asset.rank ? '#' + asset.rank : '—'));
         var picture = make('picture');
         var source = make('source');
         source.srcset = '/assets/zodiac-icons/48/' + asset.sign + '.avif';

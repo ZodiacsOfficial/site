@@ -1078,8 +1078,8 @@ const indexedRegistryResearchPaths = new Set([
     .map((item) => item.url),
 ]);
 const sitemapPolicy = {
-  // 2423 = 2420 + /registry/technical/ + both canonical Terminal views.
-  total: 2423 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
+  // 2424 = 2420 + /registry/technical/ + both canonical Terminal views + /race/.
+  total: 2424 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,
   compatibilityPairs: 78,

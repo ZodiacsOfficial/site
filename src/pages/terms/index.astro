@@ -6,7 +6,7 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
-const updated = accountSyncV2Enabled ? '12 August 2026' : '2 August 2026';
+const updated = '17 August 2026';
 
 const jsonLd = [
   {
@@ -14,13 +14,13 @@ const jsonLd = [
     name: 'Terms of use — Zodiacs.org',
     url: 'https://zodiacs.org/terms/',
     description:
-      'The terms for using zodiacs.org astrology tools, Registry records, The Cabinet of Twelve, and public-address lookups.',
+      'The terms for using zodiacs.org astrology tools, Zodiac Games, Registry records, The Cabinet of Twelve, and public-address lookups.',
   },
 ];
 ---
 <Base
   title="Terms of Use | Zodiacs.org"
-  description="Terms for the zodiacs.org astrology tools, Registry records, The Cabinet of Twelve, and public-address lookups."
+  description="Terms for the zodiacs.org astrology tools, Zodiac Games, Registry records, The Cabinet of Twelve, and public-address lookups."
   path="/terms/"
   jsonLd={jsonLd}
 >
@@ -30,10 +30,27 @@ const jsonLd = [
 
     <div class="prose">
       <p class="lede">
-        Zodiacs.org is a free astrology reference with a Registry wing whose
-        records, catalogue profiles, and lookup tools only show information.
+        Zodiacs.org is a free astrology reference with Zodiac Games and a
+        Registry wing whose records, catalogue profiles, and lookup tools only
+        show information.
         They do not offer or complete purchases. Using the site means you agree
         to these terms. We have tried to keep them short and readable.
+      </p>
+
+      <h2>Zodiac Games</h2>
+      <p>
+        Zodiac Games are free. Only joining a team and answering the weekly
+        question add points. One browser may join one team and submit one
+        counted answer to each seasonal board per week. If a new zodiac season
+        starts midweek, the new board may offer that week’s question again.
+        Standings may change, tie, pause, or be corrected when activity is
+        missing, duplicated, automated, or abusive.
+      </p>
+      <p>
+        Do not use automation, repeated browser identities, false traffic, or
+        other methods to inflate a team. We may reject, remove, or freeze
+        activity to protect the standings. The board shows the current season;
+        we do not promise a permanent winner archive or final result.
       </p>
 
       <h2>The Cabinet of Twelve and wallet connections</h2>
