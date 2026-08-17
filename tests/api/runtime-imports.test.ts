@@ -15,7 +15,6 @@ const EXPECTED_HANDLERS = [
   'api/email/admin-bootstrap.ts',
   'api/email/chart-preference.ts',
   'api/email/subscribe.ts',
-  'api/games.ts',
   'api/guide.ts',
   'api/push/subscribe.ts',
   'api/unsubscribe.ts',
@@ -188,7 +187,7 @@ function auditRuntimeGraphs(): { violations: string[]; catalogs: string[] } {
 describe('Vercel API runtime packaging', () => {
   it('exposes only the intended function handlers', () => {
     expect(deployedFunctionFiles(API_ROOT).sort()).toEqual([...EXPECTED_HANDLERS].sort());
-    expect(EXPECTED_HANDLERS).toHaveLength(13);
+    expect(EXPECTED_HANDLERS).toHaveLength(12);
   });
 
   it('routes Registry news through the existing compatibility function', () => {
@@ -196,6 +195,14 @@ describe('Vercel API runtime packaging', () => {
     expect(vercel.rewrites).toContainEqual({
       source: '/api/registry/news',
       destination: '/api/compatibility?action=registry-news',
+    });
+  });
+
+  it('routes the Zodiac Games through the existing compatibility function', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/games',
+      destination: '/api/compatibility?__zodiacs_games_route=1',
     });
   });
 
