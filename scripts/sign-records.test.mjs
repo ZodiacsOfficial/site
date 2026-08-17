@@ -284,7 +284,10 @@ describe('Zodiac token records', () => {
       read('scripts/build-sign-pages.mjs'),
       read('public/registry/scorpio/index.html'),
     ]);
-    expect(scorpio).toContain('$0.00006807');
+    // Sub-cent prices keep their full precision instead of rounding to
+    // $0.00. The snapshot workflow refreshes these pages daily, so assert
+    // the precision invariant rather than any one day's price.
+    expect(scorpio).toMatch(/data-live-price>\$0\.0{2,}\d+</u);
     expect(source).not.toContain('wing_acquisition_click');
     expect(scorpio).not.toMatch(/href="https:\/\/jup\.ag\//u);
     expect(source).toContain('function canPublishRank(snapshot, standings)');
