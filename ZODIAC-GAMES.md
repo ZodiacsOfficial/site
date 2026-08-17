@@ -343,7 +343,7 @@ Holder trophy/badge experiments · portable trophy/NFT experiments · deep local
 | R2.2 weekly recap machine | pending | — | — | nothing auto-posts |
 | R2.3 season close + Trophy Hall | pending | — | — | permanent season history |
 | R2.4 annual standings | pending | — | — | points fixed before first counted close |
-| R2.5 Astrofolio bridge | pending | — | — | actual tokens; no Astrofolio.xyz dependency · **Dias 2026-08-16: astrofolio.xyz coexists but gets zero references — sweep existing footer/thesis links** |
+| R2.5 Astrofolio bridge | pending | — | — | actual tokens; no Astrofolio.xyz dependency · **Dias 2026-08-16: astrofolio.xyz coexists but gets zero references — sweep existing footer/thesis links** · **Dias 2026-08-17: the funnel's destination is the per-sign catalogue profile (`/registry/{sign}/`), which Dias is tailoring for the Zodiac Games — re-point the Race's "Meet [Sign]" bridge there (from `/astrofolio/`); keep the record register calm, keep market data boxed with the §6.8 risk line, link live standings to /race rather than baking them into daily-built pages** |
 | R3 review cycle | recurring | — | — | begins after P0.2 + R1.2 |
 | Icebox | iced | — | — | holder trophies, NFT portability, clock, locales, thesis ending |
 
