@@ -222,7 +222,20 @@ describe('join and check-in', () => {
       res, BASE_ENV, { fetcher, now: AUG_17 },
     );
     expect(res.statusCode).toBe(502);
-    expect(res.body).toEqual({ error: 'unavailable' });
+    expect(res.body).toEqual({ error: 'unavailable', upstream: 'PostgREST zodiac_games_join_v1 500' });
+  });
+
+  it('collapses non-PostgREST upstream failures to a fixed token', async () => {
+    const fetcher = vi.fn(async () => {
+      throw new TypeError('fetch failed: https://example.supabase.co');
+    }) as unknown as typeof fetch;
+    const res = makeRes();
+    await handleGamesApi(
+      makeReq({ query: { action: 'join' }, body: { sign: 'leo' } }),
+      res, BASE_ENV, { fetcher, now: AUG_17 },
+    );
+    expect(res.statusCode).toBe(502);
+    expect(res.body).toEqual({ error: 'unavailable', upstream: 'fetch_failed' });
   });
 });
 
