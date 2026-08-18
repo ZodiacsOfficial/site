@@ -70,4 +70,12 @@ describe('Phase 5 People pilot contract', () => {
     expect(sitemap).toContain('INDEXABLE_PEOPLE.map');
     expect(nav).not.toContain('/people/');
   });
+
+  it('declares the shared page gutter without legacy People overrides', async () => {
+    const styles = await readFile(resolve('src/styles/people.css'), 'utf8');
+    const pageShell = styles.match(/\.people-page,\s*\.person-page\s*\{([^}]*)\}/u)?.[1] ?? '';
+
+    expect(pageShell).toContain('width: min(var(--people-width), calc(100% - 40px));');
+    expect(styles).not.toMatch(/100% - (?:24|32)px/u);
+  });
 });
