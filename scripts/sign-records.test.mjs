@@ -93,7 +93,7 @@ describe('Zodiac token records', () => {
       expect(visible).toContain('Price history');
       expect(visible).toContain(`The ${name} token is a digital item people can own or send.`);
       expect(visible).toContain(`No new ${name} tokens can be created.`);
-      expect(visible).toContain('This page only shows information. It cannot make a purchase or move money.');
+      expect(visible).not.toContain('This page only shows information. It cannot make a purchase or move money.');
       expect(visible).not.toMatch(/Continue to Jupiter|What do I need before I continue|How to buy/u);
       expect(html).not.toMatch(/href="https:\/\/jup\.ag\//u);
       expect(visible).not.toContain('data-trade-panel');

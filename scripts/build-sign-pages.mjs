@@ -1143,7 +1143,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
     .record-intro { max-width: 60ch; margin: 0 0 18px; font-size: 17px; line-height: 1.55; color: var(--ink-2); }
     .anchor-alias { display: block; height: 0; scroll-margin-top: 96px; }
-    .rec__safety { margin: 16px 0 0; font-size: 14px; color: var(--ink-mute); }
     .token-details { margin-top: 16px; border-top: 1px solid var(--hair); }
     .mono-address { max-width: 100%; overflow-wrap: anywhere; font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
     .story-copy { max-width: 64ch; }
@@ -1278,7 +1277,6 @@ ${rankedStandings.map((asset) => {
             <span class="sr-only">Copy verified token address</span>
           </button>
         </div>
-        <p class="rec__safety">This page only shows information. It cannot make a purchase or move money.</p>
         <details class="token-details"><summary>See technical details</summary>
           <div class="rec__row"><span class="rec__k">Solana <span class="net">· original</span></span><span class="mono-address">${esc(m.solana.address)}</span></div>
           <div class="rec__row"><span class="rec__k">Base <span class="net">· bridged version</span></span><button type="button" class="copychip" data-copy="${esc(m.base.address)}"><span class="copychip__text">${esc(m.base.address.slice(0, 8))}…${esc(m.base.address.slice(-6))}</span><span class="copychip__icon" aria-hidden="true">⧉</span><span class="sr-only">Copy Base token address</span></button></div>

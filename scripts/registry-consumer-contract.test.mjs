@@ -78,7 +78,6 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const html = await read('public/astrofolio/index.html');
     ordered(html, [
       'id="official-twelve"',
-      'id="buying-guide"',
       'id="thesis"',
       'id="market-snapshot"',
       'id="registry"',
@@ -119,7 +118,6 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const mounted = source.slice(start, source.indexOf('</main>', start));
     ordered(mounted, [
       '<ConsumerExplorer',
-      '<ConsumerBuyGuide sign={sign} />',
       '<ConsumerPurpose />',
       '<ConsumerMarketSnapshot',
       '<ConsumerHowItWorks sign={sign} />',
@@ -221,30 +219,27 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(staticSnapshot).not.toMatch(/rank|spark|chart|market cap|liquidity|volume/iu);
   });
 
-  it('keeps the optional Astrofolio doorway separate and plain in both render paths', async () => {
+  it('does not insert defensive purchase copy into the Astrofolio journey', async () => {
     const source = await read('src/app.jsx');
-    const hydrated = functionBlock(source, 'ConsumerBuyGuide');
-    const fallback = section(await read('public/astrofolio/index.html'), 'buying-guide');
-    const required = [
+    const fallback = await read('public/astrofolio/index.html');
+    const removed = [
       'If you want to go further',
       'Most people stop at browsing, and that is fine.',
       'Astrofolio.xyz is a separate website.',
       'Zodiacs.org does not take payment or complete purchases.',
-      'Prices can rise or fall quickly. You can lose what you spend.',
-      'Visit Astrofolio.xyz',
+      'Can I buy a Zodiac on Zodiacs.org?',
     ];
-    const hydratedText = normalizedText(hydrated);
-    const fallbackText = normalizedText(fallback);
-    for (const copy of required) {
-      expect(hydratedText, copy).toContain(copy);
-      expect(fallbackText, copy).toContain(copy);
+    for (const copy of removed) {
+      expect(source, copy).not.toContain(copy);
+      expect(fallback, copy).not.toContain(copy);
     }
-    expect(hydrated).toContain('href="https://astrofolio.xyz/"');
+    expect(source).not.toContain('function ConsumerBuyGuide(');
+    expect(fallback).not.toContain('id="buying-guide"');
+    expect(fallback).not.toContain('href="#buying-guide"');
     expect(fallback).toContain('href="https://astrofolio.xyz/"');
-    expect(`${hydratedText} ${fallbackText}`).not.toMatch(/Jupiter|\bSOL\b|Solana-compatible|liquidity|seed phrase/iu);
   });
 
-  it('keeps the explanatory disclosures, verifier, story, four FAQs, and close exact', async () => {
+  it('keeps the explanatory disclosures, verifier, story, three FAQs, and close exact', async () => {
     const source = await read('src/app.jsx');
     const how = functionBlock(source, 'ConsumerHowItWorks');
     for (const copy of ['What is a Zodiac?', 'Zodiacs has twelve tokens, one for each sign.', 'One token for each sign', 'The address tells them apart', 'Keep it, send it, or gift it', 'Its price can rise or fall', 'How verification works', 'See market details']) {
@@ -266,13 +261,13 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(verifier).toContain('Check a Zodiac token address');
     expect(verifier).toContain('Paste the token address shown where you found it. We&rsquo;ll tell you whether it appears in the verified list. Never paste a recovery phrase.');
     expect(verifier).toContain('This checks a token address, not a personal account.');
-    expect(verifier).toContain('This checker only shows information. It cannot move money or approve anything.');
+    expect(verifier).not.toContain('This checker only shows information. It cannot move money or approve anything.');
     expect(verifier).not.toContain('vrf__examples');
     expect(verifier).not.toContain('mono');
     const faqStart = source.indexOf('    const CONSUMER_FAQS = [');
     const faqSource = source.slice(faqStart, source.indexOf('    function ConsumerFaq(', faqStart));
-    expect(faqSource.match(/\n\s*q:/gu)).toHaveLength(4);
-    expect(section(await read('public/astrofolio/index.html'), 'faq').match(/<dt>/gu)).toHaveLength(4);
+    expect(faqSource.match(/\n\s*q:/gu)).toHaveLength(3);
+    expect(section(await read('public/astrofolio/index.html'), 'faq').match(/<dt>/gu)).toHaveLength(3);
 
     const close = functionBlock(source, 'ConsumerClosing');
     expect(close).toContain('See all twelve records');

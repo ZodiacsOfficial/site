@@ -87,7 +87,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             acquisitionSections: document.querySelectorAll('section#acquire, #acquire .acq__cta').length,
             jupiterLinks: document.querySelectorAll('a[href*="jup.ag"], [data-market-jupiter]').length,
             recordIntro: document.querySelector('#record .record-intro')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-            recordSafety: document.querySelector('#record .rec__safety')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+            recordSafetyCount: document.querySelectorAll('#record .rec__safety').length,
             tradePanels: document.querySelectorAll('[data-trade-panel]').length,
             constellation: document.querySelector('#constellation img')?.getAttribute('src') ?? '',
             constellationCopy: document.querySelector('#constellation')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
@@ -119,7 +119,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             && state.acquisitionSections === 0
             && state.jupiterLinks === 0
             && /like an account number/.test(state.recordIntro)
-            && /only shows information/.test(state.recordSafety)
+            && state.recordSafetyCount === 0
             && state.tradePanels === 0
             && state.constellation === `/assets/constellations/${record.slug}.svg`
             && /HYG Database v4\.0/.test(state.constellationCopy)
@@ -175,7 +175,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         quickVisible: quick ? getComputedStyle(quick).opacity === '1' : false,
         status: quick?.querySelector('[data-live-state]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         detailVisible: detail ? getComputedStyle(detail).opacity === '1' : false,
-        recordSafety: document.querySelector('#record .rec__safety')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        recordSafetyCount: document.querySelectorAll('#record .rec__safety').length,
         acquireAliases: document.querySelectorAll('span.anchor-alias#acquire[aria-hidden="true"]').length,
         acquisitionSections: document.querySelectorAll('section#acquire, #acquire .acq__cta').length,
         jupiterLinks: document.querySelectorAll('a[href*="jup.ag"], [data-market-jupiter]').length,
@@ -188,7 +188,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
       noJsState.quickVisible
         && /Showing the latest saved price/.test(noJsState.status)
         && noJsState.detailVisible
-        && /only shows information/.test(noJsState.recordSafety)
+        && noJsState.recordSafetyCount === 0
         && noJsState.acquireAliases === 1
         && noJsState.acquisitionSections === 0
         && noJsState.jupiterLinks === 0

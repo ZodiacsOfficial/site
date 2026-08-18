@@ -159,7 +159,7 @@ describe('registry pastel polish', () => {
       read('src/app.jsx'),
       read('src/terminal/split-styles.css'),
     ]);
-    expect(source.match(/data-vitrine-rule/gu)).toHaveLength(3);
+    expect(source.match(/data-vitrine-rule/gu)).toHaveLength(2);
     expect(css).toContain('.consumer-registry > [data-vitrine-rule]::before {');
     expect(css).toContain('height: 1px;');
     const sections = cssRule(css, '.consumer-registry > .consumer-buy,');
