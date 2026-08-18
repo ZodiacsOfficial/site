@@ -241,7 +241,10 @@ try {
     (await page.locator('.hero__twelve-glyph').count()) === 0
       && !/[♈♉♊♋♌♍♎♏♐♑♒♓]/u.test(await page.locator('.hero__twelve').textContent() ?? ''));
   const catalogueIcons = await page.locator('#the-twelve .twelve__item').evaluateAll((links) => links.map((link) => {
-    const icon = link.querySelector('.twelve__icon');
+    const icon = link.querySelector('.twelve__glyph');
+    const medallion = link.querySelector('.twelve__medallion');
+    const iconRect = icon?.getBoundingClientRect();
+    const medallionRect = medallion?.getBoundingClientRect();
     return {
       href: new URL(link.href).pathname,
       label: link.textContent.trim().toLowerCase(),
@@ -250,6 +253,10 @@ try {
       src: icon ? new URL(icon.currentSrc || icon.src).pathname : '',
       alt: icon?.getAttribute('alt'),
       hidden: icon?.getAttribute('aria-hidden'),
+      glyphWidth: iconRect?.width,
+      glyphHeight: iconRect?.height,
+      medallionWidth: medallionRect?.width,
+      medallionHeight: medallionRect?.height,
     };
   }));
   check('catalogue uses twelve official pastel zodiac icons',
@@ -258,10 +265,14 @@ try {
       return item.href === `/registry/${slug}/`
         && item.label === slug
         && item.complete
-        && item.naturalWidth === 48
-        && item.src === `/assets/zodiac-icons/48/${slug}.avif`
+        && item.naturalWidth >= 191
+        && item.src === `/assets/icons/${slug}.png`
         && item.alt === ''
-        && item.hidden === 'true';
+        && item.hidden === 'true'
+        && item.medallionWidth === 48
+        && item.medallionHeight === 48
+        && item.glyphWidth * item.glyphHeight >= 470
+        && item.glyphWidth * item.glyphHeight <= 625;
     }),
     JSON.stringify(catalogueIcons));
   check('catalogue contains no legacy Astrofolio glyph masks',
