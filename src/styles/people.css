@@ -1,7 +1,7 @@
 .people-page,
 .person-page {
   --people-width: 1120px;
-  width: min(var(--people-width), calc(100% - 32px));
+  width: min(var(--people-width), calc(100% - 40px));
   margin-inline: auto;
   padding-block: clamp(30px, 5vw, 72px) clamp(56px, 8vw, 96px);
 }
@@ -554,11 +554,6 @@
 }
 
 @media (max-width: 559px) {
-  .people-page,
-  .person-page {
-    width: min(100% - 24px, var(--people-width));
-  }
-
   .person-evidence dl > div {
     grid-template-columns: 1fr;
     gap: 4px;

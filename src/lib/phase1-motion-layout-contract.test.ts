@@ -184,6 +184,26 @@ describe('Phase 1 layout and motion contract', () => {
     }
   });
 
+  it('keeps shared navigation typography independent from route-level reader modes', async () => {
+    const [tokens, nav] = await Promise.all([
+      source('styles/tokens.css'),
+      source('components/SiteNav.astro'),
+    ]);
+    const routeTypography = [...tokens.matchAll(
+      /:root\[data-(?:stable|local)-typography\]\s*\{([^}]*)\}/gu,
+    )].map((match) => match[1]).join('\n');
+
+    expect(tokens).toContain("--font-nav-serif: 'EB Garamond Fallback'");
+    expect(tokens).toContain("--font-nav-sans: 'Instrument Sans Fallback'");
+    expect(tokens).toContain('--font-nav-mono: ui-monospace');
+    expect(tokens).toContain("--font-nav-sans: 'Golos Text'");
+    expect(routeTypography).not.toContain('--font-nav-');
+    expect(nav).toMatch(/\.nav-wrap\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);
+    expect(nav).toMatch(/\.mobile-menu\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);
+    expect(nav).toContain('class="nav__search-kbd"');
+    expect(nav).not.toMatch(/var\(--font-(?:serif|sans|mono)\)/u);
+  });
+
   it('does not attach generic scroll reveals to the Phase 1 reader templates', async () => {
     const [program, hub] = await Promise.all([
       source('components/HoroscopeProgramPage.astro'),
