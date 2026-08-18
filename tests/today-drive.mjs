@@ -147,6 +147,114 @@ async function observeLayoutShifts(page) {
       left: rect.left,
     });
 
+    const geometrySelectors = {
+      card: '.today-card',
+      cardCore: '.today-card__core',
+      reading: '.today-reading',
+      readingHead: '.today-reading__head',
+      readingBody: '.today-reading__body',
+      useful: '.today-useful',
+      livingMoment: '.living-moment-slot',
+      privateNote: '.today-private',
+      details: '.today-method-details',
+      provenance: '.today-provenance',
+    };
+    const maxGeometryEntries = 30;
+    let geometrySequence = 0;
+    let previousGeometrySignature = '';
+    globalThis.__zdxTodayGeometryHistory = [];
+    globalThis.__zdxTodayGeometryDropped = 0;
+
+    const geometryFor = (selector) => {
+      const node = document.querySelector(selector);
+      if (!node) return null;
+      const rect = node.getBoundingClientRect();
+      return {
+        classes: [...node.classList],
+        state: Object.fromEntries(
+          [...node.attributes]
+            .filter(({ name }) => name.startsWith('data-') || name === 'aria-hidden' || name === 'open')
+            .map(({ name, value }) => [name, value]),
+        ),
+        rect: {
+          y: rect.y,
+          height: rect.height,
+          top: rect.top,
+          bottom: rect.bottom,
+        },
+      };
+    };
+    const captureGeometry = (reason) => {
+      const nodes = Object.fromEntries(
+        Object.entries(geometrySelectors).map(([name, selector]) => [name, geometryFor(selector)]),
+      );
+      if (!nodes.card && !nodes.reading && !nodes.provenance) return;
+      const geometry = {
+        readyState: document.readyState,
+        todayState: document.querySelector('[data-today-state]')?.getAttribute('data-today-state') || null,
+        nodes,
+      };
+      const signature = JSON.stringify(geometry);
+      if (signature === previousGeometrySignature) return;
+      previousGeometrySignature = signature;
+
+      const entry = {
+        sequence: geometrySequence,
+        atMs: performance.now(),
+        reason,
+        ...geometry,
+      };
+      geometrySequence += 1;
+      if (globalThis.__zdxTodayGeometryHistory.length === maxGeometryEntries) {
+        // Keep the DOMContentLoaded baseline while retaining the latest states.
+        globalThis.__zdxTodayGeometryHistory.splice(1, 1);
+        globalThis.__zdxTodayGeometryDropped += 1;
+      }
+      globalThis.__zdxTodayGeometryHistory.push(entry);
+    };
+    const startGeometryTracking = () => {
+      const observedNodes = new WeakSet();
+      let scheduledFrame = 0;
+      let pendingReason = 'DOMContentLoaded';
+      const resizeObserver = new ResizeObserver(() => scheduleGeometryCapture('resize'));
+      const observeGeometryNodes = () => {
+        for (const selector of Object.values(geometrySelectors)) {
+          const node = document.querySelector(selector);
+          if (node && !observedNodes.has(node)) {
+            observedNodes.add(node);
+            resizeObserver.observe(node);
+          }
+        }
+      };
+      function scheduleGeometryCapture(reason) {
+        pendingReason = pendingReason === reason ? reason : `${pendingReason}+${reason}`;
+        if (scheduledFrame) return;
+        scheduledFrame = requestAnimationFrame(() => {
+          scheduledFrame = 0;
+          observeGeometryNodes();
+          captureGeometry(pendingReason);
+          pendingReason = 'animation-frame';
+        });
+      }
+
+      observeGeometryNodes();
+      captureGeometry('DOMContentLoaded');
+      pendingReason = 'animation-frame';
+      new MutationObserver(() => scheduleGeometryCapture('mutation')).observe(document.documentElement, {
+        attributes: true,
+        childList: true,
+        characterData: true,
+        subtree: true,
+      });
+      addEventListener('load', () => scheduleGeometryCapture('load'), { once: true });
+      document.fonts?.ready.then(() => scheduleGeometryCapture('fonts-ready'));
+    };
+    if (document.readyState === 'loading') {
+      addEventListener('DOMContentLoaded', startGeometryTracking, { once: true });
+    } else {
+      startGeometryTracking();
+    }
+
     new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
         if (!entry.hadRecentInput) {
@@ -294,7 +402,13 @@ async function drive(BASE, browser) {
   const savedChartCls = await measuredCls(desktop);
   const savedChartClsDiagnostics = savedChartCls === 0
     ? ''
-    : ` · ${JSON.stringify(await desktop.evaluate(() => globalThis.__zdxLayoutShiftDiagnostics))}`;
+    : ` · ${JSON.stringify(await desktop.evaluate(() => ({
+      shifts: globalThis.__zdxLayoutShiftDiagnostics,
+      geometry: {
+        dropped: globalThis.__zdxTodayGeometryDropped,
+        history: globalThis.__zdxTodayGeometryHistory,
+      },
+    })))}`;
   check(
     'saved-chart hydration has exactly zero CLS',
     savedChartCls === 0,
