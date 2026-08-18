@@ -33,7 +33,7 @@ const COPY: Record<AssistantLocale, ShellCopy> = {
   },
 };
 
-const STYLESHEET_HREF = '/assets/assistant-ui.css';
+const STYLESHEET_HREF = '/assets/assistant-ui.css?v=avatar-only-2';
 const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
 
@@ -203,4 +203,3 @@ export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
   launcher?.setAttribute('aria-label', currentCopy().open);
   wireOpeners();
 }
-

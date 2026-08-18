@@ -6,7 +6,7 @@
  */
 export const GUIDE_POST_LOAD_DELAY_MS = 500;
 export const GUIDE_LOADER_MARKER = 'zodiacs-guide-loader-v1';
-export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=avatar-only-1';
+export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=avatar-only-2';
 
 export function guideLoaderSource(locale = 'en') {
   const serializedLocale = JSON.stringify(String(locale));
