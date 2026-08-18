@@ -377,6 +377,13 @@ describe('thesis catalogue icon contract', () => {
   });
 });
 
+describe('thesis Guide cache contract', () => {
+  it('loads the quiet avatar shell from a versioned URL', () => {
+    expect(HTML).toContain("import('/assets/assistant-ui.js?v=avatar-only-1')");
+    expect(HTML).not.toContain("import('/assets/assistant-ui.js')");
+  });
+});
+
 describe('thesis transmission and gallery contract', () => {
   const fig1 = sliceElement(HTML, /<figure\b[^>]*\bid=["']fig-1["'][^>]*>/i, 'figure');
   const eras = [...fig1.matchAll(
