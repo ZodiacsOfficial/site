@@ -456,7 +456,6 @@ const html = `<!doctype html>
       <div class="authority__intro">
         <p class="eyebrow">For people who want the details</p>
         <h2 id="authority-title">How checking works.</h2>
-        <p>Anyone can view the list. This page cannot buy anything or move money.</p>
       </div>
       <details class="authority__details">
         <summary>Technical records and tools</summary>

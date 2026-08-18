@@ -4454,10 +4454,8 @@
       {
         label: 'Ownership and separate services',
         items: [
-          { q: 'Can I buy a Zodiac on Zodiacs.org?',
-            a: 'No. Catalogue profiles only show information and verified token addresses. Astrofolio.xyz is a separate website with its own steps, terms, and risks.' },
           { q: 'Does the Registry ask me to connect anything?',
-            a: 'No. The Registry only shows public information. It cannot make a purchase, move money, or approve anything.' },
+            a: 'No. You can browse the records and verify addresses without connecting a wallet.' },
           { q: 'Does the registry prove presale or allocation history?',
             a: 'No. The registry verifies official addresses and provenance; it does not independently establish presale, allocation, or trading-history claims.' }
         ]
@@ -5821,42 +5819,6 @@
       );
     }
 
-    function ConsumerBuyGuide({ sign }) {
-      const reveal = useReveal();
-      return (
-        <section
-          ref={reveal}
-          id="buying-guide"
-          className="consumer-buy reveal"
-          aria-labelledby="consumer-buy-title"
-          data-vitrine-rule
-          style={{ '--guide-sign': sign.hue }}
-        >
-          <header className="consumer-section-head">
-            <h2 id="consumer-buy-title">If you want to go further</h2>
-          </header>
-          <div className="consumer-buy__opening">
-            <p className="consumer-buy__intro">
-              Most people stop at browsing, and that is fine. If you want to own a token for your sign, Astrofolio.xyz is a separate website. Zodiacs.org does not take payment or complete purchases.
-            </p>
-            <aside className="consumer-buy__selection" aria-label={`Currently viewing ${sign.name}`}>
-              <img
-                src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`}
-                width="48"
-                height="48"
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-              <span><small>Currently viewing</small><strong>{sign.name}</strong></span>
-            </aside>
-          </div>
-          <p className="consumer-buy__intro">Prices can rise or fall quickly. You can lose what you spend.</p>
-          <a className="btn btn--primary" href="https://astrofolio.xyz/" rel="noopener noreferrer external">Visit Astrofolio.xyz</a>
-        </section>
-      );
-    }
-
     function ConsumerVerifier() {
       const reveal = useReveal();
       const [input, setInput] = useState('');
@@ -5920,7 +5882,6 @@
               )}
             </div>
           )}
-          <p className="consumer-verify__safety">This checker only shows information. It cannot move money or approve anything.</p>
         </section>
       );
     }
@@ -5970,7 +5931,6 @@
           <div className="consumer-proof" aria-label="Registry facts">
             <span><strong>12</strong> official tokens</span>
             <span><strong>2 verified addresses</strong> for each sign</span>
-            <span><strong>Read-only</strong> only shows information</span>
           </div>
           <div className="consumer-how__disclosures">
             <details className="consumer-disclosure">
@@ -6091,10 +6051,6 @@
       {
         q: 'How do I check a zodiac token?',
         a: 'Paste the complete token address into the checker on this page. It compares the address with the verified list.'
-      },
-      {
-        q: 'Can I buy a Zodiac on Zodiacs.org?',
-        a: 'No. Catalogue profiles only show information. Astrofolio.xyz is a separate website with its own steps, terms, and risks.'
       }
     ];
 
@@ -6647,7 +6603,6 @@
               sign={sign}
               batch={consumerMarket}
             />
-            <ConsumerBuyGuide sign={sign} />
             <ConsumerPurpose />
             <ConsumerMarketSnapshot
               batch={consumerMarket}
