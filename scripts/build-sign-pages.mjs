@@ -42,6 +42,12 @@ const root = resolve(here, '..');
 const BASE = '/registry';
 const signPath = (slug) => `${BASE}/${slug}/`;
 const signUrl = (slug) => `https://zodiacs.org${signPath(slug)}`;
+// Bump only when a sculpture must be re-fetched by clients that may have
+// cached an incomplete response for the stable asset URL.
+const SCULPTURE_ASSET_REVISIONS = Object.freeze({ scorpio: '20260818' });
+const sculpturePath = (slug) => (
+  `/assets/nuggets/${slug}.png${SCULPTURE_ASSET_REVISIONS[slug] ? `?v=${SCULPTURE_ASSET_REVISIONS[slug]}` : ''}`
+);
 
 const registry = JSON.parse(
   await readFile(resolve(root, 'public/registry/zodiacs.registry.json'), 'utf8')
@@ -311,7 +317,7 @@ function jsonLd(m) {
         description: `${m.name} dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.`,
         inLanguage: 'en',
         isPartOf: { '@type': 'WebSite', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
-        primaryImageOfPage: `https://zodiacs.org/assets/nuggets/${m.slug}.png`,
+        primaryImageOfPage: `https://zodiacs.org${sculpturePath(m.slug)}`,
         about: {
           '@type': 'Thing',
           name: `${m.name} token`,
@@ -1195,7 +1201,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     <div class="split">
       <div class="split__figure" aria-label="${esc(m.name)} artwork">
         <div class="card profile-art" style="margin:0">
-          <div class="card__inner"><div class="stage"><img src="/assets/nuggets/${m.slug}.png" alt="${esc(m.name)} zodiac artwork" decoding="async" fetchpriority="high" /></div></div>
+          <div class="card__inner"><div class="stage"><img src="${sculpturePath(m.slug)}" alt="${esc(m.name)} zodiac artwork" decoding="async" fetchpriority="high" /></div></div>
         </div>
       </div>
 
