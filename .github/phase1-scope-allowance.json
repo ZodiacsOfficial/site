@@ -1,27 +1,13 @@
 {
   "version": 1,
-  "id": "remove-defensive-purchase-copy-2026-08-18",
-  "baseCommit": "e2c6ce7f90916e66d31f5c13437e952aec47ce92",
-  "note": "Owner-approved (Dias, 2026-08-18, via Codex session): remove the standalone Astrofolio purchase disclaimer and the same defensive, obvious no-transaction language from consumer Registry and sign-profile surfaces while preserving actionable security and legal disclosures.",
+  "id": "regenerate-wing-guide-loader-avatar-only-2-2026-08-18",
+  "baseCommit": "3dfe8f13d11766a8e5da86c99911a4019bcf3b36",
+  "note": "Owner-approved drift repair (Dias standing approval, 2026-08-18): main bumped the assistant guide-loader cache tag to ?v=avatar-only-2 in src/lib/assistant/guide-loader.mjs without regenerating the wing pages that configure-legacy-analytics.mjs and the wing builders stamp. This allowance covers only the regenerated one-line loader-tag output on those pages; no content changes.",
   "protectedPaths": [
-    "public/assets/app.js",
-    "public/registry/aquarius/index.html",
-    "public/registry/aries/index.html",
-    "public/registry/cancer/index.html",
-    "public/registry/capricorn/index.html",
-    "public/registry/gemini/index.html",
     "public/registry/index.html",
-    "public/registry/leo/index.html",
-    "public/registry/libra/index.html",
-    "public/registry/pisces/index.html",
-    "public/registry/sagittarius/index.html",
-    "public/registry/scorpio/index.html",
-    "public/registry/taurus/index.html",
-    "public/registry/virgo/index.html",
-    "scripts/build-sign-pages.mjs",
-    "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-pastel-polish.test.mjs",
-    "scripts/registry-risk.test.mjs",
-    "src/app.jsx"
+    "public/registry/technical/index.html",
+    "public/sdk/examples/simastry-aura/index.html",
+    "public/sdk/index.html",
+    "public/terminal/markets/index.html"
   ]
 }
