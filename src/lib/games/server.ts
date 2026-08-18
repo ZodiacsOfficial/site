@@ -207,6 +207,16 @@ export async function handleGamesApi(
   }
   if (!env.PUBLIC_SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY
     || !validGamesSecret(env.ZODIAC_GAMES_SESSION_SECRET)) {
+    // Fail-closed diagnostics for operators: shape booleans only, never a
+    // value. `secretLength` counts the raw var so a padded paste is visible.
+    const secret = env.ZODIAC_GAMES_SESSION_SECRET;
+    console.error('[games] unconfigured', JSON.stringify({
+      hasSupabaseUrl: Boolean(env.PUBLIC_SUPABASE_URL),
+      hasServiceKey: Boolean(env.SUPABASE_SERVICE_ROLE_KEY),
+      hasSecret: typeof secret === 'string' && secret.length > 0,
+      secretLength: typeof secret === 'string' ? secret.length : 0,
+      secretValid: validGamesSecret(secret),
+    }));
     sendJson(res, 503, { error: 'unconfigured' });
     return;
   }
