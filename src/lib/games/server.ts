@@ -327,8 +327,13 @@ export async function handleGamesApi(
   } catch (error) {
     // Operator diagnostics only: the thrown messages carry the RPC name and
     // HTTP status (or a fetch failure naming the public Supabase host) —
-    // never a key or a row. Nothing from here reaches the response body.
-    console.error('[games] upstream', error instanceof Error ? error.message : String(error));
-    sendJson(res, 502, { error: 'unavailable' });
+    // never a key or a row.
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('[games] upstream', message);
+    // The response echoes the failure only when it is one of our own thrown
+    // shapes (an RPC name from the public migration plus a status code);
+    // anything else collapses to a fixed token so no runtime detail leaks.
+    const upstream = /^PostgREST [a-z0-9_]+ \d{3}$/u.test(message) ? message : 'fetch_failed';
+    sendJson(res, 502, { error: 'unavailable', upstream });
   }
 }
