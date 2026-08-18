@@ -4,7 +4,7 @@
  * stay in sync without a framework store.
  */
 import { MAX_CHARTS, PROFILE_KEY } from './schema';
-import type { Profile, SavedChart } from './schema';
+import type { Profile, SavedChart, SavedChartRelationship } from './schema';
 import { clearChartDeletion, recordChartDeletion } from './deletions';
 import { accountSyncV2Enabled } from '../account-v2/feature-flags';
 import { profileAccessAllowed } from '../account-v2/profile-access-reader';
@@ -72,7 +72,7 @@ export function findMatchingChart(chart: StoredChartIdentity): SavedChart | null
 
 export function saveChart(
   chart: SavedChart,
-  options: { explicitName?: string } = {},
+  options: { explicitName?: string; relationship?: SavedChartRelationship } = {},
 ): 'saved' | 'updated' | 'full' | 'error' {
   const profile = loadProfile();
   const explicitName = options.explicitName?.trim() || undefined;
@@ -82,24 +82,59 @@ export function saveChart(
   }
   if (existing >= 0) {
     const saved = profile.charts[existing];
+    const relationship = options.relationship ?? chart.relationship ?? saved.relationship;
     const updated = {
       ...chart,
       id: saved.id,
       name: explicitName ?? saved.name,
       createdAt: saved.createdAt,
       updatedAt: new Date().toISOString(),
+      ...(relationship ? { relationship } : {}),
     };
     profile.charts[existing] = updated;
+    if (relationship === 'self') {
+      profile.charts = profile.charts.map((candidate) => candidate.id === updated.id
+        ? candidate
+        : { ...candidate, relationship: 'other' });
+    }
     if (!persist(profile)) return 'error';
     clearChartDeletion(updated.id);
     return 'updated';
   }
   if (profile.charts.length >= MAX_CHARTS) return 'full';
-  const inserted = explicitName ? { ...chart, name: explicitName } : chart;
+  const relationship = options.relationship ?? chart.relationship;
+  const inserted = {
+    ...chart,
+    ...(explicitName ? { name: explicitName } : {}),
+    ...(relationship ? { relationship } : {}),
+  };
+  if (relationship === 'self') {
+    profile.charts = profile.charts.map((candidate) => ({
+      ...candidate,
+      relationship: 'other',
+    }));
+  }
   profile.charts.unshift(inserted);
   if (!persist(profile)) return 'error';
   clearChartDeletion(inserted.id);
   return 'saved';
+}
+
+/** Makes one saved chart the canonical self chart and classifies every other chart as other. */
+export function markPrimarySelfChart(id: string): boolean {
+  const profile = loadProfile();
+  if (!profile.charts.some((chart) => chart.id === id)) return false;
+  profile.charts = profile.charts.map((chart) => ({
+    ...chart,
+    relationship: chart.id === id ? 'self' : 'other',
+    updatedAt: chart.id === id ? new Date().toISOString() : chart.updatedAt,
+  }));
+  return persist(profile);
+}
+
+export function getPrimarySelfChart(): SavedChart | null {
+  const selfCharts = loadProfile().charts.filter((chart) => chart.relationship === 'self');
+  return selfCharts.length === 1 ? selfCharts[0]! : null;
 }
 
 function pruneYearAheadCacheEntries(shouldRemove: (id: string) => boolean): void {

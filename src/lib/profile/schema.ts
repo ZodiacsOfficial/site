@@ -24,9 +24,13 @@ export interface SavedBodySummary {
   retrograde: boolean;
 }
 
+export type SavedChartRelationship = 'self' | 'other';
+
 export interface SavedChart {
   id: string;
   name: string;
+  /** Explicit owner relationship. Missing means a legacy chart not yet classified. */
+  relationship?: SavedChartRelationship;
   createdAt: string;
   updatedAt: string;
   birth: {

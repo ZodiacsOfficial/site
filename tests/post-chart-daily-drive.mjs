@@ -308,6 +308,11 @@ async function prepareProfilePage(browser, baseURL, initialPreference, options =
       body = [];
     } else if (url.pathname === '/rest/v1/chart_deletions' && method === 'GET') {
       body = [];
+    } else if (url.pathname === '/rest/v1/living_chart_sync_consents' && method === 'GET') {
+      // Profile now mounts the Living Chart recovery surface alongside the
+      // Phase 3 email controls. Keep this fixture explicitly device-only so
+      // the unrelated email scenarios cannot contact a real sync backend.
+      body = [];
     } else if (url.pathname.startsWith('/rest/v1/')
       && ['POST', 'PATCH', 'DELETE'].includes(method)) {
       body = {};

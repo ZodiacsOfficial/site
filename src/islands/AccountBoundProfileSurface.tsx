@@ -13,7 +13,11 @@ import type { CatalogLocale } from '../lib/i18n';
 interface Props {
   dailyEmailEnabled?: boolean;
   locale?: CatalogLocale;
+  livingChartEnabled?: boolean;
+  livingChartSyncEnabled?: boolean;
 }
+
+type LivingChartTimelineModule = typeof import('./living-chart/LivingChartTimeline');
 
 type AccessState = 'checking' | 'visible' | 'withheld';
 
@@ -40,8 +44,22 @@ export function accountBoundProfileAccess(
 export default function AccountBoundProfileSurface({
   dailyEmailEnabled = false,
   locale = 'en',
+  livingChartEnabled = false,
+  livingChartSyncEnabled = false,
 }: Props) {
   const [access, setAccess] = useState<AccessState>('checking');
+  const [livingChartModule, setLivingChartModule] = useState<LivingChartTimelineModule | null>(null);
+
+  useEffect(() => {
+    if (!livingChartEnabled || locale !== 'en' || access !== 'visible') return;
+    let live = true;
+    void import('./living-chart/LivingChartTimeline')
+      .then((module) => {
+        if (live) setLivingChartModule(module);
+      })
+      .catch(() => {});
+    return () => { live = false; };
+  }, [access, livingChartEnabled, locale]);
 
   useEffect(() => {
     let live = true;
@@ -93,9 +111,11 @@ export default function AccountBoundProfileSurface({
   }, []);
 
   if (access !== 'visible') return null;
+  const LivingChartTimeline = livingChartModule?.default;
   return (
     <>
       <ProfileDashboard locale={locale} />
+      {LivingChartTimeline ? <LivingChartTimeline syncEnabled allowSyncGrant={livingChartSyncEnabled} /> : null}
       <ProfileManager locale={locale} dailyEmailEnabled={dailyEmailEnabled} accountSyncV2Enabled />
     </>
   );

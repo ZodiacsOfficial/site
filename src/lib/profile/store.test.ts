@@ -3,10 +3,12 @@ import { ENGINE_VERSION } from '../engine/types';
 import type { Chart, HouseSystem } from '../engine/types';
 import { PROFILE_DELETIONS_KEY, loadChartDeletions } from './deletions';
 import { EMPTY_PROFILE, MAX_CHARTS, PROFILE_KEY } from './schema';
-import type { SavedChart } from './schema';
+import type { SavedChart, SavedChartRelationship } from './schema';
 import {
   deleteChart,
+  getPrimarySelfChart,
   loadProfile,
+  markPrimarySelfChart,
   replaceProfile,
   saveChart,
 } from './store';
@@ -55,6 +57,7 @@ interface ChartOptions {
   lon?: number;
   houseSystem?: HouseSystem;
   engineVersion?: string;
+  relationship?: SavedChartRelationship;
 }
 
 function makeChart(id: string, options: ChartOptions = {}): SavedChart {
@@ -62,6 +65,7 @@ function makeChart(id: string, options: ChartOptions = {}): SavedChart {
   return {
     id,
     name: options.name ?? id,
+    ...(options.relationship ? { relationship: options.relationship } : {}),
     createdAt: options.createdAt ?? '2026-07-01T00:00:00.000Z',
     updatedAt: options.updatedAt ?? '2026-07-01T00:00:00.000Z',
     birth: {
@@ -190,6 +194,70 @@ describe('saveChart', () => {
     expect(loadProfile().charts).toHaveLength(MAX_CHARTS);
     expect(loadProfile().charts.find((chart) => chart.id === 'chart-10')?.name).toBe('Updated ten');
     expect(saveChart(makeChart('overflow', { lat: 100 }))).toBe('full');
+  });
+
+  it('preserves a saved relationship when a recalculation does not classify the chart', () => {
+    seedProfile([makeChart('existing', { relationship: 'self' })]);
+
+    expect(saveChart(makeChart('incoming'))).toBe('updated');
+    expect(loadProfile().charts[0].relationship).toBe('self');
+  });
+
+  it('makes an incoming self chart canonical and classifies every other chart as other', () => {
+    seedProfile([
+      makeChart('legacy-self', { relationship: 'self' }),
+      makeChart('unclassified', { lat: 14 }),
+    ]);
+
+    expect(saveChart(makeChart('new-self', { lat: 15, relationship: 'self' }))).toBe('saved');
+    expect(loadProfile().charts.map(({ id, relationship }) => ({ id, relationship }))).toEqual([
+      { id: 'new-self', relationship: 'self' },
+      { id: 'legacy-self', relationship: 'other' },
+      { id: 'unclassified', relationship: 'other' },
+    ]);
+  });
+
+  it('lets an explicit incoming other classification replace a saved self classification', () => {
+    seedProfile([makeChart('existing', { relationship: 'self' })]);
+
+    expect(saveChart(makeChart('incoming', { relationship: 'other' }))).toBe('updated');
+    expect(getPrimarySelfChart()).toBeNull();
+    expect(loadProfile().charts[0].relationship).toBe('other');
+  });
+});
+
+describe('markPrimarySelfChart', () => {
+  it('marks exactly one canonical self chart and demotes every other saved chart', () => {
+    seedProfile([
+      makeChart('old-self', { relationship: 'self' }),
+      makeChart('chosen', { lat: 14 }),
+      makeChart('third', { lat: 15 }),
+    ]);
+
+    expect(markPrimarySelfChart('chosen')).toBe(true);
+    expect(getPrimarySelfChart()?.id).toBe('chosen');
+    expect(loadProfile().charts.map(({ id, relationship }) => ({ id, relationship }))).toEqual([
+      { id: 'old-self', relationship: 'other' },
+      { id: 'chosen', relationship: 'self' },
+      { id: 'third', relationship: 'other' },
+    ]);
+  });
+
+  it('does not rewrite the profile when the requested chart is missing', () => {
+    const existing = makeChart('existing', { relationship: 'self' });
+    seedProfile([existing]);
+
+    expect(markPrimarySelfChart('missing')).toBe(false);
+    expect(loadProfile().charts).toEqual([existing]);
+  });
+
+  it('fails closed when legacy data contains more than one self chart', () => {
+    seedProfile([
+      makeChart('first-self', { relationship: 'self' }),
+      makeChart('second-self', { relationship: 'self', lat: 14 }),
+    ]);
+
+    expect(getPrimarySelfChart()).toBeNull();
   });
 });
 

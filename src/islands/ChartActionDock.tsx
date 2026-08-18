@@ -16,6 +16,8 @@ interface Props {
   anotherHref: string;
   compareLabel?: string;
   compareHref?: string;
+  saveLabel?: string;
+  onSave?: () => void;
   onGuide: () => void;
   onShare: () => void;
   shareDisabled?: boolean;
@@ -40,6 +42,8 @@ export default function ChartActionDock({
   anotherHref,
   compareLabel,
   compareHref,
+  saveLabel,
+  onSave,
   onGuide,
   onShare,
   shareDisabled = false,
@@ -60,6 +64,18 @@ export default function ChartActionDock({
         </div>
       )}
       <div class="chart-action-dock__actions">
+        {!tourOpen && saveLabel && onSave && (
+          <button
+            class="btn btn--primary"
+            type="button"
+            onClick={onSave}
+            data-save-chart
+            data-primary-action="save"
+          >
+            <span>{saveLabel}</span>
+            <span class="orb" aria-hidden="true">+</span>
+          </button>
+        )}
         {showContextualActions && (
           <button class="btn btn--ghost" type="button" onClick={onGuide} data-tour-start>
             <span>{guideLabel}</span>

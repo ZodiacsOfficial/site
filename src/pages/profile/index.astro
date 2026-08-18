@@ -5,8 +5,10 @@ import ProfileInvites from '../../islands/ProfileInvites';
 import ProfileManager from '../../islands/ProfileManager';
 import AccountSyncV2Panel from '../../islands/AccountSyncV2Panel';
 import AccountBoundProfileSurface from '../../islands/AccountBoundProfileSurface';
+import LivingChartTimeline from '../../islands/living-chart/LivingChartTimeline';
 import { hasDailyChartEmailProvider } from '../../lib/email/daily-config';
 import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../../lib/account-v2/feature-flags';
+import { livingChartSyncEnabled } from '../../lib/living-chart/feature-flags';
 import '../../styles/calculator.css';
 
 const dailyEmailEnabled = hasDailyChartEmailProvider(process.env);
@@ -15,29 +17,40 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
+const livingChartSyncPrivacyEnabled = livingChartSyncEnabled({
+  PUBLIC_LIVING_CHART_SYNC_ENABLED: process.env.PUBLIC_LIVING_CHART_SYNC_ENABLED,
+});
+const livingChartSurfaceEnabled = true;
 ---
 <Base
   clientUi
   title="Your Charts, Today and Ahead | Zodiacs.org"
   description="Open your saved birth charts, see what is active today, and keep the people and patterns you return to in one place."
   path="/profile/"
-  privateSurface={accountSyncV2Enabled}
+  privateSurface={accountSyncV2Enabled || livingChartSurfaceEnabled}
 >
   <section class="section--tight container container--narrow">
     <div class="pf-hero">
       <em class="kicker">Your astrology</em>
       <h1 class="display">Your charts, today and ahead.</h1>
       <p>
-        Return to your chart, see what is active now, and keep the people you
-        read most often close at hand.
+        {livingChartSurfaceEnabled
+          ? 'Return to your chart, see what is active now, and keep the forecasts and moments you choose in one timeline.'
+          : 'Return to your chart, see what is active now, and keep the people you read most often close at hand.'}
       </p>
     </div>
 
     {accountSyncV2Enabled ? (
-      <AccountBoundProfileSurface dailyEmailEnabled={dailyEmailEnabled} client:load />
+      <AccountBoundProfileSurface
+        dailyEmailEnabled={dailyEmailEnabled}
+        livingChartEnabled={livingChartSurfaceEnabled}
+        livingChartSyncEnabled={livingChartSyncPrivacyEnabled}
+        client:load
+      />
     ) : (
       <>
         <ProfileDashboard client:load />
+        <LivingChartTimeline syncEnabled allowSyncGrant={livingChartSyncPrivacyEnabled} client:load />
         <ProfileInvites inviteUiEnabled={inviteUiEnabled} client:load />
         <ProfileManager dailyEmailEnabled={dailyEmailEnabled} client:load />
       </>
@@ -47,9 +60,13 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
 
     <aside class="pf-note">
       <p class="mono">
-        {accountSyncV2Enabled
-          ? 'On-device means: clearing browser data clears local-only saves. An optional account can encrypt and synchronize one explicitly selected self chart.'
-          : 'On-device means: clearing your browser data clears local-only saves. Sign in to sync saved charts and removals across devices.'}
+        {livingChartSurfaceEnabled
+          ? livingChartSyncPrivacyEnabled
+            ? 'Living Chart saves start on this device. You can separately choose account sync, turn it off again, edit or delete entries, and export at any time.'
+            : 'New Living Chart sync choices are paused. Existing consent may continue syncing until you turn it off; device saves can still be exported or deleted.'
+          : accountSyncV2Enabled
+            ? 'On-device means: clearing browser data clears local-only saves. An optional account can encrypt and synchronize one explicitly selected self chart.'
+            : 'On-device means: clearing your browser data clears local-only saves. Sign in to sync saved charts and removals across devices.'}
       </p>
     </aside>
   </section>

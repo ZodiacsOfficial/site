@@ -254,7 +254,7 @@ try {
       await page.waitForFunction(() => Boolean(globalThis.zodiacsInstallPrompt), null, { timeout: TIMEOUT });
       check('first ordinary unsaved chart records progress without showing the install card',
         await page.locator('[data-pwa-install]').count() === 0
-          && await page.locator('[data-save-chart]').count() === 0
+          && await page.locator('[data-save-chart]').count() === 1
           && await page.locator('[data-first-reading-prompt]').count() === 1);
 
       await computeAgain(page);

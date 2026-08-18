@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   ACCOUNT_V2_LOCAL_OWNER_KEY,
   ACCOUNT_V2_RETAINED_OWNER_KEY,
@@ -20,11 +20,17 @@ import {
   localProfileArchiveKey,
   retainAccountBoundProfileAfterDeletion,
 } from './profile-boundary';
+import {
+  LIVING_CHART_CHANGE_EVENT,
+  LIVING_CHART_CLEAR_REQUEST_KEY,
+} from '../living-chart/store';
+import { livingChartSyncMetadataKeys } from '../living-chart/sync-metadata';
 
 const ACCOUNT_A = '11111111-1111-4111-8111-111111111111';
 const ACCOUNT_B = '22222222-2222-4222-8222-222222222222';
 const ACCOUNT_C = '33333333-3333-4333-8333-333333333333';
 const FIRST_READING_STORAGE_KEY = 'zodiacs.first-reading.v1';
+const LIVING_CHART_GUEST_VAULT_KEY = 'zodiacs.living-chart.guest-vault.v1';
 
 class MemoryStorage implements AccountV2Storage {
   readonly values = new Map<string, string>();
@@ -58,6 +64,8 @@ function profile(label: string) {
 }
 
 describe('account-bound local profile data', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
   it('treats malformed or non-profile account surfaces conservatively', () => {
     const storage = new MemoryStorage();
     storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], JSON.stringify({ version: 1, charts: [] }));
@@ -84,6 +92,8 @@ describe('account-bound local profile data', () => {
     const storage = new MemoryStorage();
     storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
     storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+    livingChartSyncMetadataKeys(ACCOUNT_A).forEach((key) => storage.setItem(key, 'account-a-sync'));
+    livingChartSyncMetadataKeys(ACCOUNT_B).forEach((key) => storage.setItem(key, 'account-b-sync'));
     storage.setItem(FIRST_READING_STORAGE_KEY, JSON.stringify({
       version: 1,
       status: 'in_progress',
@@ -181,6 +191,19 @@ describe('account-bound local profile data', () => {
     expect(storage.getItem(localProfileArchiveKey(ACCOUNT_B)!)).toContain('account-b');
   });
 
+  it('invalidates mounted Living Chart data after an account switch', () => {
+    const storage = new MemoryStorage();
+    const dispatchEvent = vi.fn();
+    vi.stubGlobal('window', { localStorage: storage, dispatchEvent });
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+
+    expect(isolateLocalProfileForAccountSwitch(storage, ACCOUNT_A, ACCOUNT_B).ok).toBe(true);
+    expect(dispatchEvent).toHaveBeenCalledTimes(1);
+    const event = dispatchEvent.mock.calls[0]![0] as CustomEvent;
+    expect(event.type).toBe(LIVING_CHART_CHANGE_EVENT);
+    expect(event.detail).toMatchObject({ operation: 'invalidate', owner: null, momentId: null });
+  });
+
   it('clears only account-sensitive profile surfaces', () => {
     const storage = new MemoryStorage();
     for (const key of ACCOUNT_BOUNDARY_PROFILE_KEYS) storage.setItem(key, 'private');
@@ -207,6 +230,8 @@ describe('account-bound local profile data', () => {
     storage.setItem(localProfileArchiveKey(ACCOUNT_A)!, 'archived-private-data');
     storage.setItem(`zodiacs.account-sync-v2.account.${ACCOUNT_A}.v1`, '{"metadata":true}');
     storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+    livingChartSyncMetadataKeys(ACCOUNT_A).forEach((key) => storage.setItem(key, 'account-a-sync'));
+    livingChartSyncMetadataKeys(ACCOUNT_B).forEach((key) => storage.setItem(key, 'account-b-sync'));
     storage.setItem('unrelated', 'keep');
 
     expect(clearAccountDataFromDevice(storage, ACCOUNT_A).ok).toBe(true);
@@ -214,7 +239,60 @@ describe('account-bound local profile data', () => {
     expect(storage.getItem(localProfileArchiveKey(ACCOUNT_A)!)).toBeNull();
     expect(storage.getItem(`zodiacs.account-sync-v2.account.${ACCOUNT_A}.v1`)).toBeNull();
     expect(storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toBeNull();
+    livingChartSyncMetadataKeys(ACCOUNT_A).forEach((key) => expect(storage.getItem(key)).toBeNull());
+    livingChartSyncMetadataKeys(ACCOUNT_B).forEach((key) => expect(storage.getItem(key)).toBe('account-b-sync'));
     expect(storage.getItem('unrelated')).toBe('keep');
+  });
+
+  it('records a content-free Living Chart clear request before device cleanup returns', () => {
+    const storage = new MemoryStorage();
+    const dispatchEvent = vi.fn();
+    vi.stubGlobal('window', {
+      localStorage: storage,
+      dispatchEvent,
+      zodiacsProfileAccess: { canRead: () => false },
+    });
+    vi.stubGlobal('document', {
+      documentElement: { hasAttribute: (name: string) => name === 'data-account-sync-v2' },
+    });
+    vi.stubGlobal('crypto', { randomUUID: () => ACCOUNT_C });
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('account-a'));
+    storage.setItem(ACCOUNT_V2_LOCAL_OWNER_KEY, JSON.stringify({ version: 1, accountId: ACCOUNT_A }));
+
+    expect(clearAccountDataFromDevice(storage, ACCOUNT_A).ok).toBe(true);
+    expect(JSON.parse(storage.getItem(LIVING_CHART_CLEAR_REQUEST_KEY)!)).toEqual({
+      version: 2,
+      requestId: ACCOUNT_C,
+      targets: [`account:${ACCOUNT_A}`],
+    });
+    expect(dispatchEvent.mock.calls.some(([event]) => (
+      (event as Event).type === LIVING_CHART_CHANGE_EVENT
+      && (event as CustomEvent).detail?.operation === 'invalidate'
+    ))).toBe(true);
+  });
+
+  it('clears the known guest Living Chart vault even after shared profile access is denied', () => {
+    const storage = new MemoryStorage();
+    vi.stubGlobal('window', {
+      localStorage: storage,
+      dispatchEvent: vi.fn(),
+      zodiacsProfileAccess: { canRead: () => false },
+    });
+    vi.stubGlobal('document', {
+      documentElement: { hasAttribute: (name: string) => name === 'data-account-sync-v2' },
+    });
+    vi.stubGlobal('crypto', { randomUUID: () => ACCOUNT_C });
+    storage.setItem(ACCOUNT_BOUNDARY_PROFILE_KEYS[0], profile('guest'));
+    storage.setItem(LIVING_CHART_GUEST_VAULT_KEY, JSON.stringify({
+      version: 1,
+      vaultId: ACCOUNT_B,
+    }));
+
+    expect(clearAccountBoundLocalProfileData(storage).ok).toBe(true);
+    expect(JSON.parse(storage.getItem(LIVING_CHART_CLEAR_REQUEST_KEY)!)).toMatchObject({
+      version: 2,
+      targets: [`guest:${ACCOUNT_B}`],
+    });
   });
 
   it('refuses device deletion unless the current owner exactly matches', () => {
@@ -372,5 +450,33 @@ describe('account-bound local profile data', () => {
     expect([...session.values.keys()].filter((key) => key.startsWith('zodiacs'))).toEqual([]);
     expect(local.getItem('unrelated')).toBe('keep-local');
     expect(session.getItem('unrelated')).toBe('keep-session');
+  });
+
+  it('records the durable IndexedDB clear after removing all other Zodiacs keys', () => {
+    const local = new MemoryStorage();
+    const session = new MemoryStorage();
+    vi.stubGlobal('window', {
+      localStorage: local,
+      dispatchEvent: vi.fn(),
+      zodiacsProfileAccess: { canRead: () => false },
+    });
+    vi.stubGlobal('document', {
+      documentElement: { hasAttribute: (name: string) => name === 'data-account-sync-v2' },
+    });
+    vi.stubGlobal('crypto', { randomUUID: () => ACCOUNT_C });
+    local.setItem('zodiacs.profile.v1', 'private');
+    local.setItem('zodiacs:today-sun-sign:v1', 'private');
+    session.setItem('zodiacs.account-sync-v2.profile-access.v1', 'private');
+
+    expect(clearAllZodiacsDataFromDevice(local, session).ok).toBe(true);
+    expect([...local.values.keys()].filter((key) => key.startsWith('zodiacs'))).toEqual([
+      LIVING_CHART_CLEAR_REQUEST_KEY,
+    ]);
+    expect(JSON.parse(local.getItem(LIVING_CHART_CLEAR_REQUEST_KEY)!)).toEqual({
+      version: 2,
+      requestId: ACCOUNT_C,
+      targets: ['all'],
+    });
+    expect([...session.values.keys()].filter((key) => key.startsWith('zodiacs'))).toEqual([]);
   });
 });

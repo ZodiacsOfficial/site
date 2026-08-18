@@ -109,6 +109,20 @@ describe('Phase 1 layout and motion contract', () => {
     expect(program).not.toContain(':global(:root[data-dfy-saved-chart]) .program :global(.dfy) {\n    min-height:');
   });
 
+  it('keeps the lazy Living Chart reflection in the saved-chart geometry', async () => {
+    const [brief, today] = await Promise.all([
+      source('islands/today/TodayBrief.tsx'),
+      source('pages/today/index.astro'),
+    ]);
+    expect(brief).toContain('{livingChartEnabled && <LivingReflection />}');
+    expect(brief).toContain('<LivingReflection prompt={reflectionPrompt} />');
+    expect(brief.match(/<button class="btn btn--primary">/gu)).toHaveLength(2);
+    expect(brief).not.toContain('<span class="btn btn--primary"><span>Save this moment</span>');
+    expect(today).toContain(".today-useful[aria-hidden='true'] { visibility: hidden; }");
+    expect(today).toContain('.today-useful__question { min-block-size: 3.1em; }');
+    expect(today).toContain('.today-useful__question { min-block-size: 4.65em; }');
+  });
+
   it('reserves both picture and image geometry for every pastel sign icon', async () => {
     const [icon, program, fallback] = await Promise.all([
       source('components/SignIcon.astro'),
@@ -178,7 +192,7 @@ describe('Phase 1 layout and motion contract', () => {
     expect(base).toContain('data-stable-typography={props.stableTypography');
     expect(base).toContain('data-local-typography={props.localTypography');
     expect(today).toMatch(/<Base\s+[\s\S]*?localTypography/u);
-    expect(today).toContain('<TodayBrief client:idle');
+    expect(today).toMatch(/<TodayBrief\s+[\s\S]*?client:idle/u);
     for (const phase1Surface of [today, hub, program]) {
       expect(phase1Surface).toMatch(/<Base\s+[\s\S]*?stableTypography/u);
     }

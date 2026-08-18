@@ -6,7 +6,7 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
-const updated = accountSyncV2Enabled ? '12 August 2026' : '2 August 2026';
+const updated = '18 August 2026';
 
 const jsonLd = [
   {
@@ -14,13 +14,13 @@ const jsonLd = [
     name: 'Privacy at Zodiacs.org',
     url: 'https://zodiacs.org/privacy/',
     description:
-      'How zodiacs.org handles birth charts, The Cabinet of Twelve public-address lookups, browser storage, sharing, analytics, accounts, and assistant messages.',
+      'How zodiacs.org handles birth charts, Living Chart entries, browser storage, sharing, analytics, accounts, and assistant messages.',
   },
 ];
 ---
 <Base
   title="Privacy — How Your Data Is Handled | Zodiacs.org"
-  description="How zodiacs.org handles birth charts, The Cabinet of Twelve public-address lookups, browser storage, sharing, analytics, accounts, and assistant messages."
+  description="How zodiacs.org handles birth charts, Living Chart entries, browser storage, sharing, analytics, accounts, and assistant messages."
   path="/privacy/"
   jsonLd={jsonLd}
 >
@@ -88,6 +88,35 @@ const jsonLd = [
         choose to create an account (below). Clearing your browser's site data
         removes saved charts. We cannot see them and cannot recover them for
         you.
+      </p>
+
+      <h2>Living Chart moments</h2>
+      <p>
+        Living Chart lets you save an optional category or short note beside a
+        dated copy of the personal forecast and factual sky receipt you saw.
+        A first save stays in this browser. If you separately choose
+        <strong> Keep this on every device</strong>, the entry's date and time
+        precision, category, note, frozen forecast, and chart identifier are
+        sent to Supabase and stored for your signed-in account. Account access
+        is restricted with row-level security and Supabase encrypts stored data
+        at rest. This is not end-to-end encryption: Zodiacs.org and Supabase can
+        technically process the stored entry to provide synchronization,
+        support, export, and deletion.
+      </p>
+      <p>
+        Living Chart sync has its own consent, separate from saved-chart sync.
+        We do not make entries public, index them, send them to Guide or another
+        AI provider automatically, use them to generate horoscopes, sell them,
+        or intentionally include their text in analytics or application logs. Withdrawing
+        Living Chart sync deletes the remote entries and advances a consent
+        version so an old offline tab cannot upload them again. Copies already
+        kept on a device remain until you delete them there or clear this site's
+        browser data. Deleting an entry removes its note, category, forecast,
+        chart identifier, and date from the device and cloud record. A
+        content-free technical deletion marker may remain so a delayed request
+        cannot restore it. The timeline provides portable JSON and readable
+        Markdown export, per-entry edit and deletion, and a retry control when
+        sync needs attention.
       </p>
 
       <h2>The Cabinet of Twelve and public wallet addresses</h2>

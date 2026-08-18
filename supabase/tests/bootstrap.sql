@@ -35,8 +35,23 @@ as $$
   select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid;
 $$;
 
+create or replace function auth.jwt()
+returns jsonb
+language sql
+stable
+security invoker
+set search_path = pg_catalog
+as $$
+  select coalesce(
+    nullif(current_setting('request.jwt.claims', true), '')::jsonb,
+    '{}'::jsonb
+  );
+$$;
+
 revoke all on schema auth from public;
 grant usage on schema auth to anon, authenticated, service_role;
 
 revoke all on function auth.uid() from public;
 grant execute on function auth.uid() to anon, authenticated, service_role;
+revoke all on function auth.jwt() from public;
+grant execute on function auth.jwt() to anon, authenticated, service_role;

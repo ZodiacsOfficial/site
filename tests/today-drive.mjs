@@ -41,6 +41,7 @@ const profile = {
   charts: [{
     id: 'today-drive',
     name: 'Fixture chart',
+    relationship: 'self',
     createdAt: '2026-07-11T00:00:00.000Z',
     updatedAt: '2026-07-11T00:00:00.000Z',
     birth: { date: '1990-01-01', time: '12:00', timeKnown: true, place: null },

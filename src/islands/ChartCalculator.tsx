@@ -347,6 +347,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const errorRef = useRef<HTMLParagraphElement>(null);
   const saveButtonRef = useRef<HTMLButtonElement>(null);
   const saveNameRef = useRef<HTMLInputElement>(null);
+  const saveReturnRef = useRef<HTMLElement | null>(null);
   const saveOriginRef = useRef<'tour' | 'free'>('free');
   const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
@@ -1293,7 +1294,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   function closeSavePrompt() {
     setSavePromptOpen(false);
-    requestAnimationFrame(() => saveButtonRef.current?.focus());
+    requestAnimationFrame(() => (saveReturnRef.current ?? saveButtonRef.current)?.focus());
   }
 
   async function openSavePrompt(origin: 'tour' | 'free' = 'free') {
@@ -1314,6 +1315,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setSaveSource(source);
     setSaveInitial(prefill);
     setSaveDraft(prefill);
+    saveReturnRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
     setSavePromptOpen(true);
   }
 
@@ -1329,6 +1333,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       const status = saveChart({
         id: crypto.randomUUID(),
         name: explicitName ?? autoName,
+        relationship: subjectMode === 'self' ? 'self' : 'other',
         createdAt: now,
         updatedAt: now,
         birth: identity.birth,
@@ -1894,6 +1899,18 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                               : wheelActionCopy.compareAdd
                             : undefined}
                           compareHref={compareWithMineHref}
+                          saveLabel={saved === 'saved'
+                            ? undefined
+                            : locale === 'en' && subjectMode === 'self'
+                              ? 'Save my chart'
+                              : t(locale, 'saveThisChart')}
+                          onSave={() => {
+                            track('next_action_clicked', {
+                              state: firstReading.status === 'complete' ? 'guide_complete' : 'chart_result',
+                              action: 'save',
+                            });
+                            void openSavePrompt();
+                          }}
                           anotherLabel={wheelActionCopy.another}
                           anotherHref={anotherChartHref}
                           onGuide={() => {
@@ -1960,28 +1977,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 </button>
               </form>
             ) : mode === 'full' ? (
-              !firstReadingLoaded
-                || firstReading.status === 'not_started'
-                || firstReading.status === 'in_progress' ? null
-                : saved !== 'saved' ? (
-                <button
-                  ref={saveButtonRef}
-                  class="btn btn--primary"
-                  type="button"
-                  onClick={() => {
-                    track('next_action_clicked', {
-                      state: firstReading.status === 'complete' ? 'guide_complete' : 'exploring',
-                      action: 'save',
-                    });
-                    void openSavePrompt();
-                  }}
-                  data-save-chart
-                  data-primary-action="save"
-                >
-                  <span>{t(locale, 'saveThisChart')}</span>
-                  <span class="orb">+</span>
-                </button>
-              ) : (
+              saved === 'saved' ? (
                 <a
                   class="btn btn--primary"
                   href="/today/"
@@ -1992,14 +1988,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <span>{t(locale, 'seeTodaySky')}{russianCopy?.chart.englishOnlySuffix ?? ''}</span>
                   <span class="orb">→</span>
                 </a>
-              )
+              ) : null
             ) : (
               <>
                 <button
                   ref={saveButtonRef}
                   class="btn btn--primary"
                   type="button"
-                  onClick={() => void openSavePrompt()}
+                  onClick={saved === 'saved' ? undefined : () => void openSavePrompt()}
                   aria-disabled={saved === 'saved'}
                   data-save-chart
                 >

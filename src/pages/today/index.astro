@@ -9,26 +9,36 @@ import publicationData from '../../data/daily-publication.json';
 import type { Daily } from '../../lib/daily';
 import type { DailyPublication } from '../../lib/daily-publication';
 import { editionDateLabel } from '../../lib/edition-freshness';
+import { livingChartCaptureEnabled, livingChartSyncEnabled } from '../../lib/living-chart/feature-flags';
 
 const daily = dailyData as Daily;
 const publication = publicationData as DailyPublication;
 const publicationLabel = editionDateLabel(publication.date);
-const sunSignLines = Object.fromEntries(
-  publication.signs.map((entry) => [entry.sign, entry.todayLine.text]),
+const sunSignReadings = Object.fromEntries(
+  publication.signs.map((entry) => [entry.sign, {
+    text: entry.todayLine.text,
+    receipt: entry.todayLine.receipt,
+  }]),
 );
+const livingChartEnabled = livingChartCaptureEnabled({
+  PUBLIC_LIVING_CHART_CAPTURE_ENABLED: process.env.PUBLIC_LIVING_CHART_CAPTURE_ENABLED,
+});
+const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled({
+  PUBLIC_LIVING_CHART_SYNC_ENABLED: process.env.PUBLIC_LIVING_CHART_SYNC_ENABLED,
+});
 ---
 <Base
   inlineCriticalCss
   stableTypography
   localTypography
   title={`${publicationLabel} Daily Astrology Brief | Zodiacs.org`}
-  description={`Choose your Sun sign for a clear note from the ${publicationLabel} UTC edition, or privately compare that sky with a birth chart saved on this device.`}
+  description={`Choose your Sun sign for a clear note from the ${publicationLabel} UTC edition, or privately compare that sky with your birth chart.`}
   path="/today/"
   imageAlt={`${publicationLabel} daily astrology brief — Zodiacs.org`}
   editionDate={publication.date}
 >
-  <script slot="head" is:inline>
-    /* Local-only return-state hint. It carries no chart data: the boolean and
+  <script slot="head" is:inline define:vars={{ livingChartEnabled }}>
+    /* Private return-state hint. It carries no chart data: the boolean and
        validated sign let CSS establish the correct first-paint geometry
        before the idle island reads storage. */
     (function () {
@@ -40,6 +50,7 @@ const sunSignLines = Object.fromEntries(
         var syncPrivateProfileHint = function () {
           document.documentElement.removeAttribute('data-today-saved-chart');
           document.documentElement.removeAttribute('data-today-chart-sun-sign');
+          document.documentElement.removeAttribute('data-living-chart-needs-self');
           if (document.documentElement.hasAttribute('data-account-sync-v2')
             && (!window.zodiacsProfileAccess || !window.zodiacsProfileAccess.canRead())) return;
           var rawProfile = localStorage.getItem('zodiacs.profile.v1');
@@ -56,9 +67,18 @@ const sunSignLines = Object.fromEntries(
             var latestStamp = typeof latest.updatedAt === 'string' ? latest.updatedAt : (latest.createdAt || '');
             return chartStamp > latestStamp ? chart : latest;
           }, null);
-          if (latestChart) {
+          var selfCharts = livingChartEnabled
+            ? charts.filter(function (chart) { return chart.relationship === 'self'; })
+            : [];
+          var primaryChart = livingChartEnabled
+            ? (selfCharts.length === 1 ? selfCharts[0] : null)
+            : latestChart;
+          if (livingChartEnabled && charts.length && !primaryChart) {
+            document.documentElement.setAttribute('data-living-chart-needs-self', '');
+          }
+          if (primaryChart) {
             document.documentElement.setAttribute('data-today-saved-chart', '');
-            var sun = latestChart.summary.bodies.find(function (body) {
+            var sun = primaryChart.summary.bodies.find(function (body) {
               return body && body.body === 'Sun' && Number.isFinite(body.lon);
             });
             if (sun) {
@@ -69,6 +89,7 @@ const sunSignLines = Object.fromEntries(
           }
         };
         syncPrivateProfileHint();
+        window.addEventListener('zodiacs:profile', syncPrivateProfileHint);
         window.addEventListener('zodiacs:profile-access', syncPrivateProfileHint);
       } catch (error) {}
     })();
@@ -83,15 +104,22 @@ const sunSignLines = Object.fromEntries(
       <em class="kicker">Your daily brief</em>
       <h1 class="display"><EditionText current="Today" editionDate={publication.date} /></h1>
       <p>
-        Start with the zodiac sign you know. If you have a saved birth chart,
-        you’ll automatically get a more personal comparison.
+        {livingChartEnabled
+          ? 'Start with the zodiac sign you know. Then choose which saved birth chart is yours to get a more personal comparison.'
+          : 'Start with the zodiac sign you know. If you have a saved birth chart, you’ll automatically get a more personal comparison.'}
       </p>
     </header>
 
     <!-- The complete no-chart brief is server-rendered. This island owns all
          of its copy, so it needs neither the full client UI catalog nor eager
          hydration; personalization can wait until the first paint is idle. -->
-    <TodayBrief client:idle sunSignLines={sunSignLines} />
+    <TodayBrief
+      client:idle
+      sunSignReadings={sunSignReadings}
+      livingChartEnabled={livingChartEnabled}
+      livingChartSyncEnabled={livingChartCloudSyncEnabled}
+      generatorVersion={publication.rendererVersion}
+    />
 
     <UpcomingEventLinks date={publication.date} />
 
@@ -499,4 +527,258 @@ const sunSignLines = Object.fromEntries(
     .today-streak__count { animation: none; }
     .today-sign { transition: none; }
   }
+
 </style>
+
+{livingChartEnabled && (
+<style is:inline>
+  /* Capture styles stay flag-scoped so flag-off Today bytes remain unchanged. */
+  .living-moment-slot {
+    display: grid;
+    min-width: 0;
+    min-height: 50px;
+    align-items: start;
+  }
+  .living-moment-slot__closed,
+  .living-moment-slot__fallback {
+    display: flex;
+    min-width: 0;
+    min-height: 50px;
+    align-items: center;
+    padding-top: 2px;
+  }
+  .living-moment-slot__closed .btn,
+  .living-moment-slot__fallback .btn { min-height: 46px; }
+  .living-moment-slot__fallback { visibility: hidden; }
+  .living-moment-slot__fallback .btn { pointer-events: none; }
+  .living-moment-composer {
+    display: grid;
+    gap: 15px;
+    padding: clamp(16px, 3vw, 20px);
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    background: color-mix(in oklab, var(--sign-cancer) 4%, var(--void-1));
+  }
+  .living-moment-composer__head { display: grid; gap: 5px; }
+  .living-moment-composer__head h3 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 500;
+    line-height: 1.12;
+  }
+  .living-moment-composer__head p,
+  .living-moment-composer__hint,
+  .living-moment-composer__status,
+  .living-chart__status {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+  .living-moment-composer__field,
+  .living-moment-composer__date,
+  .living-moment-composer__precision { display: grid; gap: 7px; }
+  .living-moment-composer__label,
+  .living-moment-composer__legend {
+    color: var(--text-2);
+    font-size: 12px;
+    font-weight: 650;
+  }
+  .living-moment-composer textarea,
+  .living-moment-composer input[type='date'],
+  .living-moment-composer input[type='time'],
+  .living-self-chart select {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 11px 12px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-sm);
+    background: var(--void-0);
+    color: var(--text);
+    color-scheme: dark;
+    font: inherit;
+  }
+  .living-moment-composer textarea {
+    min-height: 112px;
+    resize: vertical;
+    line-height: 1.55;
+  }
+  .living-moment-composer__counter {
+    justify-self: end;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  .living-moment-composer__categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .living-moment-composer__categories legend { flex-basis: 100%; }
+  .living-moment-composer__categories label,
+  .living-moment-composer__precision label {
+    position: relative;
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-full);
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .living-moment-composer__categories label:has(input:checked),
+  .living-moment-composer__precision label:has(input:checked) {
+    border-color: var(--hair-3);
+    color: var(--text);
+    background: color-mix(in oklab, var(--sign-cancer) 8%, transparent);
+  }
+  .living-moment-composer__categories input,
+  .living-moment-composer__precision input {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: var(--accent);
+  }
+  .living-moment-composer__when {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+    gap: 10px;
+  }
+  .living-moment-composer__precision-options,
+  .living-moment-composer__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .living-moment-composer__actions .btn { min-height: 46px; }
+  .living-moment-composer__saved {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    min-height: 50px;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  .living-moment-composer__saved > * { min-width: 0; }
+  .living-moment-composer__saved p,
+  .living-moment-composer__sync-choice p { margin: 0; }
+  .living-moment-composer__sync-choice {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, max-content));
+    align-items: center;
+    gap: 8px 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--hair-1);
+  }
+  .living-moment-composer__sync-choice p {
+    grid-column: 1 / -1;
+    color: var(--muted);
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+  .living-moment-composer__sync-state {
+    color: var(--muted);
+    overflow-wrap: anywhere;
+  }
+  .living-moment-composer__saved a { color: var(--text); width: fit-content; }
+  .living-chart__text-action {
+    min-height: 44px;
+    padding: 8px 4px;
+    color: var(--muted);
+    font: inherit;
+    font-size: 12px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .living-self-chart {
+    display: grid;
+    gap: 14px;
+    margin-top: 18px;
+    padding: clamp(18px, 4vw, 24px);
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    background: color-mix(in oklab, var(--sign-cancer) 4%, var(--void-1));
+  }
+  .living-self-chart h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 500;
+  }
+  .living-self-chart p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+  .living-self-chart label { display: grid; gap: 7px; }
+  .living-self-chart .btn { min-height: 46px; justify-self: start; }
+  .living-self-chart--placeholder {
+    display: none;
+    min-height: 164px;
+    visibility: hidden;
+  }
+  :root[data-living-chart-needs-self] .living-self-chart--placeholder { display: grid; }
+  .today-lines__rank,
+  .today-useful__label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .today-useful {
+    padding: 15px 16px;
+    border-inline-start: 2px solid var(--sign-cancer);
+    background: color-mix(in oklab, var(--sign-cancer) 5%, transparent);
+  }
+  .today-useful[aria-hidden='true'] { visibility: hidden; }
+  .today-useful p {
+    margin: 0;
+    color: var(--text-2);
+    font-size: var(--text-base);
+    line-height: 1.55;
+  }
+  .today-useful__question { min-block-size: 3.1em; }
+  .today-useful small {
+    display: block;
+    margin-top: 7px;
+    color: var(--faint);
+    font-size: 11px;
+    line-height: 1.55;
+  }
+  @media (max-width: 560px) {
+    .today-useful__question { min-block-size: 4.65em; }
+    .living-moment-composer__when { grid-template-columns: 1fr; }
+    .living-moment-slot__closed .btn,
+    .living-moment-slot__fallback .btn,
+    .living-moment-composer__actions .btn,
+    .living-self-chart .btn {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .living-moment-composer__saved { align-items: start; }
+    .living-moment-composer__sync-choice { grid-template-columns: minmax(0, 1fr); }
+    .living-moment-composer__sync-choice p { grid-column: 1; }
+    .living-moment-composer__sync-choice .living-chart__text-action {
+      width: fit-content;
+      max-width: 100%;
+      text-align: start;
+      white-space: normal;
+    }
+  }
+</style>
+)}

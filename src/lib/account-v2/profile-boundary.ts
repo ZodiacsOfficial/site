@@ -1,6 +1,13 @@
 import { PROFILE_DELETIONS_KEY } from '../profile/deletions';
 import { PAIRS_KEY } from '../profile/pairs';
 import { PROFILE_KEY } from '../profile/schema';
+import { LIVING_CHART_GUEST_VAULT_KEY } from '../living-chart/owner';
+import { livingChartSyncMetadataKeys } from '../living-chart/sync-metadata';
+import {
+  invalidateLivingChartAccess,
+  requestLivingChartClear,
+} from '../living-chart/store';
+import type { LivingChartOwnerScope } from '../living-chart/types';
 import {
   ACCOUNT_V2_LOCAL_OWNER_KEY,
   ACCOUNT_V2_RETAINED_OWNER_KEY,
@@ -145,6 +152,7 @@ export function isolateLocalProfileForAccountSwitch(
     return { ok: false, restoredPreviousArchive: false };
   }
 
+  invalidateLivingChartForBoundary(storage);
   return { ok: true, restoredPreviousArchive: nextArchive !== null };
 }
 
@@ -152,6 +160,7 @@ export function isolateLocalProfileForAccountSwitch(
 export function clearAccountBoundLocalProfileData(
   storage: AccountV2Storage,
 ): LocalProfileBoundaryResult {
+  const livingChartOwner = livingChartOwnerForBoundary(storage);
   let before: Map<string, string | null> | null = null;
   try {
     before = snapshot(storage, [...ACCOUNT_BOUNDARY_PROFILE_KEYS, FIRST_READING_STORAGE_KEY]);
@@ -161,6 +170,7 @@ export function clearAccountBoundLocalProfileData(
     if (before) restoreSnapshot(storage, before);
     return { ok: false, restoredPreviousArchive: false };
   }
+  clearLivingChartForBoundary(storage, livingChartOwner);
   return { ok: true, restoredPreviousArchive: false };
 }
 
@@ -171,20 +181,24 @@ export function clearAccountBoundLocalProfileEverywhere(
 ): LocalProfileBoundaryResult {
   const archiveKey = localProfileArchiveKey(accountId);
   if (!archiveKey) return { ok: false, restoredPreviousArchive: false };
+  const livingSyncKeys = livingChartSyncMetadataKeys(accountId);
   let before: Map<string, string | null> | null = null;
   try {
     before = snapshot(storage, [
       ...ACCOUNT_BOUNDARY_PROFILE_KEYS,
       archiveKey,
       FIRST_READING_STORAGE_KEY,
+      ...livingSyncKeys,
     ]);
     if (!sanitizeLegacyFirstReadingIdentity(storage)) throw new Error('legacy identity cleanup failed');
     replaceActiveValues(storage, {});
     storage.removeItem(archiveKey);
+    livingSyncKeys.forEach((key) => storage.removeItem(key));
   } catch {
     if (before) restoreSnapshot(storage, before);
     return { ok: false, restoredPreviousArchive: false };
   }
+  clearLivingChartForBoundary(storage, { kind: 'account', accountId });
   return { ok: true, restoredPreviousArchive: false };
 }
 
@@ -203,6 +217,7 @@ export function clearAccountDataFromDevice(
     ACCOUNT_V2_LOCAL_OWNER_KEY,
     ACCOUNT_V2_RETAINED_OWNER_KEY,
     FIRST_READING_STORAGE_KEY,
+    ...livingChartSyncMetadataKeys(accountId),
   ];
   let before: Map<string, string | null> | null = null;
   try {
@@ -217,10 +232,12 @@ export function clearAccountDataFromDevice(
     storage.removeItem(metadataKey);
     storage.removeItem(ACCOUNT_V2_LOCAL_OWNER_KEY);
     storage.removeItem(ACCOUNT_V2_RETAINED_OWNER_KEY);
+    livingChartSyncMetadataKeys(accountId).forEach((key) => storage.removeItem(key));
   } catch {
     if (before) restoreSnapshot(storage, before);
     return { ok: false, restoredPreviousArchive: false };
   }
+  clearLivingChartForBoundary(storage, { kind: 'account', accountId });
   return { ok: true, restoredPreviousArchive: false };
 }
 
@@ -303,12 +320,15 @@ export function retainAccountBoundProfileAfterDeletion(
       ACCOUNT_V2_LOCAL_OWNER_KEY,
       ACCOUNT_V2_RETAINED_OWNER_KEY,
       FIRST_READING_STORAGE_KEY,
+      ...livingChartSyncMetadataKeys(accountId),
     ]);
     if (!sanitizeLegacyFirstReadingIdentity(storage)) throw new Error('legacy identity cleanup failed');
     const cleared = clearCurrentAccountV2Metadata(storage, accountId, { preserveOwner: true });
     if (!cleared.ok || !retainCurrentAccountProfile(storage, accountId)) {
       throw new Error('retention failed');
     }
+    livingChartSyncMetadataKeys(accountId).forEach((key) => storage.removeItem(key));
+    invalidateLivingChartForBoundary(storage);
     return { ok: true, restoredPreviousArchive: false };
   } catch {
     if (before) restoreSnapshot(storage, before);
@@ -346,17 +366,22 @@ export function completeDeletedAccountLocalData(
       metadataKey,
       ACCOUNT_V2_RETAINED_OWNER_KEY,
       FIRST_READING_STORAGE_KEY,
+      ...livingChartSyncMetadataKeys(accountId),
     ]);
     if (!sanitizeLegacyFirstReadingIdentity(storage)) throw new Error('legacy identity cleanup failed');
     const cleared = clearCurrentAccountV2Metadata(storage, accountId, { preserveOwner: true });
     if (!cleared.ok) throw new Error('metadata cleanup failed');
     if (removeFromDevice) storage.removeItem(archiveKey);
+    livingChartSyncMetadataKeys(accountId).forEach((key) => storage.removeItem(key));
     const retained = readRetainedAccountOwner(storage);
     if (retained.status === 'invalid' || retained.status === 'unavailable') {
       throw new Error('retention boundary unavailable');
     }
     if (retained.status === 'ready' && retained.accountId === accountId) {
       storage.removeItem(ACCOUNT_V2_RETAINED_OWNER_KEY);
+    }
+    if (removeFromDevice) {
+      clearLivingChartForBoundary(storage, { kind: 'account', accountId });
     }
     return { ok: true, restoredPreviousArchive: false };
   } catch {
@@ -391,7 +416,59 @@ export function clearAllZodiacsDataFromDevice(
       }
     }
   }
+  // Record the IndexedDB deletion after enumerating localStorage. Otherwise
+  // this same cleanup loop removes the durable retry marker it just created.
+  clearLivingChartForBoundary(local, 'all');
   return { ok, restoredPreviousArchive: false };
+}
+
+function isBrowserLocalStorage(storage: AccountV2Storage): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    return storage === window.localStorage;
+  } catch {
+    return false;
+  }
+}
+
+function livingChartOwnerForBoundary(
+  storage: AccountV2Storage,
+): LivingChartOwnerScope | null {
+  if (!isBrowserLocalStorage(storage)) return null;
+  const owner = readLocalAccountOwner(storage);
+  if (owner.status === 'ready') return { kind: 'account', accountId: owner.accountId };
+  if (owner.status !== 'missing') return null;
+  try {
+    const raw = storage.getItem(LIVING_CHART_GUEST_VAULT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { version?: unknown; vaultId?: unknown };
+    return parsed.version === 1 && isAccountV2Id(parsed.vaultId)
+      ? { kind: 'guest', vaultId: parsed.vaultId.toLowerCase() }
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Mounted timelines must never retain records across an ownership transition. */
+function invalidateLivingChartForBoundary(storage: AccountV2Storage): void {
+  if (!isBrowserLocalStorage(storage)) return;
+  invalidateLivingChartAccess();
+}
+
+/**
+ * Starts a content-free, durable IndexedDB clear from the already-authorized
+ * exclusive boundary, even after shared read leases are revoked. Invalidation
+ * remains the fail-closed fallback when the request marker cannot be recorded.
+ */
+function clearLivingChartForBoundary(
+  storage: AccountV2Storage,
+  target: LivingChartOwnerScope | 'all' | null,
+): void {
+  if (!isBrowserLocalStorage(storage)) return;
+  if (!target || !requestLivingChartClear(target, { boundaryAuthorized: true })) {
+    invalidateLivingChartAccess();
+  }
 }
 
 function activeValues(

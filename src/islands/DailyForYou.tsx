@@ -75,11 +75,11 @@ export default function DailyForYou({
           <p class="dfy__placeholder-copy">
             {ready
               ? 'This saved-chart comparison is unavailable right now. Your complete Sun-sign reading remains ready above.'
-              : 'Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available.'}
+              : 'Your Sun-sign reading is ready above. The saved-chart layer adds close contacts when available.'}
           </p>
           <ul class="dfy__fallback-points">
             <li>The complete daily reading remains available above.</li>
-            <li>Your saved chart stays in this browser.</li>
+            <li>Your saved chart can add a more personal comparison.</li>
             <li>You can open the full daily brief whenever you are ready.</li>
           </ul>
         </div>

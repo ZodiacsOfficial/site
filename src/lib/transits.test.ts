@@ -1,12 +1,26 @@
 /** Composition shape for the transit phrasing table. */
 import { describe, expect, it } from 'vitest';
-import { transitLine, TRANSIT_ORB } from './transits';
+import { contactReceipt, transitLine, TRANSIT_ORB } from './transits';
 import { BODY_ROLE } from './compat';
 
 const PLANETS = Object.keys(BODY_ROLE);
 const ASPECTS = ['conjunction', 'sextile', 'square', 'trine', 'opposition'];
 
 describe('transits', () => {
+  it('formats compact saved-contact receipts without mutable sky positions', () => {
+    expect(contactReceipt({
+      transiting: 'Mercury',
+      transitingLon: 12,
+      transitingRetrograde: true,
+      natal: 'Ascendant',
+      natalLon: 102,
+      natalRetrograde: false,
+      type: 'square',
+      separation: 90.04,
+      orb: 0.04,
+    })).toBe('Mercury Rx square natal ASC · 0.0° from exact');
+  });
+
   it('keeps the active-transit orb tight', () => {
     expect(TRANSIT_ORB).toBe(3);
   });

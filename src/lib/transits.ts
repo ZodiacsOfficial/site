@@ -9,6 +9,7 @@
  * so only BODY_ROLE is shared.
  */
 import { BODY_ROLE } from './compat';
+import type { TodayContact } from './today';
 
 /** Max orb, in degrees, for a transit to count as active. */
 export const TRANSIT_ORB = 3;
@@ -65,4 +66,14 @@ export function transitLine(transiting: string, type: string, natal: string): st
   const phrase = ASPECT_VERB[type];
   if (!phrase || !mover) return `${transiting} aspects your ${role}.`;
   return `${transiting} ${phrase.verb} your ${role} — ${mover}, ${phrase.gloss}.`;
+}
+
+/** Compact, reproducible evidence for a saved daily contact. */
+export function contactReceipt(contact: TodayContact): string {
+  const point = contact.natal === 'Ascendant'
+    ? 'ASC'
+    : contact.natal === 'Midheaven'
+      ? 'MC'
+      : contact.natal;
+  return `${contact.transiting}${contact.transitingRetrograde ? ' Rx' : ''} ${contact.type} natal ${point}${contact.natalRetrograde ? ' Rx' : ''} · ${contact.orb.toFixed(1)}° from exact`;
 }
