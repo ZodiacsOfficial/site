@@ -104,9 +104,63 @@ async function newTodayPage(browser, options) {
 async function observeLayoutShifts(page) {
   await page.addInitScript(() => {
     globalThis.__zdxLayoutShifts = [];
+    globalThis.__zdxLayoutShiftDiagnostics = [];
+
+    const describeNode = (node) => {
+      if (!node) return null;
+      if (node.nodeType !== Node.ELEMENT_NODE) {
+        return {
+          nodeName: node.nodeName,
+          nodeType: node.nodeType,
+        };
+      }
+
+      const path = [];
+      let element = node;
+      while (element && path.length < 5) {
+        const tag = element.tagName.toLowerCase();
+        const id = element.id ? `#${element.id}` : '';
+        const classes = [...element.classList].map((name) => `.${name}`).join('');
+        path.unshift(`${tag}${id}${classes}`);
+        if (element.id) break;
+        element = element.parentElement;
+      }
+
+      return {
+        path: path.join(' > '),
+        text: node.textContent?.trim().replace(/\s+/g, ' ').slice(0, 160) || '',
+        data: Object.fromEntries(
+          [...node.attributes]
+            .filter(({ name }) => name.startsWith('data-'))
+            .map(({ name, value }) => [name, value]),
+        ),
+      };
+    };
+    const describeRect = (rect) => rect && ({
+      x: rect.x,
+      y: rect.y,
+      width: rect.width,
+      height: rect.height,
+      top: rect.top,
+      right: rect.right,
+      bottom: rect.bottom,
+      left: rect.left,
+    });
+
     new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (!entry.hadRecentInput) globalThis.__zdxLayoutShifts.push(entry.value);
+        if (!entry.hadRecentInput) {
+          globalThis.__zdxLayoutShifts.push(entry.value);
+          globalThis.__zdxLayoutShiftDiagnostics.push({
+            value: entry.value,
+            startTime: entry.startTime,
+            sources: [...(entry.sources || [])].map((source) => ({
+              node: describeNode(source.node),
+              previousRect: describeRect(source.previousRect),
+              currentRect: describeRect(source.currentRect),
+            })),
+          });
+        }
       }
     }).observe({ type: 'layout-shift', buffered: true });
   });
@@ -238,7 +292,14 @@ async function drive(BASE, browser) {
   );
   const savedChartHeight = await desktop.locator('.today-reading').evaluate((node) => node.getBoundingClientRect().height);
   const savedChartCls = await measuredCls(desktop);
-  check('saved-chart hydration has exactly zero CLS', savedChartCls === 0, `${savedChartCls} · ${savedChartHeight}px reading`);
+  const savedChartClsDiagnostics = savedChartCls === 0
+    ? ''
+    : ` · ${JSON.stringify(await desktop.evaluate(() => globalThis.__zdxLayoutShiftDiagnostics))}`;
+  check(
+    'saved-chart hydration has exactly zero CLS',
+    savedChartCls === 0,
+    `${savedChartCls} · ${savedChartHeight}px reading${savedChartClsDiagnostics}`,
+  );
   check('saved chart renders a real brief', await desktop.locator('.today-lines li').count() >= 2);
   check('saved chart replaces the Sun-sign baseline', await desktop.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 0);
   check('brief makes no backend requests', apiRequests === 0, `${apiRequests} requests`);
