@@ -185,18 +185,22 @@ describe('Phase 1 layout and motion contract', () => {
   });
 
   it('keeps shared navigation typography independent from route-level reader modes', async () => {
-    const [tokens, nav] = await Promise.all([
+    const [tokens, nav, base] = await Promise.all([
       source('styles/tokens.css'),
       source('components/SiteNav.astro'),
+      source('layouts/Base.astro'),
     ]);
     const routeTypography = [...tokens.matchAll(
       /:root\[data-(?:stable|local)-typography\]\s*\{([^}]*)\}/gu,
     )].map((match) => match[1]).join('\n');
 
-    expect(tokens).toContain("--font-nav-serif: 'EB Garamond Fallback'");
-    expect(tokens).toContain("--font-nav-sans: 'Instrument Sans Fallback'");
-    expect(tokens).toContain('--font-nav-mono: ui-monospace');
+    expect(tokens).toContain("--font-nav-serif: 'EB Garamond'");
+    expect(tokens).toContain("--font-nav-sans: 'Instrument Sans'");
+    expect(tokens).toContain("--font-nav-mono: 'JetBrains Mono'");
     expect(tokens).toContain("--font-nav-sans: 'Golos Text'");
+    expect(base).toContain('href="/fonts/instrument-sans-latin-wght-normal.woff2"');
+    expect(base).toContain('href="/fonts/eb-garamond-latin-400-normal.woff2"');
+    expect(base).toContain('href="/fonts/eb-garamond-latin-500-normal.woff2"');
     expect(routeTypography).not.toContain('--font-nav-');
     expect(nav).toMatch(/\.nav-wrap\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);
     expect(nav).toMatch(/\.mobile-menu\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);

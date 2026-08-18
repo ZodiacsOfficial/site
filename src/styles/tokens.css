@@ -238,12 +238,11 @@
   --font-serif: 'EB Garamond', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
   --font-sans: 'Instrument Sans', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
-  /* Shared chrome must not inherit route-level typography modes. The Latin
-     nav uses the metric-matched local faces on every route so its geometry is
-     stable from first paint and zero-request reader pages stay zero-request. */
-  --font-nav-serif: 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
-  --font-nav-sans: 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
-  --font-nav-mono: ui-monospace, Menlo, Consolas, monospace;
+  /* Shared chrome keeps the canonical main-site typography on every route.
+     Reader modes may replace content faces, but never the navigation faces. */
+  --font-nav-serif: 'EB Garamond', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
+  --font-nav-sans: 'Instrument Sans', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
+  --font-nav-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
