@@ -360,20 +360,18 @@ describe('thesis catalogue icon contract', () => {
     links.forEach(({ attrs, inner }, index) => {
       const slug = SIGNS[index];
       const images = voidTagParts(inner, 'img');
-      const sources = voidTagParts(inner, 'source');
       expect(attrs).toMatch(new RegExp(`\\bhref=["']/registry/${slug}/["']`, 'i'));
       expect(images).toHaveLength(1);
-      expect(sources).toHaveLength(1);
-      expect(images[0].attrs).toContain(`src="/assets/zodiac-icons/48/${slug}.webp"`);
-      expect(images[0].attrs).toContain(`srcset="/assets/zodiac-icons/48/${slug}.webp 1x, /assets/zodiac-icons/128/${slug}.webp 2x, /assets/zodiac-icons/400/${slug}.webp 3x"`);
-      expect(sources[0].attrs).toContain(`srcset="/assets/zodiac-icons/48/${slug}.avif 1x, /assets/zodiac-icons/128/${slug}.avif 2x, /assets/zodiac-icons/400/${slug}.avif 3x"`);
-      expect(images[0].attrs).toMatch(/\bwidth="48"\s+height="48"/);
+      expect(images[0].attrs).toContain(`src="/assets/icons/${slug}.png"`);
+      expect(images[0].attrs).toMatch(/\bclass=["'][^"']*\btwelve__glyph\b/);
+      expect(inner).toMatch(/--glyph-w:\d+px;--glyph-h:\d+px/);
+      expect(images[0].attrs).toMatch(/\bwidth="\d+"\s+height="\d+"/);
       expect(images[0].attrs).toMatch(/\balt=""/);
       expect(images[0].attrs).toMatch(/\baria-hidden="true"/);
       expect(textOf(inner)).toBe(`${slug[0].toUpperCase()}${slug.slice(1)}`);
     });
-    expect(HTML).toMatch(/\.twelve__medallion\s*\{[^}]*inline-size:48px;[^}]*block-size:48px;/s);
-    expect(HTML).toMatch(/\.twelve__icon\s*\{[^}]*inline-size:100%;[^}]*block-size:100%;[^}]*object-fit:contain;/s);
+    expect(HTML).toMatch(/\.twelve__medallion\s*\{[^}]*inline-size:48px;[^}]*block-size:48px;[^}]*background:var\(--sign\)/s);
+    expect(HTML).toMatch(/\.twelve__glyph\s*\{[^}]*inline-size:var\(--glyph-w\);[^}]*block-size:var\(--glyph-h\);[^}]*object-fit:contain;/s);
     expect(catalogue).not.toMatch(/\baf-glyph\b|\/assets\/astrofolio\//i);
     expect(textOf(catalogue)).toContain('lore, provenance & the listed digital asset.');
   });
