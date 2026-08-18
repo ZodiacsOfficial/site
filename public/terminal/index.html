@@ -10237,7 +10237,7 @@
     var defaultLocale = "en";
     function loadGuide() {
       if (!modulePromise) {
-        modulePromise = import('/assets/assistant-ui.js').catch(function (error) {
+        modulePromise = import('/assets/assistant-ui.js?v=avatar-only-2').catch(function (error) {
           modulePromise = null;
           throw error;
         });
