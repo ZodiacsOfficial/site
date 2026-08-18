@@ -365,12 +365,15 @@ describe('thesis catalogue icon contract', () => {
       expect(images).toHaveLength(1);
       expect(sources).toHaveLength(1);
       expect(images[0].attrs).toContain(`src="/assets/zodiac-icons/48/${slug}.webp"`);
-      expect(sources[0].attrs).toContain(`srcset="/assets/zodiac-icons/48/${slug}.avif"`);
+      expect(images[0].attrs).toContain(`srcset="/assets/zodiac-icons/48/${slug}.webp 1x, /assets/zodiac-icons/128/${slug}.webp 2x, /assets/zodiac-icons/400/${slug}.webp 3x"`);
+      expect(sources[0].attrs).toContain(`srcset="/assets/zodiac-icons/48/${slug}.avif 1x, /assets/zodiac-icons/128/${slug}.avif 2x, /assets/zodiac-icons/400/${slug}.avif 3x"`);
       expect(images[0].attrs).toMatch(/\bwidth="48"\s+height="48"/);
       expect(images[0].attrs).toMatch(/\balt=""/);
       expect(images[0].attrs).toMatch(/\baria-hidden="true"/);
       expect(textOf(inner)).toBe(`${slug[0].toUpperCase()}${slug.slice(1)}`);
     });
+    expect(HTML).toMatch(/\.twelve__medallion\s*\{[^}]*inline-size:48px;[^}]*block-size:48px;/s);
+    expect(HTML).toMatch(/\.twelve__icon\s*\{[^}]*inline-size:100%;[^}]*block-size:100%;[^}]*object-fit:contain;/s);
     expect(catalogue).not.toMatch(/\baf-glyph\b|\/assets\/astrofolio\//i);
     expect(textOf(catalogue)).toContain('lore, provenance & the listed digital asset.');
   });
