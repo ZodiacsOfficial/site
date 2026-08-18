@@ -271,19 +271,22 @@ describe('Guide typography boundary', () => {
     expect(proactiveSurfaces).not.toMatch(/['"](?:Instrument Sans|EB Garamond)['"]/u);
   });
 
-  it('keeps the mobile launcher compact without removing its accessible name', async () => {
+  it('keeps the launcher avatar-only at every viewport without removing its accessible name', async () => {
     const [drawerCss, shellCss, shellSource] = await Promise.all([
       readFile(new URL('./assistant.css', import.meta.url), 'utf8'),
       readFile(new URL('./guide-bootstrap.css', import.meta.url), 'utf8'),
       readFile(new URL('./guide-bootstrap.ts', import.meta.url), 'utf8'),
     ]);
-    for (const css of [drawerCss, shellCss]) {
-      const mobile = css.slice(css.lastIndexOf('@media (max-width: 560px)'));
-      expect(mobile).toContain('width: 48px;');
-      expect(mobile).toContain('height: 48px;');
-      expect(mobile).toContain('font-size: 0;');
-    }
+    const launcherRule = shellCss.slice(
+      shellCss.indexOf('.zguide-launcher {'),
+      shellCss.indexOf('.zguide-launcher__avatar'),
+    );
+    expect(launcherRule).toContain('width: 48px;');
+    expect(launcherRule).toContain('height: 48px;');
+    expect(launcherRule).toContain('font-size: 0;');
     expect(shellSource).toContain("launcher.setAttribute('aria-label', currentCopy().open);");
+    expect(shellSource).not.toContain("label.textContent = 'Guide';");
+    expect(drawerCss).toContain('@media (max-width: 560px)');
   });
 });
 
@@ -447,12 +450,18 @@ describe('assistant profile-access privacy fence', () => {
     const bootstrap = shell.slice(bootstrapStart);
 
     expect(shell).toContain("const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js';");
-    expect(shell).toContain('const INVITE_DELAY_MS = 2_000;');
-    expect(shell).toContain("const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';");
+    expect(shell).not.toContain('INVITE_DELAY_MS');
+    expect(shell).not.toContain('INVITE_KEY');
+    expect(shell).not.toContain('showInvite');
+    expect(shell).not.toContain('zguide-invite');
+    expect(bootstrap).not.toContain('setTimeout(');
     expect(shell).toContain('context.drawImage(image, 0, 0, size, size);');
     expect(shell).toContain("canvas.setAttribute('aria-hidden', 'true');");
     expect(shell).toContain('drawerModulePromise ??= import(DRAWER_MODULE_HREF)');
     expect(loader).toContain('export const GUIDE_POST_LOAD_DELAY_MS = 500;');
+    expect(loader).toContain("export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=avatar-only-2';");
+    expect(loader).toContain("modulePromise = import('${GUIDE_SHELL_URL}')");
+    expect(shell).toContain("const STYLESHEET_HREF = '/assets/assistant-ui.css?v=avatar-only-2';");
     expect(loader).toContain("window.addEventListener('load', scheduleGuide, { once: true });");
     expect(loader).toContain("document.addEventListener('click', onGuideIntent, true);");
     expect(loader).toContain('event.stopImmediatePropagation();');

@@ -238,6 +238,11 @@
   --font-serif: 'EB Garamond', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
   --font-sans: 'Instrument Sans', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  /* Shared chrome keeps the canonical main-site typography on every route.
+     Reader modes may replace content faces, but never the navigation faces. */
+  --font-nav-serif: 'EB Garamond', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
+  --font-nav-sans: 'Instrument Sans', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
+  --font-nav-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -296,4 +301,7 @@ html:lang(ru) {
   /* The reviewed Cyrillic subset owns Russian labels. Latin receipts can use
      the platform mono rather than pulling the separate 39KB Latin webfont. */
   --font-mono: 'JetBrains Mono Cyrillic', ui-monospace, Menlo, Consolas, monospace;
+  --font-nav-serif: 'EB Garamond Cyrillic', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', Georgia, serif;
+  --font-nav-sans: 'Golos Text', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, sans-serif;
+  --font-nav-mono: 'JetBrains Mono Cyrillic', ui-monospace, Menlo, Consolas, monospace;
 }

@@ -1,6 +1,6 @@
 /**
  * Lightweight, privacy-neutral Guide shell. This entry mounts only the
- * launcher and proactive welcome; the conversation drawer is fetched after a
+ * avatar-only launcher; the conversation drawer is fetched after a
  * deliberate user action.
  */
 import './guide-bootstrap.css';
@@ -9,9 +9,6 @@ export type AssistantLocale = 'en' | 'es' | 'pt' | 'fr' | 'it';
 
 interface ShellCopy {
   open: string;
-  invite: string;
-  inviteAction: string;
-  dismissInvite: string;
 }
 
 interface DrawerModule {
@@ -21,48 +18,28 @@ interface DrawerModule {
 const COPY: Record<AssistantLocale, ShellCopy> = {
   en: {
     open: 'Open Guide',
-    invite: 'I can help with this page, astrology, your birth chart, or Astrofolio.',
-    inviteAction: 'Ask Guide',
-    dismissInvite: 'Dismiss Guide welcome',
   },
   es: {
     open: 'Abrir Guide',
-    invite: 'Puedo ayudarte con esta página, astrología, tu carta natal o Astrofolio.',
-    inviteAction: 'Preguntar a Guide',
-    dismissInvite: 'Cerrar la bienvenida de Guide',
   },
   pt: {
     open: 'Abrir Guide',
-    invite: 'Posso ajudar com esta página, astrologia, seu mapa natal ou Astrofolio.',
-    inviteAction: 'Perguntar ao Guide',
-    dismissInvite: 'Fechar boas-vindas do Guide',
   },
   fr: {
     open: 'Ouvrir Guide',
-    invite: 'Je peux aider avec cette page, l’astrologie, ton thème natal ou Astrofolio.',
-    inviteAction: 'Demander à Guide',
-    dismissInvite: 'Fermer l’accueil de Guide',
   },
   it: {
     open: 'Apri Guide',
-    invite: 'Posso aiutarti con questa pagina, astrologia, il tuo tema natale o Astrofolio.',
-    inviteAction: 'Chiedi a Guide',
-    dismissInvite: 'Chiudi il benvenuto di Guide',
   },
 };
 
-const STYLESHEET_HREF = '/assets/assistant-ui.css';
+const STYLESHEET_HREF = '/assets/assistant-ui.css?v=avatar-only-2';
 const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
-const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';
-const INVITE_DELAY_MS = 2_000;
 
 let stylesheetPromise: Promise<void> | null = null;
 let drawerModulePromise: Promise<DrawerModule> | null = null;
 let launcher: HTMLButtonElement | null = null;
-let invite: HTMLElement | null = null;
-let inviteTimer = 0;
-let inviteSeenInMemory = false;
 let locale: AssistantLocale = 'en';
 let openersWired = false;
 let portraitPromise: Promise<HTMLImageElement> | null = null;
@@ -92,14 +69,6 @@ function ensureStylesheet(): Promise<void> {
   });
   if (!existing) document.head.append(link);
   return stylesheetPromise;
-}
-
-function safeSessionGet(key: string): string | null {
-  try { return sessionStorage.getItem(key); } catch { return null; }
-}
-
-function safeSessionSet(key: string, value: string): void {
-  try { sessionStorage.setItem(key, value); } catch { /* memory fallback below */ }
 }
 
 function loadPortrait(): Promise<HTMLImageElement> {
@@ -174,13 +143,6 @@ function currentCopy(): ShellCopy {
   return COPY[locale];
 }
 
-function dismissInvite(): void {
-  invite?.remove();
-  invite = null;
-  inviteSeenInMemory = true;
-  safeSessionSet(INVITE_KEY, '1');
-}
-
 async function loadDrawer(): Promise<DrawerModule> {
   drawerModulePromise ??= import(DRAWER_MODULE_HREF) as Promise<DrawerModule>;
   try {
@@ -197,8 +159,7 @@ export async function openAssistant(
   from?: HTMLElement | null,
 ): Promise<void> {
   await bootstrapGuide(requestedLocale);
-  const restoreTarget = from?.isConnected && !from.closest('.zguide-invite') ? from : launcher;
-  dismissInvite();
+  const restoreTarget = from?.isConnected ? from : launcher;
   const drawer = await loadDrawer();
   await drawer.openAssistant(requestedLocale ?? locale, restoreTarget);
 }
@@ -214,9 +175,7 @@ function buildLauncher(): void {
   launcher.className = 'zguide-launcher';
   launcher.dataset.guideLauncher = '';
   launcher.setAttribute('aria-label', currentCopy().open);
-  const label = document.createElement('span');
-  label.textContent = 'Guide';
-  launcher.append(createPortrait('zguide-launcher__avatar', 32), label);
+  launcher.append(createPortrait('zguide-launcher__avatar', 32));
   launcher.addEventListener('click', () => void openAssistant(undefined, launcher));
   document.body.append(launcher);
 }
@@ -236,46 +195,11 @@ function wireOpeners(): void {
   });
 }
 
-function showInvite(): void {
-  if (
-    invite || inviteSeenInMemory || safeSessionGet(INVITE_KEY) === '1'
-    || !launcher || launcher.getAttribute('aria-expanded') === 'true'
-  ) return;
-  inviteSeenInMemory = true;
-  safeSessionSet(INVITE_KEY, '1');
-  const copy = currentCopy();
-  invite = document.createElement('aside');
-  invite.className = 'zguide-invite';
-  const dismiss = document.createElement('button');
-  dismiss.type = 'button';
-  dismiss.className = 'zguide-invite__dismiss';
-  dismiss.setAttribute('aria-label', copy.dismissInvite);
-  dismiss.textContent = '×';
-  const identity = document.createElement('div');
-  identity.className = 'zguide-invite__identity';
-  const label = document.createElement('strong');
-  label.textContent = 'Guide';
-  identity.append(createPortrait('zguide-invite__avatar', 44), label);
-  const message = document.createElement('p');
-  message.textContent = copy.invite;
-  const action = document.createElement('button');
-  action.type = 'button';
-  action.className = 'zguide-invite__action';
-  action.textContent = copy.inviteAction;
-  dismiss.addEventListener('click', dismissInvite);
-  action.addEventListener('click', () => void openAssistant(undefined, launcher));
-  invite.append(dismiss, identity, message, action);
-  document.body.append(invite);
-}
-
-/** Mount the default-visible launcher and one quiet, non-modal welcome. */
+/** Mount the avatar-only launcher. Guide opens only after deliberate user action. */
 export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
   locale = normalizeLocale(requestedLocale);
   await ensureStylesheet();
   buildLauncher();
   launcher?.setAttribute('aria-label', currentCopy().open);
   wireOpeners();
-  if (!inviteTimer && !inviteSeenInMemory && safeSessionGet(INVITE_KEY) !== '1') {
-    inviteTimer = window.setTimeout(showInvite, Math.max(0, INVITE_DELAY_MS - performance.now()));
-  }
 }

@@ -42,6 +42,12 @@ const root = resolve(here, '..');
 const BASE = '/registry';
 const signPath = (slug) => `${BASE}/${slug}/`;
 const signUrl = (slug) => `https://zodiacs.org${signPath(slug)}`;
+// Bump only when a sculpture must be re-fetched by clients that may have
+// cached an incomplete response for the stable asset URL.
+const SCULPTURE_ASSET_REVISIONS = Object.freeze({ scorpio: '20260818' });
+const sculpturePath = (slug) => (
+  `/assets/nuggets/${slug}.png${SCULPTURE_ASSET_REVISIONS[slug] ? `?v=${SCULPTURE_ASSET_REVISIONS[slug]}` : ''}`
+);
 
 const registry = JSON.parse(
   await readFile(resolve(root, 'public/registry/zodiacs.registry.json'), 'utf8')
@@ -311,7 +317,7 @@ function jsonLd(m) {
         description: `${m.name} dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.`,
         inLanguage: 'en',
         isPartOf: { '@type': 'WebSite', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
-        primaryImageOfPage: `https://zodiacs.org/assets/nuggets/${m.slug}.png`,
+        primaryImageOfPage: `https://zodiacs.org${sculpturePath(m.slug)}`,
         about: {
           '@type': 'Thing',
           name: `${m.name} token`,
@@ -1143,7 +1149,6 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
     .record-intro { max-width: 60ch; margin: 0 0 18px; font-size: 17px; line-height: 1.55; color: var(--ink-2); }
     .anchor-alias { display: block; height: 0; scroll-margin-top: 96px; }
-    .rec__safety { margin: 16px 0 0; font-size: 14px; color: var(--ink-mute); }
     .token-details { margin-top: 16px; border-top: 1px solid var(--hair); }
     .mono-address { max-width: 100%; overflow-wrap: anywhere; font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
     .story-copy { max-width: 64ch; }
@@ -1196,7 +1201,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     <div class="split">
       <div class="split__figure" aria-label="${esc(m.name)} artwork">
         <div class="card profile-art" style="margin:0">
-          <div class="card__inner"><div class="stage"><img src="/assets/nuggets/${m.slug}.png" alt="${esc(m.name)} zodiac artwork" decoding="async" fetchpriority="high" /></div></div>
+          <div class="card__inner"><div class="stage"><img src="${sculpturePath(m.slug)}" alt="${esc(m.name)} zodiac artwork" decoding="async" fetchpriority="high" /></div></div>
         </div>
       </div>
 
@@ -1278,7 +1283,6 @@ ${rankedStandings.map((asset) => {
             <span class="sr-only">Copy verified token address</span>
           </button>
         </div>
-        <p class="rec__safety">This page only shows information. It cannot make a purchase or move money.</p>
         <details class="token-details"><summary>See technical details</summary>
           <div class="rec__row"><span class="rec__k">Solana <span class="net">· original</span></span><span class="mono-address">${esc(m.solana.address)}</span></div>
           <div class="rec__row"><span class="rec__k">Base <span class="net">· bridged version</span></span><button type="button" class="copychip" data-copy="${esc(m.base.address)}"><span class="copychip__text">${esc(m.base.address.slice(0, 8))}…${esc(m.base.address.slice(-6))}</span><span class="copychip__icon" aria-hidden="true">⧉</span><span class="sr-only">Copy Base token address</span></button></div>

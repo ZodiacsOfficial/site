@@ -47,7 +47,7 @@ describe('the committed pages', () => {
         '<span class="anchor-alias" id="acquire" aria-hidden="true"></span> <section class="sec reveal" id="record" aria-label="Check the token">',
       );
       expect(html, sign).not.toMatch(/<(?:a|button)\b[^>]*\bid="acquire"/iu);
-      expect(html, sign).toContain('This page only shows information. It cannot make a purchase or move money.');
+      expect(html, sign).not.toContain('This page only shows information. It cannot make a purchase or move money.');
       expect(html, sign).toContain('Verified token address');
     }
   });

@@ -618,15 +618,22 @@
     }
     .twelve__item:hover { border-color: var(--hair-3); transform: translateY(-2px); background: var(--surface-2); }
     .twelve__item:active { transform: scale(0.97); }
-    .twelve__medallion { display:block; line-height:0; }
-    .twelve__icon {
-      display:block; width:48px; height:48px; border-radius:50%;
-      filter:drop-shadow(0 9px 16px rgba(6,7,9,.42));
-      transition:transform 320ms var(--ease),filter 320ms var(--ease);
+    .twelve__medallion {
+      display:grid; place-items:center; flex:none;
+      inline-size:48px; block-size:48px; border-radius:50%;
+      background:var(--sign);
+      box-shadow:0 9px 16px rgba(6,7,9,.42), inset 0 0 0 1px rgba(255,255,255,.14);
+      transition:transform 320ms var(--ease),box-shadow 320ms var(--ease);
     }
-    .twelve__item:hover .twelve__icon {
+    .twelve__glyph {
+      display:block;
+      inline-size:var(--glyph-w); block-size:var(--glyph-h);
+      object-fit:contain;
+      filter:brightness(0) saturate(100%);
+    }
+    .twelve__item:hover .twelve__medallion {
       transform:scale(1.06);
-      filter:drop-shadow(0 12px 20px rgba(6,7,9,.58));
+      box-shadow:0 12px 20px rgba(6,7,9,.58), inset 0 0 0 1px rgba(255,255,255,.18);
     }
     .twelve__name { font-family: var(--mono); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-dim); }
     .twelve__item:hover .twelve__name { color: var(--ink-2); }
@@ -2486,18 +2493,18 @@
       </div>
       <p class="twelve__note">Open a sign's entry — lore, provenance &amp; the listed digital asset.</p>
       <nav class="twelve__grid" aria-label="Sign catalogue pages">
-        <a class="twelve__item" href="/registry/aries/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/aries.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Aries</span></a>
-        <a class="twelve__item" href="/registry/taurus/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/taurus.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Taurus</span></a>
-        <a class="twelve__item" href="/registry/gemini/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/gemini.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/gemini.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Gemini</span></a>
-        <a class="twelve__item" href="/registry/cancer/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/cancer.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/cancer.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Cancer</span></a>
-        <a class="twelve__item" href="/registry/leo/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/leo.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/leo.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Leo</span></a>
-        <a class="twelve__item" href="/registry/virgo/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/virgo.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/virgo.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Virgo</span></a>
-        <a class="twelve__item" href="/registry/libra/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/libra.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/libra.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Libra</span></a>
-        <a class="twelve__item" href="/registry/scorpio/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/scorpio.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/scorpio.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Scorpio</span></a>
-        <a class="twelve__item" href="/registry/sagittarius/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/sagittarius.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/sagittarius.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Sagittarius</span></a>
-        <a class="twelve__item" href="/registry/capricorn/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/capricorn.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/capricorn.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Capricorn</span></a>
-        <a class="twelve__item" href="/registry/aquarius/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/aquarius.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Aquarius</span></a>
-        <a class="twelve__item" href="/registry/pisces/"><picture class="twelve__medallion"><source srcset="/assets/zodiac-icons/48/pisces.avif" type="image/avif" /><img class="twelve__icon" src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" /></picture><span class="twelve__name">Pisces</span></a>
+        <a class="twelve__item" href="/registry/aries/"><span class="twelve__medallion" style="--sign:#DE8E79;--glyph-w:26px;--glyph-h:23px"><img class="twelve__glyph" src="/assets/icons/aries.png" width="256" height="233" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Aries</span></a>
+        <a class="twelve__item" href="/registry/taurus/"><span class="twelve__medallion" style="--sign:#B9D4BE;--glyph-w:26px;--glyph-h:24px"><img class="twelve__glyph" src="/assets/icons/taurus.png" width="256" height="237" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Taurus</span></a>
+        <a class="twelve__item" href="/registry/gemini/"><span class="twelve__medallion" style="--sign:#B29DD0;--glyph-w:25px;--glyph-h:25px"><img class="twelve__glyph" src="/assets/icons/gemini.png" width="256" height="255" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Gemini</span></a>
+        <a class="twelve__item" href="/registry/cancer/"><span class="twelve__medallion" style="--sign:#B6D4E4;--glyph-w:29px;--glyph-h:21px"><img class="twelve__glyph" src="/assets/icons/cancer.png" width="256" height="189" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Cancer</span></a>
+        <a class="twelve__item" href="/registry/leo/"><span class="twelve__medallion" style="--sign:#E0A9B4;--glyph-w:22px;--glyph-h:27px"><img class="twelve__glyph" src="/assets/icons/leo.png" width="215" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Leo</span></a>
+        <a class="twelve__item" href="/registry/virgo/"><span class="twelve__medallion" style="--sign:#B7D9B0;--glyph-w:25px;--glyph-h:25px"><img class="twelve__glyph" src="/assets/icons/virgo.png" width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Virgo</span></a>
+        <a class="twelve__item" href="/registry/libra/"><span class="twelve__medallion" style="--sign:#D3A9DE;--glyph-w:29px;--glyph-h:21px"><img class="twelve__glyph" src="/assets/icons/libra.png" width="256" height="184" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Libra</span></a>
+        <a class="twelve__item" href="/registry/scorpio/"><span class="twelve__medallion" style="--sign:#B9DCE8;--glyph-w:26px;--glyph-h:23px"><img class="twelve__glyph" src="/assets/icons/scorpio.png" width="256" height="221" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Scorpio</span></a>
+        <a class="twelve__item" href="/registry/sagittarius/"><span class="twelve__medallion" style="--sign:#E0B080;--glyph-w:24px;--glyph-h:25px"><img class="twelve__glyph" src="/assets/icons/sagittarius.png" width="253" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Sagittarius</span></a>
+        <a class="twelve__item" href="/registry/capricorn/"><span class="twelve__medallion" style="--sign:#C0DEA8;--glyph-w:24px;--glyph-h:26px"><img class="twelve__glyph" src="/assets/icons/capricorn.png" width="236" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Capricorn</span></a>
+        <a class="twelve__item" href="/registry/aquarius/"><span class="twelve__medallion" style="--sign:#AE8FC9;--glyph-w:34px;--glyph-h:14px"><img class="twelve__glyph" src="/assets/icons/aquarius.png" width="256" height="104" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Aquarius</span></a>
+        <a class="twelve__item" href="/registry/pisces/"><span class="twelve__medallion" style="--sign:#A9D4C4;--glyph-w:21px;--glyph-h:28px"><img class="twelve__glyph" src="/assets/icons/pisces.png" width="191" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" /></span><span class="twelve__name">Pisces</span></a>
       </nav>
     </section>
 
@@ -2537,7 +2544,7 @@
     var defaultLocale = "en";
     function loadGuide() {
       if (!modulePromise) {
-        modulePromise = import('/assets/assistant-ui.js').catch(function (error) {
+        modulePromise = import('/assets/assistant-ui.js?v=avatar-only-2').catch(function (error) {
           modulePromise = null;
           throw error;
         });

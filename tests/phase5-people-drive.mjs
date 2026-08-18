@@ -248,6 +248,106 @@ await withPreview({ port: 4425 }, async (baseURL) => {
     }
     await noJsContext.close();
 
+    // The shared capsule must keep the same geometry on default, stable, and
+    // local-content typography routes. Normal and font-blocked passes verify
+    // both the canonical main-site faces and their shared fallback path.
+    for (const viewport of [
+      { width: 390, height: 844 },
+      { width: 1280, height: 900 },
+    ]) {
+      const navRuns = [];
+      for (const blockFonts of [false, true]) {
+        const navStates = [];
+        for (const route of ['/', '/people/', '/people/ada-lovelace/', '/today/']) {
+          const context = await browser.newContext({ viewport });
+          if (blockFonts) {
+            await context.route(/\.woff2(?:\?|$)/u, (requestRoute) => requestRoute.abort());
+          }
+          const page = await context.newPage();
+          const fontRequests = [];
+          const browserErrors = [];
+          page.on('request', (request) => {
+            if (request.resourceType() === 'font') fontRequests.push(request.url());
+          });
+          page.on('pageerror', (error) => browserErrors.push(error.message));
+          const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'domcontentloaded' });
+          const measureNav = () => page.evaluate(() => {
+            const nav = document.querySelector('[data-nav]');
+            const box = nav?.getBoundingClientRect();
+            return {
+              width: box?.width ?? 0,
+              height: box?.height ?? 0,
+              sans: nav ? getComputedStyle(nav).fontFamily : '',
+              serif: document.querySelector('.nav__name')
+                ? getComputedStyle(document.querySelector('.nav__name')).fontFamily
+                : '',
+              mono: document.querySelector('.nav__search-kbd')
+                ? getComputedStyle(document.querySelector('.nav__search-kbd')).fontFamily
+                : '',
+            };
+          });
+          const initial = await measureNav();
+          await page.waitForLoadState('load');
+          await page.evaluate(async () => {
+            await Promise.race([
+              document.fonts.ready,
+              new Promise((resolveReady) => setTimeout(resolveReady, 2_000)),
+            ]);
+            await new Promise((resolvePaint) => requestAnimationFrame(() => requestAnimationFrame(resolvePaint)));
+          });
+          const settled = await measureNav();
+          navStates.push({ route, initial, settled });
+
+          check(response?.status() === 200, `${route}@${viewport.width}: navigation geometry route failed`);
+          if (blockFonts) {
+            check(
+              Math.abs(initial.width - settled.width) <= 0.1
+                && Math.abs(initial.height - settled.height) <= 0.1,
+              `${route}@${viewport.width}: fallback navigation resized after first paint`,
+            );
+          }
+          check(
+            browserErrors.length === 0,
+            `${route}@${viewport.width}: navigation browser errors: ${browserErrors.join(' | ')}`,
+          );
+          if (route === '/people/' || route === '/today/') {
+            const requestedFontPaths = [...new Set(fontRequests.map((url) => new URL(url).pathname))];
+            const canonicalNavFonts = new Set([
+              '/fonts/instrument-sans-latin-wght-normal.woff2',
+              '/fonts/eb-garamond-latin-400-normal.woff2',
+              '/fonts/eb-garamond-latin-500-normal.woff2',
+              '/fonts/jetbrains-mono-latin-wght-normal.woff2',
+            ]);
+            check(
+              requestedFontPaths.every((fontPath) => canonicalNavFonts.has(fontPath)),
+              `${route}@${viewport.width}: local-content typography fetched a non-navigation font: ${requestedFontPaths.join(', ')}`,
+            );
+          }
+          await context.close();
+        }
+
+        const baseline = navStates[0].settled;
+        for (const state of navStates.slice(1)) {
+          check(
+            Math.abs(state.settled.width - baseline.width) <= 0.1
+              && Math.abs(state.settled.height - baseline.height) <= 0.1,
+            `${state.route}@${viewport.width}: navigation geometry differs from /${blockFonts ? ' with fonts blocked' : ''}`,
+          );
+          check(
+            state.settled.sans === baseline.sans
+              && state.settled.serif === baseline.serif
+              && state.settled.mono === baseline.mono,
+            `${state.route}@${viewport.width}: navigation font families differ from /${blockFonts ? ' with fonts blocked' : ''}`,
+          );
+        }
+        navRuns.push({ blockFonts, navStates });
+      }
+
+      const normalStates = navRuns.find((run) => !run.blockFonts)?.navStates ?? [];
+      const blockedStates = navRuns.find((run) => run.blockFonts)?.navStates ?? [];
+      check(normalStates.length === blockedStates.length, `${viewport.width}: navigation font-mode coverage differs`);
+    }
+
     // Responsive and motion verification on representative content.
     for (const viewport of [
       { width: 360, height: 800 },
@@ -261,13 +361,24 @@ await withPreview({ port: 4425 }, async (baseURL) => {
       page.on('pageerror', (error) => browserErrors.push(error.message));
       for (const route of ['/people/', ...representative]) {
         await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' });
-        const width = await page.evaluate(() => ({
-          document: document.documentElement.scrollWidth,
-          viewport: innerWidth,
-        }));
+        const width = await page.evaluate(() => {
+          const shell = document.querySelector('.people-page, .person-page')?.getBoundingClientRect();
+          return {
+            document: document.documentElement.scrollWidth,
+            viewport: innerWidth,
+            gutterStart: shell?.left ?? -1,
+            gutterEnd: shell ? innerWidth - shell.right : -1,
+          };
+        });
         check(
           width.document <= width.viewport + 1,
           `${route}@${viewport.width}: ${width.document}px content in ${width.viewport}px viewport`,
+        );
+        const expectedGutter = (viewport.width - Math.min(1120, viewport.width - 40)) / 2;
+        check(
+          Math.abs(width.gutterStart - expectedGutter) <= 0.5
+            && Math.abs(width.gutterEnd - expectedGutter) <= 0.5,
+          `${route}@${viewport.width}: People gutters ${width.gutterStart}/${width.gutterEnd}, expected ${expectedGutter}`,
         );
         if (OUT && (route === '/people/' || route === '/people/ada-lovelace/')) {
           const label = route === '/people/' ? 'directory' : 'ada-lovelace';

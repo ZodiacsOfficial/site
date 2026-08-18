@@ -73,6 +73,7 @@ describe('Zodiac token records', () => {
       expect((visible.match(/<h1\b/gu) || [])).toHaveLength(1);
       expect(visible).toContain(`Zodiac sign <span class="g">·</span> ${index + 1} of 12`);
       expect(visible).toContain(`${name} at a glance`);
+      expect(visible).toContain(`<div class="stage"><img src="/assets/nuggets/${sign}.png`);
       expect(visible).toContain(`The ${name} token`);
       expect(visible).toContain(`Born under ${name}`);
       expect(visible).toContain(`${name} today`);
@@ -93,7 +94,7 @@ describe('Zodiac token records', () => {
       expect(visible).toContain('Price history');
       expect(visible).toContain(`The ${name} token is a digital item people can own or send.`);
       expect(visible).toContain(`No new ${name} tokens can be created.`);
-      expect(visible).toContain('This page only shows information. It cannot make a purchase or move money.');
+      expect(visible).not.toContain('This page only shows information. It cannot make a purchase or move money.');
       expect(visible).not.toMatch(/Continue to Jupiter|What do I need before I continue|How to buy/u);
       expect(html).not.toMatch(/href="https:\/\/jup\.ag\//u);
       expect(visible).not.toContain('data-trade-panel');
@@ -166,6 +167,8 @@ describe('Zodiac token records', () => {
     }
 
     const scorpio = await read('public/registry/scorpio/index.html');
+    expect(scorpio).toContain('/assets/nuggets/scorpio.png?v=20260818');
+    expect(scorpio).toContain('https://zodiacs.org/assets/nuggets/scorpio.png?v=20260818');
     for (const person of ['marie-curie', 'pablo-picasso', 'bill-gates', 'leonardo-dicaprio']) {
       expect(scorpio).toContain(`href="/people/${person}/"`);
     }
