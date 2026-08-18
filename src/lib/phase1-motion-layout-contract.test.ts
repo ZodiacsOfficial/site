@@ -94,6 +94,13 @@ describe('Phase 1 layout and motion contract', () => {
     expect(page).toContain('.today-fallback__status.is-visible { visibility: visible; }');
   });
 
+  it('preserves the stored Sun-sign grid formatting context through hydration', async () => {
+    const fallback = await source('islands/today/SunSignFallback.tsx');
+    expect(fallback).toMatch(
+      /restoredSelection && !hasInteracted \? \(\s*<div class="today-sign-readings">\s*<article\s+key=\{active\.slug\}/u,
+    );
+  });
+
   it('scopes saved-chart reservations to unresolved fallback nodes', async () => {
     const [today, program] = await Promise.all([
       source('pages/today/index.astro'),

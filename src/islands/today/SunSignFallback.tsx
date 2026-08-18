@@ -155,26 +155,29 @@ export default function SunSignFallback({
         aria-live={hasInteracted ? 'polite' : undefined}
       >
         {active && dailyLine && restoredSelection && !hasInteracted ? (
-          <section
-            id={`today-sun-sign-${active.slug}`}
-            class="today-sign-reading today-sign-reading--compact"
-            style={`--sign:${active.hue}`}
-            data-today-sun-sign={active.slug}
-          >
-            <p class="kicker">{active.dates}</p>
-            <h3 class="today-sign-reading__title">
-              <PastelSignIcon sign={active} size={28} className="today-sign-reading__icon" />
-              <span>{active.name} · {editionLabel}</span>
-            </h3>
-            <p class="today-sign-reading__line">{dailyLine}</p>
-            <a
-              class="today-sign-reading__more"
-              href={`/horoscopes/${active.slug}/`}
-              onClick={() => trackNextAction('sun-sign', 'open-horoscope')}
+          <div class="today-sign-readings">
+            <article
+              key={active.slug}
+              id={`today-sun-sign-${active.slug}`}
+              class="today-sign-reading today-sign-reading--compact"
+              style={`--sign:${active.hue}`}
+              data-today-sun-sign={active.slug}
             >
-              Read the full {active.name} horoscope <span aria-hidden="true">→</span>
-            </a>
-          </section>
+              <p class="kicker">{active.dates}</p>
+              <h3 class="today-sign-reading__title">
+                <PastelSignIcon sign={active} size={28} className="today-sign-reading__icon" />
+                <span>{active.name} · {editionLabel}</span>
+              </h3>
+              <p class="today-sign-reading__line">{dailyLine}</p>
+              <a
+                class="today-sign-reading__more"
+                href={`/horoscopes/${active.slug}/`}
+                onClick={() => trackNextAction('sun-sign', 'open-horoscope')}
+              >
+                Read the full {active.name} horoscope <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
         ) : active && dailyLine ? (
           <section
             id={`today-sun-sign-${active.slug}`}
