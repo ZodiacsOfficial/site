@@ -496,7 +496,8 @@ try {
     assert.equal(await noJsPage.locator('.static-vitrine__choice').count(), 12);
     assert.equal(await noJsPage.locator('.static-vitrine__panel').count(), 12);
     assert.equal(await noJsPage.locator('#market-snapshot li').count(), 12);
-    assert.equal(await noJsPage.locator('#faq dt').count(), 4);
+    // Three entries since the defensive purchase-copy removal (#254).
+    assert.equal(await noJsPage.locator('#faq dt').count(), 3);
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').getAttribute('href'), '/terminal/');

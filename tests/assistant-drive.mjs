@@ -215,7 +215,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const launcher = page.locator('[data-guide-launcher]');
     await launcher.waitFor({ state: 'visible', timeout: 15_000 });
     await page.evaluate(() => { window.__initialGuideLauncher = document.querySelector('[data-guide-launcher]'); });
-    check('Guide launcher is visible by default', (await launcher.textContent())?.trim() === 'Guide');
+    check('Guide launcher is visible by default as an accessible avatar-only button',
+      (await launcher.textContent())?.trim() === ''
+      && await launcher.getAttribute('aria-label') === 'Open Guide');
     check('pre-action shell does not fetch the private drawer graph',
       !assistantAssets.some((path) => path === '/assets/assistant-drawer.js'
         || path === '/assets/assistant-drawer.css'
@@ -231,18 +233,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && node.getAttribute('role') === 'presentation'
         && node.getAttribute('data-guide-portrait') === 'ready'
         && node.width > 0 && node.height > 0));
+    // The quiet shell stays collapsed until a visitor acts: no proactive
+    // invite, no Guide call, no saved-chart read while the page just sits.
     await page.waitForTimeout(2_200);
-    const welcome = page.locator('.zguide-invite');
-    await welcome.waitFor({ state: 'visible' });
-    const welcomeAvatar = welcome.locator('canvas.zguide-invite__avatar[data-guide-portrait="ready"]');
-    check('welcome carries the Guide identity avatar', await welcomeAvatar.count() === 1);
-    check('welcome is non-modal and has no live region', await welcome.getAttribute('role') === null
-      && await welcome.getAttribute('aria-live') === null);
-    check('welcome neither calls Guide nor reads a chart', requests.length === 0
+    check('quiet shell never volunteers an invite', await page.locator('.zguide-invite').count() === 0);
+    check('quiet shell neither calls Guide nor reads a chart', requests.length === 0
       && await page.evaluate(() => window.__profileReads) === 0);
-    check('welcome does not steal focus', await welcome.evaluate((node) => !node.contains(document.activeElement)));
+    check('quiet shell does not steal focus', await launcher.evaluate((node) => !node.contains(document.activeElement)));
 
-    await page.getByRole('button', { name: 'Ask Guide' }).click();
+    await launcher.click();
     const dialog = page.locator('.zassistant__panel');
     const input = page.locator('.zassistant__input');
     await dialog.waitFor({ state: 'visible' });
@@ -391,12 +390,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const stalledPage = await stalled.newPage();
     let releaseShellCss;
     const shellCssGate = new Promise((resolve) => { releaseShellCss = resolve; });
-    await stalledPage.route('**/assets/assistant-ui.css', async (route) => {
+    // The shell stylesheet ships with a cache-busting query — match any version.
+    await stalledPage.route('**/assets/assistant-ui.css*', async (route) => {
       await shellCssGate;
       await route.continue();
     });
     await installGuideRoute(stalledPage, []);
-    const shellCssRequest = stalledPage.waitForRequest('**/assets/assistant-ui.css');
+    const shellCssRequest = stalledPage.waitForRequest('**/assets/assistant-ui.css*');
     await stalledPage.goto(`${baseURL}/ask/`, { waitUntil: 'domcontentloaded' });
     await shellCssRequest;
     await stalledPage.locator('[data-assistant-open]').first().click();

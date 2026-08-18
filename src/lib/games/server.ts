@@ -207,7 +207,20 @@ export async function handleGamesApi(
   }
   if (!env.PUBLIC_SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY
     || !validGamesSecret(env.ZODIAC_GAMES_SESSION_SECRET)) {
-    sendJson(res, 503, { error: 'unconfigured' });
+    // Fail-closed diagnostics for operators: shape booleans only, never a
+    // value. `secretLength` counts the raw var so a padded paste is visible.
+    // The shape rides in the response too — this branch only executes while
+    // the feature is down, so nothing live is ever described.
+    const secret = env.ZODIAC_GAMES_SESSION_SECRET;
+    const shape = {
+      hasSupabaseUrl: Boolean(env.PUBLIC_SUPABASE_URL),
+      hasServiceKey: Boolean(env.SUPABASE_SERVICE_ROLE_KEY),
+      hasSecret: typeof secret === 'string' && secret.length > 0,
+      secretLength: typeof secret === 'string' ? secret.length : 0,
+      secretValid: validGamesSecret(secret),
+    };
+    console.error('[games] unconfigured', JSON.stringify(shape));
+    sendJson(res, 503, { error: 'unconfigured', missing: shape });
     return;
   }
 

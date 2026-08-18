@@ -315,7 +315,9 @@ describe('Zodiac token records', () => {
       const scripts = [...html.matchAll(/<script(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/giu)]
         .map((match) => match[1])
         .filter((script) => script.trim());
-      const guideBootstrap = scripts.find((script) => script.includes("import('/assets/assistant-ui.js')"));
+      // Tolerate the loader's cache tag: match the import specifier prefix
+      // so a version bump cannot silently orphan this contract.
+      const guideBootstrap = scripts.find((script) => script.includes("import('/assets/assistant-ui.js"));
       expect(guideBootstrap).toContain('return mod.bootstrapGuide(defaultLocale)');
       expect(guideBootstrap).toContain('return mod.openAssistant(');
       expect(html).toContain('data-guide-loader="zodiacs-guide-loader-v1"');

@@ -66,7 +66,16 @@ describe('handleGamesApi gates', () => {
     const res = makeRes();
     await handleGamesApi(makeReq(), res, { ...BASE_ENV, ZODIAC_GAMES_SESSION_SECRET: 'short' });
     expect(res.statusCode).toBe(503);
-    expect(res.body).toEqual({ error: 'unconfigured' });
+    expect(res.body).toEqual({
+      error: 'unconfigured',
+      missing: {
+        hasSupabaseUrl: true,
+        hasServiceKey: true,
+        hasSecret: true,
+        secretLength: 5,
+        secretValid: false,
+      },
+    });
   });
 
   it('rejects cross-origin writes', async () => {
