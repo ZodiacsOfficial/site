@@ -459,6 +459,8 @@ describe('assistant profile-access privacy fence', () => {
     expect(shell).toContain("canvas.setAttribute('aria-hidden', 'true');");
     expect(shell).toContain('drawerModulePromise ??= import(DRAWER_MODULE_HREF)');
     expect(loader).toContain('export const GUIDE_POST_LOAD_DELAY_MS = 500;');
+    expect(loader).toContain("export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=avatar-only-1';");
+    expect(loader).toContain("modulePromise = import('${GUIDE_SHELL_URL}')");
     expect(loader).toContain("window.addEventListener('load', scheduleGuide, { once: true });");
     expect(loader).toContain("document.addEventListener('click', onGuideIntent, true);");
     expect(loader).toContain('event.stopImmediatePropagation();');
@@ -501,4 +503,3 @@ describe('assistant profile-access privacy fence', () => {
     }
   });
 });
-
