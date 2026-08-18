@@ -324,7 +324,11 @@ export async function handleGamesApi(
       isoYear: week.isoYear,
       isoWeek: week.isoWeek,
     });
-  } catch {
+  } catch (error) {
+    // Operator diagnostics only: the thrown messages carry the RPC name and
+    // HTTP status (or a fetch failure naming the public Supabase host) —
+    // never a key or a row. Nothing from here reaches the response body.
+    console.error('[games] upstream', error instanceof Error ? error.message : String(error));
     sendJson(res, 502, { error: 'unavailable' });
   }
 }
