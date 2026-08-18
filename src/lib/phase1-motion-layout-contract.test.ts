@@ -99,7 +99,8 @@ describe('Phase 1 layout and motion contract', () => {
       source('pages/today/index.astro'),
       source('components/HoroscopeProgramPage.astro'),
     ]);
-    expect(today).toMatch(/\.today-reading__body\s*\{[^}]*display:\s*grid;[^}]*min-height:\s*300px;/u);
+    expect(today).toMatch(/\.today-reading__body\s*\{[^}]*display:\s*grid;[^}]*min-height:\s*326px;/u);
+    expect(today).toMatch(/@media \(max-width: 480px\)\s*\{\s*\.today-reading__body\s*\{\s*min-height:\s*488px;\s*\}/u);
     expect(today).not.toContain('.today-returning-chart-placeholder { min-height:');
     expect(today).not.toContain(':root[data-today-saved-chart] .today-reading { min-height:');
     expect(program).toMatch(/\.program :global\(\.dfy__body\)\s*\{[^}]*display:\s*grid;[^}]*height:\s*260px;/u);
