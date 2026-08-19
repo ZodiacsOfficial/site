@@ -95,10 +95,19 @@ describe('Phase 1 layout and motion contract', () => {
   });
 
   it('preserves the complete stored Sun-sign SSR subtree through hydration', async () => {
-    const fallback = await source('islands/today/SunSignFallback.tsx');
+    const [fallback, page] = await Promise.all([
+      source('islands/today/SunSignFallback.tsx'),
+      source('pages/today/index.astro'),
+    ]);
     expect(fallback).not.toContain('restoredSelection');
     expect(fallback).toMatch(
       /active && dailyLine && hasInteracted \? \([\s\S]*?\) : \(\s*<div class="today-sign-readings" data-today-all-signs>/u,
+    );
+    expect(page).toMatch(
+      /:root\[data-today-sun-sign\]\s*\{\s*scrollbar-gutter:\s*stable both-edges;\s*\}/u,
+    );
+    expect(page).toMatch(
+      /:root\[data-today-sun-sign\]:not\(\[data-today-saved-chart\]\) \.today-fallback__result\s*\{\s*min-height:\s*224px;\s*\}/u,
     );
   });
 

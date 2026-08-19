@@ -385,6 +385,16 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
     white-space: nowrap;
   }
   .today-fallback__result { min-height: 38px; }
+  /* A stored sign keeps its scrollbar lane through streamed SSR and saved-chart
+     hint changes. */
+  :root[data-today-sun-sign] {
+    scrollbar-gutter: stable both-edges;
+  }
+  /* Reserve the compact desktop/provenance reading until its SSR bytes arrive;
+     saved charts use the separate geometry above. */
+  :root[data-today-sun-sign]:not([data-today-saved-chart]) .today-fallback__result {
+    min-height: 224px;
+  }
   .today-sign-readings {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
