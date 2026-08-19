@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import EditionText from '../../components/EditionText.astro';
+import RaceRamp from '../../components/RaceRamp.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import EmailCapture from '../../components/EmailCapture.astro';
 import programData from '../../data/horoscope-program.json';
@@ -82,6 +83,8 @@ const jsonLd = [
     <p class="horo-note">
       Want a more personal view? <a href="/birth-chart/">Get your free birth chart</a>.
     </p>
+
+    <RaceRamp gap="28px" />
 
     <details class="horo-method">
       <summary>Behind these readings</summary>

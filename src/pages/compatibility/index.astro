@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Faq from '../../components/Faq.astro';
+import RaceRamp from '../../components/RaceRamp.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import AstroTerm from '../../components/AstroTerm.astro';
 import SynastryCalculator from '../../islands/SynastryCalculator';
@@ -113,6 +114,7 @@ const inviteUiEnabled = import.meta.env.PUBLIC_COMPAT_INVITES_ENABLED === '1';
 
   <section class="section--tight container container--narrow">
     <Faq items={faq} heading="Compatibility questions" />
+    <RaceRamp gap="28px" />
   </section>
 </Base>
 

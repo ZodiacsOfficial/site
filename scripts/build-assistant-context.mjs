@@ -77,7 +77,7 @@ const LOCALIZED_PAGE_PREFIXES = LOCALES
 // The Race stays unlisted while PUBLIC_ZODIAC_GAMES_ENABLED is off; the
 // launch packet that flips the flag also removes this entry so the guide
 // and the built site list the same routes.
-const UNLISTED_ROUTE_PREFIXES = Object.freeze(['/people/', '/race/']);
+const UNLISTED_ROUTE_PREFIXES = Object.freeze(['/people/']);
 
 function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;

@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import EmailCapture from './EmailCapture.astro';
 import Faq from './Faq.astro';
+import RaceRamp from './RaceRamp.astro';
 import ShareRow from './ShareRow.astro';
 import SignIcon from './SignIcon.astro';
 import UpcomingEventLinks from './events/UpcomingEventLinks.astro';
@@ -333,6 +334,8 @@ const skyMarkers = reading.skyStrip.markers;
     </section>
 
     <ShareRow text={`${sign.name} ${reading.title} — ${reading.label}`} url={canonicalUrl} />
+
+    <RaceRamp signName={sign.name} gap="28px" />
 
     <nav class="program__signs" aria-label={`Other signs for ${meta.nav.toLowerCase()} horoscopes`}>
       <span class="program__signs-head">The other eleven signs</span>

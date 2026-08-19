@@ -1,0 +1,79 @@
+---
+/**
+ * The R2.1 ramp into The Race. Renders nothing while
+ * PUBLIC_ZODIAC_GAMES_ENABLED is off, so flag-off builds (including CI and
+ * its committed receipts) are byte-identical with pre-ramp output. Copy is
+ * sign-specific where the surface knows the sign; scoring language stays
+ * the approved sentence — free participation only.
+ */
+import { daysLeftInSeason, seasonInstanceAt } from '../lib/games/season';
+
+interface Props {
+  signName?: string;
+  /** Extra classes for the band (e.g. `reveal`); applied only when it renders. */
+  class?: string;
+  /** Space above the band, applied only when it renders (e.g. '28px'). */
+  gap?: string;
+}
+
+const enabled = (import.meta.env.PUBLIC_ZODIAC_GAMES_ENABLED
+  ?? process.env.PUBLIC_ZODIAC_GAMES_ENABLED) === '1';
+const { signName, class: className, gap } = Astro.props;
+const buildInstant = new Date();
+const season = enabled ? seasonInstanceAt(buildInstant) : null;
+const daysLeft = season ? daysLeftInSeason(season, buildInstant) : 0;
+const daysWord = daysLeft === 1 ? 'day' : 'days';
+---
+{season && (
+  <aside
+    class:list={['race-ramp', className]}
+    style={[
+      gap ? `--race-ramp-gap:${gap}` : null,
+      signName ? null : `--sign:${season.sign.hue}`,
+    ].filter(Boolean).join(';') || undefined}
+  >
+    <span class="race-ramp__label mono">The Zodiac Games</span>
+    <span class="race-ramp__text">
+      {signName
+        ? `Team ${signName} is in The Race. Joins and weekly check-ins score the points — nothing else counts.`
+        : `All twelve signs are racing. ${season.sign.name} Season closes in ${daysLeft} ${daysWord}.`}
+    </span>
+    <a class="race-ramp__link" href="/race/">
+      {signName ? `Join Team ${signName} — it’s free` : 'See the standings'} →
+    </a>
+  </aside>
+)}
+
+<style>
+  .race-ramp {
+    margin-block-start: var(--race-ramp-gap, 0);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    padding: 12px 18px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: linear-gradient(90deg, rgba(198, 204, 218, 0.04), transparent 60%);
+  }
+  .race-ramp__label {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .race-ramp__text {
+    flex: 1 1 240px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .race-ramp__link {
+    margin-inline-start: auto;
+    font-size: 13px;
+    font-weight: 550;
+    color: var(--text-2);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .race-ramp__link:hover { color: var(--text); }
+</style>

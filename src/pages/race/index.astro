@@ -27,8 +27,6 @@ const description =
   title={title}
   description={description}
   path="/race/"
-  noindex
-  nofollow
 >
   <section class="section--tight container container--narrow">
     <header class="race-hero">
@@ -50,6 +48,7 @@ const description =
       client:load
       seasonId={season.id}
       seasonName={season.sign.name}
+      seasonSlug={season.sign.slug}
       seasonEndsAt={season.endUtcExclusive}
       isoYear={buildWeek.isoYear}
       isoWeek={buildWeek.isoWeek}
@@ -107,19 +106,8 @@ const description =
         Hall. Pride. That’s the prize, and it’s the good kind.
       </dd>
 
-      <dt>What’s a Zodiac token, then?</dt>
-      <dd>
-        Each sign also has one official token — a digital asset you can hold
-        in a wallet. Owning one is optional, separate, and doesn’t affect the
-        Games at all.
-      </dd>
-
       <dt>Do you sell anything?</dt>
-      <dd>
-        No. The Games are free and nothing here is a store. Some people choose
-        to own their sign’s token; that happens elsewhere, on public
-        exchanges, and it’s never required.
-      </dd>
+      <dd>No. The Games are free and nothing here is a store.</dd>
 
       <dt>What happens to my data?</dt>
       <dd>

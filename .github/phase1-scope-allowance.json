@@ -1,13 +1,9 @@
 {
   "version": 1,
-  "id": "regenerate-wing-guide-loader-avatar-only-2-2026-08-18",
-  "baseCommit": "3dfe8f13d11766a8e5da86c99911a4019bcf3b36",
-  "note": "Owner-approved drift repair (Dias standing approval, 2026-08-18): main bumped the assistant guide-loader cache tag to ?v=avatar-only-2 in src/lib/assistant/guide-loader.mjs without regenerating the wing pages that configure-legacy-analytics.mjs and the wing builders stamp. This allowance covers only the regenerated one-line loader-tag output on those pages; no content changes.",
+  "id": "race-ramp-sign-guides-2026-08-19",
+  "baseCommit": "19a20322e0980d9712356561165982e6f7f06869",
+  "note": "Owner-approved (Dias, 2026-08-19, R2.1 ramps): add the flag-gated RaceRamp band to the twelve sign guides, below the CollectBand. The ramp renders nothing while PUBLIC_ZODIAC_GAMES_ENABLED is off, so flag-off builds of the guides are unchanged.",
   "protectedPaths": [
-    "public/registry/index.html",
-    "public/registry/technical/index.html",
-    "public/sdk/examples/simastry-aura/index.html",
-    "public/sdk/index.html",
-    "public/terminal/markets/index.html"
+    "src/pages/[sign]/index.astro"
   ]
 }
