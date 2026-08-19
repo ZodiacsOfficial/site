@@ -30,10 +30,27 @@ export interface RaceSign {
 export interface RaceBoardProps {
   seasonId: string;
   seasonName: string;
+  /** Slug of the season's sign — picks the season's trophy sculpture. */
+  seasonSlug: string;
   seasonEndsAt: number;
   isoYear: number;
   isoWeek: number;
   signs: RaceSign[];
+}
+
+/** The official SDK sign icon (circle set) at the board tier. */
+function signIcon(slug: string, size: number) {
+  return (
+    <img
+      class="race-board__disc"
+      src={`/assets/zodiac-icons/48/${slug}.webp`}
+      width={size}
+      height={size}
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+  );
 }
 
 interface StandingRow {
@@ -79,7 +96,7 @@ function joinedLabel(joinedAt: string): string {
 }
 
 export default function RaceBoard({
-  seasonId, seasonName, seasonEndsAt, isoYear, isoWeek, signs,
+  seasonId, seasonName, seasonSlug, seasonEndsAt, isoYear, isoWeek, signs,
 }: RaceBoardProps) {
   const [standings, setStandings] = useState<StandingRow[] | null>(null);
   const [week, setWeek] = useState({ isoYear, isoWeek });
@@ -278,7 +295,7 @@ export default function RaceBoard({
               <tr key={row.sign} data-mine={isMine ? 'true' : undefined} style={`--sign:${sign?.hue ?? 'var(--ink-dim)'}`}>
                 <td class="race-board__rank">{index + 1}</td>
                 <td class="race-board__sign">
-                  <span class="race-board__disc" aria-hidden="true">{sign?.glyph}</span>
+                  {signIcon(row.sign, 24)}
                   {sign?.name ?? row.sign}
                   {isMine && <span class="race-board__yours">your team</span>}
                 </td>
@@ -306,7 +323,7 @@ export default function RaceBoard({
                   style={`--sign:${sign.hue}`}
                   onClick={() => setSelected(sign.slug)}
                 >
-                  <span aria-hidden="true">{sign.glyph}</span> {sign.name}
+                  {signIcon(sign.slug, 20)} {sign.name}
                 </button>
               ))}
             </div>
@@ -367,24 +384,33 @@ export default function RaceBoard({
       )}
 
       <div class="race-board__module race-board__trophy" ref={trophyRef}>
-        <h3>The {seasonName} trophy.</h3>
-        <p>
-          Completes in {daysLeft} {daysLeft === 1 ? 'day' : 'days'}. Engraved with
-          whoever’s on top when the season closes.
-        </p>
+        <img
+          class="race-board__trophy-figure"
+          src={`/assets/sculptures/512/${seasonSlug}.webp`}
+          width={200}
+          height={200}
+          alt={`The ${seasonName} sculpture — this season’s trophy`}
+          loading="lazy"
+          decoding="async"
+        />
+        <div>
+          <h3>The {seasonName} trophy.</h3>
+          <p>
+            Completes in {daysLeft} {daysLeft === 1 ? 'day' : 'days'}. Engraved with
+            whoever’s on top when the season closes.
+          </p>
+        </div>
       </div>
 
       {bridgeSign && (
         <div class="race-board__module race-board__bridge">
           <h3>{bridgeSign.name} is one of the Twelve.</h3>
           <p>
-            Joining Team {bridgeSign.name} is free — that’s the whole game.{' '}
-            {bridgeSign.name} also has one official token. A token is a digital
-            asset you can hold in a wallet. Owning it is optional and doesn’t
-            affect the Race.
+            Every sign has an official catalogue profile — its story, its
+            record, and its place among the Twelve.
           </p>
           <a
-            href="/astrofolio/"
+            href={`/registry/${bridgeSign.slug}/`}
             class="race-board__bridge-link"
             onClick={() => trackAnalytics('race_to_astrofolio', { sign: bridgeSign.slug, source: 'race' })}
           >

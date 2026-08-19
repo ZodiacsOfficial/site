@@ -145,6 +145,10 @@ export const GET: APIRoute = async () => {
     PUBLIC_REGISTRY_AURA_ENABLED:
       import.meta.env.PUBLIC_REGISTRY_AURA_ENABLED ?? process.env.PUBLIC_REGISTRY_AURA_ENABLED,
   });
+  // The Race exists only while the Games flag is on; its entry follows the
+  // same build-time gate as the page itself (R2.1).
+  const gamesEnabled = (import.meta.env.PUBLIC_ZODIAC_GAMES_ENABLED
+    ?? process.env.PUBLIC_ZODIAC_GAMES_ENABLED) === '1';
 
   const evergreenUrls = [
     { loc: '/', priority: 1.0 },
@@ -206,6 +210,7 @@ export const GET: APIRoute = async () => {
   const urls: { loc: string; priority: number; lastmod?: string }[] = [
     ...evergreenUrls,
     ...(registryAuraEntry ? [registryAuraEntry] : []),
+    ...(gamesEnabled ? [{ loc: '/race/', priority: 0.8, lastmod: '2026-08-19' }] : []),
     { loc: '/horoscopes/', priority: 0.8, lastmod: horoscopeProgram.anchorDate },
     ...eventsPublication.pages.map((event) => ({
       loc: event.path,

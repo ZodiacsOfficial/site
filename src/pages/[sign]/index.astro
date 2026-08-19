@@ -5,6 +5,7 @@ import SignIcon from '../../components/SignIcon.astro';
 import FactTable from '../../components/FactTable.astro';
 import HeritageTimeline from '../../components/HeritageTimeline.astro';
 import CollectBand from '../../components/CollectBand.astro';
+import RaceRamp from '../../components/RaceRamp.astro';
 import Faq from '../../components/Faq.astro';
 import ShareRow from '../../components/ShareRow.astro';
 import { SIGNS, SIGN_SLUGS, signBySlug, ELEMENT_LABEL } from '../../lib/signs';
@@ -97,6 +98,7 @@ const jsonLd = [
       <div class="guide-main">
         <div class="guide-band reveal">
           <CollectBand signName={sign.name} slug={sign.slug} />
+          <RaceRamp signName={sign.name} gap="10px" />
         </div>
 
         <div class="prose reveal">
