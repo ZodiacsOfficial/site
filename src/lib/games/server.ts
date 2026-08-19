@@ -7,7 +7,13 @@
  * no input here that could carry a purchase, balance, or wallet.
  */
 import { SIGN_SLUGS } from '../signs.js';
-import { daysLeftInSeason, isoWeekUtc, seasonInstanceAt } from './season.js';
+import {
+  SEASON_ID_PATTERN,
+  daysLeftInSeason,
+  isoWeekUtc,
+  seasonInstanceAt,
+  seasonInstanceForId,
+} from './season.js';
 import { gamesAnonymousPrincipal, validGamesSecret } from './security.js';
 
 const MAX_BODY_BYTES = 256;
@@ -138,14 +144,18 @@ function sendJson(
   res: any,
   status: number,
   body: Record<string, unknown>,
-  cacheable = false,
+  cache: 'none' | 'board' | 'archive' = 'none',
 ): void {
   res.statusCode = status;
-  if (cacheable) {
+  if (cache === 'board') {
     // Browsers must always revalidate — a stale board is a wrong scoreboard.
     // Only the shared edge cache may briefly reuse a response.
     res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
     res.setHeader('CDN-Cache-Control', 'public, s-maxage=60');
+  } else if (cache === 'archive') {
+    // A closed season can never change — nothing writes to a past season id.
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+    res.setHeader('CDN-Cache-Control', 'public, s-maxage=86400');
   } else {
     res.setHeader('Cache-Control', 'no-store');
   }
@@ -232,7 +242,24 @@ export async function handleGamesApi(
         return;
       }
       const instant = now();
-      const season = seasonInstanceAt(instant);
+      const current = seasonInstanceAt(instant);
+      // An optional past-season id serves the immutable archive (the season
+      // close and the Trophy Hall). Future seasons have no board to serve.
+      const requestedRaw = typeof req.query?.season === 'string' ? req.query.season : '';
+      let season = current;
+      if (requestedRaw && requestedRaw !== current.id) {
+        if (!SEASON_ID_PATTERN.test(requestedRaw)) {
+          sendJson(res, 400, { error: 'invalid' });
+          return;
+        }
+        const requested = seasonInstanceForId(requestedRaw);
+        if (requested.endUtcExclusive > instant) {
+          sendJson(res, 404, { error: 'unknown_season' });
+          return;
+        }
+        season = requested;
+      }
+      const closed = season.endUtcExclusive <= instant;
       const week = isoWeekUtc(instant);
       const result = await callGamesRpc(env, fetcher, 'zodiac_games_standings_v1', {
         season_id: season.id,
@@ -242,11 +269,12 @@ export async function handleGamesApi(
         seasonSign: season.sign.slug,
         seasonName: season.sign.name,
         seasonEndsAt: season.endUtcExclusive,
-        daysLeft: daysLeftInSeason(season, instant),
+        daysLeft: closed ? 0 : daysLeftInSeason(season, instant),
+        closed,
         isoYear: week.isoYear,
         isoWeek: week.isoWeek,
         standings: zeroFilledStandings(result?.standings),
-      }, true);
+      }, closed ? 'archive' : 'board');
       return;
     }
 

@@ -1,7 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import RaceBoard from '../../islands/RaceBoard';
-import { SIGNS } from '../../lib/signs';
+import { SIGNS, signBySlug } from '../../lib/signs';
+import { championSeasons, currentAnnouncement } from '../../lib/games/champions';
 import { daysLeftInSeason, isoWeekUtc, seasonInstanceAt } from '../../lib/games/season';
 import '../../styles/race.css';
 
@@ -18,6 +19,12 @@ const season = seasonInstanceAt(buildInstant);
 const buildDaysLeft = daysLeftInSeason(season, buildInstant);
 const buildWeek = isoWeekUtc(buildInstant);
 const raceSigns = SIGNS.map(({ slug, name, glyph, hue }) => ({ slug, name, glyph, hue }));
+
+// §D champion announcement: the most recently closed, counted season stays
+// engraved above the board while its successor season runs.
+const champion = currentAnnouncement(championSeasons(), buildInstant);
+const championSignEntry = champion ? signBySlug(champion.champion) : null;
+const runnerUpName = champion ? signBySlug(champion.runnerUp).name : '';
 
 const title = 'The Race — The Zodiac Games | Zodiacs.org';
 const description =
@@ -44,6 +51,28 @@ const description =
         The Games are free. They always will be.
       </p>
     </header>
+
+    {champion && championSignEntry && (
+      <aside class="race-champion" style={`--sign:${championSignEntry.hue}`}>
+        <img
+          class="race-champion__figure"
+          src={`/assets/sculptures/512/${champion.champion}.webp`}
+          width={160}
+          height={160}
+          alt={`The ${championSignEntry.name} sculpture — the ${champion.seasonName} Season trophy, completed`}
+          loading="eager"
+          decoding="async"
+        />
+        <div>
+          <p class="race-champion__sign display">{championSignEntry.name.toUpperCase()}</p>
+          <p class="race-champion__title">{champion.seasonName} Season Champion · {champion.year}</p>
+          <p class="race-champion__detail">
+            Won by {champion.marginPoints.toLocaleString('en')} {champion.marginPoints === 1 ? 'point' : 'points'} over {runnerUpName}. Engraved. Permanent.
+          </p>
+          <a href="/games/history/">See the Trophy Hall →</a>
+        </div>
+      </aside>
+    )}
 
     <RaceBoard
       client:load
@@ -82,6 +111,9 @@ const description =
         year. All twelve signs compete in every season. When a season closes,
         the leader becomes Season Champion, the trophy is engraved, and the
         next season starts from zero.
+      </p>
+      <p>
+        <a href="/games/history/">See the Trophy Hall →</a>
       </p>
     </div>
 

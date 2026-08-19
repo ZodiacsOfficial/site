@@ -192,6 +192,55 @@
   max-width: 58ch;
 }
 
+/* §D champion announcement — the completed trophy, engraved. */
+.race-champion {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  margin-block-end: 28px;
+  border: 1px solid color-mix(in oklab, var(--sign) 45%, transparent);
+  border-radius: var(--r-md);
+}
+
+.race-champion__figure {
+  flex: 0 0 auto;
+  inline-size: clamp(104px, 24vw, 160px);
+  block-size: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.5));
+}
+
+.race-champion__sign {
+  margin: 0;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  letter-spacing: 0.04em;
+  color: var(--sign);
+}
+
+.race-champion__title {
+  margin: 2px 0 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+}
+
+.race-champion__detail {
+  margin: 0 0 10px;
+  color: var(--ink-2);
+  max-width: 44ch;
+}
+
+@media (max-width: 540px) {
+  .race-champion {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
 /* The season trophy — the sign's sculpture, indicative of the season. */
 .race-board__trophy {
   display: flex;
