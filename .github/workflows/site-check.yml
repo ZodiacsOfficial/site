@@ -274,6 +274,43 @@ jobs:
       - name: Local save, persistence, export, and deletion acceptance
         run: npm run test:phase7:living-chart
 
+  # TEMPORARY: remove after the merged-source screenshots and manifest have
+  # been reviewed and committed. This produces genuine pinned-Chromium
+  # evidence after reconciling Phase 7 with the latest daily publication.
+  phase1-evidence-refresh-temporary:
+    name: TEMPORARY — Phase 1 evidence refresh
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install pinned Chromium
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Build current production artifact
+        run: npm run build
+
+      - name: Refresh exact-width Phase 1 acceptance evidence
+        run: npm run test:phase1:acceptance
+
+      - name: Upload refreshed Phase 1 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase1-evidence-refresh-${{ github.run_id }}
+          path: docs/acceptance/phase1/screenshots/
+          if-no-files-found: error
+          retention-days: 14
+
   zodiac-games-sql:
     name: Zodiac Games SQL
     runs-on: ubuntu-latest
