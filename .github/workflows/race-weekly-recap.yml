@@ -1,0 +1,66 @@
+name: Race Weekly Recap
+
+# Drafts the weekly State of the Race (Zodiac Games R2.2) from the PUBLIC
+# standings endpoint — the same JSON every visitor's browser fetches, so the
+# job needs no secret. It commits the draft bundle + snapshot history and
+# opens a review issue. NOTHING auto-posts anywhere; a person reads the
+# issue, edits, and posts by hand.
+on:
+  schedule:
+    - cron: "11 8 * * 1" # Monday morning UTC, recapping the stamped week.
+  workflow_dispatch:
+
+concurrency:
+  group: race-weekly-recap-${{ github.event.repository.default_branch }}
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    name: Draft State of the Race
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Draft the recap from live standings
+        run: node scripts/build-race-recap.mjs
+
+      - name: Detect a new draft
+        id: draft
+        run: |
+          FILE=$(git status --porcelain docs/race-recaps | awk '$1 == "??" && $2 ~ /\.md$/ { print $2 }' | head -1)
+          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+          if [ -z "$FILE" ]; then
+            echo "No new draft this run (Games off, or the week is already stamped)."
+          fi
+
+      - name: Commit the draft and snapshot
+        if: steps.draft.outputs.file != ''
+        run: |
+          git config user.name "zodiacs-recap-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/race-recaps
+          git commit -m "State of the Race draft: $(basename "${{ steps.draft.outputs.file }}" .md)"
+          git push origin HEAD:${{ github.event.repository.default_branch }}
+
+      - name: Open the review issue
+        if: steps.draft.outputs.file != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          WEEK=$(basename "${{ steps.draft.outputs.file }}" .md)
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "State of the Race — ${WEEK} (draft for review)" \
+            --body-file "${{ steps.draft.outputs.file }}"
