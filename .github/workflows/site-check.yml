@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Install pinned Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Validate registry JSON
         run: node -e "JSON.parse(require('node:fs').readFileSync('public/registry/zodiacs.registry.json', 'utf8'))"
@@ -266,7 +266,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Build (Living Chart capture flag on)
         run: npm run build
@@ -303,7 +303,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Feature-off and fixture-enabled browser acceptance
         run: npm run test:phase4:sharing
@@ -326,7 +326,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Browser acceptance drive
         run: npm run test:phase3:post-chart
@@ -353,7 +353,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Build (push flags on, fixture key only)
         run: npm run build
@@ -382,7 +382,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Build
         run: npm run build
@@ -415,7 +415,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Build (feature flag on)
         run: npm run build
