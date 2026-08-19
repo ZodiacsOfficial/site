@@ -88,6 +88,8 @@ interface RunInput {
   mine?: MineHandoff | null;
 }
 
+type ChartComputedSource = 'fresh' | 'shared_details' | 'shared_positions';
+
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 type TourModule = typeof import('./explorer/tour');
 type LensModule = typeof import('./explorer/lens/ChartLens');
@@ -974,6 +976,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           primaryProfileOriginRef.current = false;
           primaryProfileChartIdRef.current = null;
           mineProfileOriginRef.current = handoffOrigins.mine && nextMineHandoff !== null;
+          track('chart_computed', { mode, source: 'shared_positions' });
           clearFragment();
         })
         .catch(() => {
@@ -1009,7 +1012,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       name: decoded.name,
       subjectMode: nextSubjectMode,
       mine: nextMineHandoff,
-    }, false);
+    }, false, 'shared_details');
   }, []);
 
   useEffect(() => {
@@ -1028,7 +1031,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const canCompute = date !== '' && city !== null && (!timeKnown || time !== '')
     && !(mode === 'rising' && !timeKnown);
 
-  async function runChart(input: RunInput, focusAfterCompute: boolean) {
+  async function runChart(
+    input: RunInput,
+    focusAfterCompute: boolean,
+    source: ChartComputedSource = 'fresh',
+  ) {
     const accessGeneration = profileAccessGeneration.current;
     const requiresProfileAccess = primaryProfileOriginRef.current;
     const runId = runChartIdRef.current + 1;
@@ -1083,7 +1090,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         }
       }
       track('result_rendered', { mode });
-      track('chart_computed', { mode });
+      track('chart_computed', { mode, source });
       if (locale !== 'ru') void import('./PwaInstallPrompt').then(setPwaInstallModule, () => {});
       setPwaComputationCount((count) => count + 1);
       const computedSun = result.bodies.find((body) => body.body === 'Sun');

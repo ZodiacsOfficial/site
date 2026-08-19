@@ -4,6 +4,10 @@
  * deliberate user action.
  */
 import './guide-bootstrap.css';
+import {
+  GUIDE_OPEN_PENDING_KEY,
+  GUIDE_PRIVATE_SESSION_KEY,
+} from './guide-loader.mjs';
 
 export type AssistantLocale = 'en' | 'es' | 'pt' | 'fr' | 'it';
 
@@ -43,6 +47,28 @@ let launcher: HTMLButtonElement | null = null;
 let locale: AssistantLocale = 'en';
 let openersWired = false;
 let portraitPromise: Promise<HTMLImageElement> | null = null;
+
+function safeSessionGet(key: string): string | null {
+  try { return sessionStorage.getItem(key); } catch { return null; }
+}
+
+/**
+ * A tab that already loaded remote analytics gets a clean document before the
+ * private drawer mounts. The reload is consumed by the tiny inline loader,
+ * which reopens Guide after Base has skipped the provider for this tab.
+ */
+function beginPrivateTransition(): boolean {
+  if (!document.documentElement.hasAttribute('data-guide-analytics-boundary')) return false;
+  if (safeSessionGet(GUIDE_PRIVATE_SESSION_KEY) === '1') return false;
+  try {
+    sessionStorage.setItem(GUIDE_PRIVATE_SESSION_KEY, '1');
+    sessionStorage.setItem(GUIDE_OPEN_PENDING_KEY, '1');
+    location.reload();
+  } catch {
+    location.assign('/ask/#guide');
+  }
+  return true;
+}
 
 function normalizeLocale(value?: string): AssistantLocale {
   const candidate = (value ?? document.documentElement.lang).trim().toLowerCase();
@@ -158,6 +184,7 @@ export async function openAssistant(
   requestedLocale?: string,
   from?: HTMLElement | null,
 ): Promise<void> {
+  if (beginPrivateTransition()) return;
   await bootstrapGuide(requestedLocale);
   const restoreTarget = from?.isConnected ? from : launcher;
   const drawer = await loadDrawer();

@@ -112,6 +112,15 @@ describe('analytics event contract', () => {
   });
 
   it('keeps sharing-loop analytics inside fixed, non-identifying enums', () => {
+    expect(sanitizeAnalyticsProperties('chart_computed', {
+      mode: 'full',
+      source: 'shared_positions',
+      token: 'never',
+    })).toEqual({ mode: 'full', source: 'shared_positions' });
+    expect(sanitizeAnalyticsProperties('chart_computed', {
+      mode: 'full',
+      source: 'link-from-a-friend',
+    })).toEqual({ mode: 'full' });
     expect(sanitizeAnalyticsProperties('invite_created', {
       notify: true,
       token: 'never',
