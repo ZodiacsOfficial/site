@@ -51,12 +51,14 @@ describe('assistant site context', () => {
 
     expect(counts).toEqual({
       birthdays: 366,
-      consumerRoutes: 682,
+      // +1 static page and +1 consumer route since /race/ left the
+      // unlisted set (Zodiac Games R2.1).
+      consumerRoutes: 683,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 43,
+      staticPages: 44,
       tools: 17,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');

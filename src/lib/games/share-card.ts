@@ -179,16 +179,40 @@ function circle(
   context.arc(x, y, radius, 0, Math.PI * 2);
 }
 
+/**
+ * Loads one official SDK circle icon for canvas painting. Resolves null on
+ * any failure so the card can fall back to the painted-glyph rendering —
+ * a card must never fail to render because an icon fetch did.
+ */
+function loadSignIcon(tier: 48 | 400, slug: string): Promise<HTMLImageElement | null> {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => resolve(null);
+    image.src = `/assets/zodiac-icons/${tier}/${slug}.webp`;
+  });
+}
+
 function drawStrip(
   context: CanvasRenderingContext2D,
   snapshot: RaceShareSnapshot,
   y: number,
+  icons: readonly (HTMLImageElement | null)[],
 ): void {
   const gap = 82;
   const startX = W / 2 - (gap * 11) / 2;
   snapshot.strip.forEach((entry, index) => {
     const x = startX + index * gap;
+    const icon = icons[index] ?? null;
     if (entry.mine) {
+      if (icon) {
+        context.drawImage(icon, x - 26, y - 26, 52, 52);
+        context.strokeStyle = entry.hue;
+        context.lineWidth = 2;
+        circle(context, x, y, 27);
+        context.stroke();
+        return;
+      }
       context.fillStyle = entry.hue;
       circle(context, x, y, 26);
       context.fill();
@@ -198,6 +222,12 @@ function drawStrip(
       context.font = `500 26px ${SERIF}`;
       context.fillText(`${entry.glyph}︎`, x, y + 1);
     } else {
+      if (icon) {
+        context.globalAlpha = 0.5;
+        context.drawImage(icon, x - 16, y - 16, 32, 32);
+        context.globalAlpha = 1;
+        return;
+      }
       context.strokeStyle = HAIR;
       context.lineWidth = 1;
       circle(context, x, y, 16);
@@ -219,6 +249,12 @@ export async function drawRaceShareCard(snapshot: RaceShareSnapshot): Promise<Bl
       document.fonts.load(`500 24px ${MONO}`),
     ]).catch(() => {});
   }
+
+  // The official SDK circle icons; a failed fetch falls back to glyphs.
+  const [centerIcon, stripIcons] = await Promise.all([
+    loadSignIcon(400, snapshot.sign.slug),
+    Promise.all(snapshot.strip.map((entry) => loadSignIcon(48, entry.slug))),
+  ]);
 
   const canvas = document.createElement("canvas");
   canvas.width = W;
@@ -242,7 +278,7 @@ export async function drawRaceShareCard(snapshot: RaceShareSnapshot): Promise<Bl
   context.font = `500 22px ${MONO}`;
   context.fillText("THE ZODIAC GAMES", W / 2, 96);
 
-  // The sign's disc — the one chromatic moment on the card.
+  // The sign's disc — the official icon inside the sign-hued ring.
   const discY = 430;
   context.fillStyle = PANEL;
   circle(context, W / 2, discY, 218);
@@ -251,12 +287,16 @@ export async function drawRaceShareCard(snapshot: RaceShareSnapshot): Promise<Bl
   context.lineWidth = 3;
   circle(context, W / 2, discY, 218);
   context.stroke();
-  context.fillStyle = snapshot.sign.hue;
-  circle(context, W / 2, discY, 178);
-  context.fill();
-  context.fillStyle = BG;
-  context.font = `500 210px ${SERIF}`;
-  context.fillText(`${snapshot.sign.glyph}︎`, W / 2, discY + 8);
+  if (centerIcon) {
+    context.drawImage(centerIcon, W / 2 - 178, discY - 178, 356, 356);
+  } else {
+    context.fillStyle = snapshot.sign.hue;
+    circle(context, W / 2, discY, 178);
+    context.fill();
+    context.fillStyle = BG;
+    context.font = `500 210px ${SERIF}`;
+    context.fillText(`${snapshot.sign.glyph}︎`, W / 2, discY + 8);
+  }
 
   context.fillStyle = INK;
   context.font = `500 118px ${SERIF}`;
@@ -272,7 +312,7 @@ export async function drawRaceShareCard(snapshot: RaceShareSnapshot): Promise<Bl
   context.font = `500 25px ${MONO}`;
   context.fillText(snapshot.contextLine.toUpperCase(), W / 2, 946);
 
-  drawStrip(context, snapshot, 1090);
+  drawStrip(context, snapshot, 1090, stripIcons);
 
   context.strokeStyle = HAIR;
   context.lineWidth = 1;

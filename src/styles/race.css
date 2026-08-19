@@ -60,15 +60,12 @@
   gap: 10px;
 }
 
+/* The official SDK circle icon, rendered at the board tier. */
 .race-board__disc {
-  display: inline-grid;
-  place-items: center;
-  inline-size: 26px;
-  block-size: 26px;
+  display: inline-block;
+  vertical-align: middle;
   border-radius: var(--r-full);
-  background: color-mix(in oklab, var(--sign) 22%, transparent);
-  color: var(--sign);
-  font-size: 0.85rem;
+  flex: 0 0 auto;
 }
 
 .race-board__yours {
@@ -133,8 +130,8 @@
   transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }
 
-.race-board__chip span {
-  color: var(--sign);
+.race-board__chip .race-board__disc {
+  margin-inline-end: 4px;
 }
 
 .race-board__chip:hover {
@@ -195,10 +192,31 @@
   max-width: 58ch;
 }
 
+/* The season trophy — the sign's sculpture, indicative of the season. */
+.race-board__trophy {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.race-board__trophy-figure {
+  flex: 0 0 auto;
+  inline-size: clamp(96px, 22vw, 160px);
+  block-size: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.45));
+}
+
 @media (max-width: 540px) {
   .race-board__table td,
   .race-board__table th {
     padding-inline: 6px;
+  }
+
+  .race-board__trophy {
+    flex-direction: column;
+    text-align: center;
   }
 }
 
