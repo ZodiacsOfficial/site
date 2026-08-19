@@ -74,12 +74,10 @@ export default function SunSignFallback({
 }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
-  const [restoredSelection, setRestoredSelection] = useState(false);
 
   useEffect(() => {
     const saved = readSavedSign();
     setSelected(saved);
-    setRestoredSelection(saved !== null);
   }, []);
 
   const active = useMemo<Sign | null>(
@@ -101,7 +99,6 @@ export default function SunSignFallback({
   const chooseSign = (slug: string) => {
     setSelected(slug);
     setHasInteracted(true);
-    setRestoredSelection(false);
     saveSign(slug);
     trackNextAction('no-chart', 'choose-sun-sign');
   };
@@ -154,28 +151,7 @@ export default function SunSignFallback({
         class="today-fallback__result"
         aria-live={hasInteracted ? 'polite' : undefined}
       >
-        {active && dailyLine && restoredSelection && !hasInteracted ? (
-          <section
-            id={`today-sun-sign-${active.slug}`}
-            class="today-sign-reading today-sign-reading--compact"
-            style={`--sign:${active.hue}`}
-            data-today-sun-sign={active.slug}
-          >
-            <p class="kicker">{active.dates}</p>
-            <h3 class="today-sign-reading__title">
-              <PastelSignIcon sign={active} size={28} className="today-sign-reading__icon" />
-              <span>{active.name} · {editionLabel}</span>
-            </h3>
-            <p class="today-sign-reading__line">{dailyLine}</p>
-            <a
-              class="today-sign-reading__more"
-              href={`/horoscopes/${active.slug}/`}
-              onClick={() => trackNextAction('sun-sign', 'open-horoscope')}
-            >
-              Read the full {active.name} horoscope <span aria-hidden="true">→</span>
-            </a>
-          </section>
-        ) : active && dailyLine ? (
+        {active && dailyLine && hasInteracted ? (
           <section
             id={`today-sun-sign-${active.slug}`}
             class="today-sign-reading"

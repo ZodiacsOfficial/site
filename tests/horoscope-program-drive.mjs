@@ -386,15 +386,27 @@ async function inspectDailyForYouChunkFailure(browser, baseURL) {
     baseURL,
     reducedMotion: 'no-preference',
     viewport: { width: 1280, height: 900 },
+    // The production worker precaches hashed Astro chunks. Block it here so
+    // this probe exercises a real network failure instead of a cached module.
+    serviceWorkers: 'block',
   });
   const page = await context.newPage();
   try {
+    let blockedChunkRequests = 0;
     await page.addInitScript((value) => {
       localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
     }, RETURNING_PROFILE);
-    await page.route(/DailyForYou[^/]*\.js(?:\?.*)?$/u, (route) => route.abort());
+    await page.route(/DailyForYou[^/]*\.js(?:\?.*)?$/u, async (route) => {
+      blockedChunkRequests += 1;
+      await route.abort();
+    });
     await page.goto('/horoscopes/aries/', { waitUntil: 'networkidle' });
     const fallback = page.locator('.dfy--placeholder');
+    check(
+      'daily island failure: the DailyForYou chunk was blocked by the harness',
+      blockedChunkRequests > 0,
+      String(blockedChunkRequests),
+    );
     check(
       'daily island failure: the reserved saved-chart fallback stays visible and useful',
       await fallback.isVisible()

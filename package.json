@@ -107,6 +107,8 @@
     "test:games:sql": "bash scripts/test-games-sql.sh",
     "test:phase6:assistant-sql": "bash scripts/test-phase6-assistant-sql.sh",
     "test:account:sync-sql": "bash scripts/test-account-sync-v2-sql.sh",
+    "test:phase7:living-sync-sql": "bash scripts/test-living-chart-sync-sql.sh",
+    "test:phase7:living-chart": "node tests/phase7-living-chart-drive.mjs",
     "test:phase6:ask": "node tests/assistant-drive.mjs"
   },
   "dependencies": {

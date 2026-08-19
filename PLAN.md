@@ -1,22 +1,35 @@
 # Zodiacs.org household-name program
 
-Last updated: 2026-07-26
+Last updated: 2026-08-18
 
-Active phase: **Phase 6 candidate — Ask Zodiacs. The existing isolated
-assistant gains its committed quota migration, the indexable /ask/ home
-with the feature-off static guide, exact-preview chart consent, the
-internal-source row, and executable grounded/red-team evaluation suites.
-The public flag stays off until the release ladder — migration, secrets,
-budget, owner canary, red-team, ≥90% link sample — is green. Phase 7 is
-not part of this program.**
+Active delivery: **Phase 7 — Living Chart. Personalized horoscopes
+and Living Chart form one forecast → moment → history loop. Public sign
+horoscopes remain acquisition surfaces, `/today/` becomes the personal
+daily home for an explicit My chart, and Profile owns the private timeline.
+The final product is guest-first and offline-capable, with separately
+consented cross-device sync in the public core. See
+`docs/PHASE-7-LIVING-CHART.md`.**
+
+The owner explicitly authorized implementation and public release on
+2026-08-18, superseding the earlier closed-flag review exception for this
+program. The release uses the existing production Supabase Auth/Data API:
+first saves are immediate and device-first; account sync is a separate,
+revocable consent; owner RLS and platform encryption at rest protect remote
+rows. This convenience-first design is intentionally not end-to-end
+encryption and is described that way in the reader-facing Privacy Policy.
+The Guide, Race, Registry, and Astrofolio remain outside this private loop.
+
+Phase 6 Ask Zodiacs remains an independently governed existing surface. This
+authorization does not declare every historical Phase 6 operational item
+complete and does not permit Living Chart content to enter Guide context.
 
 ## Authority and operating rule
 
-The owner-supplied **MASTER BUILD BRIEF — zodiacs.org: From Reference Site to Household Name** dated 2026-07-19 controls this six-phase program. This file is its operational source of truth.
+The owner-supplied **MASTER BUILD BRIEF — zodiacs.org: From Reference Site to Household Name** dated 2026-07-19 controls the original six-phase program. The owner-approved Phase 7 direction recorded above extends that program without declaring any unfinished earlier phase complete. This file remains its operational source of truth.
 
 `docs/MASTER-PLAN.md` remains useful as a historical product, design, trust, and engineering audit. Where it conflicts with the new brief, it is superseded. In particular, its decisions to avoid daily horoscope expansion, push, a people directory, and an AI assistant no longer control; those are now Phases 1, 3, 5, and 6. Its Cosmic Void design rules, privacy posture, computation standards, performance budgets, and trust findings continue to apply where they do not conflict.
 
-Phases are strict gates. **No work may begin on the next phase until every item in the active phase's Definition of Done is verified and logged here.** A phase is not complete because its code exists; it is complete only when its content, operations, accessibility, performance, and automated-run evidence all pass.
+Phases are normally strict gates. **No work may begin on the next phase until every item in the active phase's Definition of Done is verified and logged here, unless the owner records a specific exception here.** The 2026-08-18 Living Chart authorization is that exception. A phase is not complete because its code exists; it is complete only when its content, operations, accessibility, performance, and automated-run evidence all pass.
 
 Execution is AI-only:
 
@@ -802,6 +815,6 @@ Keep clean data and route seams for these; do not implement them inside this pro
 - Selected exact-date event URLs to avoid same-month event collisions.
 - Preserved truthful Organization authorship for the AI-only operating model without a prominent reader-facing automation badge.
 
-Phase 4 is publicly launched and formally complete. Phase 5C is the active
-bounded People indexing step under the conservative owner-approved policy.
-Phase 6 remains gated on the full Phase 5 Definition of Done.
+Phase 4 and the bounded Phase 5C People release are publicly launched.
+Phase 6 remains independently governed, while the owner-authorized Phase 7
+exception recorded at the top of this plan is the active delivery program.

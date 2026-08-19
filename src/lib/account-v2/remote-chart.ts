@@ -62,6 +62,7 @@ export async function savedChartFromRemote(input: unknown): Promise<{
   const fallback = (): SavedChart => ({
     id: parsed.chartId,
     name: parsed.label,
+    relationship: 'self',
     createdAt: parsed.createdAt,
     updatedAt: parsed.updatedAt,
     birth: structuredClone(parsed.birth),
@@ -105,6 +106,7 @@ export async function savedChartFromRemote(input: unknown): Promise<{
       chart: {
         id: parsed.chartId,
         name: parsed.label,
+        relationship: 'self',
         createdAt: parsed.createdAt,
         updatedAt: parsed.updatedAt,
         birth: structuredClone(parsed.birth),

@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Install pinned Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Validate registry JSON
         run: node -e "JSON.parse(require('node:fs').readFileSync('public/registry/zodiacs.registry.json', 'utf8'))"
@@ -223,6 +223,57 @@ jobs:
       - name: PostgreSQL 17 migration, privacy, and concurrency gates
         run: bash scripts/test-phase6-assistant-sql.sh
 
+  account-sync-v2-sql:
+    name: Account Sync v2 SQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: PostgreSQL 17 migration, privacy, and concurrency gates
+        run: bash scripts/test-account-sync-v2-sql.sh
+
+  phase7-living-chart-sync-sql:
+    name: Phase 7 Living Chart sync SQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: PostgreSQL 17 migration, RLS, replay, and concurrency gates
+        run: bash scripts/test-living-chart-sync-sql.sh
+
+  phase7-living-chart-drive:
+    name: Phase 7 Living Chart drive
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUBLIC_LIVING_CHART_CAPTURE_ENABLED: "1"
+      PUBLIC_LIVING_CHART_SYNC_ENABLED: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright-core install chromium
+
+      - name: Build (Living Chart capture flag on)
+        run: npm run build
+
+      - name: Local save, persistence, export, and deletion acceptance
+        run: npm run test:phase7:living-chart
+
   zodiac-games-sql:
     name: Zodiac Games SQL
     runs-on: ubuntu-latest
@@ -252,7 +303,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Feature-off and fixture-enabled browser acceptance
         run: npm run test:phase4:sharing
@@ -275,7 +326,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Browser acceptance drive
         run: npm run test:phase3:post-chart
@@ -302,7 +353,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Build (push flags on, fixture key only)
         run: npm run build
@@ -331,7 +382,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Build
         run: npm run build
@@ -364,7 +415,7 @@ jobs:
         run: npm ci
 
       - name: Install Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Build (feature flag on)
         run: npm run build

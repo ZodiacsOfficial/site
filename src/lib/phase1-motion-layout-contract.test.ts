@@ -94,12 +94,37 @@ describe('Phase 1 layout and motion contract', () => {
     expect(page).toContain('.today-fallback__status.is-visible { visibility: visible; }');
   });
 
+  it('preserves the complete stored Sun-sign SSR subtree through hydration', async () => {
+    const [fallback, page] = await Promise.all([
+      source('islands/today/SunSignFallback.tsx'),
+      source('pages/today/index.astro'),
+    ]);
+    expect(fallback).not.toContain('restoredSelection');
+    expect(fallback).toMatch(
+      /active && dailyLine && hasInteracted \? \([\s\S]*?\) : \(\s*<div class="today-sign-readings" data-today-all-signs>/u,
+    );
+    expect(page).toMatch(
+      /:root\[data-today-sun-sign\]\s*\{\s*scrollbar-gutter:\s*stable both-edges;\s*\}/u,
+    );
+    expect(page).toContain("document.documentElement.setAttribute('data-today-stream-pending', '');");
+    expect(page).toMatch(
+      /DOMContentLoaded[\s\S]*?requestAnimationFrame[\s\S]*?requestAnimationFrame[\s\S]*?removeAttribute\('data-today-stream-pending'\)/u,
+    );
+    expect(page).toMatch(
+      /:root\[data-today-sun-sign\]\[data-today-stream-pending\] \.today-provenance\s*\{\s*visibility:\s*hidden;\s*\}/u,
+    );
+    expect(page).toMatch(
+      /:root\[data-today-sun-sign\]:not\(\[data-today-saved-chart\]\) \.today-fallback__result\s*\{\s*min-height:\s*224px;\s*\}/u,
+    );
+  });
+
   it('scopes saved-chart reservations to unresolved fallback nodes', async () => {
     const [today, program] = await Promise.all([
       source('pages/today/index.astro'),
       source('components/HoroscopeProgramPage.astro'),
     ]);
-    expect(today).toMatch(/\.today-reading__body\s*\{[^}]*display:\s*grid;[^}]*min-height:\s*300px;/u);
+    expect(today).toMatch(/\.today-reading__body\s*\{[^}]*display:\s*grid;[^}]*min-height:\s*326px;/u);
+    expect(today).toMatch(/@media \(max-width: 480px\)\s*\{\s*\.today-reading__body\s*\{\s*min-height:\s*488px;\s*\}/u);
     expect(today).not.toContain('.today-returning-chart-placeholder { min-height:');
     expect(today).not.toContain(':root[data-today-saved-chart] .today-reading { min-height:');
     expect(program).toMatch(/\.program :global\(\.dfy__body\)\s*\{[^}]*display:\s*grid;[^}]*height:\s*260px;/u);
@@ -107,6 +132,20 @@ describe('Phase 1 layout and motion contract', () => {
     expect(program).not.toMatch(/\.program :global\(\.dfy\)\s*\{[^}]*\b(?:min-)?height\s*:/u);
     expect(program).not.toContain(':global(.dfy--placeholder) { min-height:');
     expect(program).not.toContain(':global(:root[data-dfy-saved-chart]) .program :global(.dfy) {\n    min-height:');
+  });
+
+  it('keeps the lazy Living Chart reflection in the saved-chart geometry', async () => {
+    const [brief, today] = await Promise.all([
+      source('islands/today/TodayBrief.tsx'),
+      source('pages/today/index.astro'),
+    ]);
+    expect(brief).toContain('{livingChartEnabled && <LivingReflection />}');
+    expect(brief).toContain('<LivingReflection prompt={reflectionPrompt} />');
+    expect(brief.match(/<button class="btn btn--primary">/gu)).toHaveLength(2);
+    expect(brief).not.toContain('<span class="btn btn--primary"><span>Save this moment</span>');
+    expect(today).toContain(".today-useful[aria-hidden='true'] { visibility: hidden; }");
+    expect(today).toContain('.today-useful__question { min-block-size: 3.1em; }');
+    expect(today).toContain('.today-useful__question { min-block-size: 4.65em; }');
   });
 
   it('reserves both picture and image geometry for every pastel sign icon', async () => {
@@ -178,7 +217,7 @@ describe('Phase 1 layout and motion contract', () => {
     expect(base).toContain('data-stable-typography={props.stableTypography');
     expect(base).toContain('data-local-typography={props.localTypography');
     expect(today).toMatch(/<Base\s+[\s\S]*?localTypography/u);
-    expect(today).toContain('<TodayBrief client:idle');
+    expect(today).toMatch(/<TodayBrief\s+[\s\S]*?client:idle/u);
     for (const phase1Surface of [today, hub, program]) {
       expect(phase1Surface).toMatch(/<Base\s+[\s\S]*?stableTypography/u);
     }

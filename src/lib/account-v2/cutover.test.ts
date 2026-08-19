@@ -26,7 +26,7 @@ describe('account sync v2 cutover guards', () => {
     );
     expect(page).toContain('<AccountBoundProfileSurface');
     expect(page).toContain('accountSyncV2Enabled ? (');
-    expect(page).toContain('privateSurface={accountSyncV2Enabled}');
+    expect(page).toContain('privateSurface={accountSyncV2Enabled || livingChartSurfaceEnabled}');
     expect(gate).toContain("return boundary.status === 'ready' ? 'visible' : 'withheld';");
     expect(gate).toContain("if (access !== 'visible') return null;");
   });

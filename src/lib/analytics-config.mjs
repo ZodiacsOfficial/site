@@ -58,6 +58,10 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   push_prompt: [],
   push_subscribe: [],
   today_view: [],
+  living_chart_open: ['source'],
+  living_chart_saved: ['mode'],
+  living_chart_deleted: [],
+  living_chart_export: ['format'],
   calendar_subscribe: [],
   chart_save: ['source'],
   chart_share: ['variant'],
@@ -80,6 +84,15 @@ const ZODIAC_SIGN_VALUES = Object.freeze([
 
 /** Closed-value contracts for non-identifying product dimensions. */
 export const ANALYTICS_EVENT_VALUES = Object.freeze({
+  living_chart_open: Object.freeze({
+    source: Object.freeze(['today', 'profile']),
+  }),
+  living_chart_saved: Object.freeze({
+    mode: Object.freeze(['active', 'quiet']),
+  }),
+  living_chart_export: Object.freeze({
+    format: Object.freeze(['json', 'markdown']),
+  }),
   team_join: Object.freeze({ sign: ZODIAC_SIGN_VALUES }),
   weekly_checkin: Object.freeze({ sign: ZODIAC_SIGN_VALUES }),
   share_card: Object.freeze({ sign: ZODIAC_SIGN_VALUES }),

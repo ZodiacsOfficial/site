@@ -21,6 +21,7 @@ const profile = {
   charts: [{
     id: 'push-drive',
     name: 'Fixture chart',
+    relationship: 'self',
     createdAt: '2026-07-11T00:00:00.000Z',
     updatedAt: '2026-07-11T00:00:00.000Z',
     birth: { date: '1990-01-01', time: null, timeKnown: false, place: null },

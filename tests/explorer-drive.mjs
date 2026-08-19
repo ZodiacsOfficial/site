@@ -136,32 +136,35 @@ try {
   const detailSummary = detail.locator('summary');
   const placementCount = await detail.locator('.calc__table tbody tr').count();
   const aspectCount = await detail.locator('.calc__aspects li').count();
-  check('first reading: prompt withholds guide and read-another but keeps one chart share available', await page.evaluate(() => {
+  check('first reading: prompt withholds guide and read-another but keeps save and share available', await page.evaluate(() => {
     const prompt = document.querySelector('[data-first-reading-prompt]');
     const dock = document.querySelector('[data-chart-action-dock]');
     return Boolean(prompt && dock
       && !dock.querySelector('[data-tour-start]')
       && !dock.querySelector('[data-read-another-chart]')
+      && dock.querySelectorAll('[data-save-chart]').length === 1
       && dock.querySelectorAll('[data-share-card]').length === 1
       && document.querySelectorAll('[data-share-card]').length === 1);
   }));
   await page.locator('[data-first-reading-dismiss]').click();
   await page.waitForSelector('[data-tour-start]', { timeout: 5000 });
-  check('first reading: dismissal reveals Guide + Share + Read another and one white next action', await page.evaluate(() => {
+  check('first reading: dismissal reveals Save + Guide + Share + Read another and one white next action', await page.evaluate(() => {
     const dock = document.querySelector('[data-chart-action-dock]');
     return !document.querySelector('[data-first-reading-prompt]')
-      && dock?.querySelectorAll('.chart-action-dock__actions > .btn').length === 3
+      && dock?.querySelectorAll('.chart-action-dock__actions > .btn').length === 4
+      && dock.querySelectorAll('[data-save-chart]').length === 1
       && dock.querySelectorAll('[data-tour-start]').length === 1
       && dock.querySelectorAll('[data-share-card]').length === 1
       && dock.querySelectorAll('[data-read-another-chart]').length === 1
       && dock.querySelector('[data-read-another-chart]')?.getAttribute('href')?.startsWith('/birth-chart/someone-else/#mine=')
       && document.querySelectorAll('[data-primary-action]').length === 1;
   }));
-  check('chart actions: guide/share/read-another openers are unique and absent from More ways', await page.evaluate(() =>
-    document.querySelectorAll('[data-tour-start]').length === 1
+  check('chart actions: save/guide/share/read-another actions are unique and absent from More ways', await page.evaluate(() =>
+    document.querySelectorAll('[data-save-chart]').length === 1
+    && document.querySelectorAll('[data-tour-start]').length === 1
     && document.querySelectorAll('[data-share-card]').length === 1
     && document.querySelectorAll('[data-read-another-chart]').length === 1
-    && !document.querySelector('[data-chart-more] [data-tour-start], [data-chart-more] [data-share-card], [data-chart-more] [data-read-another-chart]')));
+    && !document.querySelector('[data-chart-more] [data-save-chart], [data-chart-more] [data-tour-start], [data-chart-more] [data-share-card], [data-chart-more] [data-read-another-chart]')));
   check('plain-first: visual story, approach, and communication precede actions and full detail', await page.evaluate(() => {
     const wheel = document.querySelector('.calc__wheel');
     const read = document.querySelector('.reading-path');
@@ -633,7 +636,7 @@ try {
     (await tp.locator('[data-tour-card]').count()) === 0
     && await tp.locator('.insp--hint').isVisible()
     && (await tp.locator('[data-chart-action-dock]').count()) === 1
-    && (await tp.locator('[data-chart-action-dock] .chart-action-dock__actions > .btn').count()) === 3);
+    && (await tp.locator('[data-chart-action-dock] .chart-action-dock__actions > .btn').count()) === 4);
 
   // No-time chart: horizon and houses give way to the honest chapter.
   // (Hop through about:blank — a bare fragment swap on the same path is a
@@ -670,12 +673,12 @@ try {
   await mob.waitForSelector('.wheel--interactive', { timeout: 15000 });
   await revealFullGuide(mob);
   check('mobile: hint hidden', !(await mob.locator('.insp--hint').isVisible().catch(() => false)));
-  check('mobile: Guide + Share + Read another dock is full-width below the interactive chart', await mob.evaluate(() => {
+  check('mobile: Save + Guide + Share + Read another dock is full-width below the interactive chart', await mob.evaluate(() => {
     const wheel = document.querySelector('.xplr__wheelbox')?.getBoundingClientRect();
     const dock = document.querySelector('[data-chart-action-dock]')?.getBoundingClientRect();
     const buttons = Array.from(document.querySelectorAll('[data-chart-action-dock] .chart-action-dock__actions > .btn'))
       .map((button) => button.getBoundingClientRect());
-    if (!wheel || !dock || buttons.length !== 3) return false;
+    if (!wheel || !dock || buttons.length !== 4) return false;
     return dock.top >= wheel.bottom - 0.5
       && buttons.every((button) => button.top >= dock.top
         && button.bottom <= dock.bottom + 0.5
@@ -750,7 +753,7 @@ try {
   check('mobile: tour exit closes the sheet and restores wheel actions',
     (await mob.locator('[data-tour-card]').count()) === 0
     && await mob.locator('[data-chart-action-dock]').isVisible()
-    && (await mob.locator('[data-chart-action-dock] .chart-action-dock__actions > .btn').count()) === 3);
+    && (await mob.locator('[data-chart-action-dock] .chart-action-dock__actions > .btn').count()) === 4);
   await mob.close();
 
   // ── Reduced motion: selection and tour transitions are instant ──

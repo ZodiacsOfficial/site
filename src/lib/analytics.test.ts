@@ -36,6 +36,10 @@ const REQUIRED_EVENTS = [
   'first_reading_completed',
   'next_action_clicked',
   'email_capture_viewed',
+  'living_chart_open',
+  'living_chart_saved',
+  'living_chart_deleted',
+  'living_chart_export',
 ] as const;
 
 describe('analytics event contract', () => {
@@ -124,6 +128,52 @@ describe('analytics event contract', () => {
       method: 'copy',
       url: 'never',
     })).toEqual({ method: 'copy' });
+  });
+
+  it('keeps Living Chart analytics content-free and inside fixed enums', () => {
+    expect(sanitizeAnalyticsProperties('living_chart_open', {
+      source: 'today',
+      chartId: 'private',
+      note: 'never-forward-note-content',
+    })).toEqual({ source: 'today' });
+    expect(sanitizeAnalyticsProperties('living_chart_open', {
+      source: 'profile',
+      momentId: 'private',
+    })).toEqual({ source: 'profile' });
+    expect(sanitizeAnalyticsProperties('living_chart_open', { source: 'home' })).toEqual({});
+
+    expect(sanitizeAnalyticsProperties('living_chart_saved', {
+      mode: 'active',
+      date: '2026-08-18',
+      text: 'never-forward-reading-content',
+    })).toEqual({ mode: 'active' });
+    expect(sanitizeAnalyticsProperties('living_chart_saved', { mode: 'quiet' })).toEqual({ mode: 'quiet' });
+    expect(sanitizeAnalyticsProperties('living_chart_saved', { mode: 'private' })).toEqual({});
+
+    expect(sanitizeAnalyticsProperties('living_chart_deleted', {
+      id: 'private',
+      note: 'never',
+    })).toEqual({});
+    expect(sanitizeAnalyticsProperties('living_chart_export', {
+      format: 'json',
+      filename: 'private.json',
+      contents: 'never',
+    })).toEqual({ format: 'json' });
+    expect(sanitizeAnalyticsProperties('living_chart_export', { format: 'markdown' })).toEqual({
+      format: 'markdown',
+    });
+    expect(sanitizeAnalyticsProperties('living_chart_export', { format: 'csv' })).toEqual({});
+  });
+
+  it('scrubs Living Chart content at the actual browser emission boundary', () => {
+    const track = vi.fn();
+    vi.stubGlobal('window', { zodiacsAnalytics: { track } });
+    trackAnalytics('living_chart_saved', {
+      mode: 'active',
+      note: 'never-forward-note-content',
+      momentId: 'never-forward-a-record-id',
+    });
+    expect(track).toHaveBeenCalledWith('living_chart_saved', { mode: 'active' });
   });
 
   it('keeps Terminal view switches inside the fixed surface and direction enums', () => {
