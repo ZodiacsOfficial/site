@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Install pinned Chromium
-        run: npx playwright-core install chromium
+        run: npx playwright-core install --with-deps chromium
 
       - name: Validate registry JSON
         run: node -e "JSON.parse(require('node:fs').readFileSync('public/registry/zodiacs.registry.json', 'utf8'))"
@@ -294,7 +294,7 @@ jobs:
         run: npm ci
 
       - name: Install pinned Chromium
-        run: npx playwright-core install --with-deps chromium
+        run: npx playwright-core install chromium
 
       - name: Build current production artifact
         run: npm run build
