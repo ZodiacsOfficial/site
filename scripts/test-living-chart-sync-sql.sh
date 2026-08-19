@@ -9,6 +9,7 @@ living_database="zodiacs_living_chart_sync_test"
 living_container_name="zodiacs-living-chart-sync-sql-$$-${RANDOM}-$(date -u +%s)"
 living_container_id=""
 living_sync_migration="${living_repo_root}/supabase/migrations/20260818112526_living_chart_sync.sql"
+living_sync_rls_initplan_migration="${living_repo_root}/supabase/migrations/20260819111145_living_chart_rls_initplan.sql"
 
 cleanup_living_sql_container() {
   if [[ -n "${living_container_id}" ]]; then
@@ -121,6 +122,8 @@ run_living_sql_file \
   "${living_repo_root}/supabase/tests/living_chart_sync_upgrade_seed.sql"
 run_living_sql_file \
   "${living_repo_root}/supabase/migrations/20260818112526_living_chart_sync.sql"
+run_living_sql_file \
+  "${living_sync_rls_initplan_migration}"
 
 run_living_sql_file \
   "${living_repo_root}/supabase/tests/living_chart_sync.sql"

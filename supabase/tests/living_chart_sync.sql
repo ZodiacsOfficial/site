@@ -144,6 +144,42 @@ select pg_temp.assert_true(
 );
 
 select pg_temp.assert_true(
+  (
+    select count(*) = 2
+      and bool_and(
+        position('(selectauth.uid()' in normalized_qual) > 0
+        and position(
+          '(selectauth.jwt()asjwt)->>''is_anonymous''::text'
+          in normalized_qual
+        ) > 0
+        and position('isdistinctfrom''true''::text' in normalized_qual) > 0
+        and position('(select(auth.jwt()->>' in normalized_qual) = 0
+      )
+    from (
+      select lower(
+        regexp_replace(
+          pg_get_expr(policy.polqual, policy.polrelid),
+          '[[:space:]]+',
+          '',
+          'g'
+        )
+      ) as normalized_qual
+      from pg_policy as policy
+      join pg_class as relation on relation.oid = policy.polrelid
+      join pg_namespace as namespace on namespace.oid = relation.relnamespace
+      where namespace.nspname = 'public'
+        and (
+          (relation.relname = 'living_chart_sync_consents'
+            and policy.polname = 'living_chart_sync_consents_select_own')
+          or (relation.relname = 'living_chart_moments'
+            and policy.polname = 'living_chart_moments_select_current_epoch')
+        )
+    ) as living_chart_policy
+  ),
+  'Living Chart read policies must cache auth.uid() and auth.jwt() as initplans'
+);
+
+select pg_temp.assert_true(
   not has_table_privilege(
     'authenticated',
     'living_chart_private.living_chart_runtime_settings',

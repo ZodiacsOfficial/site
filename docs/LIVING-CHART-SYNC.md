@@ -59,7 +59,9 @@ the mutation ledger, so the same queued mutation can succeed after re-enable.
 
 ## Release gate
 
-Apply `20260818112526_living_chart_sync.sql` through the reviewed Supabase
-migration process before enabling public Living Chart sync. The migration is
-replay-safe, but it must not be pasted into production without the SQL privacy
-and concurrency gate in `scripts/test-living-chart-sync-sql.sh` passing.
+Apply `20260818112526_living_chart_sync.sql` and its ordered
+`20260819111145_living_chart_rls_initplan.sql` follow-up through the reviewed
+Supabase migration process before enabling public Living Chart sync. The
+migrations are replay-safe, but they must not be pasted into production without
+the SQL privacy and concurrency gate in
+`scripts/test-living-chart-sync-sql.sh` passing.
