@@ -94,10 +94,11 @@ describe('Phase 1 layout and motion contract', () => {
     expect(page).toContain('.today-fallback__status.is-visible { visibility: visible; }');
   });
 
-  it('preserves the stored Sun-sign grid formatting context through hydration', async () => {
+  it('preserves the complete stored Sun-sign SSR subtree through hydration', async () => {
     const fallback = await source('islands/today/SunSignFallback.tsx');
+    expect(fallback).not.toContain('restoredSelection');
     expect(fallback).toMatch(
-      /restoredSelection && !hasInteracted \? \(\s*<div class="today-sign-readings">\s*<article\s+key=\{active\.slug\}/u,
+      /active && dailyLine && hasInteracted \? \([\s\S]*?\) : \(\s*<div class="today-sign-readings" data-today-all-signs>/u,
     );
   });
 

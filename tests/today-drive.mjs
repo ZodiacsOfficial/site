@@ -397,10 +397,27 @@ async function drive(BASE, browser) {
     localStorage.setItem('zodiacs:today-sun-sign:v1', 'leo');
   });
   await returningSign.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
-  await returningSign.waitForFunction(() => document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length === 1);
+  await returningSign.waitForFunction(() => (
+    document.querySelector('.today-sign[aria-current="true"]')?.getAttribute('href') === '#today-sun-sign-leo'
+      && document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length === 12
+  ));
   const returningSignCls = await measuredCls(returningSign);
   check('stored Sun-sign hydration has exactly zero CLS', returningSignCls === 0, String(returningSignCls));
-  check('stored Sun sign restores the Leo reading', await returningSign.locator('#today-sun-sign-reading [data-today-sun-sign="leo"]').count() === 1);
+  const returningSignState = await returningSign.evaluate(() => ({
+    totalReadings: document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length,
+    visibleReadings: Array.from(document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]'))
+      .filter((node) => getComputedStyle(node).display !== 'none')
+      .map((node) => node.getAttribute('data-today-sun-sign')),
+    selectedHref: document.querySelector('.today-sign[aria-current="true"]')?.getAttribute('href') ?? null,
+  }));
+  check(
+    'stored Sun sign preserves the SSR readings and restores only Leo visibly',
+    returningSignState.totalReadings === 12
+      && returningSignState.visibleReadings.length === 1
+      && returningSignState.visibleReadings[0] === 'leo'
+      && returningSignState.selectedHref === '#today-sun-sign-leo',
+    JSON.stringify(returningSignState),
+  );
   await returningSign.close();
 
   const empty = await newTodayPage(browser, { viewport: { width: 900, height: 1400 } });
