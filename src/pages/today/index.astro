@@ -46,6 +46,14 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
         var sign = localStorage.getItem('zodiacs:today-sun-sign:v1');
         if (/^(aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)$/.test(sign || '')) {
           document.documentElement.setAttribute('data-today-sun-sign', sign);
+          document.documentElement.setAttribute('data-today-stream-pending', '');
+          document.addEventListener('DOMContentLoaded', function () {
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                document.documentElement.removeAttribute('data-today-stream-pending');
+              });
+            });
+          }, { once: true });
         }
         var syncPrivateProfileHint = function () {
           document.documentElement.removeAttribute('data-today-saved-chart');
@@ -389,6 +397,12 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
      hint changes. */
   :root[data-today-sun-sign] {
     scrollbar-gutter: stable both-edges;
+  }
+  /* The disclosure can enter the bottom of a tall first viewport while the
+     static response is still streaming. Keep its final space but defer its
+     paint until the stored-sign document has finished parsing. */
+  :root[data-today-sun-sign][data-today-stream-pending] .today-provenance {
+    visibility: hidden;
   }
   /* Reserve the compact desktop/provenance reading until its SSR bytes arrive;
      saved charts use the separate geometry above. */

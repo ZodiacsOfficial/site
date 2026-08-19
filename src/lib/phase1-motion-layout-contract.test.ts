@@ -106,6 +106,13 @@ describe('Phase 1 layout and motion contract', () => {
     expect(page).toMatch(
       /:root\[data-today-sun-sign\]\s*\{\s*scrollbar-gutter:\s*stable both-edges;\s*\}/u,
     );
+    expect(page).toContain("document.documentElement.setAttribute('data-today-stream-pending', '');");
+    expect(page).toMatch(
+      /DOMContentLoaded[\s\S]*?requestAnimationFrame[\s\S]*?requestAnimationFrame[\s\S]*?removeAttribute\('data-today-stream-pending'\)/u,
+    );
+    expect(page).toMatch(
+      /:root\[data-today-sun-sign\]\[data-today-stream-pending\] \.today-provenance\s*\{\s*visibility:\s*hidden;\s*\}/u,
+    );
     expect(page).toMatch(
       /:root\[data-today-sun-sign\]:not\(\[data-today-saved-chart\]\) \.today-fallback__result\s*\{\s*min-height:\s*224px;\s*\}/u,
     );
