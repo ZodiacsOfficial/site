@@ -92,6 +92,42 @@ select pg_temp.assert_true(
 );
 
 select pg_temp.assert_true(
+  has_table_privilege('service_role', 'public.living_chart_sync_consents', 'SELECT')
+    and has_table_privilege('service_role', 'public.living_chart_sync_consents', 'INSERT')
+    and has_table_privilege('service_role', 'public.living_chart_sync_consents', 'UPDATE')
+    and has_table_privilege('service_role', 'public.living_chart_sync_consents', 'DELETE')
+    and not has_table_privilege('service_role', 'public.living_chart_sync_consents', 'TRUNCATE')
+    and not has_table_privilege('service_role', 'public.living_chart_sync_consents', 'REFERENCES')
+    and not has_table_privilege('service_role', 'public.living_chart_sync_consents', 'TRIGGER')
+    and not has_table_privilege('service_role', 'public.living_chart_sync_consents', 'MAINTAIN')
+    and has_table_privilege('service_role', 'public.living_chart_moments', 'SELECT')
+    and has_table_privilege('service_role', 'public.living_chart_moments', 'INSERT')
+    and has_table_privilege('service_role', 'public.living_chart_moments', 'UPDATE')
+    and has_table_privilege('service_role', 'public.living_chart_moments', 'DELETE')
+    and not has_table_privilege('service_role', 'public.living_chart_moments', 'TRUNCATE')
+    and not has_table_privilege('service_role', 'public.living_chart_moments', 'REFERENCES')
+    and not has_table_privilege('service_role', 'public.living_chart_moments', 'TRIGGER')
+    and not has_table_privilege('service_role', 'public.living_chart_moments', 'MAINTAIN')
+    and has_table_privilege('service_role', 'living_chart_private.living_chart_mutations', 'SELECT')
+    and has_table_privilege('service_role', 'living_chart_private.living_chart_mutations', 'INSERT')
+    and has_table_privilege('service_role', 'living_chart_private.living_chart_mutations', 'UPDATE')
+    and has_table_privilege('service_role', 'living_chart_private.living_chart_mutations', 'DELETE')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_mutations', 'TRUNCATE')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_mutations', 'REFERENCES')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_mutations', 'TRIGGER')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_mutations', 'MAINTAIN')
+    and has_table_privilege('service_role', 'living_chart_private.living_chart_runtime_settings', 'SELECT')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_runtime_settings', 'INSERT')
+    and has_table_privilege('service_role', 'living_chart_private.living_chart_runtime_settings', 'UPDATE')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_runtime_settings', 'DELETE')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_runtime_settings', 'TRUNCATE')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_runtime_settings', 'REFERENCES')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_runtime_settings', 'TRIGGER')
+    and not has_table_privilege('service_role', 'living_chart_private.living_chart_runtime_settings', 'MAINTAIN'),
+  'service role table grants must match the least-privilege contract exactly'
+);
+
+select pg_temp.assert_true(
   not has_table_privilege('anon', 'public.living_chart_sync_consents', 'SELECT')
     and not has_table_privilege('anon', 'public.living_chart_moments', 'SELECT')
     and not has_function_privilege(

@@ -53,3 +53,11 @@ grant execute on function living_chart_private.set_living_chart_sync_consent_imp
 grant execute on function living_chart_private.living_chart_record_mutation(
   uuid, uuid, text, text, jsonb
 ) to authenticated;
+
+-- Supabase projects may carry broad service-role default table privileges.
+-- Replaying the final migration must scrub those grants before restoring the
+-- intentionally narrow contract for both exposed and private tables.
+grant all privileges on table public.living_chart_sync_consents to service_role;
+grant all privileges on table public.living_chart_moments to service_role;
+grant all privileges on table living_chart_private.living_chart_mutations to service_role;
+grant all privileges on table living_chart_private.living_chart_runtime_settings to service_role;

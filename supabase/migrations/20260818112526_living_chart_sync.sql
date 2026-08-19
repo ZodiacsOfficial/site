@@ -495,10 +495,10 @@ alter table public.living_chart_moments enable row level security;
 alter table living_chart_private.living_chart_mutations enable row level security;
 alter table living_chart_private.living_chart_runtime_settings enable row level security;
 
-revoke all on table public.living_chart_sync_consents from public, anon, authenticated;
-revoke all on table public.living_chart_moments from public, anon, authenticated;
-revoke all on table living_chart_private.living_chart_mutations from public, anon, authenticated;
-revoke all on table living_chart_private.living_chart_runtime_settings from public, anon, authenticated;
+revoke all on table public.living_chart_sync_consents from public, anon, authenticated, service_role;
+revoke all on table public.living_chart_moments from public, anon, authenticated, service_role;
+revoke all on table living_chart_private.living_chart_mutations from public, anon, authenticated, service_role;
+revoke all on table living_chart_private.living_chart_runtime_settings from public, anon, authenticated, service_role;
 
 grant select on table public.living_chart_sync_consents to authenticated;
 grant select on table public.living_chart_moments to authenticated;
