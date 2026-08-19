@@ -210,7 +210,10 @@ export const GET: APIRoute = async () => {
   const urls: { loc: string; priority: number; lastmod?: string }[] = [
     ...evergreenUrls,
     ...(registryAuraEntry ? [registryAuraEntry] : []),
-    ...(gamesEnabled ? [{ loc: '/race/', priority: 0.8, lastmod: '2026-08-19' }] : []),
+    ...(gamesEnabled ? [
+      { loc: '/race/', priority: 0.8, lastmod: '2026-08-19' },
+      { loc: '/games/history/', priority: 0.6, lastmod: '2026-08-19' },
+    ] : []),
     { loc: '/horoscopes/', priority: 0.8, lastmod: horoscopeProgram.anchorDate },
     ...eventsPublication.pages.map((event) => ({
       loc: event.path,

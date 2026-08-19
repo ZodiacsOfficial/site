@@ -1066,6 +1066,7 @@ const registryAuraIndexed = sitemapLocs.has('/registry/collection/');
 // the Registry Collection follows its own: the sitemap entry and the built
 // page appear and disappear together.
 const raceIndexed = sitemapLocs.has('/race/');
+const trophyHallIndexed = sitemapLocs.has('/games/history/');
 const indexablePeoplePaths = new Set(
   JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).people
     .filter((person) => person.indexEligibility.eligible)
@@ -1083,7 +1084,7 @@ const indexedRegistryResearchPaths = new Set([
 ]);
 const sitemapPolicy = {
   // 2423 = 2420 + /registry/technical/ + both canonical Terminal views.
-  total: 2423 + Number(registryAuraIndexed) + Number(raceIndexed)
+  total: 2423 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,
@@ -1122,6 +1123,7 @@ const indexedFamilies = [
   },
   { label: 'Registry Collection', pattern: /^\/registry\/collection\/$/, expected: Number(registryAuraIndexed), localized: false },
   { label: 'The Race', pattern: /^\/race\/$/, expected: Number(raceIndexed), localized: false },
+  { label: 'Trophy Hall', pattern: /^\/games\/history\/$/, expected: Number(trophyHallIndexed), localized: false },
   { label: 'Registry technical record', pattern: /^\/registry\/technical\/$/, expected: 1, localized: false },
   { label: 'Terminal Research', pattern: /^\/terminal\/research(?:\/[a-z0-9-]+)?\/$/, expected: sitemapPolicy.registryResearchPages, localized: false },
 ];

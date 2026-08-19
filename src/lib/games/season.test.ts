@@ -4,6 +4,7 @@ import {
   SEASON_ID_PATTERN,
   daysLeftInSeason,
   isoWeekUtc,
+  previousSeasonInstance,
   seasonInstanceAt,
   seasonInstanceForId,
 } from './season';
@@ -79,5 +80,16 @@ describe('seasonInstanceForId', () => {
   it('rejects malformed ids', () => {
     expect(() => seasonInstanceForId('virgo-19')).toThrow();
     expect(() => seasonInstanceForId('ophiuchus-2026')).toThrow();
+  });
+
+  it('resolves the most recently closed season, across the year boundary', () => {
+    const august = previousSeasonInstance(Date.UTC(2026, 7, 19));
+    expect(august.id).toBe('cancer-2026');
+    expect(august.endUtcExclusive).toBeLessThanOrEqual(Date.UTC(2026, 7, 19));
+
+    // Mid-January sits inside capricorn-2026 (started December); the season
+    // before it is sagittarius-2026.
+    const january = previousSeasonInstance(Date.UTC(2027, 0, 10));
+    expect(january.id).toBe('sagittarius-2026');
   });
 });
