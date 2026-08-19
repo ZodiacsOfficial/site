@@ -6,11 +6,11 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-08-19T13:07:18.043Z",
+  "capturedAt": "2026-08-19T15:11:39.810Z",
   "browser": "Chromium 141.0.7390.37",
   "dailyDate": "2026-08-19",
   "publicationCanonicalSha256": "e11324d67321b38f4d4d7ef160416fa48615bd6226eb00b8abcce1656c2d086a",
-  "templateSourceSha256": "efb7917762f1209ebe9f93e83caf60a90f2af434f242e932d54c03bef2450c71",
+  "templateSourceSha256": "9a4372a07ea6ee1b7e3f95bbed55451ec8ae7daf2f1c47c361a52d65baa9622f",
   "renderPayloadSha256": {
     "daily": "852cfaaf46331851e15c9bba62b6d62f7ad683ee39928917747da01b1f42630b",
     "dailyPublication": "769fb9b5ab929374e55b95e66b42656674d686b44c780d9ac6046e05279ef81f",
@@ -19,8 +19,8 @@
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-08-19T13:06:39.279Z",
-    "templateSourceSha256": "efb7917762f1209ebe9f93e83caf60a90f2af434f242e932d54c03bef2450c71",
+    "builtAt": "2026-08-19T15:11:00.566Z",
+    "templateSourceSha256": "9a4372a07ea6ee1b7e3f95bbed55451ec8ae7daf2f1c47c361a52d65baa9622f",
     "dailyDate": "2026-08-19",
     "publicationCanonicalSha256": "e11324d67321b38f4d4d7ef160416fa48615bd6226eb00b8abcce1656c2d086a",
     "renderPayloadSha256": {
@@ -42,13 +42,13 @@
         "file": "today-360.png",
         "width": 360,
         "height": 5593,
-        "sha256": "58a02144be0f3eeeb9afc06be874889c80b800ba76a689c5051df17a0b9f1813"
+        "sha256": "91485f02962c324cdc974f61b623313aea2ca6badf364ff9cbd62999bea629e8"
       },
       "layout": {
         "clientWidth": 360,
         "scrollWidth": 360,
         "scrollHeight": 5593,
-        "contentLength": 3924,
+        "contentLength": 3918,
         "overlay": false,
         "guideLauncher": true,
         "guideInvite": false,
@@ -68,13 +68,13 @@
         "file": "today-1280.png",
         "width": 1280,
         "height": 3402,
-        "sha256": "debc94facbd33d9cd76121c060cc1ece7e9fee9825ce39aae5af2e4659b977f1"
+        "sha256": "5f6e07d3fbcd0ab6fbbfeece3dfabe2464a2c32cae1e18182a873d621e3e9f1b"
       },
       "layout": {
         "clientWidth": 1280,
         "scrollWidth": 1280,
         "scrollHeight": 3402,
-        "contentLength": 3972,
+        "contentLength": 3966,
         "overlay": false,
         "guideLauncher": true,
         "guideInvite": false,

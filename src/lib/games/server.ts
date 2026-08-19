@@ -253,13 +253,13 @@ export async function handleGamesApi(
           return;
         }
         const requested = seasonInstanceForId(requestedRaw);
-        if (requested.endUtcExclusive > instant) {
+        if (requested.endUtcExclusive > instant.getTime()) {
           sendJson(res, 404, { error: 'unknown_season' });
           return;
         }
         season = requested;
       }
-      const closed = season.endUtcExclusive <= instant;
+      const closed = season.endUtcExclusive <= instant.getTime();
       const week = isoWeekUtc(instant);
       const result = await callGamesRpc(env, fetcher, 'zodiac_games_standings_v1', {
         season_id: season.id,
