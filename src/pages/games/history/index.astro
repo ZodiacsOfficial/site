@@ -1,0 +1,168 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { championSeasons, championSign } from '../../../lib/games/champions';
+import { seasonInstanceAt, daysLeftInSeason } from '../../../lib/games/season';
+
+const gamesEnabled = (import.meta.env.PUBLIC_ZODIAC_GAMES_ENABLED
+  ?? process.env.PUBLIC_ZODIAC_GAMES_ENABLED) === '1';
+if (!gamesEnabled) {
+  return Astro.redirect('/404.html');
+}
+
+// Build-time snapshot: the Hall changes only when the season-close workflow
+// commits a new entry, and the site rebuilds daily regardless.
+const buildInstant = new Date();
+const season = seasonInstanceAt(buildInstant);
+const buildDaysLeft = daysLeftInSeason(season, buildInstant);
+const closeDate = new Date(season.endUtcExclusive - 1).toLocaleDateString('en', {
+  month: 'long', day: 'numeric', timeZone: 'UTC',
+});
+const entries = championSeasons().slice().reverse();
+
+const title = 'The Trophy Hall — The Zodiac Games | Zodiacs.org';
+const description =
+  'Every season of the Zodiac Games crowns one champion. The Trophy Hall remembers all of it — every season, every champion, forever.';
+---
+<Base
+  title={title}
+  description={description}
+  path="/games/history/"
+>
+  <section class="section--tight container container--narrow">
+    <header class="hall-hero">
+      <em class="kicker">The Zodiac Games</em>
+      <h1 class="display">The Trophy Hall.</h1>
+      <p>
+        The Games run all year. The Hall remembers all of it — every season,
+        every champion, forever.
+      </p>
+    </header>
+
+    {entries.length === 0 && (
+      <p class="hall-empty">
+        The first trophy is still being raced for. {season.sign.name} Season
+        closes {closeDate} — {buildDaysLeft} {buildDaysLeft === 1 ? 'day' : 'days'} to
+        go. Someone’s name goes here forever.
+      </p>
+    )}
+
+    {entries.length > 0 && (
+      <ol class="hall-list" reversed>
+        {entries.map((entry) => {
+          const sign = championSign(entry);
+          return (
+            <li class="hall-entry" style={`--sign:${sign.hue}`}>
+              <img
+                class="hall-entry__figure"
+                src={`/assets/sculptures/512/${entry.champion}.webp`}
+                width={120}
+                height={120}
+                alt={`The ${sign.name} sculpture — the ${entry.seasonName} Season trophy`}
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="hall-entry__body">
+                <p class="hall-entry__line">
+                  {entry.seasonName} {entry.year} · <strong>{sign.name}</strong>
+                  {' '}· won by {entry.marginPoints.toLocaleString('en')} {entry.marginPoints === 1 ? 'point' : 'points'}
+                </p>
+                <details class="hall-entry__standings">
+                  <summary>final standings →</summary>
+                  <table>
+                    <thead>
+                      <tr><th scope="col">#</th><th scope="col">Sign</th><th scope="col">Points</th></tr>
+                    </thead>
+                    <tbody>
+                      {entry.finalStandings.map((row, index) => (
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{row.sign.charAt(0).toUpperCase() + row.sign.slice(1)}</td>
+                          <td class="mono">{row.points.toLocaleString('en')}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </details>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    )}
+
+    <p class="hall-back">
+      <a href="/race/">Back to the live Race →</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .hall-hero {
+    margin-block-end: 32px;
+  }
+  .hall-hero p {
+    max-width: 52ch;
+    color: var(--muted);
+  }
+  .hall-empty {
+    padding: 20px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    color: var(--muted);
+    max-width: 52ch;
+  }
+  .hall-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .hall-entry {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 20px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+  }
+  .hall-entry__figure {
+    flex: 0 0 auto;
+    inline-size: clamp(72px, 14vw, 120px);
+    block-size: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.45));
+  }
+  .hall-entry__line {
+    margin: 0 0 6px;
+  }
+  .hall-entry__line strong {
+    color: var(--sign);
+  }
+  .hall-entry__standings summary {
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 13.5px;
+  }
+  .hall-entry__standings table {
+    margin-block-start: 10px;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .hall-entry__standings td,
+  .hall-entry__standings th {
+    text-align: left;
+    padding: 4px 14px 4px 0;
+    border-bottom: 1px solid var(--hair-1);
+  }
+  .hall-back {
+    margin-block-start: 32px;
+  }
+  @media (max-width: 540px) {
+    .hall-entry {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

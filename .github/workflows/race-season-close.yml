@@ -1,0 +1,49 @@
+name: Race Season Close
+
+# Locks each closed Race season into the Trophy Hall (Zodiac Games R2.3).
+# Runs shortly after UTC midnight daily; on the morning after a season
+# boundary it fetches the closed season's immutable archive from the PUBLIC
+# standings endpoint (no secret) and appends one entry to
+# src/data/games/champions.json — committed once, never edited. Every other
+# day it exits without writing. The daily site build publishes the result.
+on:
+  schedule:
+    - cron: "23 0 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: race-season-close-${{ github.event.repository.default_branch }}
+  cancel-in-progress: false
+
+jobs:
+  close:
+    name: Engrave a closed season
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Lock the previous season if it just closed
+        run: node scripts/close-race-season.mjs
+
+      - name: Commit the Trophy Hall entry
+        run: |
+          if git diff --quiet src/data/games/champions.json; then
+            echo "No newly closed season to engrave."
+            exit 0
+          fi
+          git config user.name "zodiacs-recap-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/data/games/champions.json
+          git commit -m "Trophy Hall: engrave the newly closed season"
+          git push origin HEAD:${{ github.event.repository.default_branch }}

@@ -98,3 +98,9 @@ export function seasonInstanceForId(id: string): SeasonInstance {
       Date.UTC(startYear + (wraps ? 1 : 0), sign.end[0] - 1, sign.end[1]) + DAY_MS,
   };
 }
+
+/** The season instance that closed most recently before the current one. */
+export function previousSeasonInstance(input: Date | number): SeasonInstance {
+  const current = seasonInstanceAt(input);
+  return seasonInstanceAt(current.startUtc - 1);
+}

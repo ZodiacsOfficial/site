@@ -116,10 +116,49 @@ describe('standings', () => {
     expect(standings).toHaveLength(12);
     expect(standings[0]).toEqual({ sign: 'scorpio', points: 150, joins: 1, checkins: 2 });
     expect(new Set(standings.map((row) => row.sign)).size).toBe(12);
+    expect(body.closed).toBe(false);
     expect(res.headers['cache-control']).toBe('public, max-age=0, must-revalidate');
     expect(res.headers['cdn-cache-control']).toBe('public, s-maxage=60');
     const [, init] = fetcher.mock.calls[0]!;
     expect(JSON.parse((init as RequestInit).body as string)).toEqual({ season_id: 'leo-2026' });
+  });
+
+  it('serves a closed past season as a long-cached immutable archive', async () => {
+    const fetcher = rpcFetcher({
+      season_id: 'cancer-2026',
+      standings: [{ sign: 'pisces', points: 400, joins: 3, checkins: 4 }],
+    });
+    const res = makeRes();
+    await handleGamesApi(
+      makeReq({ method: 'GET', query: { action: 'standings', season: 'cancer-2026' }, headers: {} }),
+      res, BASE_ENV, { fetcher, now: AUG_17 },
+    );
+    expect(res.statusCode).toBe(200);
+    const body = res.body as Record<string, unknown>;
+    expect(body.seasonId).toBe('cancer-2026');
+    expect(body.closed).toBe(true);
+    expect(body.daysLeft).toBe(0);
+    expect((body.standings as unknown[]).length).toBe(12);
+    expect(res.headers['cache-control']).toBe('public, max-age=3600');
+    expect(res.headers['cdn-cache-control']).toBe('public, s-maxage=86400');
+    const [, init] = fetcher.mock.calls[0]!;
+    expect(JSON.parse((init as RequestInit).body as string)).toEqual({ season_id: 'cancer-2026' });
+  });
+
+  it('refuses future seasons and malformed season ids', async () => {
+    for (const [season, status, error] of [
+      ['virgo-2026', 404, 'unknown_season'],
+      ['leo-2099', 404, 'unknown_season'],
+      ['dragon-2026', 400, 'invalid'],
+    ] as const) {
+      const res = makeRes();
+      await handleGamesApi(
+        makeReq({ method: 'GET', query: { action: 'standings', season }, headers: {} }),
+        res, BASE_ENV, { fetcher: vi.fn() as unknown as typeof fetch, now: AUG_17 },
+      );
+      expect(res.statusCode, season).toBe(status);
+      expect((res.body as { error?: string }).error, season).toBe(error);
+    }
   });
 });
 
