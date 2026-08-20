@@ -125,6 +125,13 @@ describe('Phase 1 layout and motion contract', () => {
     ]);
     expect(today).toMatch(/\.today-reading__body\s*\{[^}]*display:\s*grid;[^}]*min-height:\s*326px;/u);
     expect(today).toMatch(/@media \(max-width: 480px\)\s*\{\s*\.today-reading__body\s*\{\s*min-height:\s*488px;\s*\}/u);
+    expect(today).toContain("data-living-chart-enabled={livingChartEnabled ? '' : undefined}");
+    expect(today).toMatch(
+      /\.today-page\[data-living-chart-enabled\] \.today-reading__body\s*\{\s*min-height:\s*570px;\s*\}/u,
+    );
+    expect(today).toMatch(
+      /\.today-page\[data-living-chart-enabled\] \.today-returning-chart-placeholder \.today-reading__head h2\s*\{[^}]*overflow:\s*hidden;[^}]*text-overflow:\s*ellipsis;[^}]*white-space:\s*nowrap;/u,
+    );
     expect(today).not.toContain('.today-returning-chart-placeholder { min-height:');
     expect(today).not.toContain(':root[data-today-saved-chart] .today-reading { min-height:');
     expect(program).toMatch(/\.program :global\(\.dfy__body\)\s*\{[^}]*display:\s*grid;[^}]*height:\s*260px;/u);

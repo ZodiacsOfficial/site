@@ -6,11 +6,11 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-08-20T06:49:46.809Z",
+  "capturedAt": "2026-08-20T10:42:45.379Z",
   "browser": "Chromium 149.0.7827.55",
   "dailyDate": "2026-08-20",
   "publicationCanonicalSha256": "2851e728db7d409245edade355215c0cf77a9330527f49858c963c87a0a5eaae",
-  "templateSourceSha256": "2905e5d93af0c0470482fea896048b5efedb9438a40048a2c5a89bf12cf64b76",
+  "templateSourceSha256": "8ed7429a8ea89cfa50ca4bc929b6f51e0cb3413aa9f9dc7b1cb1c36af381dfac",
   "renderPayloadSha256": {
     "daily": "31332e52297218be101ce89b7926e101562d40f58683f7ef199d2491f27739a2",
     "dailyPublication": "696c5054255fc26bc8501463cb58f8ad72e38c5db31a1e0f70b79ce577ea7fb8",
@@ -19,8 +19,8 @@
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-08-20T06:49:09.442Z",
-    "templateSourceSha256": "2905e5d93af0c0470482fea896048b5efedb9438a40048a2c5a89bf12cf64b76",
+    "builtAt": "2026-08-20T10:34:05.317Z",
+    "templateSourceSha256": "8ed7429a8ea89cfa50ca4bc929b6f51e0cb3413aa9f9dc7b1cb1c36af381dfac",
     "dailyDate": "2026-08-20",
     "publicationCanonicalSha256": "2851e728db7d409245edade355215c0cf77a9330527f49858c963c87a0a5eaae",
     "renderPayloadSha256": {
@@ -198,7 +198,7 @@
         "file": "tomorrow-360.png",
         "width": 360,
         "height": 3650,
-        "sha256": "09dd5a426a861976068839c30fda43a356b33d5251235fcad886cb6eff305b25"
+        "sha256": "a546557e605d3625e25b5f5886277a6473712766fa8067684f4877fb8d8d57b5"
       },
       "layout": {
         "clientWidth": 360,
@@ -301,13 +301,13 @@
       "screenshot": {
         "file": "monthly-360.png",
         "width": 360,
-        "height": 4277,
-        "sha256": "a94149a5c0da15378daa0aac652f15428bc5ce862dddfbb9eca6c9e1064deb71"
+        "height": 4248,
+        "sha256": "535806e886116b31a188c8ac2c9f251320c872bfa24fcd3cbee7195b40eba30c"
       },
       "layout": {
         "clientWidth": 360,
         "scrollWidth": 360,
-        "scrollHeight": 4277,
+        "scrollHeight": 4248,
         "contentLength": 3444,
         "overlay": false,
         "guideLauncher": true,

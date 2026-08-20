@@ -107,6 +107,7 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
     data-edition-content="true"
     data-daily-date={publication.date}
     data-generation-mode={publication.generation.mode}
+    data-living-chart-enabled={livingChartEnabled ? '' : undefined}
   >
     <header class="today-hero">
       <em class="kicker">Your daily brief</em>
@@ -540,6 +541,12 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
   .today-method-details__body li { overflow-wrap: anywhere; font-family: var(--font-mono); font-size: 10.5px; }
   @media (max-width: 480px) {
     .today-reading__body { min-height: 488px; }
+    .today-page[data-living-chart-enabled] .today-reading__body { min-height: 570px; }
+    .today-page[data-living-chart-enabled] .today-returning-chart-placeholder .today-reading__head h2 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     .today-card__head { align-items: center; }
     .today-lines li { padding-left: 14px; }
     .today-sign-picker__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
