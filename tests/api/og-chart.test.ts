@@ -1,41 +1,47 @@
 import { describe, expect, it, vi } from 'vitest';
 import { encodePositionsLink, POSITION_BODY_ORDER } from '../../src/lib/share-positions';
 
-const rendererMocks = vi.hoisted(() => {
+const imageResponseMock = vi.hoisted(() => {
   const png = new Uint8Array(24);
   png.set([137, 80, 78, 71, 13, 10, 26, 10]);
   const view = new DataView(png.buffer);
   view.setUint32(16, 1200);
   view.setUint32(20, 630);
   return {
-    asPng: vi.fn(() => png),
-    renderedFree: vi.fn(),
-    rendererFree: vi.fn(),
-    satori: vi.fn(async (
-      _element: unknown,
-      _options: { fonts: Array<{ weight: number; style: string }> },
-    ) => '<svg/>'),
+    element: vi.fn(),
+    options: vi.fn(),
+    renderFailure: null as Error | null,
+    png,
   };
 });
 
 const fetchMock = vi.fn(async () => new Response(new Uint8Array([0])));
 vi.stubGlobal('fetch', fetchMock);
-vi.mock('@resvg/resvg-wasm', () => ({
-  initWasm: vi.fn(async () => undefined),
-  Resvg: class {
-    render() {
-      return { asPng: rendererMocks.asPng, free: rendererMocks.renderedFree };
+vi.mock('@vercel/og', () => ({
+  ImageResponse: class extends Response {
+    constructor(element: unknown, options: {
+      width: number;
+      height: number;
+      headers?: HeadersInit;
+      fonts?: Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>;
+    }) {
+      imageResponseMock.element(element);
+      imageResponseMock.options(options);
+      super(imageResponseMock.png, {
+        headers: { ...options.headers, 'Content-Type': 'image/png' },
+      });
     }
-    free() { rendererMocks.rendererFree(); }
+
+    override async arrayBuffer(): Promise<ArrayBuffer> {
+      if (imageResponseMock.renderFailure) {
+        const failure = imageResponseMock.renderFailure;
+        imageResponseMock.renderFailure = null;
+        throw failure;
+      }
+      return super.arrayBuffer();
+    }
   },
 }));
-vi.mock('@resvg/resvg-wasm/index_bg.wasm?module', () => ({ default: {} }));
-vi.mock('satori/wasm', () => ({
-  default: rendererMocks.satori,
-  init: vi.fn(),
-}));
-vi.mock('yoga-wasm-web', () => ({ default: vi.fn(async () => ({})) }));
-vi.mock('yoga-wasm-web/dist/yoga.wasm?module', () => ({ default: {} }));
 
 const { default: handler, previewModel } = await import('../../api/og/chart');
 
@@ -108,7 +114,7 @@ describe('chart preview edge function', () => {
     ))).status).toBe(405);
   });
 
-  it('returns 503 before committing an image response and retries failed renderer initialization', async () => {
+  it('returns 503 before committing an image when a bundled font cannot load, then retries', async () => {
     fetchMock.mockClear();
     fetchMock.mockRejectedValueOnce(new Error('font unavailable'));
     const failed = await handler(new Request(`https://zodiacs.org/api/og/chart?p=${token}&image=1`));
@@ -124,10 +130,8 @@ describe('chart preview edge function', () => {
   });
 
   it('emits a 1200×630 PNG response without cache or indexing', async () => {
-    rendererMocks.asPng.mockClear();
-    rendererMocks.renderedFree.mockClear();
-    rendererMocks.rendererFree.mockClear();
-    rendererMocks.satori.mockClear();
+    imageResponseMock.element.mockClear();
+    imageResponseMock.options.mockClear();
     const response = await handler(new Request(`https://zodiacs.org/api/og/chart?p=${token}&image=1`));
     const bytes = new Uint8Array(await response.arrayBuffer());
     expect(response.status).toBe(200);
@@ -137,23 +141,34 @@ describe('chart preview edge function', () => {
     expect(Array.from(bytes.slice(0, 8))).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
     expect(new DataView(bytes.buffer).getUint32(16)).toBe(1200);
     expect(new DataView(bytes.buffer).getUint32(20)).toBe(630);
-    expect(rendererMocks.satori.mock.calls[0]?.[1]?.fonts).toEqual([
-      expect.objectContaining({ weight: 500, style: 'normal' }),
-      expect.objectContaining({ weight: 500, style: 'italic' }),
+    expect(imageResponseMock.options).toHaveBeenCalledOnce();
+    expect(imageResponseMock.options).toHaveBeenCalledWith(expect.objectContaining({
+      width: 1200,
+      height: 630,
+      fonts: [
+        expect.objectContaining({ name: 'sans serif', weight: 400, style: 'normal' }),
+        expect.objectContaining({ name: 'EB Garamond', weight: 500, style: 'italic' }),
+      ],
+    }));
+    expect(fetchMock.mock.calls.map(([input]) => new URL(String(input)).pathname)).toEqual([
+      expect.stringContaining('/node_modules/@vercel/og/dist/noto-sans-v27-latin-regular.ttf'),
+      expect.stringContaining('/api/og/eb-garamond-latin-500-italic.woff'),
+      expect.stringContaining('/node_modules/@vercel/og/dist/noto-sans-v27-latin-regular.ttf'),
+      expect.stringContaining('/api/og/eb-garamond-latin-500-italic.woff'),
     ]);
-    expect(rendererMocks.asPng).toHaveBeenCalledOnce();
-    expect(rendererMocks.renderedFree).toHaveBeenCalledOnce();
-    expect(rendererMocks.rendererFree).toHaveBeenCalledOnce();
+    const serializedCard = JSON.stringify(imageResponseMock.element.mock.calls[0]?.[0]);
+    expect(serializedCard).toContain('Your chart signature');
+    expect(serializedCard).toContain('"fontFamily":"EB Garamond"');
+    expect(serializedCard).toContain('"fontStyle":"italic"');
   });
 
-  it('frees both WASM render objects when PNG encoding fails', async () => {
-    rendererMocks.asPng.mockImplementationOnce(() => { throw new Error('PNG failed'); });
-    rendererMocks.renderedFree.mockClear();
-    rendererMocks.rendererFree.mockClear();
+  it('returns a generic 503 before committing a streaming renderer failure', async () => {
+    imageResponseMock.renderFailure = new Error('render failed');
     const response = await handler(new Request(`https://zodiacs.org/api/og/chart?p=${token}&image=1`));
+
     expect(response.status).toBe(503);
+    expect(response.headers.get('content-type')).toContain('text/plain');
+    expect(response.headers.get('cache-control')).toBe('no-store, max-age=0');
     expect(await response.text()).toBe('Chart preview unavailable.');
-    expect(rendererMocks.renderedFree).toHaveBeenCalledOnce();
-    expect(rendererMocks.rendererFree).toHaveBeenCalledOnce();
   });
 });

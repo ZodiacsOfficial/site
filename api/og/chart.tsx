@@ -1,10 +1,5 @@
-/// <reference path="../../src/types/wasm-module.d.ts" />
 /** @jsxImportSource preact */
-import { Resvg, initWasm as initResvg } from '@resvg/resvg-wasm';
-import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm?module';
-import satori, { init as initSatori } from 'satori/wasm';
-import initYoga from 'yoga-wasm-web';
-import yogaWasm from 'yoga-wasm-web/dist/yoga.wasm?module';
+import { ImageResponse } from '@vercel/og';
 import { decodePositionsLink } from '../../src/lib/share-positions.js';
 
 export const config = { runtime: 'edge' };
@@ -21,7 +16,7 @@ const SIGNS = [
   ['Sagittarius', 'sagittarius'], ['Capricorn', 'capricorn'], ['Aquarius', 'aquarius'], ['Pisces', 'pisces'],
 ] as const;
 
-let rendererAssets: Promise<[ArrayBuffer, ArrayBuffer]> | null = null;
+let previewFonts: Promise<[ArrayBuffer, ArrayBuffer]> | null = null;
 
 function loadFont(url: URL): Promise<ArrayBuffer> {
   return fetch(url).then((response) => {
@@ -30,17 +25,15 @@ function loadFont(url: URL): Promise<ArrayBuffer> {
   });
 }
 
-function prepareRenderer(): Promise<[ArrayBuffer, ArrayBuffer]> {
-  if (rendererAssets) return rendererAssets;
+function prepareFonts(): Promise<[ArrayBuffer, ArrayBuffer]> {
+  if (previewFonts) return previewFonts;
   const pending = Promise.all([
-    initYoga(yogaWasm).then((yoga) => initSatori(yoga)),
-    initResvg(resvgWasm),
-    loadFont(new URL('./eb-garamond-latin-500-normal.woff', import.meta.url)),
+    loadFont(new URL('../../node_modules/@vercel/og/dist/noto-sans-v27-latin-regular.ttf', import.meta.url)),
     loadFont(new URL('./eb-garamond-latin-500-italic.woff', import.meta.url)),
-  ]).then(([, , normalFont, italicFont]): [ArrayBuffer, ArrayBuffer] => [normalFont, italicFont]);
-  rendererAssets = pending;
+  ]);
+  previewFonts = pending;
   void pending.catch(() => {
-    if (rendererAssets === pending) rendererAssets = null;
+    if (previewFonts === pending) previewFonts = null;
   });
   return pending;
 }
@@ -96,6 +89,8 @@ function htmlEscape(value: string): string {
 }
 
 const PRIVACY_HEADERS = {
+  // Keep this key lowercase: @vercel/og defines its cache default with the
+  // same spelling before spreading these options into the Response headers.
   'cache-control': 'no-store, max-age=0',
   'X-Robots-Tag': 'noindex, nofollow, noarchive',
   'Referrer-Policy': 'no-referrer',
@@ -111,14 +106,18 @@ function errorResponse(status: number): Response {
 
 async function image(model: ChartPreviewModel): Promise<Response> {
   const rows = model.placements;
-  const element = (
+  const [normalFont, italicFont] = await prepareFonts();
+  const rendered = new ImageResponse(
     <div style={{
       width: '1200px', height: '630px', display: 'flex', flexDirection: 'column',
       justifyContent: 'space-between', padding: '58px 68px', background: '#060709',
-      color: '#EEF1F7', fontFamily: 'EB Garamond',
+      color: '#EEF1F7', fontFamily: 'sans serif',
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', fontSize: 28, fontStyle: 'italic', color: '#8E96AB' }}>Your chart signature</div>
+        <div style={{
+          display: 'flex', fontFamily: 'EB Garamond', fontSize: 28,
+          fontStyle: 'italic', color: '#8E96AB',
+        }}>Your chart signature</div>
         <div style={{ display: 'flex', fontSize: 24, color: '#8E96AB' }}>zodiacs.org</div>
       </div>
       <div style={{ display: 'flex', gap: '30px', width: '100%' }}>
@@ -135,33 +134,25 @@ async function image(model: ChartPreviewModel): Promise<Response> {
         ))}
       </div>
       <div style={{ display: 'flex', fontSize: 24, color: '#8E96AB' }}>{model.settings} / Positions only</div>
-    </div>
+    </div>,
+    {
+      width: 1200,
+      height: 630,
+      // ImageResponse supplies its own exact image/png content type.
+      headers: PRIVACY_HEADERS,
+      fonts: [
+        { name: 'sans serif', data: normalFont, weight: 400, style: 'normal' },
+        { name: 'EB Garamond', data: italicFont, weight: 500, style: 'italic' },
+      ],
+    },
   );
-  const [normalFont, italicFont] = await prepareRenderer();
-  const svg = await satori(element as never, {
-    width: 1200,
-    height: 630,
-    fonts: [
-      { name: 'EB Garamond', data: normalFont, weight: 500, style: 'normal' },
-      { name: 'EB Garamond', data: italicFont, weight: 500, style: 'italic' },
-    ],
+  // ImageResponse renders through a stream. Consume it before returning so a
+  // renderer failure stays on the generic 503 path instead of committing a
+  // partial 200 response to a social crawler.
+  const png = await rendered.arrayBuffer();
+  return new Response(png, {
+    headers: { ...PRIVACY_HEADERS, 'Content-Type': 'image/png' },
   });
-  const renderer = new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } });
-  try {
-    const rendered = renderer.render();
-    try {
-      // Copy the bytes before freeing the WASM render object. Rendering must
-      // finish before the 200 response is committed so failures return 503.
-      const png = Uint8Array.from(rendered.asPng());
-      return new Response(png, {
-        headers: { ...PRIVACY_HEADERS, 'Content-Type': 'image/png' },
-      });
-    } finally {
-      rendered.free();
-    }
-  } finally {
-    renderer.free();
-  }
 }
 
 export default async function handler(request: Request): Promise<Response> {

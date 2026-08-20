@@ -881,13 +881,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     }
   }
 
-  // Warm the ephemeris while the visitor types.
-  useEffect(() => {
-    const warm = () => { loadEngine(); };
-    const idle = (window as any).requestIdleCallback ?? ((fn: () => void) => setTimeout(fn, 2500));
-    idle(warm);
-  }, [loadEngine]);
-
   // A shared chart arrives in the fragment. A v1 #c token carries birth
   // input and computes as before; a v2 #p token is loaded into a deliberately
   // reduced, read-only view. Never choose between two conflicting formats.
@@ -1528,7 +1521,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     && document.documentElement.hasAttribute('data-chart-share-receiver');
   return (
     <div class="calc" data-subject-mode={subjectMode}>
-      <form ref={formRef} class="calc__form shell" onSubmit={compute} aria-busy={busy} noValidate>
+      <form
+        ref={formRef}
+        class="calc__form shell"
+        onFocusCapture={() => { void loadEngine(); }}
+        onSubmit={compute}
+        aria-busy={busy} noValidate
+      >
         <div class="core calc__core">
           <div class="calc__fields">
             <BirthFields
@@ -1560,7 +1559,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 setCity(value);
                 setFieldErrors((current) => current.place ? { ...current, place: false } : current);
               }}
-              onWarm={loadEngine}
               showUnknownTime={mode !== 'rising'}
               requireKnownTime
               timeHelp={mode === 'rising' ? t(locale, 'risingTimeHelp') : t(locale, 'chartTimeHelp')}
