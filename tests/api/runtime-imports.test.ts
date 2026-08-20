@@ -16,6 +16,7 @@ const EXPECTED_HANDLERS = [
   'api/email/chart-preference.ts',
   'api/email/subscribe.ts',
   'api/guide.ts',
+  'api/og/chart.tsx',
   'api/push/subscribe.ts',
   'api/unsubscribe.ts',
   'api/wallet-birth.ts',
@@ -187,7 +188,7 @@ function auditRuntimeGraphs(): { violations: string[]; catalogs: string[] } {
 describe('Vercel API runtime packaging', () => {
   it('exposes only the intended function handlers', () => {
     expect(deployedFunctionFiles(API_ROOT).sort()).toEqual([...EXPECTED_HANDLERS].sort());
-    expect(EXPECTED_HANDLERS).toHaveLength(12);
+    expect(EXPECTED_HANDLERS).toHaveLength(13);
   });
 
   it('routes Registry news through the existing compatibility function', () => {

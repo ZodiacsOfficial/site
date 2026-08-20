@@ -73,6 +73,9 @@ export interface ChartTourProps {
   onComplete?: () => void;
   onOpenForecast?: () => void;
   onSave: () => void;
+  shareLabel: string;
+  shareStatusLabel: string;
+  shareDisabled: boolean;
   onShare: () => void;
   onExit: () => void;
   returnFocus: () => void;
@@ -88,7 +91,7 @@ export default function ChartTour({
   scene, chart, locale, variant, initialStep = 0, moonAmbiguous = false, selection,
   loadEngine, buildScene, renderInspector, topAspects, readAspect, readHouse,
   onSelect, onAnnounce, onVisual, onEnsure, onTrack, onProgress, onComplete,
-  onOpenForecast, onSave, onShare, onExit, returnFocus,
+  onOpenForecast, onSave, shareLabel, shareStatusLabel, shareDisabled, onShare, onExit, returnFocus,
 }: ChartTourProps) {
   const chapters = useMemo(
     () => (variant === 'quick' ? deriveFirstReading(scene) : deriveChapters(scene)),
@@ -667,7 +670,9 @@ export default function ChartTour({
       }}
       prevDisabled={at === 0}
       isLast={at === stops.length - 1}
-      shareLabel={t(locale, 'shareChart')}
+      shareLabel={shareLabel}
+      shareStatusLabel={shareStatusLabel}
+      shareDisabled={shareDisabled}
       onShare={onShare}
       onExit={() => {
         cancelTween();

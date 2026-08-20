@@ -31,6 +31,8 @@ interface Props {
   prevDisabled: boolean;
   isLast: boolean;
   shareLabel: string;
+  shareStatusLabel: string;
+  shareDisabled: boolean;
   onShare: () => void;
   onExit: () => void;
   headingRef: MutableRef<HTMLHeadingElement | null>;
@@ -39,7 +41,7 @@ interface Props {
 export default function TourCard({
   locale, variant, kicker, title, dotsLabel, exitLabel, finishLabel, nextLabel, paragraphs, feature, dots,
   onDot, onPrev, onNext, onFinish, prevDisabled, isLast, onExit, headingRef,
-  shareLabel, onShare,
+  shareLabel, shareStatusLabel, shareDisabled, onShare,
 }: Props) {
   // The four-step first reading opens expanded on phones so the lesson and
   // its navigation are immediately legible. Longer tours retain the peek.
@@ -99,10 +101,11 @@ export default function TourCard({
             class="tour__share"
             type="button"
             onClick={onShare}
+            disabled={shareDisabled}
             aria-label={shareLabel}
             data-tour-share
           >
-            <span>{shareLabel}</span>
+            <span>{shareStatusLabel}</span>
             <span aria-hidden="true">↗</span>
           </button>
           <button class="insp__close" type="button" onClick={onExit} aria-label={exitLabel} data-tour-exit>×</button>

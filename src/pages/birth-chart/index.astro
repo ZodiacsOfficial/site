@@ -72,6 +72,28 @@ const jsonLd = [
   imageAlt="Free birth chart calculator — Zodiacs.org"
   jsonLd={jsonLd}
 >
+  <script slot="head" is:inline>
+    try {
+      var chartShareParams = new URLSearchParams(location.hash.slice(1));
+      if (chartShareParams.has('p') || chartShareParams.has('c')) {
+        document.documentElement.dataset.chartShareReceiver = '';
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('a[href="/astrofolio/"],a[href^="/registry/"],a[href^="/sdk/"]').forEach(function (element) {
+            var footerWing = element.closest('.footer__col');
+            (footerWing || element).remove();
+          });
+        }, { once: true });
+      }
+    } catch (error) {}
+  </script>
+  <style slot="head" is:inline>
+    html[data-chart-share-receiver] a[href="/astrofolio/"],
+    html[data-chart-share-receiver] a[href^="/registry/"],
+    html[data-chart-share-receiver] a[href^="/sdk/"],
+    html[data-chart-share-receiver] .calc__record,
+    html[data-chart-share-receiver] [data-registry-aura-chart-link],
+    html[data-chart-share-receiver] .footer__col:has(a[href^="/registry/"]) { display: none !important; }
+  </style>
   <section class="section--tight container">
     <div class="tool-hero">
       <h1 class="display">Get your free birth chart.</h1>

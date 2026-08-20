@@ -731,13 +731,13 @@ try {
       && shareBox.width >= 44
       && shareBox.height >= 44;
   }));
+  const tourShareDownloadPromise = mob.waitForEvent('download', { timeout: 10000 });
   await mob.locator('[data-tour-share]').click();
-  await mob.waitForSelector('[data-share-dialog]', { timeout: 10000 });
-  check('mobile: tour Share opens the chart share sheet without ending the tour',
-    await mob.locator('[data-share-dialog]').getAttribute('open') !== null
+  const tourShareDownload = await tourShareDownloadPromise;
+  check('mobile: tour Share exports the prepared chart without ending the tour',
+    tourShareDownload.suggestedFilename() === 'zodiacs-chart-sheet.png'
+    && (await mob.locator('[data-share-dialog]').count()) === 0
     && (await mob.locator('[data-tour-card]').count()) === 1);
-  await mob.locator('[data-share-dialog] .calc-share-dialog__close').click();
-  await mob.waitForSelector('[data-share-dialog]', { state: 'detached', timeout: 5000 });
   await shot(mob, 'mobile-tour-sheet.png');
   const mobHandle = await mob.locator('[data-tour-card] .insp__handle').boundingBox();
   if (mobHandle) {

@@ -121,6 +121,13 @@ describe('analytics event contract', () => {
       mode: 'full',
       source: 'link-from-a-friend',
     })).toEqual({ mode: 'full' });
+    expect(sanitizeAnalyticsProperties('chart_share', {
+      variant: 'positions_link',
+      token: 'never',
+    })).toEqual({ variant: 'positions_link' });
+    expect(sanitizeAnalyticsProperties('chart_share', {
+      variant: 'custom-link-from-a-friend',
+    })).toEqual({});
     expect(sanitizeAnalyticsProperties('invite_created', {
       notify: true,
       token: 'never',

@@ -87,6 +87,17 @@ export const ANALYTICS_EVENT_VALUES = Object.freeze({
   chart_computed: Object.freeze({
     source: Object.freeze(['fresh', 'shared_details', 'shared_positions']),
   }),
+  chart_share: Object.freeze({
+    variant: Object.freeze([
+      'details_link',
+      'positions_link',
+      'big_three_card',
+      'full_chart_card',
+      'signature_card',
+      'approach_card',
+      'communication_card',
+    ]),
+  }),
   living_chart_open: Object.freeze({
     source: Object.freeze(['today', 'profile']),
   }),

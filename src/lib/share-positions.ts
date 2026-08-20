@@ -12,7 +12,7 @@
  */
 import type {
   Angles, BodyName, BodyPosition, HouseSystem,
-} from './engine/types';
+} from './engine/types.js';
 
 export const POSITION_BODY_ORDER = [
   'Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter',
