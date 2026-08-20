@@ -9,9 +9,20 @@ interface Props {
   selected: City | null;
   id?: string;
   locale?: Locale;
+  validationError?: string;
+  selectionHint?: string;
+  required?: boolean;
 }
 
-export default function PlaceSearch({ onSelect, selected, id = 'place', locale = 'en' }: Props) {
+export default function PlaceSearch({
+  onSelect,
+  selected,
+  id = 'place',
+  locale = 'en',
+  validationError,
+  selectionHint,
+  required = false,
+}: Props) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<City[]>([]);
   const [open, setOpen] = useState(false);
@@ -19,6 +30,7 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale =
   const [error, setError] = useState(false);
   const debounce = useRef<ReturnType<typeof setTimeout>>();
   const requestToken = useRef(0);
+  const pickHint = validationError || (!selected && query.trim() ? selectionHint : '');
 
   function onInput(value: string) {
     const token = ++requestToken.current;
@@ -91,6 +103,9 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale =
         aria-autocomplete="list"
         aria-controls={`${id}-list`}
         aria-activedescendant={open && results[active] ? `${id}-opt-${active}` : undefined}
+        aria-describedby={pickHint ? `${id}-pick-hint` : undefined}
+        aria-invalid={validationError ? 'true' : undefined}
+        aria-required={required || undefined}
         placeholder={t(locale, 'placePlaceholder')}
         autocomplete="off"
         value={query}
@@ -98,6 +113,15 @@ export default function PlaceSearch({ onSelect, selected, id = 'place', locale =
         onInput={(e) => onInput((e.target as HTMLInputElement).value)}
         onKeyDown={onKeyDown}
       />
+      {pickHint && (
+        <p
+          id={`${id}-pick-hint`}
+          class={validationError ? 'place__error' : 'place__hint'}
+          role={validationError ? 'alert' : undefined}
+        >
+          {pickHint}
+        </p>
+      )}
       {error && <p class="place__error" role="alert">{t(locale, 'placeError')}</p>}
       {open && (
         <ul class="place__list" id={`${id}-list`} role="listbox">

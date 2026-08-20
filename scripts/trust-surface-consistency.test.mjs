@@ -156,6 +156,6 @@ describe('homepage social card', () => {
     expect(seo).toContain('<meta property="og:image:type" content={imageType} />');
     expect(seo).toContain('<meta name="twitter:image" content={imageUrl} />');
     expect(createHash('sha256').update(bytes).digest('hex'))
-      .toBe('c35c76b2452eec03fa3a20346f83de858ac8b42e6fa6f65ab128d8b4b8a51fcd');
+      .toBe('8cdbd6b9adedc94b1793137dc0def58c2497ab1560f1850ef4e033d5ee7467fe');
   });
 });

@@ -73,8 +73,10 @@
 }
 .field__input:hover { border-color: var(--hair-3); }
 .field__input:focus { border-color: color-mix(in oklab, var(--accent) 60%, transparent); outline: none; }
+.field__input[aria-invalid='true'] { border-color: var(--sign-aries); }
 .field__input:disabled { opacity: 0.45; }
 .field__help { margin: 0; font-size: 12.5px; color: var(--faint); }
+.field__error { margin: 0; font-size: 12.5px; color: var(--sign-aries); }
 .calc__house-terms {
   display: flex;
   align-items: center;
@@ -152,6 +154,7 @@
 }
 .place__clear:hover { color: var(--text); border-color: var(--hair-3); }
 .place__error { margin: 8px 0 0; font-size: 12.5px; color: var(--sign-aries); }
+.place__hint { margin: 8px 0 0; font-size: 12.5px; color: var(--faint); }
 
 /* Notices */
 .notice {
