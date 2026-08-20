@@ -26,7 +26,7 @@ function prepareFonts(): Promise<[ArrayBuffer, ArrayBuffer]> {
   if (previewFonts) return previewFonts;
   const pending = Promise.all([
     readFile(new URL('../../node_modules/@vercel/og/dist/noto-sans-v27-latin-regular.ttf', import.meta.url)),
-    readFile(new URL('../og/eb-garamond-latin-500-italic.woff', import.meta.url)),
+    readFile(new URL('../../api/og/eb-garamond-latin-500-italic.woff', import.meta.url)),
   ]).then(([normal, italic]): [ArrayBuffer, ArrayBuffer] => [
     exactArrayBuffer(normal),
     exactArrayBuffer(italic),

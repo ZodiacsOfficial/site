@@ -262,14 +262,14 @@ describe('Vercel API runtime packaging', () => {
     expect(audit.violations).toEqual([]);
     expect(audit.catalogs).toEqual([]);
     expect(runtimeImports(join(ROOT, 'api/compatibility.ts'))).toContainEqual({
-      specifier: './_og/chart-preview.js',
+      specifier: '../src/server/chart-preview.js',
       hasJsonAttribute: false,
     });
-    expect(runtimeImports(join(ROOT, 'api/_og/chart-preview.ts'))).toContainEqual({
+    expect(runtimeImports(join(ROOT, 'src/server/chart-preview.ts'))).toContainEqual({
       specifier: '@vercel/og',
       hasJsonAttribute: false,
     });
-    expect(readFileSync(join(ROOT, 'api/_og/chart-preview.ts'), 'utf8')).not.toContain("runtime: 'edge'");
+    expect(readFileSync(join(ROOT, 'src/server/chart-preview.ts'), 'utf8')).not.toContain("runtime: 'edge'");
   });
 
   it('packages the shared admin bootstrap guard in both daily enrollment graphs', () => {

@@ -1,7 +1,7 @@
 import { sendInviteJson } from '../src/lib/invite/api.js';
 import { handleGamesApi } from '../src/lib/games/server.js';
 import { handleRegistryNews } from './_registry/news-handler.js';
-import { handleChartPreviewNodeRequest } from './_og/chart-preview.js';
+import { handleChartPreviewNodeRequest } from '../src/server/chart-preview.js';
 import completeHandler from '../src/lib/invite/routes/invite-complete.js';
 import exchangeHandler from '../src/lib/invite/routes/invite-exchange.js';
 import hideHandler from '../src/lib/invite/routes/invite-hide.js';

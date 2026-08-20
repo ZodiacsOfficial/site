@@ -13,7 +13,7 @@ describe('chart preview renderer', () => {
       throw new Error('The chart preview renderer must not fetch assets.');
     });
     vi.stubGlobal('fetch', fetchSpy);
-    const { handleChartImageRequest } = await import('../../api/_og/chart-preview');
+    const { handleChartImageRequest } = await import('../../src/server/chart-preview');
     const token = encodePositionsLink({
       bodies: POSITION_BODY_ORDER.map((body, index) => ({ body, lon: index * 29.999 })),
       angles: { asc: 359.999, mc: 270 },

@@ -15,6 +15,7 @@ const SOURCE_ROOTS = Object.freeze([
   'src/layouts',
   'src/lib',
   'src/pages',
+  'src/server',
   'src/strings',
 ]);
 

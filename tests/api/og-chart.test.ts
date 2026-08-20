@@ -50,8 +50,8 @@ const {
   handleChartImageRequest: imageHandler,
   handleChartPreviewNodeRequest,
   PREVIEW_KICKER,
-} = await import('../../api/_og/chart-preview');
-const { previewModel } = await import('../../api/_og/chart-preview-model');
+} = await import('../../src/server/chart-preview');
+const { previewModel } = await import('../../src/server/chart-preview-model');
 const { default: compatibilityHandler } = await import('../../api/compatibility');
 
 const token = encodePositionsLink({

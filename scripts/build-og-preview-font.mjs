@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const routePath = path.join(root, 'api/_og/chart-preview.ts');
+const routePath = path.join(root, 'src/server/chart-preview.ts');
 const sourcePath = path.join(
   root,
   'node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-500-italic.woff',
@@ -24,7 +24,7 @@ function sha256(bytes) {
 
 const route = await readFile(routePath, 'utf8');
 const kicker = route.match(/export const PREVIEW_KICKER = '([^']+)'/)?.[1];
-if (!kicker) throw new Error('Could not read PREVIEW_KICKER from api/_og/chart-preview.ts.');
+if (!kicker) throw new Error('Could not read PREVIEW_KICKER from src/server/chart-preview.ts.');
 
 const source = await readFile(sourcePath);
 const sourceSha256 = sha256(source);

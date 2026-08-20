@@ -31,6 +31,7 @@ const description = 'A free astrology calculator.';
     ['src/islands/Example.tsx', 'export const View = () => <p>A crypto market shortcut.</p>;'],
     ['src/lib/email/example.ts', "export const body = 'Buy this Zodiac token today.';"],
     ['src/lib/share-card.ts', "export const footer = 'Trade the Zodiac token.';"],
+    ['src/server/chart-preview.ts', "export const footer = 'Trade the Zodiac token.';"],
     ['api/example.ts', "export const errorMessage = 'The token market is ready.';"],
     ['src/content/example.mdx', 'A memecoin does not belong in this guide.'],
     ['src/data/example.json', '{"description":"Official Zodiac token"}'],
@@ -178,7 +179,7 @@ const description = 'A free astrology calculator.';
   it('fails a seeded full-tree source while keeping Registry exclusions exact', async () => {
     const repo = await mkdtemp(join(tmpdir(), 'consumer-boundary-'));
     try {
-      for (const root of ['api', 'src/components', 'src/content', 'src/data/registry-research', 'src/islands', 'src/layouts', 'src/lib/email', 'src/pages', 'src/strings', 'public']) {
+      for (const root of ['api', 'src/components', 'src/content', 'src/data/registry-research', 'src/islands', 'src/layouts', 'src/lib/email', 'src/pages', 'src/server', 'src/strings', 'public']) {
         await mkdir(join(repo, root), { recursive: true });
       }
       await writeFile(join(repo, 'public/llms.txt'), 'Free astrology tools.');

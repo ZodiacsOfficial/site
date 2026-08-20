@@ -1,4 +1,4 @@
-import { decodePositionsLink } from '../../src/lib/share-positions.js';
+import { decodePositionsLink } from '../lib/share-positions.js';
 
 const HUES: Record<string, string> = {
   aries: '#DE8E79', taurus: '#B9D4BE', gemini: '#B29DD0', cancer: '#B6D4E4',
