@@ -18,9 +18,7 @@ const imageResponseMock = vi.hoisted(() => {
   };
 });
 
-const fetchMock = vi.fn(async () => new Response(new Uint8Array([0])));
-vi.stubGlobal('fetch', fetchMock);
-vi.mock('../../node_modules/@vercel/og/dist/index.edge.js', () => ({
+vi.mock('@vercel/og', () => ({
   ImageResponse: class extends Response {
     constructor(element: unknown, options: {
       width: number;
@@ -46,7 +44,15 @@ vi.mock('../../node_modules/@vercel/og/dist/index.edge.js', () => ({
   },
 }));
 
-const { default: handler, previewModel, PREVIEW_KICKER } = await import('../../api/og/chart');
+const {
+  CHART_PREVIEW_ROUTE_KEY,
+  handleChartLinkRequest: linkHandler,
+  handleChartImageRequest: imageHandler,
+  handleChartPreviewNodeRequest,
+  PREVIEW_KICKER,
+} = await import('../../api/_og/chart-preview');
+const { previewModel } = await import('../../api/_og/chart-preview-model');
+const { default: compatibilityHandler } = await import('../../api/compatibility');
 
 const token = encodePositionsLink({
   bodies: POSITION_BODY_ORDER.map((body, index) => ({ body, lon: index * 29.999 })),
@@ -61,7 +67,7 @@ const noAnglesToken = encodePositionsLink({
   engineVersion: '1.2.3',
 })!;
 
-describe('chart preview edge function', () => {
+describe('chart preview functions', () => {
   it('builds a bounded positions-only model with minute carry', () => {
     const model = previewModel(token);
     expect(model?.placements.map(({ label }) => label)).toEqual(['Sun', 'Moon', 'Rising']);
@@ -76,7 +82,7 @@ describe('chart preview edge function', () => {
     expect(model?.placements.map(({ label }) => label)).toEqual(['Sun', 'Moon']);
     expect(model?.settings).toBe('12:00 reference / No houses / Tropical');
 
-    const response = await handler(new Request(
+    const response = await linkHandler(new Request(
       `https://zodiacs.org/api/og/chart?p=${encodeURIComponent(noAnglesToken)}`,
     ));
     const html = await response.text();
@@ -85,7 +91,7 @@ describe('chart preview edge function', () => {
   });
 
   it('returns a no-store noindex HTML wrapper that redirects to the fragment receiver', async () => {
-    const response = await handler(new Request(`https://zodiacs.org/api/og/chart?p=${encodeURIComponent(token)}`));
+    const response = await linkHandler(new Request(`https://zodiacs.org/api/og/chart?p=${encodeURIComponent(token)}`));
     const html = await response.text();
     expect(response.status).toBe(200);
     expect(response.headers.get('cache-control')).toBe('no-store, max-age=0');
@@ -93,6 +99,7 @@ describe('chart preview edge function', () => {
     expect(response.headers.get('referrer-policy')).toBe('no-referrer');
     expect(response.headers.get('content-security-policy')).toContain("default-src 'none'");
     expect(html).toContain('property="og:image"');
+    expect(html).toContain(`/api/og/chart-image?p=${encodeURIComponent(token)}`);
     expect(html).toContain('/birth-chart/#p=');
     expect(html).not.toMatch(/registry|astrofolio|terminal|wallet|birth date:\s*\d/i);
   });
@@ -103,39 +110,36 @@ describe('chart preview edge function', () => {
       `https://zodiacs.org/api/og/chart?p=${token}&p=${token}`,
       'https://zodiacs.org/api/og/chart?p=bad',
       `https://zodiacs.org/api/og/chart?p=${token}&free=text`,
-      `https://zodiacs.org/api/og/chart?p=${token}&image`,
-      `https://zodiacs.org/api/og/chart?p=${token}&image=`,
+      `https://zodiacs.org/api/og/chart?p=${token}&image=1`,
     ];
     for (const url of urls) {
-      const response = await handler(new Request(url));
+      const response = await linkHandler(new Request(url));
       expect(response.status).toBe(400);
       expect(await response.text()).toBe('Chart preview unavailable.');
     }
-    expect((await handler(new Request(
+    expect((await linkHandler(new Request(
       `https://zodiacs.org/api/og/chart?p=${token}`,
       { method: 'POST' },
     ))).status).toBe(405);
   });
 
-  it('returns 503 before committing an image when a bundled font cannot load, then retries', async () => {
-    fetchMock.mockClear();
-    fetchMock.mockRejectedValueOnce(new Error('font unavailable'));
-    const failed = await handler(new Request(`https://zodiacs.org/api/og/chart?p=${token}&image=1`));
-    expect(failed.status).toBe(503);
-    expect(failed.headers.get('content-type')).toContain('text/plain');
-    expect(failed.headers.get('cache-control')).toBe('no-store, max-age=0');
-    expect(await failed.text()).toBe('Chart preview unavailable.');
-
-    const retried = await handler(new Request(`https://zodiacs.org/api/og/chart?p=${token}&image=1`));
-    expect(retried.status).toBe(200);
-    expect(retried.headers.get('content-type')).toBe('image/png');
-    expect(fetchMock).toHaveBeenCalledTimes(4);
+  it('keeps the image renderer on a narrow positions-only request surface', async () => {
+    for (const request of [
+      new Request('https://zodiacs.org/api/og/chart-image'),
+      new Request(`https://zodiacs.org/api/og/chart-image?p=${token}&p=${token}`),
+      new Request(`https://zodiacs.org/api/og/chart-image?p=${token}&free=text`),
+      new Request(`https://zodiacs.org/api/og/chart-image?p=${token}`, { method: 'POST' }),
+    ]) {
+      const response = await imageHandler(request);
+      expect([400, 405]).toContain(response.status);
+      expect(await response.text()).toBe('Chart preview unavailable.');
+    }
   });
 
   it('emits a 1200×630 PNG response without cache or indexing', async () => {
     imageResponseMock.element.mockClear();
     imageResponseMock.options.mockClear();
-    const response = await handler(new Request(`https://zodiacs.org/api/og/chart?p=${token}&image=1`));
+    const response = await imageHandler(new Request(`https://zodiacs.org/api/og/chart-image?p=${token}`));
     const bytes = new Uint8Array(await response.arrayBuffer());
     expect(response.status).toBe(200);
     expect(response.headers.get('content-type')).toBe('image/png');
@@ -153,21 +157,87 @@ describe('chart preview edge function', () => {
         expect.objectContaining({ name: 'EB Garamond', weight: 500, style: 'italic' }),
       ],
     }));
-    expect(fetchMock.mock.calls.map(([input]) => new URL(String(input)).pathname)).toEqual([
-      expect.stringContaining('/node_modules/@vercel/og/dist/noto-sans-v27-latin-regular.ttf'),
-      expect.stringContaining('/api/og/eb-garamond-latin-500-italic.woff'),
-      expect.stringContaining('/node_modules/@vercel/og/dist/noto-sans-v27-latin-regular.ttf'),
-      expect.stringContaining('/api/og/eb-garamond-latin-500-italic.woff'),
-    ]);
     const serializedCard = JSON.stringify(imageResponseMock.element.mock.calls[0]?.[0]);
     expect(serializedCard).toContain('Your chart signature');
     expect(serializedCard).toContain('"fontFamily":"EB Garamond"');
     expect(serializedCard).toContain('"fontStyle":"italic"');
   });
 
+  it('writes the buffered image through the Vercel Node response contract', async () => {
+    const headers = new Map<string, string>();
+    const end = vi.fn();
+    const response = {
+      statusCode: 0,
+      setHeader(name: string, value: string) {
+        headers.set(name.toLowerCase(), value);
+      },
+      end,
+    };
+    await handleChartPreviewNodeRequest({
+      method: 'GET',
+      url: `/api/og/chart-image?p=${encodeURIComponent(token)}`,
+      headers: { host: 'zodiacs.org' },
+      query: { [CHART_PREVIEW_ROUTE_KEY]: 'image', p: token },
+    }, response, 'image');
+
+    expect(response.statusCode).toBe(200);
+    expect(headers.get('content-type')).toBe('image/png');
+    expect(headers.get('cache-control')).toBe('no-store, max-age=0');
+    expect(end).toHaveBeenCalledOnce();
+    expect(Array.from((end.mock.calls[0]?.[0] as Buffer).subarray(0, 8))).toEqual(
+      [137, 80, 78, 71, 13, 10, 26, 10],
+    );
+  });
+
+  it('writes the metadata wrapper through the consolidated Node route', async () => {
+    const headers = new Map<string, string>();
+    const end = vi.fn();
+    const response = {
+      statusCode: 0,
+      setHeader(name: string, value: string) {
+        headers.set(name.toLowerCase(), value);
+      },
+      end,
+    };
+    await compatibilityHandler({
+      method: 'GET',
+      headers: { 'x-forwarded-host': 'zodiacs-preview.vercel.app' },
+      query: { [CHART_PREVIEW_ROUTE_KEY]: 'link', p: token },
+    }, response);
+
+    expect(response.statusCode).toBe(200);
+    expect(headers.get('content-type')).toContain('text/html');
+    expect(headers.get('cache-control')).toBe('no-store, max-age=0');
+    const html = Buffer.from(end.mock.calls[0]?.[0] as Buffer).toString('utf8');
+    expect(html).toContain(
+      `https://zodiacs-preview.vercel.app/api/og/chart-image?p=${encodeURIComponent(token)}`,
+    );
+    expect(html).toContain('https://zodiacs-preview.vercel.app/birth-chart/#p=');
+  });
+
+  it('rejects extra or duplicate values before the consolidated route renders', async () => {
+    for (const query of [
+      { [CHART_PREVIEW_ROUTE_KEY]: 'link', p: token, extra: 'value' },
+      { [CHART_PREVIEW_ROUTE_KEY]: ['link', 'link'], p: token },
+      { [CHART_PREVIEW_ROUTE_KEY]: 'link', p: [token, token] },
+    ]) {
+      const end = vi.fn();
+      const response = { statusCode: 0, setHeader: vi.fn(), end };
+      await handleChartPreviewNodeRequest(
+        { method: 'GET', headers: { host: 'zodiacs.org' }, query },
+        response,
+        'link',
+      );
+      expect(response.statusCode).toBe(400);
+      expect(Buffer.from(end.mock.calls[0]?.[0] as Buffer).toString('utf8')).toBe(
+        'Chart preview unavailable.',
+      );
+    }
+  });
+
   it('returns a generic 503 before committing a streaming renderer failure', async () => {
     imageResponseMock.renderFailure = new Error('render failed');
-    const response = await handler(new Request(`https://zodiacs.org/api/og/chart?p=${token}&image=1`));
+    const response = await imageHandler(new Request(`https://zodiacs.org/api/og/chart-image?p=${token}`));
 
     expect(response.status).toBe(503);
     expect(response.headers.get('content-type')).toContain('text/plain');
@@ -184,26 +254,34 @@ describe('chart preview edge function', () => {
     );
     expect(PREVIEW_KICKER).toBe('Your chart signature');
 
-    const { ImageResponse: RealImageResponse } = await vi.importActual<typeof import('@vercel/og')>('@vercel/og');
-    const response = new RealImageResponse(
-      h('div', {
-        style: {
-          display: 'flex',
-          width: '320px',
-          height: '180px',
-          fontFamily: 'EB Garamond',
-          fontStyle: 'italic',
+    const originalFetch = globalThis.fetch;
+    vi.stubGlobal('fetch', vi.fn(() => {
+      throw new Error('The renderer must not fetch assets.');
+    }));
+    try {
+      const { ImageResponse: RealImageResponse } = await vi.importActual<typeof import('@vercel/og')>('@vercel/og');
+      const response = new RealImageResponse(
+        h('div', {
+          style: {
+            display: 'flex',
+            width: '320px',
+            height: '180px',
+            fontFamily: 'EB Garamond',
+            fontStyle: 'italic',
+          },
+        }, PREVIEW_KICKER),
+        {
+          width: 320,
+          height: 180,
+          fonts: [{ name: 'EB Garamond', data: font, weight: 500, style: 'italic' }],
         },
-      }, PREVIEW_KICKER),
-      {
-        width: 320,
-        height: 180,
-        fonts: [{ name: 'EB Garamond', data: font, weight: 500, style: 'italic' }],
-      },
-    );
-    const png = Buffer.from(await response.arrayBuffer());
-    expect(Array.from(png.subarray(0, 8))).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
-    expect(png.readUInt32BE(16)).toBe(320);
-    expect(png.readUInt32BE(20)).toBe(180);
+      );
+      const png = Buffer.from(await response.arrayBuffer());
+      expect(Array.from(png.subarray(0, 8))).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
+      expect(png.readUInt32BE(16)).toBe(320);
+      expect(png.readUInt32BE(20)).toBe(180);
+    } finally {
+      vi.stubGlobal('fetch', originalFetch);
+    }
   });
 });

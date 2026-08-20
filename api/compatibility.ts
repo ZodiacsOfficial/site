@@ -1,6 +1,7 @@
 import { sendInviteJson } from '../src/lib/invite/api.js';
 import { handleGamesApi } from '../src/lib/games/server.js';
 import { handleRegistryNews } from './_registry/news-handler.js';
+import { handleChartPreviewNodeRequest } from './_og/chart-preview.js';
 import completeHandler from '../src/lib/invite/routes/invite-complete.js';
 import exchangeHandler from '../src/lib/invite/routes/invite-exchange.js';
 import hideHandler from '../src/lib/invite/routes/invite-hide.js';
@@ -42,6 +43,11 @@ export function compatibilityInviteHandlerForAction(value: unknown): InviteHandl
 }
 
 export default async function handler(req: any, res: any): Promise<void> {
+  const previewRoute = req.query?.__zodiacs_og_route;
+  if (previewRoute === 'link' || previewRoute === 'image') {
+    await handleChartPreviewNodeRequest(req, res, previewRoute);
+    return;
+  }
   // /api/games rewrites here (vercel.json) so the Zodiac Games do not add a
   // deployed function; the Games handler owns everything past this line.
   if (req.query?.__zodiacs_games_route === '1') {
