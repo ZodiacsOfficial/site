@@ -1,4 +1,4 @@
-/// <reference path="./wasm.d.ts" />
+/// <reference path="../../src/types/wasm-module.d.ts" />
 /** @jsxImportSource preact */
 import { Resvg, initWasm as initResvg } from '@resvg/resvg-wasm';
 import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm?module';
