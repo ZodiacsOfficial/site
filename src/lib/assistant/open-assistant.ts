@@ -154,8 +154,8 @@ interface Copy {
 const COPY: Record<AssistantLocale, Copy> = {
   en: {
     title: 'Guide', open: 'Open Guide', close: 'Close Guide', clear: "Clear today's conversation",
-    intro: 'Ask about this page, astrology, your birth chart, or published Astrofolio facts.',
-    invite: 'I can help with this page, astrology, your birth chart, or Astrofolio.',
+    intro: 'Ask about this page, astrology, or your birth chart.',
+    invite: 'I can help with this page, astrology, or your birth chart.',
     inviteAction: 'Ask Guide', dismissInvite: 'Dismiss Guide welcome', log: 'Guide conversation',
     input: 'Your question', placeholder: 'What would you like help with?', send: 'Send', stop: 'Stop', retry: 'Retry',
     newline: 'Shift + Enter for a new line', context: 'Visible sources', pageSource: 'This page',
@@ -176,8 +176,8 @@ const COPY: Record<AssistantLocale, Copy> = {
   },
   es: {
     title: 'Guide', open: 'Abrir Guide', close: 'Cerrar Guide', clear: 'Borrar la conversación de hoy',
-    intro: 'Pregunta sobre esta página, astrología, tu carta natal o datos publicados de Astrofolio.',
-    invite: 'Puedo ayudarte con esta página, astrología, tu carta natal o Astrofolio.',
+    intro: 'Pregunta sobre esta página, astrología o tu carta natal.',
+    invite: 'Puedo ayudarte con esta página, astrología o tu carta natal.',
     inviteAction: 'Preguntar a Guide', dismissInvite: 'Cerrar la bienvenida de Guide', log: 'Conversación con Guide',
     input: 'Tu pregunta', placeholder: '¿En qué te puedo ayudar?', send: 'Enviar', stop: 'Detener', retry: 'Reintentar',
     newline: 'Mayús + Intro para una línea nueva', context: 'Fuentes visibles', pageSource: 'Esta página',
@@ -197,8 +197,8 @@ const COPY: Record<AssistantLocale, Copy> = {
   },
   pt: {
     title: 'Guide', open: 'Abrir Guide', close: 'Fechar Guide', clear: 'Limpar a conversa de hoje',
-    intro: 'Pergunte sobre esta página, astrologia, seu mapa natal ou fatos publicados do Astrofolio.',
-    invite: 'Posso ajudar com esta página, astrologia, seu mapa natal ou Astrofolio.',
+    intro: 'Pergunte sobre esta página, astrologia ou seu mapa natal.',
+    invite: 'Posso ajudar com esta página, astrologia ou seu mapa natal.',
     inviteAction: 'Perguntar ao Guide', dismissInvite: 'Fechar boas-vindas do Guide', log: 'Conversa com o Guide',
     input: 'Sua pergunta', placeholder: 'Como posso ajudar?', send: 'Enviar', stop: 'Parar', retry: 'Tentar de novo',
     newline: 'Shift + Enter para uma nova linha', context: 'Fontes visíveis', pageSource: 'Esta página',
@@ -218,8 +218,8 @@ const COPY: Record<AssistantLocale, Copy> = {
   },
   fr: {
     title: 'Guide', open: 'Ouvrir Guide', close: 'Fermer Guide', clear: 'Effacer la conversation du jour',
-    intro: 'Pose une question sur cette page, l’astrologie, ton thème natal ou les faits publiés d’Astrofolio.',
-    invite: 'Je peux aider avec cette page, l’astrologie, ton thème natal ou Astrofolio.',
+    intro: 'Pose une question sur cette page, l’astrologie ou ton thème natal.',
+    invite: 'Je peux aider avec cette page, l’astrologie ou ton thème natal.',
     inviteAction: 'Demander à Guide', dismissInvite: 'Fermer l’accueil de Guide', log: 'Conversation avec Guide',
     input: 'Ta question', placeholder: 'Comment puis-je aider ?', send: 'Envoyer', stop: 'Arrêter', retry: 'Réessayer',
     newline: 'Maj + Entrée pour aller à la ligne', context: 'Sources visibles', pageSource: 'Cette page',
@@ -239,8 +239,8 @@ const COPY: Record<AssistantLocale, Copy> = {
   },
   it: {
     title: 'Guide', open: 'Apri Guide', close: 'Chiudi Guide', clear: 'Cancella la conversazione di oggi',
-    intro: 'Chiedi di questa pagina, astrologia, il tuo tema natale o fatti pubblicati di Astrofolio.',
-    invite: 'Posso aiutarti con questa pagina, astrologia, il tuo tema natale o Astrofolio.',
+    intro: 'Chiedi di questa pagina, astrologia o il tuo tema natale.',
+    invite: 'Posso aiutarti con questa pagina, astrologia o il tuo tema natale.',
     inviteAction: 'Chiedi a Guide', dismissInvite: 'Chiudi il benvenuto di Guide', log: 'Conversazione con Guide',
     input: 'La tua domanda', placeholder: 'Come posso aiutarti?', send: 'Invia', stop: 'Interrompi', retry: 'Riprova',
     newline: 'Maiusc + Invio per andare a capo', context: 'Fonti visibili', pageSource: 'Questa pagina',
@@ -280,11 +280,6 @@ const GUIDE_LINK_PATHS = new Set([
   '/learn/',
   '/horoscopes/',
   '/profile/',
-  '/registry/',
-  '/terminal/',
-  '/sdk/',
-  '/sdk/#astrofolio',
-  '/disclosure/',
 ]);
 let stylesheetPromise: Promise<void> | null = null;
 
@@ -525,11 +520,6 @@ const PAGE_CATALOG = {
   learn: { title: 'Learn astrology', facts: 'The current page is part of the Zodiacs.org Learn astrology reference.' },
   horoscopes: { title: 'Horoscopes and Today', facts: 'The current page is part of the dated Zodiacs.org horoscope or Today editions.' },
   account: { title: 'Optional Zodiacs account', facts: 'The current page is part of the optional Zodiacs account and saved-chart area.' },
-  registry: { title: 'Zodiacs Registry', facts: 'The current page is part of the read-only Zodiacs Registry.' },
-  terminal: { title: 'Zodiac Terminal', facts: 'The current page is part of the Zodiacs.org market-and-research interface.' },
-  astrofolio: { title: 'Astrofolio', facts: 'The current page is the published Zodiacs.org SDK context for the separate Astrofolio product.' },
-  sdk: { title: 'Zodiacs SDK', facts: 'The current page is part of the public Zodiacs SDK documentation.' },
-  disclosure: { title: 'Ownership and market disclosure', facts: 'The current page is the dated Zodiacs.org ownership and market disclosure.' },
 } as const;
 
 type PageCatalogId = keyof typeof PAGE_CATALOG;
@@ -545,10 +535,6 @@ function approvedPageId(pathname: string): PageCatalogId | null {
   if (/^\/learn(?:\/|$)/.test(path)) return 'learn';
   if (/^\/(?:horoscopes|today)(?:\/|$)/.test(path)) return 'horoscopes';
   if (/^\/(?:profile|account)(?:\/|$)/.test(path)) return 'account';
-  if (/^\/registry(?:\/|$)/.test(path)) return 'registry';
-  if (/^\/terminal(?:\/|$)/.test(path)) return 'terminal';
-  if (/^\/sdk(?:\/|$)/.test(path)) return 'sdk';
-  if (/^\/disclosure(?:\/|$)/.test(path)) return 'disclosure';
   return null;
 }
 

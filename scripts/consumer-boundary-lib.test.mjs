@@ -1,0 +1,218 @@
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { describe, expect, it } from 'vitest';
+import {
+  READ_ONLY_POSTURE,
+  extractConsumerFragments,
+  findConsumerBoundaryViolations,
+  scanConsumerBoundary,
+} from './consumer-boundary-lib.mjs';
+
+function rules(source, file) {
+  return findConsumerBoundaryViolations(source, file).map(({ rule }) => rule);
+}
+
+describe('consumer boundary source scanner', () => {
+  it('reads visible Astro copy and frontmatter strings without treating comments as copy', () => {
+    const source = `---
+const description = 'A free astrology calculator.';
+// official Zodiac token belongs in the wing
+---
+<main><p>Meet the official Zodiac token.</p></main>
+<style>/* crypto market */</style>`;
+    const violations = findConsumerBoundaryViolations(source, 'src/pages/example/index.astro');
+    expect(violations.map(({ match }) => match)).toContain('official Zodiac token');
+    expect(violations.length).toBeGreaterThan(0);
+    expect(violations.every(({ text }) => text.includes('Meet the official Zodiac token.'))).toBe(true);
+  });
+
+  it.each([
+    ['src/islands/Example.tsx', 'export const View = () => <p>A crypto market shortcut.</p>;'],
+    ['src/lib/email/example.ts', "export const body = 'Buy this Zodiac token today.';"],
+    ['src/lib/share-card.ts', "export const footer = 'Trade the Zodiac token.';"],
+    ['api/example.ts', "export const errorMessage = 'The token market is ready.';"],
+    ['src/content/example.mdx', 'A memecoin does not belong in this guide.'],
+    ['src/data/example.json', '{"description":"Official Zodiac token"}'],
+  ])('detects seeded audience copy in %s', (file, source) => {
+    expect(findConsumerBoundaryViolations(source, file).length).toBeGreaterThan(0);
+  });
+
+  it.each([
+    ['en', '<p>Read the token details.</p>'],
+    ['es', '<p>Compra este token oficial en el mercado de criptomonedas.</p>'],
+    ['pt', '<p>Compre este token oficial no mercado de criptomoedas.</p>'],
+    ['it', '<p>Acquista questo token ufficiale nel mercato delle criptovalute.</p>'],
+    ['fr', '<p>Achetez ce jeton officiel sur le marché des cryptomonnaies.</p>'],
+    ['ru', '<p>Купите официальный токен на рынке криптовалют.</p>'],
+  ])('rejects visible %s token, market, or crypto copy', (locale, source) => {
+    expect(findConsumerBoundaryViolations(source, `src/pages/${locale}/example.astro`).length)
+      .toBeGreaterThan(0);
+  });
+
+  it('does not confuse identifiers, comments, module names, or auth-token errors with audience copy', () => {
+    const source = `
+      import { createHash } from 'node:crypto';
+      // official Zodiac token and market desk
+      const marketToken = 'expired session token';
+      export function tokenFromBody() { return marketToken; }
+    `;
+    expect(findConsumerBoundaryViolations(source, 'api/session.ts')).toEqual([]);
+    expect(findConsumerBoundaryViolations("throw new Error('web-crypto-unavailable')", 'src/lib/hash.ts')).toEqual([]);
+    expect(findConsumerBoundaryViolations("export const copy = 'Elle peut marcher ici.'", 'src/data/fr-guides.ts')).toEqual([]);
+    expect(findConsumerBoundaryViolations('<p>A sessão permanece criptografada.</p>', 'src/pages/pt/profile/index.astro')).toEqual([]);
+    expect(findConsumerBoundaryViolations("throw new Error('Invalid positions-only chart token.')", 'api/calendar/transits.ts')).toEqual([]);
+    expect(findConsumerBoundaryViolations("throw new Error('Official Zodiac token market.')", 'api/calendar/transits.ts').length).toBeGreaterThan(0);
+  });
+
+  it('keeps legal disclosure narrow instead of exempting a whole legal page', () => {
+    const defensive = '<p>Digital assets can be volatile, may have no buyers, and can fall to zero market value.</p>';
+    expect(findConsumerBoundaryViolations(defensive, 'src/pages/terms/index.astro')).toEqual([]);
+
+    const seededPromotion = '<p>Buy this official Zodiac token today.</p>';
+    expect(rules(seededPromotion, 'src/pages/terms/index.astro')).toContain('token or coin vocabulary');
+
+    const negationDecoy = '<p>No signup. Buy this official Zodiac token today.</p>';
+    expect(rules(negationDecoy, 'src/pages/terms/index.astro')).toContain('token or coin vocabulary');
+
+    expect(rules('<p>No signup. Meet the official Zodiac token.</p>', 'src/pages/terms/index.astro'))
+      .toContain('token or coin vocabulary');
+    expect(rules('<p>This is not advice. The official Zodiac token is exciting.</p>', 'src/pages/terms/index.astro'))
+      .toContain('token or coin vocabulary');
+  });
+
+  it('allows only the keyed legal attestation to retain its exact external-domain disclosure', () => {
+    const disclosure = `export const EN = {
+      'disclosure.operatorStatement': 'I do not control astrofolio.xyz or its token deployment or market activity.',
+      'home.hero': 'A free birth chart.',
+    };`;
+    expect(findConsumerBoundaryViolations(disclosure, 'src/strings/en.mjs')).toEqual([]);
+
+    const leak = `export const EN = {
+      'home.hero': 'Visit astrofolio.xyz for its official Zodiac token market.',
+    };`;
+    const violations = findConsumerBoundaryViolations(leak, 'src/strings/en.mjs');
+    expect(violations.map(({ rule }) => rule)).toContain('external wing or acquisition destination');
+    expect(violations.map(({ rule }) => rule)).toContain('token or coin vocabulary');
+
+    const unrelatedCatalog = `export const COPY = {
+      'disclosure.operatorStatement': 'Visit the crypto market.',
+    };`;
+    expect(findConsumerBoundaryViolations(unrelatedCatalog, 'src/lib/email/copy.ts').length).toBeGreaterThan(0);
+
+    const acquisitionVenue = `export const EN = {
+      'disclosure.operatorStatement': 'I do not control astrofolio.xyz. Visit jup.ag for details.',
+    };`;
+    expect(rules(acquisitionVenue, 'src/strings/en.mjs'))
+      .toContain('external wing or acquisition destination');
+
+    const promotionalDisclosure = `export const EN = {
+      'disclosure.foo': 'Buy the official Zodiac token today.',
+    };`;
+    expect(rules(promotionalDisclosure, 'src/strings/en.mjs'))
+      .toContain('token or coin vocabulary');
+
+    const approvedKeyPromotion = `export const EN = {
+      'disclosure.tradeStatement': 'Buy the official Zodiac token today.',
+    };`;
+    expect(rules(approvedKeyPromotion, 'src/strings/en.mjs'))
+      .toContain('token or coin vocabulary');
+  });
+
+  it('recognizes defensive legal copy in released locales without exempting promotion', () => {
+    const defensive = '<p>Le fournisseur blockchain ne reçoit pas les données de naissance.</p>';
+    expect(findConsumerBoundaryViolations(defensive, 'src/pages/fr/privacy/index.astro')).toEqual([]);
+
+    const seededPromotion = '<p>Achetez le token officiel sur le crypto market.</p>';
+    expect(findConsumerBoundaryViolations(seededPromotion, 'src/pages/fr/privacy/index.astro').length).toBeGreaterThan(0);
+  });
+
+  it('rejects acquisition venues even when the link sits in a legal page', () => {
+    const source = '<p>We do not operate this venue. <a href="https://jup.ag/">Open it</a>.</p>';
+    expect(rules(source, 'src/pages/terms/index.astro')).toContain('external wing or acquisition destination');
+  });
+
+  it('pins sanctioned internal bridges and rejects the same link elsewhere', () => {
+    const bridge = '<a href={`/registry/${slug}/`}>View the record</a>';
+    expect(findConsumerBoundaryViolations(bridge, 'src/components/CollectBand.astro')).toEqual([]);
+    expect(rules(bridge, 'src/lib/email/daily.ts')).toContain('unsanctioned wing link');
+    expect(rules('<a href="/terminal/markets/">Trade</a>', 'src/components/CollectBand.astro'))
+      .toContain('unsanctioned wing link');
+    expect(rules('<a href="/sdk/">SDK</a>', 'src/pages/about/index.astro'))
+      .toContain('unsanctioned wing link');
+
+    const secondLink = `export const links = '/registry/\${slug}/ then /terminal/markets/';`;
+    expect(rules(secondLink, 'src/components/CollectBand.astro'))
+      .toContain('unsanctioned wing link');
+
+    expect(findConsumerBoundaryViolations('<a href="/astrofolio/">Astrofolio</a>', 'src/components/SiteFooter.astro'))
+      .toEqual([]);
+    expect(rules('<a href="/terminal/">Terminal</a>', 'src/components/SiteFooter.astro'))
+      .toContain('unsanctioned wing link');
+    expect(rules('<a href="/registry">Record</a>', 'src/pages/example.astro'))
+      .toContain('unsanctioned wing link');
+    expect(rules('<a href="/registry?x=1">Record</a>', 'src/pages/example.astro'))
+      .toContain('unsanctioned wing link');
+  });
+
+  it('finds raw and fenced MDX wing links before stripping markup', () => {
+    expect(rules('<a href="/registry/">Record</a>', 'src/content/example.mdx'))
+      .toContain('unsanctioned wing link');
+    expect(rules('```md\n[Record](/registry/)\n```', 'src/content/example.mdx'))
+      .toContain('unsanctioned wing link');
+  });
+
+  it('preserves exactly the required read-only posture without creating a free-form bypass', () => {
+    expect(findConsumerBoundaryViolations(READ_ONLY_POSTURE, 'public/llms.txt')).toEqual([]);
+    const seeded = READ_ONLY_POSTURE.replace('Optional market context', 'A crypto market shortcut');
+    expect(findConsumerBoundaryViolations(seeded, 'public/llms.txt').length).toBeGreaterThan(0);
+  });
+
+  it('extracts TSX, Astro, MDX, and JSON values as source-located fragments', () => {
+    expect(extractConsumerFragments('<p>One market.</p>', 'src/pages/a.astro')[0]).toMatchObject({ kind: 'visible', line: 1 });
+    expect(extractConsumerFragments('export const x = <p>One market.</p>', 'src/islands/a.tsx').some(({ text }) => text.includes('One market.'))).toBe(true);
+    expect(extractConsumerFragments('One market.', 'src/content/a.mdx')[0]).toMatchObject({ kind: 'visible', line: 1 });
+    expect(extractConsumerFragments('{"copy":"One market."}', 'src/data/a.json')[0]).toMatchObject({ key: 'copy', line: 1 });
+  });
+
+  it('fails a seeded full-tree source while keeping Registry exclusions exact', async () => {
+    const repo = await mkdtemp(join(tmpdir(), 'consumer-boundary-'));
+    try {
+      for (const root of ['api', 'src/components', 'src/content', 'src/data/registry-research', 'src/islands', 'src/layouts', 'src/lib/email', 'src/pages', 'src/strings', 'public']) {
+        await mkdir(join(repo, root), { recursive: true });
+      }
+      await writeFile(join(repo, 'public/llms.txt'), 'Free astrology tools.');
+      await writeFile(join(repo, 'src/data/registry-research/drafts.json'), '{"copy":"Official Zodiac token market"}');
+      await writeFile(join(repo, 'src/data/registry-research/unreviewed.json'), '{"copy":"Official Zodiac token market"}');
+      await writeFile(join(repo, 'src/lib/email/example.ts'), "export const body = 'Buy this Zodiac asset.';");
+
+      const { violations } = await scanConsumerBoundary(repo);
+      expect(violations.some(({ file }) => file === 'src/lib/email/example.ts')).toBe(true);
+      expect(violations.some(({ file }) => file === 'src/data/registry-research/unreviewed.json')).toBe(true);
+      expect(violations.some(({ file }) => file === 'src/data/registry-research/drafts.json')).toBe(false);
+    } finally {
+      await rm(repo, { force: true, recursive: true });
+    }
+  });
+
+  it('pins the Packet C consumer copy and llms boundary', async () => {
+    const [about, terms, llms, llmsFull] = await Promise.all([
+      readFile(new URL('../src/pages/about/index.astro', import.meta.url), 'utf8'),
+      readFile(new URL('../src/pages/terms/index.astro', import.meta.url), 'utf8'),
+      readFile(new URL('../public/llms.txt', import.meta.url), 'utf8'),
+      readFile(new URL('../public/llms-full.txt', import.meta.url), 'utf8'),
+    ]);
+
+    expect(about).not.toMatch(/astrofolio\.xyz|official Zodiac token|market desk/iu);
+    expect(terms).not.toContain('astrofolio.xyz');
+
+    const pointer = 'Read-only Registry and developer context: https://zodiacs.org/llms-full.txt';
+    expect(llms.split(pointer)).toHaveLength(2);
+    const consumerLead = llms.slice(0, llms.indexOf(pointer));
+    expect(consumerLead).not.toMatch(/Astrofolio|Terminal|official Zodiac token|market desk|simple guide to buying/iu);
+    expect(llms.split(READ_ONLY_POSTURE)).toHaveLength(2);
+
+    expect(llmsFull).toContain('a simple guide to buying');
+    expect(llmsFull).toContain('a "{sign} token" or "{sign} coin"');
+  });
+});

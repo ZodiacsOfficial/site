@@ -49,13 +49,10 @@ jobs:
           ! grep -RInE 'Symbiosis|ZodiacS(DK)|diasmal[[:digit:]]{3}|zodiacs-org/sdk' public/sdk public/registry README.md CLAUDE.md DESIGNER_HANDOFF.md
 
       - name: Wing language stays in the wing
-        # Crypto/market vocabulary must never appear on the new consumer
-        # surfaces. Registry routes are exempt by path; the Registry-only
-        # islands (WalletChart, RegistryAura, islands/aura/) are exempt by
-        # name; the privacy pages carry the legally required wallet/provider
-        # disclosures (CLAUDE.md carve-out). The rest of src stays covered.
-        run: |
-          ! grep -RInE --exclude-dir=registry --exclude-dir=aura --exclude-dir=privacy --exclude=WalletChart.tsx --exclude=RegistryAura.tsx 'Solana|DexScreener|Jupiter swap|ERC-20|SPL record|memecoin|market cap' src/pages src/components src/islands src/content src/layouts
+        # The source-aware gate checks rendered strings across Astro, TS/TSX,
+        # MDX, JSON, email/share code, and API output. Legal and Registry
+        # carve-outs are exact and tested; arbitrary directory bypasses are not.
+        run: npm run check:consumer-boundary
 
       - name: Voice — banned tells stay out of the copy
         # The smug vocabulary CLAUDE.md bans on new surfaces, enforced

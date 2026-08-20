@@ -9,7 +9,6 @@ import {
   MIN_CONTEXT_BYTES,
   TOOL_ROUTES,
   buildAssistantContext,
-  consumerVocabularyScope,
   extractCanonicalLabels,
   extractLearnTopics,
   generateAssistantContext,
@@ -51,25 +50,23 @@ describe('assistant site context', () => {
 
     expect(counts).toEqual({
       birthdays: 366,
-      // /race/ joined the listing in R2.1; the Trophy Hall
-      // (/games/history/) joined in R2.3.
-      consumerRoutes: 684,
+      // /race/ joined the listing in R2.1 and the Trophy Hall joined in
+      // R2.3; Packet C removes the two wing-only routes from Guide context.
+      consumerRoutes: 682,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 45,
+      staticPages: 43,
       tools: 17,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
     expect(context).toContain('- /learn/placements/sun-in-aries/ — What Sun in Aries means in a birth chart.');
     expect(context).toContain('- /rising-sign/pisces/ — What Pisces rising means.');
-    expect(context).toContain('Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.');
-    expect(context).toContain('- /astrofolio/: Astrofolio is the consumer collection');
-    expect(context).toContain('- /terminal/: Terminal is the expert market desk');
-    expect(context).toContain('ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart');
-    expect(context).toContain('- /registry/ — Zodiacs Registry: the read-only verification hub');
+    expect(context).not.toContain('ASTROFOLIO, TERMINAL, AND REGISTRY');
+    expect(context).not.toMatch(/\/(?:astrofolio|disclosure|registry|sdk|terminal|thesis)\//u);
+    expect(context).not.toMatch(/\b(?:Astrofolio|Registry|Terminal)\b/u);
     expect(context).not.toContain('Zodiac Terminal');
   });
 
@@ -78,7 +75,7 @@ describe('assistant site context', () => {
 
     expect(context).toContain('Chart calculation does not send birth fields to a chart API.');
     expect(context).toContain('optional account sync uploads only the charts a person chooses');
-    expect(context).toContain('The AI assistant sends chat messages to Anthropic');
+    expect(context).toContain('The public Guide sends chat messages to OpenAI');
     expect(context).toContain('placements-only chart summary only after the person explicitly chooses “Attach my chart”');
     expect(context).not.toContain('Birth details stay on the device.');
 
@@ -104,9 +101,8 @@ describe('assistant site context', () => {
     expect(context).not.toMatch(/(?:^|\s)\/es\//m);
     expect(context).not.toMatch(/(?:^|\s)\/pt\//m);
     expect(context).not.toMatch(/(?:^|\s)\/ru\//m);
-    const consumerContext = consumerVocabularyScope(context);
     for (const word of BANNED_CONSUMER_VOCABULARY) {
-      expect(consumerContext).not.toMatch(new RegExp(`\\b${word}(?:s)?\\b`, 'i'));
+      expect(context).not.toMatch(new RegExp(`\\b${word}(?:s)?\\b`, 'i'));
     }
   });
 
