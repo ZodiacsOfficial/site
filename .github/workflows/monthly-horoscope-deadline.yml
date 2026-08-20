@@ -1,0 +1,47 @@
+name: Monthly Horoscope Deadline
+
+# The transit workflow computes the next month on the 25th. This earlier,
+# read-only check keeps the editorial deadline visible when the twelve draft
+# files have not yet been prepared. It opens an issue; it never writes prose.
+
+on:
+  schedule:
+    - cron: "17 6 20 * *" # 20th monthly, 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  missing-drafts:
+    name: Check next month's horoscope drafts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check the twelve draft paths
+        id: check
+        run: node scripts/check-next-month-horoscopes.mjs --github-output "$GITHUB_OUTPUT"
+
+      - name: Open the editorial reminder issue
+        if: steps.check.outputs.missing_count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MONTH: ${{ steps.check.outputs.month }}
+          LABEL: ${{ steps.check.outputs.label }}
+          MISSING_CHECKLIST: ${{ steps.check.outputs.missing_checklist }}
+        run: |
+          TITLE="Write the ${LABEL} horoscopes"
+          if [ "$(gh issue list --state open --search "in:title \"${TITLE}\"" --json number --jq length)" != "0" ]; then
+            echo "Reminder issue already open"
+            exit 0
+          fi
+
+          BODY=$(printf '%s\n\n%s\n\n%s\n\n%s\n' \
+            "The next monthly horoscope set is incomplete at \`src/content/horoscopes/${MONTH}-{sign}.mdx\`." \
+            "Missing drafts:" \
+            "$MISSING_CHECKLIST" \
+            "This is the early editorial reminder. The scheduled transit workflow normally writes \`src/data/transits-${MONTH}.json\` on the 25th; once it is present, use it as the only source for dated sky claims. Keep every new file at \`draft: true\` for human editorial review and follow \`docs/HOROSCOPE-GENERATION.md\`. Related record: \`GROWTH-2026-08-19-full-marketing-audit\`.")
+          gh issue create --title "$TITLE" --body "$BODY"
