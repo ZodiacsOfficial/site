@@ -6,6 +6,8 @@ import * as ts from 'typescript';
 
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const API_ROOT = join(ROOT, 'api');
+const NODE_MODULES_ROOT = `${join(ROOT, 'node_modules')}${sep}`;
+const EDGE_RENDERER_IMPORT = '../../node_modules/@vercel/og/dist/index.edge.js';
 const EXPECTED_HANDLERS = [
   'api/account.ts',
   'api/aura-holdings.ts',
@@ -170,6 +172,14 @@ function auditRuntimeGraphs(): { violations: string[]; catalogs: string[] } {
       const target = resolveSource(path, imported.specifier);
       if (!target) {
         violations.push(`${repoPath(path)} -> ${imported.specifier} does not resolve from source`);
+      } else if (target.startsWith(NODE_MODULES_ROOT)) {
+        // Bare package imports are already terminal boundaries in this audit.
+        // Keep the one relative dependency entry equally bounded: it selects
+        // @vercel/og's Edge build so the deployment does not trace its Node
+        // renderer too, while never exempting another repository import.
+        if (repoPath(path) !== 'api/og/chart.tsx' || imported.specifier !== EDGE_RENDERER_IMPORT) {
+          violations.push(`${repoPath(path)} -> ${imported.specifier} is an unapproved relative dependency import`);
+        }
       } else {
         pending.push(target);
       }
@@ -247,6 +257,10 @@ describe('Vercel API runtime packaging', () => {
     const audit = auditRuntimeGraphs();
     expect(audit.violations).toEqual([]);
     expect(audit.catalogs).toEqual([]);
+    expect(runtimeImports(join(ROOT, 'api/og/chart.tsx'))).toContainEqual({
+      specifier: EDGE_RENDERER_IMPORT,
+      hasJsonAttribute: false,
+    });
   });
 
   it('packages the shared admin bootstrap guard in both daily enrollment graphs', () => {

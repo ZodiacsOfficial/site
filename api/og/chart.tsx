@@ -1,5 +1,7 @@
 /** @jsxImportSource preact */
-import { ImageResponse } from '@vercel/og';
+// Use the official package's Edge entry directly. Its conditional export also
+// exposes a Node entry, and Vercel's file tracer otherwise ships both renderers.
+import { ImageResponse } from '../../node_modules/@vercel/og/dist/index.edge.js';
 import { decodePositionsLink } from '../../src/lib/share-positions.js';
 
 export const config = { runtime: 'edge' };
@@ -15,6 +17,8 @@ const SIGNS = [
   ['Leo', 'leo'], ['Virgo', 'virgo'], ['Libra', 'libra'], ['Scorpio', 'scorpio'],
   ['Sagittarius', 'sagittarius'], ['Capricorn', 'capricorn'], ['Aquarius', 'aquarius'], ['Pisces', 'pisces'],
 ] as const;
+
+export const PREVIEW_KICKER = 'Your chart signature';
 
 let previewFonts: Promise<[ArrayBuffer, ArrayBuffer]> | null = null;
 
@@ -117,7 +121,7 @@ async function image(model: ChartPreviewModel): Promise<Response> {
         <div style={{
           display: 'flex', fontFamily: 'EB Garamond', fontSize: 28,
           fontStyle: 'italic', color: '#8E96AB',
-        }}>Your chart signature</div>
+        }}>{PREVIEW_KICKER}</div>
         <div style={{ display: 'flex', fontSize: 24, color: '#8E96AB' }}>zodiacs.org</div>
       </div>
       <div style={{ display: 'flex', gap: '30px', width: '100%' }}>

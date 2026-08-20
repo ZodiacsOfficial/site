@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { h } from 'preact';
 import { describe, expect, it, vi } from 'vitest';
 import { encodePositionsLink, POSITION_BODY_ORDER } from '../../src/lib/share-positions';
 
@@ -17,7 +20,7 @@ const imageResponseMock = vi.hoisted(() => {
 
 const fetchMock = vi.fn(async () => new Response(new Uint8Array([0])));
 vi.stubGlobal('fetch', fetchMock);
-vi.mock('@vercel/og', () => ({
+vi.mock('../../node_modules/@vercel/og/dist/index.edge.js', () => ({
   ImageResponse: class extends Response {
     constructor(element: unknown, options: {
       width: number;
@@ -43,7 +46,7 @@ vi.mock('@vercel/og', () => ({
   },
 }));
 
-const { default: handler, previewModel } = await import('../../api/og/chart');
+const { default: handler, previewModel, PREVIEW_KICKER } = await import('../../api/og/chart');
 
 const token = encodePositionsLink({
   bodies: POSITION_BODY_ORDER.map((body, index) => ({ body, lon: index * 29.999 })),
@@ -170,5 +173,37 @@ describe('chart preview edge function', () => {
     expect(response.headers.get('content-type')).toContain('text/plain');
     expect(response.headers.get('cache-control')).toBe('no-store, max-age=0');
     expect(await response.text()).toBe('Chart preview unavailable.');
+  });
+
+  it('renders the bounded EB Garamond kicker subset as a real PNG', async () => {
+    const font = readFileSync(new URL('../../api/og/eb-garamond-latin-500-italic.woff', import.meta.url));
+    expect(font.subarray(0, 4).toString('ascii')).toBe('wOFF');
+    expect(font.byteLength).toBeLessThan(8_000);
+    expect(createHash('sha256').update(font).digest('hex')).toBe(
+      'ed04e3bc22e73224bf11cafb26c73fbc20207179a2ed6529f12aa67b2955d0e0',
+    );
+    expect(PREVIEW_KICKER).toBe('Your chart signature');
+
+    const { ImageResponse: RealImageResponse } = await vi.importActual<typeof import('@vercel/og')>('@vercel/og');
+    const response = new RealImageResponse(
+      h('div', {
+        style: {
+          display: 'flex',
+          width: '320px',
+          height: '180px',
+          fontFamily: 'EB Garamond',
+          fontStyle: 'italic',
+        },
+      }, PREVIEW_KICKER),
+      {
+        width: 320,
+        height: 180,
+        fonts: [{ name: 'EB Garamond', data: font, weight: 500, style: 'italic' }],
+      },
+    );
+    const png = Buffer.from(await response.arrayBuffer());
+    expect(Array.from(png.subarray(0, 8))).toEqual([137, 80, 78, 71, 13, 10, 26, 10]);
+    expect(png.readUInt32BE(16)).toBe(320);
+    expect(png.readUInt32BE(20)).toBe(180);
   });
 });
