@@ -166,7 +166,14 @@ export default function CommunicationRead({ chart, locale = 'en' }: Props) {
         ))}
       </div>
 
-      <p class="calc__comm-privacy">Birth details stay off the image.</p>
+      <footer class="calc__deep-read-footer">
+        <p class="calc__comm-privacy">Birth details stay off the image.</p>
+        {read.moonSign && (
+          <a href={`/learn/placements/moon-in-${read.moonSign}/`}>
+            Read Moon in {signName(signBySlug(read.moonSign), locale)} →
+          </a>
+        )}
+      </footer>
       {shareState === 'preparing' && <p class="sr-only" role="status">Preparing your communication card.</p>}
       {shareState === 'saved' && <p class="sr-only" role="status">Your communication card is ready.</p>}
       {shareState === 'error' && (

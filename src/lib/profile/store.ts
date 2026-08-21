@@ -9,10 +9,12 @@ import { clearChartDeletion, recordChartDeletion } from './deletions';
 import { accountSyncV2Enabled } from '../account-v2/feature-flags';
 import { profileAccessAllowed } from '../account-v2/profile-access-reader';
 import { loadProfile } from './read-store';
+import { SIGN_SLUGS } from '../signs';
 
 export { loadProfile } from './read-store';
 
 const YEAR_AHEAD_CACHE_KEY = 'zodiacs.yearahead.v1';
+export const PROFILE_SUN_SIGN_KEY = 'zodiacs:today-sun-sign:v1';
 const ACCOUNT_SYNC_V2_ENABLED = accountSyncV2Enabled();
 
 interface PersistOptions {
@@ -22,6 +24,33 @@ interface PersistOptions {
 export type StoredChartIdentity = Pick<SavedChart, 'birth'> & {
   summary: Pick<SavedChart['summary'], 'houseSystem'>;
 };
+
+function isSunSign(value: string | null): value is string {
+  return value !== null && SIGN_SLUGS.includes(value);
+}
+
+/** Read the lightweight Sun-sign preference shared by guides and Today. */
+export function loadProfileSunSign(): string | null {
+  if (!profileAccessAllowed()) return null;
+  try {
+    const value = localStorage.getItem(PROFILE_SUN_SIGN_KEY);
+    return isSunSign(value) ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Store a Sun-sign preference without fabricating a saved birth chart. */
+export function setProfileSunSign(sign: string): boolean {
+  if (!isSunSign(sign) || !profileAccessAllowed()) return false;
+  try {
+    localStorage.setItem(PROFILE_SUN_SIGN_KEY, sign);
+    window.dispatchEvent(new CustomEvent('zodiacs:profile-sun-sign', { detail: { sign } }));
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 function queueCloudSync() {
   if (typeof window === 'undefined') return;

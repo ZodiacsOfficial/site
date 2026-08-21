@@ -65,7 +65,15 @@ const jsonLd = [
         <div class="hero-es__foot">
           <p>Cartas natales, signo lunar, compatibilidad y horóscopos gratis: precisos, privados y fáciles de entender.</p>
           <div class="hero-es__ctas">
-            <a class="btn btn--primary" href={localizePath('es', '/birth-chart/')}><span>Obtén tu carta natal gratis</span><span class="orb">↗</span></a>
+            <a
+              class="btn btn--primary"
+              href="/birth-chart/"
+              hreflang="en"
+              title="Contenido disponible por ahora en inglés"
+              aria-label="Obtén tu carta natal gratis. Contenido disponible por ahora en inglés"
+            >
+              <span>Obtén tu carta natal gratis — por ahora en inglés</span><span class="orb">↗</span>
+            </a>
             <a class="btn btn--ghost hero-es__ghost" href="/es/horoscopes/"><span>Ver pronósticos</span></a>
           </div>
         </div>

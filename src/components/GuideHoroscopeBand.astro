@@ -1,0 +1,49 @@
+---
+interface Props {
+  signName: string;
+  slug: string;
+}
+
+const { signName, slug } = Astro.props;
+---
+<aside class="guide-horoscopes" aria-label={`${signName} horoscopes`}>
+  <em class="guide-horoscopes__kicker">Your {signName} horoscope</em>
+  <p>
+    <a href={`/horoscopes/${slug}/`}>{signName} today</a>
+    <span aria-hidden="true">·</span>
+    <a href={`/horoscopes/${slug}/weekly/`}>this week</a>
+    <span aria-hidden="true">·</span>
+    <a href={`/horoscopes/${slug}/monthly/`}>this month</a>
+  </p>
+</aside>
+
+<style>
+  .guide-horoscopes {
+    padding: 18px 20px;
+    border: 1px solid color-mix(in srgb, var(--sign) 24%, var(--hair-2));
+    border-radius: var(--r-md);
+    background: color-mix(in srgb, var(--sign) 5%, var(--void-1));
+  }
+  .guide-horoscopes__kicker {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--muted);
+    font-family: var(--font-serif);
+    font-size: var(--text-sm);
+  }
+  .guide-horoscopes p {
+    display: flex;
+    margin: 0;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 7px;
+    color: var(--faint);
+    font-size: var(--text-base);
+  }
+  .guide-horoscopes a {
+    color: var(--text);
+    text-decoration-color: color-mix(in srgb, var(--sign) 52%, transparent);
+    text-underline-offset: 4px;
+  }
+  .guide-horoscopes a:hover { color: var(--sign); }
+</style>
