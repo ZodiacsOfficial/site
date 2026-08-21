@@ -1,0 +1,3006 @@
+{
+ "schema": "zodiacs.phase5.people-index-demand.v1",
+ "generatedBy": "scripts/build-people-index-demand.mjs --refresh",
+ "generatedAtUtc": "2026-08-21T05:34:57.891Z",
+ "source": {
+  "name": "Wikimedia REST API — English Wikipedia pageviews",
+  "endpoint": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/",
+  "project": "en.wikipedia",
+  "access": "all-access",
+  "agent": "user",
+  "granularity": "monthly"
+ },
+ "metric": "Twelve-month English Wikipedia reader pageviews. This is a public-demand proxy, not Google search volume or a claim about the people.",
+ "window": {
+  "from": "2025-08-01",
+  "to": "2026-07-31",
+  "completeMonths": 12
+ },
+ "target": 100,
+ "population": "All 497 reviewed deceased profiles; living profiles remain separately protected.",
+ "tieBreak": "slug ascending",
+ "people": [
+  {
+   "rank": 1,
+   "slug": "bruce-lee",
+   "title": "Bruce_Lee",
+   "views": 14589437
+  },
+  {
+   "rank": 2,
+   "slug": "elvis-presley",
+   "title": "Elvis_Presley",
+   "views": 5508399
+  },
+  {
+   "rank": 3,
+   "slug": "freddie-mercury",
+   "title": "Freddie_Mercury",
+   "views": 5209978
+  },
+  {
+   "rank": 4,
+   "slug": "albert-einstein",
+   "title": "Albert_Einstein",
+   "views": 4692757
+  },
+  {
+   "rank": 5,
+   "slug": "prince",
+   "title": "Prince_(musician)",
+   "views": 4393168
+  },
+  {
+   "rank": 6,
+   "slug": "david-bowie",
+   "title": "David_Bowie",
+   "views": 4126325
+  },
+  {
+   "rank": 7,
+   "slug": "marilyn-monroe",
+   "title": "Marilyn_Monroe",
+   "views": 3976795
+  },
+  {
+   "rank": 8,
+   "slug": "diego-maradona",
+   "title": "Diego_Maradona",
+   "views": 3932790
+  },
+  {
+   "rank": 9,
+   "slug": "john-lennon",
+   "title": "John_Lennon",
+   "views": 3688833
+  },
+  {
+   "rank": 10,
+   "slug": "martin-luther-king-jr",
+   "title": "Martin_Luther_King_Jr.",
+   "views": 3614517
+  },
+  {
+   "rank": 11,
+   "slug": "judy-garland",
+   "title": "Judy_Garland",
+   "views": 3464486
+  },
+  {
+   "rank": 12,
+   "slug": "stephen-hawking",
+   "title": "Stephen_Hawking",
+   "views": 3453025
+  },
+  {
+   "rank": 13,
+   "slug": "mahatma-gandhi",
+   "title": "Mahatma_Gandhi",
+   "views": 3218194
+  },
+  {
+   "rank": 14,
+   "slug": "charlie-chaplin",
+   "title": "Charlie_Chaplin",
+   "views": 2935874
+  },
+  {
+   "rank": 15,
+   "slug": "audrey-hepburn",
+   "title": "Audrey_Hepburn",
+   "views": 2897946
+  },
+  {
+   "rank": 16,
+   "slug": "amy-winehouse",
+   "title": "Amy_Winehouse",
+   "views": 2864709
+  },
+  {
+   "rank": 17,
+   "slug": "wolfgang-amadeus-mozart",
+   "title": "Wolfgang_Amadeus_Mozart",
+   "views": 2661248
+  },
+  {
+   "rank": 18,
+   "slug": "alfred-hitchcock",
+   "title": "Alfred_Hitchcock",
+   "views": 2546623
+  },
+  {
+   "rank": 19,
+   "slug": "paul-newman",
+   "title": "Paul_Newman",
+   "views": 2490240
+  },
+  {
+   "rank": 20,
+   "slug": "bob-marley",
+   "title": "Bob_Marley",
+   "views": 2387669
+  },
+  {
+   "rank": 21,
+   "slug": "selena",
+   "title": "Selena",
+   "views": 2272183
+  },
+  {
+   "rank": 22,
+   "slug": "alan-turing",
+   "title": "Alan_Turing",
+   "views": 2251568
+  },
+  {
+   "rank": 23,
+   "slug": "nelson-mandela",
+   "title": "Nelson_Mandela",
+   "views": 2228041
+  },
+  {
+   "rank": 24,
+   "slug": "tina-turner",
+   "title": "Tina_Turner",
+   "views": 2191115
+  },
+  {
+   "rank": 25,
+   "slug": "jane-austen",
+   "title": "Jane_Austen",
+   "views": 2166828
+  },
+  {
+   "rank": 26,
+   "slug": "karl-marx",
+   "title": "Karl_Marx",
+   "views": 2161883
+  },
+  {
+   "rank": 27,
+   "slug": "marie-curie",
+   "title": "Marie_Curie",
+   "views": 2119110
+  },
+  {
+   "rank": 28,
+   "slug": "mary-shelley",
+   "title": "Mary_Shelley",
+   "views": 2109808
+  },
+  {
+   "rank": 29,
+   "slug": "vincent-van-gogh",
+   "title": "Vincent_van_Gogh",
+   "views": 1997965
+  },
+  {
+   "rank": 30,
+   "slug": "aretha-franklin",
+   "title": "Aretha_Franklin",
+   "views": 1972820
+  },
+  {
+   "rank": 31,
+   "slug": "grace-kelly",
+   "title": "Grace_Kelly",
+   "views": 1963962
+  },
+  {
+   "rank": 32,
+   "slug": "frida-kahlo",
+   "title": "Frida_Kahlo",
+   "views": 1941354
+  },
+  {
+   "rank": 33,
+   "slug": "indira-gandhi",
+   "title": "Indira_Gandhi",
+   "views": 1926019
+  },
+  {
+   "rank": 34,
+   "slug": "neil-armstrong",
+   "title": "Neil_Armstrong",
+   "views": 1894555
+  },
+  {
+   "rank": 35,
+   "slug": "edgar-allan-poe",
+   "title": "Edgar_Allan_Poe",
+   "views": 1883171
+  },
+  {
+   "rank": 36,
+   "slug": "george-orwell",
+   "title": "George_Orwell",
+   "views": 1829473
+  },
+  {
+   "rank": 37,
+   "slug": "amelia-earhart",
+   "title": "Amelia_Earhart",
+   "views": 1822538
+  },
+  {
+   "rank": 38,
+   "slug": "pablo-picasso",
+   "title": "Pablo_Picasso",
+   "views": 1786713
+  },
+  {
+   "rank": 39,
+   "slug": "friedrich-nietzsche",
+   "title": "Friedrich_Nietzsche",
+   "views": 1784972
+  },
+  {
+   "rank": 40,
+   "slug": "babe-ruth",
+   "title": "Babe_Ruth",
+   "views": 1783798
+  },
+  {
+   "rank": 41,
+   "slug": "ayrton-senna",
+   "title": "Ayrton_Senna",
+   "views": 1716809
+  },
+  {
+   "rank": 42,
+   "slug": "sigmund-freud",
+   "title": "Sigmund_Freud",
+   "views": 1706077
+  },
+  {
+   "rank": 43,
+   "slug": "charles-dickens",
+   "title": "Charles_Dickens",
+   "views": 1686064
+  },
+  {
+   "rank": 44,
+   "slug": "franz-kafka",
+   "title": "Franz_Kafka",
+   "views": 1671215
+  },
+  {
+   "rank": 45,
+   "slug": "andy-warhol",
+   "title": "Andy_Warhol",
+   "views": 1650061
+  },
+  {
+   "rank": 46,
+   "slug": "jawaharlal-nehru",
+   "title": "Jawaharlal_Nehru",
+   "views": 1644923
+  },
+  {
+   "rank": 47,
+   "slug": "katharine-hepburn",
+   "title": "Katharine_Hepburn",
+   "views": 1639449
+  },
+  {
+   "rank": 48,
+   "slug": "emily-bronte",
+   "title": "Emily_Brontë",
+   "views": 1576495
+  },
+  {
+   "rank": 49,
+   "slug": "jim-morrison",
+   "title": "Jim_Morrison",
+   "views": 1571933
+  },
+  {
+   "rank": 50,
+   "slug": "karen-carpenter",
+   "title": "Karen_Carpenter",
+   "views": 1553189
+  },
+  {
+   "rank": 51,
+   "slug": "rosa-parks",
+   "title": "Rosa_Parks",
+   "views": 1477151
+  },
+  {
+   "rank": 52,
+   "slug": "wilt-chamberlain",
+   "title": "Wilt_Chamberlain",
+   "views": 1434775
+  },
+  {
+   "rank": 53,
+   "slug": "janis-joplin",
+   "title": "Janis_Joplin",
+   "views": 1428247
+  },
+  {
+   "rank": 54,
+   "slug": "sylvia-plath",
+   "title": "Sylvia_Plath",
+   "views": 1427291
+  },
+  {
+   "rank": 55,
+   "slug": "mark-twain",
+   "title": "Mark_Twain",
+   "views": 1412848
+  },
+  {
+   "rank": 56,
+   "slug": "niki-lauda",
+   "title": "Niki_Lauda",
+   "views": 1412135
+  },
+  {
+   "rank": 57,
+   "slug": "jean-michel-basquiat",
+   "title": "Jean-Michel_Basquiat",
+   "views": 1352117
+  },
+  {
+   "rank": 58,
+   "slug": "ingrid-bergman",
+   "title": "Ingrid_Bergman",
+   "views": 1326602
+  },
+  {
+   "rank": 59,
+   "slug": "bette-davis",
+   "title": "Bette_Davis",
+   "views": 1282652
+  },
+  {
+   "rank": 60,
+   "slug": "ada-lovelace",
+   "title": "Ada_Lovelace",
+   "views": 1231497
+  },
+  {
+   "rank": 61,
+   "slug": "florence-nightingale",
+   "title": "Florence_Nightingale",
+   "views": 1222037
+  },
+  {
+   "rank": 62,
+   "slug": "virginia-woolf",
+   "title": "Virginia_Woolf",
+   "views": 1212460
+  },
+  {
+   "rank": 63,
+   "slug": "sridevi",
+   "title": "Sridevi",
+   "views": 1205212
+  },
+  {
+   "rank": 64,
+   "slug": "johan-cruyff",
+   "title": "Johan_Cruyff",
+   "views": 1184327
+  },
+  {
+   "rank": 65,
+   "slug": "charles-darwin",
+   "title": "Charles_Darwin",
+   "views": 1175712
+  },
+  {
+   "rank": 66,
+   "slug": "eleanor-roosevelt",
+   "title": "Eleanor_Roosevelt",
+   "views": 1147078
+  },
+  {
+   "rank": 67,
+   "slug": "eva-peron",
+   "title": "Eva_Perón",
+   "views": 1112945
+  },
+  {
+   "rank": 68,
+   "slug": "haile-selassie",
+   "title": "Haile_Selassie",
+   "views": 1080704
+  },
+  {
+   "rank": 69,
+   "slug": "albert-camus",
+   "title": "Albert_Camus",
+   "views": 1077130
+  },
+  {
+   "rank": 70,
+   "slug": "subhas-chandra-bose",
+   "title": "Subhas_Chandra_Bose",
+   "views": 1070902
+  },
+  {
+   "rank": 71,
+   "slug": "immanuel-kant",
+   "title": "Immanuel_Kant",
+   "views": 1043134
+  },
+  {
+   "rank": 72,
+   "slug": "yuri-gagarin",
+   "title": "Yuri_Gagarin",
+   "views": 1019853
+  },
+  {
+   "rank": 73,
+   "slug": "charlotte-bronte",
+   "title": "Charlotte_Brontë",
+   "views": 1019607
+  },
+  {
+   "rank": 74,
+   "slug": "coco-chanel",
+   "title": "Coco_Chanel",
+   "views": 1016032
+  },
+  {
+   "rank": 75,
+   "slug": "rabindranath-tagore",
+   "title": "Rabindranath_Tagore",
+   "views": 990650
+  },
+  {
+   "rank": 76,
+   "slug": "lata-mangeshkar",
+   "title": "Lata_Mangeshkar",
+   "views": 977567
+  },
+  {
+   "rank": 77,
+   "slug": "maria-callas",
+   "title": "Maria_Callas",
+   "views": 974609
+  },
+  {
+   "rank": 78,
+   "slug": "muhammad-ali-jinnah",
+   "title": "Muhammad_Ali_Jinnah",
+   "views": 974324
+  },
+  {
+   "rank": 79,
+   "slug": "raj-kapoor",
+   "title": "Raj_Kapoor",
+   "views": 950719
+  },
+  {
+   "rank": 80,
+   "slug": "arthur-miller",
+   "title": "Arthur_Miller",
+   "views": 943820
+  },
+  {
+   "rank": 81,
+   "slug": "maya-angelou",
+   "title": "Maya_Angelou",
+   "views": 933648
+  },
+  {
+   "rank": 82,
+   "slug": "akira-kurosawa",
+   "title": "Akira_Kurosawa",
+   "views": 931583
+  },
+  {
+   "rank": 83,
+   "slug": "george-best",
+   "title": "George_Best",
+   "views": 931097
+  },
+  {
+   "rank": 84,
+   "slug": "louis-armstrong",
+   "title": "Louis_Armstrong",
+   "views": 930629
+  },
+  {
+   "rank": 85,
+   "slug": "simon-bolivar",
+   "title": "Simón_Bolívar",
+   "views": 894514
+  },
+  {
+   "rank": 86,
+   "slug": "katherine-johnson",
+   "title": "Katherine_Johnson",
+   "views": 878228
+  },
+  {
+   "rank": 87,
+   "slug": "marlene-dietrich",
+   "title": "Marlene_Dietrich",
+   "views": 857301
+  },
+  {
+   "rank": 88,
+   "slug": "sun-yat-sen",
+   "title": "Sun_Yat-sen",
+   "views": 848414
+  },
+  {
+   "rank": 89,
+   "slug": "madhubala",
+   "title": "Madhubala",
+   "views": 829263
+  },
+  {
+   "rank": 90,
+   "slug": "antoni-gaudi",
+   "title": "Antoni_Gaudí",
+   "views": 827511
+  },
+  {
+   "rank": 91,
+   "slug": "luciano-pavarotti",
+   "title": "Luciano_Pavarotti",
+   "views": 812498
+  },
+  {
+   "rank": 92,
+   "slug": "alexander-graham-bell",
+   "title": "Alexander_Graham_Bell",
+   "views": 810974
+  },
+  {
+   "rank": 93,
+   "slug": "swami-vivekananda",
+   "title": "Swami_Vivekananda",
+   "views": 809662
+  },
+  {
+   "rank": 94,
+   "slug": "billie-holiday",
+   "title": "Billie_Holiday",
+   "views": 781719
+  },
+  {
+   "rank": 95,
+   "slug": "thomas-sankara",
+   "title": "Thomas_Sankara",
+   "views": 775997
+  },
+  {
+   "rank": 96,
+   "slug": "bertrand-russell",
+   "title": "Bertrand_Russell",
+   "views": 758508
+  },
+  {
+   "rank": 97,
+   "slug": "w-e-b-du-bois",
+   "title": "W._E._B._Du_Bois",
+   "views": 752826
+  },
+  {
+   "rank": 98,
+   "slug": "toni-morrison",
+   "title": "Toni_Morrison",
+   "views": 747966
+  },
+  {
+   "rank": 99,
+   "slug": "victor-hugo",
+   "title": "Victor_Hugo",
+   "views": 746720
+  },
+  {
+   "rank": 100,
+   "slug": "sally-ride",
+   "title": "Sally_Ride",
+   "views": 745219
+  },
+  {
+   "rank": 101,
+   "slug": "homi-j-bhabha",
+   "title": "Homi_J._Bhabha",
+   "views": 744630
+  },
+  {
+   "rank": 102,
+   "slug": "rene-descartes",
+   "title": "René_Descartes",
+   "views": 728639
+  },
+  {
+   "rank": 103,
+   "slug": "ernest-shackleton",
+   "title": "Ernest_Shackleton",
+   "views": 723734
+  },
+  {
+   "rank": 104,
+   "slug": "claude-monet",
+   "title": "Claude_Monet",
+   "views": 718132
+  },
+  {
+   "rank": 105,
+   "slug": "buster-keaton",
+   "title": "Buster_Keaton",
+   "views": 714652
+  },
+  {
+   "rank": 106,
+   "slug": "patsy-cline",
+   "title": "Patsy_Cline",
+   "views": 698663
+  },
+  {
+   "rank": 107,
+   "slug": "hans-christian-andersen",
+   "title": "Hans_Christian_Andersen",
+   "views": 694921
+  },
+  {
+   "rank": 108,
+   "slug": "bobby-charlton",
+   "title": "Bobby_Charlton",
+   "views": 692842
+  },
+  {
+   "rank": 109,
+   "slug": "johann-wolfgang-von-goethe",
+   "title": "Johann_Wolfgang_von_Goethe",
+   "views": 683043
+  },
+  {
+   "rank": 110,
+   "slug": "josephine-baker",
+   "title": "Josephine_Baker",
+   "views": 668189
+  },
+  {
+   "rank": 111,
+   "slug": "joan-didion",
+   "title": "Joan_Didion",
+   "views": 667126
+  },
+  {
+   "rank": 112,
+   "slug": "jose-rizal",
+   "title": "José_Rizal",
+   "views": 663996
+  },
+  {
+   "rank": 113,
+   "slug": "arthur-schopenhauer",
+   "title": "Arthur_Schopenhauer",
+   "views": 660612
+  },
+  {
+   "rank": 114,
+   "slug": "william-blake",
+   "title": "William_Blake",
+   "views": 653672
+  },
+  {
+   "rank": 115,
+   "slug": "dian-fossey",
+   "title": "Dian_Fossey",
+   "views": 652596
+  },
+  {
+   "rank": 116,
+   "slug": "ludwig-wittgenstein",
+   "title": "Ludwig_Wittgenstein",
+   "views": 640180
+  },
+  {
+   "rank": 117,
+   "slug": "s-ren-kierkegaard",
+   "title": "Søren_Kierkegaard",
+   "views": 637877
+  },
+  {
+   "rank": 118,
+   "slug": "kalpana-chawla",
+   "title": "Kalpana_Chawla",
+   "views": 629139
+  },
+  {
+   "rank": 119,
+   "slug": "walt-whitman",
+   "title": "Walt_Whitman",
+   "views": 628430
+  },
+  {
+   "rank": 120,
+   "slug": "jean-jacques-rousseau",
+   "title": "Jean-Jacques_Rousseau",
+   "views": 619041
+  },
+  {
+   "rank": 121,
+   "slug": "edith-piaf",
+   "title": "Édith_Piaf",
+   "views": 614859
+  },
+  {
+   "rank": 122,
+   "slug": "keith-haring",
+   "title": "Keith_Haring",
+   "views": 612679
+  },
+  {
+   "rank": 123,
+   "slug": "simone-de-beauvoir",
+   "title": "Simone_de_Beauvoir",
+   "views": 602422
+  },
+  {
+   "rank": 124,
+   "slug": "rembrandt",
+   "title": "Rembrandt",
+   "views": 591892
+  },
+  {
+   "rank": 125,
+   "slug": "rosalind-franklin",
+   "title": "Rosalind_Franklin",
+   "views": 588147
+  },
+  {
+   "rank": 126,
+   "slug": "florence-griffith-joyner",
+   "title": "Florence_Griffith_Joyner",
+   "views": 586469
+  },
+  {
+   "rank": 127,
+   "slug": "jules-verne",
+   "title": "Jules_Verne",
+   "views": 582352
+  },
+  {
+   "rank": 128,
+   "slug": "george-bernard-shaw",
+   "title": "George_Bernard_Shaw",
+   "views": 582114
+  },
+  {
+   "rank": 129,
+   "slug": "georg-wilhelm-friedrich-hegel",
+   "title": "Georg_Wilhelm_Friedrich_Hegel",
+   "views": 568749
+  },
+  {
+   "rank": 130,
+   "slug": "edmund-hillary",
+   "title": "Edmund_Hillary",
+   "views": 565770
+  },
+  {
+   "rank": 131,
+   "slug": "booker-t-washington",
+   "title": "Booker_T._Washington",
+   "views": 564483
+  },
+  {
+   "rank": 132,
+   "slug": "roberto-clemente",
+   "title": "Roberto_Clemente",
+   "views": 564357
+  },
+  {
+   "rank": 133,
+   "slug": "ella-fitzgerald",
+   "title": "Ella_Fitzgerald",
+   "views": 560283
+  },
+  {
+   "rank": 134,
+   "slug": "nusrat-fateh-ali-khan",
+   "title": "Nusrat_Fateh_Ali_Khan",
+   "views": 554501
+  },
+  {
+   "rank": 135,
+   "slug": "george-eliot",
+   "title": "George_Eliot",
+   "views": 550160
+  },
+  {
+   "rank": 136,
+   "slug": "walter-payton",
+   "title": "Walter_Payton",
+   "views": 548569
+  },
+  {
+   "rank": 137,
+   "slug": "mary-wollstonecraft",
+   "title": "Mary_Wollstonecraft",
+   "views": 547623
+  },
+  {
+   "rank": 138,
+   "slug": "zhou-enlai",
+   "title": "Zhou_Enlai",
+   "views": 544598
+  },
+  {
+   "rank": 139,
+   "slug": "karl-lagerfeld",
+   "title": "Karl_Lagerfeld",
+   "views": 541074
+  },
+  {
+   "rank": 140,
+   "slug": "mary-pickford",
+   "title": "Mary_Pickford",
+   "views": 535745
+  },
+  {
+   "rank": 141,
+   "slug": "jean-luc-godard",
+   "title": "Jean-Luc_Godard",
+   "views": 533092
+  },
+  {
+   "rank": 142,
+   "slug": "anne-bronte",
+   "title": "Anne_Brontë",
+   "views": 524558
+  },
+  {
+   "rank": 143,
+   "slug": "antonio-vivaldi",
+   "title": "Antonio_Vivaldi",
+   "views": 523081
+  },
+  {
+   "rank": 144,
+   "slug": "louis-pasteur",
+   "title": "Louis_Pasteur",
+   "views": 519761
+  },
+  {
+   "rank": 145,
+   "slug": "eusebio",
+   "title": "Eusébio",
+   "views": 514268
+  },
+  {
+   "rank": 146,
+   "slug": "gabriel-garcia-marquez",
+   "title": "Gabriel_García_Márquez",
+   "views": 514235
+  },
+  {
+   "rank": 147,
+   "slug": "francisco-goya",
+   "title": "Francisco_Goya",
+   "views": 513721
+  },
+  {
+   "rank": 148,
+   "slug": "franz-liszt",
+   "title": "Franz_Liszt",
+   "views": 512331
+  },
+  {
+   "rank": 149,
+   "slug": "marcel-proust",
+   "title": "Marcel_Proust",
+   "views": 511358
+  },
+  {
+   "rank": 150,
+   "slug": "satyajit-ray",
+   "title": "Satyajit_Ray",
+   "views": 507397
+  },
+  {
+   "rank": 151,
+   "slug": "zaha-hadid",
+   "title": "Zaha_Hadid",
+   "views": 502633
+  },
+  {
+   "rank": 152,
+   "slug": "friedrich-engels",
+   "title": "Friedrich_Engels",
+   "views": 501710
+  },
+  {
+   "rank": 153,
+   "slug": "sukarno",
+   "title": "Sukarno",
+   "views": 501160
+  },
+  {
+   "rank": 154,
+   "slug": "kwame-nkrumah",
+   "title": "Kwame_Nkrumah",
+   "views": 491125
+  },
+  {
+   "rank": 155,
+   "slug": "herman-melville",
+   "title": "Herman_Melville",
+   "views": 489675
+  },
+  {
+   "rank": 156,
+   "slug": "thomas-mann",
+   "title": "Thomas_Mann",
+   "views": 478464
+  },
+  {
+   "rank": 157,
+   "slug": "lal-bahadur-shastri",
+   "title": "Lal_Bahadur_Shastri",
+   "views": 469582
+  },
+  {
+   "rank": 158,
+   "slug": "paul-robeson",
+   "title": "Paul_Robeson",
+   "views": 469483
+  },
+  {
+   "rank": 159,
+   "slug": "yogi-berra",
+   "title": "Yogi_Berra",
+   "views": 466188
+  },
+  {
+   "rank": 160,
+   "slug": "erwin-schrodinger",
+   "title": "Erwin_Schrödinger",
+   "views": 465330
+  },
+  {
+   "rank": 161,
+   "slug": "michael-faraday",
+   "title": "Michael_Faraday",
+   "views": 464395
+  },
+  {
+   "rank": 162,
+   "slug": "c-v-raman",
+   "title": "C._V._Raman",
+   "views": 463035
+  },
+  {
+   "rank": 163,
+   "slug": "duke-ellington",
+   "title": "Duke_Ellington",
+   "views": 453430
+  },
+  {
+   "rank": 164,
+   "slug": "louisa-may-alcott",
+   "title": "Louisa_May_Alcott",
+   "views": 452406
+  },
+  {
+   "rank": 165,
+   "slug": "carl-friedrich-gauss",
+   "title": "Carl_Friedrich_Gauss",
+   "views": 444485
+  },
+  {
+   "rank": 166,
+   "slug": "meena-kumari",
+   "title": "Meena_Kumari",
+   "views": 441701
+  },
+  {
+   "rank": 167,
+   "slug": "frantz-fanon",
+   "title": "Frantz_Fanon",
+   "views": 438729
+  },
+  {
+   "rank": 168,
+   "slug": "flannery-o-connor",
+   "title": "Flannery_O'Connor",
+   "views": 436365
+  },
+  {
+   "rank": 169,
+   "slug": "dorothy-dandridge",
+   "title": "Dorothy_Dandridge",
+   "views": 432000
+  },
+  {
+   "rank": 170,
+   "slug": "j-m-w-turner",
+   "title": "J._M._W._Turner",
+   "views": 425637
+  },
+  {
+   "rank": 171,
+   "slug": "george-gershwin",
+   "title": "George_Gershwin",
+   "views": 424426
+  },
+  {
+   "rank": 172,
+   "slug": "toshiro-mifune",
+   "title": "Toshiro_Mifune",
+   "views": 423629
+  },
+  {
+   "rank": 173,
+   "slug": "desmond-tutu",
+   "title": "Desmond_Tutu",
+   "views": 417810
+  },
+  {
+   "rank": 174,
+   "slug": "henri-matisse",
+   "title": "Henri_Matisse",
+   "views": 413931
+  },
+  {
+   "rank": 175,
+   "slug": "claude-debussy",
+   "title": "Claude_Debussy",
+   "views": 412020
+  },
+  {
+   "rank": 176,
+   "slug": "nargis",
+   "title": "Nargis",
+   "views": 411148
+  },
+  {
+   "rank": 177,
+   "slug": "ryuichi-sakamoto",
+   "title": "Ryuichi_Sakamoto",
+   "views": 410337
+  },
+  {
+   "rank": 178,
+   "slug": "franz-schubert",
+   "title": "Franz_Schubert",
+   "views": 409469
+  },
+  {
+   "rank": 179,
+   "slug": "blaise-pascal",
+   "title": "Blaise_Pascal",
+   "views": 406038
+  },
+  {
+   "rank": 180,
+   "slug": "sheikh-mujibur-rahman",
+   "title": "Sheikh_Mujibur_Rahman",
+   "views": 404138
+  },
+  {
+   "rank": 181,
+   "slug": "smita-patil",
+   "title": "Smita_Patil",
+   "views": 403227
+  },
+  {
+   "rank": 182,
+   "slug": "kahlil-gibran",
+   "title": "Kahlil_Gibran",
+   "views": 402252
+  },
+  {
+   "rank": 183,
+   "slug": "enrico-fermi",
+   "title": "Enrico_Fermi",
+   "views": 401979
+  },
+  {
+   "rank": 184,
+   "slug": "alexander-fleming",
+   "title": "Alexander_Fleming",
+   "views": 401951
+  },
+  {
+   "rank": 185,
+   "slug": "federico-fellini",
+   "title": "Federico_Fellini",
+   "views": 386420
+  },
+  {
+   "rank": 186,
+   "slug": "john-stuart-mill",
+   "title": "John_Stuart_Mill",
+   "views": 379729
+  },
+  {
+   "rank": 187,
+   "slug": "james-clerk-maxwell",
+   "title": "James_Clerk_Maxwell",
+   "views": 368327
+  },
+  {
+   "rank": 188,
+   "slug": "leslie-cheung",
+   "title": "Leslie_Cheung",
+   "views": 366276
+  },
+  {
+   "rank": 189,
+   "slug": "william-wilberforce",
+   "title": "William_Wilberforce",
+   "views": 354985
+  },
+  {
+   "rank": 190,
+   "slug": "ida-b-wells",
+   "title": "Ida_B._Wells",
+   "views": 354128
+  },
+  {
+   "rank": 191,
+   "slug": "pablo-neruda",
+   "title": "Pablo_Neruda",
+   "views": 353387
+  },
+  {
+   "rank": 192,
+   "slug": "willie-mays",
+   "title": "Willie_Mays",
+   "views": 352999
+  },
+  {
+   "rank": 193,
+   "slug": "emile-zola",
+   "title": "Émile_Zola",
+   "views": 349615
+  },
+  {
+   "rank": 194,
+   "slug": "sarojini-naidu",
+   "title": "Sarojini_Naidu",
+   "views": 346954
+  },
+  {
+   "rank": 195,
+   "slug": "seve-ballesteros",
+   "title": "Seve_Ballesteros",
+   "views": 345346
+  },
+  {
+   "rank": 196,
+   "slug": "muhammad-iqbal",
+   "title": "Muhammad_Iqbal",
+   "views": 341194
+  },
+  {
+   "rank": 197,
+   "slug": "hattie-mcdaniel",
+   "title": "Hattie_McDaniel",
+   "views": 340812
+  },
+  {
+   "rank": 198,
+   "slug": "joseph-haydn",
+   "title": "Joseph_Haydn",
+   "views": 339101
+  },
+  {
+   "rank": 199,
+   "slug": "gregor-mendel",
+   "title": "Gregor_Mendel",
+   "views": 337116
+  },
+  {
+   "rank": 200,
+   "slug": "celia-cruz",
+   "title": "Celia_Cruz",
+   "views": 336750
+  },
+  {
+   "rank": 201,
+   "slug": "nellie-bly",
+   "title": "Nellie_Bly",
+   "views": 334269
+  },
+  {
+   "rank": 202,
+   "slug": "le-corbusier",
+   "title": "Le_Corbusier",
+   "views": 331074
+  },
+  {
+   "rank": 203,
+   "slug": "karen-blixen",
+   "title": "Karen_Blixen",
+   "views": 330868
+  },
+  {
+   "rank": 204,
+   "slug": "garrincha",
+   "title": "Garrincha",
+   "views": 328421
+  },
+  {
+   "rank": 205,
+   "slug": "honore-de-balzac",
+   "title": "Honoré_de_Balzac",
+   "views": 327799
+  },
+  {
+   "rank": 206,
+   "slug": "antonin-dvorak",
+   "title": "Antonín_Dvořák",
+   "views": 325490
+  },
+  {
+   "rank": 207,
+   "slug": "raja-ravi-varma",
+   "title": "Raja_Ravi_Varma",
+   "views": 325157
+  },
+  {
+   "rank": 208,
+   "slug": "johannes-brahms",
+   "title": "Johannes_Brahms",
+   "views": 324728
+  },
+  {
+   "rank": 209,
+   "slug": "arthur-rimbaud",
+   "title": "Arthur_Rimbaud",
+   "views": 321909
+  },
+  {
+   "rank": 210,
+   "slug": "erik-satie",
+   "title": "Erik_Satie",
+   "views": 318670
+  },
+  {
+   "rank": 211,
+   "slug": "roald-amundsen",
+   "title": "Roald_Amundsen",
+   "views": 317137
+  },
+  {
+   "rank": 212,
+   "slug": "paramahansa-yogananda",
+   "title": "Paramahansa_Yogananda",
+   "views": 312909
+  },
+  {
+   "rank": 213,
+   "slug": "george-sand",
+   "title": "George_Sand",
+   "views": 307844
+  },
+  {
+   "rank": 214,
+   "slug": "anne-sullivan",
+   "title": "Anne_Sullivan",
+   "views": 304095
+  },
+  {
+   "rank": 215,
+   "slug": "artemisia-gentileschi",
+   "title": "Artemisia_Gentileschi",
+   "views": 301157
+  },
+  {
+   "rank": 216,
+   "slug": "dalida",
+   "title": "Dalida",
+   "views": 301075
+  },
+  {
+   "rank": 217,
+   "slug": "ignaz-semmelweis",
+   "title": "Ignaz_Semmelweis",
+   "views": 296975
+  },
+  {
+   "rank": 218,
+   "slug": "irene-joliot-curie",
+   "title": "Irène_Joliot-Curie",
+   "views": 293638
+  },
+  {
+   "rank": 219,
+   "slug": "piet-mondrian",
+   "title": "Piet_Mondrian",
+   "views": 291533
+  },
+  {
+   "rank": 220,
+   "slug": "jacques-derrida",
+   "title": "Jacques_Derrida",
+   "views": 290755
+  },
+  {
+   "rank": 221,
+   "slug": "edward-elgar",
+   "title": "Edward_Elgar",
+   "views": 286268
+  },
+  {
+   "rank": 222,
+   "slug": "harriet-beecher-stowe",
+   "title": "Harriet_Beecher_Stowe",
+   "views": 283739
+  },
+  {
+   "rank": 223,
+   "slug": "pierre-auguste-renoir",
+   "title": "Pierre-Auguste_Renoir",
+   "views": 281214
+  },
+  {
+   "rank": 224,
+   "slug": "lucy-maud-montgomery",
+   "title": "Lucy_Maud_Montgomery",
+   "views": 280009
+  },
+  {
+   "rank": 225,
+   "slug": "subrahmanyan-chandrasekhar",
+   "title": "Subrahmanyan_Chandrasekhar",
+   "views": 278649
+  },
+  {
+   "rank": 226,
+   "slug": "teresa-teng",
+   "title": "Teresa_Teng",
+   "views": 278000
+  },
+  {
+   "rank": 227,
+   "slug": "mary-oliver",
+   "title": "Mary_Oliver",
+   "views": 272126
+  },
+  {
+   "rank": 228,
+   "slug": "mahalia-jackson",
+   "title": "Mahalia_Jackson",
+   "views": 269472
+  },
+  {
+   "rank": 229,
+   "slug": "antoine-lavoisier",
+   "title": "Antoine_Lavoisier",
+   "views": 266995
+  },
+  {
+   "rank": 230,
+   "slug": "maria-montessori",
+   "title": "Maria_Montessori",
+   "views": 265446
+  },
+  {
+   "rank": 231,
+   "slug": "edgar-degas",
+   "title": "Edgar_Degas",
+   "views": 264293
+  },
+  {
+   "rank": 232,
+   "slug": "emmeline-pankhurst",
+   "title": "Emmeline_Pankhurst",
+   "views": 264003
+  },
+  {
+   "rank": 233,
+   "slug": "steve-biko",
+   "title": "Steve_Biko",
+   "views": 262576
+  },
+  {
+   "rank": 234,
+   "slug": "charles-baudelaire",
+   "title": "Charles_Baudelaire",
+   "views": 260061
+  },
+  {
+   "rank": 235,
+   "slug": "sri-aurobindo",
+   "title": "Sri_Aurobindo",
+   "views": 254344
+  },
+  {
+   "rank": 236,
+   "slug": "elsa-schiaparelli",
+   "title": "Elsa_Schiaparelli",
+   "views": 252517
+  },
+  {
+   "rank": 237,
+   "slug": "montesquieu",
+   "title": "Montesquieu",
+   "views": 251328
+  },
+  {
+   "rank": 238,
+   "slug": "peter-tosh",
+   "title": "Peter_Tosh",
+   "views": 248765
+  },
+  {
+   "rank": 239,
+   "slug": "dolores-del-rio",
+   "title": "Dolores_del_Río",
+   "views": 245557
+  },
+  {
+   "rank": 240,
+   "slug": "elizabeth-barrett-browning",
+   "title": "Elizabeth_Barrett_Browning",
+   "views": 241698
+  },
+  {
+   "rank": 241,
+   "slug": "maryam-mirzakhani",
+   "title": "Maryam_Mirzakhani",
+   "views": 240480
+  },
+  {
+   "rank": 242,
+   "slug": "bessie-coleman",
+   "title": "Bessie_Coleman",
+   "views": 237704
+  },
+  {
+   "rank": 243,
+   "slug": "mercedes-sosa",
+   "title": "Mercedes_Sosa",
+   "views": 237001
+  },
+  {
+   "rank": 244,
+   "slug": "audre-lorde",
+   "title": "Audre_Lorde",
+   "views": 236204
+  },
+  {
+   "rank": 245,
+   "slug": "alfred-adler",
+   "title": "Alfred_Adler",
+   "views": 234123
+  },
+  {
+   "rank": 246,
+   "slug": "r-k-narayan",
+   "title": "R._K._Narayan",
+   "views": 232984
+  },
+  {
+   "rank": 247,
+   "slug": "margaret-mead",
+   "title": "Margaret_Mead",
+   "views": 229546
+  },
+  {
+   "rank": 248,
+   "slug": "leonora-carrington",
+   "title": "Leonora_Carrington",
+   "views": 227243
+  },
+  {
+   "rank": 249,
+   "slug": "mary-jackson",
+   "title": "Mary_Jackson_(engineer)",
+   "views": 225199
+  },
+  {
+   "rank": 250,
+   "slug": "camille-saint-saens",
+   "title": "Camille_Saint-Saëns",
+   "views": 225027
+  },
+  {
+   "rank": 251,
+   "slug": "joan-miro",
+   "title": "Joan_Miró",
+   "views": 224387
+  },
+  {
+   "rank": 252,
+   "slug": "ma-rainey",
+   "title": "Ma_Rainey",
+   "views": 218077
+  },
+  {
+   "rank": 253,
+   "slug": "edward-jenner",
+   "title": "Edward_Jenner",
+   "views": 217334
+  },
+  {
+   "rank": 254,
+   "slug": "hector-berlioz",
+   "title": "Hector_Berlioz",
+   "views": 214259
+  },
+  {
+   "rank": 255,
+   "slug": "hilma-af-klint",
+   "title": "Hilma_af_Klint",
+   "views": 212165
+  },
+  {
+   "rank": 256,
+   "slug": "gertrude-bell",
+   "title": "Gertrude_Bell",
+   "views": 209098
+  },
+  {
+   "rank": 257,
+   "slug": "clarice-lispector",
+   "title": "Clarice_Lispector",
+   "views": 208596
+  },
+  {
+   "rank": 258,
+   "slug": "agnes-varda",
+   "title": "Agnès_Varda",
+   "views": 208226
+  },
+  {
+   "rank": 259,
+   "slug": "miriam-makeba",
+   "title": "Miriam_Makeba",
+   "views": 207849
+  },
+  {
+   "rank": 260,
+   "slug": "dorothy-day",
+   "title": "Dorothy_Day",
+   "views": 207543
+  },
+  {
+   "rank": 261,
+   "slug": "julius-nyerere",
+   "title": "Julius_Nyerere",
+   "views": 207237
+  },
+  {
+   "rank": 262,
+   "slug": "colette",
+   "title": "Colette",
+   "views": 203184
+  },
+  {
+   "rank": 263,
+   "slug": "edvard-grieg",
+   "title": "Edvard_Grieg",
+   "views": 201460
+  },
+  {
+   "rank": 264,
+   "slug": "arnold-schoenberg",
+   "title": "Arnold_Schoenberg",
+   "views": 199462
+  },
+  {
+   "rank": 265,
+   "slug": "jagadish-chandra-bose",
+   "title": "Jagadish_Chandra_Bose",
+   "views": 196360
+  },
+  {
+   "rank": 266,
+   "slug": "luchino-visconti",
+   "title": "Luchino_Visconti",
+   "views": 195842
+  },
+  {
+   "rank": 267,
+   "slug": "anita-mui",
+   "title": "Anita_Mui",
+   "views": 195759
+  },
+  {
+   "rank": 268,
+   "slug": "diane-arbus",
+   "title": "Diane_Arbus",
+   "views": 194856
+  },
+  {
+   "rank": 269,
+   "slug": "issey-miyake",
+   "title": "Issey_Miyake",
+   "views": 193295
+  },
+  {
+   "rank": 270,
+   "slug": "bessie-smith",
+   "title": "Bessie_Smith",
+   "views": 192060
+  },
+  {
+   "rank": 271,
+   "slug": "dante-gabriel-rossetti",
+   "title": "Dante_Gabriel_Rossetti",
+   "views": 190915
+  },
+  {
+   "rank": 272,
+   "slug": "cantinflas",
+   "title": "Cantinflas",
+   "views": 187652
+  },
+  {
+   "rank": 273,
+   "slug": "guy-de-maupassant",
+   "title": "Guy_de_Maupassant",
+   "views": 187268
+  },
+  {
+   "rank": 274,
+   "slug": "mahmoud-darwish",
+   "title": "Mahmoud_Darwish",
+   "views": 178486
+  },
+  {
+   "rank": 275,
+   "slug": "edith-stein",
+   "title": "Edith_Stein",
+   "views": 178099
+  },
+  {
+   "rank": 276,
+   "slug": "thor-heyerdahl",
+   "title": "Thor_Heyerdahl",
+   "views": 177269
+  },
+  {
+   "rank": 277,
+   "slug": "evariste-galois",
+   "title": "Évariste_Galois",
+   "views": 176759
+  },
+  {
+   "rank": 278,
+   "slug": "getulio-vargas",
+   "title": "Getúlio_Vargas",
+   "views": 170759
+  },
+  {
+   "rank": 279,
+   "slug": "althea-gibson",
+   "title": "Althea_Gibson",
+   "views": 170043
+  },
+  {
+   "rank": 280,
+   "slug": "fernando-pessoa",
+   "title": "Fernando_Pessoa",
+   "views": 169504
+  },
+  {
+   "rank": 281,
+   "slug": "soong-ching-ling",
+   "title": "Soong_Ching-ling",
+   "views": 169282
+  },
+  {
+   "rank": 282,
+   "slug": "gioachino-rossini",
+   "title": "Gioachino_Rossini",
+   "views": 168769
+  },
+  {
+   "rank": 283,
+   "slug": "premchand",
+   "title": "Premchand",
+   "views": 168305
+  },
+  {
+   "rank": 284,
+   "slug": "italo-calvino",
+   "title": "Italo_Calvino",
+   "views": 167777
+  },
+  {
+   "rank": 285,
+   "slug": "roland-barthes",
+   "title": "Roland_Barthes",
+   "views": 167556
+  },
+  {
+   "rank": 286,
+   "slug": "jose-marti",
+   "title": "José_Martí",
+   "views": 165428
+  },
+  {
+   "rank": 287,
+   "slug": "jose-de-san-martin",
+   "title": "José_de_San_Martín",
+   "views": 165207
+  },
+  {
+   "rank": 288,
+   "slug": "friedrich-schiller",
+   "title": "Friedrich_Schiller",
+   "views": 163284
+  },
+  {
+   "rank": 289,
+   "slug": "jane-addams",
+   "title": "Jane_Addams",
+   "views": 161699
+  },
+  {
+   "rank": 290,
+   "slug": "michelangelo-antonioni",
+   "title": "Michelangelo_Antonioni",
+   "views": 161278
+  },
+  {
+   "rank": 291,
+   "slug": "elizabeth-cady-stanton",
+   "title": "Elizabeth_Cady_Stanton",
+   "views": 161238
+  },
+  {
+   "rank": 292,
+   "slug": "astrid-lindgren",
+   "title": "Astrid_Lindgren",
+   "views": 160286
+  },
+  {
+   "rank": 293,
+   "slug": "wilma-rudolph",
+   "title": "Wilma_Rudolph",
+   "views": 160251
+  },
+  {
+   "rank": 294,
+   "slug": "abdus-salam",
+   "title": "Abdus_Salam",
+   "views": 160093
+  },
+  {
+   "rank": 295,
+   "slug": "henri-poincare",
+   "title": "Henri_Poincaré",
+   "views": 156201
+  },
+  {
+   "rank": 296,
+   "slug": "clara-schumann",
+   "title": "Clara_Schumann",
+   "views": 155843
+  },
+  {
+   "rank": 297,
+   "slug": "christina-rossetti",
+   "title": "Christina_Rossetti",
+   "views": 154933
+  },
+  {
+   "rank": 298,
+   "slug": "knute-rockne",
+   "title": "Knute_Rockne",
+   "views": 149794
+  },
+  {
+   "rank": 299,
+   "slug": "sonja-henie",
+   "title": "Sonja_Henie",
+   "views": 148916
+  },
+  {
+   "rank": 300,
+   "slug": "samuel-barber",
+   "title": "Samuel_Barber",
+   "views": 148498
+  },
+  {
+   "rank": 301,
+   "slug": "bernardo-o-higgins",
+   "title": "Bernardo_O'Higgins",
+   "views": 147937
+  },
+  {
+   "rank": 302,
+   "slug": "john-constable",
+   "title": "John_Constable",
+   "views": 146321
+  },
+  {
+   "rank": 303,
+   "slug": "ghassan-kanafani",
+   "title": "Ghassan_Kanafani",
+   "views": 146183
+  },
+  {
+   "rank": 304,
+   "slug": "joseph-lister",
+   "title": "Joseph_Lister",
+   "views": 145686
+  },
+  {
+   "rank": 305,
+   "slug": "amrita-pritam",
+   "title": "Amrita_Pritam",
+   "views": 144897
+  },
+  {
+   "rank": 306,
+   "slug": "maria-felix",
+   "title": "María_Félix",
+   "views": 144408
+  },
+  {
+   "rank": 307,
+   "slug": "denis-diderot",
+   "title": "Denis_Diderot",
+   "views": 144048
+  },
+  {
+   "rank": 308,
+   "slug": "georges-bizet",
+   "title": "Georges_Bizet",
+   "views": 142610
+  },
+  {
+   "rank": 309,
+   "slug": "faten-hamama",
+   "title": "Faten_Hamama",
+   "views": 138538
+  },
+  {
+   "rank": 310,
+   "slug": "alberto-santos-dumont",
+   "title": "Alberto_Santos-Dumont",
+   "views": 138524
+  },
+  {
+   "rank": 311,
+   "slug": "dorothea-lange",
+   "title": "Dorothea_Lange",
+   "views": 137525
+  },
+  {
+   "rank": 312,
+   "slug": "alfred-north-whitehead",
+   "title": "Alfred_North_Whitehead",
+   "views": 136964
+  },
+  {
+   "rank": 313,
+   "slug": "katherine-mansfield",
+   "title": "Katherine_Mansfield",
+   "views": 136674
+  },
+  {
+   "rank": 314,
+   "slug": "paul-verlaine",
+   "title": "Paul_Verlaine",
+   "views": 136326
+  },
+  {
+   "rank": 315,
+   "slug": "berthe-morisot",
+   "title": "Berthe_Morisot",
+   "views": 133612
+  },
+  {
+   "rank": 316,
+   "slug": "ralph-ellison",
+   "title": "Ralph_Ellison",
+   "views": 131550
+  },
+  {
+   "rank": 317,
+   "slug": "louise-bourgeois",
+   "title": "Louise_Bourgeois",
+   "views": 131515
+  },
+  {
+   "rank": 318,
+   "slug": "frederick-banting",
+   "title": "Frederick_Banting",
+   "views": 130723
+  },
+  {
+   "rank": 319,
+   "slug": "qian-xuesen",
+   "title": "Qian_Xuesen",
+   "views": 130342
+  },
+  {
+   "rank": 320,
+   "slug": "fred-perry",
+   "title": "Fred_Perry",
+   "views": 130278
+  },
+  {
+   "rank": 321,
+   "slug": "fernando-botero",
+   "title": "Fernando_Botero",
+   "views": 129793
+  },
+  {
+   "rank": 322,
+   "slug": "natsume-soseki",
+   "title": "Natsume_Sōseki",
+   "views": 128436
+  },
+  {
+   "rank": 323,
+   "slug": "kamala-surayya",
+   "title": "Kamala_Surayya",
+   "views": 128330
+  },
+  {
+   "rank": 324,
+   "slug": "u-thant",
+   "title": "U_Thant",
+   "views": 127284
+  },
+  {
+   "rank": 325,
+   "slug": "gabriel-faure",
+   "title": "Gabriel_Fauré",
+   "views": 125864
+  },
+  {
+   "rank": 326,
+   "slug": "marguerite-duras",
+   "title": "Marguerite_Duras",
+   "views": 125736
+  },
+  {
+   "rank": 327,
+   "slug": "saadat-hasan-manto",
+   "title": "Saadat_Hasan_Manto",
+   "views": 125299
+  },
+  {
+   "rank": 328,
+   "slug": "carl-sandburg",
+   "title": "Carl_Sandburg",
+   "views": 125096
+  },
+  {
+   "rank": 329,
+   "slug": "chien-shiung-wu",
+   "title": "Chien-Shiung_Wu",
+   "views": 124933
+  },
+  {
+   "rank": 330,
+   "slug": "yasunari-kawabata",
+   "title": "Yasunari_Kawabata",
+   "views": 122807
+  },
+  {
+   "rank": 331,
+   "slug": "walter-gropius",
+   "title": "Walter_Gropius",
+   "views": 122560
+  },
+  {
+   "rank": 332,
+   "slug": "fridtjof-nansen",
+   "title": "Fridtjof_Nansen",
+   "views": 120699
+  },
+  {
+   "rank": 333,
+   "slug": "lynn-margulis",
+   "title": "Lynn_Margulis",
+   "views": 119518
+  },
+  {
+   "rank": 334,
+   "slug": "lu-xun",
+   "title": "Lu_Xun",
+   "views": 119122
+  },
+  {
+   "rank": 335,
+   "slug": "wangari-maathai",
+   "title": "Wangarĩ_Maathai",
+   "views": 118976
+  },
+  {
+   "rank": 336,
+   "slug": "elisabeth-vigee-le-brun",
+   "title": "Élisabeth_Vigée_Le_Brun",
+   "views": 115377
+  },
+  {
+   "rank": 337,
+   "slug": "oscar-niemeyer",
+   "title": "Oscar_Niemeyer",
+   "views": 114460
+  },
+  {
+   "rank": 338,
+   "slug": "cesaria-evora",
+   "title": "Cesária_Évora",
+   "views": 114029
+  },
+  {
+   "rank": 339,
+   "slug": "fatima-jinnah",
+   "title": "Fatima_Jinnah",
+   "views": 112927
+  },
+  {
+   "rank": 340,
+   "slug": "humphry-davy",
+   "title": "Humphry_Davy",
+   "views": 111953
+  },
+  {
+   "rank": 341,
+   "slug": "amilcar-cabral",
+   "title": "Amílcar_Cabral",
+   "views": 108977
+  },
+  {
+   "rank": 342,
+   "slug": "henri-cartier-bresson",
+   "title": "Henri_Cartier-Bresson",
+   "views": 108436
+  },
+  {
+   "rank": 343,
+   "slug": "alma-mahler",
+   "title": "Alma_Mahler",
+   "views": 108207
+  },
+  {
+   "rank": 344,
+   "slug": "anton-bruckner",
+   "title": "Anton_Bruckner",
+   "views": 106009
+  },
+  {
+   "rank": 345,
+   "slug": "august-strindberg",
+   "title": "August_Strindberg",
+   "views": 105857
+  },
+  {
+   "rank": 346,
+   "slug": "vittorio-de-sica",
+   "title": "Vittorio_De_Sica",
+   "views": 105044
+  },
+  {
+   "rank": 347,
+   "slug": "heinrich-hertz",
+   "title": "Heinrich_Hertz",
+   "views": 102635
+  },
+  {
+   "rank": 348,
+   "slug": "matthew-henson",
+   "title": "Matthew_Henson",
+   "views": 100407
+  },
+  {
+   "rank": 349,
+   "slug": "bedrich-smetana",
+   "title": "Bedřich_Smetana",
+   "views": 98189
+  },
+  {
+   "rank": 350,
+   "slug": "ngugi-wa-thiong-o",
+   "title": "Ngũgĩ_wa_Thiong'o",
+   "views": 97708
+  },
+  {
+   "rank": 351,
+   "slug": "nadine-gordimer",
+   "title": "Nadine_Gordimer",
+   "views": 96903
+  },
+  {
+   "rank": 352,
+   "slug": "elizabeth-blackwell",
+   "title": "Elizabeth_Blackwell",
+   "views": 96693
+  },
+  {
+   "rank": 353,
+   "slug": "bhimsen-joshi",
+   "title": "Bhimsen_Joshi",
+   "views": 96149
+  },
+  {
+   "rank": 354,
+   "slug": "funmilayo-ransome-kuti",
+   "title": "Funmilayo_Ransome-Kuti",
+   "views": 95288
+  },
+  {
+   "rank": 355,
+   "slug": "brenda-fassie",
+   "title": "Brenda_Fassie",
+   "views": 94898
+  },
+  {
+   "rank": 356,
+   "slug": "w-g-grace",
+   "title": "W._G._Grace",
+   "views": 93731
+  },
+  {
+   "rank": 357,
+   "slug": "kathe-kollwitz",
+   "title": "Käthe_Kollwitz",
+   "views": 90121
+  },
+  {
+   "rank": 358,
+   "slug": "elizabeth-bishop",
+   "title": "Elizabeth_Bishop",
+   "views": 90010
+  },
+  {
+   "rank": 359,
+   "slug": "mulk-raj-anand",
+   "title": "Mulk_Raj_Anand",
+   "views": 86723
+  },
+  {
+   "rank": 360,
+   "slug": "alvar-aalto",
+   "title": "Alvar_Aalto",
+   "views": 85901
+  },
+  {
+   "rank": 361,
+   "slug": "ritwik-ghatak",
+   "title": "Ritwik_Ghatak",
+   "views": 85192
+  },
+  {
+   "rank": 362,
+   "slug": "karel-capek",
+   "title": "Karel_Čapek",
+   "views": 83125
+  },
+  {
+   "rank": 363,
+   "slug": "amedeo-avogadro",
+   "title": "Amedeo_Avogadro",
+   "views": 82725
+  },
+  {
+   "rank": 364,
+   "slug": "banjo-paterson",
+   "title": "Banjo_Paterson",
+   "views": 81475
+  },
+  {
+   "rank": 365,
+   "slug": "selma-lagerlof",
+   "title": "Selma_Lagerlöf",
+   "views": 80185
+  },
+  {
+   "rank": 366,
+   "slug": "helen-frankenthaler",
+   "title": "Helen_Frankenthaler",
+   "views": 79635
+  },
+  {
+   "rank": 367,
+   "slug": "nadia-boulanger",
+   "title": "Nadia_Boulanger",
+   "views": 78835
+  },
+  {
+   "rank": 368,
+   "slug": "miguel-de-unamuno",
+   "title": "Miguel_de_Unamuno",
+   "views": 74496
+  },
+  {
+   "rank": 369,
+   "slug": "barbara-mcclintock",
+   "title": "Barbara_McClintock",
+   "views": 72998
+  },
+  {
+   "rank": 370,
+   "slug": "junko-tabei",
+   "title": "Junko_Tabei",
+   "views": 72484
+  },
+  {
+   "rank": 371,
+   "slug": "jean-beliveau",
+   "title": "Jean_Béliveau",
+   "views": 70433
+  },
+  {
+   "rank": 372,
+   "slug": "david-alfaro-siqueiros",
+   "title": "David_Alfaro_Siqueiros",
+   "views": 69122
+  },
+  {
+   "rank": 373,
+   "slug": "virginia-apgar",
+   "title": "Virginia_Apgar",
+   "views": 69063
+  },
+  {
+   "rank": 374,
+   "slug": "leos-janacek",
+   "title": "Leoš_Janáček",
+   "views": 68613
+  },
+  {
+   "rank": 375,
+   "slug": "ranjitsinhji",
+   "title": "Ranjitsinhji",
+   "views": 67949
+  },
+  {
+   "rank": 376,
+   "slug": "konrad-lorenz",
+   "title": "Konrad_Lorenz",
+   "views": 66900
+  },
+  {
+   "rank": 377,
+   "slug": "ali-farka-toure",
+   "title": "Ali_Farka_Touré",
+   "views": 66094
+  },
+  {
+   "rank": 378,
+   "slug": "carlos-fuentes",
+   "title": "Carlos_Fuentes",
+   "views": 63717
+  },
+  {
+   "rank": 379,
+   "slug": "fukuzawa-yukichi",
+   "title": "Fukuzawa_Yukichi",
+   "views": 62909
+  },
+  {
+   "rank": 380,
+   "slug": "gaetano-donizetti",
+   "title": "Gaetano_Donizetti",
+   "views": 62049
+  },
+  {
+   "rank": 381,
+   "slug": "cecilia-payne-gaposchkin",
+   "title": "Cecilia_Payne-Gaposchkin",
+   "views": 61978
+  },
+  {
+   "rank": 382,
+   "slug": "emil-zatopek",
+   "title": "Emil_Zátopek",
+   "views": 61950
+  },
+  {
+   "rank": 383,
+   "slug": "setsuko-hara",
+   "title": "Setsuko_Hara",
+   "views": 61668
+  },
+  {
+   "rank": 384,
+   "slug": "sophie-germain",
+   "title": "Sophie_Germain",
+   "views": 61636
+  },
+  {
+   "rank": 385,
+   "slug": "elis-regina",
+   "title": "Elis_Regina",
+   "views": 60833
+  },
+  {
+   "rank": 386,
+   "slug": "rosa-bonheur",
+   "title": "Rosa_Bonheur",
+   "views": 60652
+  },
+  {
+   "rank": 387,
+   "slug": "natalia-ginzburg",
+   "title": "Natalia_Ginzburg",
+   "views": 59869
+  },
+  {
+   "rank": 388,
+   "slug": "g-e-m-anscombe",
+   "title": "G._E._M._Anscombe",
+   "views": 58723
+  },
+  {
+   "rank": 389,
+   "slug": "maria-goeppert-mayer",
+   "title": "Maria_Goeppert_Mayer",
+   "views": 57196
+  },
+  {
+   "rank": 390,
+   "slug": "helen-b-taussig",
+   "title": "Helen_B._Taussig",
+   "views": 56368
+  },
+  {
+   "rank": 391,
+   "slug": "wis-awa-szymborska",
+   "title": "Wisława_Szymborska",
+   "views": 55591
+  },
+  {
+   "rank": 392,
+   "slug": "lucretia-mott",
+   "title": "Lucretia_Mott",
+   "views": 55399
+  },
+  {
+   "rank": 393,
+   "slug": "david-unaipon",
+   "title": "David_Unaipon",
+   "views": 53566
+  },
+  {
+   "rank": 394,
+   "slug": "machado-de-assis",
+   "title": "Machado_de_Assis",
+   "views": 53281
+  },
+  {
+   "rank": 395,
+   "slug": "giacomo-leopardi",
+   "title": "Giacomo_Leopardi",
+   "views": 53177
+  },
+  {
+   "rank": 396,
+   "slug": "millicent-fawcett",
+   "title": "Millicent_Fawcett",
+   "views": 52575
+  },
+  {
+   "rank": 397,
+   "slug": "ousmane-sembene",
+   "title": "Ousmane_Sembène",
+   "views": 50166
+  },
+  {
+   "rank": 398,
+   "slug": "gabriele-munter",
+   "title": "Gabriele_Münter",
+   "views": 48854
+  },
+  {
+   "rank": 399,
+   "slug": "muhammad-abduh",
+   "title": "Muhammad_Abduh",
+   "views": 48372
+  },
+  {
+   "rank": 400,
+   "slug": "caroline-herschel",
+   "title": "Caroline_Herschel",
+   "views": 48146
+  },
+  {
+   "rank": 401,
+   "slug": "carlos-p-romulo",
+   "title": "Carlos_P._Romulo",
+   "views": 48052
+  },
+  {
+   "rank": 402,
+   "slug": "jose-clemente-orozco",
+   "title": "José_Clemente_Orozco",
+   "views": 48024
+  },
+  {
+   "rank": 403,
+   "slug": "gertrude-b-elion",
+   "title": "Gertrude_B._Elion",
+   "views": 47110
+  },
+  {
+   "rank": 404,
+   "slug": "bruno-schulz",
+   "title": "Bruno_Schulz",
+   "views": 47005
+  },
+  {
+   "rank": 405,
+   "slug": "heitor-villa-lobos",
+   "title": "Heitor_Villa-Lobos",
+   "views": 46977
+  },
+  {
+   "rank": 406,
+   "slug": "violeta-parra",
+   "title": "Violeta_Parra",
+   "views": 46915
+  },
+  {
+   "rank": 407,
+   "slug": "fanny-blankers-koen",
+   "title": "Fanny_Blankers-Koen",
+   "views": 45057
+  },
+  {
+   "rank": 408,
+   "slug": "charles-lyell",
+   "title": "Charles_Lyell",
+   "views": 44790
+  },
+  {
+   "rank": 409,
+   "slug": "kartini",
+   "title": "Kartini",
+   "views": 43551
+  },
+  {
+   "rank": 410,
+   "slug": "ruth-benedict",
+   "title": "Ruth_Benedict",
+   "views": 43291
+  },
+  {
+   "rank": 411,
+   "slug": "ruben-dario",
+   "title": "Rubén_Darío",
+   "views": 43246
+  },
+  {
+   "rank": 412,
+   "slug": "antonio-machado",
+   "title": "Antonio_Machado",
+   "views": 42953
+  },
+  {
+   "rank": 413,
+   "slug": "henry-lawson",
+   "title": "Henry_Lawson",
+   "views": 42823
+  },
+  {
+   "rank": 414,
+   "slug": "eileen-gray",
+   "title": "Eileen_Gray",
+   "views": 42472
+  },
+  {
+   "rank": 415,
+   "slug": "alessandro-manzoni",
+   "title": "Alessandro_Manzoni",
+   "views": 42148
+  },
+  {
+   "rank": 416,
+   "slug": "paula-modersohn-becker",
+   "title": "Paula_Modersohn-Becker",
+   "views": 42011
+  },
+  {
+   "rank": 417,
+   "slug": "isabella-bird",
+   "title": "Isabella_Bird",
+   "views": 39869
+  },
+  {
+   "rank": 418,
+   "slug": "annie-jump-cannon",
+   "title": "Annie_Jump_Cannon",
+   "views": 38973
+  },
+  {
+   "rank": 419,
+   "slug": "ethel-smyth",
+   "title": "Ethel_Smyth",
+   "views": 38289
+  },
+  {
+   "rank": 420,
+   "slug": "tsuguharu-foujita",
+   "title": "Tsuguharu_Foujita",
+   "views": 38159
+  },
+  {
+   "rank": 421,
+   "slug": "sadegh-hedayat",
+   "title": "Sadegh_Hedayat",
+   "views": 37490
+  },
+  {
+   "rank": 422,
+   "slug": "kenzo-tange",
+   "title": "Kenzō_Tange",
+   "views": 36632
+  },
+  {
+   "rank": 423,
+   "slug": "luis-barragan",
+   "title": "Luis_Barragán",
+   "views": 36394
+  },
+  {
+   "rank": 424,
+   "slug": "hideki-yukawa",
+   "title": "Hideki_Yukawa",
+   "views": 35523
+  },
+  {
+   "rank": 425,
+   "slug": "charles-eames",
+   "title": "Charles_Eames",
+   "views": 34807
+  },
+  {
+   "rank": 426,
+   "slug": "grazia-deledda",
+   "title": "Grazia_Deledda",
+   "views": 33457
+  },
+  {
+   "rank": 427,
+   "slug": "harriet-taylor-mill",
+   "title": "Harriet_Taylor_Mill",
+   "views": 32368
+  },
+  {
+   "rank": 428,
+   "slug": "hideyo-noguchi",
+   "title": "Hideyo_Noguchi",
+   "views": 32188
+  },
+  {
+   "rank": 429,
+   "slug": "ray-eames",
+   "title": "Ray_Eames",
+   "views": 32148
+  },
+  {
+   "rank": 430,
+   "slug": "qiu-jin",
+   "title": "Qiu_Jin",
+   "views": 32143
+  },
+  {
+   "rank": 431,
+   "slug": "whina-cooper",
+   "title": "Whina_Cooper",
+   "views": 31206
+  },
+  {
+   "rank": 432,
+   "slug": "sandor-marai",
+   "title": "Sándor_Márai",
+   "views": 30214
+  },
+  {
+   "rank": 433,
+   "slug": "hibari-misora",
+   "title": "Hibari_Misora",
+   "views": 30107
+  },
+  {
+   "rank": 434,
+   "slug": "cecile-chaminade",
+   "title": "Cécile_Chaminade",
+   "views": 29634
+  },
+  {
+   "rank": 435,
+   "slug": "albertina-sisulu",
+   "title": "Albertina_Sisulu",
+   "views": 29126
+  },
+  {
+   "rank": 436,
+   "slug": "lao-she",
+   "title": "Lao_She",
+   "views": 28605
+  },
+  {
+   "rank": 437,
+   "slug": "consuelo-velazquez",
+   "title": "Consuelo_Velázquez",
+   "views": 28374
+  },
+  {
+   "rank": 438,
+   "slug": "frank-worrell",
+   "title": "Frank_Worrell",
+   "views": 28097
+  },
+  {
+   "rank": 439,
+   "slug": "berenice-abbott",
+   "title": "Berenice_Abbott",
+   "views": 27986
+  },
+  {
+   "rank": 440,
+   "slug": "dinu-lipatti",
+   "title": "Dinu_Lipatti",
+   "views": 26904
+  },
+  {
+   "rank": 441,
+   "slug": "learie-constantine",
+   "title": "Learie_Constantine",
+   "views": 26864
+  },
+  {
+   "rank": 442,
+   "slug": "yu-gwan-sun",
+   "title": "Yu_Gwan-sun",
+   "views": 25333
+  },
+  {
+   "rank": 443,
+   "slug": "elsa-morante",
+   "title": "Elsa_Morante",
+   "views": 25274
+  },
+  {
+   "rank": 444,
+   "slug": "s-h-raza",
+   "title": "S._H._Raza",
+   "views": 25155
+  },
+  {
+   "rank": 445,
+   "slug": "madeleine-vionnet",
+   "title": "Madeleine_Vionnet",
+   "views": 24796
+  },
+  {
+   "rank": 446,
+   "slug": "octavia-hill",
+   "title": "Octavia_Hill",
+   "views": 24793
+  },
+  {
+   "rank": 447,
+   "slug": "buchi-emecheta",
+   "title": "Buchi_Emecheta",
+   "views": 24314
+  },
+  {
+   "rank": 448,
+   "slug": "oodgeroo-noonuccal",
+   "title": "Oodgeroo_Noonuccal",
+   "views": 24240
+  },
+  {
+   "rank": 449,
+   "slug": "james-van-der-zee",
+   "title": "James_Van_Der_Zee",
+   "views": 23488
+  },
+  {
+   "rank": 450,
+   "slug": "yosano-akiko",
+   "title": "Yosano_Akiko",
+   "views": 23469
+  },
+  {
+   "rank": 451,
+   "slug": "alfonsina-storni",
+   "title": "Alfonsina_Storni",
+   "views": 23141
+  },
+  {
+   "rank": 452,
+   "slug": "giorgos-seferis",
+   "title": "Giorgos_Seferis",
+   "views": 22240
+  },
+  {
+   "rank": 453,
+   "slug": "julia-de-burgos",
+   "title": "Julia_de_Burgos",
+   "views": 22074
+  },
+  {
+   "rank": 454,
+   "slug": "xu-beihong",
+   "title": "Xu_Beihong",
+   "views": 21895
+  },
+  {
+   "rank": 455,
+   "slug": "rufino-tamayo",
+   "title": "Rufino_Tamayo",
+   "views": 20984
+  },
+  {
+   "rank": 456,
+   "slug": "tarsila-do-amaral",
+   "title": "Tarsila_do_Amaral",
+   "views": 20610
+  },
+  {
+   "rank": 457,
+   "slug": "lin-huiyin",
+   "title": "Lin_Huiyin",
+   "views": 20250
+  },
+  {
+   "rank": 458,
+   "slug": "rosario-castellanos",
+   "title": "Rosario_Castellanos",
+   "views": 20143
+  },
+  {
+   "rank": 459,
+   "slug": "judith-wright",
+   "title": "Judith_Wright",
+   "views": 19927
+  },
+  {
+   "rank": 460,
+   "slug": "lina-bo-bardi",
+   "title": "Lina_Bo_Bardi",
+   "views": 18756
+  },
+  {
+   "rank": 461,
+   "slug": "bessie-head",
+   "title": "Bessie_Head",
+   "views": 18622
+  },
+  {
+   "rank": 462,
+   "slug": "halide-edib-ad-var",
+   "title": "Halide_Edib_Adıvar",
+   "views": 18615
+  },
+  {
+   "rank": 463,
+   "slug": "hanae-mori",
+   "title": "Hanae_Mori",
+   "views": 18165
+  },
+  {
+   "rank": 464,
+   "slug": "eca-de-queiroz",
+   "title": "Eça_de_Queiroz",
+   "views": 17952
+  },
+  {
+   "rank": 465,
+   "slug": "ba-jin",
+   "title": "Ba_Jin",
+   "views": 17158
+  },
+  {
+   "rank": 466,
+   "slug": "maria-zambrano",
+   "title": "María_Zambrano",
+   "views": 16442
+  },
+  {
+   "rank": 467,
+   "slug": "kathleen-kenyon",
+   "title": "Kathleen_Kenyon",
+   "views": 15816
+  },
+  {
+   "rank": 468,
+   "slug": "edith-clarke",
+   "title": "Edith_Clarke",
+   "views": 15576
+  },
+  {
+   "rank": 469,
+   "slug": "jean-bartik",
+   "title": "Jean_Bartik",
+   "views": 14828
+  },
+  {
+   "rank": 470,
+   "slug": "florence-knoll",
+   "title": "Florence_Knoll",
+   "views": 14775
+  },
+  {
+   "rank": 471,
+   "slug": "machiko-hasegawa",
+   "title": "Machiko_Hasegawa",
+   "views": 14538
+  },
+  {
+   "rank": 472,
+   "slug": "luis-federico-leloir",
+   "title": "Luis_Federico_Leloir",
+   "views": 14430
+  },
+  {
+   "rank": 473,
+   "slug": "silvina-ocampo",
+   "title": "Silvina_Ocampo",
+   "views": 14234
+  },
+  {
+   "rank": 474,
+   "slug": "may-ziadeh",
+   "title": "May_Ziadeh",
+   "views": 14103
+  },
+  {
+   "rank": 475,
+   "slug": "margaret-ekpo",
+   "title": "Margaret_Ekpo",
+   "views": 13506
+  },
+  {
+   "rank": 476,
+   "slug": "teresa-carreno",
+   "title": "Teresa_Carreño",
+   "views": 13483
+  },
+  {
+   "rank": 477,
+   "slug": "clara-haskil",
+   "title": "Clara_Haskil",
+   "views": 13058
+  },
+  {
+   "rank": 478,
+   "slug": "ben-enwonwu",
+   "title": "Ben_Enwonwu",
+   "views": 12585
+  },
+  {
+   "rank": 479,
+   "slug": "mariama-ba",
+   "title": "Mariama_Bâ",
+   "views": 12028
+  },
+  {
+   "rank": 480,
+   "slug": "flora-nwapa",
+   "title": "Flora_Nwapa",
+   "views": 11586
+  },
+  {
+   "rank": 481,
+   "slug": "chabuca-granda",
+   "title": "Chabuca_Granda",
+   "views": 11467
+  },
+  {
+   "rank": 482,
+   "slug": "chairil-anwar",
+   "title": "Chairil_Anwar",
+   "views": 11428
+  },
+  {
+   "rank": 483,
+   "slug": "carlos-chagas",
+   "title": "Carlos_Chagas",
+   "views": 11296
+  },
+  {
+   "rank": 484,
+   "slug": "irma-stern",
+   "title": "Irma_Stern",
+   "views": 11154
+  },
+  {
+   "rank": 485,
+   "slug": "candido-portinari",
+   "title": "Candido_Portinari",
+   "views": 9507
+  },
+  {
+   "rank": 486,
+   "slug": "bernardo-houssay",
+   "title": "Bernardo_Houssay",
+   "views": 9195
+  },
+  {
+   "rank": 487,
+   "slug": "bertha-lutz",
+   "title": "Bertha_Lutz",
+   "views": 8279
+  },
+  {
+   "rank": 488,
+   "slug": "xiao-hong",
+   "title": "Xiao_Hong",
+   "views": 7719
+  },
+  {
+   "rank": 489,
+   "slug": "nise-da-silveira",
+   "title": "Nise_da_Silveira",
+   "views": 7470
+  },
+  {
+   "rank": 490,
+   "slug": "parvin-e-tesami",
+   "title": "Parvin_E'tesami",
+   "views": 6973
+  },
+  {
+   "rank": 491,
+   "slug": "xiang-jingyu",
+   "title": "Xiang_Jingyu",
+   "views": 6880
+  },
+  {
+   "rank": 492,
+   "slug": "doria-shafik",
+   "title": "Doria_Shafik",
+   "views": 5885
+  },
+  {
+   "rank": 493,
+   "slug": "delmira-agustini",
+   "title": "Delmira_Agustini",
+   "views": 5490
+  },
+  {
+   "rank": 494,
+   "slug": "juana-de-ibarbourou",
+   "title": "Juana_de_Ibarbourou",
+   "views": 5359
+  },
+  {
+   "rank": 495,
+   "slug": "misuzu-kaneko",
+   "title": "Misuzu_Kaneko",
+   "views": 4707
+  },
+  {
+   "rank": 496,
+   "slug": "ellen-kuzwayo",
+   "title": "Ellen_Kuzwayo",
+   "views": 4521
+  },
+  {
+   "rank": 497,
+   "slug": "cecilia-meireles",
+   "title": "Cecília_Meireles",
+   "views": 4024
+  }
+ ]
+}

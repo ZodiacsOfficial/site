@@ -24,12 +24,17 @@ describe('hreflang release policy', () => {
     expect(STAGED_NOINDEX_LOCALES).toEqual([]);
     expect(ABSENT_LOCALES).toEqual(['ar']);
     expect(X_DEFAULT_HREFLANG).toEqual({
-      hreflang: 'x-default', locale: 'en', expectedBlocks: 2051,
+      hreflang: 'x-default', locale: 'en', expectedBlocks: 575,
     });
     expect(hreflangRouteFamily('/fr/tools/')).toBe('core');
-    expect(hreflangRouteFamily('/birthday/february-29/')).toBe('programmatic');
+    expect(hreflangRouteFamily('/birthday/february-29/')).toBe('birthday');
+    expect(hreflangRouteFamily('/ru/aries/')).toBe('sign-guide');
     expect(hreflangRouteFamily('/ru/horoscopes/aries/')).toBeNull();
     expect([...expectedHreflangsForPath('/tools/')]).toEqual(['en', 'es', 'pt-BR', 'fr', 'it', 'ru', 'x-default']);
+    expect([...expectedHreflangsForPath('/birthday/february-29/')])
+      .toEqual(['en', 'x-default']);
+    expect([...expectedHreflangsForPath('/aries/')])
+      .toEqual(['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']);
     expect([...expectedHreflangsForPath('/learn/chinese-zodiac/dragon/')])
       .toEqual(['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']);
     expect([...expectedHreflangsForPath('/horoscopes/aries/')]).toEqual([]);

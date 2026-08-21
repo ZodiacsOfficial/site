@@ -1,7 +1,7 @@
 /**
- * The legacy wing's URL inventory — every page served verbatim from
- * public/. Single source of truth for the sitemap endpoint (and any
- * future nav that lists the wing). Keep in sync with public/.
+ * Human-facing legacy-wing URLs eligible for sitemap discovery. Machine
+ * contracts such as llms.txt and the Registry JSON remain served from public/
+ * but are deliberately absent here.
  */
 import { SIGN_SLUGS } from '../signs';
 
@@ -19,7 +19,4 @@ export const LEGACY_URLS: LegacyUrl[] = [
   { path: '/archive/', priority: 0.6 },
   { path: '/sdk/', priority: 0.7 },
   { path: '/sdk/examples/simastry-aura/', priority: 0.4 },
-  { path: '/llms.txt', priority: 0.4 },
-  { path: '/llms-full.txt', priority: 0.4 },
-  { path: '/registry/zodiacs.registry.json', priority: 0.5 },
 ];

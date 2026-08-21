@@ -13,6 +13,12 @@
  * variety between pages comes from the facts, not from paraphrase.
  *
  *   node docs/phase5/people-pilot/tools/compose-copy.mjs
+ *   node docs/phase5/people-pilot/tools/compose-copy.mjs --migrate-articles
+ *   node docs/phase5/people-pilot/tools/compose-copy.mjs --check
+ *
+ * Released copy is deliberately frozen. --migrate-articles applies the one
+ * approved corpus-wide grammar migration; --check verifies that migration is
+ * complete and that the derived depth report still matches the frozen copy.
  */
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -54,7 +60,7 @@ const ASPECT_SENSE = {
     'A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct.',
   ],
   opposition: [
-    'The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit.',
+    'The scheme reads an opposition as an axis to walk, not a fight to win: the chart keeps both ends lit.',
     'Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine.',
     'An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.',
     'Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.',
@@ -82,6 +88,7 @@ const ASPECT_SENSE = {
     'A sixth of the circle is close enough for cooperation and far enough that it stays optional.',
   ],
 };
+const aspectWithArticle = (type) => `${type === 'opposition' ? 'an' : 'a'} ${type}`;
 const DIGNITY_GLOSS = {
   domicile: 'the planet in its own sign, running on home rules',
   exaltation: 'the tradition’s honoured-guest placement, working at its best',
@@ -312,8 +319,8 @@ function lede(record, slug) {
       text: `${pick([
         `${capitalise(bodyLabel(tight.a))} and ${bodyLabel(tight.b)} sit ${deg(tight.orb)} from an exact ${tight.type} — near enough that the tradition reads ${SHORT_FUNCTION[tight.a]} and ${SHORT_FUNCTION[tight.b]} as a single working part.`,
         `${deg(tight.orb)} separates ${bodyLabel(tight.a)} and ${bodyLabel(tight.b)} from an exact ${tight.type}; at that range ${SHORT_FUNCTION[tight.a]} and ${SHORT_FUNCTION[tight.b]} read as one mechanism.`,
-        `The chart's headline is a ${tight.type}: ${bodyLabel(tight.a)} and ${bodyLabel(tight.b)} within ${deg(tight.orb)}, ${SHORT_FUNCTION[tight.a]} wired to ${SHORT_FUNCTION[tight.b]}.`,
-        `Tightest of all, ${bodyLabel(tight.a)} holds a ${tight.type} to ${bodyLabel(tight.b)} at ${deg(tight.orb)} — close enough to weld ${SHORT_FUNCTION[tight.a]} to ${SHORT_FUNCTION[tight.b]}.`,
+        `The chart's headline is ${aspectWithArticle(tight.type)}: ${bodyLabel(tight.a)} and ${bodyLabel(tight.b)} within ${deg(tight.orb)}, ${SHORT_FUNCTION[tight.a]} wired to ${SHORT_FUNCTION[tight.b]}.`,
+        `Tightest of all, ${bodyLabel(tight.a)} holds ${aspectWithArticle(tight.type)} to ${bodyLabel(tight.b)} at ${deg(tight.orb)} — close enough to weld ${SHORT_FUNCTION[tight.a]} to ${SHORT_FUNCTION[tight.b]}.`,
       ], slug, 'lede-aspect-lead')} ${pick(ASPECT_SENSE[tight.type], slug, 'lede-aspect')}`,
     };
   }
@@ -370,12 +377,12 @@ function geometryBlock(record, slug) {
   const [first, ...rest] = aspects;
   const opening = pick([
     `The tightest geometry in the chart puts ${bodyLabel(first.a)} ${ASPECT_GEOMETRY[first.type]} from ${bodyLabel(first.b)}, ${deg(first.orb)} off exact.`,
-    `${capitalise(bodyLabel(first.a))} and ${bodyLabel(first.b)} hold the closest angle here — a ${first.type}, ${deg(first.orb)} wide.`,
-    `Closest first: ${bodyLabel(first.a)} to ${bodyLabel(first.b)}, a ${first.type} with ${deg(first.orb)} of slack.`,
-      `The day's firmest angle joins ${bodyLabel(first.a)} and ${bodyLabel(first.b)} — a ${first.type} holding at ${deg(first.orb)}.`,
+    `${capitalise(bodyLabel(first.a))} and ${bodyLabel(first.b)} hold the closest angle here — ${aspectWithArticle(first.type)}, ${deg(first.orb)} wide.`,
+    `Closest first: ${bodyLabel(first.a)} to ${bodyLabel(first.b)}, ${aspectWithArticle(first.type)} with ${deg(first.orb)} of slack.`,
+      `The day's firmest angle joins ${bodyLabel(first.a)} and ${bodyLabel(first.b)} — ${aspectWithArticle(first.type)} holding at ${deg(first.orb)}.`,
     `Nothing in the geometry sits closer than ${bodyLabel(first.a)} and ${bodyLabel(first.b)}: ${deg(first.orb)} from an exact ${first.type}.`,
     `Start where the chart is tightest — ${bodyLabel(first.a)} ${first.type} ${bodyLabel(first.b)}, ${deg(first.orb)} of separation.`,
-    `${capitalise(bodyLabel(first.a))} to ${bodyLabel(first.b)} is the closest call of the day, a ${first.type} within ${deg(first.orb)}.`,
+    `${capitalise(bodyLabel(first.a))} to ${bodyLabel(first.b)} is the closest call of the day, ${aspectWithArticle(first.type)} within ${deg(first.orb)}.`,
 ], slug, 'geometry-open');
   const tail = rest.length > 0
     ? ` Behind it, ${rest.map((aspect) => `${bodyLabel(aspect.a)} ${aspect.type} ${bodyLabel(aspect.b)} at ${deg(aspect.orb)}`).join(', and ')} — both still well inside the orbs this site uses.`
@@ -624,6 +631,11 @@ function figuresBlock(record, slug) {
  * measurement at the end always runs across every copy file, old and new.
  */
 const FREEZE = process.env.FREEZE_EXISTING === '1';
+const CHECK = process.argv.includes('--check');
+const MIGRATE_ARTICLES = process.argv.includes('--migrate-articles');
+if ([CHECK, MIGRATE_ARTICLES].filter(Boolean).length > 1 || ((CHECK || MIGRATE_ARTICLES) && FREEZE)) {
+  throw new Error('Choose one of --check, --migrate-articles, or FREEZE_EXISTING=1');
+}
 /* Deterministic similarity repair: reseeds.json maps slug → round.
    A bumped round changes every pooled pick on that one page. */
 let reseeds = {};
@@ -632,12 +644,39 @@ const policy = JSON.parse(await readFile(join(PILOT, 'index-policy.json'), 'utf8
 const withdrawnSlugs = new Set((policy.withdrawn ?? []).map((entry) => entry.slug));
 const candidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'))
   .filter((candidate) => candidate.role === 'pilot' && !withdrawnSlugs.has(candidate.slug));
-await mkdir(join(PILOT, 'copy'), { recursive: true });
-const existingCopy = new Set((await readdir(join(PILOT, 'copy'))).map((file) => file.replace(/\.json$/u, '')));
+if (!CHECK) await mkdir(join(PILOT, 'copy'), { recursive: true });
+const existingCopy = new Set((await readdir(join(PILOT, 'copy')))
+  .filter((file) => file.endsWith('.json'))
+  .map((file) => file.replace(/\.json$/u, '')));
+const candidateSlugs = new Set(candidates.map((candidate) => candidate.slug));
+const orphanCopy = [...existingCopy].filter((slug) => !candidateSlugs.has(slug)).sort();
+if (orphanCopy.length > 0) {
+  throw new Error(`Generated copy has orphan file(s): ${orphanCopy.join(', ')}`);
+}
+const migrateArticles = (source) => source
+  .replaceAll('a axis', 'an axis')
+  .replaceAll('a opposition', 'an opposition');
+if (CHECK || MIGRATE_ARTICLES) {
+  for (const slug of existingCopy) {
+    const copyPath = join(PILOT, 'copy', `${slug}.json`);
+    const existing = await readFile(copyPath, 'utf8');
+    const migrated = migrateArticles(existing);
+    if (CHECK && migrated !== existing) {
+      throw new Error(`${slug}: generated article grammar drift; run compose-copy.mjs --migrate-articles`);
+    }
+    if (MIGRATE_ARTICLES && migrated !== existing) {
+      await writeFile(copyPath, migrated, 'utf8');
+    }
+  }
+}
 
 const pages = [];
 const bySign = {};
 for (const candidate of candidates) {
+  if (CHECK || MIGRATE_ARTICLES) {
+    if (!existingCopy.has(candidate.slug)) throw new Error(`${candidate.slug}: generated copy is missing`);
+    continue;
+  }
   const record = JSON.parse(await readFile(join(PILOT, 'computed', `${candidate.slug}.json`), 'utf8'));
   bySign[record.sun.sign] = bySign[record.sun.sign] ?? [];
   bySign[record.sun.sign].push(candidate.slug);
@@ -645,6 +684,7 @@ for (const candidate of candidates) {
 
 let composed = 0;
 for (const candidate of candidates) {
+  if (CHECK || MIGRATE_ARTICLES) continue;
   const seedRound = reseeds[candidate.slug] ?? 0;
   if (FREEZE && existingCopy.has(candidate.slug)) {
     const existing = JSON.parse(await readFile(join(PILOT, 'copy', `${candidate.slug}.json`), 'utf8'));
@@ -692,7 +732,9 @@ for (const candidate of candidates) {
     substantiveStatements: new Set(page.substantiveFacts).size,
     blocks: blocks.length,
   };
-  await writeFile(join(PILOT, 'copy', `${candidate.slug}.json`), `${JSON.stringify(page, null, 2)}\n`, 'utf8');
+  const copyPath = join(PILOT, 'copy', `${candidate.slug}.json`);
+  const serializedPage = `${JSON.stringify(page, null, 2)}\n`;
+  await writeFile(copyPath, serializedPage, 'utf8');
   pages.push(page);
 }
 
@@ -748,9 +790,18 @@ const report = {
   topPairs: matrix.slice(0, 10),
   perSlugMax,
 };
-await writeFile(join(PILOT, 'depth-report.json'), `${JSON.stringify(report, null, 1)}\n`, 'utf8');
+const reportPath = join(PILOT, 'depth-report.json');
+const serializedReport = `${JSON.stringify(report, null, 1)}\n`;
+if (CHECK) {
+  const existing = await readFile(reportPath, 'utf8').catch(() => '');
+  if (existing !== serializedReport) {
+    throw new Error('People depth report drifted; run node docs/phase5/people-pilot/tools/compose-copy.mjs');
+  }
+} else {
+  await writeFile(reportPath, serializedReport, 'utf8');
+}
 
-console.log(`Composed ${FREEZE ? composed : pages.length} new pages; measured ${allPages.length} total.`);
+console.log(`${CHECK ? 'Checked' : MIGRATE_ARTICLES ? 'Migrated' : 'Composed'} ${CHECK || MIGRATE_ARTICLES ? allPages.length : FREEZE ? composed : pages.length} pages; measured ${allPages.length} total.`);
 console.log(`Original words: min ${report.originalWords.min}, median ${report.originalWords.median}, max ${report.originalWords.max}`);
 console.log(`Substantive statements: min ${report.substantiveStatements.min}, max ${report.substantiveStatements.max}`);
 console.log(`Highest cross-page similarity: ${report.highestSimilarity.similarity} (${report.highestSimilarity.pair.join(' <> ')})`);

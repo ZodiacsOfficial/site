@@ -15,7 +15,8 @@ const check = (condition, message) => {
 const people = peopleData.people;
 const routes = ['/people/', ...people.map((person) => `/people/${person.slug}/`)];
 const indexablePeople = people.filter((person) => person.indexEligibility.eligible);
-const protectedLiving = people.filter((person) => !person.indexEligibility.eligible);
+const deferredPeople = people.filter((person) => !person.indexEligibility.eligible && !person.living);
+const protectedLiving = people.filter((person) => person.living);
 const indexablePaths = new Set(indexablePeople.map((person) => `/people/${person.slug}/`));
 if (peopleData.directoryIndexable) indexablePaths.add('/people/');
 const representative = [
@@ -67,9 +68,12 @@ await withPreview({ port: 4425 }, async (baseURL) => {
             }
           }),
       }));
+      const routePerson = people.find((person) => `/people/${person.slug}/` === route);
       const expectedRobots = indexablePaths.has(route)
         ? 'max-image-preview:large'
-        : 'noindex, nofollow, max-image-preview:large';
+        : routePerson?.living
+          ? 'noindex, nofollow, max-image-preview:large'
+          : 'noindex, follow, max-image-preview:large';
       check(state.robots === expectedRobots, `${route}: robots=${state.robots}`);
       check(state.canonical === `https://zodiacs.org${route}`, `${route}: canonical=${state.canonical}`);
       check(state.alternates === 0, `${route}: emitted ${state.alternates} hreflang alternates`);
@@ -147,8 +151,8 @@ await withPreview({ port: 4425 }, async (baseURL) => {
     }
     check(inventoryErrors.length === 0, `inventory browser errors: ${inventoryErrors.join(' | ')}`);
     check(
-      indexablePeople.length === people.filter((person) => !person.living).length,
-      `indexable must equal the deceased count: ${indexablePeople.length} vs ${people.filter((person) => !person.living).length}`,
+      indexablePeople.length === 104 && deferredPeople.length === 393,
+      `People demand partition drifted: ${indexablePeople.length} indexable / ${deferredPeople.length} deferred`,
     );
     check(
       protectedLiving.map((person) => person.slug).sort().join(',')
@@ -485,6 +489,7 @@ if (failures.length) {
 
 console.log(
   `phase5-people-drive: PASS — ${assertions} assertions;`
-  + ` ${indexablePeople.length} indexable profiles, directory + ${protectedLiving.length} living profiles protected,`
+  + ` ${indexablePeople.length} indexable profiles, ${deferredPeople.length} deferred,`
+  + ` directory + ${protectedLiving.length} living profiles protected,`
   + ' 20 portraits/fallbacks, no-JS, responsive, keyboard and reduced-motion states',
 );

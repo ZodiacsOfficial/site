@@ -7,6 +7,7 @@ import {
   CORE_ROUTE_LOCALES,
   CATALOG_LOCALES,
   LEGACY_HOME_SELECTOR_LOCALES,
+  INDEXABLE_SIGN_GUIDE_LOCALES,
   PROGRAMMATIC_ROUTE_LOCALES,
   RELEASED_LOCALES,
   STAGED_CORE_ROUTE_LOCALES,
@@ -17,6 +18,7 @@ import {
   normalizeKnownLocale,
   normalizeLocale,
   renderableLocalesForPath,
+  renderableAlternatePathEntries,
   showsEnglishOnlyInterpretation,
   stripLocale,
   tf,
@@ -140,6 +142,7 @@ describe('i18n helpers', () => {
     expect(STAGED_CORE_ROUTE_LOCALES).toEqual([]);
     expect(LEGACY_HOME_SELECTOR_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
     expect(PROGRAMMATIC_ROUTE_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
+    expect(INDEXABLE_SIGN_GUIDE_LOCALES).toEqual(['en', 'es', 'pt', 'fr', 'it']);
     expect(LOCALE_META.ru).toEqual({
       pathPrefix: '/ru', htmlLang: 'ru', dir: 'ltr', hreflang: 'ru',
       intlLocale: 'ru-RU', ogLocale: 'ru_RU', languageName: 'Русский',
@@ -157,8 +160,11 @@ describe('i18n helpers', () => {
     expect(localizePath('ru', '/birthday/february-29/')).toBe('/birthday/february-29/');
     expect(availableLocalesForPath('/tools/')).toEqual(CORE_ROUTE_LOCALES);
     expect(renderableLocalesForPath('/tools/')).toEqual(CORE_ROUTE_LOCALES);
-    expect(availableLocalesForPath('/birthday/february-29/')).toEqual(PROGRAMMATIC_ROUTE_LOCALES);
+    expect(availableLocalesForPath('/birthday/february-29/')).toEqual(['en']);
+    expect(renderableLocalesForPath('/birthday/february-29/')).toEqual(PROGRAMMATIC_ROUTE_LOCALES);
     expect(availableLocalesForPath('/learn/chinese-zodiac/dragon/')).toEqual(PROGRAMMATIC_ROUTE_LOCALES);
+    expect(availableLocalesForPath('/aries/')).toEqual(INDEXABLE_SIGN_GUIDE_LOCALES);
+    expect(renderableLocalesForPath('/aries/')).toEqual(CORE_ROUTE_LOCALES);
     expect(alternatePaths('/tools/')).toHaveProperty('ru', '/ru/tools/');
     for (const path of ['/birthday/february-29/', '/learn/chinese-zodiac/dragon/']) {
       expect(alternatePaths(path)).not.toHaveProperty('ru');
@@ -170,11 +176,7 @@ describe('i18n helpers', () => {
     expect(LOCALIZED_PATHS.has('/compatibility/aries-taurus/')).toBe(false);
     expect(alternatePaths('/compatibility/aries-taurus/')).toBeNull();
 
-    for (const path of [
-      '/birthday/july-15/',
-      '/learn/chinese-zodiac/',
-      '/learn/chinese-zodiac/dragon/',
-    ]) {
+    for (const path of ['/learn/chinese-zodiac/', '/learn/chinese-zodiac/dragon/']) {
       // Programmatic families are recognized without enumerating hundreds of
       // paths into every client island's i18n bundle.
       expect(LOCALIZED_PATHS.has(path)).toBe(false);
@@ -186,6 +188,24 @@ describe('i18n helpers', () => {
         it: `/it${path}`,
       });
     }
+    expect(alternatePaths('/birthday/july-15/')).toEqual({ en: '/birthday/july-15/' });
+    expect(renderableAlternatePathEntries('/es/birthday/july-15/')).toEqual([
+      { locale: 'en', href: '/birthday/july-15/' },
+      { locale: 'es', href: '/es/birthday/july-15/' },
+      { locale: 'pt', href: '/pt/birthday/july-15/' },
+      { locale: 'fr', href: '/fr/birthday/july-15/' },
+      { locale: 'it', href: '/it/birthday/july-15/' },
+    ]);
+    expect(alternatePaths('/aries/')).toEqual({
+      en: '/aries/',
+      es: '/es/aries/',
+      pt: '/pt/aries/',
+      fr: '/fr/aries/',
+      it: '/it/aries/',
+    });
+    expect(renderableAlternatePathEntries('/ru/aries/')).toContainEqual({
+      locale: 'ru', href: '/ru/aries/',
+    });
     expect(alternatePaths('/birthday/february-30/')).toBeNull();
     expect(alternatePaths('/birthday/january-01/')).toBeNull();
     expect(alternatePaths('/learn/chinese-zodiac/phoenix/')).toBeNull();

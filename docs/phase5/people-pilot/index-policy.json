@@ -5,7 +5,7 @@
  "outsideLegalAdviceObtained": false,
  "minimumIndexableProfilesForDirectory": 20,
  "directoryIndexable": true,
- "indexableProfiles": [
+ "reviewedDeceasedProfiles": [
   "abdus-salam",
   "ada-lovelace",
   "agnes-varda",
@@ -504,6 +504,32 @@
   "zaha-hadid",
   "zhou-enlai"
  ],
+ "demandPruning": {
+  "authorizedBy": "owner instruction of 2026-08-21 — Packet F authorizes search-demand pruning while keeping reviewed People routes available",
+  "authorizedAtUtc": "2026-08-21T05:49:10Z",
+  "evidence": "docs/phase5/people-pilot/index-demand.json",
+  "rankedTarget": 100,
+  "retainReviewedDeceasedRegistryLinks": true,
+  "continuityOverrides": [
+   {
+    "slug": "walt-whitman",
+    "rank": 119
+   },
+   {
+    "slug": "ella-fitzgerald",
+    "rank": 133
+   },
+   {
+    "slug": "gabriel-garcia-marquez",
+    "rank": 146
+   },
+   {
+    "slug": "michael-faraday",
+    "rank": 161
+   }
+  ],
+  "reason": "Keep the 100 highest measured public-demand profiles plus four reviewed deceased profiles already linked from Registry sign records. The remaining reviewed deceased profiles stay live but noindex, follow."
+ },
  "protectedLivingProfiles": [
   "bill-gates",
   "leonardo-dicaprio",

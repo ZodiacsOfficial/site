@@ -9,6 +9,7 @@ import {
   LOCALE_META,
   LEGACY_HOME_SELECTOR_LOCALES,
   alternatePathEntries,
+  renderableAlternatePathEntries,
   localizePath,
   normalizeCatalogLocale,
   stripLocale,
@@ -19,7 +20,7 @@ import {
 const year = new Date().getFullYear();
 interface Props { locale?: Locale; terminalMarketNotice?: boolean }
 const locale = normalizeCatalogLocale(Astro.props.locale);
-const routeLanguageLinks = alternatePathEntries(Astro.url.pathname);
+const routeLanguageLinks = renderableAlternatePathEntries(Astro.url.pathname);
 // Preserve the established locale-home fallback on English-only routes while
 // deriving the candidate set from actual route availability, never LOCALES.
 const availableHomeFallback = alternatePathEntries('/').filter((entry) => (

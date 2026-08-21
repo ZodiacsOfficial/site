@@ -7,7 +7,7 @@
   "identity": "Painter · Netherlands · 1606–1669",
   "title": "Rembrandt's birth chart",
   "metaDescription": "Rembrandt's chart, computed from a sourced birth date: Sun at 22.5° Cancer. Birth time unknown, so no houses or rising sign.",
-  "lede": "The chart's headline is a opposition: Mercury and Saturn within 0.4°, thinking wired to structure. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "lede": "The chart's headline is an opposition: Mercury and Saturn within 0.4°, thinking wired to structure. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
   "ledeFact": "aspect:Mercury:Saturn:opposition",
   "blocks": [
     {
@@ -37,7 +37,7 @@
         "aspect:Mercury:Jupiter:trine:0.72",
         "aspect:Jupiter:Saturn:sextile:1.12"
       ],
-      "text": "The tightest geometry in the chart puts Mercury directly across the wheel from Saturn, 0.4° off exact. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Mercury trine Jupiter at 0.7°, and Jupiter sextile Saturn at 1.1° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+      "text": "The tightest geometry in the chart puts Mercury directly across the wheel from Saturn, 0.4° off exact. The scheme reads an opposition as an axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Mercury trine Jupiter at 0.7°, and Jupiter sextile Saturn at 1.1° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "figures",

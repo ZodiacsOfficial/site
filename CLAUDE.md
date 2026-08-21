@@ -100,6 +100,16 @@ owns that page.
   cards at `public/assets/og/*.png` are frozen and unreferenced — leave
   the files alone, don't regenerate or re-reference them)
 - `public/assets/pulse.json` / `distribution.json` ← weekly cron workflows
+- `docs/phase5/people-pilot/index-demand.json` ← `node
+  scripts/build-people-index-demand.mjs --refresh` (pinned twelve-month
+  Wikimedia reader-demand proxy; offline drift check uses `--check`)
+- `docs/phase5/people-pilot/copy/*.json` and `depth-report.json` ← `node
+  docs/phase5/people-pilot/tools/compose-copy.mjs` (released copy is frozen;
+  approved article fixes use `--migrate-articles`, and the offline frozen-copy
+  invariant/depth-report check uses `--check`)
+- `src/data/people.json` ← `node scripts/build-people-pilot.mjs` (sources:
+  reviewed manifest, index policy, demand evidence, composed copy and
+  computed charts; offline drift check uses `--check`)
 
 `public/sw.js` is a PWA worker — the owner approved superseding the old
 push-only rule (2026-07-15, WS4 merge decision). Strict invariants: HTML

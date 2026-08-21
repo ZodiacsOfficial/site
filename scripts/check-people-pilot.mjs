@@ -1,6 +1,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolvePeopleIndexPolicy } from './people-index-policy.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const data = JSON.parse(await readFile(resolve(root, 'src/data/people.json'), 'utf8'));
@@ -8,6 +9,13 @@ const indexPolicy = JSON.parse(
   await readFile(resolve(root, 'docs/phase5/people-pilot/index-policy.json'), 'utf8'),
 );
 const pilot = resolve(root, 'docs/phase5/people-pilot');
+const manifest = JSON.parse(await readFile(resolve(pilot, 'manifest.json'), 'utf8'));
+const indexDemand = JSON.parse(await readFile(resolve(pilot, 'index-demand.json'), 'utf8'));
+const {
+  indexableProfiles: indexableSlugs,
+  noindexTailProfiles: noindexTailSlugs,
+  protectedLivingProfiles: protectedLivingSlugs,
+} = resolvePeopleIndexPolicy({ manifest, indexPolicy, indexDemand });
 const failures = [];
 const signIndex = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
@@ -24,10 +32,6 @@ const birthdayFiles = new Set(
     .map((file) => file.replace(/\.mdx$/u, '')),
 );
 
-const indexableSlugs = new Set(indexPolicy.indexableProfiles);
-const protectedLivingSlugs = new Set(indexPolicy.protectedLivingProfiles);
-if (indexableSlugs.size !== indexPolicy.indexableProfiles.length) failures.push('duplicate indexable policy slug');
-if (protectedLivingSlugs.size !== indexPolicy.protectedLivingProfiles.length) failures.push('duplicate protected policy slug');
 if (indexableSlugs.size < indexPolicy.minimumIndexableProfilesForDirectory
     && indexPolicy.directoryIndexable) {
   failures.push('directory indexed below its minimum eligible-profile threshold');
@@ -35,8 +39,9 @@ if (indexableSlugs.size < indexPolicy.minimumIndexableProfilesForDirectory
 
 for (const person of data.people) {
   const expectedEligible = indexableSlugs.has(person.slug);
+  const expectedNoindexTail = noindexTailSlugs.has(person.slug);
   const expectedProtected = protectedLivingSlugs.has(person.slug);
-  if (expectedEligible === expectedProtected) {
+  if ([expectedEligible, expectedNoindexTail, expectedProtected].filter(Boolean).length !== 1) {
     failures.push(`${person.slug}: missing from or duplicated across policy sets`);
   }
   if (person.indexEligibility.eligible !== expectedEligible) {
@@ -50,6 +55,12 @@ for (const person of data.people) {
     || !person.indexEligibility.blockedBy.some((reason) => reason.includes('living-person-protection'))
   )) {
     failures.push(`${person.slug}: living-person protection drifted`);
+  }
+  if (expectedNoindexTail && (
+    person.living
+    || !person.indexEligibility.blockedBy.some((reason) => reason.includes('search-demand-tail'))
+  )) {
+    failures.push(`${person.slug}: deferred search-demand state drifted`);
   }
   const computed = JSON.parse(
     await readFile(resolve(pilot, 'computed', `${person.slug}.json`), 'utf8'),
@@ -107,5 +118,6 @@ if (failures.length) {
 }
 console.log(
   `people-release-integrity: OK — ${indexableSlugs.size} explicitly indexable deceased records,`
+  + ` ${noindexTailSlugs.size} deferred deceased records,`
   + ` ${protectedLivingSlugs.size} protected living records, uncertain-time aggregates honest`,
 );
