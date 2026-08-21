@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-drafts.v1",
-  "generatedAt": "2026-08-20T07:29:45.753Z",
+  "generatedAt": "2026-08-21T01:59:21.547Z",
   "generator": "zodiacs.registry-research.deterministic.v1",
   "method": {
     "id": "zodiacs.registry-research-method.v1",
@@ -4727,12 +4727,323 @@
       },
       "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
       "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [
+        {
+          "kind": "append-only-follow-up",
+          "parentId": "zrx-market-check-2026-08-13"
+        }
+      ],
+      "id": "zrx-market-check-2026-08-13-observation-168h",
+      "slug": "market-check-2026-08-13-observation-168h",
+      "kind": "observation-update",
+      "templateId": "observation-update.v1",
+      "parentId": "zrx-market-check-2026-08-13",
+      "issuedAt": "2026-08-21T01:59:21.547Z",
+      "visibleAt": "2026-08-21T01:59:21.547Z",
+      "title": "Leo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (185.87 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-08-13-observation-168h/",
+      "signs": [
+        "leo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "symbolicScore": {
+        "sign": "leo",
+        "attention": 22,
+        "tone": 0,
+        "eventIntensity": 0,
+        "calculation": "9 disclosed Sun occupancy-attention points",
+        "marketFieldsUsed": false
+      },
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "The original zrx-market-check-2026-08-13 sky score and traditional reading remain unchanged.",
+          "evidence": [
+            "/assets/data/registry-research/items/zrx-market-check-2026-08-13.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "This follow-up does not reinterpret the sky after observing the market.",
+          "evidence": [
+            "/assets/data/registry-research/items/zrx-market-check-2026-08-13.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "185.87 hours after the original market observation, indexed price change was +20.88% and indexed liquidity change was +18.1%. This temporal comparison does not establish causation.",
+          "evidence": [
+            "public/assets/data/registry-market-history.v1.json"
+          ]
+        }
+      },
+      "market": {
+        "available": true,
+        "snapshotId": "registry-market:2026-08-21:2026-08-21T01:59:21.547Z",
+        "observedAt": "2026-08-21T01:59:21.547Z",
+        "provider": "DexScreener",
+        "sign": "leo",
+        "priceUsd": 0.00008672,
+        "change24hPct": 1.83,
+        "marketCapUsd": 86720,
+        "fdvUsd": 86719,
+        "liquidityUsd": 15217.86,
+        "volume24hUsd": 87.4,
+        "indexedPoolCount": 1,
+        "deepestPoolUrl": "https://dexscreener.com/solana/48erbgmqizekyloccebd7cs5knqpzqr7qqak9mzapqgq",
+        "baselineSnapshotId": "registry-market:2026-08-13:2026-08-13T08:07:16.084Z",
+        "baselineObservedAt": "2026-08-13T08:07:16.084Z",
+        "requestedElapsedHours": 168,
+        "actualElapsedHours": 185.87,
+        "priceChangePct": 20.88,
+        "liquidityChangePct": 18.1
+      },
+      "evidence": {
+        "parentId": "zrx-market-check-2026-08-13",
+        "baselineSnapshotId": "registry-market:2026-08-13:2026-08-13T08:07:16.084Z",
+        "marketSnapshotId": "registry-market:2026-08-21:2026-08-21T01:59:21.547Z",
+        "coverage": "first-qualifying-archive-observation"
+      },
+      "artifactHash": "c60b472577f840c6fcee379620ed288e7285abf376d6ee8ff2e9d7fc81d805cf"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [],
+      "id": "zrx-market-check-2026-08-21",
+      "slug": "market-check-2026-08-21",
+      "kind": "market-check",
+      "templateId": "market-check.v1",
+      "issuedAt": "2026-08-21T01:59:21.547Z",
+      "visibleAt": "2026-08-21T01:59:21.547Z",
+      "title": "Aries market check · 2026-08-21",
+      "summary": "Aries price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-08-21/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "symbolicScore": {
+        "sign": "aries",
+        "attention": 27,
+        "tone": -10,
+        "eventIntensity": 13,
+        "calculation": "18 attention / -12 tone / 15 event intensity × 0.8679 horizon multiplier",
+        "marketFieldsUsed": false
+      },
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "Aries is the highest-ranked attention entry in the separately published 2026-08-21 daily outlook.",
+          "evidence": [
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "Elevated symbolic attention for this sign, without a strong directional tone. Signal: active. The symbolic score was fixed before this market comparison.",
+          "evidence": [
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "At 2026-08-21T01:59:21.547Z, Aries was indexed at $0.00008549, with +2.37% over 24 hours, $85.47K market cap, $85.47K FDV, $14.79K indexed liquidity, $84.84 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Aries market cap was 0.995× the collection median and indexed liquidity was 0.994× the collection median.",
+          "evidence": [
+            "public/assets/data/registry-market-history.v1.json"
+          ]
+        }
+      },
+      "market": {
+        "available": true,
+        "snapshotId": "registry-market:2026-08-21:2026-08-21T01:59:21.547Z",
+        "observedAt": "2026-08-21T01:59:21.547Z",
+        "provider": "DexScreener",
+        "sign": "aries",
+        "priceUsd": 0.00008549,
+        "change24hPct": 2.37,
+        "marketCapUsd": 85472,
+        "fdvUsd": 85472,
+        "liquidityUsd": 14788.53,
+        "volume24hUsd": 84.84,
+        "indexedPoolCount": 1,
+        "deepestPoolUrl": "https://dexscreener.com/solana/hrn98ylgigp475es1gaqyrmbqk1v4dkv6tdkylhvh2is",
+        "collectionMedian": {
+          "marketCapUsd": 85872.5,
+          "liquidityUsd": 14884.225
+        },
+        "vsCollectionMedian": {
+          "marketCap": 0.995,
+          "liquidity": 0.994
+        }
+      },
+      "evidence": {
+        "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-21",
+        "marketSnapshotId": "registry-market:2026-08-21:2026-08-21T01:59:21.547Z",
+        "coverage": {
+          "overall": "complete",
+          "events": "complete",
+          "occupancies": "complete",
+          "expectedTransitMonths": [
+            "2026-08"
+          ],
+          "missingTransitMonths": [],
+          "missingOccupancyPlanets": []
+        }
+      },
+      "artifactHash": "ee12e7ee9aafdf0b74341c46afbf87bd02368166194a2673508937eb30bf07d7"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [],
+      "id": "zrx-daily-market-brief-2026-08-21",
+      "slug": "daily-market-brief-2026-08-21",
+      "kind": "daily-market-brief",
+      "templateId": "daily-market-brief.v1",
+      "issuedAt": "2026-08-21T12:00:00.000Z",
+      "visibleAt": "2026-08-21T12:00:00.000Z",
+      "title": "Venus opposition Saturn · daily market brief",
+      "summary": "Venus opposition Saturn leads the disclosed symbolic index; Aries market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-08-21/",
+      "signs": [
+        "libra",
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "aspect"
+      ],
+      "symbolicScore": {
+        "sign": "aries",
+        "attention": 27,
+        "tone": -10,
+        "eventIntensity": 13,
+        "calculation": "18 attention / -12 tone / 15 event intensity × 0.8679 horizon multiplier",
+        "marketFieldsUsed": false
+      },
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "Venus opposition Saturn is the highest-weighted named factor for Aries in the 2026-08-21 UTC edition. The disclosed score is attention 27/100, tone -10, and symbolic event intensity 13/100.",
+          "evidence": [
+            "src/data/transits-2026-08.json",
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "Elevated symbolic attention for this sign, without a strong directional tone. Signal: active. This is a traditional symbolic reading, not a price direction or probability.",
+          "evidence": [
+            "src/data/transits-2026-08.json",
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "At 2026-08-21T01:59:21.547Z, Aries was indexed at $0.00008549, with +2.37% over 24 hours, $85.47K market cap, $85.47K FDV, $14.79K indexed liquidity, $84.84 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
+          "evidence": [
+            "public/assets/data/registry-market-history.v1.json"
+          ]
+        }
+      },
+      "market": {
+        "available": true,
+        "snapshotId": "registry-market:2026-08-21:2026-08-21T01:59:21.547Z",
+        "observedAt": "2026-08-21T01:59:21.547Z",
+        "provider": "DexScreener",
+        "sign": "aries",
+        "priceUsd": 0.00008549,
+        "change24hPct": 2.37,
+        "marketCapUsd": 85472,
+        "fdvUsd": 85472,
+        "liquidityUsd": 14788.53,
+        "volume24hUsd": 84.84,
+        "indexedPoolCount": 1,
+        "deepestPoolUrl": "https://dexscreener.com/solana/hrn98ylgigp475es1gaqyrmbqk1v4dkv6tdkylhvh2is"
+      },
+      "evidence": {
+        "dailyFacts": "src/data/daily.json#2026-08-21",
+        "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-21",
+        "marketSnapshotId": "registry-market:2026-08-21:2026-08-21T01:59:21.547Z",
+        "coverage": {
+          "overall": "complete",
+          "events": "complete",
+          "occupancies": "complete",
+          "expectedTransitMonths": [
+            "2026-08"
+          ],
+          "missingTransitMonths": [],
+          "missingOccupancyPlanets": []
+        }
+      },
+      "artifactHash": "115d518b483bb1c16bf1ed1c05aad516cbb546533e0b62c1c479a032f9209c92"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
       "revisions": [],
       "id": "zrx-event-brief-aspect-2026-08-21t12-40-54-701z-venus-opposition-saturn",
       "slug": "event-brief-aspect-2026-08-21t12-40-54-701z-venus-opposition-saturn",
       "kind": "event-brief",
       "templateId": "event-brief.v1",
-      "issuedAt": "2026-08-20T12:00:00.000Z",
+      "issuedAt": "2026-08-21T12:00:00.000Z",
       "visibleAt": "2026-08-21T12:40:54.701Z",
       "eventAt": "2026-08-21T12:40:54.701Z",
       "title": "Venus Opposition Saturn · event brief",
@@ -4749,10 +5060,10 @@
       ],
       "symbolicScore": {
         "sign": "aries",
-        "attention": 17,
-        "tone": -11.3,
-        "eventIntensity": 14.2,
-        "calculation": "18 attention / -12 tone / 15 event intensity × 0.9454 horizon multiplier",
+        "attention": 17.7,
+        "tone": -11.8,
+        "eventIntensity": 14.7,
+        "calculation": "18 attention / -12 tone / 15 event intensity × 0.9811 horizon multiplier",
         "marketFieldsUsed": false
       },
       "sections": {
@@ -4765,7 +5076,7 @@
         },
         "traditionalReading": {
           "heading": "Traditional reading",
-          "body": "The exact opposition is scored as frictional for the directly occupied signs (Libra and Aries). This is symbolic scoring, not a causal market mechanism. The score calculation is 18 attention / -12 tone / 15 event intensity × 0.9454 horizon multiplier.",
+          "body": "The exact opposition is scored as frictional for the directly occupied signs (Libra and Aries). This is symbolic scoring, not a causal market mechanism. The score calculation is 18 attention / -12 tone / 15 event intensity × 0.9811 horizon multiplier.",
           "evidence": [
             "src/data/transits-2026-08.json"
           ]
@@ -4785,7 +5096,7 @@
         "transitSource": "src/data/transits-2026-08.json",
         "eventKey": "aspect:2026-08-21T12:40:54.701Z:Venus-opposition-Saturn",
         "groupedEvents": null,
-        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-20",
+        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-21",
         "marketSnapshotId": null,
         "coverage": {
           "overall": "complete",
@@ -4798,7 +5109,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "84ec8e6cf52ba5f317167e96aa139f848d5e2adf4f6865109cb97e4d8073c20e"
+      "artifactHash": "f00f7d449961a53b427407fb6fd77812432f3d4c1fd344d22eed87f7d7a5afba"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -4824,7 +5135,7 @@
       "slug": "event-brief-ingress-2026-08-23t02-19-04-011z-sun-virgo",
       "kind": "event-brief",
       "templateId": "event-brief.v1",
-      "issuedAt": "2026-08-20T12:00:00.000Z",
+      "issuedAt": "2026-08-21T12:00:00.000Z",
       "visibleAt": "2026-08-23T02:19:04.011Z",
       "eventAt": "2026-08-23T02:19:04.011Z",
       "title": "Sun enters Virgo · event brief",
@@ -4840,10 +5151,10 @@
       ],
       "symbolicScore": {
         "sign": "virgo",
-        "attention": 12.9,
+        "attention": 13.4,
         "tone": 0,
-        "eventIntensity": 1.8,
-        "calculation": "14.5 attention / 0 tone / 2 event intensity × 0.8894 horizon multiplier",
+        "eventIntensity": 1.9,
+        "calculation": "14.5 attention / 0 tone / 2 event intensity × 0.9251 horizon multiplier",
         "marketFieldsUsed": false
       },
       "sections": {
@@ -4856,7 +5167,7 @@
         },
         "traditionalReading": {
           "heading": "Traditional reading",
-          "body": "The ingress adds attention to Virgo. Ingresses are intentionally neutral on price direction. The score calculation is 14.5 attention / 0 tone / 2 event intensity × 0.8894 horizon multiplier.",
+          "body": "The ingress adds attention to Virgo. Ingresses are intentionally neutral on price direction. The score calculation is 14.5 attention / 0 tone / 2 event intensity × 0.9251 horizon multiplier.",
           "evidence": [
             "src/data/transits-2026-08.json"
           ]
@@ -4876,7 +5187,7 @@
         "transitSource": "src/data/transits-2026-08.json",
         "eventKey": "ingress:2026-08-23T02:19:04.011Z:Sun-virgo",
         "groupedEvents": null,
-        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-20",
+        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-21",
         "marketSnapshotId": null,
         "coverage": {
           "overall": "complete",
@@ -4889,7 +5200,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "f5cde15b552025ee19a2f06b42a7b6f21f6a408f004e7c20382c61143090998b"
+      "artifactHash": "4847fb4f751b2cd9899b6d24679dcd2c94543eb0ab1592be235c4a92ee1ef734"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -4915,7 +5226,7 @@
       "slug": "event-brief-ingress-2026-08-25t11-04-19-304z-mercury-virgo",
       "kind": "event-brief",
       "templateId": "event-brief.v1",
-      "issuedAt": "2026-08-20T12:00:00.000Z",
+      "issuedAt": "2026-08-21T12:00:00.000Z",
       "visibleAt": "2026-08-25T11:04:19.304Z",
       "eventAt": "2026-08-25T11:04:19.304Z",
       "title": "Mercury enters Virgo · event brief",
@@ -4931,10 +5242,10 @@
       ],
       "symbolicScore": {
         "sign": "virgo",
-        "attention": 10.1,
+        "attention": 10.5,
         "tone": 0,
-        "eventIntensity": 1.6,
-        "calculation": "12.5 attention / 0 tone / 2 event intensity × 0.8050 horizon multiplier",
+        "eventIntensity": 1.7,
+        "calculation": "12.5 attention / 0 tone / 2 event intensity × 0.8407 horizon multiplier",
         "marketFieldsUsed": false
       },
       "sections": {
@@ -4947,7 +5258,7 @@
         },
         "traditionalReading": {
           "heading": "Traditional reading",
-          "body": "The ingress adds attention to Virgo. Ingresses are intentionally neutral on price direction. The score calculation is 12.5 attention / 0 tone / 2 event intensity × 0.8050 horizon multiplier.",
+          "body": "The ingress adds attention to Virgo. Ingresses are intentionally neutral on price direction. The score calculation is 12.5 attention / 0 tone / 2 event intensity × 0.8407 horizon multiplier.",
           "evidence": [
             "src/data/transits-2026-08.json"
           ]
@@ -4967,7 +5278,7 @@
         "transitSource": "src/data/transits-2026-08.json",
         "eventKey": "ingress:2026-08-25T11:04:19.304Z:Mercury-virgo",
         "groupedEvents": null,
-        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-20",
+        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-21",
         "marketSnapshotId": null,
         "coverage": {
           "overall": "complete",
@@ -4980,7 +5291,261 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "5941f934519682f567dc9ac2f573ea51dd7848d53d386146b0c94a977a2bb1ac"
+      "artifactHash": "65f823af65ed86a4948167bff7fd3f32686f6d65095471cbea2ac5cee79dbdf8"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [],
+      "id": "zrx-event-brief-lunation-2026-08-28t04-18-24-894z-full-moon-pisces",
+      "slug": "event-brief-lunation-2026-08-28t04-18-24-894z-full-moon-pisces",
+      "kind": "event-brief",
+      "templateId": "event-brief.v1",
+      "issuedAt": "2026-08-21T12:00:00.000Z",
+      "visibleAt": "2026-08-28T04:18:24.894Z",
+      "eventAt": "2026-08-28T04:18:24.894Z",
+      "title": "Full Moon in Pisces · event brief",
+      "summary": "Full Moon in Pisces becomes exact at 2026-08-28T04:18:24.894Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-lunation-2026-08-28t04-18-24-894z-full-moon-pisces/",
+      "signs": [
+        "pisces"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "lunation"
+      ],
+      "symbolicScore": null,
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "Full Moon in Pisces is exact at 2026-08-28T04:18:24.894Z, according to the committed transit catalog.",
+          "evidence": [
+            "src/data/transits-2026-08.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "The event is listed as calendar context. No directional market claim is attached to it.",
+          "evidence": [
+            "src/data/transits-2026-08.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "No market outcome is attached to this precomputed event brief. A separately timestamped follow-up may be appended after an eligible archive observation.",
+          "evidence": []
+        }
+      },
+      "market": {
+        "available": false,
+        "snapshotId": null,
+        "observedAt": null
+      },
+      "evidence": {
+        "transitSource": "src/data/transits-2026-08.json",
+        "eventKey": "lunation:2026-08-28T04:18:24.894Z:full-moon-pisces",
+        "groupedEvents": null,
+        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-21",
+        "marketSnapshotId": null,
+        "coverage": {
+          "overall": "complete",
+          "events": "complete",
+          "occupancies": "complete",
+          "expectedTransitMonths": [
+            "2026-08"
+          ],
+          "missingTransitMonths": [],
+          "missingOccupancyPlanets": []
+        }
+      },
+      "artifactHash": "fb9785fe4abf231cffbb60c930e8a3be35d6d74f6e02aa9348104af650315227"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [],
+      "id": "zrx-event-brief-aspect-2026-08-28t07-24-51-749z-mercury-square-uranus",
+      "slug": "event-brief-aspect-2026-08-28t07-24-51-749z-mercury-square-uranus",
+      "kind": "event-brief",
+      "templateId": "event-brief.v1",
+      "issuedAt": "2026-08-21T12:00:00.000Z",
+      "visibleAt": "2026-08-28T07:24:51.749Z",
+      "eventAt": "2026-08-28T07:24:51.749Z",
+      "title": "Mercury Square Uranus · event brief",
+      "summary": "Mercury Square Uranus becomes exact at 2026-08-28T07:24:51.749Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-08-28t07-24-51-749z-mercury-square-uranus/",
+      "signs": [
+        "gemini",
+        "virgo"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "symbolicScore": null,
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "Mercury Square Uranus is exact at 2026-08-28T07:24:51.749Z, according to the committed transit catalog.",
+          "evidence": [
+            "src/data/transits-2026-08.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "The event is listed as calendar context. No directional market claim is attached to it.",
+          "evidence": [
+            "src/data/transits-2026-08.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "No market outcome is attached to this precomputed event brief. A separately timestamped follow-up may be appended after an eligible archive observation.",
+          "evidence": []
+        }
+      },
+      "market": {
+        "available": false,
+        "snapshotId": null,
+        "observedAt": null
+      },
+      "evidence": {
+        "transitSource": "src/data/transits-2026-08.json",
+        "eventKey": "aspect:2026-08-28T07:24:51.749Z:Mercury-square-Uranus",
+        "groupedEvents": null,
+        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-21",
+        "marketSnapshotId": null,
+        "coverage": {
+          "overall": "complete",
+          "events": "complete",
+          "occupancies": "complete",
+          "expectedTransitMonths": [
+            "2026-08"
+          ],
+          "missingTransitMonths": [],
+          "missingOccupancyPlanets": []
+        }
+      },
+      "artifactHash": "6e96856b01fe6bff8e2de546606d4d9801fa0e6af3534c334e4cad0d1db6600b"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [],
+      "id": "zrx-event-brief-aspect-2026-08-28t22-18-59-335z-sun-square-uranus",
+      "slug": "event-brief-aspect-2026-08-28t22-18-59-335z-sun-square-uranus",
+      "kind": "event-brief",
+      "templateId": "event-brief.v1",
+      "issuedAt": "2026-08-21T12:00:00.000Z",
+      "visibleAt": "2026-08-28T22:18:59.335Z",
+      "eventAt": "2026-08-28T22:18:59.335Z",
+      "title": "Sun Square Uranus · event brief",
+      "summary": "Sun Square Uranus becomes exact at 2026-08-28T22:18:59.335Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-08-28t22-18-59-335z-sun-square-uranus/",
+      "signs": [
+        "gemini",
+        "virgo"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "symbolicScore": null,
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "Sun Square Uranus is exact at 2026-08-28T22:18:59.335Z, according to the committed transit catalog.",
+          "evidence": [
+            "src/data/transits-2026-08.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "The event is listed as calendar context. No directional market claim is attached to it.",
+          "evidence": [
+            "src/data/transits-2026-08.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "No market outcome is attached to this precomputed event brief. A separately timestamped follow-up may be appended after an eligible archive observation.",
+          "evidence": []
+        }
+      },
+      "market": {
+        "available": false,
+        "snapshotId": null,
+        "observedAt": null
+      },
+      "evidence": {
+        "transitSource": "src/data/transits-2026-08.json",
+        "eventKey": "aspect:2026-08-28T22:18:59.335Z:Sun-square-Uranus",
+        "groupedEvents": null,
+        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-21",
+        "marketSnapshotId": null,
+        "coverage": {
+          "overall": "complete",
+          "events": "complete",
+          "occupancies": "complete",
+          "expectedTransitMonths": [
+            "2026-08"
+          ],
+          "missingTransitMonths": [],
+          "missingOccupancyPlanets": []
+        }
+      },
+      "artifactHash": "c73cf7596a68a051e80f6975780b7c7f7711f7313324447bad6a580b9405fdd8"
     }
   ]
 }

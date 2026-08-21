@@ -1,12 +1,12 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-08-20T07:29:45.753Z",
+  "generatedAt": "2026-08-21T01:59:21.547Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-07-21T00:00:00.000Z",
-    "endsBefore": "2026-08-28T00:00:00.000Z"
+    "startsAt": "2026-07-22T00:00:00.000Z",
+    "endsBefore": "2026-08-29T00:00:00.000Z"
   },
   "items": []
 }
