@@ -4641,7 +4641,7 @@
               <span className="consumer-destinations__eyebrow">Official merchandise</span>
               <h3>Astrofolio Shop</h3>
               <p>Clothing and collections for the twelve signs.</p>
-              <a className="consumer-destinations__link" href="https://shop.astrofolio.xyz/" rel="noopener noreferrer external">
+              <a className="consumer-destinations__link" href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external">
                 Shop Astrofolio <span aria-hidden="true">↗</span>
               </a>
             </article>
@@ -4652,9 +4652,6 @@
 
     function ProMasthead({ sign, batch }) {
       const season = useCurrentSeason();
-      const [paused, setPaused] = useState(() => {
-        try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; }
-      });
       const quotes = batch.status === 'ok'
         ? SIGNS.map(item => batch.quotes[item.asset.sign]).filter(Boolean)
         : [];
@@ -4672,10 +4669,7 @@
             <TerminalViewLink view="consumer" sign={sign} className="terminal-view-link" />
           </div>
           <div className="pro-tape-control">
-            <MarketTape season={season} paused={paused} batch={batch} />
-            <button type="button" aria-pressed={paused} onClick={() => setPaused(value => !value)}>
-              {paused ? 'Resume tape' : 'Pause tape'}
-            </button>
+            <MarketTape season={season} paused batch={batch} />
           </div>
           <dl className="pro-aggregate" aria-busy={batch.status === 'loading'}>
             <div><dt>Reported market cap</dt><dd>{batch.status === 'ok' ? formatUsdCompact(marketCaps.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>{marketCaps.length} of 12 reporting</small></div>

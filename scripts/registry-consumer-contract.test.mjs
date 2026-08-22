@@ -140,7 +140,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const marketLinks = html.match(/href="\/terminal\/(?:\?[^"#]*)?"/gu) ?? [];
     expect(marketLinks).toHaveLength(1);
     expect(html).toContain('<a class="consumer-destinations__link" href="/terminal/" data-terminal-static-view="pro">Open the Terminal');
-    expect(html).toContain('<a class="consumer-destinations__link" href="https://shop.astrofolio.xyz/" rel="noopener noreferrer external">Shop Astrofolio');
+    expect(html).toContain('<a class="consumer-destinations__link" href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external">Shop Astrofolio');
     expect(html).not.toContain('href="/terminal/markets/"');
     expect(html).not.toContain('data-terminal-preference-banner');
 
@@ -298,7 +298,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const destinations = functionBlock(source, 'ConsumerDestinations');
     expect(destinations).toContain('<h2 id="consumer-destinations-title">Explore Astrofolio</h2>');
     expect(destinations).toContain('<TerminalViewLink view="pro" sign={sign} className="consumer-destinations__link" />');
-    expect(destinations).toContain('href="https://shop.astrofolio.xyz/" rel="noopener noreferrer external"');
+    expect(destinations).toContain('href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external"');
     expect(destinations).not.toContain('/terminal/markets/');
     const verifier = functionBlock(source, 'ConsumerVerifier');
     expect(verifier).toContain('id="verify" className="consumer-verify reveal"');

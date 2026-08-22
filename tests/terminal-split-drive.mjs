@@ -291,7 +291,7 @@ try {
       (await page.locator('.consumer-destinations [data-terminal-view-link="pro"]').innerText()).replace(/\s+/gu, ' ').trim(),
       'Open the Terminal ↗',
     );
-    assert.equal(await page.locator('.consumer-destinations a[href="https://shop.astrofolio.xyz/"]').count(), 1);
+    assert.equal(await page.locator('.consumer-destinations a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await page.locator('#faq summary').count(), 8);
     assert.deepEqual(await page.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the Zodiac markets?', 'What is the Terminal?']);
     assert.equal(await page.locator('[data-consumer-market-snapshot] [data-snapshot-sign]').count(), 12);
@@ -486,10 +486,8 @@ try {
     await proPage.keyboard.press('Enter');
     assert.equal((await proPage.locator('th[aria-sort="descending"] button').textContent())?.trim(), 'Indexed liquidity');
     assert.match(proPage.url(), /rank=liquidity/u);
-    const tapeButton = proPage.locator('.pro-tape-control > button');
-    assert.equal(await tapeButton.innerText(), 'Pause tape');
-    await tapeButton.click();
-    assert.equal(await tapeButton.innerText(), 'Resume tape');
+    assert.equal(await proPage.locator('.pro-tape-control > button').count(), 0);
+    assert.equal(await proPage.locator('.pro-tape-control [data-market-tape][data-paused]').count(), 1);
     assert.equal(await proPage.locator('[data-terminal-view-link="consumer"]').getAttribute('href'), '/astrofolio/?sign=pisces');
     assert.deepEqual(proErrors, []);
     await pro.close();
@@ -505,8 +503,8 @@ try {
     assert.equal(await noJsPage.locator('#market-snapshot li').count(), 12);
     assert.equal(await noJsPage.locator('#faq dt').count(), 8);
     assert.deepEqual(await noJsPage.locator('#faq dt').allInnerTexts().then((items) => items.slice(-2)), ['What are the Zodiac markets?', 'What is the Terminal?']);
-    assert.equal(await noJsPage.locator('#explore-astrofolio a[href="https://shop.astrofolio.xyz/"]').count(), 1);
-    assert.equal(await noJsPage.locator('.static-site__footer a[href="https://shop.astrofolio.xyz/"]').count(), 0);
+    assert.equal(await noJsPage.locator('#explore-astrofolio a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
+    assert.equal(await noJsPage.locator('.static-site__footer a[href="https://shop.app/m/41mzeq7f2h"]').count(), 0);
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').getAttribute('href'), '/terminal/');
