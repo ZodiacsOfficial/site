@@ -335,6 +335,8 @@ const skyMarkers = reading.skyStrip.markers;
 
     <ShareRow text={`${sign.name} ${reading.title} — ${reading.label}`} url={canonicalUrl} />
 
+    <a class="program__guide-link" href={`/${sign.slug}/`}>Full {sign.name} guide →</a>
+
     <RaceRamp signName={sign.name} gap="28px" />
 
     <nav class="program__signs" aria-label={`Other signs for ${meta.nav.toLowerCase()} horoscopes`}>
@@ -360,6 +362,16 @@ const skyMarkers = reading.skyStrip.markers;
     gap: clamp(26px, 5vw, 44px);
     padding-block: clamp(22px, 5vw, 52px) clamp(42px, 7vw, 76px);
   }
+  .program__guide-link {
+    width: fit-content;
+    color: var(--text-2);
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    font-style: italic;
+    text-decoration-color: color-mix(in srgb, var(--sign) 52%, transparent);
+    text-underline-offset: 5px;
+  }
+  .program__guide-link:hover { color: var(--sign); }
   .program__crumbs {
     display: flex;
     flex-wrap: wrap;

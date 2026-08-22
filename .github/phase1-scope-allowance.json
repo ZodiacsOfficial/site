@@ -1,15 +1,10 @@
 {
   "version": 1,
-  "id": "growth-activation-d-share-loop-2026-08-22",
-  "baseCommit": "bc03691edbc506100a61784de95b68c3227462b3",
-  "note": "Owner-authorized Packet D for GROWTH-2026-08-19-full-marketing-audit: keep inbound chart-share receivers Registry-sterile across the existing localized birth-chart routes and add the already-requested localized share labels. No sign-guide, Registry product, or unrelated locale behavior changes.",
+  "id": "growth-activation-e-link-graph-2026-08-22",
+  "baseCommit": "3b3dcd7e8f758881dcf37c1e59e1541f9a88e567",
+  "note": "Owner-authorized Packet E for GROWTH-2026-08-19-full-marketing-audit: add the horoscope and profile links to the frozen English guide template and point the Spanish homepage hero at the live English calculator with a clear language annotation. Current daily and Registry artifacts are inherited unchanged from Packet D.",
   "protectedPaths": [
-    "src/pages/es/birth-chart/index.astro",
-    "src/pages/fr/birth-chart/index.astro",
-    "src/pages/it/birth-chart/index.astro",
-    "src/pages/pt/birth-chart/index.astro",
-    "src/strings/additions.fr.mjs",
-    "src/strings/additions.it.mjs",
-    "src/strings/additions.pt.mjs"
+    "src/pages/[sign]/index.astro",
+    "src/pages/es/index.astro"
   ]
 }

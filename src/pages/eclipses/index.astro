@@ -4,6 +4,7 @@ import '../../styles/rx-table.css';
 import eclipseData from '../../data/eclipses.json';
 import { signBySlug } from '../../lib/signs';
 import { formatDate, formatShortDate, formatTime } from '../../lib/i18n/dates';
+import { publishedEventById } from '../../lib/events/publication';
 
 // Every eclipse 2026–2028 from the committed data — receipts, no
 // client ephemeris.
@@ -28,6 +29,8 @@ interface EclipseEntry {
 
 const eclipses = (eclipseData.eclipses as EclipseEntry[]).map((e) => {
   const at = new Date(e.peak);
+  const publicationId = `eclipse-${e.peak.slice(0, 10)}`;
+  const anchorId = `${publicationId}-${e.type}`;
   const pct = typeof e.obscuration === 'number' ? Math.round(e.obscuration * 100) : null;
   let detail = '';
   if (e.type === 'solar') {
@@ -45,11 +48,13 @@ const eclipses = (eclipseData.eclipses as EclipseEntry[]).map((e) => {
   }
   return {
     ...e,
+    anchorId,
     at,
     sign: signBySlug(e.sign),
     detail,
     label: `${e.kind === 'annular' ? 'Annular' : e.kind[0].toUpperCase() + e.kind.slice(1)} ${e.type}`,
     past: at < buildNow,
+    path: publishedEventById.get(publicationId)?.path ?? null,
   };
 });
 
@@ -97,16 +102,15 @@ const faq = [
 ];
 
 const eventNodes = upcomingEvents.map((e) => {
-  const id = `eclipse-${e.peak.slice(0, 10)}-${e.type}`;
   return {
     '@type': 'Event',
-    '@id': `https://zodiacs.org/eclipses/#${id}`,
+    '@id': `https://zodiacs.org${e.path ?? `/eclipses/#${e.anchorId}`}`,
     name: `${e.label} eclipse in ${e.sign.name}`,
     description: `${e.detail}; peak at ${e.peak} in universal time.`,
     startDate: e.peak,
     endDate: e.peak,
     eventStatus: 'https://schema.org/EventScheduled',
-    url: `https://zodiacs.org/eclipses/#${id}`,
+    url: `https://zodiacs.org${e.path ?? `/eclipses/#${e.anchorId}`}`,
   };
 });
 
@@ -187,8 +191,10 @@ const jsonLd = [
         </thead>
         <tbody>
           {eclipses.map((e) => (
-            <tr id={`eclipse-${e.peak.slice(0, 10)}-${e.type}`} class={e.past ? 'rx-table__past' : ''}>
-              <td data-label="Peak">{fmtDay(e.at)}</td>
+            <tr id={e.anchorId} class={e.past ? 'rx-table__past' : ''}>
+              <td data-label="Peak">
+                {e.path ? <a href={e.path}>{fmtDay(e.at)}</a> : fmtDay(e.at)}
+              </td>
               <td class="mono" data-label="UTC">{fmtTime(e.at)}</td>
               <td data-label="Eclipse">{e.label}</td>
               <td data-label="In" style={`color:${e.sign.hue}`}>{e.sign.name}</td>

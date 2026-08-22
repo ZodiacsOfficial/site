@@ -5,6 +5,7 @@ import sky from '../../data/sky.json';
 import { bodyLongitude } from '../../lib/engine/full';
 import { formatLongitude, signForLongitude } from '../../lib/signs';
 import { formatDate, formatShortDate, formatTime } from '../../lib/i18n/dates';
+import { publishedEventById } from '../../lib/events/publication';
 
 // Every full moon 2026–2027 from the committed sky data, with the
 // Moon's sign computed at each instant — receipts, no client ephemeris.
@@ -33,13 +34,16 @@ const fulls = (sky.moons as { type: string; at: string }[])
     const second = seen.has(monthKey);
     seen.add(monthKey);
     const lon = bodyLongitude('Moon', date);
+    const id = `full-moon-${at.slice(0, 10)}`;
     return {
+      id,
       at: date,
       year: date.getUTCFullYear(),
       name: second ? 'Blue' : MONTH_NAMES[date.getUTCMonth()],
       position: formatLongitude(lon),
       sign: signForLongitude(lon),
       past: date < buildNow,
+      path: publishedEventById.get(id)?.path ?? null,
     };
   });
 
@@ -83,16 +87,15 @@ const faq = [
 
 const eventNodes = upcomingEvents.map((full) => {
   const iso = full.at.toISOString();
-  const id = `full-moon-${iso.slice(0, 10)}`;
   return {
     '@type': 'Event',
-    '@id': `https://zodiacs.org/full-moon-calendar/#${id}`,
+    '@id': `https://zodiacs.org${full.path ?? `/full-moon-calendar/#${full.id}`}`,
     name: `${full.name === 'Blue' ? 'Blue moon' : `${full.name} Moon`} in ${full.sign.name}`,
     description: `Full moon at ${full.position}; exact opposition of the Sun and Moon at ${iso}.`,
     startDate: iso,
     endDate: iso,
     eventStatus: 'https://schema.org/EventScheduled',
-    url: `https://zodiacs.org/full-moon-calendar/#${id}`,
+    url: `https://zodiacs.org${full.path ?? `/full-moon-calendar/#${full.id}`}`,
   };
 });
 
@@ -176,8 +179,10 @@ const jsonLd = [
           </thead>
           <tbody>
             {fulls.filter((f) => f.year === year).map((f) => (
-              <tr id={`full-moon-${f.at.toISOString().slice(0, 10)}`} class={f.past ? 'rx-table__past' : ''}>
-                <td data-label="Date">{fmtDay(f.at)}</td>
+              <tr id={f.id} class={f.past ? 'rx-table__past' : ''}>
+                <td data-label="Date">
+                  {f.path ? <a href={f.path}>{fmtDay(f.at)}</a> : fmtDay(f.at)}
+                </td>
                 <td class="mono" data-label="Time UTC">{fmtTime(f.at)}</td>
                 <td class="mono" data-label="Moon stands at">{f.position}</td>
                 <td data-label="Name">{f.name === 'Blue' ? 'Blue moon' : `${f.name} Moon`}</td>

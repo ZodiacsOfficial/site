@@ -60,6 +60,8 @@ describe('ReadingPath', () => {
     expect(markup).toContain('Spotlight rising');
     expect(markup).toContain('aria-pressed="true"');
     expect(markup).toContain('See all placements');
+    expect(markup).toContain('href="/learn/placements/moon-in-gemini/"');
+    expect(markup).toContain('Read Moon in Gemini →');
   });
 
   it('uses the twelve-sign fallback and explains why houses are absent', () => {

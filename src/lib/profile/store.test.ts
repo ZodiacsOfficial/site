@@ -7,10 +7,13 @@ import type { SavedChart, SavedChartRelationship } from './schema';
 import {
   deleteChart,
   getPrimarySelfChart,
+  loadProfileSunSign,
   loadProfile,
   markPrimarySelfChart,
+  PROFILE_SUN_SIGN_KEY,
   replaceProfile,
   saveChart,
+  setProfileSunSign,
 } from './store';
 import { resolveSavedChart, type SavedChartEngineLoader } from './resolve';
 
@@ -303,6 +306,37 @@ describe('replaceProfile', () => {
     expect(JSON.parse(storage.getItem(YEAR_AHEAD_CACHE_KEY)!)).toEqual({
       'remote-kept': { computedAt: 'current' },
     });
+  });
+});
+
+describe('profile Sun sign', () => {
+  it('stores and reads a bounded sign preference without creating a chart', () => {
+    vi.stubGlobal('CustomEvent', class {
+      type: string;
+      detail: unknown;
+
+      constructor(type: string, init: { detail: unknown }) {
+        this.type = type;
+        this.detail = init.detail;
+      }
+    });
+
+    expect(setProfileSunSign('aries')).toBe(true);
+    expect(storage.getItem(PROFILE_SUN_SIGN_KEY)).toBe('aries');
+    expect(loadProfileSunSign()).toBe('aries');
+    expect(loadProfile().charts).toEqual([]);
+    expect(window.dispatchEvent).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'zodiacs:profile-sun-sign',
+      detail: { sign: 'aries' },
+    }));
+  });
+
+  it('rejects unknown signs and malformed stored values', () => {
+    expect(setProfileSunSign('ophiuchus')).toBe(false);
+    expect(storage.getItem(PROFILE_SUN_SIGN_KEY)).toBeNull();
+
+    storage.setItem(PROFILE_SUN_SIGN_KEY, 'ophiuchus');
+    expect(loadProfileSunSign()).toBeNull();
   });
 });
 

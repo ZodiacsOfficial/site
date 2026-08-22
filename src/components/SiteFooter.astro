@@ -4,6 +4,7 @@ import BrandMark from './BrandMark.astro';
 import EmailCapture from './EmailCapture.astro';
 import TerminalMarketVenueNotice from './TerminalMarketVenueNotice.astro';
 import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../lib/assistant/guide-loader.mjs';
+import { FOOTER_TOOLS } from '../lib/nav-tools';
 import {
   LOCALE_META,
   LEGACY_HOME_SELECTOR_LOCALES,
@@ -29,13 +30,13 @@ const languageLinks = (routeLanguageLinks.length ? routeLanguageLinks : availabl
   meta: LOCALE_META[entry.locale],
 }));
 const FOOTER_COPY = {
-  en: { assistant: 'Guide', today: 'Today' },
-  es: { assistant: 'Guide', today: 'Hoy (en inglés)' },
-  pt: { assistant: 'Guide', today: 'Hoje (em inglês)' },
-  fr: { assistant: 'Guide', today: 'Aujourd’hui (en anglais)' },
-  it: { assistant: 'Guide', today: 'Oggi (in inglese)' },
-  ru: { assistant: 'Guide — пока по-английски', today: 'Сегодня — пока по-английски' },
-} as const satisfies Record<Locale, { assistant: string; today: string }>;
+  en: { assistant: 'Guide' },
+  es: { assistant: 'Guide' },
+  pt: { assistant: 'Guide' },
+  fr: { assistant: 'Guide' },
+  it: { assistant: 'Guide' },
+  ru: { assistant: 'Guide — пока по-английски' },
+} as const satisfies Record<Locale, { assistant: string }>;
 const englishSuffix = locale === 'ru' ? ' — пока по-английски' : '';
 const englishOnlyAria = locale === 'ru' ? 'Материал пока доступен по-английски' : undefined;
 const privacyHref = localizePath(locale, '/privacy/');
@@ -67,15 +68,16 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
 
       <nav class="footer__col" aria-label={t(locale, 'navTools')}>
         <span class="footer__label">{t(locale, 'navTools')}</span>
-        <a href={localizePath(locale, '/birth-chart/')}>{t(locale, 'birthChart')}</a>
-        <a href="/today/" hreflang="en" title={englishOnlyAria}>{FOOTER_COPY[locale].today}</a>
-        <a href={localizePath(locale, '/compatibility/')}>{t(locale, 'compatibility')}</a>
-        <a href={localizePath(locale, '/moon-sign/')}>{t(locale, 'moonSign')}</a>
-        <a href={localizePath(locale, '/rising-sign/')}>{t(locale, 'risingSign')}</a>
-        <a href={localizePath(locale, '/moon-phase/')}>{t(locale, 'moonPhase')}</a>
-        <a href={localizePath(locale, '/saturn-return/')}>{t(locale, 'saturnReturn')}</a>
-        <a href={localizePath(locale, '/transits/')}>{t(locale, 'transits')}</a>
-        <a href="/retrogrades/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'retrogrades')}{englishSuffix}</a>
+        {FOOTER_TOOLS.map((tool) => (
+          <a
+            href={tool.localized ? localizePath(locale, tool.href) : tool.href}
+            hreflang={!tool.localized ? 'en' : undefined}
+            title={!tool.localized && locale === 'ru' ? englishOnlyAria : undefined}
+          >
+            {tool.labels?.[locale] ?? t(locale, tool.label)}
+            {!tool.localized && !tool.labels && locale === 'ru' ? englishSuffix : ''}
+          </a>
+        ))}
       </nav>
 
       <nav class="footer__col" aria-label={t(locale, 'navLearn')}>
