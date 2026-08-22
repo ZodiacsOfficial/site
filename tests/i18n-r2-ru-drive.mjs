@@ -122,9 +122,13 @@ await withPreview({ port: 4418 }, async (baseURL) => {
 
         if (route === '/ru/' && viewport.width === 1280) {
           const desktopEnglishSeams = await page.locator('.nav__deferred').allTextContents();
-          check(desktopEnglishSeams.length === 2, `Russian desktop nav exposes ${desktopEnglishSeams.length} English-only seams; expected 2`);
+          check(desktopEnglishSeams.length === 3, `Russian desktop nav exposes ${desktopEnglishSeams.length} English-only seams; expected 3`);
           check(desktopEnglishSeams.every((value) => value.trim() === '— пока по-английски'), 'Russian desktop nav seam copy drifted');
           check(await page.locator('.nav__search').count() === 0, 'English-only search control leaked into Russian desktop nav');
+          const astrofolioChip = page.locator('.nav__chip');
+          check(await astrofolioChip.getAttribute('href') === '/astrofolio/', 'Russian desktop Astrofolio seam points somewhere else');
+          check(await astrofolioChip.getAttribute('hreflang') === 'en', 'Russian desktop Astrofolio seam is not declared English');
+          check((await astrofolioChip.textContent() ?? '').includes('Astrofolio'), 'Russian desktop Astrofolio seam lost its label');
         }
 
         if (OUT && ['/ru/', '/ru/birth-chart/', '/ru/aries/'].includes(route)) {

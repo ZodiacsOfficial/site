@@ -6,14 +6,12 @@
  */
 import { SIGNS, signDates, signName } from '../lib/signs';
 import SignIcon from './SignIcon.astro';
-import { localizePath, normalizeCatalogLocale, stripLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
+import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { ALL_TOOLS_LABEL, NAV_TOOLS } from '../lib/nav-tools';
 
 interface Props { locale?: Locale }
 const locale = normalizeCatalogLocale(Astro.props.locale);
 const path = Astro.url.pathname;
-const consumerPath = stripLocale(path);
-const registrySurface = /^\/(?:astrofolio|terminal|registry|sdk|thesis|archive|disclosure)(?:\/|$)/.test(consumerPath);
 const links = [
   ...(locale === 'en' ? [{ href: '/today/', label: 'Today' }] : []),
   { href: '/learn/', label: t(locale, 'navLearn') },
@@ -96,18 +94,16 @@ const visibleNavTools = locale === 'ru'
     )}
 
     <a
-      class:list={['nav__chip', { 'nav__chip--deferred': registrySurface && locale === 'ru' }]}
-      href={registrySurface ? '/astrofolio/' : localizePath(locale, '/birth-chart/')}
-      hreflang={registrySurface && locale === 'ru' ? 'en' : undefined}
-      aria-current={(registrySurface
-        ? path === '/astrofolio/'
-        : consumerPath === '/birth-chart/') ? 'page' : undefined}
-      title={registrySurface && locale === 'ru' ? englishOnlyAria : undefined}
-      aria-label={registrySurface && locale === 'ru' ? `${t(locale, 'navCollect')}. ${englishOnlyAria}` : undefined}
+      class:list={['nav__chip', { 'nav__chip--deferred': locale === 'ru' }]}
+      href="/astrofolio/"
+      hreflang={locale === 'ru' ? 'en' : undefined}
+      aria-current={path === '/astrofolio/' ? 'page' : undefined}
+      title={locale === 'ru' ? englishOnlyAria : undefined}
+      aria-label={locale === 'ru' ? `${t(locale, 'navCollect')}. ${englishOnlyAria}` : undefined}
     >
-      {registrySurface && locale === 'ru' ? (
+      {locale === 'ru' ? (
         <><span>{t(locale, 'navCollect')}</span><small class="nav__deferred">— пока по-английски</small></>
-      ) : registrySurface ? t(locale, 'navCollect') : t(locale, 'birthChart')}
+      ) : t(locale, 'navCollect')}
     </a>
 
     <button
@@ -331,8 +327,8 @@ const visibleNavTools = locale === 'ru'
   .nav__saved.has-saves { color: var(--accent); }
   .nav__saved.has-saves:hover { color: var(--accent); }
 
-  /* The persistent conversion door points to the birth chart on consumer
-     pages. Registry surfaces retain their route back to Astrofolio. */
+  /* A permanent door into Astrofolio. It stays compact on phones, then gains
+     the divider treatment once the desktop link row appears. */
   .nav__chip {
     display: inline-flex;
     align-items: center;
