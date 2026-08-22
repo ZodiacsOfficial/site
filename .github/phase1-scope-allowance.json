@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "id": "growth-activation-e-link-graph-2026-08-22",
-  "baseCommit": "3b3dcd7e8f758881dcf37c1e59e1541f9a88e567",
-  "note": "Owner-authorized Packet E for GROWTH-2026-08-19-full-marketing-audit: add the horoscope and profile links to the frozen English guide template and point the Spanish homepage hero at the live English calculator with a clear language annotation. Current daily and Registry artifacts are inherited unchanged from Packet D.",
+  "id": "growth-activation-f-index-pruning-2026-08-22",
+  "baseCommit": "01bd802b6785cf5f96505348cb4f68acd1ca0e00",
+  "note": "Owner-authorized Packet F for GROWTH-2026-08-19-full-marketing-audit: separate localized route renderability from search discovery so untranslated birthday pages and Russian sign guides remain available while leaving the index.",
   "protectedPaths": [
-    "src/pages/[sign]/index.astro",
-    "src/pages/es/index.astro"
+    "src/lib/i18n/index.test.ts",
+    "src/lib/i18n/index.ts"
   ]
 }

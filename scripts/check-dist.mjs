@@ -37,6 +37,7 @@ import {
   STAGED_NOINDEX_LOCALES,
   X_DEFAULT_HREFLANG,
   expectedHreflangsForPath,
+  hreflangRouteFamily,
 } from './i18n-hreflang-policy.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -60,7 +61,6 @@ const RUSSIAN_INDEXED_PATHS = new Set([
   '/ru/moon-sign/', '/ru/rising-sign/', '/ru/moon-phase/',
   '/ru/saturn-return/', '/ru/transits/', '/ru/baby-zodiac/',
   '/ru/profile/', '/ru/methodology/', '/ru/privacy/', '/ru/disclosure/',
-  ...ZODIAC_SIGN_SLUGS.map((sign) => `/ru/${sign}/`),
 ]);
 const LOCALIZED_404_PATHS = new Set([
   '/404.html', '/es/404/', '/pt/404/', '/fr/404/', '/it/404/', '/ru/404/',
@@ -874,6 +874,7 @@ const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
 if (!sitemap.startsWith('<?xml')) fail('sitemap.xml: missing XML declaration');
 const sitemapLocs = new Set();
 const sitemapBlocksByPath = new Map();
+const sitemapAlternatePaths = new Set();
 for (const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
   const url = new URL(m[1]);
   if (url.origin !== 'https://zodiacs.org') {
@@ -907,6 +908,38 @@ for (const block of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
   const lastmod = block[1].match(/<lastmod>([^<]+)<\/lastmod>/)?.[1];
   if (!lastmod || !/^\d{4}-\d{2}-\d{2}$/.test(lastmod) || Number.isNaN(Date.parse(`${lastmod}T00:00:00Z`))) {
     fail(`sitemap.xml: ${loc} has invalid or missing lastmod`);
+  }
+}
+for (const match of sitemap.matchAll(/<xhtml:link\b[^>]*>/g)) {
+  const href = attr(match[0], 'href');
+  if (!href) {
+    fail('sitemap.xml: alternate link is missing href');
+    continue;
+  }
+  const url = new URL(href);
+  if (url.origin !== SITE_ORIGIN) {
+    fail(`sitemap.xml: alternate link has unexpected origin — ${href}`);
+    continue;
+  }
+  sitemapAlternatePaths.add(url.pathname);
+  const target = targetPath(url.pathname);
+  if (!target || !(await exists(target))) {
+    fail(`sitemap.xml: alternate link has no file — ${href}`);
+    continue;
+  }
+  if (target.endsWith('.html')) {
+    const html = idCache.get(target) ?? (await readFile(target, 'utf8'));
+    if (hasNoindex(html)) fail(`sitemap.xml: noindex alternate included — ${href}`);
+    if (canonicalHref(html) !== href) {
+      fail(`sitemap.xml: alternate is not self-canonical — ${href}`);
+    }
+  }
+}
+for (const artifact of ['/llms.txt', '/llms-full.txt', '/registry/zodiacs.registry.json']) {
+  if (sitemapLocs.has(artifact)) fail(`sitemap.xml: machine artifact must not be indexed — ${artifact}`);
+  const target = targetPath(artifact);
+  if (!target || !(await exists(target))) {
+    fail(`Packet F: machine artifact no longer resolves — ${artifact}`);
   }
 }
 {
@@ -1083,20 +1116,21 @@ const indexedRegistryResearchPaths = new Set([
     .map((item) => item.url),
 ]);
 const sitemapPolicy = {
-  // 2423 = 2420 + /registry/technical/ + both canonical Terminal views.
-  total: 2423 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
+  // 944 reflects Packet F's removal of 1,464 localized birthday previews,
+  // twelve thin Russian sign guides, and three machine-contract artifacts.
+  total: 944 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,
   compatibilityPairs: 78,
-  birthdays: 1830,
+  birthdays: 366,
   chineseZodiac: 65,
   disclosures: 6,
   horoscopePages: 84,
   eventPages: publishedEventPaths.size,
   peoplePages: indexablePeoplePaths.size,
   registryResearchPages: indexedRegistryResearchPaths.size,
-  translatedBlocks: 2051,
+  translatedBlocks: 575,
 };
 const indexedFamilies = [
   { label: 'compatibility pairs', pattern: /^\/compatibility\/[a-z]+-[a-z]+\/$/, expected: sitemapPolicy.compatibilityPairs, localized: false },
@@ -1148,6 +1182,37 @@ requireExactSet(
   new Set([...sitemapLocs].filter((path) => /^\/terminal\/research(?:\/[a-z0-9-]+)?\/$/u.test(path))),
   indexedRegistryResearchPaths,
 );
+
+const packetFNoindexCounts = { localizedBirthdays: 0, russianSignGuides: 0, people: 0 };
+for (const file of files) {
+  const rel = relative(root, file).split(sep).join('/');
+  const pagePath = htmlFileToPath(rel);
+  const localizedBirthday = /^\/(?:es|pt|fr|it)\/birthday\/[a-z]+-\d{1,2}\/$/u.test(pagePath);
+  const russianSignGuide = /^\/ru\/(?:aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)\/$/u.test(pagePath);
+  const deferredPerson = /^\/people\/[a-z0-9-]+\/$/u.test(pagePath)
+    && !indexablePeoplePaths.has(pagePath);
+  if (!localizedBirthday && !russianSignGuide && !deferredPerson) continue;
+  if (localizedBirthday) packetFNoindexCounts.localizedBirthdays += 1;
+  if (russianSignGuide) packetFNoindexCounts.russianSignGuides += 1;
+  if (deferredPerson) packetFNoindexCounts.people += 1;
+  const html = idCache.get(file) ?? (await readFile(file, 'utf8'));
+  if (!hasNoindex(html)) fail(`Packet F: expected noindex page — ${pagePath}`);
+  if (canonicalHref(html) !== `${SITE_ORIGIN}${pagePath}`) {
+    fail(`Packet F: noindex page is not self-canonical — ${pagePath}`);
+  }
+  if (sitemapLocs.has(pagePath) || sitemapAlternatePaths.has(pagePath)) {
+    fail(`Packet F: noindex page leaked into sitemap discovery — ${pagePath}`);
+  }
+}
+if (packetFNoindexCounts.localizedBirthdays !== 1464) {
+  fail(`Packet F: ${packetFNoindexCounts.localizedBirthdays}/1464 localized birthday previews are present`);
+}
+if (packetFNoindexCounts.russianSignGuides !== 12) {
+  fail(`Packet F: ${packetFNoindexCounts.russianSignGuides}/12 Russian sign-guide previews are present`);
+}
+if (packetFNoindexCounts.people !== 501 - indexablePeoplePaths.size) {
+  fail(`Packet F: ${packetFNoindexCounts.people}/${501 - indexablePeoplePaths.size} deferred People profiles are present`);
+}
 
 if (sitemapLocs.size !== sitemapPolicy.total) {
   fail(`sitemap.xml: ${sitemapLocs.size} locs vs coordinated baseline ${sitemapPolicy.total}`);
@@ -1219,7 +1284,9 @@ for (const file of files) {
   const pagePath = htmlFileToPath(rel.split(sep).join('/'));
   const russianRouteAvailable = expectedHreflangsForPath(pagePath).has('ru')
     || LOCALIZED_404_PATHS.has(pagePath);
-  if (!russianRouteAvailable && /href=["'](?:https:\/\/zodiacs\.org)?\/ru(?:\/|["'#?])/.test(html)) {
+  const russianRouteRenderable = russianRouteAvailable
+    || hreflangRouteFamily(pagePath) === 'sign-guide';
+  if (!russianRouteRenderable && /href=["'](?:https:\/\/zodiacs\.org)?\/ru(?:\/|["'#?])/.test(html)) {
     fail(`${rel}: Russian route leaked onto a deferred or programmatic page`);
   }
   if (/href=["'](?:https:\/\/zodiacs\.org)?\/ar(?:\/|["'#?])/.test(html)) {
@@ -1228,20 +1295,22 @@ for (const file of files) {
   if (/hreflang=["']ar["']/.test(html)) {
     fail(`${rel}: inactive Arabic hreflang leaked into HTML`);
   }
-  if (!russianRouteAvailable && /hreflang=["']ru["']/.test(html)) {
+  if (!russianRouteAvailable
+      && /<link\b[^>]*\brel=["']alternate["'][^>]*\bhreflang=["']ru["']|<link\b[^>]*\bhreflang=["']ru["'][^>]*\brel=["']alternate["']/.test(html)) {
     fail(`${rel}: Russian hreflang leaked onto a deferred or programmatic page`);
   }
   if (/property=["']og:locale(?::alternate)?["'][^>]*content=["']ar_AR["']/.test(html)) {
     fail(`${rel}: inactive Arabic Open Graph locale leaked into HTML`);
   }
-  if (!russianRouteAvailable
+  const isRussianSignGuide = /^\/ru\/(?:aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)\/$/u.test(pagePath);
+  if (!russianRouteAvailable && !isRussianSignGuide
       && /property=["']og:locale(?::alternate)?["'][^>]*content=["']ru_RU["']/.test(html)) {
     fail(`${rel}: Russian Open Graph locale leaked onto a deferred or programmatic page`);
   }
   if (/العربية/u.test(html)) {
     fail(`${rel}: inactive Arabic language-selector label leaked into HTML`);
   }
-  if (!russianRouteAvailable && /Русский/u.test(html)) {
+  if (!russianRouteRenderable && /Русский/u.test(html)) {
     fail(`${rel}: Russian language-selector label leaked onto a deferred or programmatic page`);
   }
 }

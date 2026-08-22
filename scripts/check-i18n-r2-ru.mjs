@@ -18,9 +18,11 @@ const core = [
   '/baby-zodiac/', '/profile/', '/methodology/', '/privacy/', '/disclosure/',
   ...signs.map((sign) => `/${sign}/`),
 ];
-const indexedRoutes = core.map((path) => `/ru${path}`);
+const signPaths = new Set(signs.map((sign) => `/${sign}/`));
+const indexedRoutes = core.filter((path) => !signPaths.has(path)).map((path) => `/ru${path}`);
+const noindexSignRoutes = new Set(signs.map((sign) => `/ru/${sign}/`));
 const notFoundRoute = '/ru/404/';
-const expectedRoutes = [...indexedRoutes, notFoundRoute];
+const expectedRoutes = [...indexedRoutes, ...noindexSignRoutes, notFoundRoute];
 const expectedFiles = new Map(expectedRoutes.map((route) => [
   route,
   resolve(dist, route.replace(/^\//, ''), 'index.html'),
@@ -169,7 +171,7 @@ for (const [route, file] of expectedFiles) {
     continue;
   }
   const text = visibleText(html);
-  const noindex = route === notFoundRoute;
+  const noindex = route === notFoundRoute || noindexSignRoutes.has(route);
   if (!/<html\b[^>]*\blang=["']ru["']/u.test(html)) fail(`${route}: html lang is not ru`);
   if (/<html\b[^>]*\bdir=/u.test(html)) fail(`${route}: Russian LTR page must not emit dir`);
   const robots = metaContent(html, 'robots');
@@ -242,6 +244,9 @@ for (const [route, file] of expectedFiles) {
 }
 
 for (const contentPath of core) {
+  const discoveryLocaleCards = signPaths.has(contentPath)
+    ? publicLocaleCards.filter((entry) => entry.prefix !== '/ru')
+    : publicLocaleCards;
   for (const locale of publicLocaleCards) {
     const route = `${locale.prefix}${contentPath}` || '/';
     const file = resolve(dist, route === '/' ? 'index.html' : `${route.replace(/^\//u, '')}index.html`);
@@ -254,9 +259,11 @@ for (const contentPath of core) {
     }
     const self = propertyMetaContents(html, 'og:locale');
     const alternates = propertyMetaContents(html, 'og:locale:alternate');
-    const expectedAlternates = publicLocaleCards
-      .filter((entry) => entry.ogLocale !== locale.ogLocale)
-      .map((entry) => entry.ogLocale);
+    const expectedAlternates = signPaths.has(contentPath) && locale.prefix === '/ru'
+      ? []
+      : discoveryLocaleCards
+        .filter((entry) => entry.ogLocale !== locale.ogLocale)
+        .map((entry) => entry.ogLocale);
     if (JSON.stringify(self) !== JSON.stringify([locale.ogLocale])) {
       fail(`${route}: Open Graph locale is ${self.join(',') || 'missing'}; expected ${locale.ogLocale}`);
     }
@@ -270,7 +277,7 @@ const sitemap = await readFile(resolve(dist, 'sitemap.xml'), 'utf8');
 const russianSitemapRoutes = [...sitemap.matchAll(/<loc>https:\/\/zodiacs\.org(\/ru\/[^<]*)<\/loc>/gu)]
   .map((match) => match[1]);
 if (JSON.stringify([...russianSitemapRoutes].sort()) !== JSON.stringify([...indexedRoutes].sort())) {
-  fail(`sitemap.xml has ${russianSitemapRoutes.length}/26 exact Russian core routes`);
+  fail(`sitemap.xml has ${russianSitemapRoutes.length}/${indexedRoutes.length} exact indexable Russian core routes`);
 }
 if (sitemap.includes('/ru/404/')) fail('sitemap.xml contains the noindex Russian 404');
 
@@ -330,4 +337,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`i18n-r2-ru: OK — 26 indexable routes + noindex 404, reciprocal discovery, ${fontBytes} font bytes, ${heroPosterBytes}/${mobileHeroPosterBytes} byte desktop/mobile homepage posters`);
+console.log(`i18n-r2-ru: OK — 14 indexable routes + 12 noindex sign guides + noindex 404, reciprocal discovery, ${fontBytes} font bytes, ${heroPosterBytes}/${mobileHeroPosterBytes} byte desktop/mobile homepage posters`);

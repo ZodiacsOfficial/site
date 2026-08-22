@@ -2,6 +2,10 @@ import { describe, expect, it } from 'vitest';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import peopleData from '../src/data/people.json';
+import manifest from '../docs/phase5/people-pilot/manifest.json';
+import indexPolicy from '../docs/phase5/people-pilot/index-policy.json';
+import indexDemand from '../docs/phase5/people-pilot/index-demand.json';
+import { resolvePeopleIndexPolicy } from './people-index-policy.mjs';
 
 describe('Phase 5 People pilot contract', () => {
   it('contains exactly 501 distinct records with the policy-driven release boundary', () => {
@@ -12,9 +16,16 @@ describe('Phase 5 People pilot contract', () => {
     expect(new Set(peopleData.people.map((person) => person.slug)).size).toBe(peopleData.people.length);
     expect(new Set(peopleData.people.map((person) => person.qid)).size).toBe(peopleData.people.length);
     const indexable = peopleData.people.filter((person) => person.indexEligibility.eligible);
-    const protectedLiving = peopleData.people.filter((person) => !person.indexEligibility.eligible);
-    expect(indexable).toHaveLength(peopleData.people.filter((person) => !person.living).length);
+    const deferred = peopleData.people.filter((person) => (
+      !person.indexEligibility.eligible && !person.living
+    ));
+    const protectedLiving = peopleData.people.filter((person) => person.living);
+    expect(indexable).toHaveLength(104);
+    expect(deferred).toHaveLength(393);
     expect(indexable.every((person) => !person.living && person.indexEligibility.blockedBy.length === 0)).toBe(true);
+    expect(deferred.every((person) => (
+      person.indexEligibility.blockedBy.some((reason) => reason.includes('search-demand-tail'))
+    ))).toBe(true);
     expect(protectedLiving.map((person) => person.slug).sort()).toEqual([
       'bill-gates',
       'leonardo-dicaprio',
@@ -25,6 +36,30 @@ describe('Phase 5 People pilot contract', () => {
       person.living
       && person.indexEligibility.blockedBy.some((reason) => reason.includes('living-person-protection'))
     ))).toBe(true);
+  });
+
+  it('keeps generated aspect articles grammatical', () => {
+    const copy = peopleData.people
+      .flatMap((person) => [person.copy.lede, ...person.copy.blocks.map((block) => block.text)])
+      .join(' ');
+    expect(copy).not.toMatch(/\ba (?:axis|opposition)\b/u);
+  });
+
+  it('rejects tampered demand-evidence provenance in every policy consumer', () => {
+    for (const mutate of [
+      (evidence) => { evidence.metric = 'Unidentified popularity score'; },
+      (evidence) => { evidence.source.name = 'Unknown source'; },
+      (evidence) => { evidence.window.from = '2025-09-01'; },
+      (evidence) => { evidence.generatedAtUtc = '1900-01-01'; },
+      (evidence) => { evidence.generatedAtUtc = 'August 21, 2026'; },
+      (evidence) => { evidence.generatedAtUtc = '2026-08-21T12:34:56.789+00:00'; },
+      (evidence) => { evidence.people[0].title = 'Wrong_article'; },
+    ]) {
+      const evidence = structuredClone(indexDemand);
+      mutate(evidence);
+      expect(() => resolvePeopleIndexPolicy({ manifest, indexPolicy, indexDemand: evidence }))
+        .toThrow();
+    }
   });
 
   it('never counts an uncertain sign in chart aggregates', () => {
@@ -61,7 +96,7 @@ describe('Phase 5 People pilot contract', () => {
     expect(directory).toContain('noindex={!PEOPLE_DIRECTORY_INDEXABLE}');
     expect(directory).toContain('nofollow={!PEOPLE_DIRECTORY_INDEXABLE}');
     expect(profile).toContain('noindex={!person.indexEligibility.eligible}');
-    expect(profile).toContain('nofollow={!person.indexEligibility.eligible}');
+    expect(profile).toContain('nofollow={person.living}');
   });
 
   it('publishes only allowlisted profiles in the sitemap and keeps People out of primary navigation', async () => {

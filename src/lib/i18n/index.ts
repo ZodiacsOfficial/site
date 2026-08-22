@@ -76,6 +76,9 @@ const CORE_LOCALIZED_PATHS = [
  */
 export const CORE_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it', 'ru'] as const satisfies readonly Locale[];
 
+/** RU sign-guide shells stay renderable but are withheld from discovery. */
+export const INDEXABLE_SIGN_GUIDE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
+
 /** Complete private-preview trees awaiting a later indexability release. */
 export const STAGED_CORE_ROUTE_LOCALES = [] as const satisfies readonly Locale[];
 
@@ -87,7 +90,12 @@ export const LEGACY_HOME_SELECTOR_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as co
 
 /** Locales in which each translated route is actually available. */
 export const LOCALIZED_PATHS: ReadonlyMap<string, readonly Locale[]> = new Map(
-  CORE_LOCALIZED_PATHS.map((path) => [path, CORE_ROUTE_LOCALES] as const),
+  CORE_LOCALIZED_PATHS.map((path) => [
+    path,
+    SIGN_SLUGS.some((slug) => path === `/${slug}/`)
+      ? INDEXABLE_SIGN_GUIDE_LOCALES
+      : CORE_ROUTE_LOCALES,
+  ] as const),
 );
 
 const BIRTHDAY_MONTH_LENGTHS: Readonly<Record<string, number>> = Object.freeze({
@@ -109,12 +117,15 @@ const CHINESE_ZODIAC_SLUGS = new Set([
   'horse', 'goat', 'monkey', 'rooster', 'dog', 'pig',
 ]);
 
-/** Compact client-safe recognition for the data-driven localized families. */
-function isLocalizedProgrammaticPath(path: string): boolean {
+function isLocalizedChineseZodiacPath(path: string): boolean {
   if (path === '/learn/chinese-zodiac/') return true;
   const animal = path.match(/^\/learn\/chinese-zodiac\/([a-z]+)\/$/)?.[1];
   if (animal) return CHINESE_ZODIAC_SLUGS.has(animal);
 
+  return false;
+}
+
+function isLocalizedBirthdayPath(path: string): boolean {
   const birthday = path.match(/^\/birthday\/([a-z]+)-(\d{1,2})\/$/);
   if (!birthday) return false;
   const maxDay = BIRTHDAY_MONTH_LENGTHS[birthday[1]];
@@ -125,7 +136,8 @@ function isLocalizedProgrammaticPath(path: string): boolean {
 export function availableLocalesForPath(path: string): readonly Locale[] | undefined {
   const canonical = stripLocale(path);
   return LOCALIZED_PATHS.get(canonical)
-    ?? (isLocalizedProgrammaticPath(canonical) ? PROGRAMMATIC_ROUTE_LOCALES : undefined);
+    ?? (isLocalizedChineseZodiacPath(canonical) ? PROGRAMMATIC_ROUTE_LOCALES : undefined)
+    ?? (isLocalizedBirthdayPath(canonical) ? [DEFAULT_LOCALE] : undefined);
 }
 
 /** Internal rendering availability; never use this for discovery metadata. */
@@ -134,7 +146,9 @@ export function renderableLocalesForPath(path: string): readonly Locale[] | unde
   if (CORE_LOCALIZED_PATHS.includes(canonical)) {
     return [...CORE_ROUTE_LOCALES, ...STAGED_CORE_ROUTE_LOCALES];
   }
-  return isLocalizedProgrammaticPath(canonical) ? PROGRAMMATIC_ROUTE_LOCALES : undefined;
+  return isLocalizedChineseZodiacPath(canonical) || isLocalizedBirthdayPath(canonical)
+    ? PROGRAMMATIC_ROUTE_LOCALES
+    : undefined;
 }
 
 export function stripLocale(path: string): string {
@@ -183,6 +197,19 @@ export function alternatePathEntries(path: string): AlternatePathEntry[] {
   return Object.entries(alternates).map(([locale, href]) => ({
     locale: locale as Locale,
     href,
+  }));
+}
+
+/** Visible navigation only; unlike discovery metadata, includes noindex previews. */
+export function renderableAlternatePathEntries(path: string): AlternatePathEntry[] {
+  const clean = path.endsWith('/404/') ? '/404.html' : stripLocale(path);
+  const locales = renderableLocalesForPath(clean);
+  if (!locales) return [];
+  return locales.map((locale) => ({
+    locale,
+    href: clean === '/404.html' && locale !== DEFAULT_LOCALE
+      ? `${LOCALE_PATH_PREFIX[locale]}/404/`
+      : localizePath(locale, clean),
   }));
 }
 
