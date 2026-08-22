@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "growth-activation-d-share-loop-2026-08-20",
-  "baseCommit": "3139ca56f96f2683230d245aadc0ef04ddcbd4c6",
+  "id": "growth-activation-d-share-loop-2026-08-22",
+  "baseCommit": "bc03691edbc506100a61784de95b68c3227462b3",
   "note": "Owner-authorized Packet D for GROWTH-2026-08-19-full-marketing-audit: keep inbound chart-share receivers Registry-sterile across the existing localized birth-chart routes and add the already-requested localized share labels. No sign-guide, Registry product, or unrelated locale behavior changes.",
   "protectedPaths": [
     "src/pages/es/birth-chart/index.astro",
