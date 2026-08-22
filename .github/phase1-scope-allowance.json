@@ -1,9 +1,10 @@
 {
   "version": 1,
-  "id": "race-ramp-sign-guides-2026-08-19",
-  "baseCommit": "19a20322e0980d9712356561165982e6f7f06869",
-  "note": "Owner-approved (Dias, 2026-08-19, R2.1 ramps): add the flag-gated RaceRamp band to the twelve sign guides, below the CollectBand. The ramp renders nothing while PUBLIC_ZODIAC_GAMES_ENABLED is off, so flag-off builds of the guides are unchanged.",
+  "id": "astrofolio-store-faq-2026-08-22",
+  "baseCommit": "0c622178f7b8a5efe3df53bb1f520e09874fa7cb",
   "protectedPaths": [
-    "src/pages/[sign]/index.astro"
+    "public/assets/app.js",
+    "scripts/registry-consumer-contract.test.mjs",
+    "src/app.jsx"
   ]
 }
