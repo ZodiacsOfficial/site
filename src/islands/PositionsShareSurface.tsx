@@ -16,6 +16,7 @@ import {
   savePreparedChartCard,
   type PreparedChartCard,
 } from '../lib/share-card';
+import { ensurePastelZodiacIconEmbedding } from '../lib/share-card-pastel-icons';
 import { formatLongitude } from '../lib/signs';
 import { positionsReading } from '../lib/share-positions-reading';
 import Wheel from '../lib/wheel/Wheel';
@@ -181,18 +182,20 @@ export function decodePositionsToken(token: string): PositionsShareChart | null 
   return decodePositionsLink(token);
 }
 
-export function preparePrimaryShareArtifact(
+export async function preparePrimaryShareArtifact(
   chart: Chart,
   mode: 'full' | 'moon' | 'rising',
   locale: Locale,
   moonAmbiguous = false,
 ): Promise<PreparedChartCard> {
-  return mode === 'full'
-    ? prepareChartSheet(chart, { locale, hideBirthDetails: true, moonAmbiguous })
-    : preparePlacementCard(chart, mode, locale, {
-      referenceTime: !chart.input.timeKnown,
-      moonAmbiguous,
-    });
+  if (mode === 'full') {
+    await ensurePastelZodiacIconEmbedding();
+    return prepareChartSheet(chart, { locale, hideBirthDetails: true, moonAmbiguous });
+  }
+  return preparePlacementCard(chart, mode, locale, {
+    referenceTime: !chart.input.timeKnown,
+    moonAmbiguous,
+  });
 }
 
 export function sharePreparedArtifact(prepared: PreparedChartCard) {
