@@ -4544,7 +4544,7 @@
           data-terminal-view-link={view}
           onClick={() => rememberTerminalView(view, surface, direction)}
         >
-          {pro ? 'Market view' : 'Astrofolio'} <span aria-hidden="true">↗</span>
+          {pro ? 'Open the Terminal' : 'Astrofolio'} <span aria-hidden="true">↗</span>
         </a>
       );
     }
@@ -4623,11 +4623,35 @@
       );
     }
 
+    function ConsumerDestinations({ sign }) {
+      const reveal = useReveal();
+      return (
+        <section ref={reveal} id="explore-astrofolio" className="consumer-destinations reveal" aria-labelledby="consumer-destinations-title">
+          <header className="consumer-section-head">
+            <h2 id="consumer-destinations-title">Explore Astrofolio</h2>
+          </header>
+          <div className="consumer-destinations__grid">
+            <article className="consumer-destinations__card">
+              <span className="consumer-destinations__eyebrow">Zodiac markets</span>
+              <h3>The Terminal</h3>
+              <p>Follow all twelve with live prices, liquidity, charts, and research.</p>
+              <TerminalViewLink view="pro" sign={sign} className="consumer-destinations__link" />
+            </article>
+            <article className="consumer-destinations__card">
+              <span className="consumer-destinations__eyebrow">Official merchandise</span>
+              <h3>Astrofolio Shop</h3>
+              <p>Clothing and collections for the twelve signs.</p>
+              <a className="consumer-destinations__link" href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external">
+                Shop Astrofolio <span aria-hidden="true">↗</span>
+              </a>
+            </article>
+          </div>
+        </section>
+      );
+    }
+
     function ProMasthead({ sign, batch }) {
       const season = useCurrentSeason();
-      const [paused, setPaused] = useState(() => {
-        try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; }
-      });
       const quotes = batch.status === 'ok'
         ? SIGNS.map(item => batch.quotes[item.asset.sign]).filter(Boolean)
         : [];
@@ -4645,10 +4669,7 @@
             <TerminalViewLink view="consumer" sign={sign} className="terminal-view-link" />
           </div>
           <div className="pro-tape-control">
-            <MarketTape season={season} paused={paused} batch={batch} />
-            <button type="button" aria-pressed={paused} onClick={() => setPaused(value => !value)}>
-              {paused ? 'Resume tape' : 'Pause tape'}
-            </button>
+            <MarketTape season={season} paused batch={batch} />
           </div>
           <dl className="pro-aggregate" aria-busy={batch.status === 'loading'}>
             <div><dt>Reported market cap</dt><dd>{batch.status === 'ok' ? formatUsdCompact(marketCaps.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>{marketCaps.length} of 12 reporting</small></div>
@@ -6041,16 +6062,36 @@
 
     const CONSUMER_FAQS = [
       {
-        q: 'Is there an official token for my zodiac sign?',
-        a: 'Yes. Each of the twelve signs has one verified token record. Its technical addresses are published in the sign’s profile.'
+        q: 'What is Astrofolio?',
+        a: 'Astrofolio is the collection of twelve official Zodiac tokens—one for each sign—paired with their gold sculpture artwork and public Registry records.'
       },
       {
-        q: 'What does “official” mean?',
-        a: 'The address matches the published Registry list. It is not a promise of safety or value.'
+        q: 'How do I know a Zodiac is official?',
+        a: 'Compare the complete token address with the published Registry. A name or ticker alone is not enough.'
       },
       {
-        q: 'How do I check a zodiac token?',
-        a: 'Paste the complete token address into the checker on this page. It compares the address with the verified list.'
+        q: 'Why does each sign have Solana and Base addresses?',
+        a: 'Each Zodiac began on Solana and has an official Base counterpart. Both verified addresses appear in the same Registry record.'
+      },
+      {
+        q: 'Do I need a wallet to browse?',
+        a: 'No. You can browse the collection, see market context, and verify addresses without connecting a wallet.'
+      },
+      {
+        q: 'Where can I buy Astrofolio merchandise?',
+        a: 'The Astrofolio Shop carries official clothing and collections for the twelve signs.'
+      },
+      {
+        q: 'What are the risks?',
+        a: 'Zodiac tokens are speculative and can be volatile or hard to sell. Prices can fall to zero, and wallet mistakes or scams can cause permanent loss.'
+      },
+      {
+        q: 'What are the Zodiac markets?',
+        a: 'The Zodiac markets are the prices, liquidity, and trading activity around the twelve official tokens. Market data can be delayed or incomplete and is not a recommendation.'
+      },
+      {
+        q: 'What is the Terminal?',
+        a: 'The Terminal is the market desk for all twelve Zodiacs, with live prices, liquidity, charts, season context, and research.'
       }
     ];
 
@@ -6073,7 +6114,7 @@
       );
     }
 
-    function ConsumerClosing({ sign }) {
+    function ConsumerClosing() {
       const reveal = useReveal();
       return (
         <section ref={reveal} className="consumer-closing reveal" aria-labelledby="consumer-closing-title" data-vitrine-rule>
@@ -6084,7 +6125,6 @@
               <span>Open the Registry</span>
               <span className="consumer-closing__arrow" aria-hidden="true">→</span>
             </a>
-            <TerminalViewLink view="pro" sign={sign} className="consumer-closing__market" />
           </div>
         </section>
       );
@@ -6608,10 +6648,11 @@
               batch={consumerMarket}
               onRetry={() => setConsumerMarketRetry(value => value + 1)}
             />
+            <ConsumerDestinations sign={sign} />
             <ConsumerHowItWorks sign={sign} />
             <ConsumerVerifier />
             <ConsumerFaq />
-            <ConsumerClosing sign={sign} />
+            <ConsumerClosing />
             <span id="market" className="terminal-compat-target" aria-hidden="true" />
             <span id="briefing" className="terminal-compat-target" aria-hidden="true" />
             <span id="research" className="terminal-compat-target" aria-hidden="true" />
