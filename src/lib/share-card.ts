@@ -13,13 +13,15 @@ import { h, render } from 'preact';
 import Wheel from './wheel/Wheel';
 import {
   degreeInSign,
+  SIGNS,
   signBySlug,
   signForLongitude,
   signName,
   type Element,
   type Modality,
 } from './signs';
-import type { Angles, BodyPosition, Chart } from './engine/types';
+import type { Angles, AspectType, BodyName, BodyPosition, Chart } from './engine/types';
+import { houseOf } from './engine/houses';
 import type { CatalogLocale as Locale } from './i18n';
 import { shareCardFormat, shareCardText } from './share-card-copy';
 import { communicationRead } from './communication';
@@ -27,7 +29,7 @@ import { approachRead } from './approach';
 import { chartSignature, type ChartSignature } from './chart-signature';
 
 export type CardOutcome = 'shared' | 'downloaded' | 'cancelled';
-export type ChartCardVariant = 'full' | 'big-three' | 'communication' | 'signature' | 'approach';
+export type ChartCardVariant = 'full' | 'big-three' | 'communication' | 'signature' | 'approach' | 'sheet';
 export type PrimaryShareCardVariant = Extract<ChartCardVariant, 'signature' | 'big-three' | 'full'>;
 
 export interface ShareCardOptions {
@@ -36,6 +38,12 @@ export interface ShareCardOptions {
   locale?: Locale;
   /** Forwarded to audience-facing Moon advice for no-time boundary days. */
   moonAmbiguous?: boolean;
+  /** True when displayed positions use the calculator's 12:00 no-time reference. */
+  referenceTime?: boolean;
+  /** Sheet-only: keep placements while replacing the birth receipt with settings. */
+  hideBirthDetails?: boolean;
+  /** Already-formatted, human-readable receipt. Never coordinates or a share payload. */
+  birthReceipt?: string;
 }
 
 /**
@@ -74,19 +82,6 @@ export const SHARE_CARD_WORDMARK = Object.freeze({
   align: 'right' as const,
 });
 
-/** Read a same-origin asset as a data: URI (null on any failure). */
-function fetchAsDataUri(url: string): Promise<string | null> {
-  return fetch(url)
-    .then((res) => (res.ok ? res.blob() : null))
-    .then((blob) => (blob ? new Promise<string | null>((resolve) => {
-      const fr = new FileReader();
-      fr.onload = () => resolve(typeof fr.result === 'string' ? fr.result : null);
-      fr.onerror = () => resolve(null);
-      fr.readAsDataURL(blob);
-    }) : null))
-    .catch(() => null);
-}
-
 async function wheelSvgString(chart: Chart): Promise<string> {
   const host = document.createElement('div');
   render(h(Wheel, {
@@ -105,16 +100,25 @@ async function wheelSvgString(chart: Chart): Promise<string> {
   svg.querySelectorAll('text').forEach((t) => {
     t.setAttribute('font-family', 'ui-monospace, Menlo, Consolas, monospace');
   });
-  // An SVG rasterized through <img> can't fetch external subresources, so the
-  // sign-disc <image> hrefs must be inlined as data URIs. Drop any that fail
-  // rather than let a broken ref abort the raster.
-  await Promise.all(Array.from(svg.querySelectorAll('image')).map(async (img) => {
+  // An SVG rasterized through <img> cannot fetch external subresources. Use
+  // the wheel's canonical sign glyphs and pastel hues in the exported copy;
+  // this keeps eager share-sheet preparation self-contained and network-free.
+  Array.from(svg.querySelectorAll('image')).forEach((img) => {
     const href = img.getAttribute('href') ?? img.getAttribute('xlink:href');
-    if (!href || href.startsWith('data:')) return;
-    const uri = await fetchAsDataUri(href);
-    if (uri) img.setAttribute('href', uri);
-    else img.remove();
-  }));
+    const slug = href?.match(/\/([^/]+)\.webp$/)?.[1];
+    const sign = slug ? signBySlug(slug) : null;
+    if (!sign) { img.remove(); return; }
+    const size = Number(img.getAttribute('width'));
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', String(Number(img.getAttribute('x')) + size / 2));
+    text.setAttribute('y', String(Number(img.getAttribute('y')) + size / 2));
+    text.setAttribute('fill', sign.hue);
+    text.setAttribute('font-size', String(size * 0.72));
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('dominant-baseline', 'central');
+    text.textContent = sign.glyph;
+    img.replaceWith(text);
+  });
   const xml = new XMLSerializer().serializeToString(svg);
   render(null, host);
   return xml;
@@ -195,11 +199,23 @@ export function chartCardReceipt(
 
 /** Download/share-sheet filename contains no input-derived data. */
 export function chartCardFilename(options: ShareCardOptions = {}): string {
+  if (options.variant === 'sheet') return 'zodiacs-chart-sheet.png';
   if (options.variant === 'big-three') return 'zodiacs-big-three.png';
   if (options.variant === 'communication') return 'zodiacs-communication.png';
   if (options.variant === 'signature') return 'zodiacs-chart-signature.png';
   if (options.variant === 'approach') return 'zodiacs-how-to-approach-me.png';
   return 'zodiacs-chart.png';
+}
+
+/** Small, bounded receipts used anywhere a no-time Moon is exported. */
+export function shareCardTimeNotes(
+  locale: Locale,
+  options: Pick<ShareCardOptions, 'referenceTime' | 'moonAmbiguous'> = {},
+): string[] {
+  const notes: string[] = [];
+  if (options.referenceTime) notes.push(shareCardText(locale, 'referenceTimeNote'));
+  if (options.moonAmbiguous) notes.push(shareCardText(locale, 'approachMoonTimeNote'));
+  return notes;
 }
 
 /** Shrink until the line fits — twelve-letter signs three times over is real. */
@@ -278,6 +294,7 @@ export interface SignatureCardContent {
   kicker: string;
   signature: ChartSignature | null;
   bigThree: BigThreePlacement[];
+  notes: string[];
   receipt: string;
 }
 
@@ -285,12 +302,17 @@ export interface SignatureCardContent {
 export function signatureCardContent(
   chart: Chart,
   locale: Locale = 'en',
+  moonAmbiguous = false,
 ): SignatureCardContent {
   return {
     title: shareCardText(locale, 'signatureTitle'),
     kicker: shareCardText(locale, 'signatureKicker'),
     signature: authoredSignatureForLocale(chart, locale),
     bigThree: bigThreePlacements(chart, locale),
+    notes: shareCardTimeNotes(locale, {
+      referenceTime: !chart.input.timeKnown,
+      moonAmbiguous,
+    }),
     receipt: chartCardReceipt(chart, locale),
   };
 }
@@ -409,6 +431,10 @@ async function drawFullChartCard(
   options: ShareCardOptions = {},
 ): Promise<Blob> {
   const locale = options.locale ?? 'en';
+  const timeNotes = shareCardTimeNotes(locale, {
+    referenceTime: options.referenceTime ?? !chart.input.timeKnown,
+    moonAmbiguous: options.moonAmbiguous,
+  });
   const placements = bigThreePlacements(chart, locale);
   const trio = placements.map((placement) => ({
     label: shareCardText(locale, placement.kind),
@@ -474,6 +500,10 @@ async function drawFullChartCard(
   ctx.font = `500 ${px}px ${SERIF}`;
   ctx.fillText(line, W / 2, 1138);
 
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 19px ${MONO}`;
+  timeNotes.forEach((note, index) => ctx.fillText(note, W / 2, 1195 + index * 31));
+
   // Receipt + footer.
   ctx.fillStyle = INK_2;
   ctx.font = `400 22px ${MONO}`;
@@ -499,6 +529,7 @@ async function drawBigThreeCard(
 ): Promise<Blob> {
   const locale = options.locale ?? 'en';
   const placements = bigThreePlacements(chart, locale);
+  const timeNotes = shareCardTimeNotes(locale, options);
 
   await document.fonts.ready;
   await Promise.all([
@@ -552,6 +583,8 @@ async function drawBigThreeCard(
 
   ctx.textAlign = 'center';
   ctx.fillStyle = INK_2;
+  ctx.font = `400 20px ${MONO}`;
+  timeNotes.forEach((note, index) => ctx.fillText(note, W / 2, 1150 + index * 34));
   ctx.font = `400 24px ${MONO}`;
   ctx.fillText(shareCardFormat(locale, 'engineReceipt', { version: chart.engineVersion }), W / 2, 1238);
   ctx.font = `500 34px ${SERIF}`;
@@ -661,7 +694,7 @@ async function drawSignatureCard(
   options: ShareCardOptions = {},
 ): Promise<Blob> {
   const locale = options.locale ?? 'en';
-  const content = signatureCardContent(chart, locale);
+  const content = signatureCardContent(chart, locale, Boolean(options.moonAmbiguous));
   if (!content.signature) {
     return drawBigThreeCard(chart, { ...options, variant: 'big-three' });
   }
@@ -698,6 +731,7 @@ async function drawSignatureCard(
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_2;
   ctx.font = `400 24px ${MONO}`;
+  ctx.font = `italic 400 30px ${SERIF}`;
   ctx.fillText(content.kicker, 72, 92);
   ctx.fillStyle = INK_0;
   ctx.font = `500 68px ${SERIF}`;
@@ -725,8 +759,8 @@ async function drawSignatureCard(
 
   ctx.textAlign = 'center';
   ctx.fillStyle = INK_2;
-  ctx.font = `400 22px ${MONO}`;
-  ctx.fillText(content.signature.eyebrow.toUpperCase(), W / 2, 465);
+  ctx.font = `italic 400 28px ${SERIF}`;
+  ctx.fillText(content.signature.eyebrow, W / 2, 465);
   const titlePx = fitText(ctx, content.signature.title, W - 220, 56, 38, 500, SERIF);
   ctx.fillStyle = INK_0;
   ctx.font = `500 ${titlePx}px ${SERIF}`;
@@ -746,7 +780,8 @@ async function drawSignatureCard(
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_2;
   ctx.font = `400 22px ${MONO}`;
-  ctx.fillText('CHART FINGERPRINT', 72, 856);
+  ctx.font = `italic 400 28px ${SERIF}`;
+  ctx.fillText('Chart fingerprint', 72, 856);
   const bigThreeCount = content.bigThree.length;
   const columnWidth = (W - 144) / Math.max(1, bigThreeCount);
   content.bigThree.forEach((placement, index) => {
@@ -761,6 +796,11 @@ async function drawSignatureCard(
     ctx.font = `400 20px ${MONO}`;
     ctx.fillText(shareCardText(locale, placement.kind).toUpperCase(), center, 1067);
   });
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 20px ${MONO}`;
+  content.notes.forEach((note, index) => ctx.fillText(note, 72, 1132 + index * 34));
 
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_2;
@@ -880,10 +920,255 @@ async function drawApproachCard(
   return blob;
 }
 
+const SHEET_W = 1800;
+const SHEET_H = 2400;
+const SHEET_BODIES = [
+  'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
+  'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
+] as const satisfies readonly BodyName[];
+const BODY_GLYPH: Record<BodyName, string> = {
+  Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
+  Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇',
+  'North Node': '☊', 'South Node': '☋',
+};
+const BODY_SHORT: Record<BodyName, string> = {
+  Sun: 'Sun', Moon: 'Moon', Mercury: 'Merc', Venus: 'Venus', Mars: 'Mars',
+  Jupiter: 'Jup', Saturn: 'Sat', Uranus: 'Ura', Neptune: 'Nep', Pluto: 'Plu',
+  'North Node': 'Node', 'South Node': 'S.Node',
+};
+const ASPECT_GLYPH: Record<AspectType, string> = {
+  conjunction: '☌', sextile: '⚹', square: '□', trine: '△', opposition: '☍',
+};
+
+export interface ChartPreviewPlacement {
+  longitude: number;
+  signIndex: number;
+  signSlug: string;
+  signGlyph: string;
+  degree: number;
+  minute: number;
+}
+
+/** Round to the displayed arcminute, carrying cleanly into the next sign. */
+export function chartPreviewPlacement(longitude: number): ChartPreviewPlacement {
+  const normalized = ((longitude % 360) + 360) % 360;
+  const totalMinutes = Math.round(normalized * 60) % (360 * 60);
+  const signIndex = Math.floor(totalMinutes / (30 * 60));
+  const withinSign = totalMinutes % (30 * 60);
+  return {
+    longitude: totalMinutes / 60,
+    signIndex,
+    signSlug: SIGNS[signIndex].slug,
+    signGlyph: SIGNS[signIndex].glyph,
+    degree: Math.floor(withinSign / 60),
+    minute: withinSign % 60,
+  };
+}
+
+export function chartSheetSettings(
+  chart: Pick<Chart, 'houses'> & { input?: Pick<Chart['input'], 'timeKnown'> },
+): string {
+  if (!chart.houses) {
+    return chart.input?.timeKnown === false
+      ? '12:00 reference · No houses · Tropical'
+      : 'No houses · Tropical';
+  }
+  return `${chart.houses.system === 'whole' ? 'Whole sign' : 'Placidus'} · Tropical`;
+}
+
+function sheetPositionText(longitude: number, locale: Locale): string {
+  const value = chartPreviewPlacement(longitude);
+  return `${signName(SIGNS[value.signIndex], locale)} ${String(value.degree).padStart(2, '0')}°${String(value.minute).padStart(2, '0')}′`;
+}
+
+function drawSheetLabel(
+  ctx: CanvasRenderingContext2D,
+  body: BodyName | 'ASC' | 'MC',
+  x: number,
+  y: number,
+): void {
+  const glyph = body === 'ASC' ? 'A' : body === 'MC' ? 'M' : BODY_GLYPH[body];
+  const short = body === 'ASC' || body === 'MC' ? body : BODY_SHORT[body];
+  ctx.fillStyle = INK_0;
+  ctx.font = `500 34px ${SERIF}`;
+  ctx.fillText(glyph, x, y);
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 25px ${MONO}`;
+  ctx.fillText(short, x + 44, y);
+}
+
+async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Promise<Blob> {
+  const locale = options.locale ?? 'en';
+  await document.fonts.ready;
+  await Promise.all([
+    document.fonts.load(`500 34px ${SERIF}`),
+    document.fonts.load(`italic 400 30px ${SERIF}`),
+    document.fonts.load(`400 30px ${MONO}`),
+  ]).catch(() => {});
+  const wheel = await wheelSvgString(chart).then(loadSvg);
+  const canvas = document.createElement('canvas');
+  canvas.width = SHEET_W;
+  canvas.height = SHEET_H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('canvas unavailable');
+
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, SHEET_W, SHEET_H);
+  ctx.strokeStyle = HAIR;
+  ctx.lineWidth = 2;
+  if (typeof ctx.roundRect === 'function') {
+    ctx.beginPath();
+    ctx.roundRect(38, 38, SHEET_W - 76, SHEET_H - 76, 30);
+    ctx.stroke();
+  }
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = INK_2;
+  ctx.textAlign = 'right';
+  ctx.font = `500 31px ${SERIF}`;
+  ctx.fillText('zodiacs.org', SHEET_W - 92, 92);
+
+  ctx.drawImage(wheel, 420, 135, 960, 960);
+
+  const rows: Array<{ body: BodyName | 'ASC' | 'MC'; lon: number }> = chart.bodies
+    .map((body) => ({ body: body.body, lon: body.lon }));
+  if (chart.angles) {
+    rows.push({ body: 'ASC', lon: chart.angles.asc }, { body: 'MC', lon: chart.angles.mc });
+  }
+  const tableX = 92;
+  const tableTop = 1180;
+  const rowHeight = 66;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `italic 400 30px ${SERIF}`;
+  ctx.fillText('Positions', tableX, tableTop - 54);
+  rows.forEach((row, index) => {
+    const y = tableTop + index * rowHeight;
+    drawSheetLabel(ctx, row.body, tableX, y);
+    ctx.fillStyle = INK_0;
+    ctx.font = `400 30px ${MONO}`;
+    ctx.fillText(sheetPositionText(row.lon, locale), tableX + 190, y);
+    if (chart.houses) {
+      ctx.fillStyle = INK_2;
+      ctx.font = `400 28px ${MONO}`;
+      ctx.fillText(`H${houseOf(row.lon, chart.houses.cusps)}`, tableX + 650, y);
+    }
+    ctx.strokeStyle = HAIR;
+    ctx.beginPath();
+    ctx.moveTo(tableX, y + 31);
+    ctx.lineTo(890, y + 31);
+    ctx.stroke();
+  });
+
+  const gridX = 1010;
+  const gridY = 1260;
+  const cell = 64;
+  const byPair = new Map(chart.aspects.map((aspect) => {
+    const key = [aspect.a, aspect.b].sort().join('|');
+    return [key, aspect.type] as const;
+  }));
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `italic 400 30px ${SERIF}`;
+  ctx.fillText('Aspect grid', gridX, gridY - 138);
+  SHEET_BODIES.forEach((body, index) => {
+    ctx.save();
+    ctx.translate(gridX + index * cell + 35, gridY - 22);
+    ctx.rotate(-Math.PI / 2);
+    drawSheetLabel(ctx, body, 0, 0);
+    ctx.restore();
+    drawSheetLabel(ctx, body, gridX - 112, gridY + index * cell + 30);
+  });
+  for (let row = 0; row < SHEET_BODIES.length; row += 1) {
+    for (let column = 0; column < SHEET_BODIES.length; column += 1) {
+      const x = gridX + column * cell;
+      const y = gridY + row * cell;
+      ctx.strokeStyle = HAIR;
+      ctx.strokeRect(x, y, cell, cell);
+      if (column >= row) continue;
+      const type = byPair.get([SHEET_BODIES[row], SHEET_BODIES[column]].sort().join('|'));
+      if (!type) continue;
+      ctx.textAlign = 'center';
+      ctx.fillStyle = INK_0;
+      ctx.font = `400 30px ${SERIF}`;
+      ctx.fillText(ASPECT_GLYPH[type], x + cell / 2, y + cell / 2 + 2);
+    }
+  }
+
+  const receipt = [
+    ...(options.hideBirthDetails === false ? [options.birthReceipt?.trim()] : []),
+    chartSheetSettings(chart),
+    ...(options.moonAmbiguous ? [shareCardText(locale, 'approachMoonTimeNote')] : []),
+  ].filter(Boolean).join(' · ');
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 27px ${MONO}`;
+  wrappedLines(ctx, receipt, SHEET_W - 184, 2).forEach((line, index) => {
+    ctx.fillText(line, 92, 2260 + index * 38);
+  });
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+  if (!blob) throw new Error('png encode failed');
+  return blob;
+}
+
+async function drawPlacementCard(
+  chart: BigThreeCardChart,
+  placement: 'moon' | 'rising',
+  options: ShareCardOptions = {},
+): Promise<Blob> {
+  const locale = options.locale ?? 'en';
+  const timeNotes = shareCardTimeNotes(locale, options);
+  const source = placement === 'moon'
+    ? chart.bodies.find((body) => body.body === 'Moon')?.lon
+    : chart.angles?.asc;
+  if (source == null) throw new Error(`chart missing ${placement}`);
+  const sign = signForLongitude(source);
+  // A dedicated one-placement composition keeps the existing Big Three card stable.
+  await document.fonts.ready;
+  const disc = await loadDisc(sign.slug);
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('canvas unavailable');
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, W, H);
+  if (typeof ctx.roundRect === 'function') {
+    ctx.strokeStyle = HAIR;
+    ctx.beginPath();
+    ctx.roundRect(28.5, 28.5, W - 57, H - 57, 26);
+    ctx.stroke();
+  }
+  if (disc) ctx.drawImage(disc, (W - 300) / 2, 270, 300, 300);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = INK_2;
+  ctx.font = `italic 400 34px ${SERIF}`;
+  ctx.fillText(shareCardText(locale, placement), W / 2, 150);
+  ctx.fillStyle = INK_0;
+  ctx.font = `500 76px ${SERIF}`;
+  ctx.fillText(signName(sign, locale), W / 2, 690);
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 30px ${MONO}`;
+  ctx.fillText(`${degreeInSign(source).toFixed(1)}°`, W / 2, 770);
+  ctx.font = `400 28px ${SERIF}`;
+  ctx.fillText(shareCardText(locale, placement === 'moon' ? 'moonDescriptor' : 'risingDescriptor'), W / 2, 850);
+  ctx.font = `400 20px ${MONO}`;
+  timeNotes.forEach((note, index) => ctx.fillText(note, W / 2, 1090 + index * 34));
+  ctx.font = `400 24px ${MONO}`;
+  ctx.fillText(shareCardFormat(locale, 'engineReceipt', { version: chart.engineVersion }), W / 2, 1238);
+  ctx.textAlign = 'right';
+  ctx.font = `500 34px ${SERIF}`;
+  ctx.fillText('zodiacs.org', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+  if (!blob) throw new Error('png encode failed');
+  return blob;
+}
+
 export async function drawCard(
   chart: Chart,
   options: ShareCardOptions = {},
 ): Promise<Blob> {
+  if (options.variant === 'sheet') return drawChartSheet(chart, options);
   if (options.variant === 'big-three') return drawBigThreeCard(chart, options);
   if (options.variant === 'communication') return drawCommunicationCard(chart, options);
   if (options.variant === 'signature') return drawSignatureCard(chart, options);
@@ -917,10 +1202,34 @@ export interface BigThreeCardChart {
 export async function prepareBigThreeCard(
   chart: BigThreeCardChart,
   locale: Locale = 'en',
+  options: Pick<ShareCardOptions, 'referenceTime' | 'moonAmbiguous'> = {},
 ): Promise<PreparedChartCard> {
   return {
-    blob: await drawBigThreeCard(chart, { variant: 'big-three', locale }),
+    blob: await drawBigThreeCard(chart, { ...options, variant: 'big-three', locale }),
     filename: chartCardFilename({ variant: 'big-three', locale }),
+  };
+}
+
+export async function preparePlacementCard(
+  chart: BigThreeCardChart,
+  placement: 'moon' | 'rising',
+  locale: Locale = 'en',
+  options: Pick<ShareCardOptions, 'referenceTime' | 'moonAmbiguous'> = {},
+): Promise<PreparedChartCard> {
+  return {
+    blob: await drawPlacementCard(chart, placement, { ...options, locale }),
+    filename: placement === 'moon' ? 'zodiacs-moon-sign.png' : 'zodiacs-rising-sign.png',
+  };
+}
+
+export async function prepareChartSheet(
+  chart: Chart,
+  options: Omit<ShareCardOptions, 'variant'> = {},
+): Promise<PreparedChartCard> {
+  const sheetOptions: ShareCardOptions = { ...options, variant: 'sheet' };
+  return {
+    blob: await drawChartSheet(chart, sheetOptions),
+    filename: chartCardFilename(sheetOptions),
   };
 }
 

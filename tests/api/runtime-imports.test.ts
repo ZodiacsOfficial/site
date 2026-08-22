@@ -6,6 +6,7 @@ import * as ts from 'typescript';
 
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const API_ROOT = join(ROOT, 'api');
+const NODE_MODULES_ROOT = `${join(ROOT, 'node_modules')}${sep}`;
 const EXPECTED_HANDLERS = [
   'api/account.ts',
   'api/aura-holdings.ts',
@@ -169,6 +170,8 @@ function auditRuntimeGraphs(): { violations: string[]; catalogs: string[] } {
       const target = resolveSource(path, imported.specifier);
       if (!target) {
         violations.push(`${repoPath(path)} -> ${imported.specifier} does not resolve from source`);
+      } else if (target.startsWith(NODE_MODULES_ROOT)) {
+        violations.push(`${repoPath(path)} -> ${imported.specifier} is an unapproved relative dependency import`);
       } else {
         pending.push(target);
       }
@@ -203,6 +206,18 @@ describe('Vercel API runtime packaging', () => {
     expect(vercel.rewrites).toContainEqual({
       source: '/api/games',
       destination: '/api/compatibility?__zodiacs_games_route=1',
+    });
+  });
+
+  it('routes both chart-preview surfaces through the existing compatibility function', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/og/chart',
+      destination: '/api/compatibility?__zodiacs_og_route=link',
+    });
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/og/chart-image',
+      destination: '/api/compatibility?__zodiacs_og_route=image',
     });
   });
 
@@ -246,6 +261,15 @@ describe('Vercel API runtime packaging', () => {
     const audit = auditRuntimeGraphs();
     expect(audit.violations).toEqual([]);
     expect(audit.catalogs).toEqual([]);
+    expect(runtimeImports(join(ROOT, 'api/compatibility.ts'))).toContainEqual({
+      specifier: '../src/server/chart-preview.js',
+      hasJsonAttribute: false,
+    });
+    expect(runtimeImports(join(ROOT, 'src/server/chart-preview.ts'))).toContainEqual({
+      specifier: '@vercel/og',
+      hasJsonAttribute: false,
+    });
+    expect(readFileSync(join(ROOT, 'src/server/chart-preview.ts'), 'utf8')).not.toContain("runtime: 'edge'");
   });
 
   it('packages the shared admin bootstrap guard in both daily enrollment graphs', () => {

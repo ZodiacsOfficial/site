@@ -10,7 +10,8 @@ interface CopyLinkButtonProps {
   copiedLabel: ComponentChildren;
   ariaLabel: string;
   buttonClass: string;
-  dataHook: 'share' | 'invite';
+  dataHook: 'share' | 'invite' | 'positions' | 'preview' | 'details';
+  onCopied?: () => void;
   children?: ComponentChildren;
 }
 
@@ -24,12 +25,14 @@ export function CopyLinkButton({
   ariaLabel,
   buttonClass,
   dataHook,
+  onCopied,
   children,
 }: CopyLinkButtonProps) {
   async function copy() {
     try {
       await navigator.clipboard.writeText(url);
       onStateChange('copied');
+      onCopied?.();
     } catch {
       onStateChange('manual');
     }
@@ -44,6 +47,9 @@ export function CopyLinkButton({
           onClick={copy}
           data-share-link={dataHook === 'share' ? true : undefined}
           data-invite-link={dataHook === 'invite' ? true : undefined}
+          data-positions-link={dataHook === 'positions' ? true : undefined}
+          data-preview-link={dataHook === 'preview' ? true : undefined}
+          data-details-link={dataHook === 'details' ? true : undefined}
         >
           <span>{state === 'copied' ? copiedLabel : idleLabel}</span>
           <span class="orb">{state === 'copied' ? '✓' : '⧉'}</span>

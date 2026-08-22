@@ -1,16 +1,15 @@
 {
   "version": 1,
-  "id": "growth-activation-b-front-door-2026-08-22",
-  "baseCommit": "fa030b5610771a1d8557826deb00e9f5780a0bda",
-  "note": "Owner-authorized Packet B for GROWTH-2026-08-19-full-marketing-audit: update the existing locale catalogs and their contract tests with the calculator's inline birthplace-selection guidance. No locale routes, sign-guide content, or Registry surfaces change.",
+  "id": "growth-activation-d-share-loop-2026-08-22",
+  "baseCommit": "bc03691edbc506100a61784de95b68c3227462b3",
+  "note": "Owner-authorized Packet D for GROWTH-2026-08-19-full-marketing-audit: keep inbound chart-share receivers Registry-sterile across the existing localized birth-chart routes and add the already-requested localized share labels. No sign-guide, Registry product, or unrelated locale behavior changes.",
   "protectedPaths": [
-    "src/lib/i18n/index.test.ts",
-    "src/lib/i18n/ui/en.ts",
-    "src/lib/i18n/ui/es.ts",
-    "src/lib/i18n/ui/fr.ts",
-    "src/lib/i18n/ui/it.ts",
-    "src/lib/i18n/ui/pt.ts",
-    "src/lib/i18n/ui/ru.test.ts",
-    "src/lib/i18n/ui/ru.ts"
+    "src/pages/es/birth-chart/index.astro",
+    "src/pages/fr/birth-chart/index.astro",
+    "src/pages/it/birth-chart/index.astro",
+    "src/pages/pt/birth-chart/index.astro",
+    "src/strings/additions.fr.mjs",
+    "src/strings/additions.it.mjs",
+    "src/strings/additions.pt.mjs"
   ]
 }

@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { render } from 'preact-render-to-string';
 import { describe, expect, it } from 'vitest';
 import { computeChart } from '../lib/engine/full';
-import { ChartShareDialog } from './PositionsShareSurface';
+import ChartShareDialog from './ChartShareDialog';
 
 const chart = computeChart({
   utc: new Date('1990-06-15T12:30:00.000Z'),
@@ -13,7 +13,7 @@ const chart = computeChart({
 });
 
 describe('ChartShareDialog', () => {
-  it('offers privacy-safe Big Three and full-chart images when the chart has a rising sign', () => {
+  it('makes the chart sheet primary and wires the English signature variant', () => {
     const markup = render(h(ChartShareDialog, {
       chart,
       locale: 'en',
@@ -22,32 +22,52 @@ describe('ChartShareDialog', () => {
       onClose: () => {},
     }));
 
-    expect(markup).toContain('data-share-mode="chart-and-big-three"');
-    expect(markup.match(/data-share-card-action="full"/g)).toHaveLength(1);
-    expect(markup.match(/data-share-card-action="big-three"/g)).toHaveLength(1);
-    expect(markup).toContain('data-share-primary="full"');
-    expect(markup).toContain('Share the big three');
-    expect(markup).toContain('Share the full chart');
-    expect(markup).toContain('Preparing image…');
+    expect(markup).toContain('data-share-mode="full"');
+    expect(markup.match(/data-share-card-action="sheet"/g)).toHaveLength(1);
+    expect(markup.match(/data-share-card-action="signature"/g)).toHaveLength(1);
+    expect(markup).toContain('data-share-primary="sheet"');
+    expect(markup).toContain('Share chart sheet');
+    expect(markup).toContain('Share my chart signature');
+    expect(markup).toContain('Hide birth details');
     expect(markup).toContain('not a name, birth date, time, place, coordinates, or chart link');
-    expect(markup).not.toContain('data-share-signature');
-    expect(markup).not.toContain('data-share-card-action="signature"');
-    expect(markup).not.toContain('Copy positions-only link');
-    expect(markup).not.toMatch(/1990-06-15|12:30|40\\.7128|74\\.006|@|#i=|#s=/);
+    expect(markup).not.toMatch(/1990-06-15|12:30|40\.7128|74\.006|@|#i=|#s=/);
   });
 
-  it('keeps the honest full-chart-only choice when a rising sign is unavailable', () => {
+  it('offers a one-placement Moon card without fabricating a rising sign', () => {
     const markup = render(h(ChartShareDialog, {
       chart: { ...chart, angles: null, houses: null },
       locale: 'en',
+      mode: 'moon',
       card: 'idle',
       onCardStateChange: () => {},
       onClose: () => {},
     }));
 
-    expect(markup).toContain('data-share-mode="full"');
-    expect(markup.match(/data-share-card-action="full"/g)).toHaveLength(1);
-    expect(markup).not.toContain('data-share-card-action="big-three"');
+    expect(markup).toContain('data-share-mode="moon"');
+    expect(markup.match(/data-share-card-action="placement"/g)).toHaveLength(1);
+    expect(markup).toContain('data-share-primary="placement"');
+    expect(markup).toContain('data-share-placement-preview');
+    expect(markup).toContain('Moon sign card');
+    expect(markup).toContain('Share my Moon sign');
+    expect(markup).not.toContain('Share chart sheet');
+    expect(markup).not.toContain('Share the big three');
+    expect(markup).not.toContain('data-share-card-action="signature"');
+  });
+
+  it('uses placement-specific copy and preview for a Rising card', () => {
+    const markup = render(h(ChartShareDialog, {
+      chart,
+      locale: 'en',
+      mode: 'rising',
+      card: 'idle',
+      onCardStateChange: () => {},
+      onClose: () => {},
+    }));
+
+    expect(markup).toContain('Rising sign card');
+    expect(markup).toContain('Share my Rising sign');
+    expect(markup).toContain('data-share-placement-preview');
+    expect(markup).not.toContain('Share chart sheet');
     expect(markup).not.toContain('Share the big three');
   });
 });

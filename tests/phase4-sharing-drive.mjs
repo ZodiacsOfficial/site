@@ -599,20 +599,25 @@ async function runChartShareExposure(browser, baseURL) {
   });
   const more = page.locator('[data-chart-more]');
   if (!(await more.getAttribute('open'))) await more.locator('summary').click();
-  await page.locator('[data-share-card]').click();
+  await more.locator('[data-share-options]').click();
   const dialog = page.locator('[data-share-dialog]');
   await dialog.waitFor({ state: 'visible', timeout: 45_000 });
-  check('chart share sheet exposes Big Three and full-chart images together',
-    await dialog.getAttribute('data-share-mode') === 'chart-and-big-three'
-      && await dialog.locator('[data-share-card-action="big-three"]').count() === 1
-      && await dialog.locator('[data-share-card-action="full"]').count() === 1);
+  check('chart share dialog exposes the chart sheet and signature image together',
+    await dialog.getAttribute('data-share-mode') === 'full'
+      && await dialog.locator('[data-share-card-action="sheet"]').count() === 1
+      && await dialog.locator('[data-share-card-action="signature"]').count() === 1);
   await page.waitForFunction(() => {
-    const bigThree = document.querySelector('[data-share-card-action="big-three"]');
-    const full = document.querySelector('[data-share-card-action="full"]');
-    return bigThree instanceof HTMLButtonElement && !bigThree.disabled
-      && full instanceof HTMLButtonElement && !full.disabled;
+    const sheet = document.querySelector('[data-share-card-action="sheet"]');
+    const signature = document.querySelector('[data-share-card-action="signature"]');
+    return sheet instanceof HTMLButtonElement && !sheet.disabled
+      && signature instanceof HTMLButtonElement && !signature.disabled;
   }, null, { timeout: 45_000 });
   check('both chart images are prepared before the final user tap', true);
+  check('the dialog keeps the private positions link primary and labels the details link',
+    await dialog.locator('[data-positions-link].btn--primary').count() === 1
+      && await dialog.locator('[data-preview-link]').count() === 1
+      && await dialog.locator('[data-details-link]').count() === 1
+      && /includes your birth details/iu.test(await dialog.textContent() ?? ''));
   check('chart share sheet never displays fixture birth details',
     !/(1990-06-15|08:30|New York|America\/New_York|40\.7128|74\.006)/u.test(
       await dialog.textContent() ?? '',

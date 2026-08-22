@@ -6,27 +6,27 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-08-20T11:22:59.164Z",
+  "capturedAt": "2026-08-20T14:26:19.008Z",
   "browser": "Chromium 149.0.7827.55",
   "dailyDate": "2026-08-20",
   "publicationCanonicalSha256": "2851e728db7d409245edade355215c0cf77a9330527f49858c963c87a0a5eaae",
-  "templateSourceSha256": "2a86376371f722b1ba196f814dfef10bc97161af811507f4f57da97ffa555628",
+  "templateSourceSha256": "07685ca246e7c8e395c4cd24d453a8e06e3d3172beeb0b183c0f1cbe23076818",
   "renderPayloadSha256": {
     "daily": "31332e52297218be101ce89b7926e101562d40f58683f7ef199d2491f27739a2",
     "dailyPublication": "696c5054255fc26bc8501463cb58f8ad72e38c5db31a1e0f70b79ce577ea7fb8",
-    "dailyPublicationManifest": "90ecc729534ea3861f7230c4f4fcbf941d24ca866337f751afd99b4c3eccac7e",
+    "dailyPublicationManifest": "ed14e1009ef33d5bb27549fa467d0e0ec012ee85c5994547cda0a1b030293092",
     "horoscopeProgram": "95a4d88b1c0c444b224bb84ace5715b2fea1aa3d4cd8a0d677c534e0792f91ee"
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-08-20T11:22:24.726Z",
-    "templateSourceSha256": "2a86376371f722b1ba196f814dfef10bc97161af811507f4f57da97ffa555628",
+    "builtAt": "2026-08-20T14:24:53.223Z",
+    "templateSourceSha256": "07685ca246e7c8e395c4cd24d453a8e06e3d3172beeb0b183c0f1cbe23076818",
     "dailyDate": "2026-08-20",
     "publicationCanonicalSha256": "2851e728db7d409245edade355215c0cf77a9330527f49858c963c87a0a5eaae",
     "renderPayloadSha256": {
       "daily": "31332e52297218be101ce89b7926e101562d40f58683f7ef199d2491f27739a2",
       "dailyPublication": "696c5054255fc26bc8501463cb58f8ad72e38c5db31a1e0f70b79ce577ea7fb8",
-      "dailyPublicationManifest": "90ecc729534ea3861f7230c4f4fcbf941d24ca866337f751afd99b4c3eccac7e",
+      "dailyPublicationManifest": "ed14e1009ef33d5bb27549fa467d0e0ec012ee85c5994547cda0a1b030293092",
       "horoscopeProgram": "95a4d88b1c0c444b224bb84ace5715b2fea1aa3d4cd8a0d677c534e0792f91ee"
     }
   },
@@ -353,13 +353,13 @@
       "screenshot": {
         "file": "love-360.png",
         "width": 360,
-        "height": 3397,
-        "sha256": "bb3d99e59e1c984be2cb1ce0941bbbd910267305fc911b332cd6145793e1b375"
+        "height": 3368,
+        "sha256": "16537ac272564e9dd9aa3cb363652326ab4e4122868ae84d9caf79946320bf01"
       },
       "layout": {
         "clientWidth": 360,
         "scrollWidth": 360,
-        "scrollHeight": 3397,
+        "scrollHeight": 3368,
         "contentLength": 2128,
         "overlay": false,
         "guideLauncher": true,
