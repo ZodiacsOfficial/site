@@ -544,9 +544,9 @@ try {
     assert.doesNotMatch(staticStoryStyle.filter, /grayscale/u);
     assert.ok(staticStoryStyle.pictureBottom <= staticStoryStyle.copyTop + 1, 'the no-JavaScript thesis image sits above its copy');
     assert.equal(staticStoryStyle.buttonRadius, '0px');
-    await assertStaticFirstScreen(noJsPage, { width: 390, height: 844 });
+    await assertStaticFirstScreen(noJsPage, { width: 390, height: 844, slug: 'leo' });
     await assertPastelSelectorGeometry(noJsPage, { width: 390, height: 844, staticView: true });
-    const staticStageBefore = await noJsPage.locator('[data-static-sign="aries"] .static-vitrine__stage').boundingBox();
+    const staticStageBefore = await noJsPage.locator('[data-static-sign="leo"] .static-vitrine__stage').boundingBox();
     await noJsPage.locator('#astrofolio-leo').focus();
     for (let index = 0; index < 7; index += 1) await noJsPage.keyboard.press('ArrowRight');
     assert.equal(await noJsPage.locator('#astrofolio-pisces').isChecked(), true);
@@ -586,7 +586,7 @@ try {
       await assertPastelSelectorGeometry(noJsPage, { ...viewport, staticView: true });
     }
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
-    await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900 });
+    await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900, slug: 'leo' });
     if (OUT) await noJsPage.screenshot({ path: `${OUT}/astrofolio-no-js-1440x900.png`, fullPage: false });
     await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#pro-static-title').innerText(), 'Terminal');
@@ -625,9 +625,9 @@ try {
     const thesisFlow = await collectionPage.locator('.consumer-thesis').evaluate((node) => {
       const visual = node.querySelector('.consumer-thesis__visual')?.getBoundingClientRect();
       const essay = node.querySelector('.consumer-purpose__essay')?.getBoundingClientRect();
-      return { visualBottom: visual?.bottom, essayTop: essay?.top };
+      return { visualRight: visual?.right, essayLeft: essay?.left };
     });
-    assert.ok(thesisFlow.visualBottom <= thesisFlow.essayTop + 1, 'the thesis clock is contained above its copy');
+    assert.ok(thesisFlow.visualRight <= thesisFlow.essayLeft + 1, 'the thesis clock is contained beside its copy');
     const storyOrder = await collectionPage.locator('#what-is-astrofolio, #thesis, #shop, #cabinet, #registry, #faq').evaluateAll((nodes) => (
       nodes.map((node) => node.id)
     ));
