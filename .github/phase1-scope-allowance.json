@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "growth-activation-b-front-door-2026-08-19",
-  "baseCommit": "492364b5102952b1017b6fb8f72277fd7dcd295d",
+  "id": "growth-activation-b-front-door-2026-08-22",
+  "baseCommit": "fa030b5610771a1d8557826deb00e9f5780a0bda",
   "note": "Owner-authorized Packet B for GROWTH-2026-08-19-full-marketing-audit: update the existing locale catalogs and their contract tests with the calculator's inline birthplace-selection guidance. No locale routes, sign-guide content, or Registry surfaces change.",
   "protectedPaths": [
     "src/lib/i18n/index.test.ts",
