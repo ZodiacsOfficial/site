@@ -11,6 +11,7 @@ import {
   savePreparedChartCard,
   type PreparedChartCard,
 } from '../lib/share-card';
+import { ensurePastelZodiacIconEmbedding } from '../lib/share-card-pastel-icons';
 import { shareCardText } from '../lib/share-card-copy';
 import { signForLongitude, signName } from '../lib/signs';
 import Wheel from '../lib/wheel/Wheel';
@@ -46,7 +47,7 @@ const LINK_COPY = {
   es: { copied: 'Enlace copiado', preview: 'Copiar enlace con vista previa', details: 'Copiar enlace con datos de nacimiento', detailsNote: 'Incluye tus datos de nacimiento.', previewNote: 'El enlace privado mantiene las posiciones en tu navegador; el enlace con vista previa envía posiciones, nunca datos de nacimiento, al servicio de vista previa.', sheet: 'Compartir hoja de la carta' },
   pt: { copied: 'Link copiado', preview: 'Copiar link com prévia', details: 'Copiar link com dados de nascimento', detailsNote: 'Inclui seus dados de nascimento.', previewNote: 'O link privado mantém as posições no navegador; o link com prévia envia posições, nunca dados de nascimento, ao serviço de prévia.', sheet: 'Compartilhar folha do mapa' },
   fr: { copied: 'Lien copié', preview: 'Copier le lien avec aperçu', details: 'Copier le lien avec données de naissance', detailsNote: 'Inclut tes données de naissance.', previewNote: 'Le lien privé garde les positions dans ton navigateur ; le lien avec aperçu envoie les positions, jamais les données de naissance, au service d’aperçu.', sheet: 'Partager la feuille du thème' },
-  it: { copied: 'Link copiato', preview: 'Copia il link con anteprima', details: 'Copia il link con dati di nascita', detailsNote: 'Include i tuoi dati di nascita.', previewNote: 'Il link privato mantiene le posizioni nel browser; il link con anteprima invia le posizioni, mai i dati di nascita, al servizio di anteprima.', sheet: 'Condividi il foglio del tema' },
+  it: { copied: 'Link copiato', preview: 'Copia il link con anteprima', details: 'Copia il link con dati di nascita', detailsNote: 'Include i tuoi dati di nascita.', previewNote: 'Il link privato mantiene le posizioni nel browser; il link con anteprima invia posizioni, mai dati di nascita, al servizio di anteprima.', sheet: 'Condividi il foglio del tema' },
   ru: { copied: 'Ссылка скопирована', preview: 'Скопировать ссылку с превью', details: 'Скопировать ссылку с данными рождения', detailsNote: 'Включает ваши данные рождения.', previewNote: 'Приватная ссылка хранит положения в браузере; ссылка с превью отправляет сервису превью положения, но не данные рождения.', sheet: 'Поделиться листом карты' },
 } as const;
 
@@ -135,9 +136,12 @@ export default function ChartShareDialog({
 
   async function buildChoice(choice: Choice, hidden: boolean): Promise<PreparedChartCard> {
     const timeOptions = { referenceTime: !chart.input.timeKnown, moonAmbiguous };
-    if (choice === 'sheet') return prepareChartSheet(chart, {
-      locale, hideBirthDetails: hidden, birthReceipt, moonAmbiguous,
-    });
+    if (choice === 'sheet') {
+      await ensurePastelZodiacIconEmbedding();
+      return prepareChartSheet(chart, {
+        locale, hideBirthDetails: hidden, birthReceipt, moonAmbiguous,
+      });
+    }
     if (choice === 'placement') {
       return preparePlacementCard(chart, mode === 'rising' ? 'rising' : 'moon', locale, timeOptions);
     }
