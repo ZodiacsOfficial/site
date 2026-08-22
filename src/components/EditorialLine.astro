@@ -10,12 +10,11 @@ import { localizePath, t, type Locale } from '../lib/i18n';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
-const editorPath = locale === 'ru' ? '/ru/disclosure/' : EDITOR_PATH;
 ---
 <aside class="editorial-line container container--narrow">
   <span>
     {t(locale, 'editedBy')}{' '}
-    <a href={editorPath}>Zodiacs.org</a>
+    <a href={EDITOR_PATH}>Zodiacs.org</a>
     <span aria-hidden="true"> · </span>
     <a href={localizePath(locale, '/methodology/')}>{t(locale, 'editorialHow')}</a>
   </span>

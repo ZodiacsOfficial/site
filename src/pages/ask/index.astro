@@ -13,7 +13,7 @@ import Faq from '../../components/Faq.astro';
 const faq = [
   {
     q: 'Where do the answers come from?',
-    a: 'Guide uses a curated reference built from Zodiacs.org pages — the calculators, sign guides, Learn, calendars, Registry, Terminal, and published Astrofolio facts. When the site does not cover an exact product claim, Guide says it cannot verify it instead of improvising.',
+    a: 'Guide uses a curated reference built from Zodiacs.org calculators, sign guides, Learn pages, calendars, and horoscopes. When the site does not cover an exact claim, Guide says it cannot verify it instead of improvising.',
   },
   {
     q: 'Are the answers generated?',
@@ -29,7 +29,7 @@ const faq = [
   },
   {
     q: 'What will it not do?',
-    a: 'No medical, mental-health, legal, financial, investment, buy, sell, valuation, or market-timing advice. No predictions of specific events or dates. No claims about another person’s private thoughts or future behavior. Guide uses practical language and preserves your agency.',
+    a: 'No medical, mental-health, legal, or financial advice. No predictions of specific events or dates. No claims about another person’s private thoughts or future behavior. Guide uses practical language and preserves your agency.',
   },
 ];
 
@@ -39,7 +39,7 @@ const jsonLd = [
     '@id': 'https://zodiacs.org/ask/#page',
     url: 'https://zodiacs.org/ask/',
     name: 'Guide — astrology and birth-chart help from Zodiacs.org',
-    description: 'Ask Guide about birth charts, astrology, Zodiacs.org, or published Astrofolio facts. Signed-out conversations stay in the browser session.',
+    description: 'Ask Guide about birth charts, astrology, or Zodiacs.org tools and guides. Signed-out conversations stay in the browser session.',
     isPartOf: { '@id': 'https://zodiacs.org/#site' },
   },
   {
@@ -61,7 +61,7 @@ const jsonLd = [
 ---
 <Base
   title="Guide — astrology and birth-chart help from Zodiacs.org"
-  description="Ask Guide about birth charts, astrology, Zodiacs.org, or published Astrofolio facts. Signed-out conversations stay in the browser session."
+  description="Ask Guide about birth charts, astrology, or Zodiacs.org tools and guides. Signed-out conversations stay in the browser session."
   path="/ask/"
   image="/assets/og/v2/tool/ask.png"
   imageAlt="Guide — astrology and birth-chart help from Zodiacs.org"
@@ -74,8 +74,8 @@ const jsonLd = [
       <h1 class="display">Astrology help, right when you need it.</h1>
       <p class="ask__lede">
         Ask how a tool works, what a placement means, what your own saved chart
-        is doing, or what Zodiacs.org publishes about Astrofolio. Guide answers
-        in practical, plain language and points you toward the relevant pages.
+        is doing, or where to read more. Guide answers in practical, plain
+        language and points you toward the relevant pages.
       </p>
       <div class="ask__cta">
         <button type="button" class="btn btn--primary" data-assistant-open>
@@ -118,7 +118,7 @@ const jsonLd = [
       <div class="core tinted ask__contract-core">
         <h2>The contract, plainly</h2>
         <ul>
-          <li><strong>Grounded.</strong> Exact site, Registry, Terminal, and Astrofolio claims come from a curated Zodiacs.org reference. When it cannot verify a product fact, Guide says so.</li>
+          <li><strong>Grounded.</strong> Site and astrology claims come from a curated Zodiacs.org reference. When it cannot verify a fact, Guide says so.</li>
           <li><strong>Generated.</strong> Replies are produced on the spot and can be wrong. Astrology here is symbolic, not deterministic.</li>
           <li><strong>Private.</strong> Signed-out conversations stay in this browser session and are not stored by Zodiacs.org. A chart is attached only after you confirm a preview of the exact placement text.</li>
           <li><strong>Bounded.</strong> No medical, legal, or financial advice; no event predictions; no third-party readings. Fair-use limits keep it available: a short per-minute pace and thirty questions a day.</li>

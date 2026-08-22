@@ -35,7 +35,7 @@ export const SHARE_POSITIONS_EN = {
     positionsShareNote: 'The link omits your birth date, time, and place; the card replaces that receipt with the engine version. Planetary positions can still be identifying; this is not anonymous.',
     positionsOnlyTitle: 'Shared chart positions',
     positionsOnlyNotice: 'Positions only — birth details not included.',
-    positionsOnlyPrivacy: 'This token omits the birth date, time, and place. Planetary positions can still be identifying; it is not anonymous.',
+    positionsOnlyPrivacy: 'This link omits the birth date, time, and place. Planetary positions can still be identifying; it is not anonymous.',
     positionsLinkInvalid: 'That positions-only link is invalid or incomplete.',
     shareLinkAmbiguous: 'This link contains two chart formats, so neither one was opened.',
     positionsShareUnavailable: "Couldn't create a positions-only link for this chart.",

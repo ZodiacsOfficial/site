@@ -3,12 +3,12 @@ import { GUIDE_KNOWLEDGE_VERSION } from './catalog';
 import { resolveGuidePageKnowledge, selectGuideKnowledge } from './retriever';
 
 describe('Guide public knowledge', () => {
-  it('selects bounded Astrofolio facts without conflating the account', () => {
-    const result = selectGuideKnowledge('Is Astrofolio where my account and chart are stored?');
+  it('keeps product-wing questions inside the consumer astrology catalog', () => {
+    const result = selectGuideKnowledge('Should I buy a Zodiac token at this price?');
     expect(result.version).toBe(GUIDE_KNOWLEDGE_VERSION);
-    expect(result.entries[0]?.id).toBe('astrofolio');
-    expect(result.entries.map(({ facts }) => facts).join(' ')).toContain('never the name of a Zodiacs account');
-    expect(result.allowedPaths).toContain('/sdk/#astrofolio');
+    expect(result.entries[0]?.id).toBe('astrology-method');
+    expect(result.allowedPaths).toEqual(['/methodology/']);
+    expect(result.entries.map(({ canonicalPath }) => canonicalPath)).not.toContain('/terminal/');
     expect(result.entries.length).toBeLessThanOrEqual(4);
   });
 
@@ -47,9 +47,9 @@ describe('Guide public knowledge', () => {
     expect(result.entries[0]?.id).toBe('astrology-method');
   });
 
-  it('keeps market help factual and explicitly non-advisory', () => {
-    const result = selectGuideKnowledge('Should I buy a Zodiac token at this price?');
-    const facts = result.entries.map((entry) => entry.facts).join(' ');
-    expect(facts).toContain('must not recommend buying, selling, timing, valuation, or a trade');
+  it('contains only consumer astrology and account destinations', () => {
+    const result = selectGuideKnowledge('How do I save my birth chart?');
+    expect(result.entries.some(({ id }) => id === 'account')).toBe(true);
+    expect(result.allowedPaths.every((path) => !/^\/(?:astrofolio|registry|terminal|sdk|disclosure)\//u.test(path))).toBe(true);
   });
 });

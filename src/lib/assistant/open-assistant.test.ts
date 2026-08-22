@@ -240,7 +240,7 @@ describe('Guide response links', () => {
     const moonPath = GUIDE_KNOWLEDGE_ENTRIES.find(({ id }) => id === 'moon-sign')?.canonicalPath;
     expect(moonPath).toBe('/moon-sign/');
     expect(allowlist).toContain(`'${moonPath}'`);
-    expect(allowlist).toContain("'/sdk/#astrofolio'");
+    expect(allowlist).not.toMatch(/\/(?:astrofolio|registry|terminal|sdk|disclosure)\//u);
     expect(allowlist).not.toContain("'/private/'");
     expect(renderer).toContain('GUIDE_LINK_PATHS.has(`${url.pathname}${url.hash}`)');
     expect(renderer).toContain("url.search === ''");

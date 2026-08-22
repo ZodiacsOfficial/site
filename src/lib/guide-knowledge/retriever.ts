@@ -8,6 +8,7 @@ const encoder = new TextEncoder();
 const MAX_RESULTS = 4;
 const MAX_FACT_BYTES = 16 * 1024;
 const TOKEN = /[\p{L}\p{N}]+/gu;
+const NON_CONSUMER_TOPIC = /\b(?:astrofolio|crypto(?:currency)?|markets?|prices?|registry|tokens?|trading|wallets?)\b/iu;
 
 export interface GuideKnowledgeSelection {
   version: typeof GUIDE_KNOWLEDGE_VERSION;
@@ -50,6 +51,14 @@ export function selectGuideKnowledge(
 ): GuideKnowledgeSelection {
   const pageId = pageSourceId?.startsWith('page:') ? pageSourceId.slice(5) : null;
   const normalizedQuery = query.toLocaleLowerCase('en-US');
+  if (NON_CONSUMER_TOPIC.test(normalizedQuery)) {
+    const entry = GUIDE_KNOWLEDGE_ENTRIES.find(({ id }) => id === 'astrology-method')!;
+    return {
+      version: GUIDE_KNOWLEDGE_VERSION,
+      entries: [entry],
+      allowedPaths: [entry.canonicalPath],
+    };
+  }
   const queryTerms = terms(normalizedQuery);
   const ranked = GUIDE_KNOWLEDGE_ENTRIES
     .map((entry, index) => ({
