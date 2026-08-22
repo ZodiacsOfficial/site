@@ -2,7 +2,7 @@
  * Public, server-curated facts for Guide. This catalog contains no user data
  * and is deliberately separate from visible/private conversation sources.
  */
-export const GUIDE_KNOWLEDGE_VERSION = 'guide-public-knowledge-2026-08-14.1' as const;
+export const GUIDE_KNOWLEDGE_VERSION = 'guide-public-knowledge-2026-08-20.1' as const;
 
 export interface GuideKnowledgeEntry {
   id: string;
@@ -74,41 +74,6 @@ export const GUIDE_KNOWLEDGE_ENTRIES: readonly GuideKnowledgeEntry[] = Object.fr
     title: 'Optional Zodiacs account',
     canonicalPath: '/profile/',
     topics: ['account', 'profile', 'sync', 'save', 'saved chart', 'privacy', 'export', 'delete'],
-    facts: 'The core site works without an account. Charts start on the device. An optional Zodiacs account may sync only charts the user explicitly selects. The account is called a Zodiacs account, never an Astrofolio account. Account access and Guide generation entitlement are separate.',
-  },
-  {
-    id: 'registry',
-    title: 'Zodiacs Registry',
-    canonicalPath: '/registry/',
-    topics: ['registry', 'official', 'address', 'mint', 'token', 'verify', 'record'],
-    facts: 'The Zodiacs Registry is the read-only verification source for the twelve official Zodiac asset records. Guide may explain a published record but must not infer ownership, endorsement, value, or investment merit from Registry status.',
-  },
-  {
-    id: 'terminal',
-    title: 'Zodiac Terminal',
-    canonicalPath: '/terminal/',
-    topics: ['terminal', 'market', 'price', 'volume', 'liquidity', 'research'],
-    facts: 'Zodiac Terminal is Zodiacs.org’s market-and-research interface for the twelve Registry assets. Market facts are time-sensitive and must be labeled with their displayed timestamp. Guide may summarize published facts but must not recommend buying, selling, timing, valuation, or a trade.',
-  },
-  {
-    id: 'astrofolio',
-    title: 'Astrofolio',
-    canonicalPath: '/sdk/#astrofolio',
-    topics: ['astrofolio', 'shelf', 'collection', 'zodiac asset', 'consumer experience'],
-    facts: 'Astrofolio is a related but separate consumer experience. Zodiacs.org remains the astrology reference and official Registry and SDK source. The operator of Zodiacs.org states that they do not control astrofolio.xyz, its official channels, token deployment or administrative authorities, treasury, liquidity, or market activity. Astrofolio is never the name of a Zodiacs account or saved chart.',
-  },
-  {
-    id: 'sdk',
-    title: 'Zodiacs SDK',
-    canonicalPath: '/sdk/',
-    topics: ['sdk', 'developer', 'api', 'build', 'integration', 'astrofolio'],
-    facts: 'The public Zodiacs SDK documentation covers astrology calculations and Registry integrations. Its Astrofolio section describes the relationship to that separate product; it does not turn Astrofolio into the Zodiacs account or identity system.',
-  },
-  {
-    id: 'disclosure',
-    title: 'Ownership and market disclosure',
-    canonicalPath: '/disclosure/',
-    topics: ['disclosure', 'ownership', 'operator', 'conflict', 'compensation', 'astrofolio'],
-    facts: 'The dated Zodiacs.org disclosure is the source of truth for operator control, holdings, compensation, and the separation from Astrofolio. Guide should link to it for those questions and describe statements as the operator’s attestation rather than independent verification.',
+    facts: 'The core site works without an account. Charts start on the device. An optional Zodiacs account may sync only charts the user explicitly selects. Account access and Guide generation entitlement are separate.',
   },
 ]);

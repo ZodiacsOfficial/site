@@ -2,7 +2,7 @@
 export const ASSISTANT_CONTEXT = `SITE CONTEXT — ZODIACS.ORG
 
 Zodiacs.org is a free astrology reference. Chart calculations run in the visitor’s browser. Positions are computed astronomy; meanings are interpretation.
-Chart calculation does not send birth fields to a chart API. Saved charts are local-first; optional account sync uploads only the charts a person chooses, including their birth details, to that person’s account. The AI assistant sends chat messages to Anthropic and sends a placements-only chart summary only after the person explicitly chooses “Attach my chart”; it does not automatically attach the saved name, birth date, time, place, or coordinates.
+Chart calculation does not send birth fields to a chart API. Saved charts are local-first; optional account sync uploads only the charts a person chooses, including their birth details, to that person’s account. The public Guide sends chat messages to OpenAI and sends a placements-only chart summary only after the person explicitly chooses “Attach my chart”; it does not automatically attach the saved name, birth date, time, place, or coordinates.
 Historical civil time uses the IANA/ICU history supplied by the visitor’s browser or device runtime, so historical coverage and tzdb version depend on that host. When birth time is unknown, the site uses 12:00 local civil time as a reference for body positions, omits the rising sign, angles, and houses, and flags uncertainty if the Moon changes signs during that local date.
 The site has English pages and partial Spanish translations. The inventory below lists English routes once; do not invent an English or Spanish page that is not listed.
 
@@ -16,18 +16,12 @@ Use these labels from docs/STRATEGY.md §4 when they fit:
 - Find your moon sign
 - Find your rising sign
 - Read your sign
-- Astrofolio
-- the Twelve
-- {sign} also exists as one of the Twelve — a canonical record in the Registry
-- View the record →
 - Nothing saved yet. Charts you save will live here, on your device first.
 - Choose your sign and find its official identity through one calm collection view.
-- “the Twelve” means the twelve signs as canonical records in the registry.
-- The records bridge is: “{sign} also exists as one of the Twelve — a canonical record in the registry” → “View the record →”.
 
 TOOLS AND UTILITIES
 These lines use each live page’s meta description to state what it computes or provides:
-- /ask/ — Ask Guide about birth charts, astrology, Zodiacs.org, or published Astrofolio facts. Signed-out conversations stay in the browser session.
+- /ask/ — Ask Guide about birth charts, astrology, or Zodiacs.org tools and guides. Signed-out conversations stay in the browser session.
 - /baby-zodiac/ — Enter a due date: the near-certain sun sign (cusp caveats computed, not guessed), the week's possible moon signs, and what has to wait for the birth minute. Free.
 - /birth-chart/ — Calculate your free birth chart: sun, moon, rising, planets, houses, and what they mean — private in your browser and explained in plain language.
 - /birthday/ — Choose your birthday for a date-specific reading of character, relationships, work, and growth, with an exact Sun-sign answer when the birth year matters.
@@ -62,7 +56,6 @@ PAGE INVENTORY — EVERGREEN PAGES AND HUBS
 - /birth-chart/someone-else/ — Open someone else’s astrology chart with…
 - /birth-chart/three-dimensions/ — What the flat chart wheel leaves out.
 - /corrections/ — Material corrections to astronomical…
-- /disclosure/ — Plain-language operator…
 - /events/ — Every notable sky event of 2026 and 2027…
 - /feeds/ — Follow daily horoscopes, the current sky…
 - /games/history/ — Every season of the Zodiac Games crowns…
@@ -80,8 +73,7 @@ PAGE INVENTORY — EVERGREEN PAGES AND HUBS
 - /methodology/ — How zodiacs.org computes a chart.
 - /privacy/ — How zodiacs.org handles birth charts…
 - /race/ — Twelve signs.
-- /terminal/research/ — Verified sky facts, traditional symbolic…
-- /terms/ — Terms for the zodiacs.org astrology…
+- /terms/ — Terms for using zodiacs.org astrology…
 - /today/ — Sky details, limitations, and editorial…
 - /tools/ — Free astrology tools, no signup.
 
@@ -740,15 +732,6 @@ Every route below is a live date guide. Each one-line description names the sign
 - /birthday/september-7/ — Virgo birthday guide.
 - /birthday/september-8/ — Virgo birthday guide.
 - /birthday/september-9/ — Virgo birthday guide.
-
-ASTROFOLIO, TERMINAL, AND REGISTRY
-Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.
-- /astrofolio/: Astrofolio is the consumer collection for choosing a sign, seeing its official token, checking its Registry record, and following a simple guide to buying it.
-- /terminal/: Terminal is the expert market desk for all twelve, ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart, market tape, briefing, season context, and research headlines.
-- /terminal/research/ — Research desk: reviewed sky facts, traditional readings, and separately timestamped public-activity observations.
-- /registry/ — Zodiacs Registry: the read-only verification hub for canonical identities, official addresses, records, datasets, and methodology.
-- /thesis/ — The Nº 09 essay: zodiac history and identity meet public digital ownership and Solana performance; supporting disclosures follow.
-- /sdk/ — Open tools for charts, icons, and the registry interface.
 
 GLOSSARY TERMS
 The definitions live at /learn/glossary/#slug. These are the names available there:

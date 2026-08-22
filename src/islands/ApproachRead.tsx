@@ -172,7 +172,14 @@ export default function ApproachRead({
           The Moon may have changed signs that day. An exact birth time could change the trust guidance.
         </p>
       )}
-      <p class="calc__approach-privacy">Birth details stay off the image.</p>
+      <footer class="calc__deep-read-footer">
+        <p class="calc__approach-privacy">Birth details stay off the image.</p>
+        {read.moon && (
+          <a href={`/learn/placements/moon-in-${read.moon.sign}/`}>
+            Read Moon in {signName(signBySlug(read.moon.sign), locale)} →
+          </a>
+        )}
+      </footer>
       {shareState === 'preparing' && <p class="sr-only" role="status">Preparing your approach card.</p>}
       {shareState === 'saved' && <p class="sr-only" role="status">Your approach card is ready.</p>}
       {shareState === 'error' && (

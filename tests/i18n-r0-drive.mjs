@@ -24,6 +24,7 @@ async function routeState(page) {
     width: document.documentElement.scrollWidth,
     viewport: innerWidth,
     canonical: document.querySelector('link[rel="canonical"]')?.href ?? null,
+    robots: document.querySelector('meta[name="robots"]')?.getAttribute('content') ?? null,
     alternates: Array.from(document.querySelectorAll('link[rel="alternate"][hreflang]'))
       .map((node) => [node.getAttribute('hreflang'), node.href]),
     selector: Array.from(document.querySelectorAll('.footer__languages .footer__language-option'))
@@ -65,7 +66,7 @@ await withPreview({ port: 4417 }, async (baseURL) => {
         }
       }
 
-      for (const route of ['/birthday/july-15/', '/learn/chinese-zodiac/dragon/']) {
+      for (const route of ['/learn/chinese-zodiac/dragon/']) {
         for (const locale of PROGRAMMATIC_LOCALES) {
           const path = localizedPath(locale.prefix, route);
           const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
@@ -82,6 +83,32 @@ await withPreview({ port: 4417 }, async (baseURL) => {
           check(state.selector.length === 5, `${path}: selector has ${state.selector.length} entries`);
           check(!state.russian && !state.arabic, `${path}: deferred locale leaked into programmatic output`);
         }
+      }
+
+      for (const locale of PROGRAMMATIC_LOCALES) {
+        const route = '/birthday/july-15/';
+        const path = localizedPath(locale.prefix, route);
+        const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
+        check(response?.status() === 200, `${path}@${viewport.width}: expected 200, got ${response?.status()}`);
+        const state = await routeState(page);
+        const localizedPreview = locale.code !== 'en';
+        check(state.lang === locale.lang, `${path}@${viewport.width}: lang ${state.lang}`);
+        check(state.dirAttribute === null, `${path}@${viewport.width}: LTR output gained dir=${state.dirAttribute}`);
+        check(state.width <= state.viewport + 1, `${path}@${viewport.width}: ${state.width}px overflow`);
+        check(state.canonical === `https://zodiacs.org${path}`, `${path}: canonical ${state.canonical}`);
+        check(
+          state.robots === (localizedPreview
+            ? 'noindex, follow, max-image-preview:large'
+            : 'max-image-preview:large'),
+          `${path}: robots ${state.robots}`,
+        );
+        check(
+          JSON.stringify(state.alternates.map(([lang]) => lang))
+            === JSON.stringify(localizedPreview ? [] : ['en', 'x-default']),
+          `${path}: hreflangs ${state.alternates.map(([lang]) => lang).join(',')}`,
+        );
+        check(state.selector.length === 5, `${path}: selector has ${state.selector.length} entries`);
+        check(!state.russian && !state.arabic, `${path}: deferred locale leaked into birthday output`);
       }
 
       for (const { path, selectorCount } of [

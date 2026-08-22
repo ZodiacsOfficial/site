@@ -46,6 +46,7 @@ export const TOOL_ROUTES = Object.freeze([
 ]);
 
 export const BANNED_CONSUMER_VOCABULARY = Object.freeze([
+  'astrofolio',
   'coin',
   'crypto',
   'cryptocurrency',
@@ -54,15 +55,14 @@ export const BANNED_CONSUMER_VOCABULARY = Object.freeze([
   'market',
   'mint',
   'price',
+  'registry',
   'sale',
   'token',
+  'terminal',
   'trade',
   'trading',
   'wallet',
 ]);
-
-const WING_INVENTORY_HEADING = 'ASTROFOLIO, TERMINAL, AND REGISTRY';
-const WING_INVENTORY_END_HEADING = 'GLOSSARY TERMS';
 
 const COLLAPSE = /\s+/g;
 // The assistant inventory is English-only. Exclude every declared locale,
@@ -71,13 +71,15 @@ const COLLAPSE = /\s+/g;
 const LOCALIZED_PAGE_PREFIXES = LOCALES
   .filter((locale) => locale !== DEFAULT_LOCALE)
   .map((locale) => `${locale}/`);
-// Reachable does not mean recommendable. Phase 5's reviewed pilot remains
-// deliberately absent from all discovery surfaces until its separate
-// indexing authorization; the assistant must honor that boundary too.
-// The Race stays unlisted while PUBLIC_ZODIAC_GAMES_ENABLED is off; the
-// launch packet that flips the flag also removes this entry so the guide
-// and the built site list the same routes.
-const UNLISTED_ROUTE_PREFIXES = Object.freeze(['/people/']);
+// Reachable does not mean recommendable. Keep the reviewed People pilot and
+// every Registry/Terminal route out of the consumer astrology catalog.
+const UNLISTED_ROUTE_PREFIXES = Object.freeze([
+  '/disclosure/',
+  '/feeds/market-research',
+  '/people/',
+  '/registry/',
+  '/terminal/',
+]);
 
 function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
@@ -229,9 +231,6 @@ async function loadStaticPages(repoRoot, context) {
     if (local === '404.astro') continue;
     const route = pagePath(file, pagesRoot);
     if (UNLISTED_ROUTE_PREFIXES.some((prefix) => route.startsWith(prefix))) continue;
-    // Registry-only, feature-flagged utility: keep it out of the consumer
-    // astrology assistant and its deliberately strict vocabulary boundary.
-    if (route.startsWith('/registry/')) continue;
     // Labeled sample pages for event-template review: never part of the
     // recommendable site inventory.
     if (route.startsWith('/events/preview/')) continue;
@@ -321,18 +320,6 @@ function bannedVocabulary(text) {
   ));
 }
 
-/**
- * The Astrofolio/Terminal/Registry inventory intentionally uses its own records
- * and market register. Remove that bounded section before enforcing the
- * consumer astrology vocabulary rule on the rest of the assistant guide.
- */
-export function consumerVocabularyScope(context) {
-  const start = context.indexOf(`\n${WING_INVENTORY_HEADING}\n`);
-  const end = context.indexOf(`\n${WING_INVENTORY_END_HEADING}\n`, start + 1);
-  if (start === -1 || end === -1) return context;
-  return `${context.slice(0, start)}${context.slice(end)}`;
-}
-
 export async function generateAssistantContext({ repoRoot = repo } = {}) {
   const contentRoot = resolve(repoRoot, 'src/content');
   const horoscopeData = await loadHoroscopes(resolve(contentRoot, 'horoscopes'));
@@ -369,7 +356,9 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
   const learnSource = await readFile(resolve(repoRoot, 'src/pages/learn/index.astro'), 'utf8');
   const topics = extractLearnTopics(learnSource);
   const strategy = await readFile(resolve(repoRoot, 'docs/STRATEGY.md'), 'utf8');
-  const labels = extractCanonicalLabels(strategy);
+  const labels = extractCanonicalLabels(strategy).filter((label) => (
+    !/\b(?:Astrofolio|Registry|Registro)\b|\bthe Twelve\b|\bView the record\b|\bgold sculpture\b/iu.test(label)
+  ));
   const labelLines = labels.map((label) => `- ${label}`).join('\n');
 
   const horoscopeLabel = monthLabel(horoscopeData.latestMonth);
@@ -406,15 +395,13 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     'SITE CONTEXT — ZODIACS.ORG',
     '',
     'Zodiacs.org is a free astrology reference. Chart calculations run in the visitor’s browser. Positions are computed astronomy; meanings are interpretation.',
-    'Chart calculation does not send birth fields to a chart API. Saved charts are local-first; optional account sync uploads only the charts a person chooses, including their birth details, to that person’s account. The AI assistant sends chat messages to Anthropic and sends a placements-only chart summary only after the person explicitly chooses “Attach my chart”; it does not automatically attach the saved name, birth date, time, place, or coordinates.',
+    'Chart calculation does not send birth fields to a chart API. Saved charts are local-first; optional account sync uploads only the charts a person chooses, including their birth details, to that person’s account. The public Guide sends chat messages to OpenAI and sends a placements-only chart summary only after the person explicitly chooses “Attach my chart”; it does not automatically attach the saved name, birth date, time, place, or coordinates.',
     'Historical civil time uses the IANA/ICU history supplied by the visitor’s browser or device runtime, so historical coverage and tzdb version depend on that host. When birth time is unknown, the site uses 12:00 local civil time as a reference for body positions, omits the rising sign, angles, and houses, and flags uncertainty if the Moon changes signs during that local date.',
     'The site has English pages and partial Spanish translations. The inventory below lists English routes once; do not invent an English or Spanish page that is not listed.',
     '',
     'CANONICAL LABELS',
     'Use these labels from docs/STRATEGY.md §4 when they fit:',
     labelLines,
-    '- “the Twelve” means the twelve signs as canonical records in the registry.',
-    '- The records bridge is: “{sign} also exists as one of the Twelve — a canonical record in the registry” → “View the record →”.',
     '',
     'TOOLS AND UTILITIES',
     'These lines use each live page’s meta description to state what it computes or provides:',
@@ -450,16 +437,7 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     `Every route below is a live date guide. Each one-line description names the sign or boundary signs from that page's meta description. The pages verify the Sun sign across 1940–2030, give degree spans and decans, and include year tables on sign-boundary dates.`,
     birthdayLines(birthdays, signNames),
     '',
-    WING_INVENTORY_HEADING,
-    'Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.',
-    '- /astrofolio/: Astrofolio is the consumer collection for choosing a sign, seeing its official token, checking its Registry record, and following a simple guide to buying it.',
-    '- /terminal/: Terminal is the expert market desk for all twelve, ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart, market tape, briefing, season context, and research headlines.',
-    '- /terminal/research/ — Research desk: reviewed sky facts, traditional readings, and separately timestamped public-activity observations.',
-    '- /registry/ — Zodiacs Registry: the read-only verification hub for canonical identities, official addresses, records, datasets, and methodology.',
-    '- /thesis/ — The Nº 09 essay: zodiac history and identity meet public digital ownership and Solana performance; supporting disclosures follow.',
-    '- /sdk/ — Open tools for charts, icons, and the registry interface.',
-    '',
-    WING_INVENTORY_END_HEADING,
+    'GLOSSARY TERMS',
     'The definitions live at /learn/glossary/#slug. These are the names available there:',
     routeList(glossaryNames, 12),
     '',
@@ -481,7 +459,7 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
   if (missingDescriptions.length) {
     throw new Error(`Assistant context has routes without descriptions: ${missingDescriptions.join(', ')}`);
   }
-  const banned = bannedVocabulary(consumerVocabularyScope(context));
+  const banned = bannedVocabulary(context);
   if (banned.length) throw new Error(`Assistant context contains banned vocabulary: ${banned.join(', ')}`);
   const size = Buffer.byteLength(context);
   if (size < MIN_CONTEXT_BYTES || size > MAX_CONTEXT_BYTES) {

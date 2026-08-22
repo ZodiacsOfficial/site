@@ -114,8 +114,10 @@ describe('Russian chart-result seams', () => {
     expect(invalidation).toContain('profileHandoffIdRef.current += 1;');
     expect(invalidation).toContain('primaryProfileChartIdRef.current = null;');
     expect(invalidation).not.toContain('primaryProfileOriginRef.current = false;');
-    expect(source).toContain('onDateChange={(value) => { invalidateProfileHandoff(); setDate(value); }}');
-    expect(source).toContain('onCityChange={(value) => { invalidateProfileHandoff(); setCity(value); }}');
+    expect(source).toContain('onDateChange={(value) => {');
+    expect(source).toContain('onCityChange={(value) => {');
+    expect(source).toMatch(/onDateChange=\{\(value\) => \{[\s\S]*?invalidateProfileHandoff\(\);[\s\S]*?setDate\(value\);/u);
+    expect(source).toMatch(/onCityChange=\{\(value\) => \{[\s\S]*?invalidateProfileHandoff\(\);[\s\S]*?setCity\(value\);/u);
 
     const compute = source.slice(source.indexOf('function compute('), source.indexOf('const shareUrl'));
     expect(compute).toContain('invalidateProfileHandoff();');
@@ -134,5 +136,26 @@ describe('Russian chart-result seams', () => {
     expect(source).not.toContain('firstReadingChartKey');
     expect(source).not.toContain('firstReading.chartKey');
     expect(source).toContain('setFirstReading(readFirstReadingProgress(localStorage));');
+  });
+
+  it('keeps submission reachable and focuses the first incomplete field', async () => {
+    const [source, placeSearch] = await Promise.all([
+      readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8'),
+      readFile(new URL('./PlaceSearch.tsx', import.meta.url), 'utf8'),
+    ]);
+    const compute = source.slice(source.indexOf('function compute('), source.indexOf('const shareUrl'));
+    expect(source).toContain('disabled={busy}');
+    expect(source).not.toContain('disabled={!canCompute || busy}');
+    expect(source).toContain('aria-busy={busy} noValidate');
+    expect(compute).toContain("date: date === '' ? 'required'");
+    expect(compute).toContain("dateInput?.validity.valid === false ? 'range'");
+    expect(compute).toContain("time: timeKnown && time === ''");
+    expect(compute).toContain('place: city === null');
+    expect(compute.indexOf("? 'birth-date'")).toBeLessThan(compute.indexOf("? 'birth-time'"));
+    expect(compute.indexOf("? 'birth-time'")).toBeLessThan(compute.indexOf("? 'place'"));
+    expect(compute).toContain('querySelector<HTMLElement>(`#${firstIncomplete}`)?.focus()');
+    expect(placeSearch).toContain('!selected && query.trim() ? selectionHint');
+    expect(placeSearch).toContain('aria-required={required || undefined}');
+    expect(placeSearch).toContain("t(locale, 'placeNoResults')");
   });
 });

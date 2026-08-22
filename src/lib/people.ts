@@ -261,14 +261,39 @@ const personSchema = z.object({
 
 const peoplePilotSchema = z.object({
   schema: z.literal('zodiacs.phase5.people.v1'),
-  status: z.literal('Phase 5 public release — 497 indexable deceased records, 4 protected living records, 1 withdrawn'),
+  status: z.string().regex(/^Packet F search-quality release — \d+ indexable deceased records, \d+ deferred deceased records, 4 protected living records, 1 withdrawn$/u),
+  releaseCounts: z.object({
+    indexableDeceased: z.number().int().nonnegative(),
+    deferredDeceased: z.number().int().nonnegative(),
+    protectedLiving: z.literal(4),
+    withdrawn: z.literal(1),
+  }).strict(),
   reviewedAtUtc: isoInstantSchema,
   sourceManifestSha256: z.string().regex(/^[a-f0-9]{64}$/u),
   sourceIndexPolicySha256: z.string().regex(/^[a-f0-9]{64}$/u),
+  sourceIndexDemandSha256: z.string().regex(/^[a-f0-9]{64}$/u),
   indexPolicyApprovedAtUtc: isoInstantSchema,
   directoryIndexable: z.boolean(),
   people: z.array(personSchema).length(501),
-}).strict();
+}).strict().superRefine((release, context) => {
+  const counts = {
+    indexableDeceased: release.people.filter((person) => (
+      person.indexEligibility.eligible && !person.living
+    )).length,
+    deferredDeceased: release.people.filter((person) => (
+      !person.indexEligibility.eligible && !person.living
+    )).length,
+    protectedLiving: release.people.filter((person) => person.living).length,
+    withdrawn: 1,
+  };
+  const expectedStatus = `Packet F search-quality release — ${counts.indexableDeceased} indexable deceased records, ${counts.deferredDeceased} deferred deceased records, ${counts.protectedLiving} protected living records, 1 withdrawn`;
+  if (JSON.stringify(release.releaseCounts) !== JSON.stringify(counts)) {
+    context.addIssue({ code: 'custom', message: 'People release counts do not match the records' });
+  }
+  if (release.status !== expectedStatus) {
+    context.addIssue({ code: 'custom', message: 'People release status does not match the records' });
+  }
+});
 
 export const PEOPLE_PILOT = peoplePilotSchema.parse(rawPeople);
 export type PersonRecord = z.infer<typeof personSchema>;

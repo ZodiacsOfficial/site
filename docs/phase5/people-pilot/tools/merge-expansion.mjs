@@ -1,5 +1,7 @@
 /**
- * Phase 5 completion — merge the selected 480 into the canonical pilot set.
+ * Historical Phase 5 completion tool — merged the selected 480 into the
+ * canonical pilot set. Packet F freezes this tool because changing the
+ * population now also requires refreshed public-demand evidence.
  *
  *   --stage=pre    evidence/computed/candidates/screening/timezones merge
  *                  (run before compose-copy with FREEZE_EXISTING=1)
@@ -14,6 +16,12 @@ import { dirname, join } from 'node:path';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PILOT = join(HERE, '..');
 const stage = process.argv.find((argument) => argument.startsWith('--stage='))?.slice(8);
+const activePolicy = JSON.parse(await readFile(join(PILOT, 'index-policy.json'), 'utf8'));
+if (activePolicy.demandPruning) {
+  throw new Error(
+    'merge-expansion is retired after Packet F; population changes require refreshed index-demand evidence',
+  );
+}
 const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june',
   'july', 'august', 'september', 'october', 'november', 'december'];
 
@@ -239,7 +247,7 @@ if (stage === 'post') {
     .filter((person) => !policy.protectedLivingProfiles.includes(person.slug))
     .map((person) => person.slug)
     .sort();
-  policy.indexableProfiles = deceased;
+  policy.reviewedDeceasedProfiles = deceased;
   policy.directoryIndexable = deceased.length >= policy.minimumIndexableProfilesForDirectory;
   policy.expansion = {
     authorizedBy: 'owner instruction of 2026-07-27 — Phase 5 completion authorizes public indexing of complete deceased-person profiles and qualifying directory pages after all gates pass',

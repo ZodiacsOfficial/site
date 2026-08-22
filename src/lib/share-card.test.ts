@@ -7,10 +7,13 @@ import {
   bigThreePlacements,
   chartCardFilename,
   chartCardReceipt,
+  chartPreviewPlacement,
+  chartSheetSettings,
   communicationCardContent,
   dominantProfile,
   firstSentence,
   primaryShareCardVariant,
+  shareCardTimeNotes,
   signatureCardContent,
 } from './share-card';
 import type { Chart } from './engine/types';
@@ -50,6 +53,32 @@ describe('chartCardFilename', () => {
   it('uses privacy-safe filenames for signature and approach cards', () => {
     expect(chartCardFilename({ variant: 'signature' })).toBe('zodiacs-chart-signature.png');
     expect(chartCardFilename({ variant: 'approach' })).toBe('zodiacs-how-to-approach-me.png');
+  });
+
+  it('uses the generic Reddit sheet filename', () => {
+    expect(chartCardFilename({ variant: 'sheet' })).toBe('zodiacs-chart-sheet.png');
+  });
+});
+
+describe('chart sheet formatting', () => {
+  it('carries rounded arcminutes into the next sign and wraps the zodiac', () => {
+    expect(chartPreviewPlacement(29.999)).toMatchObject({ signSlug: 'taurus', degree: 0, minute: 0 });
+    expect(chartPreviewPlacement(359.999)).toMatchObject({ signSlug: 'aries', degree: 0, minute: 0 });
+  });
+
+  it('stamps the configured house setting honestly', () => {
+    expect(chartSheetSettings({ houses: { system: 'whole', cusps: [] } })).toBe('Whole sign · Tropical');
+    expect(chartSheetSettings({ houses: { system: 'placidus', cusps: [] } })).toBe('Placidus · Tropical');
+    expect(chartSheetSettings({ houses: null })).toBe('No houses · Tropical');
+    expect(chartSheetSettings({ houses: null, input: { timeKnown: false } }))
+      .toBe('12:00 reference · No houses · Tropical');
+  });
+
+  it('states the noon reference and Moon uncertainty without implying an angle', () => {
+    expect(shareCardTimeNotes('en', { referenceTime: true, moonAmbiguous: true })).toEqual([
+      '12:00 reference · Birth time unknown',
+      'My Moon may change signs without an exact birth time.',
+    ]);
   });
 });
 
@@ -128,6 +157,7 @@ describe('share-card content', () => {
       signSlugs: ['aries'],
     });
     expect(content.bigThree.map(({ kind }) => kind)).toEqual(['sun', 'moon', 'rising']);
+    expect(content.notes).toEqual([]);
     expect(content.receipt).toBe('Engine 9.9.9');
     expect(JSON.stringify(content)).not.toMatch(/1990|08:30|New York|latitude|longitude|destiny|will happen/i);
   });
@@ -135,6 +165,7 @@ describe('share-card content', () => {
   it('keeps authored chart signatures English-only and selects localized structural primaries', () => {
     const signatureChart = {
       ...chart,
+      input: { utc: new Date('1990-06-15T08:30:00Z'), houseSystem: 'whole', timeKnown: true },
       aspects: [],
       engineVersion: '9.9.9',
     } as Chart;
@@ -156,6 +187,22 @@ describe('share-card content', () => {
       expect(JSON.stringify(content)).not.toContain('Sun in Aries');
       expect(JSON.stringify(content)).not.toContain('Your confidence grows when you take the lead');
     }
+  });
+
+  it('carries the reference-time and Moon-boundary receipts into a no-time signature', () => {
+    const content = signatureCardContent({
+      ...chart,
+      angles: null,
+      input: { utc: new Date('1990-01-01T12:00:00Z'), houseSystem: 'whole', timeKnown: false },
+      aspects: [],
+      engineVersion: '9.9.9',
+    } as Chart, 'en', true);
+
+    expect(content.bigThree.map(({ kind }) => kind)).toEqual(['sun', 'moon']);
+    expect(content.notes).toEqual([
+      '12:00 reference · Birth time unknown',
+      'My Moon may change signs without an exact birth time.',
+    ]);
   });
 
   it('builds audience-facing approach content and carries Moon ambiguity', () => {

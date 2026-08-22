@@ -435,6 +435,7 @@ export default function ReadingPath({
   const rootRef = useRef<HTMLElement>(null);
   const sun = placements.find((placement) => placement.body === 'Sun') ?? null;
   const moon = placements.find((placement) => placement.body === 'Moon') ?? null;
+  const moonSign = moon ? signForLongitude(moon.lon) : null;
 
   useEffect(() => {
     const root = rootRef.current;
@@ -498,6 +499,11 @@ export default function ReadingPath({
               onShow={onShowOnChart}
             />
           </ul>
+          {moonSign && (
+            <a class="reading-path__placement-link" href={`/learn/placements/moon-in-${moonSign.slug}/`}>
+              Read Moon in {signName(moonSign)} →
+            </a>
+          )}
         </StoryCard>
 
         <StoryCard

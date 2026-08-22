@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { RELEASED_LOCALES, localizePath, t } from './i18n';
-import { NAV_TOOLS } from './nav-tools';
+import {
+  FOOTER_TOOLS,
+  NAV_TOOLS,
+  TOOL_CATALOG,
+  TOOLS_HUB,
+} from './nav-tools';
 
 describe('NAV_TOOLS', () => {
   it('keeps the requested eight tools in stable order', () => {
@@ -33,5 +38,25 @@ describe('NAV_TOOLS', () => {
     expect(localizePath('fr', '/birthday/')).toBe('/birthday/');
     expect(localizePath('it', '/transits/')).toBe('/it/transits/');
     expect(localizePath('it', '/birthday/')).toBe('/birthday/');
+  });
+
+  it('derives the nav, footer, and tools hub from one href catalogue', () => {
+    const catalogueHrefs = new Set(TOOL_CATALOG.map((tool) => tool.href));
+    expect(catalogueHrefs.size).toBe(TOOL_CATALOG.length);
+    expect(FOOTER_TOOLS.map((tool) => tool.href)).toEqual([
+      '/birth-chart/',
+      '/today/',
+      '/compatibility/',
+      '/moon-sign/',
+      '/rising-sign/',
+      '/moon-phase/',
+      '/saturn-return/',
+      '/transits/',
+      '/retrogrades/',
+    ]);
+    expect(TOOLS_HUB).toHaveLength(15);
+    for (const tool of [...NAV_TOOLS, ...FOOTER_TOOLS, ...TOOLS_HUB]) {
+      expect(catalogueHrefs.has(tool.href)).toBe(true);
+    }
   });
 });

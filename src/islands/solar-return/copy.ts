@@ -91,7 +91,7 @@ export const SR_COPY = {
   },
   sunHouse: {
     1: "The Sun returns in the return-chart's first house: a self-definition year. How you show up gets renovated, visibly.",
-    2: "A resources year — money, skills, and what you're actually worth on the open market. Value gets counted, then corrected upward or down.",
+    2: "A resources year — money, skills, and what your work is actually worth in practical terms. Value gets counted, then corrected upward or down.",
     3: 'A local year — words, siblings, neighborhoods, the daily loop. Small communications carry outsized freight.',
     4: 'A foundations year — housing, family, the private floor under the public life. Expect the center of gravity to move homeward.',
     5: 'An expression year — romance, play, children, work signed with your own name. What you make for joy matters more than usual.',

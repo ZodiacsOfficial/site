@@ -479,8 +479,8 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
   assert.equal(await provenance.locator('[data-aura-ledger-sign]').count(), 4);
   assert.match(normalized(await provenance.innerText()), /8 places remain reserved\./);
   assert.match(normalized(await provenance.innerText()), /Solana · checked July 16, 2026/);
-  // The record keeps the exact figure in plain words.
-  assert.match(normalized(await provenance.innerText()), /×3 sculptures/i);
+  // The record keeps the exact edition count visible.
+  assert.match(normalized(await provenance.innerText()), /×3 editions/i);
 
   await waitForSettledMotion(page.locator('.aura-result'));
 
@@ -926,6 +926,7 @@ async function verifyCardMatchesPage(browser, baseURL) {
   await page.goto(`${baseURL}/registry/collection/`, { waitUntil: 'networkidle' });
   await page.locator('#aura-address').fill(address);
   await page.getByRole('button', { name: 'Show my collection', exact: true }).click();
+  await waitForStageRevealStart(page);
   await waitForStageSettled(page);
 
   // This comparison isolates the cabinet renderer. Guide is deliberately

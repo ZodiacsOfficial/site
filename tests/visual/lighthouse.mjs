@@ -36,7 +36,7 @@ const routes = [
   // longer Cyrillic copy and the locale-specific font preload path.
   { name: 'ru-home', path: '/ru/' },
   { name: 'ru-birth-chart', path: '/ru/birth-chart/' },
-  { name: 'ru-sign-guide', path: '/ru/aries/' },
+  { name: 'ru-sign-guide', path: '/ru/aries/', intentionalNoindex: true },
 ];
 // The Phase 1 brief gates every *new* template. Older site baselines remain
 // available for a broader audit without making unrelated debt block this gate.

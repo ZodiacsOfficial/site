@@ -1,31 +1,85 @@
 # T-17 — Positions-only chart sharing
 
-Acceptance evidence for `docs/MASTER-PLAN.md` §19 T-17 and §11.8.
+Acceptance evidence for `docs/MASTER-PLAN.md` §19 T-17 and Packet D of
+`GROWTH-2026-08-19-full-marketing-audit`.
 
 ## Delivered
 
-- A strict v2 `#p=` codec carries exactly twelve tropical longitudes in a fixed body order, optional ASC/MC, house-system code, and engine version.
-- The codec allowlists its wire fields, rounds to 0.001°, accepts only canonical base64url and canonical JSON, rejects malformed/duplicate/escaped-key input, and never throws on hostile tokens.
-- The existing v1 `#c=` codec is byte-unchanged from PACKET C6.
-- The chart share action opens a native, labelled dialog. `Hide birth details` defaults off: v1 links and the existing dated card remain unchanged. When enabled, links use `#p=`, the card receipt becomes the engine version, and its filename becomes `zodiacs-chart-positions.png`.
-- The privacy mode is locked while a card is rendering, preventing a mode change from racing an in-flight export.
-- A received v2 token renders a reduced read-only wheel and placements table. It does not reconstruct houses, motion, aspects, applying/separating state, saving, or the interactive Inspector. Successful fragments are stripped; mixed `#c` + `#p` fragments are rejected.
-- The receiver shows the required notice: `Positions only — birth details not included.` Copy is available in EN and ES without adding routes or extending `LOCALIZED_PATHS`.
-- Analytics use the existing allowlisted `chart_share` event with fixed, non-sensitive variants only.
+- The strict v2 `#p=` codec carries twelve tropical longitudes in a fixed
+  body order, optional ASC/MC, the configured house-system code, and engine
+  version. It has no field for a name, birth date, time, timezone, place,
+  coordinates, flags, speed, or retrograde state.
+- The share dialog leads with a positions-only fragment link. The legacy v1
+  `#c=` link is secondary and explicitly labelled as including birth details.
+  The v1 codec remains byte-compatible.
+- `Copy link with preview` is a separate opt-in. It sends only the v2
+  positions payload to `/api/og/chart?p=`; the default fragment does not send
+  that payload to the server. The endpoint stores nothing, rejects unbounded
+  query shapes, returns no-store/noindex responses, and renders without
+  external assets.
+- The primary full-chart image is an 1800×2400 chart sheet: wheel, every
+  encoded body plus ASC/MC, sign and rounded degree-minute position, house
+  when available, the ten-body major-aspect grid, configured settings, and
+  one small `zodiacs.org` corner wordmark. It has no QR code, CTA, chart URL,
+  or Registry link.
+- `Hide birth details` defaults on. It leaves positions, houses, degrees, and
+  aspects intact while replacing the date/time/place receipt with calculation
+  settings. The privacy note does not call the positions payload anonymous.
+- The chart sheet is prepared after computation behind a dynamic import. A
+  supported mobile browser can reach native file sharing from the prepared
+  result in one tap; other browsers download the same generic filename.
+- English full charts also offer the existing authored signature composition.
+  Moon-sign and rising-sign results offer a dedicated single-placement card
+  plus the positions-only link. Unknown-time Moon cards carry the 12:00
+  reference and the same sign-boundary warning as the result.
+- The v2 receiver rebuilds major aspects from shared longitudes and derives
+  whole-sign cusps from the shared Ascendant. It never invents motion,
+  applying/separating state, or original Placidus cusps, and it labels the
+  whole-sign reconstruction.
+- Successful `#p=` and `#c=` receivers consume and strip their fragments. The
+  shared receiver chrome and post-chart result contain no links into the
+  separate records wing; an ordinary fresh calculator visit keeps the
+  sanctioned links.
+- Share analytics accept fixed variants only. Positions and preview links use
+  `positions_link`; the labelled legacy link uses `details_link`; image
+  choices use their bounded card variants. Cancelled native shares emit no
+  success event.
+- Link sharing remains available if image preparation fails. Result and tour
+  share actions stay disabled while the primary image is still preparing; if
+  preparation fails, they open the surviving link options, while image-specific
+  actions remain disabled instead of becoming clickable no-ops.
 
-The token omits date, time, timezone, coordinates, name, place, flags, latitude, speed, and retrograde state. The UI does not call it anonymous: planetary positions can still be identifying, and v2 links are intentionally unsigned/read-only receipts rather than recomputable natal inputs.
+## Verification — 2026-08-20
 
-## Verification
+- Local production build: 4,178 pages.
+- Astro check: 0 errors, 0 warnings, and 9 informational hints.
+- Full Vitest suite: 2,784 tests passed, including the two focused Tour-card
+  assertions; the focused share/runtime suite passes 87 tests across 9 files.
+- Distribution integrity: 4,281 HTML files, 1,507 search documents, and 9
+  feed items.
+- Bundle gates: `/` 32.2/42 KB gz; `/birth-chart/` 67.1/69 KB gz; engine
+  chunk 21.1/25 KB gz; largest chunk 50.1/60 KB gz. Share-card rendering
+  remains outside the initial route closure.
+- The built-browser T-17 flow passes: primary and preview links, labelled v1
+  fallback, bounded analytics, privacy-toggle races, image-failure link
+  fallback from the Tour and disabled image actions, 14-row receiver,
+  reconstructed houses and aspects, fragment stripping, receiver boundary,
+  Moon/rising cards, and one-tap mocked native file sharing.
+- The generated chart sheet is 1800×2400. Its durable 33% review artifact is
+  [`phase4-sharing/chart-sheet-33-percent.png`](./phase4-sharing/chart-sheet-33-percent.png);
+  the full positions table and aspect key remain legible at that size.
+- A direct, unmocked Satori/Resvg handler smoke returned the expected HTML
+  wrapper and a valid 40,740-byte PNG. API unit tests cover no-store/noindex
+  headers, strict query validation, the angle-free 12:00 reference, the
+  fragment receiver URL, initialization retry, and render failure before a
+  success response is committed. Vercel's Edge builder traced the self-contained
+  renderer at 829,768 summed gzip bytes, below the 1 MiB limit.
+- Runtime-graph tests pass, and no new direct `astronomy-engine` import was
+  added outside the established engine boundaries.
 
-- Production build: 943 pages.
-- Astro check: 0 errors, 0 warnings, 3 pre-existing hints.
-- Distribution integrity: 960 HTML files, 9 feed items, registry intact.
-- Focused privacy coverage: 39/39 codec and card tests passed.
-- Full local suite: 211 passed; the one failing Kahlo float snapshot is the inherited Darwin-only `astronomy-engine` delta already reproduced on clean main/C6. No scene or engine file changed; Linux CI is the authoritative full-suite gate.
-- T-17 browser flow passed: default-off dialog, v1/full link, v2 positions link, exact four-key wire, no private inputs, 14 body/angle rows, hash stripping, ambiguity rejection, invalid-token safety, non-sensitive analytics, privacy-toggle render lock, and a real forced-download fallback named `zodiacs-chart-positions.png`.
-- C6 regression harness: complete eight-calculator transcripts are byte-identical between commit `399d6a2` and T-17.
-- Bundle gates: `/` 40.5/42 KB gz; `/birth-chart/` 50.2/50.3 KB; largest chunk 51.3/60 KB; engine chunk 21.2/25 KB. The v2 codec, dialog, and receiver remain behind one dynamic boundary.
-- Lighthouse: `/` 0.77 s LCP, `/birth-chart/` 0.48 s, `/aries/` 0.44 s; CLS 0.001 and TBT 0 throughout.
-- Visual regression: home and Aries pass. T-17's three birth-chart actual captures are byte-identical to C6; both expose the same stale Darwin expected-height baseline that predates T-17.
-- Independent privacy/quality audit: clean after fixing canonical-JSON duplicate-key handling and the in-flight privacy-toggle race.
-- `git diff --check`: clean. No runtime dependency was added.
+## Deferred deployment evidence
+
+Astro's local static preview does not route Vercel Functions. A Vercel preview
+deployment still needs human review of the live `/api/og/chart` HTML and image
+responses plus one real social-crawler unfurl. This record does not claim that
+external routing or unfurl verification is complete.

@@ -3,19 +3,19 @@
  * TypeScript locale union never changes this release policy.
  */
 export const HREFLANG_LOCALE_POLICY = Object.freeze([
-  { locale: 'en', hreflang: 'en', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
-  { locale: 'es', hreflang: 'es', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
-  { locale: 'pt', hreflang: 'pt-BR', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
-  { locale: 'fr', hreflang: 'fr', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
-  { locale: 'it', hreflang: 'it', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
-  { locale: 'ru', hreflang: 'ru', indexEligible: true, routeFamilies: ['core'], expectedBlocks: 156 },
+  { locale: 'en', hreflang: 'en', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac', 'birthday'], expectedBlocks: 575 },
+  { locale: 'es', hreflang: 'es', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac'], expectedBlocks: 209 },
+  { locale: 'pt', hreflang: 'pt-BR', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac'], expectedBlocks: 209 },
+  { locale: 'fr', hreflang: 'fr', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac'], expectedBlocks: 209 },
+  { locale: 'it', hreflang: 'it', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac'], expectedBlocks: 209 },
+  { locale: 'ru', hreflang: 'ru', indexEligible: true, routeFamilies: ['core'], expectedBlocks: 84 },
   { locale: 'ar', hreflang: 'ar', indexEligible: false, routeFamilies: [], expectedBlocks: 0 },
 ]);
 
 export const X_DEFAULT_HREFLANG = Object.freeze({
   hreflang: 'x-default',
   locale: 'en',
-  expectedBlocks: 2051,
+  expectedBlocks: 575,
 });
 
 export const ACTIVE_HREFLANGS = Object.freeze(
@@ -42,8 +42,8 @@ const CORE_PATHS = new Set([
   '/', '/tools/', '/birth-chart/', '/compatibility/', '/moon-sign/',
   '/rising-sign/', '/moon-phase/', '/saturn-return/', '/transits/',
   '/baby-zodiac/', '/profile/', '/methodology/', '/privacy/', '/disclosure/',
-  ...SIGN_SLUGS.map((slug) => `/${slug}/`),
 ]);
+const SIGN_GUIDE_PATHS = new Set(SIGN_SLUGS.map((slug) => `/${slug}/`));
 const MONTH_LENGTHS = {
   january: 31, february: 29, march: 31, april: 30, may: 31, june: 30,
   july: 31, august: 31, september: 30, october: 31, november: 30, december: 31,
@@ -68,14 +68,15 @@ function canonicalPath(path) {
 export function hreflangRouteFamily(path) {
   const clean = canonicalPath(path);
   if (CORE_PATHS.has(clean)) return 'core';
-  if (clean === '/learn/chinese-zodiac/') return 'programmatic';
+  if (SIGN_GUIDE_PATHS.has(clean)) return 'sign-guide';
+  if (clean === '/learn/chinese-zodiac/') return 'chinese-zodiac';
   const animal = clean.match(/^\/learn\/chinese-zodiac\/([a-z]+)\/$/)?.[1];
-  if (animal && ANIMALS.has(animal)) return 'programmatic';
+  if (animal && ANIMALS.has(animal)) return 'chinese-zodiac';
   const birthday = clean.match(/^\/birthday\/([a-z]+)-(\d{1,2})\/$/);
   if (!birthday) return null;
   const day = Number(birthday[2]);
   return MONTH_LENGTHS[birthday[1]] >= day && birthday[2] === String(day) && day >= 1
-    ? 'programmatic'
+    ? 'birthday'
     : null;
 }
 

@@ -13,7 +13,8 @@ const searchPeople = new Set(searchIndex
   .map((entry) => entry.path)
   .filter((path) => /^\/people\/[a-z0-9-]+\/$/u.test(path)));
 
-const NOINDEX = /<meta name="robots" content="noindex, nofollow, max-image-preview:large"\s*\/?>/u;
+const NOINDEX_NOFOLLOW = /<meta name="robots" content="noindex, nofollow, max-image-preview:large"\s*\/?>/u;
+const NOINDEX_FOLLOW = /<meta name="robots" content="noindex, follow, max-image-preview:large"\s*\/?>/u;
 const INDEXABLE = /<meta name="robots" content="max-image-preview:large"\s*\/?>/u;
 
 for (const person of people) {
@@ -22,7 +23,12 @@ for (const person of people) {
   if (!html) { failures.push(`${route}: missing`); continue; }
   const eligible = person.indexEligibility.eligible;
   if (eligible && !INDEXABLE.test(html)) failures.push(`${route}: expected indexable robots`);
-  if (!eligible && !NOINDEX.test(html)) failures.push(`${route}: living protection lost`);
+  if (!eligible && person.living && !NOINDEX_NOFOLLOW.test(html)) {
+    failures.push(`${route}: living protection lost`);
+  }
+  if (!eligible && !person.living && !NOINDEX_FOLLOW.test(html)) {
+    failures.push(`${route}: deferred profile must remain noindex, follow`);
+  }
   if (/<link rel="alternate" hreflang=/u.test(html)) failures.push(`${route}: unexpected hreflang`);
   if (!html.includes(`<link rel="canonical" href="https://zodiacs.org${route}"`)) {
     failures.push(`${route}: self-canonical missing`);
@@ -40,7 +46,7 @@ if (!directoryHtml) failures.push('/people/: missing');
 if (data.directoryIndexable) {
   if (!INDEXABLE.test(directoryHtml)) failures.push('/people/: expected indexable robots');
   if (!sitemap.includes('https://zodiacs.org/people/</loc>')) failures.push('/people/: sitemap row missing');
-} else if (!NOINDEX.test(directoryHtml)) {
+} else if (!NOINDEX_NOFOLLOW.test(directoryHtml)) {
   failures.push('/people/: expected noindex robots');
 }
 
@@ -61,7 +67,7 @@ const robotsRulesFor = (slug) => (vercel.headers ?? [])
     .filter((header) => String(header.key).toLowerCase() === 'x-robots-tag')
     .map((header) => String(header.value).toLowerCase()));
 
-for (const person of people.filter((candidate) => !candidate.indexEligibility.eligible)) {
+for (const person of people.filter((candidate) => candidate.living)) {
   const values = robotsRulesFor(person.slug);
   if (values.length === 0) {
     failures.push(`${person.slug}: no vercel.json X-Robots-Tag rule names this living person`);
@@ -80,4 +86,6 @@ if (failures.length) {
   process.exit(1);
 }
 const eligibleCount = people.filter((person) => person.indexEligibility.eligible).length;
-console.log(`people-dist: OK — ${people.length + 1} routes; ${eligibleCount} indexable (+ directory ${data.directoryIndexable ? 'indexable' : 'noindex'}); ${people.length - eligibleCount} living protected; sitemap/search membership exact`);
+const deferredCount = people.filter((person) => !person.indexEligibility.eligible && !person.living).length;
+const protectedCount = people.filter((person) => person.living).length;
+console.log(`people-dist: OK — ${people.length + 1} routes; ${eligibleCount} indexable (+ directory ${data.directoryIndexable ? 'indexable' : 'noindex'}); ${deferredCount} deferred; ${protectedCount} living protected; sitemap/search membership exact`);

@@ -8,6 +8,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { resolvePeopleIndexPolicy } from '../../../../scripts/people-index-policy.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PILOT = join(HERE, '..');
@@ -376,10 +377,15 @@ check('no People entry in the navigation', !/\/people\//u.test(nav), '');
 if (phase5c) {
   const production = JSON.parse(await readFile(join(REPO, 'src/data/people.json'), 'utf8'));
   const policy = JSON.parse(await readFile(join(PILOT, 'index-policy.json'), 'utf8'));
+  const demand = JSON.parse(await readFile(join(PILOT, 'index-demand.json'), 'utf8'));
+  const resolvedPolicy = resolvePeopleIndexPolicy({ manifest, indexPolicy: policy, indexDemand: demand });
   const directoryRoute = await readFile(join(REPO, 'src/pages/people/index.astro'), 'utf8').catch(() => '');
   const personRoute = await readFile(join(REPO, 'src/pages/people/[slug].astro'), 'utf8').catch(() => '');
   const indexable = production.people.filter((person) => person.indexEligibility.eligible);
-  const protectedLiving = production.people.filter((person) => !person.indexEligibility.eligible);
+  const deferred = production.people.filter((person) => (
+    !person.indexEligibility.eligible && !person.living
+  ));
+  const protectedLiving = production.people.filter((person) => person.living);
   check('Phase 5C people route exists', pagesDir.includes('people'), '');
   check('Phase 5C sitemap is allowlist-driven', sitemap.includes('INDEXABLE_PEOPLE.map'), '');
   check(
@@ -387,16 +393,26 @@ if (phase5c) {
     directoryRoute.includes('noindex={!PEOPLE_DIRECTORY_INDEXABLE}')
       && directoryRoute.includes('nofollow={!PEOPLE_DIRECTORY_INDEXABLE}')
       && personRoute.includes('noindex={!person.indexEligibility.eligible}')
-      && personRoute.includes('nofollow={!person.indexEligibility.eligible}'),
+      && personRoute.includes('nofollow={person.living}'),
     '',
   );
   check(
-    'indexable set is exactly the non-living reviewed records',
-    indexable.length === manifest.people.filter((person) => !person.living).length
+    'indexable set is exactly the demand-selected reviewed records',
+    indexable.length === resolvedPolicy.indexableProfiles.size
       && indexable.every((person) => !person.living)
       && indexable.map((person) => person.slug).sort().join(',')
-        === [...policy.indexableProfiles].sort().join(','),
+        === [...resolvedPolicy.indexableProfiles].sort().join(','),
     `${indexable.length} indexable`,
+  );
+  check(
+    'deferred set is exactly the reviewed deceased search-demand tail',
+    deferred.length === resolvedPolicy.noindexTailProfiles.size
+      && deferred.every((person) => (
+        person.indexEligibility.blockedBy.some((reason) => reason.includes('search-demand-tail'))
+      ))
+      && deferred.map((person) => person.slug).sort().join(',')
+        === [...resolvedPolicy.noindexTailProfiles].sort().join(','),
+    `${deferred.length} deferred`,
   );
   check(
     'Phase 5C exact protected living set',
