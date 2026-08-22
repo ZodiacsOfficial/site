@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-drafts.v1",
-  "generatedAt": "2026-08-22T01:16:34.456Z",
+  "generatedAt": "2026-08-22T01:42:26.642Z",
   "generator": "zodiacs.registry-research.deterministic.v1",
   "method": {
     "id": "zodiacs.registry-research-method.v1",
@@ -5243,10 +5243,10 @@
       "kind": "observation-update",
       "templateId": "observation-update.v1",
       "parentId": "zrx-market-check-2026-08-14",
-      "issuedAt": "2026-08-22T01:16:34.456Z",
-      "visibleAt": "2026-08-22T01:16:34.456Z",
+      "issuedAt": "2026-08-22T01:42:26.642Z",
+      "visibleAt": "2026-08-22T01:42:26.642Z",
       "title": "Leo 7-day observation update",
-      "summary": "7-day follow-up using the first qualifying archived snapshot (185.2 actual hours elapsed).",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (185.63 actual hours elapsed).",
       "url": "/terminal/research/market-check-2026-08-14-observation-168h/",
       "signs": [
         "leo"
@@ -5280,7 +5280,7 @@
         },
         "marketObservation": {
           "heading": "Market observation",
-          "body": "185.2 hours after the original market observation, indexed price change was +41.16% and indexed liquidity change was +32.27%. This temporal comparison does not establish causation.",
+          "body": "185.63 hours after the original market observation, indexed price change was +41.16% and indexed liquidity change was +32.27%. This temporal comparison does not establish causation.",
           "evidence": [
             "public/assets/data/registry-market-history.v1.json"
           ]
@@ -5288,8 +5288,8 @@
       },
       "market": {
         "available": true,
-        "snapshotId": "registry-market:2026-08-22:2026-08-22T01:16:34.456Z",
-        "observedAt": "2026-08-22T01:16:34.456Z",
+        "snapshotId": "registry-market:2026-08-22:2026-08-22T01:42:26.642Z",
+        "observedAt": "2026-08-22T01:42:26.642Z",
         "provider": "DexScreener",
         "sign": "leo",
         "priceUsd": 0.00009857,
@@ -5303,17 +5303,17 @@
         "baselineSnapshotId": "registry-market:2026-08-14:2026-08-14T08:04:28.910Z",
         "baselineObservedAt": "2026-08-14T08:04:28.910Z",
         "requestedElapsedHours": 168,
-        "actualElapsedHours": 185.2,
+        "actualElapsedHours": 185.63,
         "priceChangePct": 41.16,
         "liquidityChangePct": 32.27
       },
       "evidence": {
         "parentId": "zrx-market-check-2026-08-14",
         "baselineSnapshotId": "registry-market:2026-08-14:2026-08-14T08:04:28.910Z",
-        "marketSnapshotId": "registry-market:2026-08-22:2026-08-22T01:16:34.456Z",
+        "marketSnapshotId": "registry-market:2026-08-22:2026-08-22T01:42:26.642Z",
         "coverage": "first-qualifying-archive-observation"
       },
-      "artifactHash": "de0babe7e1de4113d08d2d78e365378539993431b393e37c44d96ad6f0e872d5"
+      "artifactHash": "8341f3cb024e975b026613f36a2f93068256cef32b56be59c8d56e3f6737200e"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -5339,8 +5339,8 @@
       "slug": "market-check-2026-08-22",
       "kind": "market-check",
       "templateId": "market-check.v1",
-      "issuedAt": "2026-08-22T01:16:34.456Z",
-      "visibleAt": "2026-08-22T01:16:34.456Z",
+      "issuedAt": "2026-08-22T01:42:26.642Z",
+      "visibleAt": "2026-08-22T01:42:26.642Z",
       "title": "Leo market check · 2026-08-22",
       "summary": "Leo price, market cap, liquidity, volume, and collection medians at one archived observation.",
       "url": "/terminal/research/market-check-2026-08-22/",
@@ -5376,7 +5376,7 @@
         },
         "marketObservation": {
           "heading": "Market observation",
-          "body": "At 2026-08-22T01:16:34.456Z, Leo was indexed at $0.00009857, with +11.59% over 24 hours, $98.57K market cap, $98.57K FDV, $16.8K indexed liquidity, $2.5K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Leo market cap was 0.992× the collection median and indexed liquidity was 1.008× the collection median.",
+          "body": "At 2026-08-22T01:42:26.642Z, Leo was indexed at $0.00009857, with +11.59% over 24 hours, $98.57K market cap, $98.57K FDV, $16.8K indexed liquidity, $2.5K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Leo market cap was 0.99× the collection median and indexed liquidity was 1.008× the collection median.",
           "evidence": [
             "public/assets/data/registry-market-history.v1.json"
           ]
@@ -5384,8 +5384,8 @@
       },
       "market": {
         "available": true,
-        "snapshotId": "registry-market:2026-08-22:2026-08-22T01:16:34.456Z",
-        "observedAt": "2026-08-22T01:16:34.456Z",
+        "snapshotId": "registry-market:2026-08-22:2026-08-22T01:42:26.642Z",
+        "observedAt": "2026-08-22T01:42:26.642Z",
         "provider": "DexScreener",
         "sign": "leo",
         "priceUsd": 0.00009857,
@@ -5397,17 +5397,17 @@
         "indexedPoolCount": 1,
         "deepestPoolUrl": "https://dexscreener.com/solana/48erbgmqizekyloccebd7cs5knqpzqr7qqak9mzapqgq",
         "collectionMedian": {
-          "marketCapUsd": 99379.5,
+          "marketCapUsd": 99573.5,
           "liquidityUsd": 16672.78
         },
         "vsCollectionMedian": {
-          "marketCap": 0.992,
+          "marketCap": 0.99,
           "liquidity": 1.008
         }
       },
       "evidence": {
         "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-22",
-        "marketSnapshotId": "registry-market:2026-08-22:2026-08-22T01:16:34.456Z",
+        "marketSnapshotId": "registry-market:2026-08-22:2026-08-22T01:42:26.642Z",
         "coverage": {
           "overall": "complete",
           "events": "complete",
@@ -5419,7 +5419,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "60c598b161c09b0489d060811cf6c9703dc55d46c1fad848d710d0e6ec6d2a4d"
+      "artifactHash": "c6ba89633633324a8fc99f95cb1ec400a4a2f56ebf95e0eab9887affc3611a51"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -5485,7 +5485,7 @@
         },
         "marketObservation": {
           "heading": "Market observation",
-          "body": "At 2026-08-22T01:16:34.456Z, Leo was indexed at $0.00009857, with +11.59% over 24 hours, $98.57K market cap, $98.57K FDV, $16.8K indexed liquidity, $2.5K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
+          "body": "At 2026-08-22T01:42:26.642Z, Leo was indexed at $0.00009857, with +11.59% over 24 hours, $98.57K market cap, $98.57K FDV, $16.8K indexed liquidity, $2.5K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
           "evidence": [
             "public/assets/data/registry-market-history.v1.json"
           ]
@@ -5493,8 +5493,8 @@
       },
       "market": {
         "available": true,
-        "snapshotId": "registry-market:2026-08-22:2026-08-22T01:16:34.456Z",
-        "observedAt": "2026-08-22T01:16:34.456Z",
+        "snapshotId": "registry-market:2026-08-22:2026-08-22T01:42:26.642Z",
+        "observedAt": "2026-08-22T01:42:26.642Z",
         "provider": "DexScreener",
         "sign": "leo",
         "priceUsd": 0.00009857,
@@ -5509,7 +5509,7 @@
       "evidence": {
         "dailyFacts": "src/data/daily.json#2026-08-22",
         "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-22",
-        "marketSnapshotId": "registry-market:2026-08-22:2026-08-22T01:16:34.456Z",
+        "marketSnapshotId": "registry-market:2026-08-22:2026-08-22T01:42:26.642Z",
         "coverage": {
           "overall": "complete",
           "events": "complete",
@@ -5521,7 +5521,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "6506a4453c313184887103da3ac7ba69f9e70cce43e0d31ea71b7f5fce7e38ea"
+      "artifactHash": "76aa86d4b2fb8032f28aa5ac26cb717d11662434453a1dc8599ee45722b2e851"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
