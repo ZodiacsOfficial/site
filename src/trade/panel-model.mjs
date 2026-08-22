@@ -181,7 +181,7 @@ export function panelView({
     heading: `Buy ${sign.name}`,
     subheading: `Official ${sign.name} fungible token`,
     venue: 'Acquisition desk',
-    assetNote: `The gold sculpture is symbolic collection art. You are buying the official fungible ${sign.name} token — not the sculpture, a physical object, or a 1-of-1 NFT.`,
+    assetNote: `You are buying the official fungible ${sign.name} token — not a physical item or a 1-of-1 NFT.`,
     spendTitle: 'Choose your spend',
     routeTitle: 'Choose your route',
     quoteTitle: payMethod === 'card' ? 'Reference quote' : 'Live swap quote',

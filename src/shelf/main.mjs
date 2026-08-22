@@ -524,7 +524,7 @@ async function mount(root, records) {
       opener.textContent = showing ? 'Back to the Twelve' : `View ${record.name}`;
       opener.setAttribute(
         'aria-label',
-        showing ? 'Return the sculpture to the row' : `View the ${record.name} sculpture`,
+        showing ? 'Return to the twelve signs' : `View ${record.name}`,
       );
     }
     // The instruction follows the state: browsing the row and turning a piece

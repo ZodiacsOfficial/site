@@ -55,13 +55,13 @@ export const OG_EN = Object.freeze({
   wing: {
     kicker: 'Zodiacs.org',
     title: 'The Twelve',
-    subtitle: 'Gold sculptures, official records, and public market context.',
+    subtitle: 'Official records and public market context for the twelve Zodiac signs.',
     data: 'Astrofolio · Registry · Terminal',
   },
   astrofolio: {
     path: '/astrofolio/',
     image: '/assets/og/astrofolio/v3/leo.png',
-    alt: 'Astrofolio: the collection of gold sculptures and official tokens for the twelve Zodiac signs.',
+    alt: 'Astrofolio: the collection of twelve official Zodiac tokens.',
   },
   terminal: {
     path: '/terminal/',

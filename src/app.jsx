@@ -1574,7 +1574,7 @@
       ];
       const terminalNav = REGISTRY_VIEW === 'terminal-pro'
         ? { href: '/terminal/', label: 'Terminal', description: 'The market desk for the twelve official tokens' }
-        : { href: '/astrofolio/', label: 'Astrofolio', description: 'Choose a sign and see its official token' };
+        : { href: '/astrofolio/', label: 'Astrofolio', description: 'Choose a sign and explore the collection' };
       return (
         <>
           <div className="wnav-wrap">
@@ -2467,7 +2467,7 @@
           className="rail"
           ref={railRef}
           role="group"
-          aria-label="The twelve sculptures"
+          aria-label="Choose a Zodiac sign"
           onKeyDown={onKeyDown}
         >
           {SIGNS.map((item) => {
@@ -2561,7 +2561,7 @@
         <div
           className="stage-carousel"
           data-gallery-carousel=""
-          aria-label={`Gold sculpture of ${item.name}. Swipe horizontally to browse.`}
+          aria-label={`${item.name} Zodiac artwork. Swipe horizontally to browse signs.`}
           onPointerDown={onPointerDown}
           onPointerUp={finishSwipe}
           onPointerCancel={cancelSwipe}
@@ -2584,7 +2584,7 @@
                   src={`/assets/sculptures/512/${item.asset.sign}.webp`}
                   width="512"
                   height="512"
-                  alt={`${item.name} gold sculpture`}
+                  alt={`${item.name} Zodiac artwork`}
                   loading="eager"
                   decoding="async"
                 />
@@ -2803,7 +2803,7 @@
           data-gallery-rail=""
           data-gallery-desktop-rail=""
           role="group"
-          aria-label="The twelve sculptures"
+          aria-label="Choose a Zodiac sign"
           hidden={consumer && carousel}
           dangerouslySetInnerHTML={{ __html: RAIL_PLACEHOLDER_HTML }}
         />
@@ -2818,7 +2818,7 @@
               + (consumer ? ' gband--consumer' : '')
               + (carousel ? ' gband--flat' : '')
               + (!carousel && galleryReady ? ' is-ready' : '')}
-            aria-label="The Gallery — the twelve Gold Sculptures"
+            aria-label="Interactive Zodiac sign gallery"
             data-gallery-stage={carousel ? undefined : ''}
             data-gallery-embed={carousel ? undefined : ''}
             data-gallery-initial={slug}
@@ -2953,7 +2953,7 @@
           <div className="gband__chrome">
             {railGroup}
             <button className="gband__open" type="button" data-gallery-open="">
-              View the sculpture
+              View {sign.name}
             </button>
             <p className="gband__hint" data-gallery-hint="">
               Drag to browse · Choose a sign to open.
@@ -2962,7 +2962,7 @@
           )}
 
           <aside className="gcard" data-gallery-card="" hidden aria-labelledby="gcard-name" aria-live="off">
-            <button className="card__close" type="button" data-gallery-close="" aria-label="Return the sculpture">✕</button>
+            <button className="card__close" type="button" data-gallery-close="" aria-label="Return to the twelve signs">✕</button>
             <p className="card__lot" data-card-lot="" />
             <h2 className="card__name" id="gcard-name" data-card-name="" />
             <p className="card__figure" data-card-figure="" />
@@ -4568,7 +4568,7 @@
             </span>
           </div>
           <h1 id="consumer-explorer-title">Choose your sign</h1>
-          <p>See its current price and rank, then check the official token.</p>
+          <p>Meet the official Zodiac for your sign&mdash;its design, story, and public record.</p>
         </header>
       );
     }
@@ -4581,13 +4581,40 @@
       return 'unchanged today';
     }
 
-    function ConsumerMarketSnapshot({ batch, onRetry }) {
+    function ConsumerIntroduction() {
       const reveal = useReveal();
       return (
-        <section ref={reveal} className="consumer-snapshot reveal" aria-labelledby="consumer-snapshot-title">
+        <section ref={reveal} id="what-is-astrofolio" className="consumer-intro reveal" aria-labelledby="consumer-intro-title">
+          <div className="consumer-intro__copy">
+            <span className="consumer-eyebrow">What is Astrofolio?</span>
+            <h2 id="consumer-intro-title">Twelve signs. One collection.</h2>
+            <p>Astrofolio brings the twelve official Zodiac tokens into one place. Choose a sign to explore its design and verified public record.</p>
+          </div>
+          <dl className="consumer-intro__facts" aria-label="Astrofolio at a glance">
+            <div><dt>12</dt><dd>official Zodiacs</dd></div>
+            <div><dt>One for every sign</dt><dd>from Aries to Pisces</dd></div>
+            <div><dt>One public Registry</dt><dd>the source of truth</dd></div>
+          </dl>
+        </section>
+      );
+    }
+
+    function ConsumerMarketSnapshot({ sign, batch, onRetry }) {
+      const reveal = useReveal();
+      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
+      const ranked = batch.status === 'ok'
+        ? SIGNS
+          .map(item => ({ item, quote: batch.quotes[item.asset.sign] }))
+          .filter(entry => toFiniteNumber(entry.quote?.marketCap) !== null)
+          .sort((a, b) => toFiniteNumber(b.quote?.marketCap) - toFiniteNumber(a.quote?.marketCap))
+        : [];
+      const rank = quote ? ranked.findIndex(entry => entry.item.ticker === sign.ticker) + 1 : 0;
+      return (
+        <section ref={reveal} id="market-snapshot" className="consumer-snapshot reveal" aria-labelledby="consumer-snapshot-title" style={{ '--snapshot-sign': sign.hue }}>
           <header className="consumer-section-head">
-            <h2 id="consumer-snapshot-title">All twelve, today</h2>
-            <p>The collection stays in zodiac order, with price and movement in plain language.</p>
+            <span className="consumer-eyebrow">Market snapshot</span>
+            <h2 id="consumer-snapshot-title">{sign.name}, today</h2>
+            <p>A simple view of the sign you selected. Prices move and may be delayed.</p>
           </header>
           {batch.status === 'unavailable' && (
             <div className="consumer-snapshot__state" role="status">
@@ -4595,23 +4622,17 @@
               <button type="button" onClick={onRetry}>Try again</button>
             </div>
           )}
-          <ul className="consumer-snapshot__rows" aria-busy={batch.status === 'loading'} data-consumer-market-snapshot>
-            {SIGNS.map((item) => {
-              const quote = batch.status === 'ok' ? batch.quotes[item.asset.sign] : null;
-              return (
-                <li key={item.ticker} data-snapshot-sign={item.asset.sign} style={{ '--row-sign': item.hue }}>
-                  <span className="consumer-snapshot__identity">
-                    <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
-                    <strong>{item.name}</strong>
-                  </span>
-                  <span className="consumer-snapshot__price">{quote ? formatPriceUsd(quote.priceUsd) : batch.status === 'loading' ? 'Reading…' : '—'}</span>
-                  <span className={'consumer-snapshot__move' + marketChangeClass(quote?.priceChange24h)}>
-                    {quote ? plainMarketMovement(quote.priceChange24h) : 'movement unavailable'}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
+          <article className="consumer-snapshot__card" aria-busy={batch.status === 'loading'} data-consumer-market-snapshot data-snapshot-sign={sign.asset.sign}>
+            <div className="consumer-snapshot__identity">
+              <img src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`} width="72" height="72" alt="" loading="lazy" decoding="async" />
+              <span><small>Selected sign</small><strong>{sign.name}</strong></span>
+            </div>
+            <dl className="consumer-snapshot__metrics">
+              <div><dt>Current price</dt><dd>{quote ? formatPriceUsd(quote.priceUsd) : batch.status === 'loading' ? 'Reading…' : '—'}</dd></div>
+              <div><dt>24-hour movement</dt><dd className={marketChangeClass(quote?.priceChange24h)}>{quote ? plainMarketMovement(quote.priceChange24h) : 'unavailable'}</dd></div>
+              <div><dt>Collection rank</dt><dd>{rank > 0 ? `${rank} of 12` : 'unavailable'}</dd></div>
+            </dl>
+          </article>
           <details className="consumer-disclosure consumer-snapshot__details">
             <summary>See market details</summary>
             <div className="consumer-disclosure__body">
@@ -4623,29 +4644,58 @@
       );
     }
 
-    function ConsumerDestinations({ sign }) {
+    const ASTROFOLIO_SHOP_PRODUCTS = Object.freeze([
+      {
+        name: 'Astrofolio T-shirt',
+        image: 'https://cdn.shopify.com/s/files/1/0848/2009/9415/files/off_white-front_6320ec61-8907-4106-92da-15aedb046de5.png?v=1729962859&width=800',
+        href: 'https://shop.app/products/9655740694871/astrofolio-t-shirt',
+      },
+      {
+        name: 'Astrofolio Cap',
+        image: 'https://cdn.shopify.com/s/files/1/0848/2009/9415/files/washed_black-front_c2d5c933-e1a4-432d-8634-04f473167ae8.png?v=1729887511&width=800',
+        href: 'https://shop.app/products/9654676455767/astrofolio-cap',
+      },
+      {
+        name: 'Astrofolio Hoodie',
+        image: 'https://cdn.shopify.com/s/files/1/0848/2009/9415/files/grey_melange-front_a92b1d75-acc1-48c6-99cd-4efc5a0dd1d9.png?v=1729893846&width=800',
+        href: 'https://shop.app/products/9654762504535/astrofolio-hoodie',
+      },
+    ]);
+
+    function ConsumerShop() {
       const reveal = useReveal();
       return (
-        <section ref={reveal} id="explore-astrofolio" className="consumer-destinations reveal" aria-labelledby="consumer-destinations-title">
-          <header className="consumer-section-head">
-            <h2 id="consumer-destinations-title">Explore Astrofolio</h2>
-          </header>
-          <div className="consumer-destinations__grid">
-            <article className="consumer-destinations__card">
-              <span className="consumer-destinations__eyebrow">Zodiac markets</span>
-              <h3>The Terminal</h3>
-              <p>Follow all twelve with live prices, liquidity, charts, and research.</p>
-              <TerminalViewLink view="pro" sign={sign} className="consumer-destinations__link" />
-            </article>
-            <article className="consumer-destinations__card">
-              <span className="consumer-destinations__eyebrow">Official merchandise</span>
-              <h3>Astrofolio Shop</h3>
-              <p>Clothing and collections for the twelve signs.</p>
-              <a className="consumer-destinations__link" href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external">
-                Shop Astrofolio <span aria-hidden="true">↗</span>
-              </a>
-            </article>
+        <section ref={reveal} id="shop" className="consumer-shop reveal" aria-labelledby="consumer-shop-title" data-vitrine-rule>
+          <div className="consumer-shop__copy">
+            <span className="consumer-eyebrow">Official merchandise</span>
+            <h2 id="consumer-shop-title">Wear your sign.</h2>
+            <p>Everyday Astrofolio pieces made for the whole collection.</p>
+            <a className="consumer-shop__cta" href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external">
+              <span>View the collection</span><span aria-hidden="true">↗</span>
+            </a>
           </div>
+          <div className="consumer-shop__products" aria-label="Featured Astrofolio merchandise">
+            {ASTROFOLIO_SHOP_PRODUCTS.map((product, index) => (
+              <a key={product.name} className={'consumer-shop__product' + (index === 0 ? ' is-featured' : '')} href={product.href} rel="noopener noreferrer external">
+                <img src={product.image} width="800" height="892" alt={product.name} loading="lazy" decoding="async" />
+                <span>{product.name}<i aria-hidden="true">↗</i></span>
+              </a>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    function ConsumerTerminalStrip({ sign }) {
+      const reveal = useReveal();
+      return (
+        <section ref={reveal} id="terminal" className="consumer-terminal-strip reveal" aria-labelledby="consumer-terminal-title">
+          <div>
+            <span className="consumer-eyebrow">Zodiac markets</span>
+            <h2 id="consumer-terminal-title">Follow all twelve in the Terminal.</h2>
+            <p>Live prices, liquidity, charts, and research in one focused market view.</p>
+          </div>
+          <TerminalViewLink view="pro" sign={sign} className="consumer-terminal-strip__link" />
         </section>
       );
     }
@@ -5082,7 +5132,7 @@
           <header ref={hostRef} className="consumer-market__compact-head">
             <span className="consumer-section-head__eyebrow">Live market board</span>
             <h2 id="consumer-market-title">The twelve, ranked live.</h2>
-            <p>Choose a sign to update the sculpture, chart, and research across the page.</p>
+            <p>Choose a sign to update the chart and research across the page.</p>
           </header>
 
           <div className="market-board" data-rank={rankBy}>
@@ -5739,8 +5789,8 @@
             </div>
             <VitrinePrice sign={item} batch={batch} live={layer.current} />
             <div className="vitrine-placard__actions">
-              <a className="btn btn--primary" href={registryProfilePath(item)} tabIndex={layer.current ? undefined : -1}>View {item.name}</a>
-              <a className="btn btn--ghost" href={`${registryProfilePath(item)}#record`} tabIndex={layer.current ? undefined : -1}>Check the token</a>
+              <a className="btn btn--primary" href={registryProfilePath(item)} tabIndex={layer.current ? undefined : -1}>Explore {item.name}</a>
+              <a className="btn btn--ghost" href={`${registryProfilePath(item)}#record`} tabIndex={layer.current ? undefined : -1}>View official record</a>
             </div>
           </article>
         );
@@ -5784,7 +5834,7 @@
               sizes="(max-width: 899px) calc(100vw - 32px), min(54vw, 760px)"
               width="1024"
               height="1024"
-              alt={layer.current ? `${item.name} gold sculpture` : ''}
+              alt={layer.current ? `${item.name} Zodiac artwork` : ''}
               decoding="async"
               onLoad={(event) => {
                 const image = event.currentTarget;
@@ -5812,7 +5862,7 @@
             <span
               className="vitrine-stage__fallback"
               role={layer.current && layer.fallback ? 'img' : undefined}
-              aria-label={layer.current && layer.fallback ? `${item.name} sculpture unavailable; ${item.symbol} symbol shown` : undefined}
+              aria-label={layer.current && layer.fallback ? `${item.name} artwork unavailable; ${item.symbol} symbol shown` : undefined}
               aria-hidden={layer.current && layer.fallback ? undefined : 'true'}
             >
               {item.symbol}
@@ -5832,7 +5882,7 @@
         >
           <ConsumerIdentityHeader />
           <VitrineDiscRail active={active} setActive={setActive} interruptTransition={interruptTransition} />
-          <div className="vitrine-stage" aria-label={`${sign.name} gold sculpture`} data-vitrine-stage>
+          <div className="vitrine-stage" aria-label={`${sign.name} Zodiac artwork`} data-vitrine-stage>
             {layers.map(renderSculpture)}
           </div>
           <VitrinePlacard layers={layers} batch={batch} />
@@ -5840,7 +5890,7 @@
       );
     }
 
-    function ConsumerVerifier() {
+    function ConsumerVerifier({ embedded = false }) {
       const reveal = useReveal();
       const [input, setInput] = useState('');
       const [result, setResult] = useState(null);
@@ -5862,10 +5912,14 @@
           : { state: 'not-found', queried: query });
       };
       const networkLabel = result?.network === 'base' ? 'Base' : 'Solana';
+      const Wrapper = embedded ? 'div' : 'section';
       return (
-        <section ref={reveal} id="verify" className="consumer-verify reveal" aria-labelledby="consumer-verify-title">
+        <Wrapper ref={reveal} id="verify" className={'consumer-verify reveal' + (embedded ? ' is-embedded' : '')} aria-labelledby="consumer-verify-title">
           <header className="consumer-section-head">
-            <h2 id="consumer-verify-title">Check a Zodiac token address</h2>
+            {embedded && <span className="consumer-eyebrow">Address checker</span>}
+            {embedded
+              ? <h3 id="consumer-verify-title">Verify an address</h3>
+              : <h2 id="consumer-verify-title">Check a Zodiac token address</h2>}
           </header>
           <p className="consumer-verify__intro">Paste the token address shown where you found it. We&rsquo;ll tell you whether it appears in the verified list. Never paste a recovery phrase.</p>
           <p className="consumer-verify__distinction">This checks a token address, not a personal account.</p>
@@ -5903,89 +5957,48 @@
               )}
             </div>
           )}
-        </section>
+        </Wrapper>
       );
     }
 
-    function ConsumerHowItWorks({ sign }) {
+    function ConsumerRegistryGuide({ sign }) {
       const reveal = useReveal();
       return (
-        <section ref={reveal} id="registry" className="consumer-how reveal" aria-labelledby="consumer-how-title" data-vitrine-rule>
+        <section ref={reveal} id="registry" className="consumer-registry-guide reveal" aria-labelledby="consumer-registry-title" data-vitrine-rule>
           <header className="consumer-section-head">
-            <h2 id="consumer-how-title">What is a Zodiac?</h2>
+            <span className="consumer-eyebrow">The public Registry</span>
+            <h2 id="consumer-registry-title">Know you have the official Zodiac.</h2>
+            <p>Names and symbols can be copied. The exact address in the public record is what identifies each verified token.</p>
           </header>
-          <p className="consumer-how__intro">Zodiacs has twelve tokens, one for each sign. The public Registry lists the exact address that belongs to each one.</p>
-          <ol id="identity" className="consumer-steps" aria-label="The parts of a Zodiac">
-            <li>
-              <span className="consumer-step__visual consumer-step__constellation" aria-hidden="true">
-                {['aries', 'leo', 'pisces'].map((slug, index) => (
-                  <img key={slug} className={index === 1 ? 'is-primary' : ''} src={`/assets/zodiac-icons/48/${slug}.webp`} width="38" height="38" alt="" loading="lazy" decoding="async" />
-                ))}
-              </span>
-              <span className="consumer-step__copy">
-                <strong>One token for each sign</strong>
-                <small>Twelve signs. Twelve tokens.</small>
-              </span>
-            </li>
-            <li>
-              <span className="consumer-step__visual consumer-step__record" aria-hidden="true">
-                <img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="30" height="30" alt="" loading="lazy" decoding="async" />
-                <code>{truncateAddress(sign.representations.solana.address, 5, 4)}</code>
-              </span>
-              <span className="consumer-step__copy">
-                <strong>The address tells them apart</strong>
-                <small>Names can be copied. The exact address in the public record identifies the verified token.</small>
-              </span>
-            </li>
-            <li>
-              <span className="consumer-step__visual consumer-step__transfer" aria-hidden="true">
-                <span><img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="34" height="34" alt="" loading="lazy" decoding="async" /></span>
-                <i>→</i>
-                <span><img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="34" height="34" alt="" loading="lazy" decoding="async" /></span>
-              </span>
-              <span className="consumer-step__copy">
-                <strong>Keep it, send it, or gift it</strong>
-                <small>You can keep a Zodiac, send it to someone else, or give it as a gift. Its price can rise or fall, and you may not always find a buyer.</small>
-              </span>
-            </li>
-          </ol>
-          <div className="consumer-proof" aria-label="Registry facts">
-            <span><strong>12</strong> official tokens</span>
-            <span><strong>2 verified addresses</strong> for each sign</span>
-          </div>
-          <div className="consumer-how__disclosures">
-            <details className="consumer-disclosure">
-              <summary>How verification works</summary>
-              <div className="consumer-disclosure__body">
-                <p>Names and tickers can be copied. Verification compares the exact address with the published Registry.</p>
-                <a href="/registry/technical/#records-networks">See the records</a>
+          <div className="consumer-registry-guide__grid">
+            <article id="identity" className="consumer-registry-guide__record" style={{ '--record-sign': sign.hue }}>
+              <div className="consumer-registry-guide__sign">
+                <img src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`} width="72" height="72" alt="" loading="lazy" decoding="async" />
+                <span><small>Selected record</small><strong>{sign.name}</strong></span>
               </div>
-            </details>
-            <details className="consumer-disclosure">
-              <summary>See market details</summary>
-              <div className="consumer-disclosure__body">
-                <p>Price is independent third-party context. It can be delayed or unavailable and never changes the official record.</p>
-                <a href="/registry/technical/#market-transparency">See the sourcing method</a>
-              </div>
-            </details>
+              <dl>
+                <div><dt>Solana</dt><dd><code>{truncateAddress(sign.representations.solana.address, 7, 5)}</code></dd></div>
+                <div><dt>Base</dt><dd><code>{truncateAddress(sign.representations.base.address, 7, 5)}</code></dd></div>
+              </dl>
+              <a href={registryProfilePath(sign)}>Open the complete {sign.name} record <span aria-hidden="true">→</span></a>
+              <details className="consumer-disclosure">
+                <summary>Why the address matters</summary>
+                <div className="consumer-disclosure__body">
+                  <p>A familiar name or ticker is not enough. Verification compares the complete address with the published Registry.</p>
+                  <a href="/registry/technical/#records-networks">See how records work</a>
+                </div>
+              </details>
+            </article>
+            <ConsumerVerifier embedded />
           </div>
         </section>
       );
     }
 
-    function ConsumerPurpose() {
+    function ConsumerStory() {
       const reveal = useReveal();
-      // The same curator's sample shown inside the real Cabinet: Aries Crown
-      // Gold, Cancer pastel, Leo bronze, Scorpio silver, and Aquarius Gold.
-      const cabinetSample = Object.freeze({
-        aries: { finish: 'crown', numeral: 'V', count: '×12' },
-        cancer: { finish: 'pastel', numeral: 'I' },
-        leo: { finish: 'bronze', numeral: 'II' },
-        scorpio: { finish: 'silver', numeral: 'III' },
-        aquarius: { finish: 'gold', numeral: 'IV', count: '×3' },
-      });
       return (
-        <section ref={reveal} id="thesis" className="consumer-purpose reveal" aria-labelledby="consumer-purpose-title">
+        <section ref={reveal} id="thesis" className="consumer-story reveal" aria-labelledby="consumer-story-title">
           <article className="consumer-thesis">
             <a className="consumer-thesis__link" href="/thesis/">
               <div className="consumer-thesis__visual">
@@ -6003,59 +6016,76 @@
                 <span className="consumer-thesis__line" aria-hidden="true">Symbol · record · identity</span>
               </div>
               <div className="consumer-purpose__essay">
-                <h2 id="consumer-purpose-title">The story behind the collection</h2>
-                <p>The twelve signs have travelled through calendars, charts, jewellery, and screens. This is the story of giving their token records one public home.</p>
+                <span className="consumer-eyebrow">The Twelve</span>
+                <h2 id="consumer-story-title">The story behind the collection.</h2>
+                <p>The twelve signs have travelled through calendars, charts, jewellery, and screens. Astrofolio gives their token records one public home.</p>
                 <span className="consumer-purpose__cta"><span>Read the story</span><span className="consumer-purpose__arrow" aria-hidden="true">→</span></span>
               </div>
             </a>
           </article>
-          {REGISTRY_AURA_ENABLED && (
-            <article className="consumer-collection" data-registry-collection>
-              <a className="consumer-collection__link" href={REGISTRY_AURA_PATH}>
-                <div className="consumer-collection__copy">
-                  <small className="consumer-collection__eyebrow">A public collection</small>
-                  <h3>Cabinet of Twelve</h3>
-                  <p>See the signs held by a public address. No wallet connection is required.</p>
-                </div>
-                <div className="consumer-collection__art" aria-hidden="true">
-                  <div className="consumer-cabinet">
-                    <div className="consumer-cabinet__seats">
-                      {SIGNS.map((item, index) => {
-                        const edition = cabinetSample[item.asset.sign];
-                        const occupied = Boolean(edition);
-                        const sculpture = edition?.finish === 'gold' || edition?.finish === 'crown';
-                        const imagePath = sculpture
-                          ? `/assets/cabinet-materials/gold/${item.asset.sign}`
-                          : `/assets/zodiac-icons/128/${item.asset.sign}`;
-                        return (
-                          <span
-                            key={item.ticker}
-                            className={'consumer-cabinet__seat' + (occupied ? ` is-filled is-${edition.finish}` : ' is-empty')}
-                            style={{ '--seat-i': index }}
-                            data-cabinet-sample-finish={edition?.finish}
-                          >
-                            <span className="consumer-cabinet__number">{String(index + 1).padStart(2, '0')}</span>
-                            {occupied ? (
-                              <>
-                                <picture>
-                                  <source srcSet={`${imagePath}.avif`} type="image/avif" />
-                                  <img src={`${imagePath}.webp`} width="128" height="128" alt="" loading="lazy" decoding="async" />
-                                </picture>
-                                <span className="consumer-cabinet__edition">{edition.numeral}</span>
-                                {edition.count && <span className="consumer-cabinet__count">{edition.count}</span>}
-                              </>
-                            ) : <span className="consumer-cabinet__glyph">{item.symbol}</span>}
-                          </span>
-                        );
-                      })}
-                    </div>
-                    <span className="consumer-cabinet__plaque"><strong>5 / 12</strong><span>Curator&rsquo;s sample</span></span>
+        </section>
+      );
+    }
+
+    function ConsumerCabinet() {
+      const reveal = useReveal();
+      const cabinetSample = Object.freeze({
+        aries: { finish: 'crown', numeral: 'V', count: '×12' },
+        cancer: { finish: 'pastel', numeral: 'I' },
+        leo: { finish: 'bronze', numeral: 'II' },
+        scorpio: { finish: 'silver', numeral: 'III' },
+        aquarius: { finish: 'gold', numeral: 'IV', count: '×3' },
+      });
+      const CabinetSurface = REGISTRY_AURA_ENABLED ? 'a' : 'div';
+      return (
+        <section ref={reveal} id="cabinet" className="consumer-cabinet-section reveal" aria-labelledby="consumer-cabinet-title">
+          <article className="consumer-collection" data-registry-collection>
+            <CabinetSurface className="consumer-collection__link" {...(REGISTRY_AURA_ENABLED ? { href: REGISTRY_AURA_PATH } : {})}>
+              <div className="consumer-collection__copy">
+                <small className="consumer-collection__eyebrow">A public collection</small>
+                <h2 id="consumer-cabinet-title">Cabinet of Twelve</h2>
+                <p>See which signs a public address holds. No wallet connection is required.</p>
+              </div>
+              <div className="consumer-collection__art" aria-hidden="true">
+                <div className="consumer-cabinet">
+                  <div className="consumer-cabinet__seats">
+                    {SIGNS.map((item, index) => {
+                      const edition = cabinetSample[item.asset.sign];
+                      const occupied = Boolean(edition);
+                      const goldArtwork = edition?.finish === 'gold' || edition?.finish === 'crown';
+                      const imagePath = goldArtwork
+                        ? `/assets/cabinet-materials/gold/${item.asset.sign}`
+                        : `/assets/zodiac-icons/128/${item.asset.sign}`;
+                      return (
+                        <span
+                          key={item.ticker}
+                          className={'consumer-cabinet__seat' + (occupied ? ` is-filled is-${edition.finish}` : ' is-empty')}
+                          style={{ '--seat-i': index }}
+                          data-cabinet-sample-finish={edition?.finish}
+                        >
+                          <span className="consumer-cabinet__number">{String(index + 1).padStart(2, '0')}</span>
+                          {occupied ? (
+                            <>
+                              <picture>
+                                <source srcSet={`${imagePath}.avif`} type="image/avif" />
+                                <img src={`${imagePath}.webp`} width="128" height="128" alt="" loading="lazy" decoding="async" />
+                              </picture>
+                              <span className="consumer-cabinet__edition">{edition.numeral}</span>
+                              {edition.count && <span className="consumer-cabinet__count">{edition.count}</span>}
+                            </>
+                          ) : <span className="consumer-cabinet__glyph">{item.symbol}</span>}
+                        </span>
+                      );
+                    })}
                   </div>
+                  <span className="consumer-cabinet__plaque"><strong>5 / 12</strong><span>Curator&rsquo;s sample</span></span>
                 </div>
-                <span className="consumer-purpose__cta consumer-collection__cta"><span>Open the Cabinet</span><span className="consumer-purpose__arrow" aria-hidden="true">→</span></span>
-              </a>
-            </article>
-          )}
+              </div>
+              {REGISTRY_AURA_ENABLED
+                ? <span className="consumer-purpose__cta consumer-collection__cta"><span>Open the Cabinet</span><span className="consumer-purpose__arrow" aria-hidden="true">→</span></span>
+                : <span className="consumer-collection__preview">Collection preview</span>}
+            </CabinetSurface>
+          </article>
         </section>
       );
     }
@@ -6063,7 +6093,7 @@
     const CONSUMER_FAQS = [
       {
         q: 'What is Astrofolio?',
-        a: 'Astrofolio is the collection of twelve official Zodiac tokens—one for each sign—paired with their gold sculpture artwork and public Registry records.'
+        a: 'Astrofolio is the collection of twelve official Zodiac tokens—one for each sign—with its own design and public Registry record.'
       },
       {
         q: 'How do I know a Zodiac is official?',
@@ -6078,8 +6108,8 @@
         a: 'No. You can browse the collection, see market context, and verify addresses without connecting a wallet.'
       },
       {
-        q: 'Where can I buy Astrofolio merchandise?',
-        a: 'The Astrofolio Shop carries official clothing and collections for the twelve signs.'
+        q: 'Where can I find Astrofolio merchandise?',
+        a: 'Browse the Astrofolio Shop for clothing inspired by the twelve signs.'
       },
       {
         q: 'What are the risks?',
@@ -6117,7 +6147,7 @@
     function ConsumerClosing() {
       const reveal = useReveal();
       return (
-        <section ref={reveal} className="consumer-closing reveal" aria-labelledby="consumer-closing-title" data-vitrine-rule>
+        <section ref={reveal} className="consumer-closing reveal" aria-labelledby="consumer-closing-title">
           <h2 id="consumer-closing-title">See all twelve records</h2>
           <p>The Registry is the public record for every sign in the collection.</p>
           <div className="consumer-closing__actions">
@@ -6643,14 +6673,17 @@
               sign={sign}
               batch={consumerMarket}
             />
-            <ConsumerPurpose />
+            <ConsumerIntroduction />
+            <ConsumerStory />
+            <ConsumerShop />
             <ConsumerMarketSnapshot
+              sign={sign}
               batch={consumerMarket}
               onRetry={() => setConsumerMarketRetry(value => value + 1)}
             />
-            <ConsumerDestinations sign={sign} />
-            <ConsumerHowItWorks sign={sign} />
-            <ConsumerVerifier />
+            <ConsumerTerminalStrip sign={sign} />
+            <ConsumerCabinet />
+            <ConsumerRegistryGuide sign={sign} />
             <ConsumerFaq />
             <ConsumerClosing />
             <span id="market" className="terminal-compat-target" aria-hidden="true" />

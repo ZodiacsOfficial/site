@@ -103,10 +103,10 @@ export const EDITION_META: Record<AuraCabinetEdition, FinishMeta> = {
   },
   gold: {
     numeral: 'IV',
-    name: 'Gold Sculpture',
+    name: 'Gold Edition',
     short: 'Gold',
     range: 'From 1,000,000 held',
-    material: 'The sign itself, cast in gold — the only edition that becomes a sculpture.',
+    material: 'A full gold treatment of the sign design.',
   },
   crown: {
     numeral: 'V',
@@ -114,7 +114,7 @@ export const EDITION_META: Record<AuraCabinetEdition, FinishMeta> = {
     short: 'Crown',
     range: 'From 10,000,000 held',
     material:
-      'Ten gold sculptures standing in one seat. Its seat is framed in gold, and the case is gilded around it.',
+      'Ten Gold Editions in one seat. Its seat is framed in gold, and the case is gilded around it.',
   },
 };
 
@@ -226,9 +226,9 @@ export function principalSign(
 
 function sculpturesLine(goldCount: bigint): string {
   if (goldCount === 1n) {
-    return 'One gold sculpture — one for each complete million held.';
+    return 'One Gold Edition — one for each complete million held.';
   }
-  return `${exactGoldCount(goldCount.toString())} gold sculptures — one for each complete million held.`;
+  return `${exactGoldCount(goldCount.toString())} Gold Editions — one for each complete million held.`;
 }
 
 function decodeImage(image: HTMLImageElement): Promise<boolean> {
@@ -560,7 +560,7 @@ export function AuraCollectionCabinet({
                 : Number(goldCount - 1n > 3n ? 3n : goldCount - 1n);
               const strikesOverflow = goldCount !== null && goldCount > 4n;
               const status = represented
-                ? `represented as ${EDITION_META[edition!].name}${goldCount ? `, ${exactGoldCount(goldCount.toString())} gold ${goldCount === 1n ? 'sculpture' : 'sculptures'}` : ''}`
+                ? `represented as ${EDITION_META[edition!].name}${goldCount && goldCount > 1n ? `, ${exactGoldCount(goldCount.toString())} Gold Editions` : ''}`
                 : 'place reserved — no holding found';
 
               return (
@@ -699,7 +699,7 @@ export function AuraCollectionCabinet({
             <div
               class="aura-collection-cabinet__lineage"
               aria-label={activeEdition
-                ? `${active.name} edition: ${EDITION_META[activeEdition].name}${activeGoldCount ? `, ${exactGoldCount(activeGoldCount.toString())} gold ${activeGoldCount === 1n ? 'sculpture' : 'sculptures'}` : ''}`
+                ? `${active.name} edition: ${EDITION_META[activeEdition].name}${activeGoldCount && activeGoldCount > 1n ? `, ${exactGoldCount(activeGoldCount.toString())} Gold Editions` : ''}`
                 : `${active.name} is not represented`}
             >
               {EDITION_ORDER.map((edition) => (

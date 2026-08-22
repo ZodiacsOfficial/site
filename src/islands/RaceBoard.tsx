@@ -389,7 +389,7 @@ export default function RaceBoard({
           src={`/assets/sculptures/512/${seasonSlug}.webp`}
           width={200}
           height={200}
-          alt={`The ${seasonName} sculpture — this season’s trophy`}
+          alt={`The ${seasonName} Zodiac design — this season’s trophy`}
           loading="lazy"
           decoding="async"
         />

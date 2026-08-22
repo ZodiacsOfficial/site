@@ -108,7 +108,7 @@ Astrofolio.xyz is a related external consumer project exploring personal Zodiac 
 
 ### Astrofolio
 
-Astrofolio at https://zodiacs.org/astrofolio/ is the consumer collection. It leads with the sign picker, gold sculpture, official token, Registry record, today's price, and a simple guide to buying.
+Astrofolio at https://zodiacs.org/astrofolio/ is the consumer collection. It leads with the sign picker, official token, Registry record, today's price, and a simple guide to buying.
 
 ### Terminal
 

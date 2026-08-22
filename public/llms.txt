@@ -54,7 +54,7 @@ Astrofolio.xyz relationship:
 Astrofolio.xyz is a related external consumer project exploring personal Zodiac shelves, profiles, and share cards at https://astrofolio.xyz/. It is distinct from Astrofolio on Zodiacs.org. Zodiacs.org remains the free astrology reference and the official registry and SDK source of truth. Saved charts on Zodiacs.org live in the visitor's browser first; optional account sync is available from the saved-charts profile.
 
 Astrofolio, Terminal, and the Registry:
-- Astrofolio: choose a sign, see its gold sculpture and official token, check its Registry record, and follow a simple guide to buying it: https://zodiacs.org/astrofolio/
+- Astrofolio: choose a sign, see its official token, check its Registry record, and follow a simple guide to buying it: https://zodiacs.org/astrofolio/
 - Terminal: the expert market desk with a dense ranked view of all twelve, live price, 24-hour change, indexed liquidity, market tape, a selected-sign chart, briefings, season context, and research: https://zodiacs.org/terminal/
 - Markets Research — reviewed research archive and shareable notes: https://zodiacs.org/terminal/research/
 - The Zodiacs Registry — the canonical read-only record for one token per sign (native Solana SPL and official Base ERC-20 counterpart), including its public address verifier and machine-readable data: https://zodiacs.org/registry/

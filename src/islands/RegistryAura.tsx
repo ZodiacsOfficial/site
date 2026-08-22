@@ -1439,9 +1439,9 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
             or plainer.
           </p>
           <p>
-            Gold counts in sculptures — one for each complete million held. The
-            tenth sculpture in a single seat, 10,000,000 held, is the last
-            edition — Crown Gold. That seat is framed in gold, the case is gilded around it,
+            Each complete million held adds one Gold Edition. The tenth Gold
+            Edition in a single seat, 10,000,000 held, is the last edition —
+            Crown Gold. That seat is framed in gold, the case is gilded around it,
             and the whole cabinet carries a cast plate sealed V. A seat badge
             shows up to ×99; beyond that it reads ×99+ and the placard keeps
             the exact count.
