@@ -230,6 +230,61 @@ async function capture(browser, baseURL, testCase) {
     `,
   });
   await settlePage(page, testCase);
+
+  if (testCase.result && testCase.viewport.name === 'mobile') {
+    const geometry = await page.evaluate(async () => {
+      const viewport = document.documentElement.clientWidth;
+      const selectors = [
+        '.calc__result',
+        '.calc__result > *',
+        '.calc__approach',
+        '.calc__approach-part',
+        '.calc__comm',
+        '.calc__comm-part',
+        '.calc__record',
+        '.calc__wheel',
+      ];
+      const escaped = [...document.querySelectorAll(selectors.join(', '))]
+        .filter((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.left < -1 || rect.right > viewport + 1;
+        })
+        .map((element) => {
+          const rect = element.getBoundingClientRect();
+          return {
+            className: element.className,
+            left: rect.left,
+            right: rect.right,
+            width: rect.width,
+          };
+        });
+
+      const scrollY = window.scrollY;
+      window.scrollTo({ left: 100, top: scrollY, behavior: 'instant' });
+      await new Promise((resolveFrame) => requestAnimationFrame(() => requestAnimationFrame(resolveFrame)));
+      const scrollX = window.scrollX;
+      window.scrollTo({ left: 0, top: scrollY, behavior: 'instant' });
+
+      return {
+        viewport,
+        htmlWidth: document.documentElement.scrollWidth,
+        bodyWidth: document.body.scrollWidth,
+        scrollX,
+        escaped,
+      };
+    });
+    if (
+      geometry.htmlWidth > geometry.viewport + 1
+      || geometry.bodyWidth > geometry.viewport + 1
+      || geometry.scrollX !== 0
+      || geometry.escaped.length > 0
+    ) {
+      throw new Error(
+        `Rendered birth chart escapes the mobile viewport: ${JSON.stringify(geometry)}`,
+      );
+    }
+  }
+
   const masks = await page.locator(liveDailySelectors.join(', ')).evaluateAll((elements) => (
     elements.flatMap((element) => {
       const rect = element.getBoundingClientRect();
