@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "id": "growth-activation-a-guide-privacy-2026-08-19",
-  "baseCommit": "cdc187927931d36adc241544d4bc4e4cf9ad15d7",
-  "note": "Owner-authorized Packet A for GROWTH-2026-08-19-full-marketing-audit: regenerate the static Guide loaders so the tab-scoped analytics privacy boundary applies to the existing Registry, SDK, and Terminal shells. No Registry product behavior or copy changes.",
+  "id": "growth-activation-a-guide-privacy-2026-08-22",
+  "baseCommit": "f6d54346cf70aca47d6d952214d834e87def8594",
+  "note": "Owner-authorized Packet A for GROWTH-2026-08-19-full-marketing-audit: regenerate the static Guide loaders so the tab-scoped analytics privacy boundary applies to the existing Registry, SDK, and Terminal shells. This refresh rebases the allowance on current main without changing Registry product behavior or copy.",
   "protectedPaths": [
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",
