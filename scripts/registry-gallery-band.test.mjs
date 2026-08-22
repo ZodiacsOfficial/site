@@ -135,7 +135,7 @@ describe('the legacy shared gallery band', () => {
     // every wheel/trackpad gesture belongs to the document.
     expect(scene).toContain('if (spotlight) return;');
     expect(scene).toContain('if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;');
-    // A sculpture opens its record in place — never a navigation.
+    // A gallery piece opens its record in place — never a navigation.
     expect(scene).not.toContain('location.assign');
     expect(scene).toContain('void openFigure(index)');
     // Hovering says so before the click does.
@@ -277,7 +277,7 @@ describe('the legacy shared gallery band', () => {
     const rectangle = app.slice(opens, app.indexOf('</section>', opens));
     expect(rectangle).toContain('<div className="gband__rail-top">');
     expect(rectangle).toContain('{!consumer && (\n          <div className="gband__chrome">');
-    // The sculpture keeps one interaction meaning: it selects. Acquisition
+    // The gallery piece keeps one interaction meaning: it selects. Acquisition
     // remains the explicit placard action, so the scene never navigates or
     // emits a hidden trade request.
     const scene = await read('src/shelf/main.mjs');
@@ -305,7 +305,7 @@ describe('the legacy shared gallery band', () => {
     expect(cancel).not.toContain('velocity');
   });
 
-  it('never turns a vertical touch into a sculpture tap', async () => {
+  it('never turns a vertical touch into an artwork tap', async () => {
     const scene = await read('src/shelf/main.mjs');
     const release = functionBody(scene, 'endPointer');
 
@@ -345,11 +345,11 @@ describe('the legacy shared gallery band', () => {
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
     // The static vitrine keeps all twelve destinations useful without
-    // JavaScript and mirrors the three hydrated placard actions.
+    // JavaScript and mirrors the two hydrated placard actions.
     for (const slug of ['aries', 'virgo', 'pisces']) {
       const title = slug[0].toUpperCase() + slug.slice(1);
-      expect(html).toContain(`href="/registry/${slug}/">View ${title}</a>`);
-      expect(html).toContain(`href="/registry/${slug}/#record">Check the token</a>`);
+      expect(html).toContain(`href="/registry/${slug}/">Explore ${title}</a>`);
+      expect(html).toContain(`href="/terminal/?sign=${slug}" data-terminal-static-view="pro">Open Terminal</a>`);
     }
     expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
     expect(html).not.toMatch(/href="\/registry\/[a-z-]+\/#acquire"/u);
@@ -396,7 +396,7 @@ describe('the legacy shared gallery band', () => {
     // The resting magnification is affordance, not animation: the current
     // sign stands proud for touch and keyboard readers who raise no wave.
     expect(scene).toContain('1 + DOCK.rest');
-    // Keyboard selection snaps both the sculpture and its disc; pointer input
+    // Keyboard selection snaps both the artwork and its disc; pointer input
     // restores the dock transition for direct manipulation.
     expect(scene).toContain("root.dataset.galleryInput = 'keyboard';");
     expect(scene).toContain("root.dataset.galleryInput = 'pointer';");

@@ -50,7 +50,7 @@ describe('AuraCollectionCabinet', () => {
     expect(markup).toContain('/assets/cabinet-materials/gold/pisces.webp');
     expect(markup).toContain('aura-collection-cabinet__multiplicity-badge');
     expect(markup).toContain('>×3</span>');
-    expect(markup).toContain('gold sculptures');
+    expect(markup).toContain('Gold Editions');
     // Absence is a reserved niche, never a shouted deficiency.
     expect(markup).not.toContain('NOT REPRESENTED');
     expect(markup).toContain('place reserved — no holding found');
@@ -159,9 +159,9 @@ describe('AuraCollectionCabinet', () => {
     expect(markup).toContain('data-aura-cabinet-edition="crown"');
     expect(markup).toContain('data-aura-cabinet-lineage="crown"');
     expect(markup).toContain('>×12</span>');
-    // The seat still holds a Gold sculpture: gilding frames it, never replaces it.
+    // The seat still holds a Gold design: gilding frames it, never replaces it.
     expect(markup).toContain('/assets/cabinet-materials/gold/leo.webp');
-    // Nine sculptures is still the Gold Sculpture, and the case stays plain.
+    // Nine editions still use the Gold design, and the case stays plain.
     expect(uncrowned).toContain('data-aura-cabinet-crown="false"');
     expect(uncrowned).not.toContain('data-aura-cabinet-crown-plate');
     expect(uncrowned).not.toContain('data-aura-cabinet-edition="crown"');
@@ -184,12 +184,12 @@ describe('AuraCollectionCabinet', () => {
     // One roundel per additional Masterwork, up to three, then a "+" marker.
     expect(doubleMarkup.match(/aura-collection-cabinet__strike-roundel/g)).toHaveLength(1);
     expect(doubleMarkup).toContain('×2');
-    expect(doubleMarkup).toContain('2 gold sculptures — one for each complete million held.');
+    expect(doubleMarkup).toContain('2 Gold Editions — one for each complete million held.');
     expect(largeMarkup.match(/aura-collection-cabinet__strike-roundel--more/g)).toHaveLength(1);
     // The badge caps at ×99+ everywhere public; the placard keeps the exact figure.
     expect(largeMarkup).toContain('×99+');
     expect(largeMarkup).not.toContain('×2.5K');
-    expect(largeMarkup).toContain('2,500 gold sculptures — one for each complete million held.');
+    expect(largeMarkup).toContain('2,500 Gold Editions — one for each complete million held.');
     expect(largeMarkup).toContain('· ×2,500');
   });
 
