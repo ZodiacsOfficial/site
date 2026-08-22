@@ -9,6 +9,8 @@ const REQUIRED_EVENTS = [
   'share_card_downloaded',
   'widget_embed_copied',
   'registry_visit',
+  'registry_bridge_impression',
+  'registry_bridge_click',
   'verifier_used',
   'terminal_view_switch',
   'sdk_click',
@@ -109,6 +111,55 @@ describe('analytics event contract', () => {
       action: 'today',
       chartId: 'private',
     })).toEqual({ state: 'saved', action: 'today' });
+  });
+
+  it('keeps Registry bridge measurement aggregate-only and inside fixed enums', () => {
+    const privateFields = {
+      birthDate: '1990-01-01',
+      birthTime: '12:34',
+      place: 'Bangkok',
+      timeZone: 'Asia/Bangkok',
+      latitude: 13.75,
+      longitude: 100.5,
+      chartId: 'private',
+      href: '/registry/leo/?private=1',
+    };
+    expect(sanitizeAnalyticsProperties('registry_bridge_impression', {
+      sign: 'leo',
+      surface: 'birth_chart',
+      locale: 'en',
+      ...privateFields,
+    })).toEqual({ sign: 'leo', surface: 'birth_chart', locale: 'en' });
+    expect(sanitizeAnalyticsProperties('registry_bridge_click', {
+      sign: 'pisces',
+      surface: 'birthday',
+      locale: 'fr',
+      ...privateFields,
+    })).toEqual({ sign: 'pisces', surface: 'birthday', locale: 'fr' });
+    expect(sanitizeAnalyticsProperties('registry_bridge_impression', {
+      sign: 'ophiuchus',
+      surface: 'custom-page',
+      locale: 'visitor@example.com',
+    })).toEqual({});
+  });
+
+  it('scrubs Registry bridge payloads at the actual browser emission boundary', () => {
+    const track = vi.fn();
+    vi.stubGlobal('window', { zodiacsAnalytics: { track } });
+    trackAnalytics('registry_bridge_click', {
+      sign: 'aries',
+      surface: 'sign_guide',
+      locale: 'pt',
+      date: '2026-03-20',
+      time: '22:15',
+      place: 'Bangkok',
+      chartId: 'private',
+    });
+    expect(track).toHaveBeenCalledWith('registry_bridge_click', {
+      sign: 'aries',
+      surface: 'sign_guide',
+      locale: 'pt',
+    });
   });
 
   it('keeps sharing-loop analytics inside fixed, non-identifying enums', () => {

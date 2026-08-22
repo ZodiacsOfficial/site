@@ -196,6 +196,10 @@ const it = {
   recordOneOfTwelve:
     "esiste anche come uno dei Dodici — una scheda di riferimento nel registro.",
   recordViewLink: "Vedi la scheda →",
+  recordChartSun: "Il tuo Sole è in {sign}.",
+  recordChartBody:
+    "{sign} è uno dei Dodici, con la propria arte, storia e scheda ufficiale nel Registro.",
+  recordChartLink: "Esplora il Registro di {sign} →",
   babyDueDate: "Data prevista del parto",
   babyCompute: "Leggi il cielo della data prevista",
   babyNeedDate: "Inserisci prima una data prevista.",

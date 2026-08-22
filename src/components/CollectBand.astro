@@ -10,21 +10,49 @@ interface Props {
   signName: string;
   slug: string;
   locale?: Locale;
+  surface?: 'sign_guide' | 'birthday';
 }
-const { signName, slug, locale = 'en' } = Astro.props;
+const { signName, slug, locale = 'en', surface = 'sign_guide' } = Astro.props;
 const copy = {
   label: t(locale, 'recordLabel'),
   text: `${signName} ${t(locale, 'recordOneOfTwelve')}`,
   link: t(locale, 'recordViewLink'),
 };
 ---
-<aside class="collect-band">
+<aside
+  class="collect-band"
+  data-registry-bridge
+  data-registry-bridge-sign={slug}
+  data-registry-bridge-surface={surface}
+  data-registry-bridge-locale={locale}
+>
   <span class="collect-band__label mono">{copy.label}</span>
   <span class="collect-band__text">
     {copy.text}
   </span>
   <a class="collect-band__link" href={`/registry/${slug}/`}>{copy.link}</a>
 </aside>
+
+<script is:inline>
+  (function () {
+    var bridges = document.querySelectorAll(
+      '[data-registry-bridge]:not([data-registry-bridge-bound])'
+    );
+    bridges.forEach(function (bridge) {
+      bridge.dataset.registryBridgeBound = '';
+      var sign = bridge.dataset.registryBridgeSign;
+      var surface = bridge.dataset.registryBridgeSurface;
+      var locale = bridge.dataset.registryBridgeLocale;
+      if (!sign || !surface || !locale) return;
+      var properties = { sign: sign, surface: surface, locale: locale };
+      window.zodiacsAnalytics.track('registry_bridge_impression', properties);
+      var link = bridge.querySelector('.collect-band__link');
+      if (link) link.addEventListener('click', function () {
+        window.zodiacsAnalytics.track('registry_bridge_click', properties);
+      });
+    });
+  })();
+</script>
 
 <style>
   .collect-band {

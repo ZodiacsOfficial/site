@@ -44,7 +44,7 @@ known gaps. Do not ingest raw sessions, user IDs, emails, IPs, or birth data.
 | Compatibility action/view ratio | `compat_computed` actions / `/compatibility/` route views in the same UTC window | Directional comparison usefulness |
 | Share action/view ratio | `share_card_downloaded` actions / eligible tool route views in the same UTC window | Directional result utility |
 | Organic CTR | Search clicks / search impressions | Query-page fit |
-| Registry wing entry/view ratio | `wing_entry` actions / consumer route views in the same UTC window | Boundary health, not a maximization target |
+| Registry wing entry/view ratio | `registry_bridge_click` actions / consumer route views in the same UTC window | Boundary health, not a maximization target |
 
 Every numerator and denominator above is an independently aggregated count,
 never a linked visitor or session trail. Treat each ratio as directional only:

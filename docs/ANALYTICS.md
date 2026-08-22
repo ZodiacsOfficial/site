@@ -105,7 +105,14 @@ New directive code uses the taxonomy above.
 | `push_prompt`, `push_subscribe` | — | Flag-gated notification scaffold |
 | `today_view` | — | The today brief renders |
 | `calendar_subscribe` | — | A transit calendar is subscribed |
-| `wing_entry` | `source` | An astrology-to-Registry link is followed |
+| `wing_entry` | `source` | Legacy astrology-to-Registry click taxonomy |
+| `registry_bridge_impression` | `sign`, `surface`, `locale` | An eligible chart, birthday, or sign-guide Registry bridge renders |
+| `registry_bridge_click` | `sign`, `surface`, `locale` | A visitor follows that Registry bridge |
+
+Registry bridge properties are closed, aggregate dimensions only: one of the
+twelve sign slugs, `birth_chart` / `birthday` / `sign_guide`, and a released UI
+locale. Birth date, time, place, coordinates, chart identifiers, URLs, and
+free text are not accepted.
 
 ## Registry lot events
 

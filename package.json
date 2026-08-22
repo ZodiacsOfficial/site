@@ -72,6 +72,7 @@
     "test:registry-selector:browser": "node tests/registry-browser-drive.mjs",
     "test:terminal-split:browser": "node tests/terminal-split-drive.mjs",
     "test:registry-hub:browser": "node tests/registry-hub-drive.mjs",
+    "test:registry-bridge:dist": "node scripts/check-registry-bridge-dist.mjs",
     "test:today:browser": "node tests/today-drive.mjs",
     "test:horoscopes:browser": "node tests/horoscope-program-drive.mjs",
     "test:phase1:acceptance": "node tests/phase1-acceptance-drive.mjs",

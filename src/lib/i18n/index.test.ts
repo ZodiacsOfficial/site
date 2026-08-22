@@ -27,9 +27,9 @@ import {
 } from './index';
 
 describe('i18n helpers', () => {
-  it('keeps every localized UI catalog aligned with all 387 English keys', () => {
+  it('keeps every localized UI catalog aligned with all 390 English keys', () => {
     const englishKeys = Object.keys(UI.en).sort();
-    expect(englishKeys).toHaveLength(387);
+    expect(englishKeys).toHaveLength(390);
     for (const locale of CATALOG_LOCALES) {
       expect(Object.keys(UI[locale]).sort()).toEqual(englishKeys);
     }
@@ -219,6 +219,20 @@ describe('i18n helpers', () => {
     expect(tf('it', 'skyPlanetRetrograde', { planet: 'Plutone' })).toBe('Plutone retrogrado');
     expect(tf('it', 'pairingCta', { a: 'Ariete', b: 'Toro' })).toBe('Leggi l’abbinamento fra Ariete e Toro');
     expect(localizePath('es', '/horoscopes/aries/')).toBe('/horoscopes/aries/');
+  });
+
+  it('renders the chart Registry bridge as complete localized sentences', () => {
+    expect(tf('en', 'recordChartSun', { sign: 'Leo' })).toBe('Your Sun is in Leo.');
+    expect(tf('en', 'recordChartBody', { sign: 'Leo' })).toBe(
+      'Leo is one of the Twelve—with its own artwork, history, and official Registry record.',
+    );
+    expect(tf('en', 'recordChartLink', { sign: 'Leo' })).toBe('Explore the Leo Registry →');
+
+    for (const locale of ['es', 'pt', 'fr', 'it', 'ru'] as const) {
+      for (const key of ['recordChartSun', 'recordChartBody', 'recordChartLink'] as const) {
+        expect(tf(locale, key, { sign: 'Leo' })).not.toMatch(/\{sign\}/u);
+      }
+    }
   });
 
   it('uses the approved Brazilian Portuguese registry register', () => {

@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Faq from '../Faq.astro';
 import ShareRow from '../ShareRow.astro';
 import SignIcon from '../SignIcon.astro';
+import CollectBand from '../CollectBand.astro';
 import { LOCALE_META, localizePath } from '../../lib/i18n';
 import { planetLabel } from '../../lib/i18n/astrology';
 import { formatLongitude, signBySlug, signName } from '../../lib/signs';
@@ -293,6 +294,17 @@ const jsonLd = [
         <a class="btn btn--primary" href={localizePath(locale, '/birth-chart/')}><span>{text('ctaAction')}</span><span class="orb">↗</span></a>
       </div>
     </div>
+
+    {sign && (
+      <div class="reveal">
+        <CollectBand
+          signName={localName(sign)}
+          slug={sign.slug}
+          locale={locale}
+          surface="birthday"
+        />
+      </div>
+    )}
 
     <nav class="bday-more reveal" aria-label={text('navAria')}>
       <div class="bday-more__col">

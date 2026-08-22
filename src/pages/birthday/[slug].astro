@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Faq from '../../components/Faq.astro';
 import ShareRow from '../../components/ShareRow.astro';
 import SignIcon from '../../components/SignIcon.astro';
+import CollectBand from '../../components/CollectBand.astro';
 import PeopleCard from '../../components/people/PeopleCard.astro';
 import '../../styles/people.css';
 import { signBySlug, formatLongitude } from '../../lib/signs';
@@ -285,6 +286,12 @@ const jsonLd = [
         <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
       </div>
     </div>
+
+    {sign && (
+      <div class="reveal">
+        <CollectBand signName={sign.name} slug={sign.slug} surface="birthday" />
+      </div>
+    )}
 
     <nav class="bday-more reveal" aria-label="Nearby dates and deeper reading">
       <div class="bday-more__col">

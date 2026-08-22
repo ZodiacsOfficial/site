@@ -835,6 +835,13 @@
   text-transform: uppercase;
   color: var(--faint);
 }
+.calc__record-copy {
+  display: grid;
+  flex: 1 1 280px;
+  gap: 2px;
+  min-width: 0;
+}
+.calc__record-sun { font-size: 13px; color: var(--text-2); }
 .calc__record-text { font-size: 13px; color: var(--muted); }
 .calc__record-link {
   margin-inline-start: auto;

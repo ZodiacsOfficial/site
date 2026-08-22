@@ -71,7 +71,8 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             detailHeadings: [...document.querySelectorAll('.record-detail__title')]
               .map((heading) => heading.textContent?.replace(/\s+/g, ' ').trim() ?? ''),
             glance: document.querySelector('#glance-title')?.textContent?.trim() ?? '',
-            token: document.querySelector('#token-title')?.textContent?.trim() ?? '',
+            token: document.querySelector('#token .ownership__eyebrow')?.textContent?.trim() ?? '',
+            ownershipTitle: document.querySelector('#token-title')?.textContent?.trim() ?? '',
             standingsLabel: document.querySelector('[data-market-standings] .standings__head span')?.textContent?.trim() ?? '',
             standingsTitle: document.querySelector('#standings-title')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
             standingsSummary: document.querySelector('[data-standings-summary]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
@@ -98,6 +99,7 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             && state.intro.length > 20
             && state.glance === `${record.current} at a glance`
             && state.token === `The ${record.current} token`
+            && state.ownershipTitle === 'Supply & ownership'
             && state.sectionHeadings.includes(`Born under ${record.current}`)
             && state.sectionHeadings.includes(`${record.current} today`)
             && state.sectionHeadings.includes('Check the token')
