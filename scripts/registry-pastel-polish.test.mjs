@@ -193,19 +193,23 @@ describe('registry pastel polish', () => {
   });
 
   it('keeps the wing nav on the shared compact and desktop geometry contract', async () => {
-    const [wingNav, registry, thesis, sdk, source, siteNav] = await Promise.all([
+    const [wingNav, astrofolio, terminal, markets, thesis, sdk, technical, source, siteNav] = await Promise.all([
       read('scripts/wing-nav.mjs'),
       read('public/astrofolio/index.html'),
+      read('public/terminal/index.html'),
+      read('public/terminal/markets/index.html'),
       read('public/thesis/index.html'),
       read('public/sdk/index.html'),
+      read('public/registry/technical/index.html'),
       read('src/app.jsx'),
       read('src/components/SiteNav.astro'),
     ]);
 
-    for (const value of [wingNav, registry, thesis, sdk]) {
+    for (const value of [wingNav, astrofolio, terminal, markets, thesis, sdk, technical]) {
       expect(value).toContain('height: 52px; padding: 0 10px 0 20px;');
       expect(value).toContain('gap: 10px;');
-      expect(value).toContain('@media (min-width: 820px) { .wnav { gap: 18px; } }');
+      expect(value).toContain('@media (min-width: 820px) { .wnav { gap: 10px; } }');
+      expect(value).toContain('@media (min-width: 900px) { .wnav { gap: 18px; } }');
       expect(value).toContain('rgba(198,204,218,0.16)');
       expect(cssRule(value, '.wnav__burger {')).toContain('width: 34px; height: 34px;');
       expect(value).toContain('width: 18px; height: 1.5px;');
