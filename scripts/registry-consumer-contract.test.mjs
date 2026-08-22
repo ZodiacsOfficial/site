@@ -9,6 +9,40 @@ const SIGNS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
+const EXPECTED_FAQS = [
+  {
+    q: 'What is Astrofolio?',
+    a: 'Astrofolio is the collection of twelve official Zodiac tokens—one for each sign—paired with their gold sculpture artwork and public Registry records.',
+  },
+  {
+    q: 'How do I know a Zodiac is official?',
+    a: 'Compare the complete token address with the published Registry. A name or ticker alone is not enough.',
+  },
+  {
+    q: 'Why does each sign have Solana and Base addresses?',
+    a: 'Each Zodiac began on Solana and has an official Base counterpart. Both verified addresses appear in the same Registry record.',
+  },
+  {
+    q: 'Do I need a wallet to browse?',
+    a: 'No. You can browse the collection, see market context, and verify addresses without connecting a wallet.',
+  },
+  {
+    q: 'Where can I buy Astrofolio merchandise?',
+    a: 'The Astrofolio Shop carries official clothing and collections for the twelve signs.',
+  },
+  {
+    q: 'What are the risks?',
+    a: 'Zodiac tokens are speculative and can be volatile or hard to sell. Prices can fall to zero, and wallet mistakes or scams can cause permanent loss.',
+  },
+  {
+    q: 'What are the Zodiac markets?',
+    a: 'The Zodiac markets are the prices, liquidity, and trading activity around the twelve official tokens. Market data can be delayed or incomplete and is not a recommendation.',
+  },
+  {
+    q: 'What is the Terminal?',
+    a: 'The Terminal is the market desk for all twelve Zodiacs, with live prices, liquidity, charts, season context, and research.',
+  },
+];
 function functionBlock(source, name) {
   const start = source.indexOf(`    function ${name}(`);
   expect(start, `${name} exists`).toBeGreaterThanOrEqual(0);
@@ -41,6 +75,7 @@ function normalizedText(value) {
     .replace(/<[^>]+>/gu, ' ')
     .replace(/&(?:rsquo|#39);/gu, "'")
     .replace(/&(?:ldquo|rdquo);/gu, '"')
+    .replace(/&mdash;/gu, '—')
     .replace(/&amp;/gu, '&')
     .replace(/\s+/gu, ' ')
     .trim();
@@ -80,6 +115,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       'id="official-twelve"',
       'id="thesis"',
       'id="market-snapshot"',
+      'id="explore-astrofolio"',
       'id="registry"',
       'id="verify"',
       'id="faq"',
@@ -103,7 +139,9 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
 
     const marketLinks = html.match(/href="\/terminal\/(?:\?[^"#]*)?"/gu) ?? [];
     expect(marketLinks).toHaveLength(1);
-    expect(html).toContain('<a href="/terminal/" data-terminal-static-view="pro">Market view</a>');
+    expect(html).toContain('<a class="consumer-destinations__link" href="/terminal/" data-terminal-static-view="pro">Open the Terminal');
+    expect(html).toContain('<a class="consumer-destinations__link" href="https://shop.astrofolio.xyz/" rel="noopener noreferrer external">Shop Astrofolio');
+    expect(html).not.toContain('href="/terminal/markets/"');
     expect(html).not.toContain('data-terminal-preference-banner');
 
     const verifier = section(html, 'verify');
@@ -120,10 +158,11 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       '<ConsumerExplorer',
       '<ConsumerPurpose />',
       '<ConsumerMarketSnapshot',
+      '<ConsumerDestinations sign={sign} />',
       '<ConsumerHowItWorks sign={sign} />',
       '<ConsumerVerifier />',
       '<ConsumerFaq />',
-      '<ConsumerClosing sign={sign} />',
+      '<ConsumerClosing />',
       '<Footer />',
     ]);
     expect(mounted).not.toMatch(/ConsumerMarketSection|ConsumerMarketBriefing|MarketTape|StandingsSection|PulseSection|ProMarketsGateway/gu);
@@ -239,7 +278,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(fallback).toContain('href="https://astrofolio.xyz/"');
   });
 
-  it('keeps the explanatory disclosures, verifier, story, three FAQs, and close exact', async () => {
+  it('keeps the explanatory disclosures, destinations, verifier, expanded FAQs, and close exact', async () => {
     const source = await read('src/app.jsx');
     const how = functionBlock(source, 'ConsumerHowItWorks');
     for (const copy of ['What is a Zodiac?', 'Zodiacs has twelve tokens, one for each sign.', 'One token for each sign', 'The address tells them apart', 'Keep it, send it, or gift it', 'Its price can rise or fall', 'How verification works', 'See market details']) {
@@ -256,6 +295,11 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(purpose).toContain('{SIGNS.map((item, index) =>');
     expect(purpose).toContain("aries: { finish: 'crown', numeral: 'V', count: '×12' }");
     expect(purpose).toContain("aquarius: { finish: 'gold', numeral: 'IV', count: '×3' }");
+    const destinations = functionBlock(source, 'ConsumerDestinations');
+    expect(destinations).toContain('<h2 id="consumer-destinations-title">Explore Astrofolio</h2>');
+    expect(destinations).toContain('<TerminalViewLink view="pro" sign={sign} className="consumer-destinations__link" />');
+    expect(destinations).toContain('href="https://shop.astrofolio.xyz/" rel="noopener noreferrer external"');
+    expect(destinations).not.toContain('/terminal/markets/');
     const verifier = functionBlock(source, 'ConsumerVerifier');
     expect(verifier).toContain('id="verify" className="consumer-verify reveal"');
     expect(verifier).toContain('Check a Zodiac token address');
@@ -266,14 +310,44 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(verifier).not.toContain('mono');
     const faqStart = source.indexOf('    const CONSUMER_FAQS = [');
     const faqSource = source.slice(faqStart, source.indexOf('    function ConsumerFaq(', faqStart));
-    expect(faqSource.match(/\n\s*q:/gu)).toHaveLength(3);
-    expect(section(await read('public/astrofolio/index.html'), 'faq').match(/<dt>/gu)).toHaveLength(3);
+    expect(faqSource.match(/\n\s*q:/gu)).toHaveLength(EXPECTED_FAQS.length);
+    ordered(faqSource, [
+      "q: 'Where can I buy Astrofolio merchandise?'",
+      "q: 'What are the risks?'",
+      "q: 'What are the Zodiac markets?'",
+      "q: 'What is the Terminal?'",
+    ]);
+    const fallback = await read('public/astrofolio/index.html');
+    const staticFaq = section(fallback, 'faq');
+    expect(staticFaq.match(/<dt>/gu)).toHaveLength(EXPECTED_FAQS.length);
+    ordered(staticFaq, [
+      '<dt>Where can I buy Astrofolio merchandise?</dt>',
+      '<dt>What are the risks?</dt>',
+      '<dt>What are the Zodiac markets?</dt>',
+      '<dt>What is the Terminal?</dt>',
+    ]);
+    for (const item of EXPECTED_FAQS) {
+      expect(faqSource).toContain(`q: '${item.q}'`);
+      expect(faqSource).toContain(`a: '${item.a}'`);
+      expect(normalizedText(staticFaq)).toContain(`${item.q} ${item.a}`);
+    }
+    const schemaDocuments = [...fallback.matchAll(/<script type="application\/ld\+json">\s*([\s\S]*?)<\/script>/gu)]
+      .map((match) => JSON.parse(match[1]));
+    const schemaFaq = schemaDocuments
+      .flatMap((document) => document['@graph'] ?? [document])
+      .find((node) => node['@type'] === 'FAQPage');
+    expect(schemaFaq.mainEntity.map((item) => ({
+      q: item.name,
+      a: item.acceptedAnswer.text,
+    }))).toEqual(EXPECTED_FAQS);
 
     const close = functionBlock(source, 'ConsumerClosing');
     expect(close).toContain('See all twelve records');
-    expect(close.match(/<TerminalViewLink view="pro"/gu)).toHaveLength(1);
-    expect(close).toContain('view="pro" sign={sign}');
-    expect(functionBlock(source, 'TerminalViewLink')).toContain("{pro ? 'Market view' : 'Astrofolio'}");
+    expect(close).not.toContain('<TerminalViewLink');
+    expect(functionBlock(source, 'TerminalViewLink')).toContain("{pro ? 'Open the Terminal' : 'Astrofolio'}");
+    expect(functionBlock(source, 'Footer')).not.toContain('shop.astrofolio.xyz');
+    const staticFooter = fallback.slice(fallback.indexOf('<footer class="static-site__footer">'), fallback.indexOf('</footer>', fallback.indexOf('<footer class="static-site__footer">')));
+    expect(staticFooter).not.toContain('shop.astrofolio.xyz');
     expect(source).not.toContain('function ConsumerPreferenceBanner(');
     expect(source).not.toContain('data-terminal-preference-banner');
     expect(source).not.toContain('TERMINAL_PRO_BANNER_DISMISSED_KEY');
