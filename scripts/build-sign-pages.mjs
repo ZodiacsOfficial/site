@@ -55,6 +55,12 @@ const registry = JSON.parse(
 const pulse = JSON.parse(
   await readFile(resolve(root, 'public/assets/pulse.json'), 'utf8')
 );
+const distribution = JSON.parse(
+  await readFile(resolve(root, 'public/assets/distribution.json'), 'utf8')
+);
+const thesisDisclosure = JSON.parse(
+  await readFile(resolve(root, 'public/thesis/thesis-disclosure.json'), 'utf8')
+);
 const peopleRelease = JSON.parse(
   await readFile(resolve(root, 'src/data/people.json'), 'utf8')
 );
@@ -105,6 +111,86 @@ function pulseDate(value, includeYear = false) {
   return new Intl.DateTimeFormat('en-US', {
     month: 'short', day: 'numeric', ...(includeYear ? { year: 'numeric' } : {}), timeZone: 'UTC'
   }).format(new Date(`${iso}T12:00:00Z`));
+}
+
+function recordDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'Date unavailable';
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'
+  }).format(date);
+}
+
+function groupedTokenAmount(value) {
+  const match = String(value ?? '').match(/^(\d+)(?:\.(\d+))?$/u);
+  if (!match) return 'Unavailable';
+  const integer = match[1].replace(/\B(?=(\d{3})+(?!\d))/gu, ',');
+  return match[2] ? `${integer}.${match[2]}` : integer;
+}
+
+function compactTokenAmount(value) {
+  const amount = Number(value);
+  if (!Number.isFinite(amount)) return 'Unavailable';
+  if (amount >= 1e9) return `${(amount / 1e9).toFixed(2).replace(/\.00$/u, '')} billion`;
+  if (amount >= 1e6) return `${(amount / 1e6).toFixed(1).replace(/\.0$/u, '')} million`;
+  return Math.round(amount).toLocaleString('en-US');
+}
+
+function roundedPct(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? Math.round(number * 100) / 100 : null;
+}
+
+function ownershipModel(slug, solana, base) {
+  const snapshot = distribution.signs?.[slug] ?? null;
+  const disclosure = thesisDisclosure.signs?.[slug] ?? null;
+  if (!snapshot || !disclosure) throw new Error(`Ownership data missing: ${slug}`);
+  const top1 = roundedPct(snapshot.top1Pct);
+  const top10 = roundedPct(snapshot.top10Pct);
+  const top20 = roundedPct(snapshot.top20Pct);
+  if (
+    top1 === null || top10 === null || top20 === null
+    || top1 < 0 || top1 > top10 || top10 > top20 || top20 > 100
+  ) {
+    throw new Error(`Ownership percentages invalid: ${slug}`);
+  }
+  const capturedAt = snapshot.capturedAt ?? distribution.capturedAt;
+  const capturedTime = new Date(capturedAt).getTime();
+  const ageDays = Number.isFinite(capturedTime)
+    ? Math.max(0, Math.floor((Date.now() - capturedTime) / 86_400_000))
+    : null;
+  const segment = (value) => roundedPct(Math.max(0, value));
+  const mintDisabled = disclosure.mintAuthority?.status === 'filled'
+    && disclosure.mintAuthority?.value === 'renounced';
+  const freezeDisabled = disclosure.freezeAuthority?.status === 'filled'
+    && disclosure.freezeAuthority?.value === 'renounced';
+  const bridgedFromSolana = base?.kind === 'bridged'
+    && base?.originChain === 'solana'
+    && base?.originAddress === solana.address;
+  return {
+    supply: snapshot.supply,
+    supplyDisplay: compactTokenAmount(snapshot.supply),
+    supplyExact: groupedTokenAmount(snapshot.supply),
+    top1,
+    top10,
+    top20,
+    segments: [
+      { label: 'Largest token account', value: top1, className: 'largest' },
+      { label: 'Next 9 token accounts', value: segment(top10 - top1), className: 'next-nine' },
+      { label: 'Next 10 token accounts', value: segment(top20 - top10), className: 'next-ten' },
+      { label: 'All other token accounts', value: segment(100 - top20), className: 'others' },
+    ],
+    capturedAt,
+    capturedLabel: recordDate(capturedAt),
+    ageDays,
+    isOlder: ageDays === null || ageDays > 7,
+    mintDisabled,
+    mintChecked: recordDate(disclosure.mintAuthority?.asOf),
+    freezeDisabled,
+    freezeChecked: recordDate(disclosure.freezeAuthority?.asOf),
+    bridgedFromSolana,
+    verifyUrl: disclosure.supply?.verifyUrl ?? `https://solscan.io/token/${solana.address}`,
+  };
 }
 
 function marketStandings(snapshot) {
@@ -224,6 +310,7 @@ function pageModel(slug) {
     marketAsset,
     standings,
     rankStatus: marketRankStatus(latestMarketSnapshot, standings),
+    ownership: ownershipModel(slug, solana, base),
   };
 }
 
@@ -1078,8 +1165,59 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .glance dl div:nth-child(odd) { padding-right: 16px; }
     .glance dt { margin-bottom: 5px; font-size: 12px; color: var(--ink-mute); }
     .glance dd { margin: 0; font-size: 16px; font-weight: 600; color: var(--ink); }
-    .token-intro > p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--ink-2); }
-    .token-intro .plain-note { font-size: 13px; color: var(--ink-mute); }
+    .ownership__eyebrow {
+      display: block; margin-bottom: 10px; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em; color: ${m.hue};
+    }
+    .ownership__lede { margin: 0; max-width: 61ch; font-size: 17px; line-height: 1.58; color: var(--ink-2); }
+    .ownership__facts {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px; margin-top: 26px; border: 1px solid var(--hair-2); background: var(--hair);
+    }
+    .ownership-fact { min-width: 0; padding: 18px; background: var(--surface); }
+    .ownership-fact__label { display: block; margin-bottom: 8px; font-size: 12px; color: var(--ink-mute); }
+    .ownership-fact strong {
+      display: block; overflow-wrap: anywhere; font-size: clamp(18px, 3vw, 25px);
+      line-height: 1.15; color: var(--ink);
+    }
+    .ownership-fact small { display: block; margin-top: 8px; font-size: 12px; line-height: 1.45; color: var(--ink-mute); }
+    .ownership__spread { margin-top: 18px; padding: 22px; border: 1px solid var(--hair-2); background: var(--surface); }
+    .ownership__spread-head { display: grid; gap: 7px; margin-bottom: 18px; }
+    .ownership__spread-head span { font-size: 12px; color: var(--ink-mute); }
+    .ownership__spread-head strong { font-size: clamp(20px, 3vw, 28px); line-height: 1.2; }
+    .ownership-bar { display: flex; width: 100%; height: 14px; overflow: hidden; border-radius: 999px; background: var(--hair); }
+    .ownership-bar span { flex: var(--portion) 0 0; min-width: 2px; }
+    .ownership-bar__largest { background: ${m.hue}; }
+    .ownership-bar__next-nine { background: color-mix(in srgb, ${m.hue} 72%, #eef1f7); }
+    .ownership-bar__next-ten { background: color-mix(in srgb, ${m.hue} 46%, #8e96ab); }
+    .ownership-bar__others { background: color-mix(in srgb, ${m.hue} 20%, #252a36); }
+    .ownership-legend {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 20px; margin: 18px 0 0;
+    }
+    .ownership-legend div { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; align-items: center; gap: 9px; }
+    .ownership-legend i { width: 8px; height: 8px; border-radius: 50%; background: var(--legend); }
+    .ownership-legend dt { min-width: 0; font-size: 12px; color: var(--ink-mute); }
+    .ownership-legend dd { margin: 0; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .ownership__freshness {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+      margin: 16px 0 0; font-size: 12px; color: var(--ink-mute);
+    }
+    .ownership__age { padding: 4px 8px; border: 1px solid var(--hair-2); border-radius: 999px; color: var(--ink-2); }
+    .ownership__age--older { border-color: rgba(220, 174, 119, 0.42); color: #dcae77; }
+    .ownership__freshness a { color: var(--ink-2); text-underline-offset: 3px; }
+    .ownership-method { margin-top: 14px; border-top: 1px solid var(--hair); }
+    .ownership-method summary {
+      display: flex; min-height: 48px; align-items: center; cursor: pointer;
+      font-size: 14px; font-weight: 600; color: var(--ink-2);
+    }
+    .ownership-method p { margin: 0 0 14px; max-width: 66ch; font-size: 13px; line-height: 1.55; color: var(--ink-mute); }
+    @media (max-width: 560px) {
+      .ownership-legend { grid-template-columns: 1fr; }
+      .ownership-fact { padding: 16px; }
+      .ownership__spread { padding: 18px 16px; }
+    }
+    @media (max-width: 350px) { .ownership__facts { grid-template-columns: 1fr; } }
 
     .sec { padding-top: 72px; }
     .sec__head { margin-bottom: 26px; }
@@ -1231,9 +1369,26 @@ ${m.people.map((person) => `          <li><a href="/people/${person.slug}/"${per
       </div>
     </section>
 
-    <section class="sec reveal token-intro" id="token" aria-labelledby="token-title">
-      <div class="sec__head"><h2 class="sec__title" id="token-title">The ${esc(m.name)} token</h2><span class="line"></span></div>
-      <p>The ${esc(m.name)} token is a digital item people can own or send. No new ${esc(m.name)} tokens can be created.</p>
+    <section class="sec reveal ownership" id="token" aria-labelledby="token-title">
+      <div class="sec__head"><div><span class="ownership__eyebrow">The ${esc(m.name)} token</span><h2 class="sec__title" id="token-title">Supply &amp; ownership</h2></div><span class="line"></span></div>
+      <p class="ownership__lede">The ${esc(m.name)} token is a digital item people can own or send. No new ${esc(m.name)} tokens can be created. The public chain shows how its supply is spread across token accounts, but not who the people behind those accounts are.</p>
+      <div class="ownership__facts">
+        <article class="ownership-fact"><span class="ownership-fact__label">Recorded Solana supply</span><strong>${esc(m.ownership.supplyDisplay)} ${esc(m.ticker)}</strong><small>${esc(m.ownership.supplyExact)} at the snapshot.</small></article>
+        <article class="ownership-fact"><span class="ownership-fact__label">New issuance</span><strong>${m.ownership.mintDisabled ? 'Disabled' : 'Not verified'}</strong><small>${m.ownership.mintDisabled ? `Mint authority renounced · checked ${esc(m.ownership.mintChecked)}.` : 'See the public record before relying on this status.'}</small></article>
+        <article class="ownership-fact"><span class="ownership-fact__label">Account freezing</span><strong>${m.ownership.freezeDisabled ? 'Disabled' : 'Not verified'}</strong><small>${m.ownership.freezeDisabled ? `Freeze authority renounced · checked ${esc(m.ownership.freezeChecked)}.` : 'See the public record before relying on this status.'}</small></article>
+        <article class="ownership-fact"><span class="ownership-fact__label">Official Base version</span><strong>${m.ownership.bridgedFromSolana ? 'Bridged' : 'See record'}</strong><small>${m.ownership.bridgedFromSolana ? 'Backed by the original Solana token; it is not added again as extra supply.' : 'Check the verified Base representation below.'}</small></article>
+      </div>
+      <div class="ownership__spread">
+        <div class="ownership__spread-head"><span>How the recorded supply is spread</span><strong>Top 10 token accounts hold ${m.ownership.top10.toFixed(2)}%</strong></div>
+        <div class="ownership-bar" role="img" aria-label="Largest token account ${m.ownership.top1.toFixed(2)} percent; next 9 token accounts ${m.ownership.segments[1].value.toFixed(2)} percent; next 10 token accounts ${m.ownership.segments[2].value.toFixed(2)} percent; all other token accounts ${m.ownership.segments[3].value.toFixed(2)} percent">
+${m.ownership.segments.map((segment) => `          <span class="ownership-bar__${segment.className}" style="--portion:${segment.value}" aria-hidden="true"></span>`).join('\n')}
+        </div>
+        <dl class="ownership-legend">
+${m.ownership.segments.map((segment) => `          <div><i style="--legend:${segment.className === 'largest' ? m.hue : `color-mix(in srgb, ${m.hue} ${segment.className === 'next-nine' ? '72%' : segment.className === 'next-ten' ? '46%' : '20%'}, ${segment.className === 'next-nine' ? '#eef1f7' : segment.className === 'next-ten' ? '#8e96ab' : '#252a36'})`}" aria-hidden="true"></i><dt>${esc(segment.label)}</dt><dd>${segment.value.toFixed(2)}%</dd></div>`).join('\n')}
+        </dl>
+        <p class="ownership__freshness"><span class="ownership__age${m.ownership.isOlder ? ' ownership__age--older' : ''}">${m.ownership.isOlder ? 'Older snapshot' : 'Recent snapshot'}</span><span>Recorded ${esc(m.ownership.capturedLabel)}${m.ownership.ageDays === null ? '' : ` · ${m.ownership.ageDays} day${m.ownership.ageDays === 1 ? '' : 's'} old`}</span><a href="${esc(m.ownership.verifyUrl)}" rel="noopener noreferrer external">Check on Solscan ↗</a></p>
+        <details class="ownership-method"><summary>What does “token account” mean?</summary><p>Solana reports token accounts, not verified people. One person can use several accounts, and one account can represent a liquidity pool, bridge, exchange, or custodian. The chain does not reveal a real-world identity.</p><p>Percentages compare account balances with the recorded native Solana supply. The official Base version is bridged from Solana and is not counted a second time.</p></details>
+      </div>
     </section>
 
     <section class="sec reveal market-section" id="market" aria-labelledby="market-title">

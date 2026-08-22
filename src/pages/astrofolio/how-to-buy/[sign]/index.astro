@@ -1,0 +1,22 @@
+---
+import BuyGuide from '../index.astro';
+import { SIGNS } from '../../../../lib/signs';
+
+export function getStaticPaths() {
+  return SIGNS.map((sign) => ({
+    params: { sign: sign.slug },
+    props: { initialSlug: sign.slug },
+  }));
+}
+
+interface Props {
+  initialSlug: string;
+}
+
+const { initialSlug } = Astro.props;
+---
+
+<BuyGuide
+  initialSlug={initialSlug}
+  canonicalPath={`/astrofolio/how-to-buy/${initialSlug}/`}
+/>

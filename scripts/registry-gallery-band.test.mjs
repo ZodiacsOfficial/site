@@ -349,7 +349,7 @@ describe('the legacy shared gallery band', () => {
     for (const slug of ['aries', 'virgo', 'pisces']) {
       const title = slug[0].toUpperCase() + slug.slice(1);
       expect(html).toContain(`href="/registry/${slug}/">Explore ${title}</a>`);
-      expect(html).toContain(`href="/terminal/?sign=${slug}" data-terminal-static-view="pro">Open Terminal</a>`);
+      expect(html).toContain(`href="/astrofolio/how-to-buy/${slug}/">How to buy</a>`);
     }
     expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
     expect(html).not.toMatch(/href="\/registry\/[a-z-]+\/#acquire"/u);

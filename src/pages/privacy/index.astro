@@ -6,7 +6,7 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
-const updated = '18 August 2026';
+const updated = '22 August 2026';
 
 const jsonLd = [
   {
@@ -157,7 +157,7 @@ const jsonLd = [
         control.
       </p>
 
-      <h2>Public Terminal and Registry data sources</h2>
+      <h2>Public Astrofolio, Terminal, and Registry data sources</h2>
       <p>
         When a relevant Zodiac Terminal or Registry market panel is displayed, your browser may request
         public market data from Dex Screener, public chart data from GeckoTerminal,
@@ -166,6 +166,18 @@ const jsonLd = [
         receives ordinary web-request metadata, such as your IP address,
         browser information, and request time, and its own privacy terms and
         retention practices apply.
+      </p>
+      <p>
+        On the Astrofolio How to Buy page, opening the page or changing the selected sign does not contact
+        Jupiter, Dex Screener, or wallet software. After you explicitly load the optional convenience tool,
+        your browser requests a live, taker-less quote from Jupiter and indexed-liquidity context from Dex
+        Screener. These display requests do not include a wallet address. If you choose to review a direct
+        swap, the compatible wallet you select supplies its public Solana address to Jupiter so Jupiter can
+        build the exact transaction for your review. Your wallet signs locally. Your browser then sends the
+        signed transaction and Jupiter request identifier to Jupiter's execution endpoint. Neither the public
+        address nor the signed transaction is sent to a Zodiacs.org server, and Zodiacs.org never asks for or
+        receives a recovery phrase or private key. Jupiter and Dex Screener receive ordinary web-request
+        metadata, and their own privacy terms and retention practices apply.
       </p>
       <p>
         Each sign&rsquo;s Registry profile is read-only. It shows public market data

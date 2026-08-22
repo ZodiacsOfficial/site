@@ -243,14 +243,38 @@ const pulse = JSON.parse(await readFile(resolve(root, 'assets/pulse.json'), 'utf
 if (!pulse.capturedAt) fail('pulse.json: missing capturedAt');
 if (await exists(resolve(root, 'assets/distribution.json'))) {
   const dist = JSON.parse(await readFile(resolve(root, 'assets/distribution.json'), 'utf8'));
+  if (dist.schema !== 'zodiacs.distribution.v2') fail(`distribution.json: unexpected schema ${dist.schema}`);
+  if (!Number.isFinite(Date.parse(dist.generatedAt))) fail('distribution.json: invalid generatedAt');
   if (!dist.capturedAt) fail('distribution.json: missing capturedAt');
   if (!dist.signs || typeof dist.signs !== 'object') fail('distribution.json: missing signs');
+  if (Object.keys(dist.signs ?? {}).length !== 12) fail('distribution.json: expected 12 signs');
+  const coverage = dist.coverage ?? {};
+  if (coverage.expected !== 12) fail('distribution.json: coverage.expected must be 12');
+  if (coverage.observedInRun + coverage.carriedForward + coverage.missing !== 12) {
+    fail('distribution.json: coverage counts must total 12');
+  }
   for (const [sign, d] of Object.entries(dist.signs ?? {})) {
+    if (!Number.isFinite(Date.parse(d.capturedAt))) fail(`distribution.json: ${sign}.capturedAt invalid`);
+    if (!['observed', 'carried-forward'].includes(d.captureMode)) {
+      fail(`distribution.json: ${sign}.captureMode invalid (${d.captureMode})`);
+    }
+    if (d.commitment !== 'finalized') fail(`distribution.json: ${sign}.commitment must be finalized`);
+    if (typeof d.supply !== 'string' || !/^\d+(?:\.\d+)?$/u.test(d.supply)) {
+      fail(`distribution.json: ${sign}.supply invalid (${d.supply})`);
+    }
+    if (d.captureMode === 'observed') {
+      if (!Number.isSafeInteger(d.supplySlot) || !Number.isSafeInteger(d.largestAccountsSlot)) {
+        fail(`distribution.json: ${sign} observed snapshot requires context slots`);
+      }
+    }
     for (const key of ['top1Pct', 'top10Pct', 'top20Pct']) {
       const v = d[key];
       if (v !== null && (typeof v !== 'number' || v < 0 || v > 100)) {
         fail(`distribution.json: ${sign}.${key} out of range (${v})`);
       }
+    }
+    if (!(d.top1Pct <= d.top10Pct && d.top10Pct <= d.top20Pct)) {
+      fail(`distribution.json: ${sign} concentration shares are not monotonic`);
     }
   }
 }

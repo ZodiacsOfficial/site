@@ -270,8 +270,8 @@ try {
     assert.match(await page.locator('[data-vitrine-placard="pisces"].is-active').innerText(), /Pisces[\s\S]*February 19 to March 20[\s\S]*\$0\.000012[\s\S]*down 11\.50% today/u);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').innerText(), 'Explore Pisces');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').getAttribute('href'), '/registry/pisces/');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'Open Terminal');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').getAttribute('href'), '/terminal/?sign=pisces');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'How to buy');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').count(), 0);
     const primaryCtaStyle = await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').evaluate((node) => {
       const style = getComputedStyle(node);
@@ -285,7 +285,7 @@ try {
     assert.equal(primaryCtaStyle.orbShape, '50%');
     assert.equal(await page.locator('[data-terminal-preference-banner]').count(), 0);
     assert.equal(await page.locator('.terminal-consumer-hero [data-terminal-view-link="pro"]').count(), 0);
-    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 1);
+    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 0);
     assert.equal(await page.locator('.consumer-shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await page.locator('.consumer-shop a[href^="https://shop.app/products/"]').count(), 3);
     assert.equal(await page.locator('#registry .consumer-verify.is-embedded#verify').count(), 1);
@@ -345,7 +345,7 @@ try {
       && document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active')
     ));
     assert.equal(new URL(page.url()).searchParams.get('sign'), 'leo');
-    assert.equal(await page.locator('[data-vitrine-placard="leo"].is-active .btn--ghost').getAttribute('href'), '/terminal/?sign=leo');
+    assert.equal(await page.locator('[data-vitrine-placard="leo"].is-active .btn--ghost').getAttribute('href'), '/astrofolio/how-to-buy/leo/');
     assert.equal(await page.locator('.vitrine-stage__layer').count(), 1, 'an interrupted fade settles to one artwork layer');
     assert.equal(await page.locator('.vitrine-placard__layer').count(), 1, 'an interrupted fade settles to one placard layer');
     assert.equal(await page.locator('[data-vitrine-sculpture="leo"].is-active').count(), 1);
@@ -519,8 +519,9 @@ try {
     assert.equal(await noJsPage.locator('#registry #verify').count(), 1);
     assert.equal(await noJsPage.locator('.static-site__footer a[href="https://shop.app/m/41mzeq7f2h"]').count(), 0);
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
-    assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 12);
-    assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').first().getAttribute('href'), '/terminal/?sign=aries');
+    assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 0);
+    assert.equal(await noJsPage.locator('a[href^="/astrofolio/how-to-buy/"]').count(), 12);
+    assert.equal(await noJsPage.locator('a[href="/astrofolio/how-to-buy/aries/"]').count(), 1);
     const staticStoryStyle = await noJsPage.locator('.static-story-band').evaluate((node) => {
       const image = node.querySelector('img');
       const picture = node.querySelector('picture')?.getBoundingClientRect();

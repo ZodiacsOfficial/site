@@ -32,6 +32,7 @@ const WING_ONLY_SOURCE = Object.freeze([
   /^src\/islands\/(?:RegistryAura|WalletChart)\.tsx$/u,
   /^src\/islands\/aura\//u,
   /^src\/lib\/(?:aura(?:-|\/)|registry(?:-|\/)|wallet\/)\S*/u,
+  /^src\/pages\/astrofolio\/how-to-buy\//u,
   /^src\/pages\/(?:registry|terminal)\//u,
   /^src\/pages\/feeds\/market-research\.json\.ts$/u,
   /^src\/strings\/wallet-chart\.ts$/u,

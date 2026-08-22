@@ -77,6 +77,8 @@ describe('offline service worker posture', () => {
       '/registry', '/registry/', '/registry/index.html',
       '/registry/exchange', '/registry/exchange/', '/registry/exchange/index.html',
       '/astrofolio', '/astrofolio/', '/astrofolio/index.html',
+      '/astrofolio/how-to-buy', '/astrofolio/how-to-buy/', '/astrofolio/how-to-buy/index.html',
+      '/astrofolio/how-to-buy/leo/', '/astrofolio/how-to-buy/leo/index.html',
       '/terminal', '/terminal/', '/terminal/index.html',
       '/terminal/markets', '/terminal/markets/', '/terminal/markets/index.html',
     ];
@@ -89,7 +91,7 @@ describe('offline service worker posture', () => {
     expect(worker.networkFetch).toHaveBeenCalledTimes(volatilePaths.length);
     expect(worker.caches.open).not.toHaveBeenCalled();
 
-    for (const path of ['/astrofolio/', '/terminal/', '/terminal/markets/']) {
+    for (const path of ['/astrofolio/', '/astrofolio/how-to-buy/', '/terminal/', '/terminal/markets/']) {
       worker.networkFetch.mockRejectedValueOnce(new TypeError('offline'));
       let offline;
       handler({

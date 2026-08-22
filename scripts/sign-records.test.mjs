@@ -75,6 +75,7 @@ describe('Zodiac token records', () => {
       expect(visible).toContain(`${name} at a glance`);
       expect(visible).toContain(`<div class="stage"><img src="/assets/nuggets/${sign}.png`);
       expect(visible).toContain(`The ${name} token`);
+      expect(visible).toContain('Supply &amp; ownership');
       expect(visible).toContain(`Born under ${name}`);
       expect(visible).toContain(`${name} today`);
       expect(visible).toContain('Market standings');
@@ -116,6 +117,43 @@ describe('Zodiac token records', () => {
       expect(addressIndex).toBeGreaterThan(marketIndex);
       expect(addressIndex).toBeGreaterThan(legacyAliasIndex);
       expect(storyIndex).toBeGreaterThan(addressIndex);
+    }
+  });
+
+  it('shows supply and token-account distribution without inventing holder identities', async () => {
+    const distribution = JSON.parse(await read('public/assets/distribution.json'));
+
+    for (const sign of signs) {
+      const html = await read(`public/registry/${sign}/index.html`);
+      const name = sign.charAt(0).toUpperCase() + sign.slice(1);
+      const data = distribution.signs[sign];
+      const start = html.indexOf('<section class="sec reveal ownership" id="token"');
+      const end = html.indexOf('<section class="sec reveal market-section"', start);
+      const ownership = html.slice(start, end);
+      const nextNine = Math.round((data.top10Pct - data.top1Pct) * 100) / 100;
+      const nextTen = Math.round((data.top20Pct - data.top10Pct) * 100) / 100;
+      const others = Math.round((100 - data.top20Pct) * 100) / 100;
+
+      expect(start, sign).toBeGreaterThan(-1);
+      expect(end, sign).toBeGreaterThan(start);
+      expect(ownership).toContain(`The ${name} token`);
+      expect(ownership).toContain('Supply &amp; ownership');
+      expect(ownership).toContain('Recorded Solana supply');
+      expect(ownership).toContain('New issuance');
+      expect(ownership).toContain('Account freezing');
+      expect(ownership).toContain('Official Base version');
+      expect(ownership).toContain(`Top 10 token accounts hold ${data.top10Pct.toFixed(2)}%`);
+      expect(ownership).toContain(`Largest token account ${data.top1Pct.toFixed(2)} percent`);
+      expect(ownership).toContain(`next 9 token accounts ${nextNine.toFixed(2)} percent`);
+      expect(ownership).toContain(`next 10 token accounts ${nextTen.toFixed(2)} percent`);
+      expect(ownership).toContain(`all other token accounts ${others.toFixed(2)} percent`);
+      expect(ownership).toContain('token accounts, not verified people');
+      expect(ownership).toContain('One person can use several accounts');
+      expect(ownership).toContain('The official Base version is bridged from Solana and is not counted a second time.');
+      expect(ownership).toMatch(/(?:Recent|Older) snapshot/u);
+      expect(ownership).toContain('Check on Solscan ↗');
+      expect(ownership).not.toMatch(/Top holders|wallet concentration is lower|whale|team wallet/iu);
+      expect(ownership).not.toMatch(/href="https:\/\/jup\.ag\//u);
     }
   });
 

@@ -267,3 +267,34 @@ twelve catalogue pages, embedding any third-party script, or the thesis §VII
 claim surface. The sole exception is the 2026-08-13 Consumer educational
 handoff to a selected sign's already-authorized record; it does not itself
 quote, connect, or execute.
+
+## Addendum — 2026-08-22: Astrofolio beginner guide and optional Jupiter tool
+
+**Authorized: 2026-08-22.** The owner expressly approved a dedicated,
+consumer-first guide at `/astrofolio/how-to-buy/` and asked that it include
+the existing Jupiter API interface as an alternative offered purely for
+convenience. This addendum supersedes the older Consumer handoff and
+surface-confinement limits only to the extent stated here.
+
+The Astrofolio selected-sign action may now lead to the dedicated guide. The
+guide may explain wallets, recovery phrases, the Solana network, USDC, SOL
+network fees, verified token addresses, quote review, price impact, fees,
+irreversibility, and complete-loss risk. It must take its twelve Solana mints
+from the canonical Registry and keep the complete selected address visible
+before the executable interface.
+
+The existing first-party `/assets/trade.js` interface may run on this one
+guide route after an explicit visitor action. It must not load, request a
+quote, discover a wallet, connect, or ask for approval merely because the
+page opened or the selected sign changed. Once requested, Jupiter supplies
+the quote and transaction, the visitor's wallet reviews and signs, and
+Zodiacs.org still holds no keys or funds, constructs no transaction,
+receives no referral or platform fee, and cannot reverse a transaction.
+
+The authorization does not restore trading to the twelve Registry profiles,
+the Astrofolio landing, or the Cabinet. Those surfaces remain read-only or
+identity-first as already specified. It does not authorize a third-party
+Jupiter Plugin, external font runtime, Base-chain execution, custody,
+compensation, or a hidden default amount. The guide begins as a `noindex`,
+`no-store` pilot with route-scoped network policy. A live provider probe and
+browser verification are required immediately before production release.

@@ -197,13 +197,13 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(opening).toContain('<span class="static-vitrine__figure">Price unavailable</span>');
     expect(opening).toContain('<span class="static-vitrine__movement">movement unavailable</span>');
     expect(opening).toContain('href="/registry/aries/">Explore Aries</a>');
-    expect(opening).toContain('href="/terminal/?sign=aries" data-terminal-static-view="pro">Open Terminal</a>');
+    expect(opening).toContain('href="/astrofolio/how-to-buy/aries/">How to buy</a>');
     expect(opening).not.toContain('/registry/aries/#acquire');
     expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
     expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
 
-    const marketLinks = html.match(/href="\/terminal\/\?sign=[a-z]+"/gu) ?? [];
-    expect(marketLinks).toHaveLength(12);
+    const howToBuyLinks = html.match(/href="\/astrofolio\/how-to-buy\/[a-z]+\/"/gu) ?? [];
+    expect(howToBuyLinks).toHaveLength(12);
     expect(html).not.toContain('See market details');
     expect(html).not.toContain('class="static-terminal-gateway"');
     const shop = section(html, 'shop');
@@ -297,8 +297,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(placard).toContain('Explore {item.name}');
     expect(placard).toContain('marketRankForSign(item, batch)');
     expect(placard).toContain('Data &amp; methodology');
-    expect(placard).toContain("terminalViewHref('pro', item)");
-    expect(placard).toContain('>Open Terminal</a>');
+    expect(placard).toContain('howToBuyPath(item)');
+    expect(placard).toContain('>How to buy</a>');
     expect(placard).not.toContain('#acquire');
   });
 
@@ -389,7 +389,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     }
 
     expect(source).not.toContain('function ConsumerTerminalStrip(');
-    expect(functionBlock(source, 'VitrinePlacard')).toContain('>Open Terminal</a>');
+    expect(functionBlock(source, 'VitrinePlacard')).toContain('>How to buy</a>');
 
     const cabinet = functionBlock(source, 'ConsumerCabinet');
     expect(cabinet).toContain('id="cabinet" className="consumer-cabinet-section reveal"');
@@ -516,5 +516,11 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const mounted = source.slice(start, source.indexOf('</main>', start));
     expect(mounted).toContain('<PulseSection />');
     expect(mounted).toContain('<StandingsSection />');
+    const standings = functionBlock(source, 'StandingsSection');
+    expect(standings).toContain('entry?.capturedAt || dist?.capturedAt');
+    expect(standings).toContain('Each sign keeps its own');
+    expect(standings).toContain('Token accounts are');
+    expect(standings).toContain('not verified people or unique wallet owners');
+    expect(standings).not.toContain('wallet concentration is lower');
   });
 });

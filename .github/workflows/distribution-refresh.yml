@@ -22,14 +22,17 @@ jobs:
       - name: Build distribution data
         run: node scripts/build-distribution.mjs
 
+      - name: Regenerate Registry profiles
+        run: node scripts/build-sign-pages.mjs
+
       - name: Commit if changed
         run: |
-          if git diff --quiet public/assets/distribution.json; then
-            echo "distribution.json unchanged"
+          if git diff --quiet public/assets/distribution.json public/registry/; then
+            echo "distribution data and Registry profiles unchanged"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/assets/distribution.json
-          git commit -m "Refresh distribution data"
+          git add public/assets/distribution.json public/registry/
+          git commit -m "Refresh Registry distribution data"
           git push

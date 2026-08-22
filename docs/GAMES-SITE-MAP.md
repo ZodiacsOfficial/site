@@ -31,10 +31,11 @@ static files (Astro `dist/` merged with `public/`) → Vercel Functions
   slash or extension → `/:path/`, excluding `/api/*`, `/v1/*`,
   `/.well-known/*`). Canonicalize new routes with trailing slashes
   (`/race/`, `/games/history/`) or every visit eats a 301.
-- Per-route CSP overrides exist only for `/terminal/markets/(.*)` (allows
-  `connect-src` to jup.ag / dexscreener / geckoterminal / plausible.io) and
-  `/registry/collection/(.*)` (plausible.io only). The global CSP has no
-  `connect-src` restriction, so a page that only calls same-origin `/api/*`
+- Per-route market-execution CSP overrides exist only for
+  `/terminal/markets/(.*)` and `/astrofolio/how-to-buy/(.*)` (allowing
+  `connect-src` to the approved Jupiter and public market-data providers); a
+  separate `/registry/collection/(.*)` override allows plausible.io only. The
+  global CSP has no `connect-src` restriction, so a page that only calls same-origin `/api/*`
   needs no `vercel.json` change.
 - Function-count pressure is real (Vercel Hobby): rewrites collapse many
   URLs onto few functions (`/api/account/:action` → `/api/account?action=`,
@@ -279,11 +280,13 @@ One React bundle (`public/assets/app.js` ← `src/app.jsx`, built by
   (DexScreener stats, GeckoTerminal candles with a 12-req/min client
   budget). **`src/trade/`** → `public/assets/trade.js`: a Jupiter Ultra
   swap client (site never signs or submits; 10bps fee ceiling rejects
-  misconfigured referrals). The only route where a swap can execute is
-  `/terminal/markets/`, doubly gated by `PUBLIC_REGISTRY_EXCHANGE_ENABLED`
+  misconfigured referrals). A swap can execute from `/terminal/markets/`
+  and, after explicit visitor intent, the owner-approved beginner tool at
+  `/astrofolio/how-to-buy/`; Terminal Markets remains doubly gated by `PUBLIC_REGISTRY_EXCHANGE_ENABLED`
   (committed **off**; stamped by `scripts/configure-registry-exchange.mjs`)
-  and the route-scoped CSP (only `/terminal/markets/` may reach
-  `lite-api.jup.ag`). `configure-registry-trade.mjs` is a retired 5-line
+  and route-scoped CSP (only `/terminal/markets/` and
+  `/astrofolio/how-to-buy/` may reach `lite-api.jup.ag`).
+  `configure-registry-trade.mjs` is a retired 5-line
   no-op; `src/trade/entry.mjs` is orphaned stamping machinery.
 - **The Cabinet** = `/registry/collection/`
   (`src/islands/aura/AuraCollectionCabinet.tsx` + `RegistryAura.tsx`),

@@ -72,8 +72,9 @@ const LOCALIZED_PAGE_PREFIXES = LOCALES
   .filter((locale) => locale !== DEFAULT_LOCALE)
   .map((locale) => `${locale}/`);
 // Reachable does not mean recommendable. Keep the reviewed People pilot and
-// every Registry/Terminal route out of the consumer astrology catalog.
+// every Astrofolio/Registry/Terminal route out of the consumer astrology catalog.
 const UNLISTED_ROUTE_PREFIXES = Object.freeze([
+  '/astrofolio/',
   '/disclosure/',
   '/feeds/market-research',
   '/people/',

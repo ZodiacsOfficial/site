@@ -1,8 +1,21 @@
 {
+  "schema": "zodiacs.distribution.v2",
+  "generatedAt": "2026-08-22T16:24:24Z",
   "capturedAt": "2026-08-03",
-  "method": "getTokenSupply + getTokenLargestAccounts via public Solana RPC. Shares are of raw on-chain supply; the largest accounts include DEX liquidity pools, so wallet concentration is lower than the raw figures read.",
+  "coverage": {
+    "expected": 12,
+    "observedInRun": 0,
+    "carriedForward": 12,
+    "missing": 0
+  },
+  "method": "Finalized getTokenSupply + getTokenLargestAccounts via public Solana RPC. Shares compare raw native Solana supply with the largest token accounts. Token accounts are not verified people or unique wallet owners: one owner may use several accounts, and an account may represent a liquidity pool, bridge, exchange, or custodian. No real-world identity is inferred.",
   "signs": {
     "aries": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999678206.507775",
       "accountsSampled": 20,
       "top1Pct": 8.62,
@@ -10,6 +23,11 @@
       "top20Pct": 40.47
     },
     "taurus": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999971193.609047",
       "accountsSampled": 20,
       "top1Pct": 9.92,
@@ -17,6 +35,11 @@
       "top20Pct": 37.48
     },
     "gemini": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999873368.815688",
       "accountsSampled": 20,
       "top1Pct": 6.35,
@@ -24,6 +47,11 @@
       "top20Pct": 33.27
     },
     "cancer": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999939090.363424",
       "accountsSampled": 20,
       "top1Pct": 8.23,
@@ -31,6 +59,11 @@
       "top20Pct": 36.18
     },
     "leo": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999799059.031383",
       "accountsSampled": 20,
       "top1Pct": 10.61,
@@ -38,6 +71,11 @@
       "top20Pct": 37.77
     },
     "virgo": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999981708.827609",
       "accountsSampled": 20,
       "top1Pct": 10.2,
@@ -45,6 +83,11 @@
       "top20Pct": 38.13
     },
     "libra": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999795290.115149",
       "accountsSampled": 20,
       "top1Pct": 9.62,
@@ -52,6 +95,11 @@
       "top20Pct": 37.44
     },
     "scorpio": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999991345.402552",
       "accountsSampled": 20,
       "top1Pct": 10.48,
@@ -59,6 +107,11 @@
       "top20Pct": 36.99
     },
     "sagittarius": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999522043.557561",
       "accountsSampled": 20,
       "top1Pct": 9.83,
@@ -66,6 +119,11 @@
       "top20Pct": 38.78
     },
     "capricorn": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999981653.290163",
       "accountsSampled": 20,
       "top1Pct": 7.51,
@@ -73,6 +131,11 @@
       "top20Pct": 43.18
     },
     "aquarius": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999986388.643285",
       "accountsSampled": 20,
       "top1Pct": 8.53,
@@ -80,6 +143,11 @@
       "top20Pct": 36.64
     },
     "pisces": {
+      "capturedAt": "2026-08-03T00:00:00.000Z",
+      "captureMode": "carried-forward",
+      "commitment": "finalized",
+      "supplySlot": null,
+      "largestAccountsSlot": null,
       "supply": "999916173.438719",
       "accountsSampled": 20,
       "top1Pct": 7.16,

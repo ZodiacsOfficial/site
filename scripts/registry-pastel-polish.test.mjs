@@ -304,6 +304,7 @@ describe('registry pastel polish', () => {
     for (const heading of [
       `${name} at a glance`,
       `The ${name} token`,
+      'Supply &amp; ownership',
       `Born under ${name}`,
       `${name} today`,
       'Market standings',

@@ -62,13 +62,14 @@ describe('the retired catalogue compatibility hook', () => {
   });
 });
 
-describe('the Terminal trade module', () => {
-  it('still mounts the full trade runtime only from Terminal markets', async () => {
+describe('the shared Jupiter trade module', () => {
+  it('mounts from Terminal markets and only after explicit intent on the beginner guide', async () => {
     const [terminal, browserRuntime, builtRuntime] = await Promise.all([
       readFile(resolve(root, 'src/exchange/terminal.mjs'), 'utf8'),
       readFile(resolve(root, 'src/trade/browser.mjs'), 'utf8'),
       readFile(resolve(root, 'public/assets/trade.js'), 'utf8'),
     ]);
+    const guide = await readFile(resolve(root, 'src/pages/astrofolio/how-to-buy/index.astro'), 'utf8');
 
     expect(terminal).toContain("script.src = '/assets/trade.js'");
     expect(terminal).toContain("desk.id = 'zme-trade-panel'");
@@ -78,6 +79,9 @@ describe('the Terminal trade module', () => {
     expect(browserRuntime).toContain('window.zodiacsTrade = Object.freeze({ mount })');
     expect(builtRuntime).toContain('window.zodiacsTrade');
     expect(builtRuntime).toContain('lite-api.jup.ag');
+    expect(guide).toContain("script.src = '/assets/trade.js'");
+    expect(guide).toContain("loadButton?.addEventListener('click', revealTrade)");
+    expect(guide).not.toContain('<script src="/assets/trade.js"');
   });
 });
 
@@ -92,7 +96,7 @@ describe('the landing', () => {
     expect(html).not.toContain('/assets/trade.js');
   });
 
-  it('offers Registry and Terminal handoffs across twelve no-JS sign states', async () => {
+  it('offers Registry and beginner-guide handoffs across twelve no-JS sign states', async () => {
     const html = await hub();
     const vitrine = html.match(/<fieldset class="static-vitrine">([\s\S]*?)<\/fieldset>/)?.[1];
     expect(vitrine).toBeDefined();
@@ -115,11 +119,11 @@ describe('the landing', () => {
     expect(panels.map(([, sign]) => sign)).toEqual(SIGNS);
     for (const [, sign, panel] of panels) {
       const records = [...panel.matchAll(/href="\/registry\/([a-z]+)\/"/g)];
-      const terminals = [...panel.matchAll(/href="\/terminal\/\?sign=([a-z]+)"/g)];
+      const guides = [...panel.matchAll(/href="\/astrofolio\/how-to-buy\/([a-z]+)\/"/g)];
       expect(records, sign).toHaveLength(1);
       expect(records[0][1], sign).toBe(sign);
-      expect(terminals, sign).toHaveLength(1);
-      expect(terminals[0][1], sign).toBe(sign);
+      expect(guides, sign).toHaveLength(1);
+      expect(guides[0][1], sign).toBe(sign);
       expect(html, sign).toContain(
         `.static-vitrine:has(#astrofolio-${sign}:checked) [data-static-sign="${sign}"]`,
       );

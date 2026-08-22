@@ -73,6 +73,9 @@ function registryVolatileSurface(url) {
     || url.pathname === '/astrofolio'
     || url.pathname === '/astrofolio/'
     || url.pathname === '/astrofolio/index.html'
+    || url.pathname === '/astrofolio/how-to-buy'
+    || url.pathname.startsWith('/astrofolio/how-to-buy/')
+    || url.pathname === '/astrofolio/how-to-buy/index.html'
     || url.pathname === '/terminal'
     || url.pathname === '/terminal/'
     || url.pathname === '/terminal/index.html'
