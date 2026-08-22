@@ -12,7 +12,7 @@ const SIGNS = [
 const EXPECTED_FAQS = [
   {
     q: 'What is Astrofolio?',
-    a: 'Astrofolio is the collection of twelve official Zodiac tokens—one for each sign—paired with their gold sculpture artwork and public Registry records.',
+    a: 'Astrofolio is the collection of twelve official Zodiac tokens—one for each sign—with its own design and public Registry record.',
   },
   {
     q: 'How do I know a Zodiac is official?',
@@ -27,8 +27,8 @@ const EXPECTED_FAQS = [
     a: 'No. You can browse the collection, see market context, and verify addresses without connecting a wallet.',
   },
   {
-    q: 'Where can I buy Astrofolio merchandise?',
-    a: 'The Astrofolio Shop carries official clothing and collections for the twelve signs.',
+    q: 'Where can I find Astrofolio merchandise?',
+    a: 'Browse the Astrofolio Shop for clothing inspired by the twelve signs.',
   },
   {
     q: 'What are the risks?',
@@ -81,6 +81,55 @@ function normalizedText(value) {
     .trim();
 }
 
+const PROHIBITED_CONSUMER_TERM = /\bsculptures?\b/iu;
+
+function astrofolioConsumerSource(source) {
+  const start = source.indexOf('    function ConsumerIdentityHeader(');
+  const end = source.indexOf('\n    function TechnicalRecordsSection(', start);
+  expect(start, 'Astrofolio consumer source begins').toBeGreaterThanOrEqual(0);
+  expect(end, 'Astrofolio consumer source ends').toBeGreaterThan(start);
+  return source
+    .slice(start, end)
+    .replace(/\/\*[\s\S]*?\*\//gu, '')
+    .replace(/\/\/[^\n]*/gu, '')
+    // These are implementation identifiers and asset directories, not copy.
+    .replace(/SCULPTURE_PRESENTATION|renderSculpture|data-vitrine-sculpture/giu, '')
+    .replace(/\/assets\/sculptures\//giu, '/assets/artwork/');
+}
+
+function staticConsumerCopy(html) {
+  const title = html.match(/<title>([\s\S]*?)<\/title>/iu)?.[1] ?? '';
+  const metadata = [...html.matchAll(/<meta\s+(?:name|property)="(?:description|og:title|og:description|og:image:alt|twitter:title|twitter:description|twitter:image:alt)"\s+content="([^"]*)"\s*\/?>/giu)]
+    .map((match) => match[1]);
+  const attributes = [...html.matchAll(/\s(?:alt|aria-label|title)="([^"]*)"/giu)]
+    .map((match) => match[1]);
+  const visibleBody = (html.match(/<body[^>]*>([\s\S]*?)<\/body>/iu)?.[1] ?? '')
+    .replace(/<style\b[\s\S]*?<\/style>/giu, ' ')
+    .replace(/<script\b[\s\S]*?<\/script>/giu, ' ')
+    .replace(/<!--[\s\S]*?-->/gu, ' ');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">\s*([\s\S]*?)<\/script>/gu)]
+    .map((match) => JSON.parse(match[1]));
+  const schemaCopy = schemas.flatMap((document) => {
+    const values = [];
+    const visit = (value, key = '') => {
+      if (typeof value === 'string') {
+        if (['name', 'description', 'text', 'headline', 'alternativeHeadline', 'caption'].includes(key)) values.push(value);
+        return;
+      }
+      if (Array.isArray(value)) {
+        value.forEach((item) => visit(item, key));
+        return;
+      }
+      if (value && typeof value === 'object') {
+        Object.entries(value).forEach(([childKey, child]) => visit(child, childKey));
+      }
+    };
+    visit(document);
+    return values;
+  });
+  return normalizedText([title, ...metadata, ...attributes, normalizedText(visibleBody), ...schemaCopy].join(' '));
+}
+
 describe('Astrofolio consumer and Terminal market-desk split', () => {
   it('pins the indexed routes and their owner-directed names', async () => {
     const [consumer, pro] = await Promise.all([
@@ -109,13 +158,29 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(pro).not.toMatch(/<meta\s+name="robots"[^>]*noindex/u);
   });
 
+  it('keeps the prohibited visual-art term out of Astrofolio consumer copy', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/astrofolio/index.html'),
+    ]);
+
+    // Internal transition hooks and the legacy asset directory remain stable;
+    // this guard deliberately inspects copy, metadata, visible text, alt text,
+    // ARIA labels, and structured-data text rather than matching raw files.
+    expect(astrofolioConsumerSource(source)).not.toMatch(PROHIBITED_CONSUMER_TERM);
+    expect(staticConsumerCopy(html)).not.toMatch(PROHIBITED_CONSUMER_TERM);
+  });
+
   it('keeps the no-JS Astrofolio journey complete and in the locked order', async () => {
     const html = await read('public/astrofolio/index.html');
     ordered(html, [
       'id="official-twelve"',
-      'id="thesis"',
       'id="market-snapshot"',
-      'id="explore-astrofolio"',
+      'id="terminal"',
+      'id="about"',
+      'id="story"',
+      'id="shop"',
+      'id="collection"',
       'id="registry"',
       'id="verify"',
       'id="faq"',
@@ -127,27 +192,39 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(normalizedText(opening)).toContain('Astrofolio Leo Season · The Twelve Choose your sign');
     expect(opening.match(/class="static-vitrine__choice"/gu)).toHaveLength(12);
     expect(opening.match(/data-static-sign="[a-z]+"/gu)).toHaveLength(12);
-    expect(opening).toContain('id="astrofolio-leo" checked');
-    expect(opening).toContain('<h2 id="static-leo-title">Leo</h2><p class="static-vitrine__dates">July 23 to August 22</p>');
+    expect(opening).toContain('id="astrofolio-aries" checked');
+    expect(opening).toContain('<h2 id="static-aries-title">Aries</h2><p class="static-vitrine__dates">March 21 to April 19</p>');
     expect(opening).toContain('<span class="static-vitrine__figure">Price unavailable</span>');
     expect(opening).toContain('<span class="static-vitrine__movement">movement unavailable</span>');
-    expect(opening).toContain('href="/registry/leo/">View Leo</a>');
-    expect(opening).toContain('href="/registry/leo/#record">Check the token</a>');
-    expect(opening).not.toContain('/registry/leo/#acquire');
+    expect(opening).toContain('href="/registry/aries/">Explore Aries</a>');
+    expect(opening).toContain('href="/terminal/?sign=aries" data-terminal-static-view="pro">Open Terminal</a>');
+    expect(opening).not.toContain('/registry/aries/#acquire');
     expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
     expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
 
-    const marketLinks = html.match(/href="\/terminal\/(?:\?[^"#]*)?"/gu) ?? [];
-    expect(marketLinks).toHaveLength(1);
-    expect(html).toContain('<a class="consumer-destinations__link" href="/terminal/" data-terminal-static-view="pro">Open the Terminal');
-    expect(html).toContain('<a class="consumer-destinations__link" href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external">Shop Astrofolio');
+    const marketLinks = html.match(/href="\/terminal\/\?sign=[a-z]+"/gu) ?? [];
+    expect(marketLinks).toHaveLength(12);
+    expect(html).not.toContain('See market details');
+    expect(html).not.toContain('class="static-terminal-gateway"');
+    const shop = section(html, 'shop');
+    for (const href of [
+      'https://shop.app/m/41mzeq7f2h',
+      'https://shop.app/products/9655740694871/astrofolio-t-shirt',
+      'https://shop.app/products/9654676455767/astrofolio-cap',
+      'https://shop.app/products/9654762504535/astrofolio-hoodie',
+    ]) {
+      expect(shop).toContain(`href="${href}"`);
+    }
     expect(html).not.toContain('href="/terminal/markets/"');
     expect(html).not.toContain('data-terminal-preference-banner');
 
-    const verifier = section(html, 'verify');
-    expect(normalizedText(verifier)).toContain('Compare the token address shown where you found it with the verified list. Never paste a recovery phrase.');
-    expect(normalizedText(verifier)).toContain('This checks a token address, not a personal account.');
-    expect(verifier).toContain('href="/registry/zodiacs.registry.json">Open the verified address list</a>');
+    const registry = section(html, 'registry');
+    expect(normalizedText(registry)).toContain('Names and symbols can be copied. The Registry identifies each official Zodiac by its complete token address.');
+    expect(normalizedText(registry)).toContain("Open the verified list, then use your browser's Find command to search for the complete address. Never paste a recovery phrase.");
+    expect(registry).toContain('id="verify"');
+    expect(registry).toContain('class="consumer-destinations__card static-verifier"');
+    expect(registry).toContain('href="/registry/">Browse all twelve records');
+    expect(registry).toContain('href="/registry/zodiacs.registry.json">Open the verified address list');
   });
 
   it('pins the hydrated consumer composition in the same order', async () => {
@@ -156,16 +233,18 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const mounted = source.slice(start, source.indexOf('</main>', start));
     ordered(mounted, [
       '<ConsumerExplorer',
-      '<ConsumerPurpose />',
-      '<ConsumerMarketSnapshot',
-      '<ConsumerDestinations sign={sign} />',
-      '<ConsumerHowItWorks sign={sign} />',
-      '<ConsumerVerifier />',
+      '<ConsumerIntroduction />',
+      '<ConsumerStory />',
+      '<ConsumerShop />',
+      '<ConsumerCabinet />',
+      '<ConsumerRegistryGuide sign={sign} />',
       '<ConsumerFaq />',
       '<ConsumerClosing />',
       '<Footer />',
     ]);
-    expect(mounted).not.toMatch(/ConsumerMarketSection|ConsumerMarketBriefing|MarketTape|StandingsSection|PulseSection|ProMarketsGateway/gu);
+    expect(source).toContain('<span id="market-snapshot" className="terminal-compat-target" aria-hidden="true" />');
+    expect(source).toContain('<span id="terminal" className="terminal-compat-target" aria-hidden="true" />');
+    expect(mounted).not.toMatch(/ConsumerMarketSnapshot|ConsumerTerminalStrip|ConsumerMarketSection|ConsumerMarketBriefing|MarketTape|StandingsSection|PulseSection|ProMarketsGateway/gu);
   });
 
   it('builds the first screen as an accessible, interruptible Lit Vitrine', async () => {
@@ -211,11 +290,15 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(explorer).toContain("image.src = `/assets/cabinet-materials/gold/${layer.slug}.webp`");
     expect(explorer).toContain('markLayerFailed(layer.id)');
     expect(explorer).toContain('vitrine-stage__fallback');
+    expect(explorer).toContain('`${item.name} Zodiac artwork`');
+    expect(explorer).toContain('`${item.name} artwork unavailable; ${item.symbol} symbol shown`');
     expect(explorer).toContain("'--vitrine-stage-height': `${desktopStageHeight}px`");
     expect(placard).toContain('{layers.map(renderLayer)}');
-    expect(placard).toContain('View {item.name}');
-    expect(placard).toContain('`${registryProfilePath(item)}#record`');
-    expect(placard).toContain('Check the token');
+    expect(placard).toContain('Explore {item.name}');
+    expect(placard).toContain('marketRankForSign(item, batch)');
+    expect(placard).toContain('Data &amp; methodology');
+    expect(placard).toContain("terminalViewHref('pro', item)");
+    expect(placard).toContain('>Open Terminal</a>');
     expect(placard).not.toContain('#acquire');
   });
 
@@ -232,18 +315,18 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(rootBlock).not.toContain("window.localStorage.setItem('zodiacs:today-sun-sign:v1'");
   });
 
-  it('reuses one first-screen market read for the placard and all-twelve list', async () => {
+  it('uses one first-screen market read and keeps market context inside the placard', async () => {
     const source = await read('src/app.jsx');
     const rootBlock = functionBlock(source, 'Zodiacs');
-    const snapshot = functionBlock(source, 'ConsumerMarketSnapshot');
-    expect(rootBlock).toContain('const consumerMarket = useTwelveQuotes(!technical && !pro, consumerMarketRetry);');
-    expect(rootBlock.match(/batch=\{consumerMarket\}/gu)).toHaveLength(2);
-    expect(snapshot).not.toContain('useTwelveQuotes(');
-    expect(snapshot).toContain('<h2 id="consumer-snapshot-title">All twelve, today</h2>');
-    expect(snapshot).toContain('{SIGNS.map((item) =>');
-    expect(snapshot).toContain('plainMarketMovement(quote.priceChange24h)');
-    expect(snapshot).toContain('<summary>See market details</summary>');
-    expect(snapshot).not.toMatch(/sort\(|rankBy|marketCap|liquidityUsd|volume24h|SelectedTokenMiniChart|PlacardMarketPanel/gu);
+    const placard = functionBlock(source, 'VitrinePlacard');
+    expect(rootBlock).toContain('const consumerMarket = useTwelveQuotes(!technical && !pro);');
+    expect(rootBlock.match(/batch=\{consumerMarket\}/gu)).toHaveLength(1);
+    expect(placard).not.toContain('useTwelveQuotes(');
+    expect(placard).toContain('<VitrinePrice sign={item} batch={batch} live={layer.current} />');
+    expect(placard).toContain('marketRankForSign(item, batch)');
+    expect(placard).toContain('Data &amp; methodology');
+    expect(source).not.toContain('function ConsumerMarketSnapshot(');
+    expect(source).not.toContain('<summary>See market details</summary>');
 
     const movement = functionBlock(source, 'plainMarketMovement');
     expect(movement).toContain("up ${formatPercent(movement).replace('+', '')} today");
@@ -251,11 +334,9 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(movement).toContain("return 'unchanged today'");
     expect(movement).toContain("return 'movement unavailable'");
 
-    const staticSnapshot = section(await read('public/astrofolio/index.html'), 'market-snapshot');
-    ordered(staticSnapshot, SIGNS.map((slug) => `href="/registry/${slug}/"`));
-    expect(staticSnapshot.match(/<li(?:\s|>)/gu)).toHaveLength(12);
-    expect(staticSnapshot.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp/gu)).toHaveLength(12);
-    expect(staticSnapshot).not.toMatch(/rank|spark|chart|market cap|liquidity|volume/iu);
+    const fallback = await read('public/astrofolio/index.html');
+    expect(fallback).toContain('<span id="market-snapshot" class="terminal-compat-target" aria-hidden="true"></span>');
+    expect(fallback).not.toContain('class="static-snapshot"');
   });
 
   it('does not insert defensive purchase copy into the Astrofolio journey', async () => {
@@ -278,53 +359,79 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(fallback).toContain('href="https://astrofolio.xyz/"');
   });
 
-  it('keeps the explanatory disclosures, destinations, verifier, expanded FAQs, and close exact', async () => {
+  it('keeps the collection story, Shop, integrated Terminal links, Registry guide, FAQs, and close exact', async () => {
     const source = await read('src/app.jsx');
-    const how = functionBlock(source, 'ConsumerHowItWorks');
-    for (const copy of ['What is a Zodiac?', 'Zodiacs has twelve tokens, one for each sign.', 'One token for each sign', 'The address tells them apart', 'Keep it, send it, or gift it', 'Its price can rise or fall', 'How verification works', 'See market details']) {
-      expect(how).toContain(copy);
+    const introduction = functionBlock(source, 'ConsumerIntroduction');
+    expect(introduction).toContain('id="what-is-astrofolio"');
+    expect(introduction).toContain('<h2 id="consumer-intro-title">Twelve signs. One collection.</h2>');
+    expect(introduction).toContain('Astrofolio brings the twelve official Zodiac tokens into one place.');
+    expect(introduction).toContain('One public Registry');
+
+    const story = functionBlock(source, 'ConsumerStory');
+    expect(story).toContain('id="thesis" className="consumer-story reveal"');
+    expect(story).toContain('Symbol · record · identity');
+    expect(story).toContain('<h2 id="consumer-story-title">The story behind the collection.</h2>');
+    expect(story).toContain('<span className="consumer-story__cta"><span>Read the story</span><span aria-hidden="true">→</span></span>');
+
+    const shop = functionBlock(source, 'ConsumerShop');
+    expect(shop).toContain('id="shop" className="consumer-shop reveal"');
+    expect(shop).toContain('<h2 id="consumer-shop-title">Wear your sign.</h2>');
+    expect(shop).toContain('href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external"');
+    expect(shop).toContain('{ASTROFOLIO_SHOP_PRODUCTS.map((product, index) =>');
+    const shopProductsStart = source.indexOf('    const ASTROFOLIO_SHOP_PRODUCTS = Object.freeze([');
+    const shopProducts = source.slice(shopProductsStart, source.indexOf('\n    function ConsumerShop(', shopProductsStart));
+    for (const href of [
+      'https://shop.app/products/9655740694871/astrofolio-t-shirt',
+      'https://shop.app/products/9654676455767/astrofolio-cap',
+      'https://shop.app/products/9654762504535/astrofolio-hoodie',
+    ]) {
+      expect(shopProducts).toContain(`href: '${href}'`);
     }
-    expect(how).not.toMatch(/recognizable gold artwork|sculpture is collection artwork|one-of-one NFT/iu);
-    expect(how).not.toContain('Read the story');
-    expect(how).toContain('className="consumer-proof"');
-    const purpose = functionBlock(source, 'ConsumerPurpose');
-    ordered(purpose, ['className="consumer-thesis"', 'className="consumer-collection"']);
-    expect(purpose).toContain('Symbol · record · identity');
-    expect(purpose).toContain('<span>Read the story</span><span className="consumer-purpose__arrow"');
-    expect(purpose).toContain('<span>Open the Cabinet</span><span className="consumer-purpose__arrow"');
-    expect(purpose).toContain('{SIGNS.map((item, index) =>');
-    expect(purpose).toContain("aries: { finish: 'crown', numeral: 'V', count: '×12' }");
-    expect(purpose).toContain("aquarius: { finish: 'gold', numeral: 'IV', count: '×3' }");
-    const destinations = functionBlock(source, 'ConsumerDestinations');
-    expect(destinations).toContain('<h2 id="consumer-destinations-title">Explore Astrofolio</h2>');
-    expect(destinations).toContain('<TerminalViewLink view="pro" sign={sign} className="consumer-destinations__link" />');
-    expect(destinations).toContain('href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external"');
-    expect(destinations).not.toContain('/terminal/markets/');
+
+    expect(source).not.toContain('function ConsumerTerminalStrip(');
+    expect(functionBlock(source, 'VitrinePlacard')).toContain('>Open Terminal</a>');
+
+    const cabinet = functionBlock(source, 'ConsumerCabinet');
+    expect(cabinet).toContain('id="cabinet" className="consumer-cabinet-section reveal"');
+    expect(cabinet).toContain('<h2 id="consumer-cabinet-title">Cabinet of Twelve</h2>');
+    expect(cabinet).toContain('<span>Open the Cabinet</span><span className="consumer-purpose__arrow"');
+    expect(cabinet).toContain('{SIGNS.map((item, index) =>');
+    expect(cabinet).toContain("aries: { finish: 'crown', numeral: 'V', count: '×12' }");
+    expect(cabinet).toContain("aquarius: { finish: 'gold', numeral: 'IV', count: '×3' }");
+
     const verifier = functionBlock(source, 'ConsumerVerifier');
-    expect(verifier).toContain('id="verify" className="consumer-verify reveal"');
+    expect(verifier).toContain('function ConsumerVerifier({ embedded = false })');
+    expect(verifier).toContain("const Wrapper = embedded ? 'div' : 'section'");
+    expect(verifier).toContain("(embedded ? ' is-embedded' : '')");
+    expect(verifier).toContain('<h3 id="consumer-verify-title">Verify an address</h3>');
     expect(verifier).toContain('Check a Zodiac token address');
     expect(verifier).toContain('Paste the token address shown where you found it. We&rsquo;ll tell you whether it appears in the verified list. Never paste a recovery phrase.');
     expect(verifier).toContain('This checks a token address, not a personal account.');
     expect(verifier).not.toContain('This checker only shows information. It cannot move money or approve anything.');
     expect(verifier).not.toContain('vrf__examples');
     expect(verifier).not.toContain('mono');
+    const registry = functionBlock(source, 'ConsumerRegistryGuide');
+    expect(registry).toContain('id="registry" className="consumer-registry-guide reveal"');
+    expect(registry).toContain('<h2 id="consumer-registry-title">Know you have the official Zodiac.</h2>');
+    expect(registry).toContain('<ConsumerVerifier embedded />');
+    expect(registry).toContain('Open the complete {sign.name} record');
     const faqStart = source.indexOf('    const CONSUMER_FAQS = [');
     const faqSource = source.slice(faqStart, source.indexOf('    function ConsumerFaq(', faqStart));
     expect(faqSource.match(/\n\s*q:/gu)).toHaveLength(EXPECTED_FAQS.length);
     ordered(faqSource, [
-      "q: 'Where can I buy Astrofolio merchandise?'",
+      "q: 'Where can I find Astrofolio merchandise?'",
       "q: 'What are the risks?'",
       "q: 'What are the Zodiac markets?'",
       "q: 'What is the Terminal?'",
     ]);
     const fallback = await read('public/astrofolio/index.html');
     const staticFaq = section(fallback, 'faq');
-    expect(staticFaq.match(/<dt>/gu)).toHaveLength(EXPECTED_FAQS.length);
+    expect(staticFaq.match(/<details\s+class="consumer-faq__item">/gu)).toHaveLength(EXPECTED_FAQS.length);
     ordered(staticFaq, [
-      '<dt>Where can I buy Astrofolio merchandise?</dt>',
-      '<dt>What are the risks?</dt>',
-      '<dt>What are the Zodiac markets?</dt>',
-      '<dt>What is the Terminal?</dt>',
+      '<summary>Where can I find Astrofolio merchandise?</summary>',
+      '<summary>What are the risks?</summary>',
+      '<summary>What are the Zodiac markets?</summary>',
+      '<summary>What is the Terminal?</summary>',
     ]);
     for (const item of EXPECTED_FAQS) {
       expect(faqSource).toContain(`q: '${item.q}'`);
@@ -356,15 +463,18 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
   it('keeps consumer navigation on Astrofolio and market depth on Terminal', async () => {
     const source = await read('src/app.jsx');
     const header = functionBlock(source, 'Header');
-    expect(header).toContain("? { href: '/terminal/', label: 'Terminal', description: 'The market desk for the twelve official tokens' }");
-    expect(header).toContain(": { href: '/astrofolio/', label: 'Astrofolio', description: 'Choose a sign and see its official token' }");
+    expect(header).toContain("const terminalNav = {");
+    expect(header).toContain("href: '/astrofolio/'");
+    expect(header).toContain("label: 'Astrofolio'");
+    expect(header).toContain("description: 'Choose a sign and explore the collection'");
+    expect(header).not.toContain("label: 'Terminal'");
 
     const proStart = source.indexOf('<main id="main" className="zd terminal-pro">');
     const proMounted = source.slice(proStart, source.indexOf('</main>', proStart));
     ordered(proMounted, [
-      '<ProMasthead sign={sign} batch={proMarket} />',
-      '<ProMarketBoard active={activeTicker} setActive={setActiveTicker} batch={proMarket} />',
+      '<ProMasthead batch={proMarket} />',
       '<ProSelectedSign sign={sign} batch={proMarket} />',
+      '<ProMarketBoard active={activeTicker} setActive={setActiveTicker} batch={proMarket} />',
       '<ProMarketsGateway sign={sign} />',
       '<ConsumerMarketBriefing active={activeTicker} sharedMarket={proMarket} />',
       '<ProResearchSection sign={sign} />',

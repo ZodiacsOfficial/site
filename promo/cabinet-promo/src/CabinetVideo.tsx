@@ -129,7 +129,7 @@ export const CabinetVideo = () => {
       <WaveCaption text="Pastel · any amount held" from={70} until={92} />
       <WaveCaption text="Bronze · sealed II" from={156} until={176} />
       <WaveCaption text="Silver · sealed III" from={240} until={260} />
-      <WaveCaption text="Gold · one sculpture per million held" from={330} until={372} gold />
+      <WaveCaption text="Gold · one edition per million held" from={330} until={372} gold />
 
       <Sequence name="Master flash" from={351} durationInFrames={14}>
         <Flash peak={0.3} color="224,176,128" />
@@ -148,7 +148,7 @@ export const CabinetVideo = () => {
         <ThresholdCard amount={100000} edition="Silver Edition · III" tint="#C6CCDA" duration={56} />
       </Sequence>
       <Sequence name="Threshold — gold" from={262} durationInFrames={60}>
-        <ThresholdCard amount={1000000} edition="Gold Sculpture · IV" tint="#E0B080" duration={60} />
+        <ThresholdCard amount={1000000} edition="Gold Edition · IV" tint="#E0B080" duration={60} />
       </Sequence>
       <Sequence name="Threshold — crown" from={374} durationInFrames={60}>
         <ThresholdCard amount={10000000} edition="Crown Gold · V" tint="#E8C46A" duration={60} />

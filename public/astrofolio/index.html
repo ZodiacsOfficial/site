@@ -8497,33 +8497,87 @@
     .terminal-compat-target { position: absolute !important; width: 0 !important; height: 0 !important; overflow: hidden !important; pointer-events: none !important; }
 
     .zd.terminal-pro { width: 100%; max-width: none; padding-bottom: 0; color: var(--ink-2); font-family: var(--sans); }
-    .pro-masthead { padding: clamp(108px, 12vw, 160px) 18px 42px; }
-    .pro-masthead__identity { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 44px; padding-bottom: 38px; }
-    .pro-masthead h1 { max-width: 12ch; font-size: clamp(58px, 7.4vw, 102px); }
-    .pro-tape-control { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; }
-    .pro-tape-control .market-tape { min-width: 0; margin: 0; }
-    .pro-tape-control > button { min-width: 112px; border: 1px solid rgba(198,204,218,.09); border-left: 0; background: rgba(10,12,17,.9); color: var(--ink-dim); font: 500 10px/1 var(--sans); cursor: pointer; }
-    .pro-aggregate { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 18px 0 0; border-block: 1px solid var(--hair-2); }
-    .pro-aggregate div { display: grid; gap: 7px; padding: 20px 18px; }
-    .pro-aggregate div + div { border-left: 1px solid var(--hair); }
-    .pro-aggregate dt,
-    .pro-aggregate small { color: var(--ink-mute); font: 8px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
-    .pro-aggregate dd { margin: 0; color: var(--ink); font: 500 23px/1 var(--mono); font-variant-numeric: tabular-nums; }
+    .pro-masthead { padding: clamp(98px, 10vw, 132px) 18px 26px; }
+    .pro-masthead__identity { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 44px; padding-bottom: 24px; }
+    .pro-masthead h1 { max-width: 12ch; margin-top: 10px; font-size: clamp(46px, 5.4vw, 68px); }
+    .pro-masthead__identity p { max-width: 50ch; margin-top: 13px; font-size: clamp(15px, 1.35vw, 17px); }
+    .pro-masthead__status {
+      min-width: 210px;
+      display: grid;
+      gap: 6px;
+      justify-items: end;
+      padding-left: 28px;
+      border-left: 1px solid var(--hair-2);
+      color: var(--ink-mute);
+      font: 500 10px/1.35 var(--mono);
+      text-align: right;
+    }
+    .pro-masthead__status strong { color: var(--ink); font: 600 11px/1.3 var(--sans); }
+    .pro-masthead__status a { color: var(--ink-dim); text-underline-offset: 4px; }
+    .pro-local-nav {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      border-block: 1px solid var(--hair-2);
+      scrollbar-width: none;
+    }
+    .pro-local-nav::-webkit-scrollbar { display: none; }
+    .pro-local-nav a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 14px;
+      color: var(--ink-dim);
+      font: 550 12px/1 var(--sans);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .pro-local-nav a:hover,
+    .pro-local-nav a:focus-visible { color: var(--ink); }
     .pro-board,
-    .pro-selected,
-    .pro-research { padding: clamp(62px, 8vw, 104px) 18px; border-top: 1px solid var(--hair); scroll-margin-top: 26px; }
+    .pro-research { padding: clamp(58px, 7vw, 92px) 18px; border-top: 1px solid var(--hair); scroll-margin-top: 76px; }
+    .pro-selected { padding: clamp(34px, 4vw, 58px) 18px clamp(54px, 7vw, 88px); border-top: 1px solid var(--hair); scroll-margin-top: 76px; }
     .pro-board > header,
-    .pro-selected > header,
-    .pro-research > header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, .65fr); align-items: end; gap: 42px; margin-bottom: 34px; }
+    .pro-research > header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, .65fr); align-items: end; gap: 42px; margin-bottom: 28px; }
     .pro-board > header .consumer-section-head__eyebrow,
-    .pro-selected > header .consumer-section-head__eyebrow,
     .pro-research > header .consumer-section-head__eyebrow { grid-column: 1 / -1; }
     .pro-board h2,
-    .pro-selected h2,
-    .pro-research h2 { margin: 0; color: var(--ink); font: 400 clamp(42px, 5.3vw, 70px)/.94 var(--serif); letter-spacing: -.03em; }
+    .pro-research h2 { margin: 0; color: var(--ink); font: 400 clamp(40px, 4.8vw, 62px)/.94 var(--serif); letter-spacing: -.03em; }
     .pro-board header p,
-    .pro-selected header p,
     .pro-research header p { margin: 0; color: var(--ink-dim); font: 14px/1.55 var(--sans); }
+    .pro-board__freshness { margin-top: 7px !important; color: var(--ink-mute) !important; font: 10px/1.4 var(--mono) !important; }
+    .pro-board__sort { display: none; gap: 6px; margin-bottom: 16px; overflow-x: auto; scrollbar-width: none; }
+    .pro-board__sort::-webkit-scrollbar { display: none; }
+    .pro-board__sort button {
+      min-height: 42px;
+      padding: 0 15px;
+      border: 1px solid var(--hair-2);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink-dim);
+      font: 550 12px/1 var(--sans);
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .pro-board__sort button.is-active { border-color: var(--hair-3); background: rgba(238,241,247,.06); color: var(--ink); }
+    .pro-selected > header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 42px; margin-bottom: 24px; }
+    .pro-selected__identity { min-width: 0; display: flex; align-items: center; gap: 16px; }
+    .pro-selected__identity > img { flex: 0 0 auto; border-radius: 50%; box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-sign) 48%, transparent); }
+    .pro-selected__identity > span { min-width: 0; display: grid; gap: 5px; }
+    .pro-selected__identity small { color: var(--ink-mute); font: 500 10px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .pro-selected h2 { margin: 0; color: var(--ink); font: 400 clamp(42px, 4.7vw, 64px)/.92 var(--serif); letter-spacing: -.035em; }
+    .pro-selected__identity p { margin: 0; color: var(--ink-dim); font: 14px/1.4 var(--sans); }
+    .pro-selected__trust { display: grid; gap: 6px; justify-items: end; padding-left: 28px; border-left: 1px solid var(--hair-2); text-align: right; }
+    .pro-selected__trust strong { color: var(--ink); font: 600 12px/1.3 var(--sans); }
+    .pro-selected__trust span { color: var(--ink-mute); font: 10px/1.35 var(--mono); }
+    .pro-selected__trust a { color: var(--ink-dim); font: 550 11px/1.4 var(--sans); text-underline-offset: 4px; }
+    .pro-selected__quote { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 18px; border-block: 1px solid var(--hair-2); }
+    .pro-selected__quote > div { min-width: 0; display: grid; gap: 8px; padding: 17px 18px; }
+    .pro-selected__quote > div + div { border-left: 1px solid var(--hair); }
+    .pro-selected__quote dt { color: var(--ink-mute); font: 500 10px/1.3 var(--mono); letter-spacing: .09em; text-transform: uppercase; }
+    .pro-selected__quote dd { overflow: hidden; margin: 0; color: var(--ink); font: 500 clamp(16px, 1.7vw, 22px)/1 var(--mono); font-variant-numeric: tabular-nums; text-overflow: ellipsis; white-space: nowrap; }
     .pro-board__scroll { overflow-x: auto; border-block: 1px solid var(--hair-3); scrollbar-color: var(--hair-3) transparent; }
     .pro-board table { width: 100%; min-width: 960px; border-collapse: collapse; font-family: var(--mono); font-variant-numeric: tabular-nums; }
     .pro-board thead th { height: 46px; padding: 0 12px; color: var(--ink-mute); font-size: 8px; font-weight: 500; letter-spacing: .12em; text-align: right; text-transform: uppercase; }
@@ -8545,6 +8599,13 @@
     .pro-board td:last-child a { color: var(--ink-dim); font: 500 10px/1 var(--sans); text-decoration: none; }
     .pro-board__foot,
     .pro-board__state { max-width: 92ch; margin: 18px 0 0; color: var(--ink-mute); font: 9px/1.6 var(--mono); }
+    .pro-board__mobile { display: none; }
+    .pro-market-health { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 28px 0 0; border-block: 1px solid var(--hair-2); }
+    .pro-market-health > div { min-width: 0; display: grid; gap: 7px; padding: 18px; }
+    .pro-market-health > div + div { border-left: 1px solid var(--hair); }
+    .pro-market-health dt,
+    .pro-market-health small { color: var(--ink-mute); font: 500 10px/1.35 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .pro-market-health dd { margin: 0; color: var(--ink); font: 500 21px/1 var(--mono); font-variant-numeric: tabular-nums; }
     .pro-selected__grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(330px, .7fr); gap: 18px; align-items: stretch; }
     .pro-selected__chart { min-width: 0; padding: 24px; border: 1px solid var(--hair-2); background: rgba(10,12,17,.5); }
     .pro-selected__chart .token-spark__plot { grid-template-rows: 220px 18px; }
@@ -8556,7 +8617,27 @@
     .pro-gateway strong { color: var(--ink); font: 400 25px/1 var(--serif); }
     .pro-gateway p { margin: 0; color: var(--ink-dim); font: 13px/1.5 var(--sans); }
     .pro-gateway a { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: 0 16px; border: 1px solid var(--hair-3); color: var(--ink); font: 500 11px/1 var(--sans); text-decoration: none; white-space: nowrap; }
-    .terminal-pro > .consumer-briefing { width: min(calc(100% - 40px), 1364px); margin-inline: auto; }
+    .terminal-pro > .consumer-briefing {
+      left: auto;
+      width: min(calc(100% - 40px), 1400px);
+      margin: 0 auto;
+      padding: clamp(58px, 7vw, 92px) 18px;
+      border-top: 1px solid var(--hair);
+      border-bottom: 0;
+      background: transparent;
+      translate: none;
+    }
+    .terminal-pro > .consumer-briefing::before { display: none; }
+    .terminal-pro .consumer-briefing__head { align-items: center; padding-bottom: 28px; }
+    .terminal-pro .consumer-briefing__head h2 { max-width: none; font-size: clamp(40px, 4.8vw, 62px); line-height: .94; }
+    .terminal-pro .consumer-briefing__sign { min-width: 220px; }
+    .terminal-pro .consumer-briefing__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: 'lead market next'; }
+    .terminal-pro .consumer-briefing__lead { min-height: 0; padding: 28px 28px 28px 0; }
+    .terminal-pro .consumer-briefing__lead > h3,
+    .terminal-pro .consumer-briefing__state h3 { font-size: clamp(27px, 2.9vw, 40px); }
+    .terminal-pro .consumer-briefing__reading { margin-top: 26px; }
+    .terminal-pro .consumer-briefing__market { padding: 28px; border-right: 1px solid var(--hair-2); }
+    .terminal-pro .consumer-briefing__next { padding: 28px; border-top: 0; }
     .pro-research__cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--hair-3); }
     .pro-research__cards article { min-height: 230px; display: grid; align-content: start; padding: 25px 27px; }
     .pro-research__cards article + article { border-left: 1px solid var(--hair); }
@@ -8579,11 +8660,10 @@
       .pro-masthead__identity,
       .pro-board > header,
       .pro-selected > header,
-      .pro-research > header { grid-template-columns: 1fr; align-items: start; gap: 25px; }
+      .pro-research > header { grid-template-columns: 1fr; align-items: start; gap: 20px; }
       .terminal-consumer-hero { width: min(100% - 24px, 1400px); padding: 104px 10px 42px; }
       .terminal-consumer-hero h1 { font-size: clamp(54px, 17vw, 78px); }
-      .terminal-consumer-hero .terminal-view-link,
-      .pro-masthead__identity .terminal-view-link { justify-self: start; }
+      .terminal-consumer-hero .terminal-view-link { justify-self: start; }
       .consumer-snapshot__rows li,
       .static-snapshot__rows li { grid-template-columns: minmax(130px, 1fr) auto; gap: 8px 14px; padding: 12px 2px; }
       .consumer-snapshot__move,
@@ -8594,26 +8674,84 @@
       .terminal-pro > section,
       .terminal-pro > aside,
       .terminal-pro > .ftr { width: min(100% - 32px, 1400px); }
-      .pro-masthead { padding: 104px 0 34px; }
-      .pro-masthead h1 { max-width: 9ch; font-size: clamp(54px, 16vw, 78px); }
-      .pro-tape-control { grid-template-columns: minmax(0, 1fr); }
-      .pro-tape-control > button { min-height: 44px; border-left: 1px solid rgba(198,204,218,.09); border-top: 0; }
-      .pro-aggregate { grid-template-columns: 1fr; }
-      .pro-aggregate div + div { border-top: 1px solid var(--hair); border-left: 0; }
+      .pro-masthead { padding: 88px 0 18px; }
+      .pro-masthead h1 { max-width: 9ch; font-size: clamp(44px, 13vw, 56px); }
+      .pro-masthead__identity p { margin-top: 10px; font-size: 15px; }
+      .pro-masthead__status { min-width: 0; justify-items: start; padding: 14px 0 0; border-top: 1px solid var(--hair-2); border-left: 0; text-align: left; }
+      .pro-local-nav { margin-inline: -8px; padding-inline: 2px; }
       .pro-board,
-      .pro-selected,
-      .pro-research { padding-inline: 0; }
+      .pro-research { padding: 48px 0; }
+      .pro-selected { padding: 30px 0 52px; }
+      .pro-selected__identity > img { width: 54px; height: 54px; }
+      .pro-selected h2 { font-size: clamp(38px, 11.5vw, 48px); }
+      .pro-selected__trust { justify-items: start; padding: 14px 0 0; border-top: 1px solid var(--hair-2); border-left: 0; text-align: left; }
+      .pro-selected__quote { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pro-selected__quote > div { padding: 14px 10px; }
+      .pro-selected__quote > div:nth-child(odd) { border-left: 0; }
+      .pro-selected__quote > div:nth-child(n+3) { border-top: 1px solid var(--hair); }
+      .pro-selected__quote dd { font-size: clamp(15px, 4.8vw, 19px); }
       .pro-selected__grid,
       .pro-gateway,
       .pro-verifier { grid-template-columns: 1fr; }
-      .pro-selected__chart { padding: 18px 12px; }
+      .pro-selected__chart { padding: 14px 10px; }
+      .pro-selected__chart .token-spark__plot { grid-template-rows: 190px 18px; }
+      .pro-selected__chart .token-spark svg { height: 190px; }
       .pro-gateway,
       .pro-verifier { gap: 20px; padding: 25px 20px; }
       .pro-gateway a,
       .pro-verifier a { width: 100%; }
+      .pro-board__scroll { display: none; }
+      .pro-board__sort { display: flex; }
+      .pro-board__mobile { display: grid; margin: 0; padding: 0; border-block: 1px solid var(--hair-3); list-style: none; }
+      .pro-board__mobile > li { border-top: 1px solid var(--hair); box-shadow: inset 2px 0 0 transparent; }
+      .pro-board__mobile > li:first-child { border-top: 0; }
+      .pro-board__mobile > li.is-active { background: color-mix(in srgb, var(--row-sign) 6%, transparent); box-shadow: inset 2px 0 0 var(--row-sign); }
+      .pro-board-mobile__select {
+        width: 100%;
+        min-height: 68px;
+        display: grid;
+        grid-template-columns: 28px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 10px;
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        text-align: left;
+      }
+      .pro-board-mobile__rank { color: var(--ink-mute); font: 10px/1 var(--mono); }
+      .pro-board-mobile__identity { min-width: 0; display: flex; align-items: center; gap: 10px; }
+      .pro-board-mobile__identity img { flex: 0 0 auto; border-radius: 50%; }
+      .pro-board-mobile__identity > span { min-width: 0; display: grid; gap: 4px; }
+      .pro-board-mobile__identity strong { font: 600 14px/1 var(--sans); }
+      .pro-board-mobile__identity small { color: var(--ink-mute); font: 9px/1 var(--mono); }
+      .pro-board-mobile__quote { display: grid; gap: 6px; justify-items: end; font-variant-numeric: tabular-nums; }
+      .pro-board-mobile__quote strong { color: var(--ink-2); font: 500 11px/1 var(--mono); }
+      .pro-board-mobile__quote small { font: 500 10px/1 var(--mono); }
+      .pro-board-mobile__details { padding: 0 10px 10px 48px; }
+      .pro-board-mobile__details summary { min-height: 44px; display: flex; align-items: center; color: var(--ink-dim); font: 550 11px/1 var(--sans); cursor: pointer; }
+      .pro-board-mobile__details dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; border-block: 1px solid var(--hair); }
+      .pro-board-mobile__details dl > div { min-width: 0; padding: 12px 8px 12px 0; }
+      .pro-board-mobile__details dl > div + div { padding-left: 8px; border-left: 1px solid var(--hair); }
+      .pro-board-mobile__details dt { color: var(--ink-mute); font: 8px/1.3 var(--mono); text-transform: uppercase; }
+      .pro-board-mobile__details dd { overflow: hidden; margin: 6px 0 0; color: var(--ink-2); font: 10px/1 var(--mono); text-overflow: ellipsis; white-space: nowrap; }
+      .pro-board-mobile__details > a { min-height: 44px; display: inline-flex; align-items: center; color: var(--ink-dim); font: 550 11px/1 var(--sans); }
+      .pro-market-health { grid-template-columns: minmax(0, 1fr); }
+      .pro-market-health > div { padding: 14px 4px; }
+      .pro-market-health > div + div { border-top: 1px solid var(--hair); border-left: 0; }
+      .pro-market-health dt,
+      .pro-market-health small { font-size: 8px; letter-spacing: .04em; }
+      .pro-market-health dd { font-size: clamp(14px, 4.2vw, 17px); }
       .pro-research__cards { grid-template-columns: 1fr; }
       .pro-research__cards article + article { border-top: 1px solid var(--hair); border-left: 0; }
-      .terminal-pro > .consumer-briefing { width: calc(100% - 32px); }
+      .terminal-pro > .consumer-briefing { left: auto; width: calc(100% - 32px); margin: 0 auto; padding: 48px 0; translate: none; }
+      .terminal-pro .consumer-briefing__head { grid-template-columns: 1fr; align-items: start; gap: 18px; padding-bottom: 24px; }
+      .terminal-pro .consumer-briefing__head h2 { font-size: clamp(38px, 11.5vw, 48px); }
+      .terminal-pro .consumer-briefing__sign { min-width: 0; justify-content: flex-start; padding: 14px 0 0; border-top: 1px solid var(--hair-2); border-left: 0; }
+      .terminal-pro .consumer-briefing__grid { grid-template-columns: 1fr; grid-template-areas: 'lead' 'market' 'next'; }
+      .terminal-pro .consumer-briefing__lead { padding: 26px 0; border-right: 0; }
+      .terminal-pro .consumer-briefing__market { padding: 26px 0; border-top: 1px solid var(--hair-2); border-right: 0; }
+      .terminal-pro .consumer-briefing__next { padding: 26px 0; border-top: 1px solid var(--hair-2); }
     }
 
     /* Astrofolio · Lit Vitrine
@@ -8709,6 +8847,32 @@
     .consumer-registry .astrofolio-lockup__copy small strong { font-weight: 600; }
 
     .wnav__pill { display: contents; }
+    .wnav__dropdown-btn { appearance: none; border: 0; background: transparent; cursor: pointer; }
+    .wnav__dropdown-btn svg { transition: transform 180ms var(--ease-soft); }
+    .wnav__dropdown-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
+    .wnav-tools {
+      pointer-events: auto;
+      width: min(calc(100% - 32px), 720px);
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid var(--hair-2);
+      border-radius: 20px;
+      background: rgba(10,12,17,.86);
+      box-shadow: 0 24px 60px -24px rgba(0,0,0,.8);
+      opacity: 0;
+      transform: translateY(-6px) scale(.99);
+      transition: opacity 180ms var(--ease-soft), transform 180ms var(--ease-soft);
+      backdrop-filter: saturate(150%) blur(22px);
+      -webkit-backdrop-filter: saturate(150%) blur(22px);
+    }
+    .wnav-tools[hidden] { display: none; }
+    .wnav-tools.is-open { opacity: 1; transform: none; }
+    .wnav-tools__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; }
+    .wnav-tools__item { min-width: 0; display: grid; gap: 4px; padding: 12px; border-radius: 14px; color: var(--ink); text-decoration: none; }
+    .wnav-tools__item:hover,
+    .wnav-tools__item:focus-visible { background: rgba(238,241,247,.055); }
+    .wnav-tools__name { font: 550 14px/1.25 var(--sans); }
+    .wnav-tools__desc { overflow: hidden; color: var(--ink-mute); font: 9px/1.4 var(--mono); letter-spacing: .025em; text-overflow: ellipsis; white-space: nowrap; }
     .consumer-registry .terminal-consumer-hero h1 {
       max-width: none;
       margin: 0;
@@ -8922,11 +9086,21 @@
       font-variant-numeric: tabular-nums;
     }
     .consumer-registry .vitrine-price__movement { color: var(--active-sign); }
+    .consumer-registry .vitrine-market-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px 12px;
+      margin-top: 12px;
+      color: var(--ink-mute);
+      font: 500 11px/1.4 var(--sans);
+      letter-spacing: 0;
+    }
+    .consumer-registry .vitrine-market-meta a { color: var(--ink-dim); text-underline-offset: 4px; }
     .consumer-registry .vitrine-placard__actions {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
-      margin-top: 24px;
+      margin-top: 18px;
     }
     .consumer-registry .vitrine-placard__actions .btn {
       height: 48px;
@@ -9854,6 +10028,55 @@
       font-size: 17px;
       transition: none;
     }
+    .consumer-registry .consumer-story__cta {
+      align-self: flex-start;
+      width: fit-content;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 22px;
+      padding: 0;
+      border: 0;
+      color: var(--ink);
+      background: transparent;
+      box-shadow: none;
+      font: 600 13px/1.35 var(--sans);
+      text-decoration: none;
+    }
+    .consumer-registry .consumer-story__cta > span:first-child {
+      text-decoration: underline;
+      text-decoration-color: var(--hair-3);
+      text-underline-offset: 5px;
+    }
+    .consumer-registry .consumer-story__cta > span:last-child { color: var(--ink-dim); font-size: 16px; text-decoration: none; }
+    .consumer-static .static-story-band__copy b {
+      width: fit-content;
+      min-height: 44px;
+      gap: 9px;
+      margin-top: 4px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      color: var(--ink);
+      background: transparent;
+      box-shadow: none;
+      text-decoration: none;
+    }
+    .consumer-static .static-story-band__copy b > span:first-child {
+      text-decoration: underline;
+      text-decoration-color: var(--hair-3);
+      text-underline-offset: 5px;
+    }
+    .consumer-static .static-story-band__arrow { width: auto; height: auto; color: var(--ink-dim); background: transparent; }
+    .consumer-registry .consumer-thesis__link:hover .consumer-story__cta,
+    .consumer-registry .consumer-thesis__link:active .consumer-story__cta,
+    .consumer-registry .consumer-thesis__link:focus-visible .consumer-story__cta,
+    .consumer-registry .consumer-thesis__link:visited .consumer-story__cta { color: var(--ink); }
+    .consumer-registry .consumer-collection__link:hover .consumer-purpose__cta,
+    .consumer-registry .consumer-collection__link:active .consumer-purpose__cta,
+    .consumer-registry .consumer-collection__link:focus-visible .consumer-purpose__cta,
+    .consumer-registry .consumer-collection__link:visited .consumer-purpose__cta { color: #111318; }
     .consumer-registry .consumer-thesis__link:hover .consumer-thesis__visual img { transform: none; }
     .consumer-registry .consumer-thesis__link:active .consumer-purpose__cta,
     .consumer-registry .consumer-collection__link:active .consumer-purpose__cta { transform: scale(.98); }
@@ -10062,7 +10285,7 @@
         background: linear-gradient(180deg, transparent, rgba(6, 7, 9, .82) 30%, var(--bg) 59%);
       }
       .consumer-registry .vitrine-placard__identity h2 { font-size: clamp(50px, 15vw, 68px); }
-      .consumer-registry .vitrine-placard__actions { grid-template-columns: 1fr 1.2fr; }
+      .consumer-registry .vitrine-placard__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .consumer-registry > .consumer-buy,
       .consumer-registry > .consumer-intro,
       .consumer-registry > .consumer-story,
@@ -10143,7 +10366,7 @@
       .consumer-registry .vitrine-disc picture { width: 46px; height: 46px; }
       .consumer-registry .vitrine-disc img { width: 38px; height: 38px; }
       .consumer-registry .vitrine-placard__actions {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 9px;
       }
       .consumer-registry .vitrine-placard__record { grid-column: 1 / -1; margin-top: 5px; }
@@ -10154,7 +10377,7 @@
       .consumer-registry > .consumer-snapshot,
       .consumer-registry > .consumer-cabinet-section,
       .consumer-registry > .consumer-registry-guide,
-      .consumer-registry > .consumer-faq { padding-block: 58px; }
+      .consumer-registry > .consumer-faq { padding-block: 38px; }
       .consumer-registry .consumer-shop__products {
         min-height: 720px;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -10172,6 +10395,8 @@
       .consumer-registry .consumer-registry-guide__record,
       .consumer-registry .consumer-verify.is-embedded { padding: 24px 20px; }
       .consumer-registry .consumer-snapshot__rows li { grid-template-columns: minmax(114px, 1fr) auto; }
+      .consumer-registry .vitrine-market-meta { gap: 5px 10px; font-size: 11px; }
+      .consumer-registry .vitrine-placard__actions .btn { padding-inline: 12px; font-size: 12px; line-height: 1.12; text-align: center; }
       .consumer-registry .consumer-purpose__cta { min-height: 50px; padding-left: 18px; }
       .consumer-registry .consumer-purpose__arrow { width: 38px; height: 38px; }
       .consumer-registry .vrf { grid-template-columns: minmax(0, 1fr); }
@@ -10179,6 +10404,9 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .wnav-tools,
+      .wnav-signs,
+      .wnav__dropdown-btn svg { transition: none !important; }
       .consumer-registry *,
       .consumer-registry *::before,
       .consumer-registry *::after {
@@ -10210,6 +10438,8 @@
       </nav>
 
       <section class="static-astrofolio-opening" id="official-twelve" aria-labelledby="static-astrofolio-title">
+        <span id="market-snapshot" class="terminal-compat-target" aria-hidden="true"></span>
+        <span id="terminal" class="terminal-compat-target" aria-hidden="true"></span>
         <header class="static-astrofolio-header">
           <div class="static-astrofolio-lockup">
             <img src="/assets/astrofolio/v2/zodiac-ring-192.png" width="52" height="52" alt="">
@@ -10242,7 +10472,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-aries-title">Aries</h2><p class="static-vitrine__dates">March 21 to April 19</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/aries/">Explore Aries</a><a class="btn btn--ghost" href="/registry/aries/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/aries/">Explore Aries</a><a class="btn btn--ghost" href="/terminal/?sign=aries" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="taurus" aria-labelledby="static-taurus-title">
@@ -10250,7 +10480,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-taurus-title">Taurus</h2><p class="static-vitrine__dates">April 20 to May 20</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/taurus/">Explore Taurus</a><a class="btn btn--ghost" href="/registry/taurus/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/taurus/">Explore Taurus</a><a class="btn btn--ghost" href="/terminal/?sign=taurus" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="gemini" aria-labelledby="static-gemini-title">
@@ -10258,7 +10488,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-gemini-title">Gemini</h2><p class="static-vitrine__dates">May 21 to June 20</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/gemini/">Explore Gemini</a><a class="btn btn--ghost" href="/registry/gemini/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/gemini/">Explore Gemini</a><a class="btn btn--ghost" href="/terminal/?sign=gemini" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="cancer" aria-labelledby="static-cancer-title">
@@ -10266,7 +10496,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-cancer-title">Cancer</h2><p class="static-vitrine__dates">June 21 to July 22</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/cancer/">Explore Cancer</a><a class="btn btn--ghost" href="/registry/cancer/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/cancer/">Explore Cancer</a><a class="btn btn--ghost" href="/terminal/?sign=cancer" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="leo" aria-labelledby="static-leo-title">
@@ -10274,7 +10504,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-leo-title">Leo</h2><p class="static-vitrine__dates">July 23 to August 22</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/leo/">Explore Leo</a><a class="btn btn--ghost" href="/registry/leo/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/leo/">Explore Leo</a><a class="btn btn--ghost" href="/terminal/?sign=leo" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="virgo" aria-labelledby="static-virgo-title">
@@ -10282,7 +10512,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-virgo-title">Virgo</h2><p class="static-vitrine__dates">August 23 to September 22</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/virgo/">Explore Virgo</a><a class="btn btn--ghost" href="/registry/virgo/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/virgo/">Explore Virgo</a><a class="btn btn--ghost" href="/terminal/?sign=virgo" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="libra" aria-labelledby="static-libra-title">
@@ -10290,7 +10520,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-libra-title">Libra</h2><p class="static-vitrine__dates">September 23 to October 22</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/libra/">Explore Libra</a><a class="btn btn--ghost" href="/registry/libra/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/libra/">Explore Libra</a><a class="btn btn--ghost" href="/terminal/?sign=libra" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="scorpio" aria-labelledby="static-scorpio-title">
@@ -10298,7 +10528,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-scorpio-title">Scorpio</h2><p class="static-vitrine__dates">October 23 to November 21</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/scorpio/">Explore Scorpio</a><a class="btn btn--ghost" href="/registry/scorpio/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/scorpio/">Explore Scorpio</a><a class="btn btn--ghost" href="/terminal/?sign=scorpio" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="sagittarius" aria-labelledby="static-sagittarius-title">
@@ -10306,7 +10536,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-sagittarius-title">Sagittarius</h2><p class="static-vitrine__dates">November 22 to December 21</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/sagittarius/">Explore Sagittarius</a><a class="btn btn--ghost" href="/registry/sagittarius/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/sagittarius/">Explore Sagittarius</a><a class="btn btn--ghost" href="/terminal/?sign=sagittarius" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="capricorn" aria-labelledby="static-capricorn-title">
@@ -10314,7 +10544,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-capricorn-title">Capricorn</h2><p class="static-vitrine__dates">December 22 to January 19</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/capricorn/">Explore Capricorn</a><a class="btn btn--ghost" href="/registry/capricorn/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/capricorn/">Explore Capricorn</a><a class="btn btn--ghost" href="/terminal/?sign=capricorn" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="aquarius" aria-labelledby="static-aquarius-title">
@@ -10322,7 +10552,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-aquarius-title">Aquarius</h2><p class="static-vitrine__dates">January 20 to February 18</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/aquarius/">Explore Aquarius</a><a class="btn btn--ghost" href="/registry/aquarius/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/aquarius/">Explore Aquarius</a><a class="btn btn--ghost" href="/terminal/?sign=aquarius" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="pisces" aria-labelledby="static-pisces-title">
@@ -10330,7 +10560,7 @@
               <div class="static-vitrine__placard">
                 <h2 id="static-pisces-title">Pisces</h2><p class="static-vitrine__dates">February 19 to March 20</p>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/pisces/">Explore Pisces</a><a class="btn btn--ghost" href="/registry/pisces/#record">View official record</a></div>
+                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/pisces/">Explore Pisces</a><a class="btn btn--ghost" href="/terminal/?sign=pisces" data-terminal-static-view="pro">Open Terminal</a></div>
               </div>
             </article>
           </div>
@@ -10380,24 +10610,6 @@
           </article>
         </div>
         <p><a class="consumer-destinations__link" href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external">Browse the full Astrofolio shop <span aria-hidden="true">↗</span></a></p>
-      </section>
-
-      <section class="static-site__section static-snapshot" id="market-snapshot" aria-labelledby="static-market-title">
-        <h2 id="static-market-title">Aries, today</h2>
-        <p>A quick market view for the sign selected above. Prices may be delayed or unavailable.</p>
-        <ul class="static-snapshot__rows" aria-label="Aries market snapshot">
-          <li style="--row-sign:#DE8E79"><a href="/registry/aries/"><img src="/assets/zodiac-icons/48/aries.webp" width="32" height="32" alt="" loading="lazy" decoding="async"><strong>Aries</strong></a><span>Price unavailable</span><span>movement unavailable</span></li>
-        </ul>
-        <details class="static-disclosure"><summary>How market data works</summary><div><p>Prices come from a public market source. They may be delayed or incomplete and are not a recommendation.</p><a href="/registry/technical/#market-transparency">See the sourcing method</a></div></details>
-      </section>
-
-      <section class="static-site__section consumer-destinations static-terminal-gateway" id="terminal" aria-labelledby="static-terminal-title">
-        <article class="consumer-destinations__card">
-          <span class="consumer-destinations__eyebrow">Zodiac markets</span>
-          <h2 id="static-terminal-title">See all twelve in the Terminal</h2>
-          <p>Compare live prices, liquidity, charts, season context, and research in one market view.</p>
-          <a class="consumer-destinations__link" href="/terminal/" data-terminal-static-view="pro">Open the Terminal <span aria-hidden="true">↗</span></a>
-        </article>
       </section>
 
       <section class="static-site__section static-purpose static-collection-section" id="collection" aria-labelledby="static-collection-title">

@@ -92,7 +92,7 @@ describe('the landing', () => {
     expect(html).not.toContain('/assets/trade.js');
   });
 
-  it('offers one visible handoff across twelve no-JS sign states', async () => {
+  it('offers Registry and Terminal handoffs across twelve no-JS sign states', async () => {
     const html = await hub();
     const vitrine = html.match(/<fieldset class="static-vitrine">([\s\S]*?)<\/fieldset>/)?.[1];
     expect(vitrine).toBeDefined();
@@ -114,9 +114,12 @@ describe('the landing', () => {
     )];
     expect(panels.map(([, sign]) => sign)).toEqual(SIGNS);
     for (const [, sign, panel] of panels) {
-      const handoffs = [...panel.matchAll(/href="\/registry\/([a-z]+)\/#record"/g)];
-      expect(handoffs, sign).toHaveLength(1);
-      expect(handoffs[0][1], sign).toBe(sign);
+      const records = [...panel.matchAll(/href="\/registry\/([a-z]+)\/"/g)];
+      const terminals = [...panel.matchAll(/href="\/terminal\/\?sign=([a-z]+)"/g)];
+      expect(records, sign).toHaveLength(1);
+      expect(records[0][1], sign).toBe(sign);
+      expect(terminals, sign).toHaveLength(1);
+      expect(terminals[0][1], sign).toBe(sign);
       expect(html, sign).toContain(
         `.static-vitrine:has(#astrofolio-${sign}:checked) [data-static-sign="${sign}"]`,
       );
@@ -127,8 +130,7 @@ describe('the landing', () => {
     expect(html).toMatch(/\.static-vitrine__panel\s*\{\s*display:\s*none;/);
     expect(panels.some(([, sign]) => sign === choiceSign(checked[0]))).toBe(true);
 
-    // The beginner handoff ends at the record. It is not a second Markets
-    // gateway, a venue deep-link, or an embedded execution panel.
+    // Neither handoff is a venue deep-link or an embedded execution panel.
     expect(html).not.toContain('href="/terminal/markets/');
     expect(html).not.toMatch(/href="https:\/\/(?:[^"/]+\.)?jup\.ag\//);
     expect(html).not.toContain('data-trade-panel');

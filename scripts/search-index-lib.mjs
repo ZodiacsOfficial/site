@@ -76,7 +76,7 @@ export const CURATED_WING_ENTRIES = Object.freeze([
     kind: 'astrofolio',
     keywords: [
       'astrofolio', 'collection', 'choose your sign', 'official zodiac',
-      'token', 'gold sculpture', 'artwork', 'gallery', 'verifier', 'buying guide',
+      'token', 'zodiac design', 'artwork', 'gallery', 'verifier', 'buying guide',
     ],
   }),
   freezeCuratedEntry({

@@ -30,13 +30,13 @@ function cssRule(source, selector) {
 }
 
 describe('registry pastel polish', () => {
-  it('uses canonical sign discs and gold sculpture derivatives in the Lit Vitrine', async () => {
+  it('uses canonical sign discs and gold artwork derivatives in the Lit Vitrine', async () => {
     const source = await read('src/app.jsx');
     expect(source).toContain('srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`}');
     expect(source).toContain('src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}');
     expect(source).toContain('src={`/assets/sculptures/512/${layer.slug}.webp`}');
     expect(source).toContain('srcSet={`/assets/sculptures/512/${layer.slug}.webp 512w, /assets/sculptures/1024/${layer.slug}.webp 1024w`}');
-    expect(source).toContain('alt={layer.current ? `${item.name} gold sculpture` : \'\'}');
+    expect(source).toContain('alt={layer.current ? `${item.name} Zodiac artwork` : \'\'}');
   });
 
   it('keeps every selector disc pastel and reserves the selected hue for the ring, atmosphere, and movement', async () => {
@@ -74,17 +74,13 @@ describe('registry pastel polish', () => {
     expect(html).toContain('.static-vitrine__disc::before { opacity: 1; }');
     expect(cssRule(lit, '.consumer-registry .astrofolio-lockup__avatar {')).toContain('radial-gradient(circle, #010204');
     expect(cssRule(html, '.static-astrofolio-lockup > img {')).toContain('radial-gradient(circle, #010204');
-    const snapshotIcon = cssRule(lit, '.consumer-registry .consumer-snapshot__identity img {');
-    expect(snapshotIcon).toContain('opacity: .96;');
-    expect(snapshotIcon).toContain('filter: none;');
-    expect(snapshotIcon).toContain('var(--row-sign)');
-    expect(html.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp" width="32" height="32"/gu)).toHaveLength(12);
+    expect(html).not.toContain('class="static-snapshot"');
     expect(lit).not.toContain('var(--gold)');
     expect(lit).not.toContain('var(--gold-bright)');
     expect(lit).not.toContain('var(--gold-deep)');
   });
 
-  it('keeps the warm halo behind the sculpture and neutral UI chrome', async () => {
+  it('keeps the warm halo behind the artwork and neutral UI chrome', async () => {
     const css = await read('src/terminal/split-styles.css');
     const halo = cssRule(css, '.consumer-registry .vitrine-stage::before {');
     const primary = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn--primary {');
@@ -154,12 +150,13 @@ describe('registry pastel polish', () => {
     expect(reduced).toContain('.consumer-registry .consumer-purpose__arrow { transform: none; }');
   });
 
-  it('limits the unfolding composition to three major hairlines and no dashboard boxes', async () => {
+  it('uses deliberate hierarchy hairlines and no dashboard boxes', async () => {
     const [source, css] = await Promise.all([
       read('src/app.jsx'),
       read('src/terminal/split-styles.css'),
     ]);
-    expect(source.match(/data-vitrine-rule/gu)).toHaveLength(2);
+    expect(source.slice(source.indexOf('    function ConsumerShop('), source.indexOf('\n    function ConsumerCabinet('))).toContain('data-vitrine-rule');
+    expect(source.slice(source.indexOf('    function ConsumerRegistryGuide('), source.indexOf('\n    function ConsumerStory('))).toContain('data-vitrine-rule');
     expect(css).toContain('.consumer-registry > [data-vitrine-rule]::before {');
     expect(css).toContain('height: 1px;');
     const sections = cssRule(css, '.consumer-registry > .consumer-buy,');
@@ -183,6 +180,8 @@ describe('registry pastel polish', () => {
     expect(css).toContain('.consumer-registry .consumer-thesis__link:hover .consumer-thesis__visual img { transform: none; }');
     expect(cssRule(css, '.consumer-registry .consumer-thesis__visual img {')).not.toContain('grayscale');
     expect(cssRule(css, '.consumer-registry .consumer-purpose__cta {')).toContain('border-radius: 999px;');
+    expect(cssRule(css, '.consumer-registry .consumer-story__cta {')).toContain('width: fit-content;');
+    expect(cssRule(css, '.consumer-registry .consumer-story__cta {')).toContain('text-decoration: none;');
     expect(cssRule(css, '.consumer-registry .consumer-purpose__arrow {')).toContain('border-radius: 50%;');
   });
 
@@ -251,7 +250,7 @@ describe('registry pastel polish', () => {
       expect(output).toContain('class="wnav-menu__sign" style="--i:11;--sign:#A9D4C4"');
     }
     expect(thesis).toContain('<a class="wnav__chip" href="/astrofolio/">Astrofolio</a>');
-    expect(thesis).toContain('<span>Astrofolio</span><small>The collection of twelve gold Zodiac sculptures</small>');
+    expect(thesis).toContain('<span>Astrofolio</span><small>The twelve Zodiac signs</small>');
     expect(thesis).not.toContain('<a class="wnav__chip" href="/terminal/">Terminal</a>');
     expect(siteNav).toContain('.mobile-menu__tool:last-child { border-bottom: 0; }');
     expect(source).toContain('<span className="wnav__sep">·</span><span className="wnav__dim">org</span>');

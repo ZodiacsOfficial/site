@@ -275,7 +275,7 @@ function renderPage() {
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/share.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Zodiacs — twelve sculptural gold figures, native on Solana and bridged to Base." />
+  <meta property="og:image:alt" content="Zodiacs — twelve gold Zodiac designs, native on Solana and bridged to Base." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Archive — Zodiacs" />
   <meta name="twitter:description" content="${escAttr(ARCHIVE_META.description)}" />

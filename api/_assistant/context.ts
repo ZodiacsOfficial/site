@@ -21,7 +21,7 @@ Use these labels from docs/STRATEGY.md §4 when they fit:
 - {sign} also exists as one of the Twelve — a canonical record in the Registry
 - View the record →
 - Nothing saved yet. Charts you save will live here, on your device first.
-- Choose your sign and meet its gold sculpture and official identity through one calm collection view.
+- Choose your sign and find its official identity through one calm collection view.
 - “the Twelve” means the twelve signs as canonical records in the registry.
 - The records bridge is: “{sign} also exists as one of the Twelve — a canonical record in the registry” → “View the record →”.
 
@@ -743,7 +743,7 @@ Every route below is a live date guide. Each one-line description names the sign
 
 ASTROFOLIO, TERMINAL, AND REGISTRY
 Astrofolio is the collection. The Registry is the record. The Terminal is the market desk.
-- /astrofolio/: Astrofolio is the consumer collection for choosing a sign, seeing its gold sculpture and official token, checking its Registry record, and following a simple guide to buying it.
+- /astrofolio/: Astrofolio is the consumer collection for choosing a sign, seeing its official token, checking its Registry record, and following a simple guide to buying it.
 - /terminal/: Terminal is the expert market desk for all twelve, ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart, market tape, briefing, season context, and research headlines.
 - /terminal/research/ — Research desk: reviewed sky facts, traditional readings, and separately timestamped public-activity observations.
 - /registry/ — Zodiacs Registry: the read-only verification hub for canonical identities, official addresses, records, datasets, and methodology.

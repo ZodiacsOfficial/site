@@ -1532,6 +1532,37 @@
     function Header() {
       const [menuOpen, setMenuOpen] = useState(false);
       const [signsOpen, setSignsOpen] = useState(false);
+      const [toolsOpen, setToolsOpen] = useState(false);
+      const toolsButtonRef = useRef(null);
+      const signsButtonRef = useRef(null);
+      const focusDropdownItem = (id, last = false) => {
+        window.requestAnimationFrame(() => {
+          const items = [...document.querySelectorAll(`#${id} a`)];
+          const target = items[last ? items.length - 1 : 0];
+          items.forEach((item) => { item.tabIndex = item === target ? 0 : -1; });
+          target?.focus();
+        });
+      };
+      const handleDropdownKey = (event, columns, close, triggerRef) => {
+        const item = event.target.closest('a');
+        if (!item) return;
+        const items = [...event.currentTarget.querySelectorAll('a')];
+        const index = items.indexOf(item);
+        const moves = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: columns, ArrowUp: -columns };
+        let next = null;
+        if (event.key in moves) next = (index + moves[event.key] + items.length) % items.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = items.length - 1;
+        if (next !== null) {
+          event.preventDefault();
+          items.forEach((candidate, candidateIndex) => { candidate.tabIndex = candidateIndex === next ? 0 : -1; });
+          items[next]?.focus();
+        } else if (event.key === 'Escape') {
+          event.preventDefault();
+          close(false);
+          triggerRef.current?.focus();
+        }
+      };
       useEffect(() => {
         if (!menuOpen) return undefined;
         const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
@@ -1548,6 +1579,14 @@
         document.addEventListener('keydown', onKey);
         return () => { document.removeEventListener('click', onDoc); document.removeEventListener('keydown', onKey); };
       }, [signsOpen]);
+      useEffect(() => {
+        if (!toolsOpen) return undefined;
+        const onDoc = (e) => { if (!e.target.closest('.wnav-wrap')) setToolsOpen(false); };
+        const onKey = (e) => { if (e.key === 'Escape') setToolsOpen(false); };
+        document.addEventListener('click', onDoc);
+        document.addEventListener('keydown', onKey);
+        return () => { document.removeEventListener('click', onDoc); document.removeEventListener('keydown', onKey); };
+      }, [toolsOpen]);
       const NAV_SIGNS = [
         { slug: 'aries', name: 'Aries', glyph: '♈', dates: 'Mar 21 – Apr 19', hue: '#DE8E79' },
         { slug: 'taurus', name: 'Taurus', glyph: '♉', dates: 'Apr 20 – May 20', hue: '#B9D4BE' },
@@ -1572,20 +1611,21 @@
         { href: '/saturn-return/', name: 'Saturn return', description: 'When yours hits, exactly, and what it tends to ask.' },
         { href: '/birthday/', name: 'Birthday', description: 'Check the Zodiac sign for any birthday from 1940 to 2030, including birthdays close to a sign change.' },
       ];
-      const terminalNav = REGISTRY_VIEW === 'terminal-pro'
-        ? { href: '/terminal/', label: 'Terminal', description: 'The market desk for the twelve official tokens' }
-        : { href: '/astrofolio/', label: 'Astrofolio', description: 'Choose a sign and explore the collection' };
+      const terminalNav = {
+        href: '/astrofolio/',
+        label: 'Astrofolio',
+        description: 'Choose a sign and explore the collection',
+      };
       return (
         <>
           <div className="wnav-wrap">
-            <nav className="wnav" aria-label="Primary">
-              <div className="wnav__pill">
+            <nav className="wnav" aria-label="Primary" data-wnav="">
                 <a className="wnav__mark" href="/">
                   <span className="wnav__name">Zodiacs<span className="wnav__sep">·</span><span className="wnav__dim">org</span></span>
                 </a>
                 <div className="wnav__links">
-                  <a className="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></a>
-                  <button className="wnav__link wnav__signs-btn" type="button" aria-expanded={signsOpen} aria-controls="wnav-signs" onClick={() => setSignsOpen((v) => !v)}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+                  <button ref={toolsButtonRef} className="wnav__link wnav__dropdown-btn wnav__tools-btn" type="button" data-wnav-tools="" aria-expanded={toolsOpen} aria-controls="wnav-tools" aria-haspopup="true" onKeyDown={(event) => { if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); setSignsOpen(false); setToolsOpen(true); focusDropdownItem('wnav-tools', event.key === 'ArrowUp'); } }} onClick={() => { setToolsOpen((v) => !v); setSignsOpen(false); }}>Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+                  <button ref={signsButtonRef} className="wnav__link wnav__dropdown-btn wnav__signs-btn" type="button" data-wnav-signs="" aria-expanded={signsOpen} aria-controls="wnav-signs" aria-haspopup="true" onKeyDown={(event) => { if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); setToolsOpen(false); setSignsOpen(true); focusDropdownItem('wnav-signs', event.key === 'ArrowUp'); } }} onClick={() => { setSignsOpen((v) => !v); setToolsOpen(false); }}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
                   <a className="wnav__link" href="/learn/">Learn</a>
                   <a className="wnav__link" href="/horoscopes/">Horoscopes</a>
                   <a className="wnav__link" href="/profile/">Saved charts</a>
@@ -1594,16 +1634,25 @@
                   <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
                   <kbd className="wnav__search-kbd" aria-hidden="true">/</kbd>
                 </a>
-                <a className="wnav__chip" href={terminalNav.href} aria-current={REGISTRY_VIEW === 'terminal' || REGISTRY_VIEW === 'terminal-pro' ? 'page' : undefined}>{terminalNav.label}</a>
-                <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
+                <a className="wnav__chip" href={terminalNav.href} aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>{terminalNav.label}</a>
+                <button type="button" className="wnav__burger" data-wnav-burger="" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => { setToolsOpen(false); setSignsOpen(false); setMenuOpen((v) => !v); }}>
                   <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
                 </button>
-              </div>
             </nav>
-            <div className={signsOpen ? 'wnav-signs is-open' : 'wnav-signs'} id="wnav-signs" hidden={!signsOpen}>
+            <div className={toolsOpen ? 'wnav-tools is-open' : 'wnav-tools'} id="wnav-tools" data-wnav-tools-menu="" hidden={!toolsOpen} onKeyDown={(event) => handleDropdownKey(event, 2, setToolsOpen, toolsButtonRef)}>
+              <div className="wnav-tools__grid">
+                {NAV_TOOLS.map((tool, index) => (
+                  <a className="wnav-tools__item" key={tool.href} href={tool.href} tabIndex={index === 0 ? 0 : -1} onClick={() => setToolsOpen(false)}>
+                    <span className="wnav-tools__name">{tool.name}</span>
+                    <span className="wnav-tools__desc">{tool.description}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className={signsOpen ? 'wnav-signs is-open' : 'wnav-signs'} id="wnav-signs" data-wnav-signs-menu="" hidden={!signsOpen} onKeyDown={(event) => handleDropdownKey(event, 3, setSignsOpen, signsButtonRef)}>
               <div className="wnav-signs__grid">
-                {NAV_SIGNS.map((s) => (
-                  <a className="wnav-signs__item" key={s.slug} href={`/${s.slug}/`} style={{ '--sign': s.hue }} onClick={() => setSignsOpen(false)}>
+                {NAV_SIGNS.map((s, index) => (
+                  <a className="wnav-signs__item" key={s.slug} href={`/${s.slug}/`} style={{ '--sign': s.hue }} tabIndex={index === 0 ? 0 : -1} onClick={() => setSignsOpen(false)}>
                     <picture className="wnav-disc"><source srcSet={`/assets/zodiac-icons/128/${s.slug}.avif`} type="image/avif" /><img src={`/assets/zodiac-icons/128/${s.slug}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" /></picture>
                     <span className="wnav-signs__name">{s.name}</span>
                     <span className="wnav-signs__dates">{s.dates}</span>
@@ -1612,14 +1661,14 @@
               </div>
             </div>
           </div>
-          <div id="wnav-menu" className={menuOpen ? 'wnav-menu is-open' : 'wnav-menu'} hidden={!menuOpen} onClick={(e) => { if (e.target.closest('a')) setMenuOpen(false); }}>
+          <div id="wnav-menu" className={menuOpen ? 'wnav-menu is-open' : 'wnav-menu'} data-wnav-mobile="" hidden={!menuOpen} onClick={(e) => { if (e.target.closest('a')) setMenuOpen(false); }}>
             <nav aria-label="Mobile">
               <div className="wnav-menu__group">
                 <span className="wnav-menu__label">The site</span>
                 <a className="wnav-menu__link" style={{ '--i': 0 }} href="/learn/">Learn</a>
                 <a className="wnav-menu__link" style={{ '--i': 1 }} href="/horoscopes/">Horoscopes</a>
                 <a className="wnav-menu__link" style={{ '--i': 2 }} href="/profile/">Saved charts</a>
-                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href={terminalNav.href} aria-current={REGISTRY_VIEW === 'terminal' || REGISTRY_VIEW === 'terminal-pro' ? 'page' : undefined}>
+                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href={terminalNav.href} aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>
                   <span>{terminalNav.label}</span>
                   <small>{terminalNav.description}</small>
                 </a>
@@ -1753,56 +1802,8 @@
       + '</picture></span>'
     )).join('');
 
-    /* A restrained, display-only exchange tape ordered from the current
-       season around the wheel. Its continuously moving copy is hidden from
-       assistive technology because the complete accessible market table sits
-       below; reduced motion keeps one static, horizontally scrollable group. */
-    function MarketTape({ season, paused = false, batch: sharedBatch = null }) {
-      const fallbackBatch = useTwelveQuotes(!sharedBatch);
-      const batch = sharedBatch || fallbackBatch;
-      const start = Math.max(0, SIGNS.findIndex(item => item.ticker === season?.sign?.ticker));
-      const ordered = [...SIGNS.slice(start), ...SIGNS.slice(0, start)];
-      const renderItems = (group) => ordered.map((item) => {
-        const quote = batch.status === 'ok' ? batch.quotes[item.asset.sign] : null;
-        const isSeason = item.ticker === season?.sign?.ticker;
-        return (
-          <span
-            key={`${group}-${item.ticker}`}
-            className={'market-tape__item' + (isSeason ? ' is-season' : '')}
-            style={{ '--tape-sign': item.hue }}
-            data-market-tape-sign={item.asset.sign}
-            data-current-season={isSeason ? '' : undefined}
-          >
-            <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="22" height="22" alt="" decoding="async" />
-            <span className="market-tape__ticker">{item.ticker}</span>
-            <span className="market-tape__price">{quote ? formatPriceUsd(quote.priceUsd) : '—'}</span>
-            <span className={'market-tape__change' + marketChangeClass(quote?.priceChange24h)}>
-              {quote ? formatPercent(quote.priceChange24h) : batch.status === 'loading' ? '…' : '—'}
-            </span>
-            {isSeason && <span className="market-tape__season">Season</span>}
-          </span>
-        );
-      });
-
-      return (
-        <div
-          className="market-tape"
-          data-paused={paused || batch.status === 'unavailable' ? '' : undefined}
-          data-market-tape=""
-        >
-          <div className="market-tape__viewport" aria-hidden="true">
-            <div className="market-tape__track">
-              <div className="market-tape__group">{renderItems('primary')}</div>
-              <div className="market-tape__group" aria-hidden="true">{renderItems('echo')}</div>
-            </div>
-          </div>
-          <span className="market-tape__source" aria-hidden="true">USD · DexScreener live</span>
-        </div>
-      );
-    }
-
     /* A compact instrument for the sky the visitor is actually in. The gold
-       sculpture carries the season's identity; price stays on the market tape
+       artwork carries the season's identity; price stays in the selected market
        and selected-sign placard, so this readout only has to explain time. */
     function SeasonNow({ season }) {
       if (!season) return null;
@@ -4581,6 +4582,15 @@
       return 'unchanged today';
     }
 
+    function marketRankForSign(sign, batch, field = 'marketCap') {
+      if (batch.status !== 'ok') return 0;
+      const ranked = SIGNS
+        .map(item => ({ item, value: toFiniteNumber(batch.quotes[item.asset.sign]?.[field]) }))
+        .filter(entry => entry.value !== null)
+        .sort((left, right) => right.value - left.value || left.item.order - right.item.order);
+      return ranked.findIndex(entry => entry.item.ticker === sign.ticker) + 1;
+    }
+
     function ConsumerIntroduction() {
       const reveal = useReveal();
       return (
@@ -4595,51 +4605,6 @@
             <div><dt>One for every sign</dt><dd>from Aries to Pisces</dd></div>
             <div><dt>One public Registry</dt><dd>the source of truth</dd></div>
           </dl>
-        </section>
-      );
-    }
-
-    function ConsumerMarketSnapshot({ sign, batch, onRetry }) {
-      const reveal = useReveal();
-      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
-      const ranked = batch.status === 'ok'
-        ? SIGNS
-          .map(item => ({ item, quote: batch.quotes[item.asset.sign] }))
-          .filter(entry => toFiniteNumber(entry.quote?.marketCap) !== null)
-          .sort((a, b) => toFiniteNumber(b.quote?.marketCap) - toFiniteNumber(a.quote?.marketCap))
-        : [];
-      const rank = quote ? ranked.findIndex(entry => entry.item.ticker === sign.ticker) + 1 : 0;
-      return (
-        <section ref={reveal} id="market-snapshot" className="consumer-snapshot reveal" aria-labelledby="consumer-snapshot-title" style={{ '--snapshot-sign': sign.hue }}>
-          <header className="consumer-section-head">
-            <span className="consumer-eyebrow">Market snapshot</span>
-            <h2 id="consumer-snapshot-title">{sign.name}, today</h2>
-            <p>A simple view of the sign you selected. Prices move and may be delayed.</p>
-          </header>
-          {batch.status === 'unavailable' && (
-            <div className="consumer-snapshot__state" role="status">
-              <p>Live price context is temporarily unavailable. Every official record remains available.</p>
-              <button type="button" onClick={onRetry}>Try again</button>
-            </div>
-          )}
-          <article className="consumer-snapshot__card" aria-busy={batch.status === 'loading'} data-consumer-market-snapshot data-snapshot-sign={sign.asset.sign}>
-            <div className="consumer-snapshot__identity">
-              <img src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`} width="72" height="72" alt="" loading="lazy" decoding="async" />
-              <span><small>Selected sign</small><strong>{sign.name}</strong></span>
-            </div>
-            <dl className="consumer-snapshot__metrics">
-              <div><dt>Current price</dt><dd>{quote ? formatPriceUsd(quote.priceUsd) : batch.status === 'loading' ? 'Reading…' : '—'}</dd></div>
-              <div><dt>24-hour movement</dt><dd className={marketChangeClass(quote?.priceChange24h)}>{quote ? plainMarketMovement(quote.priceChange24h) : 'unavailable'}</dd></div>
-              <div><dt>Collection rank</dt><dd>{rank > 0 ? `${rank} of 12` : 'unavailable'}</dd></div>
-            </dl>
-          </article>
-          <details className="consumer-disclosure consumer-snapshot__details">
-            <summary>See market details</summary>
-            <div className="consumer-disclosure__body">
-              <p>Price and movement use the deepest indexed Solana pool. DexScreener is independent third-party context, may be incomplete, and is not a recommendation.</p>
-              <a href="/registry/technical/#market-transparency">See the sourcing method</a>
-            </div>
-          </details>
         </section>
       );
     }
@@ -4686,46 +4651,33 @@
       );
     }
 
-    function ConsumerTerminalStrip({ sign }) {
-      const reveal = useReveal();
-      return (
-        <section ref={reveal} id="terminal" className="consumer-terminal-strip reveal" aria-labelledby="consumer-terminal-title">
-          <div>
-            <span className="consumer-eyebrow">Zodiac markets</span>
-            <h2 id="consumer-terminal-title">Follow all twelve in the Terminal.</h2>
-            <p>Live prices, liquidity, charts, and research in one focused market view.</p>
-          </div>
-          <TerminalViewLink view="pro" sign={sign} className="consumer-terminal-strip__link" />
-        </section>
-      );
-    }
-
-    function ProMasthead({ sign, batch }) {
-      const season = useCurrentSeason();
-      const quotes = batch.status === 'ok'
-        ? SIGNS.map(item => batch.quotes[item.asset.sign]).filter(Boolean)
-        : [];
-      const marketCaps = quotes.map(quote => toFiniteNumber(quote.marketCap)).filter(value => value !== null);
-      const liquidities = quotes.map(quote => toFiniteNumber(quote.liquidityUsd)).filter(value => value !== null);
-      const advancing = quotes.filter(quote => (toFiniteNumber(quote.priceChange24h) ?? 0) > 0).length;
+    function ProMasthead({ batch }) {
+      const observed = batch.observedAt
+        ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+        : '';
+      const status = observed
+        ? `Read ${observed}${batch.stale ? ' · refresh delayed' : batch.refreshing ? ' · refreshing' : ''}`
+        : batch.status === 'unavailable' ? 'Live feed unavailable' : 'Reading live markets…';
       return (
         <header className="pro-masthead" aria-labelledby="pro-terminal-title">
           <div className="pro-masthead__identity">
             <div>
-              <span><a href="/registry/technical/">Registry market methodology</a></span>
+              <span>Zodiac markets</span>
               <h1 id="pro-terminal-title">Terminal</h1>
-              <p>Live context for the twelve official Zodiac tokens, kept separate from execution.</p>
+              <p>Live prices, charts, and market activity for all twelve signs.</p>
             </div>
-            <TerminalViewLink view="consumer" sign={sign} className="terminal-view-link" />
+            <div className="pro-masthead__status">
+              <strong>Market data only</strong>
+              <span role="status" aria-live="polite">{status}</span>
+              <a href="/registry/technical/#market-transparency">Data &amp; methodology</a>
+            </div>
           </div>
-          <div className="pro-tape-control">
-            <MarketTape season={season} paused batch={batch} />
-          </div>
-          <dl className="pro-aggregate" aria-busy={batch.status === 'loading'}>
-            <div><dt>Reported market cap</dt><dd>{batch.status === 'ok' ? formatUsdCompact(marketCaps.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>{marketCaps.length} of 12 reporting</small></div>
-            <div><dt>Indexed liquidity</dt><dd>{batch.status === 'ok' ? formatUsdCompact(liquidities.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>Exact-mint Solana pools</small></div>
-            <div><dt>24h breadth</dt><dd>{batch.status === 'ok' ? `${advancing} / ${quotes.length || 12}` : '—'}</dd><small>Tokens trading higher</small></div>
-          </dl>
+          <nav className="pro-local-nav" aria-label="Terminal sections">
+            <a href="#selected">Selected market</a>
+            <a href="#market">All markets</a>
+            <a href="#briefing">Today&rsquo;s context</a>
+            <a href="#research">Research</a>
+          </nav>
         </header>
       );
     }
@@ -4750,6 +4702,12 @@
             return b - a || left.sign.order - right.sign.order;
           });
       }, [batch, rankBy]);
+      const quotes = batch.status === 'ok'
+        ? SIGNS.map(item => batch.quotes[item.asset.sign]).filter(Boolean)
+        : [];
+      const marketCaps = quotes.map(quote => toFiniteNumber(quote.marketCap)).filter(value => value !== null);
+      const liquidities = quotes.map(quote => toFiniteNumber(quote.liquidityUsd)).filter(value => value !== null);
+      const advancing = quotes.filter(quote => (toFiniteNumber(quote.priceChange24h) ?? 0) > 0).length;
       const chooseRank = (rank) => {
         setRankBy(rank);
         try {
@@ -4758,15 +4716,40 @@
           window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
         } catch { /* keep UI sorting if URL mutation is unavailable */ }
       };
+      const chooseSign = (item, event) => {
+        const keyboardSelection = event?.detail === 0;
+        setActive(item.ticker);
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set('sign', item.asset.sign);
+          window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+        } catch { /* keep the selected market if URL mutation is unavailable */ }
+        window.requestAnimationFrame(() => {
+          const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+          const selected = document.getElementById('selected');
+          selected?.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' });
+          if (keyboardSelection) {
+            const heading = document.getElementById('pro-selected-title');
+            heading?.focus({ preventScroll: true });
+          }
+        });
+      };
       const observed = batch.observedAt ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : '';
       return (
         <section id="market" className="pro-board" aria-labelledby="pro-board-title">
           <header>
             <span className="consumer-section-head__eyebrow">Twelve-token market board</span>
-            <h2 id="pro-board-title">Ranked by {MARKET_RANKS[rankBy].label.toLowerCase()}.</h2>
-            <p>Choose a sortable measure or a sign. Missing source values always sort last.</p>
-            <p className="pro-board__freshness" role="status">{observed ? `Read ${observed}${batch.stale ? ' · refresh delayed' : batch.refreshing ? ' · refreshing' : ''}` : batch.status === 'unavailable' ? 'Live feed unavailable' : 'Reading live markets…'}</p>
+            <h2 id="pro-board-title">All markets.</h2>
+            <div>
+              <p>Compare every sign. Select one to open its chart above.</p>
+              <p className="pro-board__freshness">{observed ? `Updated ${observed}${batch.stale ? ' · refresh delayed' : batch.refreshing ? ' · refreshing' : ''}` : batch.status === 'unavailable' ? 'Live feed unavailable' : 'Reading live markets…'}</p>
+            </div>
           </header>
+          <div className="pro-board__sort" role="group" aria-label="Sort all markets">
+            {Object.entries(MARKET_RANKS).map(([key, option]) => (
+              <button key={key} type="button" className={rankBy === key ? 'is-active' : ''} aria-pressed={rankBy === key} onClick={() => chooseRank(key)}>{option.short}</button>
+            ))}
+          </div>
           <div className="pro-board__scroll">
             <table aria-busy={batch.status === 'loading'}>
               <thead>
@@ -4789,7 +4772,7 @@
                     <tr key={item.ticker} className={isActive ? 'is-active' : ''} data-market-sign={item.asset.sign} style={{ '--row-sign': item.hue }}>
                       <td className="pro-board__rank">{String(index + 1).padStart(2, '0')}</td>
                       <th scope="row">
-                        <button type="button" className="pro-board__sign" aria-pressed={isActive} onClick={() => setActive(item.ticker)}>
+                        <button type="button" className="pro-board__sign" aria-pressed={isActive} onClick={(event) => chooseSign(item, event)}>
                           <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
                           <span><strong>{item.name}</strong><small>{item.ticker}</small></span>
                         </button>
@@ -4805,7 +4788,43 @@
               </tbody>
             </table>
           </div>
+          <ol className="pro-board__mobile" aria-busy={batch.status === 'loading'}>
+            {rows.map((row, index) => {
+              const item = row.sign;
+              const quote = row.quote;
+              const isActive = item.ticker === active;
+              return (
+                <li key={item.ticker} className={isActive ? 'is-active' : ''} data-pro-mobile-market-sign={item.asset.sign} style={{ '--row-sign': item.hue }}>
+                  <button type="button" className="pro-board-mobile__select" aria-pressed={isActive} onClick={(event) => chooseSign(item, event)}>
+                    <span className="pro-board-mobile__rank">{String(index + 1).padStart(2, '0')}</span>
+                    <span className="pro-board-mobile__identity">
+                      <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="36" height="36" alt="" loading="lazy" decoding="async" />
+                      <span><strong>{item.name}</strong><small>{item.ticker}</small></span>
+                    </span>
+                    <span className="pro-board-mobile__quote">
+                      <strong>{quote ? formatPriceUsd(quote.priceUsd) : '—'}</strong>
+                      <small className={marketChangeClass(quote?.priceChange24h)}>{quote ? formatPercent(quote.priceChange24h) : '—'}</small>
+                    </span>
+                  </button>
+                  <details className="pro-board-mobile__details">
+                    <summary><span className="sr-only">{item.name} </span>Liquidity &amp; record</summary>
+                    <dl>
+                      <div><dt>Liquidity</dt><dd>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</dd></div>
+                      <div><dt>Market cap</dt><dd>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</dd></div>
+                      <div><dt>24h volume</dt><dd>{quote ? formatUsdCompact(quote.volume24h) : '—'}</dd></div>
+                    </dl>
+                    <a href={registryProfilePath(item)}>Official record ↗</a>
+                  </details>
+                </li>
+              );
+            })}
+          </ol>
           {batch.status === 'unavailable' && <p className="pro-board__state" role="status">Live market context is temporarily unavailable. Official records remain available.</p>}
+          <dl className="pro-market-health" aria-label="Collection market health" aria-busy={batch.status === 'loading'}>
+            <div><dt>Market cap (reported)</dt><dd>{batch.status === 'ok' ? formatUsdCompact(marketCaps.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>{marketCaps.length} of 12 reporting</small></div>
+            <div><dt>Trading liquidity</dt><dd>{batch.status === 'ok' ? formatUsdCompact(liquidities.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>Indexed Solana pools</small></div>
+            <div><dt>Signs up today</dt><dd>{batch.status === 'ok' ? `${advancing} / ${quotes.length || 12}` : '—'}</dd><small>24-hour direction</small></div>
+          </dl>
           <p className="pro-board__foot">
             Price and 24h change use the deepest indexed Solana pool. Liquidity sums the
             pools returned for each official mint; market cap is shown only when the source
@@ -4823,13 +4842,30 @@
       const ledger = useMemo(() => marketHistoryForSign(history.data, sign.asset.sign), [history.data, sign.asset.sign]);
       const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
       const pool = quote?.pairAddress || ledger.latest?.deepestPool?.pairAddress || '';
+      const rank = marketRankForSign(sign, batch);
       return (
-        <section className="pro-selected" aria-labelledby="pro-selected-title" style={{ '--active-sign': sign.hue }}>
+        <section id="selected" className="pro-selected" aria-labelledby="pro-selected-title" style={{ '--active-sign': sign.hue }}>
           <header>
-            <span className="consumer-section-head__eyebrow">Selected-sign readout</span>
-            <h2 id="pro-selected-title">{sign.name}, in market and season.</h2>
-            <p>{signDateLabel(sign)} · {sign.element} · {sign.archetype}</p>
+            <div className="pro-selected__identity">
+              <img src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`} width="64" height="64" alt="" decoding="async" />
+              <span>
+                <small>Selected market · {sign.ticker}</small>
+                <h2 id="pro-selected-title" tabIndex={-1}>{sign.name} market</h2>
+                <p>{signDateLabel(sign)} · {sign.element} · {sign.archetype}</p>
+              </span>
+            </div>
+            <div className="pro-selected__trust">
+              <strong>Official · Solana</strong>
+              <span>{rank > 0 ? `#${rank} of 12 by market cap` : 'Market-cap rank unavailable'}</span>
+              <a href={registryProfilePath(sign)}>Official record ↗</a>
+            </div>
           </header>
+          <dl className="pro-selected__quote" aria-busy={batch.status === 'loading'}>
+            <div><dt>Price</dt><dd>{quote ? formatPriceUsd(quote.priceUsd) : '—'}</dd></div>
+            <div><dt>24h change</dt><dd className={marketChangeClass(quote?.priceChange24h)}>{quote ? formatPercent(quote.priceChange24h) : '—'}</dd></div>
+            <div><dt>Trading liquidity</dt><dd>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</dd></div>
+            <div><dt>24h volume</dt><dd>{quote ? formatUsdCompact(quote.volume24h) : '—'}</dd></div>
+          </dl>
           <div className="pro-selected__grid">
             <div className="pro-selected__chart" aria-label={`${sign.name} selected-sign history`}>
               <SelectedTokenMiniChart key={sign.asset.sign} sign={sign} pool={pool} observations={ledger.observations} />
@@ -4943,7 +4979,6 @@
     }
 
     function ConsumerCapitalHeader({ sign }) {
-      const season = useCurrentSeason();
       const batch = useTwelveQuotes(true);
       const quotes = batch.status === 'ok'
         ? SIGNS.map(sign => batch.quotes[sign.asset.sign]).filter(Boolean)
@@ -4965,7 +5000,6 @@
             <h1 id="consumer-explorer-title">Astrofolio</h1>
             <p>Twelve signs. Twelve transferable tokens. One live public market.</p>
           </div>
-          <MarketTape season={season} />
           <div className="capital-pulse" aria-busy={batch.status === 'loading'}>
             <div>
               <span>Indexed market cap</span>
@@ -5454,9 +5488,9 @@
           {includeLegacyAnchors && <span id="outlook" className="consumer-briefing__legacy-anchor" aria-hidden="true" />}
           <header ref={hostRef} className="consumer-briefing__head">
             <div>
-              <span className="consumer-section-head__eyebrow">Sky fact · market observation</span>
-              <h2 id="consumer-briefing-title">Today’s market briefing</h2>
-              <p>One relevant sky event, one plain-language reading, and the market measures that matter now.</p>
+              <span className="consumer-section-head__eyebrow">Market facts · sky context</span>
+              <h2 id="consumer-briefing-title">Today’s context</h2>
+              <p>Observed market activity and today’s sky context for {activeSign.name}, kept clearly separate.</p>
             </div>
             <div className="consumer-briefing__sign">
               <img src={`/assets/zodiac-icons/128/${activeSign.asset.sign}.webp`} width="58" height="58" alt="" decoding="async" />
@@ -5775,6 +5809,10 @@
     function VitrinePlacard({ layers, batch }) {
       const renderLayer = (layer) => {
         const item = SIGNS.find((candidate) => candidate.asset.sign === layer.slug) ?? SIGNS[0];
+        const rank = marketRankForSign(item, batch);
+        const observed = batch.observedAt
+          ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+          : '';
         return (
           <article
             key={layer.id}
@@ -5788,15 +5826,29 @@
               <p>{consumerSignDateLabel(item)}</p>
             </div>
             <VitrinePrice sign={item} batch={batch} live={layer.current} />
+            <div className="vitrine-market-meta">
+              <span>{rank > 0 ? `#${rank} by market cap` : 'Market-cap rank unavailable'}</span>
+              {observed && <span>Updated {observed}{batch.stale ? ' · delayed' : ''}</span>}
+              {batch.status === 'unavailable' && <span>Market data unavailable · retrying automatically</span>}
+              <a href="/registry/technical/#market-transparency" tabIndex={layer.current ? undefined : -1}>Data &amp; methodology</a>
+            </div>
             <div className="vitrine-placard__actions">
               <a className="btn btn--primary" href={registryProfilePath(item)} tabIndex={layer.current ? undefined : -1}>Explore {item.name}</a>
-              <a className="btn btn--ghost" href={`${registryProfilePath(item)}#record`} tabIndex={layer.current ? undefined : -1}>View official record</a>
+              <a
+                className="btn btn--ghost"
+                href={terminalViewHref('pro', item)}
+                data-terminal-view-link="pro"
+                tabIndex={layer.current ? undefined : -1}
+                onClick={() => rememberTerminalView('pro', 'consumer_placard', 'consumer_to_pro')}
+              >Open Terminal</a>
             </div>
           </article>
         );
       };
       return (
         <div id="consumer-sign-preview" className="vitrine-placard">
+          <span id="market-snapshot" className="terminal-compat-target" aria-hidden="true" />
+          <span id="terminal" className="terminal-compat-target" aria-hidden="true" />
           {layers.map(renderLayer)}
         </div>
       );
@@ -6019,7 +6071,7 @@
                 <span className="consumer-eyebrow">The Twelve</span>
                 <h2 id="consumer-story-title">The story behind the collection.</h2>
                 <p>The twelve signs have travelled through calendars, charts, jewellery, and screens. Astrofolio gives their token records one public home.</p>
-                <span className="consumer-purpose__cta"><span>Read the story</span><span className="consumer-purpose__arrow" aria-hidden="true">→</span></span>
+                <span className="consumer-story__cta"><span>Read the story</span><span aria-hidden="true">→</span></span>
               </div>
             </a>
           </article>
@@ -6399,9 +6451,8 @@
         () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
         [activeTicker]
       );
-      const [consumerMarketRetry, setConsumerMarketRetry] = useState(0);
       const proMarket = useTwelveQuotes(pro);
-      const consumerMarket = useTwelveQuotes(!technical && !pro, consumerMarketRetry);
+      const consumerMarket = useTwelveQuotes(!technical && !pro);
 
       useEffect(() => {
         if (technical) trackAnalytics('registry_technical_visit');
@@ -6647,9 +6698,9 @@
             <div className="grain" aria-hidden="true" />
             <Header />
             <main id="main" className="zd terminal-pro">
-              <ProMasthead sign={sign} batch={proMarket} />
-              <ProMarketBoard active={activeTicker} setActive={setActiveTicker} batch={proMarket} />
+              <ProMasthead batch={proMarket} />
               <ProSelectedSign sign={sign} batch={proMarket} />
+              <ProMarketBoard active={activeTicker} setActive={setActiveTicker} batch={proMarket} />
               <ProMarketsGateway sign={sign} />
               <ConsumerMarketBriefing active={activeTicker} sharedMarket={proMarket} />
               <ProResearchSection sign={sign} />
@@ -6676,12 +6727,6 @@
             <ConsumerIntroduction />
             <ConsumerStory />
             <ConsumerShop />
-            <ConsumerMarketSnapshot
-              sign={sign}
-              batch={consumerMarket}
-              onRetry={() => setConsumerMarketRetry(value => value + 1)}
-            />
-            <ConsumerTerminalStrip sign={sign} />
             <ConsumerCabinet />
             <ConsumerRegistryGuide sign={sign} />
             <ConsumerFaq />
