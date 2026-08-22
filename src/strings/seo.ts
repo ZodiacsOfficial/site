@@ -93,7 +93,7 @@ const RU_OG_TOOL_TITLES: Readonly<Record<string, string>> = Object.freeze({
 });
 
 const RU_OG_SPECIAL_ALT: Readonly<Record<string, string>> = Object.freeze({
-  astrofolio: 'Astrofolio: коллекция золотых скульптур и официальных токенов для двенадцати знаков Зодиака.',
+  astrofolio: 'Astrofolio: коллекция двенадцати официальных токенов Зодиака.',
   terminal: 'Terminal: экспертный рыночный контекст и проверенные исследования двенадцати официальных токенов Зодиака.',
   thesis: 'Вера — самый древний актив: манифест Реестра Zodiacs.org.',
   disclosure: 'Раскрытие информации о Реестре — подтверждённые факты и ожидающие подтверждения сведения.',

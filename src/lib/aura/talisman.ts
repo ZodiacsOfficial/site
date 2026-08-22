@@ -18,7 +18,7 @@ const EDITION_LABEL: Record<AuraCabinetEdition, string> = {
   pastel: 'Pastel Disc',
   bronze: 'Bronze Edition',
   silver: 'Silver Edition',
-  gold: 'Gold Sculpture',
+  gold: 'Gold Edition',
   crown: 'Crown Gold',
 };
 

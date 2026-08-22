@@ -1,10 +1,26 @@
 {
   "version": 1,
-  "id": "growth-activation-f-index-pruning-2026-08-22",
+  "id": "growth-activation-b-f-integration-2026-08-22",
   "baseCommit": "3ae3cf3b0b3792e5ee942bbb5afda8f98adb013a",
-  "note": "Owner-authorized Packet F for GROWTH-2026-08-19-full-marketing-audit: separate localized route renderability from search discovery so untranslated birthday pages and Russian sign guides remain available while leaving the index.",
+  "note": "Owner-authorized integration of reviewed Growth Packets B-F for GROWTH-2026-08-19-full-marketing-audit. This exact set combines Packet B localization, Packet D localized chart sharing, Packet E sign-guide links, and Packet F i18n index pruning against the current production base.",
   "protectedPaths": [
     "src/lib/i18n/index.test.ts",
-    "src/lib/i18n/index.ts"
+    "src/lib/i18n/index.ts",
+    "src/lib/i18n/ui/en.ts",
+    "src/lib/i18n/ui/es.ts",
+    "src/lib/i18n/ui/fr.ts",
+    "src/lib/i18n/ui/it.ts",
+    "src/lib/i18n/ui/pt.ts",
+    "src/lib/i18n/ui/ru.test.ts",
+    "src/lib/i18n/ui/ru.ts",
+    "src/pages/[sign]/index.astro",
+    "src/pages/es/birth-chart/index.astro",
+    "src/pages/es/index.astro",
+    "src/pages/fr/birth-chart/index.astro",
+    "src/pages/it/birth-chart/index.astro",
+    "src/pages/pt/birth-chart/index.astro",
+    "src/strings/additions.fr.mjs",
+    "src/strings/additions.it.mjs",
+    "src/strings/additions.pt.mjs"
   ]
 }

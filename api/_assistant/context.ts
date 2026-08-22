@@ -17,6 +17,7 @@ Use these labels from docs/STRATEGY.md §4 when they fit:
 - Find your rising sign
 - Read your sign
 - Nothing saved yet. Charts you save will live here, on your device first.
+- Choose your sign and find its official identity through one calm collection view.
 
 TOOLS AND UTILITIES
 These lines use each live page’s meta description to state what it computes or provides:

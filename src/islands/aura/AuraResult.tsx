@@ -265,7 +265,7 @@ export function AuraResult({
                   <span>{meta.range}</span>
                   {goldCount && goldCount > 1n && (
                     <span>
-                      ×{exactGoldCount(goldCount.toString())} sculptures
+                      ×{exactGoldCount(goldCount.toString())} editions
                     </span>
                   )}
                 </div>
