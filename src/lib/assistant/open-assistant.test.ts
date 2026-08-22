@@ -479,11 +479,22 @@ describe('assistant profile-access privacy fence', () => {
     expect(buildScript).toContain("'assistant-drawer': resolve(repo, 'src/lib/assistant/open-assistant.ts')");
   });
 
-  it('keeps remote analytics out of every surface that hosts Guide state', async () => {
+  it('keeps remote analytics out of the Guide route and static wing surfaces', async () => {
     const root = new URL('../../../', import.meta.url);
     const base = await readFile(new URL('src/layouts/Base.astro', root), 'utf8');
-    expect(base).toContain('const guideRuntimeEnabled = true;');
-    expect(base).toContain('&& !accountSyncV2Enabled && !guideRuntimeEnabled');
+    const shell = await readFile(new URL('src/lib/assistant/guide-bootstrap.ts', root), 'utf8');
+    const loader = await readFile(new URL('src/lib/assistant/guide-loader.mjs', root), 'utf8');
+    const guide = await readFile(new URL('src/pages/ask/index.astro', root), 'utf8');
+    expect(base).not.toContain('guideRuntimeEnabled');
+    expect(base).toContain('plausibleScriptUrl && !props.noindex && !props.privateSurface');
+    expect(base).toContain('&& !accountSyncV2Enabled,');
+    expect(base).toContain('data-guide-analytics-boundary={plausibleEnabled ?');
+    expect(base).toContain("sessionStorage.getItem(guidePrivateSessionKey) === '1'");
+    expect(loader).toContain("export const GUIDE_PRIVATE_SESSION_KEY = 'zodiacs.guide.private-session.v1';");
+    expect(loader).toContain("sessionStorage.setItem(privateSessionKey, '1');");
+    expect(loader).toContain('location.reload();');
+    expect(shell).toContain('if (beginPrivateTransition()) return;');
+    expect(guide).toContain('privateSurface');
     for (const path of [
       'public/archive/index.html',
       'public/astrofolio/index.html',

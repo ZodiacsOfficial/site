@@ -2572,6 +2572,34 @@ const promptContext = {
     var timer = 0;
     var intentPending = false;
     var defaultLocale = "en";
+    var privateSessionKey = 'zodiacs.guide.private-session.v1';
+    var openPendingKey = 'zodiacs.guide.open-pending.v1';
+    function safeSessionGet(key) {
+      try { return sessionStorage.getItem(key); } catch (error) { return null; }
+    }
+    function consumePendingOpen() {
+      if (safeSessionGet(openPendingKey) === '1') {
+        try { sessionStorage.removeItem(openPendingKey); } catch (error) {}
+        return true;
+      }
+      if (location.pathname === '/ask/' && location.hash === '#guide') {
+        try { history.replaceState(null, '', '/ask/'); } catch (error) {}
+        return true;
+      }
+      return false;
+    }
+    function beginPrivateTransition() {
+      if (!document.documentElement.hasAttribute('data-guide-analytics-boundary')) return false;
+      if (safeSessionGet(privateSessionKey) === '1') return false;
+      try {
+        sessionStorage.setItem(privateSessionKey, '1');
+        sessionStorage.setItem(openPendingKey, '1');
+        location.reload();
+      } catch (error) {
+        location.assign('/ask/#guide');
+      }
+      return true;
+    }
     function loadGuide() {
       if (!modulePromise) {
         modulePromise = import('/assets/assistant-ui.js?v=avatar-only-2').catch(function (error) {
@@ -2590,6 +2618,7 @@ const promptContext = {
     }
     function mountGuide() {
       loadGuide().then(function (mod) {
+        if (consumePendingOpen()) return mod.openAssistant(defaultLocale, null);
         return mod.bootstrapGuide(defaultLocale).then(stopIntentListener);
       }).catch(function () {});
     }
@@ -2610,6 +2639,7 @@ const promptContext = {
       event.preventDefault();
       event.stopImmediatePropagation();
       stopScheduledMount();
+      if (beginPrivateTransition()) return;
       loadGuide().then(function (mod) {
         return mod.openAssistant(
           target.getAttribute('data-assistant-locale') || defaultLocale,

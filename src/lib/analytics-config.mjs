@@ -1,6 +1,6 @@
 /** Property allowlist shared by Astro pages and the generated Registry shell. */
 export const ANALYTICS_EVENT_PROPS = Object.freeze({
-  chart_computed: ['mode'],
+  chart_computed: ['mode', 'source'],
   chart_saved: ['source'],
   compat_computed: ['source'],
   email_subscribed: ['placement'],
@@ -84,6 +84,9 @@ const ZODIAC_SIGN_VALUES = Object.freeze([
 
 /** Closed-value contracts for non-identifying product dimensions. */
 export const ANALYTICS_EVENT_VALUES = Object.freeze({
+  chart_computed: Object.freeze({
+    source: Object.freeze(['fresh', 'shared_details', 'shared_positions']),
+  }),
   living_chart_open: Object.freeze({
     source: Object.freeze(['today', 'profile']),
   }),

@@ -8,6 +8,17 @@ optionally selects a first-party/self-hosted endpoint, and
 script URL unset, the script is absent and `zodiacsAnalytics.track` is a
 silent no-op.
 
+The script is also absent from noindex pages, routes marked with Base's
+`privateSurface` prop (including `/ask/`), and the account-v2 private preview.
+The Guide exclusion is route- and tab-session-scoped rather than a site-wide
+kill switch. `/ask/` never loads the remote script. On another consumer page,
+opening Guide marks the browser tab private and reloads that document once.
+The reloaded page skips the remote script, then reopens Guide, so the analytics
+runtime and the private drawer never share a document. The tab remains private
+for later pages in the same session. If session storage is unavailable, Guide
+opens on the private `/ask/` route instead. Static Registry-wing pages that
+host the Guide launcher remain analytics-free.
+
 ## Privacy invariant
 
 Events carry fixed enums, counters, and booleans only. No birth data, free
@@ -48,7 +59,7 @@ Provider sources: [Plausible data policy](https://plausible.io/data-policy) and
 
 | Event | Props | Fired when |
 | --- | --- | --- |
-| `chart_computed` | `mode` | A browser-computed astrology chart renders |
+| `chart_computed` | `mode`, `source` | A browser-computed or positions-only shared chart renders; `source` is `fresh`, `shared_details`, or `shared_positions` |
 | `chart_saved` | `source` | A chart or comparison is saved locally |
 | `compat_computed` | `source` | A compatibility comparison renders |
 | `email_subscribed` | `placement` | An anonymous week-ahead opt-in request is accepted |

@@ -17,6 +17,7 @@ import { RUSSIAN_RUNTIME } from '../lib/i18n/ru-runtime/server';
 import AccountProfileAccessBootstrap from '../islands/AccountProfileAccessBootstrap';
 import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../lib/account-v2/feature-flags';
 import { ACCOUNT_V2_PROFILE_ACCESS_KEY } from '../lib/account-v2/profile-access';
+import { GUIDE_PRIVATE_SESSION_KEY } from '../lib/assistant/guide-loader.mjs';
 import {
   ACCOUNT_V2_LOCAL_OWNER_KEY,
   ACCOUNT_V2_RETAINED_OWNER_KEY,
@@ -67,12 +68,9 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
-// Guide is a site-wide private transcript surface. Remote analytics must not
-// coexist with its DOM/session state, even when account-v2 itself is off.
-const guideRuntimeEnabled = true;
 const plausibleEnabled = Boolean(
   plausibleScriptUrl && !props.noindex && !props.privateSurface
-  && !accountSyncV2Enabled && !guideRuntimeEnabled,
+  && !accountSyncV2Enabled,
 );
 const dailyEmailLifecycleEnabled = hasDailyChartEmailProvider(process.env);
 const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ? direction : undefined;
@@ -88,6 +86,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
   data-local-typography={props.localTypography ? '' : undefined}
   data-daily-email-lifecycle={dailyEmailLifecycleEnabled ? '' : undefined}
   data-account-sync-v2={accountSyncV2Enabled ? '' : undefined}
+  data-guide-analytics-boundary={plausibleEnabled ? '' : undefined}
 >
   <head>
     <meta charset="utf-8" />
@@ -279,58 +278,72 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
     {plausibleEnabled && (
       <>
         <script is:inline define:vars={{
+          plausibleScriptUrl,
           plausibleEndpoint,
+          plausibleDomain,
+          guidePrivateSessionKey: GUIDE_PRIVATE_SESSION_KEY,
           analyticsEventProps: ANALYTICS_EVENT_PROPS,
           analyticsEventValues: ANALYTICS_EVENT_VALUES,
         }}>
-          window.plausible = window.plausible || function () {
-            (window.plausible.q = window.plausible.q || []).push(arguments);
-          };
-          window.plausible.init = window.plausible.init || function (options) {
-            window.plausible.o = options || {};
-          };
-          var options = {
-            hashBasedRouting: false,
-            transformRequest: function (payload) {
-              var canonical = document.querySelector('link[rel="canonical"]');
-              payload.u = canonical ? canonical.href : location.origin + location.pathname;
-              payload.r = null;
-              if (payload.p && payload.p.url) delete payload.p.url;
-              return payload;
-            }
-          };
-          if (plausibleEndpoint) options.endpoint = plausibleEndpoint;
-          window.plausible.init(options);
-          var eventProps = Object.freeze(analyticsEventProps);
-          window.zodiacsAnalytics = Object.freeze({
-            track: function (name, props) {
-              var allowed = eventProps[name];
-              if (!allowed) return;
-              var safe = {};
-              allowed.forEach(function (key) {
-                var value = (props || {})[key];
-                var enumValues = analyticsEventValues[name] && analyticsEventValues[name][key];
-                if (enumValues && (typeof value !== 'string' || enumValues.indexOf(value) === -1)) return;
-                if (typeof value === 'number' || typeof value === 'boolean' ||
-                    (typeof value === 'string' && value.length <= 32)) safe[key] = value;
-              });
-              window.plausible(name, { props: safe });
-            }
-          });
-          document.addEventListener('click', function (event) {
-            var target = event.target;
-            var link = target && target.closest ? target.closest('a[href]') : null;
-            if (!link) return;
-            var href = link.getAttribute('href') || '';
-            var destination = href.indexOf('/sdk/') === 0 ? 'docs'
-              : href.indexOf('npmjs.com/package/@zodiacs/sdk') !== -1 ? 'npm'
-              : href.indexOf('github.com/ZodiacsOfficial/sdk') !== -1 ? 'github' : '';
-            if (destination) window.zodiacsAnalytics.track('sdk_click', {
-              source: 'astrology', destination: destination
+          (function () {
+            try {
+              if (sessionStorage.getItem(guidePrivateSessionKey) === '1') return;
+            } catch (error) {}
+
+            window.plausible = window.plausible || function () {
+              (window.plausible.q = window.plausible.q || []).push(arguments);
+            };
+            window.plausible.init = window.plausible.init || function (options) {
+              window.plausible.o = options || {};
+            };
+            var options = {
+              hashBasedRouting: false,
+              transformRequest: function (payload) {
+                var canonical = document.querySelector('link[rel="canonical"]');
+                payload.u = canonical ? canonical.href : location.origin + location.pathname;
+                payload.r = null;
+                if (payload.p && payload.p.url) delete payload.p.url;
+                return payload;
+              }
+            };
+            if (plausibleEndpoint) options.endpoint = plausibleEndpoint;
+            window.plausible.init(options);
+            var eventProps = Object.freeze(analyticsEventProps);
+            window.zodiacsAnalytics = Object.freeze({
+              track: function (name, props) {
+                var allowed = eventProps[name];
+                if (!allowed) return;
+                var safe = {};
+                allowed.forEach(function (key) {
+                  var value = (props || {})[key];
+                  var enumValues = analyticsEventValues[name] && analyticsEventValues[name][key];
+                  if (enumValues && (typeof value !== 'string' || enumValues.indexOf(value) === -1)) return;
+                  if (typeof value === 'number' || typeof value === 'boolean' ||
+                      (typeof value === 'string' && value.length <= 32)) safe[key] = value;
+                });
+                window.plausible(name, { props: safe });
+              }
             });
-          });
+            document.addEventListener('click', function (event) {
+              var target = event.target;
+              var link = target && target.closest ? target.closest('a[href]') : null;
+              if (!link) return;
+              var href = link.getAttribute('href') || '';
+              var destination = href.indexOf('/sdk/') === 0 ? 'docs'
+                : href.indexOf('npmjs.com/package/@zodiacs/sdk') !== -1 ? 'npm'
+                : href.indexOf('github.com/ZodiacsOfficial/sdk') !== -1 ? 'github' : '';
+              if (destination) window.zodiacsAnalytics.track('sdk_click', {
+                source: 'astrology', destination: destination
+              });
+            });
+            var remoteScript = document.createElement('script');
+            remoteScript.defer = true;
+            remoteScript.dataset.zodiacsRemoteAnalytics = '';
+            if (plausibleDomain) remoteScript.dataset.domain = plausibleDomain;
+            remoteScript.src = plausibleScriptUrl;
+            document.head.appendChild(remoteScript);
+          })();
         </script>
-        <script is:inline defer data-domain={plausibleDomain || undefined} src={plausibleScriptUrl}></script>
       </>
     )}
     <slot name="head" />
