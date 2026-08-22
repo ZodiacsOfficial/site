@@ -2,7 +2,12 @@
    Calculator surfaces (birth chart / moon / rising islands)
    ──────────────────────────────────────────────────────────────────── */
 
-.calc { display: grid; gap: clamp(24px, 4vw, 40px); }
+.calc {
+  display: grid;
+  gap: clamp(24px, 4vw, 40px);
+  min-width: 0;
+  max-width: 100%;
+}
 
 .calc__core { padding: clamp(20px, 3.5vw, 34px); }
 .calc__fields {
@@ -856,7 +861,16 @@
 /* The result is scrolled into view after compute; clear the fixed nav
    pill (top:14px + 52px height + safe-area) so the first line and the
    shared-link notice never slide under it. */
-.calc__result { display: grid; gap: clamp(18px, 3vw, 28px); scroll-margin-top: calc(80px + env(safe-area-inset-top)); }
+.calc__result {
+  display: grid;
+  gap: clamp(18px, 3vw, 28px);
+  min-width: 0;
+  max-width: 100%;
+  scroll-margin-top: calc(80px + env(safe-area-inset-top));
+}
+/* Hydrated reads include intrinsic-width diagrams and local table scrollers.
+   Keep every surface inside the result track without disabling those scrollers. */
+.calc__result > * { min-width: 0; max-width: 100%; }
 
 /* ── Synastry ─────────────────────────────────────────────────────── */
 /* minmax(0,1fr) columns (the .syn__slots trick): a nowrap chip must not
