@@ -287,6 +287,13 @@ try {
     assert.equal(await page.locator('[data-terminal-preference-banner]').count(), 0);
     assert.equal(await page.locator('.terminal-consumer-hero [data-terminal-view-link="pro"]').count(), 0);
     assert.equal(await page.locator('a[href^="/terminal/"]').count(), 1);
+    assert.equal(
+      (await page.locator('.consumer-destinations [data-terminal-view-link="pro"]').innerText()).replace(/\s+/gu, ' ').trim(),
+      'Open the Terminal ↗',
+    );
+    assert.equal(await page.locator('.consumer-destinations a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
+    assert.equal(await page.locator('#faq summary').count(), 8);
+    assert.deepEqual(await page.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the Zodiac markets?', 'What is the Terminal?']);
     assert.equal(await page.locator('[data-consumer-market-snapshot] [data-snapshot-sign]').count(), 12);
     assert.equal(await page.locator('.consumer-registry .market-tape, .consumer-registry .pro-aggregate, .consumer-registry [data-landing-trade]').count(), 0);
     assert.equal(counts.gecko, 0);
@@ -339,7 +346,7 @@ try {
       && document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active')
     ));
     assert.equal(new URL(page.url()).searchParams.get('sign'), 'leo');
-    assert.equal(await page.locator('.consumer-closing__market').getAttribute('href'), '/terminal/?sign=leo');
+    assert.equal(await page.locator('.consumer-destinations [data-terminal-view-link="pro"]').getAttribute('href'), '/terminal/?sign=leo');
     assert.equal(await page.locator('.vitrine-stage__layer').count(), 1, 'an interrupted fade settles to one sculpture layer');
     assert.equal(await page.locator('.vitrine-placard__layer').count(), 1, 'an interrupted fade settles to one placard layer');
     assert.equal(await page.locator('[data-vitrine-sculpture="leo"].is-active').count(), 1);
@@ -479,10 +486,8 @@ try {
     await proPage.keyboard.press('Enter');
     assert.equal((await proPage.locator('th[aria-sort="descending"] button').textContent())?.trim(), 'Indexed liquidity');
     assert.match(proPage.url(), /rank=liquidity/u);
-    const tapeButton = proPage.locator('.pro-tape-control > button');
-    assert.equal(await tapeButton.innerText(), 'Pause tape');
-    await tapeButton.click();
-    assert.equal(await tapeButton.innerText(), 'Resume tape');
+    assert.equal(await proPage.locator('.pro-tape-control > button').count(), 0);
+    assert.equal(await proPage.locator('.pro-tape-control [data-market-tape][data-paused]').count(), 1);
     assert.equal(await proPage.locator('[data-terminal-view-link="consumer"]').getAttribute('href'), '/astrofolio/?sign=pisces');
     assert.deepEqual(proErrors, []);
     await pro.close();
@@ -496,8 +501,10 @@ try {
     assert.equal(await noJsPage.locator('.static-vitrine__choice').count(), 12);
     assert.equal(await noJsPage.locator('.static-vitrine__panel').count(), 12);
     assert.equal(await noJsPage.locator('#market-snapshot li').count(), 12);
-    // Three entries since the defensive purchase-copy removal (#254).
-    assert.equal(await noJsPage.locator('#faq dt').count(), 3);
+    assert.equal(await noJsPage.locator('#faq dt').count(), 8);
+    assert.deepEqual(await noJsPage.locator('#faq dt').allInnerTexts().then((items) => items.slice(-2)), ['What are the Zodiac markets?', 'What is the Terminal?']);
+    assert.equal(await noJsPage.locator('#explore-astrofolio a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
+    assert.equal(await noJsPage.locator('.static-site__footer a[href="https://shop.app/m/41mzeq7f2h"]').count(), 0);
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').getAttribute('href'), '/terminal/');
@@ -601,10 +608,10 @@ try {
       return { visualBottom: visual?.bottom, essayTop: essay?.top };
     });
     assert.ok(thesisFlow.visualBottom <= thesisFlow.essayTop + 1, 'the thesis clock is contained above its copy');
-    const storyOrder = await collectionPage.locator('#thesis, .consumer-snapshot, #registry').evaluateAll((nodes) => (
+    const storyOrder = await collectionPage.locator('#thesis, .consumer-snapshot, #explore-astrofolio, #registry').evaluateAll((nodes) => (
       nodes.map((node) => node.id || [...node.classList].find((name) => name === 'consumer-snapshot'))
     ));
-    assert.deepEqual(storyOrder, ['thesis', 'consumer-snapshot', 'registry']);
+    assert.deepEqual(storyOrder, ['thesis', 'consumer-snapshot', 'explore-astrofolio', 'registry']);
     await collection.close();
 
     const flagged = await browser.newContext({ viewport: { width: 1280, height: 900 } });

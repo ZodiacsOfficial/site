@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "growth-activation-f-index-pruning-2026-08-21",
-  "baseCommit": "feb92a21345280ca64bab6fd399744e112f87f9a",
+  "id": "growth-activation-f-index-pruning-2026-08-22",
+  "baseCommit": "01bd802b6785cf5f96505348cb4f68acd1ca0e00",
   "note": "Owner-authorized Packet F for GROWTH-2026-08-19-full-marketing-audit: separate localized route renderability from search discovery so untranslated birthday pages and Russian sign guides remain available while leaving the index.",
   "protectedPaths": [
     "src/lib/i18n/index.test.ts",
