@@ -1508,3 +1508,7 @@ console.log(
   `check-dist: OK — ${files.length} HTML files, ${searchIndexCount} search entries, `
   + `${feed.items.length} feed items, registry intact.`,
 );
+
+// Keep the Registry bridge's data-driven birthday cusp contract inside the
+// standard postbuild gate, not only in a manually invoked acceptance command.
+await import('./check-registry-bridge-dist.mjs');

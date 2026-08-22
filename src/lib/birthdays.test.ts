@@ -99,6 +99,15 @@ describe('real data integrity', () => {
     expect(days['july-22'].cusp?.b).toBe('leo');
   });
 
+  it('partitions every date into one record-safe sign or an ambiguous cusp', () => {
+    const entries = Object.values(days);
+    expect(entries.filter((entry) => entry.sign)).toHaveLength(337);
+    expect(entries.filter((entry) => entry.cusp)).toHaveLength(29);
+    for (const entry of entries) {
+      expect(Boolean(entry.sign) !== Boolean(entry.cusp)).toBe(true);
+    }
+  });
+
   it('every non-cusp date resolves a decan and a plausible boundary distance', () => {
     for (const [slug, entry] of Object.entries(days)) {
       if (entry.cusp) continue;

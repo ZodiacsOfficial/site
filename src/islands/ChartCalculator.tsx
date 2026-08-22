@@ -36,6 +36,7 @@ import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/
 import { bigThree } from '../lib/interpretations';
 import { chartWeather, natalAspectLine, planetInHouseLine, topAspects } from '../lib/natal';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { localDateEndpointsUtc, stableBodySignSlug } from '../lib/chart-date-certainty';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseName } from '../lib/engine/lite';
 import { registryAuraChartAnalytics, registryAuraChartLink } from '../lib/registry-aura-entry.mjs';
@@ -58,13 +59,14 @@ import type { TourVisual } from '../lib/scene/chapters';
 import { ENGINE_VERSION } from '../lib/engine/types';
 import type { Chart, HouseSystem } from '../lib/engine/types';
 import type { City } from '../lib/geo/search';
-import { CATALOG_LOCALES, RELEASED_LOCALES, localizePath, normalizeCatalogLocale, t, tp, type CatalogLocale as Locale, type ReleasedLocale } from '../lib/i18n';
+import { CATALOG_LOCALES, RELEASED_LOCALES, localizePath, normalizeCatalogLocale, t, tf, tp, type CatalogLocale as Locale, type ReleasedLocale } from '../lib/i18n';
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import { russianRuntime } from '../lib/i18n/ru-runtime';
 import { useEngine } from '../lib/hooks/useEngine';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
 import type { AspectType } from '../lib/engine/types';
+import { trackAnalytics } from '../lib/analytics';
 import {
   clearPostChartContext,
   publishPostChartContext,
@@ -330,6 +332,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [chart, setChart] = useState<Chart | null>(null);
   const [signature, setSignature] = useState<ChartSignature | null>(null);
   const [moonAmbiguous, setMoonAmbiguous] = useState(false);
+  const [registryRecordSlug, setRegistryRecordSlug] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<FormFieldErrors>({});
@@ -369,6 +372,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
   const chartContextIdRef = useRef(0);
+  const registryBridgeImpressionChartRef = useRef<Chart | null>(null);
   const primaryProfileOriginRef = useRef(false);
   const primaryProfileChartIdRef = useRef<string | null>(null);
   const mineProfileOriginRef = useRef(false);
@@ -399,6 +403,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setHouseSystem('whole');
     setChart(null);
     setSignature(null);
+    setRegistryRecordSlug(null);
     setComputedInput(null);
     setShareInput(null);
     setPositionsOnly(null);
@@ -979,6 +984,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           }
           setChart(null);
           setSignature(null);
+          setRegistryRecordSlug(null);
           setShareInput(null);
           setComputedInput(null);
           shareRuntimeRef.current.surface = surface;
@@ -1073,6 +1079,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setPositionsOnly(null);
     setShareDialogOpen(false);
     setMoonAmbiguous(false);
+    setRegistryRecordSlug(null);
     setSubjectMode(input.subjectMode ?? 'self');
     setMineHandoff(input.mine ?? null);
     try {
@@ -1089,15 +1096,22 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         flags: resolved.flags,
       });
       if (!runIsCurrent()) return;
+      const computedSun = result.bodies.find((body) => body.body === 'Sun');
+      const computedSunSlug = computedSun ? signForLongitude(computedSun.lon).slug : null;
       let nextMoonAmbiguous = false;
+      let nextRegistryRecordSlug = mode === 'full' && input.timeKnown ? computedSunSlug : null;
       if (!input.timeKnown) {
-        // Does the Moon change signs across this civil day? The same bounded
-        // fact must reach both the result notice and every prepared image.
-        const early = resolveLocalToUtc(input.date, '00:00', input.city.tz);
-        const late = resolveLocalToUtc(input.date, '23:59', input.city.tz);
-        const moonEarly = signForLongitude(engine.computeBodies(early.utc).find((b) => b.body === 'Moon')!.lon);
-        const moonLate = signForLongitude(engine.computeBodies(late.utc).find((b) => b.body === 'Moon')!.lon);
-        nextMoonAmbiguous = moonEarly.slug !== moonLate.slug;
+        // Compute the local civil date's endpoints once. Moon uncertainty
+        // reaches result/share notices; Sun uncertainty fails the singular
+        // Registry bridge closed instead of trusting the noon reference.
+        const endpoints = localDateEndpointsUtc(input.date, input.city.tz);
+        const startBodies = engine.computeBodies(endpoints.start);
+        const endBodies = engine.computeBodies(endpoints.end);
+        nextMoonAmbiguous = stableBodySignSlug('Moon', startBodies, endBodies) === null;
+        const stableSunSlug = stableBodySignSlug('Sun', startBodies, endBodies);
+        nextRegistryRecordSlug = mode === 'full' && stableSunSlug === computedSunSlug
+          ? stableSunSlug
+          : null;
       }
       setChart(result);
       if (signatureModule) {
@@ -1106,6 +1120,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         }, () => {});
       }
       setMoonAmbiguous(nextMoonAmbiguous);
+      setRegistryRecordSlug(nextRegistryRecordSlug);
       setComputedInput({ ...input, city: { ...input.city } });
       void import('./PositionsShareSurface').then(async (surface) => {
         if (!runIsCurrent()) return;
@@ -1131,7 +1146,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       track('chart_computed', { mode, source });
       if (locale !== 'ru') void import('./PwaInstallPrompt').then(setPwaInstallModule, () => {});
       setPwaComputationCount((count) => count + 1);
-      const computedSun = result.bodies.find((body) => body.body === 'Sun');
       window.dispatchEvent(new CustomEvent('zodiacs:chart-computed', {
         detail: {
           mode,
@@ -1519,6 +1533,19 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const shareActionDisabled = card === 'busy';
   const sharedReceiver = typeof document !== 'undefined'
     && document.documentElement.hasAttribute('data-chart-share-receiver');
+  const registryRecord = registryRecordSlug ? signBySlug(registryRecordSlug) : null;
+
+  useEffect(() => {
+    if (!chart || !registryRecord || mode !== 'full' || sharedReceiver) return;
+    if (registryBridgeImpressionChartRef.current === chart) return;
+    registryBridgeImpressionChartRef.current = chart;
+    trackAnalytics('registry_bridge_impression', {
+      sign: registryRecord.slug,
+      surface: 'birth_chart',
+      locale,
+    });
+  }, [chart, locale, mode, registryRecord?.slug, sharedReceiver]);
+
   return (
     <div class="calc" data-subject-mode={subjectMode}>
       <form
@@ -1741,6 +1768,39 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   </button>
                 </div>
               </div>
+            </aside>
+          )}
+
+          {/* The one sanctioned records bridge on a tool page. It follows the
+              Big Three interpretation and resolves only when the Sun sign is
+              exact or stable across an unknown-time local birth date. */}
+          {mode === 'full' && !sharedReceiver && registryRecord && (
+            <aside
+              class="calc__record"
+              data-registry-bridge
+              data-registry-bridge-sign={registryRecord.slug}
+              data-registry-bridge-surface="birth_chart"
+              data-registry-bridge-locale={locale}
+            >
+              <span class="calc__record-label mono">{t(locale, 'recordLabel')}</span>
+              <span class="calc__record-copy">
+                <strong class="calc__record-sun">
+                  {tf(locale, 'recordChartSun', { sign: signName(registryRecord, locale) })}
+                </strong>
+                <span class="calc__record-text">
+                  {tf(locale, 'recordChartBody', { sign: signName(registryRecord, locale) })}
+                </span>
+              </span>
+              <a
+                class="calc__record-link"
+                href={`/registry/${registryRecord.slug}/`}
+                title={russianCopy?.chart.englishOnlyTitle}
+                onClick={() => trackAnalytics('registry_bridge_click', {
+                  sign: registryRecord.slug,
+                  surface: 'birth_chart',
+                  locale,
+                })}
+              >{tf(locale, 'recordChartLink', { sign: signName(registryRecord, locale) })}</a>
             </aside>
           )}
 
@@ -2280,20 +2340,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             </details>
           )}
 
-          {/* The one sanctioned records bridge on a tool page: the sun
-              sign's canonical record, one quiet click into the collector's
-              wing. Records register — no market language (mirrors CollectBand). */}
-          {mode === 'full' && !sharedReceiver && sunSign && (
-            <aside class="calc__record">
-              <span class="calc__record-label mono">{t(locale, 'recordLabel')}</span>
-              <span class="calc__record-text">{signName(sunSign, locale)} {t(locale, 'recordOneOfTwelve')}</span>
-              <a
-                class="calc__record-link"
-                href={`/registry/${sunSign.slug}/`}
-                title={russianCopy?.chart.englishOnlyTitle}
-              >{t(locale, 'recordViewLink')}</a>
-            </aside>
-          )}
         </div>
       )}
 

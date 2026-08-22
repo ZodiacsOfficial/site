@@ -23,6 +23,8 @@ export type AnalyticsEventName =
   | 'share_card_downloaded'
   | 'widget_embed_copied'
   | 'registry_visit'
+  | 'registry_bridge_impression'
+  | 'registry_bridge_click'
   | 'verifier_used'
   | 'terminal_view_switch'
   | 'sdk_click'

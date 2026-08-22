@@ -7,6 +7,8 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   share_card_downloaded: ['variant'],
   widget_embed_copied: ['widget', 'mode'],
   registry_visit: [],
+  registry_bridge_impression: ['sign', 'surface', 'locale'],
+  registry_bridge_click: ['sign', 'surface', 'locale'],
   registry_sign_selected: ['sign', 'source'],
   verifier_used: ['chain', 'outcome'],
   terminal_view_switch: ['surface', 'direction'],
@@ -82,8 +84,26 @@ const ZODIAC_SIGN_VALUES = Object.freeze([
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ]);
 
+const REGISTRY_BRIDGE_SURFACE_VALUES = Object.freeze([
+  'birth_chart', 'birthday', 'sign_guide',
+]);
+
+const REGISTRY_BRIDGE_LOCALE_VALUES = Object.freeze([
+  'en', 'es', 'pt', 'fr', 'it', 'ru',
+]);
+
 /** Closed-value contracts for non-identifying product dimensions. */
 export const ANALYTICS_EVENT_VALUES = Object.freeze({
+  registry_bridge_impression: Object.freeze({
+    sign: ZODIAC_SIGN_VALUES,
+    surface: REGISTRY_BRIDGE_SURFACE_VALUES,
+    locale: REGISTRY_BRIDGE_LOCALE_VALUES,
+  }),
+  registry_bridge_click: Object.freeze({
+    sign: ZODIAC_SIGN_VALUES,
+    surface: REGISTRY_BRIDGE_SURFACE_VALUES,
+    locale: REGISTRY_BRIDGE_LOCALE_VALUES,
+  }),
   chart_computed: Object.freeze({
     source: Object.freeze(['fresh', 'shared_details', 'shared_positions']),
   }),
