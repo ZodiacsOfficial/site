@@ -58,6 +58,7 @@ try {
           navFits: Boolean(nav && nav.left >= 0 && nav.right <= innerWidth),
           chipVisible: Boolean(chip && getComputedStyle(chip).display !== 'none'),
           chipHref: chip?.getAttribute('href'),
+          chipText: chip?.textContent?.trim(),
           burgerVisible: Boolean(burger && getComputedStyle(burger).display !== 'none'),
         };
       });
@@ -68,7 +69,8 @@ try {
       }
       const pass = state.navFits
         && state.chipVisible
-        && state.chipHref === '/terminal/'
+        && state.chipHref === `${prefix}/birth-chart/`
+        && (prefix !== '' || state.chipText === 'Birth chart')
         && state.burgerVisible === (width === 819)
         && (width === 820 || state.mobileRegistryVisible === true);
       navBreakpointsPass &&= pass;
@@ -76,7 +78,7 @@ try {
       await navPage.close();
     }
   }
-  check('navigation: Registry persists at 819/820px in all five locales', navBreakpointsPass, navBreakpointsDetail.join(' · '));
+  check('navigation: Birth chart persists at 819/820px in all five locales', navBreakpointsPass, navBreakpointsDetail.join(' · '));
 
   // The site sets `scroll-behavior: smooth`, so scrolls animate — poll the
   // box until it stops moving before clicking.

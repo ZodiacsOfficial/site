@@ -26,8 +26,8 @@ const faq = [
     a: 'The calculation runs entirely in your browser. Saving a chart stores it on this device first; if you choose account sync, your saved charts upload to your account (stored with row-level security) so they can follow you across devices.',
   },
   {
-    q: 'What is Astrofolio?',
-    a: 'Astrofolio is the collection of twelve gold Zodiac sculptures. Choose your sign, see its artwork, and follow its public Registry record.',
+    q: "What if I don't know my birth time?",
+    a: 'Choose “I don’t know it.” The calculator uses 12:00 as a reference, leaves out the rising sign and houses instead of inventing them, and tells you if the Moon may have changed signs that day.',
   },
 ];
 
@@ -78,7 +78,7 @@ const tools = [
   description="Free birth charts, moon signs, compatibility, horoscopes, and sign guides — accurate, private, and easy to understand."
   path="/"
   image="/assets/og/v2/share-pastel-wheel-20260809.png"
-  imageAlt="Zodiacs homepage preview on black with a large ring of twelve pastel zodiac symbols and the headline “Explore the stars behind your story.”"
+  imageAlt="Zodiacs homepage preview on black with a large ring of twelve pastel zodiac symbols and the headline “Your whole chart, not just your sign.”"
   jsonLd={jsonLd}
 >
   <link
@@ -128,6 +128,7 @@ const tools = [
             <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
             <a class="btn btn--ghost hero__ghost" href="/horoscopes/"><span>See your forecasts</span></a>
           </div>
+          <p class="hero__trust">Free · No signup · Calculated in your browser</p>
         </div>
       </div>
     </div>
@@ -668,10 +669,9 @@ const tools = [
     justify-content: center;
     gap: 12px;
   }
-  /* The homepage pair uses the Registry hero's exact liquid-glass material:
-     one transparent nav-like capsule recipe for both actions. The primary's
-     white orb keeps the hierarchy without turning the button into a slab. */
-  .hero__ctas .btn {
+  /* The forecast link keeps the restrained glass treatment. The chart CTA
+     uses the sitewide solid primary recipe as the single conversion anchor. */
+  .hero__ctas .hero__ghost {
     background: rgba(10, 12, 17, 0.66);
     backdrop-filter: saturate(150%) blur(18px);
     -webkit-backdrop-filter: saturate(150%) blur(18px);
@@ -681,16 +681,19 @@ const tools = [
       inset 0 1px 0 rgba(238, 241, 247, 0.06),
       0 12px 32px -14px rgba(0, 0, 0, 0.7);
   }
-  .hero__ctas .btn:hover {
+  .hero__ctas .hero__ghost:hover {
     background: rgba(10, 12, 17, 0.76);
     border-color: rgba(238, 241, 247, 0.34);
   }
-  .hero__ctas .btn--primary .orb {
-    background: var(--ink-0, #EEF1F7);
-    border-color: rgba(238, 241, 247, 0.5);
-    color: var(--void-0, #060709);
+  .hero__trust {
+    margin: -2px 0 0;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.45;
+    letter-spacing: 0.055em;
+    color: var(--faint);
+    text-shadow: 0 1px 14px rgba(6, 7, 9, 0.72);
   }
-  .hero__ctas .btn--primary:hover .orb { background: #ffffff; }
 
   /* ── Liquid glass (homepage chrome) ──
      Everyone gets the frosted blur floor above — it renders on Safari/iOS via
@@ -700,7 +703,7 @@ const tools = [
      Chromium): Safari reports support for url() backdrop filters but paints
      nothing, which would otherwise leave these controls flat and transparent. */
   .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-  :global(html.zdx-lens) .hero__ctas .btn {
+  :global(html.zdx-lens) .hero__ctas .hero__ghost {
     background: rgba(10, 12, 17, 0.56);
     backdrop-filter: url(#zdx-lens-nav);
     -webkit-backdrop-filter: url(#zdx-lens-nav);
@@ -709,8 +712,8 @@ const tools = [
       inset 0 -1px 0 rgba(238, 241, 247, 0.04),
       0 12px 32px -14px rgba(0, 0, 0, 0.7);
   }
-  :global(html.zdx-lens) .hero__ctas .btn:hover { background: rgba(10, 12, 17, 0.66); }
-  :global(html:not(.zdx-lens)) .hero__ctas .btn {
+  :global(html.zdx-lens) .hero__ctas .hero__ghost:hover { background: rgba(10, 12, 17, 0.66); }
+  :global(html:not(.zdx-lens)) .hero__ctas .hero__ghost {
     background: rgba(10, 12, 17, 0.58);
     backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
     -webkit-backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
@@ -731,7 +734,7 @@ const tools = [
   /* Reduced transparency: solid, no blur — applies to the frosted floor and
      the Chromium lens alike. */
   @media (prefers-reduced-transparency: reduce) {
-    .hero__ctas .btn {
+    .hero__ctas .hero__ghost {
       background: rgba(10, 12, 17, 0.86);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;

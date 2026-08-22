@@ -119,7 +119,7 @@ await withPreview({ port: 4418 }, async (baseURL) => {
 
         if (route === '/ru/' && viewport.width === 1280) {
           const desktopEnglishSeams = await page.locator('.nav__deferred').allTextContents();
-          check(desktopEnglishSeams.length === 3, `Russian desktop nav exposes ${desktopEnglishSeams.length} English-only seams; expected 3`);
+          check(desktopEnglishSeams.length === 2, `Russian desktop nav exposes ${desktopEnglishSeams.length} English-only seams; expected 2`);
           check(desktopEnglishSeams.every((value) => value.trim() === '— пока по-английски'), 'Russian desktop nav seam copy drifted');
           check(await page.locator('.nav__search').count() === 0, 'English-only search control leaked into Russian desktop nav');
         }

@@ -41,7 +41,7 @@ export const OG_EN = Object.freeze({
     pisces: 'Pisces',
   }),
   share: {
-    title: 'Explore the stars behind your story.',
+    title: 'Your whole chart, not just your sign.',
     subtitle: 'Free birth charts, sign guides, and astrology tools.',
   },
   signGuide: {

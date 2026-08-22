@@ -88,6 +88,12 @@ interface RunInput {
   mine?: MineHandoff | null;
 }
 
+interface FormFieldErrors {
+  date?: 'required' | 'range';
+  time?: boolean;
+  place?: boolean;
+}
+
 type ChartComputedSource = 'fresh' | 'shared_details' | 'shared_positions';
 
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
@@ -316,6 +322,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [moonAmbiguous, setMoonAmbiguous] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FormFieldErrors>({});
   const [saved, setSaved] = useState<'idle' | 'saved' | 'full' | 'error'>('idle');
   const [shareInput, setShareInput] = useState<ShareChartInput | null>(null);
   const [computedInput, setComputedInput] = useState<RunInput | null>(null);
@@ -344,6 +351,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [pushOptIn, setPushOptIn] = useState<PushOptInModule | null>(null);
   const [pwaInstallModule, setPwaInstallModule] = useState<PwaInstallModule | null>(null);
   const [pwaComputationCount, setPwaComputationCount] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
@@ -393,6 +401,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setShareDialogOpen(false);
     setMoonAmbiguous(false);
     setError('');
+    setFieldErrors({});
     resetLens();
     exitTour();
     cancelSpotlightArrival();
@@ -1028,9 +1037,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     }
   }, [busy, error, chart]);
 
-  const canCompute = date !== '' && city !== null && (!timeKnown || time !== '')
-    && !(mode === 'rising' && !timeKnown);
-
   async function runChart(
     input: RunInput,
     focusAfterCompute: boolean,
@@ -1134,7 +1140,27 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   function compute(e: Event) {
     e.preventDefault();
-    if (!canCompute || !city) return;
+    if (busy) return;
+    const dateInput = formRef.current?.querySelector<HTMLInputElement>('#birth-date');
+    const nextFieldErrors: FormFieldErrors = {
+      date: date === '' ? 'required' : dateInput?.validity.valid === false ? 'range' : undefined,
+      time: timeKnown && time === '',
+      place: city === null,
+    };
+    setFieldErrors(nextFieldErrors);
+    setError('');
+    const firstIncomplete = nextFieldErrors.date
+      ? 'birth-date'
+      : nextFieldErrors.time
+        ? 'birth-time'
+        : nextFieldErrors.place ? 'place' : null;
+    if (firstIncomplete) {
+      requestAnimationFrame(() => {
+        formRef.current?.querySelector<HTMLElement>(`#${firstIncomplete}`)?.focus();
+      });
+      return;
+    }
+    if (!city) return;
     invalidateProfileHandoff();
     setFromLink(false);
     if (subjectMode === 'self') setLinkName(null);
@@ -1462,7 +1488,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     && (firstReading.status === 'not_started' || firstReading.status === 'in_progress');
   return (
     <div class="calc" data-subject-mode={subjectMode}>
-      <form class="calc__form shell" onSubmit={compute} aria-busy={busy}>
+      <form ref={formRef} class="calc__form shell" onSubmit={compute} aria-busy={busy} noValidate>
         <div class="core calc__core">
           <div class="calc__fields">
             <BirthFields
@@ -1474,15 +1500,36 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               time={time}
               timeKnown={timeKnown}
               city={city}
-              onDateChange={(value) => { invalidateProfileHandoff(); setDate(value); }}
-              onTimeChange={(value) => { invalidateProfileHandoff(); setTime(value); }}
-              onTimeKnownChange={(value) => { invalidateProfileHandoff(); setTimeKnown(value); }}
-              onCityChange={(value) => { invalidateProfileHandoff(); setCity(value); }}
+              onDateChange={(value) => {
+                invalidateProfileHandoff();
+                setDate(value);
+                setFieldErrors((current) => current.date ? { ...current, date: undefined } : current);
+              }}
+              onTimeChange={(value) => {
+                invalidateProfileHandoff();
+                setTime(value);
+                setFieldErrors((current) => current.time ? { ...current, time: false } : current);
+              }}
+              onTimeKnownChange={(value) => {
+                invalidateProfileHandoff();
+                setTimeKnown(value);
+                if (!value) setFieldErrors((current) => current.time ? { ...current, time: false } : current);
+              }}
+              onCityChange={(value) => {
+                invalidateProfileHandoff();
+                setCity(value);
+                setFieldErrors((current) => current.place ? { ...current, place: false } : current);
+              }}
               onWarm={loadEngine}
               showUnknownTime={mode !== 'rising'}
               requireKnownTime
               timeHelp={mode === 'rising' ? t(locale, 'risingTimeHelp') : t(locale, 'chartTimeHelp')}
               placeHelp={t(locale, 'searchGeo')}
+              dateError={fieldErrors.date === 'range'
+                ? t(locale, 'birthDateRange')
+                : fieldErrors.date ? t(locale, 'birthDateRequired') : undefined}
+              timeError={fieldErrors.time ? t(locale, 'birthTimeRequired') : undefined}
+              placeError={fieldErrors.place ? t(locale, 'placePickHint') : undefined}
             />
 
             {mode === 'full' && (
@@ -1517,7 +1564,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             )}
           </div>
 
-          <button class="btn btn--primary calc__submit" type="submit" disabled={!canCompute || busy}>
+          <button class="btn btn--primary calc__submit" type="submit" disabled={busy}>
             <span>
               {busy ? t(locale, 'computing')
                 : mode === 'moon' ? t(locale, 'findMoonSign')

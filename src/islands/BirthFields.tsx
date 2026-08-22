@@ -22,6 +22,9 @@ interface BirthFieldsProps {
   requireKnownTime?: boolean;
   timeHelp?: ComponentChildren;
   placeHelp?: ComponentChildren;
+  dateError?: string;
+  timeError?: string;
+  placeError?: string;
 }
 
 /** Shared, controlled birth date/time/place fields used by calculator islands. */
@@ -43,6 +46,9 @@ export function BirthFields({
   requireKnownTime = false,
   timeHelp,
   placeHelp,
+  dateError,
+  timeError,
+  placeError,
 }: BirthFieldsProps) {
   // This is the same unkeyed sibling set without a Fragment wrapper; keep the
   // direct array return to protect the calculator host's hard bundle budget.
@@ -52,8 +58,11 @@ export function BirthFields({
       <input
         id={dateId} class="field__input" type="date" required
         min="1800-01-01" max="2199-12-31" value={date}
+        aria-invalid={dateError ? 'true' : undefined}
+        aria-describedby={dateError ? `${dateId}-error` : undefined}
         onInput={(e) => onDateChange((e.target as HTMLInputElement).value)}
       />
+      {dateError && <p id={`${dateId}-error`} class="field__error" role="alert">{dateError}</p>}
     </div>,
 
     <div class="field">
@@ -72,15 +81,26 @@ export function BirthFields({
       <input
         id={timeId} class="field__input" type="time"
         disabled={!timeKnown} required={requireKnownTime && timeKnown} value={time}
+        aria-invalid={timeError ? 'true' : undefined}
+        aria-describedby={timeError ? `${timeId}-error` : undefined}
         onFocus={onWarm}
         onInput={(e) => onTimeChange((e.target as HTMLInputElement).value)}
       />
+      {timeError && <p id={`${timeId}-error`} class="field__error" role="alert">{timeError}</p>}
       {timeHelp !== undefined && <p class="field__help">{timeHelp}</p>}
     </div>,
 
     <div class="field">
       <label class="field__label" for={placeId}>{t(locale, 'birthplace')}</label>
-      <PlaceSearch id={placeId} selected={city} onSelect={onCityChange} locale={locale} />
+      <PlaceSearch
+        id={placeId}
+        selected={city}
+        onSelect={onCityChange}
+        locale={locale}
+        validationError={placeError}
+        selectionHint={t(locale, 'placePickHint')}
+        required
+      />
       {placeHelp !== undefined && <p class="field__help">{placeHelp}</p>}
     </div>,
   ];
