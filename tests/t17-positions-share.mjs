@@ -131,11 +131,13 @@ try {
       globalThis.__t17DownloadClicks = [];
       globalThis.__t17ShareCalls = 0;
       globalThis.__t17IconFetches = [];
+      globalThis.__t17BrandIconFetches = [];
       const originalFetch = globalThis.fetch;
       globalThis.fetch = function (input, init) {
         const url = input instanceof Request ? input.url : String(input);
         const path = new URL(url, location.href).pathname;
         if (path.includes('/assets/zodiac-icons/')) globalThis.__t17IconFetches.push(path);
+        if (path === '/assets/app-icons/v3/icon-512.png') globalThis.__t17BrandIconFetches.push(path);
         return originalFetch.call(this, input, init);
       };
       const fillText = CanvasRenderingContext2D.prototype.fillText;
@@ -242,6 +244,7 @@ try {
       const preparedSheet = await source.evaluate(() => ({
         text: globalThis.__t17CanvasText.slice(),
         events: globalThis.__t17Events.slice(),
+        brandIconFetches: globalThis.__t17BrandIconFetches.slice(),
       }));
       const preparedSheetText = preparedSheet.text.map((entry) => entry.value).join(' | ');
       for (const label of [
@@ -262,8 +265,20 @@ try {
         'the chart sheet and signature must remain separate compositions');
       const sheetWordmarks = preparedSheet.text.filter((entry) => entry.value === 'zodiacs.org');
       assert.deepEqual(sheetWordmarks.map(({ align, x, y }) => ({ align, x, y })), [
-        { align: 'right', x: 1708, y: 92 },
-      ], 'chart sheet must carry one small corner wordmark');
+        { align: 'right', x: 1708, y: 104 },
+      ], 'chart sheet must carry one legible corner wordmark');
+      assert.equal(
+        preparedSheet.brandIconFetches.includes('/assets/app-icons/v3/icon-512.png'),
+        true,
+        'chart sheet must pair the wordmark with the canonical site profile image',
+      );
+      const sectionTitles = preparedSheet.text
+        .filter((entry) => entry.value === 'Positions' || entry.value === 'Aspect grid')
+        .map(({ value, y }) => ({ value, y }));
+      assert.deepEqual(sectionTitles, [
+        { value: 'Positions', y: 1126 },
+        { value: 'Aspect grid', y: 1126 },
+      ], 'chart-sheet section titles must share a stable baseline above their labels');
 
       const moreActions = source.locator('[data-chart-more]');
       if (!(await moreActions.getAttribute('open'))) await moreActions.locator('summary').click();

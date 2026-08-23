@@ -27,6 +27,7 @@ import { shareCardFormat, shareCardText } from './share-card-copy';
 import { communicationRead } from './communication';
 import { approachRead } from './approach';
 import { chartSignature, type ChartSignature } from './chart-signature';
+import { BRAND_ICON_PATHS } from './brand-icons.mjs';
 
 export type CardOutcome = 'shared' | 'downloaded' | 'cancelled';
 export type ChartCardVariant = 'full' | 'big-three' | 'communication' | 'signature' | 'approach' | 'sheet';
@@ -138,6 +139,16 @@ function loadSvg(xml: string): Promise<HTMLImageElement> {
 export async function loadDisc(slug: string): Promise<ImageBitmap | null> {
   try {
     const res = await fetch(`/assets/zodiac-icons/128/${slug}.webp`);
+    if (!res.ok) return null;
+    return await createImageBitmap(await res.blob());
+  } catch {
+    return null;
+  }
+}
+
+async function loadBrandIcon(): Promise<ImageBitmap | null> {
+  try {
+    const res = await fetch(BRAND_ICON_PATHS.icon512);
     if (!res.ok) return null;
     return await createImageBitmap(await res.blob());
   } catch {
@@ -922,6 +933,13 @@ async function drawApproachCard(
 
 const SHEET_W = 1800;
 const SHEET_H = 2400;
+export const CHART_SHEET_LAYOUT = Object.freeze({
+  sectionTitleY: 1126,
+  aspectGridY: 1340,
+  brandIconSize: 88,
+  brandFontSize: 44,
+  brandWordmarkY: 104,
+});
 const SHEET_BODIES = [
   'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
   'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
@@ -1005,7 +1023,10 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
     document.fonts.load(`italic 400 30px ${SERIF}`),
     document.fonts.load(`400 30px ${MONO}`),
   ]).catch(() => {});
-  const wheel = await wheelSvgString(chart).then(loadSvg);
+  const [wheel, brandIcon] = await Promise.all([
+    wheelSvgString(chart).then(loadSvg),
+    loadBrandIcon(),
+  ]);
   const canvas = document.createElement('canvas');
   canvas.width = SHEET_W;
   canvas.height = SHEET_H;
@@ -1024,8 +1045,24 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
   ctx.textBaseline = 'middle';
   ctx.fillStyle = INK_2;
   ctx.textAlign = 'right';
-  ctx.font = `500 31px ${SERIF}`;
-  ctx.fillText('zodiacs.org', SHEET_W - 92, 92);
+  ctx.font = `500 ${CHART_SHEET_LAYOUT.brandFontSize}px ${SERIF}`;
+  const wordmark = 'zodiacs.org';
+  const wordmarkX = SHEET_W - 92;
+  if (brandIcon) {
+    const iconX = wordmarkX - ctx.measureText(wordmark).width - 20 - CHART_SHEET_LAYOUT.brandIconSize;
+    const iconY = CHART_SHEET_LAYOUT.brandWordmarkY - CHART_SHEET_LAYOUT.brandIconSize / 2;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(
+      brandIcon,
+      iconX,
+      iconY,
+      CHART_SHEET_LAYOUT.brandIconSize,
+      CHART_SHEET_LAYOUT.brandIconSize,
+    );
+    brandIcon.close();
+  }
+  ctx.fillText(wordmark, wordmarkX, CHART_SHEET_LAYOUT.brandWordmarkY);
 
   ctx.drawImage(wheel, 420, 135, 960, 960);
 
@@ -1040,7 +1077,7 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_2;
   ctx.font = `italic 400 30px ${SERIF}`;
-  ctx.fillText('Positions', tableX, tableTop - 54);
+  ctx.fillText('Positions', tableX, CHART_SHEET_LAYOUT.sectionTitleY);
   rows.forEach((row, index) => {
     const y = tableTop + index * rowHeight;
     drawSheetLabel(ctx, row.body, tableX, y);
@@ -1060,7 +1097,7 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
   });
 
   const gridX = 1010;
-  const gridY = 1260;
+  const gridY = CHART_SHEET_LAYOUT.aspectGridY;
   const cell = 64;
   const byPair = new Map(chart.aspects.map((aspect) => {
     const key = [aspect.a, aspect.b].sort().join('|');
@@ -1069,7 +1106,7 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_2;
   ctx.font = `italic 400 30px ${SERIF}`;
-  ctx.fillText('Aspect grid', gridX, gridY - 138);
+  ctx.fillText('Aspect grid', gridX, CHART_SHEET_LAYOUT.sectionTitleY);
   SHEET_BODIES.forEach((body, index) => {
     ctx.save();
     ctx.translate(gridX + index * cell + 35, gridY - 22);

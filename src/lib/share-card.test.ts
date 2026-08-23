@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  CHART_SHEET_LAYOUT,
   SHARE_CARD_SCALE,
   SHARE_CARD_WORDMARK,
   approachCardContent,
@@ -61,6 +62,16 @@ describe('chartCardFilename', () => {
 });
 
 describe('chart sheet formatting', () => {
+  it('keeps the aspect header clear of the rotated planet labels', () => {
+    expect(CHART_SHEET_LAYOUT.aspectGridY - CHART_SHEET_LAYOUT.sectionTitleY)
+      .toBeGreaterThanOrEqual(200);
+  });
+
+  it('uses a readable site signature beside the profile image', () => {
+    expect(CHART_SHEET_LAYOUT.brandFontSize).toBeGreaterThan(31);
+    expect(CHART_SHEET_LAYOUT.brandIconSize).toBeGreaterThanOrEqual(80);
+  });
+
   it('carries rounded arcminutes into the next sign and wraps the zodiac', () => {
     expect(chartPreviewPlacement(29.999)).toMatchObject({ signSlug: 'taurus', degree: 0, minute: 0 });
     expect(chartPreviewPlacement(359.999)).toMatchObject({ signSlug: 'aries', degree: 0, minute: 0 });
