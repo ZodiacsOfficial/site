@@ -342,11 +342,13 @@ async function inspectEditionMidnightRollover(browser, baseURL) {
   }).format(new Date(`${PROGRAM.anchorDate}T00:00:00.000Z`));
 
   try {
-    await page.clock.install({ time: new Date(`${PROGRAM.anchorDate}T23:59:59.500Z`) });
+    // Leave enough frozen-clock headroom for slower CI navigation before the
+    // deliberate rollover; a 500 ms margin made this probe timing-dependent.
+    await page.clock.install({ time: new Date(`${PROGRAM.anchorDate}T23:59:50.000Z`) });
     await page.goto('/today/', { waitUntil: 'networkidle' });
     await page.waitForFunction(() => document.documentElement.dataset.editionState === 'current');
     await page.waitForSelector('[data-today-state="empty"]');
-    await page.clock.fastForward(2_000);
+    await page.clock.fastForward(11_000);
     await page.waitForFunction(() => document.documentElement.dataset.editionState === 'dated');
     await page.locator('.today-page').evaluate((scope) => {
       const probe = document.createElement('p');
@@ -402,6 +404,10 @@ async function inspectDailyForYouChunkFailure(browser, baseURL) {
     });
     await page.goto('/horoscopes/aries/', { waitUntil: 'networkidle' });
     const fallback = page.locator('.dfy--placeholder');
+    // DailyForYou hydrates with client:visible. Move the reserved fallback into
+    // view so this probe actually requests—and blocks—the island chunk.
+    await fallback.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(250);
     check(
       'daily island failure: the DailyForYou chunk was blocked by the harness',
       blockedChunkRequests > 0,
