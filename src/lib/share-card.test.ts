@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   CHART_SHEET_LAYOUT,
+  CHART_SHEET_ASPECT_LEGEND,
+  CHART_SHEET_ASPECT_SCOPE,
   SHARE_CARD_SCALE,
   SHARE_CARD_WORDMARK,
   approachCardContent,
@@ -9,6 +11,9 @@ import {
   chartCardFilename,
   chartCardReceipt,
   chartPreviewPlacement,
+  chartSheetAspectOrb,
+  chartSheetOrbLimits,
+  chartSheetProvenanceLines,
   chartSheetSettings,
   communicationCardContent,
   dominantProfile,
@@ -70,6 +75,15 @@ describe('chart sheet formatting', () => {
   it('uses a readable site signature beside the profile image', () => {
     expect(CHART_SHEET_LAYOUT.brandFontSize).toBeGreaterThan(31);
     expect(CHART_SHEET_LAYOUT.brandIconSize).toBeGreaterThanOrEqual(80);
+    expect(CHART_SHEET_LAYOUT.brandGap).toBe(0);
+  });
+
+  it('fits the enlarged wheel, sixteen placement rows, grid, and footer', () => {
+    expect(CHART_SHEET_LAYOUT.wheelSize).toBeGreaterThan(1000);
+    expect(CHART_SHEET_LAYOUT.tableTop + (15 * CHART_SHEET_LAYOUT.tableRowHeight) + 25)
+      .toBeLessThan(CHART_SHEET_LAYOUT.footerY);
+    expect(CHART_SHEET_LAYOUT.aspectGridY + (10 * CHART_SHEET_LAYOUT.aspectCellSize))
+      .toBeLessThan(CHART_SHEET_LAYOUT.footerY);
   });
 
   it('carries rounded arcminutes into the next sign and wraps the zodiac', () => {
@@ -78,11 +92,73 @@ describe('chart sheet formatting', () => {
   });
 
   it('stamps the configured house setting honestly', () => {
-    expect(chartSheetSettings({ houses: { system: 'whole', cusps: [] } })).toBe('Whole sign · Tropical');
-    expect(chartSheetSettings({ houses: { system: 'placidus', cusps: [] } })).toBe('Placidus · Tropical');
-    expect(chartSheetSettings({ houses: null })).toBe('No houses · Tropical');
+    expect(chartSheetSettings({ houses: { system: 'whole', cusps: [] } }))
+      .toBe('Apparent geocentric · Tropical of date · Whole sign houses · True Node');
+    expect(chartSheetSettings({ houses: { system: 'placidus', cusps: [] } }))
+      .toBe('Apparent geocentric · Tropical of date · Placidus houses · True Node');
+    expect(chartSheetSettings({ houses: null }))
+      .toBe('Apparent geocentric · Tropical of date · No houses · True Node');
     expect(chartSheetSettings({ houses: null, input: { timeKnown: false } }))
-      .toBe('12:00 reference · No houses · Tropical');
+      .toBe('12:00 reference · Apparent geocentric · Tropical of date · No houses · True Node');
+  });
+
+  it('states aspect scope, limits, exact orb, and motion', () => {
+    expect(CHART_SHEET_ASPECT_SCOPE).toBe('Major aspects · Sun–Pluto · Nodes & angles excluded');
+    expect(CHART_SHEET_ASPECT_LEGEND).toContain('A applying');
+    expect(chartSheetOrbLimits().join(' ')).toContain('☌ 10/8');
+    expect(chartSheetOrbLimits().join(' ')).toContain('☍ 10/8');
+    expect(chartSheetAspectOrb(2.783, true)).toBe('2°47′A');
+    expect(chartSheetAspectOrb(0.01, false)).toBe('0°01′S');
+  });
+
+  it('keeps provenance private by default and becomes reproducible only on opt-in', () => {
+    const chart = {
+      input: {
+        utc: new Date('1990-06-15T12:30:00.000Z'),
+        latitude: 40.7128,
+        longitude: -74.006,
+        houseSystem: 'whole',
+        timeKnown: true,
+      },
+      flags: ['dst-fold'],
+    } as Chart;
+    const details = {
+      date: '1990-06-15',
+      time: '08:30',
+      timeKnown: true,
+      city: 'New York',
+      admin1: 'New York',
+      country: 'United States',
+      timezone: 'America/New_York',
+    };
+    expect(chartSheetProvenanceLines(chart, details)).toEqual(['Birth details hidden']);
+    expect(chartSheetProvenanceLines(chart, details, false)).toEqual([
+      '1990-06-15 · 08:30 local',
+      'New York, United States',
+      '40.7128°N · 74.0060°W · America/New_York',
+      'Resolved UTC · 1990-06-15 12:30 UTC',
+      'DST fold · earlier occurrence used',
+    ]);
+  });
+
+  it('labels an unknown-time instant as a reference, never a birth UTC', () => {
+    const chart = {
+      input: {
+        utc: new Date('1990-01-01T17:00:00.000Z'),
+        latitude: 40.7128,
+        longitude: -74.006,
+        houseSystem: 'whole',
+        timeKnown: false,
+      },
+      flags: ['no-time'],
+    } as Chart;
+    const lines = chartSheetProvenanceLines(chart, {
+      date: '1990-01-01', time: '12:00', timeKnown: false,
+      city: 'New York', country: 'United States', timezone: 'America/New_York',
+    }, false);
+    expect(lines[0]).toContain('Birth time unknown');
+    expect(lines).toContain('Reference UTC · 1990-01-01 17:00 UTC');
+    expect(lines.join(' ')).not.toContain('Resolved UTC');
   });
 
   it('states the noon reference and Moon uncertainty without implying an angle', () => {

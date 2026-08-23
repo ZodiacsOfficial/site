@@ -2353,9 +2353,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           onClose={closeShareDialog}
           detailsUrl={shareUrl()}
           receiverPath={localizePath(locale, '/birth-chart/')}
-          birthReceipt={computedInput
-            ? `${computedInput.date} · ${computedInput.timeKnown ? computedInput.time : t(locale, 'timeUnknown')} · ${computedInput.city.name}`
-            : undefined}
+          birthDetails={computedInput ? {
+            date: computedInput.date,
+            time: computedInput.time,
+            timeKnown: computedInput.timeKnown,
+            city: computedInput.city.name,
+            admin1: computedInput.city.admin1,
+            country: computedInput.city.country,
+            timezone: computedInput.city.tz,
+          } : undefined}
           preparedPrimary={shareRuntimeRef.current.primary?.artifact}
           moonAmbiguous={moonAmbiguous}
         />

@@ -11,6 +11,7 @@
  */
 import { h, render } from 'preact';
 import Wheel from './wheel/Wheel';
+import TechnicalWheel from './wheel/TechnicalWheel';
 import {
   degreeInSign,
   SIGNS,
@@ -21,6 +22,7 @@ import {
   type Modality,
 } from './signs';
 import type { Angles, AspectType, BodyName, BodyPosition, Chart } from './engine/types';
+import { ASPECTS } from './engine/aspects';
 import { houseOf } from './engine/houses';
 import type { CatalogLocale as Locale } from './i18n';
 import { shareCardFormat, shareCardText } from './share-card-copy';
@@ -43,8 +45,18 @@ export interface ShareCardOptions {
   referenceTime?: boolean;
   /** Sheet-only: keep placements while replacing the birth receipt with settings. */
   hideBirthDetails?: boolean;
-  /** Already-formatted, human-readable receipt. Never coordinates or a share payload. */
-  birthReceipt?: string;
+  /** Sheet-only provenance, rendered only after explicit privacy opt-in. */
+  birthDetails?: ChartSheetBirthDetails;
+}
+
+export interface ChartSheetBirthDetails {
+  date: string;
+  time: string;
+  timeKnown: boolean;
+  city: string;
+  admin1?: string;
+  country?: string;
+  timezone: string;
 }
 
 /**
@@ -83,15 +95,25 @@ export const SHARE_CARD_WORDMARK = Object.freeze({
   align: 'right' as const,
 });
 
-async function wheelSvgString(chart: Chart): Promise<string> {
+async function wheelSvgString(chart: Chart, technical = false): Promise<string> {
   const host = document.createElement('div');
-  render(h(Wheel, {
-    bodies: chart.bodies.filter((b) => b.body !== 'South Node'),
-    asc: chart.angles?.asc ?? null,
-    mc: chart.angles?.mc ?? null,
-    cusps: chart.houses?.cusps ?? null,
-    aspects: chart.aspects.filter((a) => a.orb < 6),
-  }), host);
+  render(technical
+    ? h(TechnicalWheel, {
+      bodies: chart.bodies,
+      asc: chart.angles?.asc ?? null,
+      mc: chart.angles?.mc ?? null,
+      dsc: chart.angles?.dsc ?? null,
+      ic: chart.angles?.ic ?? null,
+      cusps: chart.houses?.cusps ?? null,
+      aspects: chart.aspects,
+    })
+    : h(Wheel, {
+      bodies: chart.bodies.filter((b) => b.body !== 'South Node'),
+      asc: chart.angles?.asc ?? null,
+      mc: chart.angles?.mc ?? null,
+      cusps: chart.houses?.cusps ?? null,
+      aspects: chart.aspects.filter((a) => a.orb < 6),
+    }), host);
   const svg = host.querySelector('svg');
   if (!svg) throw new Error('wheel render failed');
   svg.setAttribute('width', String(WHEEL_SIZE));
@@ -934,9 +956,18 @@ async function drawApproachCard(
 const SHEET_W = 1800;
 const SHEET_H = 2400;
 export const CHART_SHEET_LAYOUT = Object.freeze({
-  sectionTitleY: 1126,
-  aspectGridY: 1340,
+  wheelX: 340,
+  wheelY: 145,
+  wheelSize: 1120,
+  sectionTitleY: 1305,
+  tableTop: 1375,
+  tableRowHeight: 52,
+  aspectGridX: 1020,
+  aspectGridY: 1590,
+  aspectCellSize: 66,
+  footerY: 2310,
   brandIconSize: 88,
+  brandGap: 0,
   brandFontSize: 44,
   brandWordmarkY: 104,
 });
@@ -952,7 +983,7 @@ const BODY_GLYPH: Record<BodyName, string> = {
 const BODY_SHORT: Record<BodyName, string> = {
   Sun: 'Sun', Moon: 'Moon', Mercury: 'Merc', Venus: 'Venus', Mars: 'Mars',
   Jupiter: 'Jup', Saturn: 'Sat', Uranus: 'Ura', Neptune: 'Nep', Pluto: 'Plu',
-  'North Node': 'Node', 'South Node': 'S.Node',
+  'North Node': 'T.Node', 'South Node': 'S.Node',
 };
 const ASPECT_GLYPH: Record<AspectType, string> = {
   conjunction: '☌', sextile: '⚹', square: '□', trine: '△', opposition: '☍',
@@ -986,12 +1017,81 @@ export function chartPreviewPlacement(longitude: number): ChartPreviewPlacement 
 export function chartSheetSettings(
   chart: Pick<Chart, 'houses'> & { input?: Pick<Chart['input'], 'timeKnown'> },
 ): string {
-  if (!chart.houses) {
-    return chart.input?.timeKnown === false
-      ? '12:00 reference · No houses · Tropical'
-      : 'No houses · Tropical';
-  }
-  return `${chart.houses.system === 'whole' ? 'Whole sign' : 'Placidus'} · Tropical`;
+  const houses = chart.houses
+    ? `${chart.houses.system === 'whole' ? 'Whole sign' : 'Placidus'} houses`
+    : 'No houses';
+  const reference = chart.input?.timeKnown === false ? '12:00 reference · ' : '';
+  return `${reference}Apparent geocentric · Tropical of date · ${houses} · True Node`;
+}
+
+export const CHART_SHEET_ASPECT_SCOPE = 'Major aspects · Sun–Pluto · Nodes & angles excluded';
+export const CHART_SHEET_ASPECT_LEGEND = 'Orb · A applying · S separating';
+
+export function chartSheetOrbLimits(): string[] {
+  const limits = new Map(ASPECTS.map((aspect) => [aspect.type, aspect]));
+  const pair = (type: AspectType) => {
+    const aspect = limits.get(type)!;
+    return `${ASPECT_GLYPH[type]} ${aspect.orbLuminary}/${aspect.orb}`;
+  };
+  return [
+    `Max orb (lum./other) · ${pair('conjunction')} · ${pair('sextile')} · ${pair('square')}`,
+    `${pair('trine')} · ${pair('opposition')}`,
+  ];
+}
+
+function uniquePlace(details: ChartSheetBirthDetails): string {
+  return [details.city, details.admin1, details.country]
+    .map((part) => part?.trim())
+    .filter((part, index, parts): part is string => Boolean(part) && parts.indexOf(part) === index)
+    .join(', ');
+}
+
+function coordinate(value: number | undefined, positive: string, negative: string): string | null {
+  if (value == null || !Number.isFinite(value)) return null;
+  return `${Math.abs(value).toFixed(4)}°${value < 0 ? negative : positive}`;
+}
+
+function utcReceipt(utc: Date): string {
+  const iso = utc.toISOString();
+  return `${iso.slice(0, 10)} ${iso.slice(11, utc.getUTCSeconds() ? 19 : 16)} UTC`;
+}
+
+function chartFlagReceipt(chart: Pick<Chart, 'flags'>): string | null {
+  const notes = [
+    chart.flags.includes('dst-gap') ? 'DST gap adjusted forward' : null,
+    chart.flags.includes('dst-fold') ? 'DST fold · earlier occurrence used' : null,
+    chart.flags.includes('lmt') ? 'Historical local mean time' : null,
+    chart.flags.includes('polar-fallback') ? 'Polar fallback · whole sign houses used' : null,
+  ].filter(Boolean);
+  return notes.length ? notes.join(' · ') : null;
+}
+
+/** Privacy-auditable provenance lines for the top-left technical register. */
+export function chartSheetProvenanceLines(
+  chart: Pick<Chart, 'input' | 'flags'>,
+  details: ChartSheetBirthDetails | undefined,
+  hideBirthDetails = true,
+): string[] {
+  if (hideBirthDetails || !details) return ['Birth details hidden'];
+  const latitude = coordinate(chart.input.latitude, 'N', 'S');
+  const longitude = coordinate(chart.input.longitude, 'E', 'W');
+  const coordinates = [latitude, longitude].filter(Boolean).join(' · ');
+  const timeLine = details.timeKnown
+    ? `${details.date} · ${details.time} local`
+    : `${details.date} · Birth time unknown · 12:00 local reference`;
+  const utcLabel = details.timeKnown ? 'Resolved UTC' : 'Reference UTC';
+  return [
+    timeLine,
+    uniquePlace(details),
+    [coordinates, details.timezone].filter(Boolean).join(' · '),
+    `${utcLabel} · ${utcReceipt(chart.input.utc)}`,
+    chartFlagReceipt(chart),
+  ].filter((line): line is string => Boolean(line));
+}
+
+export function chartSheetAspectOrb(orb: number, applying: boolean): string {
+  const totalMinutes = Math.round(Math.max(0, orb) * 60);
+  return `${Math.floor(totalMinutes / 60)}°${String(totalMinutes % 60).padStart(2, '0')}′${applying ? 'A' : 'S'}`;
 }
 
 function sheetPositionText(longitude: number, locale: Locale): string {
@@ -1001,30 +1101,35 @@ function sheetPositionText(longitude: number, locale: Locale): string {
 
 function drawSheetLabel(
   ctx: CanvasRenderingContext2D,
-  body: BodyName | 'ASC' | 'MC',
+  body: BodyName | 'ASC' | 'MC' | 'DSC' | 'IC',
   x: number,
   y: number,
+  compact = false,
 ): void {
-  const glyph = body === 'ASC' ? 'A' : body === 'MC' ? 'M' : BODY_GLYPH[body];
-  const short = body === 'ASC' || body === 'MC' ? body : BODY_SHORT[body];
+  const glyph = body === 'ASC' ? 'A'
+    : body === 'MC' ? 'M'
+      : body === 'DSC' ? 'D'
+        : body === 'IC' ? 'I'
+          : BODY_GLYPH[body];
+  const short = ['ASC', 'MC', 'DSC', 'IC'].includes(body) ? body : BODY_SHORT[body as BodyName];
   ctx.fillStyle = INK_0;
-  ctx.font = `500 34px ${SERIF}`;
+  ctx.font = `500 ${compact ? 29 : 32}px ${SERIF}`;
   ctx.fillText(glyph, x, y);
   ctx.fillStyle = INK_2;
-  ctx.font = `400 25px ${MONO}`;
-  ctx.fillText(short, x + 44, y);
+  ctx.font = `400 ${compact ? 20 : 23}px ${MONO}`;
+  ctx.fillText(short, x + (compact ? 38 : 44), y);
 }
 
 async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Promise<Blob> {
   const locale = options.locale ?? 'en';
   await document.fonts.ready;
   await Promise.all([
-    document.fonts.load(`500 34px ${SERIF}`),
-    document.fonts.load(`italic 400 30px ${SERIF}`),
-    document.fonts.load(`400 30px ${MONO}`),
+    document.fonts.load(`500 40px ${SERIF}`),
+    document.fonts.load(`italic 400 32px ${SERIF}`),
+    document.fonts.load(`400 27px ${MONO}`),
   ]).catch(() => {});
   const [wheel, brandIcon] = await Promise.all([
-    wheelSvgString(chart).then(loadSvg),
+    wheelSvgString(chart, true).then(loadSvg),
     loadBrandIcon(),
   ]);
   const canvas = document.createElement('canvas');
@@ -1049,7 +1154,10 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
   const wordmark = 'zodiacs.org';
   const wordmarkX = SHEET_W - 92;
   if (brandIcon) {
-    const iconX = wordmarkX - ctx.measureText(wordmark).width - 20 - CHART_SHEET_LAYOUT.brandIconSize;
+    const iconX = wordmarkX
+      - ctx.measureText(wordmark).width
+      - CHART_SHEET_LAYOUT.brandGap
+      - CHART_SHEET_LAYOUT.brandIconSize;
     const iconY = CHART_SHEET_LAYOUT.brandWordmarkY - CHART_SHEET_LAYOUT.brandIconSize / 2;
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
@@ -1064,56 +1172,102 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
   }
   ctx.fillText(wordmark, wordmarkX, CHART_SHEET_LAYOUT.brandWordmarkY);
 
-  ctx.drawImage(wheel, 420, 135, 960, 960);
+  ctx.textAlign = 'left';
+  ctx.fillStyle = INK_0;
+  ctx.font = `500 40px ${SERIF}`;
+  ctx.fillText('Birth chart', 92, 104);
+  ctx.fillStyle = INK_2;
+  ctx.font = `400 23px ${MONO}`;
+  let provenanceY = 158;
+  chartSheetProvenanceLines(chart, options.birthDetails, options.hideBirthDetails !== false)
+    .forEach((receiptLine) => {
+      const lines = wrappedLines(ctx, receiptLine, 500, 2);
+      lines.forEach((line) => {
+        ctx.fillText(line, 92, provenanceY);
+        provenanceY += 30;
+      });
+    });
 
-  const rows: Array<{ body: BodyName | 'ASC' | 'MC'; lon: number }> = chart.bodies
-    .map((body) => ({ body: body.body, lon: body.lon }));
+  ctx.drawImage(
+    wheel,
+    CHART_SHEET_LAYOUT.wheelX,
+    CHART_SHEET_LAYOUT.wheelY,
+    CHART_SHEET_LAYOUT.wheelSize,
+    CHART_SHEET_LAYOUT.wheelSize,
+  );
+
+  const rows: Array<{
+    body: BodyName | 'ASC' | 'MC' | 'DSC' | 'IC';
+    lon: number;
+    retrograde?: boolean;
+  }> = chart.bodies.map((body) => ({
+    body: body.body,
+    lon: body.lon,
+    retrograde: body.retrograde,
+  }));
   if (chart.angles) {
-    rows.push({ body: 'ASC', lon: chart.angles.asc }, { body: 'MC', lon: chart.angles.mc });
+    rows.push(
+      { body: 'ASC', lon: chart.angles.asc },
+      { body: 'DSC', lon: chart.angles.dsc },
+      { body: 'MC', lon: chart.angles.mc },
+      { body: 'IC', lon: chart.angles.ic },
+    );
   }
   const tableX = 92;
-  const tableTop = 1180;
-  const rowHeight = 66;
+  const tableTop = CHART_SHEET_LAYOUT.tableTop;
+  const rowHeight = CHART_SHEET_LAYOUT.tableRowHeight;
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_2;
-  ctx.font = `italic 400 30px ${SERIF}`;
+  ctx.font = `italic 400 32px ${SERIF}`;
   ctx.fillText('Positions', tableX, CHART_SHEET_LAYOUT.sectionTitleY);
   rows.forEach((row, index) => {
     const y = tableTop + index * rowHeight;
     drawSheetLabel(ctx, row.body, tableX, y);
     ctx.fillStyle = INK_0;
-    ctx.font = `400 30px ${MONO}`;
-    ctx.fillText(sheetPositionText(row.lon, locale), tableX + 190, y);
+    ctx.font = `400 27px ${MONO}`;
+    ctx.fillText(sheetPositionText(row.lon, locale), tableX + 168, y);
     if (chart.houses) {
       ctx.fillStyle = INK_2;
-      ctx.font = `400 28px ${MONO}`;
+      ctx.font = `400 24px ${MONO}`;
       ctx.fillText(`H${houseOf(row.lon, chart.houses.cusps)}`, tableX + 650, y);
+    }
+    if (row.retrograde) {
+      ctx.fillStyle = 'rgba(224,176,128,0.9)';
+      ctx.font = `400 20px ${MONO}`;
+      ctx.fillText('Rx', tableX + 740, y);
     }
     ctx.strokeStyle = HAIR;
     ctx.beginPath();
-    ctx.moveTo(tableX, y + 31);
-    ctx.lineTo(890, y + 31);
+    ctx.moveTo(tableX, y + 25);
+    ctx.lineTo(860, y + 25);
     ctx.stroke();
   });
 
-  const gridX = 1010;
+  const gridX = CHART_SHEET_LAYOUT.aspectGridX;
   const gridY = CHART_SHEET_LAYOUT.aspectGridY;
-  const cell = 64;
+  const cell = CHART_SHEET_LAYOUT.aspectCellSize;
   const byPair = new Map(chart.aspects.map((aspect) => {
     const key = [aspect.a, aspect.b].sort().join('|');
-    return [key, aspect.type] as const;
+    return [key, aspect] as const;
   }));
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_2;
-  ctx.font = `italic 400 30px ${SERIF}`;
+  ctx.font = `italic 400 32px ${SERIF}`;
   ctx.fillText('Aspect grid', gridX, CHART_SHEET_LAYOUT.sectionTitleY);
+  ctx.font = `400 20px ${MONO}`;
+  ctx.fillText(CHART_SHEET_ASPECT_SCOPE, gridX, 1350);
+  ctx.font = `400 17px ${MONO}`;
+  ctx.fillText(CHART_SHEET_ASPECT_LEGEND, gridX, 1382);
+  chartSheetOrbLimits().forEach((line, index) => {
+    ctx.fillText(line, gridX, 1412 + index * 28);
+  });
   SHEET_BODIES.forEach((body, index) => {
     ctx.save();
     ctx.translate(gridX + index * cell + 35, gridY - 22);
     ctx.rotate(-Math.PI / 2);
-    drawSheetLabel(ctx, body, 0, 0);
+    drawSheetLabel(ctx, body, 0, 0, true);
     ctx.restore();
-    drawSheetLabel(ctx, body, gridX - 112, gridY + index * cell + 30);
+    drawSheetLabel(ctx, body, gridX - 132, gridY + index * cell + cell / 2, true);
   });
   for (let row = 0; row < SHEET_BODIES.length; row += 1) {
     for (let column = 0; column < SHEET_BODIES.length; column += 1) {
@@ -1122,26 +1276,30 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
       ctx.strokeStyle = HAIR;
       ctx.strokeRect(x, y, cell, cell);
       if (column >= row) continue;
-      const type = byPair.get([SHEET_BODIES[row], SHEET_BODIES[column]].sort().join('|'));
-      if (!type) continue;
+      const aspect = byPair.get([SHEET_BODIES[row], SHEET_BODIES[column]].sort().join('|'));
+      if (!aspect) continue;
       ctx.textAlign = 'center';
       ctx.fillStyle = INK_0;
-      ctx.font = `400 30px ${SERIF}`;
-      ctx.fillText(ASPECT_GLYPH[type], x + cell / 2, y + cell / 2 + 2);
+      ctx.font = `400 26px ${SERIF}`;
+      ctx.fillText(ASPECT_GLYPH[aspect.type], x + cell / 2, y + 21);
+      ctx.fillStyle = INK_2;
+      ctx.font = `400 14px ${MONO}`;
+      ctx.fillText(chartSheetAspectOrb(aspect.orb, aspect.applying), x + cell / 2, y + 48);
     }
   }
 
-  const receipt = [
-    ...(options.hideBirthDetails === false ? [options.birthReceipt?.trim()] : []),
-    chartSheetSettings(chart),
-    ...(options.moonAmbiguous ? [shareCardText(locale, 'approachMoonTimeNote')] : []),
-  ].filter(Boolean).join(' · ');
+  if (options.moonAmbiguous) {
+    ctx.textAlign = 'left';
+    ctx.fillStyle = INK_2;
+    ctx.font = `400 18px ${MONO}`;
+    ctx.fillText(shareCardText(locale, 'approachMoonTimeNote'), 92, 2278, 1180);
+  }
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_2;
-  ctx.font = `400 27px ${MONO}`;
-  wrappedLines(ctx, receipt, SHEET_W - 184, 2).forEach((line, index) => {
-    ctx.fillText(line, 92, 2260 + index * 38);
-  });
+  ctx.font = `400 22px ${MONO}`;
+  ctx.fillText(chartSheetSettings(chart), 92, CHART_SHEET_LAYOUT.footerY, 1260);
+  ctx.textAlign = 'right';
+  ctx.fillText(`Engine ${chart.engineVersion}`, SHEET_W - 92, CHART_SHEET_LAYOUT.footerY);
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');
   return blob;
