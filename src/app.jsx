@@ -1036,6 +1036,14 @@
       return `/astrofolio/how-to-buy/${sign?.asset?.sign ?? 'aries'}/`;
     }
 
+    function terminalMarketPath(sign) {
+      return `/terminal/?sign=${sign?.asset?.sign ?? 'aries'}#selected`;
+    }
+
+    function zodiacMarketsPath() {
+      return '/terminal/markets/';
+    }
+
     function signDateLabel(sign) {
       const range = parseDateRange(sign?.asset?.metadata?.dateRange);
       if (!range) return sign?.asset?.metadata?.dateRange || '';
@@ -5858,6 +5866,14 @@
                 href={howToBuyPath(item)}
                 tabIndex={layer.current ? undefined : -1}
               >How to buy</a>
+            </div>
+            <div className="vitrine-placard__market-actions" aria-label={`${item.name} market tools`}>
+              <a href={terminalMarketPath(item)} tabIndex={layer.current ? undefined : -1}>
+                <span>Open Terminal</span><span aria-hidden="true">↗</span>
+              </a>
+              <a href={zodiacMarketsPath()} tabIndex={layer.current ? undefined : -1}>
+                <span>Zodiac markets</span><span aria-hidden="true">↗</span>
+              </a>
             </div>
           </article>
         );

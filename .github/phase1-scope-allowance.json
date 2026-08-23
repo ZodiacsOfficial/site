@@ -1,12 +1,11 @@
 {
   "version": 1,
-  "id": "astrofolio-story-cta-2026-08-23",
-  "baseCommit": "0ddd22aa5894590c6b8ce782dc98da37129a738b",
-  "note": "Owner-authorized Astrofolio polish. This exact set makes the Read the story action use the established white pill and dark circular arrow, regenerates its bundle, and updates only the matching contracts.",
+  "id": "astrofolio-market-gateways-2026-08-24",
+  "baseCommit": "d0385dbc79ac0dd01ec1a62e9ad9f49319cbc6e0",
+  "note": "Owner-authorized Astrofolio navigation polish. This exact set adds selected-sign Terminal and Zodiac Markets buttons, regenerates the shared bundle, and updates only the matching contracts.",
   "protectedPaths": [
     "public/assets/app.js",
     "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-pastel-polish.test.mjs",
     "src/app.jsx"
   ]
 }

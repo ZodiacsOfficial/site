@@ -272,6 +272,8 @@ try {
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').getAttribute('href'), '/registry/pisces/');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'How to buy');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active a[href="/terminal/?sign=pisces#selected"] span').first().innerText(), 'Open Terminal');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active a[href="/terminal/markets/"] span').first().innerText(), 'Zodiac markets');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').count(), 0);
     const primaryCtaStyle = await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').evaluate((node) => {
       const style = getComputedStyle(node);
@@ -285,7 +287,7 @@ try {
     assert.equal(primaryCtaStyle.orbShape, '50%');
     assert.equal(await page.locator('[data-terminal-preference-banner]').count(), 0);
     assert.equal(await page.locator('.terminal-consumer-hero [data-terminal-view-link="pro"]').count(), 0);
-    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 0);
+    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 24);
     assert.equal(await page.locator('.consumer-shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await page.locator('.consumer-shop a[href^="https://shop.app/products/"]').count(), 3);
     assert.equal(await page.locator('#registry .consumer-verify.is-embedded#verify').count(), 1);
@@ -522,6 +524,8 @@ try {
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 0);
     assert.equal(await noJsPage.locator('a[href^="/astrofolio/how-to-buy/"]').count(), 12);
     assert.equal(await noJsPage.locator('a[href="/astrofolio/how-to-buy/aries/"]').count(), 1);
+    assert.equal(await noJsPage.locator('a[href^="/terminal/?sign="]').count(), 12);
+    assert.equal(await noJsPage.locator('a[href="/terminal/markets/"]').count(), 12);
     const staticStoryStyle = await noJsPage.locator('.static-story-band').evaluate((node) => {
       const image = node.querySelector('img');
       const picture = node.querySelector('picture')?.getBoundingClientRect();

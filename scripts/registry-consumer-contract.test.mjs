@@ -198,12 +198,18 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(opening).toContain('<span class="static-vitrine__movement">movement unavailable</span>');
     expect(opening).toContain('href="/registry/aries/">Explore Aries</a>');
     expect(opening).toContain('href="/astrofolio/how-to-buy/aries/">How to buy</a>');
+    expect(opening).toContain('href="/terminal/?sign=aries#selected"><span>Open Terminal</span>');
+    expect(opening).toContain('href="/terminal/markets/"><span>Zodiac markets</span>');
     expect(opening).not.toContain('/registry/aries/#acquire');
     expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
     expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
 
     const howToBuyLinks = html.match(/href="\/astrofolio\/how-to-buy\/[a-z]+\/"/gu) ?? [];
     expect(howToBuyLinks).toHaveLength(12);
+    const terminalLinks = html.match(/href="\/terminal\/\?sign=[a-z]+#selected"/gu) ?? [];
+    expect(terminalLinks).toHaveLength(12);
+    const zodiacMarketLinks = html.match(/href="\/terminal\/markets\/"/gu) ?? [];
+    expect(zodiacMarketLinks).toHaveLength(12);
     expect(html).not.toContain('See market details');
     expect(html).not.toContain('class="static-terminal-gateway"');
     const shop = section(html, 'shop');
@@ -215,7 +221,6 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ]) {
       expect(shop).toContain(`href="${href}"`);
     }
-    expect(html).not.toContain('href="/terminal/markets/"');
     expect(html).not.toContain('data-terminal-preference-banner');
 
     const registry = section(html, 'registry');
@@ -299,6 +304,10 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(placard).toContain('Data &amp; methodology');
     expect(placard).toContain('howToBuyPath(item)');
     expect(placard).toContain('>How to buy</a>');
+    expect(placard).toContain('terminalMarketPath(item)');
+    expect(placard).toContain('<span>Open Terminal</span>');
+    expect(placard).toContain('zodiacMarketsPath()');
+    expect(placard).toContain('<span>Zodiac markets</span>');
     expect(placard).not.toContain('#acquire');
   });
 
@@ -390,6 +399,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
 
     expect(source).not.toContain('function ConsumerTerminalStrip(');
     expect(functionBlock(source, 'VitrinePlacard')).toContain('>How to buy</a>');
+    expect(functionBlock(source, 'VitrinePlacard')).toContain('<span>Open Terminal</span>');
+    expect(functionBlock(source, 'VitrinePlacard')).toContain('<span>Zodiac markets</span>');
 
     const cabinet = functionBlock(source, 'ConsumerCabinet');
     expect(cabinet).toContain('id="cabinet" className="consumer-cabinet-section reveal"');
