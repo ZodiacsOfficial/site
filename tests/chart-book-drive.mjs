@@ -19,8 +19,12 @@ const kahloWire = (name) => ({
   p: 'Coyoacán, Mexico',
 });
 
-const chartFragment = (name) =>
-  `#c=1.${Buffer.from(JSON.stringify(kahloWire(name))).toString('base64url')}`;
+const chartFragment = (name, subject = 'other') => {
+  const params = new URLSearchParams();
+  params.set('c', `1.${Buffer.from(JSON.stringify(kahloWire(name))).toString('base64url')}`);
+  if (subject === 'other') params.set('subject', 'other');
+  return `#${params.toString()}`;
+};
 
 function savedChart(id, name, overrides = {}) {
   const lat = overrides.lat ?? 19.35;
@@ -80,9 +84,9 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     return page;
   }
 
-  async function openChart(page, { name, locale = 'en' } = {}) {
+  async function openChart(page, { name, locale = 'en', subject = 'other' } = {}) {
     const path = locale === 'es' ? '/es/birth-chart/' : '/birth-chart/';
-    await page.goto(`${baseURL}${path}${chartFragment(name)}`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${baseURL}${path}${chartFragment(name, subject)}`, { waitUntil: 'domcontentloaded' });
     await page.locator('.calc__result').waitFor({ timeout: 30_000 });
     await page.locator('[data-save-chart]').waitFor();
   }
@@ -100,12 +104,51 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     return page.evaluate(() => document.activeElement?.hasAttribute('data-save-chart') ?? false);
   }
 
+  // A personal chart honors the button's literal promise: one tap saves it,
+  // leaves a visible confirmation in place, and does not ask for a name.
+  {
+    const page = await preparedPage([]);
+    await openChart(page, { subject: 'self' });
+    await page.locator('[data-save-chart]').click();
+    await page.getByText('Saved · on this device', { exact: true }).waitFor();
+    check('self chart saves in one tap', await page.locator('[data-save-prompt]').count() === 0
+      && await page.locator('[data-save-chart]').getAttribute('aria-disabled') === 'true');
+    check('self chart keeps visible save confirmation in the action dock',
+      await page.locator('[data-chart-action-dock] [data-save-chart]').getByText('Saved · on this device', { exact: true }).count() === 1);
+    const state = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), PROFILE_KEY);
+    check('one-tap save persists the auto-name', state.charts[0]?.name === 'Cancer Sun · 1907-07-06');
+    await page.close();
+  }
+
+  // Persistence failures remain explicit and retryable.
+  {
+    const page = await preparedPage([]);
+    await openChart(page, { subject: 'self' });
+    await page.evaluate(() => {
+      Storage.prototype.setItem = () => { throw new Error('blocked for test'); };
+    });
+    await page.locator('[data-save-chart]').click();
+    const alert = page.getByRole('alert');
+    await alert.waitFor();
+    check('blocked storage surfaces a clear error',
+      await alert.textContent() === "Couldn't save — your browser may be blocking local storage.");
+    await page.close();
+  }
+
   // Link name outranks a matching saved name, and unchanged Enter is `link`.
   {
     const page = await preparedPage([savedChart('mom', 'Saved current name')]);
     await openChart(page, { name: 'Link Name' });
     await page.getByText('Link Name\'s chart — "you" below means Link Name.', { exact: true }).waitFor();
     const input = await openPrompt(page);
+    check('naming prompt stays inside the chart action dock',
+      await page.locator('[data-chart-action-dock] [data-save-prompt]').count() === 1);
+    check('naming prompt is in the mobile viewport after the tap', await page.evaluate(() => {
+      const prompt = document.querySelector('[data-chart-action-dock] [data-save-prompt]');
+      if (!prompt) return false;
+      const rect = prompt.getBoundingClientRect();
+      return rect.top >= 0 && rect.bottom <= window.innerHeight;
+    }));
     check('link name is the first-priority prefill', await input.inputValue() === 'Link Name');
     check('EN prompt label is byte-identical', await input.getAttribute('aria-label') === null
       && await page.locator('label[for="chart-save-name"]').textContent() === 'Whose chart is this?');

@@ -1,3 +1,5 @@
+import type { ComponentChildren } from 'preact';
+
 interface SignaturePreview {
   headline: string;
   evidence?: string | null;
@@ -17,6 +19,8 @@ interface Props {
   compareLabel?: string;
   compareHref?: string;
   saveLabel?: string;
+  saveDisabled?: boolean;
+  savePrompt?: ComponentChildren;
   onSave?: () => void;
   onGuide: () => void;
   onShare: () => void;
@@ -43,6 +47,8 @@ export default function ChartActionDock({
   compareLabel,
   compareHref,
   saveLabel,
+  saveDisabled = false,
+  savePrompt,
   onSave,
   onGuide,
   onShare,
@@ -63,49 +69,52 @@ export default function ChartActionDock({
           {signature.evidence && <small>{signature.evidence}</small>}
         </div>
       )}
-      <div class="chart-action-dock__actions">
-        {!tourOpen && saveLabel && onSave && (
+      {savePrompt || (
+        <div class="chart-action-dock__actions">
+          {!tourOpen && saveLabel && onSave && (
+            <button
+              class="btn btn--primary"
+              type="button"
+              onClick={saveDisabled ? undefined : onSave}
+              aria-disabled={saveDisabled}
+              data-save-chart
+              data-primary-action="save"
+            >
+              <span>{saveLabel}</span>
+              <span class="orb" aria-hidden="true">{saveDisabled ? '✓' : '+'}</span>
+            </button>
+          )}
+          {showContextualActions && (
+            <button class="btn btn--ghost" type="button" onClick={onGuide} data-tour-start>
+              <span>{guideLabel}</span>
+              <span class="orb" aria-hidden="true">→</span>
+            </button>
+          )}
           <button
-            class="btn btn--primary"
+            class="btn btn--ghost"
             type="button"
-            onClick={onSave}
-            data-save-chart
-            data-primary-action="save"
+            onClick={onShare}
+            disabled={shareDisabled}
+            aria-label={shareLabel}
+            data-share-card
           >
-            <span>{saveLabel}</span>
-            <span class="orb" aria-hidden="true">+</span>
+            <span>{shareStatusLabel}</span>
+            <span class="orb" aria-hidden="true">↗</span>
           </button>
-        )}
-        {showContextualActions && (
-          <button class="btn btn--ghost" type="button" onClick={onGuide} data-tour-start>
-            <span>{guideLabel}</span>
-            <span class="orb" aria-hidden="true">→</span>
-          </button>
-        )}
-        <button
-          class="btn btn--ghost"
-          type="button"
-          onClick={onShare}
-          disabled={shareDisabled}
-          aria-label={shareLabel}
-          data-share-card
-        >
-          <span>{shareStatusLabel}</span>
-          <span class="orb" aria-hidden="true">↗</span>
-        </button>
-        {!tourOpen && compareLabel && compareHref && (
-          <a class="btn btn--ghost" href={compareHref} data-compare-with-mine>
-            <span>{compareLabel}</span>
-            <span class="orb" aria-hidden="true">→</span>
-          </a>
-        )}
-        {showContextualActions && (
-          <a class="btn btn--ghost" href={anotherHref} data-read-another-chart>
-            <span>{anotherLabel}</span>
-            <span class="orb" aria-hidden="true">→</span>
-          </a>
-        )}
-      </div>
+          {!tourOpen && compareLabel && compareHref && (
+            <a class="btn btn--ghost" href={compareHref} data-compare-with-mine>
+              <span>{compareLabel}</span>
+              <span class="orb" aria-hidden="true">→</span>
+            </a>
+          )}
+          {showContextualActions && (
+            <a class="btn btn--ghost" href={anotherHref} data-read-another-chart>
+              <span>{anotherLabel}</span>
+              <span class="orb" aria-hidden="true">→</span>
+            </a>
+          )}
+        </div>
+      )}
     </aside>
   );
 }

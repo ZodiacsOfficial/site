@@ -1372,21 +1372,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     requestAnimationFrame(() => (saveReturnRef.current ?? saveButtonRef.current)?.focus());
   }
 
-  async function openSavePrompt(origin: 'tour' | 'free' = 'free') {
-    const identity = chartIdentity();
-    if (!identity || saved === 'saved') return;
-    const accessGeneration = profileAccessGeneration.current;
+  function openSavePrompt(origin: 'tour' | 'free' = 'free') {
+    if (!chartIdentity() || saved === 'saved') return;
     saveOriginRef.current = origin;
-    let currentName = matchedName;
-    try {
-      const { findMatchingChart } = await import('../lib/profile/store');
-      if (accessGeneration !== profileAccessGeneration.current) return;
-      currentName = findMatchingChart(identity)?.name ?? null;
-      setMatchedName(currentName);
-    } catch { /* saving will surface an error if storage cannot load */ }
-    if (accessGeneration !== profileAccessGeneration.current) return;
-    const source: SavePrefillSource = linkName ? 'link' : currentName ? 'match' : 'auto';
-    const prefill = (linkName ?? currentName ?? autoName).slice(0, NAME_MAX);
+    const source: SavePrefillSource = linkName ? 'link' : matchedName ? 'match' : 'auto';
+    const prefill = (linkName ?? matchedName ?? autoName).slice(0, NAME_MAX);
     setSaveSource(source);
     setSaveInitial(prefill);
     setSaveDraft(prefill);
@@ -1404,7 +1394,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     const accessGeneration = profileAccessGeneration.current;
     try {
       const { findMatchingChart, saveChart } = await import('../lib/profile/store');
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      if (accessGeneration !== profileAccessGeneration.current) {
+        setSaved('error');
+        closeSavePrompt();
+        return;
+      }
       const status = saveChart({
         id: crypto.randomUUID(),
         name: explicitName ?? autoName,
@@ -1421,7 +1415,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           flags: chart.flags,
         },
       }, explicitName ? { explicitName } : undefined);
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      if (accessGeneration !== profileAccessGeneration.current) {
+        setSaved('error');
+        closeSavePrompt();
+        return;
+      }
       setSaved(status === 'updated' ? 'saved' : status);
       if (status === 'saved' || status === 'updated') {
         track('chart_saved', { source: saveOriginRef.current });
@@ -1465,6 +1463,31 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       ? 'link'
       : explicitName || (unchangedMatch && !isAutoName(accepted)) ? 'prompt' : 'skip';
     void commitSave(explicitName, via);
+  }
+
+  function renderSavePrompt() {
+    return (
+      <form class="calc__save-prompt" onSubmit={submitSaveName} data-save-prompt>
+        <label class="calc__save-label" for="chart-save-name">{chartBookCopy.label}</label>
+        <input
+          ref={saveNameRef}
+          class="field__input calc__save-name"
+          id="chart-save-name"
+          value={saveDraft}
+          maxLength={NAME_MAX}
+          onInput={(e) => setSaveDraft((e.currentTarget as HTMLInputElement).value)}
+          onKeyDown={(e) => {
+            if (e.key !== 'Escape') return;
+            e.preventDefault();
+            closeSavePrompt();
+          }}
+        />
+        <button class="btn btn--primary" type="submit">{chartBookCopy.save}</button>
+        <button class="btn btn--ghost" type="button" onClick={() => void commitSave(undefined, 'skip')}>
+          {chartBookCopy.skip}
+        </button>
+      </form>
+    );
   }
 
   // The visual story uses planets only (nodes stay in exact data), plus the
@@ -2047,16 +2070,23 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                             : undefined}
                           compareHref={compareWithMineHref}
                           saveLabel={saved === 'saved'
-                            ? undefined
+                            ? t(locale, 'chartSavedDevice')
                             : locale === 'en' && subjectMode === 'self'
                               ? 'Save my chart'
                               : t(locale, 'saveThisChart')}
+                          saveDisabled={saved === 'saved'}
+                          savePrompt={savePromptOpen ? renderSavePrompt() : null}
                           onSave={() => {
                             track('next_action_clicked', {
                               state: firstReading.status === 'complete' ? 'guide_complete' : 'chart_result',
                               action: 'save',
                             });
-                            void openSavePrompt();
+                            if (subjectMode === 'self') {
+                              saveOriginRef.current = 'free';
+                              void commitSave(undefined, 'skip');
+                            } else {
+                              void openSavePrompt();
+                            }
                           }}
                           anotherLabel={wheelActionCopy.another}
                           anotherHref={anotherChartHref}
@@ -2102,27 +2132,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
           {/* One primary action, derived from the visitor's current state. */}
           <div class="calc__actions">
-            {savePromptOpen ? (
-              <form class="calc__save-prompt" onSubmit={submitSaveName} data-save-prompt>
-                <label class="sr-only" for="chart-save-name">{chartBookCopy.label}</label>
-                <input
-                  ref={saveNameRef}
-                  class="field__input calc__save-name"
-                  id="chart-save-name"
-                  value={saveDraft}
-                  maxLength={NAME_MAX}
-                  onInput={(e) => setSaveDraft((e.currentTarget as HTMLInputElement).value)}
-                  onKeyDown={(e) => {
-                    if (e.key !== 'Escape') return;
-                    e.preventDefault();
-                    closeSavePrompt();
-                  }}
-                />
-                <button class="btn btn--primary" type="submit">{chartBookCopy.save}</button>
-                <button class="btn btn--ghost" type="button" onClick={() => void commitSave(undefined, 'skip')}>
-                  {chartBookCopy.skip}
-                </button>
-              </form>
+            {savePromptOpen && !(mode === 'full' && shareInput) ? (
+              renderSavePrompt()
             ) : mode === 'full' ? (
               saved === 'saved' ? (
                 <a
