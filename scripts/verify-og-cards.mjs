@@ -242,3 +242,8 @@ if (failures.length) {
 }
 
 console.log(`verify-og-cards: OK — homepage on the cache-busted void card; Astrofolio seasonal v4 and Terminal v6 identities are distinct; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
+
+// Registry catalogue cards live outside the frozen v2 bundle. Keep their
+// source, geometry, manifest, route metadata, and size contracts in the same
+// production OG gate so a standard build cannot publish a stale family.
+await import('./verify-registry-og.mjs');

@@ -1,0 +1,150 @@
+{
+  "schema": "zodiacs.registry-og.v3",
+  "version": "v3",
+  "base": "/assets/og/registry/v3",
+  "type": "image/png",
+  "width": 1200,
+  "height": 630,
+  "baseCardSource": "/assets/og/v2/registry/{sign}.png",
+  "iconSource": "/assets/sdk/zodiac-icons/circle/{sign}.png",
+  "sculptureSource": "/assets/sculptures/1024/{sign}.webp",
+  "geometry": {
+    "width": 1200,
+    "height": 630,
+    "footerRuleY": 546,
+    "sculptureBox": {
+      "left": 640,
+      "top": 38,
+      "width": 500,
+      "height": 492
+    },
+    "seal": {
+      "left": 1012,
+      "top": 397,
+      "iconSize": 118,
+      "ringSize": 138
+    }
+  },
+  "cards": [
+    {
+      "sign": "aries",
+      "image": "/assets/og/registry/v3/aries.png",
+      "sha256": "60b5f20b1c487b70644040c1743665a387aba16fe90fc8d88f658b710da171b3",
+      "sourceSha256": {
+        "baseCard": "bd87ca34d1eda14c6f059c63b29d03865e4b61a3be27e0135f00d854c31ba79d",
+        "icon": "f986d9b1cbe9aef8b86331aa41371cbded17f868ac07571814466c367c25d659",
+        "sculpture": "20feee623bdf362359bb0c357eef7768a319c5271d346cb4efc580dc7b98aaf8"
+      }
+    },
+    {
+      "sign": "taurus",
+      "image": "/assets/og/registry/v3/taurus.png",
+      "sha256": "8e630a82e4aa11892219d238f0058ef7cd30fedd19dd7006ed5f8455e146f7fa",
+      "sourceSha256": {
+        "baseCard": "4364426987dde956ff0ca759df65f9a49b201458db1133c3c6d353a2e4699d14",
+        "icon": "7988754418617960eb3083ef8356bad1afe402a6f9e098929a73234f23c60c80",
+        "sculpture": "9d444b3d7fd1f49986abad6ec534a035446b03a7dd7f86b54f831b205ab9d94e"
+      }
+    },
+    {
+      "sign": "gemini",
+      "image": "/assets/og/registry/v3/gemini.png",
+      "sha256": "c97016fc25185a6519ab7355e5515e2a68e0afc8fcebed5129420a4d8100c14b",
+      "sourceSha256": {
+        "baseCard": "34a8ede3194730c60dcca213d7ce67720faddbb0dfb73ace454719264d005ac8",
+        "icon": "94ab09cb126e4aadfbcfd24b86fa33eee35b2770a3f01dcdc24a379cdb2c6b43",
+        "sculpture": "2b690ea21f20139b27f3302d4b71b90a079ef0da0e252c26227235ae88c20092"
+      }
+    },
+    {
+      "sign": "cancer",
+      "image": "/assets/og/registry/v3/cancer.png",
+      "sha256": "472e14b46541c668001d97e74c6cfbaa2154b8195703a61841c873eaae3dc0d0",
+      "sourceSha256": {
+        "baseCard": "6b3b87c332bb98fe5286b8791b15707fb8b318482b8e3d80457f19d45501e10b",
+        "icon": "9fe3e72071a91adea150117dbcdd7e432b207e5dfa1a284066b7b2dd37ed652c",
+        "sculpture": "c3d7fe30246c316e31789fed9016a5f63ac8b7ec2c940acbe00241e70fea59d6"
+      }
+    },
+    {
+      "sign": "leo",
+      "image": "/assets/og/registry/v3/leo.png",
+      "sha256": "4adb81e831d5a38469f6c40a44312e1fb13435cbd1f2bb229ec9efde20b18020",
+      "sourceSha256": {
+        "baseCard": "5bc2c30178c2f138dc74c9f92bdd54695f3e5274abd44eeea4542c98a0951e4b",
+        "icon": "c596da09b495de2b819ffd85d96afe5e8694130a69e2c84d8f1ee52d0094bf33",
+        "sculpture": "3cd573e250ee7768b6554097b0ad2ff3538c8d9756c0535a70970ef51beec5b7"
+      }
+    },
+    {
+      "sign": "virgo",
+      "image": "/assets/og/registry/v3/virgo.png",
+      "sha256": "b5204c8740d2aaac1bc2aa4f938910b6e293cc7f3bd64043f6acb5e45fdf331c",
+      "sourceSha256": {
+        "baseCard": "bdd41c5208a70945ee5e39bb5d900f63c4a6bd8ce62f564c24a3abc116b92a24",
+        "icon": "ff05a4b427d25a87cebd17735276a3ea3b1de99c6bd3a71c53dac70da136cc23",
+        "sculpture": "c8da67098ddd47f6cb11333002650922b5b83d86bcf9f1081a67a02504735b68"
+      }
+    },
+    {
+      "sign": "libra",
+      "image": "/assets/og/registry/v3/libra.png",
+      "sha256": "e8735f6dc4da316453c41aa08ce8df18a50bf4ea8ca32641b9d491a3a63a4359",
+      "sourceSha256": {
+        "baseCard": "cefdcadc8f0a53f888716ae83e35e1f42da4a9147e5ec5eb182b39a13b49c050",
+        "icon": "fe6bf55d3abdf0656cc90dac8112cc5af683657ef06ae311f75ca84a038228eb",
+        "sculpture": "eb4b48b30ec30470b0e086245cf06005fbace2baf1c2c0f9e1ce937c6d5e0b30"
+      }
+    },
+    {
+      "sign": "scorpio",
+      "image": "/assets/og/registry/v3/scorpio.png",
+      "sha256": "63c8a76649990f114abb4929952c4f617473c029345966ea34a82aaeb2afe1c7",
+      "sourceSha256": {
+        "baseCard": "c94012a62cd7256cec82307521dfdd2eddbd687d3702da565426b7f2cddcd522",
+        "icon": "1280fcdf23d3bf21a7af3f58dbcd364392037ae14beafa2422bc72a392bfa44a",
+        "sculpture": "12355d95f7dc9cc4608907c16b86908dac149b0dc59ec1b9b46ed581c969c912"
+      }
+    },
+    {
+      "sign": "sagittarius",
+      "image": "/assets/og/registry/v3/sagittarius.png",
+      "sha256": "c87d20b5de2405966c1ffcb5709c61b190884cb076d9e990b0740c326df23b48",
+      "sourceSha256": {
+        "baseCard": "923692a17835f1790743dad1dbb21e5c08467cc30d38cecf63aa9e3d22197fcc",
+        "icon": "f218168d36db043f7e973401ac348680e4638b891c44f1a8b1dc566bf6e50782",
+        "sculpture": "37eabb1b63faef43f72e815f35283e53a0ad2dbc6cf92a81722a14091181e3a9"
+      }
+    },
+    {
+      "sign": "capricorn",
+      "image": "/assets/og/registry/v3/capricorn.png",
+      "sha256": "ddaa0f55cc314f477ceb77c1dd3b15eb406e1c82339eebdb5a0f833649c161d2",
+      "sourceSha256": {
+        "baseCard": "e378b36e42a75de6af5ce35e7680b448d0a378d3be27e2e1f2c8d5910ab2e0e6",
+        "icon": "21591b84c04c9d7b41a00a4653acda34367bfc854f6028a0ccef1618e966952a",
+        "sculpture": "baf5bd5ff2049a9fe0604298dd4fe6499b2d600ea45b39fabdb96e5ecc7950ae"
+      }
+    },
+    {
+      "sign": "aquarius",
+      "image": "/assets/og/registry/v3/aquarius.png",
+      "sha256": "7509c3fa55a64ae4dd28d7fc8987705332228f17353e39c3ba56f4a61163de55",
+      "sourceSha256": {
+        "baseCard": "b196dfac962712c95a96c4fe604f572a0d2ab26166200fe8627f93d2ea9f5032",
+        "icon": "c33554c1173df7680614d941862d162625d83ad5361bb6f37aa26cdc7a22c93c",
+        "sculpture": "aed925d54e839cf1822841c618225e36452847f7405b49f80d3e9442eb4a8709"
+      }
+    },
+    {
+      "sign": "pisces",
+      "image": "/assets/og/registry/v3/pisces.png",
+      "sha256": "1255e498ed43c94836e032b46dc0ccac5909ec7821061d06a638a868e6826444",
+      "sourceSha256": {
+        "baseCard": "7055b334eea3dbaa1a5c7bb5c2349529568083385ebf29f4131e7b85867fef40",
+        "icon": "71194cd846c0a0451ff648306b8db16d19c81c5470d76cb8c17e9e4151ecc39d",
+        "sculpture": "3399d3134148e648a454a351c1e33468d319b1d740da477bbe9bd10a3d1fe28d"
+      }
+    }
+  ]
+}

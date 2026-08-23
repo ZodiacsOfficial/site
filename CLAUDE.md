@@ -99,6 +99,10 @@ owns that page.
   pages reference `v2/sign/{slug}.png` + `v2/share.png`; the 13 legacy gilt
   cards at `public/assets/og/*.png` are frozen and unreferenced — leave
   the files alone, don't regenerate or re-reference them)
+- `public/assets/og/registry/v3/` ← `node scripts/build-registry-og.mjs`
+  (immutable Registry lot cards derived from the established v2 editorial
+  plate plus the canonical 1024px pastel icon and gold sculpture sources;
+  never overwrite the cached v2 family)
 - `public/assets/pulse.json` / `distribution.json` ← weekly cron workflows
 - `docs/phase5/people-pilot/index-demand.json` ← `node
   scripts/build-people-index-demand.mjs --refresh` (pinned twelve-month
