@@ -248,15 +248,19 @@ try {
       }));
       const preparedSheetText = preparedSheet.text.map((entry) => entry.value).join(' | ');
       for (const label of [
-        'Positions', 'Aspect grid', 'Whole sign · Tropical',
+        'Birth chart', 'Birth details hidden', 'Positions', 'Aspect grid',
+        'Apparent geocentric · Tropical of date · Whole sign houses · True Node',
+        'Major aspects · Sun–Pluto · Nodes & angles excluded',
+        'Orb · A applying · S separating',
         'Sun', 'Moon', 'Merc', 'Venus', 'Mars', 'Jup', 'Sat', 'Ura', 'Nep', 'Plu',
-        'Node', 'S.Node', 'ASC', 'MC',
+        'T.Node', 'S.Node', 'ASC', 'DSC', 'MC', 'IC', 'Rx',
       ]) {
         assert.equal(preparedSheetText.includes(label), true,
           `the prepared chart sheet must include ${label}`);
       }
       for (const privateValue of [
         BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'June 15, 1990', 'America/New_York',
+        '40.7100°N', '74.0100°W', 'Resolved UTC',
       ]) {
         assert.equal(preparedSheetText.includes(privateValue), false,
           `the default hidden chart sheet leaked ${privateValue}`);
@@ -276,8 +280,8 @@ try {
         .filter((entry) => entry.value === 'Positions' || entry.value === 'Aspect grid')
         .map(({ value, y }) => ({ value, y }));
       assert.deepEqual(sectionTitles, [
-        { value: 'Positions', y: 1126 },
-        { value: 'Aspect grid', y: 1126 },
+        { value: 'Positions', y: 1305 },
+        { value: 'Aspect grid', y: 1305 },
       ], 'chart-sheet section titles must share a stable baseline above their labels');
 
       const moreActions = source.locator('[data-chart-more]');
@@ -324,7 +328,7 @@ try {
       await dialog.locator('[data-hide-birth-details]').uncheck();
       assert.equal(
         (await dialog.locator('[data-chart-image-privacy]').innerText()).trim(),
-        'This image includes the birth date, time, and place shown above. It does not include a name, coordinates, or chart link.',
+        'This image includes the birth date, local time, place, coordinates, time zone, and resolved UTC. It does not include a name or chart link.',
         'privacy copy must disclose the birth details when the toggle is off',
       );
       await source.waitForFunction((birth) => (
@@ -335,7 +339,11 @@ try {
       const detailedSheetText = await source.evaluate(() => (
         globalThis.__t17CanvasText.map((entry) => entry.value).join(' | ')
       ));
-      for (const detail of [BIRTH.date, BIRTH.time, 'New York', 'Whole sign · Tropical']) {
+      for (const detail of [
+        BIRTH.date, BIRTH.time, 'New York', 'America/New_York',
+        '40.7100°N', '74.0100°W', 'Resolved UTC',
+        'Apparent geocentric · Tropical of date · Whole sign houses · True Node',
+      ]) {
         assert.equal(detailedSheetText.includes(detail), true,
           `birth-details-on sheet must include ${detail}`);
       }

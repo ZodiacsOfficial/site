@@ -9,6 +9,7 @@ import {
   preparePlacementCard,
   primaryShareCardVariant,
   savePreparedChartCard,
+  type ChartSheetBirthDetails,
   type PreparedChartCard,
 } from '../lib/share-card';
 import { ensurePastelZodiacIconEmbedding } from '../lib/share-card-pastel-icons';
@@ -32,7 +33,7 @@ interface Props {
   onClose: () => void;
   detailsUrl?: string;
   receiverPath?: string;
-  birthReceipt?: string;
+  birthDetails?: ChartSheetBirthDetails;
   preparedPrimary?: PreparedChartCard | null;
   moonAmbiguous?: boolean;
 }
@@ -67,7 +68,7 @@ export default function ChartShareDialog({
   onClose,
   detailsUrl = '',
   receiverPath = '/birth-chart/',
-  birthReceipt,
+  birthDetails,
   preparedPrimary = null,
   moonAmbiguous = false,
 }: Props) {
@@ -139,7 +140,7 @@ export default function ChartShareDialog({
     if (choice === 'sheet') {
       await ensurePastelZodiacIconEmbedding();
       return prepareChartSheet(chart, {
-        locale, hideBirthDetails: hidden, birthReceipt, moonAmbiguous,
+        locale, hideBirthDetails: hidden, birthDetails, moonAmbiguous,
       });
     }
     if (choice === 'placement') {

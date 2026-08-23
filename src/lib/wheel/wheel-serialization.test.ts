@@ -17,6 +17,7 @@ import { describe, expect, it } from 'vitest';
 import { h } from 'preact';
 import { render } from 'preact-render-to-string';
 import Wheel from './Wheel';
+import TechnicalWheel from './TechnicalWheel';
 import frida from '../../data/demo-chart-frida.json';
 
 type FixtureBody = { body: string; lon: number; retrograde: boolean };
@@ -53,6 +54,24 @@ describe('Wheel share-card serialization', () => {
       aspects: [],
     }));
     expect(markup).toMatchSnapshot();
+  });
+
+  it('adds audit marks only for the technical chart sheet', () => {
+    const bodies = frida.bodies as FixtureBody[];
+    const markup = render(h(TechnicalWheel as any, {
+      ...shareCardProps(),
+      bodies,
+      dsc: (frida.angles.asc + 180) % 360,
+      ic: (frida.angles.mc + 180) % 360,
+      technical: true,
+    }));
+    expect(markup.match(/data-degree-tick=/g)).toHaveLength(360);
+    expect(markup.match(/data-body-leader=/g)).toHaveLength(bodies.length);
+    expect(markup).toContain('data-angle-label="DSC"');
+    expect(markup).toContain('>DSC</text>');
+    expect(markup).toContain('data-angle-label="IC"');
+    expect(markup).toContain('>IC</text>');
+    expect(markup).toContain('data-body-leader="South Node"');
   });
 });
 

@@ -12,6 +12,7 @@
 import { describe, expect, it } from 'vitest';
 import { computeChart } from '../engine/full';
 import { buildSceneModel, collisionNudge } from './build';
+import { technicalCollisionFan } from '../wheel/technical-layout';
 import { emphasisFor, emphasisOpacity } from './emphasis';
 import { entityId, parseEntityId, type EntityRef } from './types';
 
@@ -94,6 +95,38 @@ describe('buildSceneModel parity', () => {
 
   it('matches the committed Kahlo scene snapshot', () => {
     expect(stableSnapshot(buildSceneModel(kahlo()))).toMatchSnapshot();
+  });
+});
+
+describe('technicalCollisionFan', () => {
+  it('keeps crowded markers separated across 0° Aries without changing their order', () => {
+    const bodies = [
+      { body: 'A', lon: 356 },
+      { body: 'B', lon: 359 },
+      { body: 'C', lon: 1 },
+      { body: 'D', lon: 4 },
+      { body: 'E', lon: 120 },
+    ];
+    const fan = technicalCollisionFan(bodies, 11);
+    const ordered = [...bodies]
+      .sort((a, b) => ((a.lon - 350 + 360) % 360) - ((b.lon - 350 + 360) % 360))
+      .map((body) => fan.get(body.body)!);
+    for (let index = 1; index < ordered.length; index += 1) {
+      expect(ordered[index] - ordered[index - 1]).toBeGreaterThanOrEqual(10.999999);
+    }
+    expect([...fan.keys()].sort()).toEqual(bodies.map(({ body }) => body).sort());
+  });
+
+  it('leaves already legible placements at their exact longitude', () => {
+    const bodies = [
+      { body: 'A', lon: 0 },
+      { body: 'B', lon: 120 },
+      { body: 'C', lon: 240 },
+    ];
+    const fan = technicalCollisionFan(bodies);
+    bodies.forEach(({ body, lon }) => {
+      expect(((fan.get(body)! % 360) + 360) % 360).toBe(lon);
+    });
   });
 });
 
