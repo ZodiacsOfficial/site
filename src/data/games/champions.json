@@ -1,4 +1,64 @@
 {
   "version": 1,
-  "seasons": []
+  "seasons": [
+    {
+      "seasonId": "leo-2026",
+      "seasonName": "Leo",
+      "year": 2026,
+      "endedAtUtc": 1787443200000,
+      "champion": "scorpio",
+      "runnerUp": "aries",
+      "marginPoints": 125,
+      "finalStandings": [
+        {
+          "sign": "scorpio",
+          "points": 125
+        },
+        {
+          "sign": "aries",
+          "points": 0
+        },
+        {
+          "sign": "taurus",
+          "points": 0
+        },
+        {
+          "sign": "gemini",
+          "points": 0
+        },
+        {
+          "sign": "cancer",
+          "points": 0
+        },
+        {
+          "sign": "leo",
+          "points": 0
+        },
+        {
+          "sign": "virgo",
+          "points": 0
+        },
+        {
+          "sign": "libra",
+          "points": 0
+        },
+        {
+          "sign": "sagittarius",
+          "points": 0
+        },
+        {
+          "sign": "capricorn",
+          "points": 0
+        },
+        {
+          "sign": "aquarius",
+          "points": 0
+        },
+        {
+          "sign": "pisces",
+          "points": 0
+        }
+      ]
+    }
+  ]
 }
