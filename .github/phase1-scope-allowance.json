@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "id": "comprehensive-site-audit-2026-08-23",
-  "baseCommit": "a3348f3aee8f94045d715a71f1aafcd780f703db",
-  "note": "Owner-authorized comprehensive audit remediation across the live site. This exact set corrects canonical Astrofolio identity, content accuracy, disclosure and market-data semantics, accessibility, responsive navigation, and generated locale and Registry surfaces.",
+  "id": "comprehensive-site-audit-2026-08-24",
+  "baseCommit": "189322b2cb7cddc1feabfbf0771e1f81efa04ec5",
+  "note": "Owner-authorized comprehensive audit remediation across the live site, reconciled with current main. This exact set corrects canonical Astrofolio identity, content accuracy, disclosure and market-data semantics, accessibility, responsive navigation, and generated locale and Registry surfaces while preserving the current birth-chart and Astrofolio market-gateway changes.",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/aquarius/index.html",

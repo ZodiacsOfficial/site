@@ -10,7 +10,6 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
-import ChartActionDock from './ChartActionDock';
 import AstroTerm from './AstroTerm';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
@@ -99,6 +98,7 @@ type ChartSignature = import('../lib/chart-signature').ChartSignature;
 
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 type ShareDialogModule = typeof import('./ChartShareDialog');
+type ChartActionDockModule = typeof import('./ChartActionDock');
 type PreparedPrimaryShare = Awaited<ReturnType<ShareSurfaceModule['preparePrimaryShareArtifact']>>;
 type PrimaryShareHandle = {
   artifact: PreparedPrimaryShare;
@@ -354,6 +354,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [depthMod, setDepthMod] = useState<DepthModule | null>(null);
   const [depthOpen, setDepthOpen] = useState(false);
   const [calendarSurface, setCalendarSurface] = useState<CalendarSubscribeModule | null>(null);
+  const [chartActionDockModule, setChartActionDockModule] = useState<ChartActionDockModule | null>(null);
   const [communicationSurface, setCommunicationSurface] = useState<CommunicationReadModule | null>(null);
   const [approachSurface, setApproachSurface] = useState<ApproachReadModule | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -489,8 +490,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     ? (tourVisual?.cusps ?? chart?.houses?.cusps ?? null)
     : null;
 
-  useEffect(() => () => {
-    spotlightArrivalCleanupRef.current?.();
+  useEffect(() => {
+    void import('./ChartActionDock').then(setChartActionDockModule, () => {});
+    return () => { spotlightArrivalCleanupRef.current?.(); };
   }, []);
 
   useEffect(() => {
@@ -1369,24 +1371,23 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   function closeSavePrompt() {
     setSavePromptOpen(false);
-    requestAnimationFrame(() => (saveReturnRef.current ?? saveButtonRef.current)?.focus());
+    requestAnimationFrame(() => {
+      const returnTarget = saveReturnRef.current?.isConnected
+        ? saveReturnRef.current
+        : saveButtonRef.current?.isConnected
+          ? saveButtonRef.current
+          : document.querySelector<HTMLElement>('[data-chart-action-dock] [data-save-chart]');
+      returnTarget?.focus();
+    });
   }
 
-  async function openSavePrompt(origin: 'tour' | 'free' = 'free') {
-    const identity = chartIdentity();
-    if (!identity || saved === 'saved') return;
-    const accessGeneration = profileAccessGeneration.current;
+  function openSavePrompt(origin: 'tour' | 'free' = 'free') {
+    if (saved === 'saved') return;
     saveOriginRef.current = origin;
-    let currentName = matchedName;
-    try {
-      const { findMatchingChart } = await import('../lib/profile/store');
-      if (accessGeneration !== profileAccessGeneration.current) return;
-      currentName = findMatchingChart(identity)?.name ?? null;
-      setMatchedName(currentName);
-    } catch { /* saving will surface an error if storage cannot load */ }
-    if (accessGeneration !== profileAccessGeneration.current) return;
-    const source: SavePrefillSource = linkName ? 'link' : currentName ? 'match' : 'auto';
-    const prefill = (linkName ?? currentName ?? autoName).slice(0, NAME_MAX);
+    if (subjectMode === 'self') return void commitSave(undefined, 'skip');
+    if (!chartIdentity()) return;
+    const source: SavePrefillSource = linkName ? 'link' : matchedName ? 'match' : 'auto';
+    const prefill = (linkName ?? matchedName ?? autoName).slice(0, NAME_MAX);
     setSaveSource(source);
     setSaveInitial(prefill);
     setSaveDraft(prefill);
@@ -1404,7 +1405,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     const accessGeneration = profileAccessGeneration.current;
     try {
       const { findMatchingChart, saveChart } = await import('../lib/profile/store');
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      if (accessGeneration !== profileAccessGeneration.current) throw new Error();
       const status = saveChart({
         id: crypto.randomUUID(),
         name: explicitName ?? autoName,
@@ -1421,7 +1422,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           flags: chart.flags,
         },
       }, explicitName ? { explicitName } : undefined);
-      if (accessGeneration !== profileAccessGeneration.current) return;
       setSaved(status === 'updated' ? 'saved' : status);
       if (status === 'saved' || status === 'updated') {
         track('chart_saved', { source: saveOriginRef.current });
@@ -1442,11 +1442,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           else loadPushOptIn();
         }).catch(() => {});
       }
-    } catch {
-      if (accessGeneration !== profileAccessGeneration.current) return;
-      setSaved('error');
-    }
-    if (accessGeneration !== profileAccessGeneration.current) return;
+    } catch { setSaved('error'); }
     closeSavePrompt();
   }
 
@@ -1465,6 +1461,31 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       ? 'link'
       : explicitName || (unchangedMatch && !isAutoName(accepted)) ? 'prompt' : 'skip';
     void commitSave(explicitName, via);
+  }
+
+  function renderSavePrompt() {
+    return (
+      <form class="calc__save-prompt" onSubmit={submitSaveName} data-save-prompt>
+        <label class="field__label" for="chart-save-name">{chartBookCopy.label}</label>
+        <input
+          ref={saveNameRef}
+          class="field__input calc__save-name"
+          id="chart-save-name"
+          value={saveDraft}
+          maxLength={NAME_MAX}
+          onInput={(e) => setSaveDraft((e.currentTarget as HTMLInputElement).value)}
+          onKeyDown={(e) => {
+            if (e.key !== 'Escape') return;
+            e.preventDefault();
+            closeSavePrompt();
+          }}
+        />
+        <button class="btn btn--primary" type="submit">{chartBookCopy.save}</button>
+        <button class="btn btn--ghost" type="button" onClick={() => void commitSave(undefined, 'skip')}>
+          {chartBookCopy.skip}
+        </button>
+      </form>
+    );
   }
 
   // The visual story uses planets only (nodes stay in exact data), plus the
@@ -1513,6 +1534,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   const PositionsOnlyView = shareRuntimeRef.current.surface?.PositionsOnlyResult;
   const ShareDialog = shareRuntimeRef.current.dialog;
+  const ChartActionDock = chartActionDockModule?.default;
+  const saveError = saved === 'full'
+    ? t(locale, 'chartSaveFull')
+    : saved === 'error' ? t(locale, 'chartSaveError') : null;
   const CalendarSubscribe = calendarSurface?.default;
   const ApproachRead = approachSurface?.default;
   const CommunicationRead = communicationSurface?.default;
@@ -2006,7 +2031,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                             track('next_action_clicked', { state: 'guide_complete', action: 'save' });
                           }
                           exitTour();
-                          void openSavePrompt('tour');
+                          openSavePrompt('tour');
                         }}
                         shareLabel={shareActionLabel}
                         shareStatusLabel={shareActionStatusLabel}
@@ -2023,53 +2048,61 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           locale={locale}
                         />
                       )}
-                      {shareInput && (
-                        <ChartActionDock
-                          tourOpen={tourOpen}
-                          shareOnly={firstReadingPromptVisible}
-                          actionLabel={wheelActionCopy.actions}
-                          signature={showsEnglishInterpretation && signature ? {
-                            headline: signature.title,
-                            evidence: signature.summary,
-                          } : null}
-                          signatureLabel={subjectMode === 'other'
-                            ? wheelActionCopy.signatureOther
-                            : wheelActionCopy.signatureSelf}
-                          guideLabel={firstReading.status === 'complete'
-                            ? wheelActionCopy.replay
-                            : wheelActionCopy.guide}
-                          shareLabel={shareActionLabel}
-                          shareStatusLabel={shareActionStatusLabel}
-                          compareLabel={subjectMode === 'other'
-                            ? mineHandoff
-                              ? wheelActionCopy.compareMine
-                              : wheelActionCopy.compareAdd
-                            : undefined}
-                          compareHref={compareWithMineHref}
-                          saveLabel={saved === 'saved'
-                            ? undefined
-                            : locale === 'en' && subjectMode === 'self'
-                              ? 'Save my chart'
-                              : t(locale, 'saveThisChart')}
-                          onSave={() => {
-                            track('next_action_clicked', {
-                              state: firstReading.status === 'complete' ? 'guide_complete' : 'chart_result',
-                              action: 'save',
-                            });
-                            void openSavePrompt();
-                          }}
-                          anotherLabel={wheelActionCopy.another}
-                          anotherHref={anotherChartHref}
-                          onGuide={() => {
-                            track('next_action_clicked', {
-                              state: firstReading.status === 'complete' ? 'guide_complete' : 'chart_result',
-                              action: firstReading.status === 'complete' ? 'replay_guide' : 'full_tour',
-                            });
-                            void startTour('full');
-                          }}
-                          onShare={shareChartFromAction}
-                          shareDisabled={shareActionDisabled}
-                        />
+                      {shareInput && ChartActionDock && (
+                        <>
+                          {saveError && <p class="calc__error" role="alert">{saveError}</p>}
+                          <ChartActionDock
+                            tourOpen={tourOpen}
+                            shareOnly={firstReadingPromptVisible}
+                            actionLabel={wheelActionCopy.actions}
+                            signature={showsEnglishInterpretation && signature ? {
+                              headline: signature.title,
+                              evidence: signature.summary,
+                            } : null}
+                            signatureLabel={subjectMode === 'other'
+                              ? wheelActionCopy.signatureOther
+                              : wheelActionCopy.signatureSelf}
+                            guideLabel={firstReading.status === 'complete'
+                              ? wheelActionCopy.replay
+                              : wheelActionCopy.guide}
+                            shareLabel={shareActionLabel}
+                            shareStatusLabel={shareActionStatusLabel}
+                            compareLabel={subjectMode === 'other'
+                              ? mineHandoff
+                                ? wheelActionCopy.compareMine
+                                : wheelActionCopy.compareAdd
+                              : undefined}
+                            compareHref={compareWithMineHref}
+                            saveLabel={saved === 'saved'
+                              ? t(locale, 'chartSavedDevice')
+                              : locale === 'en' && subjectMode === 'self'
+                                ? 'Save my chart'
+                                : t(locale, 'saveThisChart')}
+                            onSave={saved === 'saved' ? undefined : () => {
+                              track('next_action_clicked', {
+                                state: firstReading.status === 'complete' ? 'guide_complete' : 'chart_result',
+                                action: 'save',
+                              });
+                              openSavePrompt();
+                            }}
+                            anotherLabel={wheelActionCopy.another}
+                            anotherHref={anotherChartHref}
+                            onGuide={() => {
+                              track('next_action_clicked', {
+                                state: firstReading.status === 'complete' ? 'guide_complete' : 'chart_result',
+                                action: firstReading.status === 'complete' ? 'replay_guide' : 'full_tour',
+                              });
+                              void startTour('full');
+                            }}
+                            onShare={shareChartFromAction}
+                            shareDisabled={shareActionDisabled}
+                          />
+                          {savePromptOpen && (
+                            <div class="chart-action-dock calc__actions">
+                              {renderSavePrompt()}
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
@@ -2102,27 +2135,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
           {/* One primary action, derived from the visitor's current state. */}
           <div class="calc__actions">
-            {savePromptOpen ? (
-              <form class="calc__save-prompt" onSubmit={submitSaveName} data-save-prompt>
-                <label class="sr-only" for="chart-save-name">{chartBookCopy.label}</label>
-                <input
-                  ref={saveNameRef}
-                  class="field__input calc__save-name"
-                  id="chart-save-name"
-                  value={saveDraft}
-                  maxLength={NAME_MAX}
-                  onInput={(e) => setSaveDraft((e.currentTarget as HTMLInputElement).value)}
-                  onKeyDown={(e) => {
-                    if (e.key !== 'Escape') return;
-                    e.preventDefault();
-                    closeSavePrompt();
-                  }}
-                />
-                <button class="btn btn--primary" type="submit">{chartBookCopy.save}</button>
-                <button class="btn btn--ghost" type="button" onClick={() => void commitSave(undefined, 'skip')}>
-                  {chartBookCopy.skip}
-                </button>
-              </form>
+            {savePromptOpen && !(mode === 'full' && shareInput) ? (
+              renderSavePrompt()
             ) : mode === 'full' ? (
               saved === 'saved' ? (
                 <a
@@ -2142,11 +2156,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   ref={saveButtonRef}
                   class="btn btn--primary"
                   type="button"
-                  onClick={saved === 'saved' ? undefined : () => void openSavePrompt()}
+                  onClick={saved === 'saved' ? undefined : () => openSavePrompt()}
                   aria-disabled={saved === 'saved'}
                   data-save-chart
                 >
-                  <span>{saved === 'saved' ? t(locale, 'chartSavedDevice') : t(locale, 'saveThisChart')}</span>
+                  <span aria-live="polite">{saved === 'saved' ? t(locale, 'chartSavedDevice') : t(locale, 'saveThisChart')}</span>
                   <span class="orb">{saved === 'saved' ? '✓' : '+'}</span>
                 </button>
                 <button
@@ -2178,9 +2192,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             && firstReading.status !== 'not_started'
             && firstReading.status !== 'in_progress'
             && <p class="calc__saved">{t(locale, 'saveYearAheadNote')}</p>}
-          {saved === 'saved' && <p class="sr-only" role="status">{t(locale, 'chartSavedStatus')}</p>}
-          {saved === 'full' && <p class="calc__error" role="alert">{t(locale, 'chartSaveFull')}</p>}
-          {saved === 'error' && <p class="calc__error" role="alert">{t(locale, 'chartSaveError')}</p>}
+          {mode !== 'full' && saveError && <p class="calc__error" role="alert">{saveError}</p>}
           {saved === 'saved' && <p class="calc__saved">{t(locale, 'chartSavedBeforeLink')} <a href={localizePath(locale, '/profile/')}>{t(locale, 'chartSavedLink')}</a> {t(locale, 'chartSavedAfterLink')}</p>}
           {mode === 'full' && shareInput && (
             <details class="calc__more" data-chart-more>

@@ -181,7 +181,7 @@ describe('registry pastel polish', () => {
     expect(cssRule(css, '.consumer-registry .consumer-thesis__visual img {')).not.toContain('grayscale');
     expect(cssRule(css, '.consumer-registry .consumer-purpose__cta {')).toContain('border-radius: 999px;');
     expect(cssRule(css, '.consumer-registry .consumer-story__cta {')).toContain('width: fit-content;');
-    expect(cssRule(css, '.consumer-registry .consumer-story__cta {')).toContain('text-decoration: none;');
+    expect(cssRule(css, '.consumer-registry .consumer-story__cta {')).not.toContain('background: transparent;');
     expect(cssRule(css, '.consumer-registry .consumer-purpose__arrow {')).toContain('border-radius: 50%;');
   });
 

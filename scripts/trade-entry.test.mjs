@@ -96,7 +96,7 @@ describe('the landing', () => {
     expect(html).not.toContain('/assets/trade.js');
   });
 
-  it('offers Registry and beginner-guide handoffs across twelve no-JS sign states', async () => {
+  it('offers Registry, beginner-guide, and market handoffs across twelve no-JS sign states', async () => {
     const html = await hub();
     const vitrine = html.match(/<fieldset class="static-vitrine">([\s\S]*?)<\/fieldset>/)?.[1];
     expect(vitrine).toBeDefined();
@@ -120,10 +120,15 @@ describe('the landing', () => {
     for (const [, sign, panel] of panels) {
       const records = [...panel.matchAll(/href="\/registry\/([a-z]+)\/"/g)];
       const guides = [...panel.matchAll(/href="\/astrofolio\/how-to-buy\/([a-z]+)\/"/g)];
+      const terminals = [...panel.matchAll(/href="\/terminal\/\?sign=([a-z]+)#selected"/g)];
+      const markets = [...panel.matchAll(/href="\/terminal\/markets\/"/g)];
       expect(records, sign).toHaveLength(1);
       expect(records[0][1], sign).toBe(sign);
       expect(guides, sign).toHaveLength(1);
       expect(guides[0][1], sign).toBe(sign);
+      expect(terminals, sign).toHaveLength(1);
+      expect(terminals[0][1], sign).toBe(sign);
+      expect(markets, sign).toHaveLength(1);
       expect(html, sign).toContain(
         `.static-vitrine:has(#astrofolio-${sign}:checked) [data-static-sign="${sign}"]`,
       );
@@ -134,8 +139,8 @@ describe('the landing', () => {
     expect(html).toMatch(/\.static-vitrine__panel\s*\{\s*display:\s*none;/);
     expect(panels.some(([, sign]) => sign === choiceSign(checked[0]))).toBe(true);
 
-    // Neither handoff is a venue deep-link or an embedded execution panel.
-    expect(html).not.toContain('href="/terminal/markets/');
+    // Market handoffs stay on Zodiacs.org; the catalogue shell still embeds
+    // neither an external execution-venue link nor an executable trade panel.
     expect(html).not.toMatch(/href="https:\/\/(?:[^"/]+\.)?jup\.ag\//);
     expect(html).not.toContain('data-trade-panel');
   });

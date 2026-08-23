@@ -1036,6 +1036,14 @@
       return `/astrofolio/how-to-buy/${sign?.asset?.sign ?? 'aries'}/`;
     }
 
+    function terminalMarketPath(sign) {
+      return `/terminal/?sign=${sign?.asset?.sign ?? 'aries'}#selected`;
+    }
+
+    function zodiacMarketsPath() {
+      return '/terminal/markets/';
+    }
+
     function signDateLabel(sign) {
       const range = parseDateRange(sign?.asset?.metadata?.dateRange);
       if (!range) return sign?.asset?.metadata?.dateRange || '';
@@ -5912,6 +5920,14 @@
                 tabIndex={layer.current ? undefined : -1}
               >How to buy</a>
             </div>
+            <div className="vitrine-placard__market-actions" aria-label={`${item.name} market tools`}>
+              <a href={terminalMarketPath(item)} tabIndex={layer.current ? undefined : -1}>
+                <span>Open Terminal</span><span aria-hidden="true">↗</span>
+              </a>
+              <a href={zodiacMarketsPath()} tabIndex={layer.current ? undefined : -1}>
+                <span>Zodiac markets</span><span aria-hidden="true">↗</span>
+              </a>
+            </div>
             <p className="vitrine-official-note">
               Here, &ldquo;official&rdquo; means the address is listed in the Zodiacs Registry; it does not mean government, regulator, wallet, or exchange approval.
             </p>
@@ -6144,7 +6160,7 @@
                 <span className="consumer-eyebrow">The Twelve</span>
                 <h2 id="consumer-story-title">The story behind the collection.</h2>
                 <p>The twelve signs have travelled through calendars, charts, jewellery, and screens. Astrofolio gives their token records one public home.</p>
-                <span className="consumer-story__cta"><span>Read the story</span><span aria-hidden="true">→</span></span>
+                <span className="consumer-purpose__cta consumer-story__cta"><span>Read the story</span><span className="consumer-purpose__arrow" aria-hidden="true">→</span></span>
               </div>
             </a>
           </article>

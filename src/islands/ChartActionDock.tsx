@@ -64,16 +64,17 @@ export default function ChartActionDock({
         </div>
       )}
       <div class="chart-action-dock__actions">
-        {!tourOpen && saveLabel && onSave && (
+        {!tourOpen && saveLabel && (
           <button
             class="btn btn--primary"
             type="button"
             onClick={onSave}
+            aria-disabled={!onSave}
             data-save-chart
-            data-primary-action="save"
+            data-primary-action={onSave ? 'save' : undefined}
           >
-            <span>{saveLabel}</span>
-            <span class="orb" aria-hidden="true">+</span>
+            <span aria-live="polite">{saveLabel}</span>
+            <span class="orb" aria-hidden="true">{onSave ? '+' : '✓'}</span>
           </button>
         )}
         {showContextualActions && (

@@ -287,6 +287,8 @@ try {
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').getAttribute('href'), '/registry/pisces/');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'How to buy');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active a[href="/terminal/?sign=pisces#selected"] span').first().innerText(), 'Open Terminal');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active a[href="/terminal/markets/"] span').first().innerText(), 'Zodiac markets');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').count(), 0);
     const primaryCtaStyle = await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').evaluate((node) => {
       const style = getComputedStyle(node);
@@ -300,7 +302,11 @@ try {
     assert.equal(primaryCtaStyle.orbShape, '50%');
     assert.equal(await page.locator('[data-terminal-preference-banner]').count(), 0);
     assert.equal(await page.locator('.terminal-consumer-hero [data-terminal-view-link="pro"]').count(), 0);
-    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 0);
+    assert.equal(
+      await page.locator('.vitrine-placard__layer a[href^="/terminal/"]').count(),
+      2,
+      'the hydrated active placard exposes only its two internal market handoffs',
+    );
     assert.equal(await page.locator('.consumer-shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await page.locator('.consumer-shop a[href^="https://shop.app/products/"]').count(), 3);
     assert.equal(await page.locator('#registry .consumer-verify.is-embedded#verify').count(), 1);
@@ -537,6 +543,8 @@ try {
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 0);
     assert.equal(await noJsPage.locator('a[href^="/astrofolio/how-to-buy/"]').count(), 12);
     assert.equal(await noJsPage.locator('a[href="/astrofolio/how-to-buy/aries/"]').count(), 1);
+    assert.equal(await noJsPage.locator('a[href^="/terminal/?sign="]').count(), 12);
+    assert.equal(await noJsPage.locator('a[href="/terminal/markets/"]').count(), 12);
     const staticStoryStyle = await noJsPage.locator('.static-story-band').evaluate((node) => {
       const image = node.querySelector('img');
       const picture = node.querySelector('picture')?.getBoundingClientRect();
@@ -556,10 +564,10 @@ try {
     assert.equal(staticStoryStyle.background, 'rgba(15, 18, 26, 0.74)');
     assert.equal(staticStoryStyle.overflow, 'hidden');
     assert.equal(staticStoryStyle.radius, '22px 22px 5px');
+    assert.equal(staticStoryStyle.buttonRadius, '999px');
     assert.notEqual(staticStoryStyle.filter, 'none');
     assert.doesNotMatch(staticStoryStyle.filter, /grayscale/u);
     assert.ok(staticStoryStyle.pictureBottom <= staticStoryStyle.copyTop + 1, 'the no-JavaScript thesis image sits above its copy');
-    assert.equal(staticStoryStyle.buttonRadius, '0px');
     await assertStaticFirstScreen(noJsPage, { width: 390, height: 844, slug: expectedSeason.sign });
     await assertPastelSelectorGeometry(noJsPage, { width: 390, height: 844, staticView: true });
     const staticStageBefore = await noJsPage.locator(`[data-static-sign="${expectedSeason.sign}"] .static-vitrine__stage`).boundingBox();
@@ -633,9 +641,23 @@ try {
       copy: essay.getBoundingClientRect().width,
     }));
     assert.ok(storySizing.action < storySizing.copy * .6, 'the Story action remains compact rather than spanning its card');
-    const storyColor = await storyAction.evaluate((node) => getComputedStyle(node).color);
+    const storyStyle = await storyAction.evaluate((node) => {
+      const arrow = node.querySelector('.consumer-purpose__arrow');
+      return {
+        color: getComputedStyle(node).color,
+        background: getComputedStyle(node).backgroundColor,
+        radius: getComputedStyle(node).borderRadius,
+        arrowBackground: arrow ? getComputedStyle(arrow).backgroundColor : '',
+        arrowRadius: arrow ? getComputedStyle(arrow).borderRadius : '',
+      };
+    });
+    assert.equal(storyStyle.color, 'rgb(17, 19, 24)');
+    assert.equal(storyStyle.background, 'rgb(240, 238, 232)');
+    assert.equal(storyStyle.radius, '999px');
+    assert.equal(storyStyle.arrowBackground, 'rgb(17, 19, 24)');
+    assert.equal(storyStyle.arrowRadius, '50%');
     await collectionPage.locator('.consumer-thesis__link').hover();
-    assert.equal(await storyAction.evaluate((node) => getComputedStyle(node).color), storyColor, 'the Story action color remains stable on hover');
+    assert.equal(await storyAction.evaluate((node) => getComputedStyle(node).color), storyStyle.color, 'the Story action color remains stable on hover');
     const mobilePurpose = await collectionPage.locator('.consumer-thesis, .consumer-collection').evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().toJSON()));
     assert.ok(mobilePurpose[0].y < mobilePurpose[1].y, 'the mobile hierarchy keeps Story before Cabinet');
     await collectionPage.setViewportSize({ width: 1280, height: 900 });
@@ -661,7 +683,12 @@ try {
     await flaggedPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(flaggedPage, '#consumer-explorer-title');
     assert.equal(await flaggedPage.locator('meta[name="zodiacs-registry-exchange-enabled"]').count(), 0);
-    assert.equal(await flaggedPage.locator('[data-pro-markets-gateway], a[href^="/terminal/markets/"]').count(), 0);
+    assert.equal(await flaggedPage.locator('[data-pro-markets-gateway]').count(), 0);
+    assert.equal(
+      await flaggedPage.locator('.vitrine-placard__layer a[href="/terminal/markets/"]').count(),
+      1,
+      'Astrofolio keeps its standard internal markets handoff without mounting the pro gateway',
+    );
     await flaggedPage.goto(`${baseURL}/terminal/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(flaggedPage, '#pro-terminal-title');
     await flaggedPage.waitForFunction(() => document.querySelector('.pro-board table')?.getAttribute('aria-busy') === 'false');
