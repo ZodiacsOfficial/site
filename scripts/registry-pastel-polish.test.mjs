@@ -147,10 +147,11 @@ describe('registry pastel polish', () => {
     expect(reduced).toContain('.consumer-registry .reveal { opacity: 1; }');
     expect(reduced).toContain('.consumer-registry .vitrine-placard__actions .btn:active,');
     expect(reduced).toContain('.consumer-registry .vrf__example:active,');
-    expect(reduced).toContain('.consumer-registry .consumer-purpose__arrow { transform: none; }');
+    expect(reduced).toContain('.consumer-registry .consumer-purpose__arrow,');
+    expect(reduced).toContain('.consumer-market-gateway__action:active { transform: none; }');
   });
 
-  it('uses deliberate hierarchy hairlines and no dashboard boxes', async () => {
+  it('uses deliberate hierarchy hairlines and one editorial market gateway', async () => {
     const [source, css] = await Promise.all([
       read('src/app.jsx'),
       read('src/terminal/split-styles.css'),
@@ -174,8 +175,10 @@ describe('registry pastel polish', () => {
     expect(css).toContain('@media (max-width: 1020px) {');
     expect(css).toContain('.consumer-registry .consumer-thesis__visual { aspect-ratio: 16 / 10; }');
     expect(css).not.toContain('min-height: clamp(520px, 50vw, 620px);');
-    expect(css).toContain('isolation: auto;');
-    expect(css).toContain('.consumer-registry .consumer-closing__registry:hover .consumer-closing__arrow { transform: none; }');
+    expect(css).toContain('.consumer-market-gateway__shell {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1.12fr) minmax(350px, .88fr);');
+    expect(css).toContain('border-radius: 26px 26px 7px 26px;');
+    expect(css).toContain('.consumer-market-gateway__action.is-primary:visited { color: #111318; }');
     expect(css).toContain('.consumer-registry .ftr .mark .g { color: var(--ink-2); }');
     expect(css).toContain('.consumer-registry .consumer-thesis__link:hover .consumer-thesis__visual img { transform: none; }');
     expect(cssRule(css, '.consumer-registry .consumer-thesis__visual img {')).not.toContain('grayscale');

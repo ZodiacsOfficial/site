@@ -35,8 +35,8 @@ const EXPECTED_FAQS = [
     a: 'Zodiac tokens are speculative and can be volatile or hard to sell. Prices can fall to zero, and wallet mistakes or scams can cause permanent loss.',
   },
   {
-    q: 'What are the Zodiac markets?',
-    a: 'The Zodiac markets are the prices, liquidity, and trading activity around the twelve official tokens. Market data can be delayed or incomplete and is not a recommendation.',
+    q: 'What is Zodiac Markets?',
+    a: 'Zodiac Markets is the trading interface for the Twelve. Jupiter Ultra supplies the executable route and transaction; your wallet reviews, approves, and signs.',
   },
   {
     q: 'What is the Terminal?',
@@ -184,7 +184,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       'id="registry"',
       'id="verify"',
       'id="faq"',
-      'class="static-astrofolio-closing"',
+      'id="market-layer"',
       'data-terminal-market-notice',
     ]);
 
@@ -198,18 +198,21 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(opening).toContain('<span class="static-vitrine__movement">movement unavailable</span>');
     expect(opening).toContain('href="/registry/aries/">Explore Aries</a>');
     expect(opening).toContain('href="/astrofolio/how-to-buy/aries/">How to buy</a>');
-    expect(opening).toContain('href="/terminal/?sign=aries#selected"><span>Open Terminal</span>');
-    expect(opening).toContain('href="/terminal/markets/"><span>Zodiac markets</span>');
+    expect(opening).not.toContain('href="/terminal/');
     expect(opening).not.toContain('/registry/aries/#acquire');
     expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
     expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
 
     const howToBuyLinks = html.match(/href="\/astrofolio\/how-to-buy\/[a-z]+\/"/gu) ?? [];
     expect(howToBuyLinks).toHaveLength(12);
-    const terminalLinks = html.match(/href="\/terminal\/\?sign=[a-z]+#selected"/gu) ?? [];
-    expect(terminalLinks).toHaveLength(12);
-    const zodiacMarketLinks = html.match(/href="\/terminal\/markets\/"/gu) ?? [];
-    expect(zodiacMarketLinks).toHaveLength(12);
+    expect(html).not.toMatch(/href="\/terminal\/\?sign=[a-z]+#selected"/gu);
+    const marketGateway = section(html, 'market-layer');
+    expect(marketGateway.match(/href="\/terminal\/"/gu)).toHaveLength(1);
+    expect(marketGateway.match(/href="\/terminal\/markets\/"/gu)).toHaveLength(1);
+    expect(normalizedText(marketGateway)).toContain('Read the market. Trade your sign.');
+    expect(normalizedText(marketGateway)).toContain('Solana · 12 verified mints');
+    expect(normalizedText(marketGateway)).toContain('On Solana, Jupiter Ultra supplies the executable route and transaction. Your wallet reviews, approves, and signs.');
+    expect(marketGateway.match(/class="consumer-market-gateway__token"/gu)).toHaveLength(12);
     expect(html).not.toContain('See market details');
     expect(html).not.toContain('class="static-terminal-gateway"');
     const shop = section(html, 'shop');
@@ -244,7 +247,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       '<ConsumerCabinet />',
       '<ConsumerRegistryGuide sign={sign} />',
       '<ConsumerFaq />',
-      '<ConsumerClosing />',
+      '<ConsumerMarketGateway />',
       '<Footer />',
     ]);
     expect(source).toContain('<span id="market-snapshot" className="terminal-compat-target" aria-hidden="true" />');
@@ -304,10 +307,9 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(placard).toContain('Data &amp; methodology');
     expect(placard).toContain('howToBuyPath(item)');
     expect(placard).toContain('>How to buy</a>');
-    expect(placard).toContain('terminalMarketPath(item)');
-    expect(placard).toContain('<span>Open Terminal</span>');
-    expect(placard).toContain('zodiacMarketsPath()');
-    expect(placard).toContain('<span>Zodiac markets</span>');
+    expect(placard).not.toContain('/terminal/');
+    expect(source).not.toContain('function terminalMarketPath(');
+    expect(source).not.toContain('function zodiacMarketsPath(');
     expect(placard).not.toContain('#acquire');
   });
 
@@ -368,7 +370,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(fallback).toContain('href="https://astrofolio.xyz/"');
   });
 
-  it('keeps the collection story, Shop, integrated Terminal links, Registry guide, FAQs, and close exact', async () => {
+  it('keeps the collection story, Shop, Registry guide, FAQs, and final market gateway exact', async () => {
     const source = await read('src/app.jsx');
     const introduction = functionBlock(source, 'ConsumerIntroduction');
     expect(introduction).toContain('id="what-is-astrofolio"');
@@ -399,8 +401,17 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
 
     expect(source).not.toContain('function ConsumerTerminalStrip(');
     expect(functionBlock(source, 'VitrinePlacard')).toContain('>How to buy</a>');
-    expect(functionBlock(source, 'VitrinePlacard')).toContain('<span>Open Terminal</span>');
-    expect(functionBlock(source, 'VitrinePlacard')).toContain('<span>Zodiac markets</span>');
+    expect(functionBlock(source, 'VitrinePlacard')).not.toContain('/terminal/');
+    const marketGateway = functionBlock(source, 'ConsumerMarketGateway');
+    expect(marketGateway).toContain('id="market-layer"');
+    expect(marketGateway).toContain('<h2 id="consumer-market-gateway-title">Read the market. Trade your sign.</h2>');
+    expect(marketGateway).toContain('href="/terminal/"');
+    expect(marketGateway).toContain('<span>Open Terminal</span>');
+    expect(marketGateway).toContain('href="/terminal/markets/"');
+    expect(marketGateway).toContain('<span>Open Zodiac Markets</span>');
+    expect(marketGateway).toContain('Solana · 12 verified mints');
+    expect(marketGateway).toContain('On Solana, Jupiter Ultra supplies the executable route and transaction. Your wallet reviews, approves, and signs.');
+    expect(marketGateway).toContain('{SIGNS.map((item, index) =>');
 
     const cabinet = functionBlock(source, 'ConsumerCabinet');
     expect(cabinet).toContain('id="cabinet" className="consumer-cabinet-section reveal"');
@@ -432,7 +443,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ordered(faqSource, [
       "q: 'Where can I find Astrofolio merchandise?'",
       "q: 'What are the risks?'",
-      "q: 'What are the Zodiac markets?'",
+      "q: 'What is Zodiac Markets?'",
       "q: 'What is the Terminal?'",
     ]);
     const fallback = await read('public/astrofolio/index.html');
@@ -441,7 +452,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ordered(staticFaq, [
       '<summary>Where can I find Astrofolio merchandise?</summary>',
       '<summary>What are the risks?</summary>',
-      '<summary>What are the Zodiac markets?</summary>',
+      '<summary>What is Zodiac Markets?</summary>',
       '<summary>What is the Terminal?</summary>',
     ]);
     for (const item of EXPECTED_FAQS) {
@@ -459,9 +470,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       a: item.acceptedAnswer.text,
     }))).toEqual(EXPECTED_FAQS);
 
-    const close = functionBlock(source, 'ConsumerClosing');
-    expect(close).toContain('See all twelve records');
-    expect(close).not.toContain('<TerminalViewLink');
+    expect(source).not.toContain('function ConsumerClosing(');
+    expect(fallback).not.toContain('<section class="static-astrofolio-closing"');
     expect(functionBlock(source, 'TerminalViewLink')).toContain("{pro ? 'Open the Terminal' : 'Astrofolio'}");
     expect(functionBlock(source, 'Footer')).not.toContain('shop.astrofolio.xyz');
     const staticFooter = fallback.slice(fallback.indexOf('<footer class="static-site__footer">'), fallback.indexOf('</footer>', fallback.indexOf('<footer class="static-site__footer">')));

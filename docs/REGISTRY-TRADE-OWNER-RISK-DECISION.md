@@ -298,3 +298,25 @@ Jupiter Plugin, external font runtime, Base-chain execution, custody,
 compensation, or a hidden default amount. The guide begins as a `noindex`,
 `no-store` pilot with route-scoped network policy. A live provider probe and
 browser verification are required immediately before production release.
+
+## Addendum — 2026-08-24: Astrofolio bottom market gateway
+
+**Authorized: 2026-08-24.** The owner directed that market discovery on the
+Astrofolio landing be consolidated into one final, editorial gateway instead
+of appearing inside every selected-sign placard. The gateway may contain
+exactly one same-origin link to `/terminal/` for prices, liquidity, charts,
+and research, and exactly one same-origin link to `/terminal/markets/` for
+the existing Jupiter Ultra trading interface.
+
+This authorization changes discovery only. No sign placard, Registry profile,
+Cabinet, global navigation, or footer gains either action. Loading the
+Astrofolio landing or reaching the gateway must not load `/assets/trade.js`,
+request a Jupiter quote, discover or connect a wallet, or ask for a signature.
+The landing remains identity-first, and the executable interface remains
+confined to its already controlled routes.
+
+The Zodiac Markets destination retains its independent-provider, no-custody,
+no-compensation, `noindex`, `no-store`, network-policy, and wallet-review
+controls. This addendum does not authorize an external Jupiter URL, a
+third-party plugin, Base-chain execution, new fees, or any change to the
+Registry and Cabinet prohibitions above.

@@ -272,8 +272,7 @@ try {
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').getAttribute('href'), '/registry/pisces/');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'How to buy');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active a[href="/terminal/?sign=pisces#selected"] span').first().innerText(), 'Open Terminal');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active a[href="/terminal/markets/"] span').first().innerText(), 'Zodiac markets');
+    assert.equal(await page.locator('.vitrine-placard__market-actions').count(), 0);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').count(), 0);
     const primaryCtaStyle = await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').evaluate((node) => {
       const style = getComputedStyle(node);
@@ -287,12 +286,37 @@ try {
     assert.equal(primaryCtaStyle.orbShape, '50%');
     assert.equal(await page.locator('[data-terminal-preference-banner]').count(), 0);
     assert.equal(await page.locator('.terminal-consumer-hero [data-terminal-view-link="pro"]').count(), 0);
-    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 24);
+    const marketGateway = page.locator('#market-layer');
+    assert.equal(await marketGateway.count(), 1);
+    assert.equal(await marketGateway.locator('.consumer-market-gateway__token').count(), 12);
+    assert.equal(await marketGateway.locator('.consumer-market-gateway__action').count(), 2);
+    assert.equal(await marketGateway.locator('a[href="/terminal/"] > span').first().innerText(), 'Open Terminal');
+    assert.equal(await marketGateway.locator('a[href="/terminal/markets/"] > span').first().innerText(), 'Open Zodiac Markets');
+    const marketGatewayLayout = await marketGateway.evaluate((node) => {
+      const links = [...node.querySelectorAll('.consumer-market-gateway__action')];
+      const tickers = [...node.querySelectorAll('.consumer-market-gateway__token strong')];
+      const shell = node.querySelector('.consumer-market-gateway__shell')?.getBoundingClientRect();
+      return {
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        shellWidth: shell?.width,
+        viewport: document.documentElement.clientWidth,
+        buttons: links.map((link) => ({
+          height: link.getBoundingClientRect().height,
+          radius: getComputedStyle(link).borderRadius,
+        })),
+        tickerOverflow: tickers.map((ticker) => ticker.scrollWidth - ticker.clientWidth),
+      };
+    });
+    assert.ok(marketGatewayLayout.overflow <= 0, 'the market gateway creates no horizontal overflow');
+    assert.ok(marketGatewayLayout.shellWidth <= marketGatewayLayout.viewport, 'the market gateway stays inside the mobile viewport');
+    assert.ok(marketGatewayLayout.buttons.every((button) => button.height >= 52 && button.radius === '999px'), 'both market actions keep equal pill geometry');
+    assert.ok(marketGatewayLayout.tickerOverflow.every((overflow) => overflow <= 0), 'every market ticker remains fully visible on mobile');
+    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 2);
     assert.equal(await page.locator('.consumer-shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await page.locator('.consumer-shop a[href^="https://shop.app/products/"]').count(), 3);
     assert.equal(await page.locator('#registry .consumer-verify.is-embedded#verify').count(), 1);
     assert.equal(await page.locator('#faq summary').count(), 8);
-    assert.deepEqual(await page.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the Zodiac markets?', 'What is the Terminal?']);
+    assert.deepEqual(await page.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What is Zodiac Markets?', 'What is the Terminal?']);
     assert.equal(await page.locator('[data-consumer-market-snapshot], .consumer-snapshot').count(), 0);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-market-meta').count(), 1);
     assert.equal(await page.getByText('Data & methodology', { exact: true }).count(), 1);
@@ -515,7 +539,7 @@ try {
     assert.equal(await noJsPage.locator('#market-snapshot').count(), 1);
     assert.equal(await noJsPage.locator('.static-snapshot').count(), 0);
     assert.equal(await noJsPage.locator('#faq details').count(), 8);
-    assert.deepEqual(await noJsPage.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the Zodiac markets?', 'What is the Terminal?']);
+    assert.deepEqual(await noJsPage.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What is Zodiac Markets?', 'What is the Terminal?']);
     assert.equal(await noJsPage.locator('#shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await noJsPage.locator('#shop a[href^="https://shop.app/products/"]').count(), 6);
     assert.equal(await noJsPage.locator('#registry #verify').count(), 1);
@@ -524,8 +548,10 @@ try {
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 0);
     assert.equal(await noJsPage.locator('a[href^="/astrofolio/how-to-buy/"]').count(), 12);
     assert.equal(await noJsPage.locator('a[href="/astrofolio/how-to-buy/aries/"]').count(), 1);
-    assert.equal(await noJsPage.locator('a[href^="/terminal/?sign="]').count(), 12);
-    assert.equal(await noJsPage.locator('a[href="/terminal/markets/"]').count(), 12);
+    assert.equal(await noJsPage.locator('a[href^="/terminal/?sign="]').count(), 0);
+    assert.equal(await noJsPage.locator('#market-layer a[href="/terminal/"]').count(), 1);
+    assert.equal(await noJsPage.locator('#market-layer a[href="/terminal/markets/"]').count(), 1);
+    assert.equal(await noJsPage.locator('#market-layer .consumer-market-gateway__token').count(), 12);
     const staticStoryStyle = await noJsPage.locator('.static-story-band').evaluate((node) => {
       const image = node.querySelector('img');
       const picture = node.querySelector('picture')?.getBoundingClientRect();
@@ -648,10 +674,10 @@ try {
       return { visualRight: visual?.right, essayLeft: essay?.left };
     });
     assert.ok(thesisFlow.visualRight <= thesisFlow.essayLeft + 1, 'the thesis clock is contained beside its copy');
-    const storyOrder = await collectionPage.locator('#what-is-astrofolio, #thesis, #shop, #cabinet, #registry, #faq').evaluateAll((nodes) => (
+    const storyOrder = await collectionPage.locator('#what-is-astrofolio, #thesis, #shop, #cabinet, #registry, #faq, #market-layer').evaluateAll((nodes) => (
       nodes.map((node) => node.id)
     ));
-    assert.deepEqual(storyOrder, ['what-is-astrofolio', 'thesis', 'shop', 'cabinet', 'registry', 'faq']);
+    assert.deepEqual(storyOrder, ['what-is-astrofolio', 'thesis', 'shop', 'cabinet', 'registry', 'faq', 'market-layer']);
     await collection.close();
 
     const flagged = await browser.newContext({ viewport: { width: 1280, height: 900 } });
@@ -662,7 +688,8 @@ try {
     await flaggedPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(flaggedPage, '#consumer-explorer-title');
     assert.equal(await flaggedPage.locator('meta[name="zodiacs-registry-exchange-enabled"]').count(), 0);
-    assert.equal(await flaggedPage.locator('[data-pro-markets-gateway], a[href^="/terminal/markets/"]').count(), 0);
+    assert.equal(await flaggedPage.locator('[data-pro-markets-gateway]').count(), 0);
+    assert.equal(await flaggedPage.locator('#market-layer a[href="/terminal/markets/"]').count(), 1);
     await flaggedPage.goto(`${baseURL}/terminal/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(flaggedPage, '#pro-terminal-title');
     await flaggedPage.waitForFunction(() => document.querySelector('.pro-board table')?.getAttribute('aria-busy') === 'false');
