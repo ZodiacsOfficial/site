@@ -360,7 +360,7 @@ internal product name here — the consumer collection at `/astrofolio/`
 (owner decision 2026-08-13 in `docs/STRATEGY.md`), its identity pipeline
 (`scripts/build-astrofolio-identity.mjs`, `verify-…`, `stamp-…-season.mjs`,
 `astrofolio-season.mjs`), generated asset trees
-(`public/assets/astrofolio/{v1,v2}/`, `public/assets/og/astrofolio/v3/`),
+(`public/assets/astrofolio/{v1,v2}/`, `public/assets/og/astrofolio/{v3,v4}/`),
 nav (`src/components/SiteNav.astro`), and internal redirects
 (`vercel.json` sends `/collect`, `/registry/gallery/`, `/registry/shelf/`
 to `/astrofolio/`). Those hits are the *product* meaning the brief endorses

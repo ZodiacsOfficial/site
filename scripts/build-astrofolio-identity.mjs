@@ -18,7 +18,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 export const ASTROFOLIO_IDENTITY_VERSION = 'v2';
 export const ASTROFOLIO_IDENTITY_BASE = `/assets/astrofolio/${ASTROFOLIO_IDENTITY_VERSION}`;
-export const ASTROFOLIO_OG_VERSION = 'v3';
+export const ASTROFOLIO_OG_VERSION = 'v4';
 export const ASTROFOLIO_OG_BASE = `/assets/og/astrofolio/${ASTROFOLIO_OG_VERSION}`;
 export const TERMINAL_OG_V6_PATH = '/assets/og/v6/terminal.png';
 export const ASTROFOLIO_OG_MOTIF_GEOMETRY = Object.freeze({
@@ -98,6 +98,7 @@ async function composeSeasonalZodiacRing(rootDirectory, season, {
   discSize = 92,
   withAtmosphere = true,
   withSelectedHalo = true,
+  selectedHaloStyle = 'double',
 } = {}) {
   const center = size / 2;
   const ordered = seasonOrder(season);
@@ -115,10 +116,14 @@ async function composeSeasonalZodiacRing(rootDirectory, season, {
   }));
   const seasonHue = PASTELS[SIGN_ORDER.indexOf(season)];
   const selectedHaloSize = Math.round(discSize * 1.2174);
-  const selectedHaloInset = (selectedHaloSize - discSize) / 2;
   const selectedDisc = discInputs[0];
   const haloCenter = selectedHaloSize / 2;
-  const selectedHalo = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${selectedHaloSize}" height="${selectedHaloSize}" viewBox="0 0 ${selectedHaloSize} ${selectedHaloSize}"><circle cx="${haloCenter}" cy="${haloCenter}" r="${haloCenter - 5}" fill="none" stroke="${seasonHue}" stroke-width="3" opacity=".94"/><circle cx="${haloCenter}" cy="${haloCenter}" r="${haloCenter - 1}" fill="none" stroke="${INK}" stroke-width="1" opacity=".52"/></svg>`);
+  const haloRings = selectedHaloStyle === 'single'
+    ? `<circle cx="${haloCenter}" cy="${haloCenter}" r="${haloCenter - 2}" fill="none" stroke="${seasonHue}" stroke-width="3" opacity=".98"/>`
+    : `<circle cx="${haloCenter}" cy="${haloCenter}" r="${haloCenter - 5}" fill="none" stroke="${seasonHue}" stroke-width="3" opacity=".94"/><circle cx="${haloCenter}" cy="${haloCenter}" r="${haloCenter - 1}" fill="none" stroke="${INK}" stroke-width="1" opacity=".52"/>`;
+  const selectedHalo = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${selectedHaloSize}" height="${selectedHaloSize}" viewBox="0 0 ${selectedHaloSize} ${selectedHaloSize}">${haloRings}</svg>`);
+  const selectedCenterX = selectedDisc.left + discSize / 2;
+  const selectedCenterY = selectedDisc.top + discSize / 2;
 
   return sharp({
     create: { width: size, height: size, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } },
@@ -126,8 +131,8 @@ async function composeSeasonalZodiacRing(rootDirectory, season, {
     ...(withAtmosphere ? [{ input: orbitLineSvg(size, seasonHue), left: 0, top: 0 }] : []),
     ...(withSelectedHalo ? [{
       input: selectedHalo,
-      left: selectedDisc.left - selectedHaloInset,
-      top: selectedDisc.top - selectedHaloInset,
+      left: Math.round(selectedCenterX - selectedHaloSize / 2),
+      top: Math.round(selectedCenterY - selectedHaloSize / 2),
     }] : []),
     ...discInputs,
   ]).png({ compressionLevel: 9, adaptiveFiltering: true }).toBuffer();
@@ -359,6 +364,64 @@ async function composeOgSeasonLockup(rootDirectory, fonts, season) {
   ]).png({ compressionLevel: 9, adaptiveFiltering: true }).toBuffer();
 }
 
+function ogSocialTextSvg(fonts, season, seasonIndex) {
+  const copy = astrofolioOgCopy(season, seasonIndex);
+  const dateRange = copy.dateRange.replace(' – ', ' — ');
+  return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+    <style>
+      @font-face{font-family:Instrument;src:url(data:font/woff2;base64,${fonts.instrument}) format('woff2');font-weight:100 900}
+      @font-face{font-family:Editorial;src:url(data:font/woff2;base64,${fonts.serifItalic}) format('woff2');font-weight:500;font-style:italic}
+      @font-face{font-family:Mono;src:url(data:font/woff2;base64,${fonts.mono}) format('woff2');font-weight:100 800}
+    </style>
+    <text x="68" y="207" fill="${INK}" font-family="Editorial,serif" font-size="97" font-weight="500" font-style="italic" letter-spacing="-1.1">${copy.title}</text>
+    <text x="76" y="264" fill="#BEBAB2" font-family="Instrument,sans-serif" font-size="20" font-weight="430" letter-spacing=".55">${copy.caption}</text>
+    <text x="76" y="407" fill="#A9A59D" font-family="Mono,monospace" font-size="18" font-weight="430" letter-spacing="1.1">${dateRange} · ${copy.timeZone}</text>
+    <text x="74" y="566" fill="#8F8B84" font-family="Instrument,sans-serif" font-size="15" font-weight="500" letter-spacing="3.2">ZODIACS.ORG</text>
+  </svg>`);
+}
+
+function astrofolioSocialSeasonTitleLayout(displayName) {
+  const length = String(displayName ?? '').trim().length;
+  if (!length) throw new Error('Astrofolio social season title requires a display name');
+  if (length <= 7) return { signSize: 66, seasonSize: 48, gap: 14 };
+  if (length <= 9) return { signSize: 60, seasonSize: 45, gap: 13 };
+  return { signSize: 54, seasonSize: 42, gap: 12 };
+}
+
+async function composeOgSocialSeasonLockup(fonts, season) {
+  const identity = astrofolioOgIdentitySources(season);
+  const layout = astrofolioSocialSeasonTitleLayout(season.displayName);
+  const [signWord, seasonWord] = await Promise.all([
+    renderOgEditorialWord(fonts.serif, season.displayName, {
+      color: identity.hue,
+      fontSize: layout.signSize,
+    }),
+    renderOgEditorialWord(fonts.serifItalic, 'Season', {
+      color: INK,
+      fontSize: layout.seasonSize,
+      italic: true,
+      opacity: 0.84,
+    }),
+  ]);
+  const [signMeta, seasonMeta] = await Promise.all([
+    sharp(signWord).metadata(),
+    sharp(seasonWord).metadata(),
+  ]);
+  const height = Math.max(signMeta.height, seasonMeta.height);
+  const seasonLeft = signMeta.width + layout.gap;
+  return sharp({
+    create: {
+      width: seasonLeft + seasonMeta.width,
+      height,
+      channels: 4,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    },
+  }).composite([
+    { input: signWord, left: 0, top: height - signMeta.height },
+    { input: seasonWord, left: seasonLeft, top: height - seasonMeta.height },
+  ]).png({ compressionLevel: 9, adaptiveFiltering: true }).toBuffer();
+}
+
 async function composeSeasonSeal(rootDirectory, season) {
   const size = 192;
   const hue = PASTELS[SIGN_ORDER.indexOf(season)];
@@ -430,6 +493,50 @@ async function composeAstrofolioOg(rootDirectory, fonts, season, seasonIndex) {
     .toBuffer();
 }
 
+async function composeOgSocialZodiacDiscs(rootDirectory, season) {
+  const discs = await composeSeasonalZodiacRing(rootDirectory, season, {
+    withAtmosphere: false,
+    withSelectedHalo: true,
+    selectedHaloStyle: 'single',
+  });
+  return sharp(discs)
+    .resize(ASTROFOLIO_OG_MOTIF_GEOMETRY.size, ASTROFOLIO_OG_MOTIF_GEOMETRY.size, { kernel: 'lanczos3' })
+    .extract({
+      left: 0,
+      top: Math.round((ASTROFOLIO_OG_MOTIF_GEOMETRY.size - 630) / 2),
+      width: ASTROFOLIO_OG_MOTIF_GEOMETRY.size,
+      height: 630,
+    })
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
+    .toBuffer();
+}
+
+async function composeAstrofolioSocialOg(rootDirectory, fonts, season, seasonIndex) {
+  const identity = astrofolioOgIdentitySources(season);
+  const [motif, sculpture, seasonLockup] = await Promise.all([
+    composeOgSocialZodiacDiscs(rootDirectory, season.sign),
+    normalizeOgSculpture(rootDirectory, identity.sign),
+    composeOgSocialSeasonLockup(fonts, season),
+  ]);
+  const sculptureMeta = await sharp(sculpture).metadata();
+  const { size, centerX, centerY } = ASTROFOLIO_OG_MOTIF_GEOMETRY;
+  const atmosphere = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><defs><radialGradient id="a"><stop stop-color="#C88B39" stop-opacity=".065"/><stop offset=".58" stop-color="#C88B39" stop-opacity=".018"/><stop offset="1" stop-color="${VOID}" stop-opacity="0"/></radialGradient><radialGradient id="s"><stop stop-color="${identity.hue}" stop-opacity=".045"/><stop offset=".58" stop-color="${identity.hue}" stop-opacity=".012"/><stop offset="1" stop-color="${VOID}" stop-opacity="0"/></radialGradient></defs><ellipse cx="${centerX + 15}" cy="${centerY}" rx="354" ry="320" fill="url(#a)"/><ellipse cx="${centerX}" cy="${centerY}" rx="322" ry="298" fill="url(#s)"/><path d="M620 0V630" stroke="${INK}" stroke-opacity=".018"/></svg>`);
+  return sharp({ create: { width: 1200, height: 630, channels: 4, background: VOID } })
+    .composite([
+      { input: atmosphere, left: 0, top: 0 },
+      { input: ogSocialTextSvg(fonts, season, seasonIndex), left: 0, top: 0 },
+      {
+        input: sculpture,
+        left: Math.round(centerX - sculptureMeta.width / 2),
+        top: Math.round(centerY - sculptureMeta.height / 2),
+      },
+      { input: motif, left: Math.round(centerX - size / 2), top: 0 },
+      { input: seasonLockup, left: 75, top: 314 },
+    ])
+    .png({ compressionLevel: 9, adaptiveFiltering: true, palette: true, colours: 256, dither: 0.55 })
+    .toBuffer();
+}
+
 /**
  * Publish social cards independently from the installed-app identity package.
  * A new versioned URL is intentional: social crawlers cache both successful
@@ -446,7 +553,7 @@ export async function buildAstrofolioOgFamily({
 
   await mkdir(outputDirectory, { recursive: true });
   for (const [seasonIndex, season] of seasons.entries()) {
-    const bytes = await composeAstrofolioOg(rootDirectory, fonts, season, seasonIndex);
+    const bytes = await composeAstrofolioSocialOg(rootDirectory, fonts, season, seasonIndex);
     const filename = `${season.sign}.png`;
     await writeFile(resolve(outputDirectory, filename), bytes);
     records.push({
@@ -463,7 +570,7 @@ export async function buildAstrofolioOgFamily({
   }
 
   const manifest = {
-    schema: 'zodiacs.astrofolio-og.v3',
+    schema: 'zodiacs.astrofolio-og.v4',
     version: ASTROFOLIO_OG_VERSION,
     base: ASTROFOLIO_OG_BASE,
     type: 'image/png',
