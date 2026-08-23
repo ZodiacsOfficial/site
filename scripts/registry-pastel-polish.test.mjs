@@ -80,6 +80,38 @@ describe('registry pastel polish', () => {
     expect(lit).not.toContain('var(--gold-deep)');
   });
 
+  it('gives the mobile sign picker and final Astrofolio market gateway complete, touch-safe chrome', async () => {
+    const css = await read('src/terminal/split-styles.css');
+    const picker = cssRule(css, '.consumer-registry .vitrine-disc-picker {');
+    const arrow = cssRule(css, '.consumer-registry .vitrine-disc-picker__arrow {');
+    const hint = cssRule(css, '.consumer-registry .vitrine-disc-picker__hint {');
+    const gateway = cssRule(css, '.consumer-market-gateway__action {');
+    const note = cssRule(css, '.consumer-registry .vitrine-official-note {');
+    const staticShopImage = cssRule(css, '.consumer-static .static-shop__image {');
+    const staticShopAsset = cssRule(css, '.consumer-static .static-shop__image img {');
+
+    expect(picker).toContain('grid-template-columns: 44px minmax(0, 1fr) 44px;');
+    expect(picker).toContain('grid-area: selector;');
+    expect(arrow).toContain('width: 44px;');
+    expect(arrow).toContain('height: 44px;');
+    expect(arrow).toContain('min-width: 44px;');
+    expect(arrow).toContain('min-height: 44px;');
+    expect(arrow).toContain('border-radius: 999px;');
+    expect(hint).toContain('text-align: center;');
+    expect(css).toContain('@media (min-width: 900px) {');
+    expect(css).toContain('.consumer-registry .vitrine-disc-picker__hint { display: none; }');
+
+    expect(gateway).toContain('min-height: 52px;');
+    expect(gateway).toContain('border-radius: 999px;');
+    expect(gateway).toContain('text-decoration: none;');
+    expect(note).toContain('font: 500 10px/1.45 var(--sans);');
+    expect(staticShopImage).toContain('width: 100%;');
+    expect(staticShopImage).toContain('max-width: 100%;');
+    expect(staticShopImage).toContain('overflow: hidden;');
+    expect(staticShopAsset).toContain('width: 100%;');
+    expect(staticShopAsset).toContain('height: auto;');
+  });
+
   it('keeps the warm halo behind the artwork and neutral UI chrome', async () => {
     const css = await read('src/terminal/split-styles.css');
     const halo = cssRule(css, '.consumer-registry .vitrine-stage::before {');

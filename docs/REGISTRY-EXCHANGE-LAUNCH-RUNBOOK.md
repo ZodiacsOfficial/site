@@ -105,6 +105,13 @@ Confirm the merge deploy is flag-off first. Then the owner may set
 deployment. Repeat the protected-QA checks on the production URL. A real trade
 is optional, owner-directed, and never part of automated verification.
 
+For the owner-authorized 2026-08-24 Astrofolio gateway launch, a Vercel Git
+build whose platform-provided `VERCEL_ENV` is exactly `production` supplies
+that production-only default when `PUBLIC_REGISTRY_EXCHANGE_ENABLED` is
+absent. Preview and local builds remain flag-off. An explicit
+`PUBLIC_REGISTRY_EXCHANGE_ENABLED=0` always takes precedence and is the
+configuration rollback override; committed route bytes remain flag-off.
+
 The pilot remains `noindex`, zero-compensation, and bounded to 30 days. Review
 only the closed-schema technical events (`exchange_room_mount` and
 `exchange_market_state`) plus direct user feedback. They contain no trade

@@ -1369,19 +1369,34 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     };
   }
 
+  function isConnectedSaveControl(candidate: EventTarget | null | undefined): candidate is HTMLElement {
+    return candidate instanceof HTMLElement
+      && candidate.isConnected
+      && candidate.hasAttribute('data-save-chart');
+  }
+
+  function saveFocusFallback(): HTMLElement | null {
+    if (isConnectedSaveControl(saveButtonRef.current)) return saveButtonRef.current;
+    const dockSave = resultRef.current
+      ?.querySelector<HTMLElement>('[data-chart-action-dock] [data-save-chart]') ?? null;
+    return isConnectedSaveControl(dockSave) ? dockSave : null;
+  }
+
   function closeSavePrompt() {
     setSavePromptOpen(false);
     requestAnimationFrame(() => {
-      const returnTarget = saveReturnRef.current?.isConnected
+      const returnTarget = isConnectedSaveControl(saveReturnRef.current)
         ? saveReturnRef.current
-        : saveButtonRef.current?.isConnected
-          ? saveButtonRef.current
-          : document.querySelector<HTMLElement>('[data-chart-action-dock] [data-save-chart]');
+        : saveFocusFallback();
+      saveReturnRef.current = null;
       returnTarget?.focus();
     });
   }
 
-  function openSavePrompt(origin: 'tour' | 'free' = 'free') {
+  function openSavePrompt(
+    origin: 'tour' | 'free' = 'free',
+    trigger?: EventTarget | null,
+  ) {
     if (saved === 'saved') return;
     saveOriginRef.current = origin;
     if (subjectMode === 'self') return void commitSave(undefined, 'skip');
@@ -1391,9 +1406,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setSaveSource(source);
     setSaveInitial(prefill);
     setSaveDraft(prefill);
-    saveReturnRef.current = document.activeElement instanceof HTMLElement
-      ? document.activeElement
-      : null;
+    saveReturnRef.current = isConnectedSaveControl(trigger)
+      ? trigger
+      : isConnectedSaveControl(document.activeElement) ? document.activeElement : null;
     setSavePromptOpen(true);
   }
 
@@ -2050,7 +2065,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                       )}
                       {shareInput && ChartActionDock && (
                         <>
-                          {saveError && <p class="calc__error" role="alert">{saveError}</p>}
                           <ChartActionDock
                             tourOpen={tourOpen}
                             shareOnly={firstReadingPromptVisible}
@@ -2078,12 +2092,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                               : locale === 'en' && subjectMode === 'self'
                                 ? 'Save my chart'
                                 : t(locale, 'saveThisChart')}
-                            onSave={saved === 'saved' ? undefined : () => {
+                            onSave={saved === 'saved' ? undefined : (trigger) => {
                               track('next_action_clicked', {
                                 state: firstReading.status === 'complete' ? 'guide_complete' : 'chart_result',
                                 action: 'save',
                               });
-                              openSavePrompt();
+                              openSavePrompt('free', trigger);
                             }}
                             anotherLabel={wheelActionCopy.another}
                             anotherHref={anotherChartHref}
@@ -2102,6 +2116,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                               {renderSavePrompt()}
                             </div>
                           )}
+                          {saveError && <p class="calc__error" role="alert">{saveError}</p>}
                         </>
                       )}
                     </div>
@@ -2156,7 +2171,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   ref={saveButtonRef}
                   class="btn btn--primary"
                   type="button"
-                  onClick={saved === 'saved' ? undefined : () => openSavePrompt()}
+                  onClick={saved === 'saved'
+                    ? undefined
+                    : (event) => openSavePrompt('free', event.currentTarget)}
                   aria-disabled={saved === 'saved'}
                   data-save-chart
                 >

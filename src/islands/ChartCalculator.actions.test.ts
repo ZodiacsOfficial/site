@@ -34,7 +34,15 @@ describe('Chart result action contract', () => {
     expect(calculator).toContain('class="chart-action-dock calc__actions"');
     expect(calculator).toContain("void import('./ChartActionDock').then(setChartActionDockModule");
     expect(calculator).toContain('{renderSavePrompt()}');
-    expect(calculator).toContain("function openSavePrompt(origin: 'tour' | 'free' = 'free')");
+    expect(calculator).toContain("function isConnectedSaveControl(candidate: EventTarget | null | undefined)");
+    expect(calculator).toContain("candidate.hasAttribute('data-save-chart')");
+    expect(calculator).toContain('function saveFocusFallback(): HTMLElement | null');
+    expect(calculator).toContain("?.querySelector<HTMLElement>('[data-chart-action-dock] [data-save-chart]')");
+    expect(calculator).toContain('trigger?: EventTarget | null');
+    expect(calculator).toContain("openSavePrompt('free', trigger)");
+    expect(calculator).toContain("openSavePrompt('free', event.currentTarget)");
+    expect(calculator).toContain('saveReturnRef.current = null;');
+    expect(dock).toContain('onSave?.(event.currentTarget)');
     expect(dock).not.toContain('savePrompt');
   });
 });

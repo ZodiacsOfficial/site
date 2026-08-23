@@ -4,6 +4,7 @@ import {
   talismanEdition,
   talismanGeometry,
   talismanGoldCountLabel,
+  separateTalismanPoints,
   type AuraTalismanGeometry,
 } from "./aura/talisman";
 import { cabinetEditionForHolding } from "./aura/cabinet-finish";
@@ -81,17 +82,11 @@ const INK = "#EEF1F7";
 const MUTED = "#9CA5B8";
 const ETCHED = "rgba(197, 205, 220, 0.22)";
 const HAIR = "rgba(205, 212, 226, 0.16)";
-const BRASS = "#B79A65";
-const MATERIAL_COLORS: Record<Exclude<AuraCabinetEdition, "pastel">, string> = {
-  bronze: "#B87449",
-  silver: "#C4CEDA",
-  gold: "#DEB75E",
-  crown: "#F6DE9C",
-};
+const COMPLETE_RING = "rgba(228, 233, 243, 0.42)";
+const EDITION_RING = "rgba(238, 241, 247, 0.62)";
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
-const METHOD_NOTE =
-  "A dated composition of the represented Zodiac set, today’s Sun, and today’s Moon.";
+const METHOD_NOTE = "Your collection, set against today’s sky.";
 const EDITION_NOTE = "Public edition · collection + dated sky";
 const CARD_DATE = new Intl.DateTimeFormat("en", {
   year: "numeric",
@@ -215,26 +210,27 @@ export function auraShareSnapshot(input: AuraShareCardInput): AuraShareSnapshot 
   const represented = heldSigns.map((sign) => shareSign(sign, holdingBySign.get(sign)));
   const sun = shareSign(input.currentSky.sun);
   const moon = shareSign(input.currentSky.moon);
+  const skyMarks = separateTalismanPoints([
+    {
+      body: "Sun" as const,
+      glyph: "☉" as const,
+      sign: sun,
+      ...pointForSign(sun.slug, 0.235),
+    },
+    {
+      body: "Moon" as const,
+      glyph: "☾" as const,
+      sign: moon,
+      ...pointForSign(moon.slug, 0.235),
+    },
+  ], 0.105);
   return {
     represented,
     geometry: talismanGeometry(heldSigns, holdings),
     checkedDate,
     skyDate,
     sky: { sun, moon },
-    skyMarks: [
-      {
-        body: "Sun",
-        glyph: "☉",
-        sign: sun,
-        ...pointForSign(sun.slug, 0.235),
-      },
-      {
-        body: "Moon",
-        glyph: "☾",
-        sign: moon,
-        ...pointForSign(moon.slug, 0.235),
-      },
-    ],
+    skyMarks,
     methodNote: METHOD_NOTE,
     editionNote: EDITION_NOTE,
   };
@@ -252,7 +248,7 @@ export function auraShareAccessibleDescription(input: AuraShareCardInput): strin
     snapshot.methodNote,
     snapshot.editionNote,
     `Registry record checked ${snapshot.checkedDate}.`,
-    "Composed on this device. Zodiacs · Org.",
+    "Composed on this device. zodiacs.org.",
   ].join(" ");
 }
 
@@ -313,34 +309,153 @@ function circle(
   context.arc(x, y, radius, 0, Math.PI * 2);
 }
 
-function materialColor(sign: Pick<AuraShareSign, "edition" | "hue">): string {
-  return sign.edition === "pastel" ? sign.hue : MATERIAL_COLORS[sign.edition];
+type LoadedZodiacIcon = CanvasImageSource & { close?: () => void };
+
+function officialZodiacIconPath(slug: AuraSign): string {
+  // Normalized from the canonical @zodiacs/sdk circle artwork at build time.
+  return `/assets/zodiac-icons/128/${slug}.webp`;
+}
+
+async function imageFromBlob(blob: Blob): Promise<HTMLImageElement | null> {
+  if (typeof Image === "undefined") return null;
+  const url = URL.createObjectURL(blob);
+  try {
+    return await new Promise<HTMLImageElement>((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = () => reject(new Error("zodiac_icon_load_failed"));
+      image.src = url;
+    });
+  } catch {
+    return null;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+async function loadOfficialZodiacIcon(
+  slug: AuraSign,
+): Promise<LoadedZodiacIcon | null> {
+  try {
+    const response = await fetch(officialZodiacIconPath(slug));
+    if (!response.ok) return null;
+    const blob = await response.blob();
+    if (typeof createImageBitmap === "function") {
+      try {
+        return await createImageBitmap(blob);
+      } catch {
+        // Some WebKit builds expose createImageBitmap but cannot decode WebP
+        // through it. The packaged image element path remains canonical SDK art.
+      }
+    }
+    return await imageFromBlob(blob);
+  } catch {
+    return null;
+  }
+}
+
+async function loadOfficialZodiacIcons(
+  signs: readonly AuraSign[],
+): Promise<Map<AuraSign, LoadedZodiacIcon>> {
+  const entries = await Promise.all(signs.map(async (sign) => (
+    [sign, await loadOfficialZodiacIcon(sign)] as const
+  )));
+  const icons = new Map(entries.filter(
+    (entry): entry is readonly [AuraSign, LoadedZodiacIcon] => entry[1] !== null,
+  ));
+  const missing = entries.find((entry) => entry[1] === null)?.[0];
+  if (missing) {
+    releaseOfficialZodiacIcons(icons);
+    throw new Error(`zodiac_icon_unavailable:${missing}`);
+  }
+  return icons;
+}
+
+function releaseOfficialZodiacIcons(
+  icons: ReadonlyMap<AuraSign, LoadedZodiacIcon>,
+): void {
+  icons.forEach((icon) => icon.close?.());
+}
+
+function drawEditionRings(
+  context: CanvasRenderingContext2D,
+  edition: AuraCabinetEdition,
+  x: number,
+  y: number,
+  radius: number,
+): void {
+  if (edition === "pastel") return;
+  const rings = edition === "bronze"
+    ? [radius + 5]
+    : edition === "silver"
+      ? [radius + 5]
+      : edition === "gold"
+        ? [radius + 5, radius + 9]
+        : [radius + 5, radius + 9, radius + 13];
+
+  context.strokeStyle = EDITION_RING;
+  context.lineWidth = edition === "bronze" ? 1.5 : 2;
+  context.setLineDash(edition === "bronze" ? [3, 5] : []);
+  rings.forEach((ringRadius, index) => {
+    context.setLineDash(
+      edition === "crown" && index === rings.length - 1 ? [2, 6] :
+        edition === "bronze" ? [3, 5] : [],
+    );
+    circle(context, x, y, ringRadius);
+    context.stroke();
+  });
+  context.setLineDash([]);
+}
+
+function drawOfficialZodiacIcon(
+  context: CanvasRenderingContext2D,
+  slug: AuraSign,
+  icons: ReadonlyMap<AuraSign, LoadedZodiacIcon>,
+  x: number,
+  y: number,
+  radius: number,
+): void {
+  context.fillStyle = BG;
+  circle(context, x, y, radius + 2);
+  context.fill();
+
+  const icon = icons.get(slug);
+  if (!icon) throw new Error(`zodiac_icon_unavailable:${slug}`);
+  context.drawImage(icon, x - radius, y - radius, radius * 2, radius * 2);
+}
+
+function editionLine(sign: AuraShareSign): string {
+  const edition = sign.edition === "crown"
+    ? "CROWN"
+    : sign.edition.toUpperCase();
+  return `${edition}${sign.goldCountLabel ? ` · ${sign.goldCountLabel}` : ""}`;
 }
 
 function drawSeal(
   context: CanvasRenderingContext2D,
   snapshot: AuraShareSnapshot,
+  icons: ReadonlyMap<AuraSign, LoadedZodiacIcon>,
 ): void {
-  const size = 690;
+  const size = 600;
   const left = (W - size) / 2;
   const top = 215;
   const center = sealPoint({ x: 0.5, y: 0.5 }, size, left, top);
 
   context.strokeStyle = HAIR;
   context.lineWidth = 1;
-  [300, 186, 96].forEach((radius) => {
+  [252, 152, 90].forEach((radius) => {
     circle(context, center.x, center.y, radius);
     context.stroke();
   });
   if (snapshot.geometry.fullTwelve) {
-    context.strokeStyle = BRASS;
-    context.lineWidth = 3;
-    circle(context, center.x, center.y, 316);
+    context.strokeStyle = COMPLETE_RING;
+    context.lineWidth = 2.5;
+    circle(context, center.x, center.y, 292);
     context.stroke();
   }
 
-  context.strokeStyle = "rgba(222, 226, 237, 0.42)";
-  context.lineWidth = 3;
+  context.strokeStyle = "rgba(222, 226, 237, 0.36)";
+  context.lineWidth = 2;
   snapshot.geometry.collectionSegments.forEach((segment) => {
     line(
       context,
@@ -351,39 +466,30 @@ function drawSeal(
 
   snapshot.geometry.outerNodes.forEach((node) => {
     const point = sealPoint(node, size, left, top);
-    circle(context, point.x, point.y, node.represented ? 25 : 16);
     if (node.represented) {
       const nodeEdition = node.finish ? talismanEdition(node) : "pastel";
-      context.fillStyle = nodeEdition === "pastel"
-        ? node.hue
-        : MATERIAL_COLORS[nodeEdition];
-      context.fill();
-      context.fillStyle = BG;
-      context.textAlign = "center";
-      context.textBaseline = "middle";
-      context.font = `500 25px ${SERIF}`;
-      context.fillText(`${node.glyph}︎`, point.x, point.y + 1);
-      if (node.goldTallyArcs > 0) {
-        context.strokeStyle = "#F3D995";
-        context.lineWidth = 2.5;
-        for (let index = 0; index < node.goldTallyArcs; index += 1) {
-          context.beginPath();
-          context.arc(
-            point.x,
-            point.y,
-            31 + index * 5,
-            -Math.PI / 2 + index * Math.PI,
-            Math.PI / 5 + index * Math.PI,
-          );
-          context.stroke();
-        }
-      }
-      if (node.goldCountLabel && node.goldCount !== "1") {
-        context.fillStyle = INK;
-        context.font = `650 12px ${MONO}`;
-        context.fillText(node.goldCountLabel, point.x + 31, point.y + 25);
-      }
+      drawEditionRings(context, nodeEdition, point.x, point.y, 29);
+      drawOfficialZodiacIcon(
+        context,
+        node.sign,
+        icons,
+        point.x,
+        point.y,
+        27,
+      );
     } else {
+      const priorAlpha = context.globalAlpha;
+      context.globalAlpha = 0.2;
+      drawOfficialZodiacIcon(
+        context,
+        node.sign,
+        icons,
+        point.x,
+        point.y,
+        23,
+      );
+      context.globalAlpha = priorAlpha;
+      circle(context, point.x, point.y, 29);
       context.strokeStyle = ETCHED;
       context.lineWidth = 1;
       context.stroke();
@@ -405,60 +511,59 @@ function drawSeal(
     context.fillText(mark.glyph, point.x, point.y + 1);
   });
 
-  context.fillStyle = MUTED;
-  context.textAlign = "center";
-  context.font = `500 18px ${MONO}`;
-  context.fillText("DATED PUBLIC SKY", center.x, center.y - 12);
+  context.fillStyle = PANEL;
+  circle(context, center.x, center.y, 88);
+  context.fill();
+  context.strokeStyle = HAIR;
+  context.lineWidth = 1;
+  context.stroke();
+
   context.fillStyle = INK;
-  context.font = `500 22px ${MONO}`;
-  context.fillText(snapshot.skyDate.toUpperCase(), center.x, center.y + 22);
+  context.textAlign = "center";
+  context.font = `500 30px ${SERIF}`;
+  context.fillText(`${snapshot.represented.length} / 12`, center.x, center.y - 26);
+  context.fillStyle = MUTED;
+  context.font = `500 12px ${MONO}`;
+  context.fillText(
+    snapshot.geometry.fullTwelve ? "THE COMPLETE TWELVE" : "SIGNS REPRESENTED",
+    center.x,
+    center.y + 2,
+  );
+  context.font = `500 16px ${MONO}`;
+  context.fillText(snapshot.skyDate.toUpperCase(), center.x, center.y + 34);
 }
 
 function drawRepresentedSet(
   context: CanvasRenderingContext2D,
   snapshot: AuraShareSnapshot,
+  icons: ReadonlyMap<AuraSign, LoadedZodiacIcon>,
 ): void {
   const columns = Math.min(6, snapshot.represented.length);
   const gap = columns > 1 ? Math.min(152, 890 / (columns - 1)) : 0;
   const rows = Math.ceil(snapshot.represented.length / 6);
-  const startY = rows === 1 ? 978 : 925;
+  const startY = rows === 1 ? 950 : 894;
   snapshot.represented.forEach((sign, index) => {
     const row = Math.floor(index / 6);
     const rowItems = Math.min(6, snapshot.represented.length - row * 6);
     const rowWidth = (rowItems - 1) * gap;
     const x = W / 2 - rowWidth / 2 + (index % 6) * gap;
-    const y = startY + row * 90;
-    context.fillStyle = materialColor(sign);
-    circle(context, x, y, 22);
-    context.fill();
-    context.fillStyle = BG;
-    context.textAlign = "center";
-    context.font = `500 22px ${SERIF}`;
-    context.fillText(`${sign.glyph}︎`, x, y + 1);
+    const y = startY + row * 108;
+    drawEditionRings(context, sign.edition, x, y, 21);
+    drawOfficialZodiacIcon(context, sign.slug, icons, x, y, 19);
     context.fillStyle = INK;
-    context.font = `500 18px ${MONO}`;
-    context.fillText(sign.name.toUpperCase(), x, y + 44);
+    context.textAlign = "center";
+    context.font = `500 16px ${MONO}`;
+    context.fillText(sign.name.toUpperCase(), x, y + 35);
     context.fillStyle = MUTED;
-    context.font = `500 13px ${MONO}`;
-    context.fillText(
-      `${sign.edition === "crown" ? "CROWN" : sign.finish.toUpperCase()}${sign.goldCountLabel ? ` ${sign.goldCountLabel}` : ""}`,
-      x,
-      y + 65,
-    );
+    context.font = `500 12px ${MONO}`;
+    context.fillText(editionLine(sign), x, y + 57);
   });
 }
 
-export async function drawAuraShareCard(input: AuraShareCardInput): Promise<Blob> {
-  const snapshot = auraShareSnapshot(input);
-  if (typeof document.fonts !== "undefined") {
-    await document.fonts.ready;
-    await Promise.all([
-      document.fonts.load(`500 62px ${SERIF}`),
-      document.fonts.load(`500 24px ${MONO}`),
-      document.fonts.load(`400 29px ${SERIF}`),
-    ]).catch(() => {});
-  }
-
+async function paintAuraShareCard(
+  snapshot: AuraShareSnapshot,
+  icons: ReadonlyMap<AuraSign, LoadedZodiacIcon>,
+): Promise<Blob> {
   const canvas = document.createElement("canvas");
   canvas.width = W;
   canvas.height = H;
@@ -478,51 +583,73 @@ export async function drawAuraShareCard(input: AuraShareCardInput): Promise<Blob
   context.textBaseline = "middle";
   context.textAlign = "left";
   context.fillStyle = MUTED;
-  context.font = `500 20px ${MONO}`;
-  context.fillText("THE CABINET OF TWELVE · DATED EDITION", 66, 76);
+  context.font = `500 18px ${MONO}`;
+  context.fillText("THE CABINET OF TWELVE", 66, 76);
   context.textAlign = "right";
-  context.fillText(snapshot.skyDate.toUpperCase(), W - 66, 76);
+  context.fillText("PUBLIC EDITION", W - 66, 76);
 
   context.textAlign = "center";
   context.fillStyle = INK;
-  context.font = `500 62px ${SERIF}`;
+  context.font = `500 58px ${SERIF}`;
   context.fillText("Collection seal", W / 2, 145);
   context.fillStyle = MUTED;
-  context.font = `500 20px ${MONO}`;
-  context.fillText("THE REPRESENTED TWELVE · THE SUN · THE MOON", W / 2, 195);
+  context.font = `500 17px ${MONO}`;
+  context.fillText(
+    `${snapshot.geometry.fullTwelve ? "THE COMPLETE TWELVE" : `${snapshot.represented.length} OF THE TWELVE`} · SUN · MOON`,
+    W / 2,
+    194,
+  );
 
-  drawSeal(context, snapshot);
+  drawSeal(context, snapshot, icons);
 
   context.fillStyle = MUTED;
-  context.font = `500 18px ${MONO}`;
+  context.font = `500 16px ${MONO}`;
   context.textAlign = "center";
-  context.fillText("REPRESENTED ZODIACS", W / 2, 892);
-  drawRepresentedSet(context, snapshot);
+  context.fillText("REPRESENTED ZODIACS", W / 2, 838);
+  drawRepresentedSet(context, snapshot, icons);
 
   context.strokeStyle = HAIR;
   context.lineWidth = 1;
-  line(context, { x: 66, y: 1105 }, { x: W - 66, y: 1105 });
+  line(context, { x: 66, y: 1085 }, { x: W - 66, y: 1085 });
   context.fillStyle = INK;
   context.font = `400 29px ${SERIF}`;
   wrapLines(context, snapshot.methodNote, 890, 2).forEach((text, index) => {
-    context.fillText(text, W / 2, 1152 + index * 38);
+    context.fillText(text, W / 2, 1135 + index * 38);
   });
   context.fillStyle = MUTED;
   context.font = `500 17px ${MONO}`;
-  context.fillText(snapshot.editionNote.toUpperCase(), W / 2, 1242);
+  context.fillText(snapshot.editionNote.toUpperCase(), W / 2, 1192);
 
   context.textAlign = "left";
   context.fillText(`REGISTRY CHECKED ${snapshot.checkedDate.toUpperCase()}`, 66, 1290);
   context.textAlign = "right";
   context.fillStyle = INK;
-  context.font = `500 21px ${MONO}`;
-  context.fillText("ZODIACS · ORG", W - 66, 1290);
+  context.font = `500 22px ${MONO}`;
+  context.fillText("zodiacs.org", W - 66, 1290);
 
   const blob = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob(resolve, "image/png"),
   );
   if (!blob) throw new Error("png_encode_failed");
   return blob;
+}
+
+export async function drawAuraShareCard(input: AuraShareCardInput): Promise<Blob> {
+  const snapshot = auraShareSnapshot(input);
+  if (typeof document.fonts !== "undefined") {
+    await Promise.all([
+      document.fonts.ready,
+      document.fonts.load(`500 62px ${SERIF}`),
+      document.fonts.load(`500 24px ${MONO}`),
+      document.fonts.load(`400 29px ${SERIF}`),
+    ]).catch(() => {});
+  }
+  const icons = await loadOfficialZodiacIcons(AURA_SIGN_ORDER);
+  try {
+    return await paintAuraShareCard(snapshot, icons);
+  } finally {
+    releaseOfficialZodiacIcons(icons);
+  }
 }
 
 export function canShareAuraCardBlob(blob: Blob): boolean {

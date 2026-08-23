@@ -78,8 +78,16 @@ describe('AuraTalisman', () => {
     expect(markup).toContain('data-aura-talisman-finish="bronze"');
     expect(markup).toContain('data-aura-talisman-finish="silver"');
     expect(markup).toContain('data-aura-talisman-finish="gold"');
-    expect(markup.match(/data-aura-talisman-gold-tally=/g)).toHaveLength(2);
-    expect(markup).toContain('data-aura-talisman-count="×3"');
+    expect(markup).toContain('data-aura-talisman-edition="gold"');
+    expect(markup.match(/data-aura-talisman-icon-source="sdk"/g)).toHaveLength(12);
+    expect(markup).toContain('/assets/zodiac-icons/128/aries.webp');
+    expect(markup).toContain('/assets/zodiac-icons/128/cancer.webp');
+    expect(markup).toContain('/assets/zodiac-icons/128/leo.webp');
+    expect(markup).toContain('/assets/zodiac-icons/128/scorpio.webp');
+    expect(markup).toContain('/assets/zodiac-icons/128/aquarius.webp');
+    expect(markup).toContain('/assets/zodiac-icons/128/pisces.webp');
+    expect(markup).not.toContain('data-aura-talisman-gold-tally=');
+    expect(markup).not.toContain('data-aura-talisman-count=');
     // The date is engraved at the seal's center; the score is not.
     expect(markup).toContain('data-aura-talisman-edition="Jul 18, 2026"');
     expect(markup).toContain('aura-talisman__center-date');
@@ -112,6 +120,9 @@ describe('AuraTalisman', () => {
     expect(css).toContain('220ms cubic-bezier(0.16, 1, 0.3, 1)');
     expect(css).toContain('180ms cubic-bezier(0.16, 1, 0.3, 1)');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(css).toContain('.aura-talisman__node-icon');
+    expect(css).not.toContain('aura-talisman-gold-tally');
+    expect(css).not.toContain('linearGradient');
     expect(css).not.toContain('transition: all');
     expect(css).not.toMatch(/animation-iteration-count:\s*infinite/);
     expect(css).not.toMatch(

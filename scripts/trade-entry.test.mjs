@@ -96,7 +96,7 @@ describe('the landing', () => {
     expect(html).not.toContain('/assets/trade.js');
   });
 
-  it('offers Registry, beginner-guide, and market handoffs across twelve no-JS sign states', async () => {
+  it('offers Registry, beginner-guide, and same-origin market handoffs across twelve no-JS sign states', async () => {
     const html = await hub();
     const vitrine = html.match(/<fieldset class="static-vitrine">([\s\S]*?)<\/fieldset>/)?.[1];
     expect(vitrine).toBeDefined();
@@ -154,7 +154,7 @@ describe('the landing', () => {
   });
 });
 
-describe('the 2026-08-13 Consumer handoff decision', () => {
+describe('the historical 2026-08-13 Consumer handoff decision', () => {
   it('authorizes only the selected-sign record handoff', async () => {
     const text = await decision();
     expect(text).toContain('Addendum — 2026-08-13: beginner Consumer record handoff');

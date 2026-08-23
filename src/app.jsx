@@ -5693,10 +5693,19 @@
         // immediately, then both visual layers begin together once the image
         // is ready. Retain every decoded layer during an interrupted fade:
         // removing a partially visible outgoing layer would create a flash.
-        setLayers((current) => [
-          ...current.filter((layer) => layer.ready),
-          { id, slug: next, active: false, current: false, ready: false },
-        ]);
+        setLayers((current) => {
+          const ready = current.filter((layer) => layer.ready);
+          const anchor = ready.at(-1);
+          return [
+            ...ready.map((layer) => ({
+              ...layer,
+              active: layer.id === anchor?.id,
+              current: layer.id === anchor?.id,
+              anchored: layer.id === anchor?.id,
+            })),
+            { id, slug: next, active: false, current: false, ready: false, anchored: false },
+          ];
+        });
         return undefined;
       }, [interruptTransition, sign.asset.sign]);
 
@@ -5710,7 +5719,7 @@
         if (reduce) {
           setLayers((current) => {
             const target = current.find((layer) => layer.id === id);
-            return target ? [{ ...target, active: true, current: true, ready: true }] : current;
+            return target ? [{ ...target, active: true, current: true, ready: true, anchored: false }] : current;
           });
           return;
         }
@@ -5727,6 +5736,7 @@
             ...layer,
             active: layer.id === id,
             current: layer.id === id,
+            anchored: false,
           })));
           setTransitionId(id);
         });
@@ -5888,7 +5898,7 @@
         return (
           <article
             key={layer.id}
-            className={'vitrine-placard__layer' + (layer.active ? ' is-active' : '')}
+            className={'vitrine-placard__layer' + (layer.active ? ' is-active' : '') + (layer.anchored ? ' is-interrupt-anchor' : '')}
             aria-hidden={layer.current ? undefined : 'true'}
             inert={layer.current ? undefined : ''}
             data-vitrine-placard={layer.slug}
@@ -5943,7 +5953,7 @@
         return (
           <div
             key={layer.id}
-            className={'vitrine-stage__layer' + (layer.active ? ' is-active' : '') + (layer.fallback ? ' is-fallback' : '')}
+            className={'vitrine-stage__layer' + (layer.active ? ' is-active' : '') + (layer.fallback ? ' is-fallback' : '') + (layer.anchored ? ' is-interrupt-anchor' : '')}
             aria-hidden={layer.current ? undefined : 'true'}
             data-vitrine-sculpture={layer.slug}
             style={{ '--art-scale': presentation.scale, '--art-y': presentation.translateY }}

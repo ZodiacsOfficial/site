@@ -86,8 +86,13 @@ describe('Russian chart-result seams', () => {
     expect(profileChartRunInput([SAVED_CHART], SAVED_CHART.id)).toMatchObject({
       date: '1990-06-15',
       name: 'Private A',
+      subjectMode: 'other',
       city: { tz: 'America/New_York' },
     });
+    expect(profileChartRunInput([{
+      ...SAVED_CHART,
+      relationship: 'self',
+    }], SAVED_CHART.id)).toMatchObject({ subjectMode: 'self' });
 
     const source = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
     const profileManager = await readFile(new URL('./ProfileManager.tsx', import.meta.url), 'utf8');

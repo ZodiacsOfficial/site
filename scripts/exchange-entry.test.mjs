@@ -10,6 +10,7 @@ import {
   REGISTRY_EXCHANGE_PUBLIC_NAME,
   injectRegistryExchange,
   injectRegistryExchangeLanding,
+  registryExchangeBuildEnv,
   registryExchangeEnabled,
   renderExchangeRegion,
 } from '../src/exchange/entry.mjs';
@@ -33,6 +34,24 @@ describe('the flag', () => {
       expect(registryExchangeEnabled({ [REGISTRY_EXCHANGE_FLAG]: value })).toBe(false);
     }
     expect(registryExchangeEnabled({})).toBe(false);
+  });
+
+  it('defaults on only for a Vercel production build and preserves explicit rollback', () => {
+    expect(registryExchangeBuildEnv({})).toEqual({});
+    expect(registryExchangeBuildEnv({ VERCEL_ENV: 'preview' })).toEqual({ VERCEL_ENV: 'preview' });
+    expect(registryExchangeBuildEnv({ VERCEL_ENV: 'development' }))
+      .toEqual({ VERCEL_ENV: 'development' });
+    expect(registryExchangeBuildEnv({ VERCEL_ENV: 'production' })).toEqual({
+      VERCEL_ENV: 'production',
+      [REGISTRY_EXCHANGE_FLAG]: '1',
+    });
+    expect(registryExchangeBuildEnv({
+      VERCEL_ENV: 'production',
+      [REGISTRY_EXCHANGE_FLAG]: '0',
+    })).toEqual({
+      VERCEL_ENV: 'production',
+      [REGISTRY_EXCHANGE_FLAG]: '0',
+    });
   });
 
   it('exports one stable public integration contract for the expert Terminal gateway', () => {
@@ -174,8 +193,9 @@ describe('the committed-off drift invariant', () => {
     expect(configure).toContain("resolve(root, 'public/terminal/markets/index.html')");
     expect(configure).toContain("resolve(root, 'public/terminal/index.html')");
     expect(configure).not.toContain("resolve(root, 'public/terminal/pro/index.html')");
-    expect(configure).toContain('injectRegistryExchange(exchangeSource, process.env)');
-    expect(configure).toContain('injectRegistryExchangeLanding(terminalSource, process.env)');
+    expect(configure).toContain('const buildEnv = registryExchangeBuildEnv(process.env)');
+    expect(configure).toContain('injectRegistryExchange(exchangeSource, buildEnv)');
+    expect(configure).toContain('injectRegistryExchangeLanding(terminalSource, buildEnv)');
     expect(configure.indexOf('const exchangeOutput =')).toBeLessThan(configure.indexOf('const writes ='));
     expect(configure.indexOf('const terminalOutput =')).toBeLessThan(configure.indexOf('const writes ='));
     expect(configure).toContain('await Promise.all(writes)');

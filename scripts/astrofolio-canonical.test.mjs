@@ -14,8 +14,10 @@ const currentCopyFiles = [
   'src/pages/terms/index.astro',
   'i18n-additions.md',
   'LISTINGS.md',
+  'DESIGNER_HANDOFF.md',
   'ZODIAC-GAMES.md',
   'zodiacs-thesis-v4.md',
+  'docs/STRATEGY.md',
   'public/astrofolio/index.html',
   'public/thesis/index.html',
   'public/sdk/index.html',
@@ -34,6 +36,7 @@ describe('Astrofolio canonical surface', () => {
     expect(sdk).toContain('href="/astrofolio/"');
     expect(guidance).toContain('https://zodiacs.org/astrofolio/');
     expect(guidance).toContain('official consumer collection experience');
+    expect(await read('public/astrofolio/index.html')).toContain('"dateModified": "2026-08-24"');
     expect(JSON.parse(reviewed).continuity).toEqual({
       value: 'Astrofolio at zodiacs.org/astrofolio · the official consumer collection experience',
       asOf: '2026-08-23',
@@ -48,6 +51,8 @@ describe('Astrofolio canonical surface', () => {
       /Astrofolio\.xyz is a separate website/i,
       /do not control Astrofolio\.xyz/i,
       /does not control Astrofolio\.xyz/i,
+      /Astrofolio is a related but separate consumer product/i,
+      /Astrofolio may be referenced subtly as a related experience/i,
     ];
 
     for (const [path, copy] of copies) {

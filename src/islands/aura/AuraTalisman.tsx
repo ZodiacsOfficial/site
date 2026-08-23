@@ -2,6 +2,7 @@ import { signBySlug } from '../../lib/signs';
 import {
   auraTalismanSummary,
   buildAuraTalisman,
+  talismanEdition,
   type AuraTalismanModel,
 } from '../../lib/aura/talisman';
 import type {
@@ -59,24 +60,6 @@ function TalismanArtwork({ model }: { model: AuraTalismanModel }) {
     >
       <title>The Cabinet of Twelve — collection seal</title>
       <desc>{summary}</desc>
-
-      <defs aria-hidden="true">
-        <linearGradient id="aura-talisman-bronze" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#efc39d" />
-          <stop offset="0.48" stop-color="#a96036" />
-          <stop offset="1" stop-color="#4c291d" />
-        </linearGradient>
-        <linearGradient id="aura-talisman-silver" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#f2f6fb" />
-          <stop offset="0.52" stop-color="#aab5c4" />
-          <stop offset="1" stop-color="#4a5260" />
-        </linearGradient>
-        <linearGradient id="aura-talisman-gold" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#fff0bd" />
-          <stop offset="0.5" stop-color="#d2a54d" />
-          <stop offset="1" stop-color="#68451c" />
-        </linearGradient>
-      </defs>
 
       <g class="aura-talisman__field" aria-hidden="true">
         <circle cx="500" cy="500" r="420" />
@@ -139,6 +122,7 @@ function TalismanArtwork({ model }: { model: AuraTalismanModel }) {
       <g class="aura-talisman__nodes" aria-hidden="true">
         {model.outerNodes.map((node) => {
           const selected = model.selectedSign === node.sign;
+          const edition = talismanEdition(node);
           return (
             <g
               key={node.sign}
@@ -147,36 +131,28 @@ function TalismanArtwork({ model }: { model: AuraTalismanModel }) {
               data-aura-talisman-node={node.sign}
               data-aura-talisman-represented={node.represented ? 'true' : 'false'}
               data-aura-talisman-finish={node.finish ?? undefined}
+              data-aura-talisman-edition={node.represented ? edition : undefined}
               data-aura-talisman-selected={selected ? 'true' : 'false'}
             >
               <g
-                class={`aura-talisman__node${node.represented ? ' is-represented' : ''}${node.finish ? ` is-${node.finish}` : ''}${selected ? ' is-selected' : ''}`}
+                class={`aura-talisman__node${node.represented ? ` is-represented is-${edition}` : ''}${selected ? ' is-selected' : ''}`}
                 style={{
-                  '--aura-talisman-hue': node.hue,
                   '--aura-talisman-index': String(node.index),
                 }}
               >
                 <circle class="aura-talisman__selection" r="49" />
                 <circle class="aura-talisman__node-ring" r="39" />
                 <circle class="aura-talisman__node-face" r="30" />
-                <text y="10">{`${node.glyph}︎`}</text>
-                {Array.from({ length: node.goldTallyArcs }, (_, index) => (
-                  <circle
-                    key={`${node.sign}-gold-tally-${index}`}
-                    class="aura-talisman__gold-tally"
-                    r={45 + index * 5}
-                    pathLength="100"
-                    stroke-dasharray="26 74"
-                    stroke-dashoffset={index === 0 ? '0' : '50'}
-                    data-aura-talisman-gold-tally={index + 1}
-                  />
-                ))}
-                {node.goldCountLabel && node.goldCount !== '1' && (
-                  <g class="aura-talisman__count" data-aura-talisman-count={node.goldCountLabel}>
-                    <rect x="17" y="22" width="45" height="25" rx="12.5" />
-                    <text x="39.5" y="40">{node.goldCountLabel}</text>
-                  </g>
-                )}
+                <image
+                  class="aura-talisman__node-icon"
+                  href={`/assets/zodiac-icons/128/${node.sign}.webp`}
+                  x="-30"
+                  y="-30"
+                  width="60"
+                  height="60"
+                  preserveAspectRatio="xMidYMid meet"
+                  data-aura-talisman-icon-source="sdk"
+                />
               </g>
             </g>
           );
