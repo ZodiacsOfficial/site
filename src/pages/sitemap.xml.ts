@@ -11,7 +11,15 @@ import { DEFAULT_LOCALE, LOCALE_META, alternatePathEntries, alternatePaths } fro
 import { CHINESE_ZODIAC_PATHS } from '../lib/programmatic-paths';
 import { registryAuraSitemapEntry } from '../lib/registry-aura-entry.mjs';
 import { INDEXABLE_PEOPLE, PEOPLE_DIRECTORY_INDEXABLE } from '../lib/people';
+import {
+  BIRTHDAY_CUSP_OG_MODIFIED_AT,
+  PEOPLE_TEMPLATE_MODIFIED_AT,
+  lastmodDate,
+  latestModifiedAt,
+  terminalResearchLastmod,
+} from '../lib/seo-lastmod';
 import { SIGNS } from '../lib/signs';
+import birthdayFactsData from '../data/birthdays.json';
 import daily from '../data/daily.json';
 import horoscopeProgram from '../data/horoscope-program.json';
 import eventsPublicationData from '../data/events-publication.json';
@@ -25,7 +33,10 @@ type RegistryResearchPublication = {
   items: Array<{ url: string; status: 'published' | 'scheduled'; visibleAt: string; publishedAt: string }>;
 };
 const registryResearchPublication = registryResearchPublicationData as unknown as RegistryResearchPublication;
+const birthdayFacts = birthdayFactsData as unknown as { days: Record<string, { cusp?: unknown }> };
+const researchLastmod = terminalResearchLastmod(registryResearchPublication);
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
+const AUDIT_REMEDIATION_LASTMOD = '2026-08-23';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -58,23 +69,23 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ['/birth-chart/', '2026-07-24'],
   ['/privacy/', '2026-07-26'],
   ['/registry/technical/', '2026-08-02'],
-  ['/terminal/research/', registryResearchPublication.generatedAt.slice(0, 10)],
+  ['/terminal/research/', researchLastmod],
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
-  ['/thesis/', '2026-08-05'],
+  ['/thesis/', AUDIT_REMEDIATION_LASTMOD],
   // Astrofolio, the Terminal market desk, and the Registry's twelve plain-language token records.
-  ['/astrofolio/', '2026-08-13'],
-  ['/terminal/', '2026-08-13'],
-  ['/registry/', '2026-08-11'],
+  ['/astrofolio/', AUDIT_REMEDIATION_LASTMOD],
+  ['/terminal/', AUDIT_REMEDIATION_LASTMOD],
+  ['/registry/', AUDIT_REMEDIATION_LASTMOD],
   ...[
     'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
     'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-  ].map((sign) => [`/registry/${sign}/`, '2026-08-10'] as const),
+  ].map((sign) => [`/registry/${sign}/`, AUDIT_REMEDIATION_LASTMOD] as const),
   ...[
     '/disclosure/',
     ...CHINESE_ZODIAC_PATHS,
   ].map((loc) => [loc, '2026-07-15'] as const),
   ['/birth-chart/someone-else/', '2026-07-18'],
-  ['/birth-chart/three-dimensions/', '2026-07-28'],
+  ['/birth-chart/three-dimensions/', AUDIT_REMEDIATION_LASTMOD],
   ...[
     '/pt/', '/pt/birth-chart/', '/pt/compatibility/', '/pt/moon-sign/',
     '/pt/rising-sign/', '/pt/moon-phase/', '/pt/saturn-return/', '/pt/transits/',
@@ -112,6 +123,14 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
     ].map((sign) => `/ru/${sign}/`),
   ].map((loc) => [loc, '2026-07-22'] as const),
+  // Full-audit remediation changed rendered copy, disclosures, navigation, or
+  // source receipts on these evergreen routes. Keep this explicit so a build
+  // does not manufacture freshness from its wall-clock time.
+  ...[
+    '/', '/learn/', '/learn/houses/', '/learn/zodiac-dates/', '/learn/glossary/',
+    '/methodology/', '/about/', '/privacy/', '/terms/', '/es/', '/disclosure/',
+    '/ru/disclosure/', '/registry/technical/', '/sdk/',
+  ].map((loc) => [loc, AUDIT_REMEDIATION_LASTMOD] as const),
 ]);
 
 function getLastmod(loc: string): string {
@@ -230,12 +249,18 @@ export const GET: APIRoute = async () => {
     ...(PEOPLE_DIRECTORY_INDEXABLE ? [{
       loc: '/people/',
       priority: 0.7,
-      lastmod: INDEXABLE_PEOPLE.map((person) => person.reviewedAtUtc.slice(0, 10)).sort().at(-1),
+      lastmod: lastmodDate(latestModifiedAt(
+        PEOPLE_TEMPLATE_MODIFIED_AT,
+        ...INDEXABLE_PEOPLE.map((person) => person.reviewedAtUtc),
+      )),
     }] : []),
     ...INDEXABLE_PEOPLE.map((person) => ({
       loc: `/people/${person.slug}/`,
       priority: 0.58,
-      lastmod: person.reviewedAtUtc.slice(0, 10),
+      lastmod: lastmodDate(latestModifiedAt(
+        PEOPLE_TEMPLATE_MODIFIED_AT,
+        person.reviewedAtUtc,
+      )),
     })),
     ...guides.map((g) => ({
       loc: `/${g.data.sign}/`,
@@ -281,7 +306,10 @@ export const GET: APIRoute = async () => {
     ...birthdays.map((b) => ({
       loc: `/birthday/${b.id}/`,
       priority: 0.65,
-      lastmod: b.data.updated.toISOString().slice(0, 10),
+      lastmod: lastmodDate(latestModifiedAt(
+        b.data.updated,
+        ...(birthdayFacts.days[b.id]?.cusp ? [BIRTHDAY_CUSP_OG_MODIFIED_AT] : []),
+      )),
     })),
     ...almanac.map((entry) => ({
       loc: `/almanac/${entry.id}/`,

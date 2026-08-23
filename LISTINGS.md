@@ -41,8 +41,9 @@ Long description:
 > canonical identity: a native Solana SPL asset and an official bridged
 > Base ERC-20 representation (via Wormhole). The registry, a read-only
 > verification SDK, and a per-sign catalogue page (lore, provenance,
-> official addresses) are published at zodiacs.org. Related consumer
-> experiences are maintained by Astrofolio (astrofolio.xyz).
+> official addresses) are published at zodiacs.org. The official Astrofolio
+> consumer experience is at zodiacs.org/astrofolio; astrofolio.xyz redirects
+> to that canonical page.
 
 Official links (use everywhere, consistently):
 
@@ -55,7 +56,7 @@ Official links (use everywhere, consistently):
 - Instagram: `https://www.instagram.com/astrofolioonsol/`
 - TikTok: `https://tiktok.com/@astrofolio`
 - Telegram: `https://t.me/astrofoliosol`
-- Related app: `https://astrofolio.xyz/`
+- Astrofolio: `https://zodiacs.org/astrofolio/` (`https://astrofolio.xyz/` is a redirect alias)
 - GitHub: `https://github.com/ZodiacsOfficial`
 - Per-sign share image (1200×630): `https://zodiacs.org/assets/og/{sign}.png`
 - Icon (square-ish PNG): `https://zodiacs.org/assets/icons/{sign}.png`

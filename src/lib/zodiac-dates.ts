@@ -53,7 +53,6 @@ export interface ZodiacDateRow {
   polarity: 'Day (yang)' | 'Night (yin)';
   modernRuler: string;
   classicalRuler: string;
-  naturalHouse: number;
   northernSeason: string;
   southernSeason: string;
   ingressUtc: Record<number, string>;
@@ -90,7 +89,6 @@ export const ZODIAC_DATE_ROWS: readonly ZodiacDateRow[] = SIGNS.map((sign, index
     polarity: sign.polarity === 'day' ? 'Day (yang)' : 'Night (yin)',
     modernRuler: sign.ruler,
     classicalRuler: sign.classicRuler ?? sign.ruler,
-    naturalHouse: sign.house,
     northernSeason: season.northern,
     southernSeason: season.southern,
     ingressUtc,
@@ -105,11 +103,4 @@ export function ingressIsoMinute(iso: string): string {
 /** Human UTC receipt at minute precision, e.g. 2026-03-20 · 14:45 UTC. */
 export function ingressDisplayMinute(iso: string): string {
   return `${iso.slice(0, 10)} · ${iso.slice(11, 16)} UTC`;
-}
-
-export function ordinalHouse(house: number): string {
-  if (house === 1) return '1st';
-  if (house === 2) return '2nd';
-  if (house === 3) return '3rd';
-  return `${house}th`;
 }

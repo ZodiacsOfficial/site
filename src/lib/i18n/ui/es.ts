@@ -23,7 +23,7 @@ const es = {
     footerThesis: 'Tesis',
     footerArchive: 'Archivo',
     footerSdk: 'SDK',
-    footerCollectNote: 'La zona de colección es solo lectura: sin custodia, sin firmas, sin transacciones. Nada allí es consejo financiero.',
+    footerCollectNote: 'Los registros, las consultas, los perfiles del catálogo y el SDK del Registry son de solo lectura. La herramienta opcional de compra de Astrofolio usa Jupiter independiente y tu propia cartera; Zodiacs.org no custodia claves ni fondos. Nada de esto es asesoramiento financiero.',
     footerMethodology: 'Metodología',
     footerAbout: 'Acerca de',
     footerPrivacy: 'Privacidad',

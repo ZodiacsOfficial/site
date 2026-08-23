@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { EDITOR_AUTHOR } from '../../lib/editorial';
+import { ASPECTS } from '../../lib/engine/aspects';
 
 const jsonLd = [
   {
@@ -8,7 +9,7 @@ const jsonLd = [
     headline: 'How zodiacs.org computes your chart',
     url: 'https://zodiacs.org/methodology/',
     datePublished: '2026-07-05T10:36:57Z',
-    dateModified: '2026-08-01T00:00:00Z',
+    dateModified: '2026-08-23T00:00:00Z',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/methodology/' },
@@ -66,6 +67,40 @@ const jsonLd = [
         so on the chart.
       </p>
 
+      <h2 id="natal-aspect-policy">Natal aspects and orbs</h2>
+      <p>
+        Natal charts test every pair from the Sun through Pluto for the five
+        major aspects below. The nodes are not included. An aspect is shown
+        when its distance from exact is at or below the listed orb; any pair
+        containing the Sun or Moon uses the wider luminary orb.
+      </p>
+      <div class="method-table-wrap">
+        <table class="method-table">
+          <thead>
+            <tr><th scope="col">Aspect</th><th scope="col">Exact angle</th><th scope="col">Standard orb</th><th scope="col">With Sun or Moon</th></tr>
+          </thead>
+          <tbody>
+            {ASPECTS.map((aspect) => (
+              <tr>
+                <th scope="row">{aspect.type.charAt(0).toUpperCase() + aspect.type.slice(1)}</th>
+                <td>{aspect.angle}°</td>
+                <td>≤ {aspect.orb}°</td>
+                <td>≤ {aspect.orbLuminary}°</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Applying and separating labels use the bodies’ computed daily
+        longitude speeds. The engine advances both positions by 0.02 day
+        (28.8 minutes): if the distance from the exact aspect is smaller after
+        that step, the aspect is applying; otherwise it is separating. The
+        displayed orb is the current absolute distance from exact, not the
+        forward-step distance. Fixed-chart synastry and composite aspects do
+        not receive applying or separating labels.
+      </p>
+
       <h2>Progressions, returns, and composites</h2>
       <p>
         Secondary progressions use the day-for-a-year method: one civil day after
@@ -82,7 +117,7 @@ const jsonLd = [
       <h2>Time zones</h2>
       <p>
         A birth chart is only as good as its clock conversion. We resolve your
-        birth time with the IANA time-zone history available in your browser's
+        birth time with the IANA time-zone history available in your browser's{' '}
         <strong>host ICU data</strong>: daylight saving in all its regional weirdness,
         wartime clock changes, and pre-standardization <em>local mean time</em>{' '}
         — including offsets with seconds, like Mexico City's −6:36:36 before
@@ -161,7 +196,7 @@ const jsonLd = [
       <p>
         AI agents may propose new templates or a constrained selection system in
         a future edition, but free-form model text cannot pass the current release
-        gate. The <a href="/data/editorial-constitution.json">editorial constitution</a>
+        gate. The <a href="/data/editorial-constitution.json">editorial constitution</a>{' '}
         is public. The exact policy version, generation mode, source hashes, and
         verification result for the live edition are available in the{' '}
         <a href="/data/daily-publication.json">daily publication record</a>.
@@ -182,4 +217,9 @@ const jsonLd = [
     font-size: var(--text-2xl);
     line-height: 1.04;
   }
+  .method-table-wrap { overflow-x: auto; margin: 18px 0 20px; }
+  .method-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  .method-table th,
+  .method-table td { padding: 10px 12px; border-bottom: 1px solid var(--hair-1); text-align: left; white-space: nowrap; }
+  .method-table thead th { color: var(--faint); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
 </style>

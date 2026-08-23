@@ -189,7 +189,7 @@ describe('thesis publication metadata contract', () => {
 
     expect(dates).toEqual([
       { datetime: '2026-08-01', label: 'Published 1 Aug 2026' },
-      { datetime: '2026-08-05', label: 'Updated 5 Aug 2026' },
+      { datetime: '2026-08-23', label: 'Updated 23 Aug 2026' },
     ]);
     expect(textOf(hero)).toContain('Evidence checked 31 Jul 2026');
   });
@@ -206,7 +206,7 @@ describe('thesis publication metadata contract', () => {
       headline: 'Why Zodiacs Matter',
       url: 'https://zodiacs.org/thesis/',
       datePublished: '2026-08-01',
-      dateModified: '2026-08-05',
+      dateModified: '2026-08-23',
     });
   });
 });
@@ -543,6 +543,12 @@ describe('thesis real-use proof and honest-limitation contract', () => {
     expect(tagParts(proof, 'code').map(({ inner }) => textOf(inner))).toEqual([mint]);
     expect(textOf(proof)).toContain('Check one exact mint independently across three public surfaces.');
     expect(textOf(proof)).toContain('Solflare is a third-party wallet surface. This demonstrates wallet recognition of the mint; it does not show that Solflare consumes the Zodiacs Registry or SDK.');
+  });
+
+  it('keeps the desktop proof loop full-width with copy below its fixed controls', () => {
+    expect(HTML).toMatch(/\.proof-loop__steps\s*\{[^}]*\bwidth\s*:\s*100%[^}]*\bmax-width\s*:\s*none/isu);
+    expect(HTML).toMatch(/\.proof-loop__step\s*\{[^}]*grid-template-columns\s*:\s*40px\s+minmax\(0,1fr\)\s+28px[^}]*grid-template-rows\s*:\s*auto\s+40px\s+auto/isu);
+    expect(HTML).toMatch(/\.proof-loop__copy\s*\{[^}]*grid-column\s*:\s*1\s*\/\s*-1[^}]*grid-row\s*:\s*3/isu);
   });
 
   it('keeps exactly one honest limitation in the visible essay', () => {

@@ -124,7 +124,7 @@ export function disclosureRows(locale: Locale): readonly DisclosureRow[] {
     status: 'verified',
     evidence: disclosureText(locale, 'tradeEvidence'),
     links: [
-      { label: disclosureText(locale, 'linkTradeExample'), href: '/registry/aries/' },
+      { label: disclosureText(locale, 'linkTradeExample'), href: '/astrofolio/how-to-buy/' },
       { label: disclosureText(locale, 'linkTerms'), href: '/terms/' },
     ],
   },

@@ -23,7 +23,7 @@ const fr = {
   footerThesis: 'Thèse',
   footerArchive: 'Archives',
   footerSdk: 'SDK',
-  footerCollectNote: 'L’aile des collections est en lecture seule : elle ne détient rien, ne demande aucune signature et n’effectue aucune transaction. Rien de ce qui s’y trouve ne constitue un conseil financier.',
+  footerCollectNote: 'Les fiches, recherches, profils du catalogue et le SDK du Registry sont en lecture seule. L’outil d’achat facultatif d’Astrofolio utilise Jupiter, un service indépendant, et ton propre portefeuille ; Zodiacs.org ne détient aucune clé ni aucun fonds. Rien de ceci ne constitue un conseil financier.',
   footerMethodology: 'Méthodologie',
   footerAbout: 'À propos',
   footerPrivacy: 'Confidentialité',

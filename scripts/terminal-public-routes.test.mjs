@@ -127,8 +127,8 @@ describe('Terminal public-route split', () => {
     const legacyUrls = await read('src/lib/legacy/urls.ts');
     expect(feed).toContain("home_page_url: 'https://zodiacs.org/terminal/research/'");
     expect(sitemap).toContain("'/terminal/research/'");
-    expect(sitemap).toContain("['/astrofolio/', '2026-08-13']");
-    expect(sitemap).toContain("['/terminal/', '2026-08-13']");
+    expect(sitemap).toContain("['/astrofolio/', AUDIT_REMEDIATION_LASTMOD]");
+    expect(sitemap).toContain("['/terminal/', AUDIT_REMEDIATION_LASTMOD]");
     expect(legacyUrls).toContain("{ path: '/astrofolio/', priority: 0.8 }");
     expect(legacyUrls).toContain("{ path: '/terminal/', priority: 0.78 }");
     expect(sitemap).not.toContain("'/registry/research/'");
@@ -141,8 +141,11 @@ describe('Terminal public-route split', () => {
     ]);
     for (const source of [index, article]) {
       expect(source).toContain("name: 'Terminal', item: 'https://zodiacs.org/terminal/'");
-      expect(source).toContain('jsonLd={[terminalResearchBreadcrumb]}');
       expect(source).not.toContain("name: 'Astrofolio'");
     }
+    expect(index).toContain('jsonLd={[terminalResearchCollection, terminalResearchBreadcrumb]}');
+    expect(index).toContain("isPartOf: { '@id': 'https://zodiacs.org/#site' }");
+    expect(index).not.toContain('https://zodiacs.org/#website');
+    expect(article).toContain('jsonLd={[terminalResearchBreadcrumb]}');
   });
 });

@@ -9,7 +9,7 @@
 //
 // Uses a local @babel/standalone install if one is present; otherwise fetches
 // the pinned Babel build from unpkg (the same CDN the site already trusted).
-import { readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
@@ -45,6 +45,11 @@ const THESIS_HTML = resolve(root, 'public/thesis/index.html');
 const REGISTRY_DATA = resolve(root, 'public/registry/zodiacs.registry.json');
 const REGISTRY_TECHNICAL_HTML = resolve(root, 'public/registry/technical/index.html');
 const REGISTRY_OUTLOOK = resolve(root, 'public/assets/registry-outlook.json');
+const VENDOR_DIR = resolve(root, 'public/assets/vendor');
+const REACT_RUNTIME_SOURCE = resolve(root, 'node_modules/react/umd/react.production.min.js');
+const REACT_DOM_RUNTIME_SOURCE = resolve(root, 'node_modules/react-dom/umd/react-dom.production.min.js');
+const REACT_RUNTIME = resolve(VENDOR_DIR, 'react-18.3.1.production.min.js');
+const REACT_DOM_RUNTIME = resolve(VENDOR_DIR, 'react-dom-18.3.1.production.min.js');
 
 const BABEL_VERSION = '7.26.4';
 const BABEL_URL = `https://unpkg.com/@babel/standalone@${BABEL_VERSION}/babel.min.js`;
@@ -215,8 +220,11 @@ const configuredTerminal = synchronizeTerminalStyles(
 );
 const configuredThesis = injectRegistryAuraThesis(thesisHtml, process.env).output;
 
+await mkdir(VENDOR_DIR, { recursive: true });
 await Promise.all([
   writeFile(OUT, output, 'utf8'),
+  copyFile(REACT_RUNTIME_SOURCE, REACT_RUNTIME),
+  copyFile(REACT_DOM_RUNTIME_SOURCE, REACT_DOM_RUNTIME),
   writeFile(REGISTRY_OUTLOOK, `${JSON.stringify(registryOutlook, null, 2)}\n`, 'utf8'),
   configuredAstrofolio !== astrofolioHtml ? writeFile(ASTROFOLIO_HTML, configuredAstrofolio, 'utf8') : null,
   configuredTerminal !== terminalHtml ? writeFile(TERMINAL_HTML, configuredTerminal, 'utf8') : null,
@@ -242,6 +250,7 @@ if (configuredTechnical !== technicalHtml) {
 const hash = createHash('sha256').update(output).digest('hex').slice(0, 12);
 console.log(`Wrote ${OUT}`);
 console.log(`  ${output.length} bytes  ·  sha256:${hash}  ·  from src/app.jsx (${source.length} bytes)`);
+console.log('Self-hosted React 18.3.1 runtime copied to public/assets/vendor.');
 console.log(`Wrote ${REGISTRY_TECHNICAL_HTML}`);
 console.log('  shared Registry styles · 12 signs · 24 official representations');
 console.log(`Wrote ${REGISTRY_OUTLOOK}`);

@@ -217,17 +217,22 @@
 .people-card__body > span {
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.04em;
+  line-height: 1.4;
+  overflow-wrap: normal;
+  white-space: normal;
 }
 
 .people-card__body small {
+  display: -webkit-box;
   overflow: hidden;
   color: var(--text-2);
   font-size: 12px;
   line-height: 1.35;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
 }
 
 .people-card--compact {

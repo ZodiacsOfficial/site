@@ -31,9 +31,9 @@ const ROW_IDS = [
 ] as const;
 const ATTESTED_IDS = ['operator', 'economic-interest'] as const;
 const VERIFIED_IDS = ['origin', 'separation', 'read-only', 'trade-panel', 'financial-advice'] as const;
-// The retired catalogue panel and no-venue replacement are checkable in the
-// generated pages, so nothing is pending. The chip machinery stays for future
-// rows.
+// The Registry catalogue boundary and separate opt-in Astrofolio tool are
+// checkable in source, so nothing is pending. The chip machinery stays for
+// future rows.
 const PENDING_IDS = [] as const;
 const ROUTE_TEXT_KEYS = [
   'metaTitle',
@@ -203,18 +203,22 @@ describe('registry disclosure contract', () => {
     }
     expect(statusText('en', 'operator-attested')).toBe(EN['disclosure.statusAttested']);
     expect(EN['disclosure.statusAttested']).toMatch(/not independently verified/i);
-    // The operator statement is the owner's final confirmation, verbatim:
-    // surface control answered directly, no analogy, no unverifiable negative,
-    // and none of the superseded hedged wording.
+    // The current attestation corrects the former domain-separation claim while
+    // leaving token administration, treasury, liquidity, and market control
+    // explicitly unestablished.
     const operator = DISCLOSURE_ROWS.find((row) => row.id === 'operator')!;
-    expect(operator.statement).toContain('I personally control the zodiacs.org domain, repository, deployments, and the Registry content published there');
-    expect(operator.statement).toContain('I do not control astrofolio.xyz, its official channels, token deployment or administrative authorities, treasury, liquidity, or market activity');
-    expect(operator.statement).toContain('No person, account, or organization responsible for zodiacs.org also controls those Astrofolio surfaces');
+    expect(operator.statement).toContain('official Astrofolio consumer experience at zodiacs.org/astrofolio');
+    expect(operator.statement).toContain('astrofolio.xyz redirects to that page and is not a separate consumer surface');
+    expect(operator.statement).toContain('does not establish who controls token deployment or administrative authorities, treasury, liquidity, or market activity');
+    expect(operator.evidence).toContain('supersedes only the 2026-08-02 claim');
     expect(operator.statement).not.toMatch(/bitcoin/i);
     expect(operator.evidence).not.toContain('No public record identifies');
     // The economic row pairs the attested holdings statement with the
     // publicly verifiable distribution figures, without refusal framing.
     const economic = DISCLOSURE_ROWS.find((row) => row.id === 'economic-interest')!;
+    expect(operator.statement).toContain('2026-08-23');
+    expect(economic.statement).toContain('2026-08-02');
+    expect(economic.statement).not.toContain('2026-08-23');
     expect(economic.statement).toContain('holding positions in one or more of the twelve Registry assets');
     expect(economic.evidence).toContain('ranged from 23.0% to 30.6%');
     expect(economic.evidence).toContain('median of 27.2%');
@@ -260,31 +264,28 @@ describe('registry disclosure contract', () => {
     expect(row.statement).toContain('request signatures or approvals');
     expect(row.statement).toContain('construct or submit transactions');
     expect(row.statement).toContain('switch networks');
-    expect(row.statement).toContain('Catalogue profiles stay read-only');
-    expect(row.statement).toContain('contain no purchase route or external trading link');
+    expect(row.statement).toContain('Registry lookup surfaces, catalogue profiles, and @zodiacs/sdk are read-only');
+    expect(row.statement).toContain('does not describe the separate, opt-in Astrofolio How to Buy tool');
     expect(row.statement).not.toContain('offer one external link to Jupiter');
     expect(row.statement).not.toContain('do not connect wallets');
     expect(row.evidence).toContain('forwards only the one address used for its holdings lookup');
     expect(row.evidence).toContain('not proof of identity, control, or legal ownership');
   });
 
-  it('describes the catalogue as read-only, with no purchase or venue path', () => {
+  it('separates read-only Registry profiles from the opt-in Astrofolio tool', () => {
     const row = DISCLOSURE_ROWS.find((candidate) => candidate.id === 'trade-panel')!;
     expect(row.status).toBe('verified');
-    expect(row.statement).toContain('Catalogue profiles contain no embedded trade panel, purchase route, or external venue link');
+    expect(row.statement).toContain('Registry catalogue profiles contain no embedded trade panel, purchase route, or external venue link');
     expect(row.statement).toContain('public market context and verified token addresses only');
-    expect(row.statement).not.toContain('Each profile has one external Jupiter link');
-    expect(row.statement).not.toContain('visitor’s wallet software handle the quote');
-    expect(row.statement).toContain('never holds keys or funds');
-    expect(row.statement).toContain('never builds, signs, or sends a transaction');
-    expect(row.statement).toContain('cannot reverse one');
-    expect(row.statement).toContain('configures no referral account or platform fee');
-    expect(row.statement).toContain('receives nothing from any trade');
-    expect(row.evidence).toContain('no wallet host, trade flag, trade runtime, transaction instructions, or venue deep-link');
-    expect(row.evidence).toContain('full trading interface, where enabled, remains outside the catalogue');
-    expect(row.evidence).not.toContain('one mint-pinned jup.ag link');
-    expect(row.evidence).not.toMatch(/enabled by an operator switch|not yet enabled/iu);
-    expect(row.links.map((link) => link.href)).toEqual(['/registry/aries/', '/terms/']);
+    expect(row.statement).toContain('separate Astrofolio How to Buy page');
+    expect(row.statement).toContain('independent Jupiter convenience tool');
+    expect(row.statement).toContain('visitor’s wallet reviews and signs locally');
+    expect(row.statement).toContain('Zodiacs.org never holds keys or funds');
+    expect(row.statement).toContain('signs a transaction');
+    expect(row.statement).toContain('gains the ability to reverse one');
+    expect(row.statement).not.toContain('receives nothing from any trade');
+    expect(row.evidence).toContain('loads Jupiter only after the visitor’s click');
+    expect(row.links.map((link) => link.href)).toEqual(['/astrofolio/how-to-buy/', '/terms/']);
   });
 
   it('defines official as a Registry classification without implying safety or value', () => {

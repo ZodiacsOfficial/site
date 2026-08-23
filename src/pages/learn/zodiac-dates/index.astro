@@ -10,12 +10,11 @@ import {
   ZODIAC_DATE_ROWS,
   ingressDisplayMinute,
   ingressIsoMinute,
-  ordinalHouse,
 } from '../../../lib/zodiac-dates';
 
 const PAGE_URL = 'https://zodiacs.org/learn/zodiac-dates/';
 const CSV_URL = PAGE_URL + 'zodiac-dates.csv';
-const PAGE_DATE = '2026-07-11';
+const PAGE_DATE = '2026-08-23';
 const [currentYear, nextYear] = INGRESS_YEARS;
 const headline = 'The living correspondence chart';
 const description =
@@ -56,7 +55,6 @@ const dataset = {
     'polarity',
     'modern ruler',
     'classical ruler',
-    'natural house',
     'Northern Hemisphere season',
     'Southern Hemisphere season',
     'Sun ingress instant in UTC',
@@ -137,7 +135,7 @@ const generatedReceipt = INGRESS_GENERATED_AT.slice(0, 10)
       <div class="section-head">
         <h2 id="correspondence-table">The twelve signs, in one table</h2>
         <p>
-          <strong>Convention: <a href="/learn/glossary/#tropical-zodiac">tropical zodiac</a>; instants in UTC.</strong>
+          <strong>Convention: <a href="/learn/glossary/#tropical-zodiac">tropical zodiac</a>; instants in UTC.</strong>{' '}
           Longitude ranges include their first degree and exclude their last.
           Seasons are listed for both hemispheres.
         </p>
@@ -159,7 +157,6 @@ const generatedReceipt = INGRESS_GENERATED_AT.slice(0, 10)
               <th scope="col">Modality</th>
               <th scope="col">Polarity</th>
               <th scope="col">Rulers</th>
-              <th scope="col">Natural house</th>
               <th scope="col">Seasons</th>
               <th scope="col">{currentYear} ingress</th>
               <th scope="col">{nextYear} ingress</th>
@@ -188,7 +185,6 @@ const generatedReceipt = INGRESS_GENERATED_AT.slice(0, 10)
                     <span><small>Classical</small> {row.classicalRuler}</span>
                   </span>
                 </td>
-                <td data-label="Natural house">{ordinalHouse(row.naturalHouse)}</td>
                 <td data-label="Seasons">
                   <span class="cell-lines">
                     <span><small>North</small> {row.northernSeason}</span>

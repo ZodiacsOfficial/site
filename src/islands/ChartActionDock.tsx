@@ -17,7 +17,7 @@ interface Props {
   compareLabel?: string;
   compareHref?: string;
   saveLabel?: string;
-  onSave?: () => void;
+  onSave?: (trigger: HTMLButtonElement) => void;
   onGuide: () => void;
   onShare: () => void;
   shareDisabled?: boolean;
@@ -68,7 +68,7 @@ export default function ChartActionDock({
           <button
             class="btn btn--primary"
             type="button"
-            onClick={onSave}
+            onClick={(event) => onSave?.(event.currentTarget)}
             aria-disabled={!onSave}
             data-save-chart
             data-primary-action={onSave ? 'save' : undefined}

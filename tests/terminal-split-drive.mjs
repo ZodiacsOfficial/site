@@ -1,13 +1,16 @@
 import assert from 'node:assert/strict';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { REGISTRY_AURA_ENTRY_COPY, injectRegistryAuraLanding } from '../src/lib/registry-aura-entry.mjs';
+import { resolveAstrofolioSeasonUtc, seasonsFromRegistry } from '../scripts/astrofolio-season.mjs';
 import { consumerizeRegistryCollection } from '../scripts/registry-consumer-entry.mjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const counts = { dex: 0, gecko: 0, wikimedia: 0, jupiter: 0, wallet: 0 };
+const registry = JSON.parse(await readFile(new URL('../public/registry/zodiacs.registry.json', import.meta.url), 'utf8'));
+const expectedSeason = resolveAstrofolioSeasonUtc(new Date(), seasonsFromRegistry(registry));
 
 function quotePayload(url) {
   const encoded = new URL(url).pathname.split('/').at(-1) || '';
@@ -111,6 +114,12 @@ async function waitForTerminal(page, selector) {
   assert.ok((await page.locator('body').innerText()).trim().length > 500);
 }
 
+async function waitForConsumerQuote(page) {
+  await page.waitForFunction(() => (
+    /^\$/u.test(document.querySelector('.vitrine-placard__layer.is-active .vitrine-price__figure')?.textContent?.trim() ?? '')
+  ), undefined, { timeout: 30_000 });
+}
+
 async function assertFirstScreen(page, { width, height }) {
   const opening = page.locator('.astrofolio-vitrine');
   const viewport = page.viewportSize();
@@ -201,6 +210,38 @@ async function assertPastelSelectorGeometry(page, { width, height, staticView = 
   assert.match(activeGlow.transition, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
 }
 
+async function assertMobileDiscPicker(page) {
+  const geometry = await page.locator('.vitrine-disc-picker').evaluate((picker) => {
+    const [previous, next] = picker.querySelectorAll('.vitrine-disc-picker__arrow');
+    const rail = picker.querySelector('.vitrine-disc-rail');
+    const hint = picker.querySelector('.vitrine-disc-picker__hint');
+    const rect = (node) => node?.getBoundingClientRect();
+    const previousRect = rect(previous);
+    const railRect = rect(rail);
+    const nextRect = rect(next);
+    const pickerRect = rect(picker);
+    return {
+      arrowCount: picker.querySelectorAll('.vitrine-disc-picker__arrow').length,
+      previous: previousRect && { left: previousRect.left, right: previousRect.right, width: previousRect.width, height: previousRect.height },
+      rail: railRect && { left: railRect.left, right: railRect.right, width: railRect.width },
+      next: nextRect && { left: nextRect.left, right: nextRect.right, width: nextRect.width, height: nextRect.height },
+      picker: pickerRect && { left: pickerRect.left, right: pickerRect.right, width: pickerRect.width },
+      hintDisplay: hint ? getComputedStyle(hint).display : '',
+      hintText: hint?.textContent?.trim(),
+      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    };
+  });
+  assert.equal(geometry.arrowCount, 2);
+  assert.ok(geometry.previous && geometry.previous.width >= 44 && geometry.previous.height >= 44);
+  assert.ok(geometry.next && geometry.next.width >= 44 && geometry.next.height >= 44);
+  assert.ok(geometry.rail && geometry.previous.right <= geometry.rail.left, 'the previous control does not overlap the scroll rail');
+  assert.ok(geometry.rail && geometry.next.left >= geometry.rail.right, 'the next control does not overlap the scroll rail');
+  assert.ok(geometry.picker && geometry.picker.left >= 0 && geometry.picker.right <= 390, 'the picker stays inside the mobile viewport');
+  assert.equal(geometry.hintDisplay, 'block');
+  assert.equal(geometry.hintText, 'Swipe or use the arrows to see all twelve signs.');
+  assert.ok(geometry.overflow <= 0, 'the sign picker creates no horizontal page overflow');
+}
+
 if (OUT) await mkdir(OUT, { recursive: true });
 
 const browser = await chromium.launch({
@@ -221,8 +262,8 @@ try {
     const errors = watchErrors(page, 'Astrofolio mobile');
     await page.goto(`${baseURL}/astrofolio/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
     await waitForTerminal(page, '#consumer-explorer-title');
-    assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), 'Leo Season · The Twelve');
-    assert.equal(await page.locator('.astrofolio-lockup__copy small strong').innerText(), 'Leo');
+    assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), `${expectedSeason.displayName} Season · The Twelve`);
+    assert.equal(await page.locator('.astrofolio-lockup__copy small strong').innerText(), expectedSeason.displayName);
     assert.match(await page.locator('.astrofolio-lockup__avatar').getAttribute('src') ?? '', /\/assets\/astrofolio\/v2\/zodiac-ring-192\.png$/u);
     assert.match(await page.locator('.astrofolio-lockup__avatar').evaluate((node) => getComputedStyle(node).backgroundImage), /#010204|rgb\(1, 2, 4\)/u);
     assert.equal(await page.locator('.terminal-consumer-hero__kicker').innerText(), 'Astrofolio');
@@ -236,6 +277,10 @@ try {
       const navStyle = getComputedStyle(nav);
       const search = nav.querySelector('.wnav__search');
       const searchStyle = search ? getComputedStyle(search) : null;
+      const chip = nav.querySelector('.wnav__chip');
+      const chipStyle = chip ? getComputedStyle(chip) : null;
+      const burger = nav.querySelector('.wnav__burger');
+      const burgerStyle = burger ? getComputedStyle(burger) : null;
       return {
         overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
         left: box.left,
@@ -248,21 +293,29 @@ try {
         searchBackground: searchStyle?.backgroundColor,
         searchBorder: searchStyle?.borderTopWidth,
         searchWidth: searchStyle?.width,
+        searchHeight: searchStyle?.height,
+        chipHeight: chipStyle?.height,
+        burgerWidth: burgerStyle?.width,
+        burgerHeight: burgerStyle?.height,
       };
     });
     assert.ok(compactNav.overflow <= 0, 'the 320px navigation does not create horizontal overflow');
     assert.ok(compactNav.left >= 0 && compactNav.right <= 320, 'the single glass capsule stays inside the 320px viewport');
-    assert.ok(Math.abs(compactNav.width - 309.5) <= 2, `the capsule matches the live Zodiacs width (${compactNav.width}px)`);
+    assert.ok(compactNav.width <= 308, `the compact capsule leaves viewport breathing room (${compactNav.width}px)`);
     assert.notEqual(compactNav.navBackground, 'rgba(0, 0, 0, 0)', 'the navigation keeps its liquid-glass tint');
     assert.notEqual(compactNav.navBackdrop, 'none', 'the navigation keeps its refractive or frosted backdrop');
     assert.equal(compactNav.navBorder, '1px', 'the glass capsule keeps its optical hairline');
     assert.equal(compactNav.navRadius, '999px', 'the navigation remains one capsule');
     assert.equal(compactNav.searchBackground, 'rgba(0, 0, 0, 0)', 'search has no separate circle background');
     assert.equal(compactNav.searchBorder, '0px', 'search has no separate circle border');
-    assert.equal(compactNav.searchWidth, '34px', 'search remains a compact control inside the capsule');
+    assert.equal(compactNav.searchWidth, '44px', 'search keeps a 44px touch target inside the capsule');
+    assert.equal(compactNav.searchHeight, '44px', 'search keeps a 44px touch target inside the capsule');
+    assert.ok(Number.parseFloat(compactNav.chipHeight) >= 44, 'the Astrofolio chip keeps a 44px touch target');
+    assert.equal(compactNav.burgerWidth, '44px', 'the menu keeps a 44px touch target');
+    assert.equal(compactNav.burgerHeight, '44px', 'the menu keeps a 44px touch target');
     await page.setViewportSize({ width: 390, height: 844 });
 
-    await page.waitForFunction(() => !document.querySelector('.vitrine-price__figure')?.textContent?.includes('loading'));
+    await waitForConsumerQuote(page);
     assert.equal(counts.dex, 1, 'the first-screen placard uses one batched quote request');
     assert.equal(await page.locator('[data-consumer-sign]').count(), 12);
     assert.equal(await page.locator('[data-vitrine-sculpture="pisces"].is-active').count(), 1);
@@ -273,6 +326,7 @@ try {
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'How to buy');
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
     assert.equal(await page.locator('.vitrine-placard__market-actions').count(), 0);
+    assert.match(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-official-note').innerText(), /^Here, “official” means the address is listed in the Zodiacs Registry/u);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').count(), 0);
     const primaryCtaStyle = await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').evaluate((node) => {
       const style = getComputedStyle(node);
@@ -325,7 +379,17 @@ try {
     assert.equal(counts.wikimedia, 0);
     assert.equal(counts.jupiter, 0);
     assert.equal(counts.wallet, 0);
+    await assertMobileDiscPicker(page);
     await assertPastelSelectorGeometry(page, { width: 390, height: 844 });
+
+    await page.getByRole('button', { name: 'Previous sign' }).click();
+    await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="aquarius"]')?.classList.contains('is-active'));
+    assert.equal(await page.getByRole('button', { name: 'Next sign' }).isEnabled(), true);
+    await page.getByRole('button', { name: 'Next sign' }).click();
+    await page.waitForFunction(() => (
+      document.querySelectorAll('.vitrine-stage__layer').length === 1
+      && document.querySelector('[data-vitrine-sculpture="pisces"]')?.classList.contains('is-active')
+    ));
 
     const selector = page.locator('[data-consumer-sign="pisces"]');
     await selector.focus();
@@ -354,6 +418,20 @@ try {
     await page.locator('[data-consumer-sign="aries"]').click();
     await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="aries"]')?.classList.contains('is-active'));
     await page.waitForTimeout(40);
+    await page.evaluate(() => {
+      window.__vitrineOpacitySamples = [];
+      window.__vitrineOpacitySamplingDone = false;
+      const started = performance.now();
+      const sample = (now) => {
+        const opacity = [...document.querySelectorAll('.vitrine-stage__layer')].reduce((sum, node) => (
+          sum + Number.parseFloat(getComputedStyle(node).opacity)
+        ), 0);
+        window.__vitrineOpacitySamples.push(opacity);
+        if (now - started < 320) window.requestAnimationFrame(sample);
+        else window.__vitrineOpacitySamplingDone = true;
+      };
+      window.requestAnimationFrame(sample);
+    });
     const interruptedOutgoingOpacity = await page.locator('[data-vitrine-sculpture="pisces"]').first().evaluate((node) => {
       const opacity = Number.parseFloat(getComputedStyle(node).opacity);
       document.querySelector('[data-consumer-sign="leo"]')?.click();
@@ -361,11 +439,11 @@ try {
     });
     assert.ok(interruptedOutgoingOpacity > 0, 'the outgoing decoded artwork remains visible during its fade');
     await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active'));
-    const compositeOpacity = await page.locator('.vitrine-stage__layer').evaluateAll((nodes) => nodes.reduce((sum, node) => (
-      sum + Number.parseFloat(getComputedStyle(node).opacity)
-    ), 0));
-    assert.ok(compositeOpacity >= .75, `rapid retargeting preserves the visible artwork composite (${compositeOpacity})`);
     assert.equal(await page.locator('[data-vitrine-sculpture="pisces"]').count(), 1, 'rapid selection retains the partially faded layer instead of flashing it away');
+    await page.waitForFunction(() => window.__vitrineOpacitySamplingDone === true);
+    const opacitySamples = await page.evaluate(() => window.__vitrineOpacitySamples);
+    const minimumCompositeOpacity = Math.min(...opacitySamples);
+    assert.ok(minimumCompositeOpacity >= .9, `rapid retargeting preserves the visible artwork composite (${minimumCompositeOpacity})`);
     await page.waitForFunction(() => (
       document.querySelectorAll('.vitrine-stage__layer').length === 1
       && document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active')
@@ -374,6 +452,7 @@ try {
     assert.equal(await page.locator('[data-vitrine-placard="leo"].is-active .btn--ghost').getAttribute('href'), '/astrofolio/how-to-buy/leo/');
     assert.equal(await page.locator('.vitrine-stage__layer').count(), 1, 'an interrupted fade settles to one artwork layer');
     assert.equal(await page.locator('.vitrine-placard__layer').count(), 1, 'an interrupted fade settles to one placard layer');
+    assert.equal(await page.locator('.is-interrupt-anchor').count(), 0, 'the interruption anchor is removed after the crossfade settles');
     assert.equal(await page.locator('[data-vitrine-sculpture="leo"].is-active').count(), 1);
     assert.equal(await page.locator('[data-vitrine-placard="leo"] [role="status"]').count(), 1);
     assert.equal(await page.locator('[data-vitrine-placard="leo"] [aria-hidden="true"][role="status"]').count(), 0);
@@ -396,7 +475,7 @@ try {
     const desktopErrors = watchErrors(desktopPage, 'Astrofolio desktop');
     await desktopPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(desktopPage, '#consumer-explorer-title');
-    await desktopPage.waitForFunction(() => !document.querySelector('.vitrine-price__figure')?.textContent?.includes('loading'));
+    await waitForConsumerQuote(desktopPage);
     await assertFirstScreen(desktopPage, { width: 1440, height: 900 });
     await assertPastelSelectorGeometry(desktopPage, { width: 1440, height: 900 });
     if (OUT) await desktopPage.screenshot({ path: `${OUT}/astrofolio-1440x900.png`, fullPage: false });
@@ -437,7 +516,7 @@ try {
     const frenchPage = await frenchLocale.newPage();
     await frenchPage.goto(`${baseURL}/astrofolio/?sign=aries`, { waitUntil: 'load' });
     await waitForTerminal(frenchPage, '#consumer-explorer-title');
-    await frenchPage.waitForFunction(() => !document.querySelector('.vitrine-price__figure')?.textContent?.includes('loading'));
+    await waitForConsumerQuote(frenchPage);
     const frenchPlacard = frenchPage.locator('[data-vitrine-placard="aries"].is-active');
     assert.equal(await frenchPlacard.locator('.vitrine-price__figure').innerText(), '$1,234.50');
     assert.equal(await frenchPlacard.locator('.vitrine-price__movement').innerText(), 'up 0.50% today');
@@ -533,7 +612,7 @@ try {
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#static-astrofolio-title').innerText(), 'Choose your sign');
     assert.equal(await noJsPage.locator('.static-astrofolio-kicker').innerText(), 'Astrofolio');
-    assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), 'Leo Season · The Twelve');
+    assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), `${expectedSeason.displayName} Season · The Twelve`);
     assert.equal(await noJsPage.locator('.static-vitrine__choice').count(), 12);
     assert.equal(await noJsPage.locator('.static-vitrine__panel').count(), 12);
     assert.equal(await noJsPage.locator('#market-snapshot').count(), 1);
@@ -552,6 +631,16 @@ try {
     assert.equal(await noJsPage.locator('#market-layer a[href="/terminal/"]').count(), 1);
     assert.equal(await noJsPage.locator('#market-layer a[href="/terminal/markets/"]').count(), 1);
     assert.equal(await noJsPage.locator('#market-layer .consumer-market-gateway__token').count(), 12);
+    const staticPageGeometry = await noJsPage.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      shopImages: [...document.querySelectorAll('.static-shop__image')].map((link) => {
+        const box = link.getBoundingClientRect();
+        return { left: box.left, right: box.right, width: box.width };
+      }),
+    }));
+    assert.ok(staticPageGeometry.scrollWidth <= staticPageGeometry.viewport, 'the no-JavaScript Astrofolio page has no horizontal overflow');
+    assert.ok(staticPageGeometry.shopImages.every(({ left, right, width }) => left >= 0 && right <= staticPageGeometry.viewport && width > 0), 'every no-JavaScript shop image stays inside the mobile viewport');
     const staticStoryStyle = await noJsPage.locator('.static-story-band').evaluate((node) => {
       const image = node.querySelector('img');
       const picture = node.querySelector('picture')?.getBoundingClientRect();
@@ -575,12 +664,14 @@ try {
     assert.notEqual(staticStoryStyle.filter, 'none');
     assert.doesNotMatch(staticStoryStyle.filter, /grayscale/u);
     assert.ok(staticStoryStyle.pictureBottom <= staticStoryStyle.copyTop + 1, 'the no-JavaScript thesis image sits above its copy');
-    assert.equal(staticStoryStyle.buttonRadius, '0px');
-    await assertStaticFirstScreen(noJsPage, { width: 390, height: 844, slug: 'leo' });
+    await assertStaticFirstScreen(noJsPage, { width: 390, height: 844, slug: expectedSeason.sign });
     await assertPastelSelectorGeometry(noJsPage, { width: 390, height: 844, staticView: true });
-    const staticStageBefore = await noJsPage.locator('[data-static-sign="leo"] .static-vitrine__stage').boundingBox();
-    await noJsPage.locator('#astrofolio-leo').focus();
-    for (let index = 0; index < 7; index += 1) await noJsPage.keyboard.press('ArrowRight');
+    const staticStageBefore = await noJsPage.locator(`[data-static-sign="${expectedSeason.sign}"] .static-vitrine__stage`).boundingBox();
+    await noJsPage.locator(`#astrofolio-${expectedSeason.sign}`).focus();
+    const expectedIndex = registry.assets.findIndex(({ sign }) => sign === expectedSeason.sign);
+    const piscesIndex = registry.assets.findIndex(({ sign }) => sign === 'pisces');
+    const stepsToPisces = (piscesIndex - expectedIndex + registry.assets.length) % registry.assets.length;
+    for (let index = 0; index < stepsToPisces; index += 1) await noJsPage.keyboard.press('ArrowRight');
     assert.equal(await noJsPage.locator('#astrofolio-pisces').isChecked(), true);
     const railBox = await noJsPage.locator('.static-vitrine__rail').boundingBox();
     const selectedLabelBox = await noJsPage.locator('#astrofolio-pisces-label').boundingBox();
@@ -618,7 +709,7 @@ try {
       await assertPastelSelectorGeometry(noJsPage, { ...viewport, staticView: true });
     }
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
-    await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900, slug: 'leo' });
+    await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900, slug: expectedSeason.sign });
     if (OUT) await noJsPage.screenshot({ path: `${OUT}/astrofolio-no-js-1440x900.png`, fullPage: false });
     await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#pro-static-title').innerText(), 'Terminal');

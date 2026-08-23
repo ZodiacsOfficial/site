@@ -28,7 +28,7 @@ export const SIGN_PAGES = {
     babylonianRecord: 'LÚ.ḪUN.GÁ — “the Hired Man”, labourer of the spring fields',
     principalStar: { name: 'Hamal', note: '“head of the ram” — α Arietis' },
     lede:
-      'First of the Twelve. For two thousand years astronomers have called the point where the sun crosses into spring “the first point of Aries” — the zero-degree of every chart ever drawn. This is the record of the sign that opens the wheel.',
+      'First of the Twelve. In the tropical zodiac, 0° Aries is anchored to the March equinox — the conventional starting point for tropical longitude. This is the record of the sign that opens the wheel.',
     note: [
       'The figure begins in Babylon, where the spring stars were recorded in the MUL.APIN catalogues as LÚ.ḪUN.GÁ, “the Hired Man” — the agrarian labourer who appears when the fields demand him. When the scribes of the fifth century BC divided the sun’s road into twelve equal signs, his place at the head of the year was already old.',
       'Greece gave the stars their ram: Chrysomallos, the winged ram of the golden fleece, who carried Phrixus across the strait and was set in the sky for it. The fleece itself — nailed in a grove at Colchis under a sleepless serpent — became the object of the first great quest in Western literature, the voyage of Jason and the Argonauts.',
@@ -281,8 +281,8 @@ export const MARKET_PAIRS = {
   pisces:      { chainId: 'solana', pairId: 'Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko' }
 };
 
-// Official public channels (shared with astrofolio.xyz, the related
-// consumer experience around the Twelve).
+// Official public channels for Astrofolio, the Zodiacs.org consumer
+// collection experience around the Twelve. Astrofolio.xyz redirects there.
 export const CHANNELS = [
   { name: 'X',         handle: '@astrofoliosol',   url: 'https://x.com/astrofoliosol' },
   { name: 'Instagram', handle: '@astrofolioonsol', url: 'https://www.instagram.com/astrofolioonsol/' },

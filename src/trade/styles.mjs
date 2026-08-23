@@ -197,6 +197,7 @@ export const TP_CSS = `
   background: var(--tp-hair);
 }
 .tp .detail { min-width: 0; padding: 8px 9px; background: rgba(8,10,16,.92); }
+.tp .detail:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .tp .detail dt {
   margin: 0 0 3px; color: var(--tp-dim);
   font-family: ui-monospace, 'JetBrains Mono', monospace;
@@ -310,9 +311,18 @@ export const TP_CSS = `
 .tp__mark.ap { height: 15px; opacity: .9; }
 
 .tp .err {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
   margin: 14px 0 0; padding: 11px 13px;
   border: 1px solid color-mix(in srgb, var(--tp-red) 45%, transparent);
   border-radius: 10px; color: var(--tp-ink-2); font-size: 13px;
+}
+.tp .err__message { margin: 0; }
+.tp .err__retry {
+  min-height: 44px; flex: none; padding: 0 14px;
+  border: 1px solid var(--tp-hair-2); border-radius: 999px;
+  background: transparent; color: var(--tp-ink);
+  font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1;
+  cursor: pointer;
 }
 .tp .after { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .tp .after li { padding-left: 16px; position: relative; color: var(--tp-ink-2); font-size: 13px; }

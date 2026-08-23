@@ -10,6 +10,7 @@ import {
   peopleDisciplineGroups,
 } from '../../lib/people';
 import { SIGNS } from '../../lib/signs';
+import { PEOPLE_TEMPLATE_MODIFIED_AT } from '../../lib/seo-lastmod';
 
 const disciplines = PEOPLE_DISCIPLINE_FILTERS.map((discipline) => ({
   ...discipline,
@@ -44,6 +45,7 @@ const jsonLd = [
     url: 'https://zodiacs.org/people/',
     name: 'People',
     description: 'Sourced, time-honest astrology charts for people in the public record.',
+    dateModified: PEOPLE_TEMPLATE_MODIFIED_AT,
     mainEntity: { '@id': 'https://zodiacs.org/people/#list' },
     isPartOf: { '@id': 'https://zodiacs.org/#site' },
   },

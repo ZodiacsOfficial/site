@@ -6,7 +6,8 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
-const updated = '22 August 2026';
+const updated = '23 August 2026';
+const modifiedAt = '2026-08-23T00:00:00.000Z';
 
 const jsonLd = [
   {
@@ -14,13 +15,14 @@ const jsonLd = [
     name: 'Privacy at Zodiacs.org',
     url: 'https://zodiacs.org/privacy/',
     description:
-      'How zodiacs.org handles birth charts, Living Chart entries, browser storage, sharing, analytics, accounts, and assistant messages.',
+      'How Zodiacs.org handles birth charts, browser storage, accounts, Guide, analytics, public wallet lookups, and opt-in Jupiter requests.',
+    dateModified: modifiedAt,
   },
 ];
 ---
 <Base
   title="Privacy — How Your Data Is Handled | Zodiacs.org"
-  description="How zodiacs.org handles birth charts, Living Chart entries, browser storage, sharing, analytics, accounts, and assistant messages."
+  description="How Zodiacs.org handles birth charts, browser storage, accounts, Guide, analytics, public wallet lookups, and opt-in Jupiter requests."
   path="/privacy/"
   jsonLd={jsonLd}
 >
@@ -31,7 +33,7 @@ const jsonLd = [
     <div class="prose">
       <p class="lede">
         Chart calculation runs in your browser. Birth fields
-        are not sent as part of calculation or a The Cabinet of Twelve lookup; they
+        are not sent as part of calculation or a Cabinet of Twelve lookup; they
         leave your device only if you choose account sync or type them into an
         assistant message. If you explicitly attach a chart to the assistant,
         a placements-only summary also leaves the device; saved names and raw
@@ -168,16 +170,17 @@ const jsonLd = [
         retention practices apply.
       </p>
       <p>
-        On the Astrofolio How to Buy page, opening the page or changing the selected sign does not contact
-        Jupiter, Dex Screener, or wallet software. After you explicitly load the optional convenience tool,
-        your browser requests a live, taker-less quote from Jupiter and indexed-liquidity context from Dex
-        Screener. These display requests do not include a wallet address. If you choose to review a direct
-        swap, the compatible wallet you select supplies its public Solana address to Jupiter so Jupiter can
-        build the exact transaction for your review. Your wallet signs locally. Your browser then sends the
-        signed transaction and Jupiter request identifier to Jupiter's execution endpoint. Neither the public
-        address nor the signed transaction is sent to a Zodiacs.org server, and Zodiacs.org never asks for or
-        receives a recovery phrase or private key. Jupiter and Dex Screener receive ordinary web-request
-        metadata, and their own privacy terms and retention practices apply.
+        On the Astrofolio How to Buy page, opening the page or changing the selected sign does not load
+        Jupiter, contact wallet software, or request a quote. After you explicitly load the optional
+        convenience tool, your browser sends the selected token mint and requested amount as quote parameters
+        to independent Jupiter and requests indexed-liquidity context from Dex Screener. Those display requests
+        do not include a wallet address. If you choose to review a direct swap, the compatible wallet you select
+        supplies its public Solana address to Jupiter so Jupiter can build the exact transaction for your review.
+        Your wallet signs locally. Your browser then sends the signed transaction and Jupiter request identifier
+        to Jupiter's execution endpoint. Neither the public address nor the signed transaction is sent to a
+        Zodiacs.org server, and Zodiacs.org never asks for or receives a recovery phrase or private key. Jupiter,
+        Dex Screener, and your wallet service may receive ordinary web-request metadata such as your IP address,
+        browser information, and request time; their own privacy terms and retention practices apply.
       </p>
       <p>
         Each sign&rsquo;s Registry profile is read-only. It shows public market data

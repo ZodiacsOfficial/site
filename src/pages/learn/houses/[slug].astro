@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
-import SignIcon from '../../../components/SignIcon.astro';
 import HouseWheel from '../../../components/HouseWheel.astro';
 import { SIGNS } from '../../../lib/signs';
 import { EDITOR_AUTHOR } from '../../../lib/editorial';
@@ -38,8 +37,9 @@ const n = entry.data.house;
 const slug = entry.id.split('/')[1];
 const { Content } = await render(entry);
 
-// Natural sign association: house n ↔ nth sign of the zodiac.
-const naturalSign = SIGNS[n - 1];
+// The sequential palette keeps the wheel visually indexed; it is not a claim
+// that the nth sign rules or determines the nth house.
+const houseHue = SIGNS[n - 1].hue;
 const prevSlug = n > 1 ? HOUSE_SLUGS[n - 2] : null;
 const nextSlug = n < 12 ? HOUSE_SLUGS[n] : null;
 
@@ -90,21 +90,18 @@ const jsonLd = [
   <article class="container container--narrow learn-detail">
     <header class="learn-detail__hero learn-detail__hero--figured reveal">
       <div class="learn-detail__heroText">
-      <span class="learn-hero-glyph house-badge" style={`--sign:${naturalSign.hue}`} aria-hidden="true">{n}</span>
+      <span class="learn-hero-glyph house-badge" style={`--sign:${houseHue}`} aria-hidden="true">{n}</span>
       <em class="kicker">The houses</em>
       <h1 id={slug} class="display">The {ORDINALS[n - 1]} house</h1>
       <p class="learn-detail__role">{entry.data.theme}</p>
       <p class="learn-detail__facts mono">
-        House {n} of 12 · natural affinity
-        <a class="learn-detail__signlink" href={`/${naturalSign.slug}/`}>
-          <SignIcon sign={naturalSign.slug} size={16} /> {naturalSign.name}
-        </a>
-        {n === 1 && ' · cusp: the ascendant'}
-        {n === 7 && ' · cusp: the descendant'}
-        {n === 10 && ' · cusp: the midheaven (MC)'}
+        House {n} of 12
+        {n === 1 && ' · horizon angle: ascendant'}
+        {n === 7 && ' · horizon angle: descendant'}
+        {n === 10 && ' · associated angle: midheaven (MC)'}
       </p>
       </div>
-      <HouseWheel house={n} hue={naturalSign.hue} size={232} class="learn-detail__figure" />
+      <HouseWheel house={n} hue={houseHue} size={232} class="learn-detail__figure" />
     </header>
 
     <div class="prose reveal">
@@ -164,16 +161,6 @@ const jsonLd = [
     gap: 6px;
     flex-wrap: wrap;
   }
-  .learn-detail__signlink {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--text-2);
-    text-decoration: none;
-  }
-  .learn-detail__signlink:hover { color: var(--text); }
-  .learn-detail__signlink :global(img) { border-radius: 50%; }
-
   .learn-detail__cta-core { padding: clamp(22px, 4vw, 32px); display: grid; gap: 10px; justify-items: start; }
   .learn-detail__cta-core strong { font-size: var(--text-lg); letter-spacing: -0.01em; }
   .learn-detail__cta-core p { margin: 0; font-size: var(--text-sm); color: var(--text-2); }

@@ -117,7 +117,11 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
   go.type = 'button';
   const walletHint = el('p', 'nowallet');
   const routes = el('div', 'routes');
-  const errorBox = el('p', 'err');
+  const errorBox = el('div', 'err');
+  const errorMessage = el('p', 'err__message');
+  const errorRetry = el('button', 'err__retry', 'Try quote again');
+  errorRetry.type = 'button';
+  errorBox.append(errorMessage, errorRetry);
   errorBox.hidden = true;
   const after = el('ul', 'after');
   after.hidden = true;
@@ -294,7 +298,7 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
     reviewNotice.textContent = view.reviewNotice || '';
 
     errorBox.hidden = !view.error;
-    errorBox.textContent = view.error || '';
+    errorMessage.textContent = view.error || '';
 
     after.hidden = !view.after;
     if (view.after) after.replaceChildren(...view.after.map((t) => el('li', null, t)));
@@ -372,11 +376,13 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
     if (b) controller.setPayMethod(b.dataset.method);
   };
   const onGo = () => controller.review();
+  const onRetry = () => controller.refreshQuote();
 
   input.addEventListener('input', onInput);
   presets.addEventListener('click', onPresets);
   methods.addEventListener('click', onMethods);
   go.addEventListener('click', onGo);
+  errorRetry.addEventListener('click', onRetry);
 
   paintFn = paint;
   paint(controller.view());
@@ -394,6 +400,7 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
       presets.removeEventListener('click', onPresets);
       methods.removeEventListener('click', onMethods);
       go.removeEventListener('click', onGo);
+      errorRetry.removeEventListener('click', onRetry);
       window.clearInterval(ageClock);
       controller.destroy();
       host.replaceChildren();

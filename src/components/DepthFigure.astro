@@ -12,6 +12,7 @@ import {
   gmstHours,
   horizonCircle,
   inclinedCircle,
+  julianCenturies,
   norm360,
   OBLIQUITY,
   orient,
@@ -20,7 +21,7 @@ import {
   type EclipticPoint,
   type Projected,
 } from '../lib/wheel/ecliptic3d';
-import { ramcOf } from '../lib/engine/houses';
+import { meanObliquity, ramcOf } from '../lib/engine/houses';
 import { SIGNS } from '../lib/signs';
 
 interface FigureBody {
@@ -97,15 +98,19 @@ for (const lat of [-60, -30, 30, 60]) {
   splitByDepth(pts).forEach((r) => wire.push({ front: r.front, d: poly(r.points) }));
 }
 
-const equator = showEquator ? curve(inclinedCircle(0, OBLIQUITY, 3), R_SPHERE) : [];
+// When an instant is supplied, use that date's mean obliquity for the
+// equator, declination circles, and horizon. Unsited teaching figures retain
+// the J2000 display constant.
+const obliquity = utcMs !== null ? meanObliquity(julianCenturies(utcMs)) : OBLIQUITY;
+const equator = showEquator ? curve(inclinedCircle(0, obliquity, 3), R_SPHERE) : [];
 const bounds = showBounds
-  ? [OBLIQUITY, -OBLIQUITY].map((dec) => curve(declinationCircle(dec, OBLIQUITY, 4), R_SPHERE))
+  ? [obliquity, -obliquity].map((dec) => curve(declinationCircle(dec, obliquity, 4), R_SPHERE))
   : [];
-const decl = declRings.map((dec) => curve(declinationCircle(dec, OBLIQUITY, 4), R_SPHERE));
+const decl = declRings.map((dec) => curve(declinationCircle(dec, obliquity, 4), R_SPHERE));
 
 const sited = showHorizon && latitude !== null && longitude !== null && utcMs !== null;
 const zenith = sited
-  ? zenithOf(ramcOf({ gastHours: gmstHours(utcMs!), longitude: longitude! }), latitude!)
+  ? zenithOf(ramcOf({ gastHours: gmstHours(utcMs!), longitude: longitude! }), latitude!, obliquity)
   : null;
 const horizon = zenith ? curve(horizonCircle(zenith, 3), R_SPHERE) : [];
 

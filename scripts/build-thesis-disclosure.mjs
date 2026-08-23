@@ -6,6 +6,9 @@
  * Solana mints from the registry, applies the separately reviewed prose source,
  * preserves every mechanical field it cannot verify, and writes one reviewable
  * JSON diff.
+ *
+ * Use --reviewed-only to publish a reviewed prose correction without touching
+ * the older on-chain snapshot fields or making RPC requests.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
@@ -199,7 +202,7 @@ function pendingField() {
   return { value: null, status: 'pending', asOf: null, verifyUrl: null };
 }
 
-function reviewedField(definition, asOf, path) {
+function reviewedField(definition, fallbackAsOf, path) {
   if (!definition || typeof definition !== 'object') {
     throw new TypeError(`Reviewed source is missing ${path}`);
   }
@@ -218,6 +221,8 @@ function reviewedField(definition, asOf, path) {
   if (!['http:', 'https:'].includes(url.protocol)) {
     throw new TypeError(`Reviewed source ${path}.verifyUrl must use HTTP or HTTPS`);
   }
+  const asOf = definition.asOf ?? fallbackAsOf;
+  assertAsOf(asOf);
   return freshField(definition.value, asOf, definition.verifyUrl);
 }
 
@@ -542,7 +547,10 @@ function printReport(report) {
 export async function main(argv = process.argv.slice(2)) {
   const { values } = parseArgs({
     args: argv,
-    options: { 'as-of': { type: 'string' } },
+    options: {
+      'as-of': { type: 'string' },
+      'reviewed-only': { type: 'boolean' },
+    },
     strict: true,
   });
   const asOf = values['as-of'] ?? new Date().toISOString().slice(0, 10);
@@ -552,6 +560,15 @@ export async function main(argv = process.argv.slice(2)) {
   const reviewed = JSON.parse(await readFile(reviewedPath, 'utf8'));
   const assets = canonicalNativeAssets(registry);
   const reviewedResult = hydrateReviewedProse(existing, assets, reviewed);
+  if (values['reviewed-only']) {
+    await writeFile(
+      disclosurePath,
+      `${JSON.stringify(reviewedResult.disclosure, null, 2)}\n`,
+      'utf8',
+    );
+    printReport(reviewedResult.report);
+    return;
+  }
   const outcomes = await collectRpcOutcomes(assets, {
     url: process.env.SOLANA_RPC_URL ?? DEFAULT_SOLANA_RPC_URL,
   });

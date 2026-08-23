@@ -223,6 +223,31 @@ today receive no compensation either — and remains true when the embedded
 panel ships. It is an operator attestation: dated, published verbatim, and
 never presented as independently verified.
 
+### Identity update · 2026-08-23
+
+The owner has since consolidated Astrofolio into Zodiacs.org. The canonical
+consumer experience is now `https://zodiacs.org/astrofolio/`, and
+`astrofolio.xyz` redirects to that page. The 2026-08-02 quotation above is
+retained as a historical decision record, but its separate-control statement
+is superseded and must not be reused as current public disclosure language.
+
+### Superseded selected-sign gateway draft · 2026-08-24
+
+An earlier same-day draft would have placed Terminal and Zodiac Markets links
+inside every selected-sign placard and no-JavaScript sign state. It was
+superseded in full, before production, by the bottom-market-gateway addendum
+below. No selected-sign placard or static sign state may carry either market
+action; Astrofolio exposes the two authorized links once, in its final
+editorial gateway.
+
+The safety boundary did not change during that consolidation. Astrofolio
+itself must not load the trade runtime, connect or request a wallet, request a
+Jupiter quote, construct or submit a transaction, or ask for a signature when
+the page mounts, a gateway receives focus, or the selected sign changes. Any
+execution remains confined to the separate Terminal Markets route and its
+point-of-action warnings. No custody, referral fee, platform fee, or other
+compensation is authorized.
+
 ## Controls that remain mandatory
 
 1. Committed sign-page HTML stays flag-off; only the Vercel production

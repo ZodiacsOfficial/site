@@ -104,7 +104,7 @@ Daily horoscope RSS: https://zodiacs.org/feeds/horoscopes.xml
 
 Astrofolio, the Terminal, the Registry, and the SDK are maintained by Zodiacs.org but are not the basis for consumer astrology calculations. Holding a Zodiac is optional context; it does not make a chart more accurate, a person more compatible, or an interpretation more authoritative. Consumer calculator results do not depend on wallet ownership.
 
-Astrofolio.xyz is a related external consumer project exploring personal Zodiac shelves, profiles, and share cards. It is distinct from Astrofolio on Zodiacs.org. Zodiacs.org remains the official registry and SDK source of truth. Relationship details: https://zodiacs.org/sdk/#astrofolio
+Astrofolio at https://zodiacs.org/astrofolio/ is Zodiacs.org's official consumer collection experience. Astrofolio.xyz is a convenience redirect to that canonical page; it is not a separate product or source of truth. The Registry remains the canonical record and the SDK remains the developer source of truth. Relationship details: https://zodiacs.org/sdk/#astrofolio
 
 ### Astrofolio
 
@@ -134,7 +134,7 @@ Canonical resources:
 - Interactive Simastry Aura example: https://zodiacs.org/sdk/examples/simastry-aura/
 - Identity receipt preview: https://zodiacs.org/sdk/#receipt-preview
 - Core ownership and verification API: https://zodiacs.org/sdk/#core-api
-- Astrofolio.xyz relationship: https://zodiacs.org/sdk/#astrofolio
+- Astrofolio relationship: https://zodiacs.org/sdk/#astrofolio
 - GitHub source: https://github.com/ZodiacsOfficial/sdk
 - npm package: https://www.npmjs.com/package/@zodiacs/sdk
 - Symbolic resonance guidance: https://github.com/ZodiacsOfficial/sdk/blob/main/docs/symbolic-resonance.md

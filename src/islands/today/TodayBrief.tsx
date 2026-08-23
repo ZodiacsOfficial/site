@@ -241,7 +241,7 @@ export default function TodayBrief({
             aria-hidden={streak === null ? 'true' : undefined}
           >
             <strong class="today-streak__count">{streakDisplay}</strong>
-            <span>{streak === null || streak === 1 ? 'day' : 'days'}</span>
+            <span>day streak</span>
           </p>
         </header>
 

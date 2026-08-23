@@ -308,6 +308,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(placard).toContain('howToBuyPath(item)');
     expect(placard).toContain('>How to buy</a>');
     expect(placard).not.toContain('/terminal/');
+    expect(placard).toContain('className="vitrine-official-note"');
+    expect(placard).toContain('&ldquo;official&rdquo; means the address is listed in the Zodiacs Registry');
     expect(source).not.toContain('function terminalMarketPath(');
     expect(source).not.toContain('function zodiacMarketsPath(');
     expect(placard).not.toContain('#acquire');
@@ -336,6 +338,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(placard).toContain('<VitrinePrice sign={item} batch={batch} live={layer.current} />');
     expect(placard).toContain('marketRankForSign(item, batch)');
     expect(placard).toContain('Data &amp; methodology');
+    expect(placard).not.toContain('/terminal/');
+    expect(placard).toContain('className="vitrine-official-note"');
     expect(source).not.toContain('function ConsumerMarketSnapshot(');
     expect(source).not.toContain('<summary>See market details</summary>');
 
@@ -367,7 +371,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(source).not.toContain('function ConsumerBuyGuide(');
     expect(fallback).not.toContain('id="buying-guide"');
     expect(fallback).not.toContain('href="#buying-guide"');
-    expect(fallback).toContain('href="https://astrofolio.xyz/"');
+    expect(fallback).toContain('href="/astrofolio/">Astrofolio</a>');
+    expect(fallback).not.toContain('href="https://astrofolio.xyz/"');
   });
 
   it('keeps the collection story, Shop, Registry guide, FAQs, and final market gateway exact', async () => {

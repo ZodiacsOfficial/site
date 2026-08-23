@@ -438,9 +438,9 @@ const terms: GlossaryTerm[] = [
   {
     slug: 'natural-house',
     term: 'Natural house',
-    definition: 'Natural house is a teaching correspondence that pairs Aries with the first house, Taurus with the second, and so on through Pisces and the twelfth. It does not determine the houses in a calculated natal chart.',
+    definition: 'The sign–house correspondence, often called the “natural house” scheme, is a modern teaching device that pairs Aries with the first house, Taurus with the second, and so on. It is not a traditional rulership table and never determines the houses in a calculated natal chart.',
     related: ['house', 'zodiac-sign', 'whole-sign-houses'],
-    link: { href: '/learn/zodiac-dates/', label: 'See natural-house correspondences' },
+    link: { href: '/learn/houses/', label: 'Read the house guides' },
   },
   {
     slug: 'no-time-chart',
@@ -683,13 +683,13 @@ const terms: GlossaryTerm[] = [
   {
     slug: 'applying',
     term: 'Applying aspect',
-    definition: 'An aspect is applying when the moving positions are drawing closer to the aspect’s exact angle. The natal engine determines this from relative longitude speed; fixed-chart synastry does not assign applying or separating status.',
+    definition: 'An aspect is applying when the moving positions are drawing closer to the aspect’s exact angle. The natal engine advances both longitudes by 0.02 day (28.8 minutes) using their daily speeds and labels the aspect applying when the distance from exact decreases; fixed-chart synastry does not assign applying or separating status.',
     related: ['separating', 'exact-aspect', 'aspect'],
   },
   {
     slug: 'separating',
     term: 'Separating aspect',
-    definition: 'An aspect is separating when the moving positions are drawing farther from the aspect’s exact angle. It describes direction of motion, not whether the aspect is strong enough to be included.',
+    definition: 'An aspect is separating when the same 0.02-day forward-speed check does not reduce its distance from the exact angle. It describes direction of motion, not whether the aspect is strong enough to be included.',
     related: ['applying', 'exact-aspect', 'orb'],
   },
   {

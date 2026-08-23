@@ -111,7 +111,7 @@ Holding *Leo* does three things.
 
 **It signals.** A sign is the one affiliation people volunteer before being asked. A public record of holding it turns the oldest self-description in the world into something you can point to: a badge, worn by choice, verified as held rather than as true.
 
-**It unlocks.** The registry is open infrastructure. Any app can read it and treat holders differently: ownership-aware readings, sign-versus-sign games, shelves and goods on the consumer surfaces [Astrofolio](https://astrofolio.xyz/) maintains. The record is a key; the doors are being built around it.
+**It unlocks.** The registry is open infrastructure. Any app can read it and treat holders differently: ownership-aware readings, sign-versus-sign games, shelves and goods on the official [Astrofolio](https://zodiacs.org/astrofolio/) page. The record is a key; the doors are being built around it.
 
 **It speculates.** Part of why anyone holds a memetic asset is the expectation that others will want it later. This essay will not pretend otherwise; pretending would insult the reader. Holding a sign is, among other things, a position on the argument of this page.
 

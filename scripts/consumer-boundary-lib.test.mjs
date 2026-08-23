@@ -82,9 +82,9 @@ const description = 'A free astrology calculator.';
       .toContain('token or coin vocabulary');
   });
 
-  it('allows only the keyed legal attestation to retain its exact external-domain disclosure', () => {
+  it('allows only the keyed operator disclosure to state the redirect relationship', () => {
     const disclosure = `export const EN = {
-      'disclosure.operatorStatement': 'I do not control astrofolio.xyz or its token deployment or market activity.',
+      'disclosure.operatorStatement': 'Operator update: astrofolio.xyz redirects to the official public Astrofolio experience at zodiacs.org/astrofolio and is not a separate surface.',
       'home.hero': 'A free birth chart.',
     };`;
     expect(findConsumerBoundaryViolations(disclosure, 'src/strings/en.mjs')).toEqual([]);
@@ -102,7 +102,7 @@ const description = 'A free astrology calculator.';
     expect(findConsumerBoundaryViolations(unrelatedCatalog, 'src/lib/email/copy.ts').length).toBeGreaterThan(0);
 
     const acquisitionVenue = `export const EN = {
-      'disclosure.operatorStatement': 'I do not control astrofolio.xyz. Visit jup.ag for details.',
+      'disclosure.operatorStatement': 'astrofolio.xyz redirects to zodiacs.org/astrofolio. Visit jup.ag for details.',
     };`;
     expect(rules(acquisitionVenue, 'src/strings/en.mjs'))
       .toContain('external wing or acquisition destination');
@@ -147,6 +147,10 @@ const description = 'A free astrology calculator.';
       .toContain('unsanctioned wing link');
 
     expect(findConsumerBoundaryViolations('<a href="/astrofolio/">Astrofolio</a>', 'src/components/SiteFooter.astro'))
+      .toEqual([]);
+    expect(findConsumerBoundaryViolations('<a href="/astrofolio/how-to-buy/">Eligibility terms</a>', 'src/pages/terms/index.astro'))
+      .toEqual([]);
+    expect(findConsumerBoundaryViolations("const route = '/sdk/';", 'src/pages/sitemap.xml.ts'))
       .toEqual([]);
     expect(rules('<a href="/terminal/">Terminal</a>', 'src/components/SiteFooter.astro'))
       .toContain('unsanctioned wing link');

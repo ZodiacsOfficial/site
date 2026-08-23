@@ -81,10 +81,11 @@ Avoid:
 - overbroad claims about astrology or zodiac symbols
 - language implying custody, transaction execution, or recommendations
 
-Astrofolio may be referenced subtly as a related experience around personal
-Zodiac shelves and symbolic ownership. Do not frame Astrofolio as the parent
-brand, source of truth, or required app for the registry or SDK. Zodiacs.org
-remains the official registry and SDK source of truth.
+Astrofolio is the official consumer collection page at `/astrofolio/` within
+Zodiacs.org. It may be referenced subtly around personal Zodiac shelves and
+symbolic ownership, but it is not the parent brand, Registry source of truth,
+or required app for the Registry or SDK. Zodiacs.org remains the official
+Registry and SDK source of truth.
 
 ## Current Page Structure
 

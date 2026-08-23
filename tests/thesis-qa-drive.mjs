@@ -38,6 +38,7 @@ const COMPARISON_ROWS = [
   ['Built-in monthly cultural seasonality', ['×', '×', '✓']],
   ['Everyday cultural participation', ['×', '×', '✓']],
 ];
+const COMPARISON_MARK_COUNT = COMPARISON_ROWS.length * 3;
 const LEO_MINT = '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm';
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
   ?? (existsSync('/opt/pw-browsers/chromium')
@@ -132,12 +133,12 @@ try {
   });
   await page.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   const registryCollectionMarker = await page.evaluate(async () => {
-    const html = await fetch('/registry/').then((response) => response.text());
+    const html = await fetch('/astrofolio/').then((response) => response.text());
     const documentCopy = new DOMParser().parseFromString(html, 'text/html');
     return documentCopy.querySelector('meta[name="zodiacs-registry-collection-enabled"]')?.content ?? null;
   });
   const registryCollectionEnabled = registryCollectionMarker === '1';
-  check('Registry publishes a valid Collection build marker',
+  check('Astrofolio publishes a valid Collection build marker',
     registryCollectionMarker === '0' || registryCollectionMarker === '1',
     String(registryCollectionMarker));
   check('1440×900: no page-level horizontal overflow',
@@ -282,7 +283,7 @@ try {
   check('consumer copy introduces the twelve as digital assets',
     /twelve public digital assets, one for each sign\./.test(await page.locator('#everyone-has-a-sign').textContent() ?? ''));
   check('essay closes with a concrete invitation',
-    /Choose your sign\. See the digital asset\. Decide what it means to you\./.test(await page.locator('#the-honest-ending').textContent() ?? ''));
+    /Choose the sign you already carry\.[\s\S]*Choose your sign[\s\S]*Open the twelve digital assets/.test(await page.locator('#the-honest-ending').textContent() ?? ''));
   const catalogueAction = page.locator('#the-honest-ending [data-thesis-cta="catalogue"]');
   check('essay close sends the primary action to the catalogue',
     (await catalogueAction.count()) === 1
@@ -442,7 +443,7 @@ try {
   check('test card admits the test has not begun', /has not begun/.test(tcard));
   check('test card fixes the no-later-than date', /2026-10-31/.test(tcard));
 
-  // F3 stays open and uses the current eleven-property comparison.
+  // F3 stays open and uses the current twelve-property comparison.
   const comparison = page.locator('#fig-3 .comparison-panel .ztbl');
   check('comparison is always visible', await isVisuallyExposed(comparison));
   check('comparison is not nested in details', (await page.locator('#fig-3 details .ztbl').count()) === 0);
@@ -450,21 +451,21 @@ try {
     (await comparison.locator('thead th[scope="col"]').count()) === 4);
   const propertyLabels = (await comparison.locator('tbody th[scope="row"]').allTextContents())
     .map((label) => label.trim());
-  check('comparison has the exact eleven scoped property rows',
-    (await comparison.locator('tbody tr').count()) === 11
+  check('comparison has the exact twelve scoped property rows',
+    (await comparison.locator('tbody tr').count()) === COMPARISON_ROWS.length
       && JSON.stringify(propertyLabels) === JSON.stringify(COMPARISON_ROWS.map(([label]) => label)),
     propertyLabels.join(' · '));
-  check('comparison has exactly thirty-three standalone marks',
-    (await comparison.locator('tbody td .comparison-mark').count()) === 33);
+  check('comparison has exactly thirty-six standalone marks',
+    (await comparison.locator('tbody td .comparison-mark').count()) === COMPARISON_MARK_COUNT);
   check('comparison gives every mark an sr-only label',
-    (await comparison.locator('tbody td .sr-only').count()) === 33);
+    (await comparison.locator('tbody td .sr-only').count()) === COMPARISON_MARK_COUNT);
   const cellContent = await comparison.locator('tbody td').evaluateAll((cells) => cells.map((cell) => {
     const clone = cell.cloneNode(true);
     clone.querySelectorAll('.sr-only').forEach((node) => node.remove());
     return clone.textContent.trim();
   }));
   check('comparison cells contain only checks and X marks',
-    cellContent.length === 33 && cellContent.every((value) => value === '✓' || value === '×'),
+    cellContent.length === COMPARISON_MARK_COUNT && cellContent.every((value) => value === '✓' || value === '×'),
     [...new Set(cellContent)].join(', '));
   const rowMarks = [];
   for (const row of await comparison.locator('tbody tr').all()) {
@@ -478,8 +479,8 @@ try {
     JSON.stringify(rowMarks) === JSON.stringify(COMPARISON_ROWS.map(([, marks]) => marks)),
     JSON.stringify(rowMarks));
   const zodiacsMarks = rowMarks.map((row) => row[2]);
-  check('Zodiacs is checked on all eleven properties',
-    zodiacsMarks.length === 11 && zodiacsMarks.every((mark) => mark === '✓'),
+  check('Zodiacs is checked on all twelve properties',
+    zodiacsMarks.length === COMPARISON_ROWS.length && zodiacsMarks.every((mark) => mark === '✓'),
     JSON.stringify(zodiacsMarks));
   const comparisonNotes = page.locator('#fig-3 details.evidence-drawer');
   await comparisonNotes.locator('summary').focus();
@@ -852,13 +853,13 @@ try {
         src: image?.getAttribute('src') ?? '',
       };
     }));
-  check('no-JS: gallery exposes all twelve linked sculpture records',
+  check('no-JS: gallery exposes all twelve linked Zodiac artwork records',
     nojsFallbackState.length === 12 && nojsFallbackState.every((record, index) => {
       const slug = ZODIAC_SLUGS[index];
       const name = `${slug[0].toUpperCase()}${slug.slice(1)}`;
       return record.href === `/registry/${slug}/`
         && record.src === `/assets/nuggets/thumb/${slug}.png`
-        && record.alt === `${name} gold sculpture`;
+        && record.alt === `${name} Zodiac artwork`;
     }),
     JSON.stringify(nojsFallbackState));
   check('no-JS: static gallery fallback is visibly exposed', await isVisuallyExposed(nojsFallback));
@@ -978,7 +979,7 @@ try {
       })
     )));
     check(`${width}px: comparison body cells contain marks without repeated brand icons`,
-      mobileBodyDecorations.length === 11 && mobileBodyDecorations.every((decorations) => (
+      mobileBodyDecorations.length === COMPARISON_ROWS.length && mobileBodyDecorations.every((decorations) => (
         decorations.length === 3 && decorations.every((image) => image === 'none')
       )));
     await mob.locator('details.evidence-vault').evaluate((node) => { node.open = true; });

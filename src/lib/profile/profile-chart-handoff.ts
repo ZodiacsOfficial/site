@@ -9,6 +9,7 @@ export interface ProfileChartRunInput {
   timeKnown: boolean;
   city: City;
   houseSystem: HouseSystem;
+  subjectMode: 'self' | 'other';
   name?: string;
 }
 
@@ -26,6 +27,9 @@ export function profileChartRunInput(
     timeKnown: chart.birth.timeKnown,
     city: { ...place, pop: 0 },
     houseSystem: chart.summary.houseSystem,
+    // Only an explicit classification can grant the one-tap self-save path.
+    // Legacy, unclassified charts remain in the safer people/naming flow.
+    subjectMode: chart.relationship === 'self' ? 'self' : 'other',
     name: chart.name,
   };
 }

@@ -16,6 +16,7 @@ import {
 import birthdays from '../../data/birthdays.json';
 import { EDITOR_AUTHOR } from '../../lib/editorial';
 import { BIRTHDAY_PEOPLE_VISIBLE, peopleForBirthday } from '../../lib/people';
+import { BIRTHDAY_CUSP_OG_MODIFIED_AT, latestModifiedAt } from '../../lib/seo-lastmod';
 
 export async function getStaticPaths() {
   const entries = await getCollection('birthdays', (e) => !e.data.draft);
@@ -115,7 +116,16 @@ const birthdayPeople = peopleForBirthday(`/birthday/${slug}/`);
 const birthdayPeopleVisible = birthdayPeople.slice(0, BIRTHDAY_PEOPLE_VISIBLE);
 const birthdayPeopleMore = birthdayPeople.slice(BIRTHDAY_PEOPLE_VISIBLE);
 
-const ogImage = `/assets/og/v2/sign/${heroSign!.slug}.png`;
+// A one-sign share card contradicts a boundary page such as August 23,
+// whose answer is explicitly year-and-time dependent. Use the birthday card
+// for every computed cusp and advance schema/sitemap freshness together.
+const ogImage = cusp
+  ? '/assets/og/v2/tool/birthday.png'
+  : `/assets/og/v2/sign/${heroSign!.slug}.png`;
+const pageModifiedAt = latestModifiedAt(
+  entry.data.updated,
+  ...(cusp ? [BIRTHDAY_CUSP_OG_MODIFIED_AT] : []),
+);
 
 const jsonLd = [
   {
@@ -124,7 +134,7 @@ const jsonLd = [
     description: entry.data.description,
     url: `https://zodiacs.org/birthday/${slug}/`,
     datePublished: entry.data.published.toISOString(),
-    dateModified: entry.data.updated.toISOString(),
+    dateModified: pageModifiedAt,
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://zodiacs.org/birthday/${slug}/` },

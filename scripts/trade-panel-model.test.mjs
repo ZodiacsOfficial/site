@@ -180,8 +180,10 @@ describe('the assembled view', () => {
 
   it('separates funding from the direct swap and names what is actually bought', () => {
     const funding = panelView({ state: 'ready', sign: ARIES, quote: quote() });
-    expect(funding.assetNote).toMatch(/official fungible Aries token/i);
+    expect(funding.assetNote).toMatch(/fungible Aries token/i);
     expect(funding.assetNote).toMatch(/not a physical item.*1-of-1 NFT/i);
+    expect(funding.assetNote).toMatch(/official.*complete address.*Zodiacs Registry/is);
+    expect(funding.assetNote).toMatch(/not government, regulator, wallet, or exchange approval/i);
     expect(funding.actionIntro).toMatch(/do not complete this Zodiac order/i);
     expect(funding.methods.map((method) => method.eyebrow)).toEqual(['Fund first', 'Direct swap']);
 

@@ -92,10 +92,21 @@ await withPreview({ port: 4410 }, async (baseURL) => {
   }
 
   async function openPrompt(page) {
-    await page.locator('[data-save-chart]').click();
+    const saveButton = page.locator('[data-save-chart]');
+    await saveButton.waitFor();
+    await saveButton.evaluate((button) => {
+      document.body.tabIndex = -1;
+      document.body.focus();
+      button.click();
+    });
     const input = page.getByLabel(/Whose chart is this\?|¿De quién es esta carta\?/);
     await input.waitFor();
     await page.waitForFunction(() => document.activeElement?.id === 'chart-save-name');
+    await page.waitForFunction(() => {
+      const prompt = document.querySelector('.xplr__aside > .calc__actions [data-save-prompt]');
+      const rect = prompt?.getBoundingClientRect();
+      return Boolean(rect && rect.top >= 0 && rect.bottom <= window.innerHeight);
+    });
     return input;
   }
 
@@ -107,6 +118,12 @@ await withPreview({ port: 4410 }, async (baseURL) => {
   async function nearbySaveConfirmation(page) {
     const feedback = page.locator('[data-chart-action-dock] [data-save-chart]');
     await feedback.waitFor();
+    await page.waitForFunction(() => {
+      const button = document.querySelector('[data-chart-action-dock] [data-save-chart]');
+      return button?.textContent === 'Saved · on this device✓'
+        && button.getAttribute('aria-disabled') === 'true'
+        && button.querySelectorAll('[aria-live="polite"]').length === 1;
+    });
     return await feedback.textContent() === 'Saved · on this device✓'
       && await feedback.getAttribute('aria-disabled') === 'true'
       && await feedback.locator('[aria-live="polite"]').count() === 1;
@@ -143,6 +160,12 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     await page.locator('[data-save-chart]').click();
     const alert = page.getByRole('alert');
     await alert.waitFor();
+    const blockedFocus = await saveButtonHasFocus(page);
+    await page.waitForFunction(() => {
+      const element = document.querySelector('.xplr__aside > [role="alert"]');
+      const rect = element?.getBoundingClientRect();
+      return Boolean(rect && rect.top >= 0 && rect.bottom <= window.innerHeight);
+    });
     check('blocked storage surfaces a clear error',
       await alert.textContent() === "Couldn't save — your browser may be blocking local storage."
       && await page.locator('.xplr__aside > [role="alert"]').count() === 1
@@ -151,21 +174,33 @@ await withPreview({ port: 4410 }, async (baseURL) => {
         const rect = element?.getBoundingClientRect();
         return Boolean(rect && rect.top >= 0 && rect.bottom <= window.innerHeight);
       })
-      && await saveButtonHasFocus(page));
+      && blockedFocus);
     await page.close();
   }
 
   // Reduced calculators keep the same storage-error feedback contract.
   {
     const page = await preparedPage([]);
-    await page.goto(`${baseURL}/moon-sign/${chartFragment(undefined, 'self')}`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${baseURL}/moon-sign/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => {
+      const form = document.querySelector('.calc__form');
+      const island = form?.closest('astro-island');
+      return island ? !island.hasAttribute('ssr') : Boolean(form);
+    }, null, { timeout: 30_000 });
+    await page.locator('#birth-date').fill('1907-07-06');
+    await page.locator('#birth-time').fill('08:30');
+    await page.locator('#place').fill('Coyoacan');
+    const option = page.locator('#place-list [role="option"]:not([aria-disabled="true"])').first();
+    await option.waitFor({ state: 'visible', timeout: 30_000 });
+    await option.click();
+    await page.locator('.calc__form button[type="submit"]').click();
     await page.locator('.calc__result').waitFor({ timeout: 30_000 });
     await page.locator('[data-save-chart]').waitFor();
     await page.evaluate(() => {
       Storage.prototype.setItem = () => { throw new Error('blocked for test'); };
     });
     await page.locator('[data-save-chart]').click();
-    const alert = page.locator('.calc > .calc__error[role="alert"]');
+    const alert = page.locator('.calc__result > .calc__error[role="alert"]');
     await alert.waitFor();
     check('reduced chart keeps blocked-storage feedback',
       await alert.textContent() === "Couldn't save — your browser may be blocking local storage."
@@ -177,7 +212,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
   {
     const page = await preparedPage([savedChart('mom', 'Saved current name')]);
     await openChart(page, { name: 'Link Name' });
-    await page.getByText('Link Name\'s chart — "you" below means Link Name.', { exact: true }).waitFor();
+    await page.getByText('You’re reading Link Name’s chart. “You” below means Link Name.', { exact: true }).waitFor();
     const input = await openPrompt(page);
     check('naming prompt stays immediately beside the chart action dock',
       await page.locator('.xplr__aside > .calc__actions [data-save-prompt]').count() === 1);
@@ -223,7 +258,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
   {
     const page = await preparedPage([savedChart('mom', 'Mom')]);
     await openChart(page);
-    await page.getByText('Mom\'s chart — "you" below means Mom.', { exact: true }).waitFor();
+    await page.getByText('You’re reading Mom’s chart. “You” below means Mom.', { exact: true }).waitFor();
     const input = await openPrompt(page);
     check('dedupe-matched saved name is the second-priority prefill', await input.inputValue() === 'Mom');
     await input.fill('  Mama edited  ');
@@ -299,6 +334,8 @@ await withPreview({ port: 4410 }, async (baseURL) => {
   {
     const page = await preparedPage([], { width: 390, height: 844 });
     await openChart(page);
+    await page.locator('[data-first-reading-dismiss]').click();
+    await page.locator('[data-first-reading-prompt]').waitFor({ state: 'detached' });
     await page.locator('[data-tour-start]').click();
     await page.locator('[data-tour-card]').waitFor({ timeout: 10_000 });
     await page.locator('[data-tour-dot]').last().click();
@@ -331,7 +368,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
 
   // The real regression: roster → named link → non-explicit Skip keeps Mom.
   {
-    const page = await preparedPage([savedChart('mom', 'Mom')]);
+    const page = await preparedPage([savedChart('11111111-1111-4111-8111-111111111111', 'Mom')]);
     await page.goto(`${baseURL}/profile/`, { waitUntil: 'domcontentloaded' });
     await page.locator('.pf-list').waitFor();
     check('EN count line is byte-identical', await page.locator('.pf-count').textContent()
@@ -346,9 +383,11 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     check('EN people CTA is byte-identical', await page.locator('.pf-foot .btn').textContent()
       === "Add someone's chart+");
 
+    check('roster uses an opaque profile handoff', await page.getByRole('link', { name: 'Open', exact: true })
+      .getAttribute('href') === '/birth-chart/#profileChartId=11111111-1111-4111-8111-111111111111');
     await page.getByRole('link', { name: 'Open', exact: true }).click();
     await page.locator('.calc__result').waitFor({ timeout: 30_000 });
-    await page.getByText('Mom\'s chart — "you" below means Mom.', { exact: true }).waitFor();
+    await page.getByText('You’re reading Mom’s chart. “You” below means Mom.', { exact: true }).waitFor();
     const input = await openPrompt(page);
     check('roster link carries Mom into the prompt', await input.inputValue() === 'Mom');
     await page.getByRole('button', { name: 'Skip', exact: true }).click();
@@ -372,7 +411,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
       === 'Añade la carta de alguien+');
 
     await openChart(page, { name: 'Mamá', locale: 'es' });
-    await page.getByText('La carta de Mamá: el "tú" de abajo se refiere a Mamá.', { exact: true }).waitFor();
+    await page.getByText('Estás leyendo la carta de Mamá. El “tú” de abajo se refiere a Mamá.', { exact: true }).waitFor();
     const input = await openPrompt(page);
     check('ES prompt label is byte-identical', await page.locator('label[for="chart-save-name"]').textContent()
       === '¿De quién es esta carta?');

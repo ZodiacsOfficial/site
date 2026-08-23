@@ -25,11 +25,20 @@ const targetPaths = [
   'ru/birth-chart/index.html',
 ];
 
-async function htmlFiles(directory) {
-  const entries = await readdir(directory, { withFileTypes: true });
+export async function htmlFiles(directory) {
+  let entries;
+  try {
+    entries = await readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    // Astro may remove a transient prerender staging directory between the
+    // parent readdir and the recursive walk. It is not part of the deployable
+    // output, so a vanished directory is equivalent to an empty one.
+    if (error?.code === 'ENOENT') return [];
+    throw error;
+  }
   const nested = await Promise.all(entries.map((entry) => {
     const path = resolve(directory, entry.name);
-    if (entry.isDirectory()) return htmlFiles(path);
+    if (entry.isDirectory()) return entry.name.startsWith('.') ? [] : htmlFiles(path);
     return entry.name.endsWith('.html') ? [path] : [];
   }));
   return nested.flat();

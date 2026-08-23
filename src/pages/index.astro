@@ -351,7 +351,7 @@ const tools = [
     <div class="section-head reveal">
       <em class="kicker">Interactive preview</em>
       <h2>See how a birth chart becomes a story.</h2>
-      <p>Explore a real chart without entering anything. Tap a sign, planet, house, or connection to see what it means.</p>
+      <p>Explore a real chart without entering anything. Select a sign, planet, house, or connection to see what it means.</p>
     </div>
     <div class="reveal">
       <DemoChart />
@@ -922,8 +922,8 @@ const tools = [
     border-radius: 50%;
     pointer-events: none;
   }
-  :global(.demo__target--house) { width: clamp(22px, 6.6%, 34px); z-index: 2; }
-  :global(.demo__target--aspect) { width: clamp(20px, 6%, 31px); z-index: 1; }
+  :global(.demo__target--house) { width: min(34px, calc(var(--hit) * 1%)); z-index: 2; }
+  :global(.demo__target--aspect) { width: min(31px, calc(var(--hit) * 1%)); z-index: 1; }
   :global(.demo__target--sign) { width: 44px; height: 44px; z-index: 4; }
   :global(.demo__target:focus-visible) {
     outline: 2px solid var(--text);
@@ -1051,11 +1051,11 @@ const tools = [
   :global(.demo__cta-line strong) { color: var(--text); }
 
   @media (max-width: 640px) {
-    :global(.demo__sample-badge) { font-size: 8px; }
-    :global(.demo__preview-hint) { font-size: 9.5px; }
-    :global(.demo__receipt) { font-size: 8px; line-height: 1.45; }
+    :global(.demo__sample-badge) { font-size: 10px; }
+    :global(.demo__preview-hint) { font-size: 11px; }
+    :global(.demo__receipt) { font-size: 10px; line-height: 1.45; }
     :global(.demo__jump) { min-height: 62px; padding: 9px; }
-    :global(.demo__jump strong) { font-size: 11.5px; }
+    :global(.demo__jump strong) { font-size: 12.5px; }
     :global(.demo__insight) { min-height: 0; }
     :global(.demo__cta) { width: 100%; justify-content: center; }
     :global(.demo__callout p) { display: none; }
