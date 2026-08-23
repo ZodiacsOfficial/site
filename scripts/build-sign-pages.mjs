@@ -40,6 +40,7 @@ const root = resolve(here, '..');
 // The official token records live at /registry/ (301 from the old /collect/
 // path via vercel.json).
 const BASE = '/registry';
+const REGISTRY_OG_BASE = '/assets/og/registry/v3';
 const signPath = (slug) => `${BASE}/${slug}/`;
 const signUrl = (slug) => `https://zodiacs.org${signPath(slug)}`;
 // Bump only when a sculpture must be re-fetched by clients that may have
@@ -501,14 +502,14 @@ function render(m) {
   <meta property="og:description" content="${esc(`${m.name} dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.`)}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="${signUrl(m.slug)}" />
-  <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
+  <meta property="og:image" content="https://zodiacs.org${REGISTRY_OG_BASE}/${m.slug}.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="${esc(ogImageAlt)}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${esc(`${p.glyph.replace('︎', '')} ${m.name}`)} · Zodiac sign ${m.order} of 12 — Zodiacs" />
   <meta name="twitter:description" content="${esc(`${m.name} dates, famous birthdays, Wikipedia views, current price and rank, and verified token address.`)}" />
-  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
+  <meta name="twitter:image" content="https://zodiacs.org${REGISTRY_OG_BASE}/${m.slug}.png" />
   <meta name="twitter:image:alt" content="${esc(ogImageAlt)}" />
 
   ${brandIconLinkMarkup()}
