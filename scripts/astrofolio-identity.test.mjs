@@ -156,15 +156,15 @@ describe('Astrofolio seasonal identity generator', () => {
   });
 
   it('publishes cache-fresh social cards independently from the historical v2 identity', async () => {
-    expect(ASTROFOLIO_OG_VERSION).toBe('v3');
-    expect(ASTROFOLIO_OG_BASE).toBe('/assets/og/astrofolio/v3');
+    expect(ASTROFOLIO_OG_VERSION).toBe('v4');
+    expect(ASTROFOLIO_OG_BASE).toBe('/assets/og/astrofolio/v4');
     const social = JSON.parse(await readFile(
-      resolve(root, 'public/assets/og/astrofolio/v3/manifest.json'),
+      resolve(root, 'public/assets/og/astrofolio/v4/manifest.json'),
       'utf8',
     ));
     expect(social).toMatchObject({
-      schema: 'zodiacs.astrofolio-og.v3',
-      version: 'v3',
+      schema: 'zodiacs.astrofolio-og.v4',
+      version: 'v4',
       base: ASTROFOLIO_OG_BASE,
       type: 'image/png',
       width: 1200,
@@ -289,24 +289,24 @@ describe('Astrofolio seasonal identity generator', () => {
     }
   }, 60_000);
 
-  it('replays every v3 social card from the same deterministic seasonal composition', async () => {
+  it('replays every v4 social card from the same deterministic seasonal composition', async () => {
     const temporaryRoot = await mkdtemp(resolve(tmpdir(), 'astrofolio-og-'));
     tempDirectories.push(temporaryRoot);
-    const outputDirectory = resolve(temporaryRoot, 'v3');
+    const outputDirectory = resolve(temporaryRoot, 'v4');
     const replay = await buildAstrofolioOgFamily({ rootDirectory: root, outputDirectory });
     const committed = JSON.parse(await readFile(
-      resolve(root, 'public/assets/og/astrofolio/v3/manifest.json'),
+      resolve(root, 'public/assets/og/astrofolio/v4/manifest.json'),
       'utf8',
     ));
     expect(semanticOgManifest(replay)).toEqual(semanticOgManifest(committed));
     for (const season of replay.seasons) {
-      const committedPath = resolve(root, `public/assets/og/astrofolio/v3/${season.sign}.png`);
-      expect(digest(await readFile(committedPath)), `${season.sign}: committed v3 OG integrity`)
+      const committedPath = resolve(root, `public/assets/og/astrofolio/v4/${season.sign}.png`);
+      expect(digest(await readFile(committedPath)), `${season.sign}: committed v4 OG integrity`)
         .toBe(committed.seasons.find(({ sign }) => sign === season.sign)?.sha256);
       await expectPixelEquivalent(
         resolve(outputDirectory, `${season.sign}.png`),
         committedPath,
-        `${season.sign}: v3 OG replay`,
+        `${season.sign}: v4 OG replay`,
         {
           crop: { left: 540, top: 0, width: 660, height: 630 },
         },
@@ -321,7 +321,7 @@ describe('Astrofolio seasonal identity generator', () => {
         sharp(resolve(directory, 'avatar-1024.png')).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
         sharp(resolve(directory, 'season-seal-192.png')).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
         sharp(resolve(directory, 'icon-192.png')).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
-        sharp(resolve(root, `public/assets/og/astrofolio/v3/${sign}.png`)).raw().toBuffer({ resolveWithObject: true }),
+        sharp(resolve(root, `public/assets/og/astrofolio/v4/${sign}.png`)).raw().toBuffer({ resolveWithObject: true }),
       ]);
       const alphaAt = ({ data, info }, x, y) => data[(y * info.width + x) * info.channels + 3];
       expect(alphaAt(avatar, 0, 0), `${sign} avatar corner`).toBe(0);
