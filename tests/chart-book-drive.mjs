@@ -19,8 +19,12 @@ const kahloWire = (name) => ({
   p: 'Coyoacán, Mexico',
 });
 
-const chartFragment = (name) =>
-  `#c=1.${Buffer.from(JSON.stringify(kahloWire(name))).toString('base64url')}`;
+const chartFragment = (name, subject = 'other') => {
+  const params = new URLSearchParams();
+  params.set('c', `1.${Buffer.from(JSON.stringify(kahloWire(name))).toString('base64url')}`);
+  if (subject === 'other') params.set('subject', 'other');
+  return `#${params.toString()}`;
+};
 
 function savedChart(id, name, overrides = {}) {
   const lat = overrides.lat ?? 19.35;
@@ -80,9 +84,9 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     return page;
   }
 
-  async function openChart(page, { name, locale = 'en' } = {}) {
+  async function openChart(page, { name, locale = 'en', subject = 'other' } = {}) {
     const path = locale === 'es' ? '/es/birth-chart/' : '/birth-chart/';
-    await page.goto(`${baseURL}${path}${chartFragment(name)}`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${baseURL}${path}${chartFragment(name, subject)}`, { waitUntil: 'domcontentloaded' });
     await page.locator('.calc__result').waitFor({ timeout: 30_000 });
     await page.locator('[data-save-chart]').waitFor();
   }
@@ -100,12 +104,92 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     return page.evaluate(() => document.activeElement?.hasAttribute('data-save-chart') ?? false);
   }
 
+  async function nearbySaveConfirmation(page) {
+    const feedback = page.locator('[data-chart-action-dock] [data-save-chart]');
+    await feedback.waitFor();
+    return await feedback.textContent() === 'Saved · on this device✓'
+      && await feedback.getAttribute('aria-disabled') === 'true'
+      && await feedback.locator('[aria-live="polite"]').count() === 1;
+  }
+
+  async function confirmationHasFocus(page) {
+    await page.waitForFunction(() => document.activeElement?.hasAttribute('data-save-chart'));
+    return page.evaluate(() => document.activeElement?.isConnected === true);
+  }
+
+  // A personal chart honors the button's literal promise: one tap saves it,
+  // leaves a visible confirmation in place, and does not ask for a name.
+  {
+    const page = await preparedPage([]);
+    await openChart(page, { subject: 'self' });
+    await page.locator('[data-save-chart]').click();
+    const confirmed = await nearbySaveConfirmation(page);
+    check('self chart saves in one tap', await page.locator('[data-save-prompt]').count() === 0
+      && await page.locator('[data-save-chart]').count() === 1);
+    check('self chart keeps visible save confirmation beside the action dock', confirmed);
+    check('one-tap confirmation receives connected focus', await confirmationHasFocus(page));
+    const state = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), PROFILE_KEY);
+    check('one-tap save persists the auto-name', state.charts[0]?.name === 'Cancer Sun · 1907-07-06');
+    await page.close();
+  }
+
+  // Persistence failures remain explicit and retryable.
+  {
+    const page = await preparedPage([]);
+    await openChart(page, { subject: 'self' });
+    await page.evaluate(() => {
+      Storage.prototype.setItem = () => { throw new Error('blocked for test'); };
+    });
+    await page.locator('[data-save-chart]').click();
+    const alert = page.getByRole('alert');
+    await alert.waitFor();
+    check('blocked storage surfaces a clear error',
+      await alert.textContent() === "Couldn't save — your browser may be blocking local storage."
+      && await page.locator('.xplr__aside > [role="alert"]').count() === 1
+      && await page.evaluate(() => {
+        const element = document.querySelector('.xplr__aside > [role="alert"]');
+        const rect = element?.getBoundingClientRect();
+        return Boolean(rect && rect.top >= 0 && rect.bottom <= window.innerHeight);
+      })
+      && await saveButtonHasFocus(page));
+    await page.close();
+  }
+
+  // Reduced calculators keep the same storage-error feedback contract.
+  {
+    const page = await preparedPage([]);
+    await page.goto(`${baseURL}/moon-sign/${chartFragment(undefined, 'self')}`, { waitUntil: 'domcontentloaded' });
+    await page.locator('.calc__result').waitFor({ timeout: 30_000 });
+    await page.locator('[data-save-chart]').waitFor();
+    await page.evaluate(() => {
+      Storage.prototype.setItem = () => { throw new Error('blocked for test'); };
+    });
+    await page.locator('[data-save-chart]').click();
+    const alert = page.locator('.calc > .calc__error[role="alert"]');
+    await alert.waitFor();
+    check('reduced chart keeps blocked-storage feedback',
+      await alert.textContent() === "Couldn't save — your browser may be blocking local storage."
+      && await saveButtonHasFocus(page));
+    await page.close();
+  }
+
   // Link name outranks a matching saved name, and unchanged Enter is `link`.
   {
     const page = await preparedPage([savedChart('mom', 'Saved current name')]);
     await openChart(page, { name: 'Link Name' });
     await page.getByText('Link Name\'s chart — "you" below means Link Name.', { exact: true }).waitFor();
     const input = await openPrompt(page);
+    check('naming prompt stays immediately beside the chart action dock',
+      await page.locator('.xplr__aside > .calc__actions [data-save-prompt]').count() === 1);
+    check('naming prompt replaces competing chart actions', await page.locator('[data-chart-action-dock]').evaluate(
+      (dock) => getComputedStyle(dock).display === 'none',
+    ));
+    check('naming prompt is in the mobile viewport after the tap', await page.evaluate(() => {
+      const prompt = document.querySelector('.xplr__aside > .calc__actions [data-save-prompt]');
+      if (!prompt) return false;
+      const rect = prompt.getBoundingClientRect();
+      return rect.top >= 0 && rect.bottom <= window.innerHeight;
+    }));
     check('link name is the first-priority prefill', await input.inputValue() === 'Link Name');
     check('EN prompt label is byte-identical', await input.getAttribute('aria-label') === null
       && await page.locator('label[for="chart-save-name"]').textContent() === 'Whose chart is this?');
@@ -121,10 +205,10 @@ await withPreview({ port: 4410 }, async (baseURL) => {
 
     await openPrompt(page);
     await page.keyboard.press('Enter');
-    await page.getByText('Saved · on this device', { exact: true }).waitFor();
-    check('commit returns focus to a focusable saved button', await saveButtonHasFocus(page)
-      && await page.locator('[data-save-chart]').evaluate((button) => !button.disabled)
-      && await page.locator('[data-save-chart]').getAttribute('aria-disabled') === 'true');
+    check('commit replaces the prompt with nearby confirmation', await nearbySaveConfirmation(page)
+      && await page.locator('[data-save-prompt]').count() === 0
+      && await page.locator('[data-save-chart]').count() === 1);
+    check('named-save confirmation receives connected focus', await confirmationHasFocus(page));
     const event = await page.evaluate(() =>
       window.__chartBookEvents.find((item) => item.name === 'chart_name_set'));
     check('unchanged link prefill tracks only via=link', event?.props?.via === 'link'
@@ -144,7 +228,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     check('dedupe-matched saved name is the second-priority prefill', await input.inputValue() === 'Mom');
     await input.fill('  Mama edited  ');
     await page.keyboard.press('Enter');
-    check('edited prompt returns focus', await saveButtonHasFocus(page));
+    check('edited prompt becomes nearby confirmation', await nearbySaveConfirmation(page));
     const event = await page.evaluate(() =>
       window.__chartBookEvents.find((item) => item.name === 'chart_name_set'));
     check('edited name tracks only via=prompt', event?.props?.via === 'prompt'
@@ -187,7 +271,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     check('320px prompt does not overflow', await page.evaluate(() =>
       document.documentElement.scrollWidth <= document.documentElement.clientWidth));
     await page.getByRole('button', { name: 'Skip', exact: true }).click();
-    check('Skip returns focus', await saveButtonHasFocus(page));
+    check('Skip becomes nearby confirmation', await nearbySaveConfirmation(page));
     const state = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), PROFILE_KEY);
     const event = await page.evaluate(() =>
       window.__chartBookEvents.find((item) => item.name === 'chart_name_set'));
@@ -271,7 +355,7 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     const nameAfterSkip = await page.evaluate((key) =>
       JSON.parse(localStorage.getItem(key)).charts[0].name, PROFILE_KEY);
     check('roster → save round-trip does not clobber Mom', nameAfterSkip === 'Mom', nameAfterSkip);
-    check('round-trip Skip returns focus', await saveButtonHasFocus(page));
+    check('round-trip Skip becomes nearby confirmation', await nearbySaveConfirmation(page));
     await page.close();
   }
 
@@ -310,9 +394,15 @@ await withPreview({ port: 4410 }, async (baseURL) => {
     await openChart(page);
     await openPrompt(page);
     await page.getByRole('button', { name: 'Skip', exact: true }).click();
-    await page.getByText('You can save up to 40 charts — remove one first.', { exact: true }).waitFor();
+    const capAlert = page.getByText('You can save up to 40 charts — remove one first.', { exact: true });
+    await capAlert.waitFor();
     const count = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)).charts.length, PROFILE_KEY);
     check('41st chart triggers the new cap without growing storage', count === 40, String(count));
+    check('41st-chart alert is beside the dock and in view', await page.locator('.xplr__aside > [role="alert"]').count() === 1
+      && await capAlert.evaluate((element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.top >= 0 && rect.bottom <= window.innerHeight;
+      }));
     check('rejected 41st chart does not track a committed name', await page.evaluate(() =>
       window.__chartBookEvents.every((event) => event.name !== 'chart_name_set')));
     check('full-path commit returns focus', await saveButtonHasFocus(page));
