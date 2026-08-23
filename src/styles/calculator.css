@@ -303,14 +303,15 @@
   gap: 8px;
   padding: 12px;
 }
-.chart-action-dock > .calc__save-prompt {
+.xplr__aside > .calc__actions { padding: 14px; }
+.xplr__aside > .calc__actions .calc__save-prompt {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  width: auto;
-  margin: 14px;
+  width: 100%;
 }
-.chart-action-dock > .calc__save-prompt .calc__save-label,
-.chart-action-dock > .calc__save-prompt .calc__save-name { grid-column: 1 / -1; }
-.chart-action-dock > .calc__save-prompt .btn { width: 100%; }
+.xplr__aside > .calc__actions .calc__save-name { grid-column: 1 / -1; }
+.xplr__aside > .calc__actions .btn { width: 100%; }
+.xplr__aside:has(> .calc__actions) > [data-chart-action-dock] { display: none; }
+.xplr__aside > .calc__error { margin: 0; padding: 10px 12px; }
 .chart-action-dock__actions .btn {
   width: 100%;
   min-height: 44px;
@@ -463,13 +464,7 @@
   gap: 8px;
   width: min(100%, 620px);
 }
-.calc__save-label {
-  grid-column: 1 / -1;
-  color: var(--text-2);
-  font-size: var(--text-sm);
-  font-weight: 600;
-}
-
+.calc__save-prompt > .field__label { grid-column: 1 / -1; }
 /* Secondary chart utilities stay available without competing with the one
    state-derived primary action above. Native details gives keyboard and
    assistive-technology behavior without a custom menu state machine. */

@@ -10,25 +10,31 @@ describe('Chart result action contract', () => {
     expect(calculator).not.toContain('onWarm={loadEngine}');
   });
 
-  it('keeps a confirmed, disabled save state in the dock after a chart is saved', async () => {
+  it('keeps an announced, inactive save confirmation in the dock', async () => {
     const calculator = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
     const dock = await readFile(new URL('./ChartActionDock.tsx', import.meta.url), 'utf8');
 
-    expect(calculator).toContain("saveLabel={saved === 'saved'\n                            ? t(locale, 'chartSavedDevice')");
+    expect(calculator).toContain("saveLabel={saved === 'saved'\n                              ? t(locale, 'chartSavedDevice')");
     expect(calculator).toContain("if (subjectMode === 'self')");
     expect(calculator).toContain("void commitSave(undefined, 'skip')");
+    expect(calculator).toContain("const saveError = saved === 'full'");
+    expect(calculator).toContain("mode !== 'full' && saveError");
     expect(calculator).toContain('data-primary-action="today"');
-    expect(dock).toContain('!tourOpen && saveLabel && onSave');
-    expect(dock).toContain('onClick={saveDisabled ? undefined : onSave}');
-    expect(dock).toContain('aria-disabled={saveDisabled}');
-    expect(dock).toContain("{saveDisabled ? '\u2713' : '+'}");
+    expect(dock).toContain('!tourOpen && saveLabel');
+    expect(dock).toContain('aria-disabled={!onSave}');
+    expect(dock).toContain('aria-live="polite"');
+    expect(dock).toContain("{onSave ? '+' : '✓'}");
+    expect(dock).not.toContain('saveDisabled');
   });
 
-  it('mounts an optional naming prompt inside the chart action dock', async () => {
+  it('mounts the naming prompt immediately beside the chart action dock', async () => {
     const calculator = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
     const dock = await readFile(new URL('./ChartActionDock.tsx', import.meta.url), 'utf8');
 
-    expect(calculator).toContain('savePrompt={savePromptOpen ? renderSavePrompt() : null}');
-    expect(dock).toContain('{savePrompt || (');
+    expect(calculator).toContain('class="chart-action-dock calc__actions"');
+    expect(calculator).toContain("void import('./ChartActionDock').then(setChartActionDockModule");
+    expect(calculator).toContain('{renderSavePrompt()}');
+    expect(calculator).toContain("function openSavePrompt(origin: 'tour' | 'free' = 'free')");
+    expect(dock).not.toContain('savePrompt');
   });
 });
