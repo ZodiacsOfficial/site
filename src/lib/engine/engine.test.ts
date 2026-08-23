@@ -367,6 +367,8 @@ describe('Frida Kahlo chart (the demo fixture)', () => {
           bodies: chart.bodies.map((b) => ({
             body: b.body,
             lon: Number(b.lon.toFixed(4)),
+            lat: Number(b.lat.toFixed(4)),
+            speed: Number(b.speed.toFixed(6)),
             retrograde: b.retrograde,
           })),
           angles: {

@@ -191,7 +191,8 @@
     }
   },
   "continuity": {
-    "value": "Astrofolio.xyz · the registry's companion app carries the records forward",
-    "verifyUrl": "https://astrofolio.xyz/"
+    "value": "Astrofolio at zodiacs.org/astrofolio · the official consumer collection experience",
+    "asOf": "2026-08-23",
+    "verifyUrl": "https://zodiacs.org/astrofolio/"
   }
 }

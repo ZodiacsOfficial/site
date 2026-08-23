@@ -25,7 +25,7 @@ const it = {
   footerArchive: "Archivio",
   footerSdk: "SDK",
   footerCollectNote:
-    "L’ala della collezione è in sola lettura: nessuna custodia, nessuna firma e nessuna transazione. Nulla di ciò che contiene costituisce una consulenza finanziaria.",
+    "I record, le ricerche, i profili del catalogo e l’SDK del Registry sono in sola lettura. Lo strumento di acquisto facoltativo di Astrofolio usa Jupiter, un servizio indipendente, e il tuo portafoglio; Zodiacs.org non custodisce chiavi né fondi. Nulla di tutto ciò costituisce una consulenza finanziaria.",
   footerMethodology: "Metodologia",
   footerAbout: "Il progetto",
   footerPrivacy: "Privacy",

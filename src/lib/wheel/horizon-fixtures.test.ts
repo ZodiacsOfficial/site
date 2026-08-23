@@ -7,6 +7,7 @@
  * engine (Placidus, known birth times).
  */
 import { describe, expect, it } from 'vitest';
+import frida from '../../data/demo-chart-frida.json';
 import { computeAngles, meanObliquity, ramcOf } from '../engine/houses';
 import {
   altitudeOf,
@@ -27,20 +28,24 @@ interface Fixture {
   asc: number;
   mc: number;
   sunLon: number;
+  sunLat?: number;
   daylight: boolean;
+  expectedSunAltitude?: number;
 }
 
+const fridaSun = frida.bodies.find(({ body }) => body === 'Sun')!;
 const FIXTURES: Fixture[] = [
   {
     name: 'Frida Kahlo, Coyoacán',
-    utc: '1907-07-06T20:30:00Z',
+    utc: frida.utc,
     latitude: 19.35,
     longitude: -99.16,
-    asc: 219.169,
-    mc: 129.564,
-    sunLon: 103.59,
-    // 20:30 UTC is early afternoon in Mexico — the Sun is well up.
+    asc: frida.angles.asc,
+    mc: frida.angles.mc,
+    sunLon: fridaSun.lon,
+    sunLat: fridaSun.lat,
     daylight: true,
+    expectedSunAltitude: 40.1368,
   },
   {
     name: 'Ada Lovelace, London',
@@ -135,8 +140,11 @@ describe('the horizon reproduces the engine’s angles', () => {
 
       it('reads the Sun above or below that horizon', () => {
         const { zenith } = frame(f);
-        const altitude = altitudeOf(f.sunLon, 0, zenith);
+        const altitude = altitudeOf(f.sunLon, f.sunLat ?? 0, zenith);
         expect(altitude > 0).toBe(f.daylight);
+        if (f.expectedSunAltitude !== undefined) {
+          expect(altitude).toBeCloseTo(f.expectedSunAltitude, 3);
+        }
       });
     });
   }

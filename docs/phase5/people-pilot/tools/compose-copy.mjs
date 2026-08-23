@@ -159,6 +159,7 @@ const ELEMENT = {
   gemini: 'air', libra: 'air', aquarius: 'air',
   cancer: 'water', scorpio: 'water', pisces: 'water',
 };
+const elementWithArticle = (element) => `${/^[aeiou]/u.test(element) ? 'an' : 'a'} ${element}`;
 const MODALITY = {
   aries: 'cardinal', cancer: 'cardinal', libra: 'cardinal', capricorn: 'cardinal',
   taurus: 'fixed', leo: 'fixed', scorpio: 'fixed', aquarius: 'fixed',
@@ -197,7 +198,7 @@ const PLANET_ELEMENT_CLAUSE = {
   },
 };
 const PERSONAL_FRAMES = [
-  (rows) => `The personal planets sit ${rows.map((row) => `${row.name} at ${row.deg} ${row.sign}`).join(', ')}. ${rows.map((row) => `${row.name} in a ${row.element} sign reads as ${row.clause}`).join('; ')}.`,
+  (rows) => `The personal planets sit ${rows.map((row) => `${row.name} at ${row.deg} ${row.sign}`).join(', ')}. ${rows.map((row) => `${row.name} in ${elementWithArticle(row.element)} sign reads as ${row.clause}`).join('; ')}.`,
   (rows) => `Closer in, ${rows.map((row) => `${row.name} stands at ${row.deg} ${row.sign}`).join('; ')}. The tradition reads ${rows.map((row) => `${row.clause} from ${row.name}`).join(', ')}.`,
   (rows) => `${rows.map((row) => `${row.name} holds ${row.deg} ${row.sign}`).join(', ')} — in the old shorthand, ${rows.map((row) => row.clause).join('; ')}.`,
   (rows) => `Day to day the chart speaks through ${rows.map((row) => `${row.name} in ${row.sign} (${row.deg})`).join(', ')}: ${rows.map((row) => row.clause).join(', ')}.`,
@@ -353,9 +354,9 @@ function sunBlock(record, slug) {
   const frames = [
     `The Sun sits at ${deg(sun.degree)} ${sun.signName} — the ${decan.ordinal} decan, ${decan.span}, which the tradition sub-rules by ${decan.ruler}. Degrees matter more than the sign label here: two people born a fortnight apart share ${sun.signName} and share almost nothing else about where the Sun actually stood.`,
     `At noon on that date the Sun stood at ${deg(sun.degree)} ${sun.signName}, inside the ${decan.ordinal} decan (${decan.span}), whose traditional sub-ruler is ${decan.ruler}. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees.`,
-    `The Sun's exact place is ${deg(sun.degree)} ${sun.signName}. That falls in the ${decan.ordinal} decan, ${decan.span}, sub-ruled by ${decan.ruler} in the classical scheme — a ${element} sign read through a ${modality} season.`,
+    `The Sun's exact place is ${deg(sun.degree)} ${sun.signName}. That falls in the ${decan.ordinal} decan, ${decan.span}, sub-ruled by ${decan.ruler} in the classical scheme — ${elementWithArticle(element)} sign read through a ${modality} season.`,
       `${deg(sun.degree)} of ${sun.signName} is the Sun's exact seat — ${decan.ordinal} decan, ${decan.span}, sub-ruled by ${decan.ruler} in the old triplicity scheme. The degree is the address; the sign is only the street.`,
-    `Measured rather than labelled, the Sun holds ${deg(sun.degree)} ${sun.signName}: the ${decan.ordinal} decan, whose classical sub-ruler is ${decan.ruler}. A ${element} sign, read here in its ${decan.ordinal} face.`,
+    `Measured rather than labelled, the Sun holds ${deg(sun.degree)} ${sun.signName}: the ${decan.ordinal} decan, whose classical sub-ruler is ${decan.ruler}. ${elementWithArticle(element).replace(/^./u, (character) => character.toUpperCase())} sign, read here in its ${decan.ordinal} face.`,
     `The Sun's position resolves to ${deg(sun.degree)} ${sun.signName} — deep enough in the ${decan.ordinal} decan (${decan.span}) that ${decan.ruler}, its traditional sub-ruler, colours the reading.`,
     `${sun.signName}, but precisely: ${deg(sun.degree)}, ${decan.ordinal} decan, ${decan.span}, under ${decan.ruler} in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street.`,
     `At the noon reference the Sun sits ${deg(sun.degree)} into ${sun.signName} — the ${decan.ordinal} decan, which the old scheme hands to ${decan.ruler}. Same sign, different decan, different chart.`,
@@ -655,7 +656,11 @@ if (orphanCopy.length > 0) {
 }
 const migrateArticles = (source) => source
   .replaceAll('a axis', 'an axis')
-  .replaceAll('a opposition', 'an opposition');
+  .replaceAll('a opposition', 'an opposition')
+  .replaceAll('a air', 'an air')
+  .replaceAll('a earth', 'an earth')
+  .replaceAll('A air', 'An air')
+  .replaceAll('A earth', 'An earth');
 if (CHECK || MIGRATE_ARTICLES) {
   for (const slug of existingCopy) {
     const copyPath = join(PILOT, 'copy', `${slug}.json`);

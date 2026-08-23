@@ -223,6 +223,14 @@ today receive no compensation either — and remains true when the embedded
 panel ships. It is an operator attestation: dated, published verbatim, and
 never presented as independently verified.
 
+### Identity update · 2026-08-23
+
+The owner has since consolidated Astrofolio into Zodiacs.org. The canonical
+consumer experience is now `https://zodiacs.org/astrofolio/`, and
+`astrofolio.xyz` redirects to that page. The 2026-08-02 quotation above is
+retained as a historical decision record, but its separate-control statement
+is superseded and must not be reused as current public disclosure language.
+
 ## Controls that remain mandatory
 
 1. Committed sign-page HTML stays flag-off; only the Vercel production

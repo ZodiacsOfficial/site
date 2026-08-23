@@ -54,11 +54,10 @@ describe('growth link graph', () => {
     expect(communication).toContain('href={`/learn/placements/moon-in-${read.moonSign}/`}');
   });
 
-  it('sends the Spanish hero to the working English calculator with a language note', async () => {
+  it('sends the Spanish hero to the localized calculator', async () => {
     const homepage = await source('../pages/es/index.astro');
-    expect(homepage).toContain('href="/birth-chart/"');
-    expect(homepage).toContain('hreflang="en"');
-    expect(homepage).toContain('Obtén tu carta natal gratis — por ahora en inglés');
-    expect(homepage).not.toContain('href="/es/birth-chart/"');
+    expect(homepage).toContain("href={localizePath('es', '/birth-chart/')}");
+    expect(homepage).toContain('Obtén tu carta natal gratis');
+    expect(homepage).not.toContain('por ahora en inglés');
   });
 });

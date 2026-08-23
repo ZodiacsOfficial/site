@@ -1097,6 +1097,10 @@
       const n = Number(value);
       return Number.isFinite(n) ? n : null;
     };
+    const toNonNegativeNumber = (value) => {
+      const n = toFiniteNumber(value);
+      return n !== null && n >= 0 ? n : null;
+    };
     function formatPriceUsd(value) {
       const n = toFiniteNumber(value);
       if (n === null) return '—';
@@ -1147,8 +1151,9 @@
           pairAddress: pair.pairAddress,
           priceUsd: pair.priceUsd,
           priceChange24h: pair.priceChange?.h24,
-          liquidityUsd: pair.liquidity?.usd,
-          marketCap: pair.marketCap,
+          liquidityUsd: toNonNegativeNumber(pair.liquidity?.usd),
+          marketCap: toNonNegativeNumber(pair.marketCap),
+          fdv: toNonNegativeNumber(pair.fdv),
           pairCreatedAt: pair.pairCreatedAt
         }
       };
@@ -1176,8 +1181,11 @@
           pairAddress: best.pairAddress,
           priceUsd: best.priceUsd,
           priceChange24h: best.priceChange?.h24,
-          liquidityUsd: best.liquidity?.usd,
-          marketCap: best.marketCap ?? best.fdv,
+          liquidityUsd: toNonNegativeNumber(best.liquidity?.usd),
+          // Market capitalization and fully diluted valuation are different
+          // upstream fields. Never relabel FDV when reported cap is absent.
+          marketCap: toNonNegativeNumber(best.marketCap),
+          fdv: toNonNegativeNumber(best.fdv),
           pairCreatedAt: best.pairCreatedAt
         }
       };
@@ -1258,6 +1266,7 @@
       }
       if (twelveQuotesRequest) return twelveQuotesRequest;
       const mints = SIGNS.map((s) => s.representations.solana?.address).filter(Boolean);
+      const requestedMints = new Set(mints);
       const url = `https://api.dexscreener.com/tokens/v1/solana/${mints.join(',')}`;
       const request = fetchWithin(url, MARKET_DEADLINE_MS)
         .then(async (response) => {
@@ -1271,10 +1280,16 @@
           const pairs = Array.isArray(payload) ? payload : payload?.pairs;
           if (!Array.isArray(pairs)) return unavailableMarketContext('shape');
           const markets = new Map();
+          // A pool involving two indexed assets can appear more than once in
+          // a token batch. Keep one collection-level liquidity observation per
+          // chain/address so the Terminal never double-counts that pool.
+          const indexedPools = new Map();
           for (const pair of pairs) {
             const mint = pair?.baseToken?.address;
-            if (!mint || !pair?.pairAddress || pair?.chainId !== 'solana') continue;
+            if (!mint || !requestedMints.has(mint) || !pair?.pairAddress || pair?.chainId !== 'solana') continue;
             const liquidity = Math.max(0, toFiniteNumber(pair.liquidity?.usd) ?? 0);
+            const poolKey = `${pair.chainId}:${pair.pairAddress}`;
+            indexedPools.set(poolKey, Math.max(indexedPools.get(poolKey) ?? 0, liquidity));
             const market = markets.get(mint) || {
               liquidityUsd: 0,
               volume24h: 0,
@@ -1303,8 +1318,8 @@
               ? {
                   priceUsd: pair.priceUsd,
                   priceChange24h: pair.priceChange?.h24,
-                  marketCap: toFiniteNumber(pair.marketCap),
-                  fdv: toFiniteNumber(pair.fdv),
+                  marketCap: toNonNegativeNumber(pair.marketCap),
+                  fdv: toNonNegativeNumber(pair.fdv),
                   liquidityUsd: market.liquidityUsd,
                   volume24h: market.volume24h,
                   poolCount: market.pairs.size,
@@ -1317,7 +1332,15 @@
           // An empty but syntactically valid upstream payload is not a live
           // zero-dollar market. Fail into the explicit unavailable state.
           if (indexedPairs === 0) return unavailableMarketContext('no-pair');
-          return { status: 'ok', quotes, observedAt: new Date().toISOString() };
+          return {
+            status: 'ok',
+            quotes,
+            aggregate: {
+              indexedLiquidityUsd: [...indexedPools.values()].reduce((sum, value) => sum + value, 0),
+              indexedPoolCount: indexedPools.size,
+            },
+            observedAt: new Date().toISOString(),
+          };
         })
         .catch(() => unavailableMarketContext('network'))
         .then((result) => {
@@ -1630,6 +1653,7 @@
                 <div className="wnav__links">
                   <button ref={toolsButtonRef} className="wnav__link wnav__dropdown-btn wnav__tools-btn" type="button" data-wnav-tools="" aria-expanded={toolsOpen} aria-controls="wnav-tools" aria-haspopup="true" onKeyDown={(event) => { if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); setSignsOpen(false); setToolsOpen(true); focusDropdownItem('wnav-tools', event.key === 'ArrowUp'); } }} onClick={() => { setToolsOpen((v) => !v); setSignsOpen(false); }}>Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
                   <button ref={signsButtonRef} className="wnav__link wnav__dropdown-btn wnav__signs-btn" type="button" data-wnav-signs="" aria-expanded={signsOpen} aria-controls="wnav-signs" aria-haspopup="true" onKeyDown={(event) => { if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); setToolsOpen(false); setSignsOpen(true); focusDropdownItem('wnav-signs', event.key === 'ArrowUp'); } }} onClick={() => { setSignsOpen((v) => !v); setToolsOpen(false); }}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
+                  <a className="wnav__link" href="/today/">Today</a>
                   <a className="wnav__link" href="/learn/">Learn</a>
                   <a className="wnav__link" href="/horoscopes/">Horoscopes</a>
                   <a className="wnav__link" href="/profile/">Saved charts</a>
@@ -1669,10 +1693,11 @@
             <nav aria-label="Mobile">
               <div className="wnav-menu__group">
                 <span className="wnav-menu__label">The site</span>
-                <a className="wnav-menu__link" style={{ '--i': 0 }} href="/learn/">Learn</a>
-                <a className="wnav-menu__link" style={{ '--i': 1 }} href="/horoscopes/">Horoscopes</a>
-                <a className="wnav-menu__link" style={{ '--i': 2 }} href="/profile/">Saved charts</a>
-                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href={terminalNav.href} aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>
+                <a className="wnav-menu__link" style={{ '--i': 0 }} href="/today/">Today</a>
+                <a className="wnav-menu__link" style={{ '--i': 1 }} href="/learn/">Learn</a>
+                <a className="wnav-menu__link" style={{ '--i': 2 }} href="/horoscopes/">Horoscopes</a>
+                <a className="wnav-menu__link" style={{ '--i': 3 }} href="/profile/">Saved charts</a>
+                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 4 }} href={terminalNav.href} aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>
                   <span>{terminalNav.label}</span>
                   <small>{terminalNav.description}</small>
                 </a>
@@ -2374,7 +2399,7 @@
             />
           </div>
           <dl className="stage-market__facts">
-            <div><dt>Market cap{capRank >= 0 ? ` · #${capRank + 1}` : ''}</dt><dd>{marketCap === null ? '—' : formatUsdCompact(marketCap)}</dd></div>
+            <div><dt>Reported market cap{capRank >= 0 ? ` · #${capRank + 1}` : ''}</dt><dd>{marketCap === null ? '—' : formatUsdCompact(marketCap)}</dd></div>
             <div><dt>Liquidity{liquidityRank >= 0 ? ` · #${liquidityRank + 1}` : ''}</dt><dd>{liquidity === null ? '—' : formatUsdCompact(liquidity)}</dd></div>
             <div><dt>24h volume</dt><dd>{volume === null ? '—' : formatUsdCompact(volume)}</dd></div>
             <div><dt>Pools</dt><dd>{pools === null ? '—' : pools}</dd></div>
@@ -3581,7 +3606,7 @@
                 sign: s,
                 priceUsd: pair?.priceUsd ?? null,
                 change24h: pair?.priceChange?.h24 ?? null,
-                marketCap: toFiniteNumber(pair?.marketCap ?? pair?.fdv)
+                marketCap: toNonNegativeNumber(pair?.marketCap)
               };
             }));
           })
@@ -3656,7 +3681,7 @@
                         <th scope="col">Lot</th>
                         <th className="standings__th--r" scope="col">Price USD</th>
                         <th className="standings__th--r" scope="col">24H</th>
-                        <th className="standings__th--r" scope="col">Market cap</th>
+                        <th className="standings__th--r" scope="col">Reported market cap</th>
                         <th className="standings__th--r" scope="col">Top-10 share</th>
                       </tr>
                     </thead>
@@ -4463,8 +4488,8 @@
             a: 'Explore the Twelve, verify an address against the registry, inspect the public record, and see how address holdings can become symbolic context.' },
           { q: 'What can be built with Zodiacs?',
             a: 'Profiles, galleries, wallet views, Zodiac shelves, public-record receipts, zodiac wheel views, seasonal moments, and astrology-native interfaces.' },
-          { q: 'Where does Astrofolio.xyz fit?',
-            a: 'Astrofolio.xyz is an external consumer experience around personal Zodiac shelves and symbolic holdings. Zodiacs.org remains the official registry and SDK source of truth.' },
+          { q: 'Where is the official Astrofolio experience?',
+            a: 'Astrofolio is the official Zodiacs.org consumer collection experience at zodiacs.org/astrofolio. Astrofolio.xyz redirects there; it is not a separate app.' },
           { q: 'What does the SDK add?',
             a: 'It gives apps a read-only way to recognize official Zodiacs, show records, read public-address holdings, and compute display-ready symbolic context.' },
           { q: 'Why Solana and Base?',
@@ -4484,7 +4509,7 @@
         label: 'Legitimacy & Trust',
         items: [
           { q: 'How do I know an address is official?',
-            a: <>Check it against the record. The verifier recognizes exactly twenty-four addresses: twelve native Solana mints and twelve bridged Base representations. Anything else is reported as {REGISTRY_VERIFIER_NOT_FOUND_INLINE}. The same addresses are mirrored in the public SDK repository and match the mints Astrofolio.xyz&rsquo;s external app routes to, and the Libra record was corroborated character for character in public view, in the events preserved in <a href="/archive/#accidental-libra">the archive</a>.</> },
+            a: <>Check it against the record. The verifier recognizes exactly twenty-four addresses: twelve native Solana mints and twelve bridged Base representations. Anything else is reported as {REGISTRY_VERIFIER_NOT_FOUND_INLINE}. The same addresses are mirrored in the public SDK repository and used by the official Astrofolio experience at <a href="/astrofolio/">zodiacs.org/astrofolio</a>; the Libra record was also corroborated character for character in the events preserved in <a href="/archive/#accidental-libra">the archive</a>.</> },
           { q: 'Other tokens use the same names. Which is real?',
             a: 'Names and tickers can be copied; addresses cannot. Only the addresses in the registry are official records. When in doubt, verify the address itself, never the ticker.' },
           { q: 'Is this related to the LIBRA token from the news?',
@@ -4549,7 +4574,7 @@
       );
     }
     const MARKET_RANKS = Object.freeze({
-      marketCap: { label: 'Market cap', short: 'Mkt cap', field: 'marketCap' },
+      marketCap: { label: 'Reported market cap', short: 'Mkt cap', field: 'marketCap' },
       liquidity: { label: 'Indexed liquidity', short: 'Liquidity', field: 'liquidityUsd' },
       change: { label: '24h move', short: '24H', field: 'priceChange24h' },
     });
@@ -4724,8 +4749,13 @@
       const quotes = batch.status === 'ok'
         ? SIGNS.map(item => batch.quotes[item.asset.sign]).filter(Boolean)
         : [];
-      const marketCaps = quotes.map(quote => toFiniteNumber(quote.marketCap)).filter(value => value !== null);
-      const liquidities = quotes.map(quote => toFiniteNumber(quote.liquidityUsd)).filter(value => value !== null);
+      const marketCaps = quotes.map(quote => toNonNegativeNumber(quote.marketCap)).filter(value => value !== null);
+      const reportedMarketCapSubtotal = marketCaps.length > 0
+        ? marketCaps.reduce((sum, value) => sum + value, 0)
+        : null;
+      const indexedLiquidity = batch.status === 'ok'
+        ? toNonNegativeNumber(batch.aggregate?.indexedLiquidityUsd)
+        : null;
       const advancing = quotes.filter(quote => (toFiniteNumber(quote.priceChange24h) ?? 0) > 0).length;
       const chooseRank = (rank) => {
         setRankBy(rank);
@@ -4787,9 +4817,10 @@
                   const item = row.sign;
                   const quote = row.quote;
                   const isActive = item.ticker === active;
+                  const rankValue = toFiniteNumber(quote?.[MARKET_RANKS[rankBy].field]);
                   return (
                     <tr key={item.ticker} className={isActive ? 'is-active' : ''} data-market-sign={item.asset.sign} style={{ '--row-sign': item.hue }}>
-                      <td className="pro-board__rank">{String(index + 1).padStart(2, '0')}</td>
+                      <td className="pro-board__rank">{rankValue === null ? '—' : String(index + 1).padStart(2, '0')}</td>
                       <th scope="row">
                         <button type="button" className="pro-board__sign" aria-pressed={isActive} onClick={(event) => chooseSign(item, event)}>
                           <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
@@ -4812,10 +4843,11 @@
               const item = row.sign;
               const quote = row.quote;
               const isActive = item.ticker === active;
+              const rankValue = toFiniteNumber(quote?.[MARKET_RANKS[rankBy].field]);
               return (
                 <li key={item.ticker} className={isActive ? 'is-active' : ''} data-pro-mobile-market-sign={item.asset.sign} style={{ '--row-sign': item.hue }}>
                   <button type="button" className="pro-board-mobile__select" aria-pressed={isActive} onClick={(event) => chooseSign(item, event)}>
-                    <span className="pro-board-mobile__rank">{String(index + 1).padStart(2, '0')}</span>
+                    <span className="pro-board-mobile__rank">{rankValue === null ? '—' : String(index + 1).padStart(2, '0')}</span>
                     <span className="pro-board-mobile__identity">
                       <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="36" height="36" alt="" loading="lazy" decoding="async" />
                       <span><strong>{item.name}</strong><small>{item.ticker}</small></span>
@@ -4829,7 +4861,7 @@
                     <summary><span className="sr-only">{item.name} </span>Liquidity &amp; record</summary>
                     <dl>
                       <div><dt>Liquidity</dt><dd>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</dd></div>
-                      <div><dt>Market cap</dt><dd>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</dd></div>
+                      <div><dt>Reported market cap</dt><dd>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</dd></div>
                       <div><dt>24h volume</dt><dd>{quote ? formatUsdCompact(quote.volume24h) : '—'}</dd></div>
                     </dl>
                     <a href={registryProfilePath(item)}>Official record ↗</a>
@@ -4840,13 +4872,14 @@
           </ol>
           {batch.status === 'unavailable' && <p className="pro-board__state" role="status">Live market context is temporarily unavailable. Official records remain available.</p>}
           <dl className="pro-market-health" aria-label="Collection market health" aria-busy={batch.status === 'loading'}>
-            <div><dt>Market cap (reported)</dt><dd>{batch.status === 'ok' ? formatUsdCompact(marketCaps.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>{marketCaps.length} of 12 reporting</small></div>
-            <div><dt>Trading liquidity</dt><dd>{batch.status === 'ok' ? formatUsdCompact(liquidities.reduce((sum, value) => sum + value, 0)) : '—'}</dd><small>Indexed Solana pools</small></div>
+            <div><dt>Reported market cap subtotal</dt><dd>{formatUsdCompact(reportedMarketCapSubtotal)}</dd><small>{marketCaps.length} of 12 reporting · missing values excluded</small></div>
+            <div><dt>Indexed liquidity</dt><dd>{formatUsdCompact(indexedLiquidity)}</dd><small>{batch.status === 'ok' ? `${batch.aggregate?.indexedPoolCount ?? 0} unique Solana pools` : 'Unique Solana pools'}</small></div>
             <div><dt>Signs up today</dt><dd>{batch.status === 'ok' ? `${advancing} / ${quotes.length || 12}` : '—'}</dd><small>24-hour direction</small></div>
           </dl>
           <p className="pro-board__foot">
-            Price and 24h change use the deepest indexed Solana pool. Liquidity sums the
-            pools returned for each official mint; market cap is shown only when the source
+            Price and 24h change use the deepest indexed Solana pool. Per-sign liquidity sums
+            distinct pools returned for that mint; the collection total counts each pool address
+            once. Market cap is shown only when the source
             reports market cap, never substituted with FDV. DexScreener is independent
             third-party context, may be incomplete, and is not a recommendation. See the{' '}
             <a href="/registry/technical/#market-transparency">method and technical record</a>.
@@ -4875,7 +4908,7 @@
             </div>
             <div className="pro-selected__trust">
               <strong>Official · Solana</strong>
-              <span>{rank > 0 ? `#${rank} of 12 by market cap` : 'Market-cap rank unavailable'}</span>
+              <span>{rank > 0 ? `#${rank} of 12 by reported market cap` : 'Reported market-cap rank unavailable'}</span>
               <a href={registryProfilePath(sign)}>Official record ↗</a>
             </div>
           </header>
@@ -5263,7 +5296,7 @@
                       </span>
                       <span className="market-row__metric market-row__metric--price"><small>Price</small><strong>{quote ? formatPriceUsd(quote.priceUsd) : '—'}</strong></span>
                       <span className={'market-row__metric market-row__metric--change' + marketChangeClass(quote?.priceChange24h)}><small>24H</small><strong>{quote ? formatPercent(quote.priceChange24h) : '—'}</strong></span>
-                      <span className="market-row__metric market-row__metric--cap"><small>Market cap</small><strong>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</strong></span>
+                      <span className="market-row__metric market-row__metric--cap"><small>Reported market cap</small><strong>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</strong></span>
                       <span className="market-row__metric market-row__metric--liq"><small>Liquidity</small><strong>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</strong></span>
                       <span className="market-row__actions market-row__actions--record-only">
                         <a className="market-row__record registry-pill registry-pill--record" href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>
@@ -5777,40 +5810,60 @@
         });
       }, [active]);
       return (
-        <div className="vitrine-disc-rail" ref={railRef} role="group" aria-label="Choose your zodiac sign" onKeyDown={onKeyDown}>
-          {SIGNS.map((item, index) => {
-            const selected = item.ticker === active;
-            return (
-              <button
-                key={item.ticker}
-                type="button"
-                className={'vitrine-disc' + (selected ? ' is-active' : '')}
-                data-consumer-sign={item.asset.sign}
-                aria-label={`${item.name}, ${consumerSignDateLabel(item)}`}
-                aria-pressed={selected}
-                aria-controls="consumer-sign-preview"
-                tabIndex={selected ? 0 : -1}
-                style={{ '--sign': item.hue }}
-                onClick={() => choose(index)}
-              >
-                <picture aria-hidden="true">
-                  <source srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`} type="image/avif" />
-                  <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="40" height="40" alt="" decoding="async" />
-                </picture>
-                <span>{item.name}</span>
-              </button>
-            );
-          })}
+        <div className="vitrine-disc-picker">
+          <button
+            className="vitrine-disc-picker__arrow"
+            type="button"
+            aria-label="Previous sign"
+            disabled={activeIndex === 0}
+            onClick={() => choose(activeIndex - 1, true)}
+          >
+            <span aria-hidden="true">&#8592;</span>
+          </button>
+          <div className="vitrine-disc-rail" ref={railRef} role="group" aria-label="Choose your zodiac sign" onKeyDown={onKeyDown}>
+            {SIGNS.map((item, index) => {
+              const selected = item.ticker === active;
+              return (
+                <button
+                  key={item.ticker}
+                  type="button"
+                  className={'vitrine-disc' + (selected ? ' is-active' : '')}
+                  data-consumer-sign={item.asset.sign}
+                  aria-label={`${item.name}, ${consumerSignDateLabel(item)}`}
+                  aria-pressed={selected}
+                  aria-controls="consumer-sign-preview"
+                  tabIndex={selected ? 0 : -1}
+                  style={{ '--sign': item.hue }}
+                  onClick={() => choose(index)}
+                >
+                  <picture aria-hidden="true">
+                    <source srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`} type="image/avif" />
+                    <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="40" height="40" alt="" decoding="async" />
+                  </picture>
+                  <span>{item.name}</span>
+                </button>
+              );
+            })}
+          </div>
+          <button
+            className="vitrine-disc-picker__arrow"
+            type="button"
+            aria-label="Next sign"
+            disabled={activeIndex === SIGNS.length - 1}
+            onClick={() => choose(activeIndex + 1, true)}
+          >
+            <span aria-hidden="true">&#8594;</span>
+          </button>
+          <p className="vitrine-disc-picker__hint">Swipe or use the arrows to see all twelve signs.</p>
         </div>
       );
     }
 
     function VitrinePrice({ sign, batch, live = true }) {
       const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
-      const price = quote
-        ? formatPriceUsd(quote.priceUsd)
-        : batch.status === 'loading' || batch.status === 'idle' ? 'Price loading' : 'Price unavailable';
-      const movement = quote ? plainMarketMovement(quote.priceChange24h) : 'movement unavailable';
+      const waiting = batch.status === 'loading' || batch.status === 'idle';
+      const price = quote ? formatPriceUsd(quote.priceUsd) : waiting ? 'Fetching latest price' : 'Price unavailable';
+      const movement = quote ? plainMarketMovement(quote.priceChange24h) : waiting ? 'Updating market context' : 'Movement unavailable';
       return (
         <p
           className="vitrine-price"
@@ -5846,7 +5899,7 @@
             </div>
             <VitrinePrice sign={item} batch={batch} live={layer.current} />
             <div className="vitrine-market-meta">
-              <span>{rank > 0 ? `#${rank} by market cap` : 'Market-cap rank unavailable'}</span>
+              <span>{rank > 0 ? `#${rank} by reported market cap` : batch.status === 'loading' || batch.status === 'idle' ? 'Comparing all twelve' : 'Reported market-cap rank unavailable'}</span>
               {observed && <span>Updated {observed}{batch.stale ? ' · delayed' : ''}</span>}
               {batch.status === 'unavailable' && <span>Market data unavailable · retrying automatically</span>}
               <a href="/registry/technical/#market-transparency" tabIndex={layer.current ? undefined : -1}>Data &amp; methodology</a>
@@ -5859,6 +5912,9 @@
                 tabIndex={layer.current ? undefined : -1}
               >How to buy</a>
             </div>
+            <p className="vitrine-official-note">
+              Here, &ldquo;official&rdquo; means the address is listed in the Zodiacs Registry; it does not mean government, regulator, wallet, or exchange approval.
+            </p>
           </article>
         );
       };
@@ -6343,13 +6399,13 @@
               <a href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer">Instagram</a>
               <a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a>
               <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a>
-              <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio.xyz</a>
+              <a href="/astrofolio/">Astrofolio</a>
             </div>
             <div>Channels</div>
           </div>
           <div className="ftr__row ftr__row--origin">
             <span>
-              Zodiacs.org · Official registry · Est. {REGISTRY_ESTABLISHED} ·{' '}
+              Zodiacs.org · Registry · Zodiac assets originated {REGISTRY_ESTABLISHED} ·{' '}
               {REGISTRY_ESTABLISHMENT_PROVENANCE_URL
                 ? <a href={REGISTRY_ESTABLISHMENT_PROVENANCE_URL} rel="noopener nofollow">{REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL}</a>
                 : <a href="/disclosure/#origin">{REGISTRY_PROVENANCE_PENDING_LABEL}</a>}
@@ -6378,7 +6434,7 @@
                 <a href="/registry/">Official Registry</a>
                 {pro
                   ? <a href="/terminal/research/">Markets research</a>
-                  : <a href="/why-zodiacs-matter/">Why Zodiacs matter</a>}
+                  : <a href="/thesis/">Why Zodiacs matter</a>}
                 <a href="/astrofolio/#verify">Verify a token</a>
               </div>
             </nav>
@@ -6425,7 +6481,7 @@
 
           <div className="ftr__row ftr__row--origin">
             <span>
-              Zodiacs.org · Official registry · Est. {REGISTRY_ESTABLISHED} ·{' '}
+              Zodiacs.org · Registry · Zodiac assets originated {REGISTRY_ESTABLISHED} ·{' '}
               {REGISTRY_ESTABLISHMENT_PROVENANCE_URL
                 ? <a href={REGISTRY_ESTABLISHMENT_PROVENANCE_URL} rel="noopener nofollow">{REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL}</a>
                 : <a href="/disclosure/#origin">{REGISTRY_PROVENANCE_PENDING_LABEL}</a>}

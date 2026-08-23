@@ -356,7 +356,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(source).not.toContain('function ConsumerBuyGuide(');
     expect(fallback).not.toContain('id="buying-guide"');
     expect(fallback).not.toContain('href="#buying-guide"');
-    expect(fallback).toContain('href="https://astrofolio.xyz/"');
+    expect(fallback).toContain('href="/astrofolio/">Astrofolio</a>');
+    expect(fallback).not.toContain('href="https://astrofolio.xyz/"');
   });
 
   it('keeps the collection story, Shop, integrated Terminal links, Registry guide, FAQs, and close exact', async () => {

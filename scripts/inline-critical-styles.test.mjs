@@ -2,7 +2,7 @@ import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { inlineCriticalStyles } from './inline-critical-styles.mjs';
+import { htmlFiles, inlineCriticalStyles } from './inline-critical-styles.mjs';
 
 const temporaryRoots = [];
 
@@ -21,6 +21,16 @@ afterEach(async () => {
 });
 
 describe('inlineCriticalStyles', () => {
+  it('ignores transient build directories and tolerates a vanished directory', async () => {
+    const root = await fixture();
+    await mkdir(join(root, '.prerender'));
+    await writeFile(join(root, '.prerender', 'staging.html'), 'transient');
+    await writeFile(join(root, 'visible.html'), 'deployable');
+
+    expect(await htmlFiles(root)).toEqual([join(root, 'visible.html')]);
+    expect(await htmlFiles(join(root, 'already-removed'))).toEqual([]);
+  });
+
   it('preserves cascade order and leaves an unmarked page byte-identical', async () => {
     const root = await fixture({
       'base.css': ':root{--ink:#fff}',

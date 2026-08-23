@@ -352,74 +352,25 @@ the Games needs a season *instance* id (e.g. `virgo-2026`) layered on top.
 
 ---
 
-## 6. Astrofolio sweep (report only — nothing deleted)
+## 6. Astrofolio canonicalization (completed 2026-08-23)
 
-`grep -rni "astrofolio"` (excluding `node_modules`, `.git`,
-`package-lock.json`): **1,546 hits in 170 files.** "Astrofolio" is an
-internal product name here — the consumer collection at `/astrofolio/`
-(owner decision 2026-08-13 in `docs/STRATEGY.md`), its identity pipeline
-(`scripts/build-astrofolio-identity.mjs`, `verify-…`, `stamp-…-season.mjs`,
-`astrofolio-season.mjs`), generated asset trees
-(`public/assets/astrofolio/{v1,v2}/`, `public/assets/og/astrofolio/{v3,v4}/`),
-nav (`src/components/SiteNav.astro`), and internal redirects
-(`vercel.json` sends `/collect`, `/registry/gallery/`, `/registry/shelf/`
-to `/astrofolio/`). Those hits are the *product* meaning the brief endorses
-("Astrofolio means the twelve actual Zodiac tokens") and are not sweep
-targets. The full per-file count table is reproducible with the grep above;
-the actionable subset is below.
+Astrofolio is the consumer collection at the official canonical route
+`/astrofolio/`. The former Astrofolio domain is now a redirect alias to that
+route; it is not a separate operator, product, or destination. Consumer links,
+legal disclosures, localized strings, SDK copy, assistant context, generated
+Registry assets, and thesis materials were updated to reflect this relationship.
 
-### The actionable subset: `astrofolio.xyz` — 95 hits in 27 files
+The identity pipeline and generated asset trees retain the Astrofolio product
+name. Internal aliases such as `/collect`, `/registry/gallery/`, and
+`/registry/shelf/` also resolve to `/astrofolio/`. Tests preserve one explicit
+reference to the former domain only to verify that it is not emitted as a live
+consumer link; `LISTINGS.md` records it solely as a redirect alias.
 
-Every hit, file:line (R2.5's worklist; Dias 2026-08-16: astrofolio.xyz
-coexists but gets **zero references**):
-
-**Consumer Astro surfaces (src/pages — highest priority)**
-- `src/pages/about/index.astro:83` — live outbound `<a href="https://astrofolio.xyz/">`
-- `src/pages/terms/index.astro:84` — prose: "Astrofolio.xyz is a separate website…"
-
-**Registry SPA source → generated bundle**
-- `src/app.jsx:4446,4447,4458,4469` — FAQ "Where does Astrofolio.xyz fit?"
-- `src/app.jsx:5840,5855` — browsing/ownership copy naming Astrofolio.xyz
-- `src/app.jsx:6097` — FAQ answer
-- `src/app.jsx:6251` — live outbound `<a href="https://astrofolio.xyz/">`
-- `public/assets/app.js:2` — the generated bundle (regenerates from app.jsx)
-
-**Disclosure / compliance strings** (operator attestation "I do not control
-astrofolio.xyz…" — legal text; R2.5 needs an owner call on whether the
-attestation keeps naming the domain)
-- `src/strings/en.mjs:22` · `src/strings/additions.es.mjs:51` ·
-  `additions.fr.mjs:48` · `additions.it.mjs:54` · `additions.pt.mjs:54`
-- `src/lib/guide-knowledge/catalog.ts:98` (assistant knowledge, quotes the attestation)
-- `src/lib/disclosure.test.ts:211`
-- `public/thesis/thesis-disclosure.json` — 26 hits: 48, 51, 98, 101, 148,
-  151, 198, 201, 248, 251, 298, 301, 348, 351, 398, 401, 448, 451, 498,
-  501, 548, 551, 598, 601, 649, 652 (generated:
-  `scripts/build-thesis-disclosure.mjs`)
-- `scripts/thesis-disclosure-reviewed.json:194,195`
-- `scripts/build-thesis-disclosure.test.mjs:154,155,176`
-
-**Wing static HTML**
-- `public/thesis/index.html:2375-2387,2406,2520` (15 hits)
-- `public/sdk/index.html:62,1731,2492,2496,2505,2515,2516` (hand-authored source)
-- `public/astrofolio/index.html:126,9906,9908,9972`
-- `public/llms.txt:53,54,76` · `public/llms-full.txt:107,137`
-
-**Generators & tests**
-- `scripts/sign-data.mjs:284` (comment: channels "shared with astrofolio.xyz")
-- `scripts/registry-consumer-contract.test.mjs:231,234,242,243`
-
-**Docs / archives (informational)**
-- `docs/MASTER-PLAN.md:56,122,833` ·
-  `docs/REGISTRY-TRADE-OWNER-RISK-DECISION.md:211` · `LISTINGS.md:45,58` ·
-  `i18n-additions.md:192` · `zodiacs-thesis-v3.md:114` ·
-  `zodiacs-thesis-v4.md:156`
-
-R2.5 scope note: the protected-scope guard (§7) covers `src/app.jsx`,
-`public/assets/app.js`, `scripts/sign-data.mjs`, and the es/pt/fr/it string
-catalogs — the sweep will need a one-time scope allowance (see below).
+R2.5 used a one-time protected-scope allowance for the Registry SPA, generated
+bundle, locale strings, and related source files. The scope receipt is pinned in
+`.github/phase1-scope-allowance.json`.
 
 ---
-
 ## 7. Risks — what makes adding a dynamic page painful
 
 1. **No SSR.** Static-only Astro, no adapter. Live standings must be a

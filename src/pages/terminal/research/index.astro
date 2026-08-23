@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import publicationJson from '../../../data/registry-research/publication.json';
+import { terminalResearchLastmod } from '../../../lib/seo-lastmod';
 
 type ResearchItem = {
   id: string;
@@ -24,6 +25,17 @@ const dateLabel = (value: string) => new Intl.DateTimeFormat('en-US', {
 }).format(new Date(value));
 const categoryFor = (item: ResearchItem) => item.kind === 'event-brief' ? 'calendar' : 'zodiacs-research';
 const visibleItems = publication.items.filter((item) => item.status === 'published' && item.visibleAt <= publication.generatedAt);
+const researchLastmod = terminalResearchLastmod(publication);
+const terminalResearchCollection = {
+  '@type': 'CollectionPage',
+  '@id': 'https://zodiacs.org/terminal/research/#collection',
+  url: 'https://zodiacs.org/terminal/research/',
+  name: 'Markets Research | Terminal',
+  description: 'Verified sky facts, traditional symbolic readings, and separately timestamped Zodiac market observations from Zodiacs.org Research System.',
+  dateModified: `${researchLastmod}T00:00:00.000Z`,
+  inLanguage: 'en',
+  isPartOf: { '@id': 'https://zodiacs.org/#site' },
+};
 const terminalResearchBreadcrumb = {
   '@type': 'BreadcrumbList',
   itemListElement: [
@@ -37,7 +49,7 @@ const terminalResearchBreadcrumb = {
   title="Markets Research | Terminal"
   description="Verified sky facts, traditional symbolic readings, and separately timestamped Zodiac market observations from Zodiacs.org Research System."
   path="/terminal/research/"
-  jsonLd={[terminalResearchBreadcrumb]}
+  jsonLd={[terminalResearchCollection, terminalResearchBreadcrumb]}
   rssFeed={{ href: '/feeds/market-research.xml', title: 'Zodiacs.org Markets Research' }}
   stableTypography
   terminalMarketNotice

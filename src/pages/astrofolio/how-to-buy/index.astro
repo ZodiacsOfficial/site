@@ -210,10 +210,14 @@ const sources = [
               Names and symbols can be copied. The complete token address is what identifies the official{' '}
               <span data-sign-name>{defaultRecord.name}</span> token on Solana.
             </p>
+            <p class="official-scope" role="note">
+              Here, &ldquo;official&rdquo; only means that this complete address appears in the Zodiacs Registry.
+              It is not government, regulator, wallet, or exchange approval.
+            </p>
             <div class="verify-card">
               <div class="verify-card__top">
                 <img data-sign-icon src={defaultRecord.icon} width="52" height="52" alt="" />
-                <div><span>Buying</span><strong><span data-sign-name>{defaultRecord.name}</span> · <span data-sign-symbol>{defaultRecord.symbol}</span></strong></div>
+                <div><span>Buying</span><strong data-sign-name>{defaultRecord.name}</strong></div>
                 <span class="network-badge">Solana</span>
               </div>
               <code data-sign-mint>{defaultRecord.mint}</code>
@@ -237,7 +241,7 @@ const sources = [
             </p>
             <div class="review-list" role="list" aria-label="Swap review checklist">
               <div role="listitem"><span>Network</span><strong>Solana</strong></div>
-              <div role="listitem"><span>You are buying</span><strong><span data-sign-symbol>{defaultRecord.symbol}</span> · <span data-sign-name>{defaultRecord.name}</span></strong></div>
+              <div role="listitem"><span>You are buying</span><strong data-sign-name>{defaultRecord.name}</strong></div>
               <div role="listitem"><span>Official address</span><code data-sign-mint>{defaultRecord.mint}</code></div>
               <div role="listitem"><span>Also confirm</span><strong>Spend, estimated receive, price impact, and every fee</strong></div>
             </div>
@@ -258,7 +262,7 @@ const sources = [
           <li><span aria-hidden="true">3</span>A little SOL for fees</li>
           <li><span aria-hidden="true">4</span>The verified address</li>
         </ul>
-        <a href="#jupiter">Ready? Continue to the convenience tool ↓</a>
+        <a href="#jupiter">Continue to Jupiter ↓</a>
       </aside>
     </div>
 
@@ -273,13 +277,17 @@ const sources = [
       </div>
       <div class="jupiter-disclosure" role="note">
         <strong>Before you load it</strong>
-        <p>Jupiter is an independent swap service. Loading the tool requests a live quote from Jupiter and public market data. Your wallet reviews and signs any transaction. Astrofolio holds no keys or funds, cannot reverse a transaction, and receives no referral or trading fee.</p>
+        <p>Astrofolio at zodiacs.org/astrofolio is the official Zodiacs.org consumer page. Jupiter and your wallet remain independent services. Loading the tool requests a live quote from Jupiter and public market data. Your wallet reviews and signs any transaction. Astrofolio holds no keys or funds, cannot reverse a transaction, and receives no referral or trading fee.</p>
       </div>
-      <button class="load-jupiter" type="button" data-load-jupiter>
-        <span>Load Jupiter for <span data-sign-name>{defaultRecord.name}</span></span>
+      <div class="eligibility-ack" role="group" aria-labelledby="eligibility-title">
+        <label><input type="checkbox" data-eligibility-confirm /><span id="eligibility-title">I am at least 18 and may lawfully use a third-party swap service where I live.</span></label>
+        <p>Check availability for your region and review the <a href="/terms/">Terms</a> and <a href="/disclosure/">Disclosure</a>. This confirmation does not mean Jupiter is available in your location.</p>
+      </div>
+      <button class="load-jupiter" type="button" data-load-jupiter disabled>
+        <span data-jupiter-button-label>Load optional Jupiter tool for {defaultRecord.name}</span>
         <span aria-hidden="true">→</span>
       </button>
-      <p class="jupiter-status" data-jupiter-status role="status" aria-live="polite">Nothing has connected and no quote has been requested.</p>
+      <p class="jupiter-status" data-jupiter-status role="status" aria-live="polite">Confirm your eligibility above to continue. Nothing has connected and no quote has been requested.</p>
       <div class="jupiter-host" data-jupiter-host hidden></div>
       <noscript><p class="jupiter-noscript">The convenience tool needs JavaScript. You can still follow the guide and use the verified address in a Solana wallet or swap service you trust.</p></noscript>
     </section>
@@ -353,6 +361,8 @@ const sources = [
   const root = document.querySelector<HTMLElement>('.buy-guide');
   const astrofolioNav = document.querySelector<HTMLAnchorElement>('.nav__chip[href="/astrofolio/"]');
   const loadButton = document.querySelector<HTMLButtonElement>('[data-load-jupiter]');
+  const loadButtonLabel = document.querySelector<HTMLElement>('[data-jupiter-button-label]');
+  const eligibilityConfirm = document.querySelector<HTMLInputElement>('[data-eligibility-confirm]');
   const tradeHost = document.querySelector<HTMLElement>('[data-jupiter-host]');
   const tradeStatus = document.querySelector<HTMLElement>('[data-jupiter-status]');
   const requestedSign = new URLSearchParams(window.location.search).get('sign')?.toLowerCase() || '';
@@ -363,6 +373,13 @@ const sources = [
   let runtimeRequested = false;
 
   astrofolioNav?.setAttribute('aria-current', 'page');
+
+  function setLoadButtonLabel(mode: 'idle' | 'loading' | 'retry' = 'idle') {
+    if (!loadButtonLabel || !active) return;
+    if (mode === 'loading') loadButtonLabel.textContent = `Loading Jupiter for ${active.name}…`;
+    else if (mode === 'retry') loadButtonLabel.textContent = `Try loading Jupiter again for ${active.name}`;
+    else loadButtonLabel.textContent = `Load optional Jupiter tool for ${active.name}`;
+  }
 
   function updateUrl(record: BuyRecord) {
     const url = new URL(window.location.href);
@@ -397,6 +414,7 @@ const sources = [
     const status = document.querySelector<HTMLElement>('[data-copy-status]');
     if (status) status.textContent = '';
     if (runtimeRequested) remountTrade();
+    else setLoadButtonLabel();
   }
 
   async function copyMint() {
@@ -468,8 +486,8 @@ const sources = [
           tradeStatus.textContent = `Live Jupiter quote ready for verified ${selected.name}. Nothing will happen until you review and approve in your wallet.`;
         } else if (state.state === 'error') {
           tradeStatus.textContent = view.error
-            ? `Jupiter could not return a quote: ${view.error}`
-            : 'Jupiter could not return a quote. Nothing connected. Change the amount or try again.';
+            ? `Jupiter could not return a quote: ${view.error} Use “Try quote again” in the tool below.`
+            : 'Jupiter could not return a quote. Nothing connected. Use “Try quote again” in the tool below.';
         } else if (state.state === 'signing') {
           tradeStatus.textContent = 'Review every detail in your wallet. Cancel if anything differs from this guide.';
         } else if (state.state === 'done') {
@@ -484,9 +502,16 @@ const sources = [
 
   async function revealTrade() {
     if (!loadButton || !tradeHost || !active) return;
+    if (!eligibilityConfirm?.checked) {
+      loadButton.disabled = true;
+      eligibilityConfirm?.focus();
+      if (tradeStatus) tradeStatus.textContent = 'Confirm your eligibility above before loading the optional Jupiter tool.';
+      return;
+    }
     runtimeRequested = true;
     loadButton.disabled = true;
     loadButton.setAttribute('aria-busy', 'true');
+    setLoadButtonLabel('loading');
     if (tradeStatus) tradeStatus.textContent = 'Loading Jupiter’s live quote…';
     tradeHost.hidden = false;
     try {
@@ -503,6 +528,7 @@ const sources = [
       tradeHost.hidden = true;
       loadButton.hidden = false;
       loadButton.disabled = false;
+      setLoadButtonLabel('retry');
       if (tradeStatus) tradeStatus.textContent = 'Jupiter could not load. Nothing connected. Check your connection and try again.';
     } finally {
       loadButton.removeAttribute('aria-busy');
@@ -521,6 +547,16 @@ const sources = [
     button.addEventListener('click', copyMint);
   });
   loadButton?.addEventListener('click', revealTrade);
+  eligibilityConfirm?.addEventListener('change', () => {
+    if (!loadButton || runtimeRequested) return;
+    loadButton.disabled = !eligibilityConfirm.checked;
+    setLoadButtonLabel();
+    if (tradeStatus) {
+      tradeStatus.textContent = eligibilityConfirm.checked
+        ? 'Eligibility confirmed. The optional Jupiter tool has not loaded and no quote has been requested.'
+        : 'Confirm your eligibility above to continue. Nothing has connected and no quote has been requested.';
+    }
+  });
   if (active) syncRecord(active, Boolean(window.location.search));
 </script>
 </Base>
@@ -770,6 +806,7 @@ const sources = [
   .safety-note { margin: 24px 0 0; padding: 17px 18px; border-left: 2px solid var(--selected-sign); background: color-mix(in srgb, var(--selected-sign) 7%, transparent); color: var(--muted); font-size: 14px; line-height: 1.6; }
   .safety-note strong { color: var(--ink); }
   .safety-note--warn { border-color: #d89ba5; background: rgba(216, 155, 165, .07); }
+  .official-scope { margin: 18px 0 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
 
   .micro-steps { display: grid; gap: 0; margin: 28px 0 0; padding: 0; list-style: none; }
   .micro-steps li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 18px 0; border-top: 1px solid var(--hairline); }
@@ -801,7 +838,7 @@ const sources = [
   .ready-card__sign span { color: var(--faint); font-size: 11px; }
   .ready-card__sign strong { font-family: var(--font-display); font-size: 28px; font-weight: 400; line-height: 1; }
   .ready-card ul { display: grid; gap: 14px; margin: 20px 0; padding: 0; list-style: none; }
-  .ready-card li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; }
+  .ready-card li { display: flex; align-items: center; gap: 10px; color: var(--ink); font-size: 13px; }
   .ready-card li span { display: grid; width: 24px; height: 24px; flex: 0 0 24px; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--selected-sign) 12%, transparent); color: var(--selected-sign); font-family: var(--font-mono); font-size: 9px; }
   .ready-card > a { display: flex; min-height: 48px; align-items: center; justify-content: center; padding: 0 14px; border-radius: 999px; background: var(--ink); color: #08090b; font-size: 13px; font-weight: 650; text-align: center; text-decoration: none; }
 
@@ -817,6 +854,11 @@ const sources = [
   .jupiter-disclosure { max-width: 760px; margin-top: 30px; padding: 18px 20px; border: 1px solid var(--hairline); border-radius: 16px; background: rgba(5, 7, 10, .55); }
   .jupiter-disclosure strong { font-size: 14px; }
   .jupiter-disclosure p { margin: 5px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+  .eligibility-ack { max-width: 760px; margin-top: 16px; padding: 16px 18px; border: 1px solid var(--hairline); border-radius: 16px; }
+  .eligibility-ack label { display: flex; align-items: flex-start; gap: 12px; color: var(--ink); font-size: 14px; line-height: 1.5; cursor: pointer; }
+  .eligibility-ack input { width: 22px; height: 22px; flex: 0 0 22px; margin: 0; accent-color: var(--selected-sign); }
+  .eligibility-ack p { margin: 8px 0 0 34px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+  .eligibility-ack a { color: var(--ink); text-underline-offset: 3px; }
   .load-jupiter {
     display: flex;
     width: min(100%, 560px);

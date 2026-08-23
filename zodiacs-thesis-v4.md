@@ -153,7 +153,7 @@ No institution appointed these digital assets as an official zodiac standard. Th
 
 [CANDIDACY EVIDENCE — render this as the preserved `<section id="the-candidacy">`. A plain-language illustrated sequence summarizes independent builders, unprompted citations, ownership distribution, market continuity, and archive continuity. The complete dated scoreboard, definitions, and exclusions remain in its disclosure drawer.]
 
-[Astrofolio](https://astrofolio.xyz/) is a related consumer project under separate control, according to the dated operator attestation. The conservative methodology still excludes it from independent-adoption counts.
+[Astrofolio](https://zodiacs.org/astrofolio/) is the official consumer experience on Zodiacs.org; astrofolio.xyz is a redirect alias for that canonical page, according to the dated operator update. The conservative methodology still excludes it from independent-adoption counts because it is operator-controlled.
 
 ## The public test.
 

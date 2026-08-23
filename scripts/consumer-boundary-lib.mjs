@@ -70,7 +70,7 @@ const APPROVED_DISCLOSURE_KEY = /(?:^|\.)disclosure\.(?:adviceEvidence|adviceSta
 const DISCLOSURE_CATALOG_SOURCE = /^src\/strings\/(?:en|additions\.(?:es|fr|it|pt))\.mjs$/u;
 const WING_CATALOG_KEY = /(?:^|\.)(?:archive|astrofolio|disclosure|markets?|registry(?:Lot)?|research|terminal|thesis|walletChart|wing)(?:\.|$)|^TERMINAL_OG_PREFIXES$/iu;
 
-export const READ_ONLY_POSTURE = 'Read-only posture (collector\'s wing): Official registry. Public reads. Paste-address verification. No custody. No wallet connection. No signing. No transactions. Unknown addresses are reported only as “not found in the official Zodiacs.org registry.” Optional market context never changes identity status. Nothing on the site is financial advice. Astrology computation stays on-device; do not transmit birth data to a chart server. Account sync and the explicitly attached AI-assistant context are separate, opt-in transmissions described above.';
+export const READ_ONLY_POSTURE = 'Read-only posture (Registry and SDK): Official Registry records, catalogue profiles, paste-address verification, and the SDK are read-only. Registry lookup requests no wallet signature and submits no transaction. The separate, opt-in Astrofolio How to Buy tool may load independent Jupiter only after a visitor’s click; the visitor’s wallet reviews and signs. Zodiacs.org holds no keys or funds. Unknown addresses are reported only as “not found in the official Zodiacs.org registry.” Optional market context never changes identity status. Nothing on the site is financial advice. Astrology computation stays on-device; do not transmit birth data to a chart server. Account sync and the explicitly attached AI-assistant context are separate, opt-in transmissions described above.';
 
 const SANCTIONED_INTERNAL_LINKS = Object.freeze([
   [/^src\/components\/CollectBand\.astro$/u, /^\/registry\/\$\{…\}\/$/u],
@@ -78,15 +78,15 @@ const SANCTIONED_INTERNAL_LINKS = Object.freeze([
   [/^src\/components\/SiteFooter\.astro$/u, /^\/(?:astrofolio|disclosure|registry|sdk)\/$/u],
   [/^src\/components\/SiteNav\.astro$/u, /^\/astrofolio\/$/u],
   [/^src\/islands\/(?:ChartCalculator|RaceBoard)\.tsx$/u, /^\/registry\/\$\{…\}\/$/u],
-  [/^src\/lib\/disclosure\.ts$/u, /^\/(?:registry\/(?:aries\/|zodiacs\.registry\.json)|sdk\/|thesis\/)$/u],
+  [/^src\/lib\/disclosure\.ts$/u, /^\/(?:astrofolio\/how-to-buy\/|registry\/(?:aries\/|zodiacs\.registry\.json)|sdk\/|thesis\/)$/u],
   [/^src\/lib\/legacy\/urls\.ts$/u, /^\/(?:archive|astrofolio|registry|sdk|terminal|thesis)\//u],
   [/^src\/lib\/i18n\/index\.ts$/u, /^\/disclosure\/$/u],
   [/^src\/strings\/seo\.(?:en|ru)\.mjs$/u, /^\/disclosure\/$/u],
   [/^src\/pages\/about\/index\.astro$/u, /^\/(?:astrofolio|disclosure|registry|terminal)\/$/u],
-  [/^src\/pages\/terms\/index\.astro$/u, /^\/disclosure\/$/u],
+  [/^src\/pages\/terms\/index\.astro$/u, /^\/(?:astrofolio\/how-to-buy|disclosure)\/$/u],
   [/^src\/pages\/ru\/\[sign\]\/index\.astro$/u, /^\/registry\/\$\{…\}\/$/u],
   [/^src\/pages\/ru\/disclosure\/index\.astro$/u, /^\/terminal\/$/u],
-  [/^src\/pages\/sitemap\.xml\.ts$/u, /^\/(?:astrofolio|disclosure|registry|terminal|thesis)\//u],
+  [/^src\/pages\/sitemap\.xml\.ts$/u, /^\/(?:astrofolio|disclosure|registry|sdk|terminal|thesis)\//u],
 ]);
 
 function toPosix(value) {

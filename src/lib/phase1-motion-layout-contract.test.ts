@@ -90,7 +90,9 @@ describe('Phase 1 layout and motion contract', () => {
     expect(fallback).not.toContain('clear note for the {editionLabel} edition');
     expect(brief).toContain('data-ready={streak !== null');
     expect(brief).toContain("streak > 999 ? '999+' : (streak ?? 1)");
-    expect(page).toContain('grid-template-columns: minmax(4ch, auto) 29px;');
+    expect(page).toMatch(/\.today-streak\s*\{[\s\S]*?grid-template-columns: 3\.75rem max-content;[\s\S]*?min-width: 0;/u);
+    expect(page).toMatch(/\.today-streak__count\s*\{[\s\S]*?min-width: 0;/u);
+    expect(brief).toContain('day streak');
     expect(page).toContain('.today-fallback__status.is-visible { visibility: visible; }');
   });
 
@@ -251,7 +253,24 @@ describe('Phase 1 layout and motion contract', () => {
     expect(nav).toMatch(/\.nav-wrap\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);
     expect(nav).toMatch(/\.mobile-menu\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);
     expect(nav).toContain('class="nav__search-kbd"');
+    expect(nav).toContain('.nav { gap: 4px; padding-inline: 10px 4px; }');
+    expect(nav).toContain('.nav__name { font-size: 11px; letter-spacing: 0.08em; }');
+    expect(nav).toContain('.nav__chip { padding-inline: 7px 0; font-size: 11px; letter-spacing: 0.04em; }');
     expect(nav).not.toMatch(/var\(--font-(?:serif|sans|mono)\)/u);
+  });
+
+  it('keeps dense demo marks collision-aware while preserving large jump controls', async () => {
+    const [demo, home] = await Promise.all([
+      source('islands/DemoChart.tsx'),
+      source('pages/index.astro'),
+    ]);
+    expect(demo).toContain('const interactivePoints = [...rawPlanetTargets, ...rawHouseTargets, ...rawAspectTargets]');
+    expect(demo).toContain('return Math.min(maximum, nearest * 0.82);');
+    expect(demo.match(/style=\{position\(target\.point, undefined, target\.hit\)\}/gu)).toHaveLength(2);
+    expect(home).toContain('width: min(38px, calc(var(--hit) * 1%));');
+    expect(home).toContain('width: min(34px, calc(var(--hit) * 1%));');
+    expect(home).toContain('width: min(31px, calc(var(--hit) * 1%));');
+    expect(home).toMatch(/\.demo__jump\)\s*\{[^}]*min-height:\s*66px;/u);
   });
 
   it('does not attach generic scroll reveals to the Phase 1 reader templates', async () => {

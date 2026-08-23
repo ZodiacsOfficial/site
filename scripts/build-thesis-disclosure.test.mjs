@@ -151,8 +151,9 @@ describe('hydrateReviewedProse', () => {
       reason: 'Owner confirmation is required.',
     },
     continuity: {
-      value: "Astrofolio.xyz · the registry's companion app carries the records forward",
-      verifyUrl: 'https://astrofolio.xyz/',
+      value: 'Astrofolio at zodiacs.org/astrofolio · the official consumer collection experience',
+      asOf: '2026-08-23',
+      verifyUrl: 'https://zodiacs.org/astrofolio/',
     },
   });
 
@@ -173,8 +174,11 @@ describe('hydrateReviewedProse', () => {
     });
     expect(disclosure.signs.aries.bridge.status).toBe('filled');
     expect(disclosure.signs.aries.continuity.value).toBe(
-      "Astrofolio.xyz · the registry's companion app carries the records forward",
+      'Astrofolio at zodiacs.org/astrofolio · the official consumer collection experience',
     );
+    expect(disclosure.signs.aries.continuity.asOf).toBe('2026-08-23');
+    expect(disclosure.aggregate.continuity.asOf).toBe('2026-08-23');
+    expect(disclosure.signs.aries.liquidity.asOf).toBe('2026-07-14');
     expect(disclosure.signs.aries.treasury).toEqual(pending());
     expect(disclosure.aggregate.treasury).toEqual(pending());
     expect(report).toEqual(expect.arrayContaining([
@@ -272,6 +276,17 @@ describe('hydrateReviewedProse', () => {
       [{ sign: 'aries', mint: 'MintAries', decimals: 6 }],
       source,
     )).toThrow('signs.aries.liquidity.verifyUrl must be a non-empty string');
+  });
+
+  it('rejects an invalid field-specific review date', () => {
+    const source = reviewedSource();
+    source.continuity.asOf = '23 August 2026';
+
+    expect(() => hydrateReviewedProse(
+      disclosureFor(['aries']),
+      [{ sign: 'aries', mint: 'MintAries', decimals: 6 }],
+      source,
+    )).toThrow('Invalid --as-of date');
   });
 });
 

@@ -153,10 +153,11 @@ const visibleNavTools = locale === 'ru'
   <nav aria-label={locale === 'ru' ? 'Мобильная навигация' : 'Mobile'}>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navSite')}</span>
-      <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/learn/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
-      <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/horoscopes/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
-      <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link mobile-menu__registry" style="--i:3" href="/astrofolio/" hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>
+      {locale === 'en' && <a class="mobile-menu__link" style="--i:0" href="/today/">Today</a>}
+      <a class="mobile-menu__link" style={`--i:${locale === 'en' ? 1 : 0}`} href={localizePath(locale, '/learn/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
+      <a class="mobile-menu__link" style={`--i:${locale === 'en' ? 2 : 1}`} href={localizePath(locale, '/horoscopes/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
+      <a class="mobile-menu__link" style={`--i:${locale === 'en' ? 3 : 2}`} href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
+      <a class="mobile-menu__link mobile-menu__registry" style={`--i:${locale === 'en' ? 4 : 3}`} href="/astrofolio/" hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>
         <span>{t(locale, 'navCollect')}</span>
         <small>{astrofolioLabel[locale]}</small>
       </a>
@@ -304,8 +305,8 @@ const visibleNavTools = locale === 'ru'
     .nav__search {
       display: inline-grid;
       place-items: center;
-      width: 34px;
-      height: 34px;
+      width: 44px;
+      height: 44px;
       padding: 0;
     }
   }
@@ -332,7 +333,7 @@ const visibleNavTools = locale === 'ru'
   .nav__chip {
     display: inline-flex;
     align-items: center;
-    min-height: 34px;
+    min-height: 44px;
     padding-block: 0;
     padding-inline: 16px 2px;
     border-inline-start: 1px solid var(--hair-2);
@@ -349,6 +350,7 @@ const visibleNavTools = locale === 'ru'
   .nav__chip[aria-current='page'] { color: var(--text); }
   @media (min-width: 820px) {
     .nav__chip {
+      min-height: 34px;
       letter-spacing: 0.14em;
     }
   }
@@ -357,8 +359,8 @@ const visibleNavTools = locale === 'ru'
     position: relative;
     display: inline-block;
     flex: 0 0 auto;
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: 1px solid var(--hair-2);
     transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -385,6 +387,15 @@ const visibleNavTools = locale === 'ru'
   .nav__burger[aria-expanded='true'] .nav__burger-line:first-child { transform: translate(-50%, -50%) rotate(45deg); }
   .nav__burger[aria-expanded='true'] .nav__burger-line:nth-child(2) { opacity: 0; transform: translate(-50%, -50%) scaleX(0.18); }
   .nav__burger[aria-expanded='true'] .nav__burger-line:last-child { transform: translate(-50%, -50%) rotate(-45deg); }
+
+  /* Keep both 44px controls intact on 320px screens by compacting only the
+     surrounding lockup, gaps, padding, and destination label. */
+  @media (max-width: 360px) {
+    .nav { gap: 4px; padding-inline: 10px 4px; }
+    .nav__mark { gap: 0; }
+    .nav__name { font-size: 11px; letter-spacing: 0.08em; }
+    .nav__chip { padding-inline: 7px 0; font-size: 11px; letter-spacing: 0.04em; }
+  }
 
   /* ── Tools / Signs dropdowns ── */
   .nav-menu {

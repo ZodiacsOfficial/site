@@ -23,7 +23,7 @@ const pt = {
   footerThesis: 'Tese',
   footerArchive: 'Acervo',
   footerSdk: 'SDK',
-  footerCollectNote: 'A ala do acervo é somente para consulta: sem custódia, assinaturas ou transações. Nada ali constitui aconselhamento financeiro.',
+  footerCollectNote: 'Os registros, as consultas, os perfis do catálogo e o SDK do Registry são somente para leitura. A ferramenta opcional de compra do Astrofolio usa a Jupiter independente e a sua própria carteira; a Zodiacs.org não guarda chaves nem fundos. Nada disso constitui aconselhamento financeiro.',
   footerMethodology: 'Metodologia',
   footerAbout: 'Sobre',
   footerPrivacy: 'Privacidade',

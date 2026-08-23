@@ -6,7 +6,8 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
-const updated = '18 August 2026';
+const updated = '23 August 2026';
+const modifiedAt = '2026-08-23T00:00:00.000Z';
 
 const jsonLd = [
   {
@@ -14,13 +15,14 @@ const jsonLd = [
     name: 'Terms of use — Zodiacs.org',
     url: 'https://zodiacs.org/terms/',
     description:
-      'The terms for using zodiacs.org astrology tools, saved charts, Guide, and optional account features.',
+      'Terms for using Zodiacs.org astrology tools, saved charts, Registry records, and the optional Astrofolio Jupiter convenience tool.',
+    dateModified: modifiedAt,
   },
 ];
 ---
 <Base
   title="Terms of Use | Zodiacs.org"
-  description="Terms for using zodiacs.org astrology tools, saved charts, Guide, and optional account features."
+  description="Terms for using Zodiacs.org astrology tools, saved charts, Registry records, and the optional Astrofolio Jupiter convenience tool."
   path="/terms/"
   jsonLd={jsonLd}
 >
@@ -31,9 +33,12 @@ const jsonLd = [
     <div class="prose">
       <p class="lede">
         Zodiacs.org is a free astrology reference with a Registry wing whose
-        records, catalogue profiles, and lookup tools only show information.
-        They do not offer or complete purchases. Using the site means you agree
-        to these terms. We have tried to keep them short and readable.
+        records, catalogue profiles, SDK, and verification tools are read-only.
+        A separate, optional Astrofolio convenience tool can request a quote
+        from Jupiter and hand a proposed transaction to your own wallet after
+        you explicitly load it. Zodiacs.org does not take custody or sign for
+        you. Using the site means you agree to these terms. We have tried to
+        keep them short and readable.
       </p>
 
       <h2>The Cabinet of Twelve and wallet connections</h2>
@@ -81,12 +86,26 @@ const jsonLd = [
       <p>
         Explorer and other external links lead to independent third parties
         with their own terms, fees, security, and privacy practices. Catalogue
-        profiles contain no purchase route or trading link. Zodiacs.org does
-        not execute, broker, hold, or reverse a transaction, holds no keys or
-        funds, and receives no fee or other compensation for any trade. If you
-        choose to use a separate service, read its terms and check every detail
-        before approving anything. Blockchain transactions are often
-        irreversible. Never disclose a recovery phrase or private key.
+        profiles and Registry lookups contain no purchase route or trading link.
+        On the separate <a href="/astrofolio/how-to-buy/">Astrofolio How to Buy</a>{' '}
+        page, an optional tool loads only after your click and eligibility
+        confirmation. Jupiter supplies the quote, constructs the proposed
+        transaction, and receives the signed transaction for submission. Your
+        independent wallet displays the transaction and signs locally only if
+        you approve it. Zodiacs.org does not execute or broker the trade, never
+        receives your recovery phrase or private key, holds no keys or funds,
+        cannot reverse a transaction, and receives no referral, platform,
+        liquidity, or marketplace compensation for any trade reached through
+        the site. Blockchain transactions are often irreversible. Check the
+        network, official address, amount, fees, and destination before signing.
+      </p>
+      <p>
+        The optional tool is not available to everyone or lawful in every
+        jurisdiction. Use it only if you are legally eligible where you live,
+        meet any age requirement that applies to you, and may use Jupiter and
+        your wallet under their terms. Do not load or use it where digital-asset
+        swaps are prohibited or restricted for you. Zodiacs.org does not make
+        an eligibility determination for you.
       </p>
       <p>
         A link or Registry entry is provided for reference and is not an
@@ -203,10 +222,13 @@ const jsonLd = [
       <h2>Applicable law</h2>
       <p>
         The operator's legal identity and a chosen governing jurisdiction have
-        not yet been confirmed in the site's published materials. Applicable
-        law still governs your use, and nothing in these terms removes mandatory
-        consumer or other rights that apply to you. We will update this section
-        and the date above when those facts are confirmed.
+        not yet been confirmed in the site's published materials. This is a
+        pending disclosure, not a claim that no law applies. The law that
+        applies to you still governs your use, and nothing in these terms
+        removes mandatory consumer or other rights. Do not use an optional
+        digital-asset tool unless you are eligible to do so where you live. We
+        will update this section and the date above when the operator and
+        governing-jurisdiction facts are confirmed.
       </p>
 
       <h2>Contact</h2>

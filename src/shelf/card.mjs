@@ -268,7 +268,10 @@ export function createCard(root, { onClose }) {
 
       marketGrid.replaceChildren();
       marketCell('Liquidity', fmtCompact(pair.liquidity && pair.liquidity.usd));
-      marketCell('Market cap', fmtCompact(pair.marketCap ?? pair.fdv));
+      // DexScreener reports market capitalization and fully diluted valuation
+      // as separate fields. An absent marketCap is unknown, not permission to
+      // relabel FDV; fmtCompact renders that missing value as an em dash.
+      marketCell('Reported market cap', fmtCompact(pair.marketCap));
 
       marketState.hidden = true;
       priceRow.hidden = false;

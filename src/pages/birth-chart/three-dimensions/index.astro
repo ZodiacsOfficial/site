@@ -1,29 +1,41 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import DepthFigure from '../../../components/DepthFigure.astro';
+import demoChart from '../../../data/demo-chart-frida.json';
 import { EDITOR_AUTHOR } from '../../../lib/editorial';
+import { meanObliquity, ramcOf } from '../../../lib/engine/houses';
+import {
+  altitudeOf,
+  declinationOf,
+  gmstHours,
+  julianCenturies,
+  zenithOf,
+} from '../../../lib/wheel/ecliptic3d';
 
 /**
- * Reference charts, recorded from the site engine the same way the horizon
- * test fixtures are. Kahlo: 1907-07-06T20:30Z at 19.35, −99.16 (asc 219.169,
- * obliquity 23.4513, Sun altitude +55.9°). Greenwich: 2026-07-28T12:00Z at
- * 51.48, 0 (asc 205.447, obliquity 23.4358). Declinations follow from
- * lon/lat by sin δ = sin β cos ε + cos β sin ε sin λ.
+ * The Kahlo figures consume the same committed engine fixture as the homepage
+ * demo. Horizon, sect, and declination values are then derived here from that
+ * UTC instant and those engine positions instead of being copied by hand.
  */
-const KAHLO_UTC_MS = Date.UTC(1907, 6, 6, 20, 30);
-const KAHLO = { asc: 219.169, latitude: 19.35, longitude: -99.16 };
-const KAHLO_BODIES = [
-  { body: 'Sun', lon: 103.59, lat: 0 },
-  { body: 'Moon', lon: 62.409, lat: -4.11 },
-  { body: 'Mercury', lon: 126.418, lat: -1.716 },
-  { body: 'Venus', lon: 84.613, lat: -0.485 },
-  { body: 'Mars', lon: 283.33, lat: -5.25 },
-  { body: 'Jupiter', lon: 110.485, lat: 0.235 },
-  { body: 'Saturn', lon: 357.446, lat: -2.207 },
-  { body: 'Uranus', lon: 280.603, lat: -0.374 },
-  { body: 'Neptune', lon: 102.407, lat: -0.819 },
-  { body: 'Pluto', lon: 83.752, lat: -7.473 },
-];
+const KAHLO = { asc: demoChart.angles.asc, latitude: 19.35, longitude: -99.16 };
+const KAHLO_UTC_MS = Date.parse(demoChart.utc);
+const KAHLO_BODIES = demoChart.bodies
+  .filter(({ body }) => !body.includes('Node'))
+  .map(({ body, lon, lat }) => ({ body, lon, lat }));
+const KAHLO_OBLIQUITY = meanObliquity(julianCenturies(KAHLO_UTC_MS));
+const KAHLO_ZENITH = zenithOf(
+  ramcOf({ gastHours: gmstHours(KAHLO_UTC_MS), longitude: KAHLO.longitude }),
+  KAHLO.latitude,
+  KAHLO_OBLIQUITY,
+);
+const KAHLO_SUN = KAHLO_BODIES.find(({ body }) => body === 'Sun')!;
+const KAHLO_MARS = KAHLO_BODIES.find(({ body }) => body === 'Mars')!;
+const KAHLO_SUN_ALTITUDE = altitudeOf(KAHLO_SUN.lon, KAHLO_SUN.lat, KAHLO_ZENITH);
+const KAHLO_MARS_DECLINATION = Math.abs(
+  declinationOf(KAHLO_MARS.lon, KAHLO_MARS.lat, KAHLO_OBLIQUITY),
+);
+const KAHLO_MARS_EXCESS = KAHLO_MARS_DECLINATION - KAHLO_OBLIQUITY;
+const KAHLO_SOURCE_URL = 'https://www.astro.com/astro-databank/Kahlo%2C_Frida';
 
 const GREENWICH = { asc: 205.447 };
 const GREENWICH_BODIES = [
@@ -41,14 +53,11 @@ const GREENWICH_BODIES = [
 /** Venus sits at +4.05° declination, Saturn at +3.50°; the shared ring is drawn at their mean. */
 const VENUS_SATURN_RING = 3.77;
 
-const SECT_BODIES = [
-  { body: 'Sun', lon: 103.59, lat: 0, ringed: true },
-  { body: 'Moon', lon: 62.409, lat: -4.11 },
-  { body: 'Jupiter', lon: 110.485, lat: 0.235, dim: true },
-  { body: 'Saturn', lon: 357.446, lat: -2.207, dim: true },
-  { body: 'Venus', lon: 84.613, lat: -0.485, dim: true },
-  { body: 'Mars', lon: 283.33, lat: -5.25, dim: true },
-];
+const SECT_BODIES = ['Sun', 'Moon', 'Jupiter', 'Saturn', 'Venus', 'Mars'].map((body) => ({
+  ...KAHLO_BODIES.find((placement) => placement.body === body)!,
+  ringed: body === 'Sun',
+  dim: body !== 'Sun' && body !== 'Moon',
+}));
 
 const faq = [
   {
@@ -57,7 +66,7 @@ const faq = [
   },
   {
     q: 'What is an out-of-bounds planet?',
-    a: 'A planet is out of bounds when its declination passes ±23.44°, further north or south of the celestial equator than the Sun ever travels. The Moon and Mercury go out of bounds most often, Venus and Mars less often, and the Sun never can — the limit is the Sun’s own path. Frida Kahlo’s chart carries Mars at 28.0° south, well past it.',
+    a: `A planet is out of bounds when its declination passes ±23.44°, further north or south of the celestial equator than the Sun ever travels. The Moon and Mercury go out of bounds most often, Venus and Mars less often, and the Sun never can — the limit is the Sun’s own path. In this published-time Frida Kahlo sample, Mars is ${KAHLO_MARS_DECLINATION.toFixed(1)}° south, well past it.`,
   },
   {
     q: 'What is a parallel aspect?',
@@ -76,7 +85,7 @@ const jsonLd = [
     headline: 'The birth chart in three dimensions',
     url: PAGE_URL,
     datePublished: '2026-07-28T18:50:00+07:00',
-    dateModified: '2026-07-28T18:50:00+07:00',
+    dateModified: '2026-08-23T00:00:00+07:00',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
@@ -131,8 +140,12 @@ const jsonLd = [
       utcMs={KAHLO_UTC_MS}
       showHorizon
       showBounds
-      caption="Frida Kahlo’s chart as an armillary sphere: the zodiac band, the celestial equator, her horizon for 1907-07-06 20:30 UT at Coyoacán, and each body at its real height above or below the ecliptic plane."
+      caption="Frida Kahlo’s chart as an armillary sphere: the zodiac band, the celestial equator, her horizon for 1907-07-06 15:06:36 UTC at Coyoacán, and each body at its real height above or below the ecliptic plane."
     />
+    <p class="td-source">
+      Sample provenance: <a href={KAHLO_SOURCE_URL} target="_blank" rel="noopener noreferrer">the published Astro-Databank record</a>
+      {' '}reports 8:30 a.m. in Coyoacán and labels the time AA (birth record). The calculator converts that historical local-mean time to 15:06:36 UTC; Zodiacs.org has not independently inspected the underlying record.
+    </p>
 
     <div class="prose">
       <h2 id="latitude">The wheel is a shadow</h2>
@@ -160,8 +173,8 @@ const jsonLd = [
       <p>
         The Sun's own declination never passes ±23.44° — that limit is what
         the tropics are. A planet that crosses it is called out of bounds,
-        and traditional practice reads it as operating past the Sun's rule.
-        In Kahlo's chart, Mars stands at 28.0° south declination, 4.6° beyond
+        and modern astrological practice often describes it as operating past
+        the Sun's rule. In this sample, Mars stands at {KAHLO_MARS_DECLINATION.toFixed(1)}° south declination, {KAHLO_MARS_EXCESS.toFixed(1)}° beyond
         the southern bound. The Moon and Mercury go out of bounds most often;
         the Sun, by definition, never can.
       </p>
@@ -208,7 +221,7 @@ const jsonLd = [
       longitude={KAHLO.longitude}
       utcMs={KAHLO_UTC_MS}
       showHorizon
-      caption="The same horizon, asking one question: was the Sun above it? In Kahlo’s chart it stood 55.9° high — a day chart, so the Sun leads as sect light, ringed here."
+      caption={`The same horizon, asking one question: was the Sun above it? In this sample it stood ${KAHLO_SUN_ALTITUDE.toFixed(1)}° high — a day chart, so the Sun leads as sect light, ringed here.`}
     />
 
     <div class="prose">
@@ -233,11 +246,11 @@ const jsonLd = [
 
     <aside class="td-cta">
       <p>
-        <strong>See your own chart this way.</strong> The
+        <strong>See your own chart this way.</strong>{' '}The{' '}
         <a href="/birth-chart/">birth chart calculator</a> computes all of it
         in your browser — declinations, out-of-bounds bodies, parallels, sect
         — and the “See it in three dimensions” control under the wheel puts
-        you inside the instrument. Terms are defined in the
+        you inside the instrument. Terms are defined in the{' '}
         <a href="/learn/glossary/#declination">glossary</a>.
       </p>
     </aside>
@@ -263,6 +276,13 @@ const jsonLd = [
     font-size: var(--text-lg);
     line-height: 1.55;
     text-wrap: pretty;
+  }
+  .td-source {
+    max-width: 72ch;
+    margin: -2px 0 24px;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+    line-height: 1.6;
   }
   .prose h2 { margin-top: 34px; }
   .prose h3 { margin-top: 22px; }

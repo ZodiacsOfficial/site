@@ -76,6 +76,15 @@ const aboutHer = (line: string) => line
 
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
 
+function collisionAwareHit(points: Point[], index: number, maximum: number) {
+  const neighbours = points.filter((_, other) => other !== index);
+  if (neighbours.length === 0) return maximum;
+  const nearest = Math.min(...neighbours.map((other) => distance(points[index], other)));
+  // Keep every target inside its nearest-neighbour gap. The larger jump
+  // controls beside the wheel remain the accessible alternative on phones.
+  return Math.min(maximum, nearest * 0.82);
+}
+
 function naturalList(items: string[]) {
   if (items.length < 2) return items[0] ?? '';
   if (items.length === 2) return `${items[0]} and ${items[1]}`;
@@ -110,12 +119,9 @@ export default function DemoChart() {
     drawLon: drawLongitude.get(body.body) ?? body.lon,
     point: point(drawLongitude.get(body.body) ?? body.lon, R_BODIES),
   }));
-  const planetTargets = markerPoints.map(({ body, drawLon, point: markerPoint }, index) => {
+  const rawPlanetTargets = markerPoints.map(({ body, drawLon, point: markerPoint }) => {
     const house = houseOf(body.lon, demo.houses.cusps);
     const sign = signForLongitude(body.lon);
-    const nearest = Math.min(
-      ...markerPoints.filter((_, other) => other !== index).map(({ point: other }) => distance(markerPoint, other)),
-    );
     return {
       id: `body:${body.body}`,
       key: body.body,
@@ -125,9 +131,6 @@ export default function DemoChart() {
       caption: aboutHer(planetInHouseLine(body.body, house)),
       drawLon,
       point: markerPoint,
-      // A button stays inside its nearest-neighbour gap. Crowded markers
-      // therefore remain individually clickable at every rendered width.
-      hit: Math.min(6.4, nearest * 0.82),
       hue: sign.hue,
     };
   });
@@ -147,7 +150,8 @@ export default function DemoChart() {
       path: annularSectorPath(index * 30 + 1.5, 27, R_SIGN_FOCUS_INNER, R_SIGN_FOCUS_OUTER),
     };
   });
-  const houseTargets = demo.houses.cusps.map((cusp, index) => {
+  const housePoints = demo.houses.cusps.map((cusp) => point(norm(cusp + 15), R_HOUSE_LABELS));
+  const rawHouseTargets = demo.houses.cusps.map((cusp, index) => {
     const house = index + 1;
     const occupant = planets.find((body) => houseOf(body.lon, demo.houses.cusps) === house);
     return {
@@ -159,11 +163,11 @@ export default function DemoChart() {
       caption: occupant
         ? aboutHer(planetInHouseLine(occupant.body, house))
         : t('en', 'emptyHouseNote'),
-      point: point(norm(cusp + 15), R_HOUSE_LABELS),
+      point: housePoints[index],
       path: annularSectorPath(cusp + 0.6, 28.8, R_HOUSE_INNER, R_HOUSE_OUTER),
     };
   });
-  const aspectTargets = aspects.map((aspect, index) => {
+  const rawAspectTargets = aspects.map((aspect, index) => {
     const a = planets.find((body) => body.body === aspect.a)!;
     const b = planets.find((body) => body.body === aspect.b)!;
     const p1 = point(a.lon, R_ASPECTS);
@@ -182,6 +186,22 @@ export default function DemoChart() {
       hue: aspectHue[aspect.type] ?? 'rgba(238,241,247,0.9)',
     };
   });
+  const interactivePoints = [...rawPlanetTargets, ...rawHouseTargets, ...rawAspectTargets]
+    .map(({ point: targetPoint }) => targetPoint);
+  const planetTargets = rawPlanetTargets.map((target, index) => ({
+    ...target,
+    hit: collisionAwareHit(interactivePoints, index, 6.4),
+  }));
+  const houseOffset = rawPlanetTargets.length;
+  const houseTargets = rawHouseTargets.map((target, index) => ({
+    ...target,
+    hit: collisionAwareHit(interactivePoints, houseOffset + index, 5.8),
+  }));
+  const aspectOffset = houseOffset + rawHouseTargets.length;
+  const aspectTargets = rawAspectTargets.map((target, index) => ({
+    ...target,
+    hit: collisionAwareHit(interactivePoints, aspectOffset + index, 5.4),
+  }));
   const sunTarget = planetTargets.find((target) => target.key === 'Sun')!;
   const sunHouse = houseOf(sun.lon, demo.houses.cusps);
   const housePreview = houseTargets[sunHouse - 1];
@@ -305,7 +325,7 @@ export default function DemoChart() {
                 <button
                   type="button"
                   class="demo__target demo__target--house"
-                  style={position(target.point)}
+                  style={position(target.point, undefined, target.hit)}
                   aria-label={target.label}
                   aria-pressed="false"
                   data-demo-target
@@ -320,7 +340,7 @@ export default function DemoChart() {
                 <button
                   type="button"
                   class="demo__target demo__target--aspect"
-                  style={position(target.point)}
+                  style={position(target.point, undefined, target.hit)}
                   aria-label={target.label}
                   aria-pressed="false"
                   data-demo-target
@@ -333,9 +353,12 @@ export default function DemoChart() {
               ))}
             </div>
           </div>
-          <p class="demo__preview-hint mono">Tap a mark on the wheel—or choose a starting point.</p>
+          <p class="demo__preview-hint mono">Select a mark on the wheel—or choose a starting point.</p>
           <p class="demo__receipt mono">
-            {demo.name} · {demo.birth} · computed as {demo.utc.replace('T', ' ').slice(0, 16)} UTC
+            {demo.name} · {demo.birth} · computed as {demo.utc.replace('T', ' ').slice(0, 19)} UTC ·{' '}
+            <a href="https://www.astro.com/astro-databank/Kahlo%2C_Frida" target="_blank" rel="noopener noreferrer">
+              published time source
+            </a>
           </p>
         </div>
       </div>
@@ -344,7 +367,7 @@ export default function DemoChart() {
         <div class="demo__guide-head">
           <em class="kicker">Try the preview</em>
           <h3>Three ways into a chart</h3>
-          <p>Choose a starting point below, or tap any symbol on the wheel.</p>
+          <p>Choose a starting point below, or select any symbol on the wheel.</p>
         </div>
 
         <div class="demo__jumps" role="group" aria-label="Preview chart features">

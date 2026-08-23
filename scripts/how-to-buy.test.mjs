@@ -55,6 +55,12 @@ describe('Astrofolio beginner buying guide', () => {
   it('loads the existing Jupiter runtime only after an explicit click', async () => {
     const source = await read('src/pages/astrofolio/how-to-buy/index.astro');
     expect(source).toContain('Nothing has connected and no quote has been requested.');
+    expect(source).toContain('data-eligibility-confirm');
+    expect(source).toContain('I am at least 18 and may lawfully use a third-party swap service where I live.');
+    expect(source).toContain('href="/terms/"');
+    expect(source).toContain('href="/disclosure/"');
+    expect(source).toContain('Astrofolio at zodiacs.org/astrofolio is the official Zodiacs.org consumer page.');
+    expect(source).toContain('Jupiter and your wallet remain independent services.');
     expect(source).toContain("loadButton?.addEventListener('click', revealTrade)");
     expect(source).toContain("script.src = '/assets/trade.js'");
     expect(source).toContain('window as TradeWindow).zodiacsTrade?.mount');
@@ -63,6 +69,7 @@ describe('Astrofolio beginner buying guide', () => {
     expect(source).not.toMatch(/referralAccount|referralFee|platformFeeBps/u);
     expect(source).toContain('receives no referral or trading fee');
     expect(source).toContain('loadButton.disabled = true');
+    expect(source).toContain("setLoadButtonLabel('retry')");
     expect(source).toContain('tradeInstance?.destroy?.()');
   });
 
@@ -113,12 +120,14 @@ describe('Astrofolio beginner buying guide', () => {
     expect(guide).toContain(':global(body:has(.buy-guide) .footer__note) { display: none; }');
     expect(base).toContain('<SiteFooter locale={locale} terminalMarketNotice={props.terminalMarketNotice} />');
     expect(footer).toContain('const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice)');
-    expect(privacy).toContain("const updated = '22 August 2026'");
-    expect(privacy).toContain('live, taker-less quote from Jupiter');
+    expect(privacy).toContain("const updated = '23 August 2026'");
+    expect(privacy).toContain('selected token mint and requested amount as quote parameters');
     expect(privacy).toContain('public Solana address to Jupiter');
     expect(privacy).toContain('signed transaction and Jupiter request identifier');
     expect(privacy).toContain('Neither the public');
-    expect(privacy).toContain('is sent to a Zodiacs.org server');
+    expect(privacy).toContain('Zodiacs.org server');
     expect(privacy).toContain('recovery phrase or private key');
+    expect(privacy).toContain('your wallet service may receive ordinary web-request metadata');
+    expect(privacy).toContain('your IP address');
   });
 });

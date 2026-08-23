@@ -7,9 +7,11 @@ Drop this file in the repo root as ZODIAC-GAMES.md. It contains everything: the 
 # PART 1 — THE PLAN
 
 
-**Cowork operating document · v2.1 · 2026-08-16 · supersedes v2.0 (same day)**
+**Cowork operating document · v2.2 · 2026-08-23 · supersedes v2.1**
 
-**Changelog:** The Race now sits inside a simpler recurring system called **The Zodiac Games**. The Race is the live competition. Every zodiac season ends with a **Season Champion** and a completed trophy. Winners enter the **Trophy Hall**. Results accumulate toward one **Annual Champion**. Astrofolio means the twelve actual Zodiac tokens; **astrofolio.xyz is not part of this product funnel**. Ownership never affects Race scoring.
+**Changelog:** The Race now sits inside a simpler recurring system called **The Zodiac Games**. The Race is the live competition. Every zodiac season ends with a **Season Champion** and a completed trophy. Winners enter the **Trophy Hall**. Results accumulate toward one **Annual Champion**. Astrofolio means the twelve actual Zodiac tokens; the canonical consumer page is `https://zodiacs.org/astrofolio/`, and astrofolio.xyz is its redirect alias rather than a separate surface. Ownership never affects Race scoring.
+
+**2026-08-23 route update:** This domain relationship supersedes v2.1 instructions that called astrofolio.xyz “irrelevant” or required zero references. Product links should use the canonical Zodiacs.org page. The alias may be named when explaining the redirect, but it is not a separate destination.
 
 ---
 
@@ -80,7 +82,7 @@ The token bridge should feel like a discovery, not a checkout. **Participation w
 - Twelve official Zodiac tokens exist on Solana, roughly 1B supply each, with Base representations via Wormhole. The Registry remains the verification layer.
 - The Cabinet is a neutral wallet collection view across the Twelve.
 - Social surfaces already exist in the footer: X, Instagram, TikTok, Telegram.
-- **Astrofolio in this plan means the twelve actual Zodiac tokens. Do not route the product funnel to astrofolio.xyz.**
+- **Astrofolio in this plan means the twelve actual Zodiac tokens. Route the product funnel to `https://zodiacs.org/astrofolio/`; astrofolio.xyz redirects there.**
 - Calendar: Virgo season begins around Aug 23, 2026; Libra season around Sep 23, 2026.
 
 ## 6. The Zodiac Games — product spec
@@ -215,7 +217,7 @@ The existing Terminal and Registry remain the deeper market and verification sur
 
 ### 6.9 Astrofolio bridge
 
-**Astrofolio means the twelve actual Zodiac tokens. Astrofolio.xyz is irrelevant to this funnel.**
+**Astrofolio means the twelve actual Zodiac tokens. Its canonical consumer page is `https://zodiacs.org/astrofolio/`; astrofolio.xyz is a redirect alias, not a separate product.**
 
 The cleanest bridge is contextual and sign-specific.
 
@@ -344,7 +346,7 @@ Holder trophy/badge experiments · portable trophy/NFT experiments · deep local
 | R2.2 weekly recap machine | **done** | 2026-08-19 | — | `scripts/build-race-recap.mjs` + `race-recap-lib.mjs` (§H skeleton verbatim, §F sign lines rotated weekly; drafts for site/email/X/IG/TikTok/Telegram; X ≤280 tested; no market words, tested) reads the PUBLIC standings endpoint — no secret. Weekly cron `race-weekly-recap.yml` (Mon 08:11 UTC) commits the draft + snapshot history to `docs/race-recaps/` and opens a review ISSUE — **nothing auto-posts**; movers computed against the prior week's committed snapshot; honest skip when the Games flag is off or the week is already stamped. First live draft committed (`leo-2026-w34.md`). Deferred, logged: actual email SENDING + Race opt-in list (drafts carry a `{{unsubscribe_url}}` placeholder) — needs an owner decision on reusing the daily-list Resend pipeline vs. a separate Race list |
 | R2.3 season close + Trophy Hall | **done** | 2026-08-19 | — | Standings API accepts a past `season` id (validated, future ids refused; closed seasons served immutable with day-long edge cache). Daily cron `race-season-close.yml` (00:23 UTC) locks the just-closed season into committed `src/data/games/champions.json` — appended once, never edited, git history as tamper evidence; empty boards are not counted (no zero-point champions). Trophy Hall live at `/games/history/` (§E copy verbatim: entries with champion sculpture, margin, expandable final standings; launch empty state with the live close date). §D champion announcement renders on `/race/` above the board for the month after each close. Sitemap + check-dist + assistant listings flag-gated like `/race/`. First real close: leo-2026 on 2026-08-23, fully automatic. Follow-up logged: champion share-card surfacing on the Hall; §D context lines (Nth title / closest finish) once ≥2 seasons of data exist |
 | R2.4 annual standings | pending | — | — | points fixed before first counted close |
-| R2.5 Astrofolio bridge | pending | — | — | actual tokens; no Astrofolio.xyz dependency · **Dias 2026-08-16: astrofolio.xyz coexists but gets zero references — sweep existing footer/thesis links** · **Dias 2026-08-17: the funnel's destination is the per-sign catalogue profile (`/registry/{sign}/`), which Dias is tailoring for the Zodiac Games — re-point the Race's "Meet [Sign]" bridge there (from `/astrofolio/`); keep the record register calm, keep market data boxed with the §6.8 risk line, link live standings to /race rather than baking them into daily-built pages** · bridge re-point + Race-page token removal delivered early in R2.1 (2026-08-19); remaining: the sitewide astrofolio.xyz reference sweep (95 hits in audit §6) |
+| R2.5 Astrofolio bridge | pending | — | — | actual tokens · **Historical decision, Dias 2026-08-16:** astrofolio.xyz coexists but gets zero references — sweep existing footer/thesis links · **Historical decision, Dias 2026-08-17:** the funnel's destination is the per-sign catalogue profile (`/registry/{sign}/`), which Dias is tailoring for the Zodiac Games — re-point the Race's "Meet [Sign]" bridge there (from `/astrofolio/`); keep the record register calm, keep market data boxed with the §6.8 risk line, link live standings to /race rather than baking them into daily-built pages · bridge re-point + Race-page token removal delivered early in R2.1 (2026-08-19). **Superseded route fact, 2026-08-23:** the official consumer experience is `https://zodiacs.org/astrofolio/`; astrofolio.xyz redirects there. Current links should use the canonical Zodiacs.org URL. |
 | R3 review cycle | recurring | — | — | begins after P0.2 + R1.2 |
 | Icebox | iced | — | — | holder trophies, NFT portability, clock, locales, thesis ending |
 
@@ -558,7 +560,7 @@ Write like you'd text a smart, busy friend. Short sentences. One idea each. Seco
 
 ---
 
-## F. The Astrofolio bridge (on zodiacs.org only — zero astrofolio.xyz references anywhere)
+## F. The Astrofolio bridge (canonical page on Zodiacs.org)
 
 **In-Race module (sign-specific):**
 > **[Sign] is one of the Twelve.**
@@ -636,5 +638,5 @@ Write like you'd text a smart, busy friend. Short sentences. One idea each. Seco
 - Keep every string parameterized; the copy above is the source of truth — don't paraphrase in code.
 - The §6.8 risk line ships verbatim wherever market numbers render, including the Meet-[Sign] pages.
 - The scoring sentence (§C) appears on /race and in the FAQ, identical both places.
-- No astrofolio.xyz link, mention, or redirect anywhere in the product (Dias, 2026-08-16). Registry, Terminal, and Cabinet are the only outbound surfaces from the bridge.
+- Use `https://zodiacs.org/astrofolio/` for the official consumer experience. astrofolio.xyz may be mentioned only to explain that it redirects to the canonical page; it is not a separate destination. The earlier zero-reference rule (Dias, 2026-08-16) is superseded by the operator’s 2026-08-23 route update.
 - Countdown copy attaches only to seasons and trophies, never to tokens.

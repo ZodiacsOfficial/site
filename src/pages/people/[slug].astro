@@ -6,6 +6,7 @@ import ShareRow from '../../components/ShareRow.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import Wheel from '../../lib/wheel/Wheel';
 import { PEOPLE, type PersonRecord } from '../../lib/people';
+import { latestModifiedAt, PEOPLE_TEMPLATE_MODIFIED_AT } from '../../lib/seo-lastmod';
 import { signBySlug } from '../../lib/signs';
 
 export function getStaticPaths() {
@@ -41,8 +42,24 @@ const wheelAspects = person.aspectsStableAcrossCivilDay.map((aspect) => ({
   type: aspect.type,
 }));
 const coordinates = person.birthPlace.coordinates;
+const publishedTimeRecord = person.slug === 'frida-kahlo'
+  ? {
+      href: 'https://www.astro.com/astro-databank/Kahlo%2C_Frida',
+      label: 'Astro-Databank record',
+      detail: '6 July 1907, 8:30 a.m., Coyoacán · AA (birth record)',
+    }
+  : null;
+const profileSourceNote = publishedTimeRecord
+  ? 'This profile’s frozen Wikidata source does not include a birth time.'
+  : 'Birth time unknown.';
+const profileQualityNote = publishedTimeRecord
+  ? 'Birth date sourced. No time in this profile’s Wikidata source.'
+  : 'Birth date sourced. Birth time unknown.';
+const metaDescription = publishedTimeRecord
+  ? `${person.displayName}'s date-sourced chart: Sun at ${person.sunSign.degree.toFixed(1)}° ${person.sunSign.name}. This frozen Wikidata profile omits angles and houses; a separate published-time record is disclosed.`
+  : person.copy.metaDescription;
 const moonStatement = person.moon.uncertain
-  ? `Moon sign undetermined. The Moon crossed from ${signBySlug(person.moon.signAtCivilDayStart).name} into ${signBySlug(person.moon.signAtCivilDayEnd).name} during that day.`
+  ? `${publishedTimeRecord ? 'Within this date-only profile, the Moon sign is left open.' : 'Moon sign undetermined.'} The Moon crossed from ${signBySlug(person.moon.signAtCivilDayStart).name} into ${signBySlug(person.moon.signAtCivilDayEnd).name} during that civil day.`
   : `The Moon remained in ${person.moon.signName} throughout that civil day.`;
 const openSignTransitions = person.copy.blocks.flatMap((block) => (
   block.facts.flatMap((fact) => {
@@ -59,8 +76,17 @@ const openSignTransitions = person.copy.blocks.flatMap((block) => (
 const openSignStatement = openSignTransitions.map((transition) => (
   `${transition.body} crossed from ${transition.start} into ${transition.end} during that day, so its sign is left open.`
 )).join(' ');
+const displayBlocks = person.copy.blocks.map((block) => (
+  publishedTimeRecord && block.key === 'moon'
+    ? {
+        ...block,
+        text: `The Moon crossed from Taurus into Gemini during that civil day. This profile leaves it open because its frozen Wikidata source contains a date but no time. A separate Astro-Databank record publishes 8:30 a.m. and is disclosed below; the calculator sample uses that record, while this page keeps its independently reproducible date-only computation instead of silently merging sources.`,
+      }
+    : block
+));
 const pageUrl = `https://zodiacs.org/people/${person.slug}/`;
 const image = `/assets/og/v2/people/${person.slug}.png`;
+const pageModifiedAt = latestModifiedAt(person.reviewedAtUtc, PEOPLE_TEMPLATE_MODIFIED_AT);
 
 const jsonLd = [
   {
@@ -68,7 +94,8 @@ const jsonLd = [
     '@id': `${pageUrl}#page`,
     url: pageUrl,
     name: person.copy.title,
-    description: person.copy.metaDescription,
+    description: metaDescription,
+    dateModified: pageModifiedAt,
     about: { '@id': `${pageUrl}#person` },
     isPartOf: { '@id': 'https://zodiacs.org/#site' },
   },
@@ -100,10 +127,10 @@ const jsonLd = [
 ---
 <Base
   title={`${person.copy.title} | Zodiacs.org`}
-  description={person.copy.metaDescription}
+  description={metaDescription}
   path={`/people/${person.slug}/`}
   image={image}
-  imageAlt={`${person.displayName}'s sourced birth-date chart — birth time unknown`}
+  imageAlt={`${person.displayName}'s sourced birth-date chart — ${publishedTimeRecord ? 'date-only profile source' : 'birth time unknown'}`}
   noindex={!person.indexEligibility.eligible}
   nofollow={person.living}
   jsonLd={jsonLd}
@@ -160,14 +187,17 @@ const jsonLd = [
         <p class="person-identity__description">{person.shortDescription}</p>
         <p class="person-identity__meta">
           {person.sunSign.name} {person.sunSign.degree.toFixed(1)}° · born {longDate}<br />
-          Birth time unknown
+          {profileSourceNote}
         </p>
         <p class="person-quality">
-          <strong>Birth date sourced. Birth time unknown.</strong>
+          <strong>{profileQualityNote}</strong>
           <span>
             {moonStatement}
             {openSignStatement && ` ${openSignStatement}`}
             {' '}Everything below uses only what the complete civil day settles.
+            {publishedTimeRecord && (
+              <>{' '}A <a href={publishedTimeRecord.href} target="_blank" rel="noopener noreferrer">separate published-time record</a> is documented in the source panel.</>
+            )}
           </span>
         </p>
       </header>
@@ -190,7 +220,7 @@ const jsonLd = [
         </div>
 
         <div class="person-blocks">
-          {person.copy.blocks.map((block) => (
+          {displayBlocks.map((block) => (
             <section class="person-block">
               <h2>{block.title}</h2>
               <p>{block.text}</p>
@@ -204,12 +234,13 @@ const jsonLd = [
           <a href="/people/">All people</a>
         </nav>
 
-        <EvidenceDisclosure
-          class="person-evidence"
-          label="Where this comes from"
-          description="Sources, revisions, and exactly what this chart assumes"
-          variant="panel"
-        >
+        <div id="sources">
+          <EvidenceDisclosure
+            class="person-evidence"
+            label="Where this comes from"
+            description="Sources, revisions, and exactly what this chart assumes"
+            variant="panel"
+          >
           <dl>
             <div>
               <dt>Source article</dt>
@@ -234,15 +265,33 @@ const jsonLd = [
             </div>
             <div>
               <dt>Birthplace</dt>
-              <dd>{person.birthPlace.normalisedLabel} · {person.birthPlace.entity}</dd>
+              <dd>
+                {person.birthPlace.normalisedLabel} ·{' '}
+                <a href={`https://www.wikidata.org/wiki/${person.birthPlace.entity}`} target="_blank" rel="noopener noreferrer">
+                  {person.birthPlace.entity}
+                </a>
+              </dd>
             </div>
             <div>
               <dt>Coordinates</dt>
               <dd>
-                {coordinates.latitude.toFixed(4)}, {coordinates.longitude.toFixed(4)} · from {coordinates.sourceEntityLabel}
+                {coordinates.latitude.toFixed(4)}, {coordinates.longitude.toFixed(4)} · from{' '}
+                <a href={`https://www.wikidata.org/wiki/${coordinates.sourceEntity}`} target="_blank" rel="noopener noreferrer">
+                  {coordinates.sourceEntityLabel} ({coordinates.sourceEntity})
+                </a>
                 {coordinates.precisionDowngrade ? ` · ${coordinates.precisionDowngrade}` : ''}
               </dd>
             </div>
+            <div><dt>Birth-time evidence in this profile</dt><dd>{person.birthTimeEvidence}</dd></div>
+            {publishedTimeRecord && (
+              <div>
+                <dt>Separate published-time record</dt>
+                <dd>
+                  <a href={publishedTimeRecord.href} target="_blank" rel="noopener noreferrer">{publishedTimeRecord.label}</a>
+                  {' · '}{publishedTimeRecord.detail}. It powers the homepage and three-dimensional sample; Zodiacs.org has not independently inspected the underlying birth record and does not merge it into this frozen Wikidata profile.
+                </dd>
+              </div>
+            )}
             <div>
               <dt>Reference instant</dt>
               <dd>{person.computation.utcInstant} · noon civil time, not a birth time</dd>
@@ -280,7 +329,8 @@ const jsonLd = [
               Ask us to correct or remove it.
             </a>
           </p>
-        </EvidenceDisclosure>
+          </EvidenceDisclosure>
+        </div>
 
         {related.length > 0 && (
           <section class="person-related" aria-labelledby="related-people">

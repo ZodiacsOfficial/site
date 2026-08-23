@@ -6,61 +6,85 @@
     {
       "body": "Sun",
       "lon": 103.3755,
+      "lat": -0.0002,
+      "speed": 0.95362,
       "retrograde": false
     },
     {
       "body": "Moon",
       "lon": 59.7121,
+      "lat": -4.2615,
+      "speed": 12.023644,
       "retrograde": false
     },
     {
       "body": "Mercury",
       "lon": 126.3359,
+      "lat": -1.6612,
+      "speed": 0.372832,
       "retrograde": false
     },
     {
       "body": "Venus",
       "lon": 84.3393,
+      "lat": -0.4948,
+      "speed": 1.216515,
       "retrograde": false
     },
     {
       "body": "Mars",
       "lon": 283.3963,
+      "lat": -5.2397,
+      "speed": -0.294293,
       "retrograde": true
     },
     {
       "body": "Jupiter",
       "lon": 110.4352,
+      "lat": 0.2344,
+      "speed": 0.223162,
       "retrograde": false
     },
     {
       "body": "Saturn",
       "lon": 357.4452,
+      "lat": -2.2064,
+      "speed": 0.005565,
       "retrograde": false
     },
     {
       "body": "Uranus",
       "lon": 280.6122,
+      "lat": -0.3739,
+      "speed": -0.040416,
       "retrograde": true
     },
     {
       "body": "Neptune",
       "lon": 102.399,
+      "lat": -0.8185,
+      "speed": 0.037223,
       "retrograde": false
     },
     {
       "body": "Pluto",
       "lon": 83.7468,
+      "lat": -7.4728,
+      "speed": 0.022498,
       "retrograde": false
     },
     {
       "body": "North Node",
       "lon": 113.4131,
+      "lat": 0,
+      "speed": -0.053004,
       "retrograde": true
     },
     {
       "body": "South Node",
       "lon": 293.4131,
+      "lat": 0,
+      "speed": -0.053004,
       "retrograde": true
     }
   ],

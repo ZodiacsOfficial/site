@@ -211,14 +211,13 @@ describe('registry pastel polish', () => {
       expect(value).toContain('@media (min-width: 820px) { .wnav { gap: 10px; } }');
       expect(value).toContain('@media (min-width: 900px) { .wnav { gap: 18px; } }');
       expect(value).toContain('rgba(198,204,218,0.16)');
-      expect(cssRule(value, '.wnav__burger {')).toContain('width: 34px; height: 34px;');
       expect(value).toContain('width: 18px; height: 1.5px;');
       expect(value).toContain('position: absolute; top: 50%; left: 50%;');
       expect(value).toContain('translate(-50%, calc(-50% - 5px))');
       expect(value).toContain('translate(-50%, calc(-50% + 5px))');
       expect(value).toContain('transform 220ms cubic-bezier(0.77,0,0.175,1)');
       expect(value).toContain('letter-spacing: 0.14em;');
-      expect(value).toContain('@media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }');
+      expect(value).toMatch(/@media \(min-width: 820px\) \{ \.wnav__chip \{ (?:(?:min-)?height: 34px; )?letter-spacing: 0\.14em; \} \}/u);
       expect(value).toContain('@media (max-width: 819.5px) { .wnav__sep, .wnav__dim { display: none; } }');
       expect(value).toContain('padding-top: env(safe-area-inset-top);');
       expect(value).toContain('border: 1px solid rgba(198,204,218,0.16);');
@@ -230,6 +229,19 @@ describe('registry pastel polish', () => {
       expect(value).toContain('padding: calc(96px + env(safe-area-inset-top)) 24px 40px;');
       expect(value).not.toContain('.wnav-menu > nav { max-width: 520px; margin: 0 auto; }');
       expect(value).not.toContain('@keyframes wnav-in');
+    }
+    for (const value of [wingNav, astrofolio, thesis]) {
+      expect(cssRule(value, '.wnav__burger {')).toContain('width: 44px; height: 44px;');
+      expect(value).toMatch(/@media \(max-width: 819\.5px\)\s*\{[\s\S]{0,260}\.wnav__search\s*\{[^}]*width:\s*44px;[^}]*height:\s*44px;/u);
+      expect(cssRule(value, '.wnav__chip {')).toMatch(/(?:min-)?height:\s*44px;/u);
+      expect(value).toContain('@media (max-width: 360px) {');
+      expect(value).toContain('.wnav { gap: 4px; padding: 0 4px 0 10px; }');
+      expect(value).toContain('.wnav__name { font-size: 11px; letter-spacing: 0.08em; }');
+      expect(value).toContain('.wnav__chip { padding: 0 0 0 7px; font-size: 11px; letter-spacing: 0.04em; }');
+    }
+    for (const value of [wingNav, thesis]) {
+      expect(value).toContain('<a class="wnav__link" href="/today/">Today</a>');
+      expect(value).toContain('<a class="wnav-menu__link" style="--i:0" href="/today/">Today</a>');
     }
     for (const value of [wingNav, thesis, sdk]) expect(value).toContain('>Tools</span>');
     for (const [href, name] of [

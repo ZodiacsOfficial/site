@@ -1,13 +1,16 @@
 import assert from 'node:assert/strict';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { REGISTRY_AURA_ENTRY_COPY, injectRegistryAuraLanding } from '../src/lib/registry-aura-entry.mjs';
+import { resolveAstrofolioSeasonUtc, seasonsFromRegistry } from '../scripts/astrofolio-season.mjs';
 import { consumerizeRegistryCollection } from '../scripts/registry-consumer-entry.mjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const counts = { dex: 0, gecko: 0, wikimedia: 0, jupiter: 0, wallet: 0 };
+const registry = JSON.parse(await readFile(new URL('../public/registry/zodiacs.registry.json', import.meta.url), 'utf8'));
+const expectedSeason = resolveAstrofolioSeasonUtc(new Date(), seasonsFromRegistry(registry));
 
 function quotePayload(url) {
   const encoded = new URL(url).pathname.split('/').at(-1) || '';
@@ -221,8 +224,8 @@ try {
     const errors = watchErrors(page, 'Astrofolio mobile');
     await page.goto(`${baseURL}/astrofolio/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
     await waitForTerminal(page, '#consumer-explorer-title');
-    assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), 'Leo Season · The Twelve');
-    assert.equal(await page.locator('.astrofolio-lockup__copy small strong').innerText(), 'Leo');
+    assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), `${expectedSeason.displayName} Season · The Twelve`);
+    assert.equal(await page.locator('.astrofolio-lockup__copy small strong').innerText(), expectedSeason.displayName);
     assert.match(await page.locator('.astrofolio-lockup__avatar').getAttribute('src') ?? '', /\/assets\/astrofolio\/v2\/zodiac-ring-192\.png$/u);
     assert.match(await page.locator('.astrofolio-lockup__avatar').evaluate((node) => getComputedStyle(node).backgroundImage), /#010204|rgb\(1, 2, 4\)/u);
     assert.equal(await page.locator('.terminal-consumer-hero__kicker').innerText(), 'Astrofolio');
@@ -236,6 +239,10 @@ try {
       const navStyle = getComputedStyle(nav);
       const search = nav.querySelector('.wnav__search');
       const searchStyle = search ? getComputedStyle(search) : null;
+      const chip = nav.querySelector('.wnav__chip');
+      const chipStyle = chip ? getComputedStyle(chip) : null;
+      const burger = nav.querySelector('.wnav__burger');
+      const burgerStyle = burger ? getComputedStyle(burger) : null;
       return {
         overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
         left: box.left,
@@ -248,18 +255,26 @@ try {
         searchBackground: searchStyle?.backgroundColor,
         searchBorder: searchStyle?.borderTopWidth,
         searchWidth: searchStyle?.width,
+        searchHeight: searchStyle?.height,
+        chipHeight: chipStyle?.height,
+        burgerWidth: burgerStyle?.width,
+        burgerHeight: burgerStyle?.height,
       };
     });
     assert.ok(compactNav.overflow <= 0, 'the 320px navigation does not create horizontal overflow');
     assert.ok(compactNav.left >= 0 && compactNav.right <= 320, 'the single glass capsule stays inside the 320px viewport');
-    assert.ok(Math.abs(compactNav.width - 309.5) <= 2, `the capsule matches the live Zodiacs width (${compactNav.width}px)`);
+    assert.ok(compactNav.width <= 308, `the compact capsule leaves viewport breathing room (${compactNav.width}px)`);
     assert.notEqual(compactNav.navBackground, 'rgba(0, 0, 0, 0)', 'the navigation keeps its liquid-glass tint');
     assert.notEqual(compactNav.navBackdrop, 'none', 'the navigation keeps its refractive or frosted backdrop');
     assert.equal(compactNav.navBorder, '1px', 'the glass capsule keeps its optical hairline');
     assert.equal(compactNav.navRadius, '999px', 'the navigation remains one capsule');
     assert.equal(compactNav.searchBackground, 'rgba(0, 0, 0, 0)', 'search has no separate circle background');
     assert.equal(compactNav.searchBorder, '0px', 'search has no separate circle border');
-    assert.equal(compactNav.searchWidth, '34px', 'search remains a compact control inside the capsule');
+    assert.equal(compactNav.searchWidth, '44px', 'search keeps a 44px touch target inside the capsule');
+    assert.equal(compactNav.searchHeight, '44px', 'search keeps a 44px touch target inside the capsule');
+    assert.ok(Number.parseFloat(compactNav.chipHeight) >= 44, 'the Astrofolio chip keeps a 44px touch target');
+    assert.equal(compactNav.burgerWidth, '44px', 'the menu keeps a 44px touch target');
+    assert.equal(compactNav.burgerHeight, '44px', 'the menu keeps a 44px touch target');
     await page.setViewportSize({ width: 390, height: 844 });
 
     await page.waitForFunction(() => !document.querySelector('.vitrine-price__figure')?.textContent?.includes('loading'));
@@ -507,7 +522,7 @@ try {
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#static-astrofolio-title').innerText(), 'Choose your sign');
     assert.equal(await noJsPage.locator('.static-astrofolio-kicker').innerText(), 'Astrofolio');
-    assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), 'Leo Season · The Twelve');
+    assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), `${expectedSeason.displayName} Season · The Twelve`);
     assert.equal(await noJsPage.locator('.static-vitrine__choice').count(), 12);
     assert.equal(await noJsPage.locator('.static-vitrine__panel').count(), 12);
     assert.equal(await noJsPage.locator('#market-snapshot').count(), 1);
@@ -545,11 +560,14 @@ try {
     assert.doesNotMatch(staticStoryStyle.filter, /grayscale/u);
     assert.ok(staticStoryStyle.pictureBottom <= staticStoryStyle.copyTop + 1, 'the no-JavaScript thesis image sits above its copy');
     assert.equal(staticStoryStyle.buttonRadius, '0px');
-    await assertStaticFirstScreen(noJsPage, { width: 390, height: 844, slug: 'leo' });
+    await assertStaticFirstScreen(noJsPage, { width: 390, height: 844, slug: expectedSeason.sign });
     await assertPastelSelectorGeometry(noJsPage, { width: 390, height: 844, staticView: true });
-    const staticStageBefore = await noJsPage.locator('[data-static-sign="leo"] .static-vitrine__stage').boundingBox();
-    await noJsPage.locator('#astrofolio-leo').focus();
-    for (let index = 0; index < 7; index += 1) await noJsPage.keyboard.press('ArrowRight');
+    const staticStageBefore = await noJsPage.locator(`[data-static-sign="${expectedSeason.sign}"] .static-vitrine__stage`).boundingBox();
+    await noJsPage.locator(`#astrofolio-${expectedSeason.sign}`).focus();
+    const expectedIndex = registry.assets.findIndex(({ sign }) => sign === expectedSeason.sign);
+    const piscesIndex = registry.assets.findIndex(({ sign }) => sign === 'pisces');
+    const stepsToPisces = (piscesIndex - expectedIndex + registry.assets.length) % registry.assets.length;
+    for (let index = 0; index < stepsToPisces; index += 1) await noJsPage.keyboard.press('ArrowRight');
     assert.equal(await noJsPage.locator('#astrofolio-pisces').isChecked(), true);
     const railBox = await noJsPage.locator('.static-vitrine__rail').boundingBox();
     const selectedLabelBox = await noJsPage.locator('#astrofolio-pisces-label').boundingBox();
@@ -587,7 +605,7 @@ try {
       await assertPastelSelectorGeometry(noJsPage, { ...viewport, staticView: true });
     }
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
-    await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900, slug: 'leo' });
+    await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900, slug: expectedSeason.sign });
     if (OUT) await noJsPage.screenshot({ path: `${OUT}/astrofolio-no-js-1440x900.png`, fullPage: false });
     await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#pro-static-title').innerText(), 'Terminal');

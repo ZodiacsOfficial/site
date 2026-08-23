@@ -22,7 +22,7 @@ const en = {
     footerThesis: 'Thesis',
     footerArchive: 'Archive',
     footerSdk: 'SDK',
-    footerCollectNote: "The collector's wing is read-only: no custody, no signing, no transactions. Nothing there is financial advice.",
+    footerCollectNote: 'Registry records, lookups, catalogue profiles, and the SDK are read-only. Astrofolio’s optional buying tool uses independent Jupiter and your own wallet; Zodiacs.org holds no keys or funds. Nothing here is financial advice.',
     footerMethodology: 'Methodology',
     footerAbout: 'About',
     footerPrivacy: 'Privacy',
