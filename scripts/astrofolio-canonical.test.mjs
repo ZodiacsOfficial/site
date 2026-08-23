@@ -25,6 +25,24 @@ const currentCopyFiles = [
 ];
 
 describe('Astrofolio canonical surface', () => {
+  it('permanently redirects both Astrofolio hostnames to the canonical page', async () => {
+    const config = JSON.parse(await read('vercel.json'));
+    const redirect = config.redirects.find(({ has = [] }) => (
+      has.some(({ type, value }) => (
+        type === 'host'
+        && new RegExp(value).test('astrofolio.xyz')
+        && new RegExp(value).test('www.astrofolio.xyz')
+      ))
+    ));
+
+    expect(redirect).toMatchObject({
+      source: '/:path(.*)',
+      destination: 'https://zodiacs.org/astrofolio/',
+      permanent: true,
+    });
+    expect(new RegExp(redirect.has[0].value).test('zodiacs.org')).toBe(false);
+  });
+
   it('names zodiacs.org/astrofolio as the official consumer experience', async () => {
     const [sdk, guidance, reviewed] = await Promise.all([
       read('public/sdk/index.html'),
