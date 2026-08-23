@@ -9320,7 +9320,7 @@
       position: relative;
       grid-area: placard;
       align-self: start;
-      min-height: 328px;
+      min-height: 274px;
     }
     .consumer-registry .vitrine-placard__layer {
       position: absolute;
@@ -9412,47 +9412,6 @@
     .consumer-registry .vitrine-placard__actions .btn--ghost { padding-inline: 17px; justify-content: center; color: var(--ink-2); }
     .consumer-registry .vitrine-placard__actions .btn:hover { border-color: rgba(238,241,247,.5); background-color: rgba(14,16,22,.84); }
     .consumer-registry .vitrine-placard__actions .btn:active { transform: scale(.98); }
-    .consumer-registry .vitrine-placard__market-actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .consumer-registry .vitrine-placard__market-actions a {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-width: 0;
-      min-height: 44px;
-      padding: 0 7px 0 14px;
-      border: 1px solid rgba(198,204,218,.14);
-      border-radius: 999px;
-      color: var(--ink-2);
-      background: rgba(238,241,247,.025);
-      font: 550 11.5px/1.15 var(--sans);
-      text-decoration: none;
-      transition: transform 80ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);
-    }
-    .consumer-registry .vitrine-placard__market-actions a > span:first-child {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .consumer-registry .vitrine-placard__market-actions a > span:last-child {
-      display: grid;
-      place-items: center;
-      flex: 0 0 28px;
-      width: 28px;
-      height: 28px;
-      margin-left: 6px;
-      border-radius: 50%;
-      color: var(--bg);
-      background: var(--ink);
-      font: 600 13px/1 var(--sans);
-    }
-    .consumer-registry .vitrine-placard__market-actions a:hover { border-color: rgba(238,241,247,.42); background: rgba(238,241,247,.06); }
-    .consumer-registry .vitrine-placard__market-actions a:active { transform: scale(.98); }
     .consumer-registry .vitrine-placard__record {
       grid-column: 1 / -1;
       justify-self: start;
@@ -9475,7 +9434,7 @@
     .consumer-registry > .consumer-verify,
     .consumer-registry > .consumer-purpose,
     .consumer-registry > .consumer-faq,
-    .consumer-registry > .consumer-closing,
+    .consumer-registry > .consumer-market-gateway,
     .consumer-registry > .ftr {
       width: min(calc(100% - 48px), 1180px);
       margin-inline: auto;
@@ -9495,7 +9454,7 @@
     .consumer-registry > .consumer-how,
     .consumer-registry > .consumer-verify,
     .consumer-registry > .consumer-faq,
-    .consumer-registry > .consumer-closing {
+    .consumer-registry > .consumer-market-gateway {
       position: relative;
       padding: clamp(64px, 8vw, 108px) 0;
     }
@@ -9523,7 +9482,7 @@
     .consumer-registry .consumer-cabinet-section h2,
     .consumer-registry .consumer-destinations h2,
     .consumer-registry .consumer-purpose h2,
-    .consumer-registry .consumer-closing h2 {
+    .consumer-registry .consumer-market-gateway h2 {
       max-width: 18ch;
       margin: 0;
       color: var(--ink);
@@ -9532,8 +9491,7 @@
       text-transform: none;
       text-wrap: balance;
     }
-    .consumer-registry .consumer-section-head > p,
-    .consumer-registry .consumer-closing > p {
+    .consumer-registry .consumer-section-head > p {
       max-width: 52ch;
       margin: 22px 0 0;
       color: var(--ink-dim);
@@ -9747,6 +9705,138 @@
       max-width: 10ch;
       font-size: clamp(38px, 4.6vw, 58px);
     }
+
+    .consumer-registry > .consumer-market-gateway { padding-top: clamp(48px, 7vw, 88px); }
+    .consumer-market-gateway__shell {
+      min-width: 0;
+      min-height: 440px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(350px, .88fr);
+      overflow: hidden;
+      border: 1px solid var(--hair-2);
+      border-radius: 26px 26px 7px 26px;
+      background: rgba(15, 18, 26, .74);
+      box-shadow: 0 32px 76px -62px rgba(0, 0, 0, .94);
+    }
+    .consumer-market-gateway__visual {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-right: 1px solid var(--hair-2);
+      background: #08090d;
+    }
+    .consumer-market-gateway__status {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 22px;
+      border-bottom: 1px solid var(--hair-2);
+      color: var(--ink-mute);
+      font: 500 9px/1 var(--mono);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .consumer-market-gateway__status > span:first-child { color: var(--ink-2); }
+    .consumer-market-gateway__tokens {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-bottom: 1px solid var(--hair-2);
+    }
+    .consumer-market-gateway__token {
+      min-width: 0;
+      min-height: 106px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto 1fr;
+      align-content: center;
+      align-items: center;
+      gap: 6px 10px;
+      padding: 15px 16px;
+      border-right: 1px solid var(--hair);
+      border-bottom: 1px solid var(--hair);
+    }
+    .consumer-market-gateway__token:nth-child(4n) { border-right: 0; }
+    .consumer-market-gateway__token:nth-last-child(-n + 4) { border-bottom: 0; }
+    .consumer-market-gateway__token small {
+      grid-column: 1 / -1;
+      color: var(--ink-mute);
+      font: 500 8px/1 var(--mono);
+      letter-spacing: .12em;
+    }
+    .consumer-market-gateway__token img { width: 34px; height: 34px; display: block; border-radius: 50%; opacity: .9; }
+    .consumer-market-gateway__token strong { min-width: 0; overflow: hidden; color: var(--ink-2); font: 550 10px/1 var(--mono); letter-spacing: .06em; text-overflow: ellipsis; }
+    .consumer-market-gateway__routes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .consumer-market-gateway__routes > span { min-width: 0; display: grid; gap: 6px; padding: 18px 22px; }
+    .consumer-market-gateway__routes > span + span { border-left: 1px solid var(--hair-2); }
+    .consumer-market-gateway__routes small { color: var(--ink-mute); font: 500 8px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .consumer-market-gateway__routes strong { color: var(--ink-2); font: 500 11px/1.35 var(--sans); }
+    .consumer-market-gateway__copy {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(34px, 5vw, 62px);
+    }
+    .consumer-market-gateway__eyebrow {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--ink-dim);
+      font: italic 500 14px/1.2 var(--serif);
+    }
+    .consumer-market-gateway__copy h2 { max-width: 11ch; }
+    .consumer-registry .consumer-market-gateway__copy > p,
+    .consumer-static .consumer-market-gateway__copy > p { max-width: 46ch; margin: 22px 0 0; color: var(--ink-dim); font: 400 14px/1.62 var(--sans); }
+    .consumer-market-gateway__actions { display: grid; gap: 10px; margin-top: 30px; }
+    .consumer-market-gateway__action {
+      min-width: 0;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 5px 6px 5px 20px;
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 999px;
+      color: var(--ink-2);
+      background: rgba(238, 241, 247, .025);
+      font: 600 13px/1.3 var(--sans);
+      text-decoration: none;
+      transition: transform 80ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);
+    }
+    .consumer-market-gateway__action > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .consumer-market-gateway__action > span:last-child {
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #111318;
+      background: #f0eee8;
+      font-size: 17px;
+    }
+    .consumer-market-gateway__action.is-primary { border-color: rgba(255, 255, 255, .36); color: #111318; background: #f0eee8; box-shadow: 0 18px 42px -26px rgba(0, 0, 0, .9); }
+    .consumer-market-gateway__action.is-primary > span:last-child { color: #f5f2eb; background: #111318; }
+    .consumer-market-gateway__action:hover { border-color: rgba(255, 255, 255, .5); }
+    .consumer-market-gateway__action:active { transform: scale(.98); }
+    .consumer-market-gateway__action:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+    .consumer-market-gateway__action.is-secondary:visited { color: var(--ink-2); }
+    .consumer-market-gateway__action.is-secondary:hover,
+    .consumer-market-gateway__action.is-secondary:active,
+    .consumer-market-gateway__action.is-secondary:focus-visible { color: var(--ink-2); background: rgba(238, 241, 247, .055); }
+    .consumer-market-gateway__action.is-primary:hover,
+    .consumer-market-gateway__action.is-primary:active,
+    .consumer-market-gateway__action.is-primary:focus-visible,
+    .consumer-market-gateway__action.is-primary:visited { color: #111318; }
+    .consumer-registry .consumer-market-gateway__copy > .consumer-market-gateway__note,
+    .consumer-static .consumer-market-gateway__copy > .consumer-market-gateway__note { margin-top: 16px; color: var(--ink-mute); font-size: 11px; line-height: 1.5; }
 
     .consumer-registry > .consumer-shop {
       display: grid;
@@ -10458,47 +10548,6 @@
       font: 400 14px/1.65 var(--sans);
     }
 
-    .consumer-registry > .consumer-closing {
-      overflow: visible;
-      isolation: auto;
-      padding-top: clamp(48px, 6vw, 78px);
-      padding-bottom: clamp(48px, 6vw, 78px);
-      text-align: left;
-    }
-    .consumer-registry .consumer-closing h2 { margin-inline: 0; }
-    .consumer-registry .consumer-closing__actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px 28px;
-      justify-content: flex-start;
-      align-items: center;
-      margin-top: 34px;
-    }
-    .consumer-registry .consumer-closing__registry {
-      min-height: 0;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: var(--ink-2);
-      font: 550 14px/1.4 var(--sans);
-      letter-spacing: 0;
-      text-decoration: underline;
-      text-decoration-color: var(--hair-3);
-      text-transform: none;
-      transform: none;
-      transition: none;
-    }
-    .consumer-registry .consumer-closing__arrow {
-      margin-left: 5px;
-      transform: none;
-      transition: none;
-    }
-    .consumer-registry .consumer-closing__registry:hover {
-      border-color: transparent;
-      color: var(--ink-2);
-    }
-    .consumer-registry .consumer-closing__registry:hover .consumer-closing__arrow { transform: none; }
-
     .consumer-registry > .ftr { font-family: var(--sans); }
     .consumer-registry .ftr .mark .g { color: var(--ink-2); }
     .consumer-registry .ftr__links a,
@@ -10554,7 +10603,7 @@
         grid-area: stage;
         align-self: end;
         width: min(100%, 416px);
-        min-height: 298px;
+        min-height: 244px;
         margin-inline: auto;
       }
       .consumer-registry .vitrine-placard__layer {
@@ -10577,7 +10626,7 @@
       .consumer-registry > .consumer-verify,
       .consumer-registry > .consumer-purpose,
       .consumer-registry > .consumer-faq,
-      .consumer-registry > .consumer-closing,
+      .consumer-registry > .consumer-market-gateway,
       .consumer-registry > .ftr { width: min(calc(100% - 32px), 620px); }
       .consumer-registry .consumer-buy__opening { grid-template-columns: minmax(0, 1fr); align-items: start; }
       .consumer-registry > .consumer-intro,
@@ -10590,6 +10639,9 @@
       }
       .consumer-registry .consumer-story .consumer-thesis__visual { min-height: 0; aspect-ratio: 16 / 10; }
       .consumer-registry .consumer-story .consumer-purpose__essay { padding: 30px 26px 34px; }
+      .consumer-market-gateway__shell { min-height: 0; grid-template-columns: minmax(0, 1fr); border-radius: 22px 22px 5px 22px; }
+      .consumer-market-gateway__visual { min-height: 390px; border-right: 0; border-bottom: 1px solid var(--hair-2); }
+      .consumer-market-gateway__copy { padding: 30px 26px 34px; }
       .consumer-registry > .consumer-shop { gap: 38px; }
       .consumer-registry .consumer-shop__copy > p { max-width: 48ch; }
       .consumer-registry .consumer-shop__products { min-height: 520px; }
@@ -10647,17 +10699,16 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 9px;
       }
-      .consumer-registry .vitrine-placard__market-actions { gap: 9px; }
-      .consumer-registry .vitrine-placard__market-actions a { padding-left: 12px; font-size: 11px; }
       .consumer-registry .vitrine-placard__record { grid-column: 1 / -1; margin-top: 5px; }
-      .consumer-registry .vitrine-placard { min-height: 298px; }
+      .consumer-registry .vitrine-placard { min-height: 244px; }
       .consumer-registry > .consumer-intro,
       .consumer-registry > .consumer-story,
       .consumer-registry > .consumer-shop,
       .consumer-registry > .consumer-snapshot,
       .consumer-registry > .consumer-cabinet-section,
       .consumer-registry > .consumer-registry-guide,
-      .consumer-registry > .consumer-faq { padding-block: 38px; }
+      .consumer-registry > .consumer-faq,
+      .consumer-registry > .consumer-market-gateway { padding-block: 38px; }
       .consumer-registry .consumer-shop__products {
         min-height: 720px;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -10679,6 +10730,31 @@
       .consumer-registry .vitrine-placard__actions .btn { padding-inline: 12px; font-size: 12px; line-height: 1.12; text-align: center; }
       .consumer-registry .consumer-purpose__cta { min-height: 50px; padding-left: 18px; }
       .consumer-registry .consumer-purpose__arrow { width: 38px; height: 38px; }
+      .consumer-market-gateway__status { min-height: 50px; padding-inline: 14px; font-size: 8px; letter-spacing: .1em; }
+      .consumer-market-gateway__tokens { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .consumer-market-gateway__token {
+        min-height: 96px;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto auto;
+        justify-items: center;
+        gap: 6px;
+        padding: 11px 8px;
+        text-align: center;
+      }
+      .consumer-market-gateway__token:nth-child(4n) { border-right: 1px solid var(--hair); }
+      .consumer-market-gateway__token:nth-last-child(-n + 4) { border-bottom: 1px solid var(--hair); }
+      .consumer-market-gateway__token:nth-child(3n) { border-right: 0; }
+      .consumer-market-gateway__token:nth-last-child(-n + 3) { border-bottom: 0; }
+      .consumer-market-gateway__token small { grid-column: auto; width: 100%; }
+      .consumer-market-gateway__token img { width: 28px; height: 28px; }
+      .consumer-market-gateway__token strong { width: 100%; overflow: visible; font-size: 8px; text-overflow: clip; }
+      .consumer-market-gateway__routes { grid-template-columns: minmax(0, 1fr); }
+      .consumer-market-gateway__routes > span { padding: 15px 16px; }
+      .consumer-market-gateway__routes > span + span { border-top: 1px solid var(--hair-2); border-left: 0; }
+      .consumer-market-gateway__visual { min-height: 0; }
+      .consumer-market-gateway__copy { padding: 28px 22px 30px; }
+      .consumer-market-gateway__actions { margin-top: 26px; }
+      .consumer-market-gateway__action { width: 100%; }
       .consumer-registry .vrf { grid-template-columns: minmax(0, 1fr); }
       .consumer-registry .vrf__submit { width: 100%; }
     }
@@ -10696,12 +10772,12 @@
       }
       .consumer-registry .reveal { opacity: 1; }
       .consumer-registry .vitrine-placard__actions .btn:active,
-      .consumer-registry .vitrine-placard__market-actions a:active,
       .consumer-registry .vrf__submit:active,
       .consumer-registry .vrf__example:active,
       .consumer-registry .consumer-thesis__link:active .consumer-purpose__cta,
       .consumer-registry .consumer-collection__link:active .consumer-purpose__cta,
-      .consumer-registry .consumer-purpose__arrow { transform: none; }
+      .consumer-registry .consumer-purpose__arrow,
+      .consumer-market-gateway__action:active { transform: none; }
     }
 </style>
 </head>

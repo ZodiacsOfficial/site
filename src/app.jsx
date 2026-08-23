@@ -1036,14 +1036,6 @@
       return `/astrofolio/how-to-buy/${sign?.asset?.sign ?? 'aries'}/`;
     }
 
-    function terminalMarketPath(sign) {
-      return `/terminal/?sign=${sign?.asset?.sign ?? 'aries'}#selected`;
-    }
-
-    function zodiacMarketsPath() {
-      return '/terminal/markets/';
-    }
-
     function signDateLabel(sign) {
       const range = parseDateRange(sign?.asset?.metadata?.dateRange);
       if (!range) return sign?.asset?.metadata?.dateRange || '';
@@ -5920,14 +5912,6 @@
                 tabIndex={layer.current ? undefined : -1}
               >How to buy</a>
             </div>
-            <div className="vitrine-placard__market-actions" aria-label={`${item.name} market tools`}>
-              <a href={terminalMarketPath(item)} tabIndex={layer.current ? undefined : -1}>
-                <span>Open Terminal</span><span aria-hidden="true">↗</span>
-              </a>
-              <a href={zodiacMarketsPath()} tabIndex={layer.current ? undefined : -1}>
-                <span>Zodiac markets</span><span aria-hidden="true">↗</span>
-              </a>
-            </div>
             <p className="vitrine-official-note">
               Here, &ldquo;official&rdquo; means the address is listed in the Zodiacs Registry; it does not mean government, regulator, wallet, or exchange approval.
             </p>
@@ -6257,8 +6241,8 @@
         a: 'Zodiac tokens are speculative and can be volatile or hard to sell. Prices can fall to zero, and wallet mistakes or scams can cause permanent loss.'
       },
       {
-        q: 'What are the Zodiac markets?',
-        a: 'The Zodiac markets are the prices, liquidity, and trading activity around the twelve official tokens. Market data can be delayed or incomplete and is not a recommendation.'
+        q: 'What is Zodiac Markets?',
+        a: 'Zodiac Markets is the trading interface for the Twelve. Jupiter Ultra supplies the executable route and transaction; your wallet reviews, approves, and signs.'
       },
       {
         q: 'What is the Terminal?',
@@ -6285,18 +6269,57 @@
       );
     }
 
-    function ConsumerClosing() {
+    function ConsumerMarketGateway() {
       const reveal = useReveal();
       return (
-        <section ref={reveal} className="consumer-closing reveal" aria-labelledby="consumer-closing-title">
-          <h2 id="consumer-closing-title">See all twelve records</h2>
-          <p>The Registry is the public record for every sign in the collection.</p>
-          <div className="consumer-closing__actions">
-            <a className="consumer-closing__registry" href="/registry/">
-              <span>Open the Registry</span>
-              <span className="consumer-closing__arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
+        <section
+          ref={reveal}
+          id="market-layer"
+          className="consumer-market-gateway reveal"
+          aria-labelledby="consumer-market-gateway-title"
+        >
+          <article className="consumer-market-gateway__shell">
+            <div className="consumer-market-gateway__visual" aria-hidden="true">
+              <div className="consumer-market-gateway__status">
+                <span>Astrofolio / market layer</span>
+                <span>Solana · 12 verified mints</span>
+              </div>
+              <div className="consumer-market-gateway__tokens">
+                {SIGNS.map((item, index) => (
+                  <span className="consumer-market-gateway__token" key={item.ticker}>
+                    <small>{String(index + 1).padStart(2, '0')}</small>
+                    <img
+                      src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}
+                      width="48"
+                      height="48"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <strong>{item.ticker}</strong>
+                  </span>
+                ))}
+              </div>
+              <div className="consumer-market-gateway__routes">
+                <span><small>01 / Terminal</small><strong>Prices · liquidity · charts</strong></span>
+                <span><small>02 / Zodiac Markets</small><strong>Jupiter Ultra · wallet-signed</strong></span>
+              </div>
+            </div>
+            <div className="consumer-market-gateway__copy">
+              <span className="consumer-market-gateway__eyebrow">The market layer</span>
+              <h2 id="consumer-market-gateway-title">Read the market. Trade your sign.</h2>
+              <p>Use Terminal for prices, liquidity, charts, and research across the Twelve. When you&rsquo;re ready to swap, move into Zodiac Markets.</p>
+              <div className="consumer-market-gateway__actions">
+                <a className="consumer-market-gateway__action is-secondary" href="/terminal/">
+                  <span>Open Terminal</span><span aria-hidden="true">↗</span>
+                </a>
+                <a className="consumer-market-gateway__action is-primary" href="/terminal/markets/">
+                  <span>Open Zodiac Markets</span><span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <p className="consumer-market-gateway__note">On Solana, Jupiter Ultra supplies the executable route and transaction. Your wallet reviews, approves, and signs.</p>
+            </div>
+          </article>
         </section>
       );
     }
@@ -6819,7 +6842,7 @@
             <ConsumerCabinet />
             <ConsumerRegistryGuide sign={sign} />
             <ConsumerFaq />
-            <ConsumerClosing />
+            <ConsumerMarketGateway />
             <span id="market" className="terminal-compat-target" aria-hidden="true" />
             <span id="briefing" className="terminal-compat-target" aria-hidden="true" />
             <span id="research" className="terminal-compat-target" aria-hidden="true" />

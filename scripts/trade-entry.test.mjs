@@ -120,15 +120,10 @@ describe('the landing', () => {
     for (const [, sign, panel] of panels) {
       const records = [...panel.matchAll(/href="\/registry\/([a-z]+)\/"/g)];
       const guides = [...panel.matchAll(/href="\/astrofolio\/how-to-buy\/([a-z]+)\/"/g)];
-      const terminals = [...panel.matchAll(/href="\/terminal\/\?sign=([a-z]+)#selected"/g)];
-      const markets = [...panel.matchAll(/href="\/terminal\/markets\/"/g)];
       expect(records, sign).toHaveLength(1);
       expect(records[0][1], sign).toBe(sign);
       expect(guides, sign).toHaveLength(1);
       expect(guides[0][1], sign).toBe(sign);
-      expect(terminals, sign).toHaveLength(1);
-      expect(terminals[0][1], sign).toBe(sign);
-      expect(markets, sign).toHaveLength(1);
       expect(html, sign).toContain(
         `.static-vitrine:has(#astrofolio-${sign}:checked) [data-static-sign="${sign}"]`,
       );
@@ -139,8 +134,13 @@ describe('the landing', () => {
     expect(html).toMatch(/\.static-vitrine__panel\s*\{\s*display:\s*none;/);
     expect(panels.some(([, sign]) => sign === choiceSign(checked[0]))).toBe(true);
 
-    // Market handoffs stay on Zodiacs.org; the catalogue shell still embeds
-    // neither an external execution-venue link nor an executable trade panel.
+    // Sign-level handoffs stay educational. Market discovery is consolidated
+    // into one deliberate bottom gateway rather than repeated in each panel.
+    expect(vitrine).not.toContain('href="/terminal/');
+    const gateway = html.match(/<section\b[^>]*\bid="market-layer"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+    expect(gateway).toBeDefined();
+    expect(gateway.match(/href="\/terminal\/"/g)).toHaveLength(1);
+    expect(gateway.match(/href="\/terminal\/markets\/"/g)).toHaveLength(1);
     expect(html).not.toMatch(/href="https:\/\/(?:[^"/]+\.)?jup\.ag\//);
     expect(html).not.toContain('data-trade-panel');
   });
@@ -174,6 +174,18 @@ describe('the 2026-08-13 Consumer handoff decision', () => {
     expect(text).toContain('extend its pilot\ndeadline');
     expect(text).toContain('It adds no authority for custody');
     expect(text).toMatch(/referral fees,\s+platform fees, or other compensation/);
+  });
+});
+
+describe('the 2026-08-24 Astrofolio market-gateway decision', () => {
+  it('authorizes one bottom discovery gateway without adding execution to the landing', async () => {
+    const text = compact(await decision());
+    expect(text).toContain('Addendum — 2026-08-24: Astrofolio bottom market gateway');
+    expect(text).toContain('Authorized: 2026-08-24');
+    expect(text).toContain('exactly one same-origin link to `/terminal/`');
+    expect(text).toContain('exactly one same-origin link to `/terminal/markets/`');
+    expect(text).toContain('No sign placard, Registry profile, Cabinet, global navigation, or footer gains either action');
+    expect(text).toContain('must not load `/assets/trade.js`, request a Jupiter quote, discover or connect a wallet, or ask for a signature');
   });
 });
 
