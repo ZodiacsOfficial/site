@@ -77,13 +77,13 @@
 
 .aura-talisman__complete-halo {
   fill: none;
-  stroke: rgb(224 210 168 / 55%);
+  stroke: rgb(222 228 240 / 48%);
   stroke-width: 3;
 }
 
 .aura-talisman__segments {
   fill: none;
-  stroke: rgb(231 224 203 / 72%);
+  stroke: rgb(219 225 237 / 62%);
   stroke-linecap: round;
   stroke-width: 5;
   transform-box: fill-box;
@@ -111,8 +111,8 @@
 }
 
 .aura-talisman__sky-mark--sun circle {
-  fill: #d7c28f;
-  stroke: #f0dfb2;
+  fill: #dfe4ed;
+  stroke: #f5f7fa;
 }
 
 .aura-talisman__sky-mark text {
@@ -134,7 +134,7 @@
 .aura-talisman__selection {
   fill: none;
   opacity: 0;
-  stroke: #fff8e6;
+  stroke: #f7f9fc;
   stroke-dasharray: 2 8;
   stroke-linecap: round;
   stroke-width: 2;
@@ -153,83 +153,54 @@
   stroke-width: 1.5;
 }
 
-.aura-talisman__node > text {
-  fill: currentColor;
-  font: 500 36px/1 serif;
-  text-anchor: middle;
-}
-
-.aura-talisman__node.is-represented {
-  color: #11141a;
-}
-
 .aura-talisman__node.is-represented .aura-talisman__node-ring {
-  fill: color-mix(in srgb, var(--aura-talisman-hue) 20%, #080a0f);
-  stroke: color-mix(in srgb, var(--aura-talisman-hue) 56%, white);
-  stroke-width: 3;
+  fill: rgb(6 8 13 / 98%);
+  stroke: rgb(231 235 243 / 48%);
+  stroke-width: 1.5;
 }
 
 .aura-talisman__node.is-represented .aura-talisman__node-face {
-  fill: var(--aura-talisman-hue);
-  stroke: rgb(255 255 255 / 34%);
+  fill: rgb(6 8 13 / 98%);
+  stroke: transparent;
 }
 
-.aura-talisman__node.is-bronze .aura-talisman__node-face {
-  fill: url("#aura-talisman-bronze");
+.aura-talisman__node-icon {
+  opacity: 0.2;
+  pointer-events: none;
 }
 
-.aura-talisman__node.is-silver .aura-talisman__node-face {
-  fill: url("#aura-talisman-silver");
-}
-
-.aura-talisman__node.is-gold .aura-talisman__node-face {
-  fill: url("#aura-talisman-gold");
+.aura-talisman__node.is-represented .aura-talisman__node-icon {
+  opacity: 1;
 }
 
 .aura-talisman__node.is-bronze .aura-talisman__node-ring {
-  fill: rgb(70 37 25 / 72%);
-  stroke: #c78457;
+  stroke-dasharray: 2 5;
+  stroke-width: 2;
 }
 
 .aura-talisman__node.is-silver .aura-talisman__node-ring {
-  fill: rgb(45 51 61 / 78%);
-  stroke: #c8d1dd;
+  stroke: rgb(235 239 246 / 72%);
+  stroke-width: 2.5;
 }
 
 .aura-talisman__node.is-gold .aura-talisman__node-ring {
-  fill: rgb(71 48 20 / 76%);
-  stroke: #e1bf72;
+  stroke: rgb(239 242 248 / 84%);
+  stroke-width: 3.5;
+}
+
+.aura-talisman__node.is-crown .aura-talisman__node-ring {
+  stroke: rgb(247 249 252 / 92%);
+  stroke-dasharray: 9 3;
+  stroke-width: 4;
 }
 
 .aura-talisman__node.is-selected .aura-talisman__node-ring {
-  stroke: #fff8e6;
+  stroke: #f7f9fc;
   stroke-width: 5;
 }
 
 .aura-talisman__node.is-selected .aura-talisman__selection {
   opacity: 0.92;
-}
-
-.aura-talisman__gold-tally {
-  fill: none;
-  stroke: #f3d995;
-  stroke-linecap: round;
-  stroke-width: 3;
-  transform: rotate(-90deg);
-  vector-effect: non-scaling-stroke;
-}
-
-.aura-talisman__count rect {
-  fill: #0b0d12;
-  stroke: #f1d58b;
-  stroke-width: 1.5;
-}
-
-.aura-talisman__count text {
-  fill: #f6e7b8;
-  font: 650 14px/1 var(--font-mono, monospace);
-  letter-spacing: 0;
-  text-anchor: middle;
 }
 
 .aura-talisman__center circle {
@@ -258,7 +229,7 @@
 
 .aura-talisman__complete-ring {
   fill: none;
-  stroke: rgb(224 210 168 / 34%);
+  stroke: rgb(222 228 240 / 30%);
   stroke-dasharray: 3 9;
   stroke-width: 1.5;
 }
@@ -373,17 +344,8 @@
   .aura-talisman__complete-halo,
   .aura-talisman__complete-ring,
   .aura-talisman__selection,
-  .aura-talisman__gold-tally,
   .aura-talisman__node-ring,
   .aura-talisman__node-face {
     stroke: CanvasText;
-  }
-
-  .aura-talisman__count rect {
-    border-color: CanvasText;
-    background: Canvas;
-    fill: Canvas;
-    stroke: CanvasText;
-    color: CanvasText;
   }
 }

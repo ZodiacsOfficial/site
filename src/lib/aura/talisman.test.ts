@@ -168,6 +168,20 @@ describe('Registry Aura talisman composition', () => {
     expect(model.chartEchoNodes).toEqual([]);
   });
 
+  it('separates conjunction marks without changing their recorded longitudes', () => {
+    const source = composition();
+    source.currentSky = {
+      ...source.currentSky,
+      sun: { sign: 'cancer', longitude: 116 },
+      moon: { sign: 'cancer', longitude: 116 },
+    };
+    const model = buildAuraTalisman(source);
+    const [sun, moon] = model.skyMarks;
+
+    expect([sun.longitude, moon.longitude]).toEqual([116, 116]);
+    expect(Math.hypot(moon.x - sun.x, moon.y - sun.y)).toBeGreaterThanOrEqual(0.064);
+  });
+
   it('adds chart echoes only when requested and keeps collection geometry unchanged', () => {
     const source = composition();
     const publicModel = buildAuraTalisman(source);

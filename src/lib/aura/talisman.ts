@@ -95,6 +95,55 @@ function roundCoordinate(value: number): number {
   return Number(value.toFixed(6));
 }
 
+/**
+ * Gives two display marks a deterministic tangential gap while preserving
+ * their shared orbit. This is presentation-only geometry for conjunctions;
+ * the source longitudes on each mark remain exact.
+ */
+export function separateTalismanPoints<T extends AuraTalismanPoint>(
+  points: readonly [T, T],
+  minimumDistance: number,
+): [T, T] {
+  const [first, second] = points;
+  const deltaX = second.x - first.x;
+  const deltaY = second.y - first.y;
+  const distance = Math.hypot(deltaX, deltaY);
+  if (!Number.isFinite(minimumDistance) || minimumDistance <= 0 || distance >= minimumDistance) {
+    return [{ ...first }, { ...second }];
+  }
+
+  const midpointX = (first.x + second.x) / 2;
+  const midpointY = (first.y + second.y) / 2;
+  const radialX = midpointX - CENTER;
+  const radialY = midpointY - CENTER;
+  const radialLength = Math.hypot(radialX, radialY) || 1;
+  let tangentX = -radialY / radialLength;
+  let tangentY = radialX / radialLength;
+  let projection = deltaX * tangentX + deltaY * tangentY;
+  if (projection < 0) {
+    tangentX *= -1;
+    tangentY *= -1;
+    projection *= -1;
+  }
+  const shift = (
+    -projection
+    + Math.sqrt(Math.max(0, projection ** 2 + minimumDistance ** 2 - distance ** 2))
+  ) / 2;
+
+  return [
+    {
+      ...first,
+      x: roundCoordinate(first.x - tangentX * shift),
+      y: roundCoordinate(first.y - tangentY * shift),
+    },
+    {
+      ...second,
+      x: roundCoordinate(second.x + tangentX * shift),
+      y: roundCoordinate(second.y + tangentY * shift),
+    },
+  ];
+}
+
 /** Zero degrees (the beginning of Aries) sits at twelve o'clock. */
 function pointForLongitude(longitude: number, radius: number): AuraTalismanPoint {
   const normalized = ((longitude % 360) + 360) % 360;
@@ -255,7 +304,7 @@ export function buildAuraTalisman(
   const selectedSign = options.selectedSign ?? null;
   return {
     ...geometry,
-    skyMarks: [
+    skyMarks: separateTalismanPoints([
       skyMark(
         'Sun',
         composition.currentSky.sun.sign,
@@ -266,7 +315,7 @@ export function buildAuraTalisman(
         composition.currentSky.moon.sign,
         composition.currentSky.moon.longitude,
       ),
-    ],
+    ], 0.065),
     chartEchoNodes: options.includeChart
       ? composition.chartEvidence.map(chartEcho)
       : [],

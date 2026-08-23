@@ -26,6 +26,8 @@ interface CanvasHarness {
   painted: Array<{ text: string; font: string }>;
   canvas: { width: number; height: number };
   context: Record<string, unknown>;
+  fetch: ReturnType<typeof vi.fn>;
+  decodedIcons: Array<{ close: ReturnType<typeof vi.fn> }>;
   share: ReturnType<typeof vi.fn>;
   anchor: {
     href: string;
@@ -37,11 +39,20 @@ interface CanvasHarness {
   revokeObjectURL: ReturnType<typeof vi.fn>;
 }
 
-function installCanvas(options: { encode?: boolean; canShare?: boolean } = {}): CanvasHarness {
+function installCanvas(
+  options: {
+    encode?: boolean;
+    canShare?: boolean;
+    icons?: boolean;
+    missingIcon?: string;
+    context?: boolean;
+  } = {},
+): CanvasHarness {
   const painted: Array<{ text: string; font: string }> = [];
   const context = {
     arc: vi.fn(),
     beginPath: vi.fn(),
+    drawImage: vi.fn(),
     fill: vi.fn(),
     fillRect: vi.fn(),
     fillText: vi.fn((text: string) => painted.push({ text, font: context.font })),
@@ -49,9 +60,11 @@ function installCanvas(options: { encode?: boolean; canShare?: boolean } = {}): 
     measureText: vi.fn((text: string) => ({ width: text.length * 14 })),
     moveTo: vi.fn(),
     roundRect: vi.fn(),
+    setLineDash: vi.fn(),
     stroke: vi.fn(),
     fillStyle: "",
     font: "",
+    globalAlpha: 1,
     lineWidth: 1,
     strokeStyle: "",
     textAlign: "left",
@@ -60,7 +73,7 @@ function installCanvas(options: { encode?: boolean; canShare?: boolean } = {}): 
   const canvas = {
     width: 0,
     height: 0,
-    getContext: vi.fn(() => context),
+    getContext: vi.fn(() => (options.context === false ? null : context)),
     toBlob: vi.fn((callback: (blob: Blob | null) => void) =>
       callback(options.encode === false ? null : new Blob(["png"], { type: "image/png" })),
     ),
@@ -90,10 +103,23 @@ function installCanvas(options: { encode?: boolean; canShare?: boolean } = {}): 
     createObjectURL: vi.fn(() => "blob:talisman-preview"),
     revokeObjectURL,
   });
+  const fetch = vi.fn(async (path: string) => ({
+    ok: options.icons !== false && !path.endsWith(`/${options.missingIcon}.webp`),
+    blob: async () => new Blob(["official-zodiac-icon"], { type: "image/webp" }),
+  }));
+  const decodedIcons: Array<{ close: ReturnType<typeof vi.fn> }> = [];
+  vi.stubGlobal("fetch", fetch);
+  vi.stubGlobal("createImageBitmap", vi.fn(async () => {
+    const bitmap = { close: vi.fn() };
+    decodedIcons.push(bitmap);
+    return bitmap;
+  }));
   return {
     painted,
     canvas,
     context,
+    fetch,
+    decodedIcons,
     share,
     anchor,
     appendChild,
@@ -185,6 +211,16 @@ describe("Registry Aura collection talisman snapshot", () => {
     expect(serialized).not.toMatch(/address|wallet|balance|price|birth|name of owner/i);
   });
 
+  it("separates Sun and Moon marks at an exact conjunction", () => {
+    const snapshot = auraShareSnapshot({
+      ...input,
+      currentSky: { sun: "leo", moon: "leo" },
+    });
+    const [sun, moon] = snapshot.skyMarks;
+    expect([sun.sign.slug, moon.sign.slug]).toEqual(["leo", "leo"]);
+    expect(Math.hypot(moon.x - sun.x, moon.y - sun.y)).toBeGreaterThanOrEqual(0.104);
+  });
+
   it("shows exact Gold counts through ninety-nine and caps larger public tallies", () => {
     const exact = auraShareSnapshot({
       ...input,
@@ -261,10 +297,10 @@ describe("Registry Aura collection talisman snapshot", () => {
       "Cabinet of Twelve collection seal dated Jul 16, 2026 UTC",
       "Represented Zodiac set: Aries, pastel; Cancer, silver; Leo, gold ×3",
       "Sun in Leo; Moon in Cancer",
-      "A dated composition of the represented Zodiac set, today’s Sun, and today’s Moon",
+      "Your collection, set against today’s sky",
       "Public edition · collection + dated sky",
       "Registry record checked Jul 16, 2026 UTC",
-      "Zodiacs · Org",
+      "zodiacs.org",
     ]) {
       expect(description).toContain(required);
     }
@@ -280,9 +316,11 @@ describe("Registry Aura talisman PNG", () => {
     expect(harness.canvas).toMatchObject({ width: 1080, height: 1350 });
     const text = harness.painted.map((entry) => entry.text).join(" ");
     for (const required of [
-      "THE CABINET OF TWELVE · DATED EDITION",
+      "THE CABINET OF TWELVE",
+      "PUBLIC EDITION",
       "Collection seal",
-      "DATED PUBLIC SKY",
+      "3 / 12",
+      "SIGNS REPRESENTED",
       "JUL 16, 2026 UTC",
       "REPRESENTED ZODIACS",
       "ARIES",
@@ -290,17 +328,49 @@ describe("Registry Aura talisman PNG", () => {
       "LEO",
       "PASTEL",
       "SILVER",
-      "GOLD ×3",
-      "A dated composition of the represented Zodiac set, today’s Sun, and today’s Moon.",
+      "GOLD · ×3",
+      "Your collection, set against today’s sky.",
       "PUBLIC EDITION · COLLECTION + DATED SKY",
       "REGISTRY CHECKED JUL 16, 2026 UTC",
-      "ZODIACS · ORG",
+      "zodiacs.org",
     ]) {
       expect(text).toContain(required);
     }
     expect(harness.context.lineTo).toHaveBeenCalled();
     expect(harness.context.arc).toHaveBeenCalled();
     expect(text).not.toMatch(/https?:|zodiacs\.org\//i);
+  });
+
+  it("draws the canonical SDK-derived pastel icons in the orbit and ledger", async () => {
+    const harness = installCanvas({ icons: true });
+    await drawAuraShareCard(input);
+
+    expect(harness.fetch.mock.calls.map(([path]) => path)).toEqual([
+      "/assets/zodiac-icons/128/aries.webp",
+      "/assets/zodiac-icons/128/taurus.webp",
+      "/assets/zodiac-icons/128/gemini.webp",
+      "/assets/zodiac-icons/128/cancer.webp",
+      "/assets/zodiac-icons/128/leo.webp",
+      "/assets/zodiac-icons/128/virgo.webp",
+      "/assets/zodiac-icons/128/libra.webp",
+      "/assets/zodiac-icons/128/scorpio.webp",
+      "/assets/zodiac-icons/128/sagittarius.webp",
+      "/assets/zodiac-icons/128/capricorn.webp",
+      "/assets/zodiac-icons/128/aquarius.webp",
+      "/assets/zodiac-icons/128/pisces.webp",
+    ]);
+    expect(harness.context.drawImage).toHaveBeenCalledTimes(15);
+    expect(harness.painted.filter(({ text }) => text.includes("×3"))).toHaveLength(1);
+    expect(harness.decodedIcons).toHaveLength(12);
+    harness.decodedIcons.forEach((icon) => expect(icon.close).toHaveBeenCalledOnce());
+  });
+
+  it("fails cleanly instead of painting Unicode when canonical art is unavailable", async () => {
+    const harness = installCanvas({ missingIcon: "libra" });
+    await expect(drawAuraShareCard(input)).rejects.toThrow("zodiac_icon_unavailable:libra");
+    expect(harness.painted).toEqual([]);
+    expect(harness.decodedIcons).toHaveLength(11);
+    harness.decodedIcons.forEach((icon) => expect(icon.close).toHaveBeenCalledOnce());
   });
 
   it("cannot paint private or financial fields appended at runtime", async () => {
@@ -329,8 +399,16 @@ describe("Registry Aura talisman PNG", () => {
   });
 
   it("fails clearly when PNG encoding is unavailable", async () => {
-    installCanvas({ encode: false });
+    const harness = installCanvas({ encode: false });
     await expect(drawAuraShareCard(input)).rejects.toThrow("png_encode_failed");
+    harness.decodedIcons.forEach((icon) => expect(icon.close).toHaveBeenCalledOnce());
+  });
+
+  it("releases canonical artwork when the canvas context is unavailable", async () => {
+    const harness = installCanvas({ context: false });
+    await expect(drawAuraShareCard(input)).rejects.toThrow("canvas_unavailable");
+    expect(harness.decodedIcons).toHaveLength(12);
+    harness.decodedIcons.forEach((icon) => expect(icon.close).toHaveBeenCalledOnce());
   });
 });
 
