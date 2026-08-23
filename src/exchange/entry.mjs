@@ -33,6 +33,19 @@ export function registryExchangeEnabled(env = {}) {
   return env[REGISTRY_EXCHANGE_FLAG] === '1';
 }
 
+/**
+ * Resolve the build environment without weakening the exact-value feature
+ * flag. Vercel exposes VERCEL_ENV=production only for production deployments,
+ * so a Git production build may supply the owner-authorized default while
+ * previews, local builds, and the committed HTML remain flag-off. An explicit
+ * exchange flag always wins, including `0` for the rollback path.
+ */
+export function registryExchangeBuildEnv(env = {}) {
+  if (Object.prototype.hasOwnProperty.call(env, REGISTRY_EXCHANGE_FLAG)) return env;
+  if (env.VERCEL_ENV !== 'production') return env;
+  return { ...env, [REGISTRY_EXCHANGE_FLAG]: '1' };
+}
+
 export function exchangeSlotComment() {
   return '<!-- registry-exchange:slot {} -->';
 }

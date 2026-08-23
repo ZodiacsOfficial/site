@@ -14,8 +14,10 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import {
+  REGISTRY_EXCHANGE_FLAG,
   injectRegistryExchange,
   injectRegistryExchangeLanding,
+  registryExchangeBuildEnv,
   registryExchangeEnabled,
 } from '../src/exchange/entry.mjs';
 
@@ -23,7 +25,8 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const exchangeFile = resolve(root, 'public/terminal/markets/index.html');
 const terminalFile = resolve(root, 'public/terminal/index.html');
 
-const enabled = registryExchangeEnabled(process.env);
+const buildEnv = registryExchangeBuildEnv(process.env);
+const enabled = registryExchangeEnabled(buildEnv);
 const [exchangeSource, terminalSource] = await Promise.all([
   readFile(exchangeFile, 'utf8'),
   readFile(terminalFile, 'utf8'),
@@ -32,8 +35,8 @@ const [exchangeSource, terminalSource] = await Promise.all([
 // Validate and render both surfaces before writing either one. A malformed or
 // missing Terminal marker must fail the build without leaving the venue route and
 // its only discovery entry in different flag states.
-const exchangeOutput = injectRegistryExchange(exchangeSource, process.env).output;
-const terminalOutput = injectRegistryExchangeLanding(terminalSource, process.env).output;
+const exchangeOutput = injectRegistryExchange(exchangeSource, buildEnv).output;
+const terminalOutput = injectRegistryExchangeLanding(terminalSource, buildEnv).output;
 const writes = [
   exchangeOutput !== exchangeSource ? writeFile(exchangeFile, exchangeOutput) : null,
   terminalOutput !== terminalSource ? writeFile(terminalFile, terminalOutput) : null,
@@ -42,5 +45,10 @@ await Promise.all(writes);
 
 console.log(
   `Terminal venue route: ${enabled ? 'enabled' : 'disabled'} `
-  + `(${writes.length} of 2 surfaces rewritten, Terminal landing included)`,
+  + `(${writes.length} of 2 surfaces rewritten, Terminal landing included; `
+  + `${Object.prototype.hasOwnProperty.call(process.env, REGISTRY_EXCHANGE_FLAG)
+    ? 'explicit exchange flag'
+    : process.env.VERCEL_ENV === 'production'
+      ? 'Vercel production default'
+      : 'flag-off default'})`,
 );
