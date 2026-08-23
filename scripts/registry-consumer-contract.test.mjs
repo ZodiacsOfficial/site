@@ -371,7 +371,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(story).toContain('id="thesis" className="consumer-story reveal"');
     expect(story).toContain('Symbol · record · identity');
     expect(story).toContain('<h2 id="consumer-story-title">The story behind the collection.</h2>');
-    expect(story).toContain('<span className="consumer-story__cta"><span>Read the story</span><span aria-hidden="true">→</span></span>');
+    expect(story).toContain('<span className="consumer-purpose__cta consumer-story__cta"><span>Read the story</span><span className="consumer-purpose__arrow" aria-hidden="true">→</span></span>');
 
     const shop = functionBlock(source, 'ConsumerShop');
     expect(shop).toContain('id="shop" className="consumer-shop reveal"');

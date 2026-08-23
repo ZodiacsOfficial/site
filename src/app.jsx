@@ -6088,7 +6088,7 @@
                 <span className="consumer-eyebrow">The Twelve</span>
                 <h2 id="consumer-story-title">The story behind the collection.</h2>
                 <p>The twelve signs have travelled through calendars, charts, jewellery, and screens. Astrofolio gives their token records one public home.</p>
-                <span className="consumer-story__cta"><span>Read the story</span><span aria-hidden="true">→</span></span>
+                <span className="consumer-purpose__cta consumer-story__cta"><span>Read the story</span><span className="consumer-purpose__arrow" aria-hidden="true">→</span></span>
               </div>
             </a>
           </article>

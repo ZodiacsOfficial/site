@@ -541,6 +541,7 @@ try {
     assert.equal(staticStoryStyle.background, 'rgba(15, 18, 26, 0.74)');
     assert.equal(staticStoryStyle.overflow, 'hidden');
     assert.equal(staticStoryStyle.radius, '22px 22px 5px');
+    assert.equal(staticStoryStyle.buttonRadius, '999px');
     assert.notEqual(staticStoryStyle.filter, 'none');
     assert.doesNotMatch(staticStoryStyle.filter, /grayscale/u);
     assert.ok(staticStoryStyle.pictureBottom <= staticStoryStyle.copyTop + 1, 'the no-JavaScript thesis image sits above its copy');
@@ -615,9 +616,23 @@ try {
       copy: essay.getBoundingClientRect().width,
     }));
     assert.ok(storySizing.action < storySizing.copy * .6, 'the Story action remains compact rather than spanning its card');
-    const storyColor = await storyAction.evaluate((node) => getComputedStyle(node).color);
+    const storyStyle = await storyAction.evaluate((node) => {
+      const arrow = node.querySelector('.consumer-purpose__arrow');
+      return {
+        color: getComputedStyle(node).color,
+        background: getComputedStyle(node).backgroundColor,
+        radius: getComputedStyle(node).borderRadius,
+        arrowBackground: arrow ? getComputedStyle(arrow).backgroundColor : '',
+        arrowRadius: arrow ? getComputedStyle(arrow).borderRadius : '',
+      };
+    });
+    assert.equal(storyStyle.color, 'rgb(17, 19, 24)');
+    assert.equal(storyStyle.background, 'rgb(240, 238, 232)');
+    assert.equal(storyStyle.radius, '999px');
+    assert.equal(storyStyle.arrowBackground, 'rgb(17, 19, 24)');
+    assert.equal(storyStyle.arrowRadius, '50%');
     await collectionPage.locator('.consumer-thesis__link').hover();
-    assert.equal(await storyAction.evaluate((node) => getComputedStyle(node).color), storyColor, 'the Story action color remains stable on hover');
+    assert.equal(await storyAction.evaluate((node) => getComputedStyle(node).color), storyStyle.color, 'the Story action color remains stable on hover');
     const mobilePurpose = await collectionPage.locator('.consumer-thesis, .consumer-collection').evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().toJSON()));
     assert.ok(mobilePurpose[0].y < mobilePurpose[1].y, 'the mobile hierarchy keeps Story before Cabinet');
     await collectionPage.setViewportSize({ width: 1280, height: 900 });
