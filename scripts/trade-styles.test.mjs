@@ -34,7 +34,17 @@ describe('trade panel layout', () => {
     expect(rule('.tp__step-number')).toContain('border-radius: 50%');
     expect(rule('.tp .details')).toContain('grid-template-columns');
     expect(rule('.tp .review-notice')).toContain('border: 1px solid');
-    expect(rule('.tp__asset-note')).toContain('rgba(231,200,121');
+    expect(rule('.tp__asset-note')).toContain('color-mix(in srgb, var(--tp-accent)');
+  });
+
+  it('keeps the sign pastel as the only chroma — Warm Gilt stays retired', () => {
+    // Same prohibition the exchange stylesheet pins: no gold, and every
+    // hex resolves to the void ramp or the aries severe pastel.
+    expect(TP_CSS).not.toMatch(/#E7C879|#F1E5BC|#D4AF37|gold/i);
+    expect(TP_CSS).not.toMatch(/rgba\(231,200,121/);
+    const hexes = TP_CSS.match(/#[0-9A-Fa-f]{6}\b/g) ?? [];
+    const allowed = ['#EEF1F7', '#C6CCDA', '#8E96AB', '#DE8E79', '#0F121A', '#090B10'];
+    for (const hex of hexes) expect(allowed, hex).toContain(hex);
   });
 
   it('keeps interaction feedback accessible and motion-considerate', () => {
