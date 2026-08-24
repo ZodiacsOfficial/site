@@ -66,7 +66,7 @@ jobs:
         # The smug vocabulary CLAUDE.md bans on new surfaces, enforced
         # over every content file and template the agents touch.
         run: |
-          ! grep -RIniE 'done properly|computed properly|shows? (its|their) work|like a human( wrote it)?|no mush|not vibes|speaks human|como es debido|sin paja' src/content src/pages src/components src/islands
+          ! grep -RIniE 'done properly|computed properly|shows? (its|their) work|like a human( wrote it)?|no mush|not vibes|speaks human|in plain language|como es debido|sin paja' src/content src/pages src/components src/islands
 
       - name: Authorship stays transparent
         run: |
