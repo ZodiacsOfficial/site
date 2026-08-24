@@ -5820,51 +5820,30 @@
         });
       }, [active]);
       return (
-        <div className="vitrine-disc-picker">
-          <button
-            className="vitrine-disc-picker__arrow"
-            type="button"
-            aria-label="Previous sign"
-            disabled={activeIndex === 0}
-            onClick={() => choose(activeIndex - 1, true)}
-          >
-            <span aria-hidden="true">&#8592;</span>
-          </button>
-          <div className="vitrine-disc-rail" ref={railRef} role="group" aria-label="Choose your zodiac sign" onKeyDown={onKeyDown}>
-            {SIGNS.map((item, index) => {
-              const selected = item.ticker === active;
-              return (
-                <button
-                  key={item.ticker}
-                  type="button"
-                  className={'vitrine-disc' + (selected ? ' is-active' : '')}
-                  data-consumer-sign={item.asset.sign}
-                  aria-label={`${item.name}, ${consumerSignDateLabel(item)}`}
-                  aria-pressed={selected}
-                  aria-controls="consumer-sign-preview"
-                  tabIndex={selected ? 0 : -1}
-                  style={{ '--sign': item.hue }}
-                  onClick={() => choose(index)}
-                >
-                  <picture aria-hidden="true">
-                    <source srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`} type="image/avif" />
-                    <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="40" height="40" alt="" decoding="async" />
-                  </picture>
-                  <span>{item.name}</span>
-                </button>
-              );
-            })}
-          </div>
-          <button
-            className="vitrine-disc-picker__arrow"
-            type="button"
-            aria-label="Next sign"
-            disabled={activeIndex === SIGNS.length - 1}
-            onClick={() => choose(activeIndex + 1, true)}
-          >
-            <span aria-hidden="true">&#8594;</span>
-          </button>
-          <p className="vitrine-disc-picker__hint">Swipe or use the arrows to see all twelve signs.</p>
+        <div className="vitrine-disc-rail" ref={railRef} role="group" aria-label="Choose your zodiac sign" onKeyDown={onKeyDown}>
+          {SIGNS.map((item, index) => {
+            const selected = item.ticker === active;
+            return (
+              <button
+                key={item.ticker}
+                type="button"
+                className={'vitrine-disc' + (selected ? ' is-active' : '')}
+                data-consumer-sign={item.asset.sign}
+                aria-label={`${item.name}, ${consumerSignDateLabel(item)}`}
+                aria-pressed={selected}
+                aria-controls="consumer-sign-preview"
+                tabIndex={selected ? 0 : -1}
+                style={{ '--sign': item.hue }}
+                onClick={() => choose(index)}
+              >
+                <picture aria-hidden="true">
+                  <source srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`} type="image/avif" />
+                  <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="40" height="40" alt="" decoding="async" />
+                </picture>
+                <span>{item.name}</span>
+              </button>
+            );
+          })}
         </div>
       );
     }

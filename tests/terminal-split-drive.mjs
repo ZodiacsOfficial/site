@@ -210,38 +210,6 @@ async function assertPastelSelectorGeometry(page, { width, height, staticView = 
   assert.match(activeGlow.transition, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
 }
 
-async function assertMobileDiscPicker(page) {
-  const geometry = await page.locator('.vitrine-disc-picker').evaluate((picker) => {
-    const [previous, next] = picker.querySelectorAll('.vitrine-disc-picker__arrow');
-    const rail = picker.querySelector('.vitrine-disc-rail');
-    const hint = picker.querySelector('.vitrine-disc-picker__hint');
-    const rect = (node) => node?.getBoundingClientRect();
-    const previousRect = rect(previous);
-    const railRect = rect(rail);
-    const nextRect = rect(next);
-    const pickerRect = rect(picker);
-    return {
-      arrowCount: picker.querySelectorAll('.vitrine-disc-picker__arrow').length,
-      previous: previousRect && { left: previousRect.left, right: previousRect.right, width: previousRect.width, height: previousRect.height },
-      rail: railRect && { left: railRect.left, right: railRect.right, width: railRect.width },
-      next: nextRect && { left: nextRect.left, right: nextRect.right, width: nextRect.width, height: nextRect.height },
-      picker: pickerRect && { left: pickerRect.left, right: pickerRect.right, width: pickerRect.width },
-      hintDisplay: hint ? getComputedStyle(hint).display : '',
-      hintText: hint?.textContent?.trim(),
-      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    };
-  });
-  assert.equal(geometry.arrowCount, 2);
-  assert.ok(geometry.previous && geometry.previous.width >= 44 && geometry.previous.height >= 44);
-  assert.ok(geometry.next && geometry.next.width >= 44 && geometry.next.height >= 44);
-  assert.ok(geometry.rail && geometry.previous.right <= geometry.rail.left, 'the previous control does not overlap the scroll rail');
-  assert.ok(geometry.rail && geometry.next.left >= geometry.rail.right, 'the next control does not overlap the scroll rail');
-  assert.ok(geometry.picker && geometry.picker.left >= 0 && geometry.picker.right <= 390, 'the picker stays inside the mobile viewport');
-  assert.equal(geometry.hintDisplay, 'block');
-  assert.equal(geometry.hintText, 'Swipe or use the arrows to see all twelve signs.');
-  assert.ok(geometry.overflow <= 0, 'the sign picker creates no horizontal page overflow');
-}
-
 if (OUT) await mkdir(OUT, { recursive: true });
 
 const browser = await chromium.launch({
@@ -379,13 +347,13 @@ try {
     assert.equal(counts.wikimedia, 0);
     assert.equal(counts.jupiter, 0);
     assert.equal(counts.wallet, 0);
-    await assertMobileDiscPicker(page);
+    assert.equal(await page.locator('.vitrine-disc-picker, .vitrine-disc-picker__arrow, .vitrine-disc-picker__hint').count(), 0);
+    assert.equal(await page.locator('.astrofolio-vitrine > .vitrine-disc-rail').count(), 1);
     await assertPastelSelectorGeometry(page, { width: 390, height: 844 });
 
-    await page.getByRole('button', { name: 'Previous sign' }).click();
+    await page.locator('[data-consumer-sign="aquarius"]').click();
     await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="aquarius"]')?.classList.contains('is-active'));
-    assert.equal(await page.getByRole('button', { name: 'Next sign' }).isEnabled(), true);
-    await page.getByRole('button', { name: 'Next sign' }).click();
+    await page.locator('[data-consumer-sign="pisces"]').click();
     await page.waitForFunction(() => (
       document.querySelectorAll('.vitrine-stage__layer').length === 1
       && document.querySelector('[data-vitrine-sculpture="pisces"]')?.classList.contains('is-active')

@@ -7757,19 +7757,6 @@
       scroll-snap-type: x mandatory;
       scrollbar-color: var(--hair-2) transparent;
     }
-    .static-vitrine__support {
-      display: grid;
-      gap: 5px;
-      margin: 8px 0 0;
-      color: var(--ink-mute);
-      font: 400 11px/1.45 var(--sans);
-      text-align: center;
-    }
-    .static-vitrine__support p {
-      margin: 0;
-      color: inherit;
-      font: inherit !important;
-    }
     .static-vitrine__rail label {
       position: relative;
       flex: 0 0 68px;
@@ -8916,51 +8903,6 @@
       text-wrap: pretty;
     }
 
-    .consumer-registry .vitrine-disc-picker {
-      grid-area: selector;
-      display: grid;
-      grid-template-columns: 44px minmax(0, 1fr) 44px;
-      grid-template-areas:
-        "previous rail next"
-        ". hint .";
-      align-items: center;
-      gap: 2px 9px;
-      min-width: 0;
-    }
-    .consumer-registry .vitrine-disc-picker__arrow {
-      appearance: none;
-      display: grid;
-      place-items: center;
-      box-sizing: border-box;
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      min-height: 44px;
-      padding: 0;
-      border: 1px solid rgba(198,204,218,.18);
-      border-radius: 999px;
-      color: var(--ink-2);
-      background: rgba(238,241,247,.035);
-      font: 600 16px/1 var(--sans);
-      cursor: pointer;
-      transition: transform 80ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);
-    }
-    .consumer-registry .vitrine-disc-picker__arrow:first-child { grid-area: previous; }
-    .consumer-registry .vitrine-disc-picker__arrow:nth-last-child(2) { grid-area: next; }
-    .consumer-registry .vitrine-disc-picker__arrow:hover:not(:disabled) {
-      border-color: rgba(238,241,247,.44);
-      background: rgba(238,241,247,.075);
-    }
-    .consumer-registry .vitrine-disc-picker__arrow:active:not(:disabled) { transform: scale(.98); }
-    .consumer-registry .vitrine-disc-picker__arrow:disabled { opacity: .28; cursor: default; }
-    .consumer-registry .vitrine-disc-picker__hint {
-      grid-area: hint;
-      margin: 0;
-      color: var(--ink-mute);
-      font: 500 10px/1.35 var(--sans);
-      text-align: center;
-      text-wrap: balance;
-    }
     .consumer-registry .vitrine-disc-rail {
       grid-area: selector;
       display: flex;
@@ -8972,10 +8914,6 @@
       scroll-behavior: auto;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
-    }
-    .consumer-registry .vitrine-disc-picker .vitrine-disc-rail {
-      grid-area: rail;
-      min-width: 0;
     }
     .consumer-registry .vitrine-disc-rail::-webkit-scrollbar { display: none; }
     .consumer-registry .vitrine-disc {
@@ -10396,15 +10334,6 @@
       .consumer-registry .consumer-shop__products { min-height: 480px; }
     }
 
-    @media (min-width: 900px) {
-      .consumer-registry .vitrine-disc-picker {
-        display: block;
-      }
-      .consumer-registry .vitrine-disc-picker__arrow,
-      .consumer-registry .vitrine-disc-picker__hint { display: none; }
-      .consumer-registry .vitrine-disc-picker .vitrine-disc-rail { grid-area: auto; }
-    }
-
     @media (max-width: 899px) {
       .consumer-registry .astrofolio-vitrine {
         grid-template-columns: minmax(0, 1fr);
@@ -10417,8 +10346,7 @@
       }
       .consumer-registry .terminal-consumer-hero h1 { font-size: clamp(54px, 16vw, 76px); }
       .consumer-registry .terminal-consumer-hero p { max-width: 36ch; margin-top: 18px; }
-      .consumer-registry .vitrine-disc-picker { margin-top: 2px; }
-      .consumer-registry .vitrine-disc-rail { margin-top: 0; }
+      .consumer-registry .vitrine-disc-rail { margin-top: 2px; }
       .consumer-registry .vitrine-stage {
         justify-self: center;
         width: min(100%, 416px);
@@ -10655,11 +10583,6 @@
             <label id="astrofolio-aquarius-label" for="astrofolio-aquarius"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-aquarius"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt=""></span><span>Aquarius</span></label>
             <label id="astrofolio-pisces-label" for="astrofolio-pisces"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-pisces"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt=""></span><span>Pisces</span></label>
           </div>
-          <div class="static-vitrine__support" role="note">
-            <p>Swipe to see all twelve signs. Live prices appear when the app connects; every public record remains available.</p>
-            <p>Here, &ldquo;official&rdquo; means the address is listed in the Zodiacs Registry; it does not mean government, regulator, wallet, or exchange approval.</p>
-          </div>
-
           <div class="static-vitrine__panels" aria-live="polite">
             <article class="static-vitrine__panel" data-static-sign="aries" aria-labelledby="static-aries-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/aries.webp" width="512" height="512" alt="Aries Zodiac artwork"></div>

@@ -80,26 +80,18 @@ describe('registry pastel polish', () => {
     expect(lit).not.toContain('var(--gold-deep)');
   });
 
-  it('gives the mobile sign picker and final Astrofolio market gateway complete, touch-safe chrome', async () => {
+  it('keeps the compact swipe rail and gives the final Astrofolio market gateway touch-safe chrome', async () => {
     const css = await read('src/terminal/split-styles.css');
-    const picker = cssRule(css, '.consumer-registry .vitrine-disc-picker {');
-    const arrow = cssRule(css, '.consumer-registry .vitrine-disc-picker__arrow {');
-    const hint = cssRule(css, '.consumer-registry .vitrine-disc-picker__hint {');
+    const rail = cssRule(css, '.consumer-registry .vitrine-disc-rail {');
     const gateway = cssRule(css, '.consumer-market-gateway__action {');
     const note = cssRule(css, '.consumer-registry .vitrine-official-note {');
     const staticShopImage = cssRule(css, '.consumer-static .static-shop__image {');
     const staticShopAsset = cssRule(css, '.consumer-static .static-shop__image img {');
 
-    expect(picker).toContain('grid-template-columns: 44px minmax(0, 1fr) 44px;');
-    expect(picker).toContain('grid-area: selector;');
-    expect(arrow).toContain('width: 44px;');
-    expect(arrow).toContain('height: 44px;');
-    expect(arrow).toContain('min-width: 44px;');
-    expect(arrow).toContain('min-height: 44px;');
-    expect(arrow).toContain('border-radius: 999px;');
-    expect(hint).toContain('text-align: center;');
-    expect(css).toContain('@media (min-width: 900px) {');
-    expect(css).toContain('.consumer-registry .vitrine-disc-picker__hint { display: none; }');
+    expect(rail).toContain('grid-area: selector;');
+    expect(rail).toContain('overflow-x: auto;');
+    expect(rail).toContain('scroll-snap-type: x mandatory;');
+    expect(css).not.toContain('.consumer-registry .vitrine-disc-picker');
 
     expect(gateway).toContain('min-height: 52px;');
     expect(gateway).toContain('border-radius: 999px;');
