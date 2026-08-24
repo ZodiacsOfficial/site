@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '2 agosto 2026';
+const updated = '23 agosto 2026';
 
 const jsonLd = [
   {
@@ -43,6 +43,42 @@ const jsonLd = [
         e-mail e i temi che scegli di sincronizzare per mostrarli sugli altri
         dispositivi. I dati di nascita non vengono trasmessi né conservati sui
         nostri server come parte del calcolo stesso.
+      </p>
+
+      <h2>Momenti Living Chart</h2>
+      <p>
+        Living Chart ti permette di salvare una categoria facoltativa o una
+        breve nota accanto a una copia datata della previsione personale e
+        della ricevuta fattuale del cielo che hai visto. Un primo salvataggio
+        resta in questo browser. Se scegli separatamente l’opzione
+        <strong>Keep this on every device</strong> (conserva su tutti i tuoi
+        dispositivi), la data e la precisione oraria della voce, la categoria,
+        la nota, la previsione congelata e l’identificativo del tema vengono
+        inviati a Supabase e conservati per il tuo account con accesso
+        effettuato. L’accesso è limitato dalla sicurezza a livello di riga e
+        Supabase cifra i dati conservati a riposo. Non è una cifratura
+        end-to-end: Zodiacs.org e Supabase possono tecnicamente trattare la
+        voce conservata per fornire sincronizzazione, assistenza, esportazione
+        ed eliminazione.
+      </p>
+      <p>
+        La sincronizzazione di Living Chart ha un proprio consenso, separato
+        dalla sincronizzazione dei temi salvati. Non rendiamo pubbliche le
+        voci, non le indicizziamo, non le inviamo automaticamente a Guide o a
+        un altro fornitore di IA, non le usiamo per generare oroscopi, non le
+        vendiamo e non includiamo intenzionalmente il loro testo nell’analisi
+        o nei log dell’applicazione. Revocare il consenso elimina le voci
+        remote e fa avanzare una versione del consenso, così una vecchia
+        scheda offline non può caricarle di nuovo. Le copie già presenti su un
+        dispositivo restano finché non le elimini lì o non cancelli i dati di
+        questo sito nel browser. Eliminare una voce rimuove nota, categoria,
+        previsione, identificativo del tema e data dal dispositivo e dal
+        record nel cloud; può restare un marcatore tecnico di eliminazione
+        privo di contenuto, perché una richiesta in ritardo non possa
+        ripristinarla. La cronologia offre esportazione in JSON portabile e
+        Markdown leggibile, modifica ed eliminazione per singola voce e un
+        controllo di nuovo tentativo quando la sincronizzazione richiede
+        attenzione.
       </p>
 
       <h2>The Cabinet of Twelve, Shelf e indirizzi pubblici</h2>
@@ -115,7 +151,7 @@ const jsonLd = [
         ripubblicate da altre persone o servizi.
       </p>
 
-      <h2>Richieste automatiche del Registro</h2>
+      <h2>Fonti di dati pubbliche di Astrofolio, del Terminal e del Registro</h2>
       <p>
         Alcune sezioni del Registro richiedono automaticamente, tramite il tuo
         browser, dati pubblici di mercato a DexScreener, dati pubblici di
@@ -126,6 +162,27 @@ const jsonLd = [
         metadati di una richiesta web, come indirizzo IP, data, ora, browser e la
         pagina di provenienza consentita dalle impostazioni del browser; si applicano le
         rispettive informative sulla privacy.
+      </p>
+      <p>
+        Nella pagina Come acquistare di Astrofolio, aprire la pagina o
+        cambiare il segno selezionato non carica Jupiter, non contatta il
+        software del wallet e non richiede un prezzo. Solo dopo che carichi
+        esplicitamente lo strumento facoltativo, il tuo browser invia alla
+        piattaforma indipendente Jupiter l’identificativo del token
+        selezionato e l’importo richiesto come parametri di quotazione, e
+        chiede a DexScreener il contesto di liquidità indicizzata. Queste
+        richieste di visualizzazione non includono un indirizzo di wallet. Se
+        scegli di esaminare uno scambio diretto, il wallet compatibile che
+        selezioni fornisce il proprio indirizzo pubblico Solana a Jupiter,
+        così che Jupiter costruisca la transazione esatta che esaminerai. Il
+        tuo wallet firma localmente. Il tuo browser invia poi la transazione
+        firmata e l’identificativo della richiesta all’endpoint di esecuzione
+        di Jupiter. Né l’indirizzo pubblico né la transazione firmata vengono
+        inviati a un server di Zodiacs.org, e Zodiacs.org non chiede né riceve
+        mai una frase di recupero o una chiave privata. Jupiter, DexScreener e
+        il tuo servizio di wallet possono ricevere i normali metadati di una
+        richiesta web, come indirizzo IP, browser e ora; si applicano le
+        rispettive informative sulla privacy e sulla conservazione.
       </p>
       <p>
         Il profilo di ogni segno nel Registro è di sola lettura. Mostra dati
