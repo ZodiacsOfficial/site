@@ -138,7 +138,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@babel/standalone": "7.26.4",
+    "@babel/standalone": "8.0.4",
     "@fontsource-variable/instrument-sans": "^5.2.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.0",
     "@fontsource/eb-garamond": "^5.2.7",
