@@ -1,0 +1,398 @@
+/* Zodiacs.org — canonical site ending.
+   The Celestial Colophon is shared by Astro pages and the static Registry
+   wing. Page-specific notices may sit above it; this is always the final
+   visual section. */
+
+.zfooter {
+  --zf-bg: var(--void-1, var(--bg, #0a0c11));
+  --zf-surface: var(--void-2, var(--surface, #0f121a));
+  --zf-text: var(--text, var(--ink, #eef1f7));
+  --zf-text-2: var(--text-2, var(--ink-2, #c6ccda));
+  --zf-muted: var(--muted, var(--ink-dim, #8e96ab));
+  /* Small labels and colophon copy must remain AA-legible even on wing pages
+     whose legacy --ink-mute token is intentionally dimmer. */
+  --zf-faint: #7a8397;
+  --zf-hair: var(--hair-1, var(--hair, rgba(198, 204, 218, 0.1)));
+  --zf-hair-2: var(--hair-2, rgba(198, 204, 218, 0.16));
+  --zf-serif: var(--font-nav-serif, var(--font-serif, var(--display, var(--serif, 'EB Garamond', Georgia, serif))));
+  --zf-sans: var(--font-nav-sans, var(--font-sans, var(--sans, 'Instrument Sans', system-ui, sans-serif)));
+  --zf-mono: var(--font-nav-mono, var(--font-mono, var(--mono, 'JetBrains Mono', ui-monospace, monospace)));
+  margin-top: clamp(64px, 10vw, 112px);
+  border-top: 1px solid var(--zf-hair);
+  background: var(--zf-bg);
+  color: var(--zf-text);
+  font-family: var(--zf-sans);
+  text-align: start;
+}
+
+.zfooter *,
+.zfooter *::before,
+.zfooter *::after { box-sizing: border-box; }
+
+.zfooter__inner {
+  width: min(calc(100% - 40px), 1180px);
+  margin-inline: auto;
+  padding-block: clamp(40px, 6vw, 64px) max(34px, env(safe-area-inset-bottom));
+}
+
+.zfooter__lead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 28px;
+  padding-bottom: clamp(34px, 5vw, 44px);
+}
+
+.zfooter__brand {
+  direction: ltr;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  gap: 11px;
+  color: var(--zf-text);
+  text-decoration: none;
+}
+
+.zfooter__brand-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+}
+
+.zfooter__brand-name {
+  font-family: var(--zf-serif);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+.zfooter__brand-tld {
+  align-self: end;
+  margin-bottom: 2px;
+  color: var(--zf-faint);
+  font-family: var(--zf-mono);
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  line-height: 1;
+}
+
+.zfooter__tag {
+  max-width: 38ch;
+  margin: 13px 0 0;
+  color: var(--zf-muted);
+  font-size: 15px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.zfooter__guide {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 10px;
+  padding: 5px 15px 5px 6px;
+  border: 1px solid var(--zf-hair-2);
+  border-radius: 999px;
+  background: var(--zf-surface);
+  color: var(--zf-text-2);
+  font: 550 13px/1 var(--zf-sans);
+  cursor: pointer;
+}
+
+.zfooter__guide img {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--zf-hair-2);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.zfooter__guide:hover { border-color: rgba(198, 204, 218, 0.28); color: var(--zf-text); }
+.zfooter__guide:focus-visible,
+.zfooter a:focus-visible { outline: 2px solid var(--zf-text-2); outline-offset: 3px; }
+
+.zfooter__directory {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px clamp(36px, 7vw, 92px);
+  padding-block: 32px 38px;
+  border-top: 1px solid var(--zf-hair);
+}
+
+.zfooter__group { min-width: 0; }
+
+.zfooter__label {
+  display: block;
+  margin: 0 0 13px;
+  color: var(--zf-faint);
+  font: 500 10px/1.25 var(--zf-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.zfooter__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.zfooter__links a,
+.zfooter__links button {
+  color: var(--zf-text-2);
+  font: 400 14px/1.4 var(--zf-sans);
+  text-decoration: none;
+}
+
+.zfooter__links a:hover,
+.zfooter__links button:hover { color: var(--zf-text); }
+
+.zfooter__note {
+  display: block;
+  max-width: 38ch;
+  margin-top: 14px;
+  color: var(--zf-faint);
+  font-size: 11px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.zfooter__twelve { grid-column: 1 / -1; }
+.zfooter__twelve .zfooter__label { margin-bottom: 9px; }
+
+.zfooter__signs {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+.zfooter__sign {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: var(--zf-muted);
+  text-decoration: none;
+}
+
+.zfooter__sign img {
+  display: block;
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  opacity: 0.82;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.zfooter__sign:hover { border-color: var(--zf-hair); background: var(--zf-surface); }
+.zfooter__sign:hover img { opacity: 1; transform: translateY(-1px); }
+
+.zfooter__language {
+  display: grid;
+  grid-template-columns: 122px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  padding-block: 22px;
+  border-block: 1px solid var(--zf-hair);
+}
+
+.zfooter__language .zfooter__label { margin: 0; }
+
+.zfooter__locales {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 25px;
+}
+
+.zfooter__locale {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 1px solid transparent;
+  color: var(--zf-muted);
+  font: 400 14px/1.25 var(--zf-sans);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.zfooter__locale:hover { color: var(--zf-text-2); }
+.zfooter__locale[aria-current='page'] {
+  border-bottom-color: var(--zf-hair-2);
+  color: var(--zf-text-2);
+}
+
+.zfooter__colophon {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.8fr) minmax(140px, 0.7fr) minmax(120px, 0.6fr) minmax(280px, 1.4fr);
+  gap: 26px 38px;
+  padding-top: 26px;
+  color: var(--zf-faint);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.zfooter__copyright {
+  margin: 0;
+  color: var(--zf-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.zfooter__meta .zfooter__label { margin-bottom: 10px; }
+
+.zfooter__meta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 16px;
+}
+
+.zfooter__meta a {
+  color: var(--zf-muted);
+  text-decoration: none;
+}
+
+.zfooter__meta a:hover { color: var(--zf-text-2); }
+
+.zfooter__credits {
+  display: grid;
+  gap: 5px;
+}
+
+.zfooter__credits p { margin: 0; }
+.zfooter__credits a {
+  text-decoration: underline;
+  text-decoration-color: var(--zf-hair-2);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.zfooter__visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .zfooter__colophon {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 24px;
+  }
+
+  .zfooter__copyright,
+  .zfooter__credits { grid-column: 1 / -1; }
+}
+
+@media (max-width: 760px) {
+  .zfooter__inner {
+    width: min(calc(100% - 40px), 1180px);
+    padding-bottom: max(88px, calc(54px + env(safe-area-inset-bottom)));
+  }
+
+  .zfooter__lead { grid-template-columns: 1fr; }
+  .zfooter__guide { justify-self: start; }
+
+  .zfooter__directory {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 22px;
+  }
+
+  .zfooter__group--wide,
+  .zfooter__twelve { grid-column: 1 / -1; }
+
+  .zfooter__signs { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px 4px; }
+  .zfooter__sign { min-height: 44px; }
+
+  .zfooter__language {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-block: 24px;
+  }
+
+  .zfooter__locales {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 18px;
+  }
+
+  .zfooter__locale { width: fit-content; }
+
+  .zfooter__colophon {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 20px;
+  }
+
+  .zfooter__copyright,
+  .zfooter__credits { grid-column: 1 / -1; }
+
+  /* The fixed Guide portrait occupies the lower-right safe-area corner.
+     Credits stay clear even if JavaScript cannot fade that launcher. */
+  .zfooter__credits { padding-right: 72px; min-height: 58px; }
+}
+
+@media (max-width: 390px) {
+  .zfooter__inner { width: calc(100% - 32px); }
+  .zfooter__brand-name { font-size: 24px; }
+  .zfooter__locales { column-gap: 12px; }
+  .zfooter__colophon { column-gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zfooter__sign img { transition: none; }
+}
+
+/* First-paint/no-JS fallback used before the Registry React shell mounts.
+   It keeps the same type, color, spacing, and hierarchy in a compact form. */
+.zfooter--compact {
+  display: grid;
+  width: min(calc(100% - 40px), 1180px);
+  margin-inline: auto;
+  padding: 34px 0 max(40px, env(safe-area-inset-bottom));
+  background: transparent;
+  color: var(--zf-faint);
+  font: 400 12px/1.65 var(--zf-sans);
+}
+
+.zfooter--compact > span:first-child {
+  color: var(--zf-text-2);
+  font: 500 16px/1.4 var(--zf-serif);
+}
+
+.zfooter--compact > nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 22px;
+  padding-block: 16px;
+  border-block: 1px solid var(--zf-hair);
+}
+
+.zfooter--compact > nav a,
+.zfooter--compact > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--zf-text-2);
+  text-decoration: none;
+}
+
+.zfooter--compact > nav a:hover,
+.zfooter--compact > a:hover { color: var(--zf-text); }
+
+@media (max-width: 760px) {
+  .zfooter--compact {
+    padding-right: 72px;
+    padding-bottom: max(88px, calc(54px + env(safe-area-inset-bottom)));
+  }
+}

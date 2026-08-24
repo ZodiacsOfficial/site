@@ -16,6 +16,7 @@ import { SIGN_ORDER } from './sign-data.mjs';
 import { NAV_SIGNS, wingNavCss, wingNavHtml, wingNavScript } from './wing-nav.mjs';
 import { REGISTRY_ESTABLISHED } from '../src/lib/registry-establishment.mjs';
 import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../src/lib/assistant/guide-loader.mjs';
+import { SITE_FOOTER_STYLESHEET, renderStaticFooter } from './site-footer.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -189,6 +190,7 @@ const html = `<!doctype html>
   <link rel="icon" type="image/png" sizes="96x96" href="/assets/app-icons/v3/favicon-96.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/app-icons/v3/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
+  ${SITE_FOOTER_STYLESHEET}
   <script>
     (function(){
       var query=new URLSearchParams(location.search);
@@ -476,10 +478,10 @@ const html = `<!doctype html>
       <a class="terminal-link" href="/terminal/"><b>View market data</b><span aria-hidden="true">→</span></a>
     </aside>
 
-    <footer class="footer">
-      <span>Zodiacs.org · Token records · Est. <span data-registry-established>${esc(REGISTRY_ESTABLISHED)}</span></span>
-      <nav class="footer__links" aria-label="Registry footer"><a href="/registry/technical/">Methodology</a><a href="/disclosure/">Disclosure</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
-    </footer>
+    ${renderStaticFooter({
+      tagline: 'The official public Registry of the Twelve.',
+      established: REGISTRY_ESTABLISHED,
+    })}
   </main>
 
   <script>

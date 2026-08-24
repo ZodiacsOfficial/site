@@ -29,6 +29,7 @@
   <link rel="icon" type="image/png" sizes="96x96" href="/assets/app-icons/v3/favicon-96.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/app-icons/v3/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
+  <link rel="stylesheet" href="/assets/site-footer.css" />
 
   <style>
     /* Self-hosted interface faces. */
@@ -1225,33 +1226,73 @@
       </nav>
     </section>
 
-    <footer class="ftr">
-      <div class="ftr__row">
-        <div class="mark">Zodiacs<span class="g">·</span>org</div>
-        <div>© 2026</div>
+    <footer class="zfooter zfooter--static">
+  <div class="zfooter__inner">
+    <div class="zfooter__lead">
+      <div>
+        <a class="zfooter__brand" href="/">
+          <img class="zfooter__brand-mark" src="/assets/app-icons/v3/favicon.svg" width="26" height="26" alt="" loading="lazy" decoding="async" />
+          <span class="zfooter__brand-name">Zodiacs</span><span class="zfooter__brand-tld">.org</span>
+        </a>
+        <p class="zfooter__tag">Capricorn is one of the Twelve in the official Zodiacs Registry.</p>
       </div>
-      <div class="ftr__row">
-        <div class="ftr__links">
-          <a href="/astrofolio/">Astrofolio</a>
-          <a href="/registry/#verify">Check an address</a>
-          <a href="/thesis/">Thesis</a>
-          <a href="/disclosure/">Disclosure</a>
-          <a href="/privacy/">Privacy</a>
-          <a href="/terms/">Terms</a>
-          <a href="/registry/technical/">Technical details</a>
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
+      <button class="zfooter__guide" type="button" data-assistant-open data-footer-guide aria-haspopup="dialog">
+        <img src="/assets/guide-avatar.webp" width="32" height="32" alt="" loading="lazy" decoding="async" />
+        <span>Guide</span>
+      </button>
+    </div>
+
+    <div class="zfooter__directory">
+      <nav class="zfooter__group" aria-label="Explore">
+        <span class="zfooter__label">Explore</span>
+        <div class="zfooter__links"><a href="/">Astrology</a><a href="/astrofolio/">Astrofolio</a><a href="/registry/">Official Registry</a><a href="/thesis/">Thesis</a><a href="/archive/">Archive</a></div>
+      </nav>
+      <nav class="zfooter__group" aria-label="Trust and policies">
+        <span class="zfooter__label">Trust</span>
+        <div class="zfooter__links"><a href="/astrofolio/#verify">Verify a token</a><a href="/registry/technical/">Methodology</a><a href="/disclosure/">Disclosure</a><a href="/sdk/">SDK</a></div>
+      </nav>
+      <nav class="zfooter__group zfooter__group--wide" aria-label="Official channels">
+        <span class="zfooter__label">Follow</span>
+        <div class="zfooter__links"><a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a><a href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer">Instagram</a><a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a><a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a></div>
+      </nav>
+      <nav class="zfooter__group zfooter__twelve" aria-label="The twelve zodiac signs">
+        <span class="zfooter__label">The Twelve</span>
+        <div class="zfooter__signs">
+          <a class="zfooter__sign" href="/aries/" aria-label="Aries" title="Aries"><img src="/assets/zodiac-icons/48/aries.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Aries</span></a><a class="zfooter__sign" href="/taurus/" aria-label="Taurus" title="Taurus"><img src="/assets/zodiac-icons/48/taurus.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Taurus</span></a><a class="zfooter__sign" href="/gemini/" aria-label="Gemini" title="Gemini"><img src="/assets/zodiac-icons/48/gemini.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Gemini</span></a><a class="zfooter__sign" href="/cancer/" aria-label="Cancer" title="Cancer"><img src="/assets/zodiac-icons/48/cancer.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Cancer</span></a><a class="zfooter__sign" href="/leo/" aria-label="Leo" title="Leo"><img src="/assets/zodiac-icons/48/leo.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Leo</span></a><a class="zfooter__sign" href="/virgo/" aria-label="Virgo" title="Virgo"><img src="/assets/zodiac-icons/48/virgo.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Virgo</span></a><a class="zfooter__sign" href="/libra/" aria-label="Libra" title="Libra"><img src="/assets/zodiac-icons/48/libra.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Libra</span></a><a class="zfooter__sign" href="/scorpio/" aria-label="Scorpio" title="Scorpio"><img src="/assets/zodiac-icons/48/scorpio.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Scorpio</span></a><a class="zfooter__sign" href="/sagittarius/" aria-label="Sagittarius" title="Sagittarius"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Sagittarius</span></a><a class="zfooter__sign" href="/capricorn/" aria-label="Capricorn" title="Capricorn"><img src="/assets/zodiac-icons/48/capricorn.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Capricorn</span></a><a class="zfooter__sign" href="/aquarius/" aria-label="Aquarius" title="Aquarius"><img src="/assets/zodiac-icons/48/aquarius.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Aquarius</span></a><a class="zfooter__sign" href="/pisces/" aria-label="Pisces" title="Pisces"><img src="/assets/zodiac-icons/48/pisces.webp" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">Pisces</span></a>
         </div>
+      </nav>
+    </div>
+
+    <section class="zfooter__language" aria-labelledby="static-footer-language-label">
+      <span class="zfooter__label" id="static-footer-language-label">Language</span>
+      <nav class="zfooter__locales" aria-label="Language">
+        <span class="zfooter__locale" lang="en" aria-current="page">English</span>
+        <a class="zfooter__locale" href="/es/" hreflang="es" lang="es">Español</a>
+        <a class="zfooter__locale" href="/pt/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a>
+        <a class="zfooter__locale" href="/fr/" hreflang="fr" lang="fr">Français</a>
+        <a class="zfooter__locale" href="/it/" hreflang="it" lang="it">Italiano</a>
+      </nav>
+    </section>
+
+    <div class="zfooter__colophon">
+      <p class="zfooter__copyright">© 2026 Zodiacs.org</p>
+      <nav class="zfooter__meta" aria-label="Legal">
+        <span class="zfooter__label">Legal</span>
+        <div class="zfooter__meta-links"><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+      </nav>
+      <nav class="zfooter__meta" aria-label="More">
+        <span class="zfooter__label">More</span>
+        <div class="zfooter__meta-links"><a href="/widgets/">Widgets</a><a href="/feeds/horoscopes.xml">RSS</a></div>
+      </nav>
+      <div class="zfooter__meta zfooter__credits">
+        <span class="zfooter__label">Data &amp; licenses</span>
+        <p>Place data: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> · CC BY 4.0</p>
+        <p>Typefaces licensed under <a href="/fonts/OFL-instrument-sans.txt">SIL OFL 1.1</a></p>
+
       </div>
-      <div class="ftr__row">
-        <div class="ftr__links" aria-label="Official channels">
-          <a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a>
-          <a href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer">Instagram</a>
-          <a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a>
-          <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a>
-        </div>
-        <div>Channels</div>
-      </div>
-    </footer>
+    </div>
+  </div>
+</footer>
   </main>
 
   <script data-guide-loader="zodiacs-guide-loader-v1">
