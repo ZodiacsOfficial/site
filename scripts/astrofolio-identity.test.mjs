@@ -36,6 +36,13 @@ const PLATFORM_RENDERED_ARTWORK = new Set([
   'avatar-1024.png',
   'og-1200x630.png',
   'season-seal-192.png',
+  // The tiny favicon resizes and the svgo-optimized favicon.svg proved
+  // toolchain-version-sensitive when sharp 0.35 / svgo 4.0.2 landed: the
+  // committed v2 family is immutable, so these compare pixel-wise like the
+  // other rendered artwork instead of byte-exact (sharp rasterizes the SVG).
+  'favicon-16.png',
+  'favicon-32.png',
+  'favicon.svg',
 ]);
 
 function semanticIdentityManifest(manifest) {
