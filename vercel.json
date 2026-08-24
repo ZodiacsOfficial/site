@@ -124,8 +124,13 @@
       "permanent": true
     },
     {
-      "source": "/collect/:path(.*)",
+      "source": "/collect/:path(.*/)",
       "destination": "/registry/:path",
+      "permanent": true
+    },
+    {
+      "source": "/collect/:path(.*[^/])",
+      "destination": "/registry/:path/",
       "permanent": true
     },
     {
@@ -605,6 +610,24 @@
     },
     {
       "source": "/assets/(art|nuggets|og|sculptures)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/assets/people/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/assets/hero/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

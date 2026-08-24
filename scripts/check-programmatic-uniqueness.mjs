@@ -29,8 +29,8 @@ export function jaccardSimilarity(a, b) {
   return union === 0 ? 1 : intersection / union;
 }
 
-export async function checkPairUniqueness({ threshold = 0.42 } = {}) {
-  const directory = resolve(root, 'src/content/pairs');
+export async function checkCollectionUniqueness(collection, { threshold = 0.42 } = {}) {
+  const directory = resolve(root, `src/content/${collection}`);
   const names = (await readdir(directory)).filter((name) => name.endsWith('.mdx')).sort();
   const pages = await Promise.all(names.map(async (name) => ({
     name,
@@ -46,6 +46,10 @@ export async function checkPairUniqueness({ threshold = 0.42 } = {}) {
     }
   }
   return { count: pages.length, threshold, collisions, highest };
+}
+
+export function checkPairUniqueness(options) {
+  return checkCollectionUniqueness('pairs', options);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

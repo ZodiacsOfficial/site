@@ -282,10 +282,13 @@ for (const file of await htmlFiles(dist)) {
   }
 
   if (horoscopeContent) {
+    // FAQ rich results retreated to a handful of authority sites in 2023, so
+    // the markup is optional: validated when present, retirable without a
+    // gate change. The visible FAQ copy itself stays.
     const faqs = nodes.filter((node) => hasType(node, 'FAQPage'));
-    if (faqs.length !== 1) {
-      failures.push(`${label}: horoscope content needs exactly one FAQPage (found ${faqs.length})`);
-    } else validateFaq(faqs[0], label, 3);
+    if (faqs.length > 1) {
+      failures.push(`${label}: horoscope content allows at most one FAQPage (found ${faqs.length})`);
+    } else if (faqs.length === 1) validateFaq(faqs[0], label, 3);
   }
 
   if (pathname === '/horoscopes/') {
