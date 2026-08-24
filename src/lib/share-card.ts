@@ -29,7 +29,10 @@ import { shareCardFormat, shareCardText } from './share-card-copy';
 import { communicationRead } from './communication';
 import { approachRead } from './approach';
 import { chartSignature, type ChartSignature } from './chart-signature';
-import { BRAND_ICON_PATHS } from './brand-icons.mjs';
+import {
+  drawShareBrandLockup,
+  loadShareBrandIcon,
+} from './share-card-brand';
 
 export type CardOutcome = 'shared' | 'downloaded' | 'cancelled';
 export type ChartCardVariant = 'full' | 'big-three' | 'communication' | 'signature' | 'approach' | 'sheet';
@@ -161,16 +164,6 @@ function loadSvg(xml: string): Promise<HTMLImageElement> {
 export async function loadDisc(slug: string): Promise<ImageBitmap | null> {
   try {
     const res = await fetch(`/assets/zodiac-icons/128/${slug}.webp`);
-    if (!res.ok) return null;
-    return await createImageBitmap(await res.blob());
-  } catch {
-    return null;
-  }
-}
-
-async function loadBrandIcon(): Promise<ImageBitmap | null> {
-  try {
-    const res = await fetch(BRAND_ICON_PATHS.icon512);
     if (!res.ok) return null;
     return await createImageBitmap(await res.blob());
   } catch {
@@ -1130,7 +1123,7 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
   ]).catch(() => {});
   const [wheel, brandIcon] = await Promise.all([
     wheelSvgString(chart, true).then(loadSvg),
-    loadBrandIcon(),
+    loadShareBrandIcon(),
   ]);
   const canvas = document.createElement('canvas');
   canvas.width = SHEET_W;
@@ -1147,30 +1140,15 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
     ctx.roundRect(38, 38, SHEET_W - 76, SHEET_H - 76, 30);
     ctx.stroke();
   }
-  ctx.textBaseline = 'middle';
-  ctx.fillStyle = INK_2;
-  ctx.textAlign = 'right';
-  ctx.font = `500 ${CHART_SHEET_LAYOUT.brandFontSize}px ${SERIF}`;
-  const wordmark = 'zodiacs.org';
-  const wordmarkX = SHEET_W - 92;
-  if (brandIcon) {
-    const iconX = wordmarkX
-      - ctx.measureText(wordmark).width
-      - CHART_SHEET_LAYOUT.brandGap
-      - CHART_SHEET_LAYOUT.brandIconSize;
-    const iconY = CHART_SHEET_LAYOUT.brandWordmarkY - CHART_SHEET_LAYOUT.brandIconSize / 2;
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(
-      brandIcon,
-      iconX,
-      iconY,
-      CHART_SHEET_LAYOUT.brandIconSize,
-      CHART_SHEET_LAYOUT.brandIconSize,
-    );
-    brandIcon.close();
-  }
-  ctx.fillText(wordmark, wordmarkX, CHART_SHEET_LAYOUT.brandWordmarkY);
+  drawShareBrandLockup(ctx, brandIcon, {
+    wordmarkX: SHEET_W - 92,
+    centerY: CHART_SHEET_LAYOUT.brandWordmarkY,
+    iconSize: CHART_SHEET_LAYOUT.brandIconSize,
+    fontSize: CHART_SHEET_LAYOUT.brandFontSize,
+    gap: CHART_SHEET_LAYOUT.brandGap,
+    serif: SERIF,
+  });
+  brandIcon?.close?.();
 
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_0;

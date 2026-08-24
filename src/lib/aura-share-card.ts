@@ -9,6 +9,11 @@ import {
 } from "./aura/talisman";
 import { cabinetEditionForHolding } from "./aura/cabinet-finish";
 import {
+  drawShareBrandLockup,
+  loadShareBrandIcon,
+  type LoadedShareBrandIcon,
+} from "./share-card-brand";
+import {
   AURA_SIGN_ORDER,
   type AuraCabinetEdition,
   type AuraCabinetFinish,
@@ -84,10 +89,29 @@ const ETCHED = "rgba(197, 205, 220, 0.22)";
 const HAIR = "rgba(205, 212, 226, 0.16)";
 const COMPLETE_RING = "rgba(228, 233, 243, 0.42)";
 const EDITION_RING = "rgba(238, 241, 247, 0.62)";
+const MAX_EDITION_RING_PADDING = 13;
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
 const METHOD_NOTE = "Your collection, set against today’s sky.";
 const EDITION_NOTE = "Public edition · collection + dated sky";
+export const AURA_SHARE_LAYOUT = Object.freeze({
+  representedHeadingY: 834,
+  representedHeadingFontSize: 16,
+  representedSingleRowY: 950,
+  representedTwoRowY: 884,
+  representedRowGap: 118,
+  representedRingRadius: 21,
+  representedMaxRingPadding: MAX_EDITION_RING_PADDING,
+  representedNameOffset: 50,
+  representedEditionOffset: 69,
+  representedNameFontSize: 16,
+  representedEditionFontSize: 12,
+  representedDividerY: 1085,
+  brandCenterY: 1290,
+  brandIconSize: 44,
+  brandFontSize: 22,
+  brandGap: 0,
+});
 const CARD_DATE = new Intl.DateTimeFormat("en", {
   year: "numeric",
   month: "short",
@@ -391,7 +415,7 @@ function drawEditionRings(
       ? [radius + 5]
       : edition === "gold"
         ? [radius + 5, radius + 9]
-        : [radius + 5, radius + 9, radius + 13];
+        : [radius + 5, radius + 9, radius + MAX_EDITION_RING_PADDING];
 
   context.strokeStyle = EDITION_RING;
   context.lineWidth = edition === "bronze" ? 1.5 : 2;
@@ -541,28 +565,46 @@ function drawRepresentedSet(
   const columns = Math.min(6, snapshot.represented.length);
   const gap = columns > 1 ? Math.min(152, 890 / (columns - 1)) : 0;
   const rows = Math.ceil(snapshot.represented.length / 6);
-  const startY = rows === 1 ? 950 : 894;
+  const startY = rows === 1
+    ? AURA_SHARE_LAYOUT.representedSingleRowY
+    : AURA_SHARE_LAYOUT.representedTwoRowY;
   snapshot.represented.forEach((sign, index) => {
     const row = Math.floor(index / 6);
     const rowItems = Math.min(6, snapshot.represented.length - row * 6);
     const rowWidth = (rowItems - 1) * gap;
     const x = W / 2 - rowWidth / 2 + (index % 6) * gap;
-    const y = startY + row * 108;
-    drawEditionRings(context, sign.edition, x, y, 21);
+    const y = startY + row * AURA_SHARE_LAYOUT.representedRowGap;
+    drawEditionRings(
+      context,
+      sign.edition,
+      x,
+      y,
+      AURA_SHARE_LAYOUT.representedRingRadius,
+    );
     drawOfficialZodiacIcon(context, sign.slug, icons, x, y, 19);
     context.fillStyle = INK;
     context.textAlign = "center";
-    context.font = `500 16px ${MONO}`;
-    context.fillText(sign.name.toUpperCase(), x, y + 35);
+    context.textBaseline = "middle";
+    context.font = `500 ${AURA_SHARE_LAYOUT.representedNameFontSize}px ${MONO}`;
+    context.fillText(
+      sign.name.toUpperCase(),
+      x,
+      y + AURA_SHARE_LAYOUT.representedNameOffset,
+    );
     context.fillStyle = MUTED;
-    context.font = `500 12px ${MONO}`;
-    context.fillText(editionLine(sign), x, y + 57);
+    context.font = `500 ${AURA_SHARE_LAYOUT.representedEditionFontSize}px ${MONO}`;
+    context.fillText(
+      editionLine(sign),
+      x,
+      y + AURA_SHARE_LAYOUT.representedEditionOffset,
+    );
   });
 }
 
 async function paintAuraShareCard(
   snapshot: AuraShareSnapshot,
   icons: ReadonlyMap<AuraSign, LoadedZodiacIcon>,
+  brandIcon: LoadedShareBrandIcon | null,
 ): Promise<Blob> {
   const canvas = document.createElement("canvas");
   canvas.width = W;
@@ -603,14 +645,22 @@ async function paintAuraShareCard(
   drawSeal(context, snapshot, icons);
 
   context.fillStyle = MUTED;
-  context.font = `500 16px ${MONO}`;
+  context.font = `500 ${AURA_SHARE_LAYOUT.representedHeadingFontSize}px ${MONO}`;
   context.textAlign = "center";
-  context.fillText("REPRESENTED ZODIACS", W / 2, 838);
+  context.fillText(
+    "REPRESENTED ZODIACS",
+    W / 2,
+    AURA_SHARE_LAYOUT.representedHeadingY,
+  );
   drawRepresentedSet(context, snapshot, icons);
 
   context.strokeStyle = HAIR;
   context.lineWidth = 1;
-  line(context, { x: 66, y: 1085 }, { x: W - 66, y: 1085 });
+  line(
+    context,
+    { x: 66, y: AURA_SHARE_LAYOUT.representedDividerY },
+    { x: W - 66, y: AURA_SHARE_LAYOUT.representedDividerY },
+  );
   context.fillStyle = INK;
   context.font = `400 29px ${SERIF}`;
   wrapLines(context, snapshot.methodNote, 890, 2).forEach((text, index) => {
@@ -622,10 +672,14 @@ async function paintAuraShareCard(
 
   context.textAlign = "left";
   context.fillText(`REGISTRY CHECKED ${snapshot.checkedDate.toUpperCase()}`, 66, 1290);
-  context.textAlign = "right";
-  context.fillStyle = INK;
-  context.font = `500 22px ${MONO}`;
-  context.fillText("zodiacs.org", W - 66, 1290);
+  drawShareBrandLockup(context, brandIcon, {
+    wordmarkX: W - 66,
+    centerY: AURA_SHARE_LAYOUT.brandCenterY,
+    iconSize: AURA_SHARE_LAYOUT.brandIconSize,
+    fontSize: AURA_SHARE_LAYOUT.brandFontSize,
+    gap: AURA_SHARE_LAYOUT.brandGap,
+    serif: SERIF,
+  });
 
   const blob = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob(resolve, "image/png"),
@@ -645,10 +699,12 @@ export async function drawAuraShareCard(input: AuraShareCardInput): Promise<Blob
     ]).catch(() => {});
   }
   const icons = await loadOfficialZodiacIcons(AURA_SIGN_ORDER);
+  const brandIcon = await loadShareBrandIcon();
   try {
-    return await paintAuraShareCard(snapshot, icons);
+    return await paintAuraShareCard(snapshot, icons, brandIcon);
   } finally {
     releaseOfficialZodiacIcons(icons);
+    brandIcon?.close?.();
   }
 }
 
