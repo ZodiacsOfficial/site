@@ -125,7 +125,7 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
         <div class="zfooter__signs">
           {SIGNS.map((sign) => (
             <a class="zfooter__sign" href={localizePath(locale, `/${sign.slug}/`)} aria-label={signName(sign, locale)} title={signName(sign, locale)}>
-              <img src={`/assets/zodiac-icons/48/${sign.slug}.webp`} width="25" height="25" alt="" loading="lazy" decoding="async" />
+              <img src={`/assets/zodiac-icons/48/${sign.slug}.webp`} width="25" height="25" alt="" loading="eager" decoding="async" />
               <span class="zfooter__visually-hidden">{signName(sign, locale)}</span>
             </a>
           ))}
