@@ -73,6 +73,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Temporary PR-only capture step. The generated, deterministic Phase 1
+      # screenshots will be committed, then this step will be removed before
+      # the footer system is merged to main.
+      - name: Refresh Phase 1 exact-width acceptance evidence
+        run: npm run test:phase1:acceptance
+
       - name: Typecheck
         run: npm run check
 
@@ -157,6 +163,7 @@ jobs:
           name: phase-1-browser-performance-${{ github.run_id }}
           path: |
             tests/visual/artifacts/
+            docs/acceptance/phase1/screenshots/
             docs/acceptance/phase4-sharing/chart-sheet-33-percent.png
           if-no-files-found: ignore
           retention-days: 90
