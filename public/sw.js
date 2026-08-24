@@ -89,11 +89,35 @@ function registryWing(url) {
     .some((prefix) => url.pathname.startsWith(prefix));
 }
 
+// The shell cache would otherwise grow one entry per visited page for the
+// life of a deploy (thousands of programmatic routes exist). Bound the
+// page entries so quota eviction never silently drops the precached
+// offline shell; hashed assets stay untrimmed — a deploy bounds them.
+const SHELL_PAGE_LIMIT = 40;
+
+function boundedShellPage(url) {
+  return !['/_astro/', '/assets/', '/fonts/', '/data/'].some((prefix) => url.pathname.startsWith(prefix))
+    && !PRECACHE_URLS.includes(url.pathname);
+}
+
+async function trimShellPages(cache) {
+  const keys = await cache.keys();
+  const pages = keys.filter((request) => boundedShellPage(new URL(request.url)));
+  const excess = pages.length - SHELL_PAGE_LIMIT;
+  // Cache keys keep insertion order, so this drops the oldest first.
+  for (const request of pages.slice(0, Math.max(0, excess))) {
+    await cache.delete(request);
+  }
+}
+
 async function networkFirst(request, cacheName, allowFallback = true) {
   const cache = await caches.open(cacheName);
   try {
     const response = await fetch(request);
-    if (response.ok) await cache.put(request, response.clone());
+    if (response.ok) {
+      await cache.put(request, response.clone());
+      if (cacheName === SHELL_CACHE) trimShellPages(cache).catch(() => {});
+    }
     return response;
   } catch (error) {
     if (!allowFallback) throw error;

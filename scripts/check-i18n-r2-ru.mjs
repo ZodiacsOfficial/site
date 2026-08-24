@@ -36,7 +36,7 @@ const structuredImageRoutes = new Set([
 ]);
 const publicLocaleCards = [
   { prefix: '', ogLocale: 'en_US' },
-  { prefix: '/es', ogLocale: 'es_ES' },
+  { prefix: '/es', ogLocale: 'es_LA' },
   { prefix: '/pt', ogLocale: 'pt_BR' },
   { prefix: '/fr', ogLocale: 'fr_FR' },
   { prefix: '/it', ogLocale: 'it_IT' },
