@@ -181,3 +181,50 @@ Two more Supabase surfaces were added after the provisioning above:
   flip.
 
 Keep this file's rule: no keys, no connection strings, ever.
+
+## Live-state reconciliation (2026-08-24 addendum)
+
+Read-only inspection of the live project (pg_class/pg_proc/columns plus
+`supabase_migrations.schema_migrations`) reconciled which of the repo's
+14 migration files are actually applied in production:
+
+| Migration file | Live? | Evidence |
+| --- | --- | --- |
+| `20260706000000_profile_sync` | yes | `profiles`, `charts` tables |
+| `20260706130517_chart_deletions` | yes | `chart_deletions` table |
+| `20260707125552_weekly_digest_opt_in` | yes | `profiles.digest_opt_in` column |
+| `20260720074516_phase3_habit_layer` | yes | push/daily tables + phase-3 functions |
+| `20260720145526_phase3_delivery_guards` | yes | delivery-claim tables + claim functions |
+| `20260724003109_phase4_compat_invites` | yes | `compatibility_*` tables + invite RPCs |
+| `20260727050000_phase6_assistant_quota` | yes | `assistant_quota` + `assistant_quota_bump` |
+| `20260727180000_phase6_assistant_global_ceiling` | yes | `assistant_quota_bump_v2` |
+| `20260811153303_account_sync_v2_foundation` | **no** | no private schema exists |
+| `20260813102035_guide_atomic_quota_reservation` | yes | `guide_quota_reserve_v1` + receipts table |
+| `20260814062255_guide_quota_legacy_shape_repair` | presumed | data-shape repair; not distinguishable by object inspection, applied in the same operator batch as the reservation migration |
+| `20260817080000_zodiac_games` | yes | all four tables + three `zodiac_games_*_v1` RPCs; also the ONLY entry in `supabase_migrations.schema_migrations` (recorded there as version `20260819050930`, name `zodiac_games`) |
+| `20260818112526_living_chart_sync` | **no** | no living-chart tables exist |
+| `20260819111145_living_chart_rls_initplan` | **no** | follow-up to the above; n/a until it lands |
+
+So Account Sync v2 and Living Chart sync are genuinely unreleased at the
+database layer, exactly as their contracts require, and everything the
+live serverless functions call exists. Going forward, apply migrations
+through a path that records them in `supabase_migrations` (Supabase CLI
+`migration up`, or the connector's apply_migration) instead of the SQL
+Editor, and update this table in the same change.
+
+## Operational decisions still owed (tracked 2026-08-24)
+
+- **Leaked-password protection is OFF** (live security advisor WARN).
+  Auth is magic-link-only today so nothing is exposed, but the toggle is
+  free (Dashboard → Authentication → Sign In / Up → password security)
+  and must be ON before any password or additional auth method ships —
+  the native-app work makes that likely.
+- **No recorded backup/PITR posture.** Decide and record the backup tier
+  and a restore runbook before the native app raises the stakes; today a
+  bad migration or operator error has no documented recovery path.
+- **Key escrow.** When `ACCOUNT_SYNC_V2_ENCRYPTION_KEYS` is provisioned,
+  record where the keyring is escrowed (outside Vercel env) — losing the
+  wrapping keys silently bricks every v2 envelope, and no runbook covers
+  rotation-under-loss.
+- **Unused-index cleanup** (live performance advisor, 7 INFO entries) can
+  wait for real traffic before pruning.
