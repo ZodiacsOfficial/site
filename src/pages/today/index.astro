@@ -399,9 +399,15 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
   :root[data-today-sun-sign] {
     scrollbar-gutter: stable both-edges;
   }
-  /* The disclosure can enter the bottom of a tall first viewport while the
+  /* Tail content can enter the bottom of a tall first viewport while the
      static response is still streaming. Keep its final space but defer its
      paint until the stored-sign document has finished parsing. */
+  :root[data-today-sun-sign][data-today-stream-pending] .upcoming-events {
+    visibility: hidden;
+  }
+  :root[data-today-sun-sign][data-today-stream-pending] .today-fallback__personalize {
+    visibility: hidden;
+  }
   :root[data-today-sun-sign][data-today-stream-pending] .today-provenance {
     visibility: hidden;
   }

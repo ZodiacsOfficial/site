@@ -29,6 +29,7 @@ import { brandIconLinkMarkup } from '../src/lib/brand-icons.mjs';
 import { REGISTRY_ESTABLISHED_YEAR } from '../src/lib/registry-establishment.mjs';
 import { EN } from '../src/strings/en.mjs';
 import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../src/lib/assistant/guide-loader.mjs';
+import { SITE_FOOTER_STYLESHEET, renderStaticFooter } from './site-footer.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -282,6 +283,7 @@ function renderPage() {
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/share.png" />
 
   ${brandIconLinkMarkup()}
+  ${SITE_FOOTER_STYLESHEET}
 
   <style>
     /* Self-hosted faces — same files the rest of the site uses. */
@@ -750,30 +752,10 @@ ${renderPressKit()}
       </a>
     </nav>
 
-    <footer class="ftr">
-      <div class="ftr__row">
-        <div class="mark">Zodiacs<span class="g">·</span>org</div>
-        <div>© MMXXVI</div>
-      </div>
-      <div class="ftr__row">
-        <div class="ftr__links">
-          <a href="/astrofolio/">Astrofolio</a>
-          <a href="/registry/#verify">Verify</a>
-          <a href="/thesis/">Thesis</a>
-          <a href="/disclosure/">${esc(EN['disclosure.linkLabel'])}</a>
-          <a href="/sdk/">SDK</a>
-          <a href="/registry/zodiacs.registry.json">Record</a>
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
-        </div>
-        <div>Read-only</div>
-      </div>
-      <div class="ftr__row">
-        <div class="ftr__links" aria-label="Official channels">
-${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${c.name}</a>`).join('\n')}
-        </div>
-        <div>Channels</div>
-      </div>
-    </footer>
+    ${renderStaticFooter({
+      tagline: 'The dated public record of the Twelve.',
+      established: `MMXXIV`,
+    })}
   </main>
 
   <script data-guide-loader="${GUIDE_LOADER_MARKER}">

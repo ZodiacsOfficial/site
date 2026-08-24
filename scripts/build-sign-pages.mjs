@@ -33,6 +33,7 @@ import {
 import { brandIconLinkMarkup } from '../src/lib/brand-icons.mjs';
 import { EN } from '../src/strings/en.mjs';
 import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../src/lib/assistant/guide-loader.mjs';
+import { SITE_FOOTER_STYLESHEET, renderStaticFooter } from './site-footer.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
@@ -513,6 +514,7 @@ function render(m) {
   <meta name="twitter:image:alt" content="${esc(ogImageAlt)}" />
 
   ${brandIconLinkMarkup()}
+  ${SITE_FOOTER_STYLESHEET}
 
   <style>
     /* Self-hosted interface faces. */
@@ -1480,30 +1482,7 @@ ${NAV_SIGNS.map((sign) => `        <a href="${signPath(sign.slug)}" style="--sig
       </nav>
     </section>
 
-    <footer class="ftr">
-      <div class="ftr__row">
-        <div class="mark">Zodiacs<span class="g">·</span>org</div>
-        <div>© 2026</div>
-      </div>
-      <div class="ftr__row">
-        <div class="ftr__links">
-          <a href="/astrofolio/">Astrofolio</a>
-          <a href="/registry/#verify">Check an address</a>
-          <a href="/thesis/">Thesis</a>
-          <a href="/disclosure/">${esc(EN['disclosure.linkLabel'])}</a>
-          <a href="/privacy/">${esc(EN['disclosure.linkPrivacy'])}</a>
-          <a href="/terms/">${esc(EN['disclosure.linkTerms'])}</a>
-          <a href="/registry/technical/">Technical details</a>
-          <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
-        </div>
-      </div>
-      <div class="ftr__row">
-        <div class="ftr__links" aria-label="Official channels">
-${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${c.name}</a>`).join('\n')}
-        </div>
-        <div>Channels</div>
-      </div>
-    </footer>
+    ${renderStaticFooter({ tagline: `${m.name} is one of the Twelve in the official Zodiacs Registry.` })}
   </main>
 
   <script data-guide-loader="${GUIDE_LOADER_MARKER}">

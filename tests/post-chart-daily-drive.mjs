@@ -6,7 +6,11 @@
  * real subscriber is contacted.
  */
 import { chromium } from 'playwright-core';
-import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
+import {
+  findChromium,
+  isSiteFooterIconTeardownAbort,
+  STABLE_CHROMIUM_ARGS,
+} from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
 const PROFILE_KEY = 'zodiacs.profile.v1';
@@ -175,9 +179,12 @@ async function preparePage(browser, baseURL, testCase, viewport) {
   });
   page.on('pageerror', (error) => errors.push(`page: ${error.message}`));
   page.on('request', (request) => requests.push(request.url()));
-  page.on('requestfailed', (request) => requestFailures.push(
-    `${request.method()} ${request.url()} — ${request.failure()?.errorText ?? 'failed'}`,
-  ));
+  page.on('requestfailed', (request) => {
+    if (isSiteFooterIconTeardownAbort(request)) return;
+    requestFailures.push(
+      `${request.method()} ${request.url()} — ${request.failure()?.errorText ?? 'failed'}`,
+    );
+  });
 
   await page.route('https://phase3-test.supabase.co/**', async (route) => {
     const request = route.request();
@@ -290,9 +297,12 @@ async function prepareProfilePage(browser, baseURL, initialPreference, options =
   const unexpectedRequests = [];
   let preference = initialPreference;
   let mutationBody = null;
-  page.on('requestfailed', (request) => requestFailures.push(
-    `${request.method()} ${request.url()} — ${request.failure()?.errorText ?? 'failed'}`,
-  ));
+  page.on('requestfailed', (request) => {
+    if (isSiteFooterIconTeardownAbort(request)) return;
+    requestFailures.push(
+      `${request.method()} ${request.url()} — ${request.failure()?.errorText ?? 'failed'}`,
+    );
+  });
   await page.route('https://phase3-test.supabase.co/**', async (route) => {
     const request = route.request();
     const url = new URL(request.url());
@@ -832,9 +842,12 @@ await withPreview({ port: 4426 }, async (baseURL) => {
       const page = await context.newPage();
       const requestFailures = [];
       const unexpectedRequests = [];
-      page.on('requestfailed', (request) => requestFailures.push(
-        `${request.method()} ${request.url()} — ${request.failure()?.errorText ?? 'failed'}`,
-      ));
+      page.on('requestfailed', (request) => {
+        if (isSiteFooterIconTeardownAbort(request)) return;
+        requestFailures.push(
+          `${request.method()} ${request.url()} — ${request.failure()?.errorText ?? 'failed'}`,
+        );
+      });
       await page.route('https://phase3-test.supabase.co/**', async (route) => {
         const request = route.request();
         const url = new URL(request.url());

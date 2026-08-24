@@ -113,6 +113,12 @@ describe('Phase 1 layout and motion contract', () => {
       /DOMContentLoaded[\s\S]*?requestAnimationFrame[\s\S]*?requestAnimationFrame[\s\S]*?removeAttribute\('data-today-stream-pending'\)/u,
     );
     expect(page).toMatch(
+      /:root\[data-today-sun-sign\]\[data-today-stream-pending\] \.upcoming-events\s*\{\s*visibility:\s*hidden;\s*\}/u,
+    );
+    expect(page).toMatch(
+      /:root\[data-today-sun-sign\]\[data-today-stream-pending\] \.today-fallback__personalize\s*\{\s*visibility:\s*hidden;\s*\}/u,
+    );
+    expect(page).toMatch(
       /:root\[data-today-sun-sign\]\[data-today-stream-pending\] \.today-provenance\s*\{\s*visibility:\s*hidden;\s*\}/u,
     );
     expect(page).toMatch(
