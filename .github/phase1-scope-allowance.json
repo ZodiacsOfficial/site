@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "canonical-site-footer-2026-08-24",
-  "baseCommit": "79f7515d985f6ca656d8a10919c168551bf48f8b",
+  "baseCommit": "82e109e9662b39fe4ec37817c90f9fd8f2dc7cff",
   "note": "Owner-authorized adoption of the Celestial Colophon as the permanent site-wide footer standard. The allowance is limited to existing Registry, SDK, Terminal, generated application, builder, and contract surfaces required to replace their prior footers.",
   "protectedPaths": [
     "public/assets/app.js",
