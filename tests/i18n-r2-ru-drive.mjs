@@ -172,8 +172,18 @@ await withPreview({ port: 4418 }, async (baseURL) => {
     check(await mobilePage.locator('[data-mobile-menu] a[href="/birthday/"]').count() === 0, 'deferred birthday tool leaked into Russian mobile menu');
     check(await mobilePage.locator('[data-mobile-menu] a[href="/learn/"][hreflang="en"]').count() === 1, 'Russian mobile Learn seam is not declared English');
     check(await mobilePage.locator('[data-mobile-menu] a[href="/astrofolio/"][hreflang="en"]').count() === 1, 'Russian mobile Astrofolio seam is not declared English');
-    const focusOutline = await menu.evaluate((node) => getComputedStyle(node).outlineStyle);
-    check(focusOutline !== 'none', 'mobile menu focus is not visible');
+    // Opening the full-screen menu moves focus onto its first link (the
+    // burger no longer keeps it), so the visible-focus contract is checked
+    // on whatever actually holds focus inside the menu.
+    const focusReceipt = await mobilePage.evaluate(() => {
+      const active = document.activeElement;
+      return {
+        inMenu: Boolean(active && active.closest('[data-mobile-menu]')),
+        outline: active ? getComputedStyle(active).outlineStyle : 'none',
+      };
+    });
+    check(focusReceipt.inMenu, 'keyboard open did not move focus into the mobile menu');
+    check(focusReceipt.outline !== 'none', 'mobile menu focus is not visible');
     await mobile.close();
 
     const reduced = await browser.newContext({
