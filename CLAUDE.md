@@ -27,18 +27,28 @@ The CONTENT boundary survives the visual merge:
 
 1. **New surfaces** (`src/`): consumer astrology. **No token/market/crypto
    language or links.** The sanctioned cross-links into the wing are the
-   CollectBand on sign guides (EN + ES), the records line on the birth-chart
+   CollectBand on sign guides (all released locales: EN/ES/FR/IT/PT) and on
+   birthday pages, the records line on the birth-chart
    result (`ChartCalculator`, full mode), and the contextual saved-chart link
    to Registry Collection when `PUBLIC_REGISTRY_COLLECTION_ENABLED=1` — all in the records
-   register, never market language. Two carve-outs: `src/pages/registry/collection/`
-   is itself a Registry surface (records register, protective negations only,
-   no acquisition links), and the legal pages (Privacy, Terms, Disclosure, all
-   locales) carry the wallet/provider/market-risk disclosures that the Registry
+   register, never market language. Two carve-outs: the in-`src/` wing lanes
+   (canonical registry: `WING_ONLY_SOURCE` in
+   `scripts/consumer-boundary-lib.mjs` — `src/pages/registry/`,
+   `src/pages/terminal/`, `src/pages/astrofolio/how-to-buy/`, `src/exchange/`,
+   `src/trade/`, the wallet/aura modules), which carry wing register under the
+   scanner's own rules, and the legal pages (Privacy, Terms, Disclosure)
+   carry the wallet/provider/market-risk disclosures that the Registry
    features legally require — disclosure language there is compliance text,
-   not a boundary breach. The wing's nav/footer label is "Registry" (ES
-   "Registro"); the URL path is `/registry/` (permanently 301-redirected
-   from the old `/collect/` in `vercel.json`).
-2. **Wing** (`public/…` above): the registry catalogue keeps its museum
+   not a boundary breach. The wing's nav label is "Astrofolio" in every
+   locale; the footer column heading is "Registry". Wing URL topology (all
+   permanent redirects, served by Vercel as 308): deep paths
+   `/collect/:path` → `/registry/:path`, but bare `/collect/` →
+   `/astrofolio/`; `/registry/exchange` → `/terminal/markets/`;
+   `/registry/research` → `/terminal/research/`; `/terminal/pro/` →
+   `/terminal/`. `vercel.json` is the authority — verify against it before
+   citing a redirect.
+2. **Wing** (`public/…` above, plus the in-`src/` wing lanes named by
+   `WING_ONLY_SOURCE`): the registry catalogue keeps its museum
    voice, token content, and acquisition links — that register stays in
    the wing. Wing pages style themselves (inline blocks or
    `public/assets/discovery.css`); they still never link the hashed Astro
@@ -58,8 +68,8 @@ owns that page.
   (esbuild-bundled Three.js scene for the gallery band on `/registry/`;
   source `src/shelf/`, records baked from `sign-data.mjs` + the registry
   JSON — addresses are fetched live by the card, never baked in. The
-  standalone `/registry/gallery/` page is retired; `vercel.json` 301s it
-  to `/registry/`)
+  standalone `/registry/gallery/` page is retired; `vercel.json` 308s it
+  to `/astrofolio/`)
 - `src/shelf/figures.geometry.json` + `public/assets/sculptures/{512,1024}/`
   ← `node scripts/build-figure-assets.mjs` (silhouettes traced from
   `public/assets/nuggets/` and extruded by the gallery; the nuggets
@@ -114,6 +124,15 @@ owns that page.
 - `src/data/people.json` ← `node scripts/build-people-pilot.mjs` (sources:
   reviewed manifest, index policy, demand evidence, composed copy and
   computed charts; offline drift check uses `--check`)
+- `public/registry/index.html` (the hub shell, beyond the Aura marker
+  region above) ← `node scripts/build-registry-hub.mjs` (predev/prebuild;
+  `--check` for drift)
+- `BUILD-REPORT.md` (repo root) ← `node scripts/build-build-report.mjs` —
+  generated output, and a test fixture for
+  `scripts/trust-surface-consistency.test.mjs`; several other root docs
+  (PLAN.md, SETUP.md, ZODIAC-GAMES.md) are also test-fixture-coupled, so
+  never delete or rename a root doc without grepping the test suite first
+- `i18n-additions.md` (repo root) ← `node scripts/build-i18n-additions.mjs`
 
 `public/sw.js` is a PWA worker — the owner approved superseding the old
 push-only rule (2026-07-15, WS4 merge decision). Strict invariants: HTML
