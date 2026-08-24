@@ -26,12 +26,18 @@ await requireMarkers('src/components/SiteFooter.astro', [
   'class="zfooter__language"',
   'class="zfooter__colophon"',
   'data-footer-guide',
+  '.webp?surface=site-footer',
 ]);
 await requireMarkers('src/app.jsx', [
   'function SiteEnd(',
   'className="zfooter zfooter--static"',
   'className="zfooter__language"',
   'className="zfooter__colophon"',
+  '.webp?surface=site-footer',
+]);
+await requireMarkers('scripts/site-footer.mjs', [
+  'export function renderStaticFooter(',
+  '.webp?surface=site-footer',
 ]);
 
 for (const generator of [

@@ -6465,7 +6465,7 @@
                 <div className="zfooter__signs">
                   {SIGNS.map((sign) => (
                     <a className="zfooter__sign" key={sign.asset.sign} href={`/${sign.asset.sign}/`} aria-label={sign.name} title={sign.name}>
-                      <img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="25" height="25" alt="" loading="lazy" decoding="async" />
+                      <img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp?surface=site-footer`} width="25" height="25" alt="" loading="lazy" decoding="async" />
                       <span className="zfooter__visually-hidden">{sign.name}</span>
                     </a>
                   ))}

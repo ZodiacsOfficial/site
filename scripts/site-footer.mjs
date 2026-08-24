@@ -87,7 +87,7 @@ export function renderStaticFooter({
       <nav class="zfooter__group zfooter__twelve" aria-label="The twelve zodiac signs">
         <span class="zfooter__label">The Twelve</span>
         <div class="zfooter__signs">
-          ${SIGNS.map(([slug, name]) => `<a class="zfooter__sign" href="/${slug}/" aria-label="${name}" title="${name}"><img src="/assets/zodiac-icons/48/${slug}.webp" width="25" height="25" alt="" loading="eager" decoding="async" /><span class="zfooter__visually-hidden">${name}</span></a>`).join('')}
+          ${SIGNS.map(([slug, name]) => `<a class="zfooter__sign" href="/${slug}/" aria-label="${name}" title="${name}"><img src="/assets/zodiac-icons/48/${slug}.webp?surface=site-footer" width="25" height="25" alt="" loading="lazy" decoding="async" /><span class="zfooter__visually-hidden">${name}</span></a>`).join('')}
         </div>
       </nav>
     </div>
