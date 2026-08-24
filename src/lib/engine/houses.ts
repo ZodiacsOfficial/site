@@ -26,8 +26,21 @@ export function ramcOf(input: Pick<AngleInput, 'gastHours' | 'longitude'>): numb
   return engineRamcOf(input);
 }
 
+/**
+ * The atan2 ascendant formula returns one of the two ecliptic–horizon
+ * intersections without checking which one is rising. Below the polar circle
+ * it is always the rising one; above ~66.5° latitude the setting intersection
+ * comes back for a large fraction of each sidereal day. The true ascendant
+ * always lies east of the meridian — norm(asc − mc) strictly inside
+ * (0, 180) — so an out-of-range result is the descendant: swap the axis.
+ */
+export function correctRisingIntersection(angles: Angles): Angles {
+  if (normalizeLongitude(angles.asc - angles.mc) < 180) return angles;
+  return { ...angles, asc: angles.dsc, dsc: angles.asc };
+}
+
 export function computeAngles(input: AngleInput): Angles {
-  return engineComputeAngles(input);
+  return correctRisingIntersection(engineComputeAngles(input));
 }
 
 export function placidusCusps(input: AngleInput, angles: Angles): number[] | null {

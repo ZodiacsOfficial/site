@@ -12,6 +12,7 @@ import {
   longitudeSpeed as engineLongitudeSpeed,
 } from '@zodiacs/engine/internal';
 
+import { correctRisingIntersection, wholeSignCusps } from './houses';
 import type {
   Aspect,
   BodyName,
@@ -51,13 +52,25 @@ export function computeBodies(date: Date): BodyPosition[] {
 
 export function computeChart(input: ChartInput): Chart {
   const chart = engineComputeChart(input);
+  const angles = chart.angles ? correctRisingIntersection(chart.angles) : chart.angles;
+  let houses = chart.houses;
+  const flags = [...chart.flags] as ChartFlag[];
+  if (angles && chart.angles && angles.asc !== chart.angles.asc && houses) {
+    // The package derived cusps from the setting intersection; re-anchor them
+    // to the corrected ascendant. Placidus cannot legitimately survive at the
+    // latitudes where the flip occurs, so any non-whole system falls back.
+    if (houses.system !== 'whole' && !flags.includes('polar-fallback')) {
+      flags.push('polar-fallback');
+    }
+    houses = { system: 'whole', cusps: wholeSignCusps(angles.asc) };
+  }
   return {
     input,
     bodies: chart.bodies.map(adaptBody),
-    angles: chart.angles,
-    houses: chart.houses,
+    angles,
+    houses,
     aspects: chart.aspects as Aspect[],
-    flags: [...chart.flags] as ChartFlag[],
+    flags,
     engineVersion: chart.engineVersion,
   };
 }
