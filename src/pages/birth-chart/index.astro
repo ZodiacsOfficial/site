@@ -113,7 +113,7 @@ const jsonLd = [
       </p>
     </div>
 
-    <ChartCalculator mode="full" client:load />
+    <ChartCalculator mode="full" client:idle />
     <EmailCapture placement="chart" revealOnChart postChartManaged={postChartDailyEnabled}>
       {postChartDailyEnabled && (
         <PostChartDailyBrief slot="post-chart" idPrefix="email-chart-en" client:load />
