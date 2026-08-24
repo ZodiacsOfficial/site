@@ -210,6 +210,7 @@ function renderDigest(
   weekStart: Date,
   secret: string,
   maxCharts: number,
+  postalAddress: string,
 ): { subject: string; text: string; html: string; unsubscribe: string } {
   const label = rangeLabel(weekStart);
   const charts = recipient.charts.slice(0, maxCharts);
@@ -247,6 +248,7 @@ function renderDigest(
     cta: { label: 'Read all transits', url: `${baseUrl()}/transits/` },
     footerLines: [
       'You receive this because you asked for a Monday digest of your saved charts.',
+      postalAddress,
     ],
     unsubscribeUrl: unsubscribe,
   };
@@ -395,13 +397,19 @@ async function run(): Promise<void> {
   const resendKey = process.env.RESEND_API_KEY;
   if (!options.dryRun && !resendKey) throw new Error('RESEND_API_KEY is required when sending.');
 
+  // Same posture as the daily pipeline: a live commercial send carries the
+  // sender's physical postal address or does not go out at all.
+  const postalAddress = process.env.DAILY_EMAIL_POSTAL_ADDRESS
+    || (options.dryRun ? 'Zodiacs.org · Test-send postal address' : '');
+  if (!postalAddress) throw new Error('DAILY_EMAIL_POSTAL_ADDRESS is required when sending.');
+
   const recipients = options.fixture ? [fixtureRecipient()] : await loadRecipients(limit);
   console.log(`weekly-digest: ${recipients.length} recipient(s), week ${rangeLabel(weekStart)}, dryRun=${options.dryRun}`);
 
   let sent = 0;
   let failed = 0;
   for (const recipient of recipients) {
-    const rendered = renderDigest(recipient, weekStart, secret, maxCharts);
+    const rendered = renderDigest(recipient, weekStart, secret, maxCharts, postalAddress);
     const to = options.to ?? recipient.email;
 
     if (options.dryRun) {

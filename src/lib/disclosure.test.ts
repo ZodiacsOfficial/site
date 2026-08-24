@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -400,7 +401,9 @@ describe('registry disclosure contract', () => {
     }
   });
 
-  it('render-checks all five routes without pending chips or English copy leakage', async () => {
+  // Dist-dependent render check: skipped on a fresh clone (same idiom as
+  // build-audit.test.ts); CI always builds before testing, so it runs there.
+  it.skipIf(!existsSync(resolve(repo, 'dist')))('render-checks all five routes without pending chips or English copy leakage', async () => {
     for (const locale of RELEASED_LOCALES) {
       const html = await readFile(routeFile(locale), 'utf8');
       const route = localizePath(locale, '/disclosure/');
