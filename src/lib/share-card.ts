@@ -29,7 +29,11 @@ import { shareCardFormat, shareCardText } from './share-card-copy';
 import { communicationRead } from './communication';
 import { approachRead } from './approach';
 import { chartSignature, type ChartSignature } from './chart-signature';
-import { BRAND_ICON_PATHS } from './brand-icons.mjs';
+import {
+  PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
+  drawShareBrandLockup,
+  withShareBrandIcon,
+} from './share-card-brand';
 
 export type CardOutcome = 'shared' | 'downloaded' | 'cancelled';
 export type ChartCardVariant = 'full' | 'big-three' | 'communication' | 'signature' | 'approach' | 'sheet';
@@ -90,10 +94,21 @@ const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
 const WHEEL_SIZE = 780;
 const PROFILE_BODIES = new Set(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
 export const SHARE_CARD_WORDMARK = Object.freeze({
-  x: W - 64,
-  y: H - 46,
+  x: PORTRAIT_SHARE_CARD_BRAND_LAYOUT.wordmarkX,
+  y: PORTRAIT_SHARE_CARD_BRAND_LAYOUT.centerY,
   align: 'right' as const,
 });
+
+async function drawPortraitShareBrand(
+  context: CanvasRenderingContext2D,
+): Promise<void> {
+  await withShareBrandIcon((icon) => {
+    drawShareBrandLockup(context, icon, {
+      ...PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
+      serif: SERIF,
+    });
+  });
+}
 
 async function wheelSvgString(chart: Chart, technical = false): Promise<string> {
   const host = document.createElement('div');
@@ -161,16 +176,6 @@ function loadSvg(xml: string): Promise<HTMLImageElement> {
 export async function loadDisc(slug: string): Promise<ImageBitmap | null> {
   try {
     const res = await fetch(`/assets/zodiac-icons/128/${slug}.webp`);
-    if (!res.ok) return null;
-    return await createImageBitmap(await res.blob());
-  } catch {
-    return null;
-  }
-}
-
-async function loadBrandIcon(): Promise<ImageBitmap | null> {
-  try {
-    const res = await fetch(BRAND_ICON_PATHS.icon512);
     if (!res.ok) return null;
     return await createImageBitmap(await res.blob());
   } catch {
@@ -542,14 +547,7 @@ async function drawFullChartCard(
   ctx.font = `400 22px ${MONO}`;
   ctx.fillText(chartCardReceipt(chart, locale), W / 2, 1272);
 
-  // Wordmark — the display serif set as spaced small caps, an old-almanac /
-  // inscriptional register rather than the techy monospace.
-  ctx.fillStyle = INK_2;
-  ctx.font = `500 34px ${SERIF}`;
-  ctx.textAlign = SHARE_CARD_WORDMARK.align;
-  try { ctx.letterSpacing = '8px'; } catch { /* older canvases ignore it */ }
-  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
-  try { ctx.letterSpacing = '0px'; } catch { /* no-op */ }
+  await drawPortraitShareBrand(ctx);
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');
@@ -620,11 +618,7 @@ async function drawBigThreeCard(
   timeNotes.forEach((note, index) => ctx.fillText(note, W / 2, 1150 + index * 34));
   ctx.font = `400 24px ${MONO}`;
   ctx.fillText(shareCardFormat(locale, 'engineReceipt', { version: chart.engineVersion }), W / 2, 1238);
-  ctx.font = `500 34px ${SERIF}`;
-  ctx.textAlign = SHARE_CARD_WORDMARK.align;
-  try { ctx.letterSpacing = '8px'; } catch {}
-  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
-  try { ctx.letterSpacing = '0px'; } catch {}
+  await drawPortraitShareBrand(ctx);
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');
@@ -711,11 +705,7 @@ async function drawCommunicationCard(
   ctx.textAlign = 'left';
   ctx.fillText(content.receipt, 72, 1260);
 
-  ctx.font = `500 34px ${SERIF}`;
-  ctx.textAlign = SHARE_CARD_WORDMARK.align;
-  try { ctx.letterSpacing = '8px'; } catch {}
-  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
-  try { ctx.letterSpacing = '0px'; } catch {}
+  await drawPortraitShareBrand(ctx);
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');
@@ -839,11 +829,7 @@ async function drawSignatureCard(
   ctx.fillStyle = INK_2;
   ctx.font = `400 24px ${MONO}`;
   ctx.fillText(content.receipt, 72, 1260);
-  ctx.font = `500 34px ${SERIF}`;
-  ctx.textAlign = SHARE_CARD_WORDMARK.align;
-  try { ctx.letterSpacing = '8px'; } catch {}
-  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
-  try { ctx.letterSpacing = '0px'; } catch {}
+  await drawPortraitShareBrand(ctx);
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');
@@ -863,8 +849,10 @@ async function drawApproachCard(
     document.fonts.load(`400 28px ${SERIF}`),
     document.fonts.load(`400 23px ${MONO}`),
   ]).catch(() => {});
-  const rowDiscs = await Promise.all(content.rows.map((row) => loadDisc(row.slug)));
-  const avoidDisc = content.avoid ? await loadDisc(content.avoid.slug) : null;
+  const [rowDiscs, avoidDisc] = await Promise.all([
+    Promise.all(content.rows.map((row) => loadDisc(row.slug))),
+    content.avoid ? loadDisc(content.avoid.slug) : Promise.resolve(null),
+  ]);
 
   const canvas = document.createElement('canvas');
   canvas.width = W;
@@ -942,11 +930,7 @@ async function drawApproachCard(
   ctx.fillStyle = INK_2;
   ctx.font = `400 24px ${MONO}`;
   ctx.fillText(content.receipt, 72, 1260);
-  ctx.font = `500 34px ${SERIF}`;
-  ctx.textAlign = SHARE_CARD_WORDMARK.align;
-  try { ctx.letterSpacing = '8px'; } catch {}
-  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
-  try { ctx.letterSpacing = '0px'; } catch {}
+  await drawPortraitShareBrand(ctx);
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');
@@ -957,7 +941,7 @@ const SHEET_W = 1800;
 const SHEET_H = 2400;
 export const CHART_SHEET_LAYOUT = Object.freeze({
   wheelX: 340,
-  wheelY: 145,
+  wheelY: 156,
   wheelSize: 1120,
   sectionTitleY: 1305,
   tableTop: 1375,
@@ -1128,10 +1112,7 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
     document.fonts.load(`italic 400 32px ${SERIF}`),
     document.fonts.load(`400 27px ${MONO}`),
   ]).catch(() => {});
-  const [wheel, brandIcon] = await Promise.all([
-    wheelSvgString(chart, true).then(loadSvg),
-    loadBrandIcon(),
-  ]);
+  const wheel = await wheelSvgString(chart, true).then(loadSvg);
   const canvas = document.createElement('canvas');
   canvas.width = SHEET_W;
   canvas.height = SHEET_H;
@@ -1147,30 +1128,16 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
     ctx.roundRect(38, 38, SHEET_W - 76, SHEET_H - 76, 30);
     ctx.stroke();
   }
-  ctx.textBaseline = 'middle';
-  ctx.fillStyle = INK_2;
-  ctx.textAlign = 'right';
-  ctx.font = `500 ${CHART_SHEET_LAYOUT.brandFontSize}px ${SERIF}`;
-  const wordmark = 'zodiacs.org';
-  const wordmarkX = SHEET_W - 92;
-  if (brandIcon) {
-    const iconX = wordmarkX
-      - ctx.measureText(wordmark).width
-      - CHART_SHEET_LAYOUT.brandGap
-      - CHART_SHEET_LAYOUT.brandIconSize;
-    const iconY = CHART_SHEET_LAYOUT.brandWordmarkY - CHART_SHEET_LAYOUT.brandIconSize / 2;
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(
-      brandIcon,
-      iconX,
-      iconY,
-      CHART_SHEET_LAYOUT.brandIconSize,
-      CHART_SHEET_LAYOUT.brandIconSize,
-    );
-    brandIcon.close();
-  }
-  ctx.fillText(wordmark, wordmarkX, CHART_SHEET_LAYOUT.brandWordmarkY);
+  await withShareBrandIcon((brandIcon) => {
+    drawShareBrandLockup(ctx, brandIcon, {
+      wordmarkX: SHEET_W - 92,
+      centerY: CHART_SHEET_LAYOUT.brandWordmarkY,
+      iconSize: CHART_SHEET_LAYOUT.brandIconSize,
+      fontSize: CHART_SHEET_LAYOUT.brandFontSize,
+      gap: CHART_SHEET_LAYOUT.brandGap,
+      serif: SERIF,
+    });
+  });
 
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_0;
@@ -1351,9 +1318,7 @@ async function drawPlacementCard(
   timeNotes.forEach((note, index) => ctx.fillText(note, W / 2, 1090 + index * 34));
   ctx.font = `400 24px ${MONO}`;
   ctx.fillText(shareCardFormat(locale, 'engineReceipt', { version: chart.engineVersion }), W / 2, 1238);
-  ctx.textAlign = 'right';
-  ctx.font = `500 34px ${SERIF}`;
-  ctx.fillText('zodiacs.org', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
+  await drawPortraitShareBrand(ctx);
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');
   return blob;

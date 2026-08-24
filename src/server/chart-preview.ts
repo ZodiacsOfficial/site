@@ -16,24 +16,39 @@ const PRIVACY_HEADERS = {
   'X-Content-Type-Options': 'nosniff',
 };
 
-let previewFonts: Promise<[ArrayBuffer, ArrayBuffer]> | null = null;
+let previewFonts: Promise<[ArrayBuffer, ArrayBuffer, ArrayBuffer]> | null = null;
+let previewBrandIcon: Promise<string> | null = null;
 
 function exactArrayBuffer(bytes: Uint8Array): ArrayBuffer {
   return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer;
 }
 
-function prepareFonts(): Promise<[ArrayBuffer, ArrayBuffer]> {
+function prepareFonts(): Promise<[ArrayBuffer, ArrayBuffer, ArrayBuffer]> {
   if (previewFonts) return previewFonts;
   const pending = Promise.all([
     readFile(new URL('../../node_modules/@vercel/og/dist/noto-sans-v27-latin-regular.ttf', import.meta.url)),
     readFile(new URL('../../api/og/eb-garamond-latin-500-italic.woff', import.meta.url)),
-  ]).then(([normal, italic]): [ArrayBuffer, ArrayBuffer] => [
+    readFile(new URL('../../node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-500-normal.woff', import.meta.url)),
+  ]).then(([normal, italic, brand]): [ArrayBuffer, ArrayBuffer, ArrayBuffer] => [
     exactArrayBuffer(normal),
     exactArrayBuffer(italic),
+    exactArrayBuffer(brand),
   ]);
   previewFonts = pending;
   void pending.catch(() => {
     if (previewFonts === pending) previewFonts = null;
+  });
+  return pending;
+}
+
+function prepareBrandIcon(): Promise<string> {
+  if (previewBrandIcon) return previewBrandIcon;
+  const pending = readFile(
+    new URL('../../public/assets/app-icons/v3/icon-512.png', import.meta.url),
+  ).then((bytes) => `data:image/png;base64,${bytes.toString('base64')}`);
+  previewBrandIcon = pending;
+  void pending.catch(() => {
+    if (previewBrandIcon === pending) previewBrandIcon = null;
   });
   return pending;
 }
@@ -58,7 +73,7 @@ function strictPreviewValue(request: Request): string | null {
   return allowedKeys && values.length === 1 ? values[0] : null;
 }
 
-function previewCard(model: ChartPreviewModel) {
+function previewCard(model: ChartPreviewModel, brandIcon: string) {
   return h('div', { style: {
       width: '1200px', height: '630px', display: 'flex', flexDirection: 'column',
       justifyContent: 'space-between', padding: '58px 68px', background: '#060709',
@@ -69,7 +84,17 @@ function previewCard(model: ChartPreviewModel) {
           display: 'flex', fontFamily: 'EB Garamond', fontSize: 28,
           fontStyle: 'italic', color: '#8E96AB',
         } }, PREVIEW_KICKER),
-      h('div', { style: { display: 'flex', fontSize: 24, color: '#8E96AB' } }, 'zodiacs.org')),
+      h('div', { style: {
+          display: 'flex', alignItems: 'center', color: '#8E96AB',
+          fontFamily: 'EB Garamond', fontSize: 24, fontWeight: 500,
+        } },
+        h('img', {
+          src: brandIcon,
+          width: 48,
+          height: 48,
+          style: { width: '48px', height: '48px' },
+        }),
+        h('div', { style: { display: 'flex' } }, 'zodiacs.org'))),
     h('div', { style: { display: 'flex', gap: '30px', width: '100%' } },
       ...model.placements.map((row) => (
         h('div', { key: row.label, style: {
@@ -119,14 +144,18 @@ export async function handleChartImageRequest(request: Request): Promise<Respons
 
   try {
     const { ImageResponse } = await import('@vercel/og');
-    const [normalFont, italicFont] = await prepareFonts();
-    const rendered = new ImageResponse(previewCard(model), {
+    const [[normalFont, italicFont, brandFont], brandIcon] = await Promise.all([
+      prepareFonts(),
+      prepareBrandIcon(),
+    ]);
+    const rendered = new ImageResponse(previewCard(model, brandIcon), {
       width: 1200,
       height: 630,
       headers: PRIVACY_HEADERS,
       fonts: [
         { name: 'sans serif', data: normalFont, weight: 400, style: 'normal' },
         { name: 'EB Garamond', data: italicFont, weight: 500, style: 'italic' },
+        { name: 'EB Garamond', data: brandFont, weight: 500, style: 'normal' },
       ],
     });
     // Buffer the renderer stream so failures never commit a partial 200 to a crawler.

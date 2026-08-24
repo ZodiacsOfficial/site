@@ -78,6 +78,12 @@ describe('chart sheet formatting', () => {
     expect(CHART_SHEET_LAYOUT.brandGap).toBe(0);
   });
 
+  it('keeps the technical wheel strictly clear of the top-right logo box', () => {
+    const brandBottom = CHART_SHEET_LAYOUT.brandWordmarkY
+      + CHART_SHEET_LAYOUT.brandIconSize / 2;
+    expect(CHART_SHEET_LAYOUT.wheelY - brandBottom).toBeGreaterThanOrEqual(8);
+  });
+
   it('fits the enlarged wheel, sixteen placement rows, grid, and footer', () => {
     expect(CHART_SHEET_LAYOUT.wheelSize).toBeGreaterThan(1000);
     expect(CHART_SHEET_LAYOUT.tableTop + (15 * CHART_SHEET_LAYOUT.tableRowHeight) + 25)
@@ -190,8 +196,8 @@ describe('share-card content', () => {
     expect(SHARE_CARD_SCALE).toBe(2);
   });
 
-  it('pins the silver wordmark to the bottom-right register', () => {
-    expect(SHARE_CARD_WORDMARK).toEqual({ x: 1016, y: 1304, align: 'right' });
+  it('pins the silver logo lockup to the protected bottom-right register', () => {
+    expect(SHARE_CARD_WORDMARK).toEqual({ x: 1014, y: 1290, align: 'right' });
   });
 
   it('derives only placements selected for the big-three surface', () => {

@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   AURA_CABINET_FILENAME,
+  auraCabinetBrandLayout,
   auraCabinetAccessibleDescription,
   auraCabinetSnapshot,
   canShareAuraCabinetBlob,
@@ -56,7 +57,9 @@ function installCanvas(options: { encode?: boolean; canShare?: boolean; art?: bo
     measureText: vi.fn((text: string) => ({ width: text.length * 11 })),
     moveTo: vi.fn(),
     rect: vi.fn(),
+    restore: vi.fn(),
     roundRect: vi.fn(),
+    save: vi.fn(),
     stroke: vi.fn(),
     fillStyle: "",
     font: "",
@@ -203,6 +206,18 @@ describe("Registry Aura cabinet card snapshot", () => {
 });
 
 describe("Registry Aura cabinet PNG", () => {
+  it("scales the approved 2:1 logo lockup with the captured card width", () => {
+    const layout = auraCabinetBrandLayout(480, 456, 1000);
+    expect(layout).toMatchObject({
+      wordmarkX: 456,
+      centerY: 1000,
+      gap: 0,
+    });
+    expect(layout.iconSize).toBeCloseTo(19.5556, 3);
+    expect(layout.fontSize).toBeCloseTo(9.7778, 3);
+    expect(layout.iconSize).toBe(layout.fontSize * 2);
+  });
+
   it("refuses to export without a live cabinet to photograph", async () => {
     installCanvas();
     // The card is a capture, not a re-drawing: with no element there is

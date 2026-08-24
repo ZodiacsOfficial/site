@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   AURA_SHARE_FILENAME,
+  AURA_SHARE_LAYOUT,
   auraShareAccessibleDescription,
   auraShareSnapshot,
   canShareAuraCardBlob,
@@ -23,11 +24,20 @@ const input: AuraShareCardInput = {
 };
 
 interface CanvasHarness {
-  painted: Array<{ text: string; font: string }>;
+  painted: Array<{
+    text: string;
+    font: string;
+    fillStyle: string;
+    textAlign: string;
+    textBaseline: string;
+    x: number;
+    y: number;
+  }>;
   canvas: { width: number; height: number };
   context: Record<string, unknown>;
   fetch: ReturnType<typeof vi.fn>;
   decodedIcons: Array<{ close: ReturnType<typeof vi.fn> }>;
+  fallbackImages: Array<{ src: string }>;
   share: ReturnType<typeof vi.fn>;
   anchor: {
     href: string;
@@ -46,25 +56,38 @@ function installCanvas(
     icons?: boolean;
     missingIcon?: string;
     context?: boolean;
+    brandBitmap?: boolean;
   } = {},
 ): CanvasHarness {
-  const painted: Array<{ text: string; font: string }> = [];
+  const painted: CanvasHarness["painted"] = [];
   const context = {
     arc: vi.fn(),
     beginPath: vi.fn(),
     drawImage: vi.fn(),
     fill: vi.fn(),
     fillRect: vi.fn(),
-    fillText: vi.fn((text: string) => painted.push({ text, font: context.font })),
+    fillText: vi.fn((text: string, x: number, y: number) => painted.push({
+      text,
+      font: context.font,
+      fillStyle: context.fillStyle,
+      textAlign: context.textAlign,
+      textBaseline: context.textBaseline,
+      x,
+      y,
+    })),
     lineTo: vi.fn(),
     measureText: vi.fn((text: string) => ({ width: text.length * 14 })),
     moveTo: vi.fn(),
     roundRect: vi.fn(),
+    save: vi.fn(),
     setLineDash: vi.fn(),
     stroke: vi.fn(),
+    restore: vi.fn(),
     fillStyle: "",
     font: "",
     globalAlpha: 1,
+    imageSmoothingEnabled: false,
+    imageSmoothingQuality: "low",
     lineWidth: 1,
     strokeStyle: "",
     textAlign: "left",
@@ -105,21 +128,44 @@ function installCanvas(
   });
   const fetch = vi.fn(async (path: string) => ({
     ok: options.icons !== false && !path.endsWith(`/${options.missingIcon}.webp`),
-    blob: async () => new Blob(["official-zodiac-icon"], { type: "image/webp" }),
+    blob: async () => new Blob(
+      ["official-zodiac-icon"],
+      { type: path.endsWith(".png") ? "image/png" : "image/webp" },
+    ),
   }));
   const decodedIcons: Array<{ close: ReturnType<typeof vi.fn> }> = [];
+  const fallbackImages: Array<{ src: string }> = [];
   vi.stubGlobal("fetch", fetch);
-  vi.stubGlobal("createImageBitmap", vi.fn(async () => {
+  vi.stubGlobal("createImageBitmap", vi.fn(async (blob: Blob) => {
+    if (options.brandBitmap === false && blob.type === "image/png") {
+      throw new Error("bitmap_decode_failed");
+    }
     const bitmap = { close: vi.fn() };
     decodedIcons.push(bitmap);
     return bitmap;
   }));
+  vi.stubGlobal("Image", class {
+    onload: (() => void) | null = null;
+    onerror: (() => void) | null = null;
+    private value = "";
+
+    set src(value: string) {
+      this.value = value;
+      fallbackImages.push(this);
+      queueMicrotask(() => this.onload?.());
+    }
+
+    get src(): string {
+      return this.value;
+    }
+  });
   return {
     painted,
     canvas,
     context,
     fetch,
     decodedIcons,
+    fallbackImages,
     share,
     anchor,
     appendChild,
@@ -341,6 +387,117 @@ describe("Registry Aura talisman PNG", () => {
     expect(text).not.toMatch(/https?:|zodiacs\.org\//i);
   });
 
+  it("keeps every two-row Crown ring clear of its labels, the next row, and divider", async () => {
+    const outerRingRadius = AURA_SHARE_LAYOUT.representedRingRadius
+      + AURA_SHARE_LAYOUT.representedMaxRingPadding;
+    const firstCenter = AURA_SHARE_LAYOUT.representedTwoRowY;
+    const secondCenter = firstCenter + AURA_SHARE_LAYOUT.representedRowGap;
+    const firstNameTop = firstCenter
+      + AURA_SHARE_LAYOUT.representedNameOffset
+      - AURA_SHARE_LAYOUT.representedNameFontSize / 2;
+    const firstNameBottom = firstCenter
+      + AURA_SHARE_LAYOUT.representedNameOffset
+      + AURA_SHARE_LAYOUT.representedNameFontSize / 2;
+    const firstEditionTop = firstCenter
+      + AURA_SHARE_LAYOUT.representedEditionOffset
+      - AURA_SHARE_LAYOUT.representedEditionFontSize / 2;
+    const firstEditionBottom = firstCenter
+      + AURA_SHARE_LAYOUT.representedEditionOffset
+      + AURA_SHARE_LAYOUT.representedEditionFontSize / 2;
+    const secondNameTop = secondCenter
+      + AURA_SHARE_LAYOUT.representedNameOffset
+      - AURA_SHARE_LAYOUT.representedNameFontSize / 2;
+    const secondEditionBottom = secondCenter
+      + AURA_SHARE_LAYOUT.representedEditionOffset
+      + AURA_SHARE_LAYOUT.representedEditionFontSize / 2;
+
+    const headingBottom = AURA_SHARE_LAYOUT.representedHeadingY
+      + AURA_SHARE_LAYOUT.representedHeadingFontSize / 2;
+
+    expect((firstCenter - outerRingRadius) - headingBottom).toBeGreaterThanOrEqual(8);
+    expect(firstNameTop - (firstCenter + outerRingRadius)).toBeGreaterThanOrEqual(8);
+    expect(firstEditionTop - firstNameBottom).toBeGreaterThanOrEqual(5);
+    expect((secondCenter - outerRingRadius) - firstEditionBottom).toBeGreaterThanOrEqual(8);
+    expect(secondNameTop - (secondCenter + outerRingRadius)).toBeGreaterThanOrEqual(8);
+    expect(AURA_SHARE_LAYOUT.representedDividerY - secondEditionBottom)
+      .toBeGreaterThanOrEqual(8);
+
+    const heldSigns = [
+      "aries", "taurus", "gemini", "cancer", "leo", "virgo",
+      "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces",
+    ] as const;
+    const harness = installCanvas();
+    await drawAuraShareCard({
+      ...input,
+      heldSigns,
+      holdings: heldSigns.map((sign) => ({
+        sign,
+        finish: "gold" as const,
+        goldCount: "10",
+      })),
+    });
+
+    expect(harness.painted.find(({ text }) => text === "ARIES")?.y)
+      .toBe(firstCenter + AURA_SHARE_LAYOUT.representedNameOffset);
+    expect(harness.painted.find(({ text }) => text === "LIBRA")?.y)
+      .toBe(secondCenter + AURA_SHARE_LAYOUT.representedNameOffset);
+
+    const heading = harness.painted.find(({ text }) => text === "REPRESENTED ZODIACS")!;
+    const firstName = harness.painted.find(({ text }) => text === "ARIES")!;
+    const secondName = harness.painted.find(({ text }) => text === "LIBRA")!;
+    const firstEdition = harness.painted.find(({ text, y }) => (
+      text === "CROWN · ×10" && y < secondCenter
+    ))!;
+    const secondEdition = harness.painted.find(({ text, y }) => (
+      text === "CROWN · ×10" && y > secondCenter
+    ))!;
+    const arc = harness.context.arc as ReturnType<typeof vi.fn>;
+    const moveTo = harness.context.moveTo as ReturnType<typeof vi.fn>;
+    const lineTo = harness.context.lineTo as ReturnType<typeof vi.fn>;
+
+    expect(arc).toHaveBeenCalledWith(
+      expect.any(Number),
+      firstCenter,
+      outerRingRadius,
+      0,
+      Math.PI * 2,
+    );
+    expect(arc).toHaveBeenCalledWith(
+      expect.any(Number),
+      secondCenter,
+      outerRingRadius,
+      0,
+      Math.PI * 2,
+    );
+    expect(firstEdition.y).toBe(firstCenter + AURA_SHARE_LAYOUT.representedEditionOffset);
+    expect(secondEdition.y).toBe(secondCenter + AURA_SHARE_LAYOUT.representedEditionOffset);
+    expect(moveTo).toHaveBeenCalledWith(66, AURA_SHARE_LAYOUT.representedDividerY);
+    expect(lineTo).toHaveBeenCalledWith(1014, AURA_SHARE_LAYOUT.representedDividerY);
+
+    const sealCrownArcs = arc.mock.calls.filter(([, y, radius]) => (
+      radius === 42 && y < firstCenter
+    ));
+    const sealArtworkBottom = Math.max(
+      ...sealCrownArcs.map(([, y, radius]) => Number(y) + Number(radius)),
+    );
+    expect(sealCrownArcs.length).toBe(12);
+    expect(
+      heading.y - AURA_SHARE_LAYOUT.representedHeadingFontSize / 2 - sealArtworkBottom,
+    ).toBeGreaterThanOrEqual(8);
+    expect(
+      firstName.y - AURA_SHARE_LAYOUT.representedNameFontSize / 2
+      - (firstCenter + outerRingRadius),
+    ).toBeGreaterThanOrEqual(8);
+    expect(
+      secondName.y - AURA_SHARE_LAYOUT.representedNameFontSize / 2
+      - (secondCenter + outerRingRadius),
+    ).toBeGreaterThanOrEqual(8);
+    expect(
+      AURA_SHARE_LAYOUT.representedDividerY
+      - (secondEdition.y + AURA_SHARE_LAYOUT.representedEditionFontSize / 2),
+    ).toBeGreaterThanOrEqual(8);
+  });
+
   it("draws the canonical SDK-derived pastel icons in the orbit and ledger", async () => {
     const harness = installCanvas({ icons: true });
     await drawAuraShareCard(input);
@@ -358,10 +515,27 @@ describe("Registry Aura talisman PNG", () => {
       "/assets/zodiac-icons/128/capricorn.webp",
       "/assets/zodiac-icons/128/aquarius.webp",
       "/assets/zodiac-icons/128/pisces.webp",
+      "/assets/app-icons/v3/icon-512.png",
     ]);
-    expect(harness.context.drawImage).toHaveBeenCalledTimes(15);
+    expect(harness.context.drawImage).toHaveBeenCalledTimes(16);
     expect(harness.painted.filter(({ text }) => text.includes("×3"))).toHaveLength(1);
-    expect(harness.decodedIcons).toHaveLength(12);
+    const brand = harness.painted.find(({ text }) => text === "zodiacs.org");
+    expect(brand).toMatchObject({
+      fillStyle: "#8E96AB",
+      textAlign: "right",
+      textBaseline: "middle",
+      x: 1014,
+      y: 1290,
+    });
+    expect(brand?.font).toContain('22px "EB Garamond"');
+    expect(harness.context.drawImage).toHaveBeenLastCalledWith(
+      harness.decodedIcons.at(-1),
+      expect.any(Number),
+      1268,
+      44,
+      44,
+    );
+    expect(harness.decodedIcons).toHaveLength(13);
     harness.decodedIcons.forEach((icon) => expect(icon.close).toHaveBeenCalledOnce());
   });
 
@@ -370,6 +544,16 @@ describe("Registry Aura talisman PNG", () => {
     await expect(drawAuraShareCard(input)).rejects.toThrow("zodiac_icon_unavailable:libra");
     expect(harness.painted).toEqual([]);
     expect(harness.decodedIcons).toHaveLength(11);
+    harness.decodedIcons.forEach((icon) => expect(icon.close).toHaveBeenCalledOnce());
+  });
+
+  it("keeps the profile mark when WebKit cannot bitmap-decode the brand PNG", async () => {
+    const harness = installCanvas({ brandBitmap: false });
+    await drawAuraShareCard(input);
+
+    expect(harness.fallbackImages).toHaveLength(1);
+    expect(harness.context.drawImage).toHaveBeenCalledTimes(16);
+    expect(harness.decodedIcons).toHaveLength(12);
     harness.decodedIcons.forEach((icon) => expect(icon.close).toHaveBeenCalledOnce());
   });
 
@@ -407,7 +591,7 @@ describe("Registry Aura talisman PNG", () => {
   it("releases canonical artwork when the canvas context is unavailable", async () => {
     const harness = installCanvas({ context: false });
     await expect(drawAuraShareCard(input)).rejects.toThrow("canvas_unavailable");
-    expect(harness.decodedIcons).toHaveLength(12);
+    expect(harness.decodedIcons).toHaveLength(13);
     harness.decodedIcons.forEach((icon) => expect(icon.close).toHaveBeenCalledOnce());
   });
 });

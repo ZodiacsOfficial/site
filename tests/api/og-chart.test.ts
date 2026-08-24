@@ -155,12 +155,16 @@ describe('chart preview functions', () => {
       fonts: [
         expect.objectContaining({ name: 'sans serif', weight: 400, style: 'normal' }),
         expect.objectContaining({ name: 'EB Garamond', weight: 500, style: 'italic' }),
+        expect.objectContaining({ name: 'EB Garamond', weight: 500, style: 'normal' }),
       ],
     }));
     const serializedCard = JSON.stringify(imageResponseMock.element.mock.calls[0]?.[0]);
     expect(serializedCard).toContain('Your chart signature');
     expect(serializedCard).toContain('"fontFamily":"EB Garamond"');
     expect(serializedCard).toContain('"fontStyle":"italic"');
+    expect(serializedCard).toContain('data:image/png;base64,');
+    expect(serializedCard).toContain('zodiacs.org');
+    expect(serializedCard).toContain('"width":48');
   });
 
   it('writes the buffered image through the Vercel Node response contract', async () => {

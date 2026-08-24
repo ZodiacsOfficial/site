@@ -8,6 +8,11 @@
  * address, balance, price, or anything ownable.
  */
 import { signBySlug, type Sign } from "../signs.js";
+import {
+  PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
+  drawShareBrandLockup,
+  withShareBrandIcon,
+} from "../share-card-brand.js";
 import { SIGN_ID_PATTERN, ordinalLabel } from "./share-copy.js";
 
 export interface RaceStandingRow {
@@ -58,6 +63,10 @@ const HAIR = "rgba(205, 212, 226, 0.16)";
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
 const RACE_URL = "zodiacs.org/race";
+export const RACE_SHARE_CARD_BRAND_LAYOUT = Object.freeze({
+  ...PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
+  centerY: 76,
+});
 
 const ZODIAC_ORDER = [
   "aries", "taurus", "gemini", "cancer", "leo", "virgo",
@@ -323,6 +332,13 @@ export async function drawRaceShareCard(snapshot: RaceShareSnapshot): Promise<Bl
   context.fillStyle = INK;
   context.font = `500 27px ${MONO}`;
   context.fillText(snapshot.footerLine.toUpperCase(), W / 2, 1252);
+
+  await withShareBrandIcon((brandIcon) => {
+    drawShareBrandLockup(context, brandIcon, {
+      ...RACE_SHARE_CARD_BRAND_LAYOUT,
+      serif: SERIF,
+    });
+  });
 
   const blob = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob(resolve, "image/png"),
