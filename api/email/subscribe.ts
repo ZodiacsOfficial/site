@@ -1,4 +1,5 @@
 import { waitUntil } from '@vercel/functions';
+import { checkRateLimit } from '@vercel/firewall';
 import { createEmailSubscriptionAdapter } from '../../src/lib/email/provider.js';
 import { parseEmailSubscription } from '../../src/lib/email/input.js';
 import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email/request.js';
@@ -30,6 +31,42 @@ function wantsJson(req: any): boolean {
   return requestHeader(req, 'accept').includes('application/json');
 }
 
+/** Uses Vercel's per-region firewall counters; the matching WAF rule must use this exported ID. */
+export const EMAIL_SUBSCRIBE_RATE_LIMIT_ID = 'zodiacs-email-subscribe';
+
+async function subscribeRateLimited(req: any): Promise<boolean> {
+  try {
+    const result = await checkRateLimit(EMAIL_SUBSCRIBE_RATE_LIMIT_ID, { headers: req.headers });
+    // Unlike the Aura endpoint, an unprovisioned rule must never block
+    // signups — the counter engages only once the WAF rule exists.
+    return result?.rateLimited === true && result?.error !== 'not-found';
+  } catch {
+    return false;
+  }
+}
+
+// The daily path holds a durable per-recipient confirmation claim; the weekly
+// path has no store of its own (the daily claim is purpose-bound), so a
+// per-instance recipient cooldown absorbs scripted same-address bursts and
+// spares provider send quota. Cold starts reset it — the firewall counter
+// above is the cross-instance line. Insertion order doubles as an LRU bound.
+const WEEKLY_COOLDOWN_MS = 10 * 60_000;
+const WEEKLY_COOLDOWN_MAX_ENTRIES = 5_000;
+const weeklyCooldown = new Map<string, number>();
+
+export function weeklyRecipientOnCooldown(email: string, now = Date.now()): boolean {
+  const key = email.trim().toLowerCase();
+  const last = weeklyCooldown.get(key);
+  if (last !== undefined && now - last < WEEKLY_COOLDOWN_MS) return true;
+  weeklyCooldown.delete(key);
+  weeklyCooldown.set(key, now);
+  if (weeklyCooldown.size > WEEKLY_COOLDOWN_MAX_ENTRIES) {
+    const oldest = weeklyCooldown.keys().next().value;
+    if (oldest !== undefined) weeklyCooldown.delete(oldest);
+  }
+  return false;
+}
+
 export async function handleEmailSubscribe(req: any, res: any): Promise<void> {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -38,6 +75,11 @@ export async function handleEmailSubscribe(req: any, res: any): Promise<void> {
   }
   if (!isAllowedEmailCaptureRequest(req)) {
     sendJson(res, 403, { error: 'forbidden' });
+    return;
+  }
+  if (await subscribeRateLimited(req)) {
+    res.setHeader('Retry-After', '60');
+    sendJson(res, 429, { error: 'rate_limited' });
     return;
   }
 
@@ -89,9 +131,13 @@ export async function handleEmailSubscribe(req: any, res: any): Promise<void> {
   }
 
   try {
-    // A filled hidden field is treated as a successful no-op. Only the email
-    // and optional self-declared sign ever cross the provider boundary.
-    if (!input.honeypot) await adapter.subscribe(input.email, input.sign);
+    // A filled hidden field is treated as a successful no-op, and so is a
+    // recipient inside the weekly cooldown window — throttled, new, and
+    // known addresses stay indistinguishable at the HTTP boundary. Only the
+    // email and optional self-declared sign ever cross the provider boundary.
+    if (!input.honeypot && !weeklyRecipientOnCooldown(input.email)) {
+      await adapter.subscribe(input.email, input.sign);
+    }
     if (wantsJson(req)) sendJson(res, 200, { ok: true, pending: true });
     else sendHtml(res, 200, emailStatusPage(input.locale, 'emailPendingTitle', 'emailPendingBody'));
   } catch {

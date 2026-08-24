@@ -75,6 +75,29 @@ function validEndpoint(value: unknown): value is string {
   }
 }
 
+// Browser push endpoints come from a closed set of vendor push services;
+// anything else is junk that would bloat the table and slow the daily
+// delivery job against dead endpoints. Suffix entries cover the vendors'
+// regional shards (web.push.apple.com, sin.notify.windows.com, …). The
+// gate applies to inserts only — unsubscribe stays open so any
+// previously stored endpoint can still be removed.
+const PUSH_SERVICE_HOSTS = Object.freeze([
+  'fcm.googleapis.com',
+  'android.googleapis.com',
+  'updates.push.services.mozilla.com',
+]);
+const PUSH_SERVICE_HOST_SUFFIXES = Object.freeze([
+  '.push.apple.com',
+  '.notify.windows.com',
+  '.push.services.mozilla.com',
+]);
+
+export function isKnownPushServiceHost(host: string): boolean {
+  const candidate = host.toLowerCase();
+  return PUSH_SERVICE_HOSTS.includes(candidate)
+    || PUSH_SERVICE_HOST_SUFFIXES.some((suffix) => candidate.endsWith(suffix));
+}
+
 function validKey(value: unknown): value is string {
   return typeof value === 'string'
     && value.length > 0
@@ -87,6 +110,7 @@ export function parseSubscription(input: unknown): Required<PushSubscriptionInpu
   if (!body || typeof body !== 'object') return null;
   const candidate = body as PushSubscriptionInput;
   if (!validEndpoint(candidate.endpoint)
+    || !isKnownPushServiceHost(new URL(candidate.endpoint).hostname)
     || !validKey(candidate.keys?.p256dh)
     || !validKey(candidate.keys?.auth)) return null;
   const requestedLang = candidate.lang?.trim().toLowerCase() ?? '';

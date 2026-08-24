@@ -61,6 +61,18 @@ describe('push subscription API input', () => {
     expect(parseUnsubscribe({ endpoint: 'javascript:alert(1)' })).toBeNull();
   });
 
+  it('accepts only known push-service hosts on subscribe, any https host on unsubscribe', () => {
+    const keys = { p256dh: 'public_key-123', auth: 'auth_key-456' };
+    expect(parseSubscription({ endpoint: 'https://fcm.googleapis.com/fcm/send/example', keys })).not.toBeNull();
+    expect(parseSubscription({ endpoint: 'https://web.push.apple.com/QOexample', keys })).not.toBeNull();
+    expect(parseSubscription({ endpoint: 'https://sin.notify.windows.com/w/?token=x', keys })).not.toBeNull();
+    // Junk hosts must not enter the table, including lookalike prefixes.
+    expect(parseSubscription({ endpoint: 'https://attacker.test/flood', keys })).toBeNull();
+    expect(parseSubscription({ endpoint: 'https://notify.windows.com.attacker.test/x', keys })).toBeNull();
+    // Cleanup of anything previously stored stays possible.
+    expect(parseUnsubscribe({ endpoint: 'https://attacker.test/flood' })).toBe('https://attacker.test/flood');
+  });
+
   it('allows the exact serving production or preview origin only', () => {
     const request = (origin: string, host = 'zodiacs.org') => ({ headers: { origin, host } });
     expect(isAllowedSiteRequest(request('https://zodiacs.org'))).toBe(true);
@@ -78,7 +90,7 @@ describe('push subscription API input', () => {
     vi.stubGlobal('fetch', fetchMock);
     const base = { headers: { origin: 'https://zodiacs.org', host: 'zodiacs.org' } };
     const subscription = {
-      endpoint: 'https://push.test/subscription',
+      endpoint: 'https://fcm.googleapis.com/fcm/send/subscription',
       keys: { p256dh: 'public-key', auth: 'auth-key' },
       lang: 'en',
     };
@@ -95,7 +107,7 @@ describe('push subscription API input', () => {
     await handler({ ...base, method: 'DELETE', body: { endpoint: subscription.endpoint } }, unsubscribeResponse);
     expect(unsubscribeResponse.statusCode).toBe(200);
     expect(fetchMock).toHaveBeenNthCalledWith(2,
-      'https://project.supabase.co/rest/v1/push_subscriptions?endpoint=eq.https%3A%2F%2Fpush.test%2Fsubscription',
+      'https://project.supabase.co/rest/v1/push_subscriptions?endpoint=eq.https%3A%2F%2Ffcm.googleapis.com%2Ffcm%2Fsend%2Fsubscription',
       expect.objectContaining({ method: 'DELETE' }),
     );
   });
