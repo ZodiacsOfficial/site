@@ -219,9 +219,20 @@ Editor, and update this table in the same change.
   free (Dashboard → Authentication → Sign In / Up → password security)
   and must be ON before any password or additional auth method ships —
   the native-app work makes that likely.
-- **No recorded backup/PITR posture.** Decide and record the backup tier
-  and a restore runbook before the native app raises the stakes; today a
-  bad migration or operator error has no documented recovery path.
+- **Backups: workflow shipped, needs two secrets.**
+  `.github/workflows/db-backup.yml` takes a weekly `pg_dump` of the
+  `public` + `supabase_migrations` schemas, gzip+AES-256-encrypts it, and
+  keeps it as a private workflow artifact for 90 days. It stays a no-op
+  (with a visible warning annotation) until two repository secrets exist:
+  `SUPABASE_DB_URL` (Dashboard → Connect → Session pooler string) and
+  `BACKUP_PASSPHRASE` (long random phrase, copied into a password
+  manager). Restore path: download the artifact from the workflow run,
+  then `gpg --decrypt --batch --passphrase "$BACKUP_PASSPHRASE"
+  <file> | gunzip > backup.sql` and `psql <fresh-project-url> <
+  backup.sql` — always into a fresh project first, never straight over
+  live. Verify the first configured run downloads and decrypts before
+  trusting the schedule. Platform PITR (Supabase Pro) remains the
+  upgrade when the native app raises the stakes.
 - **Key escrow.** When `ACCOUNT_SYNC_V2_ENCRYPTION_KEYS` is provisioned,
   record where the keyring is escrowed (outside Vercel env) — losing the
   wrapping keys silently bricks every v2 envelope, and no runbook covers
