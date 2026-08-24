@@ -206,6 +206,7 @@ const en = {
     dignityFall: 'fall',
     explorerHint: 'Tap any planet, sign, house, or aspect line to inspect it — or focus the wheel and use the arrow keys.',
     explorerLabel: 'Interactive birth chart',
+    explorerKeyHint: 'Left and right arrow keys move between placements; Enter opens the details panel.',
     selectionCleared: 'Selection cleared.',
     inspectorClose: 'Close details',
     speed: 'Speed',

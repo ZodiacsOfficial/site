@@ -85,7 +85,8 @@ const terminalResearchBreadcrumb = {
         <button type="button" data-filter="calendar" aria-pressed="false">Calendar</button>
       </nav>
 
-      <div id="research-items" class="research-items" aria-live="polite">
+      <p id="research-count" class="sr-only" role="status"></p>
+      <div id="research-items" class="research-items">
         {visibleItems.map((item) => (
           <article
             class="research-item"
@@ -219,6 +220,14 @@ const terminalResearchBreadcrumb = {
         ? `No current research matches ${titleCase(activeSign)} in this view.`
         : 'No research matches this filter.';
       filterEmpty.hidden = shown > 0 || entries.length === 0;
+    }
+    // One short status line instead of a live region around the whole list:
+    // toggling dozens of articles announces unevenly across screen readers.
+    const count = document.getElementById('research-count');
+    if (count) {
+      count.textContent = activeFilter === 'all' && !activeSign && !activeType
+        ? `${shown} briefs shown`
+        : `${shown} briefs shown, filtered`;
     }
   }
 

@@ -82,12 +82,15 @@ export function BirthFields({
         id={timeId} class="field__input" type="time"
         disabled={!timeKnown} required={requireKnownTime && timeKnown} value={time}
         aria-invalid={timeError ? 'true' : undefined}
-        aria-describedby={timeError ? `${timeId}-error` : undefined}
+        aria-describedby={[
+          timeError ? `${timeId}-error` : null,
+          timeHelp !== undefined ? `${timeId}-help` : null,
+        ].filter(Boolean).join(' ') || undefined}
         onFocus={onWarm}
         onInput={(e) => onTimeChange((e.target as HTMLInputElement).value)}
       />
       {timeError && <p id={`${timeId}-error`} class="field__error" role="alert">{timeError}</p>}
-      {timeHelp !== undefined && <p class="field__help">{timeHelp}</p>}
+      {timeHelp !== undefined && <p id={`${timeId}-help`} class="field__help">{timeHelp}</p>}
     </div>,
 
     <div class="field">

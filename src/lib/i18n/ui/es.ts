@@ -207,6 +207,7 @@ const es = {
     dignityFall: 'caída',
     explorerHint: 'Toca cualquier planeta, signo, casa o línea de aspecto para inspeccionarlo — o enfoca la rueda y usa las flechas.',
     explorerLabel: 'Carta natal interactiva',
+    explorerKeyHint: 'Las flechas izquierda y derecha recorren las posiciones; Intro abre el panel de detalles.',
     selectionCleared: 'Selección borrada.',
     inspectorClose: 'Cerrar detalles',
     speed: 'Velocidad',

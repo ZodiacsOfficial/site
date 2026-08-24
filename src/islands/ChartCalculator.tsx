@@ -1888,12 +1888,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 <div class="core calc__wheel-core">
                   <div class="xplr">
                     <div class="xplr__stage">
+                      {/* role=group implies no interaction model, so the
+                          arrow-key affordance must be spoken: a hidden hint
+                          reaches AT via aria-describedby. */}
+                      <p class="sr-only" id="xplr-wheel-keys">{t(locale, 'explorerKeyHint')}</p>
                       <div
                         class="xplr__wheelbox"
                         ref={wheelboxRef}
                         tabIndex={0}
                         role="group"
                         aria-label={t(locale, 'explorerLabel')}
+                        aria-describedby="xplr-wheel-keys"
                         onKeyDown={onWheelKeyDown}
                         data-spotlight-id={spotlight?.id}
                         data-spotlight-run={spotlight?.run}

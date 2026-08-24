@@ -207,6 +207,7 @@ const pt = {
   dignityFall: 'queda',
   explorerHint: 'Toque em qualquer planeta, signo, casa ou linha de aspecto para ver os detalhes — ou selecione a roda e use as setas do teclado.',
   explorerLabel: 'Mapa astral interativo',
+  explorerKeyHint: 'As setas para a esquerda e para a direita percorrem as posições; Enter abre o painel de detalhes.',
   selectionCleared: 'Seleção desfeita.',
   inspectorClose: 'Fechar detalhes',
   speed: 'Velocidade',

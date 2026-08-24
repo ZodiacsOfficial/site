@@ -51,7 +51,7 @@
 
     :root {
       --bg:#08090c; --surface:#0d0f14; --surface-2:#12141b; --ink:#eef1f7; --ink-2:#c6ccda;
-      --ink-dim:#8e96ab; --ink-mute:#646c7e; --hair:rgba(198,204,218,.11); --hair-2:rgba(198,204,218,.18);
+      --ink-dim:#8e96ab; --ink-mute:#7a8397; --hair:rgba(198,204,218,.11); --hair-2:rgba(198,204,218,.18);
       --silver:#d3d8e4; --pastel:#e0a9b4; --serif:var(--sans);
       --sans:'Instrument Sans','Instrument Sans Fallback','Instrument Sans Fallback Android',system-ui,-apple-system,sans-serif;
       --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
@@ -384,7 +384,7 @@
         <div><p class="eyebrow">All 12 signs</p><h2 id="records-title">Choose your Zodiac.</h2></div>
         <p>Each profile brings together its dates, famous birthdays, recent Wikipedia views, price history and current rank.</p>
       </header>
-      <div class="records" aria-label="Twelve Zodiac profiles">
+      <div class="records">
         <article class="record" id="aries" style="--sign:#DE8E79" data-registry-record>
           <header class="record__head">
             <a class="record__identity" href="/registry/aries/" aria-label="Open the Aries profile">
@@ -803,6 +803,19 @@
     }
     var toolsDropdown = dropdown(toolsBtn,toolsMenu,2);
     var signsDropdown = dropdown(signsBtn,signsMenu,3);
+    [toolsDropdown,signsDropdown].forEach(function(dd){
+      if(!dd) return;
+      function closeOnFocusout(event){
+        var next = event.relatedTarget;
+        if(next && (dd.menu.contains(next) || dd.button.contains(next))) return;
+        dd.setOpen(false);
+      }
+      dd.menu.addEventListener('focusout',closeOnFocusout);
+      dd.button.addEventListener('focusout',closeOnFocusout);
+    });
+    function mobileFocusables(){
+      return mobile ? Array.prototype.slice.call(mobile.querySelectorAll('a[href], button:not([disabled])')) : [];
+    }
     if(toolsDropdown) toolsDropdown.button.addEventListener('click',function(){
       var open = !toolsDropdown.isOpen();
       if(signsDropdown) signsDropdown.setOpen(false);
@@ -821,6 +834,7 @@
     });
     function setMobile(open){
       if(!burger||!mobile) return;
+      var hadFocusInside = mobile.contains(document.activeElement);
       if(open){
         if(toolsDropdown) toolsDropdown.setOpen(false);
         if(signsDropdown) signsDropdown.setOpen(false);
@@ -830,7 +844,18 @@
       mobile.hidden = !open;
       mobile.classList.toggle('is-open', open);
       document.documentElement.style.overflow = open ? 'hidden' : '';
+      var items = mobileFocusables();
+      if(open && items[0]) items[0].focus();
+      else if(!open && hadFocusInside) burger.focus();
     }
+    if(mobile) mobile.addEventListener('keydown',function(event){
+      if(event.key !== 'Tab') return;
+      var items = mobileFocusables();
+      if(!items.length) return;
+      var first = items[0], last = items[items.length - 1];
+      if(event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
+      else if(!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
+    });
     if(burger) burger.addEventListener('click', function(){ setMobile(burger.getAttribute('aria-expanded') !== 'true'); });
     if(mobile) mobile.addEventListener('click', function(e){ if(e.target.closest('a')) setMobile(false); });
     document.addEventListener('click',function(event){
@@ -843,7 +868,8 @@
       var focused = document.activeElement;
       var restore = toolsDropdown && toolsDropdown.menu.contains(focused)
         ? toolsDropdown.button
-        : signsDropdown && signsDropdown.menu.contains(focused) ? signsDropdown.button : null;
+        : signsDropdown && signsDropdown.menu.contains(focused) ? signsDropdown.button
+        : mobile && mobile.contains(focused) ? burger : null;
       if(toolsDropdown) toolsDropdown.setOpen(false);
       if(signsDropdown) signsDropdown.setOpen(false);
       setMobile(false);

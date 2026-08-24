@@ -194,6 +194,19 @@ export function wingNavScript() {
     }
     var toolsDropdown = dropdown(toolsBtn,toolsMenu,2);
     var signsDropdown = dropdown(signsBtn,signsMenu,3);
+    [toolsDropdown,signsDropdown].forEach(function(dd){
+      if(!dd) return;
+      function closeOnFocusout(event){
+        var next = event.relatedTarget;
+        if(next && (dd.menu.contains(next) || dd.button.contains(next))) return;
+        dd.setOpen(false);
+      }
+      dd.menu.addEventListener('focusout',closeOnFocusout);
+      dd.button.addEventListener('focusout',closeOnFocusout);
+    });
+    function mobileFocusables(){
+      return mobile ? Array.prototype.slice.call(mobile.querySelectorAll('a[href], button:not([disabled])')) : [];
+    }
     if(toolsDropdown) toolsDropdown.button.addEventListener('click',function(){
       var open = !toolsDropdown.isOpen();
       if(signsDropdown) signsDropdown.setOpen(false);
@@ -212,6 +225,7 @@ export function wingNavScript() {
     });
     function setMobile(open){
       if(!burger||!mobile) return;
+      var hadFocusInside = mobile.contains(document.activeElement);
       if(open){
         if(toolsDropdown) toolsDropdown.setOpen(false);
         if(signsDropdown) signsDropdown.setOpen(false);
@@ -221,7 +235,18 @@ export function wingNavScript() {
       mobile.hidden = !open;
       mobile.classList.toggle('is-open', open);
       document.documentElement.style.overflow = open ? 'hidden' : '';
+      var items = mobileFocusables();
+      if(open && items[0]) items[0].focus();
+      else if(!open && hadFocusInside) burger.focus();
     }
+    if(mobile) mobile.addEventListener('keydown',function(event){
+      if(event.key !== 'Tab') return;
+      var items = mobileFocusables();
+      if(!items.length) return;
+      var first = items[0], last = items[items.length - 1];
+      if(event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
+      else if(!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
+    });
     if(burger) burger.addEventListener('click', function(){ setMobile(burger.getAttribute('aria-expanded') !== 'true'); });
     if(mobile) mobile.addEventListener('click', function(e){ if(e.target.closest('a')) setMobile(false); });
     document.addEventListener('click',function(event){
@@ -234,7 +259,8 @@ export function wingNavScript() {
       var focused = document.activeElement;
       var restore = toolsDropdown && toolsDropdown.menu.contains(focused)
         ? toolsDropdown.button
-        : signsDropdown && signsDropdown.menu.contains(focused) ? signsDropdown.button : null;
+        : signsDropdown && signsDropdown.menu.contains(focused) ? signsDropdown.button
+        : mobile && mobile.contains(focused) ? burger : null;
       if(toolsDropdown) toolsDropdown.setOpen(false);
       if(signsDropdown) signsDropdown.setOpen(false);
       setMobile(false);
