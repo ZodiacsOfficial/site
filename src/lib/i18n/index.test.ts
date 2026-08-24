@@ -29,7 +29,7 @@ import {
 describe('i18n helpers', () => {
   it('keeps every localized UI catalog aligned with all 390 English keys', () => {
     const englishKeys = Object.keys(UI.en).sort();
-    expect(englishKeys).toHaveLength(390);
+    expect(englishKeys).toHaveLength(391);
     for (const locale of CATALOG_LOCALES) {
       expect(Object.keys(UI[locale]).sort()).toEqual(englishKeys);
     }

@@ -15,12 +15,17 @@ jobs:
       github.event.deployment.creator.login == 'vercel[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the deployed revision
+      - name: Checkout the trusted default branch
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.deployment.sha }}
-          # The smoke script comes from the deployed revision; never leave a
-          # token on disk while running it.
+          # deployment_status runs in the base-repo context with secrets, and
+          # Vercel also deploys fork PRs — so the smoke script must come from
+          # a trusted ref, never from the deployed revision, or a fork could
+          # rewrite it to exfiltrate the bypass secret. The deployed SHA is
+          # only ever used as the probe TARGET (via the deployment URL), not
+          # as code. A PR that changes the smoke script exercises the new
+          # version only after it merges to main.
+          ref: main
           persist-credentials: false
 
       - name: Setup Node

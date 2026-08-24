@@ -1,0 +1,47 @@
+# Weekly lab-metric coverage for the three highest-traffic EN routes that
+# the per-push Phase 1 Lighthouse gate deliberately excludes (home,
+# /birth-chart/, /aries/). Scheduled rather than push-blocking: a red run
+# here is the report that the flagship funnel regressed, without letting
+# older-baseline debt block unrelated merges. Runs Monday morning after
+# the 00:15 UTC Daily Sky cron so the freshness gates pass on main.
+name: Lighthouse Baseline
+
+on:
+  schedule:
+    - cron: '23 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-baseline
+  cancel-in-progress: true
+
+jobs:
+  lighthouse-baseline:
+    name: Baseline trio audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install pinned Chromium
+        run: npx playwright-core install chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Lighthouse over the baseline trio
+        env:
+          LIGHTHOUSE_INCLUDE_BASELINE: '1'
+        run: npm run test:lighthouse

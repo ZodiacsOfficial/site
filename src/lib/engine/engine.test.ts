@@ -12,6 +12,8 @@ import {
   Body, Observer, SearchHourAngle, SearchRiseSet, MakeTime, SiderealTime,
 } from 'astronomy-engine';
 
+import { computeAngles as rawComputeAngles } from '@zodiacs/engine/internal/math';
+
 import { computeBodies, computeChart } from './full';
 import { computeAngles, meanObliquity, placidusCusps, wholeSignCusps, houseOf, norm } from './houses';
 import { findAspects, separation } from './aspects';
@@ -241,6 +243,62 @@ describe('houses', () => {
     });
     expect(chart.houses?.system).toBe('whole');
     expect(chart.flags).toContain('polar-fallback');
+  });
+
+  it('above the polar circle the ascendant is always the rising intersection', () => {
+    // Longyearbyen, 78.22°N: the raw atan2 formula returns the SETTING
+    // ecliptic–horizon intersection for roughly a third of each sidereal
+    // day here. The site wrapper must always hand back the rising one —
+    // the ascendant sits strictly east of the meridian, norm(asc − mc)
+    // inside (0, 180) — by swapping the axis when the raw result is out
+    // of range.
+    const latitude = 78.2232;
+    const longitude = 15.6267;
+    let flipped = 0;
+    for (let step = 0; step < 96; step += 1) {
+      const utc = new Date(Date.UTC(2001, 11, 21) + step * 15 * 60_000);
+      const input = {
+        gastHours: SiderealTime(MakeTime(utc)),
+        latitude,
+        longitude,
+        obliquity: meanObliquity(
+          (utc.getTime() - Date.UTC(2000, 0, 1, 12)) / (86400_000 * 36525)
+        ),
+      };
+      const raw = rawComputeAngles(input);
+      const corrected = computeAngles(input);
+      const sep = norm(corrected.asc - corrected.mc);
+      expect(sep).toBeGreaterThan(0);
+      expect(sep).toBeLessThan(180);
+      expect(angleDiff(corrected.mc, raw.mc)).toBeLessThan(1e-9);
+      if (norm(raw.asc - raw.mc) >= 180) {
+        flipped += 1;
+        expect(angleDiff(corrected.asc, raw.dsc)).toBeLessThan(1e-9);
+        expect(angleDiff(corrected.dsc, raw.asc)).toBeLessThan(1e-9);
+      } else {
+        expect(angleDiff(corrected.asc, raw.asc)).toBeLessThan(1e-9);
+      }
+    }
+    // The sweep must genuinely exercise the correction, not vacuously pass.
+    expect(flipped).toBeGreaterThan(10);
+  });
+
+  it('polar computeChart re-anchors whole-sign cusps to the corrected ascendant', () => {
+    for (let step = 0; step < 24; step += 1) {
+      const chart = computeChart({
+        utc: new Date(Date.UTC(2001, 11, 21) + step * 3_600_000),
+        latitude: 78.2232,
+        longitude: 15.6267,
+        houseSystem: 'placidus',
+        timeKnown: true,
+      });
+      const sep = norm(chart.angles!.asc - chart.angles!.mc);
+      expect(sep).toBeGreaterThan(0);
+      expect(sep).toBeLessThan(180);
+      expect(chart.houses?.system).toBe('whole');
+      expect(chart.flags).toContain('polar-fallback');
+      expect(chart.houses!.cusps[0]).toBe(Math.floor(norm(chart.angles!.asc) / 30) * 30);
+    }
   });
 
   it('houseOf places longitudes into forward spans', () => {

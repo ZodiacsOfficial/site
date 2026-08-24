@@ -1,0 +1,28 @@
+# Weekly dependency currency for the two ecosystems that carry risk:
+# the npm tree (build + serverless runtime) and the Actions used by
+# crons that push with write tokens. Grouped so routine patch/minor
+# churn arrives as one reviewable PR per ecosystem, not twelve.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
+  - package-ecosystem: npm
+    directory: /promo/cabinet-promo
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3

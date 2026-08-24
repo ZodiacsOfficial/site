@@ -224,7 +224,7 @@ const html = `<!doctype html>
 
     :root {
       --bg:#08090c; --surface:#0d0f14; --surface-2:#12141b; --ink:#eef1f7; --ink-2:#c6ccda;
-      --ink-dim:#8e96ab; --ink-mute:#646c7e; --hair:rgba(198,204,218,.11); --hair-2:rgba(198,204,218,.18);
+      --ink-dim:#8e96ab; --ink-mute:#7a8397; --hair:rgba(198,204,218,.11); --hair-2:rgba(198,204,218,.18);
       --silver:#d3d8e4; --pastel:#e0a9b4; --serif:var(--sans);
       --sans:'Instrument Sans','Instrument Sans Fallback','Instrument Sans Fallback Android',system-ui,-apple-system,sans-serif;
       --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
@@ -424,7 +424,7 @@ const html = `<!doctype html>
         <div><p class="eyebrow">All 12 signs</p><h2 id="records-title">Choose your Zodiac.</h2></div>
         <p>Each profile brings together its dates, famous birthdays, recent Wikipedia views, price history and current rank.</p>
       </header>
-      <div class="records" aria-label="Twelve Zodiac profiles">
+      <div class="records">
         ${assets.map(renderRecord).join('\n')}
       </div>
     </section>

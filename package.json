@@ -111,7 +111,15 @@
     "test:account:sync-sql": "bash scripts/test-account-sync-v2-sql.sh",
     "test:phase7:living-sync-sql": "bash scripts/test-living-chart-sync-sql.sh",
     "test:phase7:living-chart": "node tests/phase7-living-chart-drive.mjs",
-    "test:phase6:ask": "node tests/assistant-drive.mjs"
+    "test:phase6:ask": "node tests/assistant-drive.mjs",
+    "data:app-icons": "node scripts/build-app-icons.mjs",
+    "data:og-preview-font": "node scripts/build-og-preview-font.mjs",
+    "data:thesis-figures": "node scripts/build-thesis-figures.mjs",
+    "docs:build-report": "node scripts/build-build-report.mjs",
+    "check:thesis-links": "node scripts/check-thesis-links.mjs",
+    "check:site:live": "node scripts/check-site.mjs",
+    "i18n:parity:r0": "node scripts/check-i18n-r0-parity.mjs",
+    "i18n:parity:r2": "node scripts/check-i18n-r2-parity.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.111.0",
@@ -143,7 +151,7 @@
     "pixelmatch": "^7.2.0",
     "playwright-core": "^1.61.1",
     "pngjs": "^7.0.0",
-    "sharp": "^0.34.0",
+    "sharp": "^0.35.3",
     "three": "0.180.0",
     "typescript": "^5.8.0",
     "vite-node": "^3.2.4",

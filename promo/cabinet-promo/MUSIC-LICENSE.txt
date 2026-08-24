@@ -1,4 +1,7 @@
 The score (public/score.wav) is generated entirely by scripts/make-audio.mjs
 in this project — pure-math synthesis, an original work created for
 zodiacs.org. No third-party audio, samples, or recordings are used.
-License: same as the repository; no external attribution required.
+License: original work by the Zodiacs.org project; all rights reserved
+by the repository owner (the repository currently publishes no general
+license file, so no broader grant is implied). No external attribution
+required.

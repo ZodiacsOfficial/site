@@ -679,8 +679,26 @@ const visibleNavTools = locale === 'ru'
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') toolsDropdown?.setOpen(false);
   });
 
+  // An open dropdown must not float over content once keyboard focus has
+  // moved on (WCAG 1.4.13-adjacent) — close when focus leaves both parts.
+  for (const dd of [toolsDropdown, signsDropdown]) {
+    if (!dd) continue;
+    const closeOnFocusout = (event: FocusEvent) => {
+      const next = event.relatedTarget as Node | null;
+      if (next && (dd.menu.contains(next) || dd.button.contains(next))) return;
+      dd.setOpen(false);
+    };
+    dd.menu.addEventListener('focusout', closeOnFocusout);
+    dd.button.addEventListener('focusout', closeOnFocusout);
+  }
+
+  const mobileFocusables = () => Array.from(
+    mobileMenu?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? [],
+  );
+
   function setMobile(open: boolean) {
     if (!burger || !mobileMenu) return;
+    const hadFocusInside = mobileMenu.contains(document.activeElement);
     if (open) {
       toolsDropdown?.setOpen(false);
       signsDropdown?.setOpen(false);
@@ -692,7 +710,28 @@ const visibleNavTools = locale === 'ru'
     mobileMenu.hidden = !open;
     mobileMenu.classList.toggle('is-open', open);
     document.documentElement.style.overflow = open ? 'hidden' : '';
+    // The overlay covers the page, so focus must travel with it: into the
+    // first menu link on open, back to the burger on close — never dropped
+    // onto <body> behind a full-screen surface.
+    if (open) mobileFocusables()[0]?.focus();
+    else if (hadFocusInside) burger.focus();
   }
+
+  // While the full-screen menu is open, Tab cycles inside it.
+  mobileMenu?.addEventListener('keydown', (event) => {
+    if (event.key !== 'Tab') return;
+    const items = mobileFocusables();
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
   burger?.addEventListener('click', () => {
     setMobile(burger.getAttribute('aria-expanded') !== 'true');
   });
@@ -711,7 +750,9 @@ const visibleNavTools = locale === 'ru'
       ? toolsDropdown.button
       : signsDropdown?.menu.contains(focused)
         ? signsDropdown.button
-        : null;
+        : mobileMenu && mobileMenu.contains(focused)
+          ? burger
+          : null;
     toolsDropdown?.setOpen(false);
     signsDropdown?.setOpen(false);
     setMobile(false);

@@ -41,6 +41,18 @@ describe('resolveLocalToUtc', () => {
   });
 });
 
+describe('input shape', () => {
+  it('rejects non-canonical date and time strings instead of mis-resolving them', () => {
+    // Unpadded input would never match Intl's zero-padded wall strings and
+    // used to fall silently into the dst-gap branch.
+    expect(() => resolveLocalToUtc('1990-6-15', '08:30', 'Europe/Madrid')).toThrow(RangeError);
+    expect(() => resolveLocalToUtc('1990-06-15', '8:30', 'Europe/Madrid')).toThrow(RangeError);
+    expect(() => resolveLocalToUtc('1990-06-15T00:00', '08:30', 'Europe/Madrid')).toThrow(RangeError);
+    const resolved = resolveLocalToUtc('1990-06-15', '08:30', 'Europe/Madrid');
+    expect(resolved.flags).not.toContain('dst-gap');
+  });
+});
+
 describe('offsetAt', () => {
   it('reads sub-minute LMT offsets', () => {
     const off = offsetAt('America/Mexico_City', Date.UTC(1907, 6, 6));

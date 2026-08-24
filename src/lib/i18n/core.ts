@@ -36,7 +36,7 @@ export interface LocaleMeta {
  */
 export const LOCALE_META = {
   en: { pathPrefix: '', htmlLang: 'en', dir: 'ltr', hreflang: 'en', intlLocale: 'en-US', ogLocale: 'en_US', languageName: 'English' },
-  es: { pathPrefix: '/es', htmlLang: 'es', dir: 'ltr', hreflang: 'es', intlLocale: 'es-419', ogLocale: 'es_ES', languageName: 'Español' },
+  es: { pathPrefix: '/es', htmlLang: 'es', dir: 'ltr', hreflang: 'es', intlLocale: 'es-419', ogLocale: 'es_LA', languageName: 'Español' },
   pt: { pathPrefix: '/pt', htmlLang: 'pt-BR', dir: 'ltr', hreflang: 'pt-BR', intlLocale: 'pt-BR', ogLocale: 'pt_BR', languageName: 'Português (Brasil)' },
   fr: { pathPrefix: '/fr', htmlLang: 'fr', dir: 'ltr', hreflang: 'fr', intlLocale: 'fr-FR', ogLocale: 'fr_FR', languageName: 'Français' },
   it: { pathPrefix: '/it', htmlLang: 'it', dir: 'ltr', hreflang: 'it', intlLocale: 'it-IT', ogLocale: 'it_IT', languageName: 'Italiano' },

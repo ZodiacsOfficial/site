@@ -207,6 +207,7 @@ const fr = {
   dignityFall: 'chute',
   explorerHint: 'Appuie sur une planète, un signe, une maison ou une ligne d’aspect pour l’examiner — tu peux aussi sélectionner la roue et utiliser les touches fléchées.',
   explorerLabel: 'Thème astral interactif',
+  explorerKeyHint: 'Les flèches gauche et droite parcourent les positions ; Entrée ouvre le panneau de détails.',
   selectionCleared: 'Sélection annulée.',
   inspectorClose: 'Fermer les détails',
   speed: 'Vitesse',

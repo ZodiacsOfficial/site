@@ -1,6 +1,7 @@
 // Vercel serverless function for a durable, subscribable transit calendar.
 // The query carries the existing positions-only v2 share token: planetary
 // longitudes plus ASC/MC, with no name, birth date, time, place, or coordinates.
+import { checkRateLimit } from '@vercel/firewall';
 import { scanTransitContacts } from '../../src/lib/engine/transit-scan-server.js';
 import { serializeTransitContacts } from '../../src/lib/ical.js';
 import { decodePositionsLink } from '../../src/lib/share-positions.js';
@@ -60,6 +61,20 @@ function send(res: any, status: number, type: string, body: string, cache: strin
 
 type TransitCalendarBuilder = (token: string) => string;
 
+/** Uses Vercel's per-region firewall counters; the matching WAF rule must use this exported ID. */
+export const TRANSIT_CALENDAR_RATE_LIMIT_ID = 'zodiacs-transit-calendar';
+
+async function transitCalendarRateLimited(req: any): Promise<boolean> {
+  try {
+    const result = await checkRateLimit(TRANSIT_CALENDAR_RATE_LIMIT_ID, { headers: req.headers });
+    // CDN caching absorbs repeat tokens; the counter bounds an attacker
+    // minting unlimited distinct tokens. An unprovisioned rule never blocks.
+    return result?.rateLimited === true && result?.error !== 'not-found';
+  } catch {
+    return false;
+  }
+}
+
 export async function handleTransitCalendar(
   req: any,
   res: any,
@@ -68,6 +83,11 @@ export async function handleTransitCalendar(
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     send(res, 405, 'text/plain', 'Method not allowed', 'no-store');
+    return;
+  }
+  if (await transitCalendarRateLimited(req)) {
+    res.setHeader('Retry-After', '60');
+    send(res, 429, 'text/plain', 'Rate limited', 'no-store');
     return;
   }
 

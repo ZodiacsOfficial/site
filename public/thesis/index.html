@@ -2690,19 +2690,34 @@
       if(open){ signsMenu.hidden = false; requestAnimationFrame(function(){ signsMenu.classList.add('is-open'); }); }
       else { signsMenu.classList.remove('is-open'); setTimeout(function(){ signsMenu.hidden = true; }, 240); }
     }
+    function mobileFocusables(){
+      return mobile ? Array.prototype.slice.call(mobile.querySelectorAll('a[href], button:not([disabled])')) : [];
+    }
     function setMobile(open){
       if(!burger||!mobile) return;
+      var hadFocusInside = mobile.contains(document.activeElement);
       burger.setAttribute('aria-expanded', String(open));
       burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       mobile.hidden = !open;
       mobile.classList.toggle('is-open', open);
       document.documentElement.style.overflow = open ? 'hidden' : '';
+      var items = mobileFocusables();
+      if(open && items[0]) items[0].focus();
+      else if(!open && hadFocusInside) burger.focus();
     }
+    if(mobile) mobile.addEventListener('keydown', function(e){
+      if(e.key !== 'Tab') return;
+      var items = mobileFocusables();
+      if(!items.length) return;
+      var first = items[0], last = items[items.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    });
     if(signsBtn) signsBtn.addEventListener('click', function(){ setSigns(signsBtn.getAttribute('aria-expanded') !== 'true'); });
     document.addEventListener('click', function(e){ if(wrap && !wrap.contains(e.target)) setSigns(false); });
     if(burger) burger.addEventListener('click', function(){ setMobile(burger.getAttribute('aria-expanded') !== 'true'); });
     if(mobile) mobile.addEventListener('click', function(e){ if(e.target.closest('a')) setMobile(false); });
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ setSigns(false); setMobile(false); } });
+    document.addEventListener('keydown', function(e){ if(e.key !== 'Escape') return; var wasInMobile = mobile && mobile.contains(document.activeElement); setSigns(false); setMobile(false); if(wasInMobile && burger) burger.focus(); });
   })();
     })();
 

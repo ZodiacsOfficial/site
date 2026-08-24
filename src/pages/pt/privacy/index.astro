@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '2 de agosto de 2026';
+const updated = '23 de agosto de 2026';
 
 const jsonLd = [
   {
@@ -43,6 +43,41 @@ const jsonLd = [
         mapas que você escolher sincronizar para exibi-los nos seus outros
         dispositivos. Os dados de nascimento não são transmitidos nem
         armazenados em nossos servidores como parte do cálculo em si.
+      </p>
+
+      <h2>Momentos do Living Chart</h2>
+      <p>
+        O Living Chart permite salvar uma categoria opcional ou uma nota curta
+        ao lado de uma cópia datada da previsão pessoal e do recibo factual do
+        céu que você viu. Um primeiro salvamento fica neste navegador. Se você
+        escolher separadamente a opção <strong>Keep this on every
+        device</strong> (manter em todos os seus dispositivos), a data e a
+        precisão de horário da entrada, a categoria, a nota, a previsão
+        congelada e o identificador do mapa são enviados ao Supabase e
+        armazenados para a sua conta conectada. O acesso é restrito por
+        segurança em nível de linha e o Supabase criptografa os dados
+        armazenados em repouso. Não é criptografia de ponta a ponta: a
+        Zodiacs.org e o Supabase podem processar tecnicamente a entrada
+        armazenada para oferecer sincronização, suporte, exportação e
+        exclusão.
+      </p>
+      <p>
+        A sincronização do Living Chart tem o seu próprio consentimento,
+        separado da sincronização de mapas salvos. Não tornamos as entradas
+        públicas, não as indexamos, não as enviamos automaticamente ao Guide
+        nem a outro provedor de IA, não as usamos para gerar horóscopos, não
+        as vendemos e não incluímos intencionalmente o texto delas na análise
+        nem nos registros da aplicação. Retirar o consentimento exclui as
+        entradas remotas e avança uma versão de consentimento, para que uma
+        aba antiga sem conexão não possa enviá-las de novo. As cópias já
+        mantidas em um dispositivo permanecem até você excluí-las lá ou limpar
+        os dados deste site no navegador. Excluir uma entrada remove nota,
+        categoria, previsão, identificador do mapa e data do dispositivo e do
+        registro na nuvem; pode permanecer um marcador técnico de exclusão sem
+        conteúdo, para que uma solicitação atrasada não possa restaurá-la. A
+        linha do tempo oferece exportação em JSON portátil e Markdown legível,
+        edição e exclusão por entrada e um controle de nova tentativa quando a
+        sincronização precisa de atenção.
       </p>
 
       <h2>The Cabinet of Twelve, Shelf e endereços públicos</h2>
@@ -111,7 +146,7 @@ const jsonLd = [
         recolhe cópias que outras pessoas ou serviços salvaram ou republicaram.
       </p>
 
-      <h2>Solicitações automáticas do Registro</h2>
+      <h2>Fontes de dados públicas do Astrofolio, do Terminal e do Registro</h2>
       <p>
         Algumas seções do Registro solicitam automaticamente, pelo seu
         navegador, dados públicos de mercado à DexScreener, dados públicos de
@@ -122,6 +157,27 @@ const jsonLd = [
         comuns de uma solicitação web, como endereço IP, data, hora, navegador e
         a página de origem permitida pela política do navegador; as políticas de
         privacidade próprias desses serviços se aplicam.
+      </p>
+      <p>
+        Na página Como comprar do Astrofolio, abrir a página ou trocar o signo
+        selecionado não carrega a Jupiter, não contata o software de carteira
+        e não solicita um preço. Somente depois que você carrega
+        explicitamente a ferramenta opcional, o seu navegador envia à Jupiter
+        independente o identificador do token selecionado e o valor
+        solicitado como parâmetros de cotação, e pede à DexScreener o contexto
+        de liquidez indexada. Essas solicitações de exibição não incluem
+        endereço de carteira. Se você decidir revisar uma troca direta, a
+        carteira compatível que você selecionar fornece o seu endereço público
+        Solana à Jupiter, para que a Jupiter monte a transação exata que você
+        revisará. A sua carteira assina localmente. O seu navegador envia
+        então a transação assinada e o identificador da solicitação ao
+        endpoint de execução da Jupiter. Nem o endereço público nem a
+        transação assinada são enviados a um servidor da Zodiacs.org, e a
+        Zodiacs.org nunca pede nem recebe uma frase de recuperação ou chave
+        privada. Jupiter, DexScreener e o seu serviço de carteira podem
+        receber metadados comuns de uma solicitação web, como endereço IP,
+        navegador e hora; as políticas de privacidade e retenção próprias
+        desses serviços se aplicam.
       </p>
       <p>
         O perfil de cada signo no Registo é apenas de leitura. Mostra dados

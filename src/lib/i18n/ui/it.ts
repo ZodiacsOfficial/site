@@ -244,6 +244,7 @@ const it = {
   explorerHint:
     "Tocca un pianeta, un segno, una casa o una linea d’aspetto per esaminarli — oppure seleziona la ruota e usa i tasti freccia.",
   explorerLabel: "Tema natale interattivo",
+  explorerKeyHint: "Le frecce sinistra e destra scorrono le posizioni; Invio apre il pannello dei dettagli.",
   selectionCleared: "Selezione annullata.",
   inspectorClose: "Chiudi i dettagli",
   speed: "Velocità",

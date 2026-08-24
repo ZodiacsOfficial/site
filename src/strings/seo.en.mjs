@@ -123,7 +123,7 @@ export const OG_EN = Object.freeze({
     horoscope: {
       kicker: 'Horoscope',
       title: '{sign}, your forecast',
-      subtitle: 'Daily, weekly, monthly, love, career, and yearly readings in plain language.',
+      subtitle: 'Daily, weekly, monthly, love, career, and yearly readings for every sign.',
     },
     howTo: {
       kicker: 'Learn astrology',
@@ -145,7 +145,7 @@ export const OG_EN = Object.freeze({
     { key: 'mercury-retrograde', path: '/mercury-retrograde/', kicker: 'The calendar', title: 'Mercury retrograde', sub: 'Every window through 2027, with station dates and the themes to watch.' },
     { key: 'compatibility', path: '/compatibility/', kicker: 'Compatibility', title: 'Two charts, compared', sub: 'Whole-chart synastry — plus guides to all 78 sign pairings.' },
     { key: 'horoscopes', path: '/horoscopes/', kicker: 'Horoscopes', title: 'All twelve signs', sub: 'Daily through yearly readings with clear themes and one useful next move.' },
-    { key: 'learn', path: '/learn/', kicker: 'Learn astrology', title: 'Read your chart', sub: 'The signs, the planets, the houses, and the aspects, in plain language.' },
+    { key: 'learn', path: '/learn/', kicker: 'Learn astrology', title: 'Read your chart', sub: 'The signs, the planets, the houses, and the aspects — and how they fit together.' },
     { key: 'how-to-read-a-birth-chart', path: '/learn/how-to-read-a-birth-chart/', kicker: 'Learn astrology', title: 'How to read a birth chart', sub: 'Big three, planets room by room, the working aspects, then the weather — in order.' },
     { key: 'tools', path: '/tools/', kicker: 'Free astrology tools', title: 'Calculators, no signup', sub: 'Birth chart, compatibility, moon sign, rising sign, and more — free to use.' },
     { key: 'transits', path: '/transits/', kicker: 'Free tracker', title: 'Your transits, today', sub: 'The current sky aspected to your birth chart, within 3° of exact.' },

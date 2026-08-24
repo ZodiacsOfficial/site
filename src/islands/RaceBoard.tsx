@@ -311,13 +311,15 @@ export default function RaceBoard({
         {!membership && (
           <>
             <h3>Pick your team. You already know which one.</h3>
-            <div class="race-board__signs" role="radiogroup" aria-label="Your sign">
+            {/* Plain toggle buttons, not a radio pattern: every chip stays in
+                the tab order and no arrow-key model is implied — the working
+                LayerChips convention. */}
+            <div class="race-board__signs" role="group" aria-label="Your sign">
               {signs.map((sign) => (
                 <button
                   key={sign.slug}
                   type="button"
-                  role="radio"
-                  aria-checked={selected === sign.slug}
+                  aria-pressed={selected === sign.slug}
                   class="race-board__chip"
                   data-selected={selected === sign.slug ? 'true' : undefined}
                   style={`--sign:${sign.hue}`}
