@@ -9,6 +9,7 @@ import {
 } from "./aura/talisman";
 import { cabinetEditionForHolding } from "./aura/cabinet-finish";
 import {
+  PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
   drawShareBrandLockup,
   loadShareBrandIcon,
   type LoadedShareBrandIcon,
@@ -107,10 +108,10 @@ export const AURA_SHARE_LAYOUT = Object.freeze({
   representedNameFontSize: 16,
   representedEditionFontSize: 12,
   representedDividerY: 1085,
-  brandCenterY: 1290,
-  brandIconSize: 44,
-  brandFontSize: 22,
-  brandGap: 0,
+  brandCenterY: PORTRAIT_SHARE_CARD_BRAND_LAYOUT.centerY,
+  brandIconSize: PORTRAIT_SHARE_CARD_BRAND_LAYOUT.iconSize,
+  brandFontSize: PORTRAIT_SHARE_CARD_BRAND_LAYOUT.fontSize,
+  brandGap: PORTRAIT_SHARE_CARD_BRAND_LAYOUT.gap,
 });
 const CARD_DATE = new Intl.DateTimeFormat("en", {
   year: "numeric",
@@ -673,7 +674,7 @@ async function paintAuraShareCard(
   context.textAlign = "left";
   context.fillText(`REGISTRY CHECKED ${snapshot.checkedDate.toUpperCase()}`, 66, 1290);
   drawShareBrandLockup(context, brandIcon, {
-    wordmarkX: W - 66,
+    wordmarkX: PORTRAIT_SHARE_CARD_BRAND_LAYOUT.wordmarkX,
     centerY: AURA_SHARE_LAYOUT.brandCenterY,
     iconSize: AURA_SHARE_LAYOUT.brandIconSize,
     fontSize: AURA_SHARE_LAYOUT.brandFontSize,

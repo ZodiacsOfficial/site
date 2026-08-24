@@ -598,7 +598,7 @@ async function verifySampleAndLiveCollection(browser, baseURL) {
     '4 of the twelve',
     'solana · jul 16, 2026 utc',
     'editions read from the public record',
-    'zodiacs · org',
+    'zodiacs.org',
   ]) {
     assert.equal(
       cabinetPaintedLower.includes(expected),

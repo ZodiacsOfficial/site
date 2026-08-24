@@ -2,6 +2,12 @@ import { signBySlug } from "./signs";
 import { auraShareDateMs } from "./aura-share";
 import { cabinetEditionForHolding } from "./aura/cabinet-finish";
 import {
+  PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
+  drawShareBrandLockup,
+  withShareBrandIcon,
+  type ShareCardBrandLayout,
+} from "./share-card-brand";
+import {
   AURA_SIGN_ORDER,
   type AuraCabinetEdition,
   type AuraCabinetHolding,
@@ -60,7 +66,7 @@ export interface AuraCabinetSnapshot {
 
 export const AURA_CABINET_FILENAME = "zodiacs-cabinet.png";
 
-const BG = "#07080B";
+const BG = "#060709";
 const INK = "#EEF1F7";
 const MUTED = "#9CA5B8";
 const HAIR = "rgba(205, 212, 226, 0.16)";
@@ -91,6 +97,23 @@ const CARD_DATE = new Intl.DateTimeFormat("en", {
   day: "numeric",
   timeZone: "UTC",
 });
+
+/** Scales the approved 1080px lockup with the captured Cabinet card width. */
+export function auraCabinetBrandLayout(
+  cardWidth: number,
+  wordmarkX: number,
+  centerY: number,
+): ShareCardBrandLayout {
+  const scale = cardWidth / 1080;
+  return {
+    wordmarkX,
+    centerY,
+    iconSize: PORTRAIT_SHARE_CARD_BRAND_LAYOUT.iconSize * scale,
+    fontSize: PORTRAIT_SHARE_CARD_BRAND_LAYOUT.fontSize * scale,
+    gap: 0,
+    serif: SERIF,
+  };
+}
 
 /** Exact through ninety-nine sculptures, then a dignified cap. */
 function tallyLabel(holding: AuraCabinetHolding): string | null {
@@ -297,10 +320,13 @@ export async function drawAuraCabinetCard(input: AuraCabinetCardInput): Promise<
   context.fillStyle = MUTED;
   context.font = `500 ${Math.round(w * 0.0155)}px ${MONO}`;
   context.fillText("EDITIONS READ FROM THE PUBLIC RECORD", pad, footerY + footerH * 0.74);
-  context.textAlign = "right";
-  context.fillStyle = INK;
-  context.font = `500 ${Math.round(w * 0.019)}px ${MONO}`;
-  context.fillText("ZODIACS · ORG", w - pad, footerY + footerH * 0.74);
+  await withShareBrandIcon((brandIcon) => {
+    drawShareBrandLockup(
+      context,
+      brandIcon,
+      auraCabinetBrandLayout(w, w - pad, footerY + footerH * 0.74),
+    );
+  });
 
   const blob = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob(resolve, "image/png"),

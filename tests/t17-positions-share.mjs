@@ -128,6 +128,8 @@ try {
       globalThis.__t17Clipboard = [];
       globalThis.__t17Events = [];
       globalThis.__t17CanvasText = [];
+      globalThis.__t17CanvasIds = new WeakMap();
+      globalThis.__t17NextCanvasId = 1;
       globalThis.__t17DownloadClicks = [];
       globalThis.__t17ShareCalls = 0;
       globalThis.__t17IconFetches = [];
@@ -142,8 +144,13 @@ try {
       };
       const fillText = CanvasRenderingContext2D.prototype.fillText;
       CanvasRenderingContext2D.prototype.fillText = function (value, x, y, maxWidth) {
+        let canvasId = globalThis.__t17CanvasIds.get(this.canvas);
+        if (canvasId === undefined) {
+          canvasId = globalThis.__t17NextCanvasId++;
+          globalThis.__t17CanvasIds.set(this.canvas, canvasId);
+        }
         globalThis.__t17CanvasText.push({
-          value: String(value), x, y, align: this.textAlign, at: performance.now(),
+          value: String(value), x, y, align: this.textAlign, at: performance.now(), canvasId,
         });
         return maxWidth === undefined
           ? fillText.call(this, value, x, y)
@@ -219,8 +226,8 @@ try {
           const all = globalThis.__t17CanvasText.slice();
           const start = all.findLastIndex((entry) => entry.value === title);
           if (start < 0) return [];
-          const relativeEnd = all.slice(start).findIndex((entry) => entry.value === 'ZODIACS · ORG');
-          return relativeEnd < 0 ? [] : all.slice(start, start + relativeEnd + 1);
+          const canvasId = all[start].canvasId;
+          return all.filter((entry) => entry.canvasId === canvasId);
         };
         return {
           approach: cardText('How to approach me'),
@@ -241,11 +248,16 @@ try {
       assert.ok(await source.locator(SHARE_WING_LINKS).count() > 0,
         'a fresh computed chart must retain sanctioned records links');
 
-      const preparedSheet = await source.evaluate(() => ({
-        text: globalThis.__t17CanvasText.slice(),
-        events: globalThis.__t17Events.slice(),
-        brandIconFetches: globalThis.__t17BrandIconFetches.slice(),
-      }));
+      const preparedSheet = await source.evaluate(() => {
+        const all = globalThis.__t17CanvasText.slice();
+        const titleIndex = all.findLastIndex((entry) => entry.value === 'Birth chart');
+        const canvasId = all[titleIndex]?.canvasId;
+        return {
+          text: all.filter((entry) => entry.canvasId === canvasId),
+          events: globalThis.__t17Events.slice(),
+          brandIconFetches: globalThis.__t17BrandIconFetches.slice(),
+        };
+      });
       const preparedSheetText = preparedSheet.text.map((entry) => entry.value).join(' | ');
       for (const label of [
         'Birth chart', 'Birth details hidden', 'Positions', 'Aspect grid',
@@ -549,11 +561,11 @@ try {
       }
       assert.equal(approachText.includes(`Engine ${ENGINE_VERSION}`), true,
         'approach PNG must carry only its engine receipt');
-      const approachWordmark = contextualPrepared.approach.find((entry) => entry.value === 'ZODIACS · ORG');
+      const approachWordmark = contextualPrepared.approach.find((entry) => entry.value === 'zodiacs.org');
       assert.deepEqual(
         { align: approachWordmark?.align, x: approachWordmark?.x, y: approachWordmark?.y },
-        { align: 'right', x: 1016, y: 1304 },
-        'approach wordmark must occupy the bottom-right register',
+        { align: 'right', x: 1014, y: 1290 },
+        'approach lockup must occupy the protected bottom-right register',
       );
 
       await source.evaluate(() => {
@@ -699,11 +711,11 @@ try {
       assert.equal(communicationText.includes(`Engine ${ENGINE_VERSION}`), true,
         'communication PNG must carry only its engine receipt');
       const communicationWordmark = contextualPrepared.communication
-        .find((entry) => entry.value === 'ZODIACS · ORG');
+        .find((entry) => entry.value === 'zodiacs.org');
       assert.deepEqual(
         { align: communicationWordmark?.align, x: communicationWordmark?.x, y: communicationWordmark?.y },
-        { align: 'right', x: 1016, y: 1304 },
-        'communication wordmark must occupy the bottom-right register',
+        { align: 'right', x: 1014, y: 1290 },
+        'communication lockup must occupy the protected bottom-right register',
       );
       assert.deepEqual(
         communicationRender.events.slice(communicationEventStart).map(({ name, props }) => ({ name, props })),

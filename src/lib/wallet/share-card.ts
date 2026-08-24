@@ -1,6 +1,11 @@
 import { aspectLabel, planetLabel } from '../i18n/astrology';
 import { degreeInSign, signForLongitude } from '../signs';
 import { savePngBlob, type CardOutcome } from '../share-card';
+import {
+  PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
+  drawShareBrandLockup,
+  withShareBrandIcon,
+} from '../share-card-brand';
 import type { MinimalBody, PairSummary } from '../engine/synastry';
 import { truncateWalletAddress } from './address';
 import type { WalletChain } from './types';
@@ -22,6 +27,7 @@ const MUTED = '#8E96AB';
 const HAIR = 'rgba(198, 204, 218, 0.12)';
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
+export const WALLET_SHARE_CARD_BRAND_LAYOUT = PORTRAIT_SHARE_CARD_BRAND_LAYOUT;
 
 export function walletCardPlacements(bodies: MinimalBody[]) {
   return ['Sun', 'Moon', 'Mercury'].flatMap((bodyName) => {
@@ -146,12 +152,12 @@ export async function drawWalletShareCard(input: WalletShareCardInput): Promise<
   context.fillStyle = MUTED;
   context.font = `400 21px ${MONO}`;
   context.fillText(walletText('cardSymbolic'), 78, 1208);
-  context.fillStyle = INK;
-  context.textAlign = 'right';
-  context.font = `500 30px ${SERIF}`;
-  try { context.letterSpacing = '7px'; } catch {}
-  context.fillText('ZODIACS · ORG', W - 72, 1285);
-  try { context.letterSpacing = '0px'; } catch {}
+  await withShareBrandIcon((brandIcon) => {
+    drawShareBrandLockup(context, brandIcon, {
+      ...WALLET_SHARE_CARD_BRAND_LAYOUT,
+      serif: SERIF,
+    });
+  });
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');
@@ -162,4 +168,3 @@ export async function saveWalletShareCard(input: WalletShareCardInput): Promise<
   const blob = await drawWalletShareCard(input);
   return savePngBlob(blob, 'zodiacs-wallet-chart.png');
 }
-

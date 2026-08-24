@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   championShareSnapshot,
+  RACE_SHARE_CARD_BRAND_LAYOUT,
   raceShareAccessibleDescription,
   raceShareSnapshot,
 } from './share-card';
@@ -31,6 +32,16 @@ const WEEK_INPUT = {
 };
 
 describe('raceShareSnapshot', () => {
+  it('keeps the logo in the top-right safe area and the race URL in the footer', () => {
+    expect(RACE_SHARE_CARD_BRAND_LAYOUT).toMatchObject({
+      wordmarkX: 1014,
+      centerY: 76,
+      iconSize: 44,
+      fontSize: 22,
+      gap: 0,
+    });
+  });
+
   it('produces the §G copy shapes for every one of the twelve signs', () => {
     for (const row of BOARD) {
       const snapshot = raceShareSnapshot({ ...WEEK_INPUT, sign: row.sign });

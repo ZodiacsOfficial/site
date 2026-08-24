@@ -19,7 +19,12 @@ import { aspectLabel, planetLabel } from './i18n/astrology';
 import { degreeInSign, SIGNS, signForLongitude, signName } from './signs';
 import { collisionNudge } from './scene/layout';
 import { shareCardText } from './share-card-copy';
-import { SHARE_CARD_WORDMARK, savePngBlob, type CardOutcome } from './share-card';
+import { savePngBlob, type CardOutcome } from './share-card';
+import {
+  PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
+  drawShareBrandLockup,
+  withShareBrandIcon,
+} from './share-card-brand';
 
 export interface CompatibilityCardPerson {
   /** The display label the user chose; no birth input is accepted here. */
@@ -38,6 +43,10 @@ const FAINT = '#6C7488';
 const HAIR = 'rgba(198, 204, 218, 0.12)';
 const SERIF = '"EB Garamond", Georgia, serif';
 const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
+export const COMPATIBILITY_CARD_BRAND_LAYOUT = Object.freeze({
+  ...PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
+  centerY: 76,
+});
 
 /** Wheel geometry. The band sits outermost; the two rings nest inside it. */
 const CX = 540;
@@ -311,12 +320,12 @@ export async function drawCompatibilityCard(
     ctx.fillText(placements, W - 120, y);
   });
 
-  ctx.fillStyle = MUTED;
-  ctx.font = `500 30px ${SERIF}`;
-  ctx.textAlign = SHARE_CARD_WORDMARK.align;
-  try { ctx.letterSpacing = '8px'; } catch {}
-  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
-  try { ctx.letterSpacing = '0px'; } catch {}
+  await withShareBrandIcon((brandIcon) => {
+    drawShareBrandLockup(ctx, brandIcon, {
+      ...COMPATIBILITY_CARD_BRAND_LAYOUT,
+      serif: SERIF,
+    });
+  });
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
   if (!blob) throw new Error('png encode failed');
