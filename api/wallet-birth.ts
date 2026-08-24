@@ -1,3 +1,4 @@
+import { checkRateLimit } from '@vercel/firewall';
 import { parseWalletAddress } from '../src/lib/wallet/address.js';
 import {
   configuredWalletChains,
@@ -123,6 +124,20 @@ export function clearWalletBirthCache(): void {
   birthCache.clear();
 }
 
+/** Uses Vercel's per-region firewall counters; the matching WAF rule must use this exported ID. */
+export const WALLET_BIRTH_RATE_LIMIT_ID = 'zodiacs-wallet-birth';
+
+async function walletBirthRateLimited(req: any): Promise<boolean> {
+  try {
+    const result = await checkRateLimit(WALLET_BIRTH_RATE_LIMIT_ID, { headers: req.headers });
+    // An unprovisioned rule never blocks: this endpoint walks paid upstream
+    // history for up to 60s, so the counter is defense, not availability.
+    return result?.rateLimited === true && result?.error !== 'not-found';
+  } catch {
+    return false;
+  }
+}
+
 export async function handleWalletBirth(
   req: any,
   res: any,
@@ -132,6 +147,11 @@ export async function handleWalletBirth(
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     sendJson(res, 405, { error: 'method' });
+    return;
+  }
+  if (await walletBirthRateLimited(req)) {
+    res.setHeader('Retry-After', '60');
+    sendJson(res, 429, { error: 'rate_limited' });
     return;
   }
   if (!isAllowedWalletRequest(req, env)) {

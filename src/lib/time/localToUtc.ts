@@ -73,6 +73,15 @@ export function resolveLocalToUtc(
   time: string, // 'HH:MM'
   tz: string
 ): LocalTimeResolution {
+  // The wall-clock verification below compares built strings against
+  // Intl's zero-padded output, so a non-canonical input ('8:30',
+  // '1990-6-15') would never match and fall silently into the dst-gap
+  // branch, returning a plausible instant flagged as a gap. Reject the
+  // shape up front instead — a shared exported function must not hand a
+  // future caller a silently shifted time.
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time)) {
+    throw new RangeError(`resolveLocalToUtc needs 'YYYY-MM-DD' and 'HH:MM' input, got '${date}' '${time}'`);
+  }
   const [y, mo, d] = date.split('-').map(Number);
   const [hh, mm] = time.split(':').map(Number);
   const wallMs = Date.UTC(y, mo - 1, d, hh, mm);
