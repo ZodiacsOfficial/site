@@ -135,12 +135,15 @@ describe('the landing', () => {
     expect(panels.some(([, sign]) => sign === choiceSign(checked[0]))).toBe(true);
 
     // Sign-level handoffs stay educational. Market discovery is consolidated
-    // into one deliberate bottom gateway rather than repeated in each panel.
+    // into the leaderboard gateway rather than repeated in each panel, while
+    // the executable venue route remains out of the Consumer landing.
     expect(vitrine).not.toContain('href="/terminal/');
     const gateway = html.match(/<section\b[^>]*\bid="market-layer"[^>]*>([\s\S]*?)<\/section>/)?.[1];
     expect(gateway).toBeDefined();
-    expect(gateway.match(/href="\/terminal\/"/g)).toHaveLength(1);
-    expect(gateway.match(/href="\/terminal\/markets\/"/g)).toHaveLength(1);
+    expect(gateway.match(/href="\/astrofolio\/\?sign=[a-z]+#consumer-sign-preview"/g)).toHaveLength(12);
+    expect(gateway.match(/href="\/registry\/technical\/#market-transparency"/g)).toHaveLength(1);
+    expect(gateway.match(/href="\/terminal\/\?rank=marketCap"/g)).toHaveLength(1);
+    expect(gateway).not.toContain('href="/terminal/markets/');
     expect(html).not.toMatch(/href="https:\/\/(?:[^"/]+\.)?jup\.ag\//);
     expect(html).not.toContain('data-trade-panel');
   });
