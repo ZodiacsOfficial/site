@@ -54,7 +54,7 @@ describe('technical audit remediation contracts', () => {
       read('public/registry/technical/index.html'),
     ]);
     const appKeys = pages.map((page) => page.match(/<script defer src="(\/assets\/app\.js\?v=[^"]+)"><\/script>/u)?.[1]);
-    expect(new Set(appKeys)).toEqual(new Set(['/assets/app.js?v=z4']));
+    expect(new Set(appKeys)).toEqual(new Set(['/assets/app.js?v=z10']));
 
     const cacheFor = (source) => headerMap(config.headers.find((rule) => rule.source === source)).get('Cache-Control');
     expect(cacheFor('/assets/app.js')).toBe('public, max-age=0, must-revalidate');

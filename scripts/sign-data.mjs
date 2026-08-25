@@ -266,16 +266,17 @@ export const SIGN_PAGES = {
   }
 };
 
-// Live market pairs (Dex Screener). Cancer and Sagittarius currently have no
-// indexed pair and intentionally fall back to a quiet unavailable state.
+// Established Zodiac/SOL market pairs (Dex Screener).
 export const MARKET_PAIRS = {
   aries:       { chainId: 'solana', pairId: 'HRn98YLGigP475eS1GaQYRMbqk1V4dkV6tdKyLhVh2iS' },
   taurus:      { chainId: 'solana', pairId: '2GNtxia4fLW3URj5MLqVfgoKrAgDpphtAVazK41eTPfu' },
   gemini:      { chainId: 'solana', pairId: 'HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9' },
+  cancer:      { chainId: 'solana', pairId: 'DaTEcH6da4i1evZU37F9ibQirYXhLKZpKDzDno346nSW' },
   leo:         { chainId: 'solana', pairId: '48ErBGMqiZekyLoCcebd7cS5KNQPzqr7QQAK9mzAPQGQ' },
   virgo:       { chainId: 'solana', pairId: '5WcVjf8fzPkHaZqTSZDdbDFL6p2bLbAgEigxpevNrcRh' },
   libra:       { chainId: 'solana', pairId: 'DTXPQjK4ae4h2Wc7D5Rpij8YmSQxqLuTcNKrpBCjcAN9' },
   scorpio:     { chainId: 'solana', pairId: '3d2KYuMgj2yotNC6SKX4HNoeSWp4n8zqZSQ9kFH81Yta' },
+  sagittarius: { chainId: 'solana', pairId: '7mP6WeVYBNt3eao5szsMPmuHughHjNRx26TcrgJXZRky' },
   capricorn:   { chainId: 'solana', pairId: '549aknNCvxbiqmikS6sAnY6Dbg37MeENWn6ZFBfc7sin' },
   aquarius:    { chainId: 'solana', pairId: 'BygCEAhCNyWC8Co9yPa4K84NGkgkgMWdib2FG5hhuiUv' },
   pisces:      { chainId: 'solana', pairId: 'Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko' }

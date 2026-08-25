@@ -7924,10 +7924,12 @@
       font-family: var(--mono);
       font-variant-numeric: tabular-nums;
     }
-    .static-vitrine__movement { color: var(--static-sign); font-family: var(--sans); }
+    .static-vitrine__movement { color: var(--market-flat); font-family: var(--sans); }
+    .static-vitrine__movement.is-up { color: var(--market-up); }
+    .static-vitrine__movement.is-down { color: var(--vermilion); }
     .static-vitrine__actions {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       justify-items: stretch;
       gap: 9px;
       max-width: 510px;
@@ -8362,7 +8364,7 @@
       .static-vitrine__dates { margin-top: 9px; }
       .static-vitrine__price { margin-top: 15px; }
       .static-vitrine__actions { margin-top: 17px; }
-      .static-vitrine__actions { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); justify-items: stretch; }
+      .static-vitrine__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); justify-items: stretch; }
       .consumer-static .static-vitrine__actions .btn { width: 100%; }
       .static-vitrine__record { grid-column: 1 / -1; justify-self: start; }
       .static-buy__steps { grid-template-columns: 1fr; padding: 6px; }
@@ -9081,11 +9083,6 @@
       font: 500 clamp(50px, 5vw, 76px)/.86 var(--serif);
       letter-spacing: -.045em;
     }
-    .consumer-registry .vitrine-placard__identity p {
-      margin: 12px 0 0;
-      color: var(--ink-dim);
-      font: 400 14px/1.4 var(--sans);
-    }
     .consumer-registry .vitrine-price {
       display: flex;
       flex-wrap: wrap;
@@ -9100,7 +9097,9 @@
       font: 500 clamp(17px, 1.5vw, 21px)/1.2 var(--mono);
       font-variant-numeric: tabular-nums;
     }
-    .consumer-registry .vitrine-price__movement { color: var(--active-sign); }
+    .consumer-registry .vitrine-price__movement.is-up { color: var(--market-up); }
+    .consumer-registry .vitrine-price__movement.is-down { color: var(--vermilion); }
+    .consumer-registry .vitrine-price__movement.is-flat { color: var(--market-flat); }
     .consumer-registry .vitrine-market-meta {
       display: flex;
       flex-wrap: wrap;
@@ -9110,6 +9109,7 @@
       font: 500 11px/1.4 var(--sans);
       letter-spacing: 0;
     }
+    .consumer-registry .vitrine-market-meta__date { flex-basis: 100%; color: var(--ink-dim); font-size: 12px; }
     .consumer-registry .vitrine-market-meta a { color: var(--ink-dim); text-underline-offset: 4px; }
     .consumer-registry .vitrine-placard__actions {
       display: grid;
@@ -9134,31 +9134,112 @@
     }
     .consumer-registry .vitrine-placard__actions .btn::before,
     .consumer-registry .vitrine-placard__actions .btn::after { display: none; }
-    .consumer-registry .vitrine-placard__actions .btn--primary {
-      border-color: rgba(238,241,247,.3);
-      color: var(--ink);
+    .consumer-registry .vitrine-placard__actions .btn--explore,
+    .consumer-static .static-vitrine__actions .btn--explore { padding-inline: 17px; justify-content: center; color: var(--ink-2); }
+    .consumer-registry .vitrine-placard__actions .btn--fomo,
+    .consumer-static .static-vitrine__actions .btn--fomo {
+      gap: 8px;
+      padding: 4px 7px 4px 5px;
+      justify-content: flex-start;
+      border-color: rgba(255,255,255,.78);
+      color: #111318;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(229,228,224,.98)),
+        #f1f0ec;
+      box-shadow:
+        inset 0 1px 0 #fff,
+        inset 0 -1px 0 rgba(17,19,24,.1),
+        0 0 0 1px rgba(83,93,221,.12),
+        0 16px 34px -22px rgba(0,0,0,.95);
+      transition: transform 120ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);
     }
-    .consumer-registry .vitrine-placard__actions .btn--primary::after {
-      content: "↗";
+    .consumer-registry .vitrine-placard__actions .btn--fomo img,
+    .consumer-static .static-vitrine__actions .btn--fomo img {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      box-shadow: 0 0 0 1px rgba(17,19,24,.08), 0 5px 12px -7px rgba(0,0,0,.82);
+    }
+    .btn--fomo__copy { min-width: 0; display: grid; gap: 2px; text-align: left; }
+    .btn--fomo__copy small {
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      color: rgba(17,19,24,.58);
+      font: 600 8.5px/1 var(--sans);
+      letter-spacing: .035em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .btn--fomo__zodiac-emoji {
+      flex: 0 0 auto;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: 0;
+      filter: saturate(1.32) hue-rotate(-8deg) brightness(.78) contrast(1.8);
+      transform: translateY(-.5px);
+      transform-origin: center;
+    }
+    .btn--fomo__copy strong { color: #111318; font: 650 12.5px/1 var(--sans); letter-spacing: -.015em; white-space: nowrap; }
+    .btn--fomo__arrow {
+      flex: 0 0 31px;
+      width: 31px;
+      height: 31px;
+      margin-left: auto;
       display: grid;
       place-items: center;
-      flex: 0 0 30px;
-      width: 30px;
-      height: 30px;
       border-radius: 50%;
-      color: var(--bg);
-      background: var(--ink);
-      font: 600 14px/1 var(--sans);
+      color: #fff;
+      background: #535ddd;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.24), 0 5px 12px -8px rgba(43,49,142,.92);
+      font: 650 14px/1 var(--sans);
+      transition: transform 160ms cubic-bezier(.23,1,.32,1), background-color 180ms cubic-bezier(.32,.72,0,1);
     }
-    .consumer-registry .vitrine-placard__actions .btn--ghost { padding-inline: 17px; justify-content: center; color: var(--ink-2); }
-    .consumer-registry .vitrine-placard__actions .btn:hover { border-color: rgba(238,241,247,.5); background-color: rgba(14,16,22,.84); }
+    @media (hover: hover) and (pointer: fine) {
+      .consumer-registry .vitrine-placard__actions .btn:hover { border-color: rgba(238,241,247,.5); background-color: rgba(14,16,22,.84); }
+      .consumer-registry .vitrine-placard__actions .btn--fomo:hover,
+      .consumer-static .static-vitrine__actions .btn--fomo:hover {
+        transform: translateY(-1px);
+        border-color: #fff;
+        color: #111318;
+        background-color: #f8f7f4;
+      }
+      .consumer-registry .vitrine-placard__actions .btn--fomo:hover .btn--fomo__arrow,
+      .consumer-static .static-vitrine__actions .btn--fomo:hover .btn--fomo__arrow {
+        transform: translate(1px, -1px);
+        background-color: #626ce9;
+      }
+    }
     .consumer-registry .vitrine-placard__actions .btn:active { transform: scale(.98); }
-    .consumer-registry .vitrine-official-note {
-      max-width: 58ch;
-      margin: 10px 0 0;
-      color: var(--ink-dim);
-      font: 500 10px/1.45 var(--sans);
-      text-wrap: pretty;
+    .consumer-registry .vitrine-placard__actions .btn--fomo:active,
+    .consumer-static .static-vitrine__actions .btn--fomo:active {
+      transform: scale(.975);
+      transition-duration: 120ms;
+    }
+    .consumer-registry .vitrine-placard__actions .btn:focus-visible,
+    .consumer-static .static-vitrine__actions .btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    .consumer-registry .vitrine-placard__actions .btn--fomo:focus-visible,
+    .consumer-static .static-vitrine__actions .btn--fomo:focus-visible { outline-color: #7f88ff; }
+    .consumer-registry .vitrine-buy-options,
+    .consumer-static .vitrine-buy-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 7px;
+      align-items: baseline;
+      margin-top: 9px;
+      color: var(--ink-mute);
+      font: 500 11px/1.4 var(--sans);
+    }
+    .consumer-registry .vitrine-buy-options a,
+    .consumer-static .vitrine-buy-options a {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--ink-2);
+      text-underline-offset: 4px;
     }
     .consumer-registry .vitrine-placard__record {
       grid-column: 1 / -1;
@@ -9488,35 +9569,94 @@
       text-transform: uppercase;
     }
     .consumer-market-gateway__status > span:first-child { color: var(--ink-2); }
-    .consumer-market-gateway__tokens {
-      flex: 1;
+    .consumer-market-leaderboard { flex: 1; min-width: 0; border-bottom: 1px solid var(--hair-2); }
+    .consumer-market-leaderboard__labels,
+    .consumer-market-leaderboard li > a {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      border-bottom: 1px solid var(--hair-2);
-    }
-    .consumer-market-gateway__token {
-      min-width: 0;
-      min-height: 106px;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-template-rows: auto 1fr;
-      align-content: center;
+      grid-template-columns: 42px minmax(126px, 1fr) minmax(88px, .62fr) minmax(70px, .45fr) 24px;
       align-items: center;
-      gap: 6px 10px;
-      padding: 15px 16px;
-      border-right: 1px solid var(--hair);
+      column-gap: 10px;
+    }
+    .consumer-market-leaderboard__labels {
+      min-height: 34px;
+      padding: 0 14px;
       border-bottom: 1px solid var(--hair);
-    }
-    .consumer-market-gateway__token:nth-child(4n) { border-right: 0; }
-    .consumer-market-gateway__token:nth-last-child(-n + 4) { border-bottom: 0; }
-    .consumer-market-gateway__token small {
-      grid-column: 1 / -1;
       color: var(--ink-mute);
-      font: 500 8px/1 var(--mono);
+      font: 500 7px/1 var(--mono);
       letter-spacing: .12em;
+      text-transform: uppercase;
     }
-    .consumer-market-gateway__token img { width: 34px; height: 34px; display: block; border-radius: 50%; opacity: .9; }
-    .consumer-market-gateway__token strong { min-width: 0; overflow: hidden; color: var(--ink-2); font: 550 10px/1 var(--mono); letter-spacing: .06em; text-overflow: ellipsis; }
+    .consumer-market-leaderboard__labels span:nth-child(n + 3) { text-align: right; }
+    .consumer-market-leaderboard ol { margin: 0; padding: 0; list-style: none; }
+    .consumer-market-leaderboard li { min-width: 0; border-bottom: 1px solid rgba(198,204,218,.085); }
+    .consumer-market-leaderboard li:last-child { border-bottom: 0; }
+    .consumer-market-leaderboard li > a {
+      position: relative;
+      isolation: isolate;
+      min-width: 0;
+      min-height: 48px;
+      padding: 4px 14px;
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 380ms cubic-bezier(.32,.72,0,1), background-color 220ms cubic-bezier(.32,.72,0,1);
+    }
+    .consumer-market-leaderboard li > a::before {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      transform: scaleX(var(--market-share, 0));
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(198,204,218,.08), rgba(198,204,218,.012));
+      content: "";
+      transition: transform 700ms cubic-bezier(.32,.72,0,1), opacity 220ms cubic-bezier(.32,.72,0,1);
+    }
+    .consumer-market-leaderboard li.is-podium > a::before { background: linear-gradient(90deg, rgba(222,183,112,.13), rgba(222,183,112,.015)); }
+    .consumer-market-leaderboard li.is-active > a { background: rgba(238,241,247,.055); }
+    .consumer-market-leaderboard li.is-active > a::after {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 0;
+      width: 2px;
+      border-radius: 0 2px 2px 0;
+      background: var(--active-sign, var(--ink-2));
+      content: "";
+    }
+    .consumer-market-leaderboard__rank { color: var(--ink-mute); font: 500 10px/1 var(--mono); font-variant-numeric: tabular-nums; }
+    .consumer-market-leaderboard li.is-podium .consumer-market-leaderboard__rank { color: #d9bc86; }
+    .consumer-market-leaderboard__identity { min-width: 0; display: flex; align-items: center; gap: 10px; }
+    .consumer-market-leaderboard__icon {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      display: block;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px rgba(238,241,247,.12), 0 7px 16px -11px rgba(0,0,0,.9);
+    }
+    .consumer-market-leaderboard__icon img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 50%;
+      filter: none;
+    }
+    .consumer-market-leaderboard__identity > span:last-child { min-width: 0; display: grid; gap: 3px; }
+    .consumer-market-leaderboard__identity strong { overflow: hidden; color: var(--ink); font: 520 13px/1 var(--sans); text-overflow: ellipsis; white-space: nowrap; }
+    .consumer-market-leaderboard__identity small { color: var(--ink-mute); font: 500 7px/1 var(--mono); letter-spacing: .1em; }
+    .consumer-market-leaderboard__metric,
+    .consumer-market-leaderboard__move { min-width: 0; display: grid; gap: 4px; text-align: right; }
+    .consumer-market-leaderboard__metric small,
+    .consumer-market-leaderboard__move small { color: var(--ink-mute); font: 500 7px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .consumer-market-leaderboard__metric strong,
+    .consumer-market-leaderboard__move strong { overflow: hidden; color: var(--ink-2); font: 500 10px/1 var(--mono); font-variant-numeric: tabular-nums; text-overflow: ellipsis; white-space: nowrap; }
+    .consumer-market-leaderboard__move.is-up strong { color: var(--market-up); }
+    .consumer-market-leaderboard__move.is-down strong { color: var(--vermilion); }
+    .consumer-market-leaderboard__move.is-flat strong { color: var(--market-flat); }
+    .consumer-market-leaderboard__arrow { color: var(--ink-mute); font: 400 18px/1 var(--sans); text-align: right; transition: transform 320ms cubic-bezier(.32,.72,0,1), color 180ms cubic-bezier(.32,.72,0,1); }
+    .consumer-market-leaderboard li > a:hover { background: rgba(238,241,247,.045); }
+    .consumer-market-leaderboard li > a:hover .consumer-market-leaderboard__arrow { transform: translateX(2px); color: var(--ink); }
+    .consumer-market-leaderboard li > a:focus-visible { z-index: 1; outline: 2px solid var(--ink); outline-offset: -3px; }
     .consumer-market-gateway__routes {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -10488,27 +10628,29 @@
       .consumer-registry .consumer-verify.is-embedded { padding: 24px 20px; }
       .consumer-registry .consumer-snapshot__rows li { grid-template-columns: minmax(114px, 1fr) auto; }
       .consumer-registry .vitrine-market-meta { gap: 5px 10px; font-size: 11px; }
-      .consumer-registry .vitrine-placard__actions .btn { padding-inline: 12px; font-size: 12px; line-height: 1.12; text-align: center; }
+      .consumer-registry .vitrine-placard__actions .btn { padding-inline: 11px; font-size: 12px; line-height: 1.12; text-align: center; }
+      .consumer-registry .vitrine-placard__actions .btn--fomo,
+      .consumer-static .static-vitrine__actions .btn--fomo { gap: 7px; padding: 4px 6px 4px 5px; }
+      .btn--fomo__arrow { width: 31px; height: 31px; flex-basis: 31px; }
       .consumer-registry .consumer-purpose__cta { min-height: 50px; padding-left: 18px; }
       .consumer-registry .consumer-purpose__arrow { width: 38px; height: 38px; }
-      .consumer-market-gateway__status { min-height: 50px; padding-inline: 14px; font-size: 8px; letter-spacing: .1em; }
-      .consumer-market-gateway__tokens { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .consumer-market-gateway__token {
-        min-height: 96px;
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-rows: auto auto auto;
-        justify-items: center;
-        gap: 6px;
-        padding: 11px 8px;
-        text-align: center;
+      .consumer-market-gateway__status { min-height: 50px; padding-inline: 14px; font-size: 9px; letter-spacing: .08em; }
+      .consumer-market-leaderboard__labels,
+      .consumer-market-leaderboard li > a {
+        grid-template-columns: 32px minmax(116px, 1fr) 78px 14px;
+        column-gap: 7px;
       }
-      .consumer-market-gateway__token:nth-child(4n) { border-right: 1px solid var(--hair); }
-      .consumer-market-gateway__token:nth-last-child(-n + 4) { border-bottom: 1px solid var(--hair); }
-      .consumer-market-gateway__token:nth-child(3n) { border-right: 0; }
-      .consumer-market-gateway__token:nth-last-child(-n + 3) { border-bottom: 0; }
-      .consumer-market-gateway__token small { grid-column: auto; width: 100%; }
-      .consumer-market-gateway__token img { width: 28px; height: 28px; }
-      .consumer-market-gateway__token strong { width: 100%; overflow: visible; font-size: 8px; text-overflow: clip; }
+      .consumer-market-leaderboard__labels span:nth-child(4),
+      .consumer-market-leaderboard__move { display: none; }
+      .consumer-market-leaderboard__labels { padding-inline: 10px; }
+      .consumer-market-leaderboard li > a { min-height: 51px; padding-inline: 10px; }
+      .consumer-market-leaderboard__identity { gap: 8px; }
+      .consumer-market-leaderboard__icon { width: 34px; height: 34px; flex-basis: 34px; }
+      .consumer-market-leaderboard__identity strong { font-size: 12px; }
+      .consumer-market-leaderboard__identity small,
+      .consumer-market-leaderboard__metric small,
+      .consumer-market-leaderboard__move small { display: none; }
+      .consumer-market-leaderboard__metric strong { font-size: 11px; }
       .consumer-market-gateway__routes { grid-template-columns: minmax(0, 1fr); }
       .consumer-market-gateway__routes > span { padding: 15px 16px; }
       .consumer-market-gateway__routes > span + span { border-top: 1px solid var(--hair-2); border-left: 0; }
@@ -10539,6 +10681,9 @@
       .consumer-registry .consumer-collection__link:active .consumer-purpose__cta,
       .consumer-registry .consumer-purpose__arrow,
       .consumer-market-gateway__action:active { transform: none; }
+      .consumer-static .static-vitrine__actions .btn--fomo,
+      .consumer-static .static-vitrine__actions .btn--fomo__arrow { transition: none !important; }
+      .consumer-static .static-vitrine__actions .btn--fomo:active { transform: none; }
     }
 </style>
 </head>
@@ -10587,97 +10732,157 @@
             <article class="static-vitrine__panel" data-static-sign="aries" aria-labelledby="static-aries-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/aries.webp" width="512" height="512" alt="Aries Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-aries-title">Aries</h2><p class="static-vitrine__dates">March 21 to April 19</p>
+                <h2 id="static-aries-title">Aries</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/aries/">Explore Aries</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/aries/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/aries/">Explore Aries</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Aries" data-fomo-buy="aries"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Aries <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♈️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">March 21 to April 19</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/aries/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="taurus" aria-labelledby="static-taurus-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/taurus.webp" width="512" height="512" alt="Taurus Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-taurus-title">Taurus</h2><p class="static-vitrine__dates">April 20 to May 20</p>
+                <h2 id="static-taurus-title">Taurus</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/taurus/">Explore Taurus</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/taurus/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/taurus/">Explore Taurus</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Taurus" data-fomo-buy="taurus"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Taurus <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♉️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">April 20 to May 20</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/taurus/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="gemini" aria-labelledby="static-gemini-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/gemini.webp" width="512" height="512" alt="Gemini Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-gemini-title">Gemini</h2><p class="static-vitrine__dates">May 21 to June 20</p>
+                <h2 id="static-gemini-title">Gemini</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/gemini/">Explore Gemini</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/gemini/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/gemini/">Explore Gemini</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Gemini" data-fomo-buy="gemini"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Gemini <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♊️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">May 21 to June 20</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/gemini/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="cancer" aria-labelledby="static-cancer-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/cancer.webp" width="512" height="512" alt="Cancer Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-cancer-title">Cancer</h2><p class="static-vitrine__dates">June 21 to July 22</p>
+                <h2 id="static-cancer-title">Cancer</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/cancer/">Explore Cancer</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/cancer/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/cancer/">Explore Cancer</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Cancer" data-fomo-buy="cancer"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Cancer <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♋️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">June 21 to July 22</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/cancer/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="leo" aria-labelledby="static-leo-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/leo.webp" width="512" height="512" alt="Leo Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-leo-title">Leo</h2><p class="static-vitrine__dates">July 23 to August 22</p>
+                <h2 id="static-leo-title">Leo</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/leo/">Explore Leo</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/leo/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/leo/">Explore Leo</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Leo" data-fomo-buy="leo"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Leo <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♌️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">July 23 to August 22</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/leo/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="virgo" aria-labelledby="static-virgo-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/virgo.webp" width="512" height="512" alt="Virgo Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-virgo-title">Virgo</h2><p class="static-vitrine__dates">August 23 to September 22</p>
+                <h2 id="static-virgo-title">Virgo</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/virgo/">Explore Virgo</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/virgo/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/virgo/">Explore Virgo</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Virgo" data-fomo-buy="virgo"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Virgo <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♍️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">August 23 to September 22</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/virgo/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="libra" aria-labelledby="static-libra-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/libra.webp" width="512" height="512" alt="Libra Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-libra-title">Libra</h2><p class="static-vitrine__dates">September 23 to October 22</p>
+                <h2 id="static-libra-title">Libra</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/libra/">Explore Libra</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/libra/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/libra/">Explore Libra</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Libra" data-fomo-buy="libra"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Libra <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♎️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">September 23 to October 22</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/libra/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="scorpio" aria-labelledby="static-scorpio-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/scorpio.webp" width="512" height="512" alt="Scorpio Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-scorpio-title">Scorpio</h2><p class="static-vitrine__dates">October 23 to November 21</p>
+                <h2 id="static-scorpio-title">Scorpio</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/scorpio/">Explore Scorpio</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/scorpio/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/scorpio/">Explore Scorpio</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Scorpio" data-fomo-buy="scorpio"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Scorpio <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♏️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">October 23 to November 21</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/scorpio/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="sagittarius" aria-labelledby="static-sagittarius-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/sagittarius.webp" width="512" height="512" alt="Sagittarius Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-sagittarius-title">Sagittarius</h2><p class="static-vitrine__dates">November 22 to December 21</p>
+                <h2 id="static-sagittarius-title">Sagittarius</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/sagittarius/">Explore Sagittarius</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/sagittarius/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/sagittarius/">Explore Sagittarius</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Sagittarius" data-fomo-buy="sagittarius"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Sagittarius <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♐️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">November 22 to December 21</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/sagittarius/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="capricorn" aria-labelledby="static-capricorn-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/capricorn.webp" width="512" height="512" alt="Capricorn Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-capricorn-title">Capricorn</h2><p class="static-vitrine__dates">December 22 to January 19</p>
+                <h2 id="static-capricorn-title">Capricorn</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/capricorn/">Explore Capricorn</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/capricorn/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/capricorn/">Explore Capricorn</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Capricorn" data-fomo-buy="capricorn"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Capricorn <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♑️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">December 22 to January 19</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/capricorn/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="aquarius" aria-labelledby="static-aquarius-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/aquarius.webp" width="512" height="512" alt="Aquarius Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-aquarius-title">Aquarius</h2><p class="static-vitrine__dates">January 20 to February 18</p>
+                <h2 id="static-aquarius-title">Aquarius</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/aquarius/">Explore Aquarius</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/aquarius/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/aquarius/">Explore Aquarius</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Aquarius" data-fomo-buy="aquarius"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Aquarius <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♒️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">January 20 to February 18</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/aquarius/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
             <article class="static-vitrine__panel" data-static-sign="pisces" aria-labelledby="static-pisces-title">
               <div class="static-vitrine__stage"><img src="/assets/sculptures/512/pisces.webp" width="512" height="512" alt="Pisces Zodiac artwork"></div>
               <div class="static-vitrine__placard">
-                <h2 id="static-pisces-title">Pisces</h2><p class="static-vitrine__dates">February 19 to March 20</p>
+                <h2 id="static-pisces-title">Pisces</h2>
                 <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions"><a class="btn btn--primary" href="/registry/pisces/">Explore Pisces</a><a class="btn btn--ghost" href="/astrofolio/how-to-buy/pisces/">How to buy</a></div>
+                <div class="static-vitrine__actions">
+                  <a class="btn btn--explore" href="/registry/pisces/">Explore Pisces</a>
+                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Pisces" data-fomo-buy="pisces"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Pisces <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♓️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+                </div>
+                <p class="static-vitrine__dates">February 19 to March 20</p>
+                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/pisces/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
               </div>
             </article>
           </div>
@@ -10756,6 +10961,42 @@
         <details class="static-disclosure"><summary>Why the address matters</summary><div><p>A copied name or ticker can look convincing. Only an exact match with the published Registry verifies the token.</p><a href="/registry/technical/#records-networks">Learn about Registry records</a></div></details>
       </section>
 
+      <section class="static-site__section consumer-market-gateway" id="market-layer" aria-labelledby="static-market-gateway-title">
+        <article class="consumer-market-gateway__shell">
+          <div class="consumer-market-gateway__visual">
+            <div class="consumer-market-gateway__status"><span>The Twelve / leaderboard</span><span>Snapshot · Aug 24</span></div>
+            <div class="consumer-market-leaderboard">
+              <div class="consumer-market-leaderboard__labels" aria-hidden="true"><span>Rank</span><span>Sign</span><span>Market cap</span><span>24h</span><span></span></div>
+              <ol role="list" aria-label="Zodiac market-cap leaderboard" data-market-snapshot-date="2026-08-24">
+                <li class="is-podium"><a href="/astrofolio/?sign=gemini#consumer-sign-preview" style="--market-share:1"><span class="consumer-market-leaderboard__rank">01</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/gemini.avif" type="image/avif"><img src="/assets/zodiac-icons/48/gemini.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Gemini</strong><small>GEMINI</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$215.5K</strong></span><span class="consumer-market-leaderboard__move is-down"><small>24h</small><strong>-1.88%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li class="is-podium"><a href="/astrofolio/?sign=libra#consumer-sign-preview" style="--market-share:.612"><span class="consumer-market-leaderboard__rank">02</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/libra.avif" type="image/avif"><img src="/assets/zodiac-icons/48/libra.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Libra</strong><small>LIBRA</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$131.8K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+4.98%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li class="is-podium"><a href="/astrofolio/?sign=aquarius#consumer-sign-preview" style="--market-share:.561"><span class="consumer-market-leaderboard__rank">03</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/aquarius.avif" type="image/avif"><img src="/assets/zodiac-icons/48/aquarius.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Aquarius</strong><small>AQUARIUS</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$120.9K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+0.39%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li><a href="/astrofolio/?sign=taurus#consumer-sign-preview" style="--market-share:.524"><span class="consumer-market-leaderboard__rank">04</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/taurus.avif" type="image/avif"><img src="/assets/zodiac-icons/48/taurus.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Taurus</strong><small>TAURUS</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$112.9K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+12.75%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li><a href="/astrofolio/?sign=sagittarius#consumer-sign-preview" style="--market-share:.523"><span class="consumer-market-leaderboard__rank">05</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/sagittarius.avif" type="image/avif"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Sagittarius</strong><small>SAGITTARIUS</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$112.6K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+13.29%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li class="is-active"><a href="/astrofolio/?sign=aries#consumer-sign-preview" style="--market-share:.500" aria-current="true"><span class="consumer-market-leaderboard__rank">06</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/aries.avif" type="image/avif"><img src="/assets/zodiac-icons/48/aries.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Aries</strong><small>ARIES</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$107.6K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+9.45%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li><a href="/astrofolio/?sign=leo#consumer-sign-preview" style="--market-share:.496"><span class="consumer-market-leaderboard__rank">07</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/leo.avif" type="image/avif"><img src="/assets/zodiac-icons/48/leo.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Leo</strong><small>LEO</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$106.8K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+1.01%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li><a href="/astrofolio/?sign=virgo#consumer-sign-preview" style="--market-share:.494"><span class="consumer-market-leaderboard__rank">08</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/virgo.avif" type="image/avif"><img src="/assets/zodiac-icons/48/virgo.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Virgo</strong><small>VIRGO</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$106.5K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+12.82%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li><a href="/astrofolio/?sign=scorpio#consumer-sign-preview" style="--market-share:.491"><span class="consumer-market-leaderboard__rank">09</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/scorpio.avif" type="image/avif"><img src="/assets/zodiac-icons/48/scorpio.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Scorpio</strong><small>SCORPIO</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$105.9K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+8.77%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li><a href="/astrofolio/?sign=capricorn#consumer-sign-preview" style="--market-share:.491"><span class="consumer-market-leaderboard__rank">10</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/capricorn.avif" type="image/avif"><img src="/assets/zodiac-icons/48/capricorn.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Capricorn</strong><small>CAPRICORN</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$105.8K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+4.94%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li><a href="/astrofolio/?sign=pisces#consumer-sign-preview" style="--market-share:.488"><span class="consumer-market-leaderboard__rank">11</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/pisces.avif" type="image/avif"><img src="/assets/zodiac-icons/48/pisces.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Pisces</strong><small>PISCES</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$105.2K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+11.94%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+                <li><a href="/astrofolio/?sign=cancer#consumer-sign-preview" style="--market-share:.486"><span class="consumer-market-leaderboard__rank">12</span><span class="consumer-market-leaderboard__identity"><picture class="consumer-market-leaderboard__icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/48/cancer.avif" type="image/avif"><img src="/assets/zodiac-icons/48/cancer.webp" width="34" height="34" alt="" loading="lazy" decoding="async"></picture><span><strong>Cancer</strong><small>CANCER</small></span></span><span class="consumer-market-leaderboard__metric"><small>Market cap</small><strong>$104.8K</strong></span><span class="consumer-market-leaderboard__move is-up"><small>24h</small><strong>+9.65%</strong></span><span class="consumer-market-leaderboard__arrow" aria-hidden="true">›</span></a></li>
+              </ol>
+            </div>
+            <div class="consumer-market-gateway__routes"><span><small>Ranking</small><strong>Reported market cap</strong></span><span><small>Source</small><strong>Dex Screener · Solana</strong></span></div>
+          </div>
+          <div class="consumer-market-gateway__copy">
+            <span class="consumer-market-gateway__eyebrow">Latest market snapshot</span>
+            <h2 id="static-market-gateway-title">Who&rsquo;s leading today?</h2>
+            <p>The latest available snapshot ranks the Twelve by reported market cap. Tap any row to jump back to that Zodiac.</p>
+            <div class="consumer-market-gateway__actions">
+              <a class="consumer-market-gateway__action is-secondary" href="/registry/technical/#market-transparency"><span>How ranking works</span><span aria-hidden="true">→</span></a>
+              <a class="consumer-market-gateway__action is-primary" href="/terminal/?rank=marketCap"><span>View full market</span><span aria-hidden="true">↗</span></a>
+            </div>
+            <p class="consumer-market-gateway__note">Market data comes from an independent index and can be delayed, incomplete, unavailable, or wrong. It is context, not a recommendation.</p>
+          </div>
+        </article>
+      </section>
+
       <section class="static-site__section consumer-faq" id="faq" aria-labelledby="static-faq-title">
         <h2 id="static-faq-title">Questions</h2>
         <div class="consumer-faq__list static-faq">
@@ -10768,39 +11009,6 @@
           <details class="consumer-faq__item"><summary>What is Zodiac Markets?</summary><p>Zodiac Markets is the trading interface for the Twelve. Jupiter Ultra supplies the executable route and transaction; your wallet reviews, approves, and signs.</p></details>
           <details class="consumer-faq__item"><summary>What is the Terminal?</summary><p>The Terminal is the market desk for all twelve Zodiacs, with live prices, liquidity, charts, season context, and research.</p></details>
         </div>
-      </section>
-
-      <section class="static-site__section consumer-market-gateway" id="market-layer" aria-labelledby="static-market-gateway-title">
-        <article class="consumer-market-gateway__shell">
-          <div class="consumer-market-gateway__visual" aria-hidden="true">
-            <div class="consumer-market-gateway__status"><span>Astrofolio / market layer</span><span>Solana · 12 verified mints</span></div>
-            <div class="consumer-market-gateway__tokens">
-              <span class="consumer-market-gateway__token"><small>01</small><img src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>ARIES</strong></span>
-              <span class="consumer-market-gateway__token"><small>02</small><img src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>TAURUS</strong></span>
-              <span class="consumer-market-gateway__token"><small>03</small><img src="/assets/zodiac-icons/48/gemini.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>GEMINI</strong></span>
-              <span class="consumer-market-gateway__token"><small>04</small><img src="/assets/zodiac-icons/48/cancer.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>CANCER</strong></span>
-              <span class="consumer-market-gateway__token"><small>05</small><img src="/assets/zodiac-icons/48/leo.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>LEO</strong></span>
-              <span class="consumer-market-gateway__token"><small>06</small><img src="/assets/zodiac-icons/48/virgo.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>VIRGO</strong></span>
-              <span class="consumer-market-gateway__token"><small>07</small><img src="/assets/zodiac-icons/48/libra.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>LIBRA</strong></span>
-              <span class="consumer-market-gateway__token"><small>08</small><img src="/assets/zodiac-icons/48/scorpio.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>SCORPIO</strong></span>
-              <span class="consumer-market-gateway__token"><small>09</small><img src="/assets/zodiac-icons/48/sagittarius.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>SAGITTARIUS</strong></span>
-              <span class="consumer-market-gateway__token"><small>10</small><img src="/assets/zodiac-icons/48/capricorn.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>CAPRICORN</strong></span>
-              <span class="consumer-market-gateway__token"><small>11</small><img src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>AQUARIUS</strong></span>
-              <span class="consumer-market-gateway__token"><small>12</small><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><strong>PISCES</strong></span>
-            </div>
-            <div class="consumer-market-gateway__routes"><span><small>01 / Terminal</small><strong>Prices · liquidity · charts</strong></span><span><small>02 / Zodiac Markets</small><strong>Jupiter Ultra · wallet-signed</strong></span></div>
-          </div>
-          <div class="consumer-market-gateway__copy">
-            <span class="consumer-market-gateway__eyebrow">The market layer</span>
-            <h2 id="static-market-gateway-title">Read the market. Trade your sign.</h2>
-            <p>Use Terminal for prices, liquidity, charts, and research across the Twelve. When you&rsquo;re ready to swap, move into Zodiac Markets.</p>
-            <div class="consumer-market-gateway__actions">
-              <a class="consumer-market-gateway__action is-secondary" href="/terminal/"><span>Open Terminal</span><span aria-hidden="true">↗</span></a>
-              <a class="consumer-market-gateway__action is-primary" href="/terminal/markets/"><span>Open Zodiac Markets</span><span aria-hidden="true">↗</span></a>
-            </div>
-            <p class="consumer-market-gateway__note">On Solana, Jupiter Ultra supplies the executable route and transaction. Your wallet reviews, approves, and signs.</p>
-          </div>
-        </article>
       </section>
 
       <span id="market" class="terminal-compat-target" aria-hidden="true"></span>
@@ -10989,6 +11197,6 @@
   <!-- ?v= evicts browsers still holding a prior immutable-cached /assets/app.js;
        the bundle now revalidates (see vercel.json). Bump if a future build must
        reach clients before the next revalidation. -->
-  <script defer src="/assets/app.js?v=z4"></script>
+  <script defer src="/assets/app.js?v=z10"></script>
 </body>
 </html>

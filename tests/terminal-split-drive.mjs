@@ -4,29 +4,69 @@ import { chromium } from 'playwright-core';
 import { REGISTRY_AURA_ENTRY_COPY, injectRegistryAuraLanding } from '../src/lib/registry-aura-entry.mjs';
 import { resolveAstrofolioSeasonUtc, seasonsFromRegistry } from '../scripts/astrofolio-season.mjs';
 import { consumerizeRegistryCollection } from '../scripts/registry-consumer-entry.mjs';
+import { EXCHANGE_POOLS } from '../src/exchange/pools.mjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
-const counts = { dex: 0, gecko: 0, wikimedia: 0, jupiter: 0, wallet: 0 };
+const counts = { dex: 0, dexPairs: 0, gecko: 0, wikimedia: 0, jupiter: 0, wallet: 0 };
 const registry = JSON.parse(await readFile(new URL('../public/registry/zodiacs.registry.json', import.meta.url), 'utf8'));
 const expectedSeason = resolveAstrofolioSeasonUtc(new Date(), seasonsFromRegistry(registry));
+const WSOL_MINT = 'So11111111111111111111111111111111111111112';
+
+function fixturePair({ mint, pairAddress, index, canonical = false }) {
+  const libra = mint === '7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe';
+  if (libra && !canonical) {
+    return {
+      chainId: 'solana',
+      dexId: 'meteora',
+      pairAddress: '7hoH1PPnRaAZ6gyafuSSJpVYCemXpwPz9rAxnzTb71sX',
+      url: 'https://dexscreener.com/solana/7hoh1ppnraaz6gyafussjpvycemxpwpz9raxnztb71sx',
+      baseToken: { address: mint },
+      quoteToken: { address: 'BgCeigJo2iY3dJhqS2z9w4pjjufFd4F9oKS3FrkMbmbJ' },
+      priceUsd: '0.7562',
+      priceChange: { h24: 27.54 },
+      liquidity: { usd: 52_510.03 },
+      volume: { h24: 11_828.34 },
+      marketCap: 756_238_771,
+      fdv: 756_238_771,
+    };
+  }
+  const marketCap = libra ? 171_386 : (12 - index) * 100_000;
+  return {
+    chainId: 'solana',
+    dexId: 'mock',
+    pairAddress,
+    url: `https://dexscreener.com/solana/${pairAddress}`,
+    baseToken: { address: mint },
+    quoteToken: { address: WSOL_MINT },
+    priceUsd: String(libra ? 0.0001713 : index === 0 ? 1234.5 : 0.000001 * (index + 1)),
+    priceChange: { h24: libra ? 30 : index % 2 === 0 ? index + 0.5 : -(index + 0.5) },
+    liquidity: { usd: libra ? 28_443.76 : (index + 1) * 10_000 },
+    volume: { h24: libra ? 9_516.09 : (index + 1) * 2_000 },
+    marketCap,
+    fdv: marketCap,
+  };
+}
 
 function quotePayload(url) {
   const encoded = new URL(url).pathname.split('/').at(-1) || '';
-  return decodeURIComponent(encoded).split(',').filter(Boolean).map((mint, index) => ({
-    chainId: 'solana',
-    dexId: 'mock',
+  return decodeURIComponent(encoded).split(',').filter(Boolean).map((mint, index) => fixturePair({
+    mint,
+    index,
     pairAddress: `mock-pool-${index + 1}`,
-    url: `https://dexscreener.com/solana/mock-pool-${index + 1}`,
-    baseToken: { address: mint },
-    priceUsd: String(index === 0 ? 1234.5 : 0.000001 * (index + 1)),
-    priceChange: { h24: index % 2 === 0 ? index + 0.5 : -(index + 0.5) },
-    liquidity: { usd: (index + 1) * 10_000 },
-    volume: { h24: (index + 1) * 2_000 },
-    marketCap: (12 - index) * 100_000,
-    fdv: (12 - index) * 120_000,
   }));
+}
+
+function pinnedQuotePayload(url) {
+  const encoded = new URL(url).pathname.split('/').at(-1) || '';
+  const pairs = decodeURIComponent(encoded).split(',').filter(Boolean).flatMap((pairAddress) => {
+    const sign = Object.entries(EXCHANGE_POOLS).find(([, id]) => id === pairAddress)?.[0];
+    const index = registry.assets.findIndex((asset) => asset.sign === sign);
+    const mint = index >= 0 ? registry.assets[index].native.address : null;
+    return mint ? [fixturePair({ mint, pairAddress, index, canonical: true })] : [];
+  });
+  return { schemaVersion: '1.0.0', pairs };
 }
 
 function hourlyPayload() {
@@ -42,16 +82,20 @@ async function installNetworkHarness(context) {
   context.on('request', (request) => {
     const url = request.url().toLowerCase();
     if (url.includes('api.dexscreener.com/tokens/v1/solana/')) counts.dex += 1;
+    if (url.includes('api.dexscreener.com/latest/dex/pairs/solana/')) counts.dexPairs += 1;
     if (url.includes('api.geckoterminal.com/')) counts.gecko += 1;
     if (url.includes('wikimedia.org/')) counts.wikimedia += 1;
     if (url.includes('jup.ag') || url.includes('jupiter')) counts.jupiter += 1;
     if (/wallet|phantom|solflare/u.test(url)) counts.wallet += 1;
   });
-  await context.route('https://api.dexscreener.com/**', (route) => route.fulfill({
-    status: 200,
-    contentType: 'application/json',
-    body: JSON.stringify(quotePayload(route.request().url())),
-  }));
+  await context.route('https://api.dexscreener.com/**', (route) => {
+    const url = route.request().url();
+    return route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(url.includes('/latest/dex/pairs/solana/') ? pinnedQuotePayload(url) : quotePayload(url)),
+    });
+  });
   await context.route('https://api.geckoterminal.com/**', (route) => route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -131,12 +175,12 @@ async function assertFirstScreen(page, { width, height }) {
     '.vitrine-stage',
     '.vitrine-placard__layer.is-active h2',
     '.vitrine-placard__layer.is-active .vitrine-price',
-    '.vitrine-placard__layer.is-active .btn--primary',
+    '.vitrine-placard__layer.is-active .btn--fomo',
   ]) {
     assert.ok(await opening.locator(selector).isVisible(), `${selector} must be visible at ${width}x${height}`);
   }
   const openingBox = await opening.boundingBox();
-  const actionBox = await opening.locator('.vitrine-placard__layer.is-active .btn--primary').boundingBox();
+  const actionBox = await opening.locator('.vitrine-placard__layer.is-active .btn--fomo').boundingBox();
   assert.ok(openingBox && openingBox.y < height, 'opening starts in the first screen');
   assert.ok(actionBox && actionBox.y < height, `primary action stays in the first ${width}x${height} screen`);
 }
@@ -152,10 +196,10 @@ async function assertStaticFirstScreen(page, { width, height, slug = 'aries' }) 
   ]) {
     assert.ok(await page.locator(selector).isVisible(), `${selector} must be visible without JavaScript at ${width}x${height}`);
   }
-  for (const selector of ['.static-vitrine__stage', 'h2', '.static-vitrine__price', '.btn--primary']) {
+  for (const selector of ['.static-vitrine__stage', 'h2', '.static-vitrine__price', '.btn--fomo']) {
     assert.ok(await active.locator(selector).isVisible(), `${selector} must be visible without JavaScript at ${width}x${height}`);
   }
-  const actionBox = await active.locator('.btn--primary').boundingBox();
+  const actionBox = await active.locator('.btn--fomo').boundingBox();
   assert.ok(
     actionBox && actionBox.y + actionBox.height <= height,
     `the no-JavaScript primary action stays in the first ${width}x${height} screen`,
@@ -285,38 +329,98 @@ try {
 
     await waitForConsumerQuote(page);
     assert.equal(counts.dex, 1, 'the first-screen placard uses one batched quote request');
+    assert.equal(counts.dexPairs, 1, 'one pair overlay repairs the token batch without per-sign requests');
     assert.equal(await page.locator('[data-consumer-sign]').count(), 12);
     assert.equal(await page.locator('[data-vitrine-sculpture="pisces"].is-active').count(), 1);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active').count(), 1);
-    assert.match(await page.locator('[data-vitrine-placard="pisces"].is-active').innerText(), /Pisces[\s\S]*February 19 to March 20[\s\S]*\$0\.000012[\s\S]*down 11\.50% today/u);
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').innerText(), 'Explore Pisces');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').getAttribute('href'), '/registry/pisces/');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').innerText(), 'How to buy');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .btn--ghost').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
+    const activePlacard = page.locator('[data-vitrine-placard="pisces"].is-active');
+    const activePlacardText = await activePlacard.innerText();
+    assert.match(activePlacardText, /Pisces/u);
+    assert.match(activePlacardText, /\$0\.000012[\s\S]*down 11\.50% today/u);
+    assert.match(activePlacardText, /February 19 to March 20/u);
+    const exploreCta = activePlacard.locator('.btn--explore');
+    assert.equal(await exploreCta.innerText(), 'Explore Pisces');
+    assert.equal(await exploreCta.getAttribute('href'), '/registry/pisces/');
+    const fomoCta = page.locator('[data-vitrine-placard="pisces"].is-active .btn--fomo');
+    assert.equal(await fomoCta.getAttribute('href'), 'https://fomo.family/coin?address=3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE&chainId=1399811149');
+    assert.equal(await fomoCta.getAttribute('aria-label'), 'Open Fomo to buy Pisces');
+    assert.equal(await fomoCta.locator('img[src="/assets/venues/fomo-official.svg"]').count(), 1);
+    assert.equal(await fomoCta.locator('.btn--fomo__copy small').textContent(), 'Pisces ♓️');
+    assert.equal(await fomoCta.locator('.btn--fomo__copy strong').innerText(), 'Buy with Fomo');
+    assert.doesNotMatch(await fomoCta.innerText(), /selected/iu);
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-buy-options a').innerText(), 'Other ways to buy');
+    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-buy-options a').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
+    assert.ok(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-buy-options a').evaluate((node) => node.getBoundingClientRect().height >= 32));
     assert.equal(await page.locator('.vitrine-placard__market-actions').count(), 0);
-    assert.match(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-official-note').innerText(), /^Here, “official” means the address is listed in the Zodiacs Registry/u);
+    assert.equal(await activePlacard.locator('.vitrine-official-note').count(), 0);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').count(), 0);
-    const primaryCtaStyle = await page.locator('[data-vitrine-placard="pisces"].is-active .btn--primary').evaluate((node) => {
-      const style = getComputedStyle(node);
-      const orb = getComputedStyle(node, '::after');
-      return { background: style.backgroundImage, radius: style.borderRadius, shadow: style.boxShadow, orb: orb.content, orbShape: orb.borderRadius };
+    const [exploreBox, fomoBox] = await Promise.all([exploreCta.boundingBox(), fomoCta.boundingBox()]);
+    assert.ok(exploreBox && fomoBox && Math.abs(exploreBox.width - fomoBox.width) <= 1, 'Explore and Fomo use equal-width action tracks');
+    const movementStyle = await activePlacard.locator('.vitrine-price__movement').evaluate((node) => ({
+      className: node.className,
+      color: getComputedStyle(node).color,
+    }));
+    assert.match(movementStyle.className, /\bis-down\b/u);
+    assert.equal(movementStyle.color, 'rgb(212, 96, 63)');
+    const placardOrder = await activePlacard.evaluate((node) => {
+      const actions = node.querySelector('.vitrine-placard__actions')?.getBoundingClientRect();
+      const meta = node.querySelector('.vitrine-market-meta')?.getBoundingClientRect();
+      return { actionsBottom: actions?.bottom, metaTop: meta?.top };
     });
-    assert.notEqual(primaryCtaStyle.background, 'none', 'the primary action uses the shared glass surface');
+    assert.ok(placardOrder.actionsBottom <= placardOrder.metaTop, 'date and market provenance sit below the action row');
+    assert.match(await activePlacard.locator('.vitrine-market-meta').innerText(), /February 19 to March 20[\s\S]*#12 by reported market cap[\s\S]*Updated/u);
+    const primaryCtaStyle = await fomoCta.evaluate((node) => {
+      const style = getComputedStyle(node);
+      const logo = node.querySelector('img')?.getBoundingClientRect();
+      const arrow = node.querySelector('.btn--fomo__arrow');
+      const arrowStyle = arrow ? getComputedStyle(arrow) : null;
+      return {
+        background: style.backgroundImage,
+        backgroundColor: style.backgroundColor,
+        color: style.color,
+        radius: style.borderRadius,
+        shadow: style.boxShadow,
+        logoWidth: logo?.width,
+        arrowWidth: arrow?.getBoundingClientRect().width,
+        arrowBackground: arrowStyle?.backgroundColor,
+        arrowShape: arrowStyle?.borderRadius ?? '',
+      };
+    });
+    assert.notEqual(primaryCtaStyle.background, 'none', 'the primary action keeps its branded highlight');
+    assert.equal(primaryCtaStyle.backgroundColor, 'rgb(241, 240, 236)');
+    assert.equal(primaryCtaStyle.color, 'rgb(17, 19, 24)');
     assert.equal(primaryCtaStyle.radius, '999px');
     assert.notEqual(primaryCtaStyle.shadow, 'none');
-    assert.equal(primaryCtaStyle.orb, '"↗"');
-    assert.equal(primaryCtaStyle.orbShape, '50%');
+    assert.equal(primaryCtaStyle.logoWidth, 34);
+    assert.equal(primaryCtaStyle.arrowWidth, 31);
+    assert.equal(primaryCtaStyle.arrowBackground, 'rgb(83, 93, 221)');
+    assert.equal(primaryCtaStyle.arrowShape, '50%');
     assert.equal(await page.locator('[data-terminal-preference-banner]').count(), 0);
     assert.equal(await page.locator('.terminal-consumer-hero [data-terminal-view-link="pro"]').count(), 0);
     const marketGateway = page.locator('#market-layer');
     assert.equal(await marketGateway.count(), 1);
-    assert.equal(await marketGateway.locator('.consumer-market-gateway__token').count(), 12);
+    assert.equal(await marketGateway.locator('.consumer-market-leaderboard ol > li').count(), 12);
+    assert.equal(await marketGateway.locator('.consumer-market-leaderboard__icon img').count(), 12);
+    const leaderboardIconBoxes = await marketGateway.locator('.consumer-market-leaderboard__icon').evaluateAll((nodes) => nodes.map((node) => {
+      const box = node.getBoundingClientRect();
+      return { width: box.width, height: box.height };
+    }));
+    assert.ok(leaderboardIconBoxes.every(({ width, height }) => width >= 34 && height >= 34 && Math.abs(width - height) <= 1), 'leaderboard icons stay large and circular');
+    assert.equal(await marketGateway.locator('.consumer-market-leaderboard li.is-active .consumer-market-leaderboard__icon img').getAttribute('src'), '/assets/zodiac-icons/48/pisces.webp');
+    const libraLeaderboardRow = marketGateway.locator('a[href="/astrofolio/?sign=libra#consumer-sign-preview"]');
+    assert.match(await libraLeaderboardRow.innerText(), /\$171\.4K/u);
+    assert.doesNotMatch(await marketGateway.innerText(), /\$756\.2M/u);
     assert.equal(await marketGateway.locator('.consumer-market-gateway__action').count(), 2);
-    assert.equal(await marketGateway.locator('a[href="/terminal/"] > span').first().innerText(), 'Open Terminal');
-    assert.equal(await marketGateway.locator('a[href="/terminal/markets/"] > span').first().innerText(), 'Open Zodiac Markets');
+    assert.equal(await marketGateway.locator('a[href="/registry/technical/#market-transparency"] > span').first().innerText(), 'How ranking works');
+    assert.equal(await marketGateway.locator('a[href="/terminal/?rank=marketCap"] > span').first().innerText(), 'View full market');
+    assert.deepEqual(await marketGateway.locator('.consumer-market-leaderboard__identity strong').allInnerTexts().then((items) => [items[0], items.at(-1)]), ['Aries', 'Pisces']);
+    assert.equal(await marketGateway.locator('.consumer-market-leaderboard li.is-active .consumer-market-leaderboard__identity strong').innerText(), 'Pisces');
     const marketGatewayLayout = await marketGateway.evaluate((node) => {
       const links = [...node.querySelectorAll('.consumer-market-gateway__action')];
-      const tickers = [...node.querySelectorAll('.consumer-market-gateway__token strong')];
+      const rows = [...node.querySelectorAll('.consumer-market-leaderboard li > a')];
+      const names = [...node.querySelectorAll('.consumer-market-leaderboard__identity strong')];
+      const moves = [...node.querySelectorAll('.consumer-market-leaderboard__move')];
+      const metrics = [...node.querySelectorAll('.consumer-market-leaderboard__metric strong')];
       const shell = node.querySelector('.consumer-market-gateway__shell')?.getBoundingClientRect();
       return {
         overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -326,14 +430,20 @@ try {
           height: link.getBoundingClientRect().height,
           radius: getComputedStyle(link).borderRadius,
         })),
-        tickerOverflow: tickers.map((ticker) => ticker.scrollWidth - ticker.clientWidth),
+        rowHeights: rows.map((row) => row.getBoundingClientRect().height),
+        nameOverflow: names.map((name) => name.scrollWidth - name.clientWidth),
+        moveDisplays: moves.map((move) => getComputedStyle(move).display),
+        metricFonts: metrics.map((metric) => Number.parseFloat(getComputedStyle(metric).fontSize)),
       };
     });
     assert.ok(marketGatewayLayout.overflow <= 0, 'the market gateway creates no horizontal overflow');
     assert.ok(marketGatewayLayout.shellWidth <= marketGatewayLayout.viewport, 'the market gateway stays inside the mobile viewport');
     assert.ok(marketGatewayLayout.buttons.every((button) => button.height >= 52 && button.radius === '999px'), 'both market actions keep equal pill geometry');
-    assert.ok(marketGatewayLayout.tickerOverflow.every((overflow) => overflow <= 0), 'every market ticker remains fully visible on mobile');
-    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 2);
+    assert.ok(marketGatewayLayout.rowHeights.every((height) => height >= 48), 'every leaderboard row keeps a touch-safe height');
+    assert.ok(marketGatewayLayout.nameOverflow.every((overflow) => overflow <= 0), 'every leaderboard sign name remains fully visible on mobile');
+    assert.ok(marketGatewayLayout.moveDisplays.every((display) => display === 'none'), 'mobile prioritizes market cap over the secondary 24h column');
+    assert.ok(marketGatewayLayout.metricFonts.every((size) => size >= 11), 'mobile market-cap values remain consumer-readable');
+    assert.equal(await page.locator('a[href^="/terminal/"]').count(), 1);
     assert.equal(await page.locator('.consumer-shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await page.locator('.consumer-shop a[href^="https://shop.app/products/"]').count(), 3);
     assert.equal(await page.locator('#registry .consumer-verify.is-embedded#verify').count(), 1);
@@ -417,7 +527,7 @@ try {
       && document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active')
     ));
     assert.equal(new URL(page.url()).searchParams.get('sign'), 'leo');
-    assert.equal(await page.locator('[data-vitrine-placard="leo"].is-active .btn--ghost').getAttribute('href'), '/astrofolio/how-to-buy/leo/');
+    assert.equal(await page.locator('[data-vitrine-placard="leo"].is-active .vitrine-buy-options a').getAttribute('href'), '/astrofolio/how-to-buy/leo/');
     assert.equal(await page.locator('.vitrine-stage__layer').count(), 1, 'an interrupted fade settles to one artwork layer');
     assert.equal(await page.locator('.vitrine-placard__layer').count(), 1, 'an interrupted fade settles to one placard layer');
     assert.equal(await page.locator('.is-interrupt-anchor').count(), 0, 'the interruption anchor is removed after the crossfade settles');
@@ -488,6 +598,8 @@ try {
     const frenchPlacard = frenchPage.locator('[data-vitrine-placard="aries"].is-active');
     assert.equal(await frenchPlacard.locator('.vitrine-price__figure').innerText(), '$1,234.50');
     assert.equal(await frenchPlacard.locator('.vitrine-price__movement').innerText(), 'up 0.50% today');
+    assert.match(await frenchPlacard.locator('.vitrine-price__movement').getAttribute('class'), /\bis-up\b/u);
+    assert.equal(await frenchPlacard.locator('.vitrine-price__movement').evaluate((node) => getComputedStyle(node).color), 'rgb(169, 212, 196)');
     await frenchLocale.close();
 
     const failedArtwork = await browser.newContext({ viewport: { width: 390, height: 844 } });
@@ -595,10 +707,38 @@ try {
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 0);
     assert.equal(await noJsPage.locator('a[href^="/astrofolio/how-to-buy/"]').count(), 12);
     assert.equal(await noJsPage.locator('a[href="/astrofolio/how-to-buy/aries/"]').count(), 1);
+    assert.equal(await noJsPage.locator('[data-fomo-buy]').count(), 12);
+    assert.equal(await noJsPage.locator('[data-fomo-buy="aries"]').getAttribute('href'), 'https://fomo.family/coin?address=GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv&chainId=1399811149');
+    assert.equal(await noJsPage.locator('[data-fomo-buy="aries"] .btn--fomo__copy small').textContent(), 'Aries ♈️');
+    assert.doesNotMatch(await noJsPage.locator('[data-fomo-buy="aries"]').innerText(), /selected/iu);
     assert.equal(await noJsPage.locator('a[href^="/terminal/?sign="]').count(), 0);
-    assert.equal(await noJsPage.locator('#market-layer a[href="/terminal/"]').count(), 1);
-    assert.equal(await noJsPage.locator('#market-layer a[href="/terminal/markets/"]').count(), 1);
-    assert.equal(await noJsPage.locator('#market-layer .consumer-market-gateway__token').count(), 12);
+    assert.equal(await noJsPage.locator('#market-layer a[href="/registry/technical/#market-transparency"]').count(), 1);
+    assert.equal(await noJsPage.locator('#market-layer a[href="/terminal/?rank=marketCap"]').count(), 1);
+    assert.equal(await noJsPage.locator('#market-layer .consumer-market-leaderboard ol > li').count(), 12);
+    assert.equal(await noJsPage.locator('#market-layer .consumer-market-leaderboard__icon img').count(), 12);
+    const staticIconBoxes = await noJsPage.locator('#market-layer .consumer-market-leaderboard__icon').evaluateAll((nodes) => nodes.map((node) => {
+      const box = node.getBoundingClientRect();
+      return { width: box.width, height: box.height };
+    }));
+    assert.ok(staticIconBoxes.every(({ width, height }) => width >= 34 && height >= 34 && Math.abs(width - height) <= 1), 'no-JavaScript leaderboard icons keep the larger size');
+    assert.equal(await noJsPage.locator('#market-layer .consumer-market-leaderboard__icon img').first().getAttribute('src'), '/assets/zodiac-icons/48/gemini.webp');
+    assert.equal(await noJsPage.locator('#market-layer .consumer-market-leaderboard__identity strong').first().innerText(), 'Gemini');
+    const staticActions = noJsPage.locator(`[data-static-sign="${expectedSeason.sign}"] .static-vitrine__actions`);
+    const staticActionGeometry = await staticActions.evaluate((node) => {
+      const [explore, fomo] = [...node.querySelectorAll('.btn')].map((button) => button.getBoundingClientRect());
+      const date = node.parentElement?.querySelector('.static-vitrine__dates')?.getBoundingClientRect();
+      const logo = node.querySelector('.btn--fomo img')?.getBoundingClientRect();
+      return {
+        exploreWidth: explore?.width,
+        fomoWidth: fomo?.width,
+        actionsBottom: node.getBoundingClientRect().bottom,
+        dateTop: date?.top,
+        logoWidth: logo?.width,
+      };
+    });
+    assert.ok(Math.abs(staticActionGeometry.exploreWidth - staticActionGeometry.fomoWidth) <= 1, 'no-JavaScript actions use equal widths');
+    assert.ok(staticActionGeometry.actionsBottom <= staticActionGeometry.dateTop, 'no-JavaScript date sits below the action row');
+    assert.equal(staticActionGeometry.logoWidth, 34);
     const staticPageGeometry = await noJsPage.evaluate(() => ({
       viewport: document.documentElement.clientWidth,
       scrollWidth: document.documentElement.scrollWidth,
@@ -736,7 +876,7 @@ try {
     const storyOrder = await collectionPage.locator('#what-is-astrofolio, #thesis, #shop, #cabinet, #registry, #faq, #market-layer').evaluateAll((nodes) => (
       nodes.map((node) => node.id)
     ));
-    assert.deepEqual(storyOrder, ['what-is-astrofolio', 'thesis', 'shop', 'cabinet', 'registry', 'faq', 'market-layer']);
+    assert.deepEqual(storyOrder, ['what-is-astrofolio', 'thesis', 'shop', 'cabinet', 'registry', 'market-layer', 'faq']);
     await collection.close();
 
     const flagged = await browser.newContext({ viewport: { width: 1280, height: 900 } });
@@ -748,7 +888,7 @@ try {
     await waitForTerminal(flaggedPage, '#consumer-explorer-title');
     assert.equal(await flaggedPage.locator('meta[name="zodiacs-registry-exchange-enabled"]').count(), 0);
     assert.equal(await flaggedPage.locator('[data-pro-markets-gateway]').count(), 0);
-    assert.equal(await flaggedPage.locator('#market-layer a[href="/terminal/markets/"]').count(), 1);
+    assert.equal(await flaggedPage.locator('#market-layer a[href="/terminal/?rank=marketCap"]').count(), 1);
     await flaggedPage.goto(`${baseURL}/terminal/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(flaggedPage, '#pro-terminal-title');
     await flaggedPage.waitForFunction(() => document.querySelector('.pro-board table')?.getAttribute('aria-busy') === 'false');

@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
 import {
   REGISTRY_MARKET_ARCHIVE_SCHEMA,
+  REGISTRY_MARKET_METHOD,
+  SOLANA_WRAPPED_SOL_MINT,
   buildRegistryMarketSnapshot,
   canonicalSolanaAssets,
   emptyRegistryMarketArchive,
@@ -17,6 +19,7 @@ const ASSETS = [
   { sign: 'aries', displayName: 'Aries', symbol: 'ARIES', mint: 'AriesMint' },
   { sign: 'taurus', displayName: 'Taurus', symbol: 'TAURUS', mint: 'TaurusMint' },
 ];
+const PAIR_IDS = { aries: 'aries-pin', taurus: 'taurus-pin' };
 
 function pair({
   mint = 'AriesMint',
@@ -28,7 +31,7 @@ function pair({
   marketCap,
   fdv,
   chainId = 'solana',
-  quoteMint,
+  quoteMint = SOLANA_WRAPPED_SOL_MINT,
 }) {
   return {
     chainId,
@@ -73,29 +76,40 @@ describe('Registry market snapshot archive', () => {
     });
   });
 
-  it('fetches one public batch and keeps market cap separate from FDV', async () => {
-    const payload = [
-      pair({ pairAddress: 'shallow', liquidity: 100, volume: 5, marketCap: 1_000, fdv: 2_000 }),
-      pair({ pairAddress: 'deep', liquidity: 900, volume: 20, price: '0.02', change: -3, fdv: 9_000 }),
-      // Duplicate pool: the more complete/deeper record wins, but is still counted once.
-      pair({ pairAddress: 'deep', liquidity: 800, volume: 10, price: '0.03', marketCap: 8_000, fdv: 8_000 }),
-      pair({ mint: 'TaurusMint', pairAddress: 'taurus', liquidity: 300, volume: 30, marketCap: 3_000, fdv: 4_000 }),
-      pair({ mint: 'UnknownMint', quoteMint: 'AriesMint', pairAddress: 'aries-as-quote', liquidity: 50, volume: 2 }),
+  it('uses the pinned SOL pair over a deeper unrelated quote and keeps market cap separate from FDV', async () => {
+    const tokenPayload = [
+      pair({ pairAddress: 'untrusted-deep', quoteMint: 'TrumpBucksMint', liquidity: 52_510, volume: 12_000, price: '0.7562', change: 27.54, marketCap: 756_238_771, fdv: 756_238_771 }),
+      pair({ mint: 'TaurusMint', pairAddress: 'taurus-pin', liquidity: 300, volume: 30, marketCap: 3_000, fdv: 4_000 }),
       pair({ pairAddress: 'base-chain', liquidity: 10_000, volume: 99, chainId: 'base' }),
-      pair({ mint: 'UnknownMint', pairAddress: 'unknown', liquidity: 10_000, volume: 99 }),
     ];
-    const fetchImpl = vi.fn(async () => ({ ok: true, status: 200, json: async () => payload }));
-    const fetched = await fetchDexScreenerPairs({ assets: ASSETS, fetchImpl, timeoutMs: 100 });
+    const pinnedPayload = [
+      pair({ pairAddress: 'aries-pin', liquidity: 900, volume: 20, price: '0.02', change: -3, fdv: 9_000 }),
+    ];
+    const fetchImpl = vi.fn(async (url) => ({
+      ok: true,
+      status: 200,
+      json: async () => url.includes('/tokens/v1/') ? tokenPayload : { pairs: pinnedPayload },
+    }));
+    const fetched = await fetchDexScreenerPairs({
+      assets: ASSETS,
+      fetchImpl,
+      timeoutMs: 100,
+      pairIdsBySign: PAIR_IDS,
+    });
     const snapshot = buildRegistryMarketSnapshot({
       assets: ASSETS,
       pairs: fetched.pairs,
       sourceUrl: fetched.url,
       readAt: '2026-08-09T06:31:00.000Z',
+      pairIdsBySign: PAIR_IDS,
     });
 
-    expect(fetchImpl).toHaveBeenCalledTimes(1);
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
     expect(fetchImpl.mock.calls[0][0]).toBe(
       'https://api.dexscreener.com/tokens/v1/solana/AriesMint,TaurusMint',
+    );
+    expect(fetchImpl.mock.calls[1][0]).toBe(
+      'https://api.dexscreener.com/latest/dex/pairs/solana/aries-pin',
     );
     expect(snapshot).toMatchObject({
       date: '2026-08-09',
@@ -105,9 +119,9 @@ describe('Registry market snapshot archive', () => {
         marketCapUsd: 3_000,
         marketCapAssetCount: 1,
         fdvUsd: 13_000,
-        liquidityUsd: 1_300,
-        volume24hUsd: 55,
-        indexedPoolCount: 3,
+        liquidityUsd: 1_200,
+        volume24hUsd: 50,
+        indexedPoolCount: 2,
       },
     });
     expect(snapshot.assets[0]).toMatchObject({
@@ -116,12 +130,14 @@ describe('Registry market snapshot archive', () => {
       change24hPct: -3,
       marketCapUsd: null,
       fdvUsd: 9_000,
-      liquidityUsd: 1_000,
-      volume24hUsd: 25,
-      indexedPoolCount: 2,
-      deepestPool: { pairAddress: 'deep', liquidityUsd: 900 },
+      liquidityUsd: 900,
+      volume24hUsd: 20,
+      indexedPoolCount: 1,
+      deepestPool: { pairAddress: 'aries-pin', liquidityUsd: 900 },
     });
     expect(snapshot.assets[0].marketCapUsd).not.toBe(snapshot.assets[0].fdvUsd);
+    expect(JSON.stringify(snapshot)).not.toContain('756238771');
+    expect(REGISTRY_MARKET_METHOD.pricing).toContain('established Solana/WSOL pair of record');
   });
 
   it('replaces the same UTC date instead of creating a duplicate and sorts history', () => {

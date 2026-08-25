@@ -183,8 +183,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       'id="collection"',
       'id="registry"',
       'id="verify"',
-      'id="faq"',
       'id="market-layer"',
+      'id="faq"',
       'data-terminal-market-notice',
     ]);
 
@@ -193,11 +193,20 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(opening.match(/class="static-vitrine__choice"/gu)).toHaveLength(12);
     expect(opening.match(/data-static-sign="[a-z]+"/gu)).toHaveLength(12);
     expect(opening).toContain('id="astrofolio-aries" checked');
-    expect(opening).toContain('<h2 id="static-aries-title">Aries</h2><p class="static-vitrine__dates">March 21 to April 19</p>');
+    expect(opening).toContain('<h2 id="static-aries-title">Aries</h2>');
+    ordered(opening, [
+      '<h2 id="static-aries-title">Aries</h2>',
+      'class="static-vitrine__price"',
+      'class="static-vitrine__actions"',
+      '<p class="static-vitrine__dates">March 21 to April 19</p>',
+    ]);
     expect(opening).toContain('<span class="static-vitrine__figure">Price unavailable</span>');
     expect(opening).toContain('<span class="static-vitrine__movement">movement unavailable</span>');
     expect(opening).toContain('href="/registry/aries/">Explore Aries</a>');
-    expect(opening).toContain('href="/astrofolio/how-to-buy/aries/">How to buy</a>');
+    expect(opening).toContain('href="https://fomo.family/coin?address=GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv&amp;chainId=1399811149"');
+    expect(opening).toContain('src="/assets/venues/fomo-official.svg"');
+    expect(opening).toContain('data-fomo-buy="aries"');
+    expect(opening).toContain('href="/astrofolio/how-to-buy/aries/">Other ways to buy</a>');
     expect(opening).not.toContain('href="/terminal/');
     expect(opening).not.toContain('/registry/aries/#acquire');
     expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
@@ -205,14 +214,22 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
 
     const howToBuyLinks = html.match(/href="\/astrofolio\/how-to-buy\/[a-z]+\/"/gu) ?? [];
     expect(howToBuyLinks).toHaveLength(12);
+    expect(html.match(/data-fomo-buy="[a-z]+"/gu)).toHaveLength(12);
+    expect(opening.match(/<small>[A-Z][a-z]+ <span class="btn--fomo__zodiac-emoji" aria-hidden="true">[♈-♓]️<\/span><\/small><strong>Buy with Fomo<\/strong>/gu)).toHaveLength(12);
+    expect(opening).not.toContain(' selected</small>');
+    expect(html.match(/href="https:\/\/fomo\.family\/coin\?address=[^"&]+&amp;chainId=1399811149"/gu)).toHaveLength(12);
     expect(html).not.toMatch(/href="\/terminal\/\?sign=[a-z]+#selected"/gu);
     const marketGateway = section(html, 'market-layer');
-    expect(marketGateway.match(/href="\/terminal\/"/gu)).toHaveLength(1);
-    expect(marketGateway.match(/href="\/terminal\/markets\/"/gu)).toHaveLength(1);
-    expect(normalizedText(marketGateway)).toContain('Read the market. Trade your sign.');
-    expect(normalizedText(marketGateway)).toContain('Solana · 12 verified mints');
-    expect(normalizedText(marketGateway)).toContain('On Solana, Jupiter Ultra supplies the executable route and transaction. Your wallet reviews, approves, and signs.');
-    expect(marketGateway.match(/class="consumer-market-gateway__token"/gu)).toHaveLength(12);
+    expect(marketGateway.match(/href="\/registry\/technical\/#market-transparency"/gu)).toHaveLength(1);
+    expect(marketGateway.match(/href="\/terminal\/\?rank=marketCap"/gu)).toHaveLength(1);
+    expect(normalizedText(marketGateway)).toContain("Latest market snapshot Who's leading today?");
+    expect(normalizedText(marketGateway)).toContain('The latest available snapshot ranks the Twelve by reported market cap.');
+    expect(marketGateway).toContain('role="list" aria-label="Zodiac market-cap leaderboard"');
+    expect(marketGateway.match(/<li(?:\s|>)/gu)).toHaveLength(12);
+    expect(marketGateway.match(/class="consumer-market-leaderboard__icon"/gu)).toHaveLength(12);
+    expect(marketGateway.match(/\/assets\/zodiac-icons\/48\/[a-z]+\.avif/gu)).toHaveLength(12);
+    expect(marketGateway.match(/\/assets\/zodiac-icons\/48\/[a-z]+\.webp/gu)).toHaveLength(12);
+    expect(marketGateway.match(/width="34" height="34"/gu)).toHaveLength(12);
     expect(html).not.toContain('See market details');
     expect(html).not.toContain('class="static-terminal-gateway"');
     const shop = section(html, 'shop');
@@ -246,8 +263,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       '<ConsumerShop />',
       '<ConsumerCabinet />',
       '<ConsumerRegistryGuide sign={sign} />',
+      '<ConsumerMarketGateway batch={consumerMarket} activeTicker={activeTicker} />',
       '<ConsumerFaq />',
-      '<ConsumerMarketGateway />',
       '<Footer />',
     ]);
     expect(source).toContain('<span id="market-snapshot" className="terminal-compat-target" aria-hidden="true" />');
@@ -306,10 +323,22 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(placard).toContain('marketRankForSign(item, batch)');
     expect(placard).toContain('Data &amp; methodology');
     expect(placard).toContain('howToBuyPath(item)');
-    expect(placard).toContain('>How to buy</a>');
+    expect(placard).toContain('fomoBuyPath(item)');
+    expect(placard).toContain('/assets/venues/fomo-official.svg');
+    expect(placard).toContain('<small>{item.name} <span className="btn--fomo__zodiac-emoji" aria-hidden="true">{zodiacEmoji(item)}</span></small><strong>Buy with Fomo</strong>');
+    expect(functionBlock(source, 'zodiacEmoji')).toContain("`${symbol}\\uFE0F`");
+    expect(placard).not.toContain(' selected</small>');
+    expect(placard).toContain('>Other ways to buy</a>');
+    expect(placard).toContain('<span>Opens the Fomo app</span>');
+    expect(placard).toContain("trackAnalytics('astrofolio_fomo_open'");
     expect(placard).not.toContain('/terminal/');
-    expect(placard).toContain('className="vitrine-official-note"');
-    expect(placard).toContain('&ldquo;official&rdquo; means the address is listed in the Zodiacs Registry');
+    expect(placard).not.toContain('className="vitrine-official-note"');
+    expect(placard).not.toContain('&ldquo;official&rdquo; means the address is listed in the Zodiacs Registry');
+    ordered(placard, [
+      'className="vitrine-placard__actions"',
+      'className="vitrine-market-meta"',
+      'consumerSignDateLabel(item)',
+    ]);
     expect(source).not.toContain('function terminalMarketPath(');
     expect(source).not.toContain('function zodiacMarketsPath(');
     expect(placard).not.toContain('#acquire');
@@ -332,14 +361,19 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const source = await read('src/app.jsx');
     const rootBlock = functionBlock(source, 'Zodiacs');
     const placard = functionBlock(source, 'VitrinePlacard');
+    const marketGateway = functionBlock(source, 'ConsumerMarketGateway');
     expect(rootBlock).toContain('const consumerMarket = useTwelveQuotes(!technical && !pro);');
-    expect(rootBlock.match(/batch=\{consumerMarket\}/gu)).toHaveLength(1);
+    expect(rootBlock.match(/const consumerMarket = useTwelveQuotes\(!technical && !pro\);/gu)).toHaveLength(1);
+    expect(rootBlock.match(/batch=\{consumerMarket\}/gu)).toHaveLength(2);
+    expect(rootBlock).toContain('<ConsumerExplorer');
+    expect(rootBlock).toContain('<ConsumerMarketGateway batch={consumerMarket} activeTicker={activeTicker} />');
     expect(placard).not.toContain('useTwelveQuotes(');
+    expect(marketGateway).not.toContain('useTwelveQuotes(');
     expect(placard).toContain('<VitrinePrice sign={item} batch={batch} live={layer.current} />');
     expect(placard).toContain('marketRankForSign(item, batch)');
     expect(placard).toContain('Data &amp; methodology');
     expect(placard).not.toContain('/terminal/');
-    expect(placard).toContain('className="vitrine-official-note"');
+    expect(placard).not.toContain('className="vitrine-official-note"');
     expect(source).not.toContain('function ConsumerMarketSnapshot(');
     expect(source).not.toContain('<summary>See market details</summary>');
 
@@ -348,6 +382,9 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(movement).toContain("down ${formatPercent(Math.abs(movement)).replace('+', '')} today");
     expect(movement).toContain("return 'unchanged today'");
     expect(movement).toContain("return 'movement unavailable'");
+    const vitrinePrice = functionBlock(source, 'VitrinePrice');
+    expect(vitrinePrice).toContain("change > 0 ? 'up' : change < 0 ? 'down' : 'flat'");
+    expect(vitrinePrice).toContain('className={`vitrine-price__movement is-${direction}`}');
 
     const fallback = await read('public/astrofolio/index.html');
     expect(fallback).toContain('<span id="market-snapshot" class="terminal-compat-target" aria-hidden="true"></span>');
@@ -375,7 +412,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(fallback).not.toContain('href="https://astrofolio.xyz/"');
   });
 
-  it('keeps the collection story, Shop, Registry guide, FAQs, and final market gateway exact', async () => {
+  it('keeps the collection story, Shop, Registry guide, leaderboard, and FAQs exact', async () => {
     const source = await read('src/app.jsx');
     const introduction = functionBlock(source, 'ConsumerIntroduction');
     expect(introduction).toContain('id="what-is-astrofolio"');
@@ -405,18 +442,41 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     }
 
     expect(source).not.toContain('function ConsumerTerminalStrip(');
-    expect(functionBlock(source, 'VitrinePlacard')).toContain('>How to buy</a>');
+    expect(functionBlock(source, 'VitrinePlacard')).toContain('>Other ways to buy</a>');
+    expect(functionBlock(source, 'VitrinePlacard')).toContain('href={fomoBuyPath(item)}');
     expect(functionBlock(source, 'VitrinePlacard')).not.toContain('/terminal/');
     const marketGateway = functionBlock(source, 'ConsumerMarketGateway');
     expect(marketGateway).toContain('id="market-layer"');
-    expect(marketGateway).toContain('<h2 id="consumer-market-gateway-title">Read the market. Trade your sign.</h2>');
-    expect(marketGateway).toContain('href="/terminal/"');
-    expect(marketGateway).toContain('<span>Open Terminal</span>');
-    expect(marketGateway).toContain('href="/terminal/markets/"');
-    expect(marketGateway).toContain('<span>Open Zodiac Markets</span>');
-    expect(marketGateway).toContain('Solana · 12 verified mints');
-    expect(marketGateway).toContain('On Solana, Jupiter Ultra supplies the executable route and transaction. Your wallet reviews, approves, and signs.');
-    expect(marketGateway).toContain('{SIGNS.map((item, index) =>');
+    expect(marketGateway).toContain('<h2 id="consumer-market-gateway-title">Who&rsquo;s leading today?</h2>');
+    expect(marketGateway).toContain('<ol role="list" aria-label="Zodiac market-cap leaderboard">');
+    expect(marketGateway).toContain('.sort((left, right) =>');
+    expect(marketGateway).toContain('return right.marketCap - left.marketCap || left.item.order - right.item.order;');
+    expect(marketGateway).toContain('{rows.map(({ item, marketCap, change }, index) =>');
+    expect(marketGateway).toContain('formatUsdCompact(marketCap)');
+    expect(marketGateway).toContain("batch.stale ? 'Delayed'");
+    expect(marketGateway).toContain('batch.quotes?.[item.asset.sign]');
+    expect(marketGateway).toContain('href="/registry/technical/#market-transparency"');
+    expect(marketGateway).toContain('<span>How ranking works</span>');
+    expect(marketGateway).toContain('href="/terminal/?rank=marketCap"');
+    expect(marketGateway).toContain('<span>View full market</span>');
+    expect(marketGateway).toContain('Market data comes from an independent index');
+    expect(marketGateway).toContain('className="consumer-market-leaderboard__icon"');
+    expect(marketGateway).toContain('/assets/zodiac-icons/48/${item.asset.sign}.avif');
+    expect(marketGateway).toContain('/assets/zodiac-icons/48/${item.asset.sign}.webp');
+    expect(marketGateway).toContain('width="34" height="34"');
+
+    const marketLoader = functionBlock(source, 'loadTwelveMarketQuotes');
+    expect(marketLoader).toContain('isPinnedPairForSign(pair, sign)');
+    expect(marketLoader).toContain('latest/dex/pairs/solana/${missingPairIds.join(\',\')}');
+    expect(marketLoader).toContain('const pair = configured');
+    expect(marketLoader).toContain('pinnedPairsBySign.get(sign.asset.sign) || null');
+    expect(marketLoader).not.toContain('configured ? market?.bestPair');
+    const pinnedValidator = functionBlock(source, 'isPinnedPairForSign');
+    expect(pinnedValidator).toContain('pair?.pairAddress === config.pairId');
+    expect(pinnedValidator).toContain('pair?.baseToken?.address === mint');
+    expect(pinnedValidator).toContain('pair?.quoteToken?.address === SOLANA_WRAPPED_SOL_MINT');
+    const marketParser = functionBlock(source, 'parseMarketContextPayload');
+    expect(marketParser).not.toContain('|| pairs[0]');
 
     const cabinet = functionBlock(source, 'ConsumerCabinet');
     expect(cabinet).toContain('id="cabinet" className="consumer-cabinet-section reveal"');

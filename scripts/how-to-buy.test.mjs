@@ -73,15 +73,21 @@ describe('Astrofolio beginner buying guide', () => {
     expect(source).toContain('tradeInstance?.destroy?.()');
   });
 
-  it('changes both hydrated and no-JS Astrofolio actions to the selected guide', async () => {
+  it('makes Fomo primary while keeping the selected guide as an alternative', async () => {
     const [app, shell] = await Promise.all([
       read('src/app.jsx'),
       read('public/astrofolio/index.html'),
     ]);
     expect(app).toContain('function howToBuyPath(sign)');
+    expect(app).toContain('function fomoBuyPath(sign)');
+    expect(app).toContain("const FOMO_SOLANA_CHAIN_ID = '1399811149'");
+    expect(app).toContain('href={fomoBuyPath(item)}');
+    expect(app).toContain('/assets/venues/fomo-official.svg');
     expect(app).toContain('href={howToBuyPath(item)}');
-    expect(app).toContain('>How to buy</a>');
-    expect(shell.match(/href="\/astrofolio\/how-to-buy\/[a-z]+\/">How to buy<\/a>/gu)).toHaveLength(12);
+    expect(app).toContain('>Other ways to buy</a>');
+    expect(shell.match(/href="\/astrofolio\/how-to-buy\/[a-z]+\/">Other ways to buy<\/a>/gu)).toHaveLength(12);
+    expect(shell.match(/data-fomo-buy="[a-z]+"/gu)).toHaveLength(12);
+    expect(shell.match(/href="https:\/\/fomo\.family\/coin\?address=[^"&]+&amp;chainId=1399811149"/gu)).toHaveLength(12);
     expect(shell.match(/<a\b[^>]*data-terminal-static-view="pro"/gu) ?? []).toHaveLength(0);
   });
 

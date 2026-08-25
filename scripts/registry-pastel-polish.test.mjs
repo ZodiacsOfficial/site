@@ -39,7 +39,7 @@ describe('registry pastel polish', () => {
     expect(source).toContain('alt={layer.current ? `${item.name} Zodiac artwork` : \'\'}');
   });
 
-  it('keeps every selector disc pastel and reserves the selected hue for the ring, atmosphere, and movement', async () => {
+  it('keeps every selector disc pastel, reserves the selected hue for atmosphere, and colors movement by direction', async () => {
     const [css, html] = await Promise.all([
       read('src/terminal/split-styles.css'),
       read('public/astrofolio/index.html'),
@@ -47,7 +47,8 @@ describe('registry pastel polish', () => {
     const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
     expect(lit).toContain('color-mix(in srgb, var(--active-sign) 13%, transparent)');
     expect(lit).toContain('0 0 0 4px var(--sign);');
-    expect(lit).toContain('color: var(--active-sign);');
+    expect(lit).toContain('.consumer-registry .vitrine-price__movement.is-up { color: var(--market-up); }');
+    expect(lit).toContain('.consumer-registry .vitrine-price__movement.is-down { color: var(--vermilion); }');
     const hydratedDisc = cssRule(lit, '.consumer-registry .vitrine-disc img {');
     expect(hydratedDisc).toContain('width: 42px;');
     expect(hydratedDisc).toContain('height: 42px;');
@@ -84,7 +85,6 @@ describe('registry pastel polish', () => {
     const css = await read('src/terminal/split-styles.css');
     const rail = cssRule(css, '.consumer-registry .vitrine-disc-rail {');
     const gateway = cssRule(css, '.consumer-market-gateway__action {');
-    const note = cssRule(css, '.consumer-registry .vitrine-official-note {');
     const staticShopImage = cssRule(css, '.consumer-static .static-shop__image {');
     const staticShopAsset = cssRule(css, '.consumer-static .static-shop__image img {');
 
@@ -96,7 +96,7 @@ describe('registry pastel polish', () => {
     expect(gateway).toContain('min-height: 52px;');
     expect(gateway).toContain('border-radius: 999px;');
     expect(gateway).toContain('text-decoration: none;');
-    expect(note).toContain('font: 500 10px/1.45 var(--sans);');
+    expect(css).not.toContain('.consumer-registry .vitrine-official-note');
     expect(staticShopImage).toContain('width: 100%;');
     expect(staticShopImage).toContain('max-width: 100%;');
     expect(staticShopImage).toContain('overflow: hidden;');
@@ -104,18 +104,47 @@ describe('registry pastel polish', () => {
     expect(staticShopAsset).toContain('height: auto;');
   });
 
-  it('keeps the warm halo behind the artwork and neutral UI chrome', async () => {
+  it('keeps the warm artwork halo, neutral Explore chrome, and branded Fomo action', async () => {
     const css = await read('src/terminal/split-styles.css');
     const halo = cssRule(css, '.consumer-registry .vitrine-stage::before {');
-    const primary = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn--primary {');
+    const explore = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn--explore,');
+    const fomo = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn--fomo,');
+    const fomoIcon = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn--fomo img,');
+    const actionGrid = cssRule(css, '.consumer-registry .vitrine-placard__actions {');
+    const leaderboardIconShell = cssRule(css, '.consumer-market-leaderboard__icon {');
+    const leaderboardIcon = cssRule(css, '.consumer-market-leaderboard__icon img {');
     const buttons = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn {');
     expect(halo).toContain('radial-gradient');
     expect(halo).toContain('rgba(215, 173, 105, .15)');
-    expect(primary).toContain('border-color: rgba(238,241,247,.3);');
-    expect(primary).toContain('color: var(--ink);');
+    expect(explore).toContain('color: var(--ink-2);');
+    expect(fomo).toContain('justify-content: flex-start;');
+    expect(fomo).toContain('border-color: rgba(255,255,255,.78);');
+    expect(fomo).toContain('#f1f0ec;');
+    expect(fomo).toContain('color: #111318;');
+    expect(fomoIcon).toContain('width: 34px;');
+    expect(fomoIcon).toContain('height: 34px;');
+    expect(actionGrid).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
+    expect(css).not.toMatch(/grid-template-columns: minmax\(0, \.(?:82|86)fr\) minmax\(0, 1\.(?:18|14)fr\)/u);
+    expect(css).toContain('.consumer-registry .vitrine-price__movement.is-up { color: var(--market-up); }');
+    expect(css).toContain('.consumer-registry .vitrine-price__movement.is-down { color: var(--vermilion); }');
+    expect(leaderboardIconShell).toContain('flex: 0 0 34px;');
+    expect(leaderboardIconShell).toContain('width: 34px;');
+    expect(leaderboardIconShell).toContain('height: 34px;');
+    expect(leaderboardIcon).toContain('filter: none;');
+    expect(leaderboardIcon).toContain('border-radius: 50%;');
+    expect(css).toContain('.consumer-market-leaderboard__icon { width: 34px; height: 34px; flex-basis: 34px; }');
     expect(buttons).toContain('rgba(10,12,17,.66)');
     expect(buttons).toContain('inset 0 1px 0 rgba(238,241,247,.1)');
-    expect(css).toContain('.consumer-registry .vitrine-placard__actions .btn--primary::after {');
+    expect(css).toContain('.btn--fomo__arrow {');
+    expect(css).toContain('flex: 0 0 31px;');
+    expect(css).toContain('.btn--fomo__arrow { width: 31px; height: 31px; flex-basis: 31px; }');
+    expect(css).toContain('.btn--fomo__zodiac-emoji {');
+    expect(css).toContain('font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;');
+    expect(css).toContain('font-size: 14px;');
+    expect(css).toContain('filter: saturate(1.32) hue-rotate(-8deg) brightness(.78) contrast(1.8);');
+    expect(css).toContain('transform: translateY(-.5px);');
+    expect(css).toContain('@media (hover: hover) and (pointer: fine) {');
+    expect(css).toContain('.consumer-registry .vitrine-buy-options,');
     expect(buttons).not.toMatch(/--active-sign|--sign|215, 173, 105/u);
   });
 

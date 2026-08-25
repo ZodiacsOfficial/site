@@ -7806,10 +7806,12 @@
       font-family: var(--mono);
       font-variant-numeric: tabular-nums;
     }
-    .static-vitrine__movement { color: var(--static-sign); font-family: var(--sans); }
+    .static-vitrine__movement { color: var(--market-flat); font-family: var(--sans); }
+    .static-vitrine__movement.is-up { color: var(--market-up); }
+    .static-vitrine__movement.is-down { color: var(--vermilion); }
     .static-vitrine__actions {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       justify-items: stretch;
       gap: 9px;
       max-width: 510px;
@@ -8244,7 +8246,7 @@
       .static-vitrine__dates { margin-top: 9px; }
       .static-vitrine__price { margin-top: 15px; }
       .static-vitrine__actions { margin-top: 17px; }
-      .static-vitrine__actions { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); justify-items: stretch; }
+      .static-vitrine__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); justify-items: stretch; }
       .consumer-static .static-vitrine__actions .btn { width: 100%; }
       .static-vitrine__record { grid-column: 1 / -1; justify-self: start; }
       .static-buy__steps { grid-template-columns: 1fr; padding: 6px; }
@@ -8788,7 +8790,7 @@
   <script defer crossorigin="anonymous" referrerpolicy="no-referrer"
     src="/assets/vendor/react-dom-18.3.1.production.min.js"
     integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"></script>
-  <script defer src="/assets/app.js?v=z4"></script>
+  <script defer src="/assets/app.js?v=z10"></script>
 
   <script data-guide-loader="zodiacs-guide-loader-v1">
 (function () {
