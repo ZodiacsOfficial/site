@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-drafts.v1",
-  "generatedAt": "2026-08-25T01:54:26.523Z",
+  "generatedAt": "2026-08-25T07:32:06.819Z",
   "generator": "zodiacs.registry-research.deterministic.v1",
   "method": {
     "id": "zodiacs.registry-research-method.v1",
@@ -6762,13 +6762,115 @@
       },
       "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
       "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [
+        {
+          "kind": "append-only-follow-up",
+          "parentId": "zrx-market-check-2026-08-18"
+        }
+      ],
+      "id": "zrx-market-check-2026-08-18-observation-168h",
+      "slug": "market-check-2026-08-18-observation-168h",
+      "kind": "observation-update",
+      "templateId": "observation-update.v1",
+      "parentId": "zrx-market-check-2026-08-18",
+      "issuedAt": "2026-08-25T07:32:06.819Z",
+      "visibleAt": "2026-08-25T07:32:06.819Z",
+      "title": "Leo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (168.11 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-08-18-observation-168h/",
+      "signs": [
+        "leo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "symbolicScore": {
+        "sign": "leo",
+        "attention": 22,
+        "tone": 0,
+        "eventIntensity": 0,
+        "calculation": "9 disclosed Sun occupancy-attention points",
+        "marketFieldsUsed": false
+      },
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "The original zrx-market-check-2026-08-18 sky score and traditional reading remain unchanged.",
+          "evidence": [
+            "/assets/data/registry-research/items/zrx-market-check-2026-08-18.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "This follow-up does not reinterpret the sky after observing the market.",
+          "evidence": [
+            "/assets/data/registry-research/items/zrx-market-check-2026-08-18.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "168.11 hours after the original market observation, indexed price change was +97.16% and indexed liquidity change was +62.46%. This temporal comparison does not establish causation.",
+          "evidence": [
+            "public/assets/data/registry-market-history.v1.json"
+          ]
+        }
+      },
+      "market": {
+        "available": true,
+        "snapshotId": "registry-market:2026-08-25:2026-08-25T07:32:06.819Z",
+        "observedAt": "2026-08-25T07:32:06.819Z",
+        "provider": "DexScreener",
+        "sign": "leo",
+        "priceUsd": 0.00015,
+        "change24hPct": 35.98,
+        "marketCapUsd": 150047,
+        "fdvUsd": 150047,
+        "liquidityUsd": 21564.46,
+        "volume24hUsd": 5182.69,
+        "indexedPoolCount": 1,
+        "deepestPoolUrl": "https://dexscreener.com/solana/48erbgmqizekyloccebd7cs5knqpzqr7qqak9mzapqgq",
+        "baselineSnapshotId": "registry-market:2026-08-18:2026-08-18T07:25:33.287Z",
+        "baselineObservedAt": "2026-08-18T07:25:33.287Z",
+        "requestedElapsedHours": 168,
+        "actualElapsedHours": 168.11,
+        "priceChangePct": 97.16,
+        "liquidityChangePct": 62.46
+      },
+      "evidence": {
+        "parentId": "zrx-market-check-2026-08-18",
+        "baselineSnapshotId": "registry-market:2026-08-18:2026-08-18T07:25:33.287Z",
+        "marketSnapshotId": "registry-market:2026-08-25:2026-08-25T07:32:06.819Z",
+        "coverage": "first-qualifying-archive-observation"
+      },
+      "artifactHash": "4ba4d415adac006f52b3ed901f0224ba107a9231886fbbc2dc3c7bf51cde9ec2"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
       "revisions": [],
       "id": "zrx-market-check-2026-08-25",
       "slug": "market-check-2026-08-25",
       "kind": "market-check",
       "templateId": "market-check.v1",
-      "issuedAt": "2026-08-25T01:54:26.523Z",
-      "visibleAt": "2026-08-25T01:54:26.523Z",
+      "issuedAt": "2026-08-25T07:32:06.819Z",
+      "visibleAt": "2026-08-25T07:32:06.819Z",
       "title": "Virgo market check · 2026-08-25",
       "summary": "Virgo price, market cap, liquidity, volume, and collection medians at one archived observation.",
       "url": "/terminal/research/market-check-2026-08-25/",
@@ -6804,7 +6906,7 @@
         },
         "marketObservation": {
           "heading": "Market observation",
-          "body": "At 2026-08-25T01:54:26.523Z, Virgo was indexed at $0.0001348, with +29% over 24 hours, $134.87K market cap, $134.87K FDV, $19.31K indexed liquidity, $2.73K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Virgo market cap was 0.977× the collection median and indexed liquidity was 0.944× the collection median.",
+          "body": "At 2026-08-25T07:32:06.819Z, Virgo was indexed at $0.0001443, with +43.2% over 24 hours, $144.38K market cap, $144.38K FDV, $19.97K indexed liquidity, $3.27K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Virgo market cap was 0.968× the collection median and indexed liquidity was 0.948× the collection median.",
           "evidence": [
             "public/assets/data/registry-market-history.v1.json"
           ]
@@ -6812,30 +6914,30 @@
       },
       "market": {
         "available": true,
-        "snapshotId": "registry-market:2026-08-25:2026-08-25T01:54:26.523Z",
-        "observedAt": "2026-08-25T01:54:26.523Z",
+        "snapshotId": "registry-market:2026-08-25:2026-08-25T07:32:06.819Z",
+        "observedAt": "2026-08-25T07:32:06.819Z",
         "provider": "DexScreener",
         "sign": "virgo",
-        "priceUsd": 0.0001348,
-        "change24hPct": 29,
-        "marketCapUsd": 134869,
-        "fdvUsd": 134869,
-        "liquidityUsd": 19305.22,
-        "volume24hUsd": 2727.85,
+        "priceUsd": 0.0001443,
+        "change24hPct": 43.2,
+        "marketCapUsd": 144382,
+        "fdvUsd": 144382,
+        "liquidityUsd": 19969.97,
+        "volume24hUsd": 3270.08,
         "indexedPoolCount": 1,
         "deepestPoolUrl": "https://dexscreener.com/solana/5wcvjf8fzpkhazqtszddbdfl6p2blbageigxpevnrcrh",
         "collectionMedian": {
-          "marketCapUsd": 138103,
-          "liquidityUsd": 20458.78
+          "marketCapUsd": 149087.5,
+          "liquidityUsd": 21066.775
         },
         "vsCollectionMedian": {
-          "marketCap": 0.977,
-          "liquidity": 0.944
+          "marketCap": 0.968,
+          "liquidity": 0.948
         }
       },
       "evidence": {
         "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-25",
-        "marketSnapshotId": "registry-market:2026-08-25:2026-08-25T01:54:26.523Z",
+        "marketSnapshotId": "registry-market:2026-08-25:2026-08-25T07:32:06.819Z",
         "coverage": {
           "overall": "complete",
           "events": "complete",
@@ -6847,7 +6949,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "a587d36218ac629faec51266656bb053f0547fd3fb4686b76d9494496ad5badc"
+      "artifactHash": "bfdea0b2d7f9b8ce59a01e9a4ff5b3075b58952580003fa9fadae01797cbcaa4"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -7004,7 +7106,7 @@
         },
         "marketObservation": {
           "heading": "Market observation",
-          "body": "At 2026-08-25T01:54:26.523Z, Virgo was indexed at $0.0001348, with +29% over 24 hours, $134.87K market cap, $134.87K FDV, $19.31K indexed liquidity, $2.73K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
+          "body": "At 2026-08-25T07:32:06.819Z, Virgo was indexed at $0.0001443, with +43.2% over 24 hours, $144.38K market cap, $144.38K FDV, $19.97K indexed liquidity, $3.27K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
           "evidence": [
             "public/assets/data/registry-market-history.v1.json"
           ]
@@ -7012,23 +7114,23 @@
       },
       "market": {
         "available": true,
-        "snapshotId": "registry-market:2026-08-25:2026-08-25T01:54:26.523Z",
-        "observedAt": "2026-08-25T01:54:26.523Z",
+        "snapshotId": "registry-market:2026-08-25:2026-08-25T07:32:06.819Z",
+        "observedAt": "2026-08-25T07:32:06.819Z",
         "provider": "DexScreener",
         "sign": "virgo",
-        "priceUsd": 0.0001348,
-        "change24hPct": 29,
-        "marketCapUsd": 134869,
-        "fdvUsd": 134869,
-        "liquidityUsd": 19305.22,
-        "volume24hUsd": 2727.85,
+        "priceUsd": 0.0001443,
+        "change24hPct": 43.2,
+        "marketCapUsd": 144382,
+        "fdvUsd": 144382,
+        "liquidityUsd": 19969.97,
+        "volume24hUsd": 3270.08,
         "indexedPoolCount": 1,
         "deepestPoolUrl": "https://dexscreener.com/solana/5wcvjf8fzpkhazqtszddbdfl6p2blbageigxpevnrcrh"
       },
       "evidence": {
         "dailyFacts": "src/data/daily.json#2026-08-25",
         "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-25",
-        "marketSnapshotId": "registry-market:2026-08-25:2026-08-25T01:54:26.523Z",
+        "marketSnapshotId": "registry-market:2026-08-25:2026-08-25T07:32:06.819Z",
         "coverage": {
           "overall": "complete",
           "events": "complete",
@@ -7040,7 +7142,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "36813a82d1a73ab4ab1406c73d2243eca1f11f85d3ca594ba356fb04acd9d09f"
+      "artifactHash": "b0d113d48163555b9a44c64c20bbe892ece0cdf630af071d16107f98bbb11dd7"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
