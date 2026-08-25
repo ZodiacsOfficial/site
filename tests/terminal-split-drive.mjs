@@ -534,6 +534,28 @@ try {
     assert.equal(await page.locator('[data-vitrine-sculpture="leo"].is-active').count(), 1);
     assert.equal(await page.locator('[data-vitrine-placard="leo"] [role="status"]').count(), 1);
     assert.equal(await page.locator('[data-vitrine-placard="leo"] [aria-hidden="true"][role="status"]').count(), 0);
+    await page.locator('#shop').scrollIntoViewIfNeeded();
+    await page.waitForFunction(() => [...document.querySelectorAll('.consumer-shop__product img')].every((image) => (
+      image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
+    )));
+    const hydratedShopImages = await page.locator('.consumer-shop__product img').evaluateAll((images) => images.map((image) => {
+      const box = image.getBoundingClientRect();
+      return {
+        sameOrigin: new URL(image.currentSrc).origin === window.location.origin,
+        path: new URL(image.currentSrc).pathname,
+        naturalWidth: image.naturalWidth,
+        naturalHeight: image.naturalHeight,
+        width: box.width,
+        height: box.height,
+      };
+    }));
+    assert.deepEqual(hydratedShopImages.map(({ path }) => path), [
+      '/assets/astrofolio/merch/t-shirt-800.webp',
+      '/assets/astrofolio/merch/cap-800.webp',
+      '/assets/astrofolio/merch/hoodie-800.webp',
+    ]);
+    assert.ok(hydratedShopImages.every((image) => image.sameOrigin && image.naturalWidth > 0 && image.naturalHeight > 0 && image.width > 0 && image.height > 0), 'every hydrated merchandise image loads visibly from the site origin');
+    if (OUT) await page.screenshot({ path: `${OUT}/astrofolio-merch-mobile.png`, fullPage: false });
     await page.setViewportSize({ width: 768, height: 1024 });
     await assertPastelSelectorGeometry(page, { width: 768, height: 1024 });
     assert.deepEqual(errors, []);
@@ -739,16 +761,37 @@ try {
     assert.ok(Math.abs(staticActionGeometry.exploreWidth - staticActionGeometry.fomoWidth) <= 1, 'no-JavaScript actions use equal widths');
     assert.ok(staticActionGeometry.actionsBottom <= staticActionGeometry.dateTop, 'no-JavaScript date sits below the action row');
     assert.equal(staticActionGeometry.logoWidth, 34);
+    await noJsPage.locator('#shop').scrollIntoViewIfNeeded();
+    await noJsPage.waitForFunction(() => [...document.querySelectorAll('.static-shop__image img')].every((image) => (
+      image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
+    )));
     const staticPageGeometry = await noJsPage.evaluate(() => ({
       viewport: document.documentElement.clientWidth,
       scrollWidth: document.documentElement.scrollWidth,
       shopImages: [...document.querySelectorAll('.static-shop__image')].map((link) => {
         const box = link.getBoundingClientRect();
-        return { left: box.left, right: box.right, width: box.width };
+        const image = link.querySelector('img');
+        const current = image?.currentSrc ? new URL(image.currentSrc) : null;
+        return {
+          left: box.left,
+          right: box.right,
+          width: box.width,
+          height: box.height,
+          sameOrigin: current?.origin === window.location.origin,
+          path: current?.pathname,
+          naturalWidth: image?.naturalWidth,
+          naturalHeight: image?.naturalHeight,
+        };
       }),
     }));
     assert.ok(staticPageGeometry.scrollWidth <= staticPageGeometry.viewport, 'the no-JavaScript Astrofolio page has no horizontal overflow');
     assert.ok(staticPageGeometry.shopImages.every(({ left, right, width }) => left >= 0 && right <= staticPageGeometry.viewport && width > 0), 'every no-JavaScript shop image stays inside the mobile viewport');
+    assert.deepEqual(staticPageGeometry.shopImages.map(({ path }) => path), [
+      '/assets/astrofolio/merch/t-shirt-800.webp',
+      '/assets/astrofolio/merch/cap-800.webp',
+      '/assets/astrofolio/merch/hoodie-800.webp',
+    ]);
+    assert.ok(staticPageGeometry.shopImages.every((image) => image.sameOrigin && image.naturalWidth > 0 && image.naturalHeight > 0 && image.height > 0), 'every no-JavaScript merchandise image loads visibly from the site origin');
     const staticStoryStyle = await noJsPage.locator('.static-story-band').evaluate((node) => {
       const image = node.querySelector('img');
       const picture = node.querySelector('picture')?.getBoundingClientRect();

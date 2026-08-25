@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -8,6 +8,11 @@ const read = (path) => readFile(resolve(root, path), 'utf8');
 const SIGNS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+];
+const SHOP_IMAGE_PATHS = [
+  '/assets/astrofolio/merch/t-shirt-800.webp',
+  '/assets/astrofolio/merch/cap-800.webp',
+  '/assets/astrofolio/merch/hoodie-800.webp',
 ];
 const EXPECTED_FAQS = [
   {
@@ -241,6 +246,11 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ]) {
       expect(shop).toContain(`href="${href}"`);
     }
+    for (const image of SHOP_IMAGE_PATHS) {
+      expect(shop).toContain(`src="${image}"`);
+      await expect(access(resolve(root, `public${image}`))).resolves.toBeUndefined();
+    }
+    expect(shop).not.toContain('cdn.shopify.com');
     expect(html).not.toContain('data-terminal-preference-banner');
 
     const registry = section(html, 'registry');
@@ -440,6 +450,10 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ]) {
       expect(shopProducts).toContain(`href: '${href}'`);
     }
+    for (const image of SHOP_IMAGE_PATHS) {
+      expect(shopProducts).toContain(`image: '${image}'`);
+    }
+    expect(shopProducts).not.toContain('cdn.shopify.com');
 
     expect(source).not.toContain('function ConsumerTerminalStrip(');
     expect(functionBlock(source, 'VitrinePlacard')).toContain('>Other ways to buy</a>');
