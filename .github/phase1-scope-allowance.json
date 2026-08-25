@@ -2,7 +2,7 @@
   "version": 1,
   "id": "astrofolio-fomo-onboarding-2026-08-25",
   "note": "One-time allowance for PR #302: launch the owner-directed Astrofolio Fomo onboarding, consumer leaderboard, corrected canonical market-cap presentation, SDK pastel icon treatment, and the generated Registry/sign-guide evidence required by those changes. The freeze re-arms automatically once this merges.",
-  "baseCommit": "7c4212ead30055c69eb3186ddee0762ee576ff7a",
+  "baseCommit": "eb77efdf9774e251b660a86c0668a20b02483b67",
   "protectedPaths": [
     "public/assets/app.js",
     "public/assets/venues/fomo-official.svg",
