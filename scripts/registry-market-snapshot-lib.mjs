@@ -1,16 +1,20 @@
 import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
+import { EXCHANGE_POOLS } from '../src/exchange/pools.mjs';
 
 export const REGISTRY_MARKET_ARCHIVE_SCHEMA = 'zodiacs.registry-market-history.v1';
 export const REGISTRY_MARKET_ARCHIVE_VERSION = 1;
 export const DEXSCREENER_SOLANA_TOKENS_API =
   'https://api.dexscreener.com/tokens/v1/solana';
+export const DEXSCREENER_SOLANA_PAIRS_API =
+  'https://api.dexscreener.com/latest/dex/pairs/solana';
+export const SOLANA_WRAPPED_SOL_MINT = 'So11111111111111111111111111111111111111112';
 
 export const REGISTRY_MARKET_METHOD = Object.freeze({
   pricing:
-    'Price, 24h change, market cap, and FDV are read from the returned Solana pool with the greatest reported USD liquidity in which each canonical mint is the base token.',
+    'Price, 24h change, market cap, and FDV are read only from each canonical mint’s established Solana/WSOL pair of record.',
   liquidity:
-    'Liquidity and 24h volume are summed across distinct Solana pair addresses in which each canonical mint is the base token. Duplicate pair records are counted once.',
+    'Liquidity and 24h volume are read from the same established Solana/WSOL pair of record. Duplicate pair records are counted once.',
   valuation:
     'Market cap is recorded only when DexScreener reports marketCap. FDV is stored separately and is never used as a market-cap substitute.',
   limitations:
@@ -41,6 +45,17 @@ function pairLiquidity(pair) {
 
 function pairVolume24h(pair) {
   return finiteNumber(pair?.volume?.h24);
+}
+
+function isPairOfRecord(pair, asset, pairIdsBySign) {
+  const pairId = pairIdsBySign?.[asset?.sign];
+  return Boolean(
+    pairId
+    && pair?.chainId === 'solana'
+    && pair?.pairAddress === pairId
+    && pair?.baseToken?.address === asset.mint
+    && pair?.quoteToken?.address === SOLANA_WRAPPED_SOL_MINT
+  );
 }
 
 function chooseDuplicatePair(left, right) {
@@ -134,13 +149,17 @@ export function dexscreenerBatchUrl(assets) {
   return `${DEXSCREENER_SOLANA_TOKENS_API}/${assets.map(({ mint }) => mint).join(',')}`;
 }
 
-export async function fetchDexScreenerPairs({
-  assets,
-  fetchImpl = globalThis.fetch,
-  timeoutMs = 20_000,
-} = {}) {
-  if (typeof fetchImpl !== 'function') throw new Error('A fetch implementation is required');
-  const url = dexscreenerBatchUrl(assets);
+export function dexscreenerPairBatchUrl(pairIds) {
+  if (!Array.isArray(pairIds) || pairIds.length === 0) {
+    throw new Error('At least one pair of record is required');
+  }
+  if (pairIds.length > 30) {
+    throw new Error('DexScreener pair batch supports at most 30 addresses');
+  }
+  return `${DEXSCREENER_SOLANA_PAIRS_API}/${pairIds.join(',')}`;
+}
+
+async function fetchPairRows({ url, fetchImpl, timeoutMs }) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   let response;
@@ -155,31 +174,56 @@ export async function fetchDexScreenerPairs({
   } finally {
     clearTimeout(timeout);
   }
-
   if (!response?.ok) {
     throw new Error(`DexScreener request failed with HTTP ${response?.status ?? 'unknown'}`);
   }
   const payload = await response.json();
   const pairs = Array.isArray(payload) ? payload : payload?.pairs;
   if (!Array.isArray(pairs)) throw new Error('DexScreener response did not contain a pair array');
-  return { url, pairs };
+  return pairs;
 }
 
-export function buildRegistryMarketSnapshot({ assets, pairs, readAt = new Date(), sourceUrl } = {}) {
+export async function fetchDexScreenerPairs({
+  assets,
+  fetchImpl = globalThis.fetch,
+  timeoutMs = 20_000,
+  pairIdsBySign = EXCHANGE_POOLS,
+} = {}) {
+  if (typeof fetchImpl !== 'function') throw new Error('A fetch implementation is required');
+  const url = dexscreenerBatchUrl(assets);
+  const tokenPairs = await fetchPairRows({ url, fetchImpl, timeoutMs });
+  const missingPairIds = assets
+    .filter((asset) => !tokenPairs.some((pair) => isPairOfRecord(pair, asset, pairIdsBySign)))
+    .map((asset) => pairIdsBySign?.[asset.sign])
+    .filter(Boolean);
+  if (missingPairIds.length === 0) return { url, urls: [url], pairs: tokenPairs };
+  const pairUrl = dexscreenerPairBatchUrl(missingPairIds);
+  const pinnedPairs = await fetchPairRows({ url: pairUrl, fetchImpl, timeoutMs });
+  return { url, urls: [url, pairUrl], pairs: [...tokenPairs, ...pinnedPairs] };
+}
+
+export function buildRegistryMarketSnapshot({
+  assets,
+  pairs,
+  readAt = new Date(),
+  sourceUrl,
+  pairIdsBySign = EXCHANGE_POOLS,
+} = {}) {
   if (!Array.isArray(assets) || assets.length === 0) throw new Error('assets are required');
   if (!Array.isArray(pairs)) throw new Error('pairs must be an array');
   const observedAt = isoTimestamp(readAt);
-  const mintSet = new Set(assets.map(({ mint }) => mint));
+  const assetByMint = new Map(assets.map((asset) => [asset.mint, asset]));
   const byMint = new Map(assets.map(({ mint }) => [mint, new Map()]));
   const allPairs = new Map();
 
   for (const pair of pairs) {
     const mint = pair?.baseToken?.address;
+    const asset = assetByMint.get(mint);
     if (
-      pair?.chainId !== 'solana' ||
       typeof pair?.pairAddress !== 'string' ||
       !pair.pairAddress ||
-      !mintSet.has(mint)
+      !asset ||
+      !isPairOfRecord(pair, asset, pairIdsBySign)
     ) {
       continue;
     }
@@ -191,12 +235,7 @@ export function buildRegistryMarketSnapshot({ assets, pairs, readAt = new Date()
 
   const signSnapshots = assets.map((asset) => {
     const indexedPairs = [...byMint.get(asset.mint).values()];
-    const poolsWithDepth = indexedPairs.filter((pair) => pairLiquidity(pair) !== null);
-    const deepest = poolsWithDepth.sort((left, right) => {
-      const depthDifference = pairLiquidity(right) - pairLiquidity(left);
-      if (depthDifference !== 0) return depthDifference;
-      return String(left.pairAddress).localeCompare(String(right.pairAddress));
-    })[0] ?? null;
+    const pairOfRecord = indexedPairs[0] ?? null;
     const liquidity = sumReported(indexedPairs, pairLiquidity);
     const volume24h = sumReported(indexedPairs, pairVolume24h);
 
@@ -205,21 +244,21 @@ export function buildRegistryMarketSnapshot({ assets, pairs, readAt = new Date()
       displayName: asset.displayName,
       symbol: asset.symbol,
       mint: asset.mint,
-      priceUsd: deepest ? finiteNumber(deepest.priceUsd) : null,
-      change24hPct: deepest ? finiteNumber(deepest.priceChange?.h24, { allowNegative: true }) : null,
-      marketCapUsd: deepest ? finiteNumber(deepest.marketCap) : null,
-      fdvUsd: deepest ? finiteNumber(deepest.fdv) : null,
+      priceUsd: pairOfRecord ? finiteNumber(pairOfRecord.priceUsd) : null,
+      change24hPct: pairOfRecord ? finiteNumber(pairOfRecord.priceChange?.h24, { allowNegative: true }) : null,
+      marketCapUsd: pairOfRecord ? finiteNumber(pairOfRecord.marketCap) : null,
+      fdvUsd: pairOfRecord ? finiteNumber(pairOfRecord.fdv) : null,
       liquidityUsd: liquidity.value,
       liquidityReportedPoolCount: liquidity.reportedPairCount,
       volume24hUsd: volume24h.value,
       volume24hReportedPoolCount: volume24h.reportedPairCount,
       indexedPoolCount: indexedPairs.length,
-      deepestPool: deepest
+      deepestPool: pairOfRecord
         ? {
-            pairAddress: deepest.pairAddress,
-            dexId: deepest.dexId ?? null,
-            url: deepest.url ?? null,
-            liquidityUsd: pairLiquidity(deepest),
+            pairAddress: pairOfRecord.pairAddress,
+            dexId: pairOfRecord.dexId ?? null,
+            url: pairOfRecord.url ?? null,
+            liquidityUsd: pairLiquidity(pairOfRecord),
           }
         : null,
     };

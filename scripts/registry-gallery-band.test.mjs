@@ -345,11 +345,12 @@ describe('the legacy shared gallery band', () => {
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
     // The static vitrine keeps all twelve destinations useful without
-    // JavaScript and mirrors the two hydrated placard actions.
+    // JavaScript and mirrors the hydrated Explore, Fomo, and alternative paths.
     for (const slug of ['aries', 'virgo', 'pisces']) {
       const title = slug[0].toUpperCase() + slug.slice(1);
       expect(html).toContain(`href="/registry/${slug}/">Explore ${title}</a>`);
-      expect(html).toContain(`href="/astrofolio/how-to-buy/${slug}/">How to buy</a>`);
+      expect(html).toContain(`data-fomo-buy="${slug}"`);
+      expect(html).toContain(`href="/astrofolio/how-to-buy/${slug}/">Other ways to buy</a>`);
     }
     expect(html).not.toMatch(/href="[^"]*jup\.ag/iu);
     expect(html).not.toMatch(/href="\/registry\/[a-z-]+\/#acquire"/u);

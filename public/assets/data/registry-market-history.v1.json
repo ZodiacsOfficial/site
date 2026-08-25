@@ -2,8 +2,8 @@
   "schema": "zodiacs.registry-market-history.v1",
   "version": 1,
   "method": {
-    "pricing": "Price, 24h change, market cap, and FDV are read from the returned Solana pool with the greatest reported USD liquidity in which each canonical mint is the base token.",
-    "liquidity": "Liquidity and 24h volume are summed across distinct Solana pair addresses in which each canonical mint is the base token. Duplicate pair records are counted once.",
+    "pricing": "Price, 24h change, market cap, and FDV are read only from each canonical mint’s established Solana/WSOL pair of record.",
+    "liquidity": "Liquidity and 24h volume are read from the same established Solana/WSOL pair of record. Duplicate pair records are counted once.",
     "valuation": "Market cap is recorded only when DexScreener reports marketCap. FDV is stored separately and is never used as a market-cap substitute.",
     "limitations": "DexScreener is an independent index. A snapshot can be delayed, incomplete, or wrong, and does not represent a recommendation."
   },
@@ -3644,20 +3644,20 @@
       },
       "coverage": {
         "canonicalAssetCount": 12,
-        "assetsWithIndexedPools": 12,
-        "assetsWithMarketCap": 12,
-        "assetsWithFdv": 12
+        "assetsWithIndexedPools": 11,
+        "assetsWithMarketCap": 11,
+        "assetsWithFdv": 11
       },
       "totals": {
-        "marketCapUsd": 549205684,
-        "marketCapAssetCount": 12,
-        "fdvUsd": 549205682,
-        "fdvAssetCount": 12,
-        "liquidityUsd": 228497.68,
-        "liquidityReportedPoolCount": 12,
-        "volume24hUsd": 35308.53,
-        "volume24hReportedPoolCount": 12,
-        "indexedPoolCount": 12
+        "marketCapUsd": 1155433,
+        "marketCapAssetCount": 11,
+        "fdvUsd": 1155431,
+        "fdvAssetCount": 11,
+        "liquidityUsd": 187286.7,
+        "liquidityReportedPoolCount": 11,
+        "volume24hUsd": 34081.26,
+        "volume24hReportedPoolCount": 11,
+        "indexedPoolCount": 11
       },
       "assets": [
         {
@@ -3791,21 +3791,17 @@
           "displayName": "Libra",
           "symbol": "LIBRA",
           "mint": "7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe",
-          "priceUsd": 0.548,
-          "change24hPct": 3.91,
-          "marketCapUsd": 548050251,
-          "fdvUsd": 548050251,
-          "liquidityUsd": 41210.98,
-          "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 1227.27,
-          "volume24hReportedPoolCount": 1,
-          "indexedPoolCount": 1,
-          "deepestPool": {
-            "pairAddress": "7hoH1PPnRaAZ6gyafuSSJpVYCemXpwPz9rAxnzTb71sX",
-            "dexId": "meteora",
-            "url": "https://dexscreener.com/solana/7hoh1ppnraaz6gyafussjpvycemxpwpz9raxnztb71sx",
-            "liquidityUsd": 41210.98
-          }
+          "priceUsd": null,
+          "change24hPct": null,
+          "marketCapUsd": null,
+          "fdvUsd": null,
+          "liquidityUsd": null,
+          "liquidityReportedPoolCount": 0,
+          "volume24hUsd": null,
+          "volume24hReportedPoolCount": 0,
+          "indexedPoolCount": 0,
+          "deepestPool": null,
+          "correction": "Quarantined 2026-08-25: the stored observation came from a Libra/TrumpBucks pool, not Libra’s established SOL pair. A historical replacement was not available."
         },
         {
           "sign": "scorpio",
@@ -3923,20 +3919,20 @@
       },
       "coverage": {
         "canonicalAssetCount": 12,
-        "assetsWithIndexedPools": 12,
-        "assetsWithMarketCap": 12,
-        "assetsWithFdv": 12
+        "assetsWithIndexedPools": 11,
+        "assetsWithMarketCap": 11,
+        "assetsWithFdv": 11
       },
       "totals": {
-        "marketCapUsd": 570993296,
-        "marketCapAssetCount": 12,
-        "fdvUsd": 570993293,
-        "fdvAssetCount": 12,
-        "liquidityUsd": 228946.66,
-        "liquidityReportedPoolCount": 12,
-        "volume24hUsd": 5766.88,
-        "volume24hReportedPoolCount": 12,
-        "indexedPoolCount": 12
+        "marketCapUsd": 1154168,
+        "marketCapAssetCount": 11,
+        "fdvUsd": 1154165,
+        "fdvAssetCount": 11,
+        "liquidityUsd": 186500.89,
+        "liquidityReportedPoolCount": 11,
+        "volume24hUsd": 5131.88,
+        "volume24hReportedPoolCount": 11,
+        "indexedPoolCount": 11
       },
       "assets": [
         {
@@ -4070,21 +4066,17 @@
           "displayName": "Libra",
           "symbol": "LIBRA",
           "mint": "7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe",
-          "priceUsd": 0.5698,
+          "priceUsd": null,
           "change24hPct": null,
-          "marketCapUsd": 569839128,
-          "fdvUsd": 569839128,
-          "liquidityUsd": 42445.77,
-          "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 635,
-          "volume24hReportedPoolCount": 1,
-          "indexedPoolCount": 1,
-          "deepestPool": {
-            "pairAddress": "7hoH1PPnRaAZ6gyafuSSJpVYCemXpwPz9rAxnzTb71sX",
-            "dexId": "meteora",
-            "url": "https://dexscreener.com/solana/7hoh1ppnraaz6gyafussjpvycemxpwpz9raxnztb71sx",
-            "liquidityUsd": 42445.77
-          }
+          "marketCapUsd": null,
+          "fdvUsd": null,
+          "liquidityUsd": null,
+          "liquidityReportedPoolCount": 0,
+          "volume24hUsd": null,
+          "volume24hReportedPoolCount": 0,
+          "indexedPoolCount": 0,
+          "deepestPool": null,
+          "correction": "Quarantined 2026-08-25: the stored observation came from a Libra/TrumpBucks pool, not Libra’s established SOL pair. A historical replacement was not available."
         },
         {
           "sign": "scorpio",

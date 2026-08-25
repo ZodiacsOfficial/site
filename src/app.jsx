@@ -1036,12 +1036,25 @@
       return `/astrofolio/how-to-buy/${sign?.asset?.sign ?? 'aries'}/`;
     }
 
+    const FOMO_SOLANA_CHAIN_ID = '1399811149';
+    const SOLANA_WRAPPED_SOL_MINT = 'So11111111111111111111111111111111111111112';
+    function fomoBuyPath(sign) {
+      const mint = sign?.representations?.solana?.address;
+      if (!mint) return 'https://fomo.family/download';
+      return `https://fomo.family/coin?address=${encodeURIComponent(mint)}&chainId=${FOMO_SOLANA_CHAIN_ID}`;
+    }
+
     function signDateLabel(sign) {
       const range = parseDateRange(sign?.asset?.metadata?.dateRange);
       if (!range) return sign?.asset?.metadata?.dateRange || '';
       const date = (month, day) => new Date(2024, month - 1, day)
         .toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
       return `${date(range.sm, range.sd)} – ${date(range.em, range.ed)}`;
+    }
+
+    function zodiacEmoji(sign) {
+      const symbol = String(sign?.symbol || '').replace(/[\uFE0E\uFE0F]/gu, '');
+      return symbol ? `${symbol}\uFE0F` : '';
     }
 
     const ZODIAC_MARKET_PAIRS = {
@@ -1056,6 +1069,10 @@
       gemini: {
         chainId: 'solana',
         pairId: 'HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9'
+      },
+      cancer: {
+        chainId: 'solana',
+        pairId: 'DaTEcH6da4i1evZU37F9ibQirYXhLKZpKDzDno346nSW'
       },
       leo: {
         chainId: 'solana',
@@ -1072,6 +1089,10 @@
       scorpio: {
         chainId: 'solana',
         pairId: '3d2KYuMgj2yotNC6SKX4HNoeSWp4n8zqZSQ9kFH81Yta'
+      },
+      sagittarius: {
+        chainId: 'solana',
+        pairId: '7mP6WeVYBNt3eao5szsMPmuHughHjNRx26TcrgJXZRky'
       },
       capricorn: {
         chainId: 'solana',
@@ -1138,8 +1159,13 @@
     function parseMarketContextPayload(payload, config) {
       const pairs = Array.isArray(payload?.pairs) ? payload.pairs : null;
       if (!pairs?.length) return unavailableMarketContext('no-pair');
-      const pair = pairs.find((item) => eq(item?.pairAddress, config.pairId)) || pairs[0];
-      if (!pair || pair.chainId !== config.chainId || !pair.pairAddress) {
+      const pair = pairs.find((item) => item?.pairAddress === config.pairId) || null;
+      if (
+        !pair
+        || pair.chainId !== config.chainId
+        || pair.baseToken?.address !== config.baseMint
+        || pair.quoteToken?.address !== SOLANA_WRAPPED_SOL_MINT
+      ) {
         return unavailableMarketContext('malformed');
       }
       return {
@@ -1164,7 +1190,12 @@
       let best = null;
       let bestLiquidity = -1;
       for (const pair of pairs) {
-        if (!pair?.pairAddress || pair.baseToken?.address !== mint) continue;
+        if (
+          pair?.chainId !== 'solana'
+          || !pair?.pairAddress
+          || pair.baseToken?.address !== mint
+          || pair.quoteToken?.address !== SOLANA_WRAPPED_SOL_MINT
+        ) continue;
         const liquidity = toFiniteNumber(pair.liquidity?.usd) ?? 0;
         if (liquidity > bestLiquidity) {
           bestLiquidity = liquidity;
@@ -1244,9 +1275,9 @@
       return request;
     }
 
-    // One batch call quotes all twelve — the same token endpoint the
-    // Market snapshot uses — so a landing visit costs a single request
-    // no matter how many signs a visitor previews.
+    // One token batch usually quotes all twelve without fanning out per sign.
+    // If that answer omits an established SOL pool, one pair batch fills only
+    // those gaps. Quote-asset pools can never replace a pair of record.
     const MARKET_DEADLINE_MS = 8000;
     const MARKET_REFRESH_MS = 120_000;
     let twelveQuotesResult = null;
@@ -1256,6 +1287,33 @@
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), ms);
       return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+    }
+    function fetchDexPairsWithin(url) {
+      return fetchWithin(url, MARKET_DEADLINE_MS)
+        .then(async (response) => {
+          if (!response.ok) return [];
+          let payload;
+          try {
+            payload = await response.json();
+          } catch {
+            return [];
+          }
+          const pairs = Array.isArray(payload) ? payload : payload?.pairs;
+          return Array.isArray(pairs) ? pairs : [];
+        })
+        .catch(() => []);
+    }
+    function isPinnedPairForSign(pair, sign) {
+      const config = ZODIAC_MARKET_PAIRS[sign?.asset?.sign];
+      const mint = sign?.representations?.solana?.address;
+      return Boolean(
+        config
+        && mint
+        && pair?.chainId === config.chainId
+        && pair?.pairAddress === config.pairId
+        && pair?.baseToken?.address === mint
+        && pair?.quoteToken?.address === SOLANA_WRAPPED_SOL_MINT
+      );
     }
     function loadTwelveMarketQuotes() {
       const cachedAt = Date.parse(twelveQuotesResult?.observedAt || '');
@@ -1267,26 +1325,36 @@
       if (twelveQuotesRequest) return twelveQuotesRequest;
       const mints = SIGNS.map((s) => s.representations.solana?.address).filter(Boolean);
       const requestedMints = new Set(mints);
-      const url = `https://api.dexscreener.com/tokens/v1/solana/${mints.join(',')}`;
-      const request = fetchWithin(url, MARKET_DEADLINE_MS)
-        .then(async (response) => {
-          if (!response.ok) return unavailableMarketContext('http');
-          let payload;
-          try {
-            payload = await response.json();
-          } catch {
-            return unavailableMarketContext('json');
-          }
-          const pairs = Array.isArray(payload) ? payload : payload?.pairs;
-          if (!Array.isArray(pairs)) return unavailableMarketContext('shape');
+      const tokenUrl = `https://api.dexscreener.com/tokens/v1/solana/${mints.join(',')}`;
+      const request = fetchDexPairsWithin(tokenUrl)
+        .then(async (tokenPairs) => {
+          const missingPairIds = SIGNS
+            .filter((sign) => !tokenPairs.some((pair) => isPinnedPairForSign(pair, sign)))
+            .map((sign) => ZODIAC_MARKET_PAIRS[sign.asset.sign]?.pairId)
+            .filter(Boolean);
+          if (missingPairIds.length === 0) return [tokenPairs, []];
+          const pinnedPairUrl = `https://api.dexscreener.com/latest/dex/pairs/solana/${missingPairIds.join(',')}`;
+          const pinnedPairs = await fetchDexPairsWithin(pinnedPairUrl);
+          return [tokenPairs, pinnedPairs];
+        })
+        .then(([tokenPairs, pinnedPairs]) => {
+          const pairs = [...tokenPairs, ...pinnedPairs];
+          if (pairs.length === 0) return unavailableMarketContext('no-pair');
           const markets = new Map();
+          const pinnedPairsBySign = new Map();
           // A pool involving two indexed assets can appear more than once in
           // a token batch. Keep one collection-level liquidity observation per
           // chain/address so the Terminal never double-counts that pool.
           const indexedPools = new Map();
           for (const pair of pairs) {
             const mint = pair?.baseToken?.address;
-            if (!mint || !requestedMints.has(mint) || !pair?.pairAddress || pair?.chainId !== 'solana') continue;
+            if (
+              !mint
+              || !requestedMints.has(mint)
+              || !pair?.pairAddress
+              || pair?.chainId !== 'solana'
+              || pair?.quoteToken?.address !== SOLANA_WRAPPED_SOL_MINT
+            ) continue;
             const liquidity = Math.max(0, toFiniteNumber(pair.liquidity?.usd) ?? 0);
             const poolKey = `${pair.chainId}:${pair.pairAddress}`;
             indexedPools.set(poolKey, Math.max(indexedPools.get(poolKey) ?? 0, liquidity));
@@ -1307,13 +1375,20 @@
               market.bestPair = pair;
             }
             markets.set(mint, market);
+            const pinnedSign = SIGNS.find((sign) => isPinnedPairForSign(pair, sign));
+            if (pinnedSign) pinnedPairsBySign.set(pinnedSign.asset.sign, pair);
           }
           const quotes = {};
           let indexedPairs = 0;
           for (const sign of SIGNS) {
             const mint = sign.representations.solana?.address;
             const market = (mint && markets.get(mint)) || null;
-            const pair = market?.bestPair || null;
+            const configured = ZODIAC_MARKET_PAIRS[sign.asset.sign];
+            // A configured sign fails closed when its pair of record is absent
+            // or malformed. Never let an unrelated quote asset replace it.
+            const pair = configured
+              ? pinnedPairsBySign.get(sign.asset.sign) || null
+              : market?.bestPair || null;
             quotes[sign.asset.sign] = pair
               ? {
                   priceUsd: pair.priceUsd,
@@ -3210,12 +3285,11 @@
 
     function useMarketContext(sign, enabled) {
       const signKey = sign?.asset?.sign;
-      // Cancer and Sagittarius carry no pinned pair; their quote comes from
-      // the token endpoint by mint, so all twelve show live numbers whenever
-      // DexScreener indexes anything.
       const fallbackMint = sign?.representations?.solana?.address || null;
-      const config = (signKey ? ZODIAC_MARKET_PAIRS[signKey] : null)
-        ?? (fallbackMint ? { tokenMint: fallbackMint } : null);
+      const pinned = signKey ? ZODIAC_MARKET_PAIRS[signKey] : null;
+      const config = pinned && fallbackMint
+        ? { ...pinned, baseMint: fallbackMint }
+        : fallbackMint ? { tokenMint: fallbackMint } : null;
       const [state, setState] = useState(
         config ? { status: 'idle' } : unavailableMarketContext('not-configured')
       );
@@ -3583,30 +3657,16 @@
 
       useEffect(() => {
         if (!enabled) return;
-        const mints = SIGNS
-          .map((s) => s.representations.solana?.address)
-          .filter(Boolean);
-        fetch(`https://api.dexscreener.com/tokens/v1/solana/${mints.join(',')}`)
-          .then((r) => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
-          .then((payload) => {
-            const pairs = Array.isArray(payload) ? payload : payload?.pairs;
-            if (!Array.isArray(pairs)) throw new Error('shape');
-            const best = new Map();
-            for (const p of pairs) {
-              const mint = p?.baseToken?.address;
-              if (!mint) continue;
-              const liq = toFiniteNumber(p?.liquidity?.usd) ?? 0;
-              const prev = best.get(mint);
-              if (!prev || liq > prev.liq) best.set(mint, { liq, pair: p });
-            }
+        loadTwelveMarketQuotes()
+          .then((result) => {
+            if (result.status !== 'ok') throw new Error(result.reason || 'unavailable');
             setRows(SIGNS.map((s) => {
-              const mint = s.representations.solana?.address;
-              const pair = (mint && best.get(mint)?.pair) || null;
+              const quote = result.quotes?.[s.asset.sign] || null;
               return {
                 sign: s,
-                priceUsd: pair?.priceUsd ?? null,
-                change24h: pair?.priceChange?.h24 ?? null,
-                marketCap: toNonNegativeNumber(pair?.marketCap)
+                priceUsd: quote?.priceUsd ?? null,
+                change24h: quote?.priceChange24h ?? null,
+                marketCap: toNonNegativeNumber(quote?.marketCap)
               };
             }));
           })
@@ -4877,7 +4937,8 @@
             <div><dt>Signs up today</dt><dd>{batch.status === 'ok' ? `${advancing} / ${quotes.length || 12}` : '—'}</dd><small>24-hour direction</small></div>
           </dl>
           <p className="pro-board__foot">
-            Price and 24h change use the deepest indexed Solana pool. Per-sign liquidity sums
+            Price, 24h change, and valuation use each sign&rsquo;s established SOL pool when one is
+            configured; otherwise they use the deepest indexed Solana pool. Per-sign liquidity sums
             distinct pools returned for that mint; the collection total counts each pool address
             once. Market cap is shown only when the source
             reports market cap, never substituted with FDV. DexScreener is independent
@@ -5334,7 +5395,8 @@
           </div>
 
           <p className="consumer-market__foot">
-            Price and 24h change use the deepest indexed Solana pool. Liquidity sums the
+            Price, 24h change, and valuation use each sign&rsquo;s established SOL pool when one is
+            configured; otherwise they use the deepest indexed Solana pool. Liquidity sums the
             pools returned for each official mint; market cap is shown only when the source
             reports market cap, never substituted with FDV. DexScreener is independent
             third-party context, may be incomplete, and is not a recommendation. See the{' '}
@@ -5851,8 +5913,10 @@
     function VitrinePrice({ sign, batch, live = true }) {
       const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
       const waiting = batch.status === 'loading' || batch.status === 'idle';
+      const change = quote ? toFiniteNumber(quote.priceChange24h) : null;
+      const direction = change === null ? 'flat' : change > 0 ? 'up' : change < 0 ? 'down' : 'flat';
       const price = quote ? formatPriceUsd(quote.priceUsd) : waiting ? 'Fetching latest price' : 'Price unavailable';
-      const movement = quote ? plainMarketMovement(quote.priceChange24h) : waiting ? 'Updating market context' : 'Movement unavailable';
+      const movement = quote ? plainMarketMovement(change) : waiting ? 'Updating market context' : 'Movement unavailable';
       return (
         <p
           className="vitrine-price"
@@ -5862,7 +5926,7 @@
         >
           <span className="vitrine-price__figure">{price}</span>
           <span aria-hidden="true">·</span>
-          <span className="vitrine-price__movement">{movement}</span>
+          <span className={`vitrine-price__movement is-${direction}`}>{movement}</span>
         </p>
       );
     }
@@ -5884,26 +5948,40 @@
           >
             <div className="vitrine-placard__identity">
               <h2>{item.name}</h2>
-              <p>{consumerSignDateLabel(item)}</p>
             </div>
             <VitrinePrice sign={item} batch={batch} live={layer.current} />
+            <div className="vitrine-placard__actions">
+              <a
+                className="btn btn--explore"
+                href={registryProfilePath(item)}
+                tabIndex={layer.current ? undefined : -1}
+              >Explore {item.name}</a>
+              <a
+                className="btn btn--fomo"
+                href={fomoBuyPath(item)}
+                rel="external nofollow"
+                aria-label={`Open Fomo to buy ${item.name}`}
+                data-fomo-buy={item.asset.sign}
+                tabIndex={layer.current ? undefined : -1}
+                onClick={() => trackAnalytics('astrofolio_fomo_open', { sign: item.asset.sign, source: 'vitrine' })}
+              >
+                <img src="/assets/venues/fomo-official.svg" width="34" height="34" alt="" />
+                <span className="btn--fomo__copy"><small>{item.name} <span className="btn--fomo__zodiac-emoji" aria-hidden="true">{zodiacEmoji(item)}</span></small><strong>Buy with Fomo</strong></span>
+                <span className="btn--fomo__arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
             <div className="vitrine-market-meta">
+              <span className="vitrine-market-meta__date">{consumerSignDateLabel(item)}</span>
               <span>{rank > 0 ? `#${rank} by reported market cap` : batch.status === 'loading' || batch.status === 'idle' ? 'Comparing all twelve' : 'Reported market-cap rank unavailable'}</span>
               {observed && <span>Updated {observed}{batch.stale ? ' · delayed' : ''}</span>}
               {batch.status === 'unavailable' && <span>Market data unavailable · retrying automatically</span>}
               <a href="/registry/technical/#market-transparency" tabIndex={layer.current ? undefined : -1}>Data &amp; methodology</a>
             </div>
-            <div className="vitrine-placard__actions">
-              <a className="btn btn--primary" href={registryProfilePath(item)} tabIndex={layer.current ? undefined : -1}>Explore {item.name}</a>
-              <a
-                className="btn btn--ghost"
-                href={howToBuyPath(item)}
-                tabIndex={layer.current ? undefined : -1}
-              >How to buy</a>
+            <div className="vitrine-buy-options">
+              <a href={howToBuyPath(item)} tabIndex={layer.current ? undefined : -1}>Other ways to buy</a>
+              <span aria-hidden="true">·</span>
+              <span>Opens the Fomo app</span>
             </div>
-            <p className="vitrine-official-note">
-              Here, &ldquo;official&rdquo; means the address is listed in the Zodiacs Registry; it does not mean government, regulator, wallet, or exchange approval.
-            </p>
           </article>
         );
       };
@@ -6258,8 +6336,36 @@
       );
     }
 
-    function ConsumerMarketGateway() {
+    function ConsumerMarketGateway({ batch, activeTicker }) {
       const reveal = useReveal();
+      const live = batch.status === 'ok';
+      const waiting = batch.status === 'loading' || batch.status === 'idle';
+      const indexedCount = live
+        ? SIGNS.filter(item => batch.quotes?.[item.asset.sign]).length
+        : 0;
+      const rows = useMemo(() => SIGNS
+        .map((item) => {
+          const quote = live ? batch.quotes[item.asset.sign] : null;
+          return {
+            item,
+            marketCap: toFiniteNumber(quote?.marketCap),
+            change: toFiniteNumber(quote?.priceChange24h),
+          };
+        })
+        .sort((left, right) => {
+          if (left.marketCap === null && right.marketCap === null) return left.item.order - right.item.order;
+          if (left.marketCap === null) return 1;
+          if (right.marketCap === null) return -1;
+          return right.marketCap - left.marketCap || left.item.order - right.item.order;
+        }), [batch, live]);
+      const leadingCap = rows.find(row => row.marketCap !== null)?.marketCap ?? 0;
+      const observed = batch.observedAt
+        ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+        : '';
+      const coverage = live && indexedCount < SIGNS.length ? ` · ${indexedCount}/12` : '';
+      const status = live
+        ? `${batch.stale ? 'Delayed' : batch.refreshing ? 'Refreshing' : 'Live'}${coverage}${observed ? ` · ${observed}` : ''}`
+        : waiting ? 'Ranking live…' : 'Market data unavailable';
       return (
         <section
           ref={reveal}
@@ -6268,45 +6374,69 @@
           aria-labelledby="consumer-market-gateway-title"
         >
           <article className="consumer-market-gateway__shell">
-            <div className="consumer-market-gateway__visual" aria-hidden="true">
+            <div className="consumer-market-gateway__visual">
               <div className="consumer-market-gateway__status">
-                <span>Astrofolio / market layer</span>
-                <span>Solana · 12 verified mints</span>
+                <span>The Twelve / leaderboard</span>
+                <span role="status" aria-live="polite">{status}</span>
               </div>
-              <div className="consumer-market-gateway__tokens">
-                {SIGNS.map((item, index) => (
-                  <span className="consumer-market-gateway__token" key={item.ticker}>
-                    <small>{String(index + 1).padStart(2, '0')}</small>
-                    <img
-                      src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}
-                      width="48"
-                      height="48"
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <strong>{item.ticker}</strong>
-                  </span>
-                ))}
+              <div className="consumer-market-leaderboard">
+                <div className="consumer-market-leaderboard__labels" aria-hidden="true">
+                  <span>Rank</span><span>Sign</span><span>Market cap</span><span>24h</span><span />
+                </div>
+                <ol role="list" aria-label="Zodiac market-cap leaderboard">
+                  {rows.map(({ item, marketCap, change }, index) => {
+                    const active = item.ticker === activeTicker;
+                    const direction = change === null ? 'flat' : change > 0 ? 'up' : change < 0 ? 'down' : 'flat';
+                    const ranked = live && marketCap !== null;
+                    const share = leadingCap > 0 && marketCap !== null ? marketCap / leadingCap : 0;
+                    const rowLabel = ranked
+                      ? `Rank ${index + 1}, ${item.name}, market cap ${formatUsdCompact(marketCap)}${change !== null ? `, 24 hour change ${formatPercent(change)}` : ''}`
+                      : `${item.name}, market data unavailable`;
+                    const rowClass = [active ? 'is-active' : '', ranked && index < 3 ? 'is-podium' : ''].filter(Boolean).join(' ') || undefined;
+                    return (
+                      <li key={item.ticker} className={rowClass}>
+                        <a
+                          href={`/astrofolio/?sign=${item.asset.sign}#consumer-sign-preview`}
+                          style={{ '--market-share': share }}
+                          aria-current={active ? 'true' : undefined}
+                          aria-label={rowLabel}
+                          onClick={() => trackAnalytics('astrofolio_leaderboard_select', { sign: item.asset.sign, rank: live && marketCap !== null ? index + 1 : null })}
+                        >
+                          <span className="consumer-market-leaderboard__rank">{live && marketCap !== null ? String(index + 1).padStart(2, '0') : '—'}</span>
+                          <span className="consumer-market-leaderboard__identity">
+                            <picture className="consumer-market-leaderboard__icon" aria-hidden="true">
+                              <source srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`} type="image/avif" />
+                              <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="34" height="34" alt="" decoding="async" />
+                            </picture>
+                            <span><strong>{item.name}</strong><small>{item.ticker}</small></span>
+                          </span>
+                          <span className="consumer-market-leaderboard__metric"><small>Market cap</small><strong>{live ? formatUsdCompact(marketCap) : '—'}</strong></span>
+                          <span className={`consumer-market-leaderboard__move is-${direction}`}><small>24h</small><strong>{live ? formatPercent(change) : '—'}</strong></span>
+                          <span className="consumer-market-leaderboard__arrow" aria-hidden="true">›</span>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ol>
               </div>
               <div className="consumer-market-gateway__routes">
-                <span><small>01 / Terminal</small><strong>Prices · liquidity · charts</strong></span>
-                <span><small>02 / Zodiac Markets</small><strong>Jupiter Ultra · wallet-signed</strong></span>
+                <span><small>Ranking</small><strong>Reported market cap</strong></span>
+                <span><small>Source</small><strong>Dex Screener · Solana</strong></span>
               </div>
             </div>
             <div className="consumer-market-gateway__copy">
-              <span className="consumer-market-gateway__eyebrow">The market layer</span>
-              <h2 id="consumer-market-gateway-title">Read the market. Trade your sign.</h2>
-              <p>Use Terminal for prices, liquidity, charts, and research across the Twelve. When you&rsquo;re ready to swap, move into Zodiac Markets.</p>
+              <span className="consumer-market-gateway__eyebrow">{batch.stale ? 'Latest leaderboard' : 'Live leaderboard'}</span>
+              <h2 id="consumer-market-gateway-title">Who&rsquo;s leading today?</h2>
+              <p>{batch.stale ? 'The latest available ranking of the Twelve by reported market cap.' : 'A simple live ranking of the Twelve by reported market cap.'} Tap any row to jump back to that Zodiac.</p>
               <div className="consumer-market-gateway__actions">
-                <a className="consumer-market-gateway__action is-secondary" href="/terminal/">
-                  <span>Open Terminal</span><span aria-hidden="true">↗</span>
+                <a className="consumer-market-gateway__action is-secondary" href="/registry/technical/#market-transparency">
+                  <span>How ranking works</span><span aria-hidden="true">→</span>
                 </a>
-                <a className="consumer-market-gateway__action is-primary" href="/terminal/markets/">
-                  <span>Open Zodiac Markets</span><span aria-hidden="true">↗</span>
+                <a className="consumer-market-gateway__action is-primary" href="/terminal/?rank=marketCap">
+                  <span>View full market</span><span aria-hidden="true">↗</span>
                 </a>
               </div>
-              <p className="consumer-market-gateway__note">On Solana, Jupiter Ultra supplies the executable route and transaction. Your wallet reviews, approves, and signs.</p>
+              <p className="consumer-market-gateway__note">Market data comes from an independent index and can be delayed, incomplete, unavailable, or wrong. It is context, not a recommendation.</p>
             </div>
           </article>
         </section>
@@ -6830,8 +6960,8 @@
             <ConsumerShop />
             <ConsumerCabinet />
             <ConsumerRegistryGuide sign={sign} />
+            <ConsumerMarketGateway batch={consumerMarket} activeTicker={activeTicker} />
             <ConsumerFaq />
-            <ConsumerMarketGateway />
             <span id="market" className="terminal-compat-target" aria-hidden="true" />
             <span id="briefing" className="terminal-compat-target" aria-hidden="true" />
             <span id="research" className="terminal-compat-target" aria-hidden="true" />

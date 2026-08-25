@@ -19,6 +19,7 @@ is ordered alphabetically and never ranked.
 
 | File | Source | Retrieved | Notes |
 | --- | --- | --- | --- |
+| `fomo-official.svg` | `fomo.family/favicon.svg` | 2026-08-25 | Fomo's full-colour app icon, used only as an `<img>` inside the consumer handoff button. It is never used as a CSS mask or presented as an endorsement. |
 | `coinbase.svg` | `static-assets.coinbase.com/ui-infra/illustration/v1/pictogram/svg/light/coinbaseLogoNavigation-4.svg` | 2026-08-05 | Coinbase's own navigation pictogram. Brand blue replaced with ink; viewBox tightened 40→34 units. |
 | `moonpay.svg` | `www.moonpay.com/safari-pinned-tab.svg` | 2026-08-05 | MoonPay's Safari pinned-tab mask — already monochrome on transparency. Potrace preamble and metadata stripped; viewBox tightened. |
 | `ramp.svg` | `cdn.prod.website-files.com/…/6a4bbd700ee30b63d3ba9652_Logo%20sign.svg` (linked from `rampnetwork.com`) | 2026-08-05 | Ramp Network's logo sign. Fill replaced with ink. Preferred over their 32px favicon PNG, which would soften at 2× density. |
@@ -31,7 +32,7 @@ honest presentation when we cannot use the real thing.
 
 | File | Why |
 | --- | --- |
-| `fomo.svg` | fomo's published favicon (`fomo.family/favicon.svg`) is a raster app icon embedded in an SVG wrapper, with an opaque backdrop — unusable as a mask and not a vector mark. A brand-kit request would be needed for the real one. |
+| `fomo.svg` | Fomo's published favicon is a raster app icon embedded in an SVG wrapper, so it remains unsuitable for the monochrome payment-list mask. The separate `fomo-official.svg` file is used at full colour in the Fomo handoff CTA instead. |
 | `binance-wallet.svg`, `bybit-web3.svg`, `jupiter.svg`, `okx-wallet.svg`, `orca.svg`, `phantom.svg`, `raydium.svg`, `solflare.svg` | Sourced during the venue-list pass; those domains published nothing maskable. |
 
 ## Reproduction
