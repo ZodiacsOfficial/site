@@ -345,7 +345,7 @@ try {
     assert.equal(await fomoCta.getAttribute('href'), 'https://fomo.family/coin?address=3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE&chainId=1399811149');
     assert.equal(await fomoCta.getAttribute('aria-label'), 'Open Fomo to buy Pisces');
     assert.equal(await fomoCta.locator('img[src="/assets/venues/fomo-official.svg"]').count(), 1);
-    assert.equal(await fomoCta.locator('.btn--fomo__copy small').innerText(), 'Pisces ♓️');
+    assert.equal(await fomoCta.locator('.btn--fomo__copy small').textContent(), 'Pisces ♓️');
     assert.equal(await fomoCta.locator('.btn--fomo__copy strong').innerText(), 'Buy with Fomo');
     assert.doesNotMatch(await fomoCta.innerText(), /selected/iu);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-buy-options a').innerText(), 'Other ways to buy');
@@ -709,7 +709,7 @@ try {
     assert.equal(await noJsPage.locator('a[href="/astrofolio/how-to-buy/aries/"]').count(), 1);
     assert.equal(await noJsPage.locator('[data-fomo-buy]').count(), 12);
     assert.equal(await noJsPage.locator('[data-fomo-buy="aries"]').getAttribute('href'), 'https://fomo.family/coin?address=GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv&chainId=1399811149');
-    assert.equal(await noJsPage.locator('[data-fomo-buy="aries"] .btn--fomo__copy small').innerText(), 'Aries ♈️');
+    assert.equal(await noJsPage.locator('[data-fomo-buy="aries"] .btn--fomo__copy small').textContent(), 'Aries ♈️');
     assert.doesNotMatch(await noJsPage.locator('[data-fomo-buy="aries"]').innerText(), /selected/iu);
     assert.equal(await noJsPage.locator('a[href^="/terminal/?sign="]').count(), 0);
     assert.equal(await noJsPage.locator('#market-layer a[href="/registry/technical/#market-transparency"]').count(), 1);
