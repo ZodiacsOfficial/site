@@ -4716,17 +4716,17 @@
     const ASTROFOLIO_SHOP_PRODUCTS = Object.freeze([
       {
         name: 'Astrofolio T-shirt',
-        image: 'https://cdn.shopify.com/s/files/1/0848/2009/9415/files/off_white-front_6320ec61-8907-4106-92da-15aedb046de5.png?v=1729962859&width=800',
+        image: '/assets/astrofolio/merch/t-shirt-800.webp',
         href: 'https://shop.app/products/9655740694871/astrofolio-t-shirt',
       },
       {
         name: 'Astrofolio Cap',
-        image: 'https://cdn.shopify.com/s/files/1/0848/2009/9415/files/washed_black-front_c2d5c933-e1a4-432d-8634-04f473167ae8.png?v=1729887511&width=800',
+        image: '/assets/astrofolio/merch/cap-800.webp',
         href: 'https://shop.app/products/9654676455767/astrofolio-cap',
       },
       {
         name: 'Astrofolio Hoodie',
-        image: 'https://cdn.shopify.com/s/files/1/0848/2009/9415/files/grey_melange-front_a92b1d75-acc1-48c6-99cd-4efc5a0dd1d9.png?v=1729893846&width=800',
+        image: '/assets/astrofolio/merch/hoodie-800.webp',
         href: 'https://shop.app/products/9654762504535/astrofolio-hoodie',
       },
     ]);
