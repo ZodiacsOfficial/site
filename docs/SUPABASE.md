@@ -182,11 +182,11 @@ Two more Supabase surfaces were added after the provisioning above:
 
 Keep this file's rule: no keys, no connection strings, ever.
 
-## Live-state reconciliation (2026-08-24 addendum)
+## Live-state reconciliation (read-only, last checked 2026-08-27)
 
 Read-only inspection of the live project (pg_class/pg_proc/columns plus
 `supabase_migrations.schema_migrations`) reconciled which of the repo's
-14 migration files are actually applied in production:
+15 migration files are actually applied in production:
 
 | Migration file | Live? | Evidence |
 | --- | --- | --- |
@@ -204,6 +204,7 @@ Read-only inspection of the live project (pg_class/pg_proc/columns plus
 | `20260817080000_zodiac_games` | yes | all four tables + three `zodiac_games_*_v1` RPCs; also the ONLY entry in `supabase_migrations.schema_migrations` (recorded there as version `20260819050930`, name `zodiac_games`) |
 | `20260818112526_living_chart_sync` | **no** | no living-chart tables exist |
 | `20260819111145_living_chart_rls_initplan` | **no** | follow-up to the above; n/a until it lands |
+| `20260827090000_weekly_digest_unsubscribe_capability` | **no** | PR-only least-privilege unsubscribe capability; do not apply without separate owner authorization |
 
 So Account Sync v2 and Living Chart sync are genuinely unreleased at the
 database layer, exactly as their contracts require, and everything the
@@ -221,29 +222,47 @@ Editor, and update this table in the same change.
   earlier revision of this note said — and must be ON before any
   password auth method ever ships; the native-app work makes that
   likely. Until then the WARN is accepted.
-- **Backups: workflow shipped, needs two secrets.**
-  `.github/workflows/db-backup.yml` takes a weekly `pg_dump` of the
-  `public` + `supabase_migrations` schemas, plus a data-only dump of
-  `auth.users`/`auth.identities` (the account UUID↔email mapping —
-  without it a restore orphans every user-keyed row, because magic-link
-  re-signups mint new UUIDs), tars both, AES-256-encrypts the bundle,
-  and keeps it as a workflow artifact for 90 days. The runner installs
-  the PostgreSQL 17 client first (the project runs PG 17; the stock
-  runner client is 16 and refuses newer servers). It stays a no-op (with
-  a visible warning annotation) until two repository secrets exist:
-  `SUPABASE_DB_URL` (Dashboard → Connect → Session pooler string) and
-  `BACKUP_PASSPHRASE` (long random phrase, copied into a password
-  manager — the repo is public, so run artifacts are downloadable by any
-  GitHub account and this passphrase is the only confidentiality
-  boundary; never put it in a command line). Restore path: download the
-  artifact, `gpg --decrypt zodiacs-db-*.tar.gz.gpg | tar xz` (gpg
-  prompts for the passphrase), then `psql <fresh-project-url> <
-  backup.sql` followed by `psql <fresh-project-url> < auth-map.sql` —
-  always into a fresh project first, never straight over live. A decrypt
-  check is not a restore drill: do one real drill into a throwaway
-  project after the first configured run, before trusting the schedule.
-  Platform PITR (Supabase Pro) remains the upgrade when the native app
-  raises the stakes.
+- **Backups: workflow and acceptance wrapper shipped; owner setup remains.**
+  `.github/workflows/db-backup.yml` stays a visible no-op until the owner
+  provisions `SUPABASE_DB_URL` and `BACKUP_PASSPHRASE` directly in GitHub
+  Actions. It uses PostgreSQL 17 and one exported repeatable-read snapshot for
+  `public`, the complete `supabase_migrations` ledger, `auth.users`, and
+  `auth.identities`. If later authorized migrations create `private` or
+  `living_chart_private`, schema discovery automatically adds them to that same
+  dump. Owners and GRANT/REVOKE ACLs remain intact. The workflow generates
+  ordered SQL, records a content-free source acceptance manifest, then uses
+  GnuPG loopback pinentry with a protected passphrase descriptor. Neither the
+  database URL nor the passphrase is a process argument.
+
+  A decrypt check is not a restore drill. After a separately authorized owner
+  creates a fresh throwaway Supabase project, use only:
+
+  ```sh
+  bash scripts/restore-db-backup.sh /absolute/path/to/zodiacs-db-....tar.gz.gpg
+  ```
+
+  The path is the only argument. The wrapper prompts invisibly for both
+  protected values, rejects the current production project ref, verifies the
+  fresh target has no Auth or application rows and has never had its migration
+  ledger initialized, and requires `RESTORE` before changing it. Do not run
+  `supabase db push` first: `supabase_migrations` must be absent and is created
+  transactionally from the source. Auth users and identities restore before
+  application data. The remaining generated
+  sections and acceptance checks run under `psql -X`, `ON_ERROR_STOP=1`, and a
+  single transaction, so any mismatch rolls back. Acceptance compares every
+  manifest record, row count, Auth linkage, application foreign-key orphan,
+  validated constraint, RLS/policy, owner/ACL and SECURITY DEFINER state, and
+  effective `anon`/`authenticated`/`service_role` privilege. The owner must then prove a
+  restored account reauthenticates and sees only its own data in the application.
+
+  Prerequisites are PostgreSQL 17 client tools, GnuPG with loopback pinentry,
+  Node.js, and GNU `tar`. The interim contract remains: weekly RPO (up to seven
+  days after a successful run, longer after failures), 90-day GitHub artifact
+  retention, publicly downloadable ciphertext with the passphrase as its only
+  confidentiality boundary, excluded sessions/refresh/MFA/SSO/audit rows and
+  therefore expected reauthentication, and fresh-project-first restores only.
+  If production ever moves to a different Supabase project, update and review
+  the wrapper's explicit production-project guard before the next drill.
 - **Key escrow.** When `ACCOUNT_SYNC_V2_ENCRYPTION_KEYS` is provisioned,
   record where the keyring is escrowed (outside Vercel env) — losing the
   wrapping keys silently bricks every v2 envelope, and no runbook covers

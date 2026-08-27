@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import subscribeHandler from '../../../api/email/subscribe';
 import confirmHandler from '../../../api/email/_confirm';
-import { hasEmailCaptureProvider } from './config';
+import { hasEmailCaptureProvider, hasStandaloneWeeklyEmailCapture } from './config';
 import { createEmailSubscriptionAdapter } from './provider';
 import { createEmailOptInToken, EMAIL_OPT_IN_TTL_MS, verifyEmailOptInToken } from './opt-in-token';
 import { parseEmailSubscription } from './input';
@@ -59,6 +59,27 @@ describe('email capture configuration', () => {
       LOOPS_FORM_ENDPOINT: 'https://attacker.test/api/newsletter-form/form_123',
       LOOPS_DOUBLE_OPT_IN_CONFIRMED: '1',
     })).toBe(false);
+  });
+
+  it('keeps standalone weekly capture off until its sender lifecycle is explicitly released', () => {
+    const resend = {
+      EMAIL_PROVIDER: 'resend',
+      RESEND_API_KEY: 're_sending_test',
+      RESEND_CONTACTS_API_KEY: 're_contacts_test',
+      RESEND_FROM_EMAIL: 'Zodiacs.org <hello@zodiacs.org>',
+      EMAIL_CONFIRM_SECRET: SECRET,
+    };
+    expect(hasEmailCaptureProvider(resend)).toBe(true);
+    expect(hasStandaloneWeeklyEmailCapture(resend)).toBe(false);
+    expect(hasStandaloneWeeklyEmailCapture({
+      ...resend,
+      STANDALONE_WEEKLY_EMAIL_ENABLED: '1',
+    })).toBe(false);
+    expect(hasStandaloneWeeklyEmailCapture({
+      ...resend,
+      STANDALONE_WEEKLY_EMAIL_ENABLED: '1',
+      RESEND_SEGMENT_ID: 'seg_weekly',
+    })).toBe(true);
   });
 });
 
@@ -130,6 +151,7 @@ describe('Buttondown subscription adapter', () => {
   it('runs the same adapter through the public endpoint end to end', async () => {
     process.env.EMAIL_PROVIDER = 'buttondown';
     process.env.BUTTONDOWN_API_KEY = 'buttondown-test-key';
+    process.env.STANDALONE_WEEKLY_EMAIL_ENABLED = '1';
     const fetcher = vi.fn().mockResolvedValue({ ok: true, status: 201 });
     vi.stubGlobal('fetch', fetcher);
     const response = responseRecorder();
@@ -212,6 +234,8 @@ describe('Resend confirmation endpoint', () => {
     process.env.RESEND_CONTACTS_API_KEY = 're_contacts_test';
     process.env.RESEND_FROM_EMAIL = 'Zodiacs.org <hello@zodiacs.org>';
     process.env.EMAIL_CONFIRM_SECRET = SECRET;
+    process.env.STANDALONE_WEEKLY_EMAIL_ENABLED = '1';
+    process.env.RESEND_SEGMENT_ID = 'seg_weekly';
     const token = createEmailOptInToken({
       email: 'person@example.com', sign: 'pisces', locale: 'en',
     }, SECRET);
@@ -239,6 +263,7 @@ describe('Resend confirmation endpoint', () => {
       email: 'person@example.com',
       unsubscribed: false,
       properties: { sun_sign: 'pisces' },
+      segments: [{ id: 'seg_weekly' }],
     });
   });
 });

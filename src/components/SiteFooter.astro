@@ -4,6 +4,7 @@ import BrandMark from './BrandMark.astro';
 import EmailCapture from './EmailCapture.astro';
 import TerminalMarketVenueNotice from './TerminalMarketVenueNotice.astro';
 import { GUIDE_LOADER_MARKER, guideLoaderSource } from '../lib/assistant/guide-loader.mjs';
+import { footerAcquisitionDisclosureVisible } from '../lib/footer-boundary.mjs';
 import { FOOTER_TOOLS } from '../lib/nav-tools';
 import {
   LOCALE_META,
@@ -55,6 +56,7 @@ const englishHreflang = englishOnly ? ('en' as const) : undefined;
 const privacyHref = localizePath(locale, '/privacy/');
 const consumerPath = stripLocale(Astro.url.pathname);
 const isRegistryWing = /^\/(?:terminal|registry|sdk|thesis|archive|disclosure)(?:\/|$)/.test(consumerPath);
+const showAcquisitionDisclosure = footerAcquisitionDisclosureVisible(consumerPath);
 const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$)/.test(consumerPath);
 const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
 ---
@@ -118,7 +120,7 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
         <a href="/registry/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerRegistry')}{englishSuffix}</a>
         <a href="/sdk/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerSdk')}{englishSuffix}</a>
         <a href={localizePath(locale, '/disclosure/')}>{t(locale, 'footerDisclosure')}</a>
-        <span class="footer__note">{t(locale, 'footerCollectNote')}</span>
+        {showAcquisitionDisclosure && <span class="footer__note">{t(locale, 'footerCollectNote')}</span>}
       </nav>
     </div>
 

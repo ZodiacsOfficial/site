@@ -5,6 +5,7 @@ import { parseEmailSubscription } from '../../src/lib/email/input.js';
 import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email/request.js';
 import { emailStatusPage } from '../../src/lib/email/server-page.js';
 import { dailyEmailFeatureEnabled, hasDailySunEmailProvider } from '../../src/lib/email/daily-config.js';
+import { hasStandaloneWeeklyEmailCapture } from '../../src/lib/email/config.js';
 import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
 import confirmHandler from './_confirm.js';
 import unsubscribeHandler from './_unsubscribe.js';
@@ -100,6 +101,12 @@ export async function handleEmailSubscribe(req: any, res: any): Promise<void> {
   if (daily && !hasDailySunEmailProvider(process.env)) {
     if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
     else sendHtml(res, 503, dailyEmailPage('Not available yet', 'Daily email is not ready to join just yet.'));
+    return;
+  }
+
+  if (!daily && !hasStandaloneWeeklyEmailCapture(process.env)) {
+    if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
+    else sendHtml(res, 503, emailStatusPage(input.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
     return;
   }
 

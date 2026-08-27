@@ -59,6 +59,18 @@ export function hasEmailCaptureProvider(env: Environment): boolean {
   }
 }
 
+/**
+ * The legacy public capture promises a standalone weekly email. Provider
+ * credentials alone are not proof that a sender and unsubscribe lifecycle
+ * exist, so the public surface needs a separate, explicit release gate.
+ */
+export function hasStandaloneWeeklyEmailCapture(env: Environment): boolean {
+  if (value(env, 'STANDALONE_WEEKLY_EMAIL_ENABLED') !== '1'
+    || !hasEmailCaptureProvider(env)) return false;
+  return emailProviderName(env) !== 'resend'
+    || value(env, 'RESEND_SEGMENT_ID') !== '';
+}
+
 export function environmentValue(env: Environment, key: string): string {
   return value(env, key);
 }

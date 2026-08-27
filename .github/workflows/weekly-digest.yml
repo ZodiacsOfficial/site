@@ -14,7 +14,10 @@ on:
         description: "Maximum recipients for this run"
         required: false
         type: string
-        default: "200"
+        default: "80"
+
+permissions:
+  contents: read
 
 concurrency:
   group: weekly-digest
@@ -26,10 +29,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
@@ -41,26 +44,26 @@ jobs:
         run: npm run digest:weekly -- --dry-run --fixture --week-start 2026-07-13 --limit 1
 
       # The scheduled Monday run is gated behind DIGEST_ENABLED so real
-      # sends stay off until the owner has run a manual dry-run and set the
-      # variable. Manual workflow_dispatch (dry-run or real) always runs and
-      # honors its own dry_run input.
+      # sends stay off until the fixture, limit-one canary, and unsubscribe
+      # POST acceptance have passed. Manual workflow_dispatch (dry-run or
+      # real) always runs and honors its own dry_run input.
       - name: Run weekly digest
         if: github.event_name != 'schedule' || vars.DIGEST_ENABLED == 'true'
         env:
           PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          DIGEST_UNSUBSCRIBE_SECRET: ${{ secrets.DIGEST_UNSUBSCRIBE_SECRET }}
           DIGEST_FROM_EMAIL: ${{ vars.DIGEST_FROM_EMAIL || 'Zodiacs.org <hello@zodiacs.org>' }}
           DIGEST_BASE_URL: ${{ vars.DIGEST_BASE_URL || 'https://zodiacs.org' }}
           # Same repository variable the Daily Email workflow reads; the digest
           # script refuses any non-dry-run send without it (CAN-SPAM footer).
           DAILY_EMAIL_POSTAL_ADDRESS: ${{ vars.DAILY_EMAIL_POSTAL_ADDRESS }}
+          DIGEST_MAX_SENDS: "80"
           DIGEST_DRY_RUN: ${{ github.event.inputs.dry_run }}
           DIGEST_LIMIT: ${{ github.event.inputs.limit }}
         run: |
-          ARGS="--limit ${DIGEST_LIMIT:-200}"
+          ARGS=(--limit "${DIGEST_LIMIT:-80}")
           if [ "${DIGEST_DRY_RUN:-false}" = "true" ]; then
-            ARGS="$ARGS --dry-run"
+            ARGS+=(--dry-run)
           fi
-          npm run digest:weekly -- $ARGS
+          npm run digest:weekly -- "${ARGS[@]}"

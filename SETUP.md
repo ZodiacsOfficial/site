@@ -1,6 +1,6 @@
 # Zodiacs.org setup and operations
 
-Last updated: 2026-07-26
+Last updated: 2026-08-27
 
 This is the provisioning source of truth for the six-phase household-name program. It consolidates the live repository's external services, environment variables, feature flags, and scheduled jobs. It contains names and procedures only—never secrets or secret values.
 
@@ -87,8 +87,7 @@ These values may appear in client bundles. They must never contain a secret.
 
 | Variable | Scope | Meaning |
 | --- | --- | --- |
-| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server + GitHub Actions secret | Server-only Supabase credential for digest, daily-email preferences/receipts, unsubscribe, push, and assistant quota. Never expose it to a browser. |
-| `DIGEST_UNSUBSCRIBE_SECRET` | Vercel server + GitHub Actions secret | Signs one-click unsubscribe tokens. Use a long random value and rotate only with a deliberate invalidation plan. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server + GitHub Actions secret | Server-only Supabase credential for the features that explicitly require broad server authority. Weekly-digest recipient selection and capability insertion use it only in GitHub Actions; `/api/unsubscribe` uses a narrow RPC with the public key instead. Never expose the service role to a browser. |
 | `COMPAT_INVITES_ENABLED` | Vercel server flag | Must equal `1` to create, exchange, or read Phase 4 invitations. Status, revocation, hiding, completion replay, and cleanup remain available whenever the underlying server contract exists. Leave unset/off until the reviewed canary step. |
 | `COMPAT_INVITES_PUBLIC_ENABLED` | Vercel server authorization | Must equal `1` to authorize creation for any valid signed-in Auth user. It never bypasses authentication or the owned synchronized saved-chart check. Missing or any other value retains canary-only authorization. |
 | `COMPAT_INVITE_TEST_USER_IDS` | Vercel server configuration | Comma-separated list of exact Auth user UUIDs allowed to create invitations while public authorization is off. Missing or empty fails closed: nobody can create. Retain the approved canary owner after launch so disabling `COMPAT_INVITES_PUBLIC_ENABLED` restores the reviewed private boundary. Clearing this value never launches the feature. |
@@ -117,8 +116,9 @@ Resend, the program standard:
 | `RESEND_FROM_EMAIL` | Required | Verified sender used for confirmation mail. |
 | `EMAIL_CONFIRM_SECRET` | Required, server secret | At least 32 characters; signs 48-hour confirmation tokens. |
 | `EMAIL_CONFIRM_BASE_URL` | Optional | HTTPS site origin; defaults to `https://zodiacs.org`. |
-| `RESEND_SEGMENT_ID` | Optional | Segment assigned only after explicit confirmation. |
+| `RESEND_SEGMENT_ID` | Required for any future Resend standalone release | Segment assigned only after explicit confirmation. A Segment alone is not a sender. |
 | `RESEND_SIGN_PROPERTY` | Optional | Contact property for Sun sign; defaults to `sun_sign`. |
+| `STANDALONE_WEEKLY_EMAIL_ENABLED` | Future release flag | Must equal `1` to render or accept the standalone weekly capture. Keep unset until a real Segment-based sender or Resend Automation and its unsubscribe lifecycle pass end-to-end acceptance. |
 
 Supported alternatives:
 
@@ -130,7 +130,11 @@ Supported alternatives:
 | `LOOPS_MAILING_LIST_ID` | Loops, optional | Public mailing-list ID. |
 | `LOOPS_SIGN_PROPERTY` | Loops, optional | Sign contact property; defaults to `sunSign`. |
 
-The capture component is omitted when its selected adapter is incomplete. Resend confirmation `GET` is read-only for mail-scanner safety; the human/agent-triggered form `POST` creates the contact.
+The capture component is omitted when its selected adapter is incomplete or
+`STANDALONE_WEEKLY_EMAIL_ENABLED` is not exactly `1`. The repository currently
+has no standalone weekly Segment sender, so keep that flag unset. Resend
+confirmation `GET` is read-only for mail-scanner safety; the explicit form
+`POST` creates the Contact with its Segment only after confirmation.
 
 ### Digest and Phase 3 daily email
 
@@ -138,7 +142,7 @@ The capture component is omitted when its selected adapter is incomplete. Resend
 | --- | --- | --- |
 | `DIGEST_FROM_EMAIL` | GitHub variable, optional | Sender; defaults to `Zodiacs.org <hello@zodiacs.org>`. |
 | `DIGEST_BASE_URL` | GitHub variable, optional | Site origin; defaults to `https://zodiacs.org`. |
-| `DIGEST_ENABLED` | GitHub variable | Set to the string `true` only after manual dry-run, live unsubscribe, sender authentication, and test-list proof. |
+| `DIGEST_ENABLED` | GitHub variable | Set to the string `true` only after the fixture dry-run, a limit-one live canary, and an end-to-end unsubscribe confirmation `POST` all pass. The sender hard-caps every run at 80 recipients. |
 | `DAILY_EMAIL_ENABLED` | Vercel server flag + GitHub variable | Must equal the literal string `1`. In Vercel it exposes daily enrollment; in GitHub it permits real delivery. Leave both off until their release gates pass. |
 | `DAILY_EMAIL_COHORT` | Sender environment | Must be `test` or `all`. The committed workflow hardcodes `test` and exposes no cohort input; `all` remains dormant CLI support for a later approved release change. |
 | `DAILY_EMAIL_ALL_APPROVED` | Reserved GitHub variable / sender environment | Independent general-audience interlock. The sender requires the literal string `1` for a real `all`-cohort send, but the committed workflow does not read this variable or offer an `all` path. |
@@ -317,7 +321,7 @@ These are outside this program and should remain off unless separately authorize
 | --- | --- | --- |
 | Daily static facts/prose | No secret or flag | Always builds from deterministic committed data. |
 | Model-assisted daily prose | `DAILY_PROSE_ENABLED=true` + dedicated secret; reserved | Deterministic-template edition or held verified edition. |
-| Standalone email capture | Complete `EMAIL_PROVIDER` adapter | Capture component is absent; pages remain complete. |
+| Standalone email capture | `STANDALONE_WEEKLY_EMAIL_ENABLED=1` + complete provider adapter; Resend also requires `RESEND_SEGMENT_ID` | Capture component and standalone subscribe/confirm path are absent; pages remain complete. Keep off until a real sender and unsubscribe lifecycle exist. |
 | Weekly digest schedule | GitHub `DIGEST_ENABLED=true` | Workflow smoke test runs; no scheduled send. |
 | Phase 3 daily enrollment | Vercel `DAILY_EMAIL_ENABLED=1` + complete Resend/Supabase configuration | Daily capture and chart preference enrollment are absent/disabled; existing daily unsubscribe remains usable. |
 | Phase 3 daily delivery | GitHub `DAILY_EMAIL_ENABLED=1`; committed workflow is fixed to `DAILY_EMAIL_COHORT=test` and requires the allowlist | Fixture smoke still runs; no real daily email send. General-audience delivery is not exposed. |
@@ -356,6 +360,15 @@ Required released migrations:
 Phase 4 adds one released migration that is live and verified:
 
 6. `supabase/migrations/20260724003109_phase4_compat_invites.sql`
+
+The account weekly digest now has one pending additive unsubscribe-capability
+migration:
+
+- `supabase/migrations/20260827090000_weekly_digest_unsubscribe_capability.sql`
+
+It is not authorization to apply the migration. The schedule remains disabled
+until the owner authorizes migration deployment and the fixture, limit-one
+canary, and unsubscribe `POST` acceptance all pass.
 
 Account sync v2 adds one pending additive migration that is local only and has
 not been applied to the live project:
@@ -449,11 +462,17 @@ Security checklist:
 2. Publish the required SPF and DKIM DNS records and wait for verification.
 3. Create two distinct capability keys: a domain-restricted sending-access key for `RESEND_API_KEY`, and a separate full-access key for `RESEND_CONTACTS_API_KEY`. Never place the full-access key in the sending variable.
 4. Choose a verified sender such as `Zodiacs.org <hello@zodiacs.org>`.
-5. Configure the Resend email-capture variables in Vercel Production, Preview, and Development as appropriate.
+5. Keep standalone weekly capture unconfigured and
+   `STANDALONE_WEEKLY_EMAIL_ENABLED` unset until a separately authorized sender
+   and unsubscribe lifecycle pass the release gate in `docs/EMAIL-CAPTURE.md`.
 6. Create one dedicated daily Sun Resend segment and configure its ID as `RESEND_DAILY_SEGMENT_ID` identically in Vercel and GitHub Actions. It must not equal the legacy weekly `RESEND_SEGMENT_ID`.
-7. Configure the weekly-digest and Phase 3 daily secrets/variables in GitHub Actions; configure the confirmation, preference, and unsubscribe secrets in Vercel.
+7. Configure the weekly-digest and Phase 3 daily secrets/variables only through
+   their separate owner-approved releases. Weekly unsubscribe uses the existing
+   Vercel public Supabase URL/key and must not receive the service-role key or a
+   digest HMAC secret.
 8. Test scanner-safe confirmation, token expiry, replay no-op, RFC 8058 one-click unsubscribe, and an existing-unsubscribed contact.
-9. Keep `DIGEST_ENABLED` and both instances of `DAILY_EMAIL_ENABLED` off until their independent evidence is recorded in `PLAN.md`.
+9. Keep `DIGEST_ENABLED` and both instances of `DAILY_EMAIL_ENABLED` off until
+   their independent acceptance evidence is recorded in the feature runbooks.
 
 Daily messages send both `List-Unsubscribe` and `List-Unsubscribe-Post: List-Unsubscribe=One-Click` to the first-party `/api/email/unsubscribe` endpoint. `GET` is read-only and asks for confirmation; RFC 8058 `POST` performs the change. Each link revokes only its named tier while leaving weekly-digest consent unchanged. Stopping the personal-chart tier lets an already-confirmed Sun-sign daily resume automatically. Revocation must continue to work when enrollment and delivery flags are off, and the database transaction remains authoritative if provider segment cleanup is unavailable.
 

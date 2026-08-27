@@ -294,6 +294,8 @@ describe('daily sun confirmation', () => {
 
   it('never upgrades a pending weekly token into daily consent', async () => {
     configure();
+    process.env.STANDALONE_WEEKLY_EMAIL_ENABLED = '1';
+    process.env.RESEND_SEGMENT_ID = 'segment_weekly_test';
     const token = createEmailOptInToken({
       email: 'person@example.com', sign: 'libra', locale: 'en',
     }, SECRET);

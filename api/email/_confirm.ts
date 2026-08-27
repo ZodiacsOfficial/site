@@ -4,7 +4,7 @@ import {
   createEmailSubscriptionAdapter,
   type EmailSubscriptionAdapter,
 } from '../../src/lib/email/provider.js';
-import { environmentValue, hasEmailCaptureProvider } from '../../src/lib/email/config.js';
+import { environmentValue, hasStandaloneWeeklyEmailCapture } from '../../src/lib/email/config.js';
 import { verifyEmailOptInToken } from '../../src/lib/email/opt-in-token.js';
 import { requestHeader } from '../../src/lib/email/request.js';
 import { emailStatusPage } from '../../src/lib/email/server-page.js';
@@ -227,10 +227,10 @@ export default async function handler(req: any, res: any): Promise<void> {
     : sunClaim
       ? hasDailySunEmailProvider(dailyEnv!)
       : claim
-        ? hasEmailCaptureProvider(process.env)
+        ? hasStandaloneWeeklyEmailCapture(process.env)
         : daily
           ? hasDailySunEmailProvider(dailyEnv!)
-          : hasEmailCaptureProvider(process.env);
+          : hasStandaloneWeeklyEmailCapture(process.env);
   if (!configured) {
     if (daily) {
       if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });

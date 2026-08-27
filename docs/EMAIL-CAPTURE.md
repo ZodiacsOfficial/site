@@ -1,133 +1,144 @@
 # Standalone weekly email capture
 
-This capture is separate from the account-linked saved-chart digest. It sends
-only a normalized email address and an optional, self-declared sun-sign slug to
-the configured email provider. It never reads or sends chart, birth-date,
-birth-time, birthplace, profile, or saved-chart data.
+This is the public email-and-optional-sign form used by the chart, horoscope,
+and footer placements. It is separate from both the account-linked saved-chart
+digest and the frozen daily-email canary. It sends only a normalized email
+address and an optional self-declared sun-sign slug to the selected provider;
+it never reads or sends chart, birth, profile, or saved-chart data.
 
-The static component is omitted from built HTML unless `EMAIL_PROVIDER` names a
-fully configured adapter. All three placements use the same
-`src/components/EmailCapture.astro` component. The birth-chart placement stays
-hidden until a full chart has been computed in the browser.
+## Current release state: keep hidden
 
-## Provider configuration
+The standalone capture promises a weekly forecast, but this repository does
+not contain a sender that reads the standalone Resend Segment (or the
+equivalent Buttondown/Loops list). The account weekly sender reads Supabase
+account preferences and saved charts instead. The existing email unsubscribe
+endpoints serve the account digest and daily lists, not this standalone list.
+
+Provider credentials are therefore not a release signal. The component and
+weekly lifecycle endpoints remain unavailable unless
+`STANDALONE_WEEKLY_EMAIL_ENABLED=1` is also present. Resend additionally
+requires `RESEND_SEGMENT_ID`. Leave the release flag unset: no sender and
+complete unsubscribe lifecycle have been accepted, and this remediation does
+not authorize creating or enabling either one.
+
+The birth-chart placement has an additional client-side reveal condition after
+a chart is computed, but that is not a substitute for the server-side release
+gate.
+
+## Future release gate
+
+A separately authorized release must satisfy every item below before setting
+`STANDALONE_WEEKLY_EMAIL_ENABLED=1`:
+
+1. Deploy the confirmed legal operator/controller identity and a genuinely
+   valid physical postal address appropriate to that operator and
+   jurisdiction.
+2. Implement and review a real weekly sender, or configure and document a
+   Resend Broadcast/Automation lifecycle, that selects only the intended
+   Segment and includes the provider's unsubscribe control. Merely collecting
+   Contacts into a Segment is not delivery.
+3. Use a new owner-controlled fixture address to submit the public form. Verify
+   that sending the confirmation and opening its scanner-safe `GET` create no
+   Contact or Segment membership.
+4. Submit the confirmation form's explicit `POST`. In **Resend → Contacts →
+   Segments**, verify that the Contact appears in the intended weekly Segment
+   only after that POST. “Audiences” is deprecated terminology.
+5. Send a limit-one forecast canary through the actual standalone sender.
+   Exercise its unsubscribe link and verify provider suppression or list
+   removal, then verify the next eligible send does not deliver.
+6. Confirm retry, duplicate-contact, expiry, rate-limit, and failure behavior.
+   Only then may the owner explicitly enable the standalone release flag and
+   redeploy.
+
+Do not treat mocked tests as provider acceptance. They prove the code's request
+shape and scanner-safe ordering, not live Segment membership, cadence, or
+unsubscribe suppression.
+
+## Dormant adapter contract
 
 Choose exactly one provider with `EMAIL_PROVIDER=resend|buttondown|loops`.
+These values configure an adapter; they do not override the standalone release
+gate.
 
 ### Resend
 
-Required:
+Adapter prerequisites:
 
-- `RESEND_API_KEY` — server-only sending-access Resend key, used only for
-  confirmation and message delivery.
-- `RESEND_CONTACTS_API_KEY` — separate server-only full-access Resend key,
-  used only for contact and segment reads/writes. It must differ from
-  `RESEND_API_KEY`.
-- `RESEND_FROM_EMAIL` — verified sender used for the plain-text confirmation.
+- `RESEND_API_KEY` — server-only sending-access key used for confirmation
+  delivery
+- `RESEND_CONTACTS_API_KEY` — a different server-only key with the Contact and
+  Segment access required by the lifecycle
+- `RESEND_FROM_EMAIL` — verified confirmation sender
 - `EMAIL_CONFIRM_SECRET` — at least 32 characters; signs the 48-hour opt-in
-  token. Rotate only after allowing outstanding confirmation links to expire.
+  token
+- `RESEND_SEGMENT_ID` — the standalone weekly Segment assigned only after
+  explicit confirmation
+- Optional `EMAIL_CONFIRM_BASE_URL` — HTTPS origin, defaulting to
+  `https://zodiacs.org`
+- Optional `RESEND_SIGN_PROPERTY` — Contact property for the selected sign,
+  defaulting to `sun_sign`
 
-Resend's [API key permissions](https://resend.com/docs/create-an-api-key)
-limit sending-access keys to email sends; contact and segment APIs therefore
-cannot share the sending key in this integration.
+The sending key and Contacts key must differ. Resend's sending-only permission
+does not grant Contact and Segment access.
 
-Optional:
+The first request sends a first-party signed confirmation without creating a
+Contact. Link `GET` is read-only for mail-scanner safety; explicit form `POST`
+creates the Contact with its weekly Segment. A duplicate Contact response is a
+safe no-op and is deliberately not used to reverse a prior unsubscribe. For
+that reason, live acceptance must inspect actual Segment membership rather
+than infer it from a success page.
 
-- `EMAIL_CONFIRM_BASE_URL` — HTTPS origin; defaults to `https://zodiacs.org`.
-- `RESEND_SEGMENT_ID` — segment added only after confirmation.
-- `RESEND_SIGN_PROPERTY` — contact property for the selected sign; defaults to
-  `sun_sign`.
+Current terminology and API references:
 
-Resend has no provider-native double-opt-in contact flow in this integration.
-The adapter therefore sends a first-party signed confirmation link without
-creating a contact. Link `GET` is read-only to tolerate mail scanners; an
-explicit form `POST` creates the contact. A replay is a no-op, and the confirm
-endpoint never updates an existing contact because doing so could reverse an
-earlier unsubscribe. Contact creation follows Resend's
-[Contacts API](https://resend.com/docs/api-reference/contacts/create-contact).
+- [Contacts](https://resend.com/docs/api-reference/contacts/create-contact)
+- [Segments](https://resend.com/docs/dashboard/segments/introduction)
+- [Migration from Audiences to Segments](https://resend.com/docs/dashboard/segments/migrating-from-audiences-to-segments)
 
-Phase 3 sun-sign daily uses a separate `RESEND_DAILY_SEGMENT_ID`.
-That segment is routing metadata only: `daily_sun_preferences` is the consent
-and sign authority. The daily and legacy weekly segment IDs must differ so a
-daily confirmation or unsubscribe can never change weekly membership.
-
-### Admin-only daily canary bootstrap
-
-Before the public daily flag is enabled, an operator may request DOI for the
-single canary address. The bootstrap has no public UI and requires all three
-server-only values:
-
-- `DAILY_EMAIL_ADMIN_BOOTSTRAP_ENABLED=1`
-- `DAILY_EMAIL_ADMIN_BOOTSTRAP_EMAIL=admin@zodiacs.org` (no other value is
-  accepted)
-- `DAILY_EMAIL_ADMIN_BOOTSTRAP_SECRET` — at least 32 characters, supplied as
-  the request's `Authorization: Bearer ...` credential
-
-For the Sun-sign canary, send `email`, `sign`, and `locale: "en"` as JSON to
-`POST /api/email/admin-bootstrap`, with the bootstrap secret in the request's
-`Authorization` header.
-
-For the personal-chart canary, the admin must first sign in through Supabase
-and sync the chart normally. Send `chartId` and an IANA `timezone` as JSON to
-`POST /api/email/chart-preference`. Put the real Supabase access token in
-`Authorization: Bearer ...` and the existing bootstrap credential in the
-second server-only header
-`X-Daily-Email-Admin-Bootstrap: Bearer ...`. The endpoint accepts this
-public-off exception only when Supabase authenticates the fixed admin mailbox
-and the selected UUID belongs to that account's synced `charts` rows. It then
-uses the ordinary pending preference, confirmation-attempt cap, signed DOI,
-and compare-and-swap confirmation path; it does not create or seed a chart.
-
-Keep the bootstrap configuration present until the emailed scanner-safe GET
-page is explicitly confirmed by POST. Confirmation revalidates the current
-Auth account email and owned chart before it can commit consent. The bootstrap
-locally opts only these fixed-admin operations into the daily adapter; it never
-changes `DAILY_EMAIL_ENABLED`, exposes a public capture, or requires a global
-`EMAIL_PROVIDER` (Resend is selected only in its local server environment).
-Every other address or chart token still requires the public feature flag.
-Remove the bootstrap values after confirmation; both public-off enrollment
-exceptions then become inert while permanent unsubscribe remains available.
+The daily canary uses a distinct `RESEND_DAILY_SEGMENT_ID`. Its database
+preference is consent authority; provider membership is only routing metadata.
+The daily and standalone weekly Segment IDs must never match.
 
 ### Buttondown
 
-Required:
+`BUTTONDOWN_API_KEY` selects the adapter. It omits Buttondown's `type` field so
+the provider creates an `unactivated` subscriber and sends its native
+double-opt-in message. The optional sign is stored as `sun_sign` metadata.
+Duplicate submissions do not overwrite existing consent history.
 
-- `BUTTONDOWN_API_KEY` — server-only API key with subscriber write access.
-
-The adapter deliberately omits Buttondown's `type` field. Buttondown therefore
-creates an `unactivated` subscriber and sends its native double-opt-in message.
-The selected sign is stored in subscriber metadata as `sun_sign`. Duplicate
-submissions are treated as a neutral pending response and never overwrite
-existing consent history. This behavior is the documented default for
-[creating a Buttondown subscriber](https://docs.buttondown.com/api-subscribers-create).
+This DOI behavior does not prove that a weekly publication or its unsubscribe
+lifecycle exists. Keep the standalone release flag off until the future release
+gate passes for the chosen Buttondown list.
 
 ### Loops
 
-Required:
+Adapter prerequisites:
 
-- `LOOPS_FORM_ENDPOINT` — the account's exact
-  `https://app.loops.so/api/newsletter-form/...` endpoint.
-- `LOOPS_DOUBLE_OPT_IN_CONFIRMED=1` — operator acknowledgement that double
-  opt-in is enabled in Loops Settings → Sending and the confirmation email is
-  published. Without this acknowledgement the site hides the component.
+- `LOOPS_FORM_ENDPOINT` — the exact
+  `https://app.loops.so/api/newsletter-form/...` endpoint
+- `LOOPS_DOUBLE_OPT_IN_CONFIRMED=1` — acknowledgement that provider DOI is
+  enabled and its confirmation email is published
+- Optional `LOOPS_MAILING_LIST_ID`
+- Optional `LOOPS_SIGN_PROPERTY`, defaulting to `sunSign`
 
-Optional:
+Only the provider form endpoint is accepted because Loops applies double
+opt-in there rather than to ordinary Contacts API calls. This still does not
+prove a weekly sender or unsubscribe lifecycle; keep the standalone release
+flag off until the future release gate passes.
 
-- `LOOPS_MAILING_LIST_ID` — a public mailing-list ID.
-- `LOOPS_SIGN_PROPERTY` — pre-created contact-property API name for the sign;
-  defaults to `sunSign`.
+## Daily-email boundary
 
-Loops currently gates double opt-in on form endpoints, not Contacts API calls,
-so this adapter accepts only the provider's form endpoint. The endpoint has
-provider-managed rate limits. See Loops' [double opt-in](https://loops.so/docs/contacts/double-opt-in)
-and [custom form](https://loops.so/docs/forms/custom-form) documentation.
+Daily email remains frozen to its existing owner-controlled test cohort. The
+admin bootstrap can exercise the already documented canary path without
+setting `DAILY_EMAIL_ENABLED` or exposing public capture, but it is not a
+public-release switch. Public daily enrollment, broader cohorts, new Segment
+configuration, and daily feature-flag changes are outside this remediation.
 
 ## Contract tests
 
-`src/lib/email/email.test.ts` covers visibility gating, input minimization,
-token expiry/tampering, scanner-safe Resend confirmation, and an end-to-end
-mocked request from `/api/email/subscribe` through the Buttondown adapter. Run:
+`src/lib/email/email.test.ts` covers release gating, input minimization, token
+expiry/tampering, scanner-safe Resend confirmation, post-confirmation Segment
+request shape, and the Buttondown adapter. Run:
 
-```sh
+```bash
 npm test -- --run src/lib/email/email.test.ts
 ```

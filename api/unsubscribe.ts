@@ -1,19 +1,9 @@
 // Vercel serverless function (this repo builds to static Astro with no SSR
 // adapter, so a per-request endpoint lives here as a zero-config function).
-// Deliberately self-contained: only node:crypto (a builtin) and global fetch.
-// It imports nothing from ../src and does NOT pull @supabase/supabase-js —
-// both were import-time crash risks in the bundled function, and the DB
-// write is a single PostgREST call the service role can make directly.
-import { createHmac, timingSafeEqual } from 'node:crypto';
-
-const SIGNING_CONTEXT = 'zodiacs-weekly-digest-unsubscribe';
-
-function verify(userId: string, signature: string, secret: string): boolean {
-  const expected = createHmac('sha256', secret).update(`${SIGNING_CONTEXT}:${userId}`).digest('base64url');
-  const given = Buffer.from(signature, 'base64url');
-  const target = Buffer.from(expected, 'base64url');
-  return given.length === target.length && timingSafeEqual(given, target);
-}
+// Deliberately self-contained: the only database operation is a narrowly
+// granted SECURITY DEFINER RPC. Vercel receives the already-public Supabase
+// browser key, never the database-wide service role or a signing secret.
+const TOKEN = /^[A-Za-z0-9_-]{43}$/u;
 
 function send(res: any, status: number, type: string, body: string): void {
   res.statusCode = status;
@@ -79,50 +69,54 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
 
-  const userId = typeof req.query?.u === 'string' ? req.query.u : '';
-  const signature = typeof req.query?.sig === 'string' ? req.query.sig : '';
+  const token = typeof req.query?.token === 'string' ? req.query.token : '';
   const url = process.env.PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const secret = process.env.DIGEST_UNSUBSCRIBE_SECRET;
+  const publishableKey = process.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY
+    || process.env.PUBLIC_SUPABASE_ANON_KEY;
 
-  if (!userId || !signature || !url || !serviceKey || !secret) {
+  if (!TOKEN.test(token)) {
     send(res, 400, 'text/plain', 'Invalid unsubscribe link.');
     return;
   }
 
-  if (!verify(userId, signature, secret)) {
-    send(res, 403, 'text/plain', 'Invalid unsubscribe link.');
+  if (!url || !publishableKey) {
+    send(res, 503, 'text/plain', 'Unsubscribe is temporarily unavailable.');
     return;
   }
 
   // GET never mutates — render a confirm page whose button POSTs back.
   if (req.method === 'GET') {
-    const action = `/api/unsubscribe?u=${encodeURIComponent(userId)}&sig=${encodeURIComponent(signature)}`;
+    const action = `/api/unsubscribe?token=${encodeURIComponent(token)}`;
     send(res, 200, 'text/html', confirmPage(action));
     return;
   }
 
-  // POST performs the opt-out via PostgREST (service role bypasses RLS).
-  const endpoint = `${url.replace(/\/+$/, '')}/rest/v1/profiles?user_id=eq.${encodeURIComponent(userId)}`;
-  let ok = false;
+  // POST presents the bearer capability to a function that can only turn the
+  // weekly preference off. The public key cannot read token rows or profiles.
+  const endpoint = `${url.replace(/\/+$/, '')}/rest/v1/rpc/weekly_digest_unsubscribe_v1`;
+  let outcome: 'success' | 'invalid' | 'unavailable' = 'unavailable';
   try {
-    const patch = await fetch(endpoint, {
-      method: 'PATCH',
+    const response = await fetch(endpoint, {
+      method: 'POST',
       headers: {
-        apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
+        apikey: publishableKey,
         'Content-Type': 'application/json',
-        Prefer: 'return=minimal',
       },
-      body: JSON.stringify({ digest_opt_in: false, updated_at: new Date().toISOString() }),
+      body: JSON.stringify({ candidate_token: token }),
     });
-    ok = patch.ok;
+    if (response.ok) {
+      outcome = await response.json() === true ? 'success' : 'invalid';
+    }
   } catch {
-    ok = false;
+    outcome = 'unavailable';
   }
 
-  if (!ok) {
-    send(res, 500, 'text/plain', 'Could not update your email preference.');
+  if (outcome === 'invalid') {
+    send(res, 400, 'text/plain', 'Invalid or expired unsubscribe link.');
+    return;
+  }
+  if (outcome === 'unavailable') {
+    send(res, 503, 'text/plain', 'Unsubscribe is temporarily unavailable.');
     return;
   }
 

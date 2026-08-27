@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 import { createClient } from '@supabase/supabase-js';
+import {
+  createDigestUnsubscribeCapability,
+  hashDigestUnsubscribeCapability,
+} from '../src/lib/server/digest-unsubscribe';
 import { computeBodies } from '../src/lib/engine/full';
 import { findInterAspects, type InterAspect, type MinimalBody } from '../src/lib/engine/synastry';
 import { BODY_ROLE } from '../src/lib/compat';
 import type { SavedChart } from '../src/lib/profile/schema';
-import { signDigestUnsubscribe } from '../src/lib/server/digest-unsubscribe';
 import {
   renderEmailHtml,
   renderEmailText,
@@ -15,9 +18,12 @@ import { SIGNS } from '../src/lib/signs';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DIGEST_ORB = 3;
-const DEFAULT_LIMIT = 200;
+const HARD_SEND_CEILING = 80;
+const DEFAULT_LIMIT = HARD_SEND_CEILING;
 const DEFAULT_CHARTS_PER_USER = 5;
 const SEND_INTERVAL_MS = 500;
+const UNSUBSCRIBE_TOKEN_TTL_DAYS = 400;
+const DRY_RUN_UNSUBSCRIBE_TOKEN = 'A'.repeat(43);
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const TRANSIT_BODIES = new Set(['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
@@ -192,9 +198,8 @@ function baseUrl(): string {
   return (process.env.DIGEST_BASE_URL || 'https://zodiacs.org').replace(/\/+$/, '');
 }
 
-function unsubscribeUrl(userId: string, secret: string): string {
-  const sig = signDigestUnsubscribe(userId, secret);
-  return `${baseUrl()}/api/unsubscribe?u=${encodeURIComponent(userId)}&sig=${encodeURIComponent(sig)}`;
+function unsubscribeUrl(token: string): string {
+  return `${baseUrl()}/api/unsubscribe?token=${encodeURIComponent(token)}`;
 }
 
 /** The Sun's sign in a saved chart — sets the accent hue and header disc. */
@@ -208,13 +213,13 @@ function chartSunSign(chart: SavedChart): string | undefined {
 function renderDigest(
   recipient: RecipientDigest,
   weekStart: Date,
-  secret: string,
+  unsubscribeToken: string,
   maxCharts: number,
   postalAddress: string,
 ): { subject: string; text: string; html: string; unsubscribe: string } {
   const label = rangeLabel(weekStart);
   const charts = recipient.charts.slice(0, maxCharts);
-  const unsubscribe = unsubscribeUrl(recipient.userId, secret);
+  const unsubscribe = unsubscribeUrl(unsubscribeToken);
 
   const sections: EmailSection[] = charts.map((chart) => {
     const hits = topTransits(chart, weekStart);
@@ -289,27 +294,24 @@ async function sendEmail(
   });
 
   if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`Resend failed with ${response.status}: ${body}`);
+    // Provider error bodies can echo recipient input. Status is enough for a
+    // public workflow log; detailed delivery diagnostics stay in Resend.
+    throw new Error(`Resend failed with status ${response.status}.`);
   }
 }
 
-function maskEmail(email: string): string {
-  const [local, domain] = email.split('@');
-  if (!local || !domain) return '[email hidden]';
-  return `${local.slice(0, 2)}***@${domain}`;
-}
-
-async function loadRecipients(limit: number): Promise<RecipientDigest[]> {
+function adminClient() {
   const url = process.env.PUBLIC_SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !serviceKey) {
     throw new Error('PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required without --fixture.');
   }
-
-  const supabase = createClient(url, serviceKey, {
+  return createClient(url, serviceKey, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
+}
+
+async function loadRecipients(limit: number, supabase: ReturnType<typeof adminClient>): Promise<RecipientDigest[]> {
 
   const { data: profiles, error: profileError, count } = await supabase
     .from('profiles')
@@ -352,6 +354,35 @@ async function loadRecipients(limit: number): Promise<RecipientDigest[]> {
   return recipients;
 }
 
+async function pruneExpiredUnsubscribeTokens(
+  supabase: ReturnType<typeof adminClient>,
+  now: Date,
+): Promise<void> {
+  const { error } = await supabase
+    .from('weekly_digest_unsubscribe_tokens')
+    .delete()
+    .lt('expires_at', now.toISOString());
+  if (error) throw new Error(`Could not prune weekly unsubscribe capabilities: ${error.message}`);
+}
+
+async function storeUnsubscribeToken(
+  supabase: ReturnType<typeof adminClient>,
+  userId: string,
+  now: Date,
+): Promise<string> {
+  const token = createDigestUnsubscribeCapability();
+  const expiresAt = addDays(now, UNSUBSCRIBE_TOKEN_TTL_DAYS);
+  const { error } = await supabase
+    .from('weekly_digest_unsubscribe_tokens')
+    .insert({
+      token_hash: hashDigestUnsubscribeCapability(token),
+      user_id: userId,
+      expires_at: expiresAt.toISOString(),
+    });
+  if (error) throw new Error(`Could not store weekly unsubscribe capability: ${error.message}`);
+  return token;
+}
+
 function fixtureRecipient(): RecipientDigest {
   const bodies = computeBodies(new Date('1990-07-13T12:00:00.000Z')).map((body) => ({
     body: body.body,
@@ -387,13 +418,10 @@ function fixtureRecipient(): RecipientDigest {
 
 async function run(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
-  const maxSends = envInt('DIGEST_MAX_SENDS', DEFAULT_LIMIT);
-  const limit = Math.min(options.limit ?? maxSends, maxSends);
+  const maxSends = Math.min(envInt('DIGEST_MAX_SENDS', DEFAULT_LIMIT), HARD_SEND_CEILING);
+  const limit = Math.min(options.limit ?? maxSends, maxSends, HARD_SEND_CEILING);
   const maxCharts = envInt('DIGEST_MAX_CHARTS_PER_USER', DEFAULT_CHARTS_PER_USER);
   const weekStart = options.weekStart ?? mondayFor(new Date());
-  const secret = process.env.DIGEST_UNSUBSCRIBE_SECRET || (options.dryRun ? 'dry-run-secret' : '');
-  if (!secret) throw new Error('DIGEST_UNSUBSCRIBE_SECRET is required when sending.');
-
   const resendKey = process.env.RESEND_API_KEY;
   if (!options.dryRun && !resendKey) throw new Error('RESEND_API_KEY is required when sending.');
 
@@ -403,17 +431,31 @@ async function run(): Promise<void> {
     || (options.dryRun ? 'Zodiacs.org · Test-send postal address' : '');
   if (!postalAddress) throw new Error('DAILY_EMAIL_POSTAL_ADDRESS is required when sending.');
 
-  const recipients = options.fixture ? [fixtureRecipient()] : await loadRecipients(limit);
+  const supabase = options.fixture ? null : adminClient();
+  const recipients = options.fixture ? [fixtureRecipient()] : await loadRecipients(limit, supabase!);
   console.log(`weekly-digest: ${recipients.length} recipient(s), week ${rangeLabel(weekStart)}, dryRun=${options.dryRun}`);
+
+  if (!options.dryRun && supabase) {
+    // The migration and its narrow RPC must exist before any live send. A
+    // missing table therefore fails closed before Resend sees a recipient.
+    await pruneExpiredUnsubscribeTokens(supabase, new Date());
+  }
 
   let sent = 0;
   let failed = 0;
-  for (const recipient of recipients) {
-    const rendered = renderDigest(recipient, weekStart, secret, maxCharts, postalAddress);
+  for (const [recipientIndex, recipient] of recipients.entries()) {
+    const unsubscribeToken = options.dryRun
+      ? DRY_RUN_UNSUBSCRIBE_TOKEN
+      : await storeUnsubscribeToken(supabase!, recipient.userId, new Date());
+    const rendered = renderDigest(recipient, weekStart, unsubscribeToken, maxCharts, postalAddress);
     const to = options.to ?? recipient.email;
 
     if (options.dryRun) {
-      console.log(`\n--- ${maskEmail(to)} | ${rendered.subject} ---\n${rendered.text}\n`);
+      if (options.fixture) {
+        console.log(`\n--- fixture | ${rendered.subject} ---\n${rendered.text}\n`);
+      } else {
+        console.log(`weekly-digest: rendered recipient ${recipientIndex + 1}/${recipients.length} (all personalized fields redacted)`);
+      }
       continue;
     }
 
@@ -421,10 +463,10 @@ async function run(): Promise<void> {
     try {
       await sendEmail(resendKey!, to, rendered.subject, rendered.text, rendered.html, rendered.unsubscribe);
       sent += 1;
-      console.log(`weekly-digest: sent ${sent}/${recipients.length} to ${maskEmail(to)}`);
+      console.log(`weekly-digest: sent ${sent}/${recipients.length}`);
     } catch (error) {
       failed += 1;
-      console.error(`weekly-digest: failed for ${maskEmail(to)}: ${error instanceof Error ? error.message : error}`);
+      console.error(`weekly-digest: recipient ${recipientIndex + 1}/${recipients.length} failed: ${error instanceof Error ? error.message : 'unknown error'}`);
     }
     await sleep(SEND_INTERVAL_MS); // gentle pace for Resend's rate limit
   }
