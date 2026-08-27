@@ -25,6 +25,15 @@
   text-align: start;
 }
 
+/* Russian routes already preload their metric-matched Cyrillic families.
+   Reuse them in the colophon so Latin-only footer faces cannot compete with
+   the above-the-fold poster or chart UI during a cold navigation. */
+:root[lang='ru'] .zfooter {
+  --zf-serif: 'EB Garamond Cyrillic', Georgia, serif;
+  --zf-sans: 'Golos Text', system-ui, sans-serif;
+  --zf-mono: 'JetBrains Mono Cyrillic', ui-monospace, monospace;
+}
+
 .zfooter *,
 .zfooter *::before,
 .zfooter *::after { box-sizing: border-box; }
