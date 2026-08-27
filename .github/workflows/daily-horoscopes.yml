@@ -59,10 +59,57 @@ jobs:
       - name: Replay 30 publication days
         run: npm run editorial:daily:replay -- --through "$TARGET_DATE"
 
+      # The site build refuses any tree whose Registry outlook is not dated
+      # like daily.json (the pairing gate in scripts/registry-research-lib.mjs
+      # runs inside `npm run build`), so a commit of the daily package alone
+      # can never produce a deployable tree. The verify step below then waits
+      # for a deployment that cannot exist, while the Registry Market Snapshot
+      # workflow waits for this run to complete before repairing the pairing —
+      # the nightly deadlock behind the "[Daily publication] Scheduled run
+      # failed" incidents. Build the paired artifacts here so the single push
+      # carries a buildable tree. Best effort on purpose: a market-data outage
+      # must never block the consumer daily publication, so on any failure we
+      # fall back to committing the daily package alone (the snapshot
+      # workflow's backstop repairs the pairing later, exactly as before).
+      - name: Pair the Registry outlook with today's edition (best effort)
+        id: pairing
+        continue-on-error: true
+        run: |
+          node scripts/build-registry-market-snapshot.mjs
+          node scripts/build-registry-outlook.mjs
+          node scripts/build-registry-research.mjs
+          node scripts/build-sign-pages.mjs
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const [history, outlook, researchDrafts, researchPublication, researchFeed] = await Promise.all([
+            readFile('public/assets/data/registry-market-history.v1.json', 'utf8').then(JSON.parse),
+            readFile('public/assets/registry-outlook.json', 'utf8').then(JSON.parse),
+            readFile('src/data/registry-research/drafts.json', 'utf8').then(JSON.parse),
+            readFile('src/data/registry-research/publication.json', 'utf8').then(JSON.parse),
+            readFile('public/assets/registry-research-feed.json', 'utf8').then(JSON.parse),
+          ]);
+          const latest = history.snapshots?.at(-1);
+          const dates = {
+            market: latest?.date,
+            marketRead: latest?.source?.readAt?.slice(0, 10),
+            dailyOutlook: outlook.daily?.date,
+            weeklyOutlook: outlook.weekly?.date,
+            researchDrafts: researchDrafts.generatedAt?.slice(0, 10),
+            researchPublication: researchPublication.generatedAt?.slice(0, 10),
+            researchFeed: researchFeed.generatedAt?.slice(0, 10),
+          };
+          for (const [label, date] of Object.entries(dates)) {
+            if (date !== process.env.TARGET_DATE) {
+              throw new Error(`${label} artifact is ${date ?? 'undated'}; expected ${process.env.TARGET_DATE}`);
+            }
+          }
+          NODE
+
       - name: Commit if changed
         id: commit
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PAIRING_OUTCOME: ${{ steps.pairing.outcome }}
         run: |
           FILES=(
             "src/data/daily.json"
@@ -70,6 +117,24 @@ jobs:
             "src/data/daily-publication-manifest.json"
             "src/data/horoscope-program.json"
           )
+          REGISTRY_FILES=(
+            "public/assets/data/registry-market-history.v1.json"
+            "public/assets/registry-outlook.json"
+            "src/data/registry-research/drafts.json"
+            "src/data/registry-research/publication.json"
+            "public/assets/registry-research-feed.json"
+            "public/assets/data/registry-research"
+            "public/registry"
+          )
+          if [ "$PAIRING_OUTCOME" = "success" ]; then
+            FILES+=("${REGISTRY_FILES[@]}")
+          else
+            # Never commit a half-regenerated pairing; restore the verified
+            # committed state and publish the daily package alone.
+            echo "::warning title=Registry pairing skipped::Outlook pairing failed; committing the daily package alone. The Registry Market Snapshot backstop repairs the pairing later."
+            git checkout -- "${REGISTRY_FILES[@]}" 2>/dev/null || true
+            git clean -fdq -- "${REGISTRY_FILES[@]}" 2>/dev/null || true
+          fi
           changed=false
           if git diff --quiet -- "${FILES[@]}"; then
             echo "Daily publication package unchanged"
