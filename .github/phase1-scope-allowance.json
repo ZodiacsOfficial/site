@@ -1,12 +1,14 @@
 {
   "version": 1,
-  "id": "registry-snapshot-age-refresh-2026-08-27",
-  "note": "One-time allowance for the four generator-produced Registry freshness labels that crossed from two to three days old while the audit remediation PR was running. No Registry source, feature flag, market behavior, or styling changes are included. The freeze re-arms automatically once this merges.",
-  "baseCommit": "43f21940ef10be872f4a7d4081b3568974a4b2fc",
+  "id": "astrofolio-merch-images-2026-08-25",
+  "note": "One-time allowance to restore the owner-reported Astrofolio merchandise images with same-origin optimized assets, update both hydrated and static-fallback product sources, and add regression coverage. The freeze re-arms automatically once this merges.",
+  "baseCommit": "d0632ab97f9fb7ea564d0915908c1b1c9d2a69c9",
   "protectedPaths": [
-    "public/registry/aries/index.html",
-    "public/registry/capricorn/index.html",
-    "public/registry/gemini/index.html",
-    "public/registry/leo/index.html"
+    "public/assets/app.js",
+    "public/assets/astrofolio/merch/cap-800.webp",
+    "public/assets/astrofolio/merch/hoodie-800.webp",
+    "public/assets/astrofolio/merch/t-shirt-800.webp",
+    "scripts/registry-consumer-contract.test.mjs",
+    "src/app.jsx"
   ]
 }
