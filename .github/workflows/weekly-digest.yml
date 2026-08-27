@@ -53,6 +53,9 @@ jobs:
           DIGEST_UNSUBSCRIBE_SECRET: ${{ secrets.DIGEST_UNSUBSCRIBE_SECRET }}
           DIGEST_FROM_EMAIL: ${{ vars.DIGEST_FROM_EMAIL || 'Zodiacs.org <hello@zodiacs.org>' }}
           DIGEST_BASE_URL: ${{ vars.DIGEST_BASE_URL || 'https://zodiacs.org' }}
+          # Same repository variable the Daily Email workflow reads; the digest
+          # script refuses any non-dry-run send without it (CAN-SPAM footer).
+          DAILY_EMAIL_POSTAL_ADDRESS: ${{ vars.DAILY_EMAIL_POSTAL_ADDRESS }}
           DIGEST_DRY_RUN: ${{ github.event.inputs.dry_run }}
           DIGEST_LIMIT: ${{ github.event.inputs.limit }}
         run: |
