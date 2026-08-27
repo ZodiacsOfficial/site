@@ -72,8 +72,10 @@ await withPreview({ port: 4418 }, async (baseURL) => {
             }),
           width: document.documentElement.scrollWidth,
           viewport: innerWidth,
-          selectorEntries: document.querySelectorAll('.footer__languages .footer__language-option').length,
-          selectorText: document.querySelector('.footer__languages')?.textContent ?? '',
+          selectorEntries: document.querySelectorAll(
+            '.footer__languages .footer__language-option, .zfooter__locales .zfooter__locale',
+          ).length,
+          selectorText: document.querySelector('.footer__languages, .zfooter__locales')?.textContent ?? '',
           cyrillic: (document.body.innerText.match(/[А-Яа-яЁё]/gu) ?? []).length,
           arHref: Boolean(document.querySelector('a[href="/ar"], a[href^="/ar/"]')),
         }));
@@ -149,7 +151,9 @@ await withPreview({ port: 4418 }, async (baseURL) => {
             `${path}: reciprocal Russian alternate=${russianAlternate}`,
           );
           check(
-            await page.locator('.footer__languages .footer__language-option').count() === 6,
+            await page.locator(
+              '.footer__languages .footer__language-option, .zfooter__locales .zfooter__locale',
+            ).count() === 6,
             `${path}: public language selector does not expose Russian`,
           );
         }

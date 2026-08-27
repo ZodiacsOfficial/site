@@ -6526,86 +6526,137 @@
       );
     }
 
-    function TechnicalFooter() {
+    const FOOTER_EXPLORE = [
+      ['/', 'Astrology'],
+      ['/astrofolio/', 'Astrofolio'],
+      ['/registry/', 'Official Registry'],
+      ['/thesis/', 'Thesis'],
+      ['/archive/', 'Archive'],
+    ];
+    const FOOTER_TRUST = [
+      ['/astrofolio/#verify', 'Verify a token'],
+      ['/registry/technical/', 'Methodology'],
+      ['/disclosure/', REGISTRY_DISCLOSURE_LABEL],
+      ['/sdk/', 'SDK'],
+    ];
+    const FOOTER_CHANNELS = [
+      ['https://x.com/astrofoliosol', 'X'],
+      ['https://www.instagram.com/astrofolioonsol/', 'Instagram'],
+      ['https://tiktok.com/@astrofolio', 'TikTok'],
+      ['https://t.me/astrofoliosol', 'Telegram'],
+    ];
+    const FOOTER_LOCALES = [
+      ['/', 'en', 'en', 'English'],
+      ['/es/', 'es', 'es', 'Español'],
+      ['/pt/', 'pt-BR', 'pt-BR', 'Português (Brasil)'],
+      ['/fr/', 'fr', 'fr', 'Français'],
+      ['/it/', 'it', 'it', 'Italiano'],
+    ];
+    const FOOTER_YEAR = new Date().getUTCFullYear();
+
+    function FooterLinks({ links, external = false }) {
+      return links.map(([href, label]) => (
+        <a key={`${href}-${label}`} href={href} rel={external ? 'noopener noreferrer' : undefined}>{label}</a>
+      ));
+    }
+
+    function SiteEnd({ tagline, exploreLinks = FOOTER_EXPLORE, trustLinks = FOOTER_TRUST }) {
       return (
-        <footer className="ftr ftr--technical">
-          <div className="ftr__row">
-            <div className="mark">Zodiacs<span className="g">·</span>org</div>
-            <div>© MMXXVI</div>
-          </div>
-          <div className="ftr__row">
-            <div className="ftr__legal">
-              <a href="/registry/">Zodiacs Registry</a>
-              <a href="#records-networks">Records</a>
-              <a href="#market-transparency">Market</a>
-              <a href="#onchain-access">Access</a>
-              <a href="#builders">Builders</a>
-              <a href="#security">Safety</a>
-              <a href="/sdk/">SDK</a>
-              <a href="/registry/zodiacs.registry.json">Record</a>
-              <a href="/archive/">Archive</a>
-              <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
-              <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
-              <a href="/privacy/">Privacy</a>
-              <a href="/terms/">Terms</a>
+        <footer className="zfooter zfooter--static">
+          <div className="zfooter__inner">
+            <div className="zfooter__lead">
+              <div>
+                <a className="zfooter__brand" href="/">
+                  <img className="zfooter__brand-mark" src="/assets/app-icons/v3/favicon.svg" width="26" height="26" alt="" loading="lazy" decoding="async" />
+                  <span className="zfooter__brand-name">Zodiacs</span><span className="zfooter__brand-tld">.org</span>
+                </a>
+                <p className="zfooter__tag">{tagline}</p>
+              </div>
+              <button className="zfooter__guide" type="button" data-assistant-open data-footer-guide aria-haspopup="dialog">
+                <img src="/assets/guide-avatar.webp" width="32" height="32" alt="" loading="lazy" decoding="async" />
+                <span>Guide</span>
+              </button>
             </div>
-            <div>Registry lookup tools: read-only</div>
-          </div>
-          <div className="ftr__row">
-            <div className="ftr__legal" aria-label="Official channels">
-              <a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a>
-              <a href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer">Instagram</a>
-              <a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a>
-              <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a>
-              <a href="/astrofolio/">Astrofolio</a>
+
+            <div className="zfooter__directory">
+              <nav className="zfooter__group" aria-label="Explore">
+                <span className="zfooter__label">Explore</span>
+                <div className="zfooter__links"><FooterLinks links={exploreLinks} /></div>
+              </nav>
+              <nav className="zfooter__group" aria-label="Trust and policies">
+                <span className="zfooter__label">Trust</span>
+                <div className="zfooter__links"><FooterLinks links={trustLinks} /></div>
+              </nav>
+              <nav className="zfooter__group zfooter__group--wide" aria-label="Official channels">
+                <span className="zfooter__label">Follow</span>
+                <div className="zfooter__links"><FooterLinks links={FOOTER_CHANNELS} external /></div>
+              </nav>
+              <nav className="zfooter__group zfooter__twelve" aria-label="The twelve zodiac signs">
+                <span className="zfooter__label">The Twelve</span>
+                <div className="zfooter__signs">
+                  {SIGNS.map((sign) => (
+                    <a className="zfooter__sign" key={sign.asset.sign} href={`/${sign.asset.sign}/`} aria-label={sign.name} title={sign.name}>
+                      <img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp?surface=site-footer`} width="25" height="25" alt="" loading="lazy" decoding="async" />
+                      <span className="zfooter__visually-hidden">{sign.name}</span>
+                    </a>
+                  ))}
+                </div>
+              </nav>
             </div>
-            <div>Channels</div>
-          </div>
-          <div className="ftr__row ftr__row--origin">
-            <span>
-              Zodiacs.org · Registry · Zodiac assets originated {REGISTRY_ESTABLISHED} ·{' '}
-              {REGISTRY_ESTABLISHMENT_PROVENANCE_URL
-                ? <a href={REGISTRY_ESTABLISHMENT_PROVENANCE_URL} rel="noopener nofollow">{REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL}</a>
-                : <a href="/disclosure/#origin">{REGISTRY_PROVENANCE_PENDING_LABEL}</a>}
-            </span>
+
+            <div className="zfooter__language">
+              <span className="zfooter__label" id="runtime-footer-language-label">Language</span>
+              <nav className="zfooter__locales" aria-labelledby="runtime-footer-language-label">
+                {FOOTER_LOCALES.map(([href, hreflang, lang, label], index) => (
+                  index === 0
+                    ? <span className="zfooter__locale" key={href} lang={lang} aria-current="page">{label}</span>
+                    : <a className="zfooter__locale" key={href} href={href} hrefLang={hreflang} lang={lang}>{label}</a>
+                ))}
+              </nav>
+            </div>
+
+            <div className="zfooter__colophon">
+              <p className="zfooter__copyright">© {FOOTER_YEAR} Zodiacs.org</p>
+              <nav className="zfooter__meta" aria-label="Legal">
+                <span className="zfooter__label">Legal</span>
+                <div className="zfooter__meta-links"><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+              </nav>
+              <nav className="zfooter__meta" aria-label="More">
+                <span className="zfooter__label">More</span>
+                <div className="zfooter__meta-links"><a href="/widgets/">Widgets</a><a href="/feeds/horoscopes.xml">RSS</a></div>
+              </nav>
+              <div className="zfooter__meta zfooter__credits">
+                <span className="zfooter__label">Data &amp; licenses</span>
+                <p>Place data: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> · CC BY 4.0</p>
+                <p>Typefaces licensed under <a href="/fonts/OFL-instrument-sans.txt">SIL OFL 1.1</a></p>
+                <p>
+                  Registry record: Zodiac assets originated {REGISTRY_ESTABLISHED} ·{' '}
+                  {REGISTRY_ESTABLISHMENT_PROVENANCE_URL
+                    ? <a href={REGISTRY_ESTABLISHMENT_PROVENANCE_URL} rel="noopener nofollow">{REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL}</a>
+                    : <a href="/disclosure/#origin">{REGISTRY_PROVENANCE_PENDING_LABEL}</a>}
+                </p>
+              </div>
+            </div>
           </div>
         </footer>
       );
     }
 
-    function Footer({ technical = false, pro = false }) {
-      if (technical) return <TechnicalFooter />;
+    function TechnicalFooter() {
+      const exploreLinks = [
+        ['/registry/', 'Zodiacs Registry'],
+        ['#records-networks', 'Records'],
+        ['#market-transparency', 'Market'],
+        ['#onchain-access', 'Access'],
+        ['#builders', 'Builders'],
+        ['#security', 'Safety'],
+      ];
+      return <SiteEnd tagline="The addresses, networks, and evidence behind the official Registry." exploreLinks={exploreLinks} />;
+    }
+
+    function MarketVenueNotice() {
       return (
-        <footer className="ftr">
-          <div className="ftr__mast">
-            <div className="ftr__identity">
-              <div className="mark">Zodiacs<span className="g">·</span>org</div>
-              <p>{pro ? 'Live market context, anchored to verified public records.' : 'Twelve signs. Twelve verified token records.'}</p>
-            </div>
-            <div className="ftr__copyright">© 2026</div>
-          </div>
-
-          <div className="ftr__directory">
-            <nav className="ftr__group" aria-label="Explore Zodiacs">
-              <span className="ftr__label">Explore</span>
-              <div className="ftr__links">
-                <a href="/registry/">Official Registry</a>
-                {pro
-                  ? <a href="/terminal/research/">Markets research</a>
-                  : <a href="/thesis/">Why Zodiacs matter</a>}
-                <a href="/astrofolio/#verify">Verify a token</a>
-              </div>
-            </nav>
-            <nav className="ftr__group" aria-label="Trust and policies">
-              <span className="ftr__label">Trust</span>
-              <div className="ftr__links">
-                <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
-                <a href="/privacy/">Privacy</a>
-                <a href="/terms/">Terms</a>
-              </div>
-            </nav>
-          </div>
-
+        <div className="ftr">
           <aside
             className="ftr__market-notice"
             role="note"
@@ -6636,16 +6687,7 @@
               </p>
             </div>
           </aside>
-
-          <div className="ftr__row ftr__row--origin">
-            <span>
-              Zodiacs.org · Registry · Zodiac assets originated {REGISTRY_ESTABLISHED} ·{' '}
-              {REGISTRY_ESTABLISHMENT_PROVENANCE_URL
-                ? <a href={REGISTRY_ESTABLISHMENT_PROVENANCE_URL} rel="noopener nofollow">{REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL}</a>
-                : <a href="/disclosure/#origin">{REGISTRY_PROVENANCE_PENDING_LABEL}</a>}
-            </span>
-          </div>
-        </footer>
+        </div>
       );
     }
 
@@ -6915,8 +6957,8 @@
                 <FaqSection />
               </section>
 
-              <Footer technical />
             </main>
+            <TechnicalFooter />
           </>
         );
       }
@@ -6936,8 +6978,9 @@
               <ConsumerMarketBriefing active={activeTicker} sharedMarket={proMarket} />
               <ProResearchSection sign={sign} />
               <ProVerifierLink sign={sign} />
-              <Footer pro />
+              <MarketVenueNotice />
             </main>
+            <SiteEnd tagline="Live market context, anchored to verified public records." />
           </>
         );
       }
@@ -6966,8 +7009,9 @@
             <span id="briefing" className="terminal-compat-target" aria-hidden="true" />
             <span id="research" className="terminal-compat-target" aria-hidden="true" />
             <span id="outlook" className="terminal-compat-target" aria-hidden="true" />
-            <Footer />
+            <MarketVenueNotice />
           </main>
+          <SiteEnd tagline="The official public Registry of the Twelve." />
         </>
       );
     }
