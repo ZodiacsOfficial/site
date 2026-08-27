@@ -225,7 +225,7 @@ for (const [route, file] of expectedFiles) {
     }
   }
 
-  const selectorEntries = (html.match(/class="footer__language-option"/gu) ?? []).length;
+  const selectorEntries = (html.match(/class="zfooter__locale"/gu) ?? []).length;
   if (selectorEntries !== 6 || !/Русский/u.test(html) || /العربية/u.test(html)) {
     fail(`${route}: language selector is not the exact six-locale public set`);
   }

@@ -93,3 +93,17 @@ export const STABLE_CHROMIUM_ARGS = [
   '--no-first-run',
   '--no-sandbox',
 ];
+
+/**
+ * Footer sign art is deliberately deferred until the page ending nears the
+ * viewport. Fast fixture navigation can cancel that optional request during
+ * teardown; keep the exception exact so other image failures still fail CI.
+ */
+export function isSiteFooterIconTeardownAbort(request) {
+  if (request.method() !== 'GET'
+    || request.resourceType() !== 'image'
+    || request.failure()?.errorText !== 'net::ERR_ABORTED') return false;
+  const url = new URL(request.url());
+  return /^\/assets\/zodiac-icons\/48\/[a-z-]+\.webp$/u.test(url.pathname)
+    && url.searchParams.get('surface') === 'site-footer';
+}

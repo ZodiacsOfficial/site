@@ -122,8 +122,8 @@ describe('Astrofolio beginner buying guide', () => {
 
     const guide = await read('src/pages/astrofolio/how-to-buy/index.astro');
     expect(guide).toContain('terminalMarketNotice');
-    expect(guide).toContain(':global(body:has(.buy-guide) .footer .email-capture--footer)');
-    expect(guide).toContain(':global(body:has(.buy-guide) .footer__note) { display: none; }');
+    expect(guide).toContain(':global(body:has(.buy-guide) .zfooter .email-capture--footer)');
+    expect(guide).toContain(':global(body:has(.buy-guide) .zfooter__note) { display: none; }');
     expect(base).toContain('<SiteFooter locale={locale} terminalMarketNotice={props.terminalMarketNotice} />');
     expect(footer).toContain('const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice)');
     expect(privacy).toContain("const updated = '23 August 2026'");

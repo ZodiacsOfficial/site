@@ -27,7 +27,9 @@ async function routeState(page) {
     robots: document.querySelector('meta[name="robots"]')?.getAttribute('content') ?? null,
     alternates: Array.from(document.querySelectorAll('link[rel="alternate"][hreflang]'))
       .map((node) => [node.getAttribute('hreflang'), node.href]),
-    selector: Array.from(document.querySelectorAll('.footer__languages .footer__language-option'))
+    selector: Array.from(document.querySelectorAll(
+      '.footer__languages .footer__language-option, .zfooter__locales .zfooter__locale',
+    ))
       .map((node) => node.textContent?.replace(/^\s*·\s*/, '').trim()),
     russian: /Русский/u.test(document.body.textContent ?? '')
       || Boolean(document.querySelector('a[href="/ru"], a[href^="/ru/"]')),
@@ -115,7 +117,7 @@ await withPreview({ port: 4417 }, async (baseURL) => {
         { path: '/today/', selectorCount: 5 },
         { path: '/horoscopes/aries/', selectorCount: 5 },
         { path: '/events/', selectorCount: 5 },
-        { path: '/registry/', selectorCount: 0 },
+        { path: '/registry/', selectorCount: 5 },
       ]) {
         const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
         check(response?.status() === 200, `${path}@${viewport.width}: deferred route is unavailable`);

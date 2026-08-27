@@ -275,8 +275,11 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       '<ConsumerRegistryGuide sign={sign} />',
       '<ConsumerMarketGateway batch={consumerMarket} activeTicker={activeTicker} />',
       '<ConsumerFaq />',
-      '<Footer />',
+      '<MarketVenueNotice />',
     ]);
+    expect(source.slice(source.indexOf('</main>', start))).toContain(
+      '<SiteEnd tagline="The official public Registry of the Twelve." />',
+    );
     expect(source).toContain('<span id="market-snapshot" className="terminal-compat-target" aria-hidden="true" />');
     expect(source).toContain('<span id="terminal" className="terminal-compat-target" aria-hidden="true" />');
     expect(mounted).not.toMatch(/ConsumerMarketSnapshot|ConsumerTerminalStrip|ConsumerMarketSection|ConsumerMarketBriefing|MarketTape|StandingsSection|PulseSection|ProMarketsGateway/gu);
@@ -552,8 +555,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(source).not.toContain('function ConsumerClosing(');
     expect(fallback).not.toContain('<section class="static-astrofolio-closing"');
     expect(functionBlock(source, 'TerminalViewLink')).toContain("{pro ? 'Open the Terminal' : 'Astrofolio'}");
-    expect(functionBlock(source, 'Footer')).not.toContain('shop.astrofolio.xyz');
-    const staticFooter = fallback.slice(fallback.indexOf('<footer class="static-site__footer">'), fallback.indexOf('</footer>', fallback.indexOf('<footer class="static-site__footer">')));
+    expect(functionBlock(source, 'SiteEnd')).not.toContain('shop.astrofolio.xyz');
+    const staticFooter = fallback.slice(fallback.indexOf('<footer class="zfooter zfooter--compact">'), fallback.indexOf('</footer>', fallback.indexOf('<footer class="zfooter zfooter--compact">')));
     expect(staticFooter).not.toContain('shop.astrofolio.xyz');
     expect(source).not.toContain('function ConsumerPreferenceBanner(');
     expect(source).not.toContain('data-terminal-preference-banner');
@@ -579,8 +582,11 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       '<ConsumerMarketBriefing active={activeTicker} sharedMarket={proMarket} />',
       '<ProResearchSection sign={sign} />',
       '<ProVerifierLink sign={sign} />',
-      '<Footer pro />',
+      '<MarketVenueNotice />',
     ]);
+    expect(source.slice(source.indexOf('</main>', proStart))).toContain(
+      '<SiteEnd tagline="Live market context, anchored to verified public records." />',
+    );
     expect(functionBlock(source, 'ProMasthead')).toContain('<h1 id="pro-terminal-title">Terminal</h1>');
     expect(source).toContain('const proMarket = useTwelveQuotes(pro);');
   });

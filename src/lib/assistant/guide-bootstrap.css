@@ -37,6 +37,12 @@
   cursor: pointer;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.zguide-launcher[data-footer-guide-visible] {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.88);
 }
 .zguide-launcher__avatar { width: 32px; height: 32px; }
 @media (max-width: 560px) {
@@ -48,4 +54,3 @@
 @media (prefers-reduced-motion: reduce) {
   .zguide-launcher { scroll-behavior: auto; transition: none !important; }
 }
-

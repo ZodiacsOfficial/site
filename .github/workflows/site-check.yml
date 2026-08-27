@@ -81,6 +81,24 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Temporary footer-release capture. These steps are removed once the
+      # generated Linux evidence is committed and normal comparison mode runs.
+      - name: Refresh Phase 1 exact-width acceptance evidence
+        run: npm run test:phase1:acceptance
+
+      - name: Refresh Linux visual baselines
+        run: npm run test:visual:update
+
+      - name: Upload footer evidence refresh
+        uses: actions/upload-artifact@v4
+        with:
+          name: footer-evidence-linux-${{ github.run_id }}
+          path: |
+            docs/acceptance/phase1/screenshots/
+            tests/visual/baselines/linux/
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Typecheck
         run: npm run check
 

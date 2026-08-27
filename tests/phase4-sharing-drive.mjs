@@ -11,7 +11,11 @@
  * account, recipient, or provider.
  */
 import { chromium } from 'playwright-core';
-import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
+import {
+  findChromium,
+  isSiteFooterIconTeardownAbort,
+  STABLE_CHROMIUM_ARGS,
+} from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
 const MODE = process.env.PHASE4_SHARING_MODE === 'enabled' ? 'enabled' : 'off';
@@ -164,11 +168,11 @@ function watchPage(page, label) {
   });
   page.on('requestfailed', (request) => {
     const failure = request.failure()?.errorText ?? 'failed';
-    const teardownIconAbort = label === 'chart-share'
+    const teardownIconAbort = isSiteFooterIconTeardownAbort(request) || (label === 'chart-share'
       && request.method() === 'GET'
       && request.resourceType() === 'image'
       && /^https?:\/\/[^/]+\/assets\/zodiac-icons\/128\/[a-z-]+\.webp$/u.test(request.url())
-      && failure === 'net::ERR_ABORTED';
+      && failure === 'net::ERR_ABORTED');
     if (teardownIconAbort) return;
     browserErrors.push(
       `${label}: requestfailed: ${request.method()} ${request.url()} — ${failure}`,

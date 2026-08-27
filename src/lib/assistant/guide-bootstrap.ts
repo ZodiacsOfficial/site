@@ -47,6 +47,8 @@ let launcher: HTMLButtonElement | null = null;
 let locale: AssistantLocale = 'en';
 let openersWired = false;
 let portraitPromise: Promise<HTMLImageElement> | null = null;
+let footerGuideObserver: IntersectionObserver | null = null;
+let footerGuideVisible = false;
 
 function safeSessionGet(key: string): string | null {
   try { return sessionStorage.getItem(key); } catch { return null; }
@@ -207,6 +209,27 @@ function buildLauncher(): void {
   document.body.append(launcher);
 }
 
+function syncLauncherWithFooterGuide(): void {
+  if (!launcher || footerGuideObserver) return;
+  const footerGuide = document.querySelector<HTMLElement>('[data-footer-guide]');
+  if (!footerGuide || typeof IntersectionObserver === 'undefined') return;
+  const footerRegion = footerGuide.closest<HTMLElement>('.zfooter') ?? footerGuide;
+
+  const updateLauncher = (): void => {
+    if (!launcher) return;
+    const keepForFocus = document.activeElement === launcher;
+    launcher.toggleAttribute('data-footer-guide-visible', footerGuideVisible && !keepForFocus);
+  };
+
+  footerGuideObserver = new IntersectionObserver(([entry]) => {
+    footerGuideVisible = Boolean(entry?.isIntersecting);
+    updateLauncher();
+  }, { threshold: 0 });
+  footerGuideObserver.observe(footerRegion);
+  launcher.addEventListener('focus', updateLauncher);
+  launcher.addEventListener('blur', updateLauncher);
+}
+
 function wireOpeners(): void {
   if (openersWired) return;
   openersWired = true;
@@ -228,5 +251,6 @@ export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
   await ensureStylesheet();
   buildLauncher();
   launcher?.setAttribute('aria-label', currentCopy().open);
+  syncLauncherWithFooterGuide();
   wireOpeners();
 }
