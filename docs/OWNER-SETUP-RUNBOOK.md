@@ -11,9 +11,23 @@ Total time: about two hours, plus DNS propagation waits.
 
 ## 1. Two account-hygiene fixes (15 minutes)
 
-### 1a. Supabase: turn on leaked-password protection
+### 1a. Vercel: move the project off the Hobby plan
 
-Free, and it must be on before the app ever adds a password sign-in.
+The site runs a commercial wing (Registry/token pages) on a Hobby plan,
+which Vercel's terms restrict to non-commercial use — and the rate-limit
+rules in §3 need Pro anyway.
+
+1. Sign in at https://vercel.com, open the **zodiacsofficial** team.
+2. **Settings → Billing → Upgrade to Pro** (US$20/month at time of
+   writing).
+
+### 1b. Supabase: leaked-password protection (deferrable)
+
+Correction from the first draft of this runbook: this toggle is **Pro
+Plan and above** on Supabase, not free — and because the site is
+magic-link-only, no passwords exist for it to protect today. It matters
+the day password sign-in ships (the native app may bring that). So:
+either defer this entirely, or if/when the Supabase org is on Pro:
 
 1. Sign in at https://supabase.com/dashboard and open the **Zodiacs.org**
    project.
@@ -23,15 +37,8 @@ Free, and it must be on before the app ever adds a password sign-in.
 3. Enable **"Prevent the use of leaked passwords"** (the HaveIBeenPwned
    check) and save.
 
-### 1b. Vercel: move the project off the Hobby plan
-
-The site runs a commercial wing (Registry/token pages) on a Hobby plan,
-which Vercel's terms restrict to non-commercial use — and the rate-limit
-rules in §3 need Pro anyway.
-
-1. Sign in at https://vercel.com, open the **zodiacsofficial** team.
-2. **Settings → Billing → Upgrade to Pro** (US$20/month at time of
-   writing).
+The live security advisor will keep showing a WARN for this until it is
+on; with magic-link-only auth that WARN is acceptable.
 
 ## 2. Backups live in ten minutes
 
@@ -55,37 +62,73 @@ repository secrets exist.
    - `BACKUP_PASSPHRASE` — the phrase from step 2
 4. Verify once: repo → **Actions → Database Backup → Run workflow**. When
    it goes green, download the artifact from the run page and confirm it
-   decrypts on your machine:
+   decrypts on your machine (gpg prompts for the passphrase — never type
+   it into a command line, where shell history keeps it):
    ```
-   gpg --decrypt --batch --passphrase "YOUR-PASSPHRASE" zodiacs-db-*.sql.gz.gpg | gunzip | head
+   gpg --decrypt zodiacs-db-*.tar.gz.gpg | tar xz
+   head backup.sql
    ```
-   You should see SQL. After that it runs every Monday by itself and keeps
-   90 days of history. Restores go into a fresh Supabase project first,
-   never straight over the live one (full runbook in `docs/SUPABASE.md`).
+   You should see SQL, plus an `auth-map.sql` beside it (the account
+   UUID↔email mapping). Delete both decrypted files afterwards. After
+   that the job runs every Monday by itself and keeps 90 days of history.
+5. Two honest caveats. This repository is public, so anyone with a GitHub
+   account can download the encrypted artifact — the passphrase is the
+   only wall, which is why it must be long, random, and never typed into
+   commands or chats. And decrypting is not yet a restore: once, within
+   the first month, do a real drill — create a throwaway free Supabase
+   project, `psql` the two files into it (`backup.sql` first, then
+   `auth-map.sql`), click around the tables, then delete the project.
+   Restores always go into a fresh project first, never straight over the
+   live one (full runbook in `docs/SUPABASE.md`).
 
-## 3. Two rate-limit rules in the Vercel firewall (10 minutes, needs Pro)
+## 3. Rate-limit rules in the Vercel firewall (10 minutes, needs Pro)
 
 The code already calls these rules by ID; they engage the moment the rules
-exist and are inert until then.
+exist and are inert until then. Correction from the first draft of this
+runbook: these are **`@vercel/firewall` SDK rules**, not path rules — the
+rule's **If** condition is the SDK condition type carrying the Rate limit
+ID, never a Request Path match, and you leave the rule's **Then** action
+at its default. The API code itself answers over-limit requests with a
+429 and a `Retry-After` header; a path-matched Deny rule would instead
+403 everything at the edge, which is not what the code expects.
 
-1. Vercel → **zodiacs-org** project → **Firewall** tab → **Configure /
-   New Rule**, choose the **Rate limit** action.
-2. Rule one — email capture:
-   - Condition: **Request Path** equals `/api/email/subscribe`
-   - Rate limit: **10 requests per 60 seconds**, keyed by IP address
-   - Action when exceeded: **Deny**
-   - **Rate Limit ID: `zodiacs-email-subscribe`** — this exact string;
-     the code matches on it.
-3. Rule two — Aura holdings (the code for this one shipped earlier and
-   expects the ID `registry-aura-holdings-v1`): same shape, path
-   `/api/aura-holdings`, **10 requests per 60 seconds** per IP, Deny.
-4. Save and deploy the firewall changes.
+For each ID below (per https://vercel.com/docs/vercel-firewall/vercel-waf/rate-limiting-sdk):
+
+1. Vercel → **zodiacs-org** project → **Firewall** in the sidebar →
+   **Configure** (top right) → **+ New Rule**.
+2. Name the rule after the ID.
+3. In **Configure**, for the first **If** condition select
+   **`@vercel/firewall`**, and paste the ID as the **Rate limit ID** —
+   the exact string, the code matches on it.
+4. Set **Rate Limit** to **10 requests per 60 seconds** (keying stays the
+   default — the code buckets by client IP) and leave **Then** at its
+   default.
+5. **Save Rule**, then **Review Changes → Publish**.
+
+The IDs the code exports today:
+
+| Rate limit ID | Endpoint it protects |
+| --- | --- |
+| `zodiacs-email-subscribe` | `/api/email/subscribe` |
+| `registry-aura-holdings-v1` | `/api/aura-holdings` |
+| `zodiacs-wallet-birth` | `/api/wallet-birth` |
+| `zodiacs-transit-calendar` | `/api/calendar/transits` |
+
+The first two are the priority (they can send email / hit upstreams);
+the last two are cheap to add while you're in the dashboard.
 
 ## 4. Turning on the retention stack, in order
 
 Everything below is merged, tested, and flag-off. Do the steps in order —
 each one builds on the last. Stop at any point; nothing half-configured
 breaks the site.
+
+**One hard prerequisite: finish §5 (legal identity) before 4c.** The
+moment the capture boxes go live the site is collecting EU personal data
+in five languages, and the privacy pages must already name the data
+controller and a contact address (GDPR Art. 13 wants that at the moment
+of collection, not after). 4a and 4b dry-runs are fine before §5; live
+capture is not.
 
 ### 4a. Resend account + domain (one-time, ~20 minutes + DNS wait)
 
@@ -118,12 +161,22 @@ Variables (the **Variables** tab, not Secrets): `PUBLIC_SUPABASE_URL` =
 `https://mftpcdpttteuwbolobye.supabase.co`, `DIGEST_ENABLED` = `true`,
 optional `DIGEST_FROM_EMAIL` = `Zodiacs.org <hello@zodiacs.org>`.
 
-Also add secret `DAILY_EMAIL_POSTAL_ADDRESS` — a real physical mailing
-address (see §5; a PO box works). Both email pipelines refuse live sends
-without one.
+The sender's physical mailing address rides in as the repository
+**variable** `DAILY_EMAIL_POSTAL_ADDRESS` (not a secret — it prints in
+every email footer). Per `docs/PHASE3-HABIT-FABLE-REVIEW.md` it is
+already set from the daily-email pilot; just confirm it exists under the
+**Variables** tab and still matches the address in §5. Both email
+pipelines refuse live sends without it.
 
 Verify: **Actions → Weekly Digest → Run workflow** with dry-run on, read
-the log, then let the Monday schedule take over.
+the log. Then do one real canary before trusting the schedule: run the
+workflow again with dry-run off and **limit 1** (your own address should
+be the only digest-opted-in account at that point), and check the email
+that arrives — footer address, unsubscribe link. Only then let the
+Monday schedule take over. One capacity note while on Resend's free
+tier: it caps at 100 emails/day as well as 3,000/month, so keep the
+workflow's limit at or below 100 until the plan is upgraded (the default
+is 200).
 
 ### 4c. Email capture on the site (weekly list signup boxes)
 
@@ -169,7 +222,7 @@ flags (`PUBLIC_REGISTRY_TRADE_ENABLED`, `PUBLIC_REGISTRY_EXCHANGE_ENABLED`,
 `PUBLIC_REGISTRY_COLLECTION_ENABLED`) off unless you deliberately decide
 otherwise — the audit's recommendation is to keep the swap venue dark.
 
-## 5. The legal identity decision (the one only you can make)
+## 5. The legal identity decision (the one only you can make — and it gates §4c)
 
 `/terms/` currently says, honestly, that the operator's legal identity and
 governing jurisdiction are unconfirmed — while the domain collects EU
@@ -187,16 +240,32 @@ emails in five languages and hosts a token registry. Two realistic paths:
 Whichever you choose, the same three edits follow (any Claude session can
 make them once you say the words): the operator paragraph in
 `src/pages/terms/index.astro`, the contact/controller line in the privacy
-pages, and the `DAILY_EMAIL_POSTAL_ADDRESS` value from §4b. A PO box or
-registered-agent address satisfies the email-footer requirement without
-publishing a home address.
+pages, and the `DAILY_EMAIL_POSTAL_ADDRESS` variable from §4b. A PO box
+or registered-agent address satisfies the email-footer requirement
+without publishing a home address.
+
+One mechanical note for whoever makes those edits: the localized privacy
+pages sit inside the Phase 1 protected scope, so the change must ship
+with a fresh `.github/phase1-scope-allowance.json` — pinned to the PR's
+base commit and listing exactly the protected files it touches (the
+scope-guard README in `scripts/phase1-scope-guard.mjs` describes the
+shape; the previous allowance was spent when PR #291 merged and cannot
+be reused). This edit is owner-directed by this runbook, which is the
+authorization the allowance file records.
 
 ## 6. Verification checklist
 
-- [ ] Supabase security advisor shows no leaked-password WARN
-- [ ] Database Backup run is green and the artifact decrypts locally
-- [ ] `curl -X POST https://zodiacs.org/api/email/subscribe` eleven times
-      quickly returns a 429 with `Retry-After` (rule live)
-- [ ] Digest dry-run log looks right; first Monday send arrives
+- [ ] Database Backup run is green, the artifact decrypts locally, and
+      one restore drill into a throwaway project has been done
+- [ ] Rate-limit rule live: run
+      `curl -X POST -H "Origin: https://zodiacs.org" https://zodiacs.org/api/email/subscribe`
+      twelve times quickly — the last ones return **429** with
+      `Retry-After`. (Without the `Origin` header every attempt returns
+      403 from the same-origin guard, which proves nothing about the
+      rule.)
+- [ ] Digest dry-run log looks right; limit-1 canary email arrives with
+      the postal footer; first scheduled Monday send arrives
 - [ ] Signup box renders on the homepage footer and the confirm email lands
 - [ ] Terms no longer contains the "pending disclosure" paragraph
+- [ ] (Only if password auth ever ships / org is on Supabase Pro) the
+      leaked-password WARN in the security advisor is cleared

@@ -3,8 +3,14 @@
 # Why this exists: the live project holds the only copy of accounts, chart
 # sync rows, email consents, push subscriptions, and game state, and no
 # platform backup tier is configured. This job takes a pg_dump, encrypts it
-# symmetrically, and stores it as a private workflow artifact for 90 days —
+# symmetrically, and stores it as a workflow artifact for 90 days —
 # a real restore path that costs nothing and needs no third-party service.
+#
+# This repository is public, so run artifacts are downloadable by any
+# GitHub account: the AES-256 passphrase is the only confidentiality
+# boundary. That is why BACKUP_PASSPHRASE must be long and random, must
+# never appear in commands, logs, or chat, and why the artifact-handling
+# action below is pinned to a commit SHA.
 #
 # Setup (repo Settings → Secrets and variables → Actions → New repository secret):
 #   SUPABASE_DB_URL    the project's "Session pooler" connection string from
@@ -13,9 +19,12 @@
 #   BACKUP_PASSPHRASE  a long random phrase; store a copy in your password
 #                      manager — an artifact cannot be decrypted without it.
 #
-# Restore (docs/SUPABASE.md has the full runbook):
-#   gpg --decrypt --batch --passphrase "$BACKUP_PASSPHRASE" backup.sql.gz.gpg | gunzip > backup.sql
-#   psql "$SUPABASE_DB_URL" < backup.sql   # into a FRESH project, never blindly over live
+# Restore (docs/SUPABASE.md has the full runbook — always into a FRESH
+# project first, never blindly over live):
+#   gpg --decrypt --batch --passphrase-file pass.txt zodiacs-db-*.tar.gz.gpg | tar xz
+#   # → backup.sql (public + supabase_migrations) and auth-map.sql
+#   #   (auth.users/auth.identities data — restores account UUIDs so
+#   #   public-schema rows re-attach to the same users)
 name: Database Backup
 
 on:
@@ -48,6 +57,15 @@ jobs:
             echo "configured=true" >> "$GITHUB_OUTPUT"
           fi
 
+      # The production project runs PostgreSQL 17; the runner image ships
+      # client 16, and pg_dump refuses servers newer than itself.
+      - name: Install PostgreSQL 17 client
+        if: steps.config.outputs.configured == 'true'
+        run: |
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y --no-install-recommends postgresql-client-17
+          pg_dump --version
+
       - name: Dump, compress, encrypt
         if: steps.config.outputs.configured == 'true'
         env:
@@ -56,25 +74,34 @@ jobs:
         run: |
           set -euo pipefail
           STAMP="$(date -u +%Y-%m-%dT%H%MZ)"
-          # Data planes only; auth/storage schemas are Supabase-managed and
-          # restore through the platform, while public + migration history
-          # carry everything this site owns.
+          # Data planes this site owns: public + migration history.
           pg_dump "$SUPABASE_DB_URL" \
             --no-owner --no-privileges \
             --schema=public --schema=supabase_migrations \
             --file=backup.sql
-          gzip -9 backup.sql
+          # The auth schema itself is Supabase-managed and recreated by a
+          # fresh project, but its ROWS are ours: without auth.users and
+          # auth.identities, restored public-schema rows would be orphaned
+          # UUIDs and magic-link re-signups would mint new identities.
+          # Sessions/refresh tokens are ephemeral and deliberately excluded.
+          pg_dump "$SUPABASE_DB_URL" \
+            --data-only --no-owner --no-privileges \
+            --table=auth.users --table=auth.identities \
+            --file=auth-map.sql
+          tar czf backup.tar.gz backup.sql auth-map.sql
           gpg --batch --yes --symmetric --cipher-algo AES256 \
             --passphrase "$BACKUP_PASSPHRASE" \
-            --output "zodiacs-db-$STAMP.sql.gz.gpg" backup.sql.gz
-          rm backup.sql.gz
-          ls -la zodiacs-db-*.sql.gz.gpg
+            --output "zodiacs-db-$STAMP.tar.gz.gpg" backup.tar.gz
+          rm backup.sql auth-map.sql backup.tar.gz
+          ls -la zodiacs-db-*.tar.gz.gpg
 
       - name: Store encrypted backup artifact
         if: steps.config.outputs.configured == 'true'
-        uses: actions/upload-artifact@v4
+        # actions/upload-artifact@v4.6.2, pinned by SHA: this step handles the
+        # backup ciphertext, so its supply chain stays commit-addressed.
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: zodiacs-db-backup-${{ github.run_id }}
-          path: zodiacs-db-*.sql.gz.gpg
+          path: zodiacs-db-*.tar.gz.gpg
           retention-days: 90
           if-no-files-found: error
