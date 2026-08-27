@@ -81,30 +81,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Temporary footer-release recapture after the Russian font-path fix.
-      # Removed once the Linux evidence is committed and comparison mode runs.
-      - name: Refresh Phase 1 exact-width acceptance evidence
-        run: npm run test:phase1:acceptance
-
-      - name: Refresh Linux visual baselines
-        run: npm run test:visual:update
-
-      - name: Verify Russian footer performance path
-        env:
-          LIGHTHOUSE_ROUTES: ru-home,ru-birth-chart,ru-sign-guide
-        run: npm run test:lighthouse
-
-      - name: Upload footer evidence refresh
-        uses: actions/upload-artifact@v4
-        with:
-          name: footer-evidence-linux-${{ github.run_id }}
-          path: |
-            docs/acceptance/phase1/screenshots/
-            tests/visual/baselines/linux/
-            tests/visual/artifacts/lighthouse/
-          if-no-files-found: error
-          retention-days: 7
-
       - name: Typecheck
         run: npm run check
 
