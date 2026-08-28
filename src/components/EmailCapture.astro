@@ -1,7 +1,7 @@
 ---
 import SignIcon from './SignIcon.astro';
 import EmailCaptureEnhancement from './EmailCaptureEnhancement.astro';
-import { hasEmailCaptureProvider } from '../lib/email/config';
+import { hasStandaloneWeeklyEmailCapture } from '../lib/email/config';
 import { dailyEmailFeatureEnabled, hasDailySunEmailProvider } from '../lib/email/daily-config';
 import { DAILY_CAPTURE_EN } from '../lib/email/daily-capture-copy';
 import { SIGNS, signName } from '../lib/signs';
@@ -30,7 +30,7 @@ const selectedSignName = selectedSignData ? signName(selectedSignData, locale) :
 // intentionally absent from `import.meta.env` client exposure.
 const dailyRequested = locale === 'en' && dailyEmailFeatureEnabled(process.env);
 const daily = dailyRequested && hasDailySunEmailProvider(process.env);
-const enabled = dailyRequested ? daily : hasEmailCaptureProvider(process.env);
+const enabled = dailyRequested ? daily : hasStandaloneWeeklyEmailCapture(process.env);
 const postChartManaged = daily && placement === 'chart' && requestedPostChartManaged;
 const capture = daily ? {
   kicker: DAILY_CAPTURE_EN.kicker,

@@ -19,6 +19,26 @@ Every finding below cites file:line evidence that was independently re-read
 during verification. Zero of the five confirmed critical/high findings were
 refuted.
 
+## Remediation note — 2026-08-28
+
+This report remains the point-in-time 24 August audit; later code must not make
+its original observations read as current production facts. The focused
+operational remediation now SHA-pins GitHub Actions, brings the locked npm tree
+to a clean install with no reported vulnerabilities, adds a physical-postal
+fail-closed rule to the account weekly digest, keeps standalone capture behind
+its explicit release gate, and adds encrypted backup/atomic restore tooling.
+
+Those code changes do not constitute operational acceptance. At the 28 August
+recheck, the live weekly capability migration had not been applied, no live
+weekly digest had ever been sent, `DIGEST_ENABLED` and the standalone release
+flag were absent, the two backup secrets were absent, and the backup workflow
+had never produced an artifact. The remediation makes an unconfigured backup
+run fail visibly rather than pass as a no-op. The digest schedule and standalone
+capture must remain off until their documented migrations and canaries pass.
+The operator identity, governing-law choice, translated legal parity, backup
+secret provisioning, first encrypted artifact, and throwaway-project restore
+drill remain owner-controlled work and are not represented as complete here.
+
 ---
 
 ## 1. Scorecard
@@ -137,8 +157,9 @@ Other notable mediums by dimension: CSP `script-src 'unsafe-inline'` with no
 tight ones); the weekly email-capture path can be scripted to bomb a
 victim's inbox (no per-recipient cooldown, no firewall rule); the push
 subscription store accepts unbounded unauthenticated inserts; the
-preview-smoke workflow runs an untrusted deployment SHA with
-`VERCEL_AUTOMATION_BYPASS_SECRET` in env; live v1 `charts` rows have no
+  preview-smoke workflow's `deployment_status` definition can come from an
+  untrusted deployed ref before its trusted checkout, while repository secrets
+  are available; live v1 `charts` rows have no
 payload-size or row-count bounds; production migration state is unrecorded
 past 2026-07-14 (12 of 14 migration files have no applied-state record);
 `npm test` fails on a fresh clone (`disclosure.test.ts` reads `dist/`
@@ -219,9 +240,9 @@ native-ready. What is missing is the last mile:
 3. **Provision native auth.** Native email OTP (6-digit code — no redirect
    allowlist changes), Sign in with Apple (required by Apple the moment any
    third-party login is offered), Keychain session storage, and a native
-   equivalent of the local-session sign-out semantics. Enable Supabase's
-   leaked-password protection now (free) so it's on before any password
-   method ever ships.
+   equivalent of the local-session sign-out semantics. Supabase leaked-password
+   protection requires Pro or above; enable it before any password method ships
+   or keep password authentication unavailable.
 4. **Ship device list + revoke.** The `revoked_at` column and per-device
    checks exist; the only path that revokes today is account deletion. A
    lost-phone story is table stakes for a multi-device product — schedule

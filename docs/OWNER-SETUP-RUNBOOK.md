@@ -1,271 +1,399 @@
 # Owner setup runbook
 
-The remaining audit items that need dashboard logins or a legal decision,
-written for doing them without prior experience. Each section stands alone;
-the order is by impact per minute. Everything code-side is already merged —
-these steps only flip switches and paste values.
+Status: reconciled against repository `main` and read-only production probes on
+2026-08-27. This runbook is for the **Zodiacs.org website only**.
 
-Total time: about two hours, plus DNS propagation waits.
+## 0. Authority and production-preservation rule
 
----
+This document identifies work that only the owner can decide or perform. It is
+not authorization for an agent or this remediation PR to:
 
-## 1. Two account-hygiene fixes (15 minutes)
+- buy or upgrade a plan;
+- publish a firewall rule, DNS record, deployment, or production setting;
+- create, rotate, reveal, or change a secret or environment variable;
+- apply a production migration or change live data;
+- create or delete a Supabase project;
+- enable, disable, expand, or roll back a live feature; or
+- insert a legal identity, jurisdiction, address, governing law, or venue.
 
-### 1a. Vercel: move the project off the Hobby plan
+Each such action needs a separate, explicit owner instruction. Never paste a
+secret, database connection string, backup passphrase, token, or private key
+into chat, a command line, a log, a commit, a screenshot, or an artifact. Move
+secret values directly between the relevant dashboard and password manager.
 
-The site runs a commercial wing (Registry/token pages) on a Hobby plan,
-which Vercel's terms restrict to non-commercial use — and the rate-limit
-rules in §3 need Pro anyway.
+### Production state to preserve
 
-1. Sign in at https://vercel.com, open the **zodiacsofficial** team.
-2. **Settings → Billing → Upgrade to Pro** (US$20/month at time of
-   writing).
+Read-only checks on 2026-08-27 found the following pilots live. “Preserve” means
+leave their current dashboard configuration unchanged; it does **not** mean set
+their flags off.
 
-### 1b. Supabase: leaked-password protection (deferrable)
+| Surface | Observed production state | Source contract | This run |
+| --- | --- | --- | --- |
+| Terminal venue at `/terminal/markets/` | Live | Committed output is flag-off, but a Vercel production build defaults the venue on when `PUBLIC_REGISTRY_EXCHANGE_ENABLED` is absent. An explicit `0` is a rollback. | Preserve; do not add, remove, or change the variable. |
+| Registry Collection / Cabinet of Twelve | Live | Committed Registry Collection/Aura output remains flag-off. Production uses the exact collection flag, with the legacy Aura name still accepted. | Preserve live production and committed flag-off bytes. |
+| Compatibility invitations | Live | UI, server authorization, Supabase access, and canary/public authorization are separate controls. | Preserve; no launch or rollback. |
+| Zodiac Games joining and standings | Live | The public build flag, Supabase configuration, and the server session secret are all required. | Preserve; no launch or rollback. |
+| Daily email | Frozen test cohort only | Real delivery is hard-frozen to `DAILY_EMAIL_COHORT=test`. | Do not expand the cohort. |
+| Web push | Not part of this remediation | Public UI, server delivery, VAPID material, Supabase access, and workflow scheduling are separate controls. | No changes. |
 
-Correction from the first draft of this runbook: this toggle is **Pro
-Plan and above** on Supabase, not free — and because the site is
-magic-link-only, no passwords exist for it to protect today. It matters
-the day password sign-in ships (the native app may bring that). So:
-either defer this entirely, or if/when the Supabase org is on Pro:
+The old `PUBLIC_REGISTRY_TRADE_ENABLED` setting no longer controls Registry
+profiles; their purchase panel is retired. Do not use it as a proxy for Terminal
+state. Do not hand-edit generated Registry or Terminal output. Run the owning
+generator and commit source plus generated output together whenever a later,
+separately authorized change requires it.
 
-1. Sign in at https://supabase.com/dashboard and open the **Zodiacs.org**
-   project.
-2. In the left sidebar open **Authentication**, then look for the email
-   sign-in settings (currently under **Sign In / Providers** → **Email**;
-   if the menu has moved, type "password" into the dashboard search).
-3. Enable **"Prevent the use of leaked passwords"** (the HaveIBeenPwned
-   check) and save.
+## 1. Owner decisions
 
-The live security advisor will keep showing a WARN for this until it is
-on; with magic-link-only auth that WARN is acceptable.
+### 1a. Paid-plan decisions
 
-## 2. Backups live in ten minutes
+The owner must decide whether to move the Vercel project from Hobby to a plan
+that permits the site's use and supports the intended Firewall configuration.
+Check the current terms and price in Vercel before deciding; this runbook does
+not approve the purchase.
 
-The weekly encrypted backup workflow is already merged
-(`.github/workflows/db-backup.yml`). It stays a visible no-op until two
-repository secrets exist.
+Supabase leaked-password protection may remain deferred while authentication is
+magic-link-only. Before any website password sign-in is released, the owner must
+decide whether to use a Supabase plan that supports the protection and then
+enable it. The current security-advisor warning is accepted until then.
 
-1. Get the database connection string: Supabase Dashboard → **Zodiacs.org**
-   → the **Connect** button in the top bar → **Session pooler** → copy the
-   URI. It looks like
-   `postgresql://postgres.mftpcdpttteuwbolobye:[YOUR-PASSWORD]@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres`.
-   If you don't know the database password, reset it first under
-   **Project Settings → Database → Reset database password** and paste the
-   new one into the URI.
-2. Create a long random passphrase (30+ characters — use your password
-   manager's generator) and **save it in the password manager**. A backup
-   cannot be decrypted without it; losing it makes every backup useless.
-3. On GitHub, open `ZodiacsOfficial/site` → **Settings → Secrets and
-   variables → Actions → New repository secret** and add both:
-   - `SUPABASE_DB_URL` — the full URI from step 1 (password filled in)
-   - `BACKUP_PASSPHRASE` — the phrase from step 2
-4. Verify once: repo → **Actions → Database Backup → Run workflow**. When
-   it goes green, download the artifact from the run page and confirm it
-   decrypts on your machine (gpg prompts for the passphrase — never type
-   it into a command line, where shell history keeps it):
-   ```
-   gpg --decrypt zodiacs-db-*.tar.gz.gpg | tar xz
-   head backup.sql
-   ```
-   You should see SQL, plus an `auth-map.sql` beside it (the account
-   UUID↔email mapping). Delete both decrypted files afterwards. After
-   that the job runs every Monday by itself and keeps 90 days of history.
-5. Two honest caveats. This repository is public, so anyone with a GitHub
-   account can download the encrypted artifact — the passphrase is the
-   only wall, which is why it must be long, random, and never typed into
-   commands or chats. And decrypting is not yet a restore: once, within
-   the first month, do a real drill — create a throwaway free Supabase
-   project, `psql` the two files into it (`backup.sql` first, then
-   `auth-map.sql`), click around the tables, then delete the project.
-   Restores always go into a fresh project first, never straight over the
-   live one (full runbook in `docs/SUPABASE.md`).
+### 1b. Legal identity, jurisdiction, and address
 
-## 3. Rate-limit rules in the Vercel firewall (10 minutes, needs Pro)
+The public Terms still say the operator identity and governing jurisdiction are
+pending. Do not infer them from a domain registration, a filing, a payment
+account, or a registered agent. The owner must provide and explicitly authorize
+all of these facts:
 
-The code already calls these rules by ID; they engage the moment the rules
-exist and are inert until then. Correction from the first draft of this
-runbook: these are **`@vercel/firewall` SDK rules**, not path rules — the
-rule's **If** condition is the SDK condition type carrying the Rate limit
-ID, never a Request Path match, and you leave the rule's **Then** action
-at its default. The API code itself answers over-limit requests with a
-429 and a `Retry-After` header; a path-matched Deny rule would instead
-403 everything at the edge, which is not what the code expects.
+1. the exact legal operator and data-controller identity;
+2. the operator's jurisdiction/country of establishment;
+3. a postal address valid for that operator's commercial email under the laws
+   that apply;
+4. the governing law for the Terms; and
+5. the chosen venue or dispute forum.
 
-For each ID below (per https://vercel.com/docs/vercel-firewall/vercel-waf/rate-limiting-sdk):
+A PO box or registered-agent address is **not automatically sufficient**. The
+owner must confirm that the chosen address is genuinely usable for the operator
+and applicable jurisdiction and can receive required mail. Obtain legal advice
+if that is uncertain.
 
-1. Vercel → **zodiacs-org** project → **Firewall** in the sidebar →
-   **Configure** (top right) → **+ New Rule**.
-2. Name the rule after the ID.
-3. In **Configure**, for the first **If** condition select
-   **`@vercel/firewall`**, and paste the ID as the **Rate limit ID** —
-   the exact string, the code matches on it.
-4. Set **Rate Limit** to **10 requests per 60 seconds** (keying stays the
-   default — the code buckets by client IP) and leave **Then** at its
-   default.
-5. **Save Rule**, then **Review Changes → Publish**.
+Legal identity must be deployed before any new public standalone email capture
+is enabled. An account-digest canary separately requires the genuinely valid,
+owner-approved postal address printed in the message footer.
 
-The IDs the code exports today:
+After the owner supplies the exact facts, a separate authorized legal PR must:
 
-| Rate limit ID | Endpoint it protects |
+- update the operator, controller/contact, applicable-law, and venue text;
+- update the visible `updated` date on every legal page it changes;
+- update `modifiedAt` in each changed English structured-data block in
+  `src/pages/terms/index.astro` and `src/pages/privacy/index.astro`; and
+- leave `DAILY_EMAIL_POSTAL_ADDRESS` unchanged until the owner separately
+  authorizes the matching dashboard update.
+
+The ES/FR/IT/PT privacy pages are Phase 1 protected. That legal PR must replace
+the spent `.github/phase1-scope-allowance.json` with a fresh version pinned to
+the exact PR base commit. Its sorted `protectedPaths` must equal exactly the
+protected locale files changed, selected from:
+
+- `src/pages/es/privacy/index.astro`
+- `src/pages/fr/privacy/index.astro`
+- `src/pages/it/privacy/index.astro`
+- `src/pages/pt/privacy/index.astro`
+
+Do **not** list `src/pages/terms/index.astro` or
+`src/pages/privacy/index.astro`; the English legal files are not protected by
+that guard, and an allowance that lists them is invalid. A prior allowance on
+`main` is already spent and cannot be reused. This runbook records the required
+mechanics; it is not authorization to make the legal edits.
+
+## 2. Encrypted database backup and restore drill
+
+The weekly workflow is `.github/workflows/db-backup.yml`. Until the owner adds
+both required secrets to the exact-`main` `database-backup-production`
+environment, every scheduled or manual run fails visibly without creating an
+artifact:
+
+- `SUPABASE_DB_URL`: the Session pooler value copied directly from the Supabase
+  dashboard into the GitHub Actions secret form; and
+- `BACKUP_PASSPHRASE`: one control-free line containing 32–1024 random bytes,
+  generated and retained in the owner's password manager.
+
+Do not show either value to an agent or place either value in a shell command.
+The workflow converts the database URL into protected libpq inputs rather than
+passing a password-bearing URL to PostgreSQL processes. Encryption uses GnuPG
+loopback pinentry with the passphrase supplied through a protected file
+descriptor, never a process argument.
+
+### Owner setup and first run
+
+These are owner-only actions and need explicit authorization before execution:
+
+1. Confirm the restore workstation has PostgreSQL 17 client tools, GnuPG with
+   loopback pinentry support, Node.js, and GNU tar. On macOS, install GNU tar as
+   `gtar`; the wrapper rejects BSD tar. The wrappers remain compatible with the
+   system Bash 3.2. The workflow also uses `pg_dump` and `pg_restore`.
+2. Confirm `main` is protected, create the `database-backup-production`
+   environment with an exact-`main` deployment-branch policy, and add the two
+   environment secrets there. Keep repository- and organization-level Actions
+   secrets empty. Do not echo or validate secret values in a workflow log.
+3. Dispatch **Actions → Database Backup** once and require a green run.
+4. Download the encrypted artifact without renaming or unpacking it. The
+   repository wrapper validates the bundle metadata and member list and removes
+   its protected decrypted workspace on exit. Do not write an ad hoc decrypt or
+   restore command.
+
+The bundle uses one exported repeatable-read snapshot for every application
+schema currently present (`public` and, if released later, `private` and
+`living_chart_private`), the complete migration-ledger schema, `auth.users`,
+and `auth.identities`. It restores Auth identities before application data and
+foreign-key validation. Generated pre-data/data/post-data sections retain the
+project's RLS, policies, ownership, GRANT/REVOKE ACLs, default ACLs, and
+SECURITY DEFINER function contract. A snapshot-generated replay section also
+preserves the special `public` schema ACL that `pg_dump` omits. Because the
+ordered Auth dump does not yet cover MFA, passkey, SSO, SAML, registered OAuth
+clients, OAuth user consents, or custom-OAuth configuration, the exporter
+fails instead of producing a partial artifact if any detected durable table is
+nonempty. The fresh-target guard independently requires every detected Auth
+relation to be empty except the managed `instances`, `schema_migrations`,
+`users`, and `identities` relations; residual sessions, refresh tokens,
+flow state, OAuth client state, or WebAuthn challenges stop the restore before
+mutation.
+
+### Mandatory first-month restore drill
+
+A successful decryption is not recovery acceptance. With separate owner
+authorization, create a **fresh throwaway Supabase project**, restore only into
+that project, and delete it only after evidence is saved. Never test a restore
+over the live project. Do not run `supabase db push` or otherwise initialize
+`supabase_migrations` first; the wrapper requires that ledger schema to be
+absent and recreates the source ledger inside the restore transaction.
+
+Run the repository procedure from a clean checkout, passing only the encrypted
+artifact path (which contains no credential):
+
+```sh
+bash scripts/restore-db-backup.sh /absolute/path/to/zodiacs-db-....tar.gz.gpg
+```
+
+The wrapper prompts invisibly for the passphrase and fresh-project database URL,
+places them in mode-0600 inputs, and never passes either through process
+arguments. It refuses the known production project, runs a read-only
+fresh-project preflight, and then requires the exact confirmation `RESTORE`
+before any schema change. That confirmation is not a substitute for the
+separate owner authorization required by this runbook. Keep the throwaway
+target traffic-disabled for the entire drill. The final transaction repeats
+the destructive emptiness/Auth compatibility guard and holds exclusive Auth
+table locks through commit so the interactive confirmation gap cannot admit a
+new account.
+
+The generated restore uses `psql -X`, `ON_ERROR_STOP=1`, and one transaction;
+any generated section or acceptance failure rolls the target back. Its order is:
+
+1. application and migration-ledger pre-data;
+2. Auth users;
+3. Auth identities;
+4. application and migration-ledger data;
+5. application and migration-ledger post-data, including constraints,
+   policies, and ACLs;
+6. the snapshot-generated `public` schema ACL replay; and
+7. manifest and authorization acceptance before commit.
+
+The drill passes only when all of the following are recorded:
+
+- source and restored row counts and canonical content digests match for every
+  included application table, so same-count mutation fails acceptance;
+- every application sequence restores its definition plus the sampled
+  `last_value` and `is_called` state;
+- restored Auth user and identity UUID digests match the source manifest;
+- the fresh target's managed Auth column contract exactly matches the source
+  before any schema change;
+- every application foreign key links to its restored parent, including Auth
+  UUIDs, and no orphan remains;
+- all application and migration-ledger constraints exist and are validated;
+- every expected table has the correct RLS/forced-RLS state and policies;
+- schema, table, sequence, routine, schema-scoped default ACLs, and relevant
+  application-owner global default ACLs match, including no unintended
+  `PUBLIC EXECUTE` on SECURITY DEFINER functions;
+- `anon`, `authenticated`, and `service_role` behavior matches the application
+  authorization contract, including denied operations;
+- restored users must reauthenticate and can access only their own rows; and
+- the fresh-project application smoke test passes before any recovery plan is
+  considered usable.
+
+Keep these interim tradeoffs explicit:
+
+- **RPO:** a successful weekly cadence can lose up to seven days of changes;
+  failed or skipped runs extend that window until the next successful backup;
+- **retention:** GitHub keeps each artifact for 90 days;
+- **public-repository exposure:** the encrypted artifact can be downloadable
+  from a public repository, so the passphrase is the confidentiality boundary;
+- **excluded Auth state:** sessions, refresh tokens, and Auth audit rows are
+  deliberately excluded, as are short-lived OAuth authorization/flow rows, so
+  reauthentication is expected; detected durable MFA, passkey, SSO, SAML,
+  OAuth client, OAuth consent, or custom-OAuth rows make export fail until
+  their ordered recovery boundary is implemented; and
+- **restore target:** fresh-project-first only, never an untested live overwrite.
+
+## 3. Vercel Firewall rate limits
+
+This section is owner-only because it may require a plan purchase and publishing
+production Firewall changes. Do not execute it from this remediation PR.
+
+The API uses `@vercel/firewall` SDK rate-limit IDs. For each rule, the **If**
+condition must be `@vercel/firewall` with the exact Rate limit ID below, set to
+10 requests per 60 seconds using the default client-IP key. Leave the rule's
+**Then** action at its SDK-rule default. A path-matched Deny rule is wrong: it
+would return 403 instead of letting the endpoint return 429 with `Retry-After`.
+
+| Rate limit ID | Endpoint |
 | --- | --- |
 | `zodiacs-email-subscribe` | `/api/email/subscribe` |
 | `registry-aura-holdings-v1` | `/api/aura-holdings` |
 | `zodiacs-wallet-birth` | `/api/wallet-birth` |
 | `zodiacs-transit-calendar` | `/api/calendar/transits` |
 
-The first two are the priority (they can send email / hit upstreams);
-the last two are cheap to add while you're in the dashboard.
+After the owner explicitly authorizes and publishes the rules, verify the email
+rule without a recipient or email body:
 
-## 4. Turning on the retention stack, in order
-
-Everything below is merged, tested, and flag-off. Do the steps in order —
-each one builds on the last. Stop at any point; nothing half-configured
-breaks the site.
-
-**One hard prerequisite: finish §5 (legal identity) before 4c.** The
-moment the capture boxes go live the site is collecting EU personal data
-in five languages, and the privacy pages must already name the data
-controller and a contact address (GDPR Art. 13 wants that at the moment
-of collection, not after). 4a and 4b dry-runs are fine before §5; live
-capture is not.
-
-### 4a. Resend account + domain (one-time, ~20 minutes + DNS wait)
-
-1. Create an account at https://resend.com (free tier: 3,000 emails/month
-   — plenty to start).
-2. Resend → **Domains → Add Domain** → `zodiacs.org`. Resend shows 2–3 DNS
-   records (DKIM/SPF).
-3. Add those records where the domain's DNS lives. If the domain uses
-   Vercel DNS: Vercel → team **Domains** → `zodiacs.org` → **DNS Records**
-   → add each record exactly as Resend shows it. Wait for Resend to show
-   **Verified** (minutes to a few hours).
-4. Resend → **API Keys**: create TWO keys — one with **Sending access**
-   only (this becomes `RESEND_API_KEY`) and one **Full access** (this
-   becomes `RESEND_CONTACTS_API_KEY`).
-5. Resend → **Audiences**: note the audience/segment ID for the weekly
-   list (`RESEND_SEGMENT_ID`); create a second one later for the daily
-   list (`RESEND_DAILY_SEGMENT_ID`).
-
-### 4b. Weekly digest (the cheapest live channel)
-
-Signed-in users who ticked the digest box on `/profile/` get a Monday
-email. Configure the GitHub workflow (repo → **Settings → Secrets and
-variables → Actions**):
-
-Secrets: `RESEND_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (Supabase →
-Project Settings → API keys → service_role — never goes anywhere else),
-`DIGEST_UNSUBSCRIBE_SECRET` (generate: `openssl rand -base64 32`).
-
-Variables (the **Variables** tab, not Secrets): `PUBLIC_SUPABASE_URL` =
-`https://mftpcdpttteuwbolobye.supabase.co`, `DIGEST_ENABLED` = `true`,
-optional `DIGEST_FROM_EMAIL` = `Zodiacs.org <hello@zodiacs.org>`.
-
-The sender's physical mailing address rides in as the repository
-**variable** `DAILY_EMAIL_POSTAL_ADDRESS` (not a secret — it prints in
-every email footer). Per `docs/PHASE3-HABIT-FABLE-REVIEW.md` it is
-already set from the daily-email pilot; just confirm it exists under the
-**Variables** tab and still matches the address in §5. Both email
-pipelines refuse live sends without it.
-
-Verify: **Actions → Weekly Digest → Run workflow** with dry-run on, read
-the log. Then do one real canary before trusting the schedule: run the
-workflow again with dry-run off and **limit 1** (your own address should
-be the only digest-opted-in account at that point), and check the email
-that arrives — footer address, unsubscribe link. Only then let the
-Monday schedule take over. One capacity note while on Resend's free
-tier: it caps at 100 emails/day as well as 3,000/month, so keep the
-workflow's limit at or below 100 until the plan is upgraded (the default
-is 200).
-
-### 4c. Email capture on the site (weekly list signup boxes)
-
-Vercel → **zodiacs-org → Settings → Environment Variables**, environment
-**Production**:
-
-```
-EMAIL_PROVIDER            resend
-RESEND_API_KEY            (sending key)
-RESEND_CONTACTS_API_KEY   (full-access key)
-RESEND_FROM_EMAIL         Zodiacs.org <hello@zodiacs.org>
-RESEND_SEGMENT_ID         (audience ID from 4a)
-EMAIL_CONFIRM_SECRET      (openssl rand -base64 32)
+```sh
+for attempt in $(seq 1 12); do
+  curl --silent --show-error --max-time 10 \
+    --output /dev/null \
+    --dump-header - \
+    --request POST \
+    --header 'Origin: https://zodiacs.org' \
+    --header 'Accept: application/json' \
+    https://zodiacs.org/api/email/subscribe
+done
 ```
 
-Redeploy (Vercel → Deployments → ⋯ on the latest → Redeploy). The capture
-boxes appear on the site and every signup is double-opt-in.
+The final responses must visibly include an `HTTP/... 429` status line and a
+`Retry-After: 60` header. Without the `Origin` header the same-origin guard
+returns 403, which does not test the Firewall rule.
 
-### 4d. Daily sun email (optional, after 4c proves out)
+## 4. Account weekly digest: supported, but keep the schedule off
 
-Add to the same Vercel env: `DAILY_EMAIL_ENABLED=1`,
-`RESEND_DAILY_SEGMENT_ID`, `DAILY_EMAIL_UNSUBSCRIBE_SECRET`,
-`DAILY_EMAIL_RECIPIENT_HASH_SECRET` (both `openssl rand -base64 32`), and
-mirror them into the GitHub Actions secrets the **Daily Email** workflow
-lists. Run its dry-run first, same as the digest.
+The supported weekly digest is for signed-in account holders who enabled it in
+`/profile/`. It queries account preferences in Supabase; it is not a sender for
+the standalone public Resend Segment.
 
-### 4e. Web push (optional)
+Keep the GitHub variable `DIGEST_ENABLED` unset or false until every acceptance
+step below passes. The sender caps each process at 80 provider attempts and the
+database delivery ledger enforces 80 non-cancelled slots for the whole Monday
+edition across retries and concurrent runs. Confirm the provider's current
+quota still leaves sufficient headroom before enabling the schedule.
 
-1. Generate keys once, locally: `npx web-push generate-vapid-keys`.
-2. GitHub → **Variables**: `PUSH_ENABLED` = `true`, `VAPID_PUBLIC_KEY`,
-   `VAPID_SUBJECT` = `mailto:hello@zodiacs.org`;
-   **Secrets**: `VAPID_PRIVATE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`.
-3. Vercel env: `PUSH_ENABLED=1`, `PUBLIC_WEB_PUSH_ENABLED=1`, plus the
-   same VAPID pair (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`). Redeploy.
-4. The **Daily Push** workflow has a dry-run dispatch — use it first.
+### Owner-only prerequisites
 
-### 4f. Community features (flags only, no accounts needed)
+Do not perform these without separate owner authorization:
 
-When ready, each is one Vercel env var + redeploy:
-`PUBLIC_COMPAT_INVITES_ENABLED=1` (compatibility invites),
-`PUBLIC_ZODIAC_GAMES_ENABLED=1` (the seasonal Race). Leave the Registry
-flags (`PUBLIC_REGISTRY_TRADE_ENABLED`, `PUBLIC_REGISTRY_EXCHANGE_ENABLED`,
-`PUBLIC_REGISTRY_COLLECTION_ENABLED`) off unless you deliberately decide
-otherwise — the audit's recommendation is to keep the swap venue dark.
+1. Apply the narrowly scoped weekly-unsubscribe capability migration to the
+   production Supabase project. No live send may run before it exists.
+2. Create the `weekly-digest-production` GitHub environment, restrict it to the
+   repository's default branch, and store exactly these three environment
+   secrets there: `RESEND_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, and a dedicated
+   random `EMAIL_CONFIRM_SECRET` of at least 32 bytes. Do not leave repository-
+   or organization-scoped copies readable by untrusted branches.
+3. In GitHub Actions variables, verify `PUBLIC_SUPABASE_URL` and
+   `DAILY_EMAIL_POSTAL_ADDRESS`; optionally set `DIGEST_FROM_EMAIL` and
+   `DIGEST_BASE_URL`. The postal address must be the exact owner-approved value
+   from §1b.
+4. In Vercel, the unsubscribe function may use only the existing public
+   `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` (the legacy public
+   anon-key fallback is supported). Do not put a service-role key or weekly
+   envelope-sealing secret in Vercel.
 
-## 5. The legal identity decision (the one only you can make — and it gates §4c)
+`DIGEST_UNSUBSCRIBE_SECRET` is obsolete and must not be added. Secret values
+must move through dashboard secret forms, never chat or command-line arguments.
 
-`/terms/` currently says, honestly, that the operator's legal identity and
-governing jurisdiction are unconfirmed — while the domain collects EU
-emails in five languages and hosts a token registry. Two realistic paths:
+### Safe enable order
 
-- **Operate as yourself.** Put your legal name (or a registered trade
-  name), country, and a mailing address in the Terms and Privacy pages.
-  Free, honest, fine for the free astrology product — but your personal
-  liability sits behind the wing's token content.
-- **Form a company** (a US single-member LLC or your country's
-  equivalent; typically US$50–500/year). Recommended before the swap
-  venue or the paid app ever go live: it gives the site a named data
-  controller for GDPR purposes and a liability shield for the wing.
+1. Confirm `DIGEST_ENABLED` is unset/false.
+2. Dispatch **Weekly Digest** with `dry_run=true` and `limit=1`. The fixture body
+   may appear; any real-recipient selection must show only aggregate counts.
+   Addresses, chart names, personalized bodies, and unsubscribe capabilities
+   must remain absent from the public Actions log.
+3. Confirm the intended owner-controlled account is the only opted-in canary.
+   With explicit approval for one live email, dispatch `dry_run=false` and
+   `limit=1`.
+4. Check the received message's sender, content, postal footer, and unsubscribe
+   link. A GET of that link must be read-only. Submit the page's explicit POST,
+   then verify the profile preference became false, the delivery receipt stays
+   `sent`, and direct public access to both capability tables remains denied.
+5. Only after steps 1–4 pass may the owner explicitly authorize setting
+   `DIGEST_ENABLED=true`. Verify the first scheduled Monday delivery and keep
+   the hard ceiling at 80 unless a separately reviewed migration changes it.
 
-Whichever you choose, the same three edits follow (any Claude session can
-make them once you say the words): the operator paragraph in
-`src/pages/terms/index.astro`, the contact/controller line in the privacy
-pages, and the `DAILY_EMAIL_POSTAL_ADDRESS` variable from §4b. A PO box
-or registered-agent address satisfies the email-footer requirement
-without publishing a home address.
+Only an exact recipient-specific rejection is recorded as a terminal `failed`
+slot. Rate limits, provider-wide 4xx responses, 5xx responses, transport
+failures, concurrent-idempotency responses, and unknown or unreadable responses
+leave the delivery fenced for exact replay or reconciliation because the
+provider may have accepted it. Do not reset or rerender that receipt; follow the
+recovery and reconciliation procedure in `docs/WEEKLY-DIGEST.md`.
 
-One mechanical note for whoever makes those edits: the localized privacy
-pages sit inside the Phase 1 protected scope, so the change must ship
-with a fresh `.github/phase1-scope-allowance.json` — pinned to the PR's
-base commit and listing exactly the protected files it touches (the
-scope-guard README in `scripts/phase1-scope-guard.mjs` describes the
-shape; the previous allowance was spent when PR #291 merged and cannot
-be reused). This edit is owner-directed by this runbook, which is the
-authorization the allowance file records.
+If any step fails, leave `DIGEST_ENABLED` unset/false and stop. Do not compensate
+by adding a broader Vercel database key.
 
-## 6. Verification checklist
+## 5. Standalone public email capture: keep off
 
-- [ ] Database Backup run is green, the artifact decrypts locally, and
-      one restore drill into a throwaway project has been done
-- [ ] Rate-limit rule live: run
-      `curl -X POST -H "Origin: https://zodiacs.org" https://zodiacs.org/api/email/subscribe`
-      twelve times quickly — the last ones return **429** with
-      `Retry-After`. (Without the `Origin` header every attempt returns
-      403 from the same-origin guard, which proves nothing about the
-      rule.)
-- [ ] Digest dry-run log looks right; limit-1 canary email arrives with
-      the postal footer; first scheduled Monday send arrives
-- [ ] Signup box renders on the homepage footer and the confirm email lands
-- [ ] Terms no longer contains the "pending disclosure" paragraph
-- [ ] (Only if password auth ever ships / org is on Supabase Pro) the
-      leaked-password WARN in the security advisor is cleared
+The public capture promises a standalone weekly forecast, but this repository
+does not contain a Segment-based weekly sender or complete provider-side
+unsubscribe/suppression lifecycle. Provider credentials alone therefore must
+not render the capture. Keep `STANDALONE_WEEKLY_EMAIL_ENABLED` unset/false.
+
+Resend's current dashboard language is **Contacts → Segments**, not Audiences.
+For Resend, a future capture release also requires a valid provider setup and
+`RESEND_SEGMENT_ID`, but those values do not make the product complete and this
+runbook does not authorize setting them.
+
+A later, separately authorized release may enable capture only after all of the
+following exist and pass with an owner-controlled address:
+
+1. the legal identity from §1b is already deployed;
+2. a real Segment-based sender, Resend Broadcast, or Resend Automation sends
+   the promised weekly message with a working unsubscribe lifecycle;
+3. submitting the capture sends a double-opt-in confirmation but does not add
+   Segment membership;
+4. confirmation GET remains scanner-safe and does not add membership;
+5. the user explicitly submits the confirmation POST, after which — and only
+   after which — Contacts → Segment membership appears;
+6. a limit-one weekly canary is delivered;
+7. unsubscribe removes or suppresses the contact as designed; and
+8. a subsequent scheduled test proves the unsubscribed address is not sent to.
+
+Until that lifecycle exists, revise neither the gate nor the public promise.
+
+## 6. Explicitly outside this remediation
+
+Do not add setup or launch steps for these systems here:
+
+- daily email beyond the frozen test cohort;
+- web push;
+- compatibility-invite or Zodiac Games launch/rollback;
+- Registry trade, exchange, collection/Aura, community, push, or daily-email
+  feature-flag changes; or
+- changes to production DNS, Resend, Supabase, Vercel, GitHub secrets, or live
+  data without the separate owner authorization described above.
+
+These are multi-prerequisite systems, not one-flag switches. A later release
+must use its feature-specific canary and rollback contract.
+
+## 7. Owner acceptance checklist
+
+- [ ] The owner has made — or explicitly deferred — the Vercel paid-plan
+      decision; no purchase was made by this remediation.
+- [ ] The owner has supplied and authorized all five legal facts, or legal
+      identity remains pending and public standalone capture remains off.
+- [ ] A Database Backup run is green, the artifact decrypts locally, and a full
+      fresh-project restore drill satisfies every acceptance check in §2.
+- [ ] Published Firewall rules visibly return 429 and `Retry-After: 60` under
+      the header-printing check in §3.
+- [ ] The digest fixture/redacted dry-run, one-recipient live canary, and
+      scanner-safe GET plus explicit unsubscribe POST all pass before
+      `DIGEST_ENABLED` is set true.
+- [ ] Standalone public capture remains hidden until its Segment sender,
+      double-opt-in, and unsubscribe/suppression lifecycle pass end to end.
+- [ ] Terminal, Registry Collection, compatibility invitations, Zodiac Games,
+      the daily-email cohort, web push, and all Registry/community flags retain
+      their pre-remediation production state.
+- [ ] No secret, database URL, passphrase, private key, personalized email body,
+      chart name, or unsubscribe capability appears in logs, chat, commits,
+      screenshots, commands, or artifacts.

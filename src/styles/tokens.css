@@ -295,6 +295,12 @@
   --font-mono: ui-monospace, Menlo, Consolas, monospace;
 }
 
+:root[data-local-chrome-typography] {
+  --font-nav-serif: 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
+  --font-nav-sans: 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
+  --font-nav-mono: ui-monospace, Menlo, Consolas, monospace;
+}
+
 html:lang(ru) {
   --font-serif: 'EB Garamond Cyrillic', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', Georgia, serif;
   --font-sans: 'Golos Text', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, sans-serif;
@@ -304,4 +310,13 @@ html:lang(ru) {
   --font-nav-serif: 'EB Garamond Cyrillic', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', Georgia, serif;
   --font-nav-sans: 'Golos Text', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, sans-serif;
   --font-nav-mono: 'JetBrains Mono Cyrillic', ui-monospace, Menlo, Consolas, monospace;
+}
+
+/* The Russian calculator's first useful screen is latency-sensitive. Its
+   paired route opt-ins use the local content tier here and the local chrome
+   tier above, preventing cold Cyrillic font swaps from resetting LCP or CLS. */
+html:lang(ru)[data-local-typography] {
+  --font-serif: 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', Georgia, serif;
+  --font-sans: 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, Consolas, monospace;
 }

@@ -1,16 +1,22 @@
-import { createHmac, timingSafeEqual } from 'node:crypto';
+import { createHash, randomBytes } from 'node:crypto';
 
-const SIGNING_CONTEXT = 'zodiacs-weekly-digest-unsubscribe';
+const CAPABILITY = /^[A-Za-z0-9_-]{43}$/u;
 
-export function signDigestUnsubscribe(userId: string, secret: string): string {
-  return createHmac('sha256', secret)
-    .update(`${SIGNING_CONTEXT}:${userId}`)
-    .digest('base64url');
+/**
+ * A random bearer capability, stored only as a SHA-256 digest in Supabase.
+ * The raw value appears only in the recipient's unsubscribe URL.
+ */
+export function createDigestUnsubscribeCapability(): string {
+  return randomBytes(32).toString('base64url');
 }
 
-export function verifyDigestUnsubscribe(userId: string, signature: string, secret: string): boolean {
-  const expected = signDigestUnsubscribe(userId, secret);
-  const given = Buffer.from(signature, 'base64url');
-  const target = Buffer.from(expected, 'base64url');
-  return given.length === target.length && timingSafeEqual(given, target);
+export function isDigestUnsubscribeCapability(value: string): boolean {
+  return CAPABILITY.test(value);
+}
+
+export function hashDigestUnsubscribeCapability(capability: string): string {
+  if (!isDigestUnsubscribeCapability(capability)) {
+    throw new Error('Invalid weekly digest unsubscribe capability.');
+  }
+  return createHash('sha256').update(capability).digest('hex');
 }

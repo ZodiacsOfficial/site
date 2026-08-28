@@ -227,6 +227,231 @@ await withPreview({ port: 4418 }, async (baseURL) => {
     check(chartErrors.length === 0, `Russian chart browser errors: ${chartErrors.join(' | ')}`);
     await chartContext.close();
 
+    const firstPaintContext = await browser.newContext({ viewport: { width: 360, height: 800 } });
+    const firstPaint = await firstPaintContext.newPage();
+    await firstPaint.addInitScript(() => {
+      window.__zdxLayoutShift = 0;
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) window.__zdxLayoutShift += entry.value;
+        }
+      }).observe({ type: 'layout-shift', buffered: true });
+    });
+    await firstPaint.goto(`${baseURL}/ru/birth-chart/`, { waitUntil: 'domcontentloaded' });
+    const initialGeometry = await firstPaint.evaluate(() => {
+      const rect = (selector) => {
+        const bounds = document.querySelector(selector)?.getBoundingClientRect();
+        return bounds && [bounds.x, bounds.y, bounds.width, bounds.height]
+          .map((value) => Math.round(value * 100) / 100);
+      };
+      return {
+        toolStyles: Array.from(document.styleSheets)
+          .filter((sheet) => /\/(?:calculator|explorer|ChartCalculator)\..*\.css$/u.test(sheet.href ?? '')).length,
+        core: rect('.calc__core'),
+        fields: rect('.calc__fields'),
+        date: rect('#birth-date'),
+        submit: rect('.calc__submit'),
+      };
+    });
+    check(initialGeometry.toolStyles === 0, `Russian calculator loaded ${initialGeometry.toolStyles} deferred styles before first paint`);
+    await firstPaint.waitForFunction(() => Array.from(document.styleSheets)
+      .filter((sheet) => /\/(?:calculator|explorer|ChartCalculator)\..*\.css$/u.test(sheet.href ?? '')).length === 3);
+    await firstPaint.evaluate(() => new Promise((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    }));
+    const settledGeometry = await firstPaint.evaluate(() => {
+      const rect = (selector) => {
+        const bounds = document.querySelector(selector)?.getBoundingClientRect();
+        return bounds && [bounds.x, bounds.y, bounds.width, bounds.height]
+          .map((value) => Math.round(value * 100) / 100);
+      };
+      return {
+        core: rect('.calc__core'),
+        fields: rect('.calc__fields'),
+        date: rect('#birth-date'),
+        submit: rect('.calc__submit'),
+        layoutShift: window.__zdxLayoutShift,
+      };
+    });
+    for (const target of ['core', 'fields', 'date', 'submit']) {
+      check(
+        JSON.stringify(initialGeometry[target]) === JSON.stringify(settledGeometry[target]),
+        `Russian calculator ${target} moved when deferred styles loaded: ${JSON.stringify(initialGeometry[target])} -> ${JSON.stringify(settledGeometry[target])}`,
+      );
+    }
+    check(settledGeometry.layoutShift === 0, `Russian calculator deferred styles caused CLS ${settledGeometry.layoutShift}`);
+    await firstPaintContext.close();
+
+    const criticalInteractionContext = await browser.newContext({ viewport: { width: 360, height: 800 } });
+    const criticalInteraction = await criticalInteractionContext.newPage();
+    await criticalInteraction.route(
+      /\/_astro\/(?:calculator|explorer|ChartCalculator)\..*\.css$/u,
+      async (route) => {
+        await new Promise((resolve) => setTimeout(resolve, 3_000));
+        await route.continue();
+      },
+    );
+    await criticalInteraction.goto(`${baseURL}/ru/birth-chart/`, { waitUntil: 'domcontentloaded' });
+    await criticalInteraction.locator('#birth-date').focus();
+    const focusState = await criticalInteraction.locator('#birth-date').evaluate((control) => ({
+      focusVisible: control.matches(':focus-visible'),
+      outlineStyle: getComputedStyle(control).outlineStyle,
+      outlineWidth: getComputedStyle(control).outlineWidth,
+    }));
+    check(focusState.focusVisible, 'Russian calculator date input does not receive :focus-visible');
+    check(
+      focusState.outlineStyle !== 'none' && focusState.outlineWidth === '2px',
+      `Russian calculator keyboard focus ring is ${focusState.outlineStyle} ${focusState.outlineWidth}`,
+    );
+    await criticalInteraction.locator('#place').fill('New York');
+    const criticalPlaceList = criticalInteraction.locator('#place-list');
+    await criticalPlaceList.waitFor({ timeout: 10_000 });
+    const criticalPlaceState = await criticalPlaceList.evaluate((list) => ({
+      position: getComputedStyle(list).position,
+      listStyle: getComputedStyle(list).listStyleType,
+      padding: getComputedStyle(list).padding,
+      background: getComputedStyle(list).backgroundColor,
+      toolStyles: Array.from(document.styleSheets)
+        .filter((sheet) => /\/(?:calculator|explorer|ChartCalculator)\..*\.css$/u.test(sheet.href ?? '')).length,
+    }));
+    check(criticalPlaceState.toolStyles === 0, 'Russian PlaceSearch test did not hold the deferred styles in flight');
+    check(criticalPlaceState.position === 'absolute', `Russian PlaceSearch position=${criticalPlaceState.position} before deferred CSS`);
+    check(criticalPlaceState.listStyle === 'none', `Russian PlaceSearch list-style=${criticalPlaceState.listStyle} before deferred CSS`);
+    check(criticalPlaceState.padding === '6px', `Russian PlaceSearch padding=${criticalPlaceState.padding} before deferred CSS`);
+    check(
+      criticalPlaceState.background !== 'rgba(0, 0, 0, 0)',
+      'Russian PlaceSearch background is transparent before deferred CSS',
+    );
+    await criticalInteractionContext.close();
+
+    const hydrationRaceContext = await browser.newContext({ viewport: { width: 360, height: 800 } });
+    const hydrationRace = await hydrationRaceContext.newPage();
+    await hydrationRace.route(/\/_astro\/ChartCalculator\..*\.js$/u, async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      await route.continue();
+    });
+    await hydrationRace.goto(`${baseURL}/ru/birth-chart/`, { waitUntil: 'domcontentloaded' });
+    await hydrationRace.locator('#birth-date').fill('2000-01-02');
+    await hydrationRace.locator('astro-island:not([ssr])').waitFor({ timeout: 10_000 });
+    check(
+      await hydrationRace.locator('#birth-date').inputValue() === '2000-01-02',
+      'Russian calculator hydration erased a value entered while its module was in flight',
+    );
+
+    await hydrationRace.goto(`${baseURL}/ru/birth-chart/`, { waitUntil: 'domcontentloaded' });
+    await hydrationRace.evaluate(() => {
+      window.__zdxLateHydrationEdit = false;
+      document.querySelector('astro-island')?.addEventListener('astro:hydrate', () => {
+        const input = document.querySelector('#birth-date');
+        input.value = '2001-02-03';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        window.__zdxLateHydrationEdit = true;
+      }, { once: true });
+    });
+    await hydrationRace.locator('#birth-date').fill('2000-01-02');
+    await hydrationRace.waitForFunction(() => window.__zdxLateHydrationEdit === true);
+    await hydrationRace.waitForTimeout(200);
+    check(
+      await hydrationRace.locator('#birth-date').inputValue() === '2001-02-03',
+      'Russian calculator hydration restore overwrote a newer edit made during takeover',
+    );
+    await hydrationRaceContext.close();
+
+    const submitGuardContext = await browser.newContext({ viewport: { width: 360, height: 800 } });
+    const submitGuard = await submitGuardContext.newPage();
+    const submitGuardErrors = [];
+    let submitGuardDocuments = 0;
+    submitGuard.on('pageerror', (error) => submitGuardErrors.push(error.message));
+    submitGuard.on('request', (request) => {
+      if (request.resourceType() === 'document') submitGuardDocuments += 1;
+    });
+    await submitGuard.addInitScript(() => {
+      // A hidden tab may suspend requestAnimationFrame forever. Keep it inert
+      // here so the directive's timer barrier is the only way to replay submit.
+      let frame = 0;
+      window.requestAnimationFrame = () => { frame += 1; return frame; };
+      window.cancelAnimationFrame = () => {};
+    });
+    await submitGuard.route(/\/_astro\/ChartCalculator\..*\.js$/u, async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      await route.continue();
+    });
+    await submitGuard.goto(`${baseURL}/ru/birth-chart/`, { waitUntil: 'domcontentloaded' });
+    await submitGuard.locator('form.calc__form button[type="submit"]').click();
+    await submitGuard.locator('#birth-date[aria-invalid="true"]').waitFor({ timeout: 10_000 });
+    check(
+      submitGuardDocuments === 1,
+      `Russian calculator pre-hydration submit navigated ${submitGuardDocuments} documents`,
+    );
+    check(
+      new URL(submitGuard.url()).search === '',
+      `Russian calculator pre-hydration submit changed URL to ${submitGuard.url()}`,
+    );
+    check(
+      submitGuardErrors.length === 0,
+      `Russian calculator submit guard browser errors: ${submitGuardErrors.join(' | ')}`,
+    );
+
+    const falseEagerHash = await submitGuard.evaluate(async () => {
+      history.replaceState(null, '', '#p=must-not-eagerly-hydrate');
+      const host = document.createElement('div');
+      document.body.append(host);
+      let loads = 0;
+      window.Astro.interaction(
+        async () => {
+          loads += 1;
+          return async () => {};
+        },
+        { value: { eagerHash: false } },
+        host,
+      );
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      host.remove();
+      return loads;
+    });
+    check(falseEagerHash === 0, `client:interaction treated eagerHash:false as eager (${falseEagerHash} loads)`);
+    await submitGuardContext.close();
+
+    const retryContext = await browser.newContext({ viewport: { width: 360, height: 800 } });
+    const retry = await retryContext.newPage();
+    await retry.goto(`${baseURL}/ru/birth-chart/`, { waitUntil: 'domcontentloaded' });
+    const retryReceipt = await retry.evaluate(async () => {
+      const host = document.createElement('div');
+      const input = document.createElement('input');
+      host.append(input);
+      document.body.append(host);
+      let attempts = 0;
+      let hydrations = 0;
+      let unhandled = 0;
+      const onUnhandled = (event) => {
+        unhandled += 1;
+        event.preventDefault();
+      };
+      window.addEventListener('unhandledrejection', onUnhandled);
+
+      window.Astro.interaction(
+        async () => {
+          attempts += 1;
+          if (attempts === 1) throw new Error('expected interaction load rejection');
+          return async () => { hydrations += 1; };
+        },
+        { value: false },
+        host,
+      );
+      input.focus();
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      input.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      window.removeEventListener('unhandledrejection', onUnhandled);
+      host.remove();
+      return { attempts, hydrations, unhandled };
+    });
+    check(retryReceipt.attempts === 2, `client:interaction rejected-load attempts=${retryReceipt.attempts}`);
+    check(retryReceipt.hydrations === 1, `client:interaction retry hydrations=${retryReceipt.hydrations}`);
+    check(retryReceipt.unhandled === 0, `client:interaction leaked ${retryReceipt.unhandled} unhandled rejection(s)`);
+    await retryContext.close();
+
     const fontPage = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     await fontPage.goto(`${baseURL}/ru/`, { waitUntil: 'networkidle' });
     const fonts = await fontPage.evaluate(async () => {

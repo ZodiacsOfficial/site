@@ -2,6 +2,7 @@ export const EMAIL_PROVIDERS = ['resend', 'buttondown', 'loops'] as const;
 export type EmailProviderName = typeof EMAIL_PROVIDERS[number];
 
 type Environment = Record<string, unknown>;
+const RESEND_SEGMENT_ID = /^[A-Za-z0-9_-]{6,128}$/;
 
 function value(env: Environment, key: string): string {
   const raw = env[key];
@@ -59,6 +60,33 @@ export function hasEmailCaptureProvider(env: Environment): boolean {
   }
 }
 
+/**
+ * The legacy public capture promises a standalone weekly email. Provider
+ * credentials alone are not proof that a sender and unsubscribe lifecycle
+ * exist, so the public surface needs a separate, explicit release gate.
+ */
+export function hasStandaloneWeeklyEmailCapture(env: Environment): boolean {
+  if (value(env, 'STANDALONE_WEEKLY_EMAIL_ENABLED') !== '1'
+    || !hasEmailCaptureProvider(env)) return false;
+  if (emailProviderName(env) !== 'resend') return true;
+
+  const weeklySegment = value(env, 'RESEND_SEGMENT_ID');
+  const dailySegment = value(env, 'RESEND_DAILY_SEGMENT_ID');
+  return RESEND_SEGMENT_ID.test(weeklySegment)
+    && (!dailySegment
+      || (RESEND_SEGMENT_ID.test(dailySegment) && dailySegment !== weeklySegment));
+}
+
 export function environmentValue(env: Environment, key: string): string {
   return value(env, key);
+}
+
+/**
+ * Keep confirmation-token creation and verification on the same normalized
+ * secret bytes. Secret stores commonly add a trailing newline when values are
+ * copied from files; reading this key anywhere else risks issuing links that
+ * the confirmation endpoint cannot open.
+ */
+export function emailConfirmationSecret(env: Environment): string {
+  return value(env, 'EMAIL_CONFIRM_SECRET');
 }

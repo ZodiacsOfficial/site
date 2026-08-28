@@ -225,8 +225,16 @@ describe('Phase 1 layout and motion contract', () => {
     ]);
     expect(base).toContain('data-stable-typography={props.stableTypography');
     expect(base).toContain('data-local-typography={props.localTypography');
+    expect(base).toContain('data-stable-chrome-typography={props.stableChromeTypography');
     expect(today).toMatch(/<Base\s+[\s\S]*?localTypography/u);
+    expect(today).toMatch(/<Base\s+[\s\S]*?stableChromeTypography/u);
+    expect(today).toMatch(/<Base\s+[\s\S]*?minimalNavFontPreloads/u);
     expect(today).toMatch(/<TodayBrief\s+[\s\S]*?client:idle/u);
+    const todayPageRule = today.match(/\.today-page\s*\{([^}]*)\}/u)?.[1] ?? '';
+    expect(todayPageRule).toContain(
+      "font-family: Arial, 'Liberation Sans', system-ui, -apple-system, sans-serif;",
+    );
+    expect(todayPageRule).not.toContain('Fallback');
     for (const phase1Surface of [today, hub, program]) {
       expect(phase1Surface).toMatch(/<Base\s+[\s\S]*?stableTypography/u);
     }
@@ -249,6 +257,9 @@ describe('Phase 1 layout and motion contract', () => {
     expect(base).toContain('href="/fonts/instrument-sans-latin-wght-normal.woff2"');
     expect(base).toContain('href="/fonts/eb-garamond-latin-400-normal.woff2"');
     expect(base).toContain('href="/fonts/eb-garamond-latin-500-normal.woff2"');
+    expect(base).toContain('href="/fonts/jetbrains-mono-latin-wght-normal.woff2"');
+    expect(base).toContain("media={props.minimalNavFontPreloads ? '(min-width: 782px)' : undefined}");
+    expect(base).toContain('media="(min-width: 782px)"');
     expect(routeTypography).not.toContain('--font-nav-');
     expect(nav).toMatch(/\.nav-wrap\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);
     expect(nav).toMatch(/\.mobile-menu\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);

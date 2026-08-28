@@ -97,6 +97,20 @@ function categoryScoreWithout(lhr, categoryId, excludedAuditIds) {
   return earned / possible;
 }
 
+function incompleteRunReason(lhr) {
+  if (lhr.runtimeError?.code) {
+    return `${lhr.runtimeError.code}: ${lhr.runtimeError.message ?? 'unknown Lighthouse runtime error'}`;
+  }
+  const missing = [];
+  for (const categoryId of ['performance', 'accessibility', 'seo']) {
+    if (!Number.isFinite(lhr.categories[categoryId]?.score)) missing.push(`${categoryId} score`);
+  }
+  for (const auditId of ['largest-contentful-paint', 'cumulative-layout-shift', 'total-blocking-time']) {
+    if (!Number.isFinite(lhr.audits[auditId]?.numericValue)) missing.push(`${auditId} value`);
+  }
+  return missing.length > 0 ? `missing ${missing.join(', ')}` : null;
+}
+
 function gateSummary(results) {
   return {
     // The brief requires three passing runs, so report and gate the weakest
@@ -128,27 +142,43 @@ await withPreview({ port: Number(process.env.LIGHTHOUSE_PORT ?? 4328) }, async (
         // Each sample gets a fresh browser process. Reusing one process made
         // later samples inherit renderer/benchmark drift from earlier audits,
         // which obscured cold-load regressions instead of measuring them.
-        const chrome = await chromeLauncher.launch({
-          chromePath,
-          chromeFlags: [
-            '--headless=new',
-            '--disable-gpu',
-            ...STABLE_CHROMIUM_ARGS,
-          ],
-          logLevel: 'silent',
-        });
         let result;
-        try {
-          result = await lighthouse(url, {
-            port: chrome.port,
-            logLevel: 'error',
-            output: 'json',
-            onlyCategories: ['performance', 'accessibility', 'seo'],
-            maxWaitForLoad: 45_000,
-            disableStorageReset: false,
-          }, mobileConfig);
-        } finally {
-          await chrome.kill();
+        for (let attempt = 1; attempt <= 2 && !result; attempt += 1) {
+          const chrome = await chromeLauncher.launch({
+            chromePath,
+            chromeFlags: [
+              '--headless=new',
+              '--disable-gpu',
+              ...STABLE_CHROMIUM_ARGS,
+            ],
+            logLevel: 'silent',
+          });
+          try {
+            const candidate = await lighthouse(url, {
+              port: chrome.port,
+              logLevel: 'error',
+              output: 'json',
+              onlyCategories: ['performance', 'accessibility', 'seo'],
+              maxWaitForLoad: 45_000,
+              disableStorageReset: false,
+            }, mobileConfig);
+            const incompleteReason = incompleteRunReason(candidate.lhr);
+            if (incompleteReason) {
+              await writeFile(
+                resolve(artifactRoot, `${route.name}-${index + 1}-attempt-${attempt}-invalid.json`),
+                JSON.stringify(candidate.lhr, null, 2),
+              );
+              throw new Error(`incomplete Lighthouse result (${incompleteReason})`);
+            }
+            result = candidate;
+          } catch (error) {
+            if (attempt === 2) throw error;
+            console.warn(
+              `     ↳ Lighthouse runtime failed for ${route.path} sample ${index + 1} (${error.message}); retrying once in a fresh browser.`,
+            );
+          } finally {
+            await chrome.kill();
+          }
         }
         if (!result) throw new Error(`Lighthouse returned no result for ${url}.`);
 
