@@ -159,8 +159,6 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
       </p>
     </EvidenceDisclosure>
   </section>
-</Base>
-
 <style is:global>
   .today-page { max-width: 780px; }
   .today-hero { max-width: 60ch; margin-bottom: clamp(24px, 5vw, 40px); }
@@ -562,7 +560,7 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
 </style>
 
 {livingChartEnabled && (
-<style is:inline>
+<style slot="head" is:inline>
   /* Capture styles stay flag-scoped so flag-off Today bytes remain unchanged. */
   .living-moment-slot {
     display: grid;
@@ -813,3 +811,4 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
   }
 </style>
 )}
+</Base>

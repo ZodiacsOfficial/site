@@ -51,6 +51,8 @@ interface Props {
   localTypography?: boolean;
   /** Keep shared chrome on the local tier and omit font preloads for a cold-load gate. */
   localChromeTypography?: boolean;
+  /** Preload only the mobile lockup serif; CSS can discover the non-LCP chrome faces later. */
+  minimalNavFontPreloads?: boolean;
   /** UTC edition rendered by a daily surface; relative wording is enabled only while current. */
   editionDate?: string;
   /** Suppress third-party runtime scripts on pages handling private account data. */
@@ -239,13 +241,15 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
       </>
     ) : (
       !props.localChromeTypography && <>
-        <link
-          rel="preload"
-          href="/fonts/instrument-sans-latin-wght-normal.woff2"
-          as="font"
-          type="font/woff2"
-          crossorigin
-        />
+        {!props.minimalNavFontPreloads && (
+          <link
+            rel="preload"
+            href="/fonts/instrument-sans-latin-wght-normal.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+          />
+        )}
         <link
           rel="preload"
           href="/fonts/eb-garamond-latin-400-normal.woff2"
@@ -253,13 +257,15 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
           type="font/woff2"
           crossorigin
         />
-        <link
-          rel="preload"
-          href="/fonts/eb-garamond-latin-500-normal.woff2"
-          as="font"
-          type="font/woff2"
-          crossorigin
-        />
+        {!props.minimalNavFontPreloads && (
+          <link
+            rel="preload"
+            href="/fonts/eb-garamond-latin-500-normal.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+          />
+        )}
       </>
     )}
     <!-- The mono face is decorative metadata, never the LCP typeface. Let CSS

@@ -56,13 +56,14 @@ describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
 
     const horoscopeHub = readFileSync(join(distRoot, 'horoscopes', 'index.html'), 'utf8');
     expect(horoscopeHub).toContain('data-local-typography');
-    expect(horoscopeHub).toContain('data-local-chrome-typography');
-    expect(horoscopeHub).not.toMatch(/<link\b[^>]*\brel=["']preload["'][^>]*\/fonts\/(?:instrument-sans|eb-garamond-latin)/i);
+    expect(horoscopeHub).not.toContain('data-local-chrome-typography');
+    expect(horoscopeHub).toMatch(/<link\b[^>]*\brel=["']preload["'][^>]*\/fonts\/(?:instrument-sans|eb-garamond-latin)/i);
 
     const peopleDirectory = readFileSync(join(distRoot, 'people', 'index.html'), 'utf8');
     expect(peopleDirectory).toContain('data-local-typography');
-    expect(peopleDirectory).toContain('data-local-chrome-typography');
-    expect(peopleDirectory).not.toMatch(/<link\b[^>]*\brel=["']preload["'][^>]*\/fonts\/(?:instrument-sans|eb-garamond-latin)/i);
+    expect(peopleDirectory).not.toContain('data-local-chrome-typography');
+    expect(peopleDirectory).toMatch(/<link\b[^>]*\brel=["']preload["'][^>]*\/fonts\/eb-garamond-latin-400-normal\.woff2/i);
+    expect(peopleDirectory).not.toMatch(/<link\b[^>]*\brel=["']preload["'][^>]*\/fonts\/(?:instrument-sans|eb-garamond-latin-500)/i);
   });
 
   it('installs one locale catalog before every island that uses shared UI copy', () => {
