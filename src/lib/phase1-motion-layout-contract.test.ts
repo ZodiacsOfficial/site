@@ -225,7 +225,10 @@ describe('Phase 1 layout and motion contract', () => {
     ]);
     expect(base).toContain('data-stable-typography={props.stableTypography');
     expect(base).toContain('data-local-typography={props.localTypography');
+    expect(base).toContain('data-stable-chrome-typography={props.stableChromeTypography');
     expect(today).toMatch(/<Base\s+[\s\S]*?localTypography/u);
+    expect(today).toMatch(/<Base\s+[\s\S]*?stableChromeTypography/u);
+    expect(today).toMatch(/<Base\s+[\s\S]*?minimalNavFontPreloads/u);
     expect(today).toMatch(/<TodayBrief\s+[\s\S]*?client:idle/u);
     for (const phase1Surface of [today, hub, program]) {
       expect(phase1Surface).toMatch(/<Base\s+[\s\S]*?stableTypography/u);

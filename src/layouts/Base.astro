@@ -49,6 +49,8 @@ interface Props {
   stableTypography?: boolean;
   /** Use metric-matched local faces for route content. */
   localTypography?: boolean;
+  /** Use optional aliases for shared chrome when nonessential font preloads are omitted. */
+  stableChromeTypography?: boolean;
   /** Keep shared chrome on the local tier and omit font preloads for a cold-load gate. */
   localChromeTypography?: boolean;
   /** Preload only the mobile lockup serif; CSS can discover the non-LCP chrome faces later. */
@@ -88,6 +90,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
   data-inline-critical-css={props.inlineCriticalCss ? '' : undefined}
   data-stable-typography={props.stableTypography ? '' : undefined}
   data-local-typography={props.localTypography ? '' : undefined}
+  data-stable-chrome-typography={props.stableChromeTypography ? '' : undefined}
   data-local-chrome-typography={props.localChromeTypography ? '' : undefined}
   data-daily-email-lifecycle={dailyEmailLifecycleEnabled ? '' : undefined}
   data-account-sync-v2={accountSyncV2Enabled ? '' : undefined}
