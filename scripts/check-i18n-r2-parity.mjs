@@ -37,6 +37,10 @@ function normalizeApprovedRussianDiscovery(html) {
     .replace(
       /<span\b[^>]*class=["']footer__language-option["'][^>]*><span\b[^>]*class=["']footer__language-separator["'][^>]*>·<\/span><a\b[^>]*\bhreflang=["']ru["'][^>]*>Русский<\/a><\/span>/giu,
       '',
+    )
+    .replace(
+      /<a\b(?=[^>]*class=["'][^"']*\bzfooter__locale\b[^"']*["'])(?=[^>]*\bhreflang=["']ru["'])[^>]*>Русский<\/a>/giu,
+      '',
     );
 }
 

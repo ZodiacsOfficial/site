@@ -185,7 +185,8 @@ const { code } = Babel.transform(source, {
   comments: false,
 });
 
-const banner = '/* Generated from src/app.jsx by scripts/build-app.mjs — do not edit directly. */\n';
+const sourceSha256 = createHash('sha256').update(source).digest('hex');
+const banner = `/* Generated from src/app.jsx by scripts/build-app.mjs — source-sha256:${sourceSha256} — do not edit directly. */\n`;
 const registryMeta = [
   `const REGISTRY_ESTABLISHED=${JSON.stringify(REGISTRY_ESTABLISHED)};`,
   `const REGISTRY_ESTABLISHMENT_PROVENANCE_URL=${JSON.stringify(REGISTRY_ESTABLISHMENT_PROVENANCE_URL)};`,
@@ -218,7 +219,10 @@ const configuredTerminal = synchronizeTerminalStyles(
   configuredAstrofolio,
   injectRegistryExchangeLanding(terminalHtml, process.env).output,
 );
-const configuredThesis = injectRegistryAuraThesis(thesisHtml, process.env).output;
+const configuredThesis = injectRegistryAuraThesis(thesisHtml, process.env).output.replace(
+  /(<p class="zfooter__copyright">© )\d{4}( Zodiacs\.org<\/p>)/u,
+  `$1${new Date().getUTCFullYear()}$2`,
+);
 
 await mkdir(VENDOR_DIR, { recursive: true });
 await Promise.all([

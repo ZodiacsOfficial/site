@@ -12,6 +12,7 @@
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/share.png" />
   <meta property="og:url" content="https://zodiacs.org/sdk/examples/simastry-aura/" />
   <link rel="stylesheet" href="../../../assets/discovery.css" />
+  <link rel="stylesheet" href="/assets/site-footer.css" />
   <style>
     .assistant-link {
       appearance: none; border: 0; padding: 0; background: transparent;
@@ -159,11 +160,21 @@ const aiAstrologistContext = {
       <a class="link" href="/sdk/#core-api"><strong>Ownership API</strong><span>Read-only SDK surface</span></a>
     </section>
 
-    <footer>
-      <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Guide</button>
-      · Official registry. Public reads. No custody. No signing. No transactions.
-    </footer>
   </main>
+
+    <footer class="zfooter zfooter--compact">
+      <span>Zodiacs.org · SDK example</span>
+      <button class="zfooter__guide" type="button" data-assistant-open data-footer-guide aria-haspopup="dialog">
+        <img src="/assets/guide-avatar.webp" width="32" height="32" alt="" loading="lazy" decoding="async" />
+        <span>Guide</span>
+      </button>
+      <nav aria-label="Essential SDK example links">
+        <a href="/sdk/">SDK</a>
+        <a href="/registry/">Official Registry</a>
+        <a href="/disclosure/">Disclosure</a>
+      </nav>
+      <p>Public reads · no custody · no signing · no transactions.</p>
+    </footer>
   <script data-guide-loader="zodiacs-guide-loader-v1">
 (function () {
     var modulePromise;

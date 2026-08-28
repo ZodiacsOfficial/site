@@ -724,7 +724,7 @@ try {
     assert.equal(await noJsPage.locator('#shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await noJsPage.locator('#shop a[href^="https://shop.app/products/"]').count(), 6);
     assert.equal(await noJsPage.locator('#registry #verify').count(), 1);
-    assert.equal(await noJsPage.locator('.static-site__footer a[href="https://shop.app/m/41mzeq7f2h"]').count(), 0);
+    assert.equal(await noJsPage.locator('.zfooter--compact a[href="https://shop.app/m/41mzeq7f2h"]').count(), 0);
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 0);
     assert.equal(await noJsPage.locator('a[href^="/astrofolio/how-to-buy/"]').count(), 12);

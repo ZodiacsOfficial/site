@@ -37,7 +37,7 @@ describe('footer acquisition disclosure boundary', () => {
     const footer = await readFile(new URL('../components/SiteFooter.astro', import.meta.url), 'utf8');
     expect(footer).toContain('const showAcquisitionDisclosure = footerAcquisitionDisclosureVisible(consumerPath)');
     expect(footer).toContain(
-      `{showAcquisitionDisclosure && <span class="footer__note">{t(locale, 'footerCollectNote')}</span>}`,
+      `{showAcquisitionDisclosure && <span class="zfooter__note">{t(locale, 'footerCollectNote')}</span>}`,
     );
   });
 });

@@ -32,13 +32,19 @@ const languageLinks = (routeLanguageLinks.length ? routeLanguageLinks : availabl
   meta: LOCALE_META[entry.locale],
 }));
 const FOOTER_COPY = {
-  en: { assistant: 'Guide' },
-  es: { assistant: 'Guide' },
-  pt: { assistant: 'Guide' },
-  fr: { assistant: 'Guide' },
-  it: { assistant: 'Guide' },
-  ru: { assistant: 'Guide — пока по-английски' },
-} as const satisfies Record<Locale, { assistant: string }>;
+  en: { assistant: 'Guide', language: 'Language', legal: 'Legal', utilities: 'More', licenses: 'Data & licenses' },
+  es: { assistant: 'Guide', language: 'Idioma', legal: 'Legal', utilities: 'Más', licenses: 'Datos y licencias' },
+  pt: { assistant: 'Guide', language: 'Idioma', legal: 'Legal', utilities: 'Mais', licenses: 'Dados e licenças' },
+  fr: { assistant: 'Guide', language: 'Langue', legal: 'Mentions légales', utilities: 'Plus', licenses: 'Données et licences' },
+  it: { assistant: 'Guide', language: 'Lingua', legal: 'Note legali', utilities: 'Altro', licenses: 'Dati e licenze' },
+  ru: { assistant: 'Guide — пока по-английски', language: 'Язык', legal: 'Правовая информация', utilities: 'Ещё', licenses: 'Данные и лицензии' },
+} as const satisfies Record<Locale, {
+  assistant: string;
+  language: string;
+  legal: string;
+  utilities: string;
+  licenses: string;
+}>;
 // The RU release set the bar: a link whose destination is English-only
 // carries hreflang="en" plus a visible "in English for now" cue. Every
 // released locale now inherits that courtesy instead of linking silently.
@@ -54,102 +60,131 @@ const englishSuffix = englishOnly?.suffix ?? '';
 const englishOnlyAria = englishOnly?.aria;
 const englishHreflang = englishOnly ? ('en' as const) : undefined;
 const privacyHref = localizePath(locale, '/privacy/');
+const fontLicenseHref = locale === 'ru' ? '/fonts/OFL-golos-text.txt' : '/fonts/OFL-instrument-sans.txt';
 const consumerPath = stripLocale(Astro.url.pathname);
 const isRegistryWing = /^\/(?:terminal|registry|sdk|thesis|archive|disclosure)(?:\/|$)/.test(consumerPath);
 const showAcquisitionDisclosure = footerAcquisitionDisclosureVisible(consumerPath);
 const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$)/.test(consumerPath);
 const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
 ---
-<footer class="footer">
-  <div class="container">
+<footer class="zfooter">
+  <div class="zfooter__inner">
     {locale !== 'ru' && !isRegistryWing && !suppressFooterEmailCapture && <EmailCapture locale={locale} placement="footer" />}
-    <div class="footer__grid">
-      <div class="footer__brand">
-        <a class="footer__mark" href={localizePath(locale, '/')}>
-          <BrandMark size={19} />
-          <span class="footer__name">Zodiacs</span><span class="footer__tld">.org</span>
+
+    <div class="zfooter__lead">
+      <div>
+        <a class="zfooter__brand" href={localizePath(locale, '/')}>
+          <BrandMark size={26} class="zfooter__brand-mark" />
+          <span class="zfooter__brand-name">Zodiacs</span><span class="zfooter__brand-tld">.org</span>
         </a>
-        <p class="footer__tag">{t(locale, 'footerTag')}</p>
-        <button
-          class="footer__assistant"
-          type="button"
-          data-assistant-open
-          data-assistant-locale={locale}
-          aria-haspopup="dialog"
-        >
-          {FOOTER_COPY[locale].assistant}
-        </button>
+        <p class="zfooter__tag">{t(locale, 'footerTag')}</p>
       </div>
+      <button
+        class="zfooter__guide"
+        type="button"
+        data-assistant-open
+        data-footer-guide
+        data-assistant-locale={locale}
+        aria-haspopup="dialog"
+      >
+        <img src="/assets/guide-avatar.webp" width="32" height="32" alt="" loading="lazy" decoding="async" />
+        <span>{FOOTER_COPY[locale].assistant}</span>
+      </button>
+    </div>
 
-      <nav class="footer__col" aria-label={t(locale, 'navTools')}>
-        <span class="footer__label">{t(locale, 'navTools')}</span>
-        {FOOTER_TOOLS.map((tool) => (
-          <a
-            href={tool.localized ? localizePath(locale, tool.href) : tool.href}
-            hreflang={!tool.localized ? 'en' : undefined}
-            title={!tool.localized ? englishOnlyAria : undefined}
-          >
-            {tool.labels?.[locale] ?? t(locale, tool.label)}
-            {!tool.localized && !tool.labels ? englishSuffix : ''}
-          </a>
-        ))}
-      </nav>
-
-      <nav class="footer__col" aria-label={t(locale, 'navLearn')}>
-        <span class="footer__label">{t(locale, 'navLearn')}</span>
-        <a href="/learn/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerStartHere')}{englishSuffix}</a>
-        <a href="/horoscopes/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'navHoroscopes')}{englishSuffix}</a>
-        <a href="/learn/planets/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerPlanets')}{englishSuffix}</a>
-        <a href="/learn/houses/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerHouses')}{englishSuffix}</a>
-        <a href="/learn/zodiac-dates/" hreflang="en" title={englishOnlyAria}>{t(locale, 'footerZodiacDates')}{englishSuffix}</a>
-        <a href="/learn/glossary/" hreflang="en" title={englishOnlyAria}>{t(locale, 'footerGlossary')}{englishSuffix}</a>
-        <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerCompute')}</a>
-        <a href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      </nav>
-
-      <nav class="footer__col footer__col--signs" aria-label={t(locale, 'navSigns')}>
-        <span class="footer__label">{t(locale, 'navTwelve')}</span>
-        <div class="footer__signs">
-          {SIGNS.map((s) => <a href={localizePath(locale, `/${s.slug}/`)}>{signName(s, locale)}</a>)}
+    <div class="zfooter__directory">
+      <nav class="zfooter__group" aria-label={t(locale, 'navTools')}>
+        <span class="zfooter__label">{t(locale, 'navTools')}</span>
+        <div class="zfooter__links">
+          {FOOTER_TOOLS.map((tool) => (
+            <a
+              href={tool.localized ? localizePath(locale, tool.href) : tool.href}
+              hreflang={!tool.localized ? 'en' : undefined}
+              title={!tool.localized ? englishOnlyAria : undefined}
+            >
+              {tool.labels?.[locale] ?? t(locale, tool.label)}
+              {!tool.localized && !tool.labels ? englishSuffix : ''}
+            </a>
+          ))}
         </div>
       </nav>
 
-      <nav class="footer__col" aria-label={t(locale, 'navCollect')}>
-        <span class="footer__label">{t(locale, 'navCollect')}</span>
-        <a href="/astrofolio/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'navCollect')}{englishSuffix}</a>
-        <a href="/registry/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerRegistry')}{englishSuffix}</a>
-        <a href="/sdk/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerSdk')}{englishSuffix}</a>
-        <a href={localizePath(locale, '/disclosure/')}>{t(locale, 'footerDisclosure')}</a>
-        {showAcquisitionDisclosure && <span class="footer__note">{t(locale, 'footerCollectNote')}</span>}
+      <nav class="zfooter__group" aria-label={t(locale, 'navLearn')}>
+        <span class="zfooter__label">{t(locale, 'navLearn')}</span>
+        <div class="zfooter__links">
+          <a href="/learn/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerStartHere')}{englishSuffix}</a>
+          <a href="/horoscopes/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'navHoroscopes')}{englishSuffix}</a>
+          <a href="/learn/planets/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerPlanets')}{englishSuffix}</a>
+          <a href="/learn/houses/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerHouses')}{englishSuffix}</a>
+          <a href="/learn/zodiac-dates/" hreflang="en" title={englishOnlyAria}>{t(locale, 'footerZodiacDates')}{englishSuffix}</a>
+          <a href="/learn/glossary/" hreflang="en" title={englishOnlyAria}>{t(locale, 'footerGlossary')}{englishSuffix}</a>
+          <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerCompute')}</a>
+          <a href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
+        </div>
+      </nav>
+
+      <nav class="zfooter__group zfooter__group--wide" aria-label={t(locale, 'navCollect')}>
+        <span class="zfooter__label">{t(locale, 'navCollect')}</span>
+        <div class="zfooter__links">
+          <a href="/astrofolio/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'navCollect')}{englishSuffix}</a>
+          <a href="/registry/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerRegistry')}{englishSuffix}</a>
+          <a href="/sdk/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerSdk')}{englishSuffix}</a>
+          <a href={localizePath(locale, '/disclosure/')}>{t(locale, 'footerDisclosure')}</a>
+        </div>
+        {showAcquisitionDisclosure && <span class="zfooter__note">{t(locale, 'footerCollectNote')}</span>}
+      </nav>
+
+      <nav class="zfooter__group zfooter__twelve" aria-label={t(locale, 'navSigns')}>
+        <span class="zfooter__label">{t(locale, 'navTwelve')}</span>
+        <div class="zfooter__signs">
+          {SIGNS.map((sign) => (
+            <a class="zfooter__sign" href={localizePath(locale, `/${sign.slug}/`)} aria-label={signName(sign, locale)} title={signName(sign, locale)}>
+              <img src={`/assets/zodiac-icons/48/${sign.slug}.webp?surface=site-footer`} width="25" height="25" alt="" loading="lazy" decoding="async" />
+              <span class="zfooter__visually-hidden">{signName(sign, locale)}</span>
+            </a>
+          ))}
+        </div>
       </nav>
     </div>
 
     {terminalMarketNotice && <TerminalMarketVenueNotice />}
 
-    <hr class="rule" />
+    <div class="zfooter__language">
+      <span class="zfooter__label" id="footer-language-label">{FOOTER_COPY[locale].language}</span>
+      <nav class="zfooter__locales" aria-labelledby="footer-language-label">
+        {languageLinks.map((entry) => (
+          entry.locale === locale
+            ? <span class="zfooter__locale" lang={entry.meta.htmlLang} aria-current="page">{entry.meta.languageName}</span>
+            : <a class="zfooter__locale" href={entry.href} hreflang={entry.meta.hreflang} lang={entry.meta.htmlLang}>{entry.meta.languageName}</a>
+        ))}
+      </nav>
+    </div>
 
-    <div class="footer__base">
-      <span>© {year} Zodiacs.org</span>
-      <span class="footer__base-links">
-        <a href="/about/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerAbout')}{englishSuffix}</a>
-        <a href={privacyHref}>{t(locale, 'footerPrivacy')}</a>
-        <a href="/terms/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerTerms')}{englishSuffix}</a>
-        <a href={localizePath(locale, '/methodology/')}>{t(locale, 'footerMethodology')}</a>
-        <span>{t(locale, 'footerPlaceData')}: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> (CC BY 4.0)</span>
-        <span>{t(locale, 'footerFonts')} <a href={locale === 'ru' ? '/fonts/OFL-golos-text.txt' : '/fonts/OFL-instrument-sans.txt'}>SIL OFL</a></span>
-        <a href="/widgets/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerWidgets')}{englishSuffix}</a>
-        <a href="/feeds/horoscopes.xml" hreflang={englishHreflang} title={englishOnlyAria}>RSS{englishSuffix}</a>
-        <span class="footer__languages">
-          {languageLinks.map((entry, index) => (
-            <span class="footer__language-option">
-              {index > 0 && <span class="footer__language-separator" aria-hidden="true">·</span>}
-              {entry.locale === locale
-                ? <span lang={entry.meta.htmlLang}>{entry.meta.languageName}</span>
-                : <a href={entry.href} hreflang={entry.meta.hreflang} lang={entry.meta.htmlLang}>{entry.meta.languageName}</a>}
-            </span>
-          ))}
-        </span>
-      </span>
+    <div class="zfooter__colophon">
+      <p class="zfooter__copyright">© {year} Zodiacs.org</p>
+
+      <nav class="zfooter__meta" aria-label={FOOTER_COPY[locale].legal}>
+        <span class="zfooter__label">{FOOTER_COPY[locale].legal}</span>
+        <div class="zfooter__meta-links">
+          <a href="/about/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerAbout')}{englishSuffix}</a>
+          <a href={privacyHref}>{t(locale, 'footerPrivacy')}</a>
+          <a href="/terms/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerTerms')}{englishSuffix}</a>
+        </div>
+      </nav>
+
+      <nav class="zfooter__meta" aria-label={FOOTER_COPY[locale].utilities}>
+        <span class="zfooter__label">{FOOTER_COPY[locale].utilities}</span>
+        <div class="zfooter__meta-links">
+          <a href="/widgets/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerWidgets')}{englishSuffix}</a>
+          <a href="/feeds/horoscopes.xml" hreflang={englishHreflang} title={englishOnlyAria}>RSS{englishSuffix}</a>
+        </div>
+      </nav>
+
+      <div class="zfooter__meta zfooter__credits">
+        <span class="zfooter__label">{FOOTER_COPY[locale].licenses}</span>
+        <p>{t(locale, 'footerPlaceData')}: <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a> · CC BY 4.0</p>
+        <p>{t(locale, 'footerFonts')} <a href={fontLicenseHref}>SIL OFL 1.1</a></p>
+      </div>
     </div>
   </div>
 </footer>
@@ -157,123 +192,3 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
 <!-- Guide stays outside Astro's module graph. Before its post-load mount, the
      inline loader reacts only to a deliberate Guide CTA click. -->
 <script is:inline data-guide-loader={GUIDE_LOADER_MARKER} set:html={guideLoaderSource(locale)} />
-
-<style>
-  .footer {
-    margin-top: clamp(56px, 9vw, 104px);
-    padding: clamp(48px, 7vw, 80px) 0 42px;
-    border-top: 1px solid var(--hair-1);
-    background: rgba(15, 18, 26, 0.34);
-  }
-  .footer__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 36px 24px;
-    margin-bottom: clamp(36px, 6vw, 60px);
-  }
-  @media (min-width: 900px) {
-    .footer__grid { grid-template-columns: 1.5fr 0.9fr 0.9fr 1.2fr 1fr; }
-  }
-  .footer__brand { grid-column: 1 / -1; }
-  @media (min-width: 900px) { .footer__brand { grid-column: auto; } }
-  .footer__mark {
-    direction: ltr;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-  .footer__name {
-    font-family: var(--font-serif);
-    font-weight: 500;
-    font-size: 21px;
-    letter-spacing: 0.01em;
-    line-height: 1;
-    color: var(--text);
-  }
-  .footer__tld {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.12em;
-    color: var(--faint);
-    align-self: end;
-    margin-bottom: 1px;
-  }
-  .footer__tag {
-    margin: 12px 0 0;
-    max-width: 26ch;
-    font-size: var(--text-sm);
-    color: var(--muted);
-    text-wrap: pretty;
-  }
-  .footer__assistant {
-    margin-top: 14px;
-    min-height: 44px;
-    padding: 0 15px;
-    border: 1px solid var(--hair-2);
-    border-radius: 999px;
-    color: var(--text-2);
-    font-size: var(--text-sm);
-  }
-  .footer__assistant:hover { color: var(--text); border-color: var(--hair-3); }
-  .footer__col { display: flex; flex-direction: column; gap: 9px; }
-  .footer__label {
-    margin-bottom: 4px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  .footer__col a {
-    font-size: var(--text-sm);
-    color: var(--text-2);
-    text-decoration: none;
-    width: fit-content;
-  }
-  .footer__col a:hover { color: var(--text); }
-  .footer__signs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 9px 16px;
-  }
-  .footer__note {
-    margin-top: 8px;
-    font-size: var(--text-xs);
-    line-height: 1.6;
-    color: var(--faint);
-    max-width: 24ch;
-    text-wrap: pretty;
-  }
-  .footer__base {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px 20px;
-    padding-top: 26px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    color: var(--faint);
-  }
-  /* Middots ride as attached ::after separators so they never strand at the
-     start of a wrapped line on mobile. */
-  .footer__base-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; }
-  .footer__base-links > *:not(:last-child)::after { content: '·'; margin: 0 10px; color: var(--faint); }
-  .footer__languages { display: inline-flex; flex-wrap: wrap; align-items: center; }
-  .footer__language-option { display: inline-flex; align-items: center; white-space: nowrap; }
-  .footer__language-option > a {
-    display: inline-flex;
-    min-height: 24px;
-    align-items: center;
-  }
-  .footer__language-separator { margin: 0 10px; color: var(--faint); }
-  .footer__base a { color: var(--muted); text-decoration: none; }
-  .footer__base-links > span:not(.footer__languages) a {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
-  }
-  .footer__base a:hover { color: var(--text); }
-</style>

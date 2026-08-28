@@ -170,6 +170,23 @@ anywhere (Warm Gilt is retired sitewide). Reserve `.shell`/`.core` bezels
 for elevated moments; grids of equal items use the light `.tile`. Kickers are
 sentence-case serif-italic (`.kicker`), not mono-caps eyebrows.
 
+### Canonical site ending
+
+Every full page ends with the Celestial Colophon footer. Astro pages inherit
+`src/components/SiteFooter.astro` through `src/layouts/Base.astro`; static and
+generated wing pages use `renderStaticFooter()` from
+`scripts/site-footer.mjs`. The sole CSS source is
+`src/styles/site-footer.css`; `npm run footer:sync` publishes its byte-identical
+copy for static pages. Do not add bespoke full-page footers, dot-separated
+language/legal text rivers, or a second footer stylesheet. Small embeds and
+transactional or documentation shells may use the sanctioned
+`zfooter--compact` variant. Generated TypeDoc pages retain their compact
+`engine-sign-rail` ending, styled by `public/sdk/engine/assets/custom.css`;
+that dense API-reference exception must stay visually aligned with the
+Celestial Colophon and must not spread to product or editorial pages.
+`npm run footer:check` enforces the shared sources, generated output, and the
+static CSS copy.
+
 ## Engine
 
 `src/lib/engine/` computes charts client-side (astronomy-engine + in-house

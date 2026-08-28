@@ -89,6 +89,10 @@ try {
     assert.equal(await page.locator('[data-sign-mint]').first().innerText(), leo.mint);
     assert.equal(await page.locator('[data-jupiter-host]').isHidden(), true);
     assert.equal(await page.locator('[data-load-jupiter]').isDisabled(), true);
+    assert.equal(await page.locator('.zfooter .email-capture--footer').count(), 1);
+    assert.equal(await page.locator('.zfooter .email-capture--footer').isHidden(), true);
+    assert.equal(await page.locator('.zfooter__note').count(), 1);
+    assert.equal(await page.locator('.zfooter__note').isHidden(), true);
     assert.equal(
       await page.locator('#eligibility-title').innerText(),
       'I am at least 18 and may lawfully use a third-party swap service where I live.',

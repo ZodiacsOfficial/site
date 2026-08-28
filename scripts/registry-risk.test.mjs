@@ -25,9 +25,10 @@ function compact(value) {
 
 describe('Registry risk and trust copy', () => {
   it('keeps Consumer risk copy while the catalogue remains a read-only information surface', async () => {
-    const [landingSource, signSource] = await Promise.all([
+    const [landingSource, signSource, footerSource] = await Promise.all([
       readFile(resolve(root, 'src/app.jsx'), 'utf8'),
       readFile(resolve(root, 'scripts/build-sign-pages.mjs'), 'utf8'),
+      readFile(resolve(root, 'scripts/site-footer.mjs'), 'utf8'),
     ]);
 
     const landingText = compact(landingSource);
@@ -46,7 +47,7 @@ describe('Registry risk and trust copy', () => {
     expect(landingSource).not.toContain('aria-label="Rank"');
     expect(landingSource).not.toMatch(/\.sort\(\(a, b\) => \(b\.marketCap/);
 
-    const signText = compact(signSource);
+    const signText = compact(`${signSource}\n${footerSource}`);
     expect(signText).toContain('The price can change quickly and can fall to zero');
     expect(signText).not.toContain('This page only shows information. It cannot make a purchase or move money');
     expect(signText).not.toMatch(/Continue to Jupiter|jupiterSwapUrl|What do I need before I continue/);
