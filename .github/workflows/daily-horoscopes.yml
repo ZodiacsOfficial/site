@@ -6,16 +6,16 @@ name: Daily Sky
 
 on:
   schedule:
-    # GitHub delays or drops runs scheduled on the busiest minutes (:00
-    # especially): the 00:00 entry fired at 08:54 on 2026-08-27 and not at
-    # all on 2026-08-28, leaving the live site a day stale and every build
-    # red on the freshness gates. Off-peak minutes fire more reliably, and
-    # the later entries are cheap idempotent backstops: a run that finds
-    # the day's package already committed verifies production and exits,
-    # so double fires are safe by construction (same design as the
-    # Registry Market Snapshot backstop).
-    - cron: "23 0 * * *" # primary, shortly after the UTC day opens
-    - cron: "23 4 * * *" # backstop if the primary was dropped or drifted
+    - cron: "0 0 * * *" # daily, 00:00 UTC
+    # GitHub delays or drops busy-minute schedules: the entry above fired
+    # at 08:54 on 2026-08-27 and not at all on 2026-08-28, leaving the
+    # live site a day stale and every build red on the freshness gates
+    # until a manual dispatch. The off-peak backstop below bounds that
+    # damage; it is idempotent by construction — a fire that finds the
+    # day's package already committed verifies production and exits (the
+    # same design as the Registry Market Snapshot backstop). The declared
+    # publication boundary stays 00:00 UTC.
+    - cron: "23 4 * * *" # backstop if the midnight fire was dropped or drifted
   workflow_dispatch:
 
 concurrency:
