@@ -119,6 +119,65 @@ try {
           document.fonts.ready,
           new Promise((resolveReady) => setTimeout(resolveReady, 10_000)),
         ]));
+        // `font-display: optional` is a production performance contract, but
+        // it deliberately permits either the metric-matched fallback or the
+        // downloaded face on a cold load. Loading an optional face after its
+        // no-swap window expires does not make the browser select it. Create
+        // fresh evidence-only aliases, fully load them, and only then assign
+        // them in the screenshot stylesheet below.
+        const evidenceFonts = await page.evaluate(async () => {
+          const definitions = [
+            {
+              family: 'ZDX Evidence Instrument Sans',
+              source: 'url("/fonts/instrument-sans-latin-wght-normal.woff2") format("woff2-variations")',
+              descriptors: { weight: '400 700', style: 'normal' },
+            },
+            {
+              family: 'ZDX Evidence Instrument Sans',
+              source: 'url("/fonts/instrument-sans-latin-wght-italic.woff2") format("woff2-variations")',
+              descriptors: { weight: '400 700', style: 'italic' },
+            },
+            {
+              family: 'ZDX Evidence EB Garamond',
+              source: 'url("/fonts/eb-garamond-latin-400-normal.woff2") format("woff2")',
+              descriptors: { weight: '400', style: 'normal' },
+            },
+            {
+              family: 'ZDX Evidence EB Garamond',
+              source: 'url("/fonts/eb-garamond-latin-500-normal.woff2") format("woff2")',
+              descriptors: { weight: '500', style: 'normal' },
+            },
+            {
+              family: 'ZDX Evidence EB Garamond',
+              source: 'url("/fonts/eb-garamond-latin-400-italic.woff2") format("woff2")',
+              descriptors: { weight: '400', style: 'italic' },
+            },
+            {
+              family: 'ZDX Evidence JetBrains Mono',
+              source: 'url("/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2-variations")',
+              descriptors: { weight: '300 600', style: 'normal' },
+            },
+          ];
+          return Promise.all(definitions.map(async ({ family, source, descriptors }) => {
+            try {
+              const face = await new FontFace(family, source, descriptors).load();
+              document.fonts.add(face);
+              return { family, weight: descriptors.weight, style: descriptors.style, loaded: true };
+            } catch (error) {
+              return {
+                family,
+                weight: descriptors.weight,
+                style: descriptors.style,
+                loaded: false,
+                error: error instanceof Error ? error.message : String(error),
+              };
+            }
+          }));
+        });
+        const missingEvidenceFonts = evidenceFonts.filter(({ loaded }) => !loaded);
+        if (missingEvidenceFonts.length > 0) {
+          errors.push(`evidence fonts failed to load: ${missingEvidenceFonts.map(({ family, weight, style, error }) => `${family} ${style} ${weight}${error ? ` (${error})` : ''}`).join(', ')}`);
+        }
         // Guide deliberately mounts 500 ms after `load` so its resources stay
         // outside LCP. Evidence still requires the settled launcher, so wait
         // for that explicit product boundary instead of racing the timer.
@@ -131,6 +190,51 @@ try {
             animation: none !important;
             transition: none !important;
             caret-color: transparent !important;
+          }
+          /* Shared chrome and the footer use evidence-only aliases that were
+             loaded before this assignment. Routes that explicitly choose
+             local typography (Today and the hub) retain their production
+             content families; other Phase 1 readers use the same font files
+             through the evidence aliases for deterministic rasterization. */
+          :root {
+            --font-nav-serif: 'ZDX Evidence EB Garamond', Georgia, serif;
+            --font-nav-sans: 'ZDX Evidence Instrument Sans', system-ui, -apple-system, sans-serif;
+            --font-nav-mono: 'ZDX Evidence JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+          }
+          :root[data-stable-typography]:not([data-local-typography]) {
+            --font-serif: 'ZDX Evidence EB Garamond', Georgia, serif;
+            --font-sans: 'ZDX Evidence Instrument Sans', system-ui, -apple-system, sans-serif;
+            --font-mono: 'ZDX Evidence JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+          }
+          .zfooter {
+            --zf-serif: 'ZDX Evidence EB Garamond', Georgia, serif;
+            --zf-sans: 'ZDX Evidence Instrument Sans', system-ui, sans-serif;
+            --zf-mono: 'ZDX Evidence JetBrains Mono', ui-monospace, monospace;
+          }
+          /* Chromium can rerasterize fixed translucent layers on different
+             compositor tiles during a very tall full-page screenshot. Pin
+             their equivalent first-viewport positions into document space;
+             fixed-position behavior is covered by interaction tests, while
+             this receipt records stable page composition. */
+          .orbs, .dust {
+            position: absolute !important;
+            inset: 0 0 auto !important;
+            height: 100vh !important;
+          }
+          .nav-wrap { position: absolute !important; }
+          .nav, .zguide-launcher {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
+          .zguide-launcher {
+            position: absolute !important;
+            top: calc(100vh - 66px) !important;
+            bottom: auto !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
+          @media (max-width: 560px) {
+            .zguide-launcher { top: calc(100vh - 60px) !important; }
           }
           /* Production skips the far-offscreen footer until a real user
              approaches it. Full-page screenshots rasterize from the top and
@@ -165,6 +269,8 @@ try {
             document.fonts.ready,
             new Promise((resolveFonts) => setTimeout(resolveFonts, 10_000)),
           ]);
+          document.querySelector('.zguide-launcher')
+            ?.removeAttribute('data-footer-guide-visible');
           await waitForPaint();
           await waitForPaint();
           return [...document.images]
@@ -235,12 +341,12 @@ try {
 }
 
 const manifest = {
-  schema: 'zodiacs.phase1-visual-acceptance.v3',
+  schema: 'zodiacs.phase1-visual-acceptance.v4',
   driver: {
     name: 'playwright-core',
     version: playwrightPackage.version,
     script: 'tests/phase1-acceptance-drive.mjs',
-    contractVersion: 3,
+    contractVersion: 4,
   },
   capturedAt: new Date().toISOString(),
   browser: `Chromium ${browserVersion}`,

@@ -49,11 +49,11 @@ interface Props {
   stableTypography?: boolean;
   /** Use metric-matched local faces for route content. */
   localTypography?: boolean;
-  /** Use optional aliases for shared chrome when nonessential font preloads are omitted. */
+  /** Keep shared chrome faces optional when nonessential font preloads are omitted. */
   stableChromeTypography?: boolean;
   /** Keep shared chrome on the local tier and omit font preloads for a cold-load gate. */
   localChromeTypography?: boolean;
-  /** Preload only the mobile lockup serif; CSS can discover the non-LCP chrome faces later. */
+  /** Keep non-LCP chrome preloads desktop-only so mobile can paint without a font race. */
   minimalNavFontPreloads?: boolean;
   /** UTC edition rendered by a daily surface; relative wording is enabled only while current. */
   editionDate?: string;
@@ -244,13 +244,14 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
       </>
     ) : (
       !props.localChromeTypography && <>
-        {!props.minimalNavFontPreloads && (
+        {(!props.minimalNavFontPreloads || props.stableChromeTypography) && (
           <link
             rel="preload"
             href="/fonts/instrument-sans-latin-wght-normal.woff2"
             as="font"
             type="font/woff2"
             crossorigin
+            media={props.minimalNavFontPreloads ? '(min-width: 782px)' : undefined}
           />
         )}
         <link
@@ -260,20 +261,31 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
           type="font/woff2"
           crossorigin
         />
-        {!props.minimalNavFontPreloads && (
+        {(!props.minimalNavFontPreloads || props.stableChromeTypography) && (
           <link
             rel="preload"
             href="/fonts/eb-garamond-latin-500-normal.woff2"
             as="font"
             type="font/woff2"
             crossorigin
+            media={props.minimalNavFontPreloads ? '(min-width: 782px)' : undefined}
+          />
+        )}
+        {props.minimalNavFontPreloads && props.stableChromeTypography && (
+          <link
+            rel="preload"
+            href="/fonts/jetbrains-mono-latin-wght-normal.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+            media="(min-width: 782px)"
           />
         )}
       </>
     )}
-    <!-- The mono face is decorative metadata, never the LCP typeface. Let CSS
-         discover it after the sans/serif faces instead of making its 39KB
-         preload compete with the first meaningful paint on mobile. -->
+    <!-- The mono face is decorative metadata, never the LCP typeface. Today
+         may preload it above the desktop breakpoint, but mobile lets CSS
+         discover it without competing with the first meaningful paint. -->
     <SEO {...props} />
     {locale === 'en' && (
       <script is:inline>

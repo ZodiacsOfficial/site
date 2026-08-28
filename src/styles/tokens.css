@@ -295,12 +295,6 @@
   --font-mono: ui-monospace, Menlo, Consolas, monospace;
 }
 
-:root[data-stable-chrome-typography] {
-  --font-nav-serif: 'EB Garamond Phase1', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
-  --font-nav-sans: 'Instrument Sans Phase1', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
-  --font-nav-mono: 'JetBrains Mono Phase1', ui-monospace, Menlo, Consolas, monospace;
-}
-
 :root[data-local-chrome-typography] {
   --font-nav-serif: 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
   --font-nav-sans: 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;

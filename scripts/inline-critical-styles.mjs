@@ -12,6 +12,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const distRoot = resolve(repo, 'dist');
 const marker = 'data-inline-critical-css';
+const stableChromeMarker = 'data-stable-chrome-typography';
 const linkPattern = /<link\b[^>]*>/gi;
 const criticalStylePattern = /<style\b[^>]*\bdata-zdx-critical=["'][^"']+["'][^>]*>/gi;
 const deferredStylePattern = /<template\b[^>]*\bdata-zdx-deferred-style\b[^>]*>/gi;
@@ -79,6 +80,27 @@ function attribute(tag, name) {
   return match?.[1] ?? null;
 }
 
+function htmlAttributePattern(name) {
+  return new RegExp(
+    `\\s${name}(?:\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+))?(?=\\s|>)`,
+    'i',
+  );
+}
+
+function openingHtmlTag(html) {
+  return html.match(/<html\b[^>]*>/i)?.[0] ?? '';
+}
+
+function hasHtmlAttribute(html, name) {
+  return htmlAttributePattern(name).test(openingHtmlTag(html));
+}
+
+function removeHtmlAttribute(html, name) {
+  const tag = openingHtmlTag(html);
+  if (!tag) return html;
+  return html.replace(tag, tag.replace(htmlAttributePattern(name), ''));
+}
+
 function assertSafeCss(css, href) {
   if (/@import\b/i.test(css)) {
     throw new Error(`inline-critical-styles: @import is not safe to relocate from ${href}`);
@@ -94,8 +116,38 @@ function assertSafeCss(css, href) {
   }
 }
 
+const stableChromeFaces = new Map([
+  ['Instrument Sans', '/fonts/instrument-sans-latin-wght-normal.woff2'],
+  ['EB Garamond:400', '/fonts/eb-garamond-latin-400-normal.woff2'],
+  ['EB Garamond:500', '/fonts/eb-garamond-latin-500-normal.woff2'],
+  ['JetBrains Mono', '/fonts/jetbrains-mono-latin-wght-normal.woff2'],
+]);
+
+function declarationValue(face, property) {
+  const match = face.match(new RegExp(`${property}\\s*:\\s*(?:"([^"]+)"|'([^']+)'|([^;}]+))`, 'i'));
+  return (match?.[1] ?? match?.[2] ?? match?.[3] ?? '').trim();
+}
+
+function stabilizeChromeFontDisplay(css) {
+  let changes = 0;
+  const output = css.replace(/@font-face\s*\{[^{}]*\}/gi, (face) => {
+    const family = declarationValue(face, 'font-family');
+    const weight = declarationValue(face, 'font-weight');
+    const key = family === 'EB Garamond' ? `${family}:${weight}` : family;
+    const expectedSource = stableChromeFaces.get(key);
+    if (!expectedSource || !face.includes(expectedSource)) return face;
+
+    const transformed = face.replace(/(font-display\s*:\s*)swap\b/i, '$1optional');
+    if (transformed !== face) changes += 1;
+    return transformed;
+  });
+  return { css: output, changes };
+}
+
 export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase = false } = {}) {
-  if (!html.includes(marker)) return { html, stylesheets: 0, bytes: 0 };
+  if (!hasHtmlAttribute(html, marker)) return { html, stylesheets: 0, bytes: 0 };
+
+  const stabilizeChrome = hasHtmlAttribute(html, stableChromeMarker);
 
   const stylesheetTags = [...html.matchAll(linkPattern)]
     .map((match) => match[0])
@@ -132,15 +184,27 @@ export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase
 
   let output = html;
   let bytes = 0;
+  let stabilizedChromeFaces = 0;
   for (const tag of selectedTags) {
     const href = attribute(tag, 'href');
     const cssPath = resolve(root, `.${href}`);
-    const css = await readFile(cssPath, 'utf8');
+    const sourceCss = await readFile(cssPath, 'utf8');
+    const stableResult = stabilizeChrome
+      ? stabilizeChromeFontDisplay(sourceCss)
+      : { css: sourceCss, changes: 0 };
+    const css = stableResult.css;
+    stabilizedChromeFaces += stableResult.changes;
     assertSafeCss(css, href);
     bytes += Buffer.byteLength(css);
     output = output.replace(
       tag,
       `<style data-zdx-critical="${basename(href)}">${css}</style>`,
+    );
+  }
+
+  if (stabilizeChrome && stabilizedChromeFaces !== stableChromeFaces.size) {
+    throw new Error(
+      `inline-critical-styles: expected ${stableChromeFaces.size} stable chrome faces, found ${stabilizedChromeFaces}`,
     );
   }
 
@@ -157,7 +221,8 @@ export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase
     output = output.replace('</head>', `${deferredStyleLoader}</head>`);
   }
 
-  output = output.replace(/\sdata-inline-critical-css(?:="")?/i, '');
+  output = removeHtmlAttribute(output, marker);
+  output = removeHtmlAttribute(output, stableChromeMarker);
   return { html: output, stylesheets: selectedTags.length, bytes };
 }
 
@@ -173,7 +238,7 @@ async function main() {
   });
   for (const path of markedOutsideScope) {
     const source = await readFile(path, 'utf8');
-    if (source.includes(marker)) {
+    if (hasHtmlAttribute(source, marker)) {
       throw new Error(`inline-critical-styles: marker outside approved scope: ${path}`);
     }
   }
@@ -182,7 +247,10 @@ async function main() {
     const path = resolve(distRoot, relativePath);
     const source = await readFile(path, 'utf8');
     const deferNonBase = relativePath === 'ru/birth-chart/index.html';
-    if (!source.includes(marker)) {
+    if (hasHtmlAttribute(source, stableChromeMarker) && relativePath !== 'today/index.html') {
+      throw new Error(`inline-critical-styles: stable chrome marker outside Today: ${relativePath}`);
+    }
+    if (!hasHtmlAttribute(source, marker)) {
       const inlineCount = source.match(criticalStylePattern)?.length ?? 0;
       const externalCount = [...source.matchAll(linkPattern)]
         .map((match) => match[0])
