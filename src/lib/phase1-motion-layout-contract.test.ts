@@ -230,6 +230,11 @@ describe('Phase 1 layout and motion contract', () => {
     expect(today).toMatch(/<Base\s+[\s\S]*?stableChromeTypography/u);
     expect(today).toMatch(/<Base\s+[\s\S]*?minimalNavFontPreloads/u);
     expect(today).toMatch(/<TodayBrief\s+[\s\S]*?client:idle/u);
+    const todayPageRule = today.match(/\.today-page\s*\{([^}]*)\}/u)?.[1] ?? '';
+    expect(todayPageRule).toContain(
+      "font-family: Arial, 'Liberation Sans', system-ui, -apple-system, sans-serif;",
+    );
+    expect(todayPageRule).not.toContain('Fallback');
     for (const phase1Surface of [today, hub, program]) {
       expect(phase1Surface).toMatch(/<Base\s+[\s\S]*?stableTypography/u);
     }

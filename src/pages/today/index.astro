@@ -162,7 +162,13 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
     </EvidenceDisclosure>
   </section>
 <style is:global>
-  .today-page { max-width: 780px; }
+  .today-page {
+    max-width: 780px;
+    /* Resolve the cold-load reading face directly from the native stack.
+       Routing it through a local() @font-face can settle one frame late on
+       Linux, rewrap the 60ch hero, and move the complete reading shell. */
+    font-family: Arial, 'Liberation Sans', system-ui, -apple-system, sans-serif;
+  }
   .today-hero { max-width: 60ch; margin-bottom: clamp(24px, 5vw, 40px); }
   .today-hero h1 {
     margin: 12px 0 12px;
