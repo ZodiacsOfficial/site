@@ -41,7 +41,6 @@ describe('GitHub Actions trust boundaries', () => {
       ['compat-invite-sweep.yml', 'compatibility-invite-production'],
       ['daily-email.yml', 'daily-email-production'],
       ['db-backup.yml', 'database-backup-production'],
-      ['one-time-actions-secret-migration.yml', 'secret-migration-production'],
       ['preview-api-smoke.yml', 'preview-smoke-production'],
       ['push-daily.yml', 'daily-push-production'],
       ['weekly-digest.yml', 'weekly-digest-production'],
