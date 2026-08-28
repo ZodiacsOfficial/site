@@ -69,8 +69,9 @@ Adapter prerequisites:
 - `RESEND_CONTACTS_API_KEY` — a different server-only key with the Contact and
   Segment access required by the lifecycle
 - `RESEND_FROM_EMAIL` — verified confirmation sender
-- `EMAIL_CONFIRM_SECRET` — at least 32 characters; signs the 48-hour opt-in
-  token
+- `EMAIL_CONFIRM_SECRET` — an independently generated random value of at least
+  32 bytes (for example, `openssl rand -base64 48`); derives the AES-256-GCM key
+  for the opaque 48-hour opt-in token
 - `RESEND_SEGMENT_ID` — the standalone weekly Segment assigned only after
   explicit confirmation
 - Optional `EMAIL_CONFIRM_BASE_URL` — HTTPS origin, defaulting to
@@ -81,8 +82,9 @@ Adapter prerequisites:
 The sending key and Contacts key must differ. Resend's sending-only permission
 does not grant Contact and Segment access.
 
-The first request sends a first-party signed confirmation without creating a
-Contact. Link `GET` is read-only for mail-scanner safety; explicit form `POST`
+The first request sends a first-party encrypted confirmation without creating
+a Contact or exposing the normalized address in the URL. Link `GET` is
+read-only for mail-scanner safety; explicit form `POST`
 creates the Contact with its weekly Segment. A duplicate Contact response is a
 safe no-op and is deliberately not used to reverse a prior unsubscribe. For
 that reason, live acceptance must inspect actual Segment membership rather
@@ -96,7 +98,8 @@ Current terminology and API references:
 
 The daily canary uses a distinct `RESEND_DAILY_SEGMENT_ID`. Its database
 preference is consent authority; provider membership is only routing metadata.
-The daily and standalone weekly Segment IDs must never match.
+Both configured IDs must match the provider's 6–128 character identifier
+contract, and the daily and standalone weekly Segment IDs must never match.
 
 ### Buttondown
 

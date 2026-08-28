@@ -1,31 +1,36 @@
 name: Preview API Smoke
 
 on:
-  deployment_status:
+  # Vercel repository dispatches are evaluated from the default-branch
+  # workflow definition. Never use deployment_status here: that event can
+  # evaluate workflow YAML from an untrusted deployed ref.
+  repository_dispatch:
+    types:
+      - 'vercel.deployment.ready'
 
 permissions:
   contents: read
+
+concurrency:
+  group: preview-api-smoke-${{ github.event.client_payload.id }}
+  cancel-in-progress: true
 
 jobs:
   preview-api-smoke:
     name: Preview API smoke
     if: >-
-      github.event.deployment_status.state == 'success' &&
-      github.event.deployment.environment == 'Preview' &&
-      github.event.deployment.creator.login == 'vercel[bot]'
+      github.actor == 'vercel[bot]' &&
+      github.event.client_payload.environment == 'preview' &&
+      github.event.client_payload.project.id == vars.VERCEL_PROJECT_ID &&
+      github.event.client_payload.project.name == 'zodiacs-org'
     runs-on: ubuntu-latest
+    environment: preview-smoke-production
+    timeout-minutes: 10
     steps:
       - name: Checkout the trusted default branch
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          # deployment_status runs in the base-repo context with secrets, and
-          # Vercel also deploys fork PRs — so the smoke script must come from
-          # a trusted ref, never from the deployed revision, or a fork could
-          # rewrite it to exfiltrate the bypass secret. The deployed SHA is
-          # only ever used as the probe TARGET (via the deployment URL), not
-          # as code. A PR that changes the smoke script exercises the new
-          # version only after it merges to main.
-          ref: main
+          ref: ${{ github.event.repository.default_branch }}
           persist-credentials: false
 
       - name: Setup Node
@@ -35,7 +40,9 @@ jobs:
 
       - name: Probe the Preview functions
         env:
-          PREVIEW_URL: ${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}
+          PREVIEW_URL: ${{ github.event.client_payload.url }}
+          DEPLOYMENT_PROJECT_ID: ${{ github.event.client_payload.project.id }}
+          VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
           # Optional for public previews; required when Vercel Deployment
           # Protection intercepts automation before it reaches the app.
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}

@@ -1,18 +1,33 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { createHmac } from 'node:crypto';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { checkRateLimit } from '@vercel/firewall';
 import subscribeHandler from '../../../api/email/subscribe';
 import confirmHandler from '../../../api/email/_confirm';
 import { hasEmailCaptureProvider, hasStandaloneWeeklyEmailCapture } from './config';
 import { createEmailSubscriptionAdapter } from './provider';
-import { createEmailOptInToken, EMAIL_OPT_IN_TTL_MS, verifyEmailOptInToken } from './opt-in-token';
+import {
+  createEmailOptInToken,
+  EMAIL_CONFIRMATION_TOKEN_MAX_CHARS,
+  EMAIL_OPT_IN_LEGACY_ACCEPT_UNTIL_MS,
+  EMAIL_OPT_IN_TTL_MS,
+  verifyEmailOptInToken,
+} from './opt-in-token';
 import { parseEmailSubscription } from './input';
 import { emailStatusPage } from './server-page';
 
 const ORIGINAL_ENV = { ...process.env };
 const SECRET = 'test-secret-that-is-at-least-thirty-two-characters';
 
+vi.mock('@vercel/firewall', () => ({ checkRateLimit: vi.fn() }));
+
+beforeEach(() => {
+  vi.mocked(checkRateLimit).mockResolvedValue({ rateLimited: false } as never);
+});
+
 afterEach(() => {
   process.env = { ...ORIGINAL_ENV };
   vi.unstubAllGlobals();
+  vi.mocked(checkRateLimit).mockReset();
 });
 
 function responseRecorder() {
@@ -80,6 +95,34 @@ describe('email capture configuration', () => {
       STANDALONE_WEEKLY_EMAIL_ENABLED: '1',
       RESEND_SEGMENT_ID: 'seg_weekly',
     })).toBe(true);
+    expect(hasStandaloneWeeklyEmailCapture({
+      ...resend,
+      STANDALONE_WEEKLY_EMAIL_ENABLED: '1',
+      RESEND_SEGMENT_ID: 'bad id',
+    })).toBe(false);
+    expect(hasStandaloneWeeklyEmailCapture({
+      ...resend,
+      STANDALONE_WEEKLY_EMAIL_ENABLED: '1',
+      RESEND_SEGMENT_ID: 'short',
+    })).toBe(false);
+    expect(hasStandaloneWeeklyEmailCapture({
+      ...resend,
+      STANDALONE_WEEKLY_EMAIL_ENABLED: '1',
+      RESEND_SEGMENT_ID: 'seg_weekly',
+      RESEND_DAILY_SEGMENT_ID: 'seg_weekly',
+    })).toBe(false);
+    expect(hasStandaloneWeeklyEmailCapture({
+      ...resend,
+      STANDALONE_WEEKLY_EMAIL_ENABLED: '1',
+      RESEND_SEGMENT_ID: 'seg_weekly',
+      RESEND_DAILY_SEGMENT_ID: 'bad daily id',
+    })).toBe(false);
+    expect(hasStandaloneWeeklyEmailCapture({
+      ...resend,
+      STANDALONE_WEEKLY_EMAIL_ENABLED: '1',
+      RESEND_SEGMENT_ID: 'seg_weekly',
+      RESEND_DAILY_SEGMENT_ID: 'seg_daily',
+    })).toBe(true);
   });
 });
 
@@ -111,12 +154,63 @@ describe('Resend first-party confirmation token', () => {
     const token = createEmailOptInToken({
       email: 'person@example.com', sign: 'libra', locale: 'en',
     }, SECRET, now);
+    expect(token).toMatch(/^v2\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/);
+    expect(token.split('.')).toHaveLength(4);
+    expect(token.split('.').slice(1).map((part) => (
+      Buffer.from(part, 'base64url').toString('utf8')
+    )).join('')).not.toContain('person@example.com');
     expect(verifyEmailOptInToken(token, SECRET, now + 1_000)).toMatchObject({
       email: 'person@example.com', sign: 'libra', locale: 'en',
       expiresAt: now + EMAIL_OPT_IN_TTL_MS,
     });
     expect(verifyEmailOptInToken(`${token}x`, SECRET, now)).toBeNull();
     expect(verifyEmailOptInToken(token, SECRET, now + EMAIL_OPT_IN_TTL_MS)).toBeNull();
+  });
+
+  it('rejects oversized and non-canonical encodings before decrypting them', () => {
+    const now = Date.UTC(2026, 6, 15);
+    const token = createEmailOptInToken({
+      email: 'person@example.com', sign: 'libra', locale: 'en',
+    }, SECRET, now);
+    const [version, iv, encrypted, tag] = token.split('.');
+
+    expect(verifyEmailOptInToken('A'.repeat(EMAIL_CONFIRMATION_TOKEN_MAX_CHARS + 1), SECRET, now))
+      .toBeNull();
+    for (const mutated of [
+      `${version}.${iv}=.${encrypted}.${tag}`,
+      `${version}.${iv}.${encrypted}!.${tag}`,
+      `${version}.${iv}.${encrypted}.${tag}\n`,
+    ]) {
+      expect(verifyEmailOptInToken(mutated, SECRET, now)).toBeNull();
+    }
+  });
+
+  it('accepts unexpired v1 links during the encrypted-token rollout window', () => {
+    const now = Date.UTC(2026, 6, 15);
+    const payload = Buffer.from(JSON.stringify({
+      e: 'legacy@example.com', s: 'taurus', l: 'en', x: now + EMAIL_OPT_IN_TTL_MS,
+    })).toString('base64url');
+    const signature = createHmac('sha256', SECRET)
+      .update(`zodiacs-email-capture-v1:${payload}`)
+      .digest('base64url');
+    const token = `${payload}.${signature}`;
+
+    expect(verifyEmailOptInToken(token, SECRET, now + 1_000)).toMatchObject({
+      email: 'legacy@example.com', sign: 'taurus', locale: 'en',
+    });
+    expect(verifyEmailOptInToken(token, SECRET, now + EMAIL_OPT_IN_TTL_MS)).toBeNull();
+    expect(verifyEmailOptInToken(token, SECRET, EMAIL_OPT_IN_LEGACY_ACCEPT_UNTIL_MS)).toBeNull();
+  });
+
+  it('rejects authenticated legacy claims whose expiry exceeds the 48-hour window', () => {
+    const now = Date.UTC(2026, 6, 15);
+    const payload = Buffer.from(JSON.stringify({
+      e: 'legacy@example.com', s: 'taurus', l: 'en', x: now + (3 * EMAIL_OPT_IN_TTL_MS),
+    })).toString('base64url');
+    const signature = createHmac('sha256', SECRET)
+      .update(`zodiacs-email-capture-v1:${payload}`)
+      .digest('base64url');
+    expect(verifyEmailOptInToken(`${payload}.${signature}`, SECRET, now)).toBeNull();
   });
 
   it.each(['pt', 'fr', 'it'] as const)('round-trips the %s locale and renders its document language', (locale) => {
@@ -131,6 +225,31 @@ describe('Resend first-party confirmation token', () => {
 });
 
 describe('Buttondown subscription adapter', () => {
+  it('fails closed when the email WAF rule is absent or unavailable', async () => {
+    for (const rateLimitResult of [
+      { kind: 'result', value: { rateLimited: false, error: 'not-found' } },
+      { kind: 'error', value: new Error('firewall unavailable') },
+    ] as const) {
+      if (rateLimitResult.kind === 'result') {
+        vi.mocked(checkRateLimit).mockResolvedValueOnce(rateLimitResult.value as never);
+      } else {
+        vi.mocked(checkRateLimit).mockRejectedValueOnce(rateLimitResult.value);
+      }
+      const fetcher = vi.fn();
+      vi.stubGlobal('fetch', fetcher);
+      const response = responseRecorder();
+      await subscribeHandler({
+        method: 'POST',
+        headers: SITE_HEADERS,
+        body: { email: 'person@example.com', sign: 'aries', locale: 'en' },
+      }, response);
+      expect(response.statusCode).toBe(503);
+      expect(JSON.parse(response.body)).toEqual({ error: 'unavailable' });
+      expect(fetcher).not.toHaveBeenCalled();
+      vi.unstubAllGlobals();
+    }
+  });
+
   it('creates an unactivated, double-opt-in subscriber without a type override', async () => {
     const fetcher = vi.fn().mockResolvedValue({ ok: true, status: 201 });
     const adapter = createEmailSubscriptionAdapter({
@@ -170,6 +289,35 @@ describe('Buttondown subscription adapter', () => {
       email_address: 'person@example.com', metadata: { sun_sign: 'aries' },
     });
     expect(JSON.stringify(providerPayload)).not.toContain('birth');
+  });
+
+  it('does not consume the recipient cooldown when the provider send fails', async () => {
+    process.env.EMAIL_PROVIDER = 'buttondown';
+    process.env.BUTTONDOWN_API_KEY = 'buttondown-test-key';
+    process.env.STANDALONE_WEEKLY_EMAIL_ENABLED = '1';
+    const fetcher = vi.fn()
+      .mockResolvedValueOnce({ ok: false, status: 500 })
+      .mockResolvedValueOnce({ ok: true, status: 201 });
+    vi.stubGlobal('fetch', fetcher);
+    const request = {
+      method: 'POST',
+      headers: SITE_HEADERS,
+      body: { email: 'provider-retry@example.com', sign: 'aries', locale: 'en' },
+    };
+
+    const failed = responseRecorder();
+    await subscribeHandler(request, failed);
+    expect(failed.statusCode).toBe(502);
+
+    const retried = responseRecorder();
+    await subscribeHandler(request, retried);
+    expect(retried.statusCode).toBe(200);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+
+    const held = responseRecorder();
+    await subscribeHandler(request, held);
+    expect(held.statusCode).toBe(200);
+    expect(fetcher).toHaveBeenCalledTimes(2);
   });
 });
 
@@ -228,6 +376,53 @@ describe('Resend and Loops subscription adapters', () => {
 });
 
 describe('Resend confirmation endpoint', () => {
+  it('rejects oversized tokens before provider or database work', async () => {
+    process.env.EMAIL_PROVIDER = 'resend';
+    process.env.RESEND_API_KEY = 're_sending_test';
+    process.env.RESEND_CONTACTS_API_KEY = 're_contacts_test';
+    process.env.RESEND_FROM_EMAIL = 'Zodiacs.org <hello@zodiacs.org>';
+    process.env.EMAIL_CONFIRM_SECRET = SECRET;
+    process.env.STANDALONE_WEEKLY_EMAIL_ENABLED = '1';
+    process.env.RESEND_SEGMENT_ID = 'seg_weekly';
+    const fetcher = vi.fn();
+    vi.stubGlobal('fetch', fetcher);
+    const token = 'A'.repeat(EMAIL_CONFIRMATION_TOKEN_MAX_CHARS + 1);
+
+    for (const request of [
+      { method: 'GET', query: { token } },
+      { method: 'POST', body: new URLSearchParams({ token }).toString() },
+    ]) {
+      const response = responseRecorder();
+      await confirmHandler(request, response);
+      expect(response.statusCode).toBe(400);
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('normalizes the confirmation secret identically when issuing and verifying links', async () => {
+    process.env.EMAIL_PROVIDER = 'resend';
+    process.env.RESEND_API_KEY = 're_sending_test';
+    process.env.RESEND_CONTACTS_API_KEY = 're_contacts_test';
+    process.env.RESEND_FROM_EMAIL = 'Zodiacs.org <hello@zodiacs.org>';
+    process.env.EMAIL_CONFIRM_SECRET = `  ${SECRET}\n`;
+    process.env.STANDALONE_WEEKLY_EMAIL_ENABLED = '1';
+    process.env.RESEND_SEGMENT_ID = 'seg_weekly';
+    const fetcher = vi.fn().mockResolvedValue({ ok: true, status: 201 });
+    vi.stubGlobal('fetch', fetcher);
+    const adapter = createEmailSubscriptionAdapter(process.env, fetcher as unknown as typeof fetch, 'en');
+    await adapter?.subscribe('whitespace@example.com', 'virgo');
+    const emailRequest = JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body));
+    const confirmationUrl = String(emailRequest.text).match(/https:\/\/\S+/u)?.[0];
+    if (!confirmationUrl) throw new Error('Confirmation URL was not sent.');
+    const token = new URL(confirmationUrl).searchParams.get('token');
+    expect(token).toBeTruthy();
+
+    const response = responseRecorder();
+    await confirmHandler({ method: 'GET', query: { token } }, response);
+    expect(response.statusCode).toBe(200);
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+
   it('makes GET read-only and creates the contact only after POST confirmation', async () => {
     process.env.EMAIL_PROVIDER = 'resend';
     process.env.RESEND_API_KEY = 're_sending_test';

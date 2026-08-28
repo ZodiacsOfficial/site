@@ -9,9 +9,51 @@ create temporary table zodiacs_expected_manifest (
 \copy zodiacs_expected_manifest (line) from 'source-manifest.txt' with (format text)
 
 \if :restore_preflight
+\ir db-backup-manifest-init.sql
+\ir db-auth-durable-state-guard.sql
+\ir db-auth-restore-target-state-guard.sql
+\ir db-auth-column-contract.sql
+
+create temporary table zodiacs_current_global_default_acl (
+  line text primary key
+);
+
+insert into zodiacs_current_global_default_acl (line)
+select 'global-default-acl|' || pg_catalog.encode(
+  pg_catalog.convert_to(pg_catalog.pg_get_userbyid(default_acl.defaclrole)::text, 'UTF8'),
+  'hex'
+) || '|' || pg_catalog.encode(
+  pg_catalog.sha256(pg_catalog.convert_to(
+    pg_catalog.jsonb_build_array(
+      pg_catalog.pg_get_userbyid(default_acl.defaclrole),
+      '*',
+      default_acl.defaclobjtype,
+      case when default_acl.defaclacl is null then null else (
+        select pg_catalog.jsonb_agg(acl::text order by acl::text)
+        from pg_catalog.unnest(default_acl.defaclacl) as acl
+      ) end
+    )::text,
+    'UTF8'
+  )),
+  'hex'
+)
+from pg_catalog.pg_default_acl as default_acl
+where default_acl.defaclnamespace = 0
+  and pg_catalog.pg_get_userbyid(default_acl.defaclrole) in (
+    select pg_catalog.convert_from(
+      pg_catalog.decode(pg_catalog.split_part(expected.line, '|', 2), 'hex'),
+      'UTF8'
+    )
+    from zodiacs_expected_manifest as expected
+    where expected.line like 'application-owner|%'
+  )
+order by default_acl.defaclrole, default_acl.defaclobjtype;
+
 do $preflight$
 declare
   user_object_count integer;
+  missing_count integer;
+  unexpected_count integer;
 begin
   if pg_catalog.current_setting('server_version_num')::integer / 10000 <> 17 then
     raise exception 'Restore target must run PostgreSQL 17.';
@@ -76,19 +118,97 @@ begin
   if (select pg_catalog.count(*) from zodiacs_expected_manifest) = 0 then
     raise exception 'Backup acceptance manifest is empty.';
   end if;
+
+  if not exists (
+    select 1
+    from zodiacs_expected_manifest as expected
+    where expected.line like 'auth-column|%'
+  ) then
+    raise exception 'Backup is missing the managed Auth column contract.';
+  end if;
+
+  select pg_catalog.count(*)
+  into missing_count
+  from zodiacs_expected_manifest as expected
+  where expected.line like 'auth-column|%'
+    and not exists (
+      select 1
+      from zodiacs_auth_column_contract as actual
+      where actual.line = expected.line
+    );
+
+  select pg_catalog.count(*)
+  into unexpected_count
+  from zodiacs_auth_column_contract as actual
+  where not exists (
+    select 1
+    from zodiacs_expected_manifest as expected
+    where expected.line = actual.line
+  );
+
+  if missing_count <> 0 or unexpected_count <> 0 then
+    raise exception
+      'Fresh-project Auth column contract is incompatible with this backup: % source columns missing, % target columns unexpected.',
+      missing_count,
+      unexpected_count;
+  end if;
+
+  if exists (
+    select 1
+    from zodiacs_expected_manifest as expected
+    where expected.line like 'application-owner|%'
+      and not exists (
+        select 1
+        from pg_catalog.pg_roles as role
+        where role.rolname = pg_catalog.convert_from(
+          pg_catalog.decode(pg_catalog.split_part(expected.line, '|', 2), 'hex'),
+          'UTF8'
+        )
+      )
+  ) then
+    raise exception 'Fresh-project target is missing an application object-owner role.';
+  end if;
+
+  select pg_catalog.count(*)
+  into missing_count
+  from zodiacs_expected_manifest as expected
+  where expected.line like 'global-default-acl|%'
+    and not exists (
+      select 1
+      from zodiacs_current_global_default_acl as actual
+      where actual.line = expected.line
+    );
+
+  select pg_catalog.count(*)
+  into unexpected_count
+  from zodiacs_current_global_default_acl as actual
+  where not exists (
+    select 1
+    from zodiacs_expected_manifest as expected
+    where expected.line = actual.line
+  );
+
+  if missing_count <> 0 or unexpected_count <> 0 then
+    raise exception
+      'Fresh-project global default ACLs differ from the source application-owner contract: % source records missing, % target records unexpected.',
+      missing_count,
+      unexpected_count;
+  end if;
 end;
 $preflight$;
-\quit 0
+\quit
 \endif
 
 -- Rebuild the same canonical manifest after all ordered restore sections have
 -- run, but before psql commits the surrounding single transaction.
+\ir db-backup-manifest-init.sql
 \ir db-backup-manifest.sql
 
 do $manifest_comparison$
 declare
   missing_count integer;
   unexpected_count integer;
+  category_record record;
 begin
   select pg_catalog.count(*)
   into missing_count
@@ -109,6 +229,48 @@ begin
   );
 
   if missing_count <> 0 or unexpected_count <> 0 then
+    for category_record in
+      select
+        categories.category,
+        (
+          select pg_catalog.count(*)
+          from zodiacs_expected_manifest as expected
+          where pg_catalog.split_part(expected.line, '|', 1) = categories.category
+            and not exists (
+              select 1
+              from zodiacs_backup_manifest as actual
+              where actual.line = expected.line
+            )
+        ) as category_missing,
+        (
+          select pg_catalog.count(*)
+          from zodiacs_backup_manifest as actual
+          where pg_catalog.split_part(actual.line, '|', 1) = categories.category
+            and not exists (
+              select 1
+              from zodiacs_expected_manifest as expected
+              where expected.line = actual.line
+            )
+        ) as category_unexpected
+      from (
+        select pg_catalog.split_part(expected.line, '|', 1) as category
+        from zodiacs_expected_manifest as expected
+        union
+        select pg_catalog.split_part(actual.line, '|', 1) as category
+        from zodiacs_backup_manifest as actual
+      ) as categories
+      order by categories.category
+    loop
+      if category_record.category_missing <> 0
+         or category_record.category_unexpected <> 0 then
+        raise warning
+          'Restore manifest category % differs: % expected records missing, % unexpected records found.',
+          category_record.category,
+          category_record.category_missing,
+          category_record.category_unexpected;
+      end if;
+    end loop;
+
     raise exception
       'Restore manifest mismatch: % expected records missing, % unexpected records found.',
       missing_count,
@@ -254,6 +416,7 @@ select pg_catalog.set_config(
 );
 
 set local role authenticated;
+set local row_security = on;
 select pg_catalog.set_config('request.jwt.claim.sub', :'rls_test_user', true);
 select pg_catalog.set_config(
   'request.jwt.claims',

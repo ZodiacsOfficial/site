@@ -23,6 +23,8 @@
   color: var(--zf-text);
   font-family: var(--zf-sans);
   text-align: start;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 /* Russian routes already preload their metric-matched Cyrillic families.

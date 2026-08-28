@@ -223,14 +223,18 @@ Editor, and update this table in the same change.
   password auth method ever ships; the native-app work makes that
   likely. Until then the WARN is accepted.
 - **Backups: workflow and acceptance wrapper shipped; owner setup remains.**
-  `.github/workflows/db-backup.yml` stays a visible no-op until the owner
-  provisions `SUPABASE_DB_URL` and `BACKUP_PASSPHRASE` directly in GitHub
-  Actions. It uses PostgreSQL 17 and one exported repeatable-read snapshot for
+  `.github/workflows/db-backup.yml` fails visibly until the owner provisions
+  `SUPABASE_DB_URL` and a one-line, control-free, 32–1024-byte
+  `BACKUP_PASSPHRASE` in the exact-`main`
+  `database-backup-production` GitHub environment; repository- and
+  organization-level Actions secrets must remain empty. A green run must
+  contain exactly one nonempty encrypted artifact. It uses PostgreSQL
+  17 and one exported repeatable-read snapshot for
   `public`, the complete `supabase_migrations` ledger, `auth.users`, and
   `auth.identities`. If later authorized migrations create `private` or
   `living_chart_private`, schema discovery automatically adds them to that same
   dump. Owners and GRANT/REVOKE ACLs remain intact. The workflow generates
-  ordered SQL, records a content-free source acceptance manifest, then uses
+  ordered SQL, records content digests without plaintext source rows, then uses
   GnuPG loopback pinentry with a protected passphrase descriptor. Neither the
   database URL nor the passphrase is a process argument.
 
@@ -243,24 +247,36 @@ Editor, and update this table in the same change.
 
   The path is the only argument. The wrapper prompts invisibly for both
   protected values, rejects the current production project ref, verifies the
-  fresh target has no Auth or application rows and has never had its migration
-  ledger initialized, and requires `RESTORE` before changing it. Do not run
+  fresh target has no application rows, has no residual Auth state outside the
+  managed `instances`, `schema_migrations`, `users`, and `identities`
+  relations, and has never had its migration ledger initialized. It requires
+  `RESTORE` before changing anything. Do not run
   `supabase db push` first: `supabase_migrations` must be absent and is created
-  transactionally from the source. Auth users and identities restore before
+  transactionally from the source. The managed Auth column contract is checked
+  before any mutation. Auth users and identities restore before
   application data. The remaining generated
   sections and acceptance checks run under `psql -X`, `ON_ERROR_STOP=1`, and a
   single transaction, so any mismatch rolls back. Acceptance compares every
-  manifest record, row count, Auth linkage, application foreign-key orphan,
-  validated constraint, RLS/policy, owner/ACL and SECURITY DEFINER state, and
+  manifest record, row count, application-content digest, sequence definition
+  and state, Auth
+  linkage, application foreign-key orphan, validated constraint, RLS/policy,
+  owner/ACL and SECURITY DEFINER state, and
   effective `anon`/`authenticated`/`service_role` privilege. The owner must then prove a
   restored account reauthenticates and sees only its own data in the application.
 
   Prerequisites are PostgreSQL 17 client tools, GnuPG with loopback pinentry,
-  Node.js, and GNU `tar`. The interim contract remains: weekly RPO (up to seven
+  Node.js, and GNU tar (`gtar` on macOS; BSD tar is rejected). The interim
+  contract remains: weekly RPO (up to seven
   days after a successful run, longer after failures), 90-day GitHub artifact
   retention, publicly downloadable ciphertext with the passphrase as its only
-  confidentiality boundary, excluded sessions/refresh/MFA/SSO/audit rows and
-  therefore expected reauthentication, and fresh-project-first restores only.
+  confidentiality boundary, excluded sessions/refresh/audit and short-lived
+  OAuth-flow rows and therefore expected reauthentication, and
+  fresh-project-first restores only. Detected durable MFA, passkey, SSO, SAML,
+  OAuth-client, OAuth-consent, or custom-OAuth rows make export fail until their
+  ordered recovery boundary is implemented. Keep the target traffic-disabled:
+  the atomic restore repeats the destructive guard and holds exclusive locks on
+  managed Auth tables, while a generated replay section preserves the source
+  `public` schema ACL that `pg_dump` otherwise omits.
   If production ever moves to a different Supabase project, update and review
   the wrapper's explicit production-project guard before the next drill.
 - **Key escrow.** When `ACCOUNT_SYNC_V2_ENCRYPTION_KEYS` is provisioned,

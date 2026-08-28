@@ -3,6 +3,12 @@ name: Weekly Digest
 on:
   schedule:
     - cron: "0 6 * * 1"
+    # Bounded continuation runs recover an aborted provider result first, then
+    # fill any remaining current-week slots. Tuesday runs revisit every Monday
+    # fence before expiry and are recovery-only, so they cannot create a new one.
+    - cron: "15 6 * * 1"
+    - cron: "0 7,10,18 * * 1"
+    - cron: "0,15 5,6,7,10,17 * * 2"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -10,6 +16,11 @@ on:
         required: false
         type: boolean
         default: true
+      recovery_only:
+        description: "Recover existing dispatch fences without creating a new one"
+        required: false
+        type: boolean
+        default: false
       limit:
         description: "Maximum recipients for this run"
         required: false
@@ -27,9 +38,16 @@ jobs:
   digest:
     name: Send weekly digest
     runs-on: ubuntu-latest
+    # Store all three live secrets only in this environment and restrict its
+    # deployment branches to the default branch before enabling the feature.
+    environment: weekly-digest-production
+    timeout-minutes: 25
     steps:
-      - name: Checkout
+      - name: Checkout the trusted default branch
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -44,26 +62,33 @@ jobs:
         run: npm run digest:weekly -- --dry-run --fixture --week-start 2026-07-13 --limit 1
 
       # The scheduled Monday run is gated behind DIGEST_ENABLED so real
-      # sends stay off until the fixture, limit-one canary, and unsubscribe
-      # POST acceptance have passed. Manual workflow_dispatch (dry-run or
-      # real) always runs and honors its own dry_run input.
+      # sends stay off until the fixture, owner canary, and unsubscribe POST
+      # acceptance have passed. Protected-main manual runs default to dry-run.
       - name: Run weekly digest
         if: github.event_name != 'schedule' || vars.DIGEST_ENABLED == 'true'
         env:
           PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_API_KEY: ${{ (github.event_name == 'schedule' || inputs.dry_run == false) && secrets.RESEND_API_KEY || '' }}
+          # Reuse the existing confirmation secret through a domain-separated
+          # key derivation only for live envelope sealing/recovery. Manual dry
+          # runs receive an empty value; the fixture smoke step never receives it.
+          EMAIL_CONFIRM_SECRET: ${{ (github.event_name == 'schedule' || inputs.dry_run == false) && secrets.EMAIL_CONFIRM_SECRET || '' }}
           DIGEST_FROM_EMAIL: ${{ vars.DIGEST_FROM_EMAIL || 'Zodiacs.org <hello@zodiacs.org>' }}
           DIGEST_BASE_URL: ${{ vars.DIGEST_BASE_URL || 'https://zodiacs.org' }}
           # Same repository variable the Daily Email workflow reads; the digest
           # script refuses any non-dry-run send without it (CAN-SPAM footer).
           DAILY_EMAIL_POSTAL_ADDRESS: ${{ vars.DAILY_EMAIL_POSTAL_ADDRESS }}
           DIGEST_MAX_SENDS: "80"
-          DIGEST_DRY_RUN: ${{ github.event.inputs.dry_run }}
-          DIGEST_LIMIT: ${{ github.event.inputs.limit }}
+          DIGEST_DRY_RUN: ${{ inputs.dry_run }}
+          DIGEST_LIMIT: ${{ inputs.limit }}
+          DIGEST_RECOVERY_ONLY: ${{ github.event.schedule == '0,15 5,6,7,10,17 * * 2' || inputs.recovery_only == true }}
         run: |
           ARGS=(--limit "${DIGEST_LIMIT:-80}")
           if [ "${DIGEST_DRY_RUN:-false}" = "true" ]; then
             ARGS+=(--dry-run)
+          fi
+          if [ "${DIGEST_RECOVERY_ONLY:-false}" = "true" ]; then
+            ARGS+=(--recovery-only)
           fi
           npm run digest:weekly -- "${ARGS[@]}"

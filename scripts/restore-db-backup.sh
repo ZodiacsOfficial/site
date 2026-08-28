@@ -12,6 +12,8 @@ restore_pgpass_file="${restore_work_dir}/.pgpass"
 restore_env_file="${restore_work_dir}/.pg-env"
 restore_archive="${restore_work_dir}/backup.tar.gz"
 restore_bundle_dir="${restore_work_dir}/bundle"
+restore_archive_member_file="${restore_work_dir}/archive-members.txt"
+restore_tar_command=""
 production_project_ref="mftpcdpttteuwbolobye"
 
 cleanup_restore() {
@@ -30,12 +32,28 @@ if [[ "$#" -ne 1 || ! -f "$1" ]]; then
 fi
 restore_artifact="$1"
 
-for restore_command in node psql gpg tar; do
+for restore_command in node psql gpg tr; do
   if ! command -v "${restore_command}" >/dev/null 2>&1; then
     echo "${restore_command} is required." >&2
     exit 1
   fi
 done
+
+for restore_tar_candidate in gtar tar; do
+  if command -v "${restore_tar_candidate}" >/dev/null 2>&1; then
+    restore_tar_version="$("${restore_tar_candidate}" --version 2>/dev/null || true)"
+    case "${restore_tar_version}" in
+      *"GNU tar"*)
+        restore_tar_command="${restore_tar_candidate}"
+        break
+        ;;
+    esac
+  fi
+done
+if [[ -z "${restore_tar_command}" ]]; then
+  echo "GNU tar is required (install it as gtar on macOS)." >&2
+  exit 1
+fi
 if [[ ! "$(psql --version)" =~ \(PostgreSQL\)[[:space:]]17\. ]]; then
   echo "PostgreSQL 17 client tools are required." >&2
   exit 1
@@ -76,10 +94,21 @@ expected_members=(
   auth-identities.sql
   application-data.sql
   application-post.sql
+  public-schema-acl.sql
 )
-mapfile -t archive_members < <(
-  tar --list --gzip --file="${restore_archive}" --quoting-style=escape
-)
+if ! "${restore_tar_command}" \
+  --list \
+  --gzip \
+  --file="${restore_archive}" \
+  --quoting-style=escape \
+  > "${restore_archive_member_file}"; then
+  echo "Backup archive member inspection failed." >&2
+  exit 1
+fi
+archive_members=()
+while IFS= read -r archive_member; do
+  archive_members[${#archive_members[@]}]="${archive_member}"
+done < "${restore_archive_member_file}"
 if [[ "${#archive_members[@]}" -ne "${#expected_members[@]}" ]]; then
   echo "Backup archive has an unexpected member count." >&2
   exit 1
@@ -99,7 +128,7 @@ for expected_member in "${expected_members[@]}"; do
 done
 
 mkdir "${restore_bundle_dir}"
-tar \
+"${restore_tar_command}" \
   --extract \
   --gzip \
   --file="${restore_archive}" \
@@ -139,8 +168,8 @@ rm -f -- "${restore_url_file}"
 source "${restore_env_file}"
 rm -f -- "${restore_env_file}"
 
-restore_host_lower="${PGHOST,,}"
-restore_user_lower="${PGUSER,,}"
+restore_host_lower="$(printf '%s' "${PGHOST}" | tr '[:upper:]' '[:lower:]')"
+restore_user_lower="$(printf '%s' "${PGUSER}" | tr '[:upper:]' '[:lower:]')"
 if [[ "${restore_host_lower}" == *"${production_project_ref}"* \
    || "${restore_user_lower}" == *"${production_project_ref}"* ]]; then
   echo "Restore refused: the target resolves to the current production project." >&2
@@ -152,6 +181,7 @@ fi
   psql \
     -X \
     --no-password \
+    --quiet \
     --set ON_ERROR_STOP=1 \
     --set restore_preflight=1 \
     --file="${restore_script_dir}/db-restore-acceptance.sql"
@@ -171,10 +201,12 @@ unset restore_confirmation
   psql \
     -X \
     --no-password \
+    --quiet \
     --set ON_ERROR_STOP=1 \
     --set VERBOSITY=terse \
     --set restore_preflight=0 \
     --single-transaction \
+    --file="${restore_script_dir}/db-restore-final-guard.sql" \
     --file="${restore_script_dir}/db-restore-prelude.sql" \
     --file="application-pre.sql" \
     --file="${restore_script_dir}/db-restore-auth-begin.sql" \
@@ -183,6 +215,7 @@ unset restore_confirmation
     --file="${restore_script_dir}/db-restore-auth-end.sql" \
     --file="application-data.sql" \
     --file="application-post.sql" \
+    --file="public-schema-acl.sql" \
     --file="${restore_script_dir}/db-restore-acceptance.sql"
 )
 

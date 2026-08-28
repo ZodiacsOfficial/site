@@ -7,6 +7,7 @@ const TOKEN = 'A'.repeat(43);
 afterEach(() => {
   process.env = { ...ORIGINAL_ENV };
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 function configure(): void {
@@ -42,7 +43,7 @@ describe('weekly digest unsubscribe page', () => {
     expect(fetcher).not.toHaveBeenCalled();
     expect(response.headers.get('X-Robots-Tag')).toBe('noindex, nofollow');
     expect(response.body).toContain('<h1>Unsubscribe?</h1>');
-    expect(response.body).toContain('This stops the weekly digest for this address. One click, effective immediately.');
+    expect(response.body).toContain('This turns off the weekly digest preference for this address now. A message already in flight may still arrive.');
     expect(response.body).toContain('Confirm unsubscribe');
     expect(response.body).toContain('/assets/zodiac-icons/48/aries.webp');
     expect(response.body).not.toContain('Turn off the weekly digest?');
@@ -50,6 +51,8 @@ describe('weekly digest unsubscribe page', () => {
 
   it('revokes only on POST and offers a direct return to the digest setting', async () => {
     configure();
+    const deadline = new AbortController().signal;
+    const timeout = vi.spyOn(AbortSignal, 'timeout').mockReturnValue(deadline);
     const fetcher = vi.fn().mockResolvedValue(new Response('true', {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
@@ -70,12 +73,14 @@ describe('weekly digest unsubscribe page', () => {
     expect(fetcher.mock.calls[0]?.[1]).toMatchObject({
       method: 'POST',
       body: JSON.stringify({ candidate_token: TOKEN }),
+      signal: deadline,
     });
+    expect(timeout).toHaveBeenCalledWith(5_000);
     const headers = new Headers(fetcher.mock.calls[0]?.[1]?.headers);
     expect(headers.get('apikey')).toBe('sb_publishable_test');
     expect(headers.get('authorization')).toBeNull();
     expect(response.body).toContain('<h1>Done — you’re unsubscribed.</h1>');
-    expect(response.body).toContain('No more weekly digest. If you change your mind, restart it from your profile.');
+    expect(response.body).toContain('Your weekly digest preference is off. A message already in flight may still arrive. You can restart it from your profile.');
     expect(response.body).toContain('href="/profile/#weekly-digest"');
     expect(response.body).toContain('Restart the weekly digest');
     expect(response.body).not.toContain('You are unsubscribed.');
@@ -96,6 +101,21 @@ describe('weekly digest unsubscribe page', () => {
   it('fails closed when the RPC is unavailable', async () => {
     configure();
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('unavailable', { status: 503 })));
+    const response = responseRecorder();
+
+    await unsubscribeHandler({ method: 'POST', query: { token: TOKEN } }, response);
+
+    expect(response.statusCode).toBe(503);
+    expect(response.body).toBe('Unsubscribe is temporarily unavailable.');
+  });
+
+  it('fails closed when the bounded RPC request aborts', async () => {
+    configure();
+    const deadline = AbortSignal.abort();
+    vi.spyOn(AbortSignal, 'timeout').mockReturnValue(deadline);
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(
+      Object.assign(new Error('deadline'), { name: 'AbortError' }),
+    ));
     const response = responseRecorder();
 
     await unsubscribeHandler({ method: 'POST', query: { token: TOKEN } }, response);

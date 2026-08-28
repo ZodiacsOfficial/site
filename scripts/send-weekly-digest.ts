@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { randomUUID } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 import {
   createDigestUnsubscribeCapability,
@@ -7,7 +8,6 @@ import {
 import { computeBodies } from '../src/lib/engine/full';
 import { findInterAspects, type InterAspect, type MinimalBody } from '../src/lib/engine/synastry';
 import { BODY_ROLE } from '../src/lib/compat';
-import type { SavedChart } from '../src/lib/profile/schema';
 import {
   renderEmailHtml,
   renderEmailText,
@@ -15,42 +15,73 @@ import {
   type EmailSection,
 } from '../src/lib/email/template';
 import { SIGNS } from '../src/lib/signs';
+import {
+  buildWeeklyDigestRequestEnvelope,
+  createWeeklyDigestResendRequest,
+  openWeeklyDigestRequestEnvelope,
+  sealWeeklyDigestRequestEnvelope,
+  sendWeeklyDigestEnvelope,
+  WeeklyDigestProviderAbortError,
+  weeklyDigestEnvelopeDigest,
+  type WeeklyDigestProviderResult,
+  type WeeklyDigestRequestEnvelope,
+} from '../src/lib/weekly-digest/delivery';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DIGEST_ORB = 3;
 const HARD_SEND_CEILING = 80;
 const DEFAULT_LIMIT = HARD_SEND_CEILING;
 const DEFAULT_CHARTS_PER_USER = 5;
-const SEND_INTERVAL_MS = 500;
 const UNSUBSCRIBE_TOKEN_TTL_DAYS = 400;
 const DRY_RUN_UNSUBSCRIBE_TOKEN = 'A'.repeat(43);
+const MAX_CHARTS_PER_USER = 5;
+const MAX_SEALED_ENVELOPE_CHARS = 262_144;
+const RESEND_IDEMPOTENCY_WINDOW_MS = 24 * 60 * 60 * 1_000;
+const RESEND_IDEMPOTENCY_SAFETY_MARGIN_MS = 60 * 1_000;
+const SAFE_PROVIDER_CODE = /^[a-z][a-z0-9_]{0,63}$/u;
+const SHA256_HEX = /^[0-9a-f]{64}$/u;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
+const CONTROL_CHARACTER = /[\u0000-\u001f\u007f]/u;
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const TRANSIT_BODIES = new Set(['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
 
 interface CliOptions {
   dryRun: boolean;
   fixture: boolean;
+  recoveryOnly: boolean;
   limit: number | null;
-  to: string | null;
   weekStart: Date | null;
 }
 
-interface ProfileRow {
-  user_id: string;
-}
-
-interface ChartRow {
-  user_id: string;
-  payload: unknown;
-  updated_at: string | null;
+interface DigestChart {
+  name: string;
+  bodies: MinimalBody[];
 }
 
 interface RecipientDigest {
   userId: string;
   email: string;
-  charts: SavedChart[];
+  charts: DigestChart[];
+  contentDigest: string;
 }
+
+interface WeeklyReservation {
+  leaseToken: string;
+  unsubscribeToken: string;
+}
+
+type WeeklyRecovery =
+  | { outcome: 'reconciliation' }
+  | {
+    outcome: 'claimed';
+    weekStart: string;
+    userId: string;
+    leaseToken: string;
+    idempotencyKey: string;
+    envelopeDigest: string;
+    sealedEnvelope: string;
+    dispatchStartedAt: string;
+  };
 
 interface DigestTransit {
   date: Date;
@@ -61,8 +92,8 @@ function parseArgs(argv: string[]): CliOptions {
   const options: CliOptions = {
     dryRun: false,
     fixture: false,
+    recoveryOnly: false,
     limit: null,
-    to: null,
     weekStart: null,
   };
 
@@ -70,12 +101,19 @@ function parseArgs(argv: string[]): CliOptions {
     const arg = argv[i];
     if (arg === '--dry-run') options.dryRun = true;
     else if (arg === '--fixture') options.fixture = true;
+    else if (arg === '--recovery-only') options.recoveryOnly = true;
     else if (arg === '--limit') options.limit = positiveInt(argv[++i], '--limit');
-    else if (arg === '--to') options.to = requiredValue(argv[++i], '--to');
     else if (arg === '--week-start') options.weekStart = parseDate(requiredValue(argv[++i], '--week-start'));
     else {
       throw new Error(`Unknown option: ${arg}`);
     }
+  }
+
+  if (options.fixture && !options.dryRun) {
+    throw new Error('--fixture is synthetic output and requires --dry-run.');
+  }
+  if (options.recoveryOnly && options.dryRun) {
+    throw new Error('--recovery-only is available only for live fenced deliveries.');
   }
 
   return options;
@@ -92,18 +130,28 @@ function positiveInt(value: string | undefined, flag: string): number {
   return n;
 }
 
-function envInt(name: string, fallback: number): number {
+function envInt(name: string, fallback: number, maximum: number): number {
   const raw = process.env[name];
   if (!raw) return fallback;
   const n = Number(raw);
-  return Number.isInteger(n) && n > 0 ? n : fallback;
+  if (!Number.isInteger(n) || n <= 0 || n > maximum) {
+    throw new Error(`${name} must be an integer from 1 through ${maximum}.`);
+  }
+  return n;
 }
 
 function parseDate(value: string): Date {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new Error('--week-start must be YYYY-MM-DD');
   const date = new Date(`${value}T00:00:00.000Z`);
-  if (Number.isNaN(date.getTime())) throw new Error('--week-start must be a real date');
+  if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value) {
+    throw new Error('--week-start must be a real date');
+  }
+  if (date.getUTCDay() !== 1) throw new Error('--week-start must be a Monday');
   return date;
+}
+
+function editionDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
 }
 
 function mondayFor(date: Date): Date {
@@ -111,6 +159,12 @@ function mondayFor(date: Date): Date {
   const daysSinceMonday = (start.getUTCDay() + 6) % 7;
   start.setUTCDate(start.getUTCDate() - daysSinceMonday);
   return start;
+}
+
+function liveCreationWindow(date: Date): boolean {
+  // Every new fence must be followed by the bounded Monday/Tuesday recovery
+  // cadence. Recovery-only runs remain valid outside this creation window.
+  return date.getUTCDay() === 1 && date.getUTCHours() < 19;
 }
 
 function addDays(date: Date, days: number): Date {
@@ -131,22 +185,8 @@ function rangeLabel(start: Date): string {
   return `${monthDay(start)}-${monthDay(end)}`;
 }
 
-function isSavedChart(value: unknown): value is SavedChart {
-  const chart = value as SavedChart;
-  return Boolean(
-    chart &&
-    typeof chart === 'object' &&
-    typeof chart.id === 'string' &&
-    typeof chart.name === 'string' &&
-    chart.summary &&
-    Array.isArray(chart.summary.bodies),
-  );
-}
-
-function chartBodies(chart: SavedChart): MinimalBody[] {
-  return chart.summary.bodies
-    .filter((body) => typeof body.body === 'string' && typeof body.lon === 'number')
-    .map((body) => ({ body: body.body, lon: body.lon }));
+function chartBodies(chart: DigestChart): MinimalBody[] {
+  return chart.bodies;
 }
 
 function transitBodies(date: Date): MinimalBody[] {
@@ -155,7 +195,7 @@ function transitBodies(date: Date): MinimalBody[] {
     .map((body) => ({ body: body.body, lon: body.lon }));
 }
 
-function topTransits(chart: SavedChart, weekStart: Date): DigestTransit[] {
+function topTransits(chart: DigestChart, weekStart: Date): DigestTransit[] {
   const natal = chartBodies(chart);
   const best = new Map<string, DigestTransit>();
 
@@ -198,13 +238,30 @@ function baseUrl(): string {
   return (process.env.DIGEST_BASE_URL || 'https://zodiacs.org').replace(/\/+$/, '');
 }
 
+function assertLiveBaseUrl(): void {
+  let parsed: URL;
+  try {
+    parsed = new URL(baseUrl());
+  } catch {
+    throw new Error('DIGEST_BASE_URL must be an HTTPS origin.');
+  }
+  if (parsed.protocol !== 'https:'
+    || parsed.username
+    || parsed.password
+    || parsed.search
+    || parsed.hash
+    || baseUrl() !== parsed.origin) {
+    throw new Error('DIGEST_BASE_URL must be an HTTPS origin.');
+  }
+}
+
 function unsubscribeUrl(token: string): string {
   return `${baseUrl()}/api/unsubscribe?token=${encodeURIComponent(token)}`;
 }
 
 /** The Sun's sign in a saved chart — sets the accent hue and header disc. */
-function chartSunSign(chart: SavedChart): string | undefined {
-  const sun = chart.summary.bodies.find((body) => body.body === 'Sun');
+function chartSunSign(chart: DigestChart): string | undefined {
+  const sun = chart.bodies.find((body) => body.body === 'Sun');
   if (!sun || typeof sun.lon !== 'number') return undefined;
   const index = Math.floor(((sun.lon % 360) + 360) % 360 / 30);
   return SIGNS[index]?.slug;
@@ -266,40 +323,6 @@ function renderDigest(
   };
 }
 
-async function sendEmail(
-  apiKey: string,
-  to: string,
-  subject: string,
-  text: string,
-  html: string,
-  unsubscribe: string,
-): Promise<void> {
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: process.env.DIGEST_FROM_EMAIL || 'Zodiacs.org <hello@zodiacs.org>',
-      to: [to],
-      subject,
-      text,
-      html,
-      headers: {
-        'List-Unsubscribe': `<${unsubscribe}>`,
-        'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    // Provider error bodies can echo recipient input. Status is enough for a
-    // public workflow log; detailed delivery diagnostics stay in Resend.
-    throw new Error(`Resend failed with status ${response.status}.`);
-  }
-}
-
 function adminClient() {
   const url = process.env.PUBLIC_SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -311,119 +334,395 @@ function adminClient() {
   });
 }
 
-async function loadRecipients(limit: number, supabase: ReturnType<typeof adminClient>): Promise<RecipientDigest[]> {
+type DigestSupabase = ReturnType<typeof adminClient>;
 
-  const { data: profiles, error: profileError, count } = await supabase
-    .from('profiles')
-    .select('user_id', { count: 'exact' })
-    .eq('digest_opt_in', true)
-    .limit(limit);
-  if (profileError) throw profileError;
-
-  const userIds = ((profiles ?? []) as ProfileRow[]).map((profile) => profile.user_id);
-  if (count && count > limit) {
-    console.log(`weekly-digest: capped ${count} opted-in users to ${limit} for this run`);
-  }
-  if (userIds.length === 0) return [];
-
-  const { data: charts, error: chartsError } = await supabase
-    .from('charts')
-    .select('user_id,payload,updated_at')
-    .in('user_id', userIds)
-    .order('updated_at', { ascending: false });
-  if (chartsError) throw chartsError;
-
-  const chartsByUser = new Map<string, SavedChart[]>();
-  for (const row of (charts ?? []) as ChartRow[]) {
-    if (!isSavedChart(row.payload)) continue;
-    const list = chartsByUser.get(row.user_id) ?? [];
-    list.push(row.payload);
-    chartsByUser.set(row.user_id, list);
-  }
-
-  const recipients: RecipientDigest[] = [];
-  for (const userId of userIds) {
-    const userResult = await supabase.auth.admin.getUserById(userId);
-    if (userResult.error) throw userResult.error;
-    const email = userResult.data.user?.email;
-    const userCharts = chartsByUser.get(userId) ?? [];
-    if (!email || userCharts.length === 0) continue;
-    recipients.push({ userId, email, charts: userCharts });
-  }
-
-  return recipients;
+function databaseFailure(label: string, error: unknown): Error {
+  const rawCode = error && typeof error === 'object'
+    ? (error as { code?: unknown }).code
+    : null;
+  const code = typeof rawCode === 'string' && /^[A-Za-z0-9_-]{1,32}$/u.test(rawCode)
+    ? rawCode
+    : 'unknown';
+  return new Error(`${label} failed (${code}).`);
 }
 
-async function pruneExpiredUnsubscribeTokens(
-  supabase: ReturnType<typeof adminClient>,
-  now: Date,
-): Promise<void> {
-  const { error } = await supabase
-    .from('weekly_digest_unsubscribe_tokens')
-    .delete()
-    .lt('expires_at', now.toISOString());
-  if (error) throw new Error(`Could not prune weekly unsubscribe capabilities: ${error.message}`);
+function objectValue(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : null;
 }
 
-async function storeUnsubscribeToken(
-  supabase: ReturnType<typeof adminClient>,
+function validEmail(value: unknown): value is string {
+  return typeof value === 'string'
+    && value.length >= 3
+    && Buffer.byteLength(value, 'utf8') <= 320
+    && value === value.trim()
+    && !CONTROL_CHARACTER.test(value)
+    && /^[^\s@]+@[^\s@]+$/u.test(value);
+}
+
+function digestChart(value: unknown): DigestChart | null {
+  const chart = objectValue(value);
+  if (!chart
+    || typeof chart.name !== 'string'
+    || [...chart.name].length < 1
+    || [...chart.name].length > 200
+    || CONTROL_CHARACTER.test(chart.name)
+    || !Array.isArray(chart.bodies)
+    || chart.bodies.length < 1
+    || chart.bodies.length > 64) return null;
+
+  const bodies: MinimalBody[] = [];
+  for (const valueBody of chart.bodies) {
+    const body = objectValue(valueBody);
+    if (!body
+      || typeof body.body !== 'string'
+      || [...body.body].length < 1
+      || [...body.body].length > 32
+      || CONTROL_CHARACTER.test(body.body)
+      || typeof body.lon !== 'number'
+      || !Number.isFinite(body.lon)
+      || body.lon < 0
+      || body.lon >= 360) return null;
+    bodies.push({ body: body.body, lon: body.lon });
+  }
+  return { name: chart.name, bodies };
+}
+
+function recipientContent(
+  value: unknown,
+  userId: string,
+  maxCharts: number,
+): RecipientDigest | null {
+  const result = objectValue(value);
+  const snapshot = objectValue(result?.snapshot);
+  if (!result
+    || !snapshot
+    || typeof result.digest !== 'string'
+    || !SHA256_HEX.test(result.digest)
+    || !validEmail(snapshot.email)
+    || !Array.isArray(snapshot.charts)
+    || snapshot.charts.length < 1
+    || snapshot.charts.length > maxCharts) return null;
+  const charts = snapshot.charts.map(digestChart);
+  if (charts.some((chart) => chart === null)) return null;
+  return {
+    userId,
+    email: snapshot.email,
+    charts: charts as DigestChart[],
+    contentDigest: result.digest,
+  };
+}
+
+async function loadCandidateIds(
+  supabase: DigestSupabase,
+  weekStart: Date,
+  limit: number,
+): Promise<string[]> {
+  const { data, error } = await supabase.rpc('weekly_digest_candidates_v1', {
+    candidate_week_start: editionDate(weekStart),
+    candidate_limit: limit,
+  });
+  if (error) throw databaseFailure('Weekly candidate selection', error);
+  if (!Array.isArray(data) || data.length > limit || data.length > HARD_SEND_CEILING) {
+    throw new Error('Weekly candidate selection returned an invalid result.');
+  }
+  const userIds = data.map((row) => objectValue(row)?.user_id);
+  if (userIds.some((userId) => typeof userId !== 'string' || !UUID.test(userId))) {
+    throw new Error('Weekly candidate selection returned an invalid account identifier.');
+  }
+  const unique = new Set(userIds as string[]);
+  if (unique.size !== userIds.length) {
+    throw new Error('Weekly candidate selection returned duplicate accounts.');
+  }
+  return [...unique];
+}
+
+async function loadRecipientContent(
+  supabase: DigestSupabase,
+  userId: string,
+  maxCharts: number,
+): Promise<RecipientDigest | null> {
+  const { data, error } = await supabase.rpc('weekly_digest_content_v1', {
+    candidate_user_id: userId,
+    candidate_max_charts: maxCharts,
+  });
+  if (error) throw databaseFailure('Weekly recipient content', error);
+  if (data === null) return null;
+  const parsed = recipientContent(data, userId, maxCharts);
+  if (!parsed) throw new Error('Weekly recipient content returned an invalid result.');
+  return parsed;
+}
+
+async function booleanRpc(
+  supabase: DigestSupabase,
+  name: string,
+  parameters: Record<string, unknown>,
+  label: string,
+): Promise<boolean> {
+  const { data, error } = await supabase.rpc(name, parameters);
+  if (error) throw databaseFailure(label, error);
+  if (typeof data !== 'boolean') throw new Error(`${label} returned an invalid result.`);
+  return data;
+}
+
+async function pruneWeeklyDeliveryState(supabase: DigestSupabase): Promise<void> {
+  const { data, error } = await supabase.rpc('weekly_digest_prune_v1');
+  if (error) throw databaseFailure('Weekly delivery cleanup', error);
+  if (!Number.isInteger(data) || Number(data) < 0) {
+    throw new Error('Weekly delivery cleanup returned an invalid result.');
+  }
+}
+
+async function reserveWeeklyDelivery(
+  supabase: DigestSupabase,
+  weekStart: Date,
   userId: string,
   now: Date,
-): Promise<string> {
-  const token = createDigestUnsubscribeCapability();
-  const expiresAt = addDays(now, UNSUBSCRIBE_TOKEN_TTL_DAYS);
-  const { error } = await supabase
-    .from('weekly_digest_unsubscribe_tokens')
-    .insert({
-      token_hash: hashDigestUnsubscribeCapability(token),
-      user_id: userId,
-      expires_at: expiresAt.toISOString(),
-    });
-  if (error) throw new Error(`Could not store weekly unsubscribe capability: ${error.message}`);
-  return token;
+): Promise<WeeklyReservation | null> {
+  const leaseToken = randomUUID();
+  const unsubscribeToken = createDigestUnsubscribeCapability();
+  const reserved = await booleanRpc(
+    supabase,
+    'weekly_digest_issue_v1',
+    {
+      candidate_week_start: editionDate(weekStart),
+      candidate_user_id: userId,
+      candidate_lease_token: leaseToken,
+      candidate_token_hash: hashDigestUnsubscribeCapability(unsubscribeToken),
+      candidate_expires_at: addDays(now, UNSUBSCRIBE_TOKEN_TTL_DAYS).toISOString(),
+    },
+    'Weekly delivery reservation',
+  );
+  return reserved ? { leaseToken, unsubscribeToken } : null;
+}
+
+async function authorizeWeeklyDelivery(
+  supabase: DigestSupabase,
+  weekStart: Date,
+  userId: string,
+  leaseToken: string,
+  envelope: WeeklyDigestRequestEnvelope,
+  contentDigest: string,
+  sealedEnvelope: string,
+  maxCharts: number,
+): Promise<boolean> {
+  return booleanRpc(supabase, 'weekly_digest_authorized_v1', {
+    candidate_week_start: editionDate(weekStart),
+    candidate_user_id: userId,
+    candidate_lease_token: leaseToken,
+    candidate_idempotency_key: envelope.idempotencyKey,
+    candidate_envelope_digest: weeklyDigestEnvelopeDigest(envelope),
+    candidate_content_digest: contentDigest,
+    candidate_sealed_envelope: sealedEnvelope,
+    candidate_max_charts: maxCharts,
+  }, 'Weekly delivery authorization');
+}
+
+async function cancelWeeklyDelivery(
+  supabase: DigestSupabase,
+  weekStart: Date,
+  userId: string,
+  leaseToken: string,
+): Promise<boolean> {
+  return booleanRpc(supabase, 'weekly_digest_cancel_v1', {
+    candidate_week_start: editionDate(weekStart),
+    candidate_user_id: userId,
+    candidate_lease_token: leaseToken,
+  }, 'Weekly delivery cancellation');
+}
+
+async function finishWeeklyDelivery(
+  supabase: DigestSupabase,
+  weekStart: Date,
+  userId: string,
+  leaseToken: string,
+  providerResult: WeeklyDigestProviderResult,
+): Promise<boolean> {
+  return booleanRpc(supabase, 'weekly_digest_finish_v1', {
+    candidate_week_start: editionDate(weekStart),
+    candidate_user_id: userId,
+    candidate_lease_token: leaseToken,
+    candidate_delivered: providerResult.kind === 'sent',
+    candidate_provider_receipt: providerResult.kind === 'sent' ? providerResult.receipt : null,
+    candidate_provider_status: providerResult.kind === 'rejected' ? providerResult.status : null,
+    candidate_provider_code: providerResult.kind === 'rejected' ? providerResult.code : null,
+  }, 'Weekly delivery finalization');
+}
+
+function parseRecovery(value: unknown): WeeklyRecovery | null {
+  if (value === null) return null;
+  const recovery = objectValue(value);
+  if (!recovery) throw new Error('Weekly delivery recovery returned an invalid result.');
+  if (recovery.outcome === 'reconciliation') return { outcome: 'reconciliation' };
+  if (recovery.outcome !== 'claimed'
+    || typeof recovery.weekStart !== 'string'
+    || editionDate(parseDate(recovery.weekStart)) !== recovery.weekStart
+    || typeof recovery.userId !== 'string'
+    || !UUID.test(recovery.userId)
+    || typeof recovery.leaseToken !== 'string'
+    || !UUID.test(recovery.leaseToken)
+    || typeof recovery.idempotencyKey !== 'string'
+    || !/^weekly-digest-v1\/[0-9a-f]{64}$/u.test(recovery.idempotencyKey)
+    || typeof recovery.envelopeDigest !== 'string'
+    || !SHA256_HEX.test(recovery.envelopeDigest)
+    || typeof recovery.sealedEnvelope !== 'string'
+    || recovery.sealedEnvelope.length < 32
+    || recovery.sealedEnvelope.length > MAX_SEALED_ENVELOPE_CHARS
+    || /[\s\u0000-\u001f\u007f]/u.test(recovery.sealedEnvelope)
+    || typeof recovery.dispatchStartedAt !== 'string'
+    || Number.isNaN(Date.parse(recovery.dispatchStartedAt))) {
+    throw new Error('Weekly delivery recovery returned an invalid result.');
+  }
+  return {
+    outcome: 'claimed',
+    weekStart: recovery.weekStart,
+    userId: recovery.userId,
+    leaseToken: recovery.leaseToken,
+    idempotencyKey: recovery.idempotencyKey,
+    envelopeDigest: recovery.envelopeDigest,
+    sealedEnvelope: recovery.sealedEnvelope,
+    dispatchStartedAt: recovery.dispatchStartedAt,
+  };
+}
+
+async function claimWeeklyRecovery(supabase: DigestSupabase): Promise<WeeklyRecovery | null> {
+  const { data, error } = await supabase.rpc('weekly_digest_recover_v1', {
+    candidate_lease_token: randomUUID(),
+  });
+  if (error) throw databaseFailure('Weekly delivery recovery', error);
+  return parseRecovery(data);
 }
 
 function fixtureRecipient(): RecipientDigest {
   const bodies = computeBodies(new Date('1990-07-13T12:00:00.000Z')).map((body) => ({
     body: body.body,
     lon: body.lon,
-    retrograde: body.retrograde,
   }));
 
   return {
     userId: '00000000-0000-4000-8000-000000000000',
     email: 'fixture@example.com',
+    contentDigest: '0'.repeat(64),
     charts: [{
-      id: 'fixture-chart',
       name: 'Fixture chart',
-      createdAt: '2026-07-07T00:00:00.000Z',
-      updatedAt: '2026-07-07T00:00:00.000Z',
-      birth: {
-        date: '1990-07-13',
-        time: '12:00',
-        timeKnown: true,
-        place: null,
-      },
-      summary: {
-        engineVersion: '1.0.0',
-        utcISO: '1990-07-13T12:00:00.000Z',
-        houseSystem: 'whole',
-        bodies,
-        angles: null,
-        flags: [],
-      },
+      bodies,
     }],
   };
 }
 
+function prepareWeeklyEnvelope(
+  recipient: RecipientDigest,
+  weekStart: Date,
+  unsubscribeToken: string,
+  maxCharts: number,
+  postalAddress: string,
+  from: string,
+  envelopeSecret: string,
+): { envelope: WeeklyDigestRequestEnvelope; sealedEnvelope: string } {
+  const rendered = renderDigest(
+    recipient,
+    weekStart,
+    unsubscribeToken,
+    maxCharts,
+    postalAddress,
+  );
+  const context = { weekStart: editionDate(weekStart), userId: recipient.userId };
+  const envelope = buildWeeklyDigestRequestEnvelope({
+    ...context,
+    from,
+    to: recipient.email,
+    subject: rendered.subject,
+    text: rendered.text,
+    html: rendered.html,
+    unsubscribe: rendered.unsubscribe,
+  });
+  const sealedEnvelope = sealWeeklyDigestRequestEnvelope(
+    envelope,
+    context,
+    envelopeSecret,
+  );
+  if (sealedEnvelope.length > MAX_SEALED_ENVELOPE_CHARS) {
+    throw new Error('Weekly digest sealed envelope exceeds its storage limit.');
+  }
+  return { envelope, sealedEnvelope };
+}
+
+function abortProviderBatch(error: WeeklyDigestProviderAbortError): never {
+  const status = Number.isInteger(error.status) && error.status! >= 100 && error.status! <= 599
+    ? String(error.status)
+    : 'none';
+  const code = typeof error.code === 'string' && SAFE_PROVIDER_CODE.test(error.code)
+    ? error.code
+    : 'none';
+  console.error(
+    `weekly-digest: provider batch abort reason=${error.reason} status=${status} code=${code}; exact sealed replay retained`,
+  );
+  throw new Error('Weekly digest stopped after a non-terminal provider outcome.');
+}
+
+async function sendAndFinalize(
+  supabase: DigestSupabase,
+  weekStart: Date,
+  userId: string,
+  leaseToken: string,
+  envelope: WeeklyDigestRequestEnvelope,
+  resendKey: string,
+  resendRequest: ReturnType<typeof createWeeklyDigestResendRequest>,
+): Promise<WeeklyDigestProviderResult> {
+  let providerResult: WeeklyDigestProviderResult;
+  try {
+    providerResult = await sendWeeklyDigestEnvelope(envelope, resendKey, resendRequest);
+  } catch (error) {
+    if (error instanceof WeeklyDigestProviderAbortError) abortProviderBatch(error);
+    throw new Error('Weekly digest provider dispatch failed before finalization.');
+  }
+
+  const finalized = await finishWeeklyDelivery(
+    supabase,
+    weekStart,
+    userId,
+    leaseToken,
+    providerResult,
+  );
+  if (!finalized) {
+    throw new Error('Weekly delivery provider result could not be finalized; sealed replay remains available.');
+  }
+  return providerResult;
+}
+
 async function run(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
-  const maxSends = Math.min(envInt('DIGEST_MAX_SENDS', DEFAULT_LIMIT), HARD_SEND_CEILING);
+  const runStartedAt = new Date();
+  const maxSends = Math.min(
+    envInt('DIGEST_MAX_SENDS', DEFAULT_LIMIT, HARD_SEND_CEILING),
+    HARD_SEND_CEILING,
+  );
   const limit = Math.min(options.limit ?? maxSends, maxSends, HARD_SEND_CEILING);
-  const maxCharts = envInt('DIGEST_MAX_CHARTS_PER_USER', DEFAULT_CHARTS_PER_USER);
-  const weekStart = options.weekStart ?? mondayFor(new Date());
+  const maxCharts = envInt(
+    'DIGEST_MAX_CHARTS_PER_USER',
+    DEFAULT_CHARTS_PER_USER,
+    MAX_CHARTS_PER_USER,
+  );
+  const currentWeek = mondayFor(runStartedAt);
+  const weekStart = options.weekStart ?? currentWeek;
   const resendKey = process.env.RESEND_API_KEY;
+  const envelopeSecret = process.env.EMAIL_CONFIRM_SECRET;
   if (!options.dryRun && !resendKey) throw new Error('RESEND_API_KEY is required when sending.');
+  if (!options.dryRun
+    && (!envelopeSecret
+      || envelopeSecret.length < 32
+      || Buffer.byteLength(envelopeSecret, 'utf8') < 32
+      || Buffer.byteLength(envelopeSecret, 'utf8') > 4_096)) {
+    throw new Error('EMAIL_CONFIRM_SECRET must be 32 to 4096 UTF-8 bytes when sending.');
+  }
+  if (!options.dryRun && editionDate(weekStart) !== editionDate(currentWeek)) {
+    throw new Error('Live weekly delivery is limited to the current UTC week.');
+  }
+  if (!options.dryRun && !options.recoveryOnly && !liveCreationWindow(runStartedAt)) {
+    throw new Error('New live weekly deliveries are limited to Monday before 19:00 UTC.');
+  }
+  if (!options.dryRun) assertLiveBaseUrl();
 
   // Same posture as the daily pipeline: a live commercial send carries the
   // sender's physical postal address or does not go out at all.
@@ -432,50 +731,214 @@ async function run(): Promise<void> {
   if (!postalAddress) throw new Error('DAILY_EMAIL_POSTAL_ADDRESS is required when sending.');
 
   const supabase = options.fixture ? null : adminClient();
-  const recipients = options.fixture ? [fixtureRecipient()] : await loadRecipients(limit, supabase!);
-  console.log(`weekly-digest: ${recipients.length} recipient(s), week ${rangeLabel(weekStart)}, dryRun=${options.dryRun}`);
-
-  if (!options.dryRun && supabase) {
-    // The migration and its narrow RPC must exist before any live send. A
-    // missing table therefore fails closed before Resend sees a recipient.
-    await pruneExpiredUnsubscribeTokens(supabase, new Date());
-  }
-
   let sent = 0;
   let failed = 0;
-  for (const [recipientIndex, recipient] of recipients.entries()) {
-    const unsubscribeToken = options.dryRun
-      ? DRY_RUN_UNSUBSCRIBE_TOKEN
-      : await storeUnsubscribeToken(supabase!, recipient.userId, new Date());
-    const rendered = renderDigest(recipient, weekStart, unsubscribeToken, maxCharts, postalAddress);
-    const to = options.to ?? recipient.email;
+  let skipped = 0;
+  let reconciliation = 0;
+  let attempts = 0;
 
-    if (options.dryRun) {
+  if (options.dryRun) {
+    const candidateIds = options.fixture
+      ? [fixtureRecipient().userId]
+      : await loadCandidateIds(supabase!, weekStart, limit);
+    console.log(`weekly-digest: ${candidateIds.length} bounded candidate(s), week ${rangeLabel(weekStart)}, dryRun=true`);
+    for (const [candidateIndex, userId] of candidateIds.entries()) {
+      const recipient = options.fixture
+        ? fixtureRecipient()
+        : await loadRecipientContent(supabase!, userId, maxCharts);
+      if (!recipient) {
+        skipped += 1;
+        continue;
+      }
+      const rendered = renderDigest(
+        recipient,
+        weekStart,
+        DRY_RUN_UNSUBSCRIBE_TOKEN,
+        maxCharts,
+        postalAddress,
+      );
       if (options.fixture) {
         console.log(`\n--- fixture | ${rendered.subject} ---\n${rendered.text}\n`);
       } else {
-        console.log(`weekly-digest: rendered recipient ${recipientIndex + 1}/${recipients.length} (all personalized fields redacted)`);
+        console.log(`weekly-digest: rendered recipient ${candidateIndex + 1}/${candidateIds.length} (all personalized fields redacted)`);
       }
+    }
+    console.log(`weekly-digest: done, sent=0, failed=0, skipped=${skipped}, reconciliation=0, attempted=0, dryRun=true`);
+    return;
+  }
+
+  // Every live operation goes through narrow service-role RPCs. A missing
+  // migration fails closed before Resend sees a recipient.
+  await pruneWeeklyDeliveryState(supabase!);
+  const resendRequest = createWeeklyDigestResendRequest(fetch);
+
+  // Recover ambiguous <=24-hour dispatches first. The opened object contains
+  // the exact original body and idempotency key; no personalized field is
+  // queried or rebuilt for replay.
+  let recoveryScans = 0;
+  let recoveryRequest: ReturnType<typeof createWeeklyDigestResendRequest> | null = null;
+  let recoveryRequestDeadline = 0;
+  while (attempts < limit && recoveryScans < HARD_SEND_CEILING) {
+    const recovery = await claimWeeklyRecovery(supabase!);
+    if (!recovery) break;
+    recoveryScans += 1;
+    if (recovery.outcome === 'reconciliation') {
+      reconciliation += 1;
+      continue;
+    }
+    const context = { weekStart: recovery.weekStart, userId: recovery.userId };
+    const envelope = openWeeklyDigestRequestEnvelope(
+      recovery.sealedEnvelope,
+      context,
+      envelopeSecret!,
+    );
+    if (!envelope
+      || envelope.idempotencyKey !== recovery.idempotencyKey
+      || weeklyDigestEnvelopeDigest(envelope) !== recovery.envelopeDigest) {
+      throw new Error('Weekly delivery recovery integrity validation failed; no request was sent.');
+    }
+    const providerDeadline = Date.parse(recovery.dispatchStartedAt)
+      + RESEND_IDEMPOTENCY_WINDOW_MS
+      - RESEND_IDEMPOTENCY_SAFETY_MARGIN_MS;
+    if (Date.now() >= providerDeadline) {
+      throw new Error('Weekly delivery recovery no longer has a safe provider replay window; no request was sent.');
+    }
+    if (!recoveryRequest) {
+      // Recovery claims are oldest-first. Reuse the first (earliest) absolute
+      // deadline for one serialized provider queue, preserving team-wide
+      // pacing while remaining conservative for every later envelope.
+      recoveryRequestDeadline = providerDeadline;
+      recoveryRequest = createWeeklyDigestResendRequest(fetch, {
+        absoluteDeadlineMs: recoveryRequestDeadline,
+      });
+    } else if (providerDeadline < recoveryRequestDeadline) {
+      throw new Error('Weekly recovery ordering changed during the run; no later request was sent.');
+    }
+
+    attempts += 1;
+    const result = await sendAndFinalize(
+      supabase!,
+      parseDate(recovery.weekStart),
+      recovery.userId,
+      recovery.leaseToken,
+      envelope,
+      resendKey!,
+      recoveryRequest,
+    );
+    if (result.kind === 'sent') {
+      sent += 1;
+      console.log(`weekly-digest: recovered and finalized ${sent}/${attempts} attempted delivery(s)`);
+    } else {
+      failed += 1;
+      console.error(`weekly-digest: recovered delivery rejected status=${result.status} code=${result.code}`);
+    }
+  }
+
+  const candidateLimit = limit - attempts;
+  const candidateIds = !options.recoveryOnly && candidateLimit > 0
+    ? await loadCandidateIds(supabase!, weekStart, candidateLimit)
+    : [];
+  console.log(`weekly-digest: ${candidateIds.length} bounded new candidate(s), week ${rangeLabel(weekStart)}, dryRun=false`);
+
+  for (const [candidateIndex, userId] of candidateIds.entries()) {
+    if (attempts >= limit) break;
+
+    const reservation = await reserveWeeklyDelivery(
+      supabase!,
+      weekStart,
+      userId,
+      runStartedAt,
+    );
+    if (!reservation) {
+      skipped += 1;
       continue;
     }
 
-    // One bad address or a Resend 429 must not sink the rest of the batch.
+    let recipient: RecipientDigest | null;
     try {
-      await sendEmail(resendKey!, to, rendered.subject, rendered.text, rendered.html, rendered.unsubscribe);
-      sent += 1;
-      console.log(`weekly-digest: sent ${sent}/${recipients.length}`);
-    } catch (error) {
-      failed += 1;
-      console.error(`weekly-digest: recipient ${recipientIndex + 1}/${recipients.length} failed: ${error instanceof Error ? error.message : 'unknown error'}`);
+      recipient = await loadRecipientContent(supabase!, userId, maxCharts);
+    } catch {
+      await cancelWeeklyDelivery(supabase!, weekStart, userId, reservation.leaseToken);
+      throw new Error('Weekly recipient lookup failed after its reservation was cancelled.');
     }
-    await sleep(SEND_INTERVAL_MS); // gentle pace for Resend's rate limit
+    if (!recipient) {
+      await cancelWeeklyDelivery(supabase!, weekStart, userId, reservation.leaseToken);
+      skipped += 1;
+      continue;
+    }
+
+    let prepared: ReturnType<typeof prepareWeeklyEnvelope> | null = null;
+    let authorized = false;
+    try {
+      // Re-fetch after rendering and immediately before the authorization RPC.
+      // If content moved, rebuild once; a second movement is skipped. The RPC
+      // itself repeats the digest/consent check under the profile row lock.
+      for (let refresh = 0; refresh < 2; refresh += 1) {
+        prepared = prepareWeeklyEnvelope(
+          recipient,
+          weekStart,
+          reservation.unsubscribeToken,
+          maxCharts,
+          postalAddress,
+          process.env.DIGEST_FROM_EMAIL || 'Zodiacs.org <hello@zodiacs.org>',
+          envelopeSecret!,
+        );
+        const refreshed = await loadRecipientContent(supabase!, userId, maxCharts);
+        if (!refreshed) break;
+        if (refreshed.contentDigest === recipient.contentDigest) {
+          authorized = await authorizeWeeklyDelivery(
+            supabase!,
+            weekStart,
+            userId,
+            reservation.leaseToken,
+            prepared.envelope,
+            recipient.contentDigest,
+            prepared.sealedEnvelope,
+            maxCharts,
+          );
+          break;
+        }
+        recipient = refreshed;
+        prepared = null;
+      }
+    } catch {
+      await cancelWeeklyDelivery(supabase!, weekStart, userId, reservation.leaseToken);
+      throw new Error('Weekly digest preparation failed after its reservation was cancelled.');
+    }
+
+    if (!authorized || !prepared) {
+      await cancelWeeklyDelivery(supabase!, weekStart, userId, reservation.leaseToken);
+      skipped += 1;
+      continue;
+    }
+
+    attempts += 1;
+    const providerResult = await sendAndFinalize(
+      supabase!,
+      weekStart,
+      userId,
+      reservation.leaseToken,
+      prepared.envelope,
+      resendKey!,
+      resendRequest,
+    );
+    if (providerResult.kind === 'rejected') {
+      failed += 1;
+      console.error(
+        `weekly-digest: recipient ${candidateIndex + 1}/${candidateIds.length} rejected status=${providerResult.status} code=${providerResult.code}`,
+      );
+      continue;
+    }
+
+    sent += 1;
+    console.log(`weekly-digest: sent ${sent}/${attempts} attempted delivery(s)`);
   }
 
-  console.log(`weekly-digest: done, sent=${sent}, failed=${failed}, dryRun=${options.dryRun}`);
-  if (failed > 0) throw new Error(`weekly-digest: ${failed} of ${recipients.length} send(s) failed`);
+  console.log(`weekly-digest: done, sent=${sent}, failed=${failed}, skipped=${skipped}, reconciliation=${reconciliation}, attempted=${attempts}, dryRun=false`);
+  if (failed > 0) throw new Error(`weekly-digest: ${failed} explicit provider rejection(s)`);
 }
 
 run().catch((error) => {
-  console.error(error instanceof Error ? error.message : error);
+  console.error(error instanceof Error ? error.message : 'Weekly digest failed with an unknown error.');
   process.exit(1);
 });

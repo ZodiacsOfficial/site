@@ -87,19 +87,19 @@ These values may appear in client bundles. They must never contain a secret.
 
 | Variable | Scope | Meaning |
 | --- | --- | --- |
-| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server + GitHub Actions secret | Server-only Supabase credential for the features that explicitly require broad server authority. Weekly-digest recipient selection and capability insertion use it only in GitHub Actions; `/api/unsubscribe` uses a narrow RPC with the public key instead. Never expose the service role to a browser. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server + feature-specific GitHub environment secret | Server-only Supabase credential for the features that explicitly require broad server authority. Weekly-digest recipient selection and capability insertion use it only in the exact-`main` weekly environment; `/api/unsubscribe` uses a narrow RPC with the public key instead. Never expose the service role to a browser or repository-level Actions scope. |
 | `COMPAT_INVITES_ENABLED` | Vercel server flag | Must equal `1` to create, exchange, or read Phase 4 invitations. Status, revocation, hiding, completion replay, and cleanup remain available whenever the underlying server contract exists. Leave unset/off until the reviewed canary step. |
 | `COMPAT_INVITES_PUBLIC_ENABLED` | Vercel server authorization | Must equal `1` to authorize creation for any valid signed-in Auth user. It never bypasses authentication or the owned synchronized saved-chart check. Missing or any other value retains canary-only authorization. |
 | `COMPAT_INVITE_TEST_USER_IDS` | Vercel server configuration | Comma-separated list of exact Auth user UUIDs allowed to create invitations while public authorization is off. Missing or empty fails closed: nobody can create. Retain the approved canary owner after launch so disabling `COMPAT_INVITES_PUBLIC_ENABLED` restores the reviewed private boundary. Clearing this value never launches the feature. |
 | `COMPAT_INVITE_BASE_URL` | Vercel server configuration, optional | HTTPS site origin used in the one-time creation URL; defaults to `https://zodiacs.org`. |
-| `COMPAT_INVITE_SWEEP_SECRET` | Vercel + GitHub Actions secret | At least 32 characters. The same value authenticates the hourly cleanup workflow to the server endpoint. |
+| `COMPAT_INVITE_SWEEP_SECRET` | Vercel + `compatibility-invite-production` environment secret | At least 32 characters. The same value authenticates the hourly cleanup workflow to the server endpoint. |
 | `ACCOUNT_SYNC_V2_API_ENABLED` | Vercel server flag | Must equal exactly `1` for new enrollment and ordinary v2 sync. Missing or any other value fails closed. It is a sync-canary switch, not a privacy-rights switch: export, deletion recovery, consent withdrawal, and removal of an existing remote chart remain available during rollback. |
 | `ACCOUNT_SYNC_V2_CANARY_USER_IDS` | Vercel server configuration | Comma-separated list of 1–100 exact Auth user UUIDs admitted to the private sync canary. Missing, empty, malformed, or oversized configuration denies enrollment, upload, and read calls; it never creates public access. |
 | `ACCOUNT_SYNC_V2_ENCRYPTION_KEYS` | Vercel server secret | JSON object containing 1–16 positive numeric key versions mapped to canonical base64 32-byte service-managed encryption keys. Retain older keys until every envelope using them has been re-encrypted or deleted. Never use a `PUBLIC_` prefix. |
 | `ACCOUNT_SYNC_V2_ACTIVE_KEY_VERSION` | Vercel server configuration | Positive version present in `ACCOUNT_SYNC_V2_ENCRYPTION_KEYS`; new chart and provider-locator envelopes use this version. Change it only as part of a reviewed key-rotation plan. |
 | `ACCOUNT_SYNC_V2_FINGERPRINT_KEYS` | Vercel server secret | Separate JSON keyring containing 1–4 positive numeric versions mapped to canonical base64 32-byte HMAC keys for mutation and deletion-recovery verifiers. It must not reuse an encryption key or enter a browser bundle. |
 | `ACCOUNT_SYNC_V2_ACTIVE_FINGERPRINT_KEY_VERSION` | Vercel server configuration | Positive version present in `ACCOUNT_SYNC_V2_FINGERPRINT_KEYS`; new verifiers use this version while retries may use retained versions during rotation. |
-| `ACCOUNT_SYNC_V2_CLEANUP_SECRET` | Vercel + GitHub Actions secret | 32–512 characters. The same value authenticates the hourly, fixed-256-row deletion-receipt cleanup request. It grants no account/user API access and must not use a `PUBLIC_` prefix. Do not provision it until the account-v2 migration and endpoint are approved for deployment. |
+| `ACCOUNT_SYNC_V2_CLEANUP_SECRET` | Vercel + `account-cleanup-production` environment secret | 32–512 characters. The same value authenticates the hourly, fixed-256-row deletion-receipt cleanup request. It grants no account/user API access and must not use a `PUBLIC_` prefix. Do not provision it until the account-v2 migration and endpoint are approved for deployment. |
 | `COMPAT_INVITE_RECIPIENT_HASH_SECRET` | Vercel server secret | At least 32 characters. HMACs the resolved account email for the one-shot completion-email delivery claim; raw email is never stored in the Phase 4 tables. |
 
 ### Standalone email capture
@@ -111,10 +111,10 @@ Resend, the program standard:
 | Variable | Requirement | Meaning |
 | --- | --- | --- |
 | `EMAIL_PROVIDER` | Required | Set to `resend`. |
-| `RESEND_API_KEY` | Required, server/CI secret | Sending-access Resend key used only to send confirmation and daily messages. |
-| `RESEND_CONTACTS_API_KEY` | Required, server/CI secret | Separate full-access Resend key used only for contact and segment operations. It must differ from `RESEND_API_KEY`. |
+| `RESEND_API_KEY` | Required, server/protected-environment secret | Sending-access Resend key used only to send confirmation and daily messages. |
+| `RESEND_CONTACTS_API_KEY` | Required, server/`daily-email-production` environment secret | Separate full-access Resend key used only for contact and segment operations. It must differ from `RESEND_API_KEY`. |
 | `RESEND_FROM_EMAIL` | Required | Verified sender used for confirmation mail. |
-| `EMAIL_CONFIRM_SECRET` | Required, server secret | At least 32 characters; signs 48-hour confirmation tokens. |
+| `EMAIL_CONFIRM_SECRET` | Required, server secret | An independently generated random value of at least 32 bytes (for example, `openssl rand -base64 48`); derives the AES-256-GCM key for opaque 48-hour confirmation tokens. Do not reuse an API key or passphrase. |
 | `EMAIL_CONFIRM_BASE_URL` | Optional | HTTPS site origin; defaults to `https://zodiacs.org`. |
 | `RESEND_SEGMENT_ID` | Required for any future Resend standalone release | Segment assigned only after explicit confirmation. A Segment alone is not a sender. |
 | `RESEND_SIGN_PROPERTY` | Optional | Contact property for Sun sign; defaults to `sun_sign`. |
@@ -136,6 +136,28 @@ has no standalone weekly Segment sender, so keep that flag unset. Resend
 confirmation `GET` is read-only for mail-scanner safety; the explicit form
 `POST` creates the Contact with its Segment only after confirmation.
 
+### GitHub Actions secret boundary
+
+`main` must remain protected and repository- and organization-level Actions
+secret scopes must remain empty. Put each credential only in an environment
+whose deployment policy selects the exact `main` branch:
+
+| Environment | Secrets |
+| --- | --- |
+| `account-cleanup-production` | `ACCOUNT_SYNC_V2_CLEANUP_SECRET` when account sync v2 is released |
+| `compatibility-invite-production` | `COMPAT_INVITE_SWEEP_SECRET` |
+| `database-backup-production` | `SUPABASE_DB_URL`, `BACKUP_PASSPHRASE` |
+| `daily-email-production` | daily hash/allowlist/unsubscribe secrets, both Resend keys, segment IDs, and `SUPABASE_SERVICE_ROLE_KEY` |
+| `daily-push-production` | `SUPABASE_SERVICE_ROLE_KEY`, `VAPID_PRIVATE_KEY` |
+| `weekly-digest-production` | `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `EMAIL_CONFIRM_SECRET` |
+| `preview-smoke-production` | `VERCEL_AUTOMATION_BYPASS_SECRET` |
+
+Set the nonsecret repository variable `VERCEL_PROJECT_ID` to the linked Vercel
+project ID. Preview smoke runs only from default-branch workflow code, only for
+Vercel's `vercel.deployment.ready` dispatch, and only when that project ID,
+project name, preview environment, bot actor, and team hostname family all
+match.
+
 ### Digest and Phase 3 daily email
 
 | Variable | Scope | Meaning |
@@ -143,16 +165,17 @@ confirmation `GET` is read-only for mail-scanner safety; the explicit form
 | `DIGEST_FROM_EMAIL` | GitHub variable, optional | Sender; defaults to `Zodiacs.org <hello@zodiacs.org>`. |
 | `DIGEST_BASE_URL` | GitHub variable, optional | Site origin; defaults to `https://zodiacs.org`. |
 | `DIGEST_ENABLED` | GitHub variable | Set to the string `true` only after the fixture dry-run, a limit-one live canary, and an end-to-end unsubscribe confirmation `POST` all pass. The sender hard-caps every run at 80 recipients. |
+| `EMAIL_CONFIRM_SECRET` | `weekly-digest-production` environment secret | Dedicated independently generated random value of at least 32 bytes used only to seal exact weekly-provider replay envelopes. Store it with `RESEND_API_KEY` and `SUPABASE_SERVICE_ROLE_KEY` in the default-branch-restricted environment, not at repository or organization scope. |
 | `DAILY_EMAIL_ENABLED` | Vercel server flag + GitHub variable | Must equal the literal string `1`. In Vercel it exposes daily enrollment; in GitHub it permits real delivery. Leave both off until their release gates pass. |
 | `DAILY_EMAIL_COHORT` | Sender environment | Must be `test` or `all`. The committed workflow hardcodes `test` and exposes no cohort input; `all` remains dormant CLI support for a later approved release change. |
 | `DAILY_EMAIL_ALL_APPROVED` | Reserved GitHub variable / sender environment | Independent general-audience interlock. The sender requires the literal string `1` for a real `all`-cohort send, but the committed workflow does not read this variable or offer an `all` path. |
-| `DAILY_EMAIL_TEST_ALLOWLIST` | GitHub secret | Required for the `test` cohort. JSON array or comma/whitespace-separated list of normalized recipient addresses. |
-| `DAILY_EMAIL_RECIPIENT_HASH_SECRET` | Vercel server + GitHub Actions secret | At least 32 characters. HMACs normalized addresses for cross-tier suppression, revocation, receipts, and idempotency without storing raw email. Use the same value in both runtimes. |
-| `DAILY_EMAIL_UNSUBSCRIBE_SECRET` | Vercel server + GitHub Actions secret | At least 32 characters. Signs permanent first-party daily-unsubscribe links. Keep available while delivery is off; rotation invalidates links and requires an explicit migration plan. |
+| `DAILY_EMAIL_TEST_ALLOWLIST` | `daily-email-production` environment secret | Required for the `test` cohort. JSON array or comma/whitespace-separated list of normalized recipient addresses. |
+| `DAILY_EMAIL_RECIPIENT_HASH_SECRET` | Vercel server + `daily-email-production` environment secret | At least 32 characters. HMACs normalized addresses for cross-tier suppression, revocation, receipts, and idempotency without storing raw email. Use the same value in both runtimes. |
+| `DAILY_EMAIL_UNSUBSCRIBE_SECRET` | Vercel server + `daily-email-production` environment secret | At least 32 characters. Signs permanent first-party daily-unsubscribe links. Keep available while delivery is off; rotation invalidates links and requires an explicit migration plan. |
 | `DAILY_EMAIL_FROM` | GitHub variable, optional | Verified daily sender; defaults to `Zodiacs.org <hello@zodiacs.org>`. This is distinct from `RESEND_FROM_EMAIL`, which sends confirmation mail. |
 | `DAILY_EMAIL_BASE_URL` | GitHub variable, optional | HTTPS site origin used in daily links; defaults to `https://zodiacs.org`. |
 | `DAILY_EMAIL_POSTAL_ADDRESS` | GitHub variable | Physical sender address printed in every HTML and plain-text daily email. Required for real delivery; never use a placeholder in a test-list or audience send. |
-| `RESEND_DAILY_SEGMENT_ID` | Vercel server + GitHub Actions secret | One dedicated Resend segment for confirmed sun-sign daily contacts. It must differ from the legacy weekly `RESEND_SEGMENT_ID`. |
+| `RESEND_DAILY_SEGMENT_ID` | Vercel server + `daily-email-production` environment secret | One dedicated Resend segment for confirmed sun-sign daily contacts. It must differ from the legacy weekly `RESEND_SEGMENT_ID`. |
 
 The Vercel daily-email endpoints require `EMAIL_PROVIDER=resend`, distinct `RESEND_API_KEY` and `RESEND_CONTACTS_API_KEY` capability keys, `RESEND_FROM_EMAIL`, `EMAIL_CONFIRM_SECRET`, `PUBLIC_SUPABASE_URL`, exactly one public Supabase browser key, `SUPABASE_SERVICE_ROLE_KEY`, and `RESEND_DAILY_SEGMENT_ID`; `EMAIL_CONFIRM_BASE_URL` is the optional origin override. GitHub delivery requires `PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, both distinct Resend keys, `DAILY_EMAIL_ENABLED`, `DAILY_EMAIL_RECIPIENT_HASH_SECRET`, `DAILY_EMAIL_UNSUBSCRIBE_SECRET`, `DAILY_EMAIL_POSTAL_ADDRESS`, `RESEND_DAILY_SEGMENT_ID`, and the test allowlist. When the legacy weekly capture uses `RESEND_SEGMENT_ID`, provide that value to the daily-email runtime too so equality is rejected fail-closed. The workflow itself supplies `DAILY_EMAIL_COHORT=test`. Dormant direct-CLI `all` support additionally requires `DAILY_EMAIL_ALL_APPROVED=1`, but it is not a release path until an approved workflow change deliberately exposes it. The daily sender and base URL have the defaults above. Store secret values only in each platform's secret store.
 
@@ -221,7 +244,7 @@ If the key, flag, provider, output schema, fact audit, or copy gate is unavailab
 | `PUSH_ENABLED` | Vercel server/build env | Must equal `1`; enables the endpoint and stamps the worker push handler on. |
 | `PUBLIC_VAPID_KEY` | Vercel public env | Browser-visible VAPID public key. |
 | `VAPID_PUBLIC_KEY` | GitHub variable/server config | Delivery-side public key. |
-| `VAPID_PRIVATE_KEY` | GitHub secret | Delivery-side private key. |
+| `VAPID_PRIVATE_KEY` | `daily-push-production` environment secret | Delivery-side private key. |
 | `VAPID_SUBJECT` | GitHub variable | Contact URI, normally a `mailto:` address. |
 | `PUSH_TEST_SUBSCRIPTION_IDS` | GitHub variable | Optional comma-separated list of at most 50 exact subscription IDs. Required for a real pre-enable test send; omitted for the enabled production schedule. |
 
@@ -468,8 +491,8 @@ Security checklist:
 6. Create one dedicated daily Sun Resend segment and configure its ID as `RESEND_DAILY_SEGMENT_ID` identically in Vercel and GitHub Actions. It must not equal the legacy weekly `RESEND_SEGMENT_ID`.
 7. Configure the weekly-digest and Phase 3 daily secrets/variables only through
    their separate owner-approved releases. Weekly unsubscribe uses the existing
-   Vercel public Supabase URL/key and must not receive the service-role key or a
-   digest HMAC secret.
+   Vercel public Supabase URL/key and must not receive the service-role key or
+   the weekly envelope-sealing secret.
 8. Test scanner-safe confirmation, token expiry, replay no-op, RFC 8058 one-click unsubscribe, and an existing-unsubscribed contact.
 9. Keep `DIGEST_ENABLED` and both instances of `DAILY_EMAIL_ENABLED` off until
    their independent acceptance evidence is recorded in the feature runbooks.
@@ -576,7 +599,7 @@ All schedules are UTC.
 | `.github/workflows/daily-email.yml` | Hourly at UTC minute 13 | Runs a credential-free fixture smoke; when explicitly enabled, verifies the exact live edition and selects eligible test-list recipients. | Off by default; real delivery requires GitHub `DAILY_EMAIL_ENABLED=1`. Workflow is hardcoded to `test`; no general-audience path exists. |
 | `.github/workflows/compat-invite-sweep.yml` | Hourly at UTC minute 17 | Closes overdue Phase 4 invitations in bounded batches and prunes 30-day evidence; missing configuration exits cleanly. | Released, provisioned, and required while invitations can exist. |
 | `.github/workflows/account-deletion-receipt-cleanup.yml` | Hourly at UTC minute 37 | Sends one authenticated request that removes at most 256 expired account-deletion receipts and 256 expired provider leases; missing configuration exits without a request. | Committed only; leave unprovisioned until account sync v2 is approved. Required once deletion receipts can exist. |
-| `.github/workflows/weekly-digest.yml` | Monday 06:00 | Fixture smoke always; real send only when `DIGEST_ENABLED=true`. | Off by default. |
+| `.github/workflows/weekly-digest.yml` | Monday 06:00, 06:15, 07:00, 10:00, 18:00; Tuesday recovery at 05:00/05:15, 06:00/06:15, 07:00/07:15, 10:00/10:15, 17:00/17:15 | Fixture smoke always. Scheduled delivery/recovery requires `DIGEST_ENABLED=true`; an explicit manual `dry_run=false` dispatch is the separately controlled limit-one canary path and does not use that schedule gate. | Off by default; live credentials exist only in the default-branch-restricted `weekly-digest-production` environment. |
 | `.github/workflows/pulse-refresh.yml` | Monday 06:17 | Refreshes Wikipedia/Trends pulse data and commits changes. | Existing, best effort. |
 | `.github/workflows/distribution-refresh.yml` | Monday 06:31 | Refreshes Registry ownership distribution and commits changes. | Existing Registry operation. |
 | `.github/workflows/push-daily.yml` | Daily 07:00 | Verifies the committed events publication and dry-runs the July 18 event plus the July 22 quiet day; when enabled, applies the global priority/cap schedule, sends at most one source-backed event alert, and otherwise sends nothing. | Off by default; real delivery requires GitHub `PUSH_ENABLED=true`. |

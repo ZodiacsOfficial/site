@@ -4,6 +4,7 @@
 // granted SECURITY DEFINER RPC. Vercel receives the already-public Supabase
 // browser key, never the database-wide service role or a signing secret.
 const TOKEN = /^[A-Za-z0-9_-]{43}$/u;
+const UNSUBSCRIBE_RPC_TIMEOUT_MS = 5_000;
 
 function send(res: any, status: number, type: string, body: string): void {
   res.statusCode = status;
@@ -47,7 +48,7 @@ function weeklyDigestPage(
 function confirmPage(action: string): string {
   return weeklyDigestPage(
     'Unsubscribe?',
-    'This stops the weekly digest for this address. One click, effective immediately.',
+    'This turns off the weekly digest preference for this address now. A message already in flight may still arrive.',
     { kind: 'form', action, label: 'Confirm unsubscribe' },
   );
 }
@@ -57,7 +58,7 @@ function donePage(): string {
   // unlike the two daily lists, it does not send a fresh confirmation email.
   return weeklyDigestPage(
     'Done — you’re unsubscribed.',
-    'No more weekly digest. If you change your mind, restart it from your profile.',
+    'Your weekly digest preference is off. A message already in flight may still arrive. You can restart it from your profile.',
     { kind: 'link', href: '/profile/#weekly-digest', label: 'Restart the weekly digest' },
   );
 }
@@ -103,6 +104,7 @@ export default async function handler(req: any, res: any): Promise<void> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ candidate_token: token }),
+      signal: AbortSignal.timeout(UNSUBSCRIBE_RPC_TIMEOUT_MS),
     });
     if (response.ok) {
       outcome = await response.json() === true ? 'success' : 'invalid';

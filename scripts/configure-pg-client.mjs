@@ -57,8 +57,8 @@ const database = oneLine(decode(input.pathname.replace(/^\//u, ''), 'Database na
 const user = oneLine(decode(input.username, 'Database user'), 'Database user');
 const password = oneLine(decode(input.password, 'Database password'), 'Database password');
 const sslmode = oneLine(input.searchParams.get('sslmode') || 'require', 'sslmode');
-if (!/^(?:disable|allow|prefer|require|verify-ca|verify-full)$/u.test(sslmode)) {
-  throw new Error('Database URL has an unsupported sslmode.');
+if (!/^(?:require|verify-ca|verify-full)$/u.test(sslmode)) {
+  throw new Error('Database URL must require TLS (sslmode=require, verify-ca, or verify-full).');
 }
 
 if (!/^\d{1,5}$/u.test(port) || Number(port) < 1 || Number(port) > 65_535) {

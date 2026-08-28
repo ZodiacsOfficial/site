@@ -5,10 +5,42 @@
 -- content and authorization details are represented only by SHA-256 digests,
 -- so the manifest never prints user data.
 set local timezone = 'UTC';
-drop table if exists pg_temp.zodiacs_backup_manifest;
-create temporary table zodiacs_backup_manifest (
-  line text primary key
-);
+set local datestyle = 'ISO, YMD';
+set local intervalstyle = 'postgres';
+set local bytea_output = 'hex';
+set local extra_float_digits = 3;
+set local search_path = pg_catalog;
+
+insert into zodiacs_application_owners (owner_oid)
+select namespace.nspowner
+from pg_catalog.pg_namespace as namespace
+where namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations')
+union
+select relation.relowner
+from pg_catalog.pg_class as relation
+join pg_catalog.pg_namespace as namespace
+  on namespace.oid = relation.relnamespace
+where namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations')
+union
+select procedure.proowner
+from pg_catalog.pg_proc as procedure
+join pg_catalog.pg_namespace as namespace
+  on namespace.oid = procedure.pronamespace
+where namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations')
+union
+select type_record.typowner
+from pg_catalog.pg_type as type_record
+join pg_catalog.pg_namespace as namespace
+  on namespace.oid = type_record.typnamespace
+where namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations');
+
+insert into zodiacs_backup_manifest (line)
+select 'application-owner|' || pg_catalog.encode(
+  pg_catalog.convert_to(pg_catalog.pg_get_userbyid(owner_oid)::text, 'UTF8'),
+  'hex'
+)
+from zodiacs_application_owners
+order by owner_oid;
 
 do $manifest$
 declare
@@ -20,7 +52,7 @@ begin
     from pg_catalog.pg_class as relation
     join pg_catalog.pg_namespace as namespace
       on namespace.oid = relation.relnamespace
-    where relation.relkind in ('r', 'p')
+    where relation.relkind in ('r', 'p', 'm')
       and (
         namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations')
         or (
@@ -44,6 +76,117 @@ begin
   end loop;
 end;
 $manifest$;
+
+-- A row count cannot detect swapped owners, changed consent, or damaged
+-- ciphertext. Hash every complete application row, sort those row hashes, and
+-- fold them into a constant-memory relation digest. jsonb gives deterministic
+-- key ordering without ever printing source data into the manifest.
+do $application_content_manifest$
+declare
+  relation_record record;
+  row_hash_record record;
+  relation_digest bytea;
+begin
+  for relation_record in
+    select namespace.nspname, relation.relname
+    from pg_catalog.pg_class as relation
+    join pg_catalog.pg_namespace as namespace
+      on namespace.oid = relation.relnamespace
+    where namespace.nspname in ('public', 'private', 'living_chart_private')
+      and relation.relkind in ('r', 'p', 'm')
+    order by namespace.nspname, relation.relname
+  loop
+    relation_digest := pg_catalog.sha256(pg_catalog.convert_to(
+      'zodiacs-application-content-v1',
+      'UTF8'
+    ));
+
+    for row_hash_record in execute pg_catalog.format(
+      'select pg_catalog.sha256(pg_catalog.convert_to('
+      || 'pg_catalog.to_jsonb(source_row)::text, ''UTF8'')) as row_hash '
+      || 'from %I.%I as source_row order by 1',
+      relation_record.nspname,
+      relation_record.relname
+    )
+    loop
+      relation_digest := pg_catalog.sha256(
+        relation_digest OPERATOR(pg_catalog.||) row_hash_record.row_hash
+      );
+    end loop;
+
+    insert into zodiacs_backup_manifest (line)
+    values (
+      'application-content|' || relation_record.nspname || '.'
+      || relation_record.relname || '|'
+      || pg_catalog.encode(relation_digest, 'hex')
+    );
+  end loop;
+end;
+$application_content_manifest$;
+
+-- Sequences are not MVCC objects. The exporter appends these sampled values as
+-- final setval calls to application-data.sql, so the restored state and this
+-- manifest record refer to the same sample rather than pg_dump's earlier one.
+do $sequence_state_manifest$
+declare
+  sequence_record record;
+  sequence_last_value text;
+  sequence_is_called boolean;
+begin
+  for sequence_record in
+    select namespace.nspname, relation.relname
+    from pg_catalog.pg_class as relation
+    join pg_catalog.pg_namespace as namespace
+      on namespace.oid = relation.relnamespace
+    where namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations')
+      and relation.relkind = 'S'
+    order by namespace.nspname, relation.relname
+  loop
+    execute pg_catalog.format(
+      'select last_value::text, is_called from %I.%I',
+      sequence_record.nspname,
+      sequence_record.relname
+    ) into sequence_last_value, sequence_is_called;
+
+    insert into zodiacs_backup_manifest (line)
+    values (
+      'sequence-state|' || sequence_record.nspname || '.'
+      || sequence_record.relname || '|' || sequence_last_value || '|'
+      || case when sequence_is_called then 't' else 'f' end
+    );
+  end loop;
+end;
+$sequence_state_manifest$;
+
+insert into zodiacs_backup_manifest (line)
+select 'sequence-definition|' || namespace.nspname || '.' || relation.relname
+  || '|' || pg_catalog.encode(
+    pg_catalog.sha256(pg_catalog.convert_to(
+      pg_catalog.jsonb_build_array(
+        pg_catalog.format_type(sequence_record.seqtypid, null),
+        sequence_record.seqstart,
+        sequence_record.seqincrement,
+        sequence_record.seqmax,
+        sequence_record.seqmin,
+        sequence_record.seqcache,
+        sequence_record.seqcycle
+      )::text,
+      'UTF8'
+    )),
+    'hex'
+  )
+from pg_catalog.pg_sequence as sequence_record
+join pg_catalog.pg_class as relation
+  on relation.oid = sequence_record.seqrelid
+join pg_catalog.pg_namespace as namespace
+  on namespace.oid = relation.relnamespace
+where namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations')
+order by namespace.nspname, relation.relname;
+
+\ir db-auth-column-contract.sql
+insert into zodiacs_backup_manifest (line)
+select line
+from zodiacs_auth_column_contract;
 
 insert into zodiacs_backup_manifest (line)
 select 'auth-users-content|' || pg_catalog.encode(
@@ -93,10 +236,26 @@ select 'schema-security|' || pg_catalog.encode(
     pg_catalog.jsonb_build_array(
       namespace.nspname,
       pg_catalog.pg_get_userbyid(namespace.nspowner),
-      case when namespace.nspacl is null then null else (
-        select pg_catalog.jsonb_agg(acl::text order by acl::text)
-        from pg_catalog.unnest(namespace.nspacl) as acl
-      ) end
+      (
+        select pg_catalog.jsonb_agg(
+          pg_catalog.jsonb_build_array(
+            case
+              when acl.grantee = 0 then 'PUBLIC'
+              else pg_catalog.pg_get_userbyid(acl.grantee)
+            end,
+            pg_catalog.pg_get_userbyid(acl.grantor),
+            acl.privilege_type,
+            acl.is_grantable
+          )
+          order by acl.grantee, acl.grantor, acl.privilege_type, acl.is_grantable
+        )
+        from pg_catalog.aclexplode(
+          coalesce(
+            namespace.nspacl,
+            pg_catalog.acldefault('n', namespace.nspowner)
+          )
+        ) as acl
+      )
     )::text,
     'UTF8'
   )),
@@ -118,10 +277,32 @@ select 'relation-security|' || pg_catalog.encode(
       relation.relreplident,
       relation.relispopulated,
       pg_catalog.to_jsonb(relation.reloptions),
-      case when relation.relacl is null then null else (
-        select pg_catalog.jsonb_agg(acl::text order by acl::text)
-        from pg_catalog.unnest(relation.relacl) as acl
-      ) end
+      (
+        select pg_catalog.jsonb_agg(
+          pg_catalog.jsonb_build_array(
+            case
+              when acl.grantee = 0 then 'PUBLIC'
+              else pg_catalog.pg_get_userbyid(acl.grantee)
+            end,
+            pg_catalog.pg_get_userbyid(acl.grantor),
+            acl.privilege_type,
+            acl.is_grantable
+          )
+          order by acl.grantee, acl.grantor, acl.privilege_type, acl.is_grantable
+        )
+        from pg_catalog.aclexplode(
+          coalesce(
+            relation.relacl,
+            pg_catalog.acldefault(
+              case
+                when relation.relkind = 'S' then 's'::pg_catalog."char"
+                else 'r'::pg_catalog."char"
+              end,
+              relation.relowner
+            )
+          )
+        ) as acl
+      )
     )::text,
     'UTF8'
   )),
@@ -218,7 +399,59 @@ join pg_catalog.pg_class as relation
 join pg_catalog.pg_namespace as namespace
   on namespace.oid = relation.relnamespace
 where namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations')
+  and not trigger_record.tgisinternal
 order by relation.relname, trigger_record.tgname;
+
+-- Constraint-backed internal trigger names contain newly allocated OIDs and
+-- cannot survive a logical restore byte-for-byte. Hash every stable semantic
+-- field instead, including enabled state, so FK enforcement is still covered.
+insert into zodiacs_backup_manifest (line)
+select 'internal-trigger|' || pg_catalog.encode(
+  pg_catalog.sha256(pg_catalog.convert_to(
+    pg_catalog.jsonb_build_array(
+      child_namespace.nspname,
+      child_relation.relname,
+      referenced_namespace.nspname,
+      referenced_relation.relname,
+      constraint_namespace.nspname,
+      constraint_record.conname,
+      procedure_namespace.nspname,
+      procedure.proname,
+      pg_catalog.pg_get_function_identity_arguments(procedure.oid),
+      trigger_record.tgtype,
+      trigger_record.tgenabled,
+      trigger_record.tgdeferrable,
+      trigger_record.tginitdeferred,
+      pg_catalog.encode(trigger_record.tgargs, 'hex'),
+      pg_catalog.pg_get_expr(trigger_record.tgqual, trigger_record.tgrelid, true)
+    )::text,
+    'UTF8'
+  )),
+  'hex'
+)
+from pg_catalog.pg_trigger as trigger_record
+join pg_catalog.pg_class as child_relation
+  on child_relation.oid = trigger_record.tgrelid
+join pg_catalog.pg_namespace as child_namespace
+  on child_namespace.oid = child_relation.relnamespace
+join pg_catalog.pg_proc as procedure
+  on procedure.oid = trigger_record.tgfoid
+join pg_catalog.pg_namespace as procedure_namespace
+  on procedure_namespace.oid = procedure.pronamespace
+left join pg_catalog.pg_class as referenced_relation
+  on referenced_relation.oid = trigger_record.tgconstrrelid
+left join pg_catalog.pg_namespace as referenced_namespace
+  on referenced_namespace.oid = referenced_relation.relnamespace
+left join pg_catalog.pg_constraint as constraint_record
+  on constraint_record.oid = trigger_record.tgconstraint
+left join pg_catalog.pg_namespace as constraint_namespace
+  on constraint_namespace.oid = constraint_record.connamespace
+where child_namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations')
+  and trigger_record.tgisinternal
+order by child_namespace.nspname, child_relation.relname,
+  constraint_namespace.nspname, constraint_record.conname,
+  procedure_namespace.nspname, procedure.proname,
+  trigger_record.tgtype;
 
 insert into zodiacs_backup_manifest (line)
 select 'constraint|' || pg_catalog.encode(
@@ -295,7 +528,14 @@ order by procedure.proname,
   pg_catalog.pg_get_function_identity_arguments(procedure.oid);
 
 insert into zodiacs_backup_manifest (line)
-select 'default-acl|' || pg_catalog.encode(
+select case
+  when default_acl.defaclnamespace = 0
+  then 'global-default-acl|' || pg_catalog.encode(
+    pg_catalog.convert_to(pg_catalog.pg_get_userbyid(default_acl.defaclrole)::text, 'UTF8'),
+    'hex'
+  ) || '|'
+  else 'default-acl|'
+end || pg_catalog.encode(
   pg_catalog.sha256(pg_catalog.convert_to(
     pg_catalog.jsonb_build_array(
       pg_catalog.pg_get_userbyid(default_acl.defaclrole),
@@ -314,6 +554,13 @@ from pg_catalog.pg_default_acl as default_acl
 left join pg_catalog.pg_namespace as namespace
   on namespace.oid = default_acl.defaclnamespace
 where namespace.nspname in ('public', 'private', 'living_chart_private', 'supabase_migrations')
+  or (
+    default_acl.defaclnamespace = 0
+    and default_acl.defaclrole in (
+      select owner_oid
+      from zodiacs_application_owners
+    )
+  )
 order by default_acl.defaclrole, default_acl.defaclnamespace,
   default_acl.defaclobjtype;
 

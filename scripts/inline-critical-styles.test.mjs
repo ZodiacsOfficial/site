@@ -50,6 +50,31 @@ describe('inlineCriticalStyles', () => {
     expect((await inlineCriticalStyles(unmarked, root)).html).toBe(unmarked);
   });
 
+  it('defers noncritical tool styles without inline handlers or a no-JS gap', async () => {
+    const root = await fixture({
+      'Base.hash.css': ':root{--ink:#fff}',
+      'calculator.hash.css': '.calc{color:var(--ink)}',
+      'explorer.hash.css': '.explorer{display:grid}',
+      'ChartCalculator.hash.css': '.reading{display:block}',
+    });
+    const marked = '<html data-inline-critical-css><head>'
+      + '<link rel="stylesheet" href="/_astro/Base.hash.css">'
+      + '<link rel="stylesheet" href="/_astro/calculator.hash.css">'
+      + '<link rel="stylesheet" href="/_astro/explorer.hash.css">'
+      + '<link rel="stylesheet" href="/_astro/ChartCalculator.hash.css">'
+      + '</head><body></body></html>';
+    const result = await inlineCriticalStyles(marked, root, { deferNonBase: true });
+
+    expect(result.stylesheets).toBe(1);
+    expect(result.html).toContain('<style data-zdx-critical="Base.hash.css">');
+    expect(result.html.match(/<template data-zdx-deferred-style>/g)).toHaveLength(3);
+    expect(result.html.match(/<noscript><link rel="stylesheet"/g)).toHaveLength(3);
+    expect(result.html).toContain('data-zdx-deferred-style-loader');
+    expect(result.html).toContain("window.addEventListener('load', schedule");
+    expect(result.html).not.toMatch(/\bonload=/i);
+    expect(result.html).not.toContain('data-inline-critical-css');
+  });
+
   it.each([
     ['relative URL', '.x{background:url(../image.png)}', 'relative CSS URL'],
     ['CSS import', '@import "/other.css";', '@import is not safe'],

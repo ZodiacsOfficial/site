@@ -256,7 +256,9 @@ cron, not a runtime server.
    invent a second settings path. Localize the string in BOTH catalog
    locales (src/lib/i18n).
 3. Email infra: Resend. Domain-authenticate zodiacs.org (SPF + DKIM),
-   set RESEND_API_KEY and SUPABASE_SERVICE_ROLE_KEY as repo secrets.
+   set RESEND_API_KEY and SUPABASE_SERVICE_ROLE_KEY only as secrets in the
+   exact-`main` `weekly-digest-production` GitHub environment. Never use
+   repository- or organization-scoped Actions secrets.
    List-Unsubscribe header + a signed one-click unsubscribe endpoint
    (a tiny Vercel function is acceptable here; it only flips
    digest_opt_in false for a token it can verify).

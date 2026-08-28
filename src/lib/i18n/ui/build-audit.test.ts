@@ -35,6 +35,34 @@ describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
     );
     expect(tomorrow).toMatch(/<link\b[^>]*\brel=["']stylesheet["']/i);
     expect(tomorrow).not.toContain('<style data-zdx-critical=');
+
+    const russianBirthChart = readFileSync(
+      join(distRoot, 'ru', 'birth-chart', 'index.html'),
+      'utf8',
+    );
+    expect(russianBirthChart.match(/<style\b[^>]*\bdata-zdx-critical=/gi)).toHaveLength(1);
+    expect(russianBirthChart).toMatch(/data-zdx-critical=["']Base\.[^"']+\.css["']/i);
+    expect(russianBirthChart).toContain('data-zdx-calculator-first-paint');
+    expect(russianBirthChart.match(/<template data-zdx-deferred-style>/gi)).toHaveLength(3);
+    expect(russianBirthChart.match(/<noscript><link\b[^>]*\brel=["']stylesheet["']/gi)).toHaveLength(3);
+    expect(russianBirthChart).toContain('data-zdx-deferred-style-loader');
+    expect(russianBirthChart).not.toMatch(/\bonload=/i);
+    expect(russianBirthChart).toContain('client="interaction"');
+    expect(russianBirthChart).not.toContain('client="idle"');
+    expect(russianBirthChart).not.toContain('data-inline-critical-css');
+    expect(russianBirthChart).toContain('data-local-typography');
+    expect(russianBirthChart).toContain('data-local-chrome-typography');
+    expect(russianBirthChart).not.toMatch(/<link\b[^>]*\brel=["']preload["'][^>]*\/fonts\/(?:golos-text|eb-garamond-cyrillic)/i);
+
+    const horoscopeHub = readFileSync(join(distRoot, 'horoscopes', 'index.html'), 'utf8');
+    expect(horoscopeHub).toContain('data-local-typography');
+    expect(horoscopeHub).toContain('data-local-chrome-typography');
+    expect(horoscopeHub).not.toMatch(/<link\b[^>]*\brel=["']preload["'][^>]*\/fonts\/(?:instrument-sans|eb-garamond-latin)/i);
+
+    const peopleDirectory = readFileSync(join(distRoot, 'people', 'index.html'), 'utf8');
+    expect(peopleDirectory).toContain('data-local-typography');
+    expect(peopleDirectory).toContain('data-local-chrome-typography');
+    expect(peopleDirectory).not.toMatch(/<link\b[^>]*\brel=["']preload["'][^>]*\/fonts\/(?:instrument-sans|eb-garamond-latin)/i);
   });
 
   it('installs one locale catalog before every island that uses shared UI copy', () => {

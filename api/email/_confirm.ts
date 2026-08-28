@@ -4,8 +4,15 @@ import {
   createEmailSubscriptionAdapter,
   type EmailSubscriptionAdapter,
 } from '../../src/lib/email/provider.js';
-import { environmentValue, hasStandaloneWeeklyEmailCapture } from '../../src/lib/email/config.js';
-import { verifyEmailOptInToken } from '../../src/lib/email/opt-in-token.js';
+import {
+  emailConfirmationSecret,
+  environmentValue,
+  hasStandaloneWeeklyEmailCapture,
+} from '../../src/lib/email/config.js';
+import {
+  EMAIL_CONFIRMATION_TOKEN_MAX_CHARS,
+  verifyEmailOptInToken,
+} from '../../src/lib/email/opt-in-token.js';
 import { requestHeader } from '../../src/lib/email/request.js';
 import { emailStatusPage } from '../../src/lib/email/server-page.js';
 import type { Locale } from '../../src/lib/i18n/core';
@@ -195,7 +202,11 @@ export default async function handler(req: any, res: any): Promise<void> {
   const token = req.method === 'GET'
     ? (typeof req.query?.token === 'string' ? req.query.token : '')
     : tokenFromBody(req.body);
-  const secret = process.env.EMAIL_CONFIRM_SECRET ?? '';
+  if (token.length === 0 || token.length > EMAIL_CONFIRMATION_TOKEN_MAX_CHARS) {
+    send(res, 400, emailStatusPage('en', 'emailConfirmInvalidTitle', 'emailConfirmInvalidBody'));
+    return;
+  }
+  const secret = emailConfirmationSecret(process.env);
   const claim = secret ? verifyEmailOptInToken(token, secret) : null;
   const publicDaily = dailyEmailFeatureEnabled(process.env);
   const candidateSunClaim = secret ? verifyDailySunOptInToken(token, secret) : null;

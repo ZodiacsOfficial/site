@@ -75,7 +75,7 @@ Registry establishment text consumes the single source `src/lib/registry-establi
 **Implemented locally; live-provider acceptance is pending credentials.**
 
 - Analytics: the Plausible-compatible shim is absent when unset and loads with `defer` only when configured. It canonicalizes paths, nulls outbound referrers, and allowlists the eleven directive events plus existing fixed-enum events. The integration uses no cookies or persistent/browser fingerprinting. Under the accepted bounded exception, Plausible may briefly process the request IP address and User-Agent into a salted site/device/day identifier for aggregate deduplication; raw values are not stored, the salt rotates and is deleted every 24 hours, and no identifier is exposed to Zodiacs.org or Growth OS. It rejects query strings, free text, birth details, chart positions, email values, and wallet addresses. The taxonomy is documented in `docs/ANALYTICS.md`. Local event tests pass; “events visible in analytics” requires a configured deployment and remains pending.
-- Email: one `EmailCapture` powers post-chart, `/horoscopes/`, and astrology-footer placements in all five locale rails. Only normalized email plus optional self-declared sun sign enters the adapter. Resend, Buttondown, and Loops are env-selected and the component is omitted when configuration is incomplete. Scanner-safe signed Resend confirmation and a mocked end-to-end Buttondown request pass. A credentialed delivery/confirmation smoke test against the operator's chosen ESP remains pending.
+- Email: one `EmailCapture` powers post-chart, `/horoscopes/`, and astrology-footer placements in all five locale rails. Only normalized email plus optional self-declared sun sign enters the adapter. Resend, Buttondown, and Loops are env-selected and the component is omitted when configuration is incomplete. Scanner-safe opaque AES-GCM Resend confirmation and a mocked end-to-end Buttondown request pass. A credentialed delivery/confirmation smoke test against the operator's chosen ESP remains pending.
 - OG/Twitter: 45 directive-required images are unique 1200×630 PNGs, use canonical sign art, and are wired per page; the existing `/assets/og/v2/share.png` is still the fallback. The complete rendered inventory appears below.
 - Structured data: homepage `WebSite`, `Organization`, and existing FAQ `FAQPage`; sitewide `BreadcrumbList`; guide/learn `Article` (including the five learn section hubs); and tool `WebApplication` validate with 0 errors. Disclosure references the canonical site `@id`.
 
@@ -149,7 +149,7 @@ The route/API hide unless `PUBLIC_WALLET_CHART_ENABLED=1` and a provider exists.
 | `EMAIL_PROVIDER` | Selects `resend`, `buttondown`, or `loops`. Capture is omitted unless the chosen adapter is complete. |
 | `RESEND_API_KEY` | Server-only Resend API key. |
 | `RESEND_FROM_EMAIL` | Verified sender for the first-party confirmation email. |
-| `EMAIL_CONFIRM_SECRET` | At least 32 characters; signs 48-hour Resend double-opt-in tokens. |
+| `EMAIL_CONFIRM_SECRET` | Independently generated random value of at least 32 bytes; authenticates 48-hour confirmation tokens, with email-bearing standalone and daily-Sun claims sealed by AES-256-GCM. |
 | `EMAIL_CONFIRM_BASE_URL` | Optional HTTPS confirmation origin; defaults to `https://zodiacs.org`. |
 | `RESEND_SEGMENT_ID` | Optional segment assigned only after explicit confirmation. |
 | `RESEND_SIGN_PROPERTY` | Optional selected-sign contact property; defaults to `sun_sign`. |

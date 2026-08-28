@@ -35,9 +35,14 @@ jobs:
   daily-email:
     name: Select and send daily email cohort
     runs-on: ubuntu-latest
+    environment: daily-email-production
+    timeout-minutes: 25
     steps:
-      - name: Checkout
+      - name: Checkout the trusted default branch
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -91,14 +96,14 @@ jobs:
           DAILY_EMAIL_LIMIT: ${{ inputs.limit }}
           DAILY_EMAIL_TO: ${{ inputs.to }}
         run: |
-          ARGS="--limit ${DAILY_EMAIL_LIMIT:-200}"
+          ARGS=(--limit "${DAILY_EMAIL_LIMIT:-200}")
           if [ "${DAILY_EMAIL_DRY_RUN:-false}" = "true" ]; then
-            ARGS="$ARGS --dry-run"
+            ARGS+=(--dry-run)
           fi
           if [ -n "${DAILY_EMAIL_AT:-}" ]; then
-            ARGS="$ARGS --at $DAILY_EMAIL_AT"
+            ARGS+=(--at "$DAILY_EMAIL_AT")
           fi
           if [ -n "${DAILY_EMAIL_TO:-}" ]; then
-            ARGS="$ARGS --to $DAILY_EMAIL_TO"
+            ARGS+=(--to "$DAILY_EMAIL_TO")
           fi
-          npx vite-node --script scripts/send-daily-email.ts $ARGS
+          npx vite-node --script scripts/send-daily-email.ts "${ARGS[@]}"

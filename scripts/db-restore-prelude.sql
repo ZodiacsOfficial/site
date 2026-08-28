@@ -4,10 +4,6 @@
 -- schema before this transactional reset is allowed to run.
 drop schema public;
 
--- PostgreSQL treats public as an initdb-created schema, so pg_dump deliberately
--- does not emit CREATE SCHEMA for it. Recreate the PostgreSQL 15+ baseline that
--- pg_dump expects; generated owner/ACL/comment deltas then replay the source
--- project's exact contract.
-create schema public authorization pg_database_owner;
-grant usage on schema public to public;
-comment on schema public is 'standard public schema';
+-- The generated application pre-data section recreates public with the exact
+-- source owner, ACL, and comment. Creating a baseline schema here would race
+-- that authoritative pg_dump output and make every valid restore fail.

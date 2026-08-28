@@ -19,6 +19,14 @@ async function requireMarkers(relativePath, markers) {
   }
 }
 
+async function rejectMarkers(relativePath, markers) {
+  const source = await readFile(resolve(repoRoot, relativePath), 'utf8').catch(() => null);
+  if (source === null) return;
+  for (const marker of markers) {
+    if (source.includes(marker)) failures.push(`${relativePath}: forbidden ${JSON.stringify(marker)}`);
+  }
+}
+
 async function requireExact(relativePath, expected, label) {
   const source = await readFile(resolve(repoRoot, relativePath), 'utf8').catch(() => null);
   if (source === null) {
@@ -56,9 +64,19 @@ async function nestedHtmlFiles(relativeDirectory) {
 }
 
 await requireMarkers('src/layouts/Base.astro', [
-  "import '../styles/site-footer.css';",
   "import SiteFooter from '../components/SiteFooter.astro';",
   '<SiteFooter',
+  "stylesheet.href = '/assets/site-footer.css';",
+  'if (nearViewport) appendStylesheet();',
+  "window.addEventListener('load', appendAfterLoad, { once: true });",
+  "<noscript><style>@import url('/assets/site-footer.css');</style></noscript>",
+]);
+await rejectMarkers('src/layouts/Base.astro', [
+  "import '../styles/site-footer.css';",
+]);
+await requireMarkers('src/styles/base.css', [
+  'content-visibility: auto;',
+  'contain-intrinsic-size: auto 900px;',
 ]);
 await requireMarkers('src/components/SiteFooter.astro', [
   '<footer class="zfooter">',

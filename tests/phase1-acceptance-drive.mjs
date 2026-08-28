@@ -132,6 +132,12 @@ try {
             transition: none !important;
             caret-color: transparent !important;
           }
+          /* Production skips the far-offscreen footer until a real user
+             approaches it. Full-page screenshots rasterize from the top and
+             can otherwise record only its intrinsic placeholder even after
+             the driver has scrolled through it. Evidence must show the
+             settled footer, so disable only that paint optimization here. */
+          .zfooter { content-visibility: visible !important; }
         ` });
         await page.evaluate(() => {
           document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-in'));

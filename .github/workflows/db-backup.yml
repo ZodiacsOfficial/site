@@ -6,11 +6,13 @@
 #
 # This repository is public, so run artifacts are downloadable by any
 # GitHub account: the AES-256 passphrase is the only confidentiality
-# boundary. That is why BACKUP_PASSPHRASE must be long and random, must
+# boundary. That is why BACKUP_PASSPHRASE must be a single control-free line
+# of at least 32 random bytes (maximum 1024), must
 # never appear in commands, logs, or chat, and why the artifact-handling
 # action below is pinned to a commit SHA.
 #
-# Setup (repo Settings → Secrets and variables → Actions → New repository secret):
+# Setup (repo Settings → Environments → database-backup-production):
+#   Restrict deployment branches/tags to the exact `main` branch, then add:
 #   SUPABASE_DB_URL    the project's "Session pooler" connection string from
 #                      Supabase Dashboard → Connect → Session pooler
 #                      (postgresql://postgres.<ref>:<password>@…:5432/postgres)
@@ -38,35 +40,51 @@ jobs:
   db-backup:
     name: Weekly encrypted pg_dump
     runs-on: ubuntu-latest
+    environment: database-backup-production
+    timeout-minutes: 45
     steps:
       - name: Check configuration
-        id: config
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
           BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
         run: |
           set -euo pipefail
-          if [ -z "$SUPABASE_DB_URL" ] || [ -z "$BACKUP_PASSPHRASE" ]; then
-            echo "::warning title=Backup not configured::Set SUPABASE_DB_URL and BACKUP_PASSPHRASE repository secrets to activate weekly database backups (see the header of .github/workflows/db-backup.yml)."
-            echo "configured=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "configured=true" >> "$GITHUB_OUTPUT"
+          export LC_ALL=C
+          missing=()
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            missing+=(SUPABASE_DB_URL)
           fi
+          if [ -z "$BACKUP_PASSPHRASE" ]; then
+            missing+=(BACKUP_PASSPHRASE)
+          fi
+          if [ "${#missing[@]}" -ne 0 ]; then
+            names=$(IFS=,; echo "${missing[*]}")
+            echo "::error title=Backup configuration missing::Required protected-environment secret(s) are absent: ${names}. No backup was created. See the workflow header for setup."
+            exit 1
+          fi
+          if [[ "$BACKUP_PASSPHRASE" == *$'\n'* || "$BACKUP_PASSPHRASE" == *$'\r'* ]]; then
+            echo "::error title=Backup configuration invalid::BACKUP_PASSPHRASE must contain exactly one control-free line."
+            exit 1
+          fi
+          passphrase_bytes=${#BACKUP_PASSPHRASE}
+          if [ "$passphrase_bytes" -lt 32 ] || [ "$passphrase_bytes" -gt 1024 ]; then
+            echo "::error title=Backup configuration invalid::BACKUP_PASSPHRASE must contain between 32 and 1024 random bytes."
+            exit 1
+          fi
+          echo "Backup configuration is present."
 
       - name: Check out audited backup scripts
-        if: steps.config.outputs.configured == 'true'
         # actions/checkout@v6.1.0
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
-          # Secrets are available in this workflow, so a dispatch may never
-          # substitute scripts from its selected branch.
+          # Scheduled workflows execute only the audited default-branch file;
+          # keep the checkout equally explicit for the scripts it invokes.
           ref: ${{ github.event.repository.default_branch }}
           persist-credentials: false
 
       # The production project runs PostgreSQL 17; the runner image ships
       # client 16, and pg_dump refuses servers newer than itself.
       - name: Install PostgreSQL 17 and GnuPG clients
-        if: steps.config.outputs.configured == 'true'
         run: |
           set -euo pipefail
           sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
@@ -75,7 +93,6 @@ jobs:
           gpg --version
 
       - name: Dump, compress, encrypt
-        if: steps.config.outputs.configured == 'true'
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
           BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
@@ -114,13 +131,31 @@ jobs:
           BACKUP_OUTPUT_DIR="$GITHUB_WORKSPACE" \
             bash scripts/export-db-backup.sh
 
+      - name: Verify encrypted backup artifact
+        id: artifact
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          artifacts=(zodiacs-db-*.tar.gz.gpg)
+          if [ "${#artifacts[@]}" -ne 1 ]; then
+            echo "::error title=Backup artifact invalid::Expected exactly one encrypted backup artifact, found ${#artifacts[@]}."
+            exit 1
+          fi
+          artifact=${artifacts[0]}
+          if [ ! -s "$artifact" ]; then
+            echo "::error title=Backup artifact empty::The encrypted backup artifact exists but contains no data."
+            exit 1
+          fi
+          bytes=$(wc -c < "$artifact" | tr -d '[:space:]')
+          echo "Verified one nonempty encrypted backup artifact (${bytes} bytes)."
+          echo "path=$artifact" >> "$GITHUB_OUTPUT"
+
       - name: Store encrypted backup artifact
-        if: steps.config.outputs.configured == 'true'
         # actions/upload-artifact@v4.6.2, pinned by SHA: this step handles the
         # backup ciphertext, so its supply chain stays commit-addressed.
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: zodiacs-db-backup-${{ github.run_id }}
-          path: zodiacs-db-*.tar.gz.gpg
+          path: ${{ steps.artifact.outputs.path }}
           retention-days: 90
           if-no-files-found: error

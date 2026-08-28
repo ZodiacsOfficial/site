@@ -107,12 +107,14 @@ mechanics; it is not authorization to make the legal edits.
 ## 2. Encrypted database backup and restore drill
 
 The weekly workflow is `.github/workflows/db-backup.yml`. Until the owner adds
-both required repository secrets, it remains a visible no-op:
+both required secrets to the exact-`main` `database-backup-production`
+environment, every scheduled or manual run fails visibly without creating an
+artifact:
 
 - `SUPABASE_DB_URL`: the Session pooler value copied directly from the Supabase
   dashboard into the GitHub Actions secret form; and
-- `BACKUP_PASSPHRASE`: a long random value generated and retained in the
-  owner's password manager.
+- `BACKUP_PASSPHRASE`: one control-free line containing 32–1024 random bytes,
+  generated and retained in the owner's password manager.
 
 Do not show either value to an agent or place either value in a shell command.
 The workflow converts the database URL into protected libpq inputs rather than
@@ -125,11 +127,13 @@ descriptor, never a process argument.
 These are owner-only actions and need explicit authorization before execution:
 
 1. Confirm the restore workstation has PostgreSQL 17 client tools, GnuPG with
-   loopback pinentry support, Node.js, and GNU `tar`. The restore wrapper uses
-   `psql`, `gpg`, `node`, and `tar`; the workflow also uses `pg_dump` and
-   `pg_restore`.
-2. Add the two repository secrets through GitHub's Actions secret forms. Do not
-   echo or validate their values in a workflow log.
+   loopback pinentry support, Node.js, and GNU tar. On macOS, install GNU tar as
+   `gtar`; the wrapper rejects BSD tar. The wrappers remain compatible with the
+   system Bash 3.2. The workflow also uses `pg_dump` and `pg_restore`.
+2. Confirm `main` is protected, create the `database-backup-production`
+   environment with an exact-`main` deployment-branch policy, and add the two
+   environment secrets there. Keep repository- and organization-level Actions
+   secrets empty. Do not echo or validate secret values in a workflow log.
 3. Dispatch **Actions → Database Backup** once and require a green run.
 4. Download the encrypted artifact without renaming or unpacking it. The
    repository wrapper validates the bundle metadata and member list and removes
@@ -142,7 +146,16 @@ schema currently present (`public` and, if released later, `private` and
 and `auth.identities`. It restores Auth identities before application data and
 foreign-key validation. Generated pre-data/data/post-data sections retain the
 project's RLS, policies, ownership, GRANT/REVOKE ACLs, default ACLs, and
-SECURITY DEFINER function contract.
+SECURITY DEFINER function contract. A snapshot-generated replay section also
+preserves the special `public` schema ACL that `pg_dump` omits. Because the
+ordered Auth dump does not yet cover MFA, passkey, SSO, SAML, registered OAuth
+clients, OAuth user consents, or custom-OAuth configuration, the exporter
+fails instead of producing a partial artifact if any detected durable table is
+nonempty. The fresh-target guard independently requires every detected Auth
+relation to be empty except the managed `instances`, `schema_migrations`,
+`users`, and `identities` relations; residual sessions, refresh tokens,
+flow state, OAuth client state, or WebAuthn challenges stop the restore before
+mutation.
 
 ### Mandatory first-month restore drill
 
@@ -165,7 +178,11 @@ places them in mode-0600 inputs, and never passes either through process
 arguments. It refuses the known production project, runs a read-only
 fresh-project preflight, and then requires the exact confirmation `RESTORE`
 before any schema change. That confirmation is not a substitute for the
-separate owner authorization required by this runbook.
+separate owner authorization required by this runbook. Keep the throwaway
+target traffic-disabled for the entire drill. The final transaction repeats
+the destructive emptiness/Auth compatibility guard and holds exclusive Auth
+table locks through commit so the interactive confirmation gap cannot admit a
+new account.
 
 The generated restore uses `psql -X`, `ON_ERROR_STOP=1`, and one transaction;
 any generated section or acceptance failure rolls the target back. Its order is:
@@ -175,19 +192,26 @@ any generated section or acceptance failure rolls the target back. Its order is:
 3. Auth identities;
 4. application and migration-ledger data;
 5. application and migration-ledger post-data, including constraints,
-   policies, and ACLs; and
-6. manifest and authorization acceptance before commit.
+   policies, and ACLs;
+6. the snapshot-generated `public` schema ACL replay; and
+7. manifest and authorization acceptance before commit.
 
 The drill passes only when all of the following are recorded:
 
-- source and restored row counts match for every included table;
+- source and restored row counts and canonical content digests match for every
+  included application table, so same-count mutation fails acceptance;
+- every application sequence restores its definition plus the sampled
+  `last_value` and `is_called` state;
 - restored Auth user and identity UUID digests match the source manifest;
+- the fresh target's managed Auth column contract exactly matches the source
+  before any schema change;
 - every application foreign key links to its restored parent, including Auth
   UUIDs, and no orphan remains;
 - all application and migration-ledger constraints exist and are validated;
 - every expected table has the correct RLS/forced-RLS state and policies;
-- schema, table, sequence, routine, and application-schema default ACLs match,
-  including no unintended `PUBLIC EXECUTE` on SECURITY DEFINER functions;
+- schema, table, sequence, routine, schema-scoped default ACLs, and relevant
+  application-owner global default ACLs match, including no unintended
+  `PUBLIC EXECUTE` on SECURITY DEFINER functions;
 - `anon`, `authenticated`, and `service_role` behavior matches the application
   authorization contract, including denied operations;
 - restored users must reauthenticate and can access only their own rows; and
@@ -201,8 +225,11 @@ Keep these interim tradeoffs explicit:
 - **retention:** GitHub keeps each artifact for 90 days;
 - **public-repository exposure:** the encrypted artifact can be downloadable
   from a public repository, so the passphrase is the confidentiality boundary;
-- **excluded Auth state:** sessions, refresh tokens, MFA, SSO, and Auth audit
-  rows are deliberately excluded, so reauthentication is expected; and
+- **excluded Auth state:** sessions, refresh tokens, and Auth audit rows are
+  deliberately excluded, as are short-lived OAuth authorization/flow rows, so
+  reauthentication is expected; detected durable MFA, passkey, SSO, SAML,
+  OAuth client, OAuth consent, or custom-OAuth rows make export fail until
+  their ordered recovery boundary is implemented; and
 - **restore target:** fresh-project-first only, never an untested live overwrite.
 
 ## 3. Vercel Firewall rate limits
@@ -249,8 +276,10 @@ The supported weekly digest is for signed-in account holders who enabled it in
 the standalone public Resend Segment.
 
 Keep the GitHub variable `DIGEST_ENABLED` unset or false until every acceptance
-step below passes. The sender enforces an 80-recipient hard ceiling per run,
-leaving headroom below Resend Free's 100-transactional-email daily limit.
+step below passes. The sender caps each process at 80 provider attempts and the
+database delivery ledger enforces 80 non-cancelled slots for the whole Monday
+edition across retries and concurrent runs. Confirm the provider's current
+quota still leaves sufficient headroom before enabling the schedule.
 
 ### Owner-only prerequisites
 
@@ -258,16 +287,19 @@ Do not perform these without separate owner authorization:
 
 1. Apply the narrowly scoped weekly-unsubscribe capability migration to the
    production Supabase project. No live send may run before it exists.
-2. In GitHub Actions, provide only these digest secrets:
-   `RESEND_API_KEY` and `SUPABASE_SERVICE_ROLE_KEY`.
+2. Create the `weekly-digest-production` GitHub environment, restrict it to the
+   repository's default branch, and store exactly these three environment
+   secrets there: `RESEND_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, and a dedicated
+   random `EMAIL_CONFIRM_SECRET` of at least 32 bytes. Do not leave repository-
+   or organization-scoped copies readable by untrusted branches.
 3. In GitHub Actions variables, verify `PUBLIC_SUPABASE_URL` and
    `DAILY_EMAIL_POSTAL_ADDRESS`; optionally set `DIGEST_FROM_EMAIL` and
    `DIGEST_BASE_URL`. The postal address must be the exact owner-approved value
    from §1b.
 4. In Vercel, the unsubscribe function may use only the existing public
    `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` (the legacy public
-   anon-key fallback is supported). Do not put a service-role key or digest HMAC
-   secret in Vercel.
+   anon-key fallback is supported). Do not put a service-role key or weekly
+   envelope-sealing secret in Vercel.
 
 `DIGEST_UNSUBSCRIBE_SECRET` is obsolete and must not be added. Secret values
 must move through dashboard secret forms, never chat or command-line arguments.
@@ -284,11 +316,18 @@ must move through dashboard secret forms, never chat or command-line arguments.
    `limit=1`.
 4. Check the received message's sender, content, postal footer, and unsubscribe
    link. A GET of that link must be read-only. Submit the page's explicit POST,
-   then verify the profile preference became false and direct public table
-   access remains denied.
+   then verify the profile preference became false, the delivery receipt stays
+   `sent`, and direct public access to both capability tables remains denied.
 5. Only after steps 1–4 pass may the owner explicitly authorize setting
    `DIGEST_ENABLED=true`. Verify the first scheduled Monday delivery and keep
-   the hard ceiling at 80 while the account remains on Resend Free.
+   the hard ceiling at 80 unless a separately reviewed migration changes it.
+
+Only an exact recipient-specific rejection is recorded as a terminal `failed`
+slot. Rate limits, provider-wide 4xx responses, 5xx responses, transport
+failures, concurrent-idempotency responses, and unknown or unreadable responses
+leave the delivery fenced for exact replay or reconciliation because the
+provider may have accepted it. Do not reset or rerender that receipt; follow the
+recovery and reconciliation procedure in `docs/WEEKLY-DIGEST.md`.
 
 If any step fails, leave `DIGEST_ENABLED` unset/false and stop. Do not compensate
 by adding a broader Vercel database key.
