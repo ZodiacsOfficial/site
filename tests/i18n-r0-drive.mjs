@@ -142,6 +142,50 @@ await withPreview({ port: 4417 }, async (baseURL) => {
       check(response?.status() === 404, `${path}: expected 404, got ${response?.status()}`);
     }
     await page.close();
+
+    // A short page can put the canonical footer in the first viewport before
+    // images finish loading. Its stylesheet must be requested immediately,
+    // rather than exposing raw footer markup until the window load event.
+    const shortPage = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await shortPage.addInitScript(() => {
+      window.__zdxFooterLinkAt = null;
+      window.__zdxWindowLoadAt = null;
+      const recordFooterLink = () => {
+        if (
+          window.__zdxFooterLinkAt === null
+          && document.querySelector('link[href="/assets/site-footer.css"]')
+        ) {
+          window.__zdxFooterLinkAt = performance.now();
+        }
+      };
+      new MutationObserver(recordFooterLink).observe(document, { childList: true, subtree: true });
+      window.addEventListener('load', () => {
+        recordFooterLink();
+        window.__zdxWindowLoadAt = performance.now();
+      }, { once: true });
+    });
+    const shortResponse = await shortPage.goto(`${baseURL}/es/learn/`, {
+      waitUntil: 'domcontentloaded',
+    });
+    check(shortResponse?.status() === 200, `/es/learn/: expected 200, got ${shortResponse?.status()}`);
+    const shortFooter = await shortPage.evaluate(() => {
+      const footer = document.querySelector('.zfooter');
+      const link = document.querySelector('link[href="/assets/site-footer.css"]');
+      return {
+        nearViewport: Boolean(footer && footer.getBoundingClientRect().top <= innerHeight + 200),
+        stylesheetRequested: Boolean(link),
+        stylesheetObservedAt: window.__zdxFooterLinkAt,
+        windowLoadAt: window.__zdxWindowLoadAt,
+      };
+    });
+    check(shortFooter.nearViewport, '/es/learn/: fixture footer is no longer near the first viewport');
+    check(shortFooter.stylesheetRequested, '/es/learn/: near-viewport footer CSS waited for window load');
+    check(
+      shortFooter.stylesheetObservedAt !== null
+        && (shortFooter.windowLoadAt === null || shortFooter.stylesheetObservedAt <= shortFooter.windowLoadAt),
+      `/es/learn/: footer CSS was observed after window load (${shortFooter.stylesheetObservedAt} > ${shortFooter.windowLoadAt})`,
+    );
+    await shortPage.close();
   } finally {
     await browser.close();
   }

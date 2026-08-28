@@ -12,8 +12,39 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const distRoot = resolve(repo, 'dist');
 const marker = 'data-inline-critical-css';
+const stableChromeMarker = 'data-stable-chrome-typography';
 const linkPattern = /<link\b[^>]*>/gi;
 const criticalStylePattern = /<style\b[^>]*\bdata-zdx-critical=["'][^"']+["'][^>]*>/gi;
+const deferredStylePattern = /<template\b[^>]*\bdata-zdx-deferred-style\b[^>]*>/gi;
+const deferredStyleLoader = `<script data-zdx-deferred-style-loader>
+    (function () {
+      var active = false;
+      var fallback;
+      var events = ['pointerover', 'pointerdown', 'focusin', 'keydown'];
+      var activate = function () {
+        if (active) return;
+        active = true;
+        if (fallback) clearTimeout(fallback);
+        for (var eventIndex = 0; eventIndex < events.length; eventIndex += 1) {
+          document.removeEventListener(events[eventIndex], onIntent, true);
+        }
+        var templates = document.querySelectorAll('template[data-zdx-deferred-style]');
+        for (var index = 0; index < templates.length; index += 1) {
+          templates[index].replaceWith(templates[index].content.cloneNode(true));
+        }
+      };
+      var onIntent = function (event) {
+        if (event.target && event.target.closest && event.target.closest('astro-island')) activate();
+      };
+      for (var index = 0; index < events.length; index += 1) {
+        document.addEventListener(events[index], onIntent, true);
+      }
+      var schedule = function () { fallback = setTimeout(activate, 200); };
+      if (document.readyState === 'complete') schedule();
+      else window.addEventListener('load', schedule, { once: true });
+      if (/(?:^|[&#])(?:p|c)=/.test(window.location.hash)) activate();
+    })();
+  </script>`;
 const signs = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -49,6 +80,27 @@ function attribute(tag, name) {
   return match?.[1] ?? null;
 }
 
+function htmlAttributePattern(name) {
+  return new RegExp(
+    `\\s${name}(?:\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+))?(?=\\s|>)`,
+    'i',
+  );
+}
+
+function openingHtmlTag(html) {
+  return html.match(/<html\b[^>]*>/i)?.[0] ?? '';
+}
+
+function hasHtmlAttribute(html, name) {
+  return htmlAttributePattern(name).test(openingHtmlTag(html));
+}
+
+function removeHtmlAttribute(html, name) {
+  const tag = openingHtmlTag(html);
+  if (!tag) return html;
+  return html.replace(tag, tag.replace(htmlAttributePattern(name), ''));
+}
+
 function assertSafeCss(css, href) {
   if (/@import\b/i.test(css)) {
     throw new Error(`inline-critical-styles: @import is not safe to relocate from ${href}`);
@@ -64,8 +116,38 @@ function assertSafeCss(css, href) {
   }
 }
 
-export async function inlineCriticalStyles(html, root = distRoot) {
-  if (!html.includes(marker)) return { html, stylesheets: 0, bytes: 0 };
+const stableChromeFaces = new Map([
+  ['Instrument Sans', '/fonts/instrument-sans-latin-wght-normal.woff2'],
+  ['EB Garamond:400', '/fonts/eb-garamond-latin-400-normal.woff2'],
+  ['EB Garamond:500', '/fonts/eb-garamond-latin-500-normal.woff2'],
+  ['JetBrains Mono', '/fonts/jetbrains-mono-latin-wght-normal.woff2'],
+]);
+
+function declarationValue(face, property) {
+  const match = face.match(new RegExp(`${property}\\s*:\\s*(?:"([^"]+)"|'([^']+)'|([^;}]+))`, 'i'));
+  return (match?.[1] ?? match?.[2] ?? match?.[3] ?? '').trim();
+}
+
+function stabilizeChromeFontDisplay(css) {
+  let changes = 0;
+  const output = css.replace(/@font-face\s*\{[^{}]*\}/gi, (face) => {
+    const family = declarationValue(face, 'font-family');
+    const weight = declarationValue(face, 'font-weight');
+    const key = family === 'EB Garamond' ? `${family}:${weight}` : family;
+    const expectedSource = stableChromeFaces.get(key);
+    if (!expectedSource || !face.includes(expectedSource)) return face;
+
+    const transformed = face.replace(/(font-display\s*:\s*)swap\b/i, '$1optional');
+    if (transformed !== face) changes += 1;
+    return transformed;
+  });
+  return { css: output, changes };
+}
+
+export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase = false } = {}) {
+  if (!hasHtmlAttribute(html, marker)) return { html, stylesheets: 0, bytes: 0 };
+
+  const stabilizeChrome = hasHtmlAttribute(html, stableChromeMarker);
 
   const stylesheetTags = [...html.matchAll(linkPattern)]
     .map((match) => match[0])
@@ -73,9 +155,6 @@ export async function inlineCriticalStyles(html, root = distRoot) {
   if (stylesheetTags.length === 0) {
     throw new Error('inline-critical-styles: marked page has no stylesheet links');
   }
-
-  let output = html;
-  let bytes = 0;
   for (const tag of stylesheetTags) {
     const href = attribute(tag, 'href');
     if (!href?.startsWith('/_astro/') || !href.endsWith('.css')) {
@@ -86,7 +165,35 @@ export async function inlineCriticalStyles(html, root = distRoot) {
     if (!cssPath.startsWith(astroRoot)) {
       throw new Error(`inline-critical-styles: stylesheet escaped build root: ${href}`);
     }
-    const css = await readFile(cssPath, 'utf8');
+  }
+
+  const selectedTags = deferNonBase
+    ? stylesheetTags.filter((tag) => {
+      const href = attribute(tag, 'href');
+      return href ? /^Base\.[A-Za-z0-9_-]+\.css$/u.test(basename(href)) : false;
+    })
+    : stylesheetTags;
+  const deferredTags = deferNonBase
+    ? stylesheetTags.filter((tag) => !selectedTags.includes(tag))
+    : [];
+  if (deferNonBase && (selectedTags.length !== 1 || deferredTags.length === 0)) {
+    throw new Error(
+      `inline-critical-styles: expected one Base stylesheet plus deferred tool styles, found ${selectedTags.length} + ${deferredTags.length}`,
+    );
+  }
+
+  let output = html;
+  let bytes = 0;
+  let stabilizedChromeFaces = 0;
+  for (const tag of selectedTags) {
+    const href = attribute(tag, 'href');
+    const cssPath = resolve(root, `.${href}`);
+    const sourceCss = await readFile(cssPath, 'utf8');
+    const stableResult = stabilizeChrome
+      ? stabilizeChromeFontDisplay(sourceCss)
+      : { css: sourceCss, changes: 0 };
+    const css = stableResult.css;
+    stabilizedChromeFaces += stableResult.changes;
     assertSafeCss(css, href);
     bytes += Buffer.byteLength(css);
     output = output.replace(
@@ -95,8 +202,28 @@ export async function inlineCriticalStyles(html, root = distRoot) {
     );
   }
 
-  output = output.replace(/\sdata-inline-critical-css(?:="")?/i, '');
-  return { html: output, stylesheets: stylesheetTags.length, bytes };
+  if (stabilizeChrome && stabilizedChromeFaces !== stableChromeFaces.size) {
+    throw new Error(
+      `inline-critical-styles: expected ${stableChromeFaces.size} stable chrome faces, found ${stabilizedChromeFaces}`,
+    );
+  }
+
+  for (const tag of deferredTags) {
+    output = output.replace(
+      tag,
+      `<template data-zdx-deferred-style>${tag}</template><noscript>${tag}</noscript>`,
+    );
+  }
+  if (deferredTags.length > 0) {
+    if (!output.includes('</head>')) {
+      throw new Error('inline-critical-styles: cannot install deferred-style loader without </head>');
+    }
+    output = output.replace('</head>', `${deferredStyleLoader}</head>`);
+  }
+
+  output = removeHtmlAttribute(output, marker);
+  output = removeHtmlAttribute(output, stableChromeMarker);
+  return { html: output, stylesheets: selectedTags.length, bytes };
 }
 
 async function main() {
@@ -111,7 +238,7 @@ async function main() {
   });
   for (const path of markedOutsideScope) {
     const source = await readFile(path, 'utf8');
-    if (source.includes(marker)) {
+    if (hasHtmlAttribute(source, marker)) {
       throw new Error(`inline-critical-styles: marker outside approved scope: ${path}`);
     }
   }
@@ -119,30 +246,44 @@ async function main() {
   for (const relativePath of targetPaths) {
     const path = resolve(distRoot, relativePath);
     const source = await readFile(path, 'utf8');
-    if (!source.includes(marker)) {
+    const deferNonBase = relativePath === 'ru/birth-chart/index.html';
+    if (hasHtmlAttribute(source, stableChromeMarker) && relativePath !== 'today/index.html') {
+      throw new Error(`inline-critical-styles: stable chrome marker outside Today: ${relativePath}`);
+    }
+    if (!hasHtmlAttribute(source, marker)) {
       const inlineCount = source.match(criticalStylePattern)?.length ?? 0;
       const externalCount = [...source.matchAll(linkPattern)]
         .map((match) => match[0])
         .filter((tag) => attribute(tag, 'rel')?.toLowerCase() === 'stylesheet')
         .length;
-      if (inlineCount !== 2 || externalCount !== 0) {
+      const deferredCount = source.match(deferredStylePattern)?.length ?? 0;
+      const loaderCount = source.match(/data-zdx-deferred-style-loader/g)?.length ?? 0;
+      const expectedInlineCount = deferNonBase ? 1 : 2;
+      const expectedDeferredCount = deferNonBase ? 3 : 0;
+      const expectedExternalCount = deferNonBase ? 6 : 0;
+      if (
+        inlineCount !== expectedInlineCount
+        || deferredCount !== expectedDeferredCount
+        || externalCount !== expectedExternalCount
+        || loaderCount !== (deferNonBase ? 1 : 0)
+      ) {
         throw new Error(
-          `inline-critical-styles: ${relativePath} is neither marked nor completely inlined`,
+          `inline-critical-styles: ${relativePath} has an unexpected inline/external stylesheet shape`,
         );
       }
       alreadyInlined += 1;
       stylesheets += inlineCount;
       continue;
     }
-    const result = await inlineCriticalStyles(source, distRoot);
+    const result = await inlineCriticalStyles(source, distRoot, { deferNonBase });
     await writeFile(path, result.html);
     pages += 1;
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 15 || stylesheets !== 32) {
+  if (pages + alreadyInlined !== 15 || stylesheets !== 29) {
     throw new Error(
-      `inline-critical-styles: expected 15 pages / 32 stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 15 pages / 29 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0

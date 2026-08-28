@@ -1,35 +1,24 @@
 import { describe, expect, it } from 'vitest';
-import { signDigestUnsubscribe, verifyDigestUnsubscribe } from './digest-unsubscribe';
+import {
+  createDigestUnsubscribeCapability,
+  hashDigestUnsubscribeCapability,
+  isDigestUnsubscribeCapability,
+} from './digest-unsubscribe';
 
-const USER = '11111111-1111-4111-8111-111111111111';
-const SECRET = 'test-secret-value';
-
-describe('digest unsubscribe signing', () => {
-  it('round-trips a signature it produced', () => {
-    const sig = signDigestUnsubscribe(USER, SECRET);
-    expect(sig).toMatch(/^[A-Za-z0-9_-]+$/); // base64url
-    expect(verifyDigestUnsubscribe(USER, sig, SECRET)).toBe(true);
+describe('digest unsubscribe capabilities', () => {
+  it('creates a 256-bit base64url capability and stores only its digest', () => {
+    const capability = createDigestUnsubscribeCapability();
+    expect(capability).toMatch(/^[A-Za-z0-9_-]{43}$/u);
+    expect(isDigestUnsubscribeCapability(capability)).toBe(true);
+    expect(hashDigestUnsubscribeCapability(capability)).toMatch(/^[a-f0-9]{64}$/u);
+    expect(hashDigestUnsubscribeCapability(capability)).not.toContain(capability);
   });
 
-  it('rejects a tampered signature', () => {
-    const sig = signDigestUnsubscribe(USER, SECRET);
-    const flipped = `${sig.slice(0, -1)}${sig.at(-1) === 'A' ? 'B' : 'A'}`;
-    expect(verifyDigestUnsubscribe(USER, flipped, SECRET)).toBe(false);
-  });
-
-  it('rejects a signature made with a different secret', () => {
-    const sig = signDigestUnsubscribe(USER, 'other-secret');
-    expect(verifyDigestUnsubscribe(USER, sig, SECRET)).toBe(false);
-  });
-
-  it('rejects a signature bound to a different user', () => {
-    const sig = signDigestUnsubscribe(USER, SECRET);
-    expect(verifyDigestUnsubscribe('22222222-2222-4222-8222-222222222222', sig, SECRET)).toBe(false);
-  });
-
-  it('returns false (never throws) on length-mismatched or junk input', () => {
-    expect(verifyDigestUnsubscribe(USER, '', SECRET)).toBe(false);
-    expect(verifyDigestUnsubscribe(USER, 'short', SECRET)).toBe(false);
-    expect(verifyDigestUnsubscribe(USER, '!!!not base64!!!', SECRET)).toBe(false);
+  it('rejects malformed capability input before hashing', () => {
+    for (const capability of ['', 'short', 'A'.repeat(44), '!!!not-base64url!!!']) {
+      expect(isDigestUnsubscribeCapability(capability)).toBe(false);
+      expect(() => hashDigestUnsubscribeCapability(capability))
+        .toThrow('Invalid weekly digest unsubscribe capability.');
+    }
   });
 });

@@ -50,6 +50,78 @@ describe('inlineCriticalStyles', () => {
     expect((await inlineCriticalStyles(unmarked, root)).html).toBe(unmarked);
   });
 
+  it('stabilizes exactly the canonical shared chrome faces on an opted-in page', async () => {
+    const root = await fixture({
+      'Base.hash.css': [
+        '@font-face{font-family:Instrument Sans;src:url(/fonts/instrument-sans-latin-wght-normal.woff2);font-weight:400 700;font-style:normal;font-display:swap}',
+        '@font-face{font-family:EB Garamond;src:url(/fonts/eb-garamond-latin-400-normal.woff2);font-weight:400;font-style:normal;font-display:swap}',
+        '@font-face{font-family:EB Garamond;src:url(/fonts/eb-garamond-latin-500-normal.woff2);font-weight:500;font-style:normal;font-display:swap}',
+        '@font-face{font-family:JetBrains Mono;src:url(/fonts/jetbrains-mono-latin-wght-normal.woff2);font-weight:300 600;font-style:normal;font-display:swap}',
+        '@font-face{font-family:Instrument Sans;src:url(/fonts/instrument-sans-latin-wght-italic.woff2);font-weight:400 700;font-style:italic;font-display:swap}',
+      ].join(''),
+    });
+    const marked = '<html data-inline-critical-css data-stable-chrome-typography><head>'
+      + '<link rel="stylesheet" href="/_astro/Base.hash.css">'
+      + '</head><body></body></html>';
+    const result = await inlineCriticalStyles(marked, root);
+
+    expect(result.html.match(/font-display:optional/g)).toHaveLength(4);
+    expect(result.html.match(/font-display:swap/g)).toHaveLength(1);
+    expect(result.html).toContain('instrument-sans-latin-wght-italic.woff2');
+    expect(result.html).not.toContain('data-stable-chrome-typography');
+  });
+
+  it('does not treat a content literal as a stable-chrome document marker', async () => {
+    const root = await fixture({
+      'route.css': '@font-face{font-family:Instrument Sans;src:url(/fonts/instrument-sans-latin-wght-normal.woff2);font-weight:400 700;font-style:normal;font-display:swap}',
+    });
+    const marked = '<html data-inline-critical-css><head>'
+      + '<link rel="stylesheet" href="/_astro/route.css">'
+      + '</head><body><code>data-stable-chrome-typography</code></body></html>';
+    const result = await inlineCriticalStyles(marked, root);
+
+    expect(result.html).toContain('font-display:swap');
+    expect(result.html).toContain('<code>data-stable-chrome-typography</code>');
+  });
+
+  it('fails closed when an opted-in build omits a required chrome face', async () => {
+    const root = await fixture({
+      'Base.hash.css': '@font-face{font-family:Instrument Sans;src:url(/fonts/instrument-sans-latin-wght-normal.woff2);font-weight:400 700;font-style:normal;font-display:swap}',
+    });
+    const marked = '<html data-inline-critical-css data-stable-chrome-typography><head>'
+      + '<link rel="stylesheet" href="/_astro/Base.hash.css">'
+      + '</head></html>';
+
+    await expect(inlineCriticalStyles(marked, root)).rejects.toThrow(
+      'expected 4 stable chrome faces, found 1',
+    );
+  });
+
+  it('defers noncritical tool styles without inline handlers or a no-JS gap', async () => {
+    const root = await fixture({
+      'Base.hash.css': ':root{--ink:#fff}',
+      'calculator.hash.css': '.calc{color:var(--ink)}',
+      'explorer.hash.css': '.explorer{display:grid}',
+      'ChartCalculator.hash.css': '.reading{display:block}',
+    });
+    const marked = '<html data-inline-critical-css><head>'
+      + '<link rel="stylesheet" href="/_astro/Base.hash.css">'
+      + '<link rel="stylesheet" href="/_astro/calculator.hash.css">'
+      + '<link rel="stylesheet" href="/_astro/explorer.hash.css">'
+      + '<link rel="stylesheet" href="/_astro/ChartCalculator.hash.css">'
+      + '</head><body></body></html>';
+    const result = await inlineCriticalStyles(marked, root, { deferNonBase: true });
+
+    expect(result.stylesheets).toBe(1);
+    expect(result.html).toContain('<style data-zdx-critical="Base.hash.css">');
+    expect(result.html.match(/<template data-zdx-deferred-style>/g)).toHaveLength(3);
+    expect(result.html.match(/<noscript><link rel="stylesheet"/g)).toHaveLength(3);
+    expect(result.html).toContain('data-zdx-deferred-style-loader');
+    expect(result.html).toContain("window.addEventListener('load', schedule");
+    expect(result.html).not.toMatch(/\bonload=/i);
+    expect(result.html).not.toContain('data-inline-critical-css');
+  });
+
   it.each([
     ['relative URL', '.x{background:url(../image.png)}', 'relative CSS URL'],
     ['CSS import', '@import "/other.css";', '@import is not safe'],

@@ -1,10 +1,10 @@
 import { SIGN_SLUGS } from '../signs.js';
-import { normalizeLocale, type Locale } from '../i18n/core.js';
+import { normalizeLocale, type ReleasedLocale } from '../i18n/core.js';
 
 export interface ParsedEmailSubscription {
   email: string;
   sign?: string;
-  locale: Locale;
+  locale: ReleasedLocale;
   honeypot: boolean;
 }
 

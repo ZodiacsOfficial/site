@@ -64,7 +64,9 @@ describe('daily publication operations', () => {
     expect(workflow).toContain("schema: 'zodiacs.daily-operation-receipt.v2'");
     expect(workflow).toContain('horoscopeProgramSha256: canonicalSha256(horoscopeProgram)');
     expect(liveVerifier).toContain('production horoscope program is not the committed program');
-    expect(workflow).toContain('actions/upload-artifact@v4');
+    expect(workflow).toContain(
+      'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2',
+    );
     expect(workflow).toContain('retention-days: 90');
     expect(workflow).toContain('- name: Record daily-publication incident');
     expect(workflow).toContain("if: github.event_name == 'schedule' && success()");

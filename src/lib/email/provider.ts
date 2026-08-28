@@ -1,5 +1,6 @@
 import { createEmailOptInToken } from './opt-in-token.js';
 import {
+  emailConfirmationSecret,
   emailProviderName,
   environmentValue,
   hasEmailCaptureProvider,
@@ -61,7 +62,7 @@ class ResendAdapter implements EmailSubscriptionAdapter {
   ) {}
 
   async subscribe(email: string, sign?: string): Promise<EmailSubscriptionResult> {
-    const secret = environmentValue(this.env, 'EMAIL_CONFIRM_SECRET');
+    const secret = emailConfirmationSecret(this.env);
     const daily = dailyEmailFeatureEnabled(this.env) && this.locale === 'en';
     const token = daily
       ? createDailySunOptInToken({ email, sign: sign ?? '' }, secret)
