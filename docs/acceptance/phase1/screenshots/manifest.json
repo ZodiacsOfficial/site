@@ -6,11 +6,11 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-08-28T09:20:14.552Z",
+  "capturedAt": "2026-08-28T10:44:07.298Z",
   "browser": "Chromium 149.0.7827.55",
   "dailyDate": "2026-08-28",
   "publicationCanonicalSha256": "a4d0f4143bed4849393499ecfe482e24f61efbe4f5ca6e1b57092fd361c081a7",
-  "templateSourceSha256": "80bee2fe6c445df2756fb6e152ed15707f928da6e7374a605c7ba7ae7aed79b9",
+  "templateSourceSha256": "8aa664a0c4e546bf215fa81cfd8d153119aab9fd0c04ec2a60dc6d78c843d62a",
   "renderPayloadSha256": {
     "daily": "986ccbe4579a12ae2b14265f2780137112ac5662d462a8150e1b8bd0b153c487",
     "dailyPublication": "ad6025614b376cc6217eece45795ea290fe71bd58586cf602a024e5126423266",
@@ -19,8 +19,8 @@
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-08-28T09:18:23.221Z",
-    "templateSourceSha256": "80bee2fe6c445df2756fb6e152ed15707f928da6e7374a605c7ba7ae7aed79b9",
+    "builtAt": "2026-08-28T10:31:43.787Z",
+    "templateSourceSha256": "8aa664a0c4e546bf215fa81cfd8d153119aab9fd0c04ec2a60dc6d78c843d62a",
     "dailyDate": "2026-08-28",
     "publicationCanonicalSha256": "a4d0f4143bed4849393499ecfe482e24f61efbe4f5ca6e1b57092fd361c081a7",
     "renderPayloadSha256": {
@@ -94,7 +94,7 @@
         "file": "horoscopes-hub-360.png",
         "width": 360,
         "height": 5644,
-        "sha256": "459ee75a6263f7dadcfb42af3b026be81225c53b2fc177dded6667f2122f105e"
+        "sha256": "e9e4b2c3aacb525160d2308177c6dbd7a04f81d481ca5e85b0a34ee96710edfd"
       },
       "layout": {
         "clientWidth": 360,
@@ -120,7 +120,7 @@
         "file": "horoscopes-hub-1280.png",
         "width": 1280,
         "height": 2737,
-        "sha256": "a8dd3f41f9d0988e4c82bc799eec19127a539e39e89973bace9d037ed8e75c8c"
+        "sha256": "a58bc52deb3ff2774d1c7aa9649f01f45daadf1f4de18c8b4fadfa121127256d"
       },
       "layout": {
         "clientWidth": 1280,
@@ -354,7 +354,7 @@
         "file": "love-360.png",
         "width": 360,
         "height": 3775,
-        "sha256": "b25ca8d3502a60f743720582ea35489633f16811e6a2ef4a8da3776573aac2ab"
+        "sha256": "6321847e981c33c4d8663f8c2873c140460a72262a1d359f4af55fabfdd5c1c1"
       },
       "layout": {
         "clientWidth": 360,
@@ -458,7 +458,7 @@
         "file": "yearly-360.png",
         "width": 360,
         "height": 12321,
-        "sha256": "dd3bc5327133a0e2bf7ea2a2694d43f0938451feac6163426ef3a15bd904a1cd"
+        "sha256": "611f366f455a307d04fb98737a274530dcf7330fd25190eb3e3775ba6b7b972e"
       },
       "layout": {
         "clientWidth": 360,
