@@ -218,7 +218,7 @@ bundled imports, not endpoints.
 | `/api/calendar/transits` | signed-token .ics feed | — |
 | `/api/email/subscribe` (+ `/confirm`, `/unsubscribe` rewrites) | daily lists, **double opt-in**, honeypot, Resend | the opt-in machinery the standings email should reuse |
 | `/api/email/chart-preference`, `/api/email/admin-bootstrap` | per-chart brief prefs | — |
-| `/api/unsubscribe` | weekly digest opt-out, HMAC-signed, deliberately dependency-free | template for a standings unsubscribe |
+| `/api/unsubscribe` | weekly digest opt-out, random bearer stored only as a SHA-256 digest and consumed by a least-privilege RPC | template for a standings unsubscribe |
 | `/api/push/subscribe` | anonymous web-push upsert (`PUSH_ENABLED` gate) | later; push list has no user identity |
 
 ### What the weekly standings email can reuse
@@ -230,8 +230,10 @@ bundled imports, not endpoints.
   (`EmailDocument`/`renderEmailHtml`/`renderEmailText`, per-sign `SIGN_HUE`
   accents) — build the standings email with this, not new HTML.
 - **Send mechanics to copy from `scripts/send-weekly-digest.ts`**:
-  `List-Unsubscribe` + one-click POST headers, 500ms pacing, per-recipient
-  try/catch, `DIGEST_MAX_SENDS`-style caps, `maskEmail()` logging.
+  `List-Unsubscribe` + one-click POST headers, serialized bounded 429 retries,
+  stable provider idempotency keys, durable weekly delivery slots, and
+  aggregate-only logging. Copy the database receipt state machine as a unit;
+  a process-local recipient cap alone is not a delivery guarantee.
 - **Scheduling**: GitHub Actions, not Vercel cron.
   `.github/workflows/weekly-digest.yml` (Mon 06:00 UTC,
   `vars.DIGEST_ENABLED` gate, fixture dry-run smoke step) is the template →
@@ -240,12 +242,16 @@ bundled imports, not endpoints.
   compat-sweep :17, receipt-cleanup :37, pulse Mon 06:17, distribution
   Mon 06:31 — pick an unused slot.
 - **Consent decision for R2.2**: the weekly digest is an account-bound
-  profile toggle with **no** double opt-in; the daily lists have full DOI
-  (48h HMAC tokens, GET-renders/POST-confirms scanner safety, RFC 8058
-  one-click unsubscribe). A public standings list should use the daily DOI
-  machinery (`src/lib/email/opt-in-token.ts`, `api/email/_confirm.ts`) and
-  the daily-style unsubscribe token (binds recipient hash + list kind;
-  the weekly token is a no-expiry userId HMAC — the weaker model).
+  profile toggle with **no** double opt-in. The standalone public capture uses
+  opaque 48h AES-GCM claims; daily-Sun capture uses a separate AES-GCM claim;
+  chart-bound daily confirmation signs identifiers and a recipient hash without
+  embedding an address. All keep GET read-only and require an explicit POST for
+  scanner safety, while daily unsubscribe authority remains HMAC-bound. A public
+  standings list should use the standalone DOI machinery
+  (`src/lib/email/opt-in-token.ts`, `api/email/_confirm.ts`) and a dedicated
+  daily-style unsubscribe token (binds recipient hash + list kind). The
+  account weekly uses a different 256-bit capability with a bounded expiry and
+  database-owned consumption state; it does not expose a user ID.
 
 ---
 

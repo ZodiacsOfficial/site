@@ -39,12 +39,12 @@ describe('Phase 1 durable acceptance evidence', () => {
       await readFile(resolve(root, 'node_modules/playwright-core/package.json'), 'utf8'),
     );
 
-    expect(manifest.schema).toBe('zodiacs.phase1-visual-acceptance.v3');
+    expect(manifest.schema).toBe('zodiacs.phase1-visual-acceptance.v4');
     expect(manifest.driver).toEqual({
       name: 'playwright-core',
       version: playwrightPackage.version,
       script: 'tests/phase1-acceptance-drive.mjs',
-      contractVersion: 3,
+      contractVersion: 4,
     });
     expect(Number.isFinite(Date.parse(manifest.capturedAt))).toBe(true);
     expect(manifest.browser).toMatch(/^Chromium \d+/);

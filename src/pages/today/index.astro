@@ -31,6 +31,8 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
   inlineCriticalCss
   stableTypography
   localTypography
+  stableChromeTypography
+  minimalNavFontPreloads
   title={`${publicationLabel} Daily Astrology Brief | Zodiacs.org`}
   description={`Choose your Sun sign for a clear note from the ${publicationLabel} UTC edition, or privately compare that sky with your birth chart.`}
   path="/today/"
@@ -159,10 +161,14 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
       </p>
     </EvidenceDisclosure>
   </section>
-</Base>
-
 <style is:global>
-  .today-page { max-width: 780px; }
+  .today-page {
+    max-width: 780px;
+    /* Resolve the cold-load reading face directly from the native stack.
+       Routing it through a local() @font-face can settle one frame late on
+       Linux, rewrap the 60ch hero, and move the complete reading shell. */
+    font-family: Arial, 'Liberation Sans', system-ui, -apple-system, sans-serif;
+  }
   .today-hero { max-width: 60ch; margin-bottom: clamp(24px, 5vw, 40px); }
   .today-hero h1 {
     margin: 12px 0 12px;
@@ -562,7 +568,7 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
 </style>
 
 {livingChartEnabled && (
-<style is:inline>
+<style slot="head" is:inline>
   /* Capture styles stay flag-scoped so flag-off Today bytes remain unchanged. */
   .living-moment-slot {
     display: grid;
@@ -813,3 +819,4 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
   }
 </style>
 )}
+</Base>

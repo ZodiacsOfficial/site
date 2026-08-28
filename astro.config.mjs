@@ -2,6 +2,20 @@ import { defineConfig } from 'astro/config';
 import preact from '@astrojs/preact';
 import mdx from '@astrojs/mdx';
 
+function interactionDirective() {
+  return {
+    name: 'zodiacs-interaction-directive',
+    hooks: {
+      'astro:config:setup': ({ addClientDirective }) => {
+        addClientDirective({
+          name: 'interaction',
+          entrypoint: './src/client-directives/interaction.ts',
+        });
+      },
+    },
+  };
+}
+
 // Static output on Vercel. No @astrojs/sitemap: the sitemap must also cover
 // the legacy wing served verbatim from public/, so it is composed by the
 // custom endpoint at src/pages/sitemap.xml.ts instead.
@@ -15,7 +29,7 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  integrations: [preact(), mdx()],
+  integrations: [interactionDirective(), preact(), mdx()],
   build: {
     format: 'directory',
     inlineStylesheets: 'auto',

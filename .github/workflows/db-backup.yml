@@ -1,30 +1,27 @@
 # Weekly logical backup of the production Supabase database.
 #
-# Why this exists: the live project holds the only copy of accounts, chart
-# sync rows, email consents, push subscriptions, and game state, and no
-# platform backup tier is configured. This job takes a pg_dump, encrypts it
-# symmetrically, and stores it as a workflow artifact for 90 days —
-# a real restore path that costs nothing and needs no third-party service.
+# Why this exists: this job takes one exported repeatable-read snapshot of the
+# application, Auth identity, and migration data, preserves owners/ACLs, then
+# symmetrically encrypts an acceptance-manifested restore bundle for 90 days.
 #
 # This repository is public, so run artifacts are downloadable by any
 # GitHub account: the AES-256 passphrase is the only confidentiality
-# boundary. That is why BACKUP_PASSPHRASE must be long and random, must
+# boundary. That is why BACKUP_PASSPHRASE must be a single control-free line
+# of at least 32 random bytes (maximum 1024), must
 # never appear in commands, logs, or chat, and why the artifact-handling
 # action below is pinned to a commit SHA.
 #
-# Setup (repo Settings → Secrets and variables → Actions → New repository secret):
+# Setup (repo Settings → Environments → database-backup-production):
+#   Restrict deployment branches/tags to the exact `main` branch, then add:
 #   SUPABASE_DB_URL    the project's "Session pooler" connection string from
 #                      Supabase Dashboard → Connect → Session pooler
 #                      (postgresql://postgres.<ref>:<password>@…:5432/postgres)
 #   BACKUP_PASSPHRASE  a long random phrase; store a copy in your password
 #                      manager — an artifact cannot be decrypted without it.
 #
-# Restore (docs/SUPABASE.md has the full runbook — always into a FRESH
-# project first, never blindly over live):
-#   gpg --decrypt --batch --passphrase-file pass.txt zodiacs-db-*.tar.gz.gpg | tar xz
-#   # → backup.sql (public + supabase_migrations) and auth-map.sql
-#   #   (auth.users/auth.identities data — restores account UUIDs so
-#   #   public-schema rows re-attach to the same users)
+# Restore (docs/SUPABASE.md has the full runbook): use the repository wrapper
+# only with separate owner authorization and only against a fresh throwaway
+# project. Never restore directly over live.
 name: Database Backup
 
 on:
@@ -43,65 +40,122 @@ jobs:
   db-backup:
     name: Weekly encrypted pg_dump
     runs-on: ubuntu-latest
+    environment: database-backup-production
+    timeout-minutes: 45
     steps:
       - name: Check configuration
-        id: config
-        env:
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
-        run: |
-          if [ -z "$SUPABASE_DB_URL" ] || [ -z "$BACKUP_PASSPHRASE" ]; then
-            echo "::warning title=Backup not configured::Set SUPABASE_DB_URL and BACKUP_PASSPHRASE repository secrets to activate weekly database backups (see the header of .github/workflows/db-backup.yml)."
-            echo "configured=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "configured=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      # The production project runs PostgreSQL 17; the runner image ships
-      # client 16, and pg_dump refuses servers newer than itself.
-      - name: Install PostgreSQL 17 client
-        if: steps.config.outputs.configured == 'true'
-        run: |
-          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
-          sudo apt-get install -y --no-install-recommends postgresql-client-17
-          pg_dump --version
-
-      - name: Dump, compress, encrypt
-        if: steps.config.outputs.configured == 'true'
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
           BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
         run: |
           set -euo pipefail
-          STAMP="$(date -u +%Y-%m-%dT%H%MZ)"
-          # Data planes this site owns: public + migration history.
-          pg_dump "$SUPABASE_DB_URL" \
-            --no-owner --no-privileges \
-            --schema=public --schema=supabase_migrations \
-            --file=backup.sql
-          # The auth schema itself is Supabase-managed and recreated by a
-          # fresh project, but its ROWS are ours: without auth.users and
-          # auth.identities, restored public-schema rows would be orphaned
-          # UUIDs and magic-link re-signups would mint new identities.
-          # Sessions/refresh tokens are ephemeral and deliberately excluded.
-          pg_dump "$SUPABASE_DB_URL" \
-            --data-only --no-owner --no-privileges \
-            --table=auth.users --table=auth.identities \
-            --file=auth-map.sql
-          tar czf backup.tar.gz backup.sql auth-map.sql
-          gpg --batch --yes --symmetric --cipher-algo AES256 \
-            --passphrase "$BACKUP_PASSPHRASE" \
-            --output "zodiacs-db-$STAMP.tar.gz.gpg" backup.tar.gz
-          rm backup.sql auth-map.sql backup.tar.gz
-          ls -la zodiacs-db-*.tar.gz.gpg
+          export LC_ALL=C
+          missing=()
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            missing+=(SUPABASE_DB_URL)
+          fi
+          if [ -z "$BACKUP_PASSPHRASE" ]; then
+            missing+=(BACKUP_PASSPHRASE)
+          fi
+          if [ "${#missing[@]}" -ne 0 ]; then
+            names=$(IFS=,; echo "${missing[*]}")
+            echo "::error title=Backup configuration missing::Required protected-environment secret(s) are absent: ${names}. No backup was created. See the workflow header for setup."
+            exit 1
+          fi
+          if [[ "$BACKUP_PASSPHRASE" == *$'\n'* || "$BACKUP_PASSPHRASE" == *$'\r'* ]]; then
+            echo "::error title=Backup configuration invalid::BACKUP_PASSPHRASE must contain exactly one control-free line."
+            exit 1
+          fi
+          passphrase_bytes=${#BACKUP_PASSPHRASE}
+          if [ "$passphrase_bytes" -lt 32 ] || [ "$passphrase_bytes" -gt 1024 ]; then
+            echo "::error title=Backup configuration invalid::BACKUP_PASSPHRASE must contain between 32 and 1024 random bytes."
+            exit 1
+          fi
+          echo "Backup configuration is present."
+
+      - name: Check out audited backup scripts
+        # actions/checkout@v6.1.0
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          # Scheduled workflows execute only the audited default-branch file;
+          # keep the checkout equally explicit for the scripts it invokes.
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      # The production project runs PostgreSQL 17; the runner image ships
+      # client 16, and pg_dump refuses servers newer than itself.
+      - name: Install PostgreSQL 17 and GnuPG clients
+        run: |
+          set -euo pipefail
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y --no-install-recommends postgresql-client-17 gnupg
+          pg_dump --version
+          gpg --version
+
+      - name: Dump, compress, encrypt
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          set -Eeuo pipefail
+          umask 077
+          private_stem="$RUNNER_TEMP/zodiacs-db-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          url_file="${private_stem}.url"
+          passphrase_file="${private_stem}.passphrase"
+          pgpass_file="${private_stem}.pgpass"
+          pg_env_file="${private_stem}.env"
+          cleanup_private_inputs() {
+            rm -f -- "$url_file" "$passphrase_file" "$pgpass_file" "$pg_env_file"
+          }
+          trap cleanup_private_inputs EXIT
+          if [ -e "$url_file" ] || [ -e "$passphrase_file" ]; then
+            echo "Protected input path collision." >&2
+            exit 1
+          fi
+
+          # printf/unset are shell builtins: no child inherits either secret.
+          printf '%s\n' "$SUPABASE_DB_URL" > "$url_file"
+          printf '%s\n' "$BACKUP_PASSPHRASE" > "$passphrase_file"
+          unset SUPABASE_DB_URL BACKUP_PASSPHRASE
+
+          PG_CLIENT_URL_FILE="$url_file" \
+          PGPASSFILE="$pgpass_file" \
+          PG_CLIENT_ENV_FILE="$pg_env_file" \
+            node scripts/configure-pg-client.mjs
+          rm -f -- "$url_file"
+          # shellcheck disable=SC1090 -- generated by the fixed repository helper.
+          source "$pg_env_file"
+          rm -f -- "$pg_env_file"
+
+          BACKUP_PASSPHRASE_FILE="$passphrase_file" \
+          BACKUP_OUTPUT_DIR="$GITHUB_WORKSPACE" \
+            bash scripts/export-db-backup.sh
+
+      - name: Verify encrypted backup artifact
+        id: artifact
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          artifacts=(zodiacs-db-*.tar.gz.gpg)
+          if [ "${#artifacts[@]}" -ne 1 ]; then
+            echo "::error title=Backup artifact invalid::Expected exactly one encrypted backup artifact, found ${#artifacts[@]}."
+            exit 1
+          fi
+          artifact=${artifacts[0]}
+          if [ ! -s "$artifact" ]; then
+            echo "::error title=Backup artifact empty::The encrypted backup artifact exists but contains no data."
+            exit 1
+          fi
+          bytes=$(wc -c < "$artifact" | tr -d '[:space:]')
+          echo "Verified one nonempty encrypted backup artifact (${bytes} bytes)."
+          echo "path=$artifact" >> "$GITHUB_OUTPUT"
 
       - name: Store encrypted backup artifact
-        if: steps.config.outputs.configured == 'true'
         # actions/upload-artifact@v4.6.2, pinned by SHA: this step handles the
         # backup ciphertext, so its supply chain stays commit-addressed.
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: zodiacs-db-backup-${{ github.run_id }}
-          path: zodiacs-db-*.tar.gz.gpg
+          path: ${{ steps.artifact.outputs.path }}
           retention-days: 90
           if-no-files-found: error

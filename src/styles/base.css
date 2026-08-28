@@ -33,6 +33,14 @@ html, body {
    scrollers (the placements table) keep their own overflow-x: auto. */
 body { min-height: 100dvh; overflow-x: clip; }
 
+/* The canonical directory is intentionally substantial and always follows
+   the route's primary content. Preserve its scroll footprint while allowing
+   the first viewport to skip below-the-fold layout and paint work. */
+.zfooter {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
 /* A single faint cool depth wash — no SaaS aurora, no chroma. Depth
    comes from one near-black vignette; the only color on the site is the
    twelve pastel discs. */

@@ -927,7 +927,10 @@ await withPreview({ port: 4426 }, async (baseURL) => {
       });
       const page = await context.newPage();
       await page.goto(`${baseURL}/birth-chart/${fragment}`, { waitUntil: 'domcontentloaded' });
-      check('no-JS calculator explanation remains visible', await page.locator('noscript').isVisible());
+      const calculatorFallback = page.locator('#main noscript > p').filter({
+        hasText: 'This birth chart calculator needs JavaScript',
+      });
+      check('no-JS calculator explanation remains visible', await calculatorFallback.isVisible());
       check('no-JS post-chart capture remains hidden', !(await page.locator('[data-email-capture-shell]').isVisible()));
       check('no-JS exposes no personal controls', await page.locator('[data-post-chart-panel]').count() === 0);
       await context.close();

@@ -1,4 +1,5 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { checkRateLimit } from '@vercel/firewall';
 
 const { waitUntilTasks } = vi.hoisted(() => ({
   waitUntilTasks: [] as Promise<unknown>[],
@@ -9,6 +10,8 @@ vi.mock('@vercel/functions', () => ({
     waitUntilTasks.push(task);
   },
 }));
+
+vi.mock('@vercel/firewall', () => ({ checkRateLimit: vi.fn() }));
 
 import subscribeHandler from '../../../api/email/subscribe';
 import confirmHandler from '../../../api/email/_confirm';
@@ -40,10 +43,15 @@ interface RequestRow {
   expires_at: number;
 }
 
+beforeEach(() => {
+  vi.mocked(checkRateLimit).mockResolvedValue({ rateLimited: false } as never);
+});
+
 afterEach(() => {
   process.env = { ...ORIGINAL_ENV };
   waitUntilTasks.splice(0);
   vi.unstubAllGlobals();
+  vi.mocked(checkRateLimit).mockReset();
 });
 
 async function flushWaitUntil(): Promise<void> {

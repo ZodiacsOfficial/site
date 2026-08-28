@@ -97,7 +97,7 @@ not numbered as code findings.
 | **P2-4** "Ahead:" could name a same-day event | **Resolved.** `futurePublishedEvents` starts the window at the day **after** the edition; `selectDailyEmailNearbyEvents` picks over that. |
 | **P2-5** `pushProfileRow` missing | **Resolved.** `PushOptIn` renders "Sky alerts · {On/Off} — the dates that matter, by notification." in its profile context (`src/styles/push.css` additions), giving the channel its §2.6.13 profile home. |
 | **P2-6** No-JS pending-page copy off-deck | **Superseded** by the P2-2 uniform-response amendment — §3.3.8's distinct pending page is retired with §2.5.7/8. Residual: the 400 sign-required page still says "Choose your sign / A sign is needed for the daily horoscope." rather than the deck's `emailCaptureMissingSign` → carried as P3-1. |
-| **P2-7** Weekly digest unsubscribe kept old copy | **Resolved.** `api/unsubscribe.ts` now renders the §3.3.7 frame ("Unsubscribe?" / "This stops the weekly digest for this address. One click, effective immediately." / "Done — you're unsubscribed.") with the restart action adapted to the weekly's real home (`/profile/#weekly-digest`) — blessed. Covered by the new `weekly-unsubscribe-api.test.ts`. |
+| **P2-7** Weekly digest unsubscribe kept old copy | **Resolved, with an operational-safety refinement.** `api/unsubscribe.ts` keeps the reviewed “Unsubscribe?” / “Done — you're unsubscribed.” frame and the restart action at `/profile/#weekly-digest`, while accurately warning that an already-authorized provider request may still arrive. Covered by `weekly-unsubscribe-api.test.ts`. |
 
 Also landed beyond the interim register, verified: a **single authoritative
 daily segment** (`RESEND_DAILY_SEGMENT_ID`) replaces the twelve-sign

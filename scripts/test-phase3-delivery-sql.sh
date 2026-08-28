@@ -91,6 +91,8 @@ done
 run_phase3_sql_file "${phase3_repo_root}/supabase/tests/phase3_habit_layer.sql"
 run_phase3_sql_file "${phase3_repo_root}/supabase/tests/phase3_delivery_guards.sql"
 run_phase3_sql_file "${phase3_repo_root}/supabase/tests/phase3_delivery_guards_concurrency.sql"
+run_phase3_sql_file "${phase3_repo_root}/supabase/tests/weekly_digest_unsubscribe.sql"
+run_phase3_sql_file "${phase3_repo_root}/supabase/tests/weekly_digest_concurrency.sql"
 
 # Reproduce the exact narrower push_subscriptions shape that reached
 # production before Phase 3, including representative rows. This second

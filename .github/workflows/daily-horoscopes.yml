@@ -23,7 +23,7 @@ jobs:
       issues: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           # A rerun is tied to the original event SHA. Resolve the current
           # default branch instead so a pushed-but-timed-out attempt becomes
@@ -32,7 +32,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
@@ -269,7 +269,7 @@ jobs:
           NODE
 
       - name: Upload operation receipt
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: daily-publication-${{ env.TARGET_DATE }}-${{ github.run_id }}
           path: ${{ runner.temp }}/daily-publication-${{ env.TARGET_DATE }}.json

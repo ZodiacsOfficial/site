@@ -5,6 +5,7 @@ import { parseEmailSubscription } from '../../src/lib/email/input.js';
 import { isAllowedEmailCaptureRequest, requestHeader } from '../../src/lib/email/request.js';
 import { emailStatusPage } from '../../src/lib/email/server-page.js';
 import { dailyEmailFeatureEnabled, hasDailySunEmailProvider } from '../../src/lib/email/daily-config.js';
+import { hasStandaloneWeeklyEmailCapture } from '../../src/lib/email/config.js';
 import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
 import confirmHandler from './_confirm.js';
 import unsubscribeHandler from './_unsubscribe.js';
@@ -34,14 +35,17 @@ function wantsJson(req: any): boolean {
 /** Uses Vercel's per-region firewall counters; the matching WAF rule must use this exported ID. */
 export const EMAIL_SUBSCRIBE_RATE_LIMIT_ID = 'zodiacs-email-subscribe';
 
-async function subscribeRateLimited(req: any): Promise<boolean> {
+type SubscribeRateLimitState = 'allowed' | 'limited' | 'unavailable';
+
+async function subscribeRateLimitState(req: any): Promise<SubscribeRateLimitState> {
   try {
     const result = await checkRateLimit(EMAIL_SUBSCRIBE_RATE_LIMIT_ID, { headers: req.headers });
-    // Unlike the Aura endpoint, an unprovisioned rule must never block
-    // signups — the counter engages only once the WAF rule exists.
-    return result?.rateLimited === true && result?.error !== 'not-found';
+    if (result?.error === 'not-found') return 'unavailable';
+    if (result?.rateLimited === true) return 'limited';
+    if (result?.rateLimited === false) return 'allowed';
+    return 'unavailable';
   } catch {
-    return false;
+    return 'unavailable';
   }
 }
 
@@ -54,8 +58,12 @@ const WEEKLY_COOLDOWN_MS = 10 * 60_000;
 const WEEKLY_COOLDOWN_MAX_ENTRIES = 5_000;
 const weeklyCooldown = new Map<string, number>();
 
+function weeklyCooldownKey(email: string): string {
+  return email.trim().toLowerCase();
+}
+
 export function weeklyRecipientOnCooldown(email: string, now = Date.now()): boolean {
-  const key = email.trim().toLowerCase();
+  const key = weeklyCooldownKey(email);
   const last = weeklyCooldown.get(key);
   if (last !== undefined && now - last < WEEKLY_COOLDOWN_MS) return true;
   weeklyCooldown.delete(key);
@@ -65,6 +73,11 @@ export function weeklyRecipientOnCooldown(email: string, now = Date.now()): bool
     if (oldest !== undefined) weeklyCooldown.delete(oldest);
   }
   return false;
+}
+
+function releaseWeeklyRecipientCooldown(email: string, claimedAt: number): void {
+  const key = weeklyCooldownKey(email);
+  if (weeklyCooldown.get(key) === claimedAt) weeklyCooldown.delete(key);
 }
 
 export async function handleEmailSubscribe(req: any, res: any): Promise<void> {
@@ -77,7 +90,13 @@ export async function handleEmailSubscribe(req: any, res: any): Promise<void> {
     sendJson(res, 403, { error: 'forbidden' });
     return;
   }
-  if (await subscribeRateLimited(req)) {
+  const rateLimitState = await subscribeRateLimitState(req);
+  if (rateLimitState === 'unavailable') {
+    if (wantsJson(req)) sendJson(res, 503, { error: 'unavailable' });
+    else sendHtml(res, 503, emailStatusPage('en', 'emailCaptureErrorTitle', 'emailCaptureError'));
+    return;
+  }
+  if (rateLimitState === 'limited') {
     res.setHeader('Retry-After', '60');
     sendJson(res, 429, { error: 'rate_limited' });
     return;
@@ -100,6 +119,12 @@ export async function handleEmailSubscribe(req: any, res: any): Promise<void> {
   if (daily && !hasDailySunEmailProvider(process.env)) {
     if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
     else sendHtml(res, 503, dailyEmailPage('Not available yet', 'Daily email is not ready to join just yet.'));
+    return;
+  }
+
+  if (!daily && !hasStandaloneWeeklyEmailCapture(process.env)) {
+    if (wantsJson(req)) sendJson(res, 503, { error: 'disabled' });
+    else sendHtml(res, 503, emailStatusPage(input.locale, 'emailCaptureErrorTitle', 'emailCaptureError'));
     return;
   }
 
@@ -135,8 +160,19 @@ export async function handleEmailSubscribe(req: any, res: any): Promise<void> {
     // recipient inside the weekly cooldown window — throttled, new, and
     // known addresses stay indistinguishable at the HTTP boundary. Only the
     // email and optional self-declared sign ever cross the provider boundary.
-    if (!input.honeypot && !weeklyRecipientOnCooldown(input.email)) {
-      await adapter.subscribe(input.email, input.sign);
+    if (!input.honeypot) {
+      const claimedAt = Date.now();
+      if (!weeklyRecipientOnCooldown(input.email, claimedAt)) {
+        try {
+          await adapter.subscribe(input.email, input.sign);
+        } catch (error) {
+          // A provider failure did not consume send quota, so it must not make
+          // a genuine retry look successful while suppressing confirmation.
+          // Delete only this request's claim in case a later claim replaced it.
+          releaseWeeklyRecipientCooldown(input.email, claimedAt);
+          throw error;
+        }
+      }
     }
     if (wantsJson(req)) sendJson(res, 200, { ok: true, pending: true });
     else sendHtml(res, 200, emailStatusPage(input.locale, 'emailPendingTitle', 'emailPendingBody'));
