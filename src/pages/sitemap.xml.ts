@@ -37,6 +37,7 @@ const birthdayFacts = birthdayFactsData as unknown as { days: Record<string, { c
 const researchLastmod = terminalResearchLastmod(registryResearchPublication);
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
 const AUDIT_REMEDIATION_LASTMOD = '2026-08-23';
+const LEGAL_IDENTITY_LASTMOD = '2026-08-29';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -131,6 +132,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/methodology/', '/about/', '/privacy/', '/terms/', '/es/', '/disclosure/',
     '/ru/disclosure/', '/registry/technical/', '/sdk/',
   ].map((loc) => [loc, AUDIT_REMEDIATION_LASTMOD] as const),
+  ...['/', '/about/', '/privacy/', '/terms/'].map((loc) => [loc, LEGAL_IDENTITY_LASTMOD] as const),
 ]);
 
 function getLastmod(loc: string): string {
