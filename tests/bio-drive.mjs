@@ -51,6 +51,13 @@ await withPreview({ port: Number(process.env.BIO_DRIVE_PORT ?? 4431) }, async (B
       navLinksVisible: [...document.querySelectorAll('.nav__links, .nav__search, .nav__chip, .nav__burger')]
         .some((node) => getComputedStyle(node).display !== 'none'),
       shareVisible: getComputedStyle(document.querySelector('[data-bio-share]')).display !== 'none',
+      shareHitTarget: (() => {
+        const share = document.querySelector('[data-bio-share]');
+        if (!share) return false;
+        const rect = share.getBoundingClientRect();
+        const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        return hit === share || Boolean(hit && share.contains(hit));
+      })(),
       guideVisible: (() => {
         const guide = document.querySelector('[data-guide-launcher]');
         return Boolean(guide && getComputedStyle(guide).display !== 'none');
@@ -82,6 +89,7 @@ await withPreview({ port: Number(process.env.BIO_DRIVE_PORT ?? 4431) }, async (B
     check(`${viewport.name}: focused navigation spacing remains present`, evidence.mainPaddingTop === '76px', evidence.mainPaddingTop);
     check(`${viewport.name}: secondary site navigation stays out of the focused chrome`, !evidence.navLinksVisible);
     check(`${viewport.name}: share action stays visible`, evidence.shareVisible);
+    check(`${viewport.name}: share action stays above the focused navigation`, evidence.shareHitTarget);
     check(`${viewport.name}: Guide does not overlap the link hub`, !evidence.guideVisible);
     check(`${viewport.name}: card stays inside viewport`, Boolean(evidence.card && evidence.card.left >= 0 && evidence.card.right <= viewport.width));
     check(`${viewport.name}: primary CTA arrives in the opening scan`, evidence.primaryTop <= 360, `${evidence.primaryTop}px`);

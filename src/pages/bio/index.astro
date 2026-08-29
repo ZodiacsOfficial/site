@@ -517,7 +517,10 @@ const dailyLabel = new Intl.DateTimeFormat('en-US', {
     .bio-sign { transition: none; }
   }
 
-  :global(body:has(.bio-shell) main) { padding-top: calc(76px + env(safe-area-inset-top)); }
+  :global(body:has(.bio-shell) main) {
+    z-index: auto;
+    padding-top: calc(76px + env(safe-area-inset-top));
+  }
   :global(body:has(.bio-shell) .nav-wrap) {
     top: 12px;
     padding-inline: 20px;
