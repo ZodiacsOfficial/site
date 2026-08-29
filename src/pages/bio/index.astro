@@ -1,13 +1,28 @@
 ---
 import Base from '../../layouts/Base.astro';
 import BrandMark from '../../components/BrandMark.astro';
+import EditionText from '../../components/EditionText.astro';
 import SignIcon from '../../components/SignIcon.astro';
+import publicationData from '../../data/daily-publication.json';
+import type { DailyPublication } from '../../lib/daily-publication';
 import { SIGNS } from '../../lib/signs';
 
-const primaryLinks = [
-  { label: 'Get your free birth chart', href: '/birth-chart/', destination: 'birth_chart' },
-  { label: 'Explore Astrofolio', href: '/astrofolio/', destination: 'astrofolio' },
-] as const;
+const primaryLink = {
+  label: 'Create my free birth chart',
+  href: '/birth-chart/',
+  destination: 'birth_chart',
+} as const;
+const astrofolioLink = {
+  label: 'Explore the official Zodiac collection',
+  href: '/astrofolio/',
+  destination: 'astrofolio',
+} as const;
+const publication = publicationData as DailyPublication;
+const dailyLabel = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+}).format(new Date(`${publication.date}T12:00:00Z`));
 ---
 <Base
   noindex
@@ -15,38 +30,72 @@ const primaryLinks = [
   stableTypography
   localTypography
   stableChromeTypography
+  editionDate={publication.date}
   title="Zodiacs.org Links — Birth Chart, Horoscopes & Astrofolio"
-  description="Get your free birth chart, read today’s horoscope for every sign, and explore Astrofolio."
+  description="Create your free birth chart, read the daily horoscope for every sign, and explore Astrofolio."
   path="/bio/"
   image="/assets/og/v2/share-pastel-wheel-20260809.png"
   imageAlt="The twelve zodiac signs in the Zodiacs.org celestial wheel."
 >
+  <button class="bio-share" type="button" data-bio-share aria-label="Share Zodiacs.org links">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 16V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
+    </svg>
+    <span data-bio-share-label>Share</span>
+  </button>
+  <span class="bio-share-status" data-bio-share-status role="status" aria-live="polite"></span>
+
   <div class="bio-shell">
     <section class="bio-card" aria-labelledby="bio-title">
-      <header class="bio-header">
-        <a class="bio-brand" href="/" data-bio-destination="website" aria-label="Zodiacs.org official website">
-          <BrandMark size={66} />
-          <h1 id="bio-title">Zodiacs<span>.org</span></h1>
-        </a>
-        <p>Your chart, your signs, your sky.</p>
-      </header>
+      <div class="bio-intro">
+        <header class="bio-hero">
+          <a class="bio-orbit" href="/" data-bio-destination="website" aria-label="Zodiacs.org official website">
+            <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+              <circle cx="60" cy="60" r="51" />
+              <ellipse cx="60" cy="60" rx="51" ry="23" transform="rotate(28 60 60)" />
+              <ellipse cx="60" cy="60" rx="51" ry="23" transform="rotate(-28 60 60)" />
+              <path d="M60 4v14M60 102v14M4 60h14M102 60h14" />
+            </svg>
+            <span class="bio-orbit__mark"><BrandMark size={58} /></span>
+          </a>
 
-      <nav class="bio-links" aria-label="Zodiacs links">
-        {primaryLinks.map((link) => (
+          <div class="bio-heading">
+            <p class="bio-kicker">Zodiacs.org</p>
+            <h1 id="bio-title">Your chart and <EditionText current="today’s" editionDate={publication.date} /> sky</h1>
+            <p class="bio-summary">Free astrology tools, calculated privately in your browser.</p>
+          </div>
+        </header>
+
+        <nav class="bio-links" aria-label="Birth chart">
           <a
-            class="bio-link"
-            href={link.href}
-            data-bio-destination={link.destination}
+            class="bio-link bio-link--primary"
+            href={primaryLink.href}
+            data-bio-destination={primaryLink.destination}
           >
-            <span>{link.label}</span>
+            <span class="bio-link__copy">
+              <strong>{primaryLink.label}</strong>
+              <small>Sun, Moon, rising and planets</small>
+            </span>
             <span class="bio-link__arrow" aria-hidden="true">→</span>
           </a>
-        ))}
-      </nav>
+        </nav>
+
+        <ul class="bio-proof" aria-label="Birth chart details">
+          <li>Free</li>
+          <li>No signup</li>
+          <li>Calculated in your browser</li>
+        </ul>
+      </div>
 
       <section class="bio-signs" aria-labelledby="signs-title">
-        <h2 id="signs-title">Daily horoscopes</h2>
-        <p>Choose your sign.</p>
+        <header class="bio-signs__head">
+          <p class="bio-signs__kicker">
+            Daily horoscopes <span aria-hidden="true">·</span>
+            <time datetime={publication.date}>{dailyLabel}</time>
+          </p>
+          <h2 id="signs-title">Choose your sign</h2>
+        </header>
+
         <div class="bio-signs__grid">
           {SIGNS.map((sign) => (
             <a
@@ -56,12 +105,25 @@ const primaryLinks = [
               style={`--sign:${sign.hue}`}
               aria-label={`${sign.name} daily horoscope`}
             >
-              <SignIcon sign={sign.slug} size={42} />
+              <SignIcon sign={sign.slug} size={48} />
               <span>{sign.name}</span>
             </a>
           ))}
         </div>
       </section>
+
+      <a
+        class="bio-astrofolio"
+        href={astrofolioLink.href}
+        data-bio-destination={astrofolioLink.destination}
+      >
+        <span class="bio-astrofolio__copy">
+          <small>Astrofolio</small>
+          <strong>{astrofolioLink.label}</strong>
+          <span>Seasonal art and collection information.</span>
+        </span>
+        <span class="bio-astrofolio__arrow" aria-hidden="true">→</span>
+      </a>
     </section>
   </div>
 
@@ -74,6 +136,62 @@ const primaryLinks = [
         destination: link.getAttribute('data-bio-destination') || ''
       });
     });
+
+    (function wireBioShare() {
+      var button = document.querySelector('[data-bio-share]');
+      var label = document.querySelector('[data-bio-share-label]');
+      var status = document.querySelector('[data-bio-share-status]');
+      if (!button || !label || !status) return;
+
+      function announce(message) {
+        label.textContent = message;
+        status.textContent = message === 'Share' ? '' : message;
+        window.setTimeout(function () {
+          label.textContent = 'Share';
+          status.textContent = '';
+        }, 2200);
+      }
+
+      function legacyCopy(value) {
+        var field = document.createElement('textarea');
+        field.value = value;
+        field.setAttribute('readonly', '');
+        field.style.position = 'fixed';
+        field.style.opacity = '0';
+        document.body.appendChild(field);
+        field.select();
+        var copied = document.execCommand('copy');
+        field.remove();
+        return copied;
+      }
+
+      button.addEventListener('click', async function () {
+        var canonical = document.querySelector('link[rel="canonical"]');
+        var url = canonical && canonical.href ? canonical.href : new URL('/bio/', window.location.origin).href;
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'Zodiacs.org',
+              text: 'Free birth charts and daily horoscopes from Zodiacs.org.',
+              url: url
+            });
+            announce('Shared');
+            return;
+          } catch (error) {
+            if (error && error.name === 'AbortError') return;
+          }
+        }
+
+        try {
+          if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Clipboard unavailable');
+          await navigator.clipboard.writeText(url);
+          announce('Copied');
+        } catch (error) {
+          announce(legacyCopy(url) ? 'Copied' : 'Copy link');
+          button.focus({ preventScroll: true });
+        }
+      });
+    })();
   </script>
 </Base>
 
@@ -82,142 +200,395 @@ const primaryLinks = [
     position: relative;
     z-index: var(--z-base);
     display: grid;
-    min-height: calc(100dvh - var(--nav-space));
-    place-items: center;
-    padding: max(28px, env(safe-area-inset-top)) 20px max(22px, env(safe-area-inset-bottom));
+    min-height: calc(100dvh - 76px - env(safe-area-inset-top));
+    justify-items: center;
+    align-items: start;
+    padding: 16px 20px max(28px, env(safe-area-inset-bottom));
   }
 
   .bio-card {
-    width: min(100%, 620px);
-    padding: clamp(26px, 6vw, 48px);
+    display: grid;
+    grid-template-areas:
+      'intro signs'
+      'astro signs';
+    grid-template-columns: minmax(0, 1.12fr) minmax(350px, 0.88fr);
+    gap: 26px clamp(32px, 4vw, 44px);
+    width: min(100%, 960px);
+    padding: 36px;
     border: 1px solid var(--hair-2);
-    border-radius: clamp(28px, 5vw, 42px);
+    border-radius: 32px;
     background: var(--surface);
-    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.34);
   }
 
-  .bio-header { text-align: center; }
-  .bio-brand {
-    display: inline-flex;
-    flex-direction: column;
+  .bio-intro { grid-area: intro; min-width: 0; }
+  .bio-hero {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
     align-items: center;
+    gap: 18px;
+  }
+
+  .bio-orbit {
+    position: relative;
+    display: grid;
+    width: 92px;
+    height: 92px;
+    place-items: center;
     color: var(--text);
     text-decoration: none;
   }
-  .bio-brand :global(.brandmark) { margin-bottom: 16px; }
-  .bio-brand h1 {
+  .bio-orbit > svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: var(--hair-2);
+    stroke-linecap: round;
+    stroke-width: 0.8;
+  }
+  .bio-orbit__mark {
+    position: relative;
+    display: grid;
+    place-items: center;
+    transition: transform 180ms ease;
+  }
+
+  .bio-kicker,
+  .bio-signs__kicker,
+  .bio-astrofolio__copy > small {
     margin: 0;
+    color: var(--muted);
     font-family: var(--font-serif);
-    font-size: clamp(42px, 10vw, 60px);
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.4;
+    text-transform: none;
+  }
+
+  .bio-heading h1 {
+    max-width: 12ch;
+    margin: 5px 0 0;
+    font-family: var(--font-serif);
+    font-size: clamp(42px, 4vw, 48px);
     font-weight: 500;
     letter-spacing: -0.035em;
-    line-height: 0.92;
+    line-height: 0.96;
+    text-wrap: balance;
   }
-  .bio-brand h1 span {
-    margin-left: 3px;
-    font-family: var(--font-mono);
-    font-size: 0.27em;
-    font-weight: 450;
-    letter-spacing: 0.02em;
-  }
-  .bio-header p {
-    margin: 14px 0 0;
-    color: var(--muted);
-    font-size: clamp(16px, 4vw, 18px);
-  }
-
-  .bio-links {
-    display: grid;
-    gap: 10px;
-    margin-top: clamp(30px, 7vw, 42px);
-  }
-  .bio-link {
-    display: flex;
-    min-height: 60px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 18px 14px 21px;
-    border: 1px solid var(--hair-2);
-    border-radius: 18px;
-    color: var(--text);
-    font-weight: 620;
-    letter-spacing: -0.015em;
-    text-decoration: none;
-    transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
-  }
-  .bio-link:first-child { background: rgba(238, 241, 247, 0.08); }
-  .bio-link__arrow {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    place-items: center;
-    border: 1px solid var(--hair-2);
-    border-radius: 50%;
+  .bio-summary {
+    max-width: 32ch;
+    margin: 12px 0 0;
     color: var(--muted);
     font-size: 16px;
-    transition: transform 160ms ease, color 160ms ease;
+    line-height: 1.5;
+    text-wrap: pretty;
   }
 
-  .bio-signs { margin-top: clamp(32px, 8vw, 46px); }
-  .bio-signs h2 {
-    margin: 0;
-    font-family: var(--font-serif);
-    font-size: clamp(26px, 6vw, 32px);
-    font-weight: 500;
-    line-height: 1;
-    text-align: center;
+  .bio-links { margin-top: 22px; }
+  .bio-link {
+    display: flex;
+    min-height: 76px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 14px 20px;
+    border: 1px solid var(--text);
+    border-radius: 18px;
+    background: var(--text);
+    color: var(--void-0);
+    text-decoration: none;
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease;
   }
-  .bio-signs > p {
-    margin: 5px 0 18px;
+  .bio-link__copy { display: grid; gap: 2px; min-width: 0; }
+  .bio-link__copy strong {
+    font-size: 16px;
+    font-weight: 680;
+    letter-spacing: -0.018em;
+    line-height: 1.25;
+  }
+  .bio-link__copy small {
+    color: rgba(6, 7, 9, 0.68);
+    font-size: 12px;
+    font-weight: 520;
+    line-height: 1.35;
+  }
+  .bio-link__arrow,
+  .bio-astrofolio__arrow {
+    flex: 0 0 auto;
+    font-size: 20px;
+    line-height: 1;
+    transition: transform 160ms ease;
+  }
+
+  .bio-proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 0;
+    margin: 14px 0 0;
+    padding: 0;
     color: var(--muted);
-    text-align: center;
+    font-size: 11px;
+    line-height: 1.4;
+    list-style: none;
+  }
+  .bio-proof li { padding-inline: 10px; border-inline-start: 1px solid var(--hair-2); }
+  .bio-proof li:first-child { padding-inline-start: 0; border-inline-start: 0; }
+
+  .bio-signs {
+    grid-area: signs;
+    min-width: 0;
+    padding-inline-start: clamp(32px, 4vw, 44px);
+    border-inline-start: 1px solid var(--hair-1);
+  }
+  .bio-signs__head { margin-bottom: 20px; }
+  .bio-signs__kicker span { padding-inline: 4px; color: var(--faint); }
+  .bio-signs h2 {
+    margin: 7px 0 0;
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 3.4vw, 44px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1;
   }
   .bio-signs__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
   }
   .bio-sign {
     display: flex;
     min-width: 0;
-    min-height: 82px;
+    min-height: 88px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 7px;
-    padding: 10px 4px;
-    border: 1px solid var(--hair-1);
-    border-radius: 16px;
+    padding: 8px 2px;
+    border-color: transparent;
+    border-radius: 14px;
+    background: transparent;
     color: var(--text-2);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 570;
     text-decoration: none;
-    transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease;
   }
   .bio-sign :global(img) { border-radius: 50%; }
 
+  .bio-astrofolio {
+    grid-area: astro;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 2px 0;
+    border-top: 1px solid var(--hair-1);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .bio-astrofolio__copy { display: grid; gap: 4px; }
+  .bio-astrofolio__copy strong {
+    max-width: 25ch;
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .bio-astrofolio__copy > span {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .bio-astrofolio__arrow { color: var(--muted); }
+
+  .bio-share {
+    position: fixed;
+    top: calc(18px + env(safe-area-inset-top));
+    right: max(20px, calc((100vw - 960px) / 2));
+    z-index: calc(var(--z-nav) + 1);
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 2px 0 12px;
+    border: 0;
+    background: transparent;
+    color: var(--text-2);
+    font: 550 12px/1 var(--font-sans);
+    cursor: pointer;
+    transition: color 160ms ease, transform 160ms ease;
+  }
+  .bio-share svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+  }
+  .bio-share-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
   @media (hover: hover) and (pointer: fine) {
-    .bio-link:hover {
-      border-color: var(--hair-3);
-      background: rgba(238, 241, 247, 0.11);
-      transform: translateY(-2px);
-    }
-    .bio-link:hover .bio-link__arrow { color: var(--text); transform: translate(2px, -2px); }
+    .bio-orbit:hover .bio-orbit__mark { transform: rotate(10deg) scale(1.04); }
+    .bio-link:hover { background: transparent; color: var(--text); transform: translateY(-2px); }
+    .bio-link:hover .bio-link__copy small { color: var(--muted); }
+    .bio-link:hover .bio-link__arrow,
+    .bio-astrofolio:hover .bio-astrofolio__arrow { transform: translateX(4px); }
     .bio-sign:hover {
-      border-color: color-mix(in srgb, var(--sign) 52%, transparent);
-      background: color-mix(in srgb, var(--sign) 8%, transparent);
+      background: color-mix(in srgb, var(--sign) 9%, transparent);
       color: var(--text);
       transform: translateY(-2px);
     }
+    .bio-astrofolio:hover strong,
+    .bio-share:hover { color: var(--text); }
+    .bio-share:hover { transform: translateY(-1px); }
   }
+
+  @media (max-width: 840px) {
+    .bio-card {
+      grid-template-areas:
+        'intro'
+        'signs'
+        'astro';
+      grid-template-columns: minmax(0, 1fr);
+      width: min(100%, 620px);
+      gap: 32px;
+    }
+    .bio-signs {
+      padding-block-start: 30px;
+      padding-inline-start: 0;
+      border-block-start: 1px solid var(--hair-1);
+      border-inline-start: 0;
+    }
+    .bio-astrofolio { padding-top: 24px; }
+  }
+
+  @media (max-width: 600px) {
+    .bio-shell { padding: 14px 18px max(24px, env(safe-area-inset-bottom)); }
+    .bio-card {
+      padding: 14px 0 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .bio-hero { grid-template-columns: 92px minmax(0, 1fr); gap: 18px; }
+    .bio-orbit { width: 92px; height: 92px; }
+    .bio-orbit__mark { transform: scale(0.86); }
+    .bio-heading h1 { font-size: clamp(36px, 10.5vw, 44px); }
+    .bio-summary { margin-top: 10px; font-size: 15px; }
+    .bio-links { margin-top: 24px; }
+    .bio-link { min-height: 72px; padding-inline: 18px; }
+    .bio-signs__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
+    .bio-sign { min-height: 82px; }
+    .bio-share { right: 16px; }
+  }
+
+  @media (max-width: 350px) {
+    .bio-shell { padding-inline: 14px; }
+    .bio-hero { grid-template-columns: 80px minmax(0, 1fr); gap: 14px; }
+    .bio-orbit { width: 80px; height: 80px; }
+    .bio-heading h1 { font-size: 34px; }
+    .bio-summary { font-size: 14px; }
+    .bio-share span { display: none; }
+    .bio-share { width: 44px; justify-content: center; padding: 0; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .bio-link, .bio-link__arrow, .bio-sign { transition: none; }
+    .bio-link,
+    .bio-link__arrow,
+    .bio-astrofolio__arrow,
+    .bio-orbit__mark,
+    .bio-share,
+    .bio-sign { transition: none; }
   }
-  @media (min-width: 540px) {
-    .bio-signs__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  :global(body:has(.bio-shell) main) {
+    z-index: auto;
+    padding-top: calc(76px + env(safe-area-inset-top));
   }
-  @media (max-width: 360px) {
-    .bio-shell { padding-inline: 12px; }
-    .bio-card { padding-inline: 16px; border-radius: 24px; }
+  :global(body:has(.bio-shell) .nav-wrap) {
+    top: 12px;
+    padding-inline: 20px;
+    background: var(--void-0);
+  }
+  :global(body:has(.bio-shell) .nav) {
+    width: min(100%, 960px) !important;
+    justify-content: flex-start;
+    height: 52px;
+    padding: 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--hair-1) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  :global(body:has(.bio-shell) .nav__links),
+  :global(body:has(.bio-shell) .nav__search),
+  :global(body:has(.bio-shell) .nav__chip),
+  :global(body:has(.bio-shell) .nav__burger),
+  :global(body:has(.bio-shell) .nav-menu) { display: none !important; }
+  :global(body:has(.bio-shell) .nav__sep),
+  :global(body:has(.bio-shell) .nav__dim) { display: inline !important; }
+  :global(body:has(.bio-shell) .nav__mark) { min-height: 44px; }
+
+  :global(body:has(.bio-shell) .zguide-launcher),
+  :global(body:has(.bio-shell) .zfooter .email-capture--footer),
+  :global(body:has(.bio-shell) .zfooter__guide),
+  :global(body:has(.bio-shell) .zfooter__directory),
+  :global(body:has(.bio-shell) .zfooter__colophon > nav[aria-label="More"]),
+  :global(body:has(.bio-shell) .zfooter__credits) { display: none !important; }
+  :global(body:has(.bio-shell) .zfooter) {
+    contain-intrinsic-size: auto 280px !important;
+    margin-top: 36px !important;
+  }
+  :global(body:has(.bio-shell) .zfooter__inner) {
+    width: min(100%, 960px) !important;
+    padding-block: 28px max(28px, env(safe-area-inset-bottom)) !important;
+  }
+  :global(body:has(.bio-shell) .zfooter__lead) { padding-bottom: 22px !important; }
+  :global(body:has(.bio-shell) .zfooter__language) { padding-block: 16px !important; }
+  :global(body:has(.bio-shell) .zfooter__colophon) {
+    grid-template-columns: minmax(150px, 0.6fr) minmax(0, 1fr) !important;
+    gap: 18px 32px !important;
+    padding-top: 18px !important;
+  }
+
+  @media (max-width: 760px) {
+    :global(body:has(.bio-shell) .zfooter__inner) {
+      padding-block: 24px max(24px, env(safe-area-inset-bottom)) !important;
+    }
+    :global(body:has(.bio-shell) .zfooter__lead) { display: block !important; }
+    :global(body:has(.bio-shell) .zfooter__tag) { max-width: 42ch; }
+    :global(body:has(.bio-shell) .zfooter__language) {
+      grid-template-columns: 1fr !important;
+      gap: 6px !important;
+    }
+    :global(body:has(.bio-shell) .zfooter__locales) {
+      display: flex !important;
+      flex-wrap: wrap;
+      gap: 0 16px !important;
+    }
+    :global(body:has(.bio-shell) .zfooter__colophon) {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+    }
+    :global(body:has(.bio-shell) .zfooter__copyright) { grid-column: auto !important; }
   }
 </style>

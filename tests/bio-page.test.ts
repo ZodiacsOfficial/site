@@ -10,7 +10,9 @@ describe('/bio/ link contract', () => {
     expect(source).toContain("href: '/astrofolio/'");
     expect(source).not.toContain("href: '/horoscopes/'");
     expect(source).toContain('Daily horoscopes');
-    expect(source).toContain('Choose your sign.');
+    expect(source).toContain('Choose your sign');
+    expect(source).toContain('editionDate={publication.date}');
+    expect(source).toContain('<EditionText current="today’s" editionDate={publication.date} />');
   });
 
   it('builds one daily horoscope link for every canonical sign', () => {
@@ -20,9 +22,20 @@ describe('/bio/ link contract', () => {
     expect(source).toContain('href={`/horoscopes/${sign.slug}/`}');
   });
 
-  it('uses the canonical shared shell, stays out of search, and bounds analytics', () => {
+  it('focuses the canonical shared shell without creating a second chrome system', () => {
     expect(source).toContain('<Base\n  noindex\n  analyticsOnNoindex');
     expect(source).not.toContain('minimalChrome');
+    expect(source).toContain(':global(body:has(.bio-shell) .nav)');
+    expect(source).toContain(':global(body:has(.bio-shell) .zguide-launcher)');
+    expect(source).toContain(':global(body:has(.bio-shell) .zfooter__directory)');
+    expect(source).toContain('background: var(--text);');
+  });
+
+  it('keeps sharing local and bounds analytics', () => {
+    expect(source).toContain('data-bio-share');
+    expect(source).toContain('navigator.share');
+    expect(source).toContain('navigator.clipboard.writeText(url)');
+    expect(source).toContain('document.querySelector(\'link[rel="canonical"]\')');
     expect(source).toContain("window.zodiacsAnalytics.track('bio_click'");
     expect(source).not.toMatch(/https?:\/\//u);
   });
