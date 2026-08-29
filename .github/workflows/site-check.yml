@@ -92,6 +92,9 @@ jobs:
           T17_SHARE_EVIDENCE: "1"
         run: node tests/t17-positions-share.mjs
 
+      - name: Regenerate Phase 1 evidence for audited source fingerprint
+        run: npm run test:phase1:acceptance
+
       - name: Engine accuracy vectors
         run: npm test
 
@@ -171,6 +174,7 @@ jobs:
           name: phase-1-browser-performance-${{ github.run_id }}
           path: |
             tests/visual/artifacts/
+            docs/acceptance/phase1/screenshots/
             docs/acceptance/phase4-sharing/chart-sheet-33-percent.png
           if-no-files-found: ignore
           retention-days: 90
