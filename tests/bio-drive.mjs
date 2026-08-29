@@ -42,7 +42,7 @@ await withPreview({ port: Number(process.env.BIO_DRIVE_PORT ?? 4431) }, async (B
       robots: document.querySelector('meta[name="robots"]')?.content,
       width: document.documentElement.scrollWidth,
       viewport: innerWidth,
-      navCount: document.querySelectorAll('.wnav').length,
+      navCount: document.querySelectorAll('nav.nav[aria-label="Primary"]').length,
       fullFooterCount: document.querySelectorAll('.zfooter').length,
       mainPaddingTop: getComputedStyle(document.querySelector('main')).paddingTop,
       card: (() => {
