@@ -1,0 +1,239 @@
+---
+import Base from '../../layouts/Base.astro';
+import BrandMark from '../../components/BrandMark.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import { SIGNS } from '../../lib/signs';
+
+const primaryLinks = [
+  { label: 'Official website', href: '/', destination: 'website', accent: 'light' },
+  { label: 'Explore Astrofolio', href: '/astrofolio/', destination: 'astrofolio', accent: 'warm' },
+] as const;
+---
+<Base
+  minimalChrome
+  stableTypography
+  localTypography
+  stableChromeTypography
+  title="Zodiacs.org — Your Chart, Signs and Daily Horoscope"
+  description="Visit Zodiacs.org, explore Astrofolio, and read today’s horoscope for every zodiac sign."
+  path="/bio/"
+  image="/assets/og/v2/share-pastel-wheel-20260809.png"
+  imageAlt="The twelve zodiac signs in the Zodiacs.org celestial wheel."
+>
+  <div class="bio-shell">
+    <section class="bio-card" aria-labelledby="bio-title">
+      <header class="bio-header">
+        <a class="bio-brand" href="/" data-bio-destination="website" aria-label="Zodiacs.org official website">
+          <BrandMark size={66} />
+          <h1 id="bio-title">Zodiacs<span>.org</span></h1>
+        </a>
+        <p>Your chart, your signs, your sky.</p>
+      </header>
+
+      <nav class="bio-links" aria-label="Zodiacs links">
+        {primaryLinks.map((link) => (
+          <a
+            class={`bio-link bio-link--${link.accent}`}
+            href={link.href}
+            data-bio-destination={link.destination}
+          >
+            <span>{link.label}</span>
+            <span class="bio-link__arrow" aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </nav>
+
+      <section class="bio-signs" aria-labelledby="signs-title">
+        <h2 id="signs-title">Today's Horoscope. Choose your sign</h2>
+        <div class="bio-signs__grid">
+          {SIGNS.map((sign) => (
+            <a
+              class="bio-sign"
+              href={`/horoscopes/${sign.slug}/`}
+              data-bio-destination={sign.slug}
+              style={`--sign:${sign.hue}`}
+              aria-label={`${sign.name} daily horoscope`}
+            >
+              <SignIcon sign={sign.slug} size={42} />
+              <span>{sign.name}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <footer class="bio-footer">
+        <span>© Zodiacs.org</span>
+        <span aria-hidden="true">·</span>
+        <a href="/privacy/">Privacy</a>
+        <span aria-hidden="true">·</span>
+        <a href="/terms/">Terms</a>
+      </footer>
+    </section>
+  </div>
+
+  <script is:inline>
+    document.addEventListener('click', function (event) {
+      var target = event.target;
+      var link = target && target.closest ? target.closest('[data-bio-destination]') : null;
+      if (!link || !window.zodiacsAnalytics) return;
+      window.zodiacsAnalytics.track('bio_click', {
+        destination: link.getAttribute('data-bio-destination') || ''
+      });
+    });
+  </script>
+</Base>
+
+<style>
+  .bio-shell {
+    position: relative;
+    z-index: var(--z-base);
+    display: grid;
+    min-height: 100dvh;
+    place-items: center;
+    padding: max(28px, env(safe-area-inset-top)) 20px max(22px, env(safe-area-inset-bottom));
+  }
+
+  .bio-card {
+    width: min(100%, 620px);
+    padding: clamp(26px, 6vw, 48px);
+    border: 1px solid var(--hair-2);
+    border-radius: clamp(28px, 5vw, 42px);
+    background: linear-gradient(155deg, rgba(21, 25, 37, 0.9), rgba(10, 12, 17, 0.84));
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+  }
+
+  .bio-header { text-align: center; }
+  .bio-brand {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .bio-brand :global(.brandmark) { margin-bottom: 16px; }
+  .bio-brand h1 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(42px, 10vw, 60px);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+  }
+  .bio-brand h1 span {
+    margin-left: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.27em;
+    font-weight: 450;
+    letter-spacing: 0.02em;
+  }
+  .bio-header p {
+    margin: 14px 0 0;
+    color: var(--muted);
+    font-size: clamp(16px, 4vw, 18px);
+  }
+
+  .bio-links {
+    display: grid;
+    gap: 10px;
+    margin-top: clamp(30px, 7vw, 42px);
+  }
+  .bio-link {
+    display: flex;
+    min-height: 60px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px 14px 21px;
+    border: 1px solid var(--hair-2);
+    border-radius: 18px;
+    color: var(--text);
+    font-weight: 620;
+    letter-spacing: -0.015em;
+    text-decoration: none;
+    transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+  }
+  .bio-link--light { background: rgba(238, 241, 247, 0.08); }
+  .bio-link--warm { background: rgba(224, 176, 128, 0.08); }
+  .bio-link--cool { background: rgba(182, 212, 228, 0.08); }
+  .bio-link__arrow {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 1px solid var(--hair-2);
+    border-radius: 50%;
+    color: var(--muted);
+    font-size: 16px;
+    transition: transform 160ms ease, color 160ms ease;
+  }
+
+  .bio-signs { margin-top: clamp(32px, 8vw, 46px); }
+  .bio-signs h2 {
+    margin: 0 0 18px;
+    font-family: var(--font-serif);
+    font-size: clamp(26px, 6vw, 32px);
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+  }
+  .bio-signs__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .bio-sign {
+    display: flex;
+    min-width: 0;
+    min-height: 82px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 4px;
+    border: 1px solid var(--hair-1);
+    border-radius: 16px;
+    color: var(--text-2);
+    font-size: 12px;
+    font-weight: 570;
+    text-decoration: none;
+    transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+  .bio-sign :global(img) { border-radius: 50%; }
+
+  .bio-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px 9px;
+    margin-top: 28px;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+  }
+  .bio-footer a { text-underline-offset: 3px; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .bio-link:hover {
+      border-color: var(--hair-3);
+      background: rgba(238, 241, 247, 0.11);
+      transform: translateY(-2px);
+    }
+    .bio-link:hover .bio-link__arrow { color: var(--text); transform: translate(2px, -2px); }
+    .bio-sign:hover {
+      border-color: color-mix(in srgb, var(--sign) 52%, transparent);
+      background: color-mix(in srgb, var(--sign) 8%, transparent);
+      color: var(--text);
+      transform: translateY(-2px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bio-link, .bio-link__arrow, .bio-sign { transition: none; }
+  }
+  @media (min-width: 540px) {
+    .bio-signs__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  @media (max-width: 360px) {
+    .bio-shell { padding-inline: 12px; }
+    .bio-card { padding-inline: 16px; border-radius: 24px; }
+  }
+</style>

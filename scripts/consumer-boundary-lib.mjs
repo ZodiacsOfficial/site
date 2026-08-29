@@ -83,6 +83,7 @@ const SANCTIONED_INTERNAL_LINKS = Object.freeze([
   [/^src\/lib\/i18n\/index\.ts$/u, /^\/disclosure\/$/u],
   [/^src\/strings\/seo\.(?:en|ru)\.mjs$/u, /^\/disclosure\/$/u],
   [/^src\/pages\/about\/index\.astro$/u, /^\/(?:astrofolio|disclosure|registry|terminal)\/$/u],
+  [/^src\/pages\/bio\/index\.astro$/u, /^\/astrofolio\/$/u],
   [/^src\/pages\/terms\/index\.astro$/u, /^\/(?:astrofolio\/how-to-buy|disclosure)\/$/u],
   [/^src\/pages\/ru\/\[sign\]\/index\.astro$/u, /^\/registry\/\$\{…\}\/$/u],
   [/^src\/pages\/ru\/disclosure\/index\.astro$/u, /^\/terminal\/$/u],

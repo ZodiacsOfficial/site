@@ -75,6 +75,7 @@ const LOCALIZED_PAGE_PREFIXES = LOCALES
 // every Astrofolio/Registry/Terminal route out of the consumer astrology catalog.
 const UNLISTED_ROUTE_PREFIXES = Object.freeze([
   '/astrofolio/',
+  '/bio/',
   '/disclosure/',
   '/feeds/market-research',
   '/people/',

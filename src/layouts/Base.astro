@@ -61,9 +61,12 @@ interface Props {
   privateSurface?: boolean;
   /** Render the Terminal-only market and venue boundary in the shared footer. */
   terminalMarketNotice?: boolean;
+  /** Keep the shared document shell but omit the standard navigation and footer. */
+  minimalChrome?: boolean;
 }
 
 const props = Astro.props;
+const minimalChrome = props.minimalChrome === true;
 const locale = normalizeCatalogLocale(props.locale);
 const clientUi = props.clientUi ? UI[locale] : null;
 const russianRuntime = props.clientUi && locale === 'ru' ? RUSSIAN_RUNTIME : null;
@@ -390,24 +393,24 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
     <div class="orbs" aria-hidden="true"></div>
     <div class="dust" aria-hidden="true"></div>
 
-    <SiteNav locale={locale} />
+    {!minimalChrome && <SiteNav locale={locale} />}
 
     {props.glass && <GlassDefs />}
 
-    <main id="main">
+    <main id="main" class:list={{ 'main--minimal': minimalChrome }}>
       <slot />
     </main>
 
-    {props.type === 'article' && <EditorialLine locale={locale} />}
-    <SourcesLine sources={props.sources} locale={locale} />
-    <SiteFooter locale={locale} terminalMarketNotice={props.terminalMarketNotice} />
+    {!minimalChrome && props.type === 'article' && <EditorialLine locale={locale} />}
+    {!minimalChrome && <SourcesLine sources={props.sources} locale={locale} />}
+    {!minimalChrome && <SiteFooter locale={locale} terminalMarketNotice={props.terminalMarketNotice} />}
 
     <!-- The canonical footer sits below every route's primary content, so its
          sizeable shared stylesheet must not delay the first viewport. Keep the
          request non-render-blocking, then apply it as soon as it is available.
          The no-script import preserves a fully styled document for readers who
          disable JavaScript without making Astro's critical-CSS pass inline it. -->
-    <script is:inline>
+    {!minimalChrome && <script is:inline>
       (function loadFooterStyles() {
         var requested = false;
         function appendStylesheet() {
@@ -427,7 +430,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
         else if (document.readyState === 'complete') appendAfterLoad();
         else window.addEventListener('load', appendAfterLoad, { once: true });
       })();
-    </script>
+    </script>}
     <noscript><style>@import url('/assets/site-footer.css');</style></noscript>
 
     <script>
@@ -468,4 +471,5 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
 <style is:global>
   :root { --nav-space: 96px; }
   main { position: relative; z-index: var(--z-base); padding-top: var(--nav-space); }
+  main.main--minimal { padding-top: 20px; }
 </style>

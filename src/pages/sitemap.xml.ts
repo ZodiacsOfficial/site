@@ -37,6 +37,7 @@ const birthdayFacts = birthdayFactsData as unknown as { days: Record<string, { c
 const researchLastmod = terminalResearchLastmod(registryResearchPublication);
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
 const AUDIT_REMEDIATION_LASTMOD = '2026-08-23';
+const BIO_PAGE_LASTMOD = '2026-08-29';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -64,6 +65,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       ? '2026-07-19'
       : ['/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
+  ['/bio/', BIO_PAGE_LASTMOD],
   // Phase 4 re-exposes the already-reviewed Big Three share card from the
   // birth-chart result sheet.
   ['/birth-chart/', '2026-07-24'],
@@ -193,6 +195,7 @@ export const GET: APIRoute = async () => {
     { loc: '/tools/', priority: 0.8 },
     { loc: '/ask/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
+    { loc: '/bio/', priority: 0.65 },
     { loc: '/registry/technical/', priority: 0.6 },
     { loc: '/terminal/research/', priority: 0.68 },
     { loc: '/learn/how-to-read-a-birth-chart/', priority: 0.8 },
