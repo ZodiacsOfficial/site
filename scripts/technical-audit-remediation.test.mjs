@@ -157,11 +157,14 @@ describe('technical audit remediation contracts', () => {
       read('public/thesis/index.html'),
     ]);
     expect(sitemap).toContain("const AUDIT_REMEDIATION_LASTMOD = '2026-08-23'");
+    expect(sitemap).toContain("const LEGAL_IDENTITY_LASTMOD = '2026-08-29'");
+    expect(sitemap).toContain("...['/', '/about/', '/privacy/', '/terms/'].map((loc) => [loc, LEGAL_IDENTITY_LASTMOD] as const)");
     for (const page of [privacy, terms]) {
-      expect(page).toContain("const modifiedAt = '2026-08-23T00:00:00.000Z'");
+      expect(page).toContain("const modifiedAt = '2026-08-29T00:00:00.000Z'");
       expect(page).toContain('dateModified: modifiedAt');
     }
-    for (const page of [about, learn, houses]) {
+    expect(about).toContain("dateModified: '2026-08-29T00:00:00.000Z'");
+    for (const page of [learn, houses]) {
       expect(page).toContain("dateModified: '2026-08-23T00:00:00.000Z'");
     }
     expect(glossary).toContain("const PAGE_DATE = '2026-08-23'");
