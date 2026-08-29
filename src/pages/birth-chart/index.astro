@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import AstroTerm from '../../components/AstroTerm.astro';
 import ChartCalculator from '../../islands/ChartCalculator';
 import { PostChartDailyBrief } from '../../islands/PostChartDailyBrief';
 import EmailCapture from '../../components/EmailCapture.astro';
@@ -132,7 +133,7 @@ const jsonLd = [
         A <a href="/learn/glossary/#birth-chart">birth chart</a> is a snapshot of the sky from where you were born, at the
         minute you were born. The wheel shows the twelve signs around the
         outside, the twelve houses inside, and each planet placed at its exact{' '}
-        <a href="/learn/glossary/#degree">degree</a>. Three <a href="/learn/glossary/#placement">placements</a> carry most of the story for beginners:
+        <AstroTerm term="degree" label="degree" surface="birth-chart-page" />. Three <AstroTerm term="placement" label="placements" surface="birth-chart-page" /> carry most of the story for beginners:
       </p>
       <ul>
         <li><strong>Sun</strong> — your core identity; the sign most people already know.</li>
@@ -147,15 +148,9 @@ const jsonLd = [
       <p>
         Prefer to learn the shape of a chart before running your numbers?{' '}
         <a href="/learn/how-to-read-a-birth-chart/">How to read a birth
-        chart</a> walks the same four steps the results do.
-      </p>
-      <p>
-        The wheel is also only half the geometry. <a
-        href="/birth-chart/three-dimensions/">The birth chart in three
-        dimensions</a> covers what it flattens away — declination,
-        out-of-bounds planets, parallel aspects, and whether yours is a day
-        or night chart — all of which the calculator computes and shows in
-        its “See it in three dimensions” view.
+        chart</a> walks the same four steps the results do, and{' '}
+        <a href="/birth-chart/three-dimensions/">the birth chart in three
+        dimensions</a> covers what the flat wheel leaves out.
       </p>
       <EvidenceDisclosure
         label="How this chart is calculated"
@@ -163,7 +158,7 @@ const jsonLd = [
       >
         <p>
           Every chart lists the exact time and place used, its coordinates, and
-          its <a href="/learn/glossary/#house-system">house system</a>. Planetary
+          its <AstroTerm term="house-system" label="house system" surface="birth-chart-page" />. Planetary
           positions are checked against astronomical reference data.
         </p>
         <p class="evidence-disclosure__links"><a href="/methodology/">Read the full methodology →</a></p>

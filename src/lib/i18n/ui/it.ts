@@ -65,6 +65,7 @@ const it = {
   houseSystem: "Sistema di case",
   wholeSignDefault: "Case a segno intero (predefinito)",
   placidus: "Placidus",
+  houseSystemHelp: "Come la carta si divide in dodici aree della vita. Con le case a segno intero ogni segno è una casa intera; Placidus varia l’ampiezza delle case secondo l’ora e il luogo esatti. I pianeti non si spostano: cambiano solo i confini delle case.",
   computing: "Calcolo in corso…",
   checking: "Verifica in corso…",
   comparing: "Confronto in corso…",

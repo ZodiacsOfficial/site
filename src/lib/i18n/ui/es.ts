@@ -63,6 +63,7 @@ const es = {
     houseSystem: 'Sistema de casas',
     wholeSignDefault: 'Signos completos (predeterminado)',
     placidus: 'Placidus',
+    houseSystemHelp: 'Cómo se divide la carta en doce áreas de la vida. Signos completos da a cada signo una casa entera; Placidus varía el tamaño de las casas según la hora y el lugar exactos. Los planetas no se mueven: solo cambian los límites de las casas.',
     computing: 'Calculando…',
     checking: 'Revisando…',
     comparing: 'Comparando…',

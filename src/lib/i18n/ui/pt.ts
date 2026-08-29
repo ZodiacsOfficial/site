@@ -63,6 +63,7 @@ const pt = {
   houseSystem: 'Sistema de casas',
   wholeSignDefault: 'Signos inteiros (padrão)',
   placidus: 'Placidus',
+  houseSystemHelp: 'Como o mapa se divide em doze áreas da vida. Signos inteiros dá a cada signo uma casa inteira; Placidus varia o tamanho das casas conforme a hora e o lugar exatos. Os planetas não se movem: só mudam os limites das casas.',
   computing: 'Calculando…',
   checking: 'Verificando…',
   comparing: 'Comparando…',

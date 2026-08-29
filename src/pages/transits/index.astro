@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import AstroTerm from '../../components/AstroTerm.astro';
 import TransitTracker from '../../islands/TransitTracker.tsx';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../lib/horoscopes';
@@ -63,7 +64,7 @@ const jsonLd = [
       <h1 class="display">What is active in your chart?</h1>
       <p>
         Start with today&rsquo;s strongest themes, then move the date up to a year
-        forward or back to watch each <a href="/learn/glossary/#transit">transit</a> build, peak, and release.
+        forward or back to watch each <AstroTerm term="transit" label="transit" surface="transits-page" /> build, peak, and release.
         Pick a saved chart or enter your birth details.
       </p>
     </div>
@@ -78,9 +79,9 @@ const jsonLd = [
       <div class="section-head reveal">
         <h2>The sky in {label}</h2>
         <p>
-          Key dates this month: <a href="/learn/glossary/#ingress">ingresses</a>,{' '}
-          <a href="/learn/glossary/#lunation">lunations</a>, <a href="/learn/glossary/#station">stations</a>, and major{' '}
-          <a href="/learn/glossary/#aspect">aspects</a>.
+          Key dates this month: <AstroTerm term="ingress" label="ingresses" surface="transits-page" />,{' '}
+          <AstroTerm term="lunation" label="lunations" surface="transits-page" />, <AstroTerm term="station" label="stations" surface="transits-page" />, and major{' '}
+          <AstroTerm term="aspect" label="aspects" surface="transits-page" />.
           Use them with the <a href="/horoscopes/">monthly horoscopes</a> or keep them as a calendar.
         </p>
       </div>

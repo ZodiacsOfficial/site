@@ -63,6 +63,7 @@ const fr = {
   houseSystem: 'Système de maisons',
   wholeSignDefault: 'Maisons en signes entiers (par défaut)',
   placidus: 'Placidus',
+  houseSystemHelp: 'La manière de diviser la carte en douze domaines de vie. En signes entiers, chaque signe forme une maison entière ; Placidus fait varier la taille des maisons selon l’heure et le lieu exacts. Les planètes ne bougent pas : seules les limites des maisons changent.',
   computing: 'Calcul en cours…',
   checking: 'Vérification en cours…',
   comparing: 'Comparaison en cours…',
