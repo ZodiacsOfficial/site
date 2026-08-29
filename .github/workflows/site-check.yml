@@ -131,6 +131,9 @@ jobs:
       - name: Horoscope templates, SSR, and responsive behavior
         run: OUT_DIR=tests/visual/artifacts/horoscope-program npm run test:horoscopes:browser
 
+      - name: Link-in-bio page acceptance
+        run: OUT_DIR=tests/visual/artifacts/bio npm run test:bio:browser
+
       - name: Existing compatibility regression drive
         run: OUT_DIR=tests/visual/artifacts/compatibility npm run test:compatibility:browser
 

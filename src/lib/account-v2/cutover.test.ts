@@ -142,7 +142,7 @@ describe('account sync v2 cutover guards', () => {
     const base = await readFile(new URL('../../layouts/Base.astro', import.meta.url), 'utf8');
     const guide = await readFile(new URL('../../pages/ask/index.astro', import.meta.url), 'utf8');
     expect(base).not.toContain('guideRuntimeEnabled');
-    expect(base).toContain('plausibleScriptUrl && !props.noindex && !props.privateSurface');
+    expect(base).toContain('plausibleScriptUrl && (!props.noindex || props.analyticsOnNoindex) && !props.privateSurface');
     expect(base).toContain('&& !accountSyncV2Enabled,');
     expect(base).toContain('data-guide-analytics-boundary={plausibleEnabled ?');
     expect(base).toContain("sessionStorage.getItem(guidePrivateSessionKey) === '1'");
