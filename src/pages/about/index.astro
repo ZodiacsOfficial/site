@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import AstroTerm from '../../components/AstroTerm.astro';
 import { EDITOR_ORGANIZATION } from '../../lib/editorial';
 import { EN } from '../../strings/en.mjs';
 
@@ -65,8 +66,8 @@ const jsonLd = [
       <h2>Accuracy without the homework</h2>
       <p>
         When a date, degree, or birth time matters, it is calculated against the
-        actual sky and checked before it appears. If you want the ephemeris,
-        house systems, historical time-zone handling, and accuracy limits, the{' '}
+        actual sky and checked before it appears. If you want the <AstroTerm term="ephemeris" label="ephemeris" surface="about-page" />,{' '}
+        <AstroTerm term="house-system" label="house systems" surface="about-page" />, historical time-zone handling, and accuracy limits, the{' '}
         <a href="/methodology/">full methodology is public</a>.
       </p>
 

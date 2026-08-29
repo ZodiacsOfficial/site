@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import AstroTerm from '../components/AstroTerm.astro';
 import RaceRamp from '../components/RaceRamp.astro';
 import SignIcon from '../components/SignIcon.astro';
 import ToolGlyph from '../components/ToolGlyph.astro';
@@ -495,13 +496,13 @@ const tools = [
       <div class="pillar reveal">
         <em class="kicker">Learn</em>
         <h3>A guide to every sign</h3>
-        <p>Twelve sign guides, the big three explained, and plain-language help for reading your chart.</p>
+        <p>Twelve sign guides, the <AstroTerm term="big-three" label="big three" surface="home-pillars" /> explained, and plain-language help for reading your chart.</p>
         <a href="/learn/">Start here →</a>
       </div>
       <div class="pillar reveal" style="--reveal-delay:80ms">
         <em class="kicker">Calculate</em>
         <h3>Free astrology tools</h3>
-        <p>Birth chart, moon, rising, compatibility, and transits, calculated privately in your browser.</p>
+        <p>Birth chart, moon, rising, compatibility, and <AstroTerm term="transit" label="transits" surface="home-pillars" />, calculated privately in your browser.</p>
         <a href="/tools/">Open the tools →</a>
       </div>
       <div class="pillar reveal" style="--reveal-delay:160ms">

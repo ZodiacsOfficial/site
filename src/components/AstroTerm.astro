@@ -59,17 +59,26 @@ const displayLabel = label ?? (term === entry.slug ? entry.term : term);
 </astro-term-help>
 
 <script>
-  import { bindContextHelp } from '../lib/context-help-client';
-
+  // Loaded on demand so static pages keep the shared context-help module out
+  // of their route-level JS closure (report-bundles gzip budgets).
   class AstroTermHelp extends HTMLElement {
     cleanup?: () => void;
+    bindToken?: number;
 
     connectedCallback() {
+      const token = (this.bindToken = (this.bindToken ?? 0) + 1);
       this.cleanup?.();
-      this.cleanup = bindContextHelp(this);
+      this.cleanup = undefined;
+      void import('../lib/context-help-client')
+        .then(({ bindContextHelp }) => {
+          if (this.bindToken !== token || !this.isConnected) return;
+          this.cleanup = bindContextHelp(this);
+        })
+        .catch(() => {});
     }
 
     disconnectedCallback() {
+      this.bindToken = (this.bindToken ?? 0) + 1;
       this.cleanup?.();
       this.cleanup = undefined;
     }

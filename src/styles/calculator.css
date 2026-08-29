@@ -81,12 +81,6 @@
 .field__input:disabled { opacity: 0.45; }
 .field__help { margin: 0; font-size: 12.5px; color: var(--faint); }
 .field__error { margin: 0; font-size: 12.5px; color: var(--sign-aries); }
-.calc__house-terms {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 2px 6px;
-}
 .calc__context-cue { font-size: 11px; line-height: 1.5; }
 
 .calc__submit { width: 100%; justify-content: space-between; }

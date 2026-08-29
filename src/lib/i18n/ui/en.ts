@@ -62,6 +62,8 @@ const en = {
     houseSystem: 'House system',
     wholeSignDefault: 'Whole sign (default)',
     placidus: 'Placidus',
+    // The EN calculator renders this sentence as JSX with tap-to-explain terms — keep both in sync.
+    houseSystemHelp: 'How the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.',
     computing: 'Computing…',
     checking: 'Checking…',
     comparing: 'Comparing…',

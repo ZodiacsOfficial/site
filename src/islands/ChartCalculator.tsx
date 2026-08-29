@@ -293,6 +293,22 @@ function sceneHas(scene: ChartSceneModel, ref: EntityRef): boolean {
   }
 }
 
+/** Receipt fragment for the computed house system; EN gets the tap-to-explain term. */
+function HouseSystemReceipt({ locale, system }: { locale: Locale; system: HouseSystem }) {
+  const label = t(locale, system === 'whole' ? 'wholeSignHouses' : 'placidusHouses');
+  if (locale !== 'en') return <>{` · ${label}`}</>;
+  return (
+    <>
+      {' · '}
+      <AstroTerm
+        term={system === 'whole' ? 'whole-sign-houses' : 'placidus'}
+        label={label}
+        surface="chart-receipt"
+      />
+    </>
+  );
+}
+
 export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Props) {
   const locale = normalizeCatalogLocale(rawLocale);
   const russianCopy = locale === 'ru' ? russianRuntime() : null;
@@ -1651,19 +1667,20 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <option value="whole">{t(locale, 'wholeSignDefault')}</option>
                   <option value="placidus">{t(locale, 'placidus')}</option>
                 </select>
-                {locale === 'en' && (
+                {locale === 'en' ? (
                   <>
-                    <p class="field__help calc__house-terms">
-                      <AstroTerm
-                        term="whole-sign-houses"
-                        label={t(locale, 'wholeSignDefault')}
-                        surface="birth-chart-form"
-                      />
-                      <span aria-hidden="true"> · </span>
-                      <AstroTerm term="placidus" label={t(locale, 'placidus')} surface="birth-chart-form" />
+                    {/* Keep this sentence aligned with the houseSystemHelp catalog entry. */}
+                    <p class="field__help">
+                      How the chart divides into twelve areas of life.{' '}
+                      <AstroTerm term="whole-sign-houses" label="Whole sign" surface="birth-chart-form" /> gives
+                      each sign one house; <AstroTerm term="placidus" label="Placidus" surface="birth-chart-form" />{' '}
+                      varies house sizes by exact birth time and place. Planets stay put — only house
+                      boundaries move.
                     </p>
                     <p class="field__help calc__context-cue">{t(locale, 'contextHelpCue')}</p>
                   </>
+                ) : (
+                  <p class="field__help">{t(locale, 'houseSystemHelp')}</p>
                 )}
               </div>
             )}
@@ -1875,7 +1892,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 <p class="calc__receipt mono" data-chart-receipt>
                   {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
                   {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
-                  {chart.houses ? ` · ${chart.houses.system === 'whole' ? t(locale, 'wholeSignHouses') : t(locale, 'placidusHouses')}` : ''}
+                  {chart.houses ? <HouseSystemReceipt locale={locale} system={chart.houses.system} /> : ''}
                   {' · '}{t(locale, 'engine')}{chart.engineVersion}
                 </p>
               </div>
@@ -2300,7 +2317,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 <p class="calc__receipt mono" data-chart-receipt>
                   {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
                   {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
-                  {chart.houses ? ` · ${chart.houses.system === 'whole' ? t(locale, 'wholeSignHouses') : t(locale, 'placidusHouses')}` : ''}
+                  {chart.houses ? <HouseSystemReceipt locale={locale} system={chart.houses.system} /> : ''}
                   {' · '}{t(locale, 'engine')}{chart.engineVersion}
                 </p>
                 <div class="calc__table-wrap">

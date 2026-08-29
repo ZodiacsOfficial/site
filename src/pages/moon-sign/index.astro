@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import AstroTerm from '../../components/AstroTerm.astro';
 import ChartCalculator from '../../islands/ChartCalculator';
 import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
 import '../../styles/calculator.css';
@@ -77,7 +78,7 @@ const jsonLd = [
       </p>
       <p>
         Once you know your moon sign, read its guide — every sign's guide has
-        a section on what that <a href="/learn/glossary/#placement">placement</a> means for the Moon specifically. Then{' '}
+        a section on what that <AstroTerm term="placement" label="placement" surface="moon-sign-page" /> means for the Moon specifically. Then{' '}
         <a href="/birth-chart/">get your birth chart</a>: sun, moon, and rising
         together are the real summary of you.
       </p>
