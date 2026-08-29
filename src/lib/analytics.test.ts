@@ -14,6 +14,7 @@ const REQUIRED_EVENTS = [
   'verifier_used',
   'terminal_view_switch',
   'sdk_click',
+  'bio_click',
   'wallet_chart_computed',
   'aura_view',
   'aura_compose',
@@ -98,6 +99,17 @@ describe('analytics event contract', () => {
       source: 'registry',
       destination: 'x'.repeat(33),
     })).toEqual({ source: 'registry' });
+  });
+
+  it('keeps bio attribution aggregate-only and inside fixed destinations', () => {
+    expect(sanitizeAnalyticsProperties('bio_click', {
+      destination: 'birth_chart',
+      href: '/birth-chart/?private=1',
+      visitor: 'private',
+    })).toEqual({ destination: 'birth_chart' });
+    expect(sanitizeAnalyticsProperties('bio_click', {
+      destination: 'custom-link',
+    })).toEqual({});
   });
 
   it('keeps beginner-guidance events useful without accepting chart data', () => {

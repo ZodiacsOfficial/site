@@ -13,6 +13,7 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   verifier_used: ['chain', 'outcome'],
   terminal_view_switch: ['surface', 'direction'],
   sdk_click: ['source', 'destination'],
+  bio_click: ['destination'],
   wallet_chart_computed: ['chain', 'holds_registry_asset'],
   aura_view: [],
   aura_compose: ['outcome', 'held_bucket'],
@@ -94,6 +95,11 @@ const REGISTRY_BRIDGE_LOCALE_VALUES = Object.freeze([
 
 /** Closed-value contracts for non-identifying product dimensions. */
 export const ANALYTICS_EVENT_VALUES = Object.freeze({
+  bio_click: Object.freeze({
+    destination: Object.freeze([
+      'website', 'birth_chart', 'astrofolio', ...ZODIAC_SIGN_VALUES,
+    ]),
+  }),
   registry_bridge_impression: Object.freeze({
     sign: ZODIAC_SIGN_VALUES,
     surface: REGISTRY_BRIDGE_SURFACE_VALUES,

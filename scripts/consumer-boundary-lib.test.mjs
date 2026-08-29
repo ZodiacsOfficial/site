@@ -148,6 +148,8 @@ const description = 'A free astrology calculator.';
 
     expect(findConsumerBoundaryViolations('<a href="/astrofolio/">Astrofolio</a>', 'src/components/SiteFooter.astro'))
       .toEqual([]);
+    expect(findConsumerBoundaryViolations('<a href="/astrofolio/">Explore Astrofolio</a>', 'src/pages/bio/index.astro'))
+      .toEqual([]);
     expect(findConsumerBoundaryViolations('<a href="/astrofolio/how-to-buy/">Eligibility terms</a>', 'src/pages/terms/index.astro'))
       .toEqual([]);
     expect(findConsumerBoundaryViolations("const route = '/sdk/';", 'src/pages/sitemap.xml.ts'))

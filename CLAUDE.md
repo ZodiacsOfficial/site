@@ -31,7 +31,9 @@ The CONTENT boundary survives the visual merge:
    birthday pages, the records line on the birth-chart
    result (`ChartCalculator`, full mode), and the contextual saved-chart link
    to Registry Collection when `PUBLIC_REGISTRY_COLLECTION_ENABLED=1` — all in the records
-   register, never market language. Two carve-outs: the in-`src/` wing lanes
+   register, never market language. The owned, `noindex` social landing at
+   `/bio/` may link to the consumer Astrofolio page in plain language; it never
+   carries token, market, or acquisition copy. Two carve-outs: the in-`src/` wing lanes
    (canonical registry: `WING_ONLY_SOURCE` in
    `scripts/consumer-boundary-lib.mjs` — `src/pages/registry/`,
    `src/pages/terminal/`, `src/pages/astrofolio/how-to-buy/`, `src/exchange/`,
