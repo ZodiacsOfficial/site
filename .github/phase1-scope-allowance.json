@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "daily-sky-recovery-2026-08-29",
-  "baseCommit": "5017cc4d67a9710db0a430ca7ac1b50f29f853e9",
+  "id": "daily-sky-recovery-2026-08-30",
+  "baseCommit": "ebb962074a530ee2fbfa1d25440a80248fbcda39",
   "protectedPaths": [
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",
