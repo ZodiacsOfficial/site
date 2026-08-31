@@ -121,8 +121,11 @@ only the closed-schema technical events (`exchange_room_mount` and
 `exchange_market_state`) plus direct user feedback. They contain no trade
 intent, wallet, amount, mint, quote, request ID, transaction, visitor-supplied
 URL/query/hash, referrer, or free text. Plausible's standard envelope receives
-only the fixed canonical room URL. On or before 2026-09-09, turn the flag off
-unless the owner records a dated continuation decision.
+only the fixed canonical room URL. The 2026-08-31 owner continuation extends
+the pilot, at the latest, to 2026-09-30 as a bridge to the ratified Swap V2
+migration; it ends earlier if the migration deploys, the probe fails, or any
+stop condition fires. On or before 2026-09-30, turn the flag off unless a
+further dated owner decision is recorded.
 
 Review once during the first production hour and once per UTC day thereafter.
 For each review, record the deployment ID and candidate SHA, probe result,
