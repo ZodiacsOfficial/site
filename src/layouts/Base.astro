@@ -457,10 +457,15 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
       }
 
       // The worker owns only a versioned astrology app shell. Registry
-      // identity JSON bypasses its caches in public/sw.js.
+      // identity JSON bypasses its caches in public/sw.js. Registration
+      // holds back a beat past load: install precaches fifteen routes, and
+      // that burst must never share the window where the page is still
+      // painting its largest content.
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
+          window.setTimeout(() => {
+            navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
+          }, 3000);
         }, { once: true });
       }
     </script>
