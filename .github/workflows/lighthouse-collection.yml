@@ -1,0 +1,54 @@
+# Weekly lab-metric coverage for /registry/collection/, the one route the
+# per-push Lighthouse gate can never see: it exists only in flag-on builds
+# (flag-off builds 404 it), so this job builds with the Registry Collection
+# flag — the same env the site-check aura-drive uses; the holdings RPC URLs
+# only need to satisfy build-time validation. The EN baseline trio this
+# workflow used to cover (/, /birth-chart/, /aries/) is now gated on every
+# push by tests/visual/lighthouse.mjs. Runs Monday morning after the
+# 00:15 UTC Daily Sky cron so the freshness gates pass on main.
+name: Lighthouse Collection
+
+on:
+  schedule:
+    - cron: '23 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-collection
+  cancel-in-progress: true
+
+jobs:
+  lighthouse-collection:
+    name: Registry Collection audit
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_REGISTRY_COLLECTION_ENABLED: "1"
+      SOLANA_RPC_URL: https://aura-ci.invalid/rpc
+      BASE_RPC_URL: https://aura-ci.invalid/base
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install pinned Chromium
+        run: npx playwright-core install chromium
+
+      - name: Build (feature flag on)
+        run: npm run build
+
+      - name: Lighthouse over the Registry Collection
+        env:
+          LIGHTHOUSE_INCLUDE_AURA: '1'
+          LIGHTHOUSE_ROUTES: registry-aura
+        run: npm run test:lighthouse

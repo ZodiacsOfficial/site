@@ -4,7 +4,7 @@
  * Quiet, museum-toned, near the top so visitors arriving from external
  * listings find the record in one click. No market language here.
  */
-import { t, type Locale } from '../lib/i18n';
+import { englishOnlyCue, t, type Locale } from '../lib/i18n';
 
 interface Props {
   signName: string;
@@ -18,6 +18,8 @@ const copy = {
   text: `${signName} ${t(locale, 'recordOneOfTwelve')}`,
   link: t(locale, 'recordViewLink'),
 };
+// The registry record is English; recordViewLink carries the visible cue.
+const englishOnly = englishOnlyCue(locale);
 ---
 <aside
   class="collect-band"
@@ -30,7 +32,12 @@ const copy = {
   <span class="collect-band__text">
     {copy.text}
   </span>
-  <a class="collect-band__link" href={`/registry/${slug}/`}>{copy.link}</a>
+  <a
+    class="collect-band__link"
+    href={`/registry/${slug}/`}
+    hreflang={englishOnly ? 'en' : undefined}
+    title={englishOnly?.aria}
+  >{copy.link}</a>
 </aside>
 
 <script is:inline>

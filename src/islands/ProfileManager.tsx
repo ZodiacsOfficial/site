@@ -29,6 +29,7 @@ import {
   setDailyChartPreference,
   type DailyChartPreference,
 } from '../lib/profile/daily-email-client';
+import { weeklyDigestSignupEnabled } from '../lib/weekly-digest/feature-flags';
 import EvidenceDisclosure from './EvidenceDisclosure';
 
 type PushOptInModule = typeof import('./PushOptIn');
@@ -927,7 +928,7 @@ export default function ProfileManager({
         {dailyPanel}
         {/* Keep the return fragment present before the asynchronous session resolves. */}
         <div id="weekly-digest">
-          {session && locale !== 'ru' && (
+          {session && locale !== 'ru' && weeklyDigestSignupEnabled() && (
             <div class="pf-digest-panel">
               <span class="mono--label">{PF_EMAIL_COPY[locale].digestLabel}</span>
               <label class="pf-digest">

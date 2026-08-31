@@ -165,6 +165,7 @@ match.
 | `DIGEST_FROM_EMAIL` | GitHub variable, optional | Sender; defaults to `Zodiacs.org <hello@zodiacs.org>`. |
 | `DIGEST_BASE_URL` | GitHub variable, optional | Site origin; defaults to `https://zodiacs.org`. |
 | `DIGEST_ENABLED` | GitHub variable | Set to the string `true` only after the fixture dry-run, a limit-one live canary, and an end-to-end unsubscribe confirmation `POST` all pass. The sender hard-caps every run at 80 recipients. |
+| `PUBLIC_WEEKLY_DIGEST_ENABLED` | Vercel build flag | Must equal the literal string `1`. Renders the profile digest opt-in checkbox; keep it off until `DIGEST_ENABLED` turns the scheduled send on, so the checkbox never promises a send that does not happen. Flip the two together. |
 | `EMAIL_CONFIRM_SECRET` | `weekly-digest-production` environment secret | Dedicated independently generated random value of at least 32 bytes used only to seal exact weekly-provider replay envelopes. Store it with `RESEND_API_KEY` and `SUPABASE_SERVICE_ROLE_KEY` in the default-branch-restricted environment, not at repository or organization scope. |
 | `DAILY_EMAIL_ENABLED` | Vercel server flag + GitHub variable | Must equal the literal string `1`. In Vercel it exposes daily enrollment; in GitHub it permits real delivery. Leave both off until their release gates pass. |
 | `DAILY_EMAIL_COHORT` | Sender environment | Must be `test` or `all`. The committed workflow hardcodes `test` and exposes no cohort input; `all` remains dormant CLI support for a later approved release change. |
@@ -345,7 +346,7 @@ These are outside this program and should remain off unless separately authorize
 | Daily static facts/prose | No secret or flag | Always builds from deterministic committed data. |
 | Model-assisted daily prose | `DAILY_PROSE_ENABLED=true` + dedicated secret; reserved | Deterministic-template edition or held verified edition. |
 | Standalone email capture | `STANDALONE_WEEKLY_EMAIL_ENABLED=1` + complete provider adapter; Resend also requires `RESEND_SEGMENT_ID` | Capture component and standalone subscribe/confirm path are absent; pages remain complete. Keep off until a real sender and unsubscribe lifecycle exist. |
-| Weekly digest schedule | GitHub `DIGEST_ENABLED=true` | Workflow smoke test runs; no scheduled send. |
+| Weekly digest schedule | GitHub `DIGEST_ENABLED=true` + Vercel `PUBLIC_WEEKLY_DIGEST_ENABLED=1` for the profile opt-in checkbox | Workflow smoke test runs; no scheduled send and no opt-in checkbox. |
 | Phase 3 daily enrollment | Vercel `DAILY_EMAIL_ENABLED=1` + complete Resend/Supabase configuration | Daily capture and chart preference enrollment are absent/disabled; existing daily unsubscribe remains usable. |
 | Phase 3 daily delivery | GitHub `DAILY_EMAIL_ENABLED=1`; committed workflow is fixed to `DAILY_EMAIL_COHORT=test` and requires the allowlist | Fixture smoke still runs; no real daily email send. General-audience delivery is not exposed. |
 | Browser push UI | `PUBLIC_WEB_PUSH_ENABLED=1` | No prompt or subscription UI. |

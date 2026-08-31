@@ -31,6 +31,7 @@ export {
   type TextDirection,
 } from './core';
 export { UI } from './ui/server';
+export { ENGLISH_ONLY_COPY, englishOnlyCue, type EnglishOnlyCue } from './english-only';
 export { pluralCategory, pluralText, tp } from './plural';
 export type { PluralCatalog, PluralCategory, PluralForms } from './plural';
 export type { UiKey } from './ui/schema';

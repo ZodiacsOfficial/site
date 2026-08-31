@@ -170,7 +170,7 @@ const pt = {
   saveYearAheadNote: 'No perfil, os mapas salvos mostram os próximos doze meses calculados — retorno solar, datas de Júpiter e Saturno e contatos com eclipses.',
   recordLabel: 'Ala do acervo',
   recordOneOfTwelve: 'também integra os Doze — um registro canônico no acervo.',
-  recordViewLink: 'Ver o registro →',
+  recordViewLink: 'Ver o registro — por enquanto em inglês →',
   recordChartSun: 'Seu Sol está em {sign}.',
   recordChartBody: '{sign} é um dos Doze, com arte, história e registro oficial próprios.',
   recordChartLink: 'Explore o Registro de {sign} →',

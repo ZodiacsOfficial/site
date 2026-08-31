@@ -45,7 +45,7 @@ const jsonLd = [
     fetchpriority="high"
   />
   <section class="hero-es container">
-    <div class="hero-es__frame reveal">
+    <div class="hero-es__frame">
       <video
         class="hero-es__video"
         data-src="/assets/hero/zodiacs-hero.mp4"
@@ -67,6 +67,10 @@ const jsonLd = [
           <div class="hero-es__ctas">
             <a class="btn btn--primary" href={localizePath('fr', '/birth-chart/')}><span>Obtiens ton thème astral gratuit</span><span class="orb">↗</span></a>
             <a class="btn btn--ghost hero-es__ghost" href="/fr/horoscopes/"><span>Voir les prévisions</span></a>
+          </div>
+          <div class="hero-es__trustlines">
+            <p class="hero-es__trust">Gratuit · Sans inscription · Calculé dans ton navigateur</p>
+            <p class="hero-es__trust">Positions vérifiées avec NASA JPL Horizons · <a href={localizePath('fr', '/methodology/')}>Nos calculs</a></p>
           </div>
         </div>
       </div>
@@ -243,6 +247,9 @@ const jsonLd = [
     text-wrap: pretty;
   }
   .hero-es__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  .hero-es__trustlines { margin: -2px 0 0; display: grid; gap: 4px; justify-items: center; }
+  .hero-es__foot .hero-es__trust { margin: 0; max-width: none; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.45; letter-spacing: 0.055em; color: var(--faint); text-shadow: 0 1px 14px rgba(6, 7, 9, 0.72); text-align: center; }
+  .hero-es__trust a { color: inherit; text-underline-offset: 2px; }
   .hero-es__ghost {
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 46%),

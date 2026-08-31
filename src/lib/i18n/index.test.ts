@@ -241,7 +241,7 @@ describe('i18n helpers', () => {
     expect(UI.pt.recordOneOfTwelve).toBe(
       'também integra os Doze — um registro canônico no acervo.',
     );
-    expect(UI.pt.recordViewLink).toBe('Ver o registro →');
+    expect(UI.pt.recordViewLink).toBe('Ver o registro — por enquanto em inglês →');
   });
 
   it('uses the approved French registry register', () => {
@@ -251,7 +251,7 @@ describe('i18n helpers', () => {
     expect(UI.fr.recordOneOfTwelve).toBe(
       'figure aussi parmi les Douze — une notice de référence dans le registre.',
     );
-    expect(UI.fr.recordViewLink).toBe('Voir la notice →');
+    expect(UI.fr.recordViewLink).toBe('Voir la notice — pour l’instant en anglais →');
   });
 
   it('uses the approved Italian registry register', () => {
@@ -261,7 +261,7 @@ describe('i18n helpers', () => {
     expect(UI.it.recordOneOfTwelve).toBe(
       'esiste anche come uno dei Dodici — una scheda di riferimento nel registro.',
     );
-    expect(UI.it.recordViewLink).toBe('Vedi la scheda →');
+    expect(UI.it.recordViewLink).toBe('Vedi la scheda — per ora in inglese →');
   });
 
   it('keeps the Spanish baby result sentences grammatical when signs are inserted', () => {
