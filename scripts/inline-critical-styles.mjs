@@ -50,10 +50,10 @@ const signs = [
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
 const targetPaths = [
-  // The EN homepage joined when the per-push Lighthouse gate started covering
-  // it: its LCP sat 70ms over budget purely on the two blocking stylesheet
-  // round trips, the same delivery cost this pass already removes for the
-  // gated RU entry pages.
+  // The EN homepage keeps only Base plus its route-owned first-paint geometry
+  // on the render path. The complete route bundle still loads after first
+  // paint (and remains present for no-JS readers), so below-fold styles cannot
+  // delay the poster while the settled page keeps its reviewed appearance.
   'index.html',
   'birth-chart/index.html',
   'today/index.html',
@@ -109,7 +109,13 @@ function removeHtmlAttribute(html, name) {
 
 export function expectedStylesheetShape(relativePath, deferNonBase) {
   if (deferNonBase) {
-    return { inlineCount: 1, deferredCount: 3, externalCount: 6, loaderCount: 1 };
+    const deferredCount = relativePath === 'index.html' ? 1 : 3;
+    return {
+      inlineCount: 1,
+      deferredCount,
+      externalCount: deferredCount * 2,
+      loaderCount: 1,
+    };
   }
   return {
     inlineCount: 2,
@@ -264,7 +270,8 @@ async function main() {
   for (const relativePath of targetPaths) {
     const path = resolve(distRoot, relativePath);
     const source = await readFile(path, 'utf8');
-    const deferNonBase = relativePath === 'birth-chart/index.html'
+    const deferNonBase = relativePath === 'index.html'
+      || relativePath === 'birth-chart/index.html'
       || relativePath === 'ru/birth-chart/index.html';
     if (hasHtmlAttribute(source, stableChromeMarker) && relativePath !== 'today/index.html') {
       throw new Error(`inline-critical-styles: stable chrome marker outside Today: ${relativePath}`);
@@ -303,9 +310,9 @@ async function main() {
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 17 || stylesheets !== 32) {
+  if (pages + alreadyInlined !== 17 || stylesheets !== 31) {
     throw new Error(
-      `inline-critical-styles: expected 17 pages / 32 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 17 pages / 31 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0

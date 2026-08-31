@@ -10,7 +10,9 @@ import DemoChart from '../islands/DemoChart';
 import WelcomeBack from '../islands/WelcomeBack';
 import glassMaps from '../data/glass-maps.json';
 import { absoluteBrandIconUrl, BRAND_ICON_PATHS } from '../lib/brand-icons.mjs';
+import { UI } from '../lib/i18n';
 import { SIGNS } from '../lib/signs';
+import homeFirstPaintCss from '../home/home-first-paint.css?inline';
 import '../styles/today.css';
 
 const faq = [
@@ -77,8 +79,10 @@ const tools = [
 ];
 ---
 <Base
-  clientUi
   inlineCriticalCss
+  stableTypography
+  localTypography
+  localChromeTypography
   title="Zodiacs.org — Free Birth Charts, Sign Guides & Astrology Tools"
   description="Free birth charts, moon signs, compatibility, horoscopes, and sign guides — accurate, private, and easy to understand."
   path="/"
@@ -101,6 +105,12 @@ const tools = [
     href="/assets/hero/zodiacs-hero-poster.avif"
     media="(min-width: 720px)"
     fetchpriority="high"
+  />
+  <style
+    slot="head"
+    is:inline
+    data-zdx-home-first-paint
+    set:html={homeFirstPaintCss}
   />
   <!-- Legacy hash deep-links from the old homepage SPA → their new homes. -->
   <script is:inline>
@@ -380,6 +390,13 @@ const tools = [
       </filter>
     </svg>
   </section>
+
+  <!-- This page's first hydrated island follows the hero. Install the shared
+       English catalogue here so its sizeable inline payload cannot delay the
+       poster element, while it still precedes every island module. -->
+  <script is:inline define:vars={{ homeUiMessages: UI.en }}>
+    globalThis.__ZDX_UI__ = { locale: 'en', messages: homeUiMessages };
+  </script>
 
   <!-- 01b · Returning visitors with a saved chart get greeted; everyone else sees nothing here -->
   <WelcomeBack client:visible />
