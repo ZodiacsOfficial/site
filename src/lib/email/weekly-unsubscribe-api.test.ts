@@ -28,22 +28,6 @@ function responseRecorder() {
 }
 
 describe('weekly digest unsubscribe page', () => {
-  it('returns the designed disabled response when Preview has no public Supabase configuration', async () => {
-    delete process.env.PUBLIC_SUPABASE_URL;
-    delete process.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-    delete process.env.PUBLIC_SUPABASE_ANON_KEY;
-    const fetcher = vi.fn();
-    vi.stubGlobal('fetch', fetcher);
-    const response = responseRecorder();
-
-    await unsubscribeHandler({ method: 'GET', query: { token: TOKEN } }, response);
-
-    expect(response.statusCode).toBe(503);
-    expect(response.headers.get('Content-Type')).toBe('text/plain; charset=utf-8');
-    expect(response.body).toBe('Unsubscribe is temporarily unavailable.');
-    expect(fetcher).not.toHaveBeenCalled();
-  });
-
   it('keeps GET read-only and uses the Phase 3 confirmation frame', async () => {
     configure();
     const fetcher = vi.fn();

@@ -75,22 +75,15 @@ const probes = [
     label: 'weekly digest unsubscribe confirmation',
     path: `/api/unsubscribe?token=${syntheticUnsubscribeToken}`,
     init: { method: 'GET', headers: sameOriginHeaders },
-    accepts: (status) => status === 200 || status === 503,
-    expectation: 'HTTP 200 confirmation or the designed HTTP 503 disabled response',
+    accepts: (status) => status === 200,
+    expectation: 'HTTP 200 confirmation without invoking the unsubscribe RPC',
     redactRequest: true,
     redactBody: true,
     validate: (response, body) => {
-      const contentType = response.headers.get('content-type') ?? '';
-      if (response.status === 503) {
-        if (!contentType.toLowerCase().includes('text/plain')) return 'disabled response is not plain text';
-        if (body.trim() !== 'Unsubscribe is temporarily unavailable.') {
-          return 'disabled response does not match the unsubscribe endpoint contract';
-        }
-        return null;
-      }
       const cacheControl = response.headers.get('cache-control') ?? '';
       const robots = response.headers.get('x-robots-tag') ?? '';
       const referrer = response.headers.get('referrer-policy') ?? '';
+      const contentType = response.headers.get('content-type') ?? '';
       if (!contentType.toLowerCase().includes('text/html')) return 'confirmation response is not HTML';
       if (!cacheControl.toLowerCase().includes('no-store')) return 'confirmation response is cacheable';
       if (!robots.toLowerCase().includes('noindex')) return 'confirmation response is indexable';
