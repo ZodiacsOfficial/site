@@ -10,7 +10,7 @@ export const EN = Object.freeze({
   'disclosure.metaDescription': 'Plain-language operator, economic-interest, provenance, read-only wallet-connection, embedded-trading, Registry classification, and digital-asset risk disclosures.',
   'disclosure.kicker': 'Registry disclosure',
   'disclosure.title': 'The facts, including the unresolved ones.',
-  'disclosure.intro': 'This page separates facts supported by public evidence from statements supplied by the operator. An operator attestation is dated and labeled as an attestation; it is never presented as independently verified.',
+  'disclosure.intro': 'This page separates facts supported by public evidence from statements supplied by the operator, Zodiacs LLC. An operator attestation is dated and labeled as an attestation; it is never presented as independently verified.',
   'disclosure.scope': 'These disclosures apply to the Registry wing. The astrology tools remain free, browser-computed, and usable without the Registry.',
   'disclosure.tableLabel': 'Registry disclosures and evidence status',
   'disclosure.statementHeading': 'Statement',

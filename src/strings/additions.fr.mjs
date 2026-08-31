@@ -30,7 +30,7 @@ export const FR_ADDITIONS = Object.freeze({
   'disclosure.establishedPrefix': 'Créé en',
   'disclosure.establishedProvenance': 'Première pièce d’origine · 2024-07-05',
   'disclosure.evidenceHeading': 'État et preuves',
-  'disclosure.intro': 'Cette page sépare les faits étayés par des preuves publiques des déclarations fournies par l’opérateur. Une attestation de l’opérateur est datée et signalée comme telle ; elle n’est jamais présentée comme vérifiée de façon indépendante.',
+  'disclosure.intro': 'Cette page sépare les faits étayés par des preuves publiques des déclarations fournies par l’opérateur, Zodiacs LLC. Une attestation de l’opérateur est datée et signalée comme telle ; elle n’est jamais présentée comme vérifiée de façon indépendante.',
   'disclosure.kicker': 'Déclarations du Registre',
   'disclosure.linkLabel': 'Déclarations',
   'disclosure.linkMethodology': 'Méthodologie',
