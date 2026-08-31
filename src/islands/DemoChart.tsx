@@ -238,6 +238,7 @@ export default function DemoChart() {
               aspects={aspects}
               size={SIZE}
               preview
+              deferIcons
             />
             <svg class="demo__focus-layer" viewBox="0 0 100 100" aria-hidden="true">
               {signTargets.map((target) => (
