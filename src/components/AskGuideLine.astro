@@ -1,0 +1,52 @@
+---
+/**
+ * One quiet, records-register invitation to open Guide from a page where
+ * questions naturally form. With JavaScript the loader opens the drawer in
+ * place; without it, the link lands on the Guide home at /ask/. That home is
+ * English-only, so localized pages carry the shared English-only cue.
+ */
+import { englishOnlyCue } from '../lib/i18n/english-only';
+
+interface Props {
+  lead: string;
+  locale?: 'en' | 'es' | 'pt' | 'fr' | 'it';
+}
+
+const { lead, locale = 'en' } = Astro.props;
+
+const ACTION = {
+  en: 'Ask Guide',
+  es: 'Preguntar a Guide',
+  pt: 'Perguntar ao Guide',
+  fr: 'Demander à Guide',
+  it: 'Chiedi a Guide',
+} as const;
+
+const cue = englishOnlyCue(locale);
+---
+<p class="ask-guide-line">
+  {lead}{' '}
+  <a
+    href="/ask/"
+    hreflang={cue ? 'en' : undefined}
+    title={cue?.aria}
+    data-assistant-open
+    data-assistant-locale={locale}
+  >{ACTION[locale]}{cue?.suffix}</a>
+</p>
+
+<style>
+  .ask-guide-line {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .ask-guide-line a {
+    color: var(--text-2);
+    text-decoration: underline;
+    text-decoration-color: var(--hair-2);
+    text-underline-offset: 3px;
+  }
+  .ask-guide-line a:hover { color: var(--text); }
+</style>

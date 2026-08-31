@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import AskGuideLine from '../../../components/AskGuideLine.astro';
 import Faq from '../../../components/Faq.astro';
 import EmailCapture from '../../../components/EmailCapture.astro';
 import ChartCalculator from '../../../islands/ChartCalculator';
@@ -104,6 +105,7 @@ const jsonLd = [
     <noscript>
       <p>Questo calcolatore del tema natale richiede JavaScript. Attiva JavaScript e ricarica la pagina per calcolare Sole, Luna, ascendente, pianeti e case nel tuo browser.</p>
     </noscript>
+    <AskGuideLine lead="Domande su una posizione del tuo tema?" locale="it" />
   </section>
 
   <section class="section--tight container container--narrow">

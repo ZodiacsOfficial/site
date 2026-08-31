@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import AskGuideLine from '../../components/AskGuideLine.astro';
 import AstroTerm from '../../components/AstroTerm.astro';
 import ChartCalculator from '../../islands/ChartCalculator';
 import { PostChartDailyBrief } from '../../islands/PostChartDailyBrief';
@@ -125,6 +126,7 @@ const jsonLd = [
     <noscript>
       <p>This birth chart calculator needs JavaScript. Enable it and reload to calculate your Sun, Moon, rising sign, planets, and houses in your browser.</p>
     </noscript>
+    <AskGuideLine lead="Questions about a placement in your chart?" />
   </section>
 
   <section class="section--tight container container--narrow">

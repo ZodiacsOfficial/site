@@ -1,12 +1,29 @@
 {
   "version": 1,
-  "id": "astrofolio-axis-venue-entry-2026-08-31",
-  "baseCommit": "43b97c31ed1d5dc77b5196e265883bd07b51909c",
+  "id": "guide-consumer-fixes-2026-08-31.4",
+  "baseCommit": "53dbbbe60f546988b8f3d7d58df7a3802336f0b2",
   "protectedPaths": [
-    "public/assets/app.js",
+    "public/registry/aquarius/index.html",
+    "public/registry/aries/index.html",
+    "public/registry/cancer/index.html",
+    "public/registry/capricorn/index.html",
+    "public/registry/gemini/index.html",
+    "public/registry/index.html",
+    "public/registry/leo/index.html",
+    "public/registry/libra/index.html",
+    "public/registry/pisces/index.html",
+    "public/registry/sagittarius/index.html",
+    "public/registry/scorpio/index.html",
+    "public/registry/taurus/index.html",
     "public/registry/technical/index.html",
-    "scripts/build-app.mjs",
-    "scripts/registry-consumer-contract.test.mjs",
-    "src/app.jsx"
+    "public/registry/virgo/index.html",
+    "public/sdk/examples/simastry-aura/index.html",
+    "public/sdk/index.html",
+    "public/terminal/markets/index.html",
+    "src/pages/es/birth-chart/index.astro",
+    "src/pages/fr/birth-chart/index.astro",
+    "src/pages/it/birth-chart/index.astro",
+    "src/pages/learn/index.astro",
+    "src/pages/pt/birth-chart/index.astro"
   ]
 }
