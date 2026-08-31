@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-drafts.v1",
-  "generatedAt": "2026-08-30T17:05:21.156Z",
+  "generatedAt": "2026-08-31T05:03:30.222Z",
   "generator": "zodiacs.registry-research.deterministic.v1",
   "method": {
     "id": "zodiacs.registry-research-method.v1",
@@ -9605,11 +9605,322 @@
       "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
       "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
       "revisions": [],
+      "id": "zrx-market-check-2026-08-31",
+      "slug": "market-check-2026-08-31",
+      "kind": "market-check",
+      "templateId": "market-check.v1",
+      "issuedAt": "2026-08-31T05:03:30.222Z",
+      "visibleAt": "2026-08-31T05:03:30.222Z",
+      "title": "Aries market check · 2026-08-31",
+      "summary": "Aries price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-08-31/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "symbolicScore": {
+        "sign": "aries",
+        "attention": 22,
+        "tone": 8,
+        "eventIntensity": 2,
+        "calculation": "14 attention / 10 tone / 3 event intensity × 0.7699 horizon multiplier",
+        "marketFieldsUsed": false
+      },
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "Aries is the highest-ranked attention entry in the separately published 2026-08-31 daily outlook.",
+          "evidence": [
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "A modest sky emphasis for this sign, without a strong directional tone. Signal: steady. The symbolic score was fixed before this market comparison.",
+          "evidence": [
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "At 2026-08-31T05:03:30.222Z, Aries was indexed at $0.0001494, with -9.29% over 24 hours, $149.42K market cap, $149.42K FDV, $20.91K indexed liquidity, $1.52K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Aries market cap was 0.976× the collection median and indexed liquidity was 0.971× the collection median.",
+          "evidence": [
+            "public/assets/data/registry-market-history.v1.json"
+          ]
+        }
+      },
+      "market": {
+        "available": true,
+        "snapshotId": "registry-market:2026-08-31:2026-08-31T05:03:30.222Z",
+        "observedAt": "2026-08-31T05:03:30.222Z",
+        "provider": "DexScreener",
+        "sign": "aries",
+        "priceUsd": 0.0001494,
+        "change24hPct": -9.29,
+        "marketCapUsd": 149422,
+        "fdvUsd": 149421,
+        "liquidityUsd": 20906.22,
+        "volume24hUsd": 1520.44,
+        "indexedPoolCount": 1,
+        "deepestPoolUrl": "https://dexscreener.com/solana/hrn98ylgigp475es1gaqyrmbqk1v4dkv6tdkylhvh2is",
+        "collectionMedian": {
+          "marketCapUsd": 153155,
+          "liquidityUsd": 21526.395
+        },
+        "vsCollectionMedian": {
+          "marketCap": 0.976,
+          "liquidity": 0.971
+        }
+      },
+      "evidence": {
+        "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-31",
+        "marketSnapshotId": "registry-market:2026-08-31:2026-08-31T05:03:30.222Z",
+        "coverage": {
+          "overall": "complete",
+          "events": "complete",
+          "occupancies": "complete",
+          "expectedTransitMonths": [
+            "2026-08"
+          ],
+          "missingTransitMonths": [],
+          "missingOccupancyPlanets": []
+        }
+      },
+      "artifactHash": "0f46c8637629cfd4ed4ee76b45a324e041eb31feabe68915c342cf09cae213f6"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [],
+      "id": "zrx-daily-market-brief-2026-08-31",
+      "slug": "daily-market-brief-2026-08-31",
+      "kind": "daily-market-brief",
+      "templateId": "daily-market-brief.v1",
+      "issuedAt": "2026-08-31T12:00:00.000Z",
+      "visibleAt": "2026-08-31T12:00:00.000Z",
+      "title": "Jupiter trine Saturn · daily market brief",
+      "summary": "Jupiter trine Saturn leads the disclosed symbolic index; Aries market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-08-31/",
+      "signs": [
+        "leo",
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "aspect"
+      ],
+      "symbolicScore": {
+        "sign": "aries",
+        "attention": 22,
+        "tone": 8,
+        "eventIntensity": 2,
+        "calculation": "14 attention / 10 tone / 3 event intensity × 0.7699 horizon multiplier",
+        "marketFieldsUsed": false
+      },
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "Jupiter trine Saturn is the highest-weighted named factor for Aries in the 2026-08-31 UTC edition. The disclosed score is attention 22/100, tone 8, and symbolic event intensity 2/100.",
+          "evidence": [
+            "src/data/transits-2026-08.json",
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "A modest sky emphasis for this sign, without a strong directional tone. Signal: steady. This is a traditional symbolic reading, not a price direction or probability.",
+          "evidence": [
+            "src/data/transits-2026-08.json",
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "At 2026-08-31T05:03:30.222Z, Aries was indexed at $0.0001494, with -9.29% over 24 hours, $149.42K market cap, $149.42K FDV, $20.91K indexed liquidity, $1.52K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
+          "evidence": [
+            "public/assets/data/registry-market-history.v1.json"
+          ]
+        }
+      },
+      "market": {
+        "available": true,
+        "snapshotId": "registry-market:2026-08-31:2026-08-31T05:03:30.222Z",
+        "observedAt": "2026-08-31T05:03:30.222Z",
+        "provider": "DexScreener",
+        "sign": "aries",
+        "priceUsd": 0.0001494,
+        "change24hPct": -9.29,
+        "marketCapUsd": 149422,
+        "fdvUsd": 149421,
+        "liquidityUsd": 20906.22,
+        "volume24hUsd": 1520.44,
+        "indexedPoolCount": 1,
+        "deepestPoolUrl": "https://dexscreener.com/solana/hrn98ylgigp475es1gaqyrmbqk1v4dkv6tdkylhvh2is"
+      },
+      "evidence": {
+        "dailyFacts": "src/data/daily.json#2026-08-31",
+        "outlookEdition": "public/assets/registry-outlook.json#daily:2026-08-31",
+        "marketSnapshotId": "registry-market:2026-08-31:2026-08-31T05:03:30.222Z",
+        "coverage": {
+          "overall": "complete",
+          "events": "complete",
+          "occupancies": "complete",
+          "expectedTransitMonths": [
+            "2026-08"
+          ],
+          "missingTransitMonths": [],
+          "missingOccupancyPlanets": []
+        }
+      },
+      "artifactHash": "82dbd859f1bec2061615109f6de425b6ac9a1570a96e870d108c15976579f733"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [],
+      "id": "zrx-weekly-outlook-2026-08-31",
+      "slug": "weekly-outlook-2026-08-31",
+      "kind": "weekly-outlook",
+      "templateId": "weekly-outlook.v1",
+      "issuedAt": "2026-08-31T12:00:00.000Z",
+      "visibleAt": "2026-08-31T12:00:00.000Z",
+      "title": "Weekly symbolic outlook · 2026-08-31",
+      "summary": "Aries, Cancer, Leo hold the three highest disclosed attention ranks for the next seven UTC days.",
+      "url": "/terminal/research/weekly-outlook-2026-08-31/",
+      "signs": [
+        "aries",
+        "cancer",
+        "leo"
+      ],
+      "topics": [
+        "markets",
+        "weekly-outlook",
+        "astrology"
+      ],
+      "symbolicScore": {
+        "sign": "aries",
+        "attention": 41,
+        "tone": 0,
+        "eventIntensity": 14,
+        "calculation": "17 attention / -10 tone / 12 event intensity × 0.9496 horizon multiplier",
+        "marketFieldsUsed": false
+      },
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "Aries, Cancer, Leo are ranked first through third by disclosed symbolic attention in the seven-day edition beginning 2026-08-31.",
+          "evidence": [
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "Elevated symbolic attention for this sign, without a strong directional tone. Signal: active. This reading supplies cultural context, not a forecast of price or liquidity.",
+          "evidence": [
+            "public/assets/registry-outlook.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "At 2026-08-31T05:03:30.222Z, Aries was indexed at $0.0001494, with -9.29% over 24 hours, $149.42K market cap, $149.42K FDV, $20.91K indexed liquidity, $1.52K 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
+          "evidence": [
+            "public/assets/data/registry-market-history.v1.json"
+          ]
+        }
+      },
+      "market": {
+        "available": true,
+        "snapshotId": "registry-market:2026-08-31:2026-08-31T05:03:30.222Z",
+        "observedAt": "2026-08-31T05:03:30.222Z",
+        "provider": "DexScreener",
+        "sign": "aries",
+        "priceUsd": 0.0001494,
+        "change24hPct": -9.29,
+        "marketCapUsd": 149422,
+        "fdvUsd": 149421,
+        "liquidityUsd": 20906.22,
+        "volume24hUsd": 1520.44,
+        "indexedPoolCount": 1,
+        "deepestPoolUrl": "https://dexscreener.com/solana/hrn98ylgigp475es1gaqyrmbqk1v4dkv6tdkylhvh2is"
+      },
+      "evidence": {
+        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-31",
+        "marketSnapshotId": "registry-market:2026-08-31:2026-08-31T05:03:30.222Z",
+        "coverage": {
+          "overall": "complete",
+          "events": "complete",
+          "occupancies": "complete",
+          "expectedTransitMonths": [
+            "2026-08",
+            "2026-09"
+          ],
+          "missingTransitMonths": [],
+          "missingOccupancyPlanets": []
+        }
+      },
+      "artifactHash": "e73e04b729b3227f768ca704d6e83509a3ac94cfd2c42ea5827c349f6a726f9e"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [],
       "id": "zrx-event-brief-aspect-2026-08-31t22-05-16-185z-jupiter-trine-saturn",
       "slug": "event-brief-aspect-2026-08-31t22-05-16-185z-jupiter-trine-saturn",
       "kind": "event-brief",
       "templateId": "event-brief.v1",
-      "issuedAt": "2026-08-30T12:00:00.000Z",
+      "issuedAt": "2026-08-31T12:00:00.000Z",
       "visibleAt": "2026-08-31T22:05:16.185Z",
       "eventAt": "2026-08-31T22:05:16.185Z",
       "title": "Jupiter Trine Saturn · event brief",
@@ -9626,10 +9937,10 @@
       ],
       "symbolicScore": {
         "sign": "aries",
-        "attention": 13,
-        "tone": 9.3,
-        "eventIntensity": 2.8,
-        "calculation": "14 attention / 10 tone / 3 event intensity × 0.9314 horizon multiplier",
+        "attention": 13.5,
+        "tone": 9.7,
+        "eventIntensity": 2.9,
+        "calculation": "14 attention / 10 tone / 3 event intensity × 0.9671 horizon multiplier",
         "marketFieldsUsed": false
       },
       "sections": {
@@ -9642,7 +9953,7 @@
         },
         "traditionalReading": {
           "heading": "Traditional reading",
-          "body": "The exact trine is scored as supportive for the directly occupied signs (Leo and Aries). This is symbolic scoring, not a causal market mechanism. The score calculation is 14 attention / 10 tone / 3 event intensity × 0.9314 horizon multiplier.",
+          "body": "The exact trine is scored as supportive for the directly occupied signs (Leo and Aries). This is symbolic scoring, not a causal market mechanism. The score calculation is 14 attention / 10 tone / 3 event intensity × 0.9671 horizon multiplier.",
           "evidence": [
             "src/data/transits-2026-08.json"
           ]
@@ -9662,7 +9973,7 @@
         "transitSource": "src/data/transits-2026-08.json",
         "eventKey": "aspect:2026-08-31T22:05:16.185Z:Jupiter-trine-Saturn",
         "groupedEvents": null,
-        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-30",
+        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-31",
         "marketSnapshotId": null,
         "coverage": {
           "overall": "complete",
@@ -9676,7 +9987,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "9941cff0146a122e80a6b85b126d37f9e97e425d737d39c3087057b46fb68ca6"
+      "artifactHash": "ded56d72f2a11ba17194050a2375ecd3a43f889dcce5895bd46051c3e20f0561"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -9702,7 +10013,7 @@
       "slug": "event-brief-aspect-2026-09-01t09-53-10-675z-mars-square-saturn",
       "kind": "event-brief",
       "templateId": "event-brief.v1",
-      "issuedAt": "2026-08-30T12:00:00.000Z",
+      "issuedAt": "2026-08-31T12:00:00.000Z",
       "visibleAt": "2026-09-01T09:53:10.675Z",
       "eventAt": "2026-09-01T09:53:10.675Z",
       "title": "Mars Square Saturn · event brief",
@@ -9719,10 +10030,10 @@
       ],
       "symbolicScore": {
         "sign": "aries",
-        "attention": 15.5,
-        "tone": -9.1,
-        "eventIntensity": 11,
-        "calculation": "17 attention / -10 tone / 12 event intensity × 0.9139 horizon multiplier",
+        "attention": 16.1,
+        "tone": -9.5,
+        "eventIntensity": 11.4,
+        "calculation": "17 attention / -10 tone / 12 event intensity × 0.9496 horizon multiplier",
         "marketFieldsUsed": false
       },
       "sections": {
@@ -9735,7 +10046,7 @@
         },
         "traditionalReading": {
           "heading": "Traditional reading",
-          "body": "The exact square is scored as frictional for the directly occupied signs (Cancer and Aries). This is symbolic scoring, not a causal market mechanism. The score calculation is 17 attention / -10 tone / 12 event intensity × 0.9139 horizon multiplier.",
+          "body": "The exact square is scored as frictional for the directly occupied signs (Cancer and Aries). This is symbolic scoring, not a causal market mechanism. The score calculation is 17 attention / -10 tone / 12 event intensity × 0.9496 horizon multiplier.",
           "evidence": [
             "src/data/transits-2026-09.json"
           ]
@@ -9755,7 +10066,7 @@
         "transitSource": "src/data/transits-2026-09.json",
         "eventKey": "aspect:2026-09-01T09:53:10.675Z:Mars-square-Saturn",
         "groupedEvents": null,
-        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-30",
+        "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-08-31",
         "marketSnapshotId": null,
         "coverage": {
           "overall": "complete",
@@ -9769,7 +10080,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "bee6e8fd9316a49d9d3dd3361fe67e291710c5399d9ad12f4a9e5ef84a7fef93"
+      "artifactHash": "ee05971c686b9ba5c637e4dea9c7eec242cceceea5e2cc93f5ccb61a0d0a93bf"
     }
   ]
 }
