@@ -60,5 +60,14 @@ describe('GitHub Actions trust boundaries', () => {
     expect(smoke).toContain('deploymentProjectId !== expectedProjectId');
     expect(smoke).toContain("/^zodiacs(?:-org)?-[a-z0-9-]+-zodiacsofficial\\.vercel\\.app$/u");
     expect(smoke).not.toContain("hostname.endsWith('.vercel.app')");
+
+    const unsubscribeStart = smoke.indexOf("label: 'weekly digest unsubscribe confirmation'");
+    const unsubscribeEnd = smoke.indexOf("label: 'wallet birth'", unsubscribeStart);
+    expect(unsubscribeStart).toBeGreaterThan(-1);
+    expect(unsubscribeEnd).toBeGreaterThan(unsubscribeStart);
+    const unsubscribeProbe = smoke.slice(unsubscribeStart, unsubscribeEnd);
+    expect(unsubscribeProbe).toContain('status === 200 || status === 503');
+    expect(unsubscribeProbe).toContain('if (response.status === 503)');
+    expect(unsubscribeProbe).toContain("body.trim() !== 'Unsubscribe is temporarily unavailable.'");
   });
 });
