@@ -15,7 +15,7 @@ on:
         type: string
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-check:
@@ -26,7 +26,6 @@ jobs:
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -85,31 +84,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Refresh visual baselines for footer alignment
-        run: |
-          if [ "$(git log -1 --pretty=%s)" != "Run visual footer baseline refresh" ]; then
-            echo "One-time visual refresh is not armed for this commit."
-            exit 0
-          fi
-          npm run test:visual:update
-
-      - name: Commit refreshed footer visual baselines
-        env:
-          VISUAL_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        run: |
-          if [ "$(git log -1 --pretty=%s)" != "Run visual footer baseline refresh" ]; then
-            echo "No one-time visual baseline commit is required."
-            exit 0
-          fi
-          git add tests/visual/baselines/linux/
-          if git diff --cached --quiet; then
-            echo "Visual baselines are already current."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Refresh footer visual baselines"
-          git push origin HEAD:"${VISUAL_HEAD_REF}"
       - name: Typecheck
         run: npm run check
 
