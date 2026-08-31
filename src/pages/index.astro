@@ -472,8 +472,12 @@ const tools = [
   </section>
 
   <!-- 03 · Zero-input value: tap your sign, see today -->
+  <!-- client:visible, not client:idle: on a fast connection idle fires while
+       the hero poster (the LCP element) is still painting, and the preact
+       module cascade lands in the paint window. The strip sits ~1400px down,
+       so hydrate it on approach instead. -->
   <section class="section container reveal">
-    <TodayBySign client:idle />
+    <TodayBySign client:visible={{ rootMargin: '240px' }} />
   </section>
 
   <!-- 04 · Tools -->

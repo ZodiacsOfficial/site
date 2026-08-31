@@ -314,6 +314,7 @@ export default function Wheel({
               y={(c.y - disc / 2).toFixed(2)}
               width={disc.toFixed(2)}
               height={disc.toFixed(2)}
+              loading="lazy"
             >
               <title>{s.name}</title>
             </image>

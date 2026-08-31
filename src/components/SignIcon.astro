@@ -15,6 +15,13 @@ interface Props {
   fetchPriority?: 'high' | 'low' | 'auto';
   /** Skip AVIF when its derivative is larger than WebP on an LCP path. */
   webpOnly?: boolean;
+  /**
+   * Hold the sources in data attributes so the icon fetches nothing at page
+   * load. Chromium fetches lazy images inside display:none panels eagerly,
+   * so JS-only surfaces (the nav menus) use this and promote the attributes
+   * on first open — see loadDeferredIcons in SiteNav.
+   */
+  deferred?: boolean;
   decoding?: 'async' | 'sync' | 'auto';
   class?: string;
 }
@@ -26,16 +33,19 @@ const {
   loading = 'lazy',
   fetchPriority,
   webpOnly = false,
+  deferred = false,
   decoding = 'async',
   class: className,
 } = Astro.props;
 const s = signBySlug(sign);
 const tier = size <= 24 ? 48 : size <= 64 ? 128 : 400;
+const avif = `/assets/zodiac-icons/${tier}/${sign}.avif`;
+const webp = `/assets/zodiac-icons/${tier}/${sign}.webp`;
 ---
 <picture class:list={['sign-icon', className]} style={`--sign:${s.hue};--sign-size:${size}px`}>
-  {!webpOnly && <source srcset={`/assets/zodiac-icons/${tier}/${sign}.avif`} type="image/avif" />}
+  {!webpOnly && <source {...(deferred ? { 'data-srcset': avif } : { srcset: avif })} type="image/avif" />}
   <img
-    src={`/assets/zodiac-icons/${tier}/${sign}.webp`}
+    {...(deferred ? { 'data-src': webp } : { src: webp })}
     width={size}
     height={size}
     alt={alt}
