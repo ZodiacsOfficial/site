@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import AskGuideLine from '../../../components/AskGuideLine.astro';
 import Faq from '../../../components/Faq.astro';
 import EmailCapture from '../../../components/EmailCapture.astro';
 import ChartCalculator from '../../../islands/ChartCalculator';
@@ -104,6 +105,7 @@ const jsonLd = [
     <noscript>
       <p>Esta calculadora de mapa astral precisa de JavaScript. Ative-o e recarregue a página para calcular seu Sol, sua Lua, seu ascendente, seus planetas e suas casas no navegador.</p>
     </noscript>
+    <AskGuideLine lead="Perguntas sobre uma posição do seu mapa?" locale="pt" />
   </section>
 
   <section class="section--tight container container--narrow">

@@ -1,12 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
+import AskGuideLine from '../../components/AskGuideLine.astro';
 import AstroTerm from '../../components/AstroTerm.astro';
 import ChartCalculator from '../../islands/ChartCalculator';
 import { PostChartDailyBrief } from '../../islands/PostChartDailyBrief';
 import EmailCapture from '../../components/EmailCapture.astro';
 import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
 import { hasDailyChartEmailProvider } from '../../lib/email/daily-config';
-import calculatorFirstPaintCss from '../../styles/calculator-first-paint.css?inline';
 import '../../styles/calculator.css';
 import '../../styles/explorer.css';
 import '../../styles/post-chart-daily.css';
@@ -68,8 +68,6 @@ const jsonLd = [
   clientUi
   glass
   inlineCriticalCss
-  localTypography
-  localChromeTypography
   title="Free Birth Chart Calculator — Sun, Moon & Rising | Zodiacs.org"
   description="Calculate your free birth chart: sun, moon, rising, planets, houses, and what they mean — computed privately, in your browser."
   path="/birth-chart/"
@@ -109,29 +107,7 @@ const jsonLd = [
       max-width: 100%;
     }
     .calc__result > * { min-width: 0; max-width: 100%; }
-    .field__help.calc__context-cue { font-size: 11px; line-height: 1.5; }
-
-    /* Keep the LCP copy at its final geometry while the route stylesheet
-       finishes loading in the background. */
-    .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
-    .tool-hero h1 {
-      margin: 0 0 16px;
-      font-family: var(--font-serif);
-      font-size: var(--text-2xl);
-      font-weight: 500;
-      letter-spacing: -0.005em;
-      line-height: 1.04;
-      font-variant-numeric: oldstyle-figures;
-      text-wrap: balance;
-    }
-    .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
   </style>
-  <style
-    slot="head"
-    is:inline
-    data-zdx-calculator-first-paint
-    set:html={calculatorFirstPaintCss}
-  />
   <section class="section--tight container">
     <div class="tool-hero">
       <h1 class="display">Get your free birth chart.</h1>
@@ -150,6 +126,7 @@ const jsonLd = [
     <noscript>
       <p>This birth chart calculator needs JavaScript. Enable it and reload to calculate your Sun, Moon, rising sign, planets, and houses in your browser.</p>
     </noscript>
+    <AskGuideLine lead="Questions about a placement in your chart?" />
   </section>
 
   <section class="section--tight container container--narrow">

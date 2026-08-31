@@ -230,7 +230,13 @@ function medical(text: string): boolean {
 }
 
 function legal(text: string): boolean {
-  return /\bshould i\s+(?:plead|confess|sue|settle|sign\s+(?:the|this|my|a)\s+(?:contract|agreement|waiver|lease|deed)|testify|appeal|file for|hide evidence|destroy evidence)\b/u.test(text)
+  const strategyAsk = /\bshould i\s+(?:plead|confess|sue|settle|testify|appeal|file for|hide evidence|destroy evidence)\b/u.test(text);
+  // "Should I (wait to) sign my apartment lease?" framed by a retrograde or
+  // transit is astrology's everyday timing question, answered reflectively by
+  // the provider policy; only the astrology-free paperwork ask stops locally.
+  const paperworkAsk = /\bshould (?:i|we)\s+(?:wait\s+to\s+)?sign\s+(?:the|this|my|our|a|that)\s+(?:\w+\s+){0,2}?(?:contract|agreement|waiver|lease|deed|paperwork)\b/u.test(text);
+  return strategyAsk
+    || (paperworkAsk && !ASTROLOGY.test(text))
     || /\bwill i\s+(?:win|lose|avoid|beat)\s+(?:the\s+|my\s+)?(?:lawsuit|case|trial|custody battle|charge|charges|deportation)\b/u.test(text)
     || /\b(?:you should|i recommend(?: that you)?)\s+(?:plead|confess|sue|settle|sign\s+(?:the|this|your|a)\s+(?:contract|agreement|waiver|lease|deed)|testify|appeal|hide evidence|destroy evidence)\b/u.test(text)
     || /\b(?:give|provide|tell)\s+me\s+(?:a\s+)?legal strategy\b/u.test(text)

@@ -378,8 +378,8 @@ describe('thesis catalogue icon contract', () => {
 });
 
 describe('thesis Guide cache contract', () => {
-  it('loads the quiet avatar shell from a versioned URL', () => {
-    expect(HTML).toContain("import('/assets/assistant-ui.js?v=avatar-only-2')");
+  it('loads the quiet Guide shell from a versioned URL', () => {
+    expect(HTML).toContain("import('/assets/assistant-ui.js?v=ask-guide-3')");
     expect(HTML).not.toContain("import('/assets/assistant-ui.js')");
   });
 });

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import AskGuideLine from '../../components/AskGuideLine.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import ToolGlyph from '../../components/ToolGlyph.astro';
 import LearningPath from '../../islands/LearningPath';
@@ -170,6 +171,9 @@ const jsonLd = [
       Curious how any of this is computed? The math is public:{' '}
       <a href="/methodology/">how we compute your chart</a>.
     </p>
+    <div class="learn-note reveal">
+      <AskGuideLine lead="Stuck on a term, or wondering how a piece fits your own chart?" />
+    </div>
   </section>
 </Base>
 

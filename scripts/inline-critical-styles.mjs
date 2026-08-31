@@ -64,9 +64,10 @@ const targetPaths = [
 ];
 
 /**
- * Entry pages inline Base and defer route bundles after their route-owned
- * first-paint CSS has established the above-fold geometry. The no-JS copies
- * remain as ordinary stylesheets, so the settled page is unchanged.
+ * Entry pages inline the styles required for above-fold geometry and defer
+ * the rest. The homepage and RU calculator need Base only; the EN calculator
+ * also keeps calculator.css on the render path. No-JS copies remain ordinary
+ * stylesheets, so the settled page is unchanged.
  */
 const deferNonBaseConfig = new Map([
   ['index.html', {
@@ -74,8 +75,8 @@ const deferNonBaseConfig = new Map([
     shape: { inline: 1, deferred: 1, external: 2 },
   }],
   ['birth-chart/index.html', {
-    select: /^Base\.[A-Za-z0-9_-]+\.css$/u,
-    shape: { inline: 1, deferred: 3, external: 6 },
+    select: /^(?:Base|calculator)\.[A-Za-z0-9_-]+\.css$/u,
+    shape: { inline: 2, deferred: 2, external: 4 },
   }],
   ['ru/birth-chart/index.html', {
     select: /^Base\.[A-Za-z0-9_-]+\.css$/u,
@@ -394,9 +395,9 @@ async function main() {
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 17 || stylesheets !== 31) {
+  if (pages + alreadyInlined !== 17 || stylesheets !== 32) {
     throw new Error(
-      `inline-critical-styles: expected 17 pages / 31 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 17 pages / 32 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0

@@ -5,9 +5,11 @@ import { describe, expect, it } from 'vitest';
 import {
   consumeAssistantStream,
   guideDayAnchorMatches,
+  parseAssistantMarkdown,
   parseAssistantSseFrame,
   placementSummaryForChart,
   selectedSelfChartFromJson,
+  todaySkySummary,
 } from './open-assistant';
 import { GUIDE_CLOUD_DISCLOSURE_POLICY_VERSION } from '../guide-server/policy';
 import { GUIDE_KNOWLEDGE_ENTRIES } from '../guide-knowledge/catalog';
@@ -226,6 +228,103 @@ describe('assistant SSE frames', () => {
   });
 });
 
+describe('assistant markdown subset', () => {
+  it('parses paragraphs, bold, italics, lists, and labelled same-site links', () => {
+    const blocks = parseAssistantMarkdown([
+      'Your **Sun sign** is *core identity*.',
+      '',
+      "To find your Moon sign, you'll need:",
+      '',
+      '- Your full birth date, including **year**',
+      '- Your birthplace',
+      '',
+      'Enter those in the [birth-chart calculator](/birth-chart/).',
+    ].join('\n'));
+
+    expect(blocks).toEqual([
+      {
+        kind: 'paragraph',
+        children: [
+          { kind: 'text', text: 'Your ' },
+          { kind: 'strong', children: [{ kind: 'text', text: 'Sun sign' }] },
+          { kind: 'text', text: ' is ' },
+          { kind: 'em', children: [{ kind: 'text', text: 'core identity' }] },
+          { kind: 'text', text: '.' },
+        ],
+      },
+      {
+        kind: 'paragraph',
+        children: [{ kind: 'text', text: "To find your Moon sign, you'll need:" }],
+      },
+      {
+        kind: 'list',
+        ordered: false,
+        items: [
+          [
+            { kind: 'text', text: 'Your full birth date, including ' },
+            { kind: 'strong', children: [{ kind: 'text', text: 'year' }] },
+          ],
+          [{ kind: 'text', text: 'Your birthplace' }],
+        ],
+      },
+      {
+        kind: 'paragraph',
+        children: [
+          { kind: 'text', text: 'Enter those in the ' },
+          { kind: 'link', path: '/birth-chart/', label: 'birth-chart calculator' },
+          { kind: 'text', text: '.' },
+        ],
+      },
+    ]);
+  });
+
+  it('splits a paragraph followed by list lines without a blank separator', () => {
+    expect(parseAssistantMarkdown('Bring:\n- a date\n1. a time')).toEqual([
+      { kind: 'paragraph', children: [{ kind: 'text', text: 'Bring:' }] },
+      { kind: 'list', ordered: false, items: [[{ kind: 'text', text: 'a date' }]] },
+      { kind: 'list', ordered: true, items: [[{ kind: 'text', text: 'a time' }]] },
+    ]);
+  });
+
+  it('links bare catalog paths and keeps everything else literal text', () => {
+    expect(parseAssistantMarkdown('See /learn/ and /registry/aries/ or 2*3*4.')).toEqual([
+      {
+        kind: 'paragraph',
+        children: [
+          { kind: 'text', text: 'See ' },
+          { kind: 'link', path: '/learn/', label: '/learn/' },
+          { kind: 'text', text: ' and /registry/aries/ or 2*3*4.' },
+        ],
+      },
+    ]);
+  });
+
+  it('degrades disallowed named links and headings to plain text', () => {
+    expect(parseAssistantMarkdown('## Watch\n[shop](/registry/) now')).toEqual([
+      {
+        kind: 'paragraph',
+        children: [{ kind: 'text', text: 'Watch\n[shop](/registry/) now' }],
+      },
+    ]);
+    expect(parseAssistantMarkdown('[evil](https://example.com/x) text')).toEqual([
+      {
+        kind: 'paragraph',
+        children: [{ kind: 'text', text: '[evil](https://example.com/x) text' }],
+      },
+    ]);
+  });
+});
+
+describe('today-sky context', () => {
+  it('summarizes the current computed sky as placement lines without location data', async () => {
+    const summary = await todaySkySummary(new Date('2026-08-31T12:00:00.000Z'));
+    expect(summary).toContain('Current sky (tropical, geocentric), computed 2026-08-31 12:00 UTC:');
+    expect(summary).toMatch(/Sun: \d+°\d{2}′ [A-Z][a-z]+/);
+    expect(summary).toMatch(/Moon: \d+°\d{2}′ [A-Z][a-z]+/);
+    expect(summary).not.toMatch(/lat|lon|house/i);
+  });
+});
+
 describe('Guide response links', () => {
   it('links only exact server-approved catalog paths', async () => {
     const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
@@ -234,7 +333,7 @@ describe('Guide response links', () => {
       source.indexOf('let stylesheetPromise'),
     );
     const renderer = source.slice(
-      source.indexOf('export function renderAssistantText'),
+      source.indexOf('export function assistantLinkPath'),
       source.indexOf('function scrollTranscript'),
     );
     const moonPath = GUIDE_KNOWLEDGE_ENTRIES.find(({ id }) => id === 'moon-sign')?.canonicalPath;
@@ -258,20 +357,14 @@ describe('Guide response links', () => {
 });
 
 describe('Guide typography boundary', () => {
-  it('keeps launcher and welcome fonts on the page-owned no-swap tokens', async () => {
+  it('keeps launcher fonts on the page-owned no-swap tokens', async () => {
     const css = await readFile(new URL('./assistant.css', import.meta.url), 'utf8');
-    const proactiveSurfaces = css.slice(
-      css.indexOf('.zguide-launcher {'),
-      css.indexOf('@keyframes zguide-welcome-in'),
-    );
+    const proactiveSurfaces = css.slice(css.indexOf('.zguide-launcher {'));
     expect(proactiveSurfaces).toContain('font: 600 14px/1 var(--font-sans);');
-    expect(proactiveSurfaces).toContain('font-family: var(--font-sans);');
-    expect(proactiveSurfaces).toContain('font: 500 20px/1.2 var(--font-serif);');
-    expect(proactiveSurfaces).toContain('font: 650 12px/1 var(--font-sans);');
     expect(proactiveSurfaces).not.toMatch(/['"](?:Instrument Sans|EB Garamond)['"]/u);
   });
 
-  it('keeps the launcher avatar-only at every viewport without removing its accessible name', async () => {
+  it('labels the launcher on wide viewports and collapses it to the avatar on small ones', async () => {
     const [drawerCss, shellCss, shellSource] = await Promise.all([
       readFile(new URL('./assistant.css', import.meta.url), 'utf8'),
       readFile(new URL('./guide-bootstrap.css', import.meta.url), 'utf8'),
@@ -279,13 +372,15 @@ describe('Guide typography boundary', () => {
     ]);
     const launcherRule = shellCss.slice(
       shellCss.indexOf('.zguide-launcher {'),
-      shellCss.indexOf('.zguide-launcher__avatar'),
+      shellCss.indexOf('.zguide-launcher[data-footer-guide-visible]'),
     );
-    expect(launcherRule).toContain('width: 48px;');
-    expect(launcherRule).toContain('height: 48px;');
-    expect(launcherRule).toContain('font-size: 0;');
+    expect(launcherRule).not.toContain('font-size: 0;');
+    const collapse = shellCss.slice(shellCss.indexOf('@media (max-width: 560px)'));
+    expect(collapse).toContain('width: 48px;');
+    expect(collapse).toContain('height: 48px;');
+    expect(collapse).toContain('font-size: 0;');
     expect(shellSource).toContain("launcher.setAttribute('aria-label', currentCopy().open);");
-    expect(shellSource).not.toContain("label.textContent = 'Guide';");
+    expect(shellSource).toContain('label.textContent = currentCopy().label;');
     expect(drawerCss).toContain('@media (max-width: 560px)');
   });
 });
@@ -311,7 +406,6 @@ describe('Guide avatar identity', () => {
     expect(source).toContain("image.setAttribute('fetchpriority', 'low');");
     for (const surface of [
       "createGuideAvatar('zguide-launcher__avatar', 32)",
-      "createGuideAvatar('zguide-invite__avatar', 44)",
       "createGuideAvatar('zassistant__avatar', 38)",
       "createGuideAvatar('zassistant__message-avatar', 20)",
     ]) expect(source).toContain(surface);
@@ -459,9 +553,9 @@ describe('assistant profile-access privacy fence', () => {
     expect(shell).toContain("canvas.setAttribute('aria-hidden', 'true');");
     expect(shell).toContain('drawerModulePromise ??= import(DRAWER_MODULE_HREF)');
     expect(loader).toContain('export const GUIDE_POST_LOAD_DELAY_MS = 500;');
-    expect(loader).toContain("export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=avatar-only-2';");
+    expect(loader).toContain("export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=ask-guide-3';");
     expect(loader).toContain("modulePromise = import('${GUIDE_SHELL_URL}')");
-    expect(shell).toContain("const STYLESHEET_HREF = '/assets/assistant-ui.css?v=avatar-only-2';");
+    expect(shell).toContain("const STYLESHEET_HREF = '/assets/assistant-ui.css?v=ask-guide-3';");
     expect(loader).toContain("window.addEventListener('load', scheduleGuide, { once: true });");
     expect(loader).toContain("document.addEventListener('click', onGuideIntent, true);");
     expect(loader).toContain('event.stopImmediatePropagation();');

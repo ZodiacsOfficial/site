@@ -30,7 +30,7 @@ describe('inlineCriticalStyles', () => {
       inlineCount: 1, deferredCount: 1, externalCount: 2, loaderCount: 1,
     });
     expect(expectedStylesheetShape('birth-chart/index.html', true)).toEqual({
-      inlineCount: 1, deferredCount: 3, externalCount: 6, loaderCount: 1,
+      inlineCount: 2, deferredCount: 2, externalCount: 4, loaderCount: 1,
     });
     expect(expectedStylesheetShape('ru/birth-chart/index.html', true)).toEqual({
       inlineCount: 1, deferredCount: 3, externalCount: 6, loaderCount: 1,

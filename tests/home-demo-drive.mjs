@@ -62,9 +62,6 @@ async function settleGuideShell(page) {
   // Seed the existing preference before navigation, then wait for the
   // intentionally post-load launcher so its fixed compositing layer cannot
   // arrive in the middle of an elementFromPoint assertion.
-  await page.addInitScript(() => {
-    try { sessionStorage.setItem('zodiacs.guide.welcome-seen.v1', '1'); } catch { /* memory-only browser */ }
-  });
 }
 
 await withPreview({ port: 4394 }, async (baseURL) => {
