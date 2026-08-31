@@ -33,7 +33,7 @@ export const ES_ADDITIONS = Object.freeze({
   'disclosure.establishedPrefix': 'Est.',
   'disclosure.establishedProvenance': 'Primer comprobante de origen · 2024-07-05',
   'disclosure.evidenceHeading': 'Estado y pruebas',
-  'disclosure.intro': 'Esta página separa los hechos respaldados por pruebas públicas de las declaraciones aportadas por el operador. Una certificación del operador se publica con fecha y etiquetada como certificación; nunca se presenta como verificada de forma independiente.',
+  'disclosure.intro': 'Esta página separa los hechos respaldados por pruebas públicas de las declaraciones aportadas por el operador, Zodiacs LLC. Una certificación del operador se publica con fecha y etiquetada como certificación; nunca se presenta como verificada de forma independiente.',
   'disclosure.kicker': 'Declaración del Registro',
   'disclosure.linkLabel': 'Declaraciones',
   'disclosure.linkMethodology': 'Metodología',
