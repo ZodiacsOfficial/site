@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "i18n-english-only-courtesy-2026-08-31",
-  "baseCommit": "1921c8183928f2ef95a35aab71883e1ca3c04c47",
+  "baseCommit": "57b2783f7b877087594464252d85b4ce18e56c48",
   "protectedPaths": [
     "src/lib/i18n/english-only.ts",
     "src/lib/i18n/index.test.ts",
