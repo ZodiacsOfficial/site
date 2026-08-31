@@ -50,6 +50,11 @@ const signs = [
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
 const targetPaths = [
+  // The EN homepage joined when the per-push Lighthouse gate started covering
+  // it: its LCP sat 70ms over budget purely on the two blocking stylesheet
+  // round trips, the same delivery cost this pass already removes for the
+  // gated RU entry pages.
+  'index.html',
   'today/index.html',
   ...signs.map((sign) => `horoscopes/${sign}/index.html`),
   'ru/index.html',
@@ -281,9 +286,9 @@ async function main() {
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 15 || stylesheets !== 29) {
+  if (pages + alreadyInlined !== 16 || stylesheets !== 31) {
     throw new Error(
-      `inline-critical-styles: expected 15 pages / 29 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 16 pages / 31 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0
