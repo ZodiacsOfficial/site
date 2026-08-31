@@ -6234,7 +6234,7 @@
           <article className="consumer-collection" data-registry-collection>
             <CabinetSurface className="consumer-collection__link" {...(REGISTRY_AURA_ENABLED ? { href: REGISTRY_AURA_PATH } : {})}>
               <div className="consumer-collection__copy">
-                <small className="consumer-collection__eyebrow">A public collection</small>
+                <small className="consumer-eyebrow">A public collection</small>
                 <h2 id="consumer-cabinet-title">Cabinet of Twelve</h2>
                 <p>See which signs a public address holds. No wallet connection is required.</p>
               </div>
@@ -6308,12 +6308,8 @@
         a: 'Zodiac tokens are speculative and can be volatile or hard to sell. Prices can fall to zero, and wallet mistakes or scams can cause permanent loss.'
       },
       {
-        q: 'What is Zodiac Markets?',
-        a: 'Zodiac Markets is the trading interface for the Twelve. Jupiter Ultra supplies the executable route and transaction; your wallet reviews, approves, and signs.'
-      },
-      {
         q: 'What is the Terminal?',
-        a: 'The Terminal is the market desk for all twelve Zodiacs, with live prices, liquidity, charts, season context, and research.'
+        a: 'The Terminal is the market desk for all twelve Zodiacs, with live prices, liquidity, charts, season context, research, and trading. Jupiter Ultra supplies the executable route and transaction; your wallet reviews, approves, and signs.'
       }
     ];
 
@@ -6343,6 +6339,7 @@
       const indexedCount = live
         ? SIGNS.filter(item => batch.quotes?.[item.asset.sign]).length
         : 0;
+      const activeSign = SIGNS.find(item => item.ticker === activeTicker) ?? SIGNS[0];
       const rows = useMemo(() => SIGNS
         .map((item) => {
           const quote = live ? batch.quotes[item.asset.sign] : null;
@@ -6432,9 +6429,23 @@
                 <a className="consumer-market-gateway__action is-secondary" href="/registry/technical/#market-transparency">
                   <span>How ranking works</span><span aria-hidden="true">→</span>
                 </a>
-                <a className="consumer-market-gateway__action is-primary" href="/terminal/?rank=marketCap">
+                <a className={'consumer-market-gateway__action ' + (REGISTRY_EXCHANGE_ENABLED ? 'is-secondary' : 'is-primary')} href="/terminal/?rank=marketCap">
                   <span>View full market</span><span aria-hidden="true">↗</span>
                 </a>
+                {/* Venue-route discovery entry, authorized by the 2026-08-31
+                    owner addendum: rides the same exchange flag and marker as
+                    the /terminal/ gateway, so committed pages (marker 0) never
+                    render it and the one rollback flag removes it everywhere. */}
+                {REGISTRY_EXCHANGE_ENABLED && (
+                  <a
+                    className="consumer-market-gateway__action is-primary"
+                    href={`${REGISTRY_EXCHANGE_PATH}#${activeSign.asset.sign}`}
+                    aria-label={`Open the Terminal venue route to trade ${activeSign.name}`}
+                    onClick={() => trackAnalytics('astrofolio_venue_route_open', { sign: activeSign.asset.sign })}
+                  >
+                    <span>Trade {activeSign.name}</span><span aria-hidden="true">↗</span>
+                  </a>
+                )}
               </div>
               <p className="consumer-market-gateway__note">Market data comes from an independent index and can be delayed, incomplete, unavailable, or wrong. It is context, not a recommendation.</p>
             </div>

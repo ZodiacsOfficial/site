@@ -101,10 +101,11 @@ export function injectRegistryExchange(html, env = {}) {
 }
 
 /**
- * The expert Terminal landing owns only a build marker for this surface. Its
- * React shell decides whether and where to render the single discovery entry.
- * This keeps the venue route and expert landing on one flag without baking
- * terminal markup or a venue URL into the committed reading surface.
+ * The expert Terminal landing — and, since the 2026-08-31 owner addendum, the
+ * Astrofolio landing — owns only a build marker for this surface. The React
+ * shell decides whether and where to render each flag-gated discovery entry.
+ * This keeps the venue route and its landings on one flag without baking
+ * terminal markup or a venue URL into the committed reading surfaces.
  */
 export function injectRegistryExchangeLanding(html, env = {}) {
   const enabled = registryExchangeEnabled(env);

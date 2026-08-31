@@ -5,6 +5,41 @@ below is satisfied.
 
 Approved: 2026-08-10T11:40:11Z
 
+## Addendum — 2026-08-31: Astrofolio market-gateway discovery entry
+
+Authorized: 2026-08-31 (owner-directed)
+
+This addendum supersedes only the count and location of the same-origin,
+flag-gated venue-route discovery entries. It does not widen the execution,
+custody, compensation, indexing, provider, telemetry, pilot, or rollback
+boundary:
+
+- A second flag-gated venue-route discovery entry is authorized on
+  `/astrofolio/`, as one action in the market gateway beside the leaderboard
+  of the Twelve. Like the `/terminal/` gateway entry it appears only when
+  `PUBLIC_REGISTRY_EXCHANGE_ENABLED=1`, links to
+  `/terminal/markets/#<selected-sign>` carrying only a canonical sign slug in
+  the URL hash, and contains no venue URL.
+- `/astrofolio/` now carries the exchange flag marker, committed `0`, stamped
+  by the same build stamper that sets the venue-route and `/terminal/`
+  markers from the same flag. Committed HTML remains flag-off: the entry is
+  absent and every marker is `0`.
+- Mounting, rendering, or focusing the entry causes no provider or wallet
+  request; selecting it only navigates.
+- Leaderboard rows remain identity links back to the sign. No global
+  navigation, footer, Cabinet, sign-record, or leaderboard-row venue-route
+  entry is authorized.
+- The venue route itself remains `noindex`, `no-store`, out of the sitemap,
+  and service-worker network-only, so rollback cannot recover a stale
+  flag-on entry.
+
+This addendum does not restart or extend the 30-day pilot. The protected
+venue route still returns flag-off on or before **2026-09-09** unless the
+owner records the dated live-contract and pilot-evidence review already
+required by this decision; flag-off removes this entry with the rest. Every
+earlier control remains in force unless its only subject is the superseded
+discovery-entry count or location.
+
 ## Addendum: 2026-08-13 current public product names
 
 Authorized: 2026-08-13

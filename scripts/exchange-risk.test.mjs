@@ -175,10 +175,28 @@ describe('Exchange risk and trust copy', () => {
     expect(decision).toContain('does not restart or extend the 30-day pilot');
     expect(decision).toContain('returns flag-off on or before **2026-09-09**');
 
-    expect(runbook).toContain('both the route and `/terminal/` landing markers are `0`');
-    expect(runbook).toContain('`/astrofolio/` must have no exchange flag marker in either state');
+    expect(runbook).toContain('the route, `/terminal/`, and `/astrofolio/` landing markers are all `0`');
     expect(runbook).toContain('exactly one Terminal venue-route discovery entry appears on `/terminal/`');
     expect(runbook).toContain('no CacheStorage entry for any Terminal venue-route or expert Terminal navigation');
     expect(runbook).toContain('On or before 2026-09-09, turn the flag off');
+  });
+
+  it('records the dated Astrofolio market-gateway entry without widening the pilot', async () => {
+    const [decision, runbook] = await Promise.all([
+      read('docs/REGISTRY-EXCHANGE-OWNER-RISK-DECISION.md').then(compact),
+      read('docs/REGISTRY-EXCHANGE-LAUNCH-RUNBOOK.md').then(compact),
+    ]);
+    expect(decision).toContain('Addendum — 2026-08-31: Astrofolio market-gateway discovery entry');
+    expect(decision).toContain('Authorized: 2026-08-31');
+    expect(decision).toContain('A second flag-gated venue-route discovery entry is authorized on `/astrofolio/`, as one action in the market gateway beside the leaderboard');
+    expect(decision).toContain('links to `/terminal/markets/#<selected-sign>` carrying only a canonical sign slug');
+    expect(decision).toContain('`/astrofolio/` now carries the exchange flag marker, committed `0`');
+    expect(decision).toContain('Mounting, rendering, or focusing the entry causes no provider or wallet request');
+    expect(decision).toContain('No global navigation, footer, Cabinet, sign-record, or leaderboard-row venue-route entry is authorized');
+    expect(decision).toContain('This addendum does not restart or extend the 30-day pilot');
+
+    expect(runbook).toContain('Since the 2026-08-31 owner addendum `/astrofolio/` carries the exchange flag marker, committed `0`');
+    expect(runbook).toContain('and exactly one on `/astrofolio/` as a market-gateway action beside the leaderboard');
+    expect(runbook).toContain('leaderboard rows remain identity links and gain no venue-route entry');
   });
 });

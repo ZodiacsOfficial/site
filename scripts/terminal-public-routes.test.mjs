@@ -42,7 +42,8 @@ describe('Terminal public-route split', () => {
     expect(pro).toContain('<meta name="zodiacs-registry-view" content="terminal-pro" />');
     expect(pro).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
     expect(pro).not.toMatch(/<meta\s+name=["']robots["'][^>]*noindex/iu);
-    expect(consumer).not.toContain('zodiacs-registry-exchange-enabled');
+    // Owner addendum 2026-08-31: Astrofolio carries the marker, committed off.
+    expect(consumer).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
     expect(markets).toContain('<meta name="robots" content="noindex" />');
   });
 

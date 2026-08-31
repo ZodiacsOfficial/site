@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "guide-consumer-fixes-2026-08-31.2",
-  "baseCommit": "43b97c31ed1d5dc77b5196e265883bd07b51909c",
+  "id": "guide-consumer-fixes-2026-08-31.3",
+  "baseCommit": "b99854f34004e9270e9c40a4c2a8ff70e94e2d94",
   "protectedPaths": [
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",
