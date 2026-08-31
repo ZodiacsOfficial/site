@@ -125,11 +125,11 @@ const jsonLd = [
     <SkyTicker client:visible locale="it" />
   </section>
 
-  <section class="section container reveal">
+  <section class="container reveal pace-act">
     <TodayBySign client:idle locale="it" />
   </section>
 
-  <section class="section container">
+  <section class="container pace-act pace-act--rule">
     <div class="section-head reveal">
       <h2>Inizia dal tuo tema</h2>
       <p>Scopri il tuo tema natale, il segno lunare, l’ascendente, le compatibilità e ciò che accade nel cielo adesso.</p>
@@ -148,7 +148,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="section container" id="segni">
+  <section class="container pace-tight" id="segni">
     <div class="section-head reveal">
       <h2>I dodici segni</h2>
       <p>Guide chiare per ogni segno: personalità, amore, compatibilità e significato nel tuo tema.</p>
@@ -166,7 +166,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="section container close-es">
+  <section class="container close-es pace-sec pace-end">
     <h2 class="display reveal">Inizia dal tuo tema natale.</h2>
     <div class="reveal" style="--reveal-delay:120ms">
       <a class="btn btn--primary" href={localizePath('it', '/birth-chart/')}><span>Calcola il tuo tema natale gratis</span><span class="orb">↗</span></a>
@@ -175,6 +175,19 @@ const jsonLd = [
 </Base>
 
 <style>
+  /* ── Vertical rhythm — one-sided padding in three tiers; the hairline
+     marks the act break. Mirrors the EN homepage scale. ── */
+  .pace-act { padding-top: clamp(72px, 9.5vw, 132px); }
+  .pace-act--rule {
+    margin-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--hair-1);
+    padding-top: clamp(44px, 5.5vw, 72px);
+  }
+  .pace-tight { padding-top: clamp(36px, 4.5vw, 60px); }
+  .pace-sec { padding-top: clamp(48px, 6.5vw, 88px); }
+  .pace-end { padding-bottom: clamp(80px, 10vw, 132px); }
+
+
   .hero-es {
     /* Rise behind the fixed nav so the glass refracts the footage on
        first paint (matches the English homepage). */

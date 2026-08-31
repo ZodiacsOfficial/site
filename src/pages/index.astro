@@ -390,7 +390,7 @@ const tools = [
   </section>
 
   <!-- 02b · Interactive proof of the hero promise -->
-  <section class="section container chart-preview" id="chart-preview">
+  <section class="container chart-preview pace-act" id="chart-preview">
     <div class="section-head reveal">
       <em class="kicker">Interactive preview</em>
       <h2>See how a birth chart becomes a story.</h2>
@@ -476,12 +476,12 @@ const tools = [
        the hero poster (the LCP element) is still painting, and the preact
        module cascade lands in the paint window. The strip sits ~1400px down,
        so hydrate it on approach instead. -->
-  <section class="section container reveal">
+  <section class="container reveal pace-sec">
     <TodayBySign client:visible={{ rootMargin: '240px' }} />
   </section>
 
   <!-- 04 · Tools -->
-  <section class="section container">
+  <section class="container pace-act pace-act--rule">
     <div class="section-head reveal">
       <h2>Start with your chart</h2>
       <p>Find your birth chart, moon sign, rising sign, compatibility, and what the sky is doing now.</p>
@@ -510,7 +510,7 @@ const tools = [
   </section>
 
   <!-- 05 · The Twelve -->
-  <section class="section container" id="signs">
+  <section class="container pace-tight" id="signs">
     <div class="section-head reveal">
       <h2>The twelve signs</h2>
       <p>A full guide to each: character, relationships, history, and what the sign means across your chart.</p>
@@ -530,7 +530,7 @@ const tools = [
   </section>
 
   <!-- 06 · Three pillars -->
-  <section class="section container">
+  <section class="container pace-act pace-act--rule">
     <div class="section-head reveal">
       <h2>Learn your signs. Save what matters.</h2>
       <p>Three parts to the site, and you can start anywhere.</p>
@@ -558,7 +558,7 @@ const tools = [
   </section>
 
   <!-- 07 · FAQ -->
-  <section class="section container container--narrow">
+  <section class="container container--narrow pace-sec">
     <div class="section-head reveal"><h2>Common questions</h2></div>
     <div class="faq reveal">
       {faq.map(({ q, a }) => (
@@ -571,7 +571,7 @@ const tools = [
   </section>
 
   <!-- 08 · Close -->
-  <section class="section container close">
+  <section class="container close pace-sec pace-end">
     <h2 class="display reveal">Start with your birth chart.</h2>
     <div class="reveal" style="--reveal-delay:120ms">
       <a class="btn btn--primary" href="/birth-chart/"><span>Start your chart</span><span class="orb">↗</span></a>
@@ -585,6 +585,19 @@ const tools = [
 </Base>
 
 <style>
+  /* ── Vertical rhythm — the page reads as four acts, and the seams carry
+     that structure: one-sided padding in three tiers instead of the global
+     .section's doubled uniform gap. Act breaks may carry a hairline. ── */
+  .pace-act { padding-top: clamp(72px, 9.5vw, 132px); }
+  .pace-act--rule {
+    margin-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--hair-1);
+    padding-top: clamp(44px, 5.5vw, 72px);
+  }
+  .pace-sec { padding-top: clamp(48px, 6.5vw, 88px); }
+  .pace-tight { padding-top: clamp(36px, 4.5vw, 60px); }
+  .pace-end { padding-bottom: clamp(80px, 10vw, 132px); }
+
   /* ── Hero — the rounded cinematic frame ── */
   .hero {
     /* Cancel main's nav clearance so the frame rises behind the fixed

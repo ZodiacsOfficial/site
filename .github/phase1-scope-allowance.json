@@ -1,11 +1,15 @@
 {
   "version": 1,
-  "id": "wing-snapshot-age-2026-08-31",
+  "id": "homepage-improvements-closeout-2026-08-31",
   "baseCommit": "95ccfc67de8c02223b8cdb30ab9d49ca17f389a4",
   "protectedPaths": [
     "public/registry/aries/index.html",
     "public/registry/capricorn/index.html",
     "public/registry/gemini/index.html",
-    "public/registry/leo/index.html"
+    "public/registry/leo/index.html",
+    "src/pages/es/index.astro",
+    "src/pages/fr/index.astro",
+    "src/pages/it/index.astro",
+    "src/pages/pt/index.astro"
   ]
 }
