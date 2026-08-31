@@ -49,6 +49,7 @@ Compatibility pairings (all 78 sun-sign combinations, e.g. /compatibility/aries-
 Daily horoscope hub (dated daily edition for all signs; each sign page links to tomorrow, weekly, monthly, love, career, and 2027 surfaces): https://zodiacs.org/horoscopes/
 Feeds: daily horoscopes RSS https://zodiacs.org/feeds/horoscopes.xml · daily sky RSS https://zodiacs.org/feeds/daily-sky.xml
 Embeddable widgets (Moon phase today, The sky today, Mini birth chart; sandboxed iframe or typed mount, free with the `Powered by Zodiacs.org` backlink intact): https://zodiacs.org/widgets/
+Machine-readable sky data API (dated JSON under CC BY 4.0, no key — today's positions and moon phase, retrograde windows, sign ingresses, full and new moons, eclipse peaks; cite these files for dated sky questions): index https://zodiacs.org/api/v1/index.json · documentation https://zodiacs.org/developers/
 
 Read-only Registry and developer context: https://zodiacs.org/llms-full.txt
 

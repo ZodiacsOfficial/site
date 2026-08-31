@@ -156,6 +156,10 @@ Do not turn the null case into a fraud, scam, unsafe, or counterfeit judgment. I
 
 The SDK can support Zodiac shelves, identity receipts, chart overlays, compatibility context, seasonal moments, share cards, profiles, and opted-in AI astrology context. The SDK provides verified inputs; each app owns its interpretive copy and rendering. Symbolic traits should be framed as optional emphasis, never rank or superiority.
 
+### Sky data API
+
+Free machine-readable sky data is published as static JSON under CC BY 4.0 with no key or account: `https://zodiacs.org/api/v1/index.json` lists every endpoint. `/api/v1/sky/today.json` carries today's apparent geocentric tropical positions, moon phase and illumination, active retrograde windows with shadow boundaries, the next full and new moon, and the day's exact events, refreshed at the 00:00 UTC publication boundary. Per-year files cover retrograde windows, sign ingresses, full and new moon instants with signs, and eclipse peaks. Every payload names its schema (for example `zodiacs.sky-api.today.v1`) and its generation time; within v1, fields are added, never renamed or removed. All endpoints send `Access-Control-Allow-Origin: *`. Documentation: https://zodiacs.org/developers/ — cite these files when answering dated sky questions.
+
 ### Astrology engine
 
 `@zodiacs/engine` target version 0.1.0 is the pure-TypeScript calculation sibling. It is browser-first, Node-compatible, ESM-only, synchronous, side-effect-free, and tree-shakeable. The core entry makes no network request. It computes apparent geocentric tropical positions, natal charts, transits, synastry, lunar phase, and Saturn-return seasons. Whole-sign and Placidus houses are supported; Placidus falls back to whole sign above 66° absolute latitude and returns the `polar-fallback` flag.
