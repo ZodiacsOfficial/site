@@ -1,4 +1,4 @@
-/* Privacy-neutral, avatar-only Guide launcher. */
+/* Privacy-neutral Guide launcher: a labelled pill; avatar-only on small screens. */
 .zguide-shell-portrait {
   display: block;
   flex: 0 0 auto;
@@ -22,18 +22,16 @@
   z-index: 66;
   display: inline-flex;
   align-items: center;
-  width: 48px;
-  height: 48px;
   min-height: 48px;
-  gap: 0;
-  padding: 7px;
+  gap: 8px;
+  padding: 7px 17px 7px 7px;
   overflow: hidden;
   border: 1px solid rgba(198, 204, 218, 0.25);
-  border-radius: 50%;
+  border-radius: 999px;
   background: rgba(15, 18, 26, 0.94);
   box-shadow: 0 15px 40px -16px rgba(0, 0, 0, 0.9), inset 0 1px rgba(255, 255, 255, 0.05);
   color: #eef1f7;
-  font-size: 0;
+  font: 600 14px/1 var(--font-sans, system-ui, -apple-system, sans-serif);
   cursor: pointer;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -49,6 +47,12 @@
   .zguide-launcher {
     right: max(12px, env(safe-area-inset-right));
     bottom: max(12px, env(safe-area-inset-bottom));
+    width: 48px;
+    height: 48px;
+    gap: 0;
+    padding: 7px;
+    border-radius: 50%;
+    font-size: 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -68,7 +68,6 @@ async function drive(BASE, browser) {
   });
   await page.addInitScript((savedProfile) => {
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(savedProfile));
-    sessionStorage.setItem('zodiacs.guide.welcome-seen.v1', '1');
   }, profile);
 
   await page.goto(`${BASE}/today/#save-moment`, { waitUntil: 'networkidle' });

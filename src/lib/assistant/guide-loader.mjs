@@ -6,7 +6,7 @@
  */
 export const GUIDE_POST_LOAD_DELAY_MS = 500;
 export const GUIDE_LOADER_MARKER = 'zodiacs-guide-loader-v1';
-export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=avatar-only-2';
+export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=ask-guide-3';
 export const GUIDE_PRIVATE_SESSION_KEY = 'zodiacs.guide.private-session.v1';
 export const GUIDE_OPEN_PENDING_KEY = 'zodiacs.guide.open-pending.v1';
 

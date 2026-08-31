@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import AskGuideLine from '../../../components/AskGuideLine.astro';
 import Faq from '../../../components/Faq.astro';
 import EmailCapture from '../../../components/EmailCapture.astro';
 import ChartCalculator from '../../../islands/ChartCalculator';
@@ -104,6 +105,7 @@ const jsonLd = [
     <noscript>
       <p>Ce calculateur de thème astral nécessite JavaScript. Active JavaScript et recharge la page pour calculer ton Soleil, ta Lune, ton ascendant, tes planètes et tes maisons dans ton navigateur.</p>
     </noscript>
+    <AskGuideLine lead="Des questions sur une position de ton thème ?" locale="fr" />
   </section>
 
   <section class="section--tight container container--narrow">

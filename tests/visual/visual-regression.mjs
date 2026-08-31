@@ -214,13 +214,56 @@ async function capture(browser, baseURL, testCase) {
       }
       html { scroll-behavior: auto !important; }
       /* Production reader pages use optional faces to prevent late swaps.
-         Screenshots instead pin the equivalent loaded brand faces, avoiding
-         a loopback-speed race between an optional face and its platform
-         fallback while preserving the same intended typography. */
+         Screenshots instead pin the same font files under test-only family
+         names with blocking display. The unique names bypass production
+         font-display timing, so an optional face cannot race its platform
+         fallback while the strict pixel gate keeps the intended typography. */
+      @font-face {
+        font-family: 'ZDX Visual Instrument';
+        src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2');
+        font-weight: 400 700;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'ZDX Visual Instrument';
+        src: url('/fonts/instrument-sans-latin-wght-italic.woff2') format('woff2');
+        font-weight: 400 700;
+        font-style: italic;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'ZDX Visual EB Garamond';
+        src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'ZDX Visual EB Garamond';
+        src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2');
+        font-weight: 500;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'ZDX Visual EB Garamond';
+        src: url('/fonts/eb-garamond-latin-400-italic.woff2') format('woff2');
+        font-weight: 400;
+        font-style: italic;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'ZDX Visual JetBrains Mono';
+        src: url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 300 600;
+        font-style: normal;
+        font-display: block;
+      }
       html[data-stable-typography] {
-        --font-serif: 'EB Garamond', Georgia, serif !important;
-        --font-sans: 'Instrument Sans', system-ui, sans-serif !important;
-        --font-mono: 'JetBrains Mono', ui-monospace, monospace !important;
+        --font-serif: 'ZDX Visual EB Garamond', Georgia, serif !important;
+        --font-sans: 'ZDX Visual Instrument', system-ui, sans-serif !important;
+        --font-mono: 'ZDX Visual JetBrains Mono', ui-monospace, monospace !important;
       }
       .reveal {
         filter: none !important;
