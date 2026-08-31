@@ -87,6 +87,43 @@ describe('inlineCriticalStyles', () => {
     expect(result.html).not.toContain('data-stable-chrome-typography');
   });
 
+  it('replaces the homepage canonical faces in place with optional route subsets', async () => {
+    const root = await fixture({
+      'Base.hash.css': [
+        '@font-face{font-family:Instrument Sans;src:url(/fonts/instrument-sans-latin-wght-normal.woff2);font-weight:400 700;font-style:normal;font-display:swap}',
+        '@font-face{font-family:EB Garamond;src:url(/fonts/eb-garamond-latin-400-normal.woff2);font-weight:400;font-style:normal;font-display:swap}',
+        '@font-face{font-family:EB Garamond;src:url(/fonts/eb-garamond-latin-500-normal.woff2);font-weight:500;font-style:normal;font-display:swap}',
+        '@font-face{font-family:JetBrains Mono;src:url(/fonts/jetbrains-mono-latin-wght-normal.woff2);font-weight:300 600;font-style:normal;font-display:swap}',
+        '@font-face{font-family:Instrument Sans;src:url(/fonts/instrument-sans-latin-wght-italic.woff2);font-weight:400 700;font-style:italic;font-display:swap}',
+      ].join(''),
+    });
+    const marked = '<html data-inline-critical-css data-local-chrome-typography><head>'
+      + '<link rel="stylesheet" href="/_astro/Base.hash.css">'
+      + '</head><body></body></html>';
+    const result = await inlineCriticalStyles(marked, root, { subsetHomepageFonts: true });
+
+    expect(result.html.match(/font-display:optional/g)).toHaveLength(4);
+    expect(result.html.match(/font-display:swap/g)).toHaveLength(1);
+    expect(result.html).toContain('/assets/home/instrument-sans-home-nav-core.woff2');
+    expect(result.html).toContain('/assets/home/eb-garamond-home-400-core.woff2');
+    expect(result.html).toContain('/assets/home/eb-garamond-home-500-nav-core.woff2');
+    expect(result.html).toContain('/assets/home/jetbrains-mono-home-nav-core.woff2');
+    expect(result.html).toContain('instrument-sans-latin-wght-italic.woff2');
+  });
+
+  it('fails closed when a homepage subset build omits a canonical face', async () => {
+    const root = await fixture({
+      'Base.hash.css': '@font-face{font-family:Instrument Sans;src:url(/fonts/instrument-sans-latin-wght-normal.woff2);font-weight:400 700;font-style:normal;font-display:swap}',
+    });
+    const marked = '<html data-inline-critical-css data-local-chrome-typography><head>'
+      + '<link rel="stylesheet" href="/_astro/Base.hash.css">'
+      + '</head></html>';
+
+    await expect(inlineCriticalStyles(marked, root, { subsetHomepageFonts: true })).rejects.toThrow(
+      'expected 4 homepage subset faces, found 1',
+    );
+  });
+
   it('does not treat a content literal as a stable-chrome document marker', async () => {
     const root = await fixture({
       'route.css': '@font-face{font-family:Instrument Sans;src:url(/fonts/instrument-sans-latin-wght-normal.woff2);font-weight:400 700;font-style:normal;font-display:swap}',

@@ -20,9 +20,9 @@ html[data-local-typography][lang='en'] {
 }
 
 html[data-local-chrome-typography][lang='en'] {
-  --font-nav-serif: 'EB Garamond Home', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
-  --font-nav-sans: 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
-  --font-nav-mono: ui-monospace, Menlo, Consolas, monospace;
+  --font-nav-serif: 'EB Garamond', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
+  --font-nav-sans: 'Instrument Sans', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
+  --font-nav-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
 }
 
 .hero.container {

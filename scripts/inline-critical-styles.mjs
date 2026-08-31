@@ -13,6 +13,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const distRoot = resolve(repo, 'dist');
 const marker = 'data-inline-critical-css';
 const stableChromeMarker = 'data-stable-chrome-typography';
+const localChromeMarker = 'data-local-chrome-typography';
 const linkPattern = /<link\b[^>]*>/gi;
 const criticalStylePattern = /<style\b[^>]*\bdata-zdx-critical=["'][^"']+["'][^>]*>/gi;
 const deferredStylePattern = /<template\b[^>]*\bdata-zdx-deferred-style\b[^>]*>/gi;
@@ -146,6 +147,24 @@ const stableChromeFaces = new Map([
   ['EB Garamond:500', '/fonts/eb-garamond-latin-500-normal.woff2'],
   ['JetBrains Mono', '/fonts/jetbrains-mono-latin-wght-normal.woff2'],
 ]);
+const homepageSubsetFaces = new Map([
+  ['Instrument Sans', {
+    source: '/fonts/instrument-sans-latin-wght-normal.woff2',
+    subset: '/assets/home/instrument-sans-home-nav-core.woff2',
+  }],
+  ['EB Garamond:400', {
+    source: '/fonts/eb-garamond-latin-400-normal.woff2',
+    subset: '/assets/home/eb-garamond-home-400-core.woff2',
+  }],
+  ['EB Garamond:500', {
+    source: '/fonts/eb-garamond-latin-500-normal.woff2',
+    subset: '/assets/home/eb-garamond-home-500-nav-core.woff2',
+  }],
+  ['JetBrains Mono', {
+    source: '/fonts/jetbrains-mono-latin-wght-normal.woff2',
+    subset: '/assets/home/jetbrains-mono-home-nav-core.woff2',
+  }],
+]);
 
 function declarationValue(face, property) {
   const match = face.match(new RegExp(`${property}\\s*:\\s*(?:"([^"]+)"|'([^']+)'|([^;}]+))`, 'i'));
@@ -168,10 +187,40 @@ function stabilizeChromeFontDisplay(css) {
   return { css: output, changes };
 }
 
-export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase = false } = {}) {
+function useHomepageFontSubsets(css) {
+  let changes = 0;
+  const output = css.replace(/@font-face\s*\{[^{}]*\}/gi, (face) => {
+    const family = declarationValue(face, 'font-family');
+    const weight = declarationValue(face, 'font-weight');
+    const key = family === 'EB Garamond' ? `${family}:${weight}` : family;
+    const replacement = homepageSubsetFaces.get(key);
+    if (!replacement || !face.includes(replacement.source)) return face;
+    if (!/font-display\s*:\s*swap\b/i.test(face)) {
+      throw new Error(`inline-critical-styles: homepage face ${key} lost its swap source contract`);
+    }
+
+    changes += 1;
+    return face
+      .replace(replacement.source, replacement.subset)
+      .replace(/(font-display\s*:\s*)swap\b/i, '$1optional');
+  });
+  return { css: output, changes };
+}
+
+export async function inlineCriticalStyles(
+  html,
+  root = distRoot,
+  { deferNonBase = false, subsetHomepageFonts = false } = {},
+) {
   if (!hasHtmlAttribute(html, marker)) return { html, stylesheets: 0, bytes: 0 };
 
   const stabilizeChrome = hasHtmlAttribute(html, stableChromeMarker);
+  if (stabilizeChrome && subsetHomepageFonts) {
+    throw new Error('inline-critical-styles: stable chrome and homepage subsets are mutually exclusive');
+  }
+  if (subsetHomepageFonts && !hasHtmlAttribute(html, localChromeMarker)) {
+    throw new Error('inline-critical-styles: homepage subsets require the local-chrome delivery marker');
+  }
 
   const stylesheetTags = [...html.matchAll(linkPattern)]
     .map((match) => match[0])
@@ -209,6 +258,7 @@ export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase
   let output = html;
   let bytes = 0;
   let stabilizedChromeFaces = 0;
+  let subsetHomepageFaces = 0;
   for (const tag of selectedTags) {
     const href = attribute(tag, 'href');
     const cssPath = resolve(root, `.${href}`);
@@ -216,8 +266,12 @@ export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase
     const stableResult = stabilizeChrome
       ? stabilizeChromeFontDisplay(sourceCss)
       : { css: sourceCss, changes: 0 };
-    const css = stableResult.css;
+    const subsetResult = subsetHomepageFonts
+      ? useHomepageFontSubsets(stableResult.css)
+      : { css: stableResult.css, changes: 0 };
+    const css = subsetResult.css;
     stabilizedChromeFaces += stableResult.changes;
+    subsetHomepageFaces += subsetResult.changes;
     assertSafeCss(css, href);
     bytes += Buffer.byteLength(css);
     output = output.replace(
@@ -229,6 +283,11 @@ export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase
   if (stabilizeChrome && stabilizedChromeFaces !== stableChromeFaces.size) {
     throw new Error(
       `inline-critical-styles: expected ${stableChromeFaces.size} stable chrome faces, found ${stabilizedChromeFaces}`,
+    );
+  }
+  if (subsetHomepageFonts && subsetHomepageFaces !== homepageSubsetFaces.size) {
+    throw new Error(
+      `inline-critical-styles: expected ${homepageSubsetFaces.size} homepage subset faces, found ${subsetHomepageFaces}`,
     );
   }
 
@@ -304,7 +363,10 @@ async function main() {
       stylesheets += inlineCount;
       continue;
     }
-    const result = await inlineCriticalStyles(source, distRoot, { deferNonBase });
+    const result = await inlineCriticalStyles(source, distRoot, {
+      deferNonBase,
+      subsetHomepageFonts: relativePath === 'index.html',
+    });
     await writeFile(path, result.html);
     pages += 1;
     stylesheets += result.stylesheets;

@@ -28,6 +28,21 @@ const fontContract = [
     source: 'public/fonts/eb-garamond-latin-400-normal.woff2',
     sha256: '815a63e9dd8466897f1b84a1751975d0eb0ce9608aa34ff4321380914541d8ad',
   },
+  {
+    file: 'eb-garamond-home-500-nav-core.woff2',
+    source: 'public/fonts/eb-garamond-latin-500-normal.woff2',
+    sha256: 'e1964873156b4f11e1bb5e667986c59030c05b5509cdb48cbc1d1645b4dbd6f8',
+  },
+  {
+    file: 'instrument-sans-home-nav-core.woff2',
+    source: 'public/fonts/instrument-sans-latin-wght-normal.woff2',
+    sha256: 'e6a89c868b8952c9f4ba3cf6142b2ddd33b069ea771d1b1b47b9fc2fa6aecce5',
+  },
+  {
+    file: 'jetbrains-mono-home-nav-core.woff2',
+    source: 'public/fonts/jetbrains-mono-latin-wght-normal.woff2',
+    sha256: 'd5ea581ca5afeb70ed5282c0c1b798b159bde43ad08fdf821229e925207ec812',
+  },
 ];
 
 describe('homepage first-paint assets', () => {
@@ -42,14 +57,16 @@ describe('homepage first-paint assets', () => {
     expect(createHash('sha256').update(subset).digest('hex')).toBe(sha256);
   });
 
-  it('keeps one optional display face and avoids nonessential font downloads', async () => {
+  it('keeps optional route subsets and avoids the full font files', async () => {
     const css = await readFile(resolve(repositoryRoot, 'src/home/home-first-paint.css'), 'utf8');
 
     expect(css.match(/font-display: optional;/g)).toHaveLength(1);
     expect(css).not.toContain('font-display: swap;');
-    expect(css).not.toMatch(/'Instrument Sans',|'EB Garamond',|'JetBrains Mono',/);
-    expect(css).not.toMatch(/instrument-sans-home|jetbrains-mono-home/u);
-    for (const { file } of fontContract) expect(css).toContain(`/assets/home/${file}`);
+    expect(css).not.toMatch(/url\(['"]?\/fonts\//u);
+    expect(css).toContain("--font-nav-serif: 'EB Garamond',");
+    expect(css).toContain("--font-nav-sans: 'Instrument Sans',");
+    expect(css).toContain("--font-nav-mono: 'JetBrains Mono',");
+    expect(css).toContain('/assets/home/eb-garamond-home-400-core.woff2');
   });
 
   it('keeps the mobile poster motion on the first-render path', async () => {
@@ -76,6 +93,7 @@ describe('homepage first-paint assets', () => {
       expect(hero).toBeGreaterThan(criticalBase);
       expect(catalog).toBeGreaterThan(hero);
       expect(catalog).toBeLessThan(firstIsland);
+      for (const { file } of fontContract) expect(html).toContain(`/assets/home/${file}`);
     },
   );
 });
