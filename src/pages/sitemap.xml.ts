@@ -65,6 +65,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       ? '2026-07-19'
       : ['/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
+  ['/developers/', '2026-08-31'] as const,
   // Phase 4 re-exposes the already-reviewed Big Three share card from the
   // birth-chart result sheet.
   ['/birth-chart/', '2026-07-24'],
@@ -208,6 +209,7 @@ export const GET: APIRoute = async () => {
     { loc: '/birthday/', priority: 0.7 },
     { loc: '/baby-zodiac/', priority: 0.8 },
     { loc: '/widgets/', priority: 0.6 },
+    { loc: '/developers/', priority: 0.6 },
     { loc: '/disclosure/', priority: 0.5 },
     // Locale variants and hreflang blocks are added below through the same
     // alternatePaths policy used by birthday pages and the translated rails.

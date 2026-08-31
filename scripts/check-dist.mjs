@@ -1141,8 +1141,9 @@ const indexedRegistryResearchPaths = new Set([
 ]);
 const sitemapPolicy = {
   // 944 reflects Packet F's removal of 1,464 localized birthday previews,
-  // twelve thin Russian sign guides, and three machine-contract artifacts.
-  total: 944 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
+  // twelve thin Russian sign guides, and three machine-contract artifacts;
+  // +1 for the /developers/ sky data API documentation page.
+  total: 945 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,
@@ -1428,8 +1429,30 @@ for (const artifact of [
   'terminal/index.html',
   'thesis/index.html',
   'sdk/index.html',
+  'api/v1/index.json',
 ]) {
   if (!(await exists(resolve(root, artifact)))) fail(`missing external-contract artifact: ${artifact}`);
+}
+
+// The sky data API's index is its deploy contract: every endpoint it
+// advertises must exist in this build, and today's snapshot must carry the
+// same date as the verified daily publication.
+if (await exists(resolve(root, 'api/v1/index.json'))) {
+  const skyApiIndex = JSON.parse(await readFile(resolve(root, 'api/v1/index.json'), 'utf8'));
+  const advertised = Array.isArray(skyApiIndex.endpoints) ? skyApiIndex.endpoints : [];
+  if (advertised.length === 0) fail('api/v1/index.json: no endpoints listed');
+  for (const endpoint of advertised) {
+    const relPath = String(endpoint?.path ?? '').replace(/^\//u, '');
+    if (!relPath.startsWith('api/v1/') || !(await exists(resolve(root, relPath)))) {
+      fail(`api/v1/index.json: advertised endpoint missing from dist — ${endpoint?.path}`);
+    }
+  }
+  if (await exists(resolve(root, 'api/v1/sky/today.json'))) {
+    const skyToday = JSON.parse(await readFile(resolve(root, 'api/v1/sky/today.json'), 'utf8'));
+    if (skyToday.date !== dailyPublicationManifest.date) {
+      fail(`api/v1/sky/today.json: date ${skyToday.date} does not match daily publication ${dailyPublicationManifest.date}`);
+    }
+  }
 }
 
 // ---- 8. Source-data freshness -------------------------------------------------

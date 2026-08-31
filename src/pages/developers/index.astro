@@ -1,0 +1,150 @@
+---
+import Base from '../../layouts/Base.astro';
+import { completeTransitYears } from '../../../scripts/build-sky-api.mjs';
+
+// The same month snapshots the generator reads decide which year files exist,
+// so this page and the deployed API can never disagree about coverage.
+const monthKeys = Object.keys(import.meta.glob('../../data/transits-*.json'))
+  .map((path) => path.slice(path.indexOf('transits-') + 'transits-'.length, -'.json'.length));
+const years = completeTransitYears(monthKeys);
+const firstYear = years.at(0);
+const lastYear = years.at(-1);
+
+const endpoints = [
+  ['/api/v1/index.json', 'Every published endpoint, with descriptions and update cadence.'],
+  ['/api/v1/sky/today.json', "Today's planetary positions, moon phase and illumination, active retrogrades with shadow boundaries, next full and new moon, and the day's exact sky events. Refreshed daily at 00:00 UTC."],
+  [`/api/v1/retrogrades/{${firstYear}–${lastYear}}.json`, 'Retrograde windows for the year, station to station, with pre- and post-shadow boundaries.'],
+  [`/api/v1/ingresses/{${firstYear}–${lastYear}}.json`, 'Every planetary sign ingress in the year, with the exact instant and whether the planet entered moving retrograde.'],
+  [`/api/v1/moon-phases/{${firstYear}–${lastYear}}.json`, 'Full and new moon instants for the year, each with its zodiac sign and degree.'],
+  [`/api/v1/eclipses/{${firstYear}–${lastYear}}.json`, 'Solar and lunar eclipses peaking in the year: type, kind, exact peak, sign, and obscuration.'],
+];
+
+const description = 'Machine-readable sky data, free under CC BY 4.0: today\'s planetary positions, retrograde windows, sign ingresses, moon phases, and eclipse dates as dated JSON. No key, no signup.';
+
+const jsonLd = [{
+  '@type': 'WebPage',
+  name: 'Sky data API for developers',
+  url: 'https://zodiacs.org/developers/',
+  description: 'Free machine-readable astronomy data from zodiacs.org: dated JSON for today’s sky, retrogrades, ingresses, moon phases, and eclipses under CC BY 4.0.',
+}];
+---
+<Base
+  title="Free Sky Data API — Retrogrades, Eclipses & Moon Phases as JSON | Zodiacs.org"
+  description={description}
+  path="/developers/"
+  jsonLd={jsonLd}
+>
+  <section class="section container container--narrow">
+    <em class="kicker">For developers</em>
+    <h1 class="dev-title display">Machine-readable sky data.</h1>
+
+    <div class="prose dev-intro">
+      <p>
+        The computed dates behind this site's calendars — retrograde windows,
+        sign ingresses, moon phases, eclipses, and today's sky — are published
+        as versioned JSON. The files are static, cached at the edge, and open
+        to any origin. There is no key, no signup, and no rate ceiling beyond
+        ordinary CDN behavior, and none of it involves anyone's birth data:
+        these endpoints describe the shared sky, and
+        <a href="/methodology/">chart calculation stays on the device</a>.
+      </p>
+    </div>
+
+    <h2 class="dev-h2">Quick start</h2>
+    <pre class="dev-code" is:raw><code>const sky = await fetch('https://zodiacs.org/api/v1/sky/today.json')
+  .then((response) => response.json());
+
+console.log(sky.date, sky.moon.phase);
+for (const body of sky.bodies) {
+  console.log(body.body, body.sign, body.degree.toFixed(1) + '°', body.retrograde ? 'Rx' : '');
+}</code></pre>
+    <p class="dev-note">
+      Or from a terminal: <code>curl -s https://zodiacs.org/api/v1/sky/today.json</code>
+    </p>
+
+    <h2 class="dev-h2">Endpoints</h2>
+    <ul class="dev-endpoints">
+      {endpoints.map(([path, description]) => (
+        <li>
+          <code>{path}</code>
+          <p>{description}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2 class="dev-h2">The contract</h2>
+    <div class="prose">
+      <p>
+        Positions are apparent geocentric tropical longitudes from the same
+        engine the calculators use, tested against NASA JPL Horizons reference
+        data; every payload names its schema (for example
+        <code>zodiacs.sky-api.today.v1</code>) and carries its generation
+        time. Within v1, fields are added, never renamed or removed. A
+        breaking change would ship under <code>/api/v2/</code> and v1 would
+        keep working. Year files cover {firstYear}–{lastYear} today and grow
+        as the underlying data is extended; read
+        <a href="/api/v1/index.json"><code>index.json</code></a> rather than
+        assuming which years exist. All instants are UTC, in ISO 8601.
+      </p>
+    </div>
+
+    <h2 class="dev-h2">License and attribution</h2>
+    <div class="prose">
+      <p>
+        The data is free to use under
+        <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener noreferrer">CC BY 4.0</a>.
+        Credit "Zodiacs.org" with a link to
+        <a href="/">https://zodiacs.org</a> wherever the data is shown.
+      </p>
+    </div>
+
+    <h2 class="dev-h2">Widgets and feeds</h2>
+    <div class="prose">
+      <p>
+        If you would rather embed a finished surface than consume JSON, the
+        <a href="/widgets/">embeddable widgets</a> render tonight's moon,
+        today's sky, and a mini birth chart inside a sandboxed iframe. Dated
+        editorial is available as RSS:
+        <a href="/feeds/horoscopes.xml">daily horoscopes</a> and
+        <a href="/feeds/daily-sky.xml">the daily sky</a>. AI agents can start
+        from <a href="/llms.txt">llms.txt</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .dev-title { margin: var(--s-1) 0 var(--s-4); }
+  .dev-intro { max-width: 68ch; }
+  .dev-h2 { margin: var(--s-12) 0 var(--s-4); font-size: var(--text-lg); }
+  .dev-code {
+    margin: 0;
+    padding: var(--s-4);
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.65;
+  }
+  .dev-note { margin: var(--s-3) 0 0; color: var(--muted); font-size: var(--text-sm); }
+  .dev-note code, .dev-endpoints code, .prose code {
+    font-family: var(--font-mono);
+    font-size: .92em;
+  }
+  .dev-endpoints {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--s-4);
+  }
+  .dev-endpoints li {
+    padding: var(--s-4);
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+  }
+  .dev-endpoints li code { font-size: 12px; overflow-wrap: anywhere; }
+  .dev-endpoints li p { margin: var(--s-2) 0 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.6; }
+</style>

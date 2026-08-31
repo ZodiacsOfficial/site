@@ -119,6 +119,28 @@ const probes = [
     accepts: (status) => status === 405,
     expectation: 'HTTP 405',
   },
+  {
+    label: 'sky data api index',
+    path: '/api/v1/index.json',
+    init: { method: 'GET', headers: sameOriginHeaders },
+    accepts: (status) => status === 200,
+    expectation: 'HTTP 200 static JSON with open CORS',
+    validate: (response, body) => {
+      const cors = response.headers.get('access-control-allow-origin') ?? '';
+      const contentType = response.headers.get('content-type') ?? '';
+      if (cors !== '*') return 'index.json is not readable cross-origin';
+      if (!contentType.toLowerCase().includes('json')) return 'index.json is not served as JSON';
+      let index;
+      try {
+        index = JSON.parse(body);
+      } catch {
+        return 'index.json is not valid JSON';
+      }
+      if (index.schema !== 'zodiacs.sky-api.index.v1') return 'index.json schema is not zodiacs.sky-api.index.v1';
+      if (!Array.isArray(index.endpoints) || index.endpoints.length === 0) return 'index.json lists no endpoints';
+      return null;
+    },
+  },
 ];
 
 function annotation(value) {
