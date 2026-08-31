@@ -58,18 +58,21 @@
 .zfooter__brand {
   direction: ltr;
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   width: fit-content;
-  gap: 11px;
+  gap: 0;
   color: var(--zf-text);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .zfooter__brand-mark {
   display: block;
+  align-self: center;
   flex: 0 0 auto;
   width: 26px;
   height: 26px;
+  margin-inline-end: 11px;
 }
 
 .zfooter__brand-name {
@@ -81,8 +84,7 @@
 }
 
 .zfooter__brand-tld {
-  align-self: end;
-  margin-bottom: 2px;
+  margin-inline-start: 6px;
   color: var(--zf-faint);
   font-family: var(--zf-mono);
   font-size: 10px;
@@ -368,7 +370,8 @@
 }
 
 @media (any-pointer: coarse) {
-  .zfooter__brand,
+  .zfooter__brand { min-height: 44px; }
+
   .zfooter__links a,
   .zfooter__links button,
   .zfooter__meta a {
