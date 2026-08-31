@@ -16,7 +16,7 @@ const recordFor = (slug) => {
 
 async function installProviderHarness(context) {
   if (LIVE_PROVIDERS) return;
-  await context.route('https://lite-api.jup.ag/**', (route) => {
+  await context.route('https://api.jup.ag/**', (route) => {
     const url = new URL(route.request().url());
     const inputMint = url.searchParams.get('inputMint');
     const outputMint = url.searchParams.get('outputMint');
@@ -69,7 +69,7 @@ try {
     const requests = { jupiter: 0, market: 0, wallet: 0 };
     context.on('request', (request) => {
       const url = request.url().toLowerCase();
-      if (url.includes('lite-api.jup.ag')) requests.jupiter += 1;
+      if (url.includes('api.jup.ag')) requests.jupiter += 1;
       if (url.includes('api.dexscreener.com')) requests.market += 1;
       if (/phantom|solflare|walletconnect/u.test(url)) requests.wallet += 1;
     });

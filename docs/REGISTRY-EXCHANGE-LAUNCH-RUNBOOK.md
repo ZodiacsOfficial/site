@@ -16,9 +16,10 @@ historical label; internal `exchange` identifiers remain unchanged.
 2. The branch is rebased onto the current `origin/main`; the scope allowance
    `baseCommit` equals that head and lists exactly the protected paths reported
    by `npm run test:phase1:scope`.
-3. The official Jupiter documentation still labels Ultra a legacy path. Run
-   `npm run exchange:probe` immediately before QA and again before flag-on. Any
-   contract, fee, rate-limit, or key requirement failure keeps the flag off.
+3. Since the ratified 2026-08-31 migration record the client speaks Jupiter's
+   Swap V2 meta-aggregator, keyless. Run `npm run exchange:probe` immediately
+   before QA and again before flag-on. Any contract, fee, rate-limit, or key
+   requirement failure keeps the flag off.
 4. A verified flag-off production deployment is retained as the Instant
    Rollback target.
 
@@ -91,7 +92,7 @@ Verify:
   burst; no ladder request contains `taker`;
 - the risk block, canonical-pool labels, ladder caption, `noindex` meta and
   `X-Robots-Tag`, CSP, and `Cache-Control: no-store` are present;
-- requests are limited to self, `lite-api.jup.ag`, `api.dexscreener.com`,
+- requests are limited to self, `api.jup.ag`, `api.dexscreener.com`,
   `api.geckoterminal.com`, and `plausible.io`; a wallet address appears only
   after the visitor explicitly asks the panel to trade;
 - the service worker has no CacheStorage entry for any Terminal venue-route or
@@ -121,8 +122,11 @@ only the closed-schema technical events (`exchange_room_mount` and
 `exchange_market_state`) plus direct user feedback. They contain no trade
 intent, wallet, amount, mint, quote, request ID, transaction, visitor-supplied
 URL/query/hash, referrer, or free text. Plausible's standard envelope receives
-only the fixed canonical room URL. On or before 2026-09-09, turn the flag off
-unless the owner records a dated continuation decision.
+only the fixed canonical room URL. The 2026-08-31 owner continuation extends
+the pilot, at the latest, to 2026-09-30 as a bridge to the ratified Swap V2
+migration; it ends earlier if the migration deploys, the probe fails, or any
+stop condition fires. On or before 2026-09-30, turn the flag off unless a
+further dated owner decision is recorded.
 
 Review once during the first production hour and once per UTC day thereafter.
 For each review, record the deployment ID and candidate SHA, probe result,

@@ -5,6 +5,35 @@ below is satisfied.
 
 Approved: 2026-08-10T11:40:11Z
 
+## Addendum — 2026-08-31: pilot continuation to 2026-09-30, as a bridge to Swap V2
+
+Authorized: 2026-08-31 (owner-directed continuation)
+
+This addendum records the dated review this decision requires before the
+pilot may continue past 2026-09-09, and bounds the continuation:
+
+- **Live-contract review, 2026-08-31.** The committed provider probe
+  (`npm run exchange:probe`, four read-only taker-less requests across the
+  three providers) passed in full: venue fee reported at 10 bps, equal to
+  and not above the 0.10% ceiling; indexed price and liquidity answered;
+  chart contract returned 168 rows; recent-trades contract returned 34
+  rows; every request completed within the probe deadline. Jupiter's
+  documentation still labels Ultra a legacy path; this continuation does
+  not call that contract durable.
+- **Pilot evidence.** The closed-schema mount and provider-state events
+  and direct user feedback remain under the owner's daily review; no stop
+  condition has been recorded, and the production flag remains on.
+- **The continuation is a bridge, not a renewal.** The pilot continues on
+  the ratified legacy Ultra path only while the separate Swap V2 migration
+  decision (drafted alongside this addendum) is pending, and ends at the
+  earliest of: the migration deploying, a probe or stop-condition failure,
+  or **2026-09-30**. On or before 2026-09-30 the venue route returns
+  flag-off unless a further dated owner decision is recorded.
+- The probe is re-run before any further continuation decision. Every
+  other control — daily UTC review, `noindex`, no-store, CSP,
+  zero-compensation, custody and rollback — remains unchanged, and no new
+  acquisition surface is created.
+
 ## Addendum — 2026-08-31: Astrofolio market-gateway discovery entry
 
 Authorized: 2026-08-31 (owner-directed)

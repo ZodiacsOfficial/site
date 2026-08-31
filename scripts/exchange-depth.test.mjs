@@ -76,7 +76,7 @@ describe('the ladder', () => {
     expect(urls).toHaveLength(LADDER_NOTIONALS.length);
     for (const url of urls) {
       expect(url).not.toMatch(/taker/);
-      expect(url).toContain('lite-api.jup.ag/ultra/v1/order');
+      expect(url).toContain('api.jup.ag/swap/v2/order');
     }
   });
 

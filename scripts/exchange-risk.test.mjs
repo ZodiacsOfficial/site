@@ -123,7 +123,7 @@ describe('Exchange risk and trust copy', () => {
     const headers = new Map(rule?.headers?.map(({ key, value }) => [key, value]));
     const csp = headers.get('Content-Security-Policy') ?? '';
     expect(csp).toContain("default-src 'self'");
-    expect(csp).toContain("connect-src 'self' https://lite-api.jup.ag https://api.dexscreener.com https://api.geckoterminal.com https://plausible.io;");
+    expect(csp).toContain("connect-src 'self' https://api.jup.ag https://api.dexscreener.com https://api.geckoterminal.com https://plausible.io;");
     expect(csp).toContain("frame-src 'none'");
     expect(csp).not.toContain('*');
     expect(headers.get('Referrer-Policy')).toBe('same-origin');
@@ -178,7 +178,22 @@ describe('Exchange risk and trust copy', () => {
     expect(runbook).toContain('the route, `/terminal/`, and `/astrofolio/` landing markers are all `0`');
     expect(runbook).toContain('exactly one Terminal venue-route discovery entry appears on `/terminal/`');
     expect(runbook).toContain('no CacheStorage entry for any Terminal venue-route or expert Terminal navigation');
-    expect(runbook).toContain('On or before 2026-09-09, turn the flag off');
+    expect(runbook).toContain('On or before 2026-09-30, turn the flag off');
+  });
+
+  it('records the dated 2026-08-31 pilot continuation as a bounded bridge', async () => {
+    const [decision, runbook] = await Promise.all([
+      read('docs/REGISTRY-EXCHANGE-OWNER-RISK-DECISION.md').then(compact),
+      read('docs/REGISTRY-EXCHANGE-LAUNCH-RUNBOOK.md').then(compact),
+    ]);
+    expect(decision).toContain('Addendum — 2026-08-31: pilot continuation to 2026-09-30, as a bridge to Swap V2');
+    expect(decision).toContain('Authorized: 2026-08-31 (owner-directed continuation)');
+    expect(decision).toContain('Live-contract review, 2026-08-31');
+    expect(decision).toContain('venue fee reported at 10 bps, equal to and not above the 0.10% ceiling');
+    expect(decision).toContain('this continuation does not call that contract durable');
+    expect(decision).toContain('ends at the earliest of: the migration deploying, a probe or stop-condition failure, or **2026-09-30**');
+    expect(decision).toContain('On or before 2026-09-30 the venue route returns flag-off unless a further dated owner decision is recorded');
+    expect(runbook).toContain('The 2026-08-31 owner continuation extends the pilot, at the latest, to 2026-09-30');
   });
 
   it('records the dated Astrofolio market-gateway entry without widening the pilot', async () => {

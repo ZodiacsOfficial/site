@@ -303,7 +303,7 @@ describe('fetching an order', () => {
     await fetchOrder({ inputMint: WSOL_MINT, outputMint: ARIES, amount: 100000000n, fetchImpl });
     await fetchOrder({ inputMint: WSOL_MINT, outputMint: ARIES, amount: 100000000n, taker: 'Wa11et', fetchImpl });
 
-    expect(seen[0]).toContain('/ultra/v1/order');
+    expect(seen[0]).toContain('/swap/v2/order');
     expect(seen[0]).toContain(`inputMint=${WSOL_MINT}`);
     expect(seen[0]).toContain(`outputMint=${ARIES}`);
     expect(seen[0]).toContain('amount=100000000');
@@ -395,7 +395,7 @@ describe('executing a signed transaction', () => {
     const result = await executeOrder({ signedTransaction: 'AQAB', requestId: 'rid', fetchImpl });
 
     expect(captured.method).toBe('POST');
-    expect(captured.url).toContain('/ultra/v1/execute');
+    expect(captured.url).toContain('/swap/v2/execute');
     expect(Object.keys(captured.body).sort()).toEqual(['requestId', 'signedTransaction']);
     expect(result.signature).toBe('sig');
   });

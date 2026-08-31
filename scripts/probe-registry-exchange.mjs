@@ -65,7 +65,7 @@ if (trades.length === 0) {
 }
 
 process.stdout.write(`${JSON.stringify({
-  provider: 'legacy-ultra-pilot',
+  provider: 'swap-v2-meta-aggregator',
   feeBps: order.feeBps,
   feeCeilingBps: VENUE_FEE_CEILING_BPS,
   indexedPrice: true,

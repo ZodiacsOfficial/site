@@ -87,7 +87,7 @@ describe('the committed page', () => {
       expect(html).not.toContain(asset.native.address);
     }
     expect(html).not.toContain('jup.ag/swap/');
-    expect(html).not.toContain('lite-api.jup.ag');
+    expect(html).not.toContain('api.jup.ag');
     expect(html).not.toContain('api.geckoterminal.com');
     expect(html).not.toContain('api.dexscreener.com');
   });

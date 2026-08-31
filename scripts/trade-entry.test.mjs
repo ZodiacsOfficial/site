@@ -23,7 +23,7 @@ describe('the committed pages', () => {
       expect(html, sign).not.toMatch(/registry-trade:(?:start|slot|end)/u);
       expect(html, sign).not.toContain('data-trade-panel');
       expect(html, sign).not.toContain('/assets/trade.js');
-      expect(html, sign).not.toMatch(/window\.zodiacsTrade|lite-api\.jup\.ag/u);
+      expect(html, sign).not.toMatch(/window\.zodiacsTrade|api\.jup\.ag/u);
     }
   });
 
@@ -78,7 +78,7 @@ describe('the shared Jupiter trade module', () => {
     expect(browserRuntime).toContain('export function mount(host, sign, hooks = {})');
     expect(browserRuntime).toContain('window.zodiacsTrade = Object.freeze({ mount })');
     expect(builtRuntime).toContain('window.zodiacsTrade');
-    expect(builtRuntime).toContain('lite-api.jup.ag');
+    expect(builtRuntime).toContain('api.jup.ag');
     expect(guide).toContain("script.src = '/assets/trade.js'");
     expect(guide).toContain("loadButton?.addEventListener('click', revealTrade)");
     expect(guide).not.toContain('<script src="/assets/trade.js"');
@@ -156,7 +156,7 @@ describe('the landing', () => {
   it('keeps every venue URL out of the shell', async () => {
     const html = await hub();
     expect(html).not.toContain('jup.ag/swap/');
-    expect(html).not.toContain('lite-api.jup.ag');
+    expect(html).not.toContain('api.jup.ag');
   });
 });
 
