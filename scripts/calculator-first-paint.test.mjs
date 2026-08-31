@@ -6,6 +6,7 @@ import { describe, expect, it } from 'vitest';
 const ROOT = resolve(import.meta.dirname, '..');
 const CRITICAL_PATH = resolve(ROOT, 'src/styles/calculator-first-paint.css');
 const CANONICAL_PATH = resolve(ROOT, 'src/styles/calculator.css');
+const EN_BIRTH_CHART_PATH = resolve(ROOT, 'src/pages/birth-chart/index.astro');
 
 const INTERACTION_SELECTORS = [
   '.field__input:focus-visible',
@@ -84,5 +85,16 @@ describe('calculator first-paint CSS contract', () => {
       expect(ring?.['outline-offset']).toBe('2px');
       expect(rules.get('\n.field__input:focus')?.outline).not.toBe('none');
     }
+  });
+
+  it('pins the English desktop context cue before deferred styles arrive', async () => {
+    const [page, canonicalCss] = await Promise.all([
+      readFile(EN_BIRTH_CHART_PATH, 'utf8'),
+      readFile(CANONICAL_PATH, 'utf8'),
+    ]);
+    const cue = rulesByIdentity(canonicalCss).get('\n.calc__context-cue');
+
+    expect(cue).toEqual({ 'font-size': '11px', 'line-height': '1.5' });
+    expect(page).toContain('.calc__context-cue { font-size: 11px; line-height: 1.5; }');
   });
 });

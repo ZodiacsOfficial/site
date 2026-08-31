@@ -55,6 +55,7 @@ const targetPaths = [
   // round trips, the same delivery cost this pass already removes for the
   // gated RU entry pages.
   'index.html',
+  'birth-chart/index.html',
   'today/index.html',
   ...signs.map((sign) => `horoscopes/${sign}/index.html`),
   'ru/index.html',
@@ -104,6 +105,18 @@ function removeHtmlAttribute(html, name) {
   const tag = openingHtmlTag(html);
   if (!tag) return html;
   return html.replace(tag, tag.replace(htmlAttributePattern(name), ''));
+}
+
+export function expectedStylesheetShape(relativePath, deferNonBase) {
+  if (deferNonBase) {
+    return { inlineCount: 1, deferredCount: 3, externalCount: 6, loaderCount: 1 };
+  }
+  return {
+    inlineCount: 2,
+    deferredCount: 0,
+    externalCount: 0,
+    loaderCount: 0,
+  };
 }
 
 function assertSafeCss(css, href) {
@@ -251,7 +264,8 @@ async function main() {
   for (const relativePath of targetPaths) {
     const path = resolve(distRoot, relativePath);
     const source = await readFile(path, 'utf8');
-    const deferNonBase = relativePath === 'ru/birth-chart/index.html';
+    const deferNonBase = relativePath === 'birth-chart/index.html'
+      || relativePath === 'ru/birth-chart/index.html';
     if (hasHtmlAttribute(source, stableChromeMarker) && relativePath !== 'today/index.html') {
       throw new Error(`inline-critical-styles: stable chrome marker outside Today: ${relativePath}`);
     }
@@ -263,14 +277,17 @@ async function main() {
         .length;
       const deferredCount = source.match(deferredStylePattern)?.length ?? 0;
       const loaderCount = source.match(/data-zdx-deferred-style-loader/g)?.length ?? 0;
-      const expectedInlineCount = deferNonBase ? 1 : 2;
-      const expectedDeferredCount = deferNonBase ? 3 : 0;
-      const expectedExternalCount = deferNonBase ? 6 : 0;
+      const {
+        inlineCount: expectedInlineCount,
+        deferredCount: expectedDeferredCount,
+        externalCount: expectedExternalCount,
+        loaderCount: expectedLoaderCount,
+      } = expectedStylesheetShape(relativePath, deferNonBase);
       if (
         inlineCount !== expectedInlineCount
         || deferredCount !== expectedDeferredCount
         || externalCount !== expectedExternalCount
-        || loaderCount !== (deferNonBase ? 1 : 0)
+        || loaderCount !== expectedLoaderCount
       ) {
         throw new Error(
           `inline-critical-styles: ${relativePath} has an unexpected inline/external stylesheet shape`,
@@ -286,9 +303,9 @@ async function main() {
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 16 || stylesheets !== 31) {
+  if (pages + alreadyInlined !== 17 || stylesheets !== 32) {
     throw new Error(
-      `inline-critical-styles: expected 16 pages / 31 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 17 pages / 32 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0

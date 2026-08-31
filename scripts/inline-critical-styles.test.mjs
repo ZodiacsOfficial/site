@@ -2,7 +2,11 @@ import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { htmlFiles, inlineCriticalStyles } from './inline-critical-styles.mjs';
+import {
+  expectedStylesheetShape,
+  htmlFiles,
+  inlineCriticalStyles,
+} from './inline-critical-styles.mjs';
 
 const temporaryRoots = [];
 
@@ -21,6 +25,18 @@ afterEach(async () => {
 });
 
 describe('inlineCriticalStyles', () => {
+  it('pins the idempotent built-output shape for each entry-page strategy', () => {
+    expect(expectedStylesheetShape('index.html', false)).toEqual({
+      inlineCount: 2, deferredCount: 0, externalCount: 0, loaderCount: 0,
+    });
+    expect(expectedStylesheetShape('birth-chart/index.html', true)).toEqual({
+      inlineCount: 1, deferredCount: 3, externalCount: 6, loaderCount: 1,
+    });
+    expect(expectedStylesheetShape('ru/birth-chart/index.html', true)).toEqual({
+      inlineCount: 1, deferredCount: 3, externalCount: 6, loaderCount: 1,
+    });
+  });
+
   it('ignores transient build directories and tolerates a vanished directory', async () => {
     const root = await fixture();
     await mkdir(join(root, '.prerender'));
