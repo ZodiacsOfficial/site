@@ -3271,28 +3271,6 @@
       border-radius: 50%;
       opacity: .55;
     }
-    .consumer-explorer__head { position: relative; z-index: 1; max-width: 760px; }
-    .consumer-explorer__head h2 {
-      max-width: 13ch;
-      font-size: clamp(42px, 6.5vw, 76px);
-      line-height: .92;
-      letter-spacing: -.04em;
-    }
-    .consumer-explorer__head > p {
-      max-width: 52ch;
-      margin: 18px 0 0;
-      color: var(--ink-2);
-      font-size: 16px;
-      line-height: 1.6;
-    }
-    .consumer-explorer__layout {
-      position: relative; z-index: 1;
-      display: grid;
-      grid-template-columns: minmax(390px, .9fr) minmax(0, 1.1fr);
-      gap: clamp(36px, 6vw, 84px);
-      align-items: center;
-      margin-top: clamp(42px, 6vw, 68px);
-    }
     .consumer-signs {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -3514,23 +3492,6 @@
       font-size: 13px;
       letter-spacing: 0;
     }
-    /* The stage — the page's opening scene on wide screens. The film hero
-       stands down and the gallery carries the headline itself: eyebrow and
-       title at the top, the twelve discs beneath them, the chosen sculpture
-       standing large in the void, and a museum placard at its feet holding
-       exactly what a label should — name, dates, price, and two doors. The
-       pastel rail paints immediately from inert placeholder discs; the WebGL
-       canvas fades in once the scene bundle mounts and takes the rail over. */
-    .consumer-explorer--stage {
-      display: block;
-      padding: clamp(84px, 10vh, 120px) 24px clamp(44px, 6vh, 72px);
-      border-bottom: 0;
-      background: none;
-      /* The opening scene runs edge to edge: break out of the 1180px column
-         the rest of the registry reads in. */
-      width: 100vw;
-      margin-inline: calc(50% - 50vw);
-    }
     /* The opening title has moved into an accessible-only H1. Visually, the
        season instrument and the artifact now begin the Registry immediately. */
     .season-now {
@@ -3657,26 +3618,6 @@
       background: linear-gradient(90deg, color-mix(in srgb, var(--season-sign) 54%, #d7b56d), var(--season-sign));
       box-shadow: 0 0 12px color-mix(in srgb, var(--season-sign) 42%, transparent), inset 0 1px 0 rgba(255,255,255,.22);
       transition: transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    /* The plate. One framed room holding the headline, the twelve, the piece
-       on show, and its label — wearing the chosen sign's pastel on its edge
-       and in the light at its shoulder, and changing colour as you walk. */
-    .consumer-explorer--stage .gband--consumer {
-      position: relative; z-index: 1;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: 1400px;
-      height: clamp(620px, 88svh, 980px);
-      margin-inline: auto;
-      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 34%, var(--hair));
-      border-radius: 26px;
-      overflow: clip;
-      background:
-        radial-gradient(78% 92% at 14% 6%, color-mix(in srgb, var(--active-sign, #E0A9B4) 15%, transparent), transparent 66%),
-        rgba(15,18,26,.88);
-      box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
-      transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
     }
     /* Below the stage breakpoint the plate is the whole opening screen. */
     .consumer-explorer:not(.consumer-explorer--stage) {
@@ -4471,7 +4412,6 @@
     .technical-records__table .copychip > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     @media (max-width: 1020px) {
-      .consumer-explorer__layout { grid-template-columns: 1fr; gap: 38px; }
       .consumer-tokens__list { grid-template-columns: 1fr; gap: 4px; }
       .consumer-verify { grid-template-columns: 1fr !important; }
       .consumer-verify > * { grid-column: 1 !important; grid-row: auto !important; }
@@ -4489,8 +4429,6 @@
       .consumer-faq,
       .consumer-closing,
       .consumer-registry .sec { padding: 48px 20px 54px; }
-      .consumer-explorer__head h2 { font-size: 43px; }
-      .consumer-explorer__layout { margin-top: 34px; gap: 28px; }
       .consumer-signs { gap: 5px; }
       .consumer-sign { min-height: 78px; grid-template-rows: 45px auto; border-radius: 14px; font-size: 9.5px; }
       .consumer-sign img { width: 44px; height: 44px; }
@@ -4581,9 +4519,6 @@
       transition:
         border-color 240ms cubic-bezier(0.23, 1, 0.32, 1),
         box-shadow 240ms cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    .consumer-explorer--stage .gband--consumer {
-      height: clamp(680px, 88svh, 900px);
     }
     .consumer-explorer .gband--flat {
       height: auto;
@@ -5091,23 +5026,12 @@
         width: 100%;
         margin-inline: 0;
       }
-      .consumer-explorer--stage {
-        padding: clamp(74px, 9vh, 92px) 12px clamp(36px, 5vh, 52px);
-      }
-      .consumer-explorer--stage .gband--consumer {
-        height: clamp(690px, calc(100dvh - 88px), 840px);
-        border-radius: 22px;
-      }
       .consumer-purpose { grid-template-columns: 1fr; }
       .consumer-collection,
       .consumer-thesis { border-radius: 22px 22px 5px 22px; }
     }
     @media (max-width: 700px) {
       .consumer-explorer:not(.consumer-explorer--stage) { padding-top: clamp(72px, 10vh, 92px); }
-      .consumer-explorer--stage { padding-inline: 8px; }
-      .consumer-explorer--stage .gband--consumer {
-        height: clamp(610px, calc(100dvh - 134px), 680px);
-      }
       .consumer-explorer .gband--flat {
         grid-template-rows: auto auto auto auto;
         border-radius: 22px;
@@ -5249,7 +5173,6 @@
     @media (max-width: 380px) {
       .stage-carousel { height: clamp(238px, 74vw, 270px); }
       .stage-carousel__slide { width: clamp(228px, 74vw, 270px); }
-      .consumer-explorer--stage .gband--consumer { height: 620px; }
       .season-now__sculpture { width: 50px; height: 40px; }
       .season-now__identity { gap: 8px; }
       .season-now__identity strong { font-size: 17px; }
@@ -5264,7 +5187,6 @@
     }
     @media (max-height: 650px) and (max-width: 700px) {
       .consumer-explorer:not(.consumer-explorer--stage) { padding-top: 70px; }
-      .consumer-explorer--stage .gband--consumer { height: 565px; }
       .gband__rail-top { min-height: 56px; padding-top: 5px; }
       .stage-carousel { height: clamp(226px, 68vw, 270px); }
       .stage-carousel__slide { width: clamp(220px, 68vw, 270px); }
@@ -5299,9 +5221,6 @@
     .consumer-explorer--stage .gband--consumer,
     .consumer-explorer .gband--flat {
       grid-template-rows: auto auto minmax(0, 1fr) auto;
-    }
-    .consumer-explorer--stage .gband--consumer {
-      height: clamp(610px, 76svh, 760px);
     }
     .consumer-masthead {
       position: relative;
@@ -5340,23 +5259,6 @@
     .gband--consumer .gband__turn-hint,
     .gband--consumer .stage-carousel { grid-row: 3; }
     .gband--consumer .stage-placard { grid-row: 4; }
-
-    .market-tape {
-      position: relative;
-      z-index: 5;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-      min-height: 42px;
-      margin-top: 12px;
-      border-block: 1px solid rgba(198,204,218,.09);
-      background: rgba(6,7,9,.34);
-    }
-    .consumer-explorer > .market-tape {
-      width: 100%;
-      margin: 0 auto 10px;
-      animation: consumer-tape-arrive 320ms cubic-bezier(0.23, 1, 0.32, 1) 55ms both;
-    }
     @keyframes consumer-masthead-arrive {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
@@ -5364,78 +5266,6 @@
     @keyframes consumer-tape-arrive {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-    .market-tape__viewport {
-      min-width: 0;
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
-    }
-    .market-tape__track {
-      display: flex;
-      width: max-content;
-      will-change: transform;
-      animation: registry-market-loop 48s linear infinite;
-    }
-    .market-tape__group { display: flex; flex: none; align-items: stretch; }
-    .market-tape__item {
-      position: relative;
-      flex: none;
-      min-height: 40px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0 18px;
-      border: 0;
-      border-right: 1px solid rgba(198,204,218,.07);
-      background: transparent;
-      color: var(--ink-dim);
-      font: 9.5px/1 var(--mono);
-      letter-spacing: .06em;
-      white-space: nowrap;
-    }
-    .market-tape__item::after {
-      content: '';
-      position: absolute;
-      left: 12px; right: 12px; bottom: 0;
-      height: 1px;
-      background: var(--tape-sign);
-      opacity: 0;
-      transform: scaleX(.4);
-      transition:
-        opacity 150ms cubic-bezier(0.23, 1, 0.32, 1),
-        transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    .market-tape__item.is-season { color: var(--ink); }
-    .market-tape__item.is-season::after { opacity: .78; transform: scaleX(1); }
-    .market-tape__item img { display: block; border-radius: 50%; }
-    .market-tape__ticker { color: var(--ink-2); }
-    .market-tape__price { color: var(--ink); font-size: 10px; }
-    .market-tape__change { font-size: 9px; }
-    .market-tape__season {
-      padding: 3px 6px;
-      border: 1px solid color-mix(in srgb, var(--tape-sign) 35%, var(--hair));
-      border-radius: 999px;
-      color: var(--tape-sign);
-      font-size: 7px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .market-tape__source {
-      align-self: stretch;
-      display: inline-flex;
-      align-items: center;
-      padding: 0 16px;
-      border-left: 1px solid rgba(198,204,218,.09);
-      background: rgba(10,12,17,.9);
-      color: var(--ink-mute);
-      font: 7.5px/1 var(--mono);
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .market-tape[data-paused] .market-tape__track {
-      animation-play-state: paused;
     }
     @keyframes registry-market-loop {
       to { transform: translateX(-50%); }
@@ -5764,7 +5594,6 @@
       .market-board[data-rank='marketCap'] .market-row__metric--cap { display: grid; }
     }
     @media (max-width: 760px) {
-      .consumer-explorer--stage .gband--consumer { height: clamp(610px, calc(100dvh - 134px), 680px); }
       .consumer-masthead {
         grid-template-columns: minmax(0, 1fr);
         grid-template-areas: 'title';
@@ -5780,20 +5609,6 @@
       .consumer-masthead > p {
         display: none;
       }
-      .market-tape { grid-template-columns: minmax(0, 1fr); }
-      .consumer-explorer > .market-tape { margin: 0 auto 10px; }
-      .market-tape__source { display: none; }
-      .market-tape__viewport {
-        overflow: hidden;
-        -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-        mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-      }
-      .market-tape__track {
-        animation: registry-market-loop 48s linear infinite;
-        will-change: transform;
-      }
-      .market-tape__group[aria-hidden='true'] { display: flex; }
-      .market-tape__item { min-height: 44px; padding-inline: 14px; }
       .consumer-market { padding-inline: 16px; }
       .consumer-market__head { grid-template-columns: 1fr; align-items: start; gap: 28px; }
       .consumer-market__head .consumer-section-head h2 { font-size: clamp(43px, 13vw, 62px); }
@@ -5843,11 +5658,7 @@
     }
     @media (max-width: 420px) {
       .consumer-masthead { margin-bottom: 10px; }
-      .consumer-explorer--stage .gband--consumer {
-        height: clamp(570px, calc(100dvh - 190px), 620px);
-      }
       .market-board__meta { align-items: flex-start; flex-direction: column; gap: 3px; }
-      .market-tape__item { padding-inline: 12px; }
       .consumer-market__personal { padding: 18px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -5855,10 +5666,6 @@
       .consumer-explorer > .market-tape {
         animation: none;
       }
-      .market-tape__viewport { overflow-x: auto; mask-image: none; -webkit-mask-image: none; scrollbar-width: none; }
-      .market-tape__viewport::-webkit-scrollbar { display: none; }
-      .market-tape__track { animation: none; will-change: auto; }
-      .market-tape__group[aria-hidden='true'] { display: none; }
       .market-row,
       .market-row::before,
       .market-row__identity img { transition-property: opacity, color, border-color !important; }
@@ -6236,9 +6043,6 @@
       .consumer-steps li { grid-template-columns: 108px minmax(0, 1fr); gap: 12px; }
       .consumer-step__record { padding-inline: 4px; }
     }
-    @media (max-height: 650px) and (max-width: 700px) {
-      .consumer-explorer--stage .gband--consumer { height: 565px; }
-    }
     @media (prefers-reduced-motion: reduce) {
       .consumer-registry .season-now {
         transform: none !important;
@@ -6298,7 +6102,6 @@
       margin-inline: auto;
       translate: none;
     }
-    .static-capital .market-tape__track { animation: none; transform: none; }
     .capital-masthead__title {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(270px, 440px);
@@ -6334,11 +6137,6 @@
       color: var(--ink-2);
       font: 400 clamp(17px, 1.65vw, 23px)/1.35 var(--sans);
       text-wrap: balance;
-    }
-    .capital-masthead > .market-tape {
-      width: 100%;
-      margin: 0;
-      background: transparent;
     }
     .capital-pulse {
       display: grid;
@@ -6459,32 +6257,6 @@
         border-color: color-mix(in srgb, var(--active-sign) 48%, rgba(238,241,247,.2));
         transform: translateX(2px);
       }
-    }
-
-    .consumer-capital-opening {
-      display: grid;
-      grid-template-columns: minmax(0, 1.48fr) minmax(390px, .72fr);
-      align-items: start;
-      gap: 16px;
-      padding: 18px 0 clamp(54px, 7vw, 92px);
-    }
-    .consumer-capital-opening .consumer-explorer--stage,
-    .consumer-capital-opening .consumer-explorer:not(.consumer-explorer--stage) {
-      width: auto;
-      min-width: 0;
-      margin: 0;
-      padding: 0;
-      border: 0;
-    }
-    .consumer-capital-opening .consumer-explorer--stage .gband--consumer,
-    .consumer-capital-opening .consumer-explorer .gband--flat {
-      width: 100%;
-      height: clamp(720px, 78svh, 790px);
-      border-radius: 24px;
-    }
-    .consumer-capital-opening:has(.consumer-market.is-expanded) .consumer-explorer,
-    .consumer-capital-opening .consumer-market.is-expanded {
-      grid-column: 1 / -1;
     }
 
     /* The selected constellation is a quiet factual layer behind the object.
@@ -6845,15 +6617,6 @@
       padding-inline: 12px;
       white-space: nowrap;
     }
-
-    /* Compact board beside the room. The expanded state returns to the full
-       twelve-row ledger across the entire opening width. */
-    .consumer-capital-opening .consumer-market {
-      min-width: 0;
-      padding: 4px 0 0;
-      border: 0;
-      background: none;
-    }
     .consumer-market__compact-head { padding: 2px 8px 14px; }
     .consumer-market__compact-head h2 {
       max-width: 10ch;
@@ -6868,22 +6631,6 @@
       color: var(--ink-dim);
       font: 13px/1.5 var(--sans);
     }
-    .consumer-capital-opening .market-board {
-      margin-top: 0;
-      padding: 7px;
-      border-radius: 21px 21px 6px 21px;
-    }
-    .consumer-capital-opening .market-board__toolbar {
-      align-items: stretch;
-      flex-direction: column;
-      gap: 7px;
-      padding: 7px 7px 12px;
-    }
-    .consumer-capital-opening .market-board__sort,
-    .consumer-capital-opening .market-board__share { width: 100%; }
-    .consumer-capital-opening .market-board__sort button { flex: 1 1 0; padding-inline: 8px; }
-    .consumer-capital-opening .market-board__share-primary { flex: 1 1 auto; }
-    .consumer-capital-opening .market-board__socials { flex: 0 0 auto; }
     .consumer-market:not(.is-expanded) .market-row {
       grid-template-columns: 27px minmax(0, 1fr) auto;
       grid-template-areas:
@@ -6932,11 +6679,6 @@
     .consumer-market__personal--compact::before { display: none; }
     .consumer-market__personal--compact > span { display: none; }
     .consumer-market__personal--compact button { margin: 0; white-space: nowrap; }
-    .consumer-capital-opening .consumer-market__foot {
-      margin: 12px 8px 0;
-      color: var(--ink-mute);
-      font: 8px/1.5 var(--mono);
-    }
 
     /* One decision-ready briefing replaces the old research pulse, preview,
        and scoring lab. Typography and hairlines carry the hierarchy. */
@@ -7244,8 +6986,6 @@
     .consumer-briefing__foot p { max-width: 76ch; margin: 0; color: var(--ink-dim); font: 10px/1.6 var(--mono); }
     .consumer-briefing__cta { min-width: 230px; min-height: 46px; justify-content: space-between; white-space: nowrap; }
 
-    .registry-trade-open .market-tape__track { animation-play-state: paused; }
-
     @media (hover: hover) and (pointer: fine) {
       .consumer-briefing__headline > a:hover h3 { color: var(--briefing-accent); }
       .consumer-briefing__headline > a:hover i {
@@ -7257,8 +6997,6 @@
 
     @media (max-width: 1120px) {
       .capital-masthead__title { grid-template-columns: minmax(0, 1fr) minmax(230px, 300px); }
-      .consumer-capital-opening { grid-template-columns: 1fr; max-width: 820px; }
-      .consumer-capital-opening .consumer-market { padding-top: 24px; }
       .consumer-market:not(.is-expanded) .market-row__actions { display: none; }
       .consumer-briefing__grid { grid-template-columns: minmax(0, 1.2fr) minmax(310px, .8fr); }
     }
@@ -7304,9 +7042,6 @@
         white-space: nowrap;
       }
       .capital-advanced__arrow { grid-area: arrow; }
-      .consumer-capital-opening { gap: 0; padding-top: 8px; }
-      .consumer-capital-opening .consumer-explorer--stage .gband--consumer,
-      .consumer-capital-opening .consumer-explorer .gband--flat { height: 810px; border-radius: 21px; }
       .gband__constellation { inset: 17% 2% 32%; opacity: .12; }
       .consumer-registry .stage-placard {
         width: calc(100% - 16px);
@@ -7329,7 +7064,6 @@
       .stage-market__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .consumer-registry .stage-placard__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .gband__turn-hint { margin-bottom: 4px; }
-      .consumer-capital-opening .consumer-market { padding-inline: 0; }
       .consumer-market__compact-head { padding: 30px 8px 16px; }
       .consumer-market__compact-head h2 { font-size: clamp(40px, 12vw, 54px); }
       .market-board__expand-row { grid-template-columns: 1fr; }
@@ -7415,8 +7149,6 @@
 
     @media (max-width: 360px) {
       .capital-masthead__title h1 { font-size: 46px; }
-      .consumer-capital-opening .consumer-explorer--stage .gband--consumer,
-      .consumer-capital-opening .consumer-explorer .gband--flat { height: 790px; }
       .stage-market { grid-template-columns: minmax(0, 1fr); gap: 7px; }
       .stage-market__facts dd { font-size: 9px; }
       .consumer-briefing__market dl > div:nth-child(even) { padding-left: 12px; }
@@ -9087,6 +8819,20 @@
       gap: 13px;
       margin: 0 0 16px;
     }
+    /* While the page scrolls under the fixed nav pill, the lockup bows out
+       instead of sliding beneath it. Additive: browsers without
+       scroll-driven animations keep the static lockup, which the pill's
+       backdrop blur already masks. */
+    @supports (animation-timeline: scroll()) {
+      .consumer-registry .astrofolio-lockup {
+        animation: astrofolio-lockup-recede linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 180px;
+      }
+      @keyframes astrofolio-lockup-recede {
+        to { opacity: 0; }
+      }
+    }
     .consumer-registry .astrofolio-lockup__avatar {
       width: 60px;
       height: 60px;
@@ -9165,6 +8911,10 @@
       scroll-behavior: auto;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
+      /* The rail always holds more discs than the column shows; the fade
+         turns the hard mid-disc crop at the trailing edge into a scroll cue. */
+      -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+      mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
     }
     .consumer-registry .vitrine-disc-rail::-webkit-scrollbar { display: none; }
     .consumer-registry .vitrine-disc {

@@ -423,6 +423,20 @@
       gap: 13px;
       margin: 0 0 16px;
     }
+    /* While the page scrolls under the fixed nav pill, the lockup bows out
+       instead of sliding beneath it. Additive: browsers without
+       scroll-driven animations keep the static lockup, which the pill's
+       backdrop blur already masks. */
+    @supports (animation-timeline: scroll()) {
+      .consumer-registry .astrofolio-lockup {
+        animation: astrofolio-lockup-recede linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 180px;
+      }
+      @keyframes astrofolio-lockup-recede {
+        to { opacity: 0; }
+      }
+    }
     .consumer-registry .astrofolio-lockup__avatar {
       width: 60px;
       height: 60px;
@@ -501,6 +515,10 @@
       scroll-behavior: auto;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
+      /* The rail always holds more discs than the column shows; the fade
+         turns the hard mid-disc crop at the trailing edge into a scroll cue. */
+      -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+      mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
     }
     .consumer-registry .vitrine-disc-rail::-webkit-scrollbar { display: none; }
     .consumer-registry .vitrine-disc {

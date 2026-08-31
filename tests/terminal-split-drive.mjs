@@ -450,7 +450,7 @@ try {
     assert.equal(await page.locator('.consumer-shop a[href^="https://shop.app/products/"]').count(), 3);
     assert.equal(await page.locator('#registry .consumer-verify.is-embedded#verify').count(), 1);
     assert.equal(await page.locator('#faq summary').count(), 8);
-    assert.deepEqual(await page.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What is Zodiac Markets?', 'What is the Terminal?']);
+    assert.deepEqual(await page.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the risks?', 'What is the Terminal?']);
     assert.equal(await page.locator('[data-consumer-market-snapshot], .consumer-snapshot').count(), 0);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-market-meta').count(), 1);
     assert.equal(await page.getByText('Data & methodology', { exact: true }).count(), 1);
@@ -722,7 +722,7 @@ try {
     assert.equal(await noJsPage.locator('#market-snapshot').count(), 1);
     assert.equal(await noJsPage.locator('.static-snapshot').count(), 0);
     assert.equal(await noJsPage.locator('#faq details').count(), 8);
-    assert.deepEqual(await noJsPage.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What is Zodiac Markets?', 'What is the Terminal?']);
+    assert.deepEqual(await noJsPage.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the risks?', 'What is the Terminal?']);
     assert.equal(await noJsPage.locator('#shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await noJsPage.locator('#shop a[href^="https://shop.app/products/"]').count(), 6);
     assert.equal(await noJsPage.locator('#registry #verify').count(), 1);

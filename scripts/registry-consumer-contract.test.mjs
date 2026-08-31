@@ -40,12 +40,11 @@ const EXPECTED_FAQS = [
     a: 'Zodiac tokens are speculative and can be volatile or hard to sell. Prices can fall to zero, and wallet mistakes or scams can cause permanent loss.',
   },
   {
-    q: 'What is Zodiac Markets?',
-    a: 'Zodiac Markets is the trading interface for the Twelve. Jupiter Ultra supplies the executable route and transaction; your wallet reviews, approves, and signs.',
-  },
-  {
+    // Merged 2026-08-31: the retired "Zodiac Markets" name (naming addendum
+    // 2026-08-13) no longer fronts a consumer answer; Terminal carries the
+    // trading sentence.
     q: 'What is the Terminal?',
-    a: 'The Terminal is the market desk for all twelve Zodiacs, with live prices, liquidity, charts, season context, and research.',
+    a: 'The Terminal is the market desk for all twelve Zodiacs, with live prices, liquidity, charts, season context, research, and trading. Jupiter Ultra supplies the executable route and transaction; your wallet reviews, approves, and signs.',
   },
 ];
 function functionBlock(source, name) {
@@ -527,7 +526,6 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ordered(faqSource, [
       "q: 'Where can I find Astrofolio merchandise?'",
       "q: 'What are the risks?'",
-      "q: 'What is Zodiac Markets?'",
       "q: 'What is the Terminal?'",
     ]);
     const fallback = await read('public/astrofolio/index.html');
@@ -536,7 +534,6 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ordered(staticFaq, [
       '<summary>Where can I find Astrofolio merchandise?</summary>',
       '<summary>What are the risks?</summary>',
-      '<summary>What is Zodiac Markets?</summary>',
       '<summary>What is the Terminal?</summary>',
     ]);
     for (const item of EXPECTED_FAQS) {
