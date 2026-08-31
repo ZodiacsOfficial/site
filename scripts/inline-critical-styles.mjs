@@ -50,11 +50,34 @@ const signs = [
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
 const targetPaths = [
+  // The EN homepage joined when the per-push Lighthouse gate started covering
+  // it: its LCP sat 70ms over budget purely on the two blocking stylesheet
+  // round trips, the same delivery cost this pass already removes for the
+  // gated RU entry pages.
+  'index.html',
+  'birth-chart/index.html',
   'today/index.html',
   ...signs.map((sign) => `horoscopes/${sign}/index.html`),
   'ru/index.html',
   'ru/birth-chart/index.html',
 ];
+
+/**
+ * Calculator entries inline their above-fold styles and defer the rest. The
+ * RU form sits below the mobile fold, so Base alone paints shift-free; the
+ * EN form is inside the first viewport and needs calculator.css at first
+ * paint (deferring it measured CLS 0.102 on /birth-chart/).
+ */
+const deferNonBaseConfig = new Map([
+  ['birth-chart/index.html', {
+    select: /^(?:Base|calculator)\.[A-Za-z0-9_-]+\.css$/u,
+    shape: { inline: 2, deferred: 2, external: 4 },
+  }],
+  ['ru/birth-chart/index.html', {
+    select: /^Base\.[A-Za-z0-9_-]+\.css$/u,
+    shape: { inline: 1, deferred: 3, external: 6 },
+  }],
+]);
 
 export async function htmlFiles(directory) {
   let entries;
@@ -167,18 +190,21 @@ export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase
     }
   }
 
+  const selectPattern = deferNonBase instanceof RegExp
+    ? deferNonBase
+    : /^Base\.[A-Za-z0-9_-]+\.css$/u;
   const selectedTags = deferNonBase
     ? stylesheetTags.filter((tag) => {
       const href = attribute(tag, 'href');
-      return href ? /^Base\.[A-Za-z0-9_-]+\.css$/u.test(basename(href)) : false;
+      return href ? selectPattern.test(basename(href)) : false;
     })
     : stylesheetTags;
   const deferredTags = deferNonBase
     ? stylesheetTags.filter((tag) => !selectedTags.includes(tag))
     : [];
-  if (deferNonBase && (selectedTags.length !== 1 || deferredTags.length === 0)) {
+  if (deferNonBase && (selectedTags.length === 0 || deferredTags.length === 0)) {
     throw new Error(
-      `inline-critical-styles: expected one Base stylesheet plus deferred tool styles, found ${selectedTags.length} + ${deferredTags.length}`,
+      `inline-critical-styles: expected inlined entry styles plus deferred tool styles, found ${selectedTags.length} + ${deferredTags.length}`,
     );
   }
 
@@ -246,7 +272,7 @@ async function main() {
   for (const relativePath of targetPaths) {
     const path = resolve(distRoot, relativePath);
     const source = await readFile(path, 'utf8');
-    const deferNonBase = relativePath === 'ru/birth-chart/index.html';
+    const deferConfig = deferNonBaseConfig.get(relativePath);
     if (hasHtmlAttribute(source, stableChromeMarker) && relativePath !== 'today/index.html') {
       throw new Error(`inline-critical-styles: stable chrome marker outside Today: ${relativePath}`);
     }
@@ -258,14 +284,14 @@ async function main() {
         .length;
       const deferredCount = source.match(deferredStylePattern)?.length ?? 0;
       const loaderCount = source.match(/data-zdx-deferred-style-loader/g)?.length ?? 0;
-      const expectedInlineCount = deferNonBase ? 1 : 2;
-      const expectedDeferredCount = deferNonBase ? 3 : 0;
-      const expectedExternalCount = deferNonBase ? 6 : 0;
+      const expectedInlineCount = deferConfig?.shape.inline ?? 2;
+      const expectedDeferredCount = deferConfig?.shape.deferred ?? 0;
+      const expectedExternalCount = deferConfig?.shape.external ?? 0;
       if (
         inlineCount !== expectedInlineCount
         || deferredCount !== expectedDeferredCount
         || externalCount !== expectedExternalCount
-        || loaderCount !== (deferNonBase ? 1 : 0)
+        || loaderCount !== (deferConfig ? 1 : 0)
       ) {
         throw new Error(
           `inline-critical-styles: ${relativePath} has an unexpected inline/external stylesheet shape`,
@@ -275,15 +301,15 @@ async function main() {
       stylesheets += inlineCount;
       continue;
     }
-    const result = await inlineCriticalStyles(source, distRoot, { deferNonBase });
+    const result = await inlineCriticalStyles(source, distRoot, { deferNonBase: deferConfig?.select });
     await writeFile(path, result.html);
     pages += 1;
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 15 || stylesheets !== 29) {
+  if (pages + alreadyInlined !== 17 || stylesheets !== 33) {
     throw new Error(
-      `inline-critical-styles: expected 15 pages / 29 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 17 pages / 33 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0

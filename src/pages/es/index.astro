@@ -131,11 +131,11 @@ const jsonLd = [
     <SkyTicker client:visible locale="es" />
   </section>
 
-  <section class="section container reveal">
+  <section class="container reveal pace-act">
     <TodayBySign client:idle locale="es" />
   </section>
 
-  <section class="section container">
+  <section class="container pace-act pace-act--rule">
     <div class="section-head reveal">
       <h2>Empieza con tu carta</h2>
       <p>Encuentra tu carta natal, signo lunar, ascendente, compatibilidad y lo que está pasando en el cielo ahora.</p>
@@ -154,7 +154,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="section container" id="signos">
+  <section class="container pace-tight" id="signos">
     <div class="section-head reveal">
       <h2>Los doce signos</h2>
       <p>Guías claras para cada signo: personalidad, amor, compatibilidad y qué significa en tu carta.</p>
@@ -172,7 +172,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="section container close-es">
+  <section class="container close-es pace-sec pace-end">
     <h2 class="display reveal">Empieza con tu carta natal.</h2>
     <div class="reveal" style="--reveal-delay:120ms">
       <a class="btn btn--primary" href={localizePath('es', '/birth-chart/')}><span>Obtén tu carta natal gratis</span><span class="orb">↗</span></a>
@@ -181,6 +181,19 @@ const jsonLd = [
 </Base>
 
 <style>
+  /* ── Vertical rhythm — one-sided padding in three tiers; the hairline
+     marks the act break. Mirrors the EN homepage scale. ── */
+  .pace-act { padding-top: clamp(72px, 9.5vw, 132px); }
+  .pace-act--rule {
+    margin-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--hair-1);
+    padding-top: clamp(44px, 5.5vw, 72px);
+  }
+  .pace-tight { padding-top: clamp(36px, 4.5vw, 60px); }
+  .pace-sec { padding-top: clamp(48px, 6.5vw, 88px); }
+  .pace-end { padding-bottom: clamp(80px, 10vw, 132px); }
+
+
   .hero-es {
     /* Rise behind the fixed nav so the glass refracts the footage on
        first paint (matches the English homepage). */
