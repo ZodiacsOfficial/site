@@ -80,6 +80,7 @@ interface GuideSession {
   modelHistoryStartSequence: number;
   lastPageSourceId: string | null;
   removedPageSourceIds: string[];
+  todaySkyRemoved: boolean;
   messages: GuideMessage[];
 }
 
@@ -91,7 +92,7 @@ interface PageInfo {
 
 interface GuideContextSource {
   sourceId: string;
-  kind: 'owner_chart' | 'site_page';
+  kind: 'owner_chart' | 'site_page' | 'today_sky';
   sourceRevision: number;
   title: string;
   facts: string;
@@ -109,12 +110,10 @@ interface GuideContextSource {
 interface Copy {
   title: string;
   open: string;
+  launcher: string;
   close: string;
   clear: string;
   intro: string;
-  invite: string;
-  inviteAction: string;
-  dismissInvite: string;
   log: string;
   input: string;
   placeholder: string;
@@ -128,6 +127,8 @@ interface Copy {
   removeSource: string;
   chartOn: string;
   chartOff: string;
+  skyOn: string;
+  skyOff: string;
   chartReading: string;
   thinking: string;
   stopped: string;
@@ -153,13 +154,13 @@ interface Copy {
 
 const COPY: Record<AssistantLocale, Copy> = {
   en: {
-    title: 'Guide', open: 'Open Guide', close: 'Close Guide', clear: "Clear today's conversation",
+    title: 'Guide', open: 'Open Guide', launcher: 'Ask Guide', close: 'Close Guide', clear: "Clear today's conversation",
     intro: 'Ask about this page, astrology, or your birth chart.',
-    invite: 'I can help with this page, astrology, or your birth chart.',
-    inviteAction: 'Ask Guide', dismissInvite: 'Dismiss Guide welcome', log: 'Guide conversation',
+    log: 'Guide conversation',
     input: 'Your question', placeholder: 'What would you like help with?', send: 'Send', stop: 'Stop', retry: 'Retry',
     newline: 'Shift + Enter for a new line', context: 'Visible sources', pageSource: 'This page',
     addPage: 'Use this page', removeSource: 'Remove source', chartOn: 'Using my chart', chartOff: 'Use my chart',
+    skyOn: "Using today's sky", skyOff: "Use today's sky",
     chartReading: 'Reading the placements in your saved chart…', thinking: 'Guide is thinking…',
     stopped: 'Stopped.', complete: 'Answer complete.', empty: 'Write a question first.',
     unavailable: 'Guide is temporarily unavailable. Please try again later.',
@@ -175,13 +176,13 @@ const COPY: Record<AssistantLocale, Copy> = {
     contextUpdated: 'Source removed. Earlier messages remain visible, but Guide will not use them in future answers.',
   },
   es: {
-    title: 'Guide', open: 'Abrir Guide', close: 'Cerrar Guide', clear: 'Borrar la conversación de hoy',
+    title: 'Guide', open: 'Abrir Guide', launcher: 'Preguntar a Guide', close: 'Cerrar Guide', clear: 'Borrar la conversación de hoy',
     intro: 'Pregunta sobre esta página, astrología o tu carta natal.',
-    invite: 'Puedo ayudarte con esta página, astrología o tu carta natal.',
-    inviteAction: 'Preguntar a Guide', dismissInvite: 'Cerrar la bienvenida de Guide', log: 'Conversación con Guide',
+    log: 'Conversación con Guide',
     input: 'Tu pregunta', placeholder: '¿En qué te puedo ayudar?', send: 'Enviar', stop: 'Detener', retry: 'Reintentar',
     newline: 'Mayús + Intro para una línea nueva', context: 'Fuentes visibles', pageSource: 'Esta página',
     addPage: 'Usar esta página', removeSource: 'Quitar fuente', chartOn: 'Usando mi carta', chartOff: 'Usar mi carta',
+    skyOn: 'Usando el cielo de hoy', skyOff: 'Usar el cielo de hoy',
     chartReading: 'Leyendo las posiciones de tu carta guardada…', thinking: 'Guide está pensando…',
     stopped: 'Detenido.', complete: 'Respuesta completa.', empty: 'Escribe una pregunta primero.',
     unavailable: 'Guide no está disponible temporalmente. Inténtalo de nuevo más tarde.',
@@ -196,13 +197,13 @@ const COPY: Record<AssistantLocale, Copy> = {
     contextUpdated: 'Fuente eliminada. Los mensajes anteriores siguen visibles, pero Guide no los usará en respuestas futuras.',
   },
   pt: {
-    title: 'Guide', open: 'Abrir Guide', close: 'Fechar Guide', clear: 'Limpar a conversa de hoje',
+    title: 'Guide', open: 'Abrir Guide', launcher: 'Perguntar ao Guide', close: 'Fechar Guide', clear: 'Limpar a conversa de hoje',
     intro: 'Pergunte sobre esta página, astrologia ou seu mapa natal.',
-    invite: 'Posso ajudar com esta página, astrologia ou seu mapa natal.',
-    inviteAction: 'Perguntar ao Guide', dismissInvite: 'Fechar boas-vindas do Guide', log: 'Conversa com o Guide',
+    log: 'Conversa com o Guide',
     input: 'Sua pergunta', placeholder: 'Como posso ajudar?', send: 'Enviar', stop: 'Parar', retry: 'Tentar de novo',
     newline: 'Shift + Enter para uma nova linha', context: 'Fontes visíveis', pageSource: 'Esta página',
     addPage: 'Usar esta página', removeSource: 'Remover fonte', chartOn: 'Usando meu mapa', chartOff: 'Usar meu mapa',
+    skyOn: 'Usando o céu de hoje', skyOff: 'Usar o céu de hoje',
     chartReading: 'Lendo as posições do seu mapa salvo…', thinking: 'Guide está pensando…',
     stopped: 'Interrompido.', complete: 'Resposta concluída.', empty: 'Escreva uma pergunta primeiro.',
     unavailable: 'O Guide está temporariamente indisponível. Tente novamente mais tarde.',
@@ -217,13 +218,13 @@ const COPY: Record<AssistantLocale, Copy> = {
     contextUpdated: 'Fonte removida. As mensagens anteriores continuam visíveis, mas o Guide não as usará nas próximas respostas.',
   },
   fr: {
-    title: 'Guide', open: 'Ouvrir Guide', close: 'Fermer Guide', clear: 'Effacer la conversation du jour',
+    title: 'Guide', open: 'Ouvrir Guide', launcher: 'Demander à Guide', close: 'Fermer Guide', clear: 'Effacer la conversation du jour',
     intro: 'Pose une question sur cette page, l’astrologie ou ton thème natal.',
-    invite: 'Je peux aider avec cette page, l’astrologie ou ton thème natal.',
-    inviteAction: 'Demander à Guide', dismissInvite: 'Fermer l’accueil de Guide', log: 'Conversation avec Guide',
+    log: 'Conversation avec Guide',
     input: 'Ta question', placeholder: 'Comment puis-je aider ?', send: 'Envoyer', stop: 'Arrêter', retry: 'Réessayer',
     newline: 'Maj + Entrée pour aller à la ligne', context: 'Sources visibles', pageSource: 'Cette page',
     addPage: 'Utiliser cette page', removeSource: 'Retirer la source', chartOn: 'Avec mon thème', chartOff: 'Utiliser mon thème',
+    skyOn: 'Avec le ciel du jour', skyOff: 'Utiliser le ciel du jour',
     chartReading: 'Lecture des positions de ton thème enregistré…', thinking: 'Guide réfléchit…',
     stopped: 'Interrompu.', complete: 'Réponse terminée.', empty: 'Écris d’abord une question.',
     unavailable: 'Guide est temporairement indisponible. Réessaie plus tard.',
@@ -238,13 +239,13 @@ const COPY: Record<AssistantLocale, Copy> = {
     contextUpdated: 'Source retirée. Les anciens messages restent visibles, mais Guide ne les utilisera plus dans ses réponses.',
   },
   it: {
-    title: 'Guide', open: 'Apri Guide', close: 'Chiudi Guide', clear: 'Cancella la conversazione di oggi',
+    title: 'Guide', open: 'Apri Guide', launcher: 'Chiedi a Guide', close: 'Chiudi Guide', clear: 'Cancella la conversazione di oggi',
     intro: 'Chiedi di questa pagina, astrologia o il tuo tema natale.',
-    invite: 'Posso aiutarti con questa pagina, astrologia o il tuo tema natale.',
-    inviteAction: 'Chiedi a Guide', dismissInvite: 'Chiudi il benvenuto di Guide', log: 'Conversazione con Guide',
+    log: 'Conversazione con Guide',
     input: 'La tua domanda', placeholder: 'Come posso aiutarti?', send: 'Invia', stop: 'Interrompi', retry: 'Riprova',
     newline: 'Maiusc + Invio per andare a capo', context: 'Fonti visibili', pageSource: 'Questa pagina',
     addPage: 'Usa questa pagina', removeSource: 'Rimuovi fonte', chartOn: 'Con il mio tema', chartOff: 'Usa il mio tema',
+    skyOn: 'Con il cielo di oggi', skyOff: 'Usa il cielo di oggi',
     chartReading: 'Lettura delle posizioni nel tuo tema salvato…', thinking: 'Guide sta pensando…',
     stopped: 'Interrotto.', complete: 'Risposta completata.', empty: 'Prima scrivi una domanda.',
     unavailable: 'Guide non è disponibile temporaneamente. Riprova più tardi.',
@@ -265,7 +266,6 @@ const MAX_MESSAGES = 12;
 const MAX_CHART_CONTEXT = 3_500;
 const SESSION_KEY = 'zodiacs.guide.daily-session.v1';
 const AUTH_BOUNDARY_KEY = 'zodiacs.guide.auth-boundary.v1';
-const INVITE_KEY = 'zodiacs.guide.welcome-seen.v1';
 const CONSENT_POLICY_VERSION = 'guide-cloud-processing-2026-08-14.2';
 const STYLESHEET_HREF = '/assets/assistant-drawer.css';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
@@ -302,10 +302,10 @@ let sendButton: HTMLButtonElement | null = null;
 let stopButton: HTMLButtonElement | null = null;
 let retryButton: HTMLButtonElement | null = null;
 let chartButton: HTMLButtonElement | null = null;
+let skyButton: HTMLButtonElement | null = null;
 let newlineHint: HTMLSpanElement | null = null;
 let privacy: HTMLParagraphElement | null = null;
 let launcher: HTMLButtonElement | null = null;
-let invite: HTMLElement | null = null;
 let opener: HTMLElement | null = null;
 let activeRequest: AbortController | null = null;
 let previousOverflow = '';
@@ -320,7 +320,6 @@ let chartSummaryPromise: Promise<string | null> | null = null;
 let profileAccessGeneration = 0;
 let interactionPending = false;
 let hasUserOpened = false;
-let inviteSeenInMemory = false;
 let pendingRetry: PendingTurn | null = null;
 let authFencePromise: Promise<void> | null = null;
 let authFenceCleanup: (() => void) | null = null;
@@ -335,7 +334,7 @@ interface PendingTurn {
   attemptId: string;
   userArticle: HTMLElement;
   assistantArticle: HTMLElement;
-  assistantBody: HTMLParagraphElement;
+  assistantBody: HTMLElement;
   chartAuthority: StoredChart | null;
 }
 
@@ -465,6 +464,7 @@ function createSession(): GuideSession {
     modelHistoryStartSequence: 1,
     lastPageSourceId: null,
     removedPageSourceIds: [],
+    todaySkyRemoved: false,
     messages: [],
   };
 }
@@ -488,6 +488,7 @@ function parseSession(raw: string | null): GuideSession | null {
         && value.cloudConsentGranted === true,
       messages: value.messages.slice(-MAX_MESSAGES),
       removedPageSourceIds: value.removedPageSourceIds.filter((id): id is string => typeof id === 'string').slice(-20),
+      todaySkyRemoved: value.todaySkyRemoved === true,
     } as GuideSession;
   } catch {
     return null;
@@ -633,6 +634,7 @@ function sourceScope(source: GuideContextSource | null) {
 async function contextScopeDigest(
   history: GuideMessage[],
   ownerChart: GuideContextSource | null,
+  todaySky: GuideContextSource | null,
   attachments: GuideContextSource[],
 ): Promise<string> {
   const state = getSession();
@@ -650,7 +652,7 @@ async function contextScopeDigest(
     history: historyProjection,
     base: [
       { slot: 'owner_chart', state: ownerChart ? 'active' : 'unavailable', source: sourceScope(ownerChart) },
-      { slot: 'today_sky', state: 'unavailable', source: null },
+      { slot: 'today_sky', state: todaySky ? 'active' : 'unavailable', source: sourceScope(todaySky) },
     ],
     attachments: attachments.map(sourceScope),
   }));
@@ -818,6 +820,40 @@ export async function placementSummaryForChart(chart: StoredChart): Promise<stri
   return `Tropical chart placements:\n${lines.join('\n')}`.slice(0, MAX_CHART_CONTEXT);
 }
 
+const MAX_SKY_CONTEXT = 1_600;
+let todaySkyPromise: Promise<string | null> | null = null;
+let todaySkyStamp = '';
+
+/** Current tropical positions, computed on this device like saved-chart placements. */
+export async function todaySkySummary(now = new Date()): Promise<string | null> {
+  try {
+    const { computeBodies } = await import('../engine/full');
+    const lines = computeBodies(now).map(({ body, lon, retrograde }) => (
+      `${body}: ${placementLabel(lon)}${retrograde ? ' · retrograde' : ''}`
+    ));
+    if (!lines.length) return null;
+    const stamp = now.toISOString().slice(0, 16).replace('T', ' ');
+    return `Current sky (tropical, geocentric), computed ${stamp} UTC:\n${lines.join('\n')}`
+      .slice(0, MAX_SKY_CONTEXT);
+  } catch {
+    return null;
+  }
+}
+
+/** One computation per minute; positions drift too slowly to matter within it. */
+function cachedTodaySkySummary(): Promise<string | null> {
+  const stamp = new Date().toISOString().slice(0, 16);
+  if (!todaySkyPromise || todaySkyStamp !== stamp) {
+    todaySkyStamp = stamp;
+    todaySkyPromise = todaySkySummary();
+  }
+  return todaySkyPromise;
+}
+
+function todaySkyEnabled(): boolean {
+  return !getSession().todaySkyRemoved;
+}
+
 export interface ParsedAssistantFrame {
   delta?: string;
   done?: boolean;
@@ -943,41 +979,181 @@ export async function consumeAssistantStream(response: Response, onDelta: (delta
   throw new AssistantFailure('temporarily_unavailable');
 }
 
-/** Model text is always inserted as text nodes; only same-site paths become links. */
-export function renderAssistantText(container: HTMLElement, text: string): void {
-  container.textContent = '';
+export type AssistantInline =
+  | { kind: 'text'; text: string }
+  | { kind: 'strong' | 'em'; children: AssistantInline[] }
+  | { kind: 'link'; path: string; label: string };
+
+export type AssistantBlock =
+  | { kind: 'paragraph'; children: AssistantInline[] }
+  | { kind: 'list'; ordered: boolean; items: AssistantInline[][] };
+
+/** Same-site catalog paths only; trailing punctuation is not part of a path. */
+export function assistantLinkPath(candidate: string): string | null {
+  let path = candidate;
+  while (/[.,!?;:)\]]$/.test(path)) path = path.slice(0, -1);
+  if (!path || !path.startsWith('/') || path.startsWith('//')
+    || path.includes('\\') || path.includes('?')) return null;
+  try {
+    const url = new URL(path, 'https://zodiacs.org');
+    return url.search === '' && GUIDE_LINK_PATHS.has(`${url.pathname}${url.hash}`)
+      ? path
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function pushInline(parts: AssistantInline[], part: AssistantInline): void {
+  const last = parts[parts.length - 1];
+  if (part.kind === 'text') {
+    if (!part.text) return;
+    if (last?.kind === 'text') {
+      last.text += part.text;
+      return;
+    }
+  }
+  parts.push(part);
+}
+
+function pushLinkifiedText(parts: AssistantInline[], text: string): void {
   const pattern = /(^|[\s([])(\/(?!\/)[^\s<>"`]+)/g;
   let cursor = 0;
   let match: RegExpExecArray | null;
   while ((match = pattern.exec(text)) !== null) {
     const start = match.index + match[1].length;
-    let path = match[2];
-    while (/[.,!?;:)\]]$/.test(path)) path = path.slice(0, -1);
-    if (!path || path.includes('\\') || path.includes('?')) continue;
-    let valid = false;
-    try {
-      const url = new URL(path, location.origin);
-      valid = url.origin === location.origin
-        && url.search === ''
-        && GUIDE_LINK_PATHS.has(`${url.pathname}${url.hash}`);
-    } catch { valid = false; }
-    if (!valid) continue;
-    container.append(document.createTextNode(text.slice(cursor, start)));
-    const anchor = document.createElement('a');
-    anchor.href = path;
-    anchor.textContent = path;
-    anchor.className = 'zassistant__link';
-    container.append(anchor);
+    const path = assistantLinkPath(match[2]);
+    if (!path) continue;
+    pushInline(parts, { kind: 'text', text: text.slice(cursor, start) });
+    pushInline(parts, { kind: 'link', path, label: path });
     cursor = start + path.length;
   }
-  container.append(document.createTextNode(text.slice(cursor)));
+  pushInline(parts, { kind: 'text', text: text.slice(cursor) });
+}
+
+function parseLinkifiedText(text: string): AssistantInline[] {
+  const parts: AssistantInline[] = [];
+  pushLinkifiedText(parts, text);
+  return parts;
+}
+
+function parseInlineText(text: string): AssistantInline[] {
+  const parts: AssistantInline[] = [];
+  const marks = /\*\*([^*\n]+)\*\*|\*([^*\s][^*\n]*?)\*|\[([^\]\n]+)\]\(\s*(\/[^\s)]+)\s*\)/g;
+  let cursor = 0;
+  let match: RegExpExecArray | null;
+  while ((match = marks.exec(text)) !== null) {
+    // A lone asterisk pair only reads as emphasis at a word boundary; "2*3*4"
+    // and similar runs stay literal text.
+    if (match[2] !== undefined && match.index > 0 && !/[\s([{'"«‹—–-]/.test(text[match.index - 1]!)) {
+      continue;
+    }
+    pushLinkifiedText(parts, text.slice(cursor, match.index));
+    if (match[1] !== undefined) {
+      pushInline(parts, { kind: 'strong', children: parseLinkifiedText(match[1]) });
+    } else if (match[2] !== undefined) {
+      pushInline(parts, { kind: 'em', children: parseLinkifiedText(match[2]) });
+    } else {
+      const path = assistantLinkPath(match[4] ?? '');
+      if (path) pushInline(parts, { kind: 'link', path, label: match[3] ?? path });
+      else pushLinkifiedText(parts, match[0]);
+    }
+    cursor = match.index + match[0].length;
+  }
+  pushLinkifiedText(parts, text.slice(cursor));
+  return parts;
+}
+
+const BULLET_LINE = /^[-*]\s+/;
+const ORDERED_LINE = /^\d{1,2}[.)]\s+/;
+
+/**
+ * Parses model text into the small sanctioned subset — paragraphs, flat
+ * lists, bold, italics, and same-site links. Anything outside the subset
+ * stays literal text; markup never becomes HTML.
+ */
+export function parseAssistantMarkdown(text: string): AssistantBlock[] {
+  const blocks: AssistantBlock[] = [];
+  for (const rawBlock of text.replace(/\r\n?/g, '\n').split(/\n[ \t]*\n+/)) {
+    const lines = rawBlock.split('\n').map((line) => line.trim()).filter(Boolean);
+    let paragraph: string[] = [];
+    let list: { ordered: boolean; items: AssistantInline[][] } | null = null;
+    const flushParagraph = () => {
+      if (!paragraph.length) return;
+      // A heading outside the subset degrades to an ordinary lead-in line.
+      const content = paragraph.join('\n').replace(/^#{1,4}\s+/, '');
+      blocks.push({ kind: 'paragraph', children: parseInlineText(content) });
+      paragraph = [];
+    };
+    const flushList = () => {
+      if (!list) return;
+      blocks.push({ kind: 'list', ordered: list.ordered, items: list.items });
+      list = null;
+    };
+    for (const line of lines) {
+      const marker = BULLET_LINE.test(line) ? BULLET_LINE : ORDERED_LINE.test(line) ? ORDERED_LINE : null;
+      if (!marker) {
+        flushList();
+        paragraph.push(line);
+        continue;
+      }
+      flushParagraph();
+      const ordered = marker === ORDERED_LINE;
+      if (!list || list.ordered !== ordered) {
+        flushList();
+        list = { ordered, items: [] };
+      }
+      list.items.push(parseInlineText(line.replace(marker, '')));
+    }
+    flushParagraph();
+    flushList();
+  }
+  return blocks;
+}
+
+function appendInlineNodes(container: Node, parts: AssistantInline[]): void {
+  for (const part of parts) {
+    if (part.kind === 'text') {
+      container.appendChild(document.createTextNode(part.text));
+    } else if (part.kind === 'link') {
+      const anchor = document.createElement('a');
+      anchor.href = part.path;
+      anchor.textContent = part.label;
+      anchor.className = 'zassistant__link';
+      container.appendChild(anchor);
+    } else {
+      const wrap = document.createElement(part.kind);
+      appendInlineNodes(wrap, part.children);
+      container.appendChild(wrap);
+    }
+  }
+}
+
+/** Model text always renders as DOM nodes built from the parsed subset — never HTML. */
+export function renderAssistantText(container: HTMLElement, text: string): void {
+  container.textContent = '';
+  for (const block of parseAssistantMarkdown(text)) {
+    if (block.kind === 'paragraph') {
+      const paragraph = document.createElement('p');
+      appendInlineNodes(paragraph, block.children);
+      container.appendChild(paragraph);
+      continue;
+    }
+    const list = document.createElement(block.ordered ? 'ol' : 'ul');
+    for (const item of block.items) {
+      const entry = document.createElement('li');
+      appendInlineNodes(entry, item);
+      list.appendChild(entry);
+    }
+    container.appendChild(list);
+  }
 }
 
 function scrollTranscript(): void {
   requestAnimationFrame(() => { if (transcript) transcript.scrollTop = transcript.scrollHeight; });
 }
 
-function appendMessage(role: GuideAuthor, content: string): { article: HTMLElement; body: HTMLParagraphElement } {
+function appendMessage(role: GuideAuthor, content: string): { article: HTMLElement; body: HTMLElement } {
   const article = document.createElement('article');
   article.className = `zassistant__message zassistant__message--${role === 'guide' ? 'assistant' : 'user'}`;
   const label = document.createElement('span');
@@ -990,7 +1166,8 @@ function appendMessage(role: GuideAuthor, content: string): { article: HTMLEleme
   } else {
     label.textContent = currentCopy().user;
   }
-  const body = document.createElement('p');
+  // Guide replies hold parsed block elements; a div keeps that valid HTML.
+  const body = document.createElement('div');
   body.className = 'zassistant__message-body';
   body.textContent = content;
   article.append(label, body);
@@ -1034,6 +1211,15 @@ function syncChartButton(): void {
   chartButton.textContent = chartEnabled ? currentCopy().chartOn : currentCopy().chartOff;
 }
 
+function syncSkyButton(): void {
+  if (!skyButton) return;
+  const enabled = todaySkyEnabled();
+  skyButton.disabled = Boolean(activeRequest) || interactionPending;
+  skyButton.setAttribute('aria-pressed', String(enabled));
+  skyButton.classList.toggle('is-active', enabled);
+  skyButton.textContent = enabled ? currentCopy().skyOn : currentCopy().skyOff;
+}
+
 function syncSourceControls(): void {
   const enabled = pageSourceEnabled();
   if (pageSourceChip) pageSourceChip.hidden = !enabled;
@@ -1042,6 +1228,7 @@ function syncSourceControls(): void {
   if (pageSourceRemove) pageSourceRemove.disabled = Boolean(activeRequest) || interactionPending;
   if (pageSourceAdd) pageSourceAdd.disabled = Boolean(activeRequest) || interactionPending;
   syncChartButton();
+  syncSkyButton();
 }
 
 function setBusy(busy: boolean): void {
@@ -1387,7 +1574,15 @@ async function buildTurnBody(
     subject: { boundary: 'root_user', subjectId: 'self', subjectName: 'You', subjectIsUser: true },
     containsThirdPartyData: false, persistence: 'local_only',
   }) : null;
-  const digest = await contextScopeDigest(history, ownerChart, attachments);
+  const skyFacts = todaySkyEnabled() ? await cachedTodaySkySummary() : null;
+  const skySourceId = `sky:${localDate()}`;
+  const todaySky = skyFacts ? await localSource({
+    sourceId: skySourceId,
+    kind: 'today_sky', sourceRevision: 1, title: "Today's sky", facts: skyFacts,
+    subject: { boundary: 'public_reference', subjectId: skySourceId, subjectName: null, subjectIsUser: false },
+    containsThirdPartyData: false, persistence: 'local_only',
+  }) : null;
+  const digest = await contextScopeDigest(history, ownerChart, todaySky, attachments);
   const now = new Date().toISOString();
   const userMessage: GuideMessage = {
     messageId: ids.messageId, turnId: ids.turnId, sequence: state.nextSequence,
@@ -1420,7 +1615,7 @@ async function buildTurnBody(
       ephemeralContext: {
         baseContext: {
           ownerChart: { slot: 'owner_chart', state: ownerChart ? 'active' : 'unavailable', source: ownerChart },
-          todaySky: { slot: 'today_sky', state: 'unavailable', source: null },
+          todaySky: { slot: 'today_sky', state: todaySky ? 'active' : 'unavailable', source: todaySky },
         },
         attachments,
         history,
@@ -1474,7 +1669,7 @@ async function runTurn(pending: PendingTurn): Promise<void> {
     const completed = await consumeGuideStream(response, pending, (delta) => {
       if (!requestIsCurrent()) return;
       answer += delta;
-      pending.assistantBody.textContent = answer;
+      renderAssistantText(pending.assistantBody, answer);
       scrollTranscript();
     });
     if (!requestIsCurrent()) return;
@@ -1595,15 +1790,6 @@ function focusableControls(): HTMLElement[] {
     .filter((element) => element.getClientRects().length > 0);
 }
 
-function dismissInvite(markSeen = true): void {
-  invite?.remove();
-  invite = null;
-  if (markSeen) {
-    inviteSeenInMemory = true;
-    safeSessionSet(INVITE_KEY, '1');
-  }
-}
-
 function closeAssistant(): void {
   if (!root || root.hidden) return;
   abortRequest();
@@ -1636,6 +1822,8 @@ function applyCopy(): void {
   const copy = currentCopy();
   if (title) title.textContent = copy.title;
   launcher?.setAttribute('aria-label', copy.open);
+  const launcherLabel = launcher?.querySelector('span');
+  if (launcherLabel) launcherLabel.textContent = copy.launcher;
   if (closeButton) closeButton.setAttribute('aria-label', copy.close);
   if (clearButton) clearButton.setAttribute('aria-label', copy.clear);
   if (intro) intro.textContent = copy.intro;
@@ -1671,6 +1859,18 @@ function addPageSource(): void {
   invalidateContext(false, true);
   syncSourceControls();
   setStatus();
+}
+
+function toggleTodaySky(): void {
+  if (activeRequest || interactionPending) return;
+  const state = getSession();
+  state.todaySkyRemoved = !state.todaySkyRemoved;
+  // Removing cuts the source's influence on later answers, like other source
+  // removals; re-adding widens the visible scope, so cloud consent renews.
+  if (state.todaySkyRemoved) invalidateContext(true);
+  else invalidateContext(false, true);
+  syncSourceControls();
+  setStatus(state.todaySkyRemoved ? currentCopy().contextUpdated : '');
 }
 
 function toggleChart(): void {
@@ -1758,7 +1958,11 @@ function build(): void {
   chartButton.className = 'zassistant__chart-chip';
   chartButton.hidden = true;
   chartButton.addEventListener('click', toggleChart);
-  sourcesRegion.append(pageSourceChip, pageSourceAdd, chartButton);
+  skyButton = document.createElement('button');
+  skyButton.type = 'button';
+  skyButton.className = 'zassistant__sky-chip';
+  skyButton.addEventListener('click', toggleTodaySky);
+  sourcesRegion.append(pageSourceChip, pageSourceAdd, skyButton, chartButton);
   transcript = document.createElement('div');
   transcript.className = 'zassistant__log';
   transcript.setAttribute('role', 'log');
@@ -1820,8 +2024,9 @@ function build(): void {
     launcher.type = 'button';
     launcher.className = 'zguide-launcher';
     launcher.dataset.guideLauncher = '';
+    launcher.setAttribute('aria-label', currentCopy().open);
     const launcherLabel = document.createElement('span');
-    launcherLabel.textContent = 'Guide';
+    launcherLabel.textContent = currentCopy().launcher;
     launcher.append(createGuideAvatar('zguide-launcher__avatar', 32), launcherLabel);
     launcher.addEventListener('click', () => void openAssistant(undefined, launcher));
     document.body.append(launcher);
@@ -1838,36 +2043,7 @@ function build(): void {
   window.addEventListener('pageshow', restoreGuideAfterPageCache);
 }
 
-function showInvite(): void {
-  if (invite || !root?.hidden || inviteSeenInMemory || safeSessionGet(INVITE_KEY) === '1') return;
-  inviteSeenInMemory = true;
-  safeSessionSet(INVITE_KEY, '1');
-  const copy = currentCopy();
-  invite = document.createElement('aside');
-  invite.className = 'zguide-invite';
-  const dismiss = document.createElement('button');
-  dismiss.type = 'button';
-  dismiss.className = 'zguide-invite__dismiss';
-  dismiss.setAttribute('aria-label', copy.dismissInvite);
-  dismiss.textContent = '×';
-  const identity = document.createElement('div');
-  identity.className = 'zguide-invite__identity';
-  const label = document.createElement('strong');
-  label.textContent = 'Guide';
-  identity.append(createGuideAvatar('zguide-invite__avatar', 44), label);
-  const message = document.createElement('p');
-  message.textContent = copy.invite;
-  const action = document.createElement('button');
-  action.type = 'button';
-  action.className = 'zguide-invite__action';
-  action.textContent = copy.inviteAction;
-  dismiss.addEventListener('click', () => dismissInvite());
-  action.addEventListener('click', () => void openAssistant(undefined, action));
-  invite.append(dismiss, identity, message, action);
-  document.body.append(invite);
-}
-
-/** Mount the default-visible launcher and one quiet, non-modal welcome. */
+/** Mount the default-visible launcher; Guide opens only on deliberate action. */
 export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
   await ensureStylesheet();
   locale = normalizeLocale(requestedLocale);
@@ -1883,7 +2059,6 @@ export async function openAssistant(requestedLocale?: string, from?: HTMLElement
   rotateGuideDayIfNeeded();
   await ensureGuideAuthFence();
   hasUserOpened = true;
-  dismissInvite();
   applyCopy();
   refreshSavedChart();
   renderTranscript();

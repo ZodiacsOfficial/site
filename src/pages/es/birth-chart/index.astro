@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import AskGuideLine from '../../../components/AskGuideLine.astro';
 import Faq from '../../../components/Faq.astro';
 import EmailCapture from '../../../components/EmailCapture.astro';
 import ChartCalculator from '../../../islands/ChartCalculator';
@@ -104,6 +105,7 @@ const jsonLd = [
     <noscript>
       <p>Esta calculadora de carta natal necesita JavaScript. Activa JavaScript y recarga la página para calcular tu Sol, Luna, ascendente, planetas y casas en tu navegador.</p>
     </noscript>
+    <AskGuideLine lead="¿Preguntas sobre una posición de tu carta?" locale="es" />
   </section>
 
   <section class="section--tight container container--narrow">

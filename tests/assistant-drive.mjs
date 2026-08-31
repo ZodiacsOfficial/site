@@ -136,7 +136,7 @@ async function installGuideRoute(page, requests) {
     const chart = body.ephemeralContext.baseContext.ownerChart.source;
     const answer = chart
       ? 'Your placements can be read practically. Continue at /birth-chart/.'
-      : 'A practical answer grounded in Zodiacs.org. Continue at /learn/ or /moon-sign/.';
+      : 'A **practical answer** grounded in Zodiacs.org:\n\n- Continue at /learn/\n- Read [the Moon sign guide](/moon-sign/)';
     await route.fulfill({ status: 200, contentType: 'text/event-stream', body: guideEvents(body, answer) });
   });
 }
@@ -215,8 +215,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const launcher = page.locator('[data-guide-launcher]');
     await launcher.waitFor({ state: 'visible', timeout: 15_000 });
     await page.evaluate(() => { window.__initialGuideLauncher = document.querySelector('[data-guide-launcher]'); });
-    check('Guide launcher is visible by default as an accessible avatar-only button',
-      (await launcher.textContent())?.trim() === ''
+    check('Guide launcher is visible by default as an accessible labelled button',
+      (await launcher.textContent())?.trim() === 'Ask Guide'
       && await launcher.getAttribute('aria-label') === 'Open Guide');
     check('pre-action shell does not fetch the private drawer graph',
       !assistantAssets.some((path) => path === '/assets/assistant-drawer.js'
@@ -298,6 +298,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check('approved response paths become safe links',
       await page.locator('.zassistant__link[href="/learn/"]').count() === 1
         && await page.locator('.zassistant__link[href="/moon-sign/"]').count() === 1);
+    check('the markdown subset renders as DOM structure, never raw markup',
+      await firstGuideMessage.locator('.zassistant__message-body strong').first().textContent() === 'practical answer'
+        && await firstGuideMessage.locator('.zassistant__message-body li').count() === 2
+        && await page.locator('.zassistant__link[href="/moon-sign/"]').evaluate((node) => node.textContent) === 'the Moon sign guide'
+        && await firstGuideMessage.evaluate((node) => !node.textContent.includes('**') && !node.textContent.includes('](')));
 
     const conversationId = first.conversationId;
     await page.goto(`${baseURL}/learn/`, { waitUntil: 'networkidle' });

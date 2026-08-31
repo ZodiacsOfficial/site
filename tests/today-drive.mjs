@@ -17,7 +17,6 @@ const manifest = JSON.parse(await readFile(
 ));
 const daily = JSON.parse(await readFile(new URL('../src/data/daily.json', import.meta.url), 'utf8'));
 const MAJOR_ASPECT_ANGLES = [0, 60, 90, 120, 180];
-const GUIDE_INVITE_SESSION_KEY = 'zodiacs.guide.welcome-seen.v1';
 
 function quietAriesLongitude() {
   const candidates = Array.from({ length: 300 }, (_, index) => index / 10).map((lon) => {
@@ -93,11 +92,6 @@ const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 
 async function newTodayPage(browser, options) {
   const page = await browser.newPage(options);
-  await page.addInitScript((inviteSessionKey) => {
-    // Today acceptance measures settled reading geometry, not the Guide's
-    // one-time proactive welcome. Use the same per-tab preference as dismiss.
-    sessionStorage.setItem(inviteSessionKey, '1');
-  }, GUIDE_INVITE_SESSION_KEY);
   return page;
 }
 
@@ -229,12 +223,8 @@ async function drive(BASE, browser) {
   await desktop.waitForSelector('[data-today-state="chart"]');
   await desktop.waitForTimeout(2_100);
   check(
-    'Today geometry keeps the one-time Guide welcome suppressed',
-    await desktop.locator('.zguide-invite').count() === 0
-      && await desktop.evaluate(
-        (inviteSessionKey) => sessionStorage.getItem(inviteSessionKey) === '1',
-        GUIDE_INVITE_SESSION_KEY,
-      ),
+    'Today geometry stays free of proactive Guide popovers',
+    await desktop.locator('.zguide-invite').count() === 0,
   );
   const savedChartHeight = await desktop.locator('.today-reading').evaluate((node) => node.getBoundingClientRect().height);
   const savedChartCls = await measuredCls(desktop);

@@ -13,7 +13,7 @@ import Faq from '../../components/Faq.astro';
 const faq = [
   {
     q: 'Where do the answers come from?',
-    a: 'Guide uses a curated reference built from Zodiacs.org calculators, sign guides, Learn pages, calendars, and horoscopes. When the site does not cover an exact claim, Guide says it cannot verify it instead of improvising.',
+    a: 'Guide uses a curated reference built from Zodiacs.org calculators, sign guides, Learn pages, calendars, and horoscopes. Questions about the current sky use today’s positions, computed in your browser the same way the calculators compute them. When the site does not cover an exact claim, Guide says it cannot verify it instead of improvising.',
   },
   {
     q: 'Are the answers generated?',
@@ -73,9 +73,9 @@ const jsonLd = [
       <em class="kicker">Guide</em>
       <h1 class="display">Astrology help, right when you need it.</h1>
       <p class="ask__lede">
-        Ask how a tool works, what a placement means, what your own saved chart
-        is doing, or where to read more. Guide answers in practical, plain
-        language and points you toward the relevant pages.
+        Ask how a tool works, what a placement means, what today's sky is
+        doing, or what your own saved chart says. Guide answers in practical,
+        plain language and points you toward the relevant pages.
       </p>
       <div class="ask__cta">
         <button type="button" class="btn btn--primary" data-assistant-open>
@@ -100,9 +100,10 @@ const jsonLd = [
       </section>
       <section class="tile ask__card" aria-labelledby="ask-astro">
         <h2 id="ask-astro">General astrology</h2>
-        <p>“What does a Saturn square feel like?” “What is a cusp, really?”
-        Plain-language answers in the same register as the Learn pages —
-        tradition read over computed astronomy, never fate.</p>
+        <p>“Is Mercury retrograde right now?” “What does a Saturn square feel
+        like?” “What is a cusp, really?” Plain-language answers in the same
+        register as the Learn pages — tradition read over computed astronomy,
+        never fate.</p>
         <p class="ask__links"><a href="/learn/">Learn</a> · <a href="/learn/houses/">The houses</a> · <a href="/learn/aspects/">The aspects</a></p>
       </section>
       <section class="tile ask__card" aria-labelledby="ask-chart">

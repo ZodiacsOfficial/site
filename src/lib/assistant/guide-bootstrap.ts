@@ -13,6 +13,7 @@ export type AssistantLocale = 'en' | 'es' | 'pt' | 'fr' | 'it';
 
 interface ShellCopy {
   open: string;
+  label: string;
 }
 
 interface DrawerModule {
@@ -22,22 +23,27 @@ interface DrawerModule {
 const COPY: Record<AssistantLocale, ShellCopy> = {
   en: {
     open: 'Open Guide',
+    label: 'Ask Guide',
   },
   es: {
     open: 'Abrir Guide',
+    label: 'Preguntar a Guide',
   },
   pt: {
     open: 'Abrir Guide',
+    label: 'Perguntar ao Guide',
   },
   fr: {
     open: 'Ouvrir Guide',
+    label: 'Demander à Guide',
   },
   it: {
     open: 'Apri Guide',
+    label: 'Chiedi a Guide',
   },
 };
 
-const STYLESHEET_HREF = '/assets/assistant-ui.css?v=avatar-only-2';
+const STYLESHEET_HREF = '/assets/assistant-ui.css?v=ask-guide-3';
 const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
 
@@ -204,7 +210,9 @@ function buildLauncher(): void {
   launcher.className = 'zguide-launcher';
   launcher.dataset.guideLauncher = '';
   launcher.setAttribute('aria-label', currentCopy().open);
-  launcher.append(createPortrait('zguide-launcher__avatar', 32));
+  const label = document.createElement('span');
+  label.textContent = currentCopy().label;
+  launcher.append(createPortrait('zguide-launcher__avatar', 32), label);
   launcher.addEventListener('click', () => void openAssistant(undefined, launcher));
   document.body.append(launcher);
 }
@@ -245,12 +253,14 @@ function wireOpeners(): void {
   });
 }
 
-/** Mount the avatar-only launcher. Guide opens only after deliberate user action. */
+/** Mount the labelled launcher. Guide opens only after deliberate user action. */
 export async function bootstrapGuide(requestedLocale?: string): Promise<void> {
   locale = normalizeLocale(requestedLocale);
   await ensureStylesheet();
   buildLauncher();
   launcher?.setAttribute('aria-label', currentCopy().open);
+  const label = launcher?.querySelector('span');
+  if (label) label.textContent = currentCopy().label;
   syncLauncherWithFooterGuide();
   wireOpeners();
 }
