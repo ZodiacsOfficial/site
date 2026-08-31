@@ -150,7 +150,9 @@ describe('Zodiac token records', () => {
       expect(ownership).toContain('token accounts, not verified people');
       expect(ownership).toContain('One person can use several accounts');
       expect(ownership).toContain('The official Base version is bridged from Solana and is not counted a second time.');
-      expect(ownership).toMatch(/(?:Recent|Older) snapshot/u);
+      expect(ownership).toContain(data.captureMode === 'observed' ? 'Observed snapshot' : 'Carried-forward snapshot');
+      expect(ownership).toContain(`<time datetime="${data.capturedAt}">`);
+      expect(ownership).not.toMatch(/(?:Recent|Older) snapshot|\d+ days? old/u);
       expect(ownership).toContain('Check on Solscan ↗');
       expect(ownership).not.toMatch(/Top holders|wallet concentration is lower|whale|team wallet/iu);
       expect(ownership).not.toMatch(/href="https:\/\/jup\.ag\//u);

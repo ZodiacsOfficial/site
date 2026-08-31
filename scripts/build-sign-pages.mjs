@@ -157,10 +157,10 @@ function ownershipModel(slug, solana, base) {
     throw new Error(`Ownership percentages invalid: ${slug}`);
   }
   const capturedAt = snapshot.capturedAt ?? distribution.capturedAt;
-  const capturedTime = new Date(capturedAt).getTime();
-  const ageDays = Number.isFinite(capturedTime)
-    ? Math.max(0, Math.floor((Date.now() - capturedTime) / 86_400_000))
-    : null;
+  const captureMode = snapshot.captureMode;
+  if (captureMode !== 'observed' && captureMode !== 'carried-forward') {
+    throw new Error(`Ownership capture mode invalid: ${slug}`);
+  }
   const segment = (value) => roundedPct(Math.max(0, value));
   const mintDisabled = disclosure.mintAuthority?.status === 'filled'
     && disclosure.mintAuthority?.value === 'renounced';
@@ -184,8 +184,8 @@ function ownershipModel(slug, solana, base) {
     ],
     capturedAt,
     capturedLabel: recordDate(capturedAt),
-    ageDays,
-    isOlder: ageDays === null || ageDays > 7,
+    snapshotLabel: captureMode === 'observed' ? 'Observed snapshot' : 'Carried-forward snapshot',
+    isCarriedForward: captureMode === 'carried-forward',
     mintDisabled,
     mintChecked: recordDate(disclosure.mintAuthority?.asOf),
     freezeDisabled,
@@ -1207,7 +1207,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       margin: 16px 0 0; font-size: 12px; color: var(--ink-mute);
     }
     .ownership__age { padding: 4px 8px; border: 1px solid var(--hair-2); border-radius: 999px; color: var(--ink-2); }
-    .ownership__age--older { border-color: rgba(220, 174, 119, 0.42); color: #dcae77; }
+    .ownership__age--carried { border-color: rgba(220, 174, 119, 0.42); color: #dcae77; }
     .ownership__freshness a { color: var(--ink-2); text-underline-offset: 3px; }
     .ownership-method { margin-top: 14px; border-top: 1px solid var(--hair); }
     .ownership-method summary {
@@ -1389,7 +1389,7 @@ ${m.ownership.segments.map((segment) => `          <span class="ownership-bar__$
         <dl class="ownership-legend">
 ${m.ownership.segments.map((segment) => `          <div><i style="--legend:${segment.className === 'largest' ? m.hue : `color-mix(in srgb, ${m.hue} ${segment.className === 'next-nine' ? '72%' : segment.className === 'next-ten' ? '46%' : '20%'}, ${segment.className === 'next-nine' ? '#eef1f7' : segment.className === 'next-ten' ? '#8e96ab' : '#252a36'})`}" aria-hidden="true"></i><dt>${esc(segment.label)}</dt><dd>${segment.value.toFixed(2)}%</dd></div>`).join('\n')}
         </dl>
-        <p class="ownership__freshness"><span class="ownership__age${m.ownership.isOlder ? ' ownership__age--older' : ''}">${m.ownership.isOlder ? 'Older snapshot' : 'Recent snapshot'}</span><span>Recorded ${esc(m.ownership.capturedLabel)}${m.ownership.ageDays === null ? '' : ` · ${m.ownership.ageDays} day${m.ownership.ageDays === 1 ? '' : 's'} old`}</span><a href="${esc(m.ownership.verifyUrl)}" rel="noopener noreferrer external">Check on Solscan ↗</a></p>
+        <p class="ownership__freshness"><span class="ownership__age${m.ownership.isCarriedForward ? ' ownership__age--carried' : ''}">${esc(m.ownership.snapshotLabel)}</span><span>Recorded <time datetime="${esc(m.ownership.capturedAt)}">${esc(m.ownership.capturedLabel)}</time></span><a href="${esc(m.ownership.verifyUrl)}" rel="noopener noreferrer external">Check on Solscan ↗</a></p>
         <details class="ownership-method"><summary>What does “token account” mean?</summary><p>Solana reports token accounts, not verified people. One person can use several accounts, and one account can represent a liquidity pool, bridge, exchange, or custodian. The chain does not reveal a real-world identity.</p><p>Percentages compare account balances with the recorded native Solana supply. The official Base version is bridged from Solana and is not counted a second time.</p></details>
       </div>
     </section>
