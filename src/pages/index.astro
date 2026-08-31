@@ -402,6 +402,36 @@ const tools = [
         (function () {
           var root = document.querySelector('[data-demo-preview]');
           if (!root) return;
+
+          // The wheel's twelve sign discs ship as data-href (Wheel
+          // deferIcons) so they cost nothing while the hero paints; lift
+          // them to real hrefs as the section approaches. The 200px margin
+          // keeps the swap invisible without pulling the fetches back into
+          // the initial load on tall phone viewports.
+          var discs = root.querySelectorAll('image[data-href]');
+          function liftDiscs() {
+            for (var i = 0; i < discs.length; i += 1) {
+              discs[i].setAttribute('href', discs[i].getAttribute('data-href'));
+              discs[i].removeAttribute('data-href');
+            }
+          }
+          if (discs.length) {
+            if ('IntersectionObserver' in window) {
+              var discWatch = new IntersectionObserver(function (entries) {
+                for (var i = 0; i < entries.length; i += 1) {
+                  if (entries[i].isIntersecting) {
+                    liftDiscs();
+                    discWatch.disconnect();
+                    return;
+                  }
+                }
+              }, { rootMargin: '200px 0px' });
+              discWatch.observe(root);
+            } else {
+              liftDiscs();
+            }
+          }
+
           var caption = root.querySelector('[data-demo-caption]');
           var title = root.querySelector('[data-demo-title-output]');
           var kind = root.querySelector('[data-demo-kind-output]');

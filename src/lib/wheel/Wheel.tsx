@@ -79,6 +79,15 @@ export interface WheelProps {
   animate?: boolean;
   /** Server-rendered homepage layer hooks; omitted everywhere else. */
   preview?: boolean;
+  /**
+   * Serve the sign-disc <image> hrefs as data-href so the SSR'd wheel
+   * fetches nothing at page load; the embedding page promotes them as the
+   * wheel nears the viewport. SVG <image> has no working lazy-load in
+   * Chromium, and the homepage demo sits below the fold — without this,
+   * every homepage view pays twelve icon fetches during the hero paint.
+   * The share card and the live calculator keep the default eager hrefs.
+   */
+  deferIcons?: boolean;
   /** Chart Explorer mode — omit for the pinned static rendering. */
   interactive?: WheelInteraction;
   /**
@@ -117,7 +126,7 @@ const ASPECT_STROKE = [0.9, 1.3, 1.8] as const;
 
 export default function Wheel({
   bodies, asc = null, mc = null, cusps = null, aspects = [], size = 420, animate = false,
-  interactive, preview = false, renderOverlay, ariaLabel = 'Birth chart wheel',
+  interactive, preview = false, deferIcons = false, renderOverlay, ariaLabel = 'Birth chart wheel',
 }: WheelProps) {
   const cx = size / 2;
   const cy = size / 2;
@@ -309,7 +318,9 @@ export default function Wheel({
               stroke-linecap="round"
             />
             <image
-              href={`/assets/zodiac-icons/128/${s.slug}.webp`}
+              {...(deferIcons
+                ? { 'data-href': `/assets/zodiac-icons/128/${s.slug}.webp` }
+                : { href: `/assets/zodiac-icons/128/${s.slug}.webp` })}
               x={(c.x - disc / 2).toFixed(2)}
               y={(c.y - disc / 2).toFixed(2)}
               width={disc.toFixed(2)}

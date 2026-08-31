@@ -114,7 +114,7 @@ async function installNetworkHarness(context) {
 }
 
 async function installExchangeFlag(context) {
-  await context.route('**/terminal/**', async (route) => {
+  const stampLanding = async (route) => {
     if (route.request().resourceType() !== 'document') return route.continue();
     const response = await route.fetch();
     const source = await response.text();
@@ -122,9 +122,11 @@ async function installExchangeFlag(context) {
       '<meta name="zodiacs-registry-exchange-enabled" content="0" />',
       '<meta name="zodiacs-registry-exchange-enabled" content="1" />',
     );
-    assert.notEqual(body, source, 'the flag simulation must stamp the Pro landing marker');
+    assert.notEqual(body, source, 'the flag simulation must stamp the landing marker');
     return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
-  });
+  };
+  await context.route('**/terminal/**', stampLanding);
+  await context.route('**/astrofolio/**', stampLanding);
 }
 
 async function installCollectionFlag(context) {
@@ -447,8 +449,8 @@ try {
     assert.equal(await page.locator('.consumer-shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await page.locator('.consumer-shop a[href^="https://shop.app/products/"]').count(), 3);
     assert.equal(await page.locator('#registry .consumer-verify.is-embedded#verify').count(), 1);
-    assert.equal(await page.locator('#faq summary').count(), 8);
-    assert.deepEqual(await page.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What is Zodiac Markets?', 'What is the Terminal?']);
+    assert.equal(await page.locator('#faq summary').count(), 7);
+    assert.deepEqual(await page.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the risks?', 'What is the Terminal?']);
     assert.equal(await page.locator('[data-consumer-market-snapshot], .consumer-snapshot').count(), 0);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-market-meta').count(), 1);
     assert.equal(await page.getByText('Data & methodology', { exact: true }).count(), 1);
@@ -719,8 +721,8 @@ try {
     assert.equal(await noJsPage.locator('.static-vitrine__panel').count(), 12);
     assert.equal(await noJsPage.locator('#market-snapshot').count(), 1);
     assert.equal(await noJsPage.locator('.static-snapshot').count(), 0);
-    assert.equal(await noJsPage.locator('#faq details').count(), 8);
-    assert.deepEqual(await noJsPage.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What is Zodiac Markets?', 'What is the Terminal?']);
+    assert.equal(await noJsPage.locator('#faq details').count(), 7);
+    assert.deepEqual(await noJsPage.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the risks?', 'What is the Terminal?']);
     assert.equal(await noJsPage.locator('#shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await noJsPage.locator('#shop a[href^="https://shop.app/products/"]').count(), 6);
     assert.equal(await noJsPage.locator('#registry #verify').count(), 1);
@@ -920,6 +922,11 @@ try {
       nodes.map((node) => node.id)
     ));
     assert.deepEqual(storyOrder, ['what-is-astrofolio', 'thesis', 'shop', 'cabinet', 'registry', 'market-layer', 'faq']);
+    assert.equal(
+      await collectionPage.locator('#market-layer a[href^="/terminal/markets/"]').count(),
+      0,
+      'flag-off Astrofolio carries no venue-route entry',
+    );
     await collection.close();
 
     const flagged = await browser.newContext({ viewport: { width: 1280, height: 900 } });
@@ -929,9 +936,22 @@ try {
     const flaggedErrors = watchErrors(flaggedPage, 'flagged gateway');
     await flaggedPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(flaggedPage, '#consumer-explorer-title');
-    assert.equal(await flaggedPage.locator('meta[name="zodiacs-registry-exchange-enabled"]').count(), 0);
+    // Owner addendum 2026-08-31: flag-on Astrofolio carries the marker and
+    // one venue-route entry at the market gateway; the pro gateway stays off
+    // this surface and the full-market handoff remains, demoted to secondary.
+    assert.equal(await flaggedPage.locator('meta[name="zodiacs-registry-exchange-enabled"][content="1"]').count(), 1);
     assert.equal(await flaggedPage.locator('[data-pro-markets-gateway]').count(), 0);
     assert.equal(await flaggedPage.locator('#market-layer a[href="/terminal/?rank=marketCap"]').count(), 1);
+    const consumerVenueEntry = flaggedPage.locator('#market-layer a[href="/terminal/markets/#leo"]');
+    assert.equal(await consumerVenueEntry.count(), 1);
+    assert.match(await consumerVenueEntry.getAttribute('class'), /\bis-primary\b/);
+    assert.match(
+      await flaggedPage.locator('#market-layer a[href="/terminal/?rank=marketCap"]').getAttribute('class'),
+      /\bis-secondary\b/,
+    );
+    const consumerProvidersBefore = { jupiter: counts.jupiter, wallet: counts.wallet };
+    await consumerVenueEntry.focus();
+    assert.deepEqual({ jupiter: counts.jupiter, wallet: counts.wallet }, consumerProvidersBefore);
     await flaggedPage.goto(`${baseURL}/terminal/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(flaggedPage, '#pro-terminal-title');
     await flaggedPage.waitForFunction(() => document.querySelector('.pro-board table')?.getAttribute('aria-busy') === 'false');
