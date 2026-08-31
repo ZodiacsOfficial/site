@@ -125,11 +125,11 @@ const jsonLd = [
     <SkyTicker client:visible locale="fr" />
   </section>
 
-  <section class="section container reveal">
+  <section class="container reveal pace-act">
     <TodayBySign client:idle locale="fr" />
   </section>
 
-  <section class="section container">
+  <section class="container pace-act pace-act--rule">
     <div class="section-head reveal">
       <h2>Commence par ton thème</h2>
       <p>Découvre ton thème astral, ton signe lunaire, ton ascendant, tes compatibilités et ce qui se passe dans le ciel maintenant.</p>
@@ -148,7 +148,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="section container" id="signes">
+  <section class="container pace-tight" id="signes">
     <div class="section-head reveal">
       <h2>Les douze signes</h2>
       <p>Des guides clairs pour chaque signe : personnalité, amour, compatibilité et signification dans ton thème.</p>
@@ -166,7 +166,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="section container close-es">
+  <section class="container close-es pace-sec pace-end">
     <h2 class="display reveal">Commence par ton thème astral.</h2>
     <div class="reveal" style="--reveal-delay:120ms">
       <a class="btn btn--primary" href={localizePath('fr', '/birth-chart/')}><span>Obtiens ton thème astral gratuit</span><span class="orb">↗</span></a>
@@ -175,6 +175,19 @@ const jsonLd = [
 </Base>
 
 <style>
+  /* ── Vertical rhythm — one-sided padding in three tiers; the hairline
+     marks the act break. Mirrors the EN homepage scale. ── */
+  .pace-act { padding-top: clamp(72px, 9.5vw, 132px); }
+  .pace-act--rule {
+    margin-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--hair-1);
+    padding-top: clamp(44px, 5.5vw, 72px);
+  }
+  .pace-tight { padding-top: clamp(36px, 4.5vw, 60px); }
+  .pace-sec { padding-top: clamp(48px, 6.5vw, 88px); }
+  .pace-end { padding-bottom: clamp(80px, 10vw, 132px); }
+
+
   .hero-es {
     /* Rise behind the fixed nav so the glass refracts the footage on
        first paint (matches the English homepage). */
