@@ -55,12 +55,14 @@ node scripts/configure-registry-exchange.mjs
 git diff --exit-code
 ```
 
-Before any flag-on QA, verify that both the route and `/terminal/` landing
-markers are `0`, the terminal and its script are absent, and neither the
-Terminal page nor Astrofolio has a venue-route discovery entry. `/astrofolio/`
-must have no exchange flag marker in either state. The round trip above must stamp the route and Terminal
-markers to `1` from the same environment flag while leaving `/astrofolio/`
-clean, then restore the two stamped surfaces to `0` byte-for-byte.
+Before any flag-on QA, verify that the route, `/terminal/`, and `/astrofolio/`
+landing markers are all `0`, the terminal and its script are absent, and
+neither the Terminal page nor Astrofolio has a venue-route discovery entry.
+Since the 2026-08-31 owner addendum `/astrofolio/` carries the exchange flag
+marker, committed `0`, exactly like the Terminal landing. The round trip above
+must stamp the route, Terminal, and Astrofolio markers to `1` from the same
+environment flag, then restore the three stamped surfaces to `0`
+byte-for-byte.
 
 ## Protected flag-on QA
 
@@ -70,13 +72,15 @@ production alias. Remove the branch override after QA.
 
 Verify:
 
-- the enabled meta marker is `1` on both the Terminal venue route and `/terminal/`,
-  the terminal mounts, and the twelve records remain below it;
-- `/astrofolio/` has no exchange marker and no venue-route discovery entry;
-- exactly one Terminal venue-route discovery entry appears on `/terminal/`; it is
-  same-origin, points to `/terminal/markets/#<selected-sign>`, contains no
-  venue URL, and causes no provider or wallet request merely by rendering or
-  receiving focus;
+- the enabled meta marker is `1` on the Terminal venue route, `/terminal/`,
+  and `/astrofolio/`, the terminal mounts, and the twelve records remain
+  below it;
+- exactly one Terminal venue-route discovery entry appears on `/terminal/`,
+  and exactly one on `/astrofolio/` as a market-gateway action beside the
+  leaderboard; each is same-origin, points to
+  `/terminal/markets/#<selected-sign>`, contains no venue URL, and causes no
+  provider or wallet request merely by rendering or receiving focus;
+- leaderboard rows remain identity links and gain no venue-route entry;
 - all twelve selections keep the panel responsive without automatically
   loading the depth ladder;
 - sign selection locks during wallet review, and every ambiguous execute
@@ -137,9 +141,10 @@ requires a dated owner decision.
 ## Emergency rollback
 
 1. Use Vercel Instant Rollback to the retained flag-off production deployment.
-2. Confirm both the production route and Terminal landing meta markers are
-   `0`, the terminal/script and sole expert discovery entry are absent, and
-   Astrofolio has neither an exchange marker nor a discovery entry.
+2. Confirm the production route, Terminal, and Astrofolio landing meta
+   markers are all `0`, and the terminal/script and every venue-route
+   discovery entry — the expert gateway and the Astrofolio market-gateway
+   action — are absent.
    Confirm an offline request cannot recover a cached flag-on venue route or
    expert Terminal page.
 3. Remove the Production environment variable and deploy the current `main` to

@@ -135,11 +135,12 @@ describe('stamping', () => {
 });
 
 describe('Terminal gateway flag synchronization', () => {
-  it('commits the expert marker off and leaves Astrofolio unmarked', async () => {
+  it('commits the expert and Astrofolio markers off', async () => {
     const [pro, consumer] = await Promise.all([proPage(), consumerPage()]);
     expect(pro.match(new RegExp(REGISTRY_EXCHANGE_META, 'g'))).toHaveLength(1);
     expect(pro).toContain(`<meta name="${REGISTRY_EXCHANGE_META}" content="0" />`);
-    expect(consumer).not.toContain(REGISTRY_EXCHANGE_META);
+    expect(consumer.match(new RegExp(REGISTRY_EXCHANGE_META, 'g'))).toHaveLength(1);
+    expect(consumer).toContain(`<meta name="${REGISTRY_EXCHANGE_META}" content="0" />`);
   });
 
   it('stamps the Terminal marker from the exact same flag', () => {
@@ -168,6 +169,14 @@ describe('Terminal gateway flag synchronization', () => {
     expect(on).not.toBe(committed);
     expect(injectRegistryExchangeLanding(on, {}).output).toBe(committed);
   });
+
+  it('is byte-reversible on the committed Astrofolio page', async () => {
+    const committed = await consumerPage();
+    const on = injectRegistryExchangeLanding(committed, ON).output;
+    expect(on).not.toBe(committed);
+    expect(on).toContain(`<meta name="${REGISTRY_EXCHANGE_META}" content="1" />`);
+    expect(injectRegistryExchangeLanding(on, {}).output).toBe(committed);
+  });
 });
 
 describe('the rendered region', () => {
@@ -188,17 +197,20 @@ describe('the committed-off drift invariant', () => {
     expect(job.indexOf('configure-registry-exchange.mjs')).toBeLessThan(job.indexOf('git diff --exit-code'));
   });
 
-  it('configures the route and Terminal landing together before writing either', async () => {
+  it('configures the route and both landings together before writing any', async () => {
     const configure = await readFile(resolve(root, 'scripts/configure-registry-exchange.mjs'), 'utf8');
     expect(configure).toContain("resolve(root, 'public/terminal/markets/index.html')");
     expect(configure).toContain("resolve(root, 'public/terminal/index.html')");
+    expect(configure).toContain("resolve(root, 'public/astrofolio/index.html')");
     expect(configure).not.toContain("resolve(root, 'public/terminal/pro/index.html')");
     expect(configure).toContain('const buildEnv = registryExchangeBuildEnv(process.env)');
     expect(configure).toContain('injectRegistryExchange(exchangeSource, buildEnv)');
     expect(configure).toContain('injectRegistryExchangeLanding(terminalSource, buildEnv)');
+    expect(configure).toContain('injectRegistryExchangeLanding(astrofolioSource, buildEnv)');
     expect(configure.indexOf('const exchangeOutput =')).toBeLessThan(configure.indexOf('const writes ='));
     expect(configure.indexOf('const terminalOutput =')).toBeLessThan(configure.indexOf('const writes ='));
+    expect(configure.indexOf('const astrofolioOutput =')).toBeLessThan(configure.indexOf('const writes ='));
     expect(configure).toContain('await Promise.all(writes)');
-    expect(configure).toContain('of 2 surfaces rewritten, Terminal landing included');
+    expect(configure).toContain('of 3 surfaces rewritten, Terminal and Astrofolio landings included');
   });
 });
