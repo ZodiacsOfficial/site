@@ -148,7 +148,9 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(consumer).toContain('<meta property="og:title" content="Astrofolio · Zodiacs" />');
     expect(consumer).toContain('<meta name="twitter:title" content="Astrofolio · Zodiacs" />');
     expect(consumer).toContain('"position": 2, "name": "Astrofolio"');
-    expect(consumer).not.toContain('zodiacs-registry-exchange-enabled');
+    // Owner addendum 2026-08-31: Astrofolio carries the exchange marker,
+    // committed off, for its flag-gated market-gateway venue-route entry.
+    expect(consumer).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
     expect(consumer).not.toMatch(/Zodiac Terminal(?: Pro)?/u);
     expect(consumer).not.toMatch(/<meta\s+name="robots"[^>]*noindex/u);
 

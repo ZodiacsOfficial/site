@@ -1,5 +1,6 @@
-// Stamps Terminal's venue route into (or out of) /terminal/markets/ and synchronizes
-// the single discovery gateway on /terminal/ from
+// Stamps Terminal's venue route into (or out of) /terminal/markets/ and
+// synchronizes the flag-gated discovery entries on /terminal/ and — since the
+// 2026-08-31 owner addendum — /astrofolio/ from
 // PUBLIC_REGISTRY_EXCHANGE_ENABLED in the SHELL env. Plain-node generators do
 // not read .env files — set the flag in the shell, the way
 // configure-registry-trade does, or the halves skew.
@@ -24,28 +25,32 @@ import {
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const exchangeFile = resolve(root, 'public/terminal/markets/index.html');
 const terminalFile = resolve(root, 'public/terminal/index.html');
+const astrofolioFile = resolve(root, 'public/astrofolio/index.html');
 
 const buildEnv = registryExchangeBuildEnv(process.env);
 const enabled = registryExchangeEnabled(buildEnv);
-const [exchangeSource, terminalSource] = await Promise.all([
+const [exchangeSource, terminalSource, astrofolioSource] = await Promise.all([
   readFile(exchangeFile, 'utf8'),
   readFile(terminalFile, 'utf8'),
+  readFile(astrofolioFile, 'utf8'),
 ]);
 
-// Validate and render both surfaces before writing either one. A malformed or
-// missing Terminal marker must fail the build without leaving the venue route and
-// its only discovery entry in different flag states.
+// Validate and render every surface before writing any one of them. A
+// malformed or missing marker must fail the build without leaving the venue
+// route and its discovery entries in different flag states.
 const exchangeOutput = injectRegistryExchange(exchangeSource, buildEnv).output;
 const terminalOutput = injectRegistryExchangeLanding(terminalSource, buildEnv).output;
+const astrofolioOutput = injectRegistryExchangeLanding(astrofolioSource, buildEnv).output;
 const writes = [
   exchangeOutput !== exchangeSource ? writeFile(exchangeFile, exchangeOutput) : null,
   terminalOutput !== terminalSource ? writeFile(terminalFile, terminalOutput) : null,
+  astrofolioOutput !== astrofolioSource ? writeFile(astrofolioFile, astrofolioOutput) : null,
 ].filter(Boolean);
 await Promise.all(writes);
 
 console.log(
   `Terminal venue route: ${enabled ? 'enabled' : 'disabled'} `
-  + `(${writes.length} of 2 surfaces rewritten, Terminal landing included; `
+  + `(${writes.length} of 3 surfaces rewritten, Terminal and Astrofolio landings included; `
   + `${Object.prototype.hasOwnProperty.call(process.env, REGISTRY_EXCHANGE_FLAG)
     ? 'explicit exchange flag'
     : process.env.VERCEL_ENV === 'production'
