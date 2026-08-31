@@ -58,7 +58,6 @@
       transition: border-color 180ms var(--ease-soft), background-color 180ms var(--ease-soft);
     }
     .terminal-view-link:hover { border-color: rgba(238,241,247,.38); background: rgba(238,241,247,.035); }
-    .consumer-registry > .consumer-explorer { margin-top: 18px; }
     .consumer-registry .stage-placard__identity {
       min-width: 0;
       display: grid;
@@ -386,11 +385,17 @@
         "intro stage"
         "selector stage"
         "placard stage";
-      column-gap: clamp(50px, 7vw, 116px);
+      column-gap: clamp(44px, 5vw, 84px);
       row-gap: 24px;
-      width: min(calc(100% - 48px), 1400px);
+      /* The text column sits on the shared 1180px section grid — one left
+         axis from the hero headline down. Only the stage's extra room
+         (up to 110px) bleeds past the grid's right edge, so the artwork
+         keeps the breathing room the old 1400px container gave it. */
+      --vitrine-column: min(100% - 48px, 1180px);
+      --vitrine-bleed: clamp(0px, (100% - 1228px) / 2, 110px);
+      width: calc(var(--vitrine-column) + var(--vitrine-bleed));
       min-height: min(900px, 100svh);
-      margin: 0 auto;
+      margin: 0 0 0 calc((100% - var(--vitrine-column)) / 2);
       padding: clamp(104px, 10vw, 138px) 0 clamp(54px, 7vw, 90px);
       border: 0;
       background: transparent;
@@ -417,6 +422,20 @@
       align-items: center;
       gap: 13px;
       margin: 0 0 16px;
+    }
+    /* While the page scrolls under the fixed nav pill, the lockup bows out
+       instead of sliding beneath it. Additive: browsers without
+       scroll-driven animations keep the static lockup, which the pill's
+       backdrop blur already masks. */
+    @supports (animation-timeline: scroll()) {
+      .consumer-registry .astrofolio-lockup {
+        animation: astrofolio-lockup-recede linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 180px;
+      }
+      @keyframes astrofolio-lockup-recede {
+        to { opacity: 0; }
+      }
     }
     .consumer-registry .astrofolio-lockup__avatar {
       width: 60px;
@@ -496,6 +515,10 @@
       scroll-behavior: auto;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
+      /* The rail always holds more discs than the column shows; the fade
+         turns the hard mid-disc crop at the trailing edge into a scroll cue. */
+      -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+      mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
     }
     .consumer-registry .vitrine-disc-rail::-webkit-scrollbar { display: none; }
     .consumer-registry .vitrine-disc {
@@ -2060,7 +2083,8 @@
         grid-template-rows: auto auto auto;
         grid-template-areas: "intro" "selector" "stage";
         gap: 14px;
-        width: min(calc(100% - 32px), 620px);
+        --vitrine-column: min(100% - 32px, 620px);
+        --vitrine-bleed: 0px;
         min-height: 0;
         padding: 92px 0 44px;
       }

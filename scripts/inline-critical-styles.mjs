@@ -63,6 +63,26 @@ const targetPaths = [
   'ru/birth-chart/index.html',
 ];
 
+/**
+ * Entry pages inline Base and defer route bundles after their route-owned
+ * first-paint CSS has established the above-fold geometry. The no-JS copies
+ * remain as ordinary stylesheets, so the settled page is unchanged.
+ */
+const deferNonBaseConfig = new Map([
+  ['index.html', {
+    select: /^Base\.[A-Za-z0-9_-]+\.css$/u,
+    shape: { inline: 1, deferred: 1, external: 2 },
+  }],
+  ['birth-chart/index.html', {
+    select: /^Base\.[A-Za-z0-9_-]+\.css$/u,
+    shape: { inline: 1, deferred: 3, external: 6 },
+  }],
+  ['ru/birth-chart/index.html', {
+    select: /^Base\.[A-Za-z0-9_-]+\.css$/u,
+    shape: { inline: 1, deferred: 3, external: 6 },
+  }],
+]);
+
 export async function htmlFiles(directory) {
   let entries;
   try {
@@ -110,11 +130,12 @@ function removeHtmlAttribute(html, name) {
 
 export function expectedStylesheetShape(relativePath, deferNonBase) {
   if (deferNonBase) {
-    const deferredCount = relativePath === 'index.html' ? 1 : 3;
+    const shape = deferNonBaseConfig.get(relativePath)?.shape;
+    const deferredCount = shape?.deferred ?? 3;
     return {
-      inlineCount: 1,
+      inlineCount: shape?.inline ?? 1,
       deferredCount,
-      externalCount: deferredCount * 2,
+      externalCount: shape?.external ?? deferredCount * 2,
       loaderCount: 1,
     };
   }
@@ -240,18 +261,21 @@ export async function inlineCriticalStyles(
     }
   }
 
+  const selectPattern = deferNonBase instanceof RegExp
+    ? deferNonBase
+    : /^Base\.[A-Za-z0-9_-]+\.css$/u;
   const selectedTags = deferNonBase
     ? stylesheetTags.filter((tag) => {
       const href = attribute(tag, 'href');
-      return href ? /^Base\.[A-Za-z0-9_-]+\.css$/u.test(basename(href)) : false;
+      return href ? selectPattern.test(basename(href)) : false;
     })
     : stylesheetTags;
   const deferredTags = deferNonBase
     ? stylesheetTags.filter((tag) => !selectedTags.includes(tag))
     : [];
-  if (deferNonBase && (selectedTags.length !== 1 || deferredTags.length === 0)) {
+  if (deferNonBase && (selectedTags.length === 0 || deferredTags.length === 0)) {
     throw new Error(
-      `inline-critical-styles: expected one Base stylesheet plus deferred tool styles, found ${selectedTags.length} + ${deferredTags.length}`,
+      `inline-critical-styles: expected inlined entry styles plus deferred tool styles, found ${selectedTags.length} + ${deferredTags.length}`,
     );
   }
 
@@ -329,9 +353,7 @@ async function main() {
   for (const relativePath of targetPaths) {
     const path = resolve(distRoot, relativePath);
     const source = await readFile(path, 'utf8');
-    const deferNonBase = relativePath === 'index.html'
-      || relativePath === 'birth-chart/index.html'
-      || relativePath === 'ru/birth-chart/index.html';
+    const deferConfig = deferNonBaseConfig.get(relativePath);
     if (hasHtmlAttribute(source, stableChromeMarker) && relativePath !== 'today/index.html') {
       throw new Error(`inline-critical-styles: stable chrome marker outside Today: ${relativePath}`);
     }
@@ -348,7 +370,7 @@ async function main() {
         deferredCount: expectedDeferredCount,
         externalCount: expectedExternalCount,
         loaderCount: expectedLoaderCount,
-      } = expectedStylesheetShape(relativePath, deferNonBase);
+      } = expectedStylesheetShape(relativePath, Boolean(deferConfig));
       if (
         inlineCount !== expectedInlineCount
         || deferredCount !== expectedDeferredCount
@@ -364,7 +386,7 @@ async function main() {
       continue;
     }
     const result = await inlineCriticalStyles(source, distRoot, {
-      deferNonBase,
+      deferNonBase: deferConfig?.select,
       subsetHomepageFonts: relativePath === 'index.html',
     });
     await writeFile(path, result.html);

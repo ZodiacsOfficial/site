@@ -211,10 +211,15 @@ const [terminalSplitCss, astrofolioHtml, terminalHtml, thesisHtml, registryOutlo
   readFile(THESIS_HTML, 'utf8'),
   buildRegistryOutlookArtifact(root),
 ]);
-// Consumer retains its collection control, but acquisition and exchange
-// discovery markers stay off this identity-first surface.
+// Consumer keeps its collection control. Since the 2026-08-31 owner addendum
+// the market gateway also carries a flag-gated venue-route entry, so the
+// exchange marker is stamped here exactly like the Terminal landing:
+// committed 0, production builds may stamp 1, one flag rolls both back.
 const styledAstrofolio = stampTerminalSplitStyles(astrofolioHtml, terminalSplitCss);
-const configuredAstrofolio = injectRegistryAuraLanding(styledAstrofolio, process.env).output;
+const configuredAstrofolio = injectRegistryExchangeLanding(
+  injectRegistryAuraLanding(styledAstrofolio, process.env).output,
+  process.env,
+).output;
 const configuredTerminal = synchronizeTerminalStyles(
   configuredAstrofolio,
   injectRegistryExchangeLanding(terminalHtml, process.env).output,

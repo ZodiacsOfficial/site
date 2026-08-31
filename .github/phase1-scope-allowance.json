@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "registry-provenance-remediation-2026-08-31",
-  "baseCommit": "95ccfc67de8c02223b8cdb30ab9d49ca17f389a4",
+  "baseCommit": "53dbbbe60f546988b8f3d7d58df7a3802336f0b2",
   "protectedPaths": [
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",

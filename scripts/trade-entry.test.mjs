@@ -91,7 +91,10 @@ describe('the landing', () => {
   it('is identity-first and carries no trade flag or panel surface', async () => {
     const html = await hub();
     expect(html).not.toContain('zodiacs-registry-trade-enabled');
-    expect(html).not.toContain('zodiacs-registry-exchange-enabled');
+    // Owner addendum 2026-08-31: the exchange marker is present, committed
+    // off, for the flag-gated market-gateway venue-route entry. The trade
+    // flag and panel stay off this surface.
+    expect(html).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
     expect(html).not.toContain('data-trade-panel');
     expect(html).not.toContain('/assets/trade.js');
   });
