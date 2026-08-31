@@ -161,7 +161,7 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
     <div class="signs-menu__grid">
       {SIGNS.map((s) => (
         <a class="signs-menu__item" href={localizePath(locale, `/${s.slug}/`)} style={`--sign:${s.hue}`}>
-          <SignIcon sign={s.slug} size={32} />
+          <SignIcon sign={s.slug} size={32} deferred />
           <span class="signs-menu__name">{signName(s, locale)}</span>
           <span class="signs-menu__dates">{signDates(s, locale)}</span>
         </a>
@@ -208,7 +208,7 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
       <div class="mobile-menu__signs">
         {SIGNS.map((s, i) => (
           <a class="mobile-menu__sign" style={`--i:${i}`} href={localizePath(locale, `/${s.slug}/`)} aria-label={signName(s, locale)}>
-            <SignIcon sign={s.slug} size={30} />
+            <SignIcon sign={s.slug} size={30} deferred />
             <span>{signName(s, locale)}</span>
           </a>
         ))}
@@ -608,6 +608,19 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
   const burger = document.querySelector('[data-menu-toggle]') as HTMLButtonElement | null;
   const mobileMenu = document.querySelector('[data-mobile-menu]') as HTMLElement | null;
 
+  // Menu sign icons ship with data-src/data-srcset (SignIcon `deferred`) so a
+  // closed panel fetches nothing at page load; promote them the first time the
+  // panel opens. Sources before imgs, so the browser never picks the webp
+  // fallback while its sibling source is still empty.
+  function loadDeferredIcons(panel: HTMLElement | null) {
+    if (!panel) return;
+    for (const el of panel.querySelectorAll<HTMLElement>('source[data-srcset], img[data-src]')) {
+      const { srcset, src } = el.dataset;
+      if (srcset) { (el as HTMLSourceElement).srcset = srcset; delete el.dataset.srcset; }
+      if (src) { (el as HTMLImageElement).src = src; delete el.dataset.src; }
+    }
+  }
+
   function dropdown(
     button: HTMLButtonElement | null,
     menu: HTMLElement | null,
@@ -630,6 +643,7 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
       window.clearTimeout(hideTimer);
       toggle.setAttribute('aria-expanded', String(open));
       if (open) {
+        loadDeferredIcons(panel);
         panel.hidden = false;
         if (focusIndex !== undefined) setActive(focusIndex, true);
         requestAnimationFrame(() => panel.classList.add('is-open'));
@@ -723,6 +737,7 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
     if (!burger || !mobileMenu) return;
     const hadFocusInside = mobileMenu.contains(document.activeElement);
     if (open) {
+      loadDeferredIcons(mobileMenu);
       toolsDropdown?.setOpen(false);
       signsDropdown?.setOpen(false);
     }

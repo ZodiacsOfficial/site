@@ -125,11 +125,11 @@ const jsonLd = [
     <SkyTicker client:visible locale="pt" />
   </section>
 
-  <section class="section container reveal">
+  <section class="container reveal pace-act">
     <TodayBySign client:idle locale="pt" />
   </section>
 
-  <section class="section container">
+  <section class="container pace-act pace-act--rule">
     <div class="section-head reveal">
       <h2>Comece pelo seu mapa</h2>
       <p>Descubra seu mapa astral, signo lunar, ascendente, compatibilidade e o que está acontecendo no céu agora.</p>
@@ -148,7 +148,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="section container" id="signos">
+  <section class="container pace-tight" id="signos">
     <div class="section-head reveal">
       <h2>Os doze signos</h2>
       <p>Guias claros de cada signo: personalidade, amor, compatibilidade e o que ele significa no seu mapa.</p>
@@ -166,7 +166,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="section container close-es">
+  <section class="container close-es pace-sec pace-end">
     <h2 class="display reveal">Comece pelo seu mapa astral.</h2>
     <div class="reveal" style="--reveal-delay:120ms">
       <a class="btn btn--primary" href={localizePath('pt', '/birth-chart/')}><span>Faça seu mapa astral grátis</span><span class="orb">↗</span></a>
@@ -175,6 +175,19 @@ const jsonLd = [
 </Base>
 
 <style>
+  /* ── Vertical rhythm — one-sided padding in three tiers; the hairline
+     marks the act break. Mirrors the EN homepage scale. ── */
+  .pace-act { padding-top: clamp(72px, 9.5vw, 132px); }
+  .pace-act--rule {
+    margin-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--hair-1);
+    padding-top: clamp(44px, 5.5vw, 72px);
+  }
+  .pace-tight { padding-top: clamp(36px, 4.5vw, 60px); }
+  .pace-sec { padding-top: clamp(48px, 6.5vw, 88px); }
+  .pace-end { padding-bottom: clamp(80px, 10vw, 132px); }
+
+
   .hero-es {
     /* Rise behind the fixed nav so the glass refracts the footage on
        first paint (matches the English homepage). */
