@@ -95,6 +95,6 @@ describe('calculator first-paint CSS contract', () => {
     const cue = rulesByIdentity(canonicalCss).get('\n.calc__context-cue');
 
     expect(cue).toEqual({ 'font-size': '11px', 'line-height': '1.5' });
-    expect(page).toContain('.calc__context-cue { font-size: 11px; line-height: 1.5; }');
+    expect(page).toContain('.field__help.calc__context-cue { font-size: 11px; line-height: 1.5; }');
   });
 });
