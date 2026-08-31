@@ -51,13 +51,14 @@ describe('assistant site context', () => {
     expect(counts).toEqual({
       birthdays: 366,
       // /race/ joined the listing in R2.1 and the Trophy Hall joined in
-      // R2.3; Packet C removes the two wing-only routes from Guide context.
-      consumerRoutes: 682,
+      // R2.3; Packet C removes the two wing-only routes from Guide context;
+      // /developers/ (the sky data API documentation) joined the static pages.
+      consumerRoutes: 683,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 43,
+      staticPages: 44,
       tools: 17,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');
