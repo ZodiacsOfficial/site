@@ -13,6 +13,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const distRoot = resolve(repo, 'dist');
 const marker = 'data-inline-critical-css';
 const stableChromeMarker = 'data-stable-chrome-typography';
+const localChromeMarker = 'data-local-chrome-typography';
 const linkPattern = /<link\b[^>]*>/gi;
 const criticalStylePattern = /<style\b[^>]*\bdata-zdx-critical=["'][^"']+["'][^>]*>/gi;
 const deferredStylePattern = /<template\b[^>]*\bdata-zdx-deferred-style\b[^>]*>/gi;
@@ -50,10 +51,10 @@ const signs = [
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
 const targetPaths = [
-  // The EN homepage joined when the per-push Lighthouse gate started covering
-  // it: its LCP sat 70ms over budget purely on the two blocking stylesheet
-  // round trips, the same delivery cost this pass already removes for the
-  // gated RU entry pages.
+  // The EN homepage keeps only Base plus its route-owned first-paint geometry
+  // on the render path. The complete route bundle still loads after first
+  // paint (and remains present for no-JS readers), so below-fold styles cannot
+  // delay the poster while the settled page keeps its reviewed appearance.
   'index.html',
   'birth-chart/index.html',
   'today/index.html',
@@ -63,12 +64,16 @@ const targetPaths = [
 ];
 
 /**
- * Calculator entries inline their above-fold styles and defer the rest. The
- * RU form sits below the mobile fold, so Base alone paints shift-free; the
- * EN form is inside the first viewport and needs calculator.css at first
- * paint (deferring it measured CLS 0.102 on /birth-chart/).
+ * Entry pages inline the styles required for above-fold geometry and defer
+ * the rest. The homepage and RU calculator need Base only; the EN calculator
+ * also keeps calculator.css on the render path. No-JS copies remain ordinary
+ * stylesheets, so the settled page is unchanged.
  */
 const deferNonBaseConfig = new Map([
+  ['index.html', {
+    select: /^Base\.[A-Za-z0-9_-]+\.css$/u,
+    shape: { inline: 1, deferred: 1, external: 2 },
+  }],
   ['birth-chart/index.html', {
     select: /^(?:Base|calculator)\.[A-Za-z0-9_-]+\.css$/u,
     shape: { inline: 2, deferred: 2, external: 4 },
@@ -124,6 +129,25 @@ function removeHtmlAttribute(html, name) {
   return html.replace(tag, tag.replace(htmlAttributePattern(name), ''));
 }
 
+export function expectedStylesheetShape(relativePath, deferNonBase) {
+  if (deferNonBase) {
+    const shape = deferNonBaseConfig.get(relativePath)?.shape;
+    const deferredCount = shape?.deferred ?? 3;
+    return {
+      inlineCount: shape?.inline ?? 1,
+      deferredCount,
+      externalCount: shape?.external ?? deferredCount * 2,
+      loaderCount: 1,
+    };
+  }
+  return {
+    inlineCount: 2,
+    deferredCount: 0,
+    externalCount: 0,
+    loaderCount: 0,
+  };
+}
+
 function assertSafeCss(css, href) {
   if (/@import\b/i.test(css)) {
     throw new Error(`inline-critical-styles: @import is not safe to relocate from ${href}`);
@@ -144,6 +168,24 @@ const stableChromeFaces = new Map([
   ['EB Garamond:400', '/fonts/eb-garamond-latin-400-normal.woff2'],
   ['EB Garamond:500', '/fonts/eb-garamond-latin-500-normal.woff2'],
   ['JetBrains Mono', '/fonts/jetbrains-mono-latin-wght-normal.woff2'],
+]);
+const homepageSubsetFaces = new Map([
+  ['Instrument Sans', {
+    source: '/fonts/instrument-sans-latin-wght-normal.woff2',
+    subset: '/assets/home/instrument-sans-home-nav-core.woff2',
+  }],
+  ['EB Garamond:400', {
+    source: '/fonts/eb-garamond-latin-400-normal.woff2',
+    subset: '/assets/home/eb-garamond-home-400-core.woff2',
+  }],
+  ['EB Garamond:500', {
+    source: '/fonts/eb-garamond-latin-500-normal.woff2',
+    subset: '/assets/home/eb-garamond-home-500-nav-core.woff2',
+  }],
+  ['JetBrains Mono', {
+    source: '/fonts/jetbrains-mono-latin-wght-normal.woff2',
+    subset: '/assets/home/jetbrains-mono-home-nav-core.woff2',
+  }],
 ]);
 
 function declarationValue(face, property) {
@@ -167,10 +209,40 @@ function stabilizeChromeFontDisplay(css) {
   return { css: output, changes };
 }
 
-export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase = false } = {}) {
+function useHomepageFontSubsets(css) {
+  let changes = 0;
+  const output = css.replace(/@font-face\s*\{[^{}]*\}/gi, (face) => {
+    const family = declarationValue(face, 'font-family');
+    const weight = declarationValue(face, 'font-weight');
+    const key = family === 'EB Garamond' ? `${family}:${weight}` : family;
+    const replacement = homepageSubsetFaces.get(key);
+    if (!replacement || !face.includes(replacement.source)) return face;
+    if (!/font-display\s*:\s*swap\b/i.test(face)) {
+      throw new Error(`inline-critical-styles: homepage face ${key} lost its swap source contract`);
+    }
+
+    changes += 1;
+    return face
+      .replace(replacement.source, replacement.subset)
+      .replace(/(font-display\s*:\s*)swap\b/i, '$1optional');
+  });
+  return { css: output, changes };
+}
+
+export async function inlineCriticalStyles(
+  html,
+  root = distRoot,
+  { deferNonBase = false, subsetHomepageFonts = false } = {},
+) {
   if (!hasHtmlAttribute(html, marker)) return { html, stylesheets: 0, bytes: 0 };
 
   const stabilizeChrome = hasHtmlAttribute(html, stableChromeMarker);
+  if (stabilizeChrome && subsetHomepageFonts) {
+    throw new Error('inline-critical-styles: stable chrome and homepage subsets are mutually exclusive');
+  }
+  if (subsetHomepageFonts && !hasHtmlAttribute(html, localChromeMarker)) {
+    throw new Error('inline-critical-styles: homepage subsets require the local-chrome delivery marker');
+  }
 
   const stylesheetTags = [...html.matchAll(linkPattern)]
     .map((match) => match[0])
@@ -211,6 +283,7 @@ export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase
   let output = html;
   let bytes = 0;
   let stabilizedChromeFaces = 0;
+  let subsetHomepageFaces = 0;
   for (const tag of selectedTags) {
     const href = attribute(tag, 'href');
     const cssPath = resolve(root, `.${href}`);
@@ -218,8 +291,12 @@ export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase
     const stableResult = stabilizeChrome
       ? stabilizeChromeFontDisplay(sourceCss)
       : { css: sourceCss, changes: 0 };
-    const css = stableResult.css;
+    const subsetResult = subsetHomepageFonts
+      ? useHomepageFontSubsets(stableResult.css)
+      : { css: stableResult.css, changes: 0 };
+    const css = subsetResult.css;
     stabilizedChromeFaces += stableResult.changes;
+    subsetHomepageFaces += subsetResult.changes;
     assertSafeCss(css, href);
     bytes += Buffer.byteLength(css);
     output = output.replace(
@@ -231,6 +308,11 @@ export async function inlineCriticalStyles(html, root = distRoot, { deferNonBase
   if (stabilizeChrome && stabilizedChromeFaces !== stableChromeFaces.size) {
     throw new Error(
       `inline-critical-styles: expected ${stableChromeFaces.size} stable chrome faces, found ${stabilizedChromeFaces}`,
+    );
+  }
+  if (subsetHomepageFonts && subsetHomepageFaces !== homepageSubsetFaces.size) {
+    throw new Error(
+      `inline-critical-styles: expected ${homepageSubsetFaces.size} homepage subset faces, found ${subsetHomepageFaces}`,
     );
   }
 
@@ -284,14 +366,17 @@ async function main() {
         .length;
       const deferredCount = source.match(deferredStylePattern)?.length ?? 0;
       const loaderCount = source.match(/data-zdx-deferred-style-loader/g)?.length ?? 0;
-      const expectedInlineCount = deferConfig?.shape.inline ?? 2;
-      const expectedDeferredCount = deferConfig?.shape.deferred ?? 0;
-      const expectedExternalCount = deferConfig?.shape.external ?? 0;
+      const {
+        inlineCount: expectedInlineCount,
+        deferredCount: expectedDeferredCount,
+        externalCount: expectedExternalCount,
+        loaderCount: expectedLoaderCount,
+      } = expectedStylesheetShape(relativePath, Boolean(deferConfig));
       if (
         inlineCount !== expectedInlineCount
         || deferredCount !== expectedDeferredCount
         || externalCount !== expectedExternalCount
-        || loaderCount !== (deferConfig ? 1 : 0)
+        || loaderCount !== expectedLoaderCount
       ) {
         throw new Error(
           `inline-critical-styles: ${relativePath} has an unexpected inline/external stylesheet shape`,
@@ -301,15 +386,18 @@ async function main() {
       stylesheets += inlineCount;
       continue;
     }
-    const result = await inlineCriticalStyles(source, distRoot, { deferNonBase: deferConfig?.select });
+    const result = await inlineCriticalStyles(source, distRoot, {
+      deferNonBase: deferConfig?.select,
+      subsetHomepageFonts: relativePath === 'index.html',
+    });
     await writeFile(path, result.html);
     pages += 1;
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 17 || stylesheets !== 33) {
+  if (pages + alreadyInlined !== 17 || stylesheets !== 32) {
     throw new Error(
-      `inline-critical-styles: expected 17 pages / 33 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 17 pages / 32 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0

@@ -1,0 +1,205 @@
+/*
+ * Stable first-paint geometry for the homepage hero.
+ *
+ * The complete route stylesheet loads after the initial document. Keep this
+ * subset equivalent to the hero's initial state so the poster can become LCP
+ * without waiting for below-the-fold homepage styles.
+ */
+@font-face {
+  font-family: 'EB Garamond Home';
+  src: url('/assets/home/eb-garamond-home-400-core.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: optional;
+}
+
+html[data-local-typography][lang='en'] {
+  --font-serif: 'EB Garamond Home', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, Menlo, Consolas, monospace;
+}
+
+html[data-local-chrome-typography][lang='en'] {
+  --font-nav-serif: 'EB Garamond', 'EB Garamond Fallback', 'EB Garamond Fallback Android', 'EB Garamond Fallback Times', 'Iowan Old Style', Georgia, serif;
+  --font-nav-sans: 'Instrument Sans', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
+  --font-nav-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+
+.hero.container {
+  margin-top: calc(-1 * var(--nav-space, 96px));
+  width: min(100% - 32px, 1440px);
+  padding-block: 0 clamp(14px, 2vw, 22px);
+}
+
+.hero__frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: clamp(18px, 2.6vw, 30px);
+  min-height: clamp(600px, calc(100svh - 40px), 900px);
+  background: var(--void-1);
+  box-shadow:
+    inset 0 0 0 1px rgba(198, 204, 218, 0.10),
+    0 30px 80px -40px rgba(0, 0, 0, 0.8);
+  isolation: isolate;
+}
+
+.hero__poster,
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  transform: scale(1.035);
+  transform-origin: center;
+}
+
+.hero__poster { display: block; }
+.hero__video {
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+.hero__video.is-playing { opacity: 1; }
+
+@keyframes hero-poster-drift {
+  0% { transform: scale(1.035) translate3d(0, 0, 0); }
+  100% { transform: scale(1.06) translate3d(-0.55%, 0.4%, 0); }
+}
+
+@media (max-width: 719px) and (prefers-reduced-motion: no-preference) {
+  .hero__poster[data-hero-motion='drift'] {
+    animation: hero-poster-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+    will-change: transform;
+  }
+  .hero__poster[data-hero-visible='false'] { animation-play-state: paused; }
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg,
+      rgba(6, 7, 9, 0.58) 0%,
+      rgba(6, 7, 9, 0.34) 30%,
+      rgba(6, 7, 9, 0.22) 56%,
+      rgba(6, 7, 9, 0.70) 88%,
+      rgba(6, 7, 9, 0.88) 100%);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  padding: calc(clamp(100px, 13svh, 132px) + env(safe-area-inset-top)) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 64px);
+  text-align: center;
+}
+
+.hero__title {
+  margin: 0 0 clamp(14px, 2vw, 20px);
+  font-family: var(--font-sans);
+  font-weight: 690;
+  font-size: clamp(2.4rem, 0.95rem + 5.9vw, 6rem);
+  line-height: 0.94;
+  letter-spacing: 0.002em;
+  text-transform: uppercase;
+  max-width: 9.53em;
+  color: var(--ink-0, #EEF1F7);
+  text-wrap: balance;
+  text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55);
+}
+
+.hero__title em {
+  font-style: normal;
+  color: var(--ink-1, #C6CCDA);
+}
+
+.hero__foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 3vw, 28px);
+}
+
+.hero__sub {
+  margin: 0;
+  max-width: 31.97em;
+  color: var(--ink-1, #C6CCDA);
+  font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+  text-shadow: 0 1px 18px rgba(6, 7, 9, 0.6);
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.hero__ctas .hero__ghost {
+  background: rgba(10, 12, 17, 0.66);
+  backdrop-filter: saturate(150%) blur(18px);
+  -webkit-backdrop-filter: saturate(150%) blur(18px);
+  border-color: rgba(238, 241, 247, 0.28);
+  color: var(--ink-0, #EEF1F7);
+  box-shadow:
+    inset 0 1px 0 rgba(238, 241, 247, 0.06),
+    0 12px 32px -14px rgba(0, 0, 0, 0.7);
+}
+
+.hero__trustlines {
+  margin: -2px 0 0;
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+}
+
+.hero__trust {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.45;
+  letter-spacing: 0.055em;
+  color: var(--faint);
+  text-shadow: 0 1px 14px rgba(6, 7, 9, 0.72);
+  text-align: center;
+}
+
+.hero__trust a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .hero.container { width: min(100% - 20px, 1440px); }
+  .hero__frame { min-height: clamp(540px, calc(100svh - 56px), 760px); }
+  .hero__content { padding: calc(clamp(96px, 15svh, 120px) + env(safe-area-inset-top)) 18px 22px; }
+  .hero__title {
+    max-width: 7.49em;
+    font-size: clamp(2.25rem, 11.5vw, 3.55rem);
+    line-height: 0.95;
+  }
+  .hero__sub {
+    max-width: 20.65em;
+    font-size: 0.98rem;
+    line-height: 1.52;
+  }
+  .hero__ctas .btn { flex: 1 1 auto; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__frame { box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10); }
+  .hero__poster,
+  .hero__video { animation: none; transform: scale(1.035); }
+  .hero__video { transition: none; }
+}
