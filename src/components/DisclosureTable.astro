@@ -1,7 +1,7 @@
 ---
 import type { DisclosureRow } from '../lib/disclosure';
 import { disclosureText, statusText } from '../lib/disclosure';
-import type { ReleasedLocale as Locale } from '../lib/i18n';
+import { englishOnlyCue, type ReleasedLocale as Locale } from '../lib/i18n';
 
 interface Props {
   rows: readonly DisclosureRow[];
@@ -9,6 +9,12 @@ interface Props {
 }
 
 const { rows, locale } = Astro.props;
+// Evidence rows may cite English-only pages (/terms/, /sdk/, /thesis/, the
+// trade example); those internal page links carry the shared courtesy cue.
+const englishOnly = englishOnlyCue(locale);
+const englishOnlyHref = (href: string | undefined): boolean => Boolean(
+  englishOnly && href && href.startsWith('/') && !href.startsWith(`/${locale}/`) && href.endsWith('/'),
+);
 ---
 <div class="disclosure-table-wrap">
   {/* Explicit table roles survive the ≤660px display:block switch, which
@@ -39,6 +45,8 @@ const { rows, locale } = Astro.props;
                     {link.href ? (
                       <a
                         href={link.href}
+                        hreflang={englishOnlyHref(link.href) ? 'en' : undefined}
+                        title={englishOnlyHref(link.href) ? englishOnly?.aria : undefined}
                         rel={link.external ? 'noopener nofollow' : undefined}
                       >
                         {link.label}{link.external ? ' ↗' : ''}

@@ -196,7 +196,7 @@ const it = {
   recordLabel: "Ala della collezione",
   recordOneOfTwelve:
     "esiste anche come uno dei Dodici — una scheda di riferimento nel registro.",
-  recordViewLink: "Vedi la scheda →",
+  recordViewLink: "Vedi la scheda — per ora in inglese →",
   recordChartSun: "Il tuo Sole è in {sign}.",
   recordChartBody:
     "{sign} è uno dei Dodici, con la propria arte, storia e scheda ufficiale nel Registro.",

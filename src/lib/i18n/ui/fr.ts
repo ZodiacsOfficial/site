@@ -170,7 +170,7 @@ const fr = {
   saveYearAheadNote: 'Sur la page de profil, les thèmes enregistrés donnent accès aux douze prochains mois calculés — retour solaire, dates de Jupiter et Saturne, contacts des éclipses.',
   recordLabel: 'Aile des collections',
   recordOneOfTwelve: 'figure aussi parmi les Douze — une notice de référence dans le registre.',
-  recordViewLink: 'Voir la notice →',
+  recordViewLink: 'Voir la notice — pour l’instant en anglais →',
   recordChartSun: 'Ton Soleil est en {sign}.',
   recordChartBody: '{sign} fait partie des Douze, avec ses propres créations, son histoire et sa notice officielle dans le Registre.',
   recordChartLink: 'Explorer le Registre de {sign} →',

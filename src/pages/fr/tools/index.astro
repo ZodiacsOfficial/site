@@ -1,11 +1,12 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import ToolGlyph from '../../../components/ToolGlyph.astro';
-import { localizePath } from '../../../lib/i18n';
+import { ENGLISH_ONLY_COPY, localizePath } from '../../../lib/i18n';
 
+const englishOnly = ENGLISH_ONLY_COPY.fr;
 const tools = [
   { href: '/birth-chart/', title: 'Thème astral', promise: 'Ton Soleil, ta Lune, ton ascendant, tes planètes, tes maisons et leur signification.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
-  { href: '/birth-chart/someone-else/', title: 'Thème d’une autre personne', promise: 'Utilise ses données de naissance, ses trois signes principaux ou un lien Zodiacs, avec son accord.', hue: 'var(--sign-pisces)', kind: 'birth' as const, englishOnly: true },
+  { href: '/birth-chart/someone-else/', title: 'Thème d’une autre personne (en anglais)', promise: 'Utilise ses données de naissance, ses trois signes principaux ou un lien Zodiacs, avec son accord.', hue: 'var(--sign-pisces)', kind: 'birth' as const, englishOnly: true },
   { href: '/today/', title: 'Aujourd’hui (en anglais)', promise: 'Ton dernier thème enregistré face au ciel de midi, degrés compris.', hue: 'var(--sign-cancer)', kind: 'transit' as const, englishOnly: true },
   { href: '/compatibility/', title: 'Compatibilité', promise: 'Compare deux thèmes et vois où ils s’accordent, se heurtent et évoluent.', hue: 'var(--sign-libra)', kind: 'compat' as const },
   { href: '/moon-sign/', title: 'Signe lunaire', promise: 'Ta manière de ressentir et ce qui t’apaise.', hue: 'var(--sign-pisces)', kind: 'moon' as const },
@@ -43,7 +44,7 @@ const jsonLd = [
 
     <div class="tools-grid">
       {tools.map((tool) => (
-        <a class="shell tinted" href={'englishOnly' in tool ? tool.href : localizePath('fr', tool.href)} hreflang={'englishOnly' in tool ? 'en' : undefined} style={`--sign:${tool.hue}`}>
+        <a class="shell tinted" href={'englishOnly' in tool ? tool.href : localizePath('fr', tool.href)} hreflang={'englishOnly' in tool ? 'en' : undefined} title={'englishOnly' in tool ? englishOnly.aria : undefined} aria-label={'englishOnly' in tool ? `${tool.title}. ${englishOnly.aria}` : undefined} style={`--sign:${tool.hue}`}>
           <div class="core tinted tool-card">
             <ToolGlyph kind={tool.kind} />
             <h3>{tool.title}</h3>

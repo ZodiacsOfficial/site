@@ -140,15 +140,18 @@ await withPreview({ port: 4402 }, async (baseURL) => {
         await page.waitForFunction(() => document.querySelector('[data-hero-video]')?.dataset.heroPlayback === 'playing');
       }
 
-      const before = await video.evaluate((element) => ({
-        attached: element.dataset.sourcesAttached === 'true',
-        playback: element.dataset.heroPlayback,
-        poster: element.getAttribute('poster'),
-        sources: [...element.querySelectorAll('source')].map((source) => source.getAttribute('src')),
-        animation: element.getAnimations().find((item) => item.animationName === 'hero-poster-drift')?.playState ?? null,
-        width: element.getBoundingClientRect().width,
-        height: element.getBoundingClientRect().height,
-      }));
+      const before = await video.evaluate((element) => {
+        const poster = document.querySelector('[data-hero-poster]');
+        return {
+          attached: element.dataset.sourcesAttached === 'true',
+          playback: element.dataset.heroPlayback,
+          poster: poster?.currentSrc ?? null,
+          sources: [...element.querySelectorAll('source')].map((source) => source.getAttribute('src')),
+          animation: poster?.getAnimations().find((item) => item.animationName === 'hero-poster-drift')?.playState ?? null,
+          width: poster?.getBoundingClientRect().width ?? 0,
+          height: poster?.getBoundingClientRect().height ?? 0,
+        };
+      });
       check(
         `${testCase.name}: initial source gate matches its viewport`,
         testCase.attachesInitially
@@ -156,7 +159,7 @@ await withPreview({ port: 4402 }, async (baseURL) => {
           : !before.attached && before.sources.every((source) => source === null),
         `${before.playback} · ${JSON.stringify(before.sources)}`,
       );
-      check(`${testCase.name}: poster remains the LCP surface`, before.poster === '/assets/hero/zodiacs-hero-poster.avif' && before.width > 0 && before.height > 0, `${before.poster} · ${before.width.toFixed(0)}×${before.height.toFixed(0)}`);
+      check(`${testCase.name}: poster remains the LCP surface`, /\/assets\/hero\/zodiacs-hero-poster(?:-mobile)?\.avif$/.test(before.poster ?? '') && before.width > 0 && before.height > 0, `${before.poster} · ${before.width.toFixed(0)}×${before.height.toFixed(0)}`);
       check(
         `${testCase.name}: ambient motion matches preference and viewport`,
         testCase.drifts ? before.animation === 'running' : before.animation === null,
@@ -214,7 +217,8 @@ await withPreview({ port: 4402 }, async (baseURL) => {
         await page.waitForFunction(() => document.querySelector('[data-hero-video]')?.dataset.heroVisible === 'false');
         const offscreen = await video.evaluate((element) => ({
           playback: element.dataset.heroPlayback,
-          animation: element.getAnimations().find((item) => item.animationName === 'hero-poster-drift')?.playState ?? null,
+          animation: document.querySelector('[data-hero-poster]')?.getAnimations()
+            .find((item) => item.animationName === 'hero-poster-drift')?.playState ?? null,
         }));
         const countsOffscreen = await page.evaluate(() => ({ play: window.__heroPlayCount, pause: window.__heroPauseCount }));
         check('mobile-normal: video pauses offscreen', countsOffscreen.pause > countsBeforeScroll.pause && offscreen.playback === 'paused', `${countsBeforeScroll.pause} → ${countsOffscreen.pause}`);
@@ -223,7 +227,7 @@ await withPreview({ port: 4402 }, async (baseURL) => {
         await page.evaluate(() => window.scrollTo(0, 0));
         await page.waitForFunction(() => document.querySelector('[data-hero-video]')?.dataset.heroVisible === 'true');
         await page.waitForFunction((previous) => window.__heroPlayCount > previous, countsOffscreen.play);
-        const onscreenAnimation = await video.evaluate((element) => element.getAnimations().find((item) => item.animationName === 'hero-poster-drift')?.playState ?? null);
+        const onscreenAnimation = await page.evaluate(() => document.querySelector('[data-hero-poster]')?.getAnimations().find((item) => item.animationName === 'hero-poster-drift')?.playState ?? null);
         check('mobile-normal: video resumes on return', true, `${countsOffscreen.play} → ${await page.evaluate(() => window.__heroPlayCount)}`);
         check('mobile-normal: poster motion resumes on return', onscreenAnimation === 'running', String(onscreenAnimation));
 
@@ -246,7 +250,8 @@ await withPreview({ port: 4402 }, async (baseURL) => {
       if (testCase.playRejects) {
         const fallback = await video.evaluate((element) => ({
           playback: element.dataset.heroPlayback,
-          animation: element.getAnimations().find((item) => item.animationName === 'hero-poster-drift')?.playState ?? null,
+          animation: document.querySelector('[data-hero-poster]')?.getAnimations()
+            .find((item) => item.animationName === 'hero-poster-drift')?.playState ?? null,
         }));
         check(`${testCase.name}: rejected playback keeps the poster drifting`, fallback.playback === 'poster-fallback' && fallback.animation === 'running', `${fallback.playback} · ${fallback.animation}`);
       }

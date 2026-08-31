@@ -170,7 +170,7 @@ const es = {
     saveYearAheadNote: 'En la página de perfil, las cartas guardadas reciben un cálculo de los próximos doce meses: retorno solar, fechas de Júpiter y Saturno, eclipses.',
     recordLabel: 'Zona de colección',
     recordOneOfTwelve: 'forma parte de las Doce piezas del Registro.',
-    recordViewLink: 'Ver el registro →',
+    recordViewLink: 'Ver el registro — por ahora en inglés →',
     recordChartSun: 'Tu Sol está en {sign}.',
     recordChartBody: '{sign} es una de las Doce, con su propio arte, historia y registro oficial en el Registro.',
     recordChartLink: 'Explora el Registro de {sign} →',

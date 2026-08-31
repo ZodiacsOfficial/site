@@ -11,6 +11,13 @@ const visualRoot = dirname(fileURLToPath(import.meta.url));
 const artifactRoot = resolve(visualRoot, 'artifacts/lighthouse');
 const runCount = Number(process.env.LIGHTHOUSE_RUNS ?? 3);
 const routes = [
+  // The three highest-traffic EN routes gate every push alongside the newer
+  // templates. They were excluded while older-baseline debt was being paid
+  // down (SITE-AUDIT-2026-08-24 §Performance); they now pass the same
+  // budgets, so the flagship funnel blocks merges exactly like /ru/ does.
+  { name: 'home', path: '/' },
+  { name: 'birth-chart', path: '/birth-chart/' },
+  { name: 'aries', path: '/aries/' },
   { name: 'thesis', path: '/thesis/' },
   { name: 'today', path: '/today/' },
   { name: 'horoscopes', path: '/horoscopes/' },
@@ -38,15 +45,9 @@ const routes = [
   { name: 'ru-birth-chart', path: '/ru/birth-chart/' },
   { name: 'ru-sign-guide', path: '/ru/aries/', intentionalNoindex: true },
 ];
-// The Phase 1 brief gates every *new* template. Older site baselines remain
-// available for a broader audit without making unrelated debt block this gate.
-if (process.env.LIGHTHOUSE_INCLUDE_BASELINE === '1') {
-  routes.unshift(
-    { name: 'home', path: '/' },
-    { name: 'birth-chart', path: '/birth-chart/' },
-    { name: 'aries', path: '/aries/' },
-  );
-}
+// Registry Collection only exists in flag-on builds, so it cannot join the
+// per-push gate; the scheduled lighthouse-collection workflow builds with the
+// flag and audits it here.
 if (process.env.LIGHTHOUSE_INCLUDE_AURA === '1') {
   routes.push({ name: 'registry-aura', path: '/registry/collection/' });
 }

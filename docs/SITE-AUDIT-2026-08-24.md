@@ -39,6 +39,36 @@ The operator identity, governing-law choice, translated legal parity, backup
 secret provisioning, first encrypted artifact, and throwaway-project restore
 drill remain owner-controlled work and are not represented as complete here.
 
+## Remediation note — 2026-08-31
+
+Three findings this report still lists as open were in fact closed in code,
+two of them the same day the audit was taken; recording them here so the
+original observations stop reading as current facts:
+
+- **Engine §2 "polar ascendant can be the descendant" — fixed 2026-08-24**
+  (`9b366d4`). `src/lib/engine/houses.ts` wraps the vendored `computeAngles`
+  with the recommended east-point correction (`norm(asc − mc)` must lie in
+  (0, 180), otherwise the axis is swapped), `full.ts` re-anchors whole-sign
+  cusps after a flip, and `engine.test.ts` holds a 96-sample Longyearbyen
+  (78.22° N) vector that asserts real flips occur and are corrected. One
+  accepted nuance remains: a chart whose user explicitly selected whole-sign
+  houses is corrected silently — no `polar-fallback` notice renders, because
+  no house-system fallback happened.
+- **Design §2 "trade panel reintroduces Warm Gilt" — fixed 2026-08-24**
+  (`5a1ea3b`). Every gold literal in `src/trade/styles.mjs` now derives from
+  the per-mount sign pastel, and `scripts/trade-styles.test.mjs` /
+  `scripts/exchange-styles.test.mjs` pin hex allowlists so gold cannot
+  return. (The Aura cabinet's gold is a product material — the edition
+  tier — not theme chrome, and stays.)
+- **Performance "CI Lighthouse gate excludes the EN baselines" — closed in
+  two steps.** The weekly reporting run this report proposed landed
+  2026-08-24 (`d5eda9a`); as of 2026-08-31 the EN trio (`/`,
+  `/birth-chart/`, `/aries/`) gates every push in
+  `tests/visual/lighthouse.mjs`, and the weekly workflow now audits the
+  flag-gated `/registry/collection/` route instead
+  (`.github/workflows/lighthouse-collection.yml`), which a flag-off per-push
+  build can never see.
+
 ---
 
 ## 1. Scorecard

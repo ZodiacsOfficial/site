@@ -5,8 +5,15 @@ import { PF_BOOK_COPY } from './ProfileManager';
 describe('weekly digest return target', () => {
   it('renders the fragment anchor before the asynchronous session panel', async () => {
     const source = await readFile(new URL('./ProfileManager.tsx', import.meta.url), 'utf8');
-    expect(source).toMatch(/<div id="weekly-digest">\s*\{session && locale !== 'ru' && \(/u);
+    expect(source).toMatch(
+      /<div id="weekly-digest">\s*\{session && locale !== 'ru' && weeklyDigestSignupEnabled\(\) && \(/u,
+    );
     expect(source).not.toContain('class="pf-digest-panel" id="weekly-digest"');
+  });
+
+  it('hides the opt-in checkbox until the public digest flag is on', async () => {
+    const source = await readFile(new URL('./ProfileManager.tsx', import.meta.url), 'utf8');
+    expect(source).toContain("import { weeklyDigestSignupEnabled } from '../lib/weekly-digest/feature-flags'");
   });
 });
 

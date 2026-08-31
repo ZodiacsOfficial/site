@@ -89,7 +89,16 @@ const tools = [
     slot="head"
     rel="preload"
     as="image"
+    href="/assets/hero/zodiacs-hero-poster-mobile.avif"
+    media="(max-width: 719px)"
+    fetchpriority="high"
+  />
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
     href="/assets/hero/zodiacs-hero-poster.avif"
+    media="(min-width: 720px)"
     fetchpriority="high"
   />
   <!-- Legacy hash deep-links from the old homepage SPA → their new homes. -->
@@ -104,10 +113,29 @@ const tools = [
 
   <!-- 01 · Hero — one rounded cinematic frame, headline over the footage. -->
   <section class="hero container">
-    <div class="hero__frame reveal">
+    {/* No reveal on the hero frame: the poster is the LCP and must paint
+        before any script runs — the RU release set this pattern. */}
+    <div class="hero__frame">
+      <picture>
+        <source
+          media="(max-width: 719px)"
+          srcset="/assets/hero/zodiacs-hero-poster-mobile.avif"
+          type="image/avif"
+        />
+        <img
+          class="hero__poster"
+          src="/assets/hero/zodiacs-hero-poster.avif"
+          width="1600"
+          height="900"
+          loading="eager"
+          fetchpriority="high"
+          alt=""
+          aria-hidden="true"
+          data-hero-poster
+        />
+      </picture>
       <video
         class="hero__video"
-        poster="/assets/hero/zodiacs-hero-poster.avif"
         muted
         loop
         playsinline
@@ -132,7 +160,10 @@ const tools = [
             <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
             <a class="btn btn--ghost hero__ghost" href="/horoscopes/"><span>See your forecasts</span></a>
           </div>
-          <p class="hero__trust">Free · No signup · Calculated in your browser</p>
+          <div class="hero__trustlines">
+            <p class="hero__trust">Free · No signup · Calculated in your browser</p>
+            <p class="hero__trust">Positions checked against NASA JPL Horizons · <a href="/methodology/">How we compute</a></p>
+          </div>
         </div>
       </div>
     </div>
@@ -142,7 +173,8 @@ const tools = [
       // desktop preserves its released autoplay. Offscreen ambient work pauses.
       (function () {
         var v = document.querySelector('[data-hero-video]');
-        if (!v) return;
+        var p = document.querySelector('[data-hero-poster]');
+        if (!v || !p) return;
         var frame = v.closest('.hero__frame');
         var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
         var reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -185,6 +217,7 @@ const tools = [
           playAttempt += 1;
           playPending = false;
           v.dataset.heroPlayback = 'poster-fallback';
+          v.classList.remove('is-playing');
           v.pause();
           detachSources();
         };
@@ -205,6 +238,7 @@ const tools = [
             playPending = false;
             abortRetried = false;
             v.dataset.heroPlayback = 'playing';
+            v.classList.add('is-playing');
             return;
           }
           promise.then(function () {
@@ -217,6 +251,7 @@ const tools = [
               return;
             }
             v.dataset.heroPlayback = 'playing';
+            v.classList.add('is-playing');
           }).catch(function (error) {
             if (attempt !== playAttempt) return;
             playPending = false;
@@ -235,6 +270,7 @@ const tools = [
         var setVisible = function (nextVisible) {
           visible = Boolean(nextVisible) && !document.hidden;
           v.dataset.heroVisible = String(visible);
+          p.dataset.heroVisible = String(visible);
           if (!visible) {
             playAttempt += 1;
             playPending = false;
@@ -256,6 +292,7 @@ const tools = [
         };
 
         v.dataset.heroMotion = reducedQuery.matches ? 'static' : 'drift';
+        p.dataset.heroMotion = v.dataset.heroMotion;
         v.dataset.heroPlayback = 'poster';
         setVisible(!frame || frame.getBoundingClientRect().bottom > 0);
 
@@ -284,6 +321,7 @@ const tools = [
 
         reducedQuery.addEventListener && reducedQuery.addEventListener('change', function () {
           v.dataset.heroMotion = reducedQuery.matches ? 'static' : 'drift';
+          p.dataset.heroMotion = v.dataset.heroMotion;
           if (reducedQuery.matches) {
             playAttempt += 1;
             playPending = false;
@@ -514,28 +552,7 @@ const tools = [
     </div>
   </section>
 
-  <!-- 07 · Persona doors -->
-  <section class="section--tight container">
-    <div class="doors">
-      <a class="door reveal" href="/learn/">
-        <em class="kicker">New here</em>
-        <span class="door__title">Follow the five-step beginner path</span>
-        <span class="door__sub">Your chart, one useful idea at a time.</span>
-      </a>
-      <a class="door reveal" href="/birth-chart/" style="--reveal-delay:70ms">
-        <em class="kicker">Have your birth details</em>
-        <span class="door__title">Get your chart explained</span>
-        <span class="door__sub">Start with the big three, then explore when you are ready.</span>
-      </a>
-      <a class="door reveal" href="/today/" style="--reveal-delay:140ms">
-        <em class="kicker">Coming back</em>
-        <span class="door__title">See what today means for you</span>
-        <span class="door__sub">A fresh brief for your saved chart—or start with your sun sign.</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- 08 · FAQ -->
+  <!-- 07 · FAQ -->
   <section class="section container container--narrow">
     <div class="section-head reveal"><h2>Common questions</h2></div>
     <div class="faq reveal">
@@ -548,11 +565,11 @@ const tools = [
     </div>
   </section>
 
-  <!-- 09 · Close -->
+  <!-- 08 · Close -->
   <section class="section container close">
     <h2 class="display reveal">Start with your birth chart.</h2>
     <div class="reveal" style="--reveal-delay:120ms">
-      <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+      <a class="btn btn--primary" href="/birth-chart/"><span>Start your chart</span><span class="orb">↗</span></a>
       <a class="close__birthday" href="/birthday/">Or look up your exact birthday →</a>
     </div>
     <p class="company-note reveal" style="--reveal-delay:180ms">
@@ -587,6 +604,7 @@ const tools = [
       0 30px 80px -40px rgba(0, 0, 0, 0.8);
     isolation: isolate;
   }
+  .hero__poster,
   .hero__video {
     position: absolute;
     inset: 0;
@@ -597,16 +615,22 @@ const tools = [
     transform: scale(1.035);
     transform-origin: center;
   }
+  .hero__poster { display: block; }
+  .hero__video {
+    opacity: 0;
+    transition: opacity 420ms ease;
+  }
+  .hero__video.is-playing { opacity: 1; }
   @keyframes hero-poster-drift {
     0% { transform: scale(1.035) translate3d(0, 0, 0); }
     100% { transform: scale(1.06) translate3d(-0.55%, 0.4%, 0); }
   }
   @media (max-width: 719px) and (prefers-reduced-motion: no-preference) {
-    .hero__video[data-hero-motion='drift'] {
+    .hero__poster[data-hero-motion='drift'] {
       animation: hero-poster-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
       will-change: transform;
     }
-    .hero__video[data-hero-visible='false'] { animation-play-state: paused; }
+    .hero__poster[data-hero-visible='false'] { animation-play-state: paused; }
   }
   .hero__scrim {
     position: absolute;
@@ -693,15 +717,27 @@ const tools = [
     background: rgba(10, 12, 17, 0.76);
     border-color: rgba(238, 241, 247, 0.34);
   }
-  .hero__trust {
+  .hero__trustlines {
     margin: -2px 0 0;
+    display: grid;
+    gap: 4px;
+    justify-items: center;
+  }
+  .hero__trust {
+    margin: 0;
     font-family: var(--font-mono);
     font-size: 10.5px;
     line-height: 1.45;
     letter-spacing: 0.055em;
     color: var(--faint);
     text-shadow: 0 1px 14px rgba(6, 7, 9, 0.72);
+    text-align: center;
   }
+  .hero__trust a {
+    color: inherit;
+    text-underline-offset: 2px;
+  }
+  .hero__trust a:hover { color: var(--ink-1, #C6CCDA); }
 
   /* ── Liquid glass (homepage chrome) ──
      Everyone gets the frosted blur floor above — it renders on Safari/iOS via
@@ -772,7 +808,9 @@ const tools = [
   }
   @media (prefers-reduced-motion: reduce) {
     .hero__frame { box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10); }
+    .hero__poster,
     .hero__video { animation: none; transform: scale(1.035); }
+    .hero__video { transition: none; }
   }
 
   /* Welcome-back strip + sky ticker styles live in ../styles/today.css
@@ -1115,23 +1153,6 @@ const tools = [
   .pillar p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.62; }
   .pillar a { margin-top: 4px; font-size: 13.5px; font-weight: 550; color: var(--text); text-decoration: none; }
   .pillar a:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-  /* ── Doors ── */
-  .doors { display: grid; gap: 12px; grid-template-columns: 1fr; }
-  @media (min-width: 860px) { .doors { grid-template-columns: repeat(3, 1fr); } }
-  .door {
-    display: grid;
-    gap: 5px;
-    padding: 22px;
-    border: 1px solid var(--hair-1);
-    border-radius: var(--r-lg);
-    text-decoration: none;
-    transition: border-color var(--dur-2) var(--ease), background var(--dur-2) var(--ease);
-  }
-  .door:hover { border-color: var(--hair-3); background: rgba(198, 204, 218, 0.03); }
-  .door .kicker { font-size: var(--text-base); color: var(--faint); margin-bottom: 2px; }
-  .door__title { font-size: var(--text-base); font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
-  .door__sub { font-size: 13px; color: var(--muted); }
 
   /* ── FAQ ── */
   .faq { display: grid; gap: 8px; }

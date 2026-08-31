@@ -82,8 +82,10 @@ const jsonLd = [
 >
   <article style={`--sign:${sign.hue}`}>
     <header class="guide-hero container">
-      <div class="guide-hero__id reveal">
-        <SignIcon sign={sign.slug} size={200} loading="eager" class="guide-hero__icon" />
+      {/* No reveal on the masthead: it is the LCP and must paint before any
+          script runs — the RU release set this pattern. */}
+      <div class="guide-hero__id">
+        <SignIcon sign={sign.slug} size={200} loading="eager" fetchPriority="high" webpOnly class="guide-hero__icon" />
         <div>
           <span class="eyebrow">{sign.glyph} · {ELEMENT_LABEL[sign.element]} · {sign.dates}</span>
           <h1>{sign.name}</h1>

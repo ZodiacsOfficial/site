@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 const source = await readFile(new URL('../src/pages/ru/index.astro', import.meta.url), 'utf8');
 const footerSource = await readFile(new URL('../src/components/SiteFooter.astro', import.meta.url), 'utf8');
 const navSource = await readFile(new URL('../src/components/SiteNav.astro', import.meta.url), 'utf8');
+const englishOnlySource = await readFile(new URL('../src/lib/i18n/english-only.ts', import.meta.url), 'utf8');
 
 describe('hidden Russian homepage hero media contract', () => {
   it('keeps the poster as LCP and every video source detached initially', () => {
@@ -43,8 +44,13 @@ describe('hidden Russian deferred-product safeguards', () => {
   });
 
   it('labels English-only navigation and removes the deferred birthday tool', () => {
-    expect(navSource).toContain("'nav__link--deferred': locale === 'ru'");
-    expect(navSource).toContain('— пока по-английски');
+    // The RU-only labeling generalized into the shared english-only courtesy;
+    // the safeguard now pins that mechanism plus the RU strings it serves.
+    expect(navSource).toContain('const englishOnly = englishOnlyCue(locale);');
+    expect(navSource).toContain("'nav__link--deferred': englishOnlyHref(l.href)");
+    expect(englishOnlySource).toContain(
+      "ru: { suffix: ' — пока по-английски', aria: 'Материал пока доступен по-английски' }",
+    );
     expect(navSource).toContain("NAV_TOOLS.filter((tool) => tool.href !== '/birthday/')");
     expect(navSource).toContain("locale === 'ru' ? null : locale === 'en'");
   });
