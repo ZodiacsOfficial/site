@@ -52,6 +52,15 @@ describe('homepage first-paint assets', () => {
     for (const { file } of fontContract) expect(css).toContain(`/assets/home/${file}`);
   });
 
+  it('keeps the mobile poster motion on the first-render path', async () => {
+    const css = await readFile(resolve(repositoryRoot, 'src/home/home-first-paint.css'), 'utf8');
+
+    expect(css).toContain('@keyframes hero-poster-drift');
+    expect(css).toContain('@media (max-width: 719px) and (prefers-reduced-motion: no-preference)');
+    expect(css).toContain(".hero__poster[data-hero-motion='drift']");
+    expect(css).toContain(".hero__poster[data-hero-visible='false'] { animation-play-state: paused; }");
+  });
+
   it.skipIf(!existsSync(resolve(repositoryRoot, 'dist/index.html')))(
     'discovers the poster first and installs client copy after the hero',
     async () => {
