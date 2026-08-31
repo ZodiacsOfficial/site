@@ -73,7 +73,7 @@ async function mockProviders(page, requests) {
       },
     });
   });
-  await page.route('https://lite-api.jup.ag/**', (route) => {
+  await page.route('https://api.jup.ag/**', (route) => {
     requests.push(route.request().url());
     return route.abort();
   });
@@ -188,7 +188,7 @@ async function inspectMobile(browser, baseURL, width) {
     new URL(baseURL).origin,
     'https://api.dexscreener.com',
     'https://api.geckoterminal.com',
-    'https://lite-api.jup.ag',
+    'https://api.jup.ag',
     'https://plausible.io',
   ]);
   check(`${width}: no added request origin`,

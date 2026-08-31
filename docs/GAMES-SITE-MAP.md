@@ -291,7 +291,7 @@ One React bundle (`public/assets/app.js` ← `src/app.jsx`, built by
   `/astrofolio/how-to-buy/`; Terminal Markets remains doubly gated by `PUBLIC_REGISTRY_EXCHANGE_ENABLED`
   (committed **off**; stamped by `scripts/configure-registry-exchange.mjs`)
   and route-scoped CSP (only `/terminal/markets/` and
-  `/astrofolio/how-to-buy/` may reach `lite-api.jup.ag`).
+  `/astrofolio/how-to-buy/` may reach `api.jup.ag`).
   `configure-registry-trade.mjs` is a retired 5-line
   no-op; `src/trade/entry.mjs` is orphaned stamping machinery.
 - **The Cabinet** = `/registry/collection/`

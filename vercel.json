@@ -295,7 +295,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; script-src-attr 'none'; connect-src 'self' https://plausible.io https://mftpcdpttteuwbolobye.supabase.co wss://mftpcdpttteuwbolobye.supabase.co https://lite-api.jup.ag https://api.dexscreener.com https://api.geckoterminal.com https://wikimedia.org; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; manifest-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; frame-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; script-src-attr 'none'; connect-src 'self' https://plausible.io https://mftpcdpttteuwbolobye.supabase.co wss://mftpcdpttteuwbolobye.supabase.co https://api.jup.ag https://api.dexscreener.com https://api.geckoterminal.com https://wikimedia.org; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; manifest-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; frame-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
         }
       ]
     },
@@ -429,7 +429,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; script-src-attr 'none'; connect-src 'self' https://lite-api.jup.ag https://api.dexscreener.com https://api.geckoterminal.com https://plausible.io; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self' blob:; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; script-src-attr 'none'; connect-src 'self' https://api.jup.ag https://api.dexscreener.com https://api.geckoterminal.com https://plausible.io; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self' blob:; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
         },
         {
           "key": "Referrer-Policy",
@@ -450,7 +450,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; script-src-attr 'none'; connect-src 'self' https://lite-api.jup.ag https://api.dexscreener.com https://api.geckoterminal.com https://plausible.io; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self' blob:; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; script-src-attr 'none'; connect-src 'self' https://api.jup.ag https://api.dexscreener.com https://api.geckoterminal.com https://plausible.io; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self' blob:; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
         },
         {
           "key": "Referrer-Policy",

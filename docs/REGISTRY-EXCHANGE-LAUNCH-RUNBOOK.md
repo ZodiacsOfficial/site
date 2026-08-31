@@ -16,9 +16,10 @@ historical label; internal `exchange` identifiers remain unchanged.
 2. The branch is rebased onto the current `origin/main`; the scope allowance
    `baseCommit` equals that head and lists exactly the protected paths reported
    by `npm run test:phase1:scope`.
-3. The official Jupiter documentation still labels Ultra a legacy path. Run
-   `npm run exchange:probe` immediately before QA and again before flag-on. Any
-   contract, fee, rate-limit, or key requirement failure keeps the flag off.
+3. Since the ratified 2026-08-31 migration record the client speaks Jupiter's
+   Swap V2 meta-aggregator, keyless. Run `npm run exchange:probe` immediately
+   before QA and again before flag-on. Any contract, fee, rate-limit, or key
+   requirement failure keeps the flag off.
 4. A verified flag-off production deployment is retained as the Instant
    Rollback target.
 
@@ -91,7 +92,7 @@ Verify:
   burst; no ladder request contains `taker`;
 - the risk block, canonical-pool labels, ladder caption, `noindex` meta and
   `X-Robots-Tag`, CSP, and `Cache-Control: no-store` are present;
-- requests are limited to self, `lite-api.jup.ag`, `api.dexscreener.com`,
+- requests are limited to self, `api.jup.ag`, `api.dexscreener.com`,
   `api.geckoterminal.com`, and `plausible.io`; a wallet address appears only
   after the visitor explicitly asks the panel to trade;
 - the service worker has no CacheStorage entry for any Terminal venue-route or

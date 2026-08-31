@@ -1,16 +1,21 @@
 /**
- * Jupiter Ultra client for the Registry trade panel.
+ * Jupiter order/execute client for the Registry trade panel.
  *
- * The site never builds, signs, or broadcasts a transaction. Ultra returns a
- * transaction it built, the visitor's wallet signs it, and Ultra submits it.
- * What is left for us is the part that protects the visitor: proving that the
- * order Jupiter returned is the order the page displayed, before any of it
- * reaches a wallet for signing.
+ * The site never builds, signs, or broadcasts a transaction. Jupiter returns
+ * a transaction it built, the visitor's wallet signs it, and Jupiter submits
+ * it. What is left for us is the part that protects the visitor: proving that
+ * the order Jupiter returned is the order the page displayed, before any of
+ * it reaches a wallet for signing.
+ *
+ * Since the ratified 2026-08-31 migration record the client speaks Swap V2's
+ * meta-aggregator (`/swap/v2/order` + `/swap/v2/execute`, keyless) — the
+ * contract-identical successor to the legacy Ultra path. Internal `ULTRA_*`
+ * identifiers stay, like the internal `exchange` names, for compatibility.
  *
  * Amounts are exact integers throughout. A float would round a balance.
  */
 
-export const ULTRA_BASE_URL = 'https://lite-api.jup.ag';
+export const ULTRA_BASE_URL = 'https://api.jup.ag';
 export const WSOL_MINT = 'So11111111111111111111111111111111111111112';
 export const VENUE_REQUEST_SPACING_MS = 2_100;
 export const VENUE_REQUEST_DEADLINE_MS = 12_000;
@@ -252,7 +257,7 @@ export function priceImpactBand(pct) {
 }
 
 function orderUrl(baseUrl, params) {
-  const url = new URL('/ultra/v1/order', baseUrl);
+  const url = new URL('/swap/v2/order', baseUrl);
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined && value !== null && value !== '') {
       url.searchParams.set(key, String(value));
@@ -441,7 +446,7 @@ export async function executeOrder({
       response = await scheduleVenueRequest(
         () => {
           bounded = boundedRequest(signal, deadlineMs);
-          return fetchImpl(new URL('/ultra/v1/execute', baseUrl).toString(), {
+          return fetchImpl(new URL('/swap/v2/execute', baseUrl).toString(), {
             method: 'POST',
             signal: bounded.signal,
             headers: { 'content-type': 'application/json', accept: 'application/json' },

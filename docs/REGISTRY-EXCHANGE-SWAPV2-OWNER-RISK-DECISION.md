@@ -1,9 +1,8 @@
 # Terminal venue route — Swap V2 migration (owner risk decision)
 
-Status: DRAFT — awaiting owner ratification. No venue code or configuration
-changes until this record is explicitly ratified and dated by the owner. The
-2026-08-10 decision reserved this migration for a record of its own; this is
-that record.
+Status: ratified by the owner, 2026-08-31 (owner-directed in session, upon
+review of the evidence below). The 2026-08-10 decision reserved this
+migration for a record of its own; this is that record.
 
 ## What is being decided
 
@@ -39,11 +38,17 @@ controls is decided here.
 
 1. `src/trade/ultra.mjs`: the base URL and the two endpoint paths. The
    order/response contract, `assertOrderMatches`, the fee-ceiling refusal,
-   and the execute flow are unchanged.
+   and the execute flow are unchanged. This is the one shared, guarded
+   Jupiter client, so the flag-gated trade panel ratified by the
+   2026-08-02 trade decision (sign records, how-to-buy) moves with the
+   venue route; both surfaces keep the identical execution boundary, and
+   the 2026-08-02 record's `lite-api.jup.ag` host reference is superseded
+   by this record for both.
 2. `scripts/probe-registry-exchange.mjs`: probes the V2 base.
-3. `vercel.json` route CSP for `/terminal/markets/`: `connect-src` swaps
+3. `vercel.json` route CSPs that allow the Jupiter client (`/terminal/markets/`
+   and the trade-panel routes): `connect-src` swaps
    `https://lite-api.jup.ag` for `https://api.jup.ag`.
-4. Pinned tests naming the old host.
+4. Pinned tests, drives, and operational docs naming the old host.
 
 ## What does not change
 

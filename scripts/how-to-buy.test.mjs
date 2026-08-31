@@ -102,14 +102,14 @@ describe('Astrofolio beginner buying guide', () => {
     const header = (key) => headers.find((entry) => entry.key === key)?.value;
     expect(header('Cache-Control')).toBe('no-store');
     expect(header('X-Robots-Tag')).toContain('noindex');
-    expect(header('Content-Security-Policy')).toContain('https://lite-api.jup.ag');
+    expect(header('Content-Security-Policy')).toContain('https://api.jup.ag');
     expect(header('Content-Security-Policy')).toContain("frame-src 'none'");
     expect(worker).toContain("url.pathname.startsWith('/astrofolio/how-to-buy/')");
     expect(decision).toContain('Addendum — 2026-08-22: Astrofolio beginner guide and optional Jupiter tool');
     expect(decision).toContain('after an explicit visitor action');
     expect(decision).toContain('receives no referral or platform fee');
     expect(siteMap).toContain('`/terminal/markets/` and');
-    expect(siteMap).toContain('`/astrofolio/how-to-buy/` may reach `lite-api.jup.ag`');
+    expect(siteMap).toContain('`/astrofolio/how-to-buy/` may reach `api.jup.ag`');
     expect(siteMap).not.toContain('only `/terminal/markets/` may reach');
   });
 
