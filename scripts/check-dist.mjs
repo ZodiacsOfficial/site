@@ -1143,8 +1143,9 @@ const sitemapPolicy = {
   // 944 reflects Packet F's removal of 1,464 localized birthday previews,
   // twelve thin Russian sign guides, and three machine-contract artifacts;
   // +1 for the /developers/ sky data API documentation page;
-  // +1 for the /big-three/ calculator.
-  total: 946 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
+  // +1 for the /big-three/ calculator;
+  // +28 for the Spanish and Portuguese daily surfaces (today, hub, twelve signs each).
+  total: 974 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,

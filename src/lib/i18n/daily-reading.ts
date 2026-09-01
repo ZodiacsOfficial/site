@@ -1,4 +1,7 @@
 import {
+  dailyBodyFactId,
+  dailyEventFactId,
+  dailyHouseFactId,
   dailyReading,
   solarHouse,
   type Daily,
@@ -155,18 +158,31 @@ const signLabelFr = (slug: string) => signName(signBySlug(slug), 'fr');
 const signLabelIt = (slug: string) => signName(signBySlug(slug), 'it');
 const utcTime = (at: string) => `${at.slice(11, 16)} UTC`;
 
-function houseLineEs(body: DailyBody, house: number): DailyLine {
+type LineContext = { date: string; sunSign: string };
+
+/** The same receipts the English renderer attaches, so a localized line answers to identical evidence. */
+function solarHouseProvenance(sourceFactId: string, context: LineContext, house: number) {
+  return {
+    scope: 'solar-house' as const,
+    evidenceRefs: [sourceFactId, dailyHouseFactId(context.date, context.sunSign, sourceFactId, house)],
+  };
+}
+
+function houseLineEs(body: DailyBody, house: number, context: LineContext): DailyLine {
   const planet = planetLabel('es', body.body);
   const rx = body.retrograde ? ' ℞' : '';
   return {
     text: `${PLANET_VERB_ES[body.body] ?? `${planet} recorre`} tu ${ORDINAL_ES[house]} casa: ${HOUSE_THEME_ES[house]}.`,
     receipt: `${planet} ${body.degree.toFixed(1)}° ${signLabel(body.sign)}${rx} · casa ${house}`,
+    house,
     body: body.body,
     hue: signBySlug(body.sign).hue,
+    templateId: 'body-house.v1',
+    ...solarHouseProvenance(dailyBodyFactId(context.date, body), context, house),
   };
 }
 
-function eventLineEs(event: DailyEvent, sunSign: string): DailyLine | null {
+function eventLineEs(event: DailyEvent, sunSign: string, date: string): DailyLine | null {
   if (event.kind === 'ingress' && event.planet && event.sign) {
     const house = solarHouse(event.sign, sunSign);
     const planet = planetLabel('es', event.planet);
@@ -178,6 +194,9 @@ function eventLineEs(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${planet} → 0° ${signLabel(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'ingress-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'lunation' && event.sign) {
@@ -191,6 +210,9 @@ function eventLineEs(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${name} ${event.degree?.toFixed(1)}° ${signLabel(event.sign)} · ${utcTime(event.at)}`,
       body: 'Moon',
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'lunation-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'station' && event.planet && event.sign) {
@@ -204,6 +226,9 @@ function eventLineEs(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${planet} ${direction} ${event.degree?.toFixed(1)}° ${signLabel(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'station-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'aspect' && event.a && event.b && event.type) {
@@ -214,23 +239,29 @@ function eventLineEs(event: DailyEvent, sunSign: string): DailyLine | null {
       text: `${a} en ${aspect} con ${b} alcanza hoy su punto exacto: es un aspecto de alcance general y el recibo muestra la hora.`,
       receipt: `${a} ${aspect} ${b} · exacto ${utcTime(event.at)}`,
       body: event.a,
+      templateId: 'aspect-collective.v1',
+      scope: 'collective',
+      evidenceRefs: [dailyEventFactId(date, event)],
     };
   }
   return null;
 }
 
-function houseLinePt(body: DailyBody, house: number): DailyLine {
+function houseLinePt(body: DailyBody, house: number, context: LineContext): DailyLine {
   const planet = planetLabel('pt', body.body);
   const rx = body.retrograde ? ' ℞' : '';
   return {
     text: `${PLANET_VERB_PT[body.body] ?? `${planet} percorre`} sua ${ORDINAL_PT[house]} casa: ${HOUSE_THEME_PT[house]}.`,
     receipt: `${planet} ${body.degree.toFixed(1)}° ${signLabelPt(body.sign)}${rx} · casa ${house}`,
+    house,
     body: body.body,
     hue: signBySlug(body.sign).hue,
+    templateId: 'body-house.v1',
+    ...solarHouseProvenance(dailyBodyFactId(context.date, body), context, house),
   };
 }
 
-function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
+function eventLinePt(event: DailyEvent, sunSign: string, date: string): DailyLine | null {
   if (event.kind === 'ingress' && event.planet && event.sign) {
     const house = solarHouse(event.sign, sunSign);
     const planet = planetLabel('pt', event.planet);
@@ -242,6 +273,9 @@ function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${planet} → 0° ${signLabelPt(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'ingress-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'lunation' && event.sign) {
@@ -255,6 +289,9 @@ function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${name} ${event.degree?.toFixed(1)}° ${signLabelPt(event.sign)} · ${utcTime(event.at)}`,
       body: 'Moon',
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'lunation-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'station' && event.planet && event.sign) {
@@ -268,6 +305,9 @@ function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${planet} ${direction} ${event.degree?.toFixed(1)}° ${signLabelPt(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'station-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'aspect' && event.a && event.b && event.type) {
@@ -278,23 +318,29 @@ function eventLinePt(event: DailyEvent, sunSign: string): DailyLine | null {
       text: `${a} em ${aspect} com ${b} chega hoje ao ponto exato: é um aspecto de alcance geral, e o registro mostra o horário.`,
       receipt: `${a} ${aspect} ${b} · exato às ${utcTime(event.at)}`,
       body: event.a,
+      templateId: 'aspect-collective.v1',
+      scope: 'collective',
+      evidenceRefs: [dailyEventFactId(date, event)],
     };
   }
   return null;
 }
 
-function houseLineFr(body: DailyBody, house: number): DailyLine {
+function houseLineFr(body: DailyBody, house: number, context: LineContext): DailyLine {
   const planet = planetLabel('fr', body.body);
   const rx = body.retrograde ? ' ℞' : '';
   return {
     text: `${PLANET_VERB_FR[body.body] ?? `${planet} parcourt`} ta ${ORDINAL_FR[house]} maison : ${HOUSE_THEME_FR[house]}.`,
     receipt: `${planet} ${body.degree.toFixed(1)}° ${signLabelFr(body.sign)}${rx} · maison ${house}`,
+    house,
     body: body.body,
     hue: signBySlug(body.sign).hue,
+    templateId: 'body-house.v1',
+    ...solarHouseProvenance(dailyBodyFactId(context.date, body), context, house),
   };
 }
 
-function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
+function eventLineFr(event: DailyEvent, sunSign: string, date: string): DailyLine | null {
   if (event.kind === 'ingress' && event.planet && event.sign) {
     const house = solarHouse(event.sign, sunSign);
     const planet = planetLabel('fr', event.planet);
@@ -306,6 +352,9 @@ function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${planet} → 0° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'ingress-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'lunation' && event.sign) {
@@ -319,6 +368,9 @@ function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${name} ${event.degree?.toFixed(1)}° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
       body: 'Moon',
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'lunation-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'station' && event.planet && event.sign) {
@@ -332,6 +384,9 @@ function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${planet} ${direction} ${event.degree?.toFixed(1)}° ${signLabelFr(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'station-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'aspect' && event.a && event.b && event.type) {
@@ -342,23 +397,29 @@ function eventLineFr(event: DailyEvent, sunSign: string): DailyLine | null {
       text: `${a} en ${aspect} avec ${b} devient exact aujourd’hui : cet aspect est collectif, et le relevé en indique l’heure.`,
       receipt: `${a} ${aspect} ${b} · exact à ${utcTime(event.at)}`,
       body: event.a,
+      templateId: 'aspect-collective.v1',
+      scope: 'collective',
+      evidenceRefs: [dailyEventFactId(date, event)],
     };
   }
   return null;
 }
 
-function houseLineIt(body: DailyBody, house: number): DailyLine {
+function houseLineIt(body: DailyBody, house: number, context: LineContext): DailyLine {
   const planet = planetLabel('it', body.body);
   const rx = body.retrograde ? ' ℞' : '';
   return {
     text: `${PLANET_VERB_IT[body.body] ?? `${planet} attraversa`} la tua ${ORDINAL_IT[house]} casa: ${HOUSE_THEME_IT[house]}.`,
     receipt: `${planet} ${body.degree.toFixed(1)}° ${signLabelIt(body.sign)}${rx} · casa ${house}`,
+    house,
     body: body.body,
     hue: signBySlug(body.sign).hue,
+    templateId: 'body-house.v1',
+    ...solarHouseProvenance(dailyBodyFactId(context.date, body), context, house),
   };
 }
 
-function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
+function eventLineIt(event: DailyEvent, sunSign: string, date: string): DailyLine | null {
   if (event.kind === 'ingress' && event.planet && event.sign) {
     const house = solarHouse(event.sign, sunSign);
     const planet = planetLabel('it', event.planet);
@@ -370,6 +431,9 @@ function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${planet} → 0° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'ingress-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'lunation' && event.sign) {
@@ -383,6 +447,9 @@ function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${name} ${event.degree?.toFixed(1)}° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
       body: 'Moon',
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'lunation-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'station' && event.planet && event.sign) {
@@ -396,6 +463,9 @@ function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
       receipt: `${planet} ${direction} ${event.degree?.toFixed(1)}° ${signLabelIt(event.sign)} · ${utcTime(event.at)}`,
       body: event.planet,
       hue: signBySlug(event.sign).hue,
+      house,
+      templateId: 'station-house.v1',
+      ...solarHouseProvenance(dailyEventFactId(date, event), { date, sunSign }, house),
     };
   }
   if (event.kind === 'aspect' && event.a && event.b && event.type) {
@@ -406,6 +476,9 @@ function eventLineIt(event: DailyEvent, sunSign: string): DailyLine | null {
       text: `${a} in ${aspect} con ${b} raggiunge oggi il punto esatto: è un aspetto collettivo e qui sotto trovi l’ora esatta.`,
       receipt: `${a} ${aspect} ${b} · esatto alle ${utcTime(event.at)}`,
       body: event.a,
+      templateId: 'aspect-collective.v1',
+      scope: 'collective',
+      evidenceRefs: [dailyEventFactId(date, event)],
     };
   }
   return null;
@@ -445,7 +518,7 @@ export function dailyReadingForLocale(sunSign: string, daily: Daily, locale: Loc
   const usedHouses = new Set<number>();
 
   for (const event of daily.events) {
-    const line = eventLine(event, sunSign);
+    const line = eventLine(event, sunSign, daily.date);
     if (line) {
       lines.push(line);
       if (event.sign) usedHouses.add(solarHouse(event.sign, sunSign));
@@ -458,7 +531,7 @@ export function dailyReadingForLocale(sunSign: string, daily: Daily, locale: Loc
   if (moon) {
     const house = solarHouse(moon.sign, sunSign);
     if (!usedHouses.has(house)) {
-      lines.push(houseLine(moon, house));
+      lines.push(houseLine(moon, house, { date: daily.date, sunSign }));
       usedHouses.add(house);
     }
   }
@@ -469,7 +542,7 @@ export function dailyReadingForLocale(sunSign: string, daily: Daily, locale: Loc
     if (!body) continue;
     const house = solarHouse(body.sign, sunSign);
     if (usedHouses.has(house)) continue;
-    lines.push(houseLine(body, house));
+    lines.push(houseLine(body, house, { date: daily.date, sunSign }));
     usedHouses.add(house);
   }
 

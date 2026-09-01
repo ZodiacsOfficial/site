@@ -5,9 +5,6 @@ import Base from '../../layouts/Base.astro';
 export async function getStaticPaths() {
   const pairs = await getCollection('pairs', ({ data }) => !data.draft);
   const learn = await getCollection('learn', ({ data }) => !data.draft);
-  const horoscopes = await getCollection('horoscopes', ({ data }) => !data.draft);
-  const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
-  const currentHoroscopes = horoscopes.filter((h) => h.data.month === latestMonth);
 
   const staticSlugs = [
     ['learn'],
@@ -15,7 +12,6 @@ export async function getStaticPaths() {
     ['learn', 'houses'],
     ['learn', 'aspects'],
     ['learn', 'placements'],
-    ['horoscopes'],
     ['mercury-retrograde'],
     ['retrogrades'],
     ['eclipses'],
@@ -29,7 +25,6 @@ export async function getStaticPaths() {
         ? ['rising-sign', l.data.sign]
         : ['learn', ...l.id.split('/')]
     )),
-    ...currentHoroscopes.map((h) => ['horoscopes', h.data.sign]),
   ];
 
   return [...staticSlugs, ...dynamicSlugs].map((slug) => ({ params: { slug: slug.join('/') } }));

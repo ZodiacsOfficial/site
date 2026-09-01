@@ -241,6 +241,13 @@ export const GET: APIRoute = async () => {
       { loc: '/games/history/', priority: 0.6, lastmod: '2026-08-19' },
     ] : []),
     { loc: '/horoscopes/', priority: 0.8, lastmod: horoscopeProgram.anchorDate },
+    // Spanish and Portuguese daily surfaces render the same edition from the
+    // same facts; they date with the edition like /today/ does.
+    ...(['es', 'pt'] as const).flatMap((locale) => [
+      { loc: `/${locale}/today/`, priority: 0.7, lastmod: daily.date },
+      { loc: `/${locale}/horoscopes/`, priority: 0.7, lastmod: daily.date },
+      ...SIGNS.map((sign) => ({ loc: `/${locale}/horoscopes/${sign.slug}/`, priority: 0.66, lastmod: daily.date })),
+    ]),
     ...eventsPublication.pages.map((event) => ({
       loc: event.path,
       priority: 0.64,
