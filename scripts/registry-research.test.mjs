@@ -131,11 +131,20 @@ describe('Registry Research deterministic publication', () => {
   it('reveals an approved event at its exact time without mutating the immutable item payload', async () => {
     const inputs = await committedInputs();
     const ledger = buildRegistryResearchLedger(inputs);
-    const event = ledger.items.find((item) => item.kind === 'event-brief' && item.visibleAt > ledger.generatedAt);
+    // The ledger clock is the latest market snapshot's read time, which can
+    // fall after every event in the committed eight-day window (a snapshot
+    // archived late in the day did exactly that on 2026-09-01). Anchor both
+    // phases on the event's own exact time so the reveal is tested at its
+    // boundary regardless of when the snapshot was read.
+    const event = ledger.items.filter((item) => item.kind === 'event-brief').at(-1);
+    expect(event).toBeDefined();
+    const justBefore = new Date(Date.parse(event.visibleAt) - 1).toISOString();
     const manifest = deepClone(inputs.approvalManifest);
-    manifest.approvals.push(approvalFor(event, { reviewedAt: ledger.generatedAt }));
+    manifest.approvals.push(approvalFor(event, { reviewedAt: justBefore }));
 
-    const before = publishRegistryResearch({ ledger, approvalManifest: manifest });
+    const earlierLedger = deepClone(ledger);
+    earlierLedger.generatedAt = justBefore;
+    const before = publishRegistryResearch({ ledger: earlierLedger, approvalManifest: manifest });
     const scheduled = before.publication.items.find((item) => item.id === event.id);
     expect(scheduled.status).toBe('scheduled');
 
