@@ -66,7 +66,7 @@ describe('assistant site context', () => {
     expect(context).toContain('- /learn/placements/sun-in-aries/ — What Sun in Aries means in a birth chart.');
     expect(context).toContain('- /rising-sign/pisces/ — What Pisces rising means.');
     expect(context).not.toContain('ASTROFOLIO, TERMINAL, AND REGISTRY');
-    expect(context).not.toMatch(/\/(?:astrofolio|disclosure|registry|sdk|terminal|thesis)\//u);
+    expect(context).not.toMatch(/\/(?:astrofolio|disclosure|fomo|registry|sdk|terminal|thesis)\//u);
     expect(context).not.toContain('/bio/');
     expect(context).not.toMatch(/\b(?:Astrofolio|Registry|Terminal)\b/u);
     expect(context).not.toContain('Zodiac Terminal');

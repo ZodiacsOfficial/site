@@ -5981,6 +5981,8 @@
               <a href={howToBuyPath(item)} tabIndex={layer.current ? undefined : -1}>Other ways to buy</a>
               <span aria-hidden="true">·</span>
               <span>Opens the Fomo app</span>
+              <span aria-hidden="true">·</span>
+              <a href="/fomo/" tabIndex={layer.current ? undefined : -1}>New to Fomo?</a>
             </div>
           </article>
         );

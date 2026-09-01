@@ -1142,8 +1142,9 @@ const indexedRegistryResearchPaths = new Set([
 const sitemapPolicy = {
   // 944 reflects Packet F's removal of 1,464 localized birthday previews,
   // twelve thin Russian sign guides, and three machine-contract artifacts;
-  // +1 for the /developers/ sky data API documentation page.
-  total: 945 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
+  // +1 for the /developers/ sky data API documentation page;
+  // +1 for /fomo/, the Astrofolio-on-Fomo landing page (wing register, indexable).
+  total: 946 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,
