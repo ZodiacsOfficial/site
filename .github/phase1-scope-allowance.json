@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "web-analytics-privacy-and-month-cap-2026-09-01",
-  "baseCommit": "79ad1aa0f81fd5fafc7e2998513d112061896843",
+  "baseCommit": "3627b0f5a84638be470b92668c6ddcd5f44a9983",
   "protectedPaths": [
     "src/lib/i18n/ui/build-audit.test.ts",
     "src/pages/es/[...slug].astro",

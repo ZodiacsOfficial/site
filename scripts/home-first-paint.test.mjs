@@ -60,8 +60,8 @@ describe('homepage first-paint assets', () => {
   it('keeps route subsets local and avoids the full font files', async () => {
     const css = await readFile(resolve(repositoryRoot, 'src/home/home-first-paint.css'), 'utf8');
 
-    expect(css.match(/font-display: optional;/g)).toHaveLength(1);
-    expect(css.match(/font-display: swap;/g)).toHaveLength(2);
+    expect(css.match(/font-display: optional;/g)).toHaveLength(2);
+    expect(css.match(/font-display: swap;/g)).toHaveLength(1);
     expect(css).not.toMatch(/url\(['"]?\/fonts\//u);
     expect(css).toContain("--font-nav-serif: 'EB Garamond',");
     expect(css).toContain("--font-nav-sans: 'Instrument Sans',");
