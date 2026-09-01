@@ -154,6 +154,7 @@ html[data-local-chrome-typography][lang='en'] {
   margin-top: clamp(24px, 2.8vw, 30px);
   display: flex;
   align-items: center;
+  width: min(100%, 35rem);
   gap: 18px;
 }
 
@@ -182,6 +183,7 @@ html[data-local-chrome-typography][lang='en'] {
 
 .hero__forecast {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 7px;
   padding: 8px 0;
@@ -190,6 +192,7 @@ html[data-local-chrome-typography][lang='en'] {
   font-weight: 500;
   color: var(--ink-0, #EEF1F7);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .hero__forecast span:last-child {
