@@ -3,7 +3,9 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   assertDailyEmailSendInterlocks,
   dailyRecipientUnsubscribeClaim,
+  canaryRecipient,
   parseDailyEmailArgs,
+  recipientHashPrefix,
   requireResendCapabilities,
   runDailyEmail,
   selectDailyEmailNearbyEvents,
@@ -20,6 +22,16 @@ describe('daily email CLI', () => {
       at: new Date('2026-07-20T07:13:00Z'),
     });
     expect(() => parseDailyEmailArgs(['--at', '2026-07-20'])).toThrow(/ISO instant/u);
+    // The canary forces limit one and refuses a command-line recipient.
+    expect(parseDailyEmailArgs(['--canary', '--dry-run', '--limit', '50'])).toMatchObject({
+      canary: true, dryRun: true, limit: 1, to: null,
+    });
+    expect(() => parseDailyEmailArgs(['--canary', '--to', 'someone@example.com']))
+      .toThrow(/DAILY_EMAIL_CANARY_TO/u);
+    expect(canaryRecipient('  Owner@Example.com ', 'DAILY_EMAIL_CANARY_TO')).toBe('owner@example.com');
+    expect(() => canaryRecipient('', 'DAILY_EMAIL_CANARY_TO')).toThrow(/DAILY_EMAIL_CANARY_TO/u);
+    expect(recipientHashPrefix('Owner@Example.com')).toBe(recipientHashPrefix('owner@example.com'));
+    expect(recipientHashPrefix('owner@example.com')).toMatch(/^[0-9a-f]{12}$/u);
     expect(() => parseDailyEmailArgs(['--limit', '0'])).toThrow(/1 to 10000/u);
     expect(() => parseDailyEmailArgs(['--unknown'])).toThrow(/Unknown option/u);
   });

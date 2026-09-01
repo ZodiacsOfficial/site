@@ -307,13 +307,19 @@ must move through dashboard secret forms, never chat or command-line arguments.
 ### Safe enable order
 
 1. Confirm `DIGEST_ENABLED` is unset/false.
-2. Dispatch **Weekly Digest** with `dry_run=true` and `limit=1`. The fixture body
-   may appear; any real-recipient selection must show only aggregate counts.
-   Addresses, chart names, personalized bodies, and unsubscribe capabilities
-   must remain absent from the public Actions log.
-3. Confirm the intended owner-controlled account is the only opted-in canary.
-   With explicit approval for one live email, dispatch `dry_run=false` and
-   `limit=1`.
+2. Add the repository secret `DIGEST_CANARY_TO` holding the owner-controlled
+   canary address (a secret form, never chat or a dispatch input). Dispatch
+   **Weekly Digest** with `canary=true` and `dry_run=true`. The run narrows this
+   week's candidates to that one address or refuses to send to anyone, and
+   prints `weekly-digest: canary receipt sent=0 recipient=sha256:<prefix>` — a
+   hash prefix, never the address. Addresses, chart names, personalized
+   bodies, and unsubscribe capabilities must remain absent from the public
+   Actions log.
+3. Confirm the canary address is opted in. With explicit approval for one live
+   email, dispatch `canary=true` and `dry_run=false`; the sender forces
+   `limit=1` and refuses `--limit`, `--fixture`, and `--recovery-only` in this
+   mode, so a typo cannot widen the send. The receipt line must read
+   `sent=1`.
 4. Check the received message's sender, content, postal footer, and unsubscribe
    link. A GET of that link must be read-only. Submit the page's explicit POST,
    then verify the profile preference became false, the delivery receipt stays
