@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import daily from '../../data/daily.json';
 
 export async function getStaticPaths() {
   const pairs = await getCollection('pairs', ({ data }) => !data.draft);
