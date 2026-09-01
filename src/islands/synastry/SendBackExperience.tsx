@@ -32,6 +32,19 @@ const COPY = {
   sendImage: 'Download the picture',
 } as const;
 
+// The same card offered on a plain result: nobody invited anyone, so the copy
+// is about sending, not sending back.
+const SHARE_COPY = {
+  sendCue: 'Share the reading',
+  sendTitle: 'Send this to {label}.',
+  sendBody: 'One tap makes a picture of this reading and a private link that carries both charts as positions only — the labels you typed, no birth details.',
+  sendShare: 'Send it',
+  sendShareText: 'Our charts, read together — from zodiacs.org',
+  sendCopy: 'Copy the private link',
+  sendCopied: 'Link copied. It carries chart positions only.',
+  sendImage: 'Download the picture',
+} as const;
+
 function download(blob: Blob) {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
@@ -49,13 +62,17 @@ export function SendBackCard({
   summary,
   inviterLabel,
   onReturned,
+  variant = 'return',
 }: {
   a: SendPerson;
   b: SendPerson;
   summary: PairSummary;
   inviterLabel: string;
   onReturned?: (method: SendMethod) => void;
+  /** `return` completes an invitation; `share` offers a plain result to the other person. */
+  variant?: 'return' | 'share';
 }) {
+  const wording = variant === 'share' ? SHARE_COPY : COPY;
   const [blob, setBlob] = useState<Blob | null>(null);
   const [state, setState] = useState<ActionState>('preparing');
   const [bigThree, setBigThree] = useState<{
@@ -120,7 +137,7 @@ export function SendBackCard({
     const file = blob ? new File([blob], 'zodiacs-compatibility.png', { type: 'image/png' }) : null;
     const data: ShareData = {
       title: 'Our charts, read together — Zodiacs.org',
-      text: COPY.sendShareText,
+      text: wording.sendShareText,
       url,
       ...(file && navigator.canShare?.({ files: [file] }) ? { files: [file] } : {}),
     };
@@ -164,32 +181,32 @@ export function SendBackCard({
   return (
     <NextActionCard
       className="syn-sendback"
-      cue={COPY.sendCue}
-      title={COPY.sendTitle}
-      body={COPY.sendBody.replace('{label}', inviterLabel)}
+      cue={wording.sendCue}
+      title={wording.sendTitle.replace('{label}', inviterLabel)}
+      body={wording.sendBody.replace('{label}', inviterLabel)}
       headingLevel={3}
       primary={canNativeShare ? (
         <button type="button" class="btn btn--primary" onClick={share}>
-          <span>{COPY.sendShare}</span>
+          <span>{wording.sendShare}</span>
           <span class="orb" aria-hidden="true">↗</span>
         </button>
       ) : (
         <button type="button" class="btn btn--primary" onClick={copy}>
-          <span>{COPY.sendCopy}</span>
+          <span>{wording.sendCopy}</span>
           <span class="orb" aria-hidden="true">↗</span>
         </button>
       )}
       secondary={(
         <>
           {canNativeShare && (
-            <button type="button" class="btn btn--ghost" onClick={copy}>{COPY.sendCopy}</button>
+            <button type="button" class="btn btn--ghost" onClick={copy}>{wording.sendCopy}</button>
           )}
           <button
             type="button"
             class="btn btn--ghost"
             onClick={saveImage}
             disabled={!blob}
-          >{COPY.sendImage}</button>
+          >{wording.sendImage}</button>
           {b.positions.angles && (
             <button
               type="button"
@@ -202,7 +219,7 @@ export function SendBackCard({
             </button>
           )}
           {state === 'preparing' && <span class="field__help">Preparing the picture…</span>}
-          {state === 'copied' && <p class="sr-only" role="status">{COPY.sendCopied}</p>}
+          {state === 'copied' && <p class="sr-only" role="status">{wording.sendCopied}</p>}
           {state === 'error' && <p class="calc__error" role="alert">The share is still here. Please try again.</p>}
           {bigThreeState === 'saved' && (
             <p class="sr-only" role="status">Your Big Three picture is ready.</p>
