@@ -31,21 +31,19 @@ type Snapshot = {
 /* Fomo's own destinations. The coin deep link is the same one the Astrofolio
    vitrine uses (src/app.jsx); no referral or partner parameter is ever added. */
 const FOMO_SITE = 'https://fomo.family/';
-const FOMO_DOWNLOAD = 'https://fomo.family/download';
 const FOMO_APP_STORE = 'https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427';
 const FOMO_PLAY = 'https://play.google.com/store/apps/details?id=family.fomo.app';
 const FOMO_SOLANA_CHAIN_ID = '1399811149';
 const fomoCoinUrl = (mint: string) =>
   `https://fomo.family/coin?address=${encodeURIComponent(mint)}&chainId=${FOMO_SOLANA_CHAIN_ID}`;
 
-/* Headline figures for the twelve on Fomo, supplied by the Zodiacs team with
-   the campaign artwork. They are not read from any API; update them here,
-   with the date, whenever the campaign figures change. */
-const CAMPAIGN_FIGURES = Object.freeze({
-  traders: '14K+',
-  traded: '$35M',
-  asOf: 'September 2026',
-});
+/* Official store badges, unmodified, self-hosted for the CSP (see
+   docs/VENUE-MARKS.md, "Store badges"). Apple's badge is an SVG at its
+   published 119.66×40 proportions; Google's PNG carries its own clear space,
+   so it is drawn taller to match the visible badge height. */
+const APP_STORE_BADGE = '/assets/badges/app-store-en.svg';
+const GOOGLE_PLAY_BADGE = '/assets/badges/google-play-en.png';
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const SPARK_DAYS = 14;
 const registryAssets = registryJson.assets as RegistryAsset[];
@@ -142,6 +140,8 @@ const records = SIGNS.map((sign) => {
     name: asset.displayName,
     symbol: solana.symbol ?? sign.name.toUpperCase(),
     dates: sign.dates,
+    start: sign.start,
+    end: sign.end,
     hue: sign.hue,
     mint: solana.address,
     fomo: fomoCoinUrl(solana.address),
@@ -189,6 +189,8 @@ const sources = [
   title={title}
   description={description}
   path="/fomo/"
+  image="/assets/og/v2/fomo.png"
+  imageAlt="The twelve Zodiacs are on Fomo. Astrofolio, in a trading app."
   jsonLd={[breadcrumb]}
   sources={sources}
   glass
@@ -205,27 +207,23 @@ const sources = [
           there under their verified Solana addresses, so you can watch your sign, follow the other eleven,
           and buy in a few taps.
         </p>
-        <div class="fomo-hero__actions reveal" style="--reveal-delay:180ms">
-          <a class="fomo-cta" href={FOMO_DOWNLOAD} rel="external nofollow noopener" data-fomo-get="hero">
-            <img src="/assets/venues/fomo-official.svg" width="40" height="40" alt="" />
-            <span class="fomo-cta__copy"><small>Free · iPhone, Android, web</small><strong>Get the Fomo app</strong></span>
-            <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
+        <div class="fomo-stores reveal" id="top-stores" style="--reveal-delay:180ms" data-fomo-stores>
+          <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
+            <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
           </a>
-          <a class="btn btn--glass" href="#signs">Open your sign <span class="orb" aria-hidden="true">↓</span></a>
+          <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
+            <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
+          </a>
         </div>
-        <p class="fomo-stores reveal" style="--reveal-delay:220ms">
-          <a href={FOMO_APP_STORE} rel="external nofollow noopener">App Store ↗</a>
-          <span aria-hidden="true">·</span>
-          <a href={FOMO_PLAY} rel="external nofollow noopener">Google Play ↗</a>
-          <span aria-hidden="true">·</span>
-          <a href={FOMO_SITE} rel="external nofollow noopener">fomo.family ↗</a>
+        <p class="fomo-web reveal" style="--reveal-delay:220ms">
+          <span>Or on a computer:</span>
+          <a href={FOMO_SITE} rel="external nofollow noopener">fomo.family in a browser ↗</a>
         </p>
-        <dl class="fomo-stats reveal" style="--reveal-delay:260ms">
-          <div><dt>Traders</dt><dd>{CAMPAIGN_FIGURES.traders}</dd></div>
-          <div><dt>Traded</dt><dd>{CAMPAIGN_FIGURES.traded}</dd></div>
-          <div><dt>Official Zodiacs</dt><dd>12</dd></div>
-        </dl>
-        <p class="fomo-stats__note reveal" style="--reveal-delay:300ms">Zodiacs on Fomo, as of {CAMPAIGN_FIGURES.asOf}.</p>
+        <ul class="fomo-facts-strip reveal" style="--reveal-delay:260ms" role="list">
+          <li><strong>12</strong> official Zodiacs</li>
+          <li><strong>Solana</strong> one verified address each</li>
+          <li><strong>Free</strong> app, rated 18+</li>
+        </ul>
       </div>
 
       <figure class="fomo-phone reveal" style="--reveal-delay:140ms" data-fomo-phone>
@@ -295,6 +293,43 @@ const sources = [
       </figure>
     </section>
 
+    <section class="fomo-finder container" id="your-sign" aria-labelledby="finder-title" data-fomo-finder>
+      <div class="shell fomo-finder__shell">
+        <div class="core fomo-finder__core">
+          <div class="fomo-finder__ask">
+            <p class="kicker">Not sure which one is yours?</p>
+            <h2 id="finder-title" class="display">Find your sign by birthday.</h2>
+            <p>Pick the month and day. The phone above switches to your sign, and the link below opens it in Fomo.</p>
+          </div>
+          <form class="fomo-finder__form" data-fomo-finder-form novalidate>
+            <label class="fomo-finder__field">
+              <span>Month</span>
+              <select name="month" data-finder-month required>
+                <option value="" selected>Month</option>
+                {MONTHS.map((month, index) => <option value={index + 1}>{month}</option>)}
+              </select>
+            </label>
+            <label class="fomo-finder__field">
+              <span>Day</span>
+              <select name="day" data-finder-day required>
+                <option value="" selected>Day</option>
+                {Array.from({ length: 31 }, (_, index) => <option value={index + 1}>{index + 1}</option>)}
+              </select>
+            </label>
+            <p class="fomo-finder__result" data-finder-result aria-live="polite" role="status"></p>
+            <div class="fomo-finder__actions" data-finder-actions hidden>
+              <a class="fomo-cta" href={initial.fomo} rel="external nofollow noopener" data-finder-open>
+                <img src="/assets/venues/fomo-official.svg" width="40" height="40" alt="" />
+                <span class="fomo-cta__copy"><small data-finder-symbol>{initial.symbol}</small><strong>Open <span data-finder-name>{initial.name}</span> in Fomo</strong></span>
+                <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
+              </a>
+              <a class="fomo-finder__card-link" href={`#sign-${initial.slug}`} data-finder-card>See the <span data-finder-name>{initial.name}</span> card ↓</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <section class="fomo-steps section--tight container" id="how" aria-labelledby="how-title">
       <div class="section-head">
         <p class="kicker">Three steps</p>
@@ -306,7 +341,7 @@ const sources = [
           <span class="fomo-steps__num">01</span>
           <h3>Get the app</h3>
           <p>Download Fomo from the App Store or Google Play, or open fomo.family in a browser. Sign in with an email address or Apple ID; Fomo sets up the wallet inside the app.</p>
-          <a href={FOMO_DOWNLOAD} rel="external nofollow noopener" data-fomo-get="steps">Download Fomo ↗</a>
+          <a href="#top-stores" data-fomo-get="steps">Get the app ↑</a>
         </li>
         <li class="tile reveal" style="--reveal-delay:80ms">
           <span class="fomo-steps__num">02</span>
@@ -331,7 +366,7 @@ const sources = [
       </div>
       <ul class="fomo-grid" role="list">
         {records.map((record, index) => (
-          <li class="tile fomo-card reveal" style={`--sign:${record.hue};--reveal-delay:${(index % 4) * 60}ms`} data-sign-card={record.slug}>
+          <li class="tile fomo-card reveal" id={`sign-${record.slug}`} style={`--sign:${record.hue};--reveal-delay:${(index % 4) * 60}ms`} data-sign-card={record.slug}>
             <div class="fomo-card__head">
               <SignIcon sign={record.slug} size={56} />
               <div>
@@ -424,13 +459,17 @@ const sources = [
           <p class="kicker">Start with your own sign</p>
           <h2 id="close-title" class="display">Your sign is already listed.</h2>
           <p>Get the app, add a little, and open your sign. Read every screen before you approve.</p>
-          <div class="fomo-close__actions">
-            <a class="fomo-cta" href={FOMO_DOWNLOAD} rel="external nofollow noopener" data-fomo-get="close">
-              <img src="/assets/venues/fomo-official.svg" width="40" height="40" alt="" />
-              <span class="fomo-cta__copy"><small>Free · iPhone, Android, web</small><strong>Get the Fomo app</strong></span>
-              <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
+          <div class="fomo-stores fomo-stores--center" data-fomo-stores>
+            <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
+              <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
             </a>
-            <a class="btn btn--glass" href="/astrofolio/">Back to Astrofolio</a>
+            <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
+              <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
+            </a>
+          </div>
+          <div class="fomo-close__actions">
+            <a class="btn btn--glass" href={FOMO_SITE} rel="external nofollow noopener">Continue on the web <span class="orb" aria-hidden="true">↗</span></a>
+            <a class="btn btn--ghost" href="/astrofolio/">Back to Astrofolio</a>
           </div>
         </div>
       </div>
@@ -444,6 +483,9 @@ const sources = [
     slug: string;
     name: string;
     symbol: string;
+    dates: string;
+    start: [number, number];
+    end: [number, number];
     hue: string;
     mint: string;
     fomo: string;
@@ -605,6 +647,66 @@ const sources = [
   document.addEventListener('visibilitychange', () => { if (document.hidden) stopCycle(); else startCycle(); });
   reducedMotion.addEventListener('change', () => startCycle());
 
+  /* Store badges: lead with the visitor's own store. Desktop keeps the published order. */
+  const agent = navigator.userAgent;
+  const ownStore = /iPhone|iPad|iPod/iu.test(agent) ? 'apple' : /Android/iu.test(agent) ? 'google' : '';
+  if (ownStore) {
+    document.querySelectorAll<HTMLElement>('[data-fomo-stores]').forEach((row) => {
+      const first = row.querySelector<HTMLElement>(`[data-store="${ownStore}"]`);
+      if (first) row.prepend(first);
+    });
+  }
+
+  /* Find your sign by birthday. Tropical dates from the site's sign table. */
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const MONTH_LENGTHS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const finderForm = document.querySelector<HTMLFormElement>('[data-fomo-finder-form]');
+  const finderMonth = document.querySelector<HTMLSelectElement>('[data-finder-month]');
+  const finderDay = document.querySelector<HTMLSelectElement>('[data-finder-day]');
+  const finderResult = document.querySelector<HTMLElement>('[data-finder-result]');
+  const finderActions = document.querySelector<HTMLElement>('[data-finder-actions]');
+  function signForDate(month: number, day: number): FomoRecord | undefined {
+    const value = month * 100 + day;
+    return records.find((record) => {
+      const start = record.start[0] * 100 + record.start[1];
+      const end = record.end[0] * 100 + record.end[1];
+      return start <= end ? value >= start && value <= end : value >= start || value <= end;
+    });
+  }
+  function runFinder() {
+    if (!finderResult || !finderActions) return;
+    const month = Number(finderMonth?.value);
+    const day = Number(finderDay?.value);
+    if (!month || !day) {
+      finderResult.textContent = '';
+      finderActions.hidden = true;
+      return;
+    }
+    if (day > MONTH_LENGTHS[month - 1]) {
+      finderResult.textContent = `${MONTHS[month - 1]} has ${MONTH_LENGTHS[month - 1]} days.`;
+      finderActions.hidden = true;
+      return;
+    }
+    const record = signForDate(month, day);
+    if (!record) return;
+    const name = document.createElement('strong');
+    name.textContent = record.name;
+    finderResult.replaceChildren(name, document.createTextNode(` · ${record.dates}`));
+    setText('[data-finder-name]', record.name, finderActions);
+    setText('[data-finder-symbol]', record.symbol, finderActions);
+    const open = finderActions.querySelector<HTMLAnchorElement>('[data-finder-open]');
+    if (open) open.href = record.fomo;
+    const card = finderActions.querySelector<HTMLAnchorElement>('[data-finder-card]');
+    if (card) card.href = `#sign-${record.slug}`;
+    finderActions.hidden = false;
+    chosen = true;
+    select(record);
+    stopCycle();
+  }
+  finderForm?.addEventListener('submit', (event) => event.preventDefault());
+  finderMonth?.addEventListener('change', runFinder);
+  finderDay?.addEventListener('change', runFinder);
+
   if (active) select(active, { animate: false });
   const cycleStartDelay = reducedMotion.matches ? 0 : 1600;
   window.setTimeout(startCycle, cycleStartDelay);
@@ -732,55 +834,115 @@ const sources = [
     line-height: 1.55;
     text-wrap: pretty;
   }
-  .fomo-hero__actions {
+  /* Official store badges. Apple's SVG at 48px; Google's PNG keeps its built-in
+     clear space, scaled so the visible badge is also 48px and pulled in by
+     negative margins so the pair sits on one baseline. */
+  .fomo-stores {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 12px 14px;
     margin-top: clamp(24px, 3.4vw, 36px);
   }
-  .fomo-stores {
+  .fomo-stores--center { justify-content: center; margin-top: 6px; }
+  .fomo-badge {
+    display: inline-flex;
+    border-radius: 8px;
+    line-height: 0;
+    transition: transform var(--dur-1) var(--ease), opacity var(--dur-1) var(--ease);
+  }
+  .fomo-badge img { display: block; width: auto; }
+  .fomo-badge--apple img { height: 48px; }
+  .fomo-badge--google img { height: 71.43px; margin: -11.71px -11.71px -11.71px -11.71px; }
+  @media (hover: hover) and (pointer: fine) {
+    .fomo-badge:hover { transform: translateY(-1px); opacity: 0.94; }
+  }
+  .fomo-badge:focus-visible { outline: 1.5px solid var(--ink-0); outline-offset: 4px; }
+  .fomo-web {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px 10px;
+    gap: 6px 8px;
     margin: 16px 0 0;
     color: var(--faint);
     font-size: var(--text-sm);
   }
-  .fomo-stores a { color: var(--muted); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
-  .fomo-stores a:hover { color: var(--text); }
-
-  .fomo-stats {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    justify-content: start;
-    gap: 12px clamp(28px, 4vw, 52px);
-    margin: clamp(32px, 5vw, 52px) 0 0;
-    padding-top: 22px;
+  .fomo-web a { color: var(--muted); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+  .fomo-web a:hover { color: var(--text); }
+  .fomo-facts-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin: clamp(26px, 4vw, 40px) 0 0;
+    padding: 18px 0 0;
     border-top: 1px solid var(--hair-1);
+    list-style: none;
+    color: var(--muted);
+    font-size: var(--text-sm);
   }
-  .fomo-stats > div { display: grid; gap: 4px; }
-  .fomo-stats dt {
+  .fomo-facts-strip strong { margin-right: 5px; color: var(--text); font-weight: 600; }
+
+  /* ── Finder ─────────────────────────────────────────────────────── */
+  .fomo-finder { padding-block: 0 clamp(8px, 2vw, 16px); }
+  .fomo-finder__core {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 56px);
+    padding: clamp(24px, 4vw, 44px);
+    background:
+      radial-gradient(90% 80% at 0% 0%, color-mix(in oklab, var(--fomo-sign) 9%, transparent), transparent 62%),
+      linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
+  }
+  .fomo-finder__ask .kicker { margin: 0 0 10px; }
+  .fomo-finder__ask h2 { margin: 0; font-size: var(--text-xl); }
+  .fomo-finder__ask p:not(.kicker) { max-width: 42ch; margin: 12px 0 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.6; text-wrap: pretty; }
+  .fomo-finder__form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .fomo-finder__field { display: grid; gap: 6px; }
+  .fomo-finder__field span {
     font-family: var(--font-mono);
     font-size: 10.5px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--faint);
   }
-  .fomo-stats dd {
-    margin: 0;
+  .fomo-finder__field select {
+    appearance: none;
+    -webkit-appearance: none;
+    min-height: 48px;
+    padding: 0 40px 0 14px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M3 5.25 7 9.25l4-4' stroke='%238E96AB' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center,
+      rgba(198, 204, 218, 0.05);
+    color: var(--text);
+    font: 500 15px/1 var(--font-sans);
+  }
+  .fomo-finder__field select:focus-visible { outline: 1.5px solid var(--ink-0); outline-offset: 2px; }
+  .fomo-finder__result {
+    grid-column: 1 / -1;
+    min-height: 1.5em;
+    margin: 2px 0 0;
+    color: var(--text-2);
+    font-size: var(--text-base);
+  }
+  .fomo-finder__result strong {
+    color: var(--text);
     font-family: var(--font-serif);
-    font-size: clamp(1.9rem, 1.3rem + 2vw, 2.7rem);
+    font-size: 1.4em;
     font-weight: 500;
-    line-height: 1;
     letter-spacing: -0.01em;
-    font-variant-numeric: oldstyle-figures;
   }
-  .fomo-stats__note {
-    margin: 10px 0 0;
-    color: var(--faint);
-    font-size: var(--text-xs);
+  .fomo-finder__actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
   }
+  .fomo-finder__actions[hidden] { display: none; }
+  .fomo-finder__card-link { color: var(--muted); font-size: var(--text-sm); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+  .fomo-finder__card-link:hover { color: var(--text); }
 
   /* ── Branded Fomo hand-off (the same pill the Astrofolio vitrine uses) ── */
   .fomo-cta {
@@ -1212,6 +1374,7 @@ const sources = [
   }
   @media (max-width: 900px) {
     .fomo-hero { grid-template-columns: 1fr; gap: clamp(36px, 8vw, 56px); }
+    .fomo-finder__core { grid-template-columns: 1fr; }
     .fomo-hero h1 { max-width: 14ch; }
     .fomo-phone__frame { transform: none; }
     .fomo-steps__list { grid-template-columns: 1fr; }
@@ -1219,11 +1382,11 @@ const sources = [
   @media (max-width: 720px) {
     .fomo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .fomo-facts__grid { grid-template-columns: 1fr; }
-    .fomo-stats { grid-template-columns: repeat(3, minmax(0, auto)); gap: 12px 20px; }
+    .fomo-finder__form { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 460px) {
     .fomo-grid { grid-template-columns: 1fr; }
-    .fomo-hero__actions .btn { width: 100%; justify-content: space-between; }
+    .fomo-close__actions .btn { width: 100%; justify-content: space-between; }
     .fomo-cta { width: 100%; }
     .fomo-cta .fomo-cta__arrow { margin-left: auto; }
   }

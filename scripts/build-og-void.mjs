@@ -3,6 +3,7 @@
  * system — 1200×630 PNGs under public/assets/og/v2/:
  *
  *   share.png              site-wide default
+ *   fomo.png               /fomo/, Astrofolio on the Fomo app
  *   sign/{slug}.png        the 12 sign guides
  *   registry/{slug}.png    the 12 Registry lots (Nº / Lot convention)
  *   registry.png           Registry landing page
@@ -24,6 +25,7 @@
  *   npm run data:og -- --only-horoscopes  # refresh the horoscope family
  *   npm run data:og -- --only-homepage    # refresh the cache-busted homepage card
  *   npm run data:og -- --only-wing        # refresh the shared Astrofolio / Terminal card
+ *   npm run data:og -- --only-fomo        # refresh the /fomo/ card
  *
  * Deterministic and offline: fonts and disc art are inlined as data:
  * URIs; Chromium comes from playwright-core (PLAYWRIGHT_MODULE and
@@ -101,6 +103,10 @@ for (const s of SIGNS) {
   // with a glyph, emoji, hue-only dot, or SDK packaging asset.
   DISCS[s.slug] = await b64(`public/assets/zodiac-icons/128/${s.slug}.webp`, 'image/webp');
 }
+
+// Fomo's own app icon, as published (docs/VENUE-MARKS.md); it identifies the
+// app the /fomo/ card is about and is never redrawn or recoloured.
+const FOMO_ICON = await b64('public/assets/venues/fomo-official.svg', 'image/svg+xml');
 
 // ── Shared chrome ─────────────────────────────────────────────────────
 const INK = '#EEF1F7';
@@ -302,6 +308,26 @@ function shareCard() {
     ${wheelMark(380, 70)}
   </div>`;
   return shell(body, OG_EN.site);
+}
+
+/** /fomo/ — Astrofolio on the Fomo app: the wheel of twelve around Fomo's
+ *  icon. Wing register on purpose; emitted alone via --only-fomo. */
+function fomoCard() {
+  const body = `
+  <div class="stage">
+    <div class="left" style="max-width: 640px;">
+      <span class="kicker">Astrofolio, in a trading app</span>
+      <div class="display" style="font-size: 74px; max-width: 620px;">The twelve Zodiacs are on Fomo.</div>
+      <div class="sub" style="max-width: 600px;">Every official Zodiac, listed in the free Fomo app under its verified Solana address.</div>
+      <div class="data">iPhone · Android · fomo.family</div>
+    </div>
+    <span style="position:relative;display:block;width:380px;height:380px;flex:none">
+      ${wheelMark(380, 64)}
+      <img src="${FOMO_ICON}" width="116" height="116" alt=""
+        style="position:absolute;left:132px;top:132px;width:116px;height:116px;border-radius:30px;display:block;box-shadow:0 30px 70px rgba(0,0,0,.65), 0 0 0 1px rgba(238,241,247,.08)" />
+    </span>
+  </div>`;
+  return shell(body, 'zodiacs.org/fomo/');
 }
 
 /** The thesis page's own card — reference-document register, no consumer
@@ -627,6 +653,7 @@ const englishRequiredCards = () => [
   ...(EVENTS_PUBLICATION.hub.indexEligible ? ['events/index.png'] : []),
   ...EVENTS_PUBLICATION.pages.map((event) => `events/${event.id}.png`),
   ...PEOPLE_PILOT.map((person) => `people/${person.slug}.png`),
+  'fomo.png',
   'registry.png',
   'thesis.png',
   'disclosure.png',
@@ -779,6 +806,15 @@ if (onlyRussian) {
   process.exit(0);
 }
 
+if (process.argv.includes('--only-fomo')) {
+  console.log('Rendering the /fomo/ share card…');
+  await shoot(fomoCard(), 'fomo.png');
+  await writeEnglishManifest();
+  console.log(`Done: ${count} card(s), ${(total / 1024).toFixed(0)}KB.`);
+  await browser.close();
+  process.exit(0);
+}
+
 if (onlyPeople) {
   console.log('Rendering People pilot OG cards…');
   for (const person of PEOPLE_PILOT) {
@@ -840,6 +876,7 @@ if (onlyHoroscopes) {
     await browser.close();
     process.exit(0);
   }
+  await shoot(fomoCard(), 'fomo.png');
   // Keep the established global fallback byte-stable unless a deliberate
   // fallback refresh is explicitly requested.
   if (process.argv.includes('--include-fallback')) await shoot(shareCard(), 'share.png');

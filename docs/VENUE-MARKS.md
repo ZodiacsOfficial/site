@@ -24,6 +24,19 @@ is ordered alphabetically and never ranked.
 | `moonpay.svg` | `www.moonpay.com/safari-pinned-tab.svg` | 2026-08-05 | MoonPay's Safari pinned-tab mask — already monochrome on transparency. Potrace preamble and metadata stripped; viewBox tightened. |
 | `ramp.svg` | `cdn.prod.website-files.com/…/6a4bbd700ee30b63d3ba9652_Logo%20sign.svg` (linked from `rampnetwork.com`) | 2026-08-05 | Ramp Network's logo sign. Fill replaced with ink. Preferred over their 32px favicon PNG, which would soften at 2× density. |
 
+## Store badges (`public/assets/badges/`)
+
+Apple's and Google's own download badges, used unmodified as `<img>` links to
+the Fomo listings on `/fomo/`. Each program publishes its badge for exactly
+this use and forbids redrawing, recolouring, or cropping it. The Google PNG
+keeps its built-in clear space and is scaled so its visible badge matches the
+Apple badge's 48px height, which is above Apple's 40px minimum.
+
+| File | Source | Retrieved | Notes |
+| --- | --- | --- | --- |
+| `app-store-en.svg` | `developer.apple.com/assets/elements/badges/download-on-the-app-store.svg` | 2026-09-01 | Black "Download on the App Store", en-US, 119.66×40 units, with its published light outline for dark backgrounds. |
+| `google-play-en.png` | `play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png` | 2026-09-01 | "Get it on Google Play", English, 646×250 including clear space. |
+
 ## House glyphs (ours, not the vendor's)
 
 These are drawn in the site's own hand because no maskable vendor asset exists.
