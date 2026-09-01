@@ -1,15 +1,19 @@
 {
   "version": 1,
-  "id": "llc-disclosure-locale-parity-2026-08-31",
-  "baseCommit": "c9b24546c55dad1a0425113a11febc5f19362e86",
+  "id": "daily-sky-recovery-2026-09-01",
+  "baseCommit": "cbbc5227070d11793f56019812bb85cf99f2353b",
   "protectedPaths": [
-    "src/pages/es/privacy/index.astro",
-    "src/pages/fr/privacy/index.astro",
-    "src/pages/it/privacy/index.astro",
-    "src/pages/pt/privacy/index.astro",
-    "src/strings/additions.es.mjs",
-    "src/strings/additions.fr.mjs",
-    "src/strings/additions.it.mjs",
-    "src/strings/additions.pt.mjs"
+    "public/registry/aquarius/index.html",
+    "public/registry/aries/index.html",
+    "public/registry/cancer/index.html",
+    "public/registry/capricorn/index.html",
+    "public/registry/gemini/index.html",
+    "public/registry/leo/index.html",
+    "public/registry/libra/index.html",
+    "public/registry/pisces/index.html",
+    "public/registry/sagittarius/index.html",
+    "public/registry/scorpio/index.html",
+    "public/registry/taurus/index.html",
+    "public/registry/virgo/index.html"
   ]
 }
