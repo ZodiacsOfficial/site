@@ -2,6 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import EditionText from '../../components/EditionText.astro';
 import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
+import AskGuideLine from '../../components/AskGuideLine.astro';
+import GuideQuickPrompts from '../../components/GuideQuickPrompts.astro';
 import UpcomingEventLinks from '../../components/events/UpcomingEventLinks.astro';
 import TodayBrief from '../../islands/today/TodayBrief';
 import dailyData from '../../data/daily.json';
@@ -134,6 +136,17 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
 
     <UpcomingEventLinks date={publication.date} />
 
+    <div class="today-ask">
+      <AskGuideLine lead="Questions about today’s sky?" />
+      <GuideQuickPrompts
+        prompts={[
+          'What does today’s sky mean for my sign?',
+          'Which of today’s aspects matters most?',
+          'How do I read today’s sky against my birth chart?',
+        ]}
+      />
+    </div>
+
     {daily.eventsCoverage === 'unavailable' && (
       <p class="today-coverage-note">
         This edition uses planetary positions only; exact-event timing
@@ -162,6 +175,7 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
     </EvidenceDisclosure>
   </section>
 <style is:global>
+  .today-ask { margin: clamp(18px, 3vw, 26px) 0 0; }
   .today-page {
     max-width: 780px;
     /* Resolve the cold-load reading face directly from the native stack.

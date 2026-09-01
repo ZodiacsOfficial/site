@@ -13,6 +13,31 @@ function htmlFiles(directory: string): string[] {
 }
 
 describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
+  it('offers Guide quick prompts as plain links on every horoscope surface', () => {
+    const surfaces = [
+      'today/index.html',
+      'horoscopes/index.html',
+      'horoscopes/aries/index.html',
+      'horoscopes/aries/tomorrow/index.html',
+      'horoscopes/aries/weekly/index.html',
+      'horoscopes/aries/monthly/index.html',
+      'horoscopes/aries/love/index.html',
+      'horoscopes/aries/career/index.html',
+      'horoscopes/aries/2027/index.html',
+    ];
+    for (const path of surfaces) {
+      const html = readFileSync(join(distRoot, path), 'utf8');
+      const chips = [...html.matchAll(/<a\b[^>]*data-assistant-prompt="([^"]*)"[^>]*>/g)];
+      expect(chips.length, path).toBeGreaterThanOrEqual(3);
+      for (const [tag, prompt] of chips) {
+        expect(tag, path).toContain('href="/ask/"');
+        expect(tag, path).toContain('data-assistant-open');
+        expect(prompt.length, `${path}: ${prompt}`).toBeLessThanOrEqual(120);
+        expect(prompt, path).toMatch(/\?$/);
+      }
+    }
+  });
+
   it('inlines CSS only on the latency-sensitive Phase 1 entry pages', () => {
     const criticalPaths = [
       'today/index.html',

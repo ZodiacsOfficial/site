@@ -1,12 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { currentHoroscopeMonth, utcMonth } from '../../lib/horoscope-month.mjs';
+import daily from '../../data/daily.json';
 
 export async function getStaticPaths() {
   const pairs = await getCollection('pairs', ({ data }) => !data.draft);
   const learn = await getCollection('learn', ({ data }) => !data.draft);
   const horoscopes = await getCollection('horoscopes', ({ data }) => !data.draft);
-  const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
+  const latestMonth = currentHoroscopeMonth(horoscopes.map((h) => h.data.month), utcMonth(daily.date));
   const currentHoroscopes = horoscopes.filter((h) => h.data.month === latestMonth);
 
   const staticSlugs = [

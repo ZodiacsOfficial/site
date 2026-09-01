@@ -1,3 +1,5 @@
+import { currentHoroscopeMonth } from '../src/lib/horoscope-month.mjs';
+
 const DAY_MS = 86_400_000;
 
 export const HOROSCOPE_SIGNS = [
@@ -88,7 +90,7 @@ export function assertHoroscopePackageFreshness({
   }
 
   const liveEntries = monthlyEntries.filter((entry) => !entry.draft);
-  const latestLiveMonth = liveEntries.map((entry) => entry.month).sort().at(-1);
+  const latestLiveMonth = currentHoroscopeMonth(liveEntries.map((entry) => entry.month), currentMonth);
   if (latestLiveMonth !== currentMonth) {
     throw new Error(
       `latest live monthly horoscope ${String(latestLiveMonth)} does not match current UTC month ${currentMonth}`,
