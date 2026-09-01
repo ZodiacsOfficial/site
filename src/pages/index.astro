@@ -161,27 +161,20 @@ const tools = [
       </video>
       <div class="hero__scrim" aria-hidden="true"></div>
       <div class="hero__content">
-        <div class="hero__story">
-          <h1 class="hero__title">
-            <span>Your whole chart,</span>
-            <em>not just your sign.</em>
-          </h1>
+        <h1 class="hero__title">Your whole chart, <em>not just your sign.</em></h1>
+        <div class="hero__foot">
           <p class="hero__sub">
-            Birth charts, moon signs, compatibility, and daily forecasts —
+            Free birth charts, moon signs, compatibility, and horoscopes —
             accurate, private, and easy to understand.
           </p>
           <div class="hero__ctas">
-            <a class="btn btn--primary" href="/birth-chart/"><span>Get my free birth chart</span><span class="orb">↗</span></a>
-            <a class="hero__forecast" href="/horoscopes/"><span>See today’s forecasts</span><span aria-hidden="true">→</span></a>
+            <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
+            <a class="btn btn--ghost hero__ghost" href="/horoscopes/"><span>See your forecasts</span></a>
           </div>
-          <p class="hero__trust">Free · Private · No account needed</p>
+          <p class="hero__trust">Free · No signup · Calculated in your browser</p>
         </div>
       </div>
     </div>
-    <a class="hero__method" href="/methodology/">
-      <span>Positions checked against NASA JPL Horizons</span>
-      <span aria-hidden="true">→</span>
-    </a>
     <script is:inline>
       // The poster is the LCP and the complete reduced-motion / constrained-data
       // experience. Mobile video remains detached until the first interaction;
@@ -680,7 +673,7 @@ const tools = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 52% 42%;
+    object-position: center 42%;
     transform: scale(1.035);
     transform-origin: center;
   }
@@ -707,11 +700,11 @@ const tools = [
     z-index: 1;
     background:
       linear-gradient(180deg,
-        rgba(6, 7, 9, 0.66) 0%,
-        rgba(6, 7, 9, 0.28) 24%,
-        rgba(6, 7, 9, 0.10) 44%,
-        rgba(6, 7, 9, 0.70) 72%,
-        rgba(6, 7, 9, 0.94) 100%);
+        rgba(6, 7, 9, 0.58) 0%,
+        rgba(6, 7, 9, 0.34) 30%,
+        rgba(6, 7, 9, 0.22) 56%,
+        rgba(6, 7, 9, 0.70) 88%,
+        rgba(6, 7, 9, 0.88) 100%);
   }
   .hero__content {
     position: relative;
@@ -720,119 +713,76 @@ const tools = [
     min-height: inherit;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    box-sizing: border-box;
-    padding: calc(clamp(100px, 13svh, 132px) + env(safe-area-inset-top)) clamp(32px, 5vw, 72px) clamp(38px, 5vw, 64px);
-    text-align: left;
-  }
-  .hero__story {
-    display: grid;
-    justify-items: start;
-    width: min(100%, 52rem);
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    padding: calc(clamp(100px, 13svh, 132px) + env(safe-area-inset-top)) clamp(22px, 4vw, 56px) clamp(28px, 5vw, 64px);
+    text-align: center;
   }
   .hero__title {
-    margin: 0;
-    font-family: var(--font-serif);
-    font-weight: 400;
-    font-size: clamp(4.4rem, 1.9rem + 5.1vw, 7rem);
-    line-height: 0.88;
-    letter-spacing: -0.025em;
-    max-width: 8em;
+    margin: 0 0 clamp(14px, 2vw, 20px);
+    font-family: 'Instrument Sans Hero', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
+    font-weight: 690;
+    font-size: clamp(2.4rem, 0.95rem + 5.9vw, 6rem);
+    line-height: 0.94;
+    letter-spacing: 0.002em;
+    text-transform: uppercase;
+    max-width: 9.53em;
     color: var(--ink-0, #EEF1F7);
+    text-wrap: balance;
     text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55);
   }
-  .hero__title span,
   .hero__title em {
-    display: block;
-    white-space: nowrap;
-  }
-  .hero__title em {
-    font-style: italic;
-    font-weight: 400;
+    font-style: normal;
     color: var(--ink-1, #C6CCDA);
+  }
+  .hero__foot {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 3vw, 28px);
   }
   .hero__sub {
-    margin: clamp(18px, 2vw, 24px) 0 0;
-    max-width: 34em;
-    font-family: var(--font-nav-sans);
+    margin: 0;
+    max-width: 31.97em;
+    font-family: 'Instrument Sans Hero', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
     color: var(--ink-1, #C6CCDA);
     font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);
-    line-height: 1.52;
+    line-height: 1.6;
     text-wrap: pretty;
     text-shadow: 0 1px 18px rgba(6, 7, 9, 0.6);
   }
   .hero__ctas {
-    margin-top: clamp(24px, 2.8vw, 30px);
     display: flex;
-    align-items: center;
-    width: min(100%, 35rem);
-    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'Instrument Sans Hero', 'Instrument Sans Fallback', 'Instrument Sans Fallback Android', system-ui, -apple-system, sans-serif;
   }
-  .hero__ctas .btn--primary {
-    display: grid;
-    grid-template-columns: 40px minmax(0, 1fr) 40px;
-    width: min(100%, 22.5rem);
-    min-height: 56px;
-    padding: 7px 8px;
-    font-family: var(--font-nav-sans);
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  .hero__ctas .btn--primary::before {
-    content: '';
-    width: 40px;
-    height: 1px;
-  }
-  .hero__ctas .btn--primary .orb {
-    justify-self: end;
-    width: 40px;
-    height: 40px;
-  }
-  .hero__forecast {
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    gap: 7px;
-    padding: 8px 0;
-    font-family: var(--font-nav-sans);
-    font-size: 0.98rem;
-    font-weight: 500;
+  .hero__ctas .hero__ghost {
+    background: rgba(10, 12, 17, 0.66);
+    backdrop-filter: saturate(150%) blur(18px);
+    -webkit-backdrop-filter: saturate(150%) blur(18px);
+    border-color: rgba(238, 241, 247, 0.28);
     color: var(--ink-0, #EEF1F7);
-    text-decoration: none;
-    white-space: nowrap;
+    box-shadow:
+      inset 0 1px 0 rgba(238, 241, 247, 0.06),
+      0 12px 32px -14px rgba(0, 0, 0, 0.7);
   }
-  .hero__forecast span:last-child {
-    transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  .hero__ctas .hero__ghost:hover {
+    background: rgba(10, 12, 17, 0.76);
+    border-color: rgba(238, 241, 247, 0.34);
   }
   .hero__trust {
-    margin: clamp(20px, 2.4vw, 26px) 0 0;
-    font-family: var(--font-nav-sans);
-    font-size: 0.78rem;
-    line-height: 1.5;
-    letter-spacing: 0.012em;
+    margin: -2px 0 0;
+    font-family: 'JetBrains Mono Hero', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+    line-height: 1.45;
+    letter-spacing: 0.055em;
     color: var(--faint);
     text-shadow: 0 1px 14px rgba(6, 7, 9, 0.72);
-  }
-  .hero__method {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    margin: 12px clamp(24px, 5vw, 72px) 0;
-    font-family: var(--font-nav-sans);
-    font-size: 0.76rem;
-    line-height: 1.45;
-    color: var(--faint);
-    text-decoration: none;
-  }
-  .hero__method span:last-child {
-    transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .hero__forecast:hover span:last-child,
-    .hero__method:hover span:last-child { transform: translateX(3px); }
-    .hero__method:hover { color: var(--ink-1, #C6CCDA); }
+    text-align: center;
   }
 
   /* ── Liquid glass (homepage chrome) ──
@@ -840,9 +790,28 @@ const tools = [
      -webkit-backdrop-filter, so the buttons and nav read as real glass there.
      Chromium additionally refracts the backdrop through the SVG capsule lens,
      gated by the .zdx-lens class (added by a tiny inline script only on
-     Chromium): Safari reports support for url() backdrop filters but paints
+  Chromium): Safari reports support for url() backdrop filters but paints
      nothing, which would otherwise leave these controls flat and transparent. */
   .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+  :global(html.zdx-lens) .hero__ctas .hero__ghost {
+    background: rgba(10, 12, 17, 0.56);
+    backdrop-filter: url(#zdx-lens-nav);
+    -webkit-backdrop-filter: url(#zdx-lens-nav);
+    box-shadow:
+      inset 0 1px 0 rgba(238, 241, 247, 0.10),
+      inset 0 -1px 0 rgba(238, 241, 247, 0.04),
+      0 12px 32px -14px rgba(0, 0, 0, 0.7);
+  }
+  :global(html.zdx-lens) .hero__ctas .hero__ghost:hover { background: rgba(10, 12, 17, 0.66); }
+  :global(html:not(.zdx-lens)) .hero__ctas .hero__ghost {
+    background: rgba(10, 12, 17, 0.58);
+    backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
+    -webkit-backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.24),
+      inset 0 10px 22px -16px rgba(255, 255, 255, 0.10),
+      0 14px 34px -14px rgba(0, 0, 0, 0.72);
+  }
   :global(html.zdx-lens .nav-wrap .nav) {
     background: rgba(10, 12, 17, 0.56);
     backdrop-filter: url(#zdx-lens-nav);
@@ -855,6 +824,11 @@ const tools = [
   /* Reduced transparency: solid, no blur — applies to the frosted floor and
      the Chromium lens alike. */
   @media (prefers-reduced-transparency: reduce) {
+    .hero__ctas .hero__ghost {
+      background: rgba(10, 12, 17, 0.86);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
     :global(html .nav-wrap .nav) {
       background: rgba(10, 12, 17, 0.92);
       backdrop-filter: none;
@@ -865,43 +839,18 @@ const tools = [
   @media (max-width: 640px) {
     .hero { width: min(100% - 20px, 1440px); }
     .hero__frame { min-height: clamp(540px, calc(100svh - 56px), 760px); }
-    .hero__poster,
-    .hero__video { object-position: 55% 44%; }
-    .hero__content { padding: calc(94px + env(safe-area-inset-top)) 24px 30px; }
+    .hero__content { padding: calc(clamp(96px, 15svh, 120px) + env(safe-area-inset-top)) 18px 22px; }
     .hero__title {
-      max-width: none;
-      font-size: clamp(2.65rem, 12vw, 3.125rem);
-      line-height: 0.91;
-      letter-spacing: -0.03em;
+      max-width: 7.49em;
+      font-size: clamp(2.25rem, 11.5vw, 3.55rem);
+      line-height: 0.95;
     }
     .hero__sub {
-      max-width: 20em;
-      font-size: 1rem;
-      line-height: 1.5;
+      max-width: 20.65em;
+      font-size: 0.98rem;
+      line-height: 1.52;
     }
-    .hero__ctas {
-      width: 100%;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 7px;
-    }
-    .hero__ctas .btn--primary { width: 100%; }
-    .hero__trust { margin-top: 18px; }
-    .hero__method { margin-inline: 24px; }
-    :global(body:has(.hero) .nav) {
-      width: min(calc(100% - 32px), 32rem);
-      padding-inline: 18px 6px;
-    }
-    :global(body:has(.hero) .nav__mark) { margin-inline-end: auto; }
-    :global(body:has(.hero) .nav__chip) { display: none; }
-  }
-  @media (max-width: 360px) {
-    .hero__content { padding-inline: 20px; padding-bottom: 26px; }
-    .hero__title em {
-      max-width: 6.4em;
-      white-space: normal;
-      text-wrap: balance;
-    }
+    .hero__ctas .btn { flex: 1 1 auto; justify-content: center; }
   }
   @media (prefers-reduced-motion: reduce) {
     .hero__frame { box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10); }
