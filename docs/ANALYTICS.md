@@ -55,6 +55,32 @@ that analytics involves no IP processing. It remains acceptable only while:
 Provider sources: [Plausible data policy](https://plausible.io/data-policy) and
 [Events API reference](https://plausible.io/docs/events-api).
 
+## Vercel Web Analytics (flagged, pageviews only)
+
+Added 2026-09-01 as a second, cookieless pageview counter so the weekly growth
+review can report visitor counts from the hosting platform. It is off in
+every build until the owner both enables Web Analytics on the Vercel project
+and sets `PUBLIC_VERCEL_WEB_ANALYTICS=1`; `src/lib/web-analytics.mjs` is the
+single source of that flag, and the English and localized privacy pages
+describe the processor only when it is on.
+
+Boundary, in the same terms as the Plausible decision above:
+
+- pageviews only — the directive event taxonomy below still goes to Plausible
+  through `zodiacsAnalytics.track`, never to Vercel;
+- the loader in `src/layouts/Base.astro` applies the same surface exclusions
+  as Plausible (noindex, private surfaces, the encrypted-sync preview, a
+  private Guide session) and its `beforeSend` hook removes the query string and
+  fragment from every pageview URL before it leaves the browser;
+- Vercel identifies a visitor for same-day deduplication with a hash derived
+  from the request (IP address and User-Agent) that is discarded after the
+  day; no cookie, no persistent identifier, no cross-site identifier;
+- the embeds stay analytics-free (`scripts/verify-widgets.mjs` rejects a
+  Vercel insights loader as it rejects Plausible).
+
+Turning the flag on is a provider-method change under the rule above and is
+recorded in `docs/growth/records/2026/GROWTH-2026-09-01-vercel-web-analytics-flag.md`.
+
 ## Directive event taxonomy
 
 | Event | Props | Fired when |

@@ -2070,6 +2070,21 @@ export async function openAssistant(requestedLocale?: string, from?: HTMLElement
   launcher?.setAttribute('aria-expanded', 'true');
   document.documentElement.style.overflow = 'hidden';
   setStatus();
+  prefillFromOpener(from);
   textarea!.focus();
   track('guide_open');
+}
+
+/**
+ * A quick-prompt opener may carry `data-assistant-prompt`. The text lands in
+ * the visitor's own composer as an editable draft and nothing else: it is not
+ * sent, not added to the page context, and never read from the URL or page
+ * text (see `syncPageBoundary`). An existing draft is left alone.
+ */
+function prefillFromOpener(from?: HTMLElement | null): void {
+  const prompt = from?.dataset?.assistantPrompt?.trim();
+  if (!prompt || !textarea || textarea.value.trim()) return;
+  textarea.value = prompt.slice(0, 280);
+  syncTextareaHeight();
+  syncSendState();
 }

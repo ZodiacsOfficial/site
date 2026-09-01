@@ -1,0 +1,177 @@
+---
+import Base from '../../../layouts/Base.astro';
+import '../../../styles/rx-table.css';
+import sky from '../../../data/sky.json';
+import { bodyLongitude } from '../../../lib/engine/full';
+import { formatLongitude, signForLongitude } from '../../../lib/signs';
+import { formatDate, formatShortDate } from '../../../lib/i18n/dates';
+import { publishedEventById } from '../../../lib/events/publication';
+
+// The 2027 Mercury retrograde windows, cut from the same committed sky data
+// the hub renders and refined to the hour — receipts, no client ephemeris.
+const YEAR = 2027;
+const buildNow = new Date();
+
+const sources = [
+  { label: 'Astronomy Engine', href: 'https://github.com/cosinekitty/astronomy' },
+  { label: 'IANA Time Zone Database', href: 'https://www.iana.org/time-zones' },
+];
+
+const windows = (sky.retrogrades as { planet: string; from: string; to: string | null }[])
+  .filter((r) => r.planet === 'Mercury')
+  .map((r) => ({ from: new Date(r.from), to: r.to ? new Date(r.to) : null, fromIso: r.from }))
+  .filter(({ from, to }) => from.getUTCFullYear() === YEAR || to?.getUTCFullYear() === YEAR)
+  .map(({ from, to, fromIso }) => {
+    const rxLon = bodyLongitude('Mercury', from);
+    const directLon = to ? bodyLongitude('Mercury', to) : null;
+    const id = `mercury-retrograde-${fromIso.slice(0, 10)}`;
+    return {
+      id,
+      from,
+      to,
+      label: `${formatShortDate('en', from)} – ${to ? formatShortDate('en', to) : 'ongoing'}`,
+      stationRx: formatLongitude(rxLon),
+      stationDirect: directLon === null ? null : formatLongitude(directLon),
+      signRx: signForLongitude(rxLon),
+      signDirect: directLon === null ? null : signForLongitude(directLon),
+      state: to && to < buildNow ? 'past' : from > buildNow ? 'upcoming' : 'active',
+      path: publishedEventById.get(id)?.path ?? null,
+    };
+  });
+
+if (windows.length === 0) throw new Error(`No ${YEAR} Mercury retrograde windows in sky.json`);
+
+const fmtMonthDay = (d: Date) => formatDate('en', d, { month: 'long', day: 'numeric', timeZone: 'UTC' });
+const spans = windows.map((w) => `${fmtMonthDay(w.from)} to ${w.to ? fmtMonthDay(w.to) : 'the end of the year'}`);
+const signs = [...new Set(windows.flatMap((w) => [w.signRx.name, w.signDirect?.name].filter(Boolean)))];
+
+const description = `Every Mercury retrograde window of 2027 with exact dates in universal time and the degree Mercury stations at, plus a calendar file so the windows sit in your own calendar.`;
+
+const faq = [
+  {
+    q: `When is Mercury retrograde in ${YEAR}?`,
+    a: `${windows.length} times: ${spans.join('; ')}. Each window is Mercury's actual motion, station to station, refined to the hour.`,
+  },
+  {
+    q: 'Which signs do the 2027 retrogrades touch?',
+    a: `The stations fall in ${signs.join(', ')}. A retrograde that starts in one sign and ends in the previous one runs across that boundary, which is why the table shows both station positions.`,
+  },
+  {
+    q: 'Is there a shadow period before and after?',
+    a: 'Mercury crosses the same degrees three times: forward before the retrograde station, backward during the window, and forward again after the direct station. Those bracketing passes are what people call the shadow; the dates in the table are the stations themselves.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: `Mercury retrograde ${YEAR}`,
+    url: `https://zodiacs.org/mercury-retrograde/${YEAR}/`,
+    description,
+    isPartOf: { '@type': 'WebPage', url: 'https://zodiacs.org/mercury-retrograde/' },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Mercury Retrograde 2027 — Exact Dates and Stations | Zodiacs.org"
+  description="Every Mercury retrograde window of 2027 with exact dates in universal time and the degree Mercury stations at, plus a calendar file so the windows sit in your own calendar."
+  path={`/mercury-retrograde/${YEAR}/`}
+  image="/assets/og/v2/tool/mercury-retrograde.png"
+  imageAlt="Mercury retrograde 2027 — Zodiacs.org"
+  jsonLd={jsonLd}
+  sources={sources}
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <em class="kicker">Mercury retrograde · {YEAR}</em>
+      <h1 class="display">Mercury retrograde in {YEAR}.</h1>
+      <p>
+        {windows.length} windows, each computed from <a href="/learn/glossary/#mercury">Mercury</a>’s actual motion{' '}
+        <a href="/learn/glossary/#station">station to station</a>, with the degree it stands still at on each end.
+        Dates are universal time.
+      </p>
+    </div>
+
+    <div class="rx-now shell tinted reveal" style="--sign:var(--sign-gemini)">
+      <div class="core tinted rx-now__core">
+        <span class="mono--label">Calendar file</span>
+        <strong class="rx-now__line">
+          <a href={`/mercury-retrograde/${YEAR}.ics`}>Add the {YEAR} windows to your calendar</a>
+        </strong>
+        <span class="rx-now__all mono">
+          One event per window, station to station · every year from 2026 on <a href="/mercury-retrograde/">the Mercury retrograde page</a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal">
+      <h2>The windows, {YEAR}</h2>
+      <p>Dates in universal time. The position shown is where Mercury stands still each time — the stations.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="rx-table">
+        <thead>
+          <tr><th>Window</th><th>Stations retrograde at</th><th>Stations direct at</th><th></th></tr>
+        </thead>
+        <tbody>
+          {windows.map((w) => (
+            <tr id={w.id} class={w.state === 'past' ? 'rx-table__past' : ''}>
+              <td data-label="Window">{w.path ? <a href={w.path}>{w.label}</a> : w.label}</td>
+              <td class="mono" data-label="Stations retrograde at">{w.stationRx}</td>
+              <td class="mono" data-label="Stations direct at">{w.stationDirect ?? '—'}</td>
+              <td class="mono rx-table__state" data-label="Status">{w.state === 'active' ? 'now' : w.state === 'upcoming' ? 'ahead' : ''}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose reveal">
+      <h2>What the window asks</h2>
+      <p>
+        The appearance is an optical effect: Mercury overtakes Earth on the inside of its orbit and seems to slide
+        backward through the zodiac for about three weeks. The practical reading is the same each time — reread before
+        you send, confirm the time and the place, and expect the conversation you thought was finished to come back
+        once. Which part of your life it visits depends on the <a href="/learn/houses/">house</a> those degrees fall in
+        for you; the birth-chart calculator shows which.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal"><h2>Questions</h2></div>
+    <div class="prose reveal">
+      {faq.map(({ q, a }) => (
+        <details class="faq-item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+    <p class="year-page__links reveal">
+      <a href="/mercury-retrograde/">All years</a> · <a href="/retrogrades/">Every planet</a> ·
+      <a href={`/full-moon-calendar/${YEAR}/`}>Full moons {YEAR}</a> · <a href={`/eclipses/${YEAR}/`}>Eclipses {YEAR}</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .tool-hero .kicker { display: block; margin-bottom: 10px; }
+  .year-page__links { margin-top: 18px; color: var(--muted); font-size: var(--text-sm); }
+  .year-page__links a { color: var(--text-2); }
+  .faq-item { border-top: 1px solid var(--hair-1); }
+  .faq-item summary { min-height: 44px; padding: 12px 0; cursor: pointer; color: var(--text); }
+  .faq-item p { margin: 0 0 14px; color: var(--muted); }
+</style>

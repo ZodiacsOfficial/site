@@ -171,9 +171,11 @@ const birthdays = defineCollection({
 });
 
 /**
- * Monthly horoscopes. Files accumulate as YYYY-MM-{sign}.mdx; the route
- * renders the latest month present and labels it from frontmatter — the
- * wall clock never decides what displays.
+ * Monthly horoscopes. Files accumulate as YYYY-MM-{sign}.mdx and may be
+ * written ahead of time; every route, the sitemap, the assistant guide, and
+ * the freshness gate pick the same edition through
+ * src/lib/horoscope-month.mjs — the latest month that is not after the
+ * committed daily edition's month — and label it from frontmatter.
  */
 const horoscopes = defineCollection({
   loader: glob({ pattern: '*.mdx', base: './src/content/horoscopes' }),
