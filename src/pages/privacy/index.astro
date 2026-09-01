@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { webAnalyticsEnabled as vercelWebAnalyticsFlag } from '../../lib/web-analytics.mjs';
 import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../../lib/account-v2/feature-flags';
 
 const accountSyncV2Enabled = isAccountSyncV2Enabled({
@@ -19,6 +20,7 @@ const jsonLd = [
     dateModified: modifiedAt,
   },
 ];
+const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
 ---
 <Base
   title="Privacy — How Your Data Is Handled | Zodiacs.org"
@@ -388,6 +390,16 @@ const jsonLd = [
           Aura events carry only allowlisted categories such as an outcome and
           a coarse held-count bucket; other events similarly record “a chart was
           saved,” never whose.
+        </p>
+      )}
+      {webAnalyticsEnabled && !accountSyncV2Enabled && (
+        <p>
+          We also count page views with Vercel Web Analytics, the cookieless
+          counter built into our hosting platform. It records the page path
+          only (query strings and fragments are removed before anything is
+          sent), tells devices apart within one day using a hash derived from
+          the request that is discarded after that day, and receives none of
+          the event data described above.
         </p>
       )}
 

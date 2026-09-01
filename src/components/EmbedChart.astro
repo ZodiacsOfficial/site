@@ -1,29 +1,30 @@
 ---
-/** Standalone private mini-chart embed. No Base shell and no analytics. */
+/**
+ * Standalone private mini-chart embed. No Base shell and no analytics. Both
+ * palettes ship in the page and key on `data-theme`; the one inline script
+ * applies the host's `?theme=` / `?accent=` parameters and nothing else.
+ */
 import MiniBirthChartWidget from '../islands/MiniBirthChartWidget';
-import { widgetAccentForTheme } from '../lib/widgets';
+import { WIDGET_THEME_SCRIPT } from '../lib/widget-theme';
 import { WIDGET_EN } from '../strings/widgets';
 
 interface Props { theme?: 'dark' | 'light' }
-const requestedTheme = Astro.url.searchParams.get('theme');
-const theme = requestedTheme === 'light' || requestedTheme === 'dark'
-  ? requestedTheme
-  : Astro.props.theme ?? 'dark';
-const requestedAccent = Astro.url.searchParams.get('accent') ?? '';
-const accent = widgetAccentForTheme(requestedAccent, theme);
-const c = theme === 'dark'
-  ? { bg: '#0A0C11', text: '#EEF1F7', mut: '#8B93A7', surface: '#0F121A', hair: 'rgba(198,204,218,0.16)', link: accent ?? '#C6CCDA' }
-  : { bg: '#FBFAF7', text: '#1C1E26', mut: '#62697B', surface: '#F0EFEB', hair: 'rgba(28,30,38,0.16)', link: accent ?? '#3C4152' };
+const theme = Astro.props.theme ?? 'dark';
 ---
 <!doctype html>
-<html lang="en" data-standalone-widget>
+<html lang="en" data-standalone-widget data-theme={theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>{WIDGET_EN.widgetTitleChart}</title>
+    <style is:inline>
+      :root{--widget-bg:#0A0C11;--widget-text:#EEF1F7;--widget-muted:#8B93A7;--widget-surface:#0F121A;--widget-hair:rgba(198,204,218,0.16);--widget-accent:#C6CCDA;color-scheme:dark}
+      :root[data-theme=light]{--widget-bg:#FBFAF7;--widget-text:#1C1E26;--widget-muted:#62697B;--widget-surface:#F0EFEB;--widget-hair:rgba(28,30,38,0.16);--widget-accent:#3C4152;color-scheme:light}
+    </style>
+    <script is:inline data-zodiacs-widget-theme set:html={WIDGET_THEME_SCRIPT}></script>
   </head>
-  <body style={`--widget-bg:${c.bg};--widget-text:${c.text};--widget-muted:${c.mut};--widget-surface:${c.surface};--widget-hair:${c.hair};--widget-accent:${c.link};margin:0;background:${c.bg};color:${c.text};font:13px/1.45 system-ui,-apple-system,sans-serif;`}>
+  <body style="margin:0;background:var(--widget-bg);color:var(--widget-text);font:13px/1.45 system-ui,-apple-system,sans-serif;">
     <main class="widget-shell">
       <MiniBirthChartWidget client:load />
       <footer>

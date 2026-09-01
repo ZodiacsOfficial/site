@@ -15,8 +15,10 @@ const ASTRO_LINK_COUNTS = new Map(Object.entries({
   'src/pages/birth-chart/three-dimensions/index.astro': 1,
   'src/pages/birthday/index.astro': 5,
   'src/pages/compatibility/index.astro': 1,
+  'src/pages/eclipses/2027/index.astro': 1,
   'src/pages/eclipses/index.astro': 3,
   'src/pages/events/index.astro': 5,
+  'src/pages/full-moon-calendar/2027/index.astro': 3,
   'src/pages/full-moon-calendar/index.astro': 5,
   'src/pages/learn/aspects/index.astro': 5,
   'src/pages/learn/houses/index.astro': 5,
@@ -24,6 +26,7 @@ const ASTRO_LINK_COUNTS = new Map(Object.entries({
   'src/pages/learn/placements/index.astro': 1,
   'src/pages/learn/planets/index.astro': 5,
   'src/pages/learn/zodiac-dates/index.astro': 5,
+  'src/pages/mercury-retrograde/2027/index.astro': 2,
   'src/pages/mercury-retrograde/index.astro': 5,
   'src/pages/moon-phase/index.astro': 5,
   'src/pages/moon-sign/index.astro': 4,
@@ -124,7 +127,7 @@ describe('glossary crosslinks', () => {
       }
     }
 
-    expect(linkedFiles).toHaveLength(152);
-    expect(linkCount).toBe(225);
+    expect(linkedFiles).toHaveLength(155);
+    expect(linkCount).toBe(231);
   });
 });

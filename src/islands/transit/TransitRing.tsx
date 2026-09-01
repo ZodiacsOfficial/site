@@ -501,7 +501,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
       <p class="sr-only" role="status">{announced}</p>
 
       {natal.calendarPositions && (
-        <CalendarSubscribe locale={locale} positions={natal.calendarPositions} />
+        <CalendarSubscribe locale={locale} positions={natal.calendarPositions} contacts={events ?? undefined} />
       )}
 
       {/* The selected transit, foregrounded. */}

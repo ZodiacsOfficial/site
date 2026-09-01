@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { iframeEmbedCode } from '../../lib/widgets';
+import { WIDGET_EN } from '../../strings/widgets';
 import { completeTransitYears } from '../../../scripts/build-sky-api.mjs';
 
 // The same month snapshots the generator reads decide which year files exist,
@@ -18,6 +20,8 @@ const endpoints = [
   [`/api/v1/moon-phases/{${firstYear}–${lastYear}}.json`, 'Full and new moon instants for the year, each with its zodiac sign and degree.'],
   [`/api/v1/eclipses/{${firstYear}–${lastYear}}.json`, 'Solar and lunar eclipses peaking in the year: type, kind, exact peak, sign, and obscuration.'],
 ];
+
+const skyEmbed = iframeEmbedCode({ origin: 'https://zodiacs.org', kind: 'sky', theme: 'dark', title: WIDGET_EN.widgetTitleSky });
 
 const description = 'Machine-readable sky data, free under CC BY 4.0: today\'s planetary positions, retrograde windows, sign ingresses, moon phases, and eclipse dates as dated JSON. No key, no signup.';
 
@@ -110,6 +114,18 @@ for (const body of sky.bodies) {
         from <a href="/llms.txt">llms.txt</a>.
       </p>
     </div>
+
+    <h2 class="dev-h2">Embed today's sky</h2>
+    <div class="prose">
+      <p>
+        The same daily edition as <code>/api/v1/sky/today.json</code>, as a
+        finished card: one iframe, no script on your page, and the
+        <code>theme</code> and <code>accent</code> parameters are applied
+        inside the frame. The card links back to zodiacs.org, which is the
+        attribution.
+      </p>
+    </div>
+    <pre class="dev-code"><code>{skyEmbed}</code></pre>
   </section>
 </Base>
 

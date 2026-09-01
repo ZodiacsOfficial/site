@@ -168,6 +168,27 @@ describe('Guide day and retry boundaries', () => {
   });
 });
 
+describe('Guide quick prompts', () => {
+  it('drafts an opener prompt into the composer only, never into context or the URL', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    const open = source.slice(
+      source.indexOf('export async function openAssistant('),
+      source.indexOf('function prefillFromOpener('),
+    );
+    const prefill = source.slice(
+      source.indexOf('function prefillFromOpener('),
+      source.indexOf('function prefillFromOpener(') + 600,
+    );
+    expect(open).toContain('prefillFromOpener(from);\n  textarea!.focus();');
+    expect(prefill).toContain('from?.dataset?.assistantPrompt?.trim()');
+    expect(prefill).toContain('textarea.value.trim()) return;');
+    expect(prefill).toContain('textarea.value = prompt.slice(0, 280);');
+    expect(prefill).not.toContain('location.');
+    expect(prefill).not.toContain('contextScope');
+    expect(prefill).not.toContain('submitQuestion');
+  });
+});
+
 describe('Guide cloud-processing disclosure', () => {
   it('keeps the browser consent version aligned with the server after the disclosure change', async () => {
     const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
@@ -582,7 +603,7 @@ describe('assistant profile-access privacy fence', () => {
     expect(base).not.toContain('guideRuntimeEnabled');
     expect(base).toContain('plausibleScriptUrl && (!props.noindex || props.analyticsOnNoindex) && !props.privateSurface');
     expect(base).toContain('&& !accountSyncV2Enabled,');
-    expect(base).toContain('data-guide-analytics-boundary={plausibleEnabled ?');
+    expect(base).toContain('data-guide-analytics-boundary={plausibleEnabled || webAnalyticsEnabled ?');
     expect(base).toContain("sessionStorage.getItem(guidePrivateSessionKey) === '1'");
     expect(loader).toContain("export const GUIDE_PRIVATE_SESSION_KEY = 'zodiacs.guide.private-session.v1';");
     expect(loader).toContain("sessionStorage.setItem(privateSessionKey, '1');");

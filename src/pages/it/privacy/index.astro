@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import { webAnalyticsEnabled as vercelWebAnalyticsFlag } from '../../../lib/web-analytics.mjs';
 
 const updated = '31 agosto 2026';
 
@@ -12,6 +13,7 @@ const jsonLd = [
     inLanguage: 'it',
   },
 ];
+const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
 ---
 <Base
   title="Privacy — Come vengono trattati i tuoi dati | Zodiacs.org"
@@ -263,6 +265,17 @@ const jsonLd = [
         e una fascia approssimativa del numero di segni; gli altri eventi
         registrano «un tema è stato salvato», mai da chi.
       </p>
+      {webAnalyticsEnabled && (
+        <p>
+          Contiamo le visualizzazioni di pagina anche con Vercel Web Analytics,
+          il contatore senza cookie integrato nella nostra piattaforma di
+          hosting. Registra solo il percorso della pagina (query string e
+          frammenti vengono rimossi prima dell’invio), distingue i dispositivi
+          nell’arco di uno stesso giorno tramite un hash derivato dalla
+          richiesta e scartato a fine giornata, e non riceve nessuno dei dati
+          sugli eventi descritti sopra.
+        </p>
+      )}
 
       <h2>Memoria del browser</h2>
       <p>
