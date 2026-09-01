@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import AskGuideLine from './AskGuideLine.astro';
+import GuideQuickPrompts from './GuideQuickPrompts.astro';
 import EmailCapture from './EmailCapture.astro';
 import Faq from './Faq.astro';
 import RaceRamp from './RaceRamp.astro';
@@ -24,6 +25,48 @@ interface Props {
 
 const { signSlug, surface, reading } = Astro.props;
 const sign = signBySlug(signSlug);
+
+// Ready questions for Guide, one row per surface. The third always points
+// back to the visitor's own chart, which is where a horoscope stops being
+// general.
+const CHART_PROMPT = 'How do I read this against my birth chart?';
+const QUICK_PROMPTS: Record<HoroscopeSurface, readonly string[]> = {
+  today: [
+    `What does today’s sky mean for ${sign.name}?`,
+    'Which of today’s transits matters most for me?',
+    CHART_PROMPT,
+  ],
+  tomorrow: [
+    `What should ${sign.name} get ready for tomorrow?`,
+    'What changes between today and tomorrow?',
+    CHART_PROMPT,
+  ],
+  weekly: [
+    `Which days this week matter most for ${sign.name}?`,
+    'How should I pace this week?',
+    CHART_PROMPT,
+  ],
+  monthly: [
+    `What are the key dates this month for ${sign.name}?`,
+    'Which of this month’s transits touches my chart?',
+    CHART_PROMPT,
+  ],
+  love: [
+    'How does this apply to my relationship right now?',
+    `What does ${sign.name} need in love this week?`,
+    CHART_PROMPT,
+  ],
+  career: [
+    'How do I use this at work this week?',
+    `Which of these transits affects ${sign.name} at work?`,
+    CHART_PROMPT,
+  ],
+  year: [
+    `What are the big themes of 2027 for ${sign.name}?`,
+    `Which 2027 transits should ${sign.name} plan around?`,
+    CHART_PROMPT,
+  ],
+};
 
 const SURFACE_META = {
   today: {
@@ -297,6 +340,7 @@ const skyMarkers = reading.skyStrip.markers;
       )}
 
       <AskGuideLine lead="Questions about this reading, or what it means for your chart?" />
+      <GuideQuickPrompts prompts={QUICK_PROMPTS[surface]} />
 
     </section>
 

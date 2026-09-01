@@ -128,3 +128,60 @@ export function serializeTransitContacts(
 
   return lines.map(foldIcalLine).join(CRLF) + CRLF;
 }
+
+/**
+ * A public sky event for a calendar: a lunation, an eclipse peak, or a
+ * retrograde window. Everything here is the same for every reader; no
+ * personal data can enter by construction.
+ */
+export interface SkyCalendarEvent {
+  /** Stable identifier fragment, e.g. `full-moon-2027-01-22`. */
+  id: string;
+  start: Date | string;
+  /** Omit for an instant (one minute); provide for a window such as a retrograde. */
+  end?: Date | string;
+  summary: string;
+  description: string;
+  /** Canonical page for the event. */
+  url?: string;
+}
+
+function skyEventLines(event: SkyCalendarEvent, dtstamp: string): string[] {
+  const dtstart = formatIcalUtc(event.start);
+  return [
+    'BEGIN:VEVENT',
+    `UID:sky-${slug(event.id)}@zodiacs.org`,
+    `DTSTAMP:${dtstamp}`,
+    `DTSTART:${dtstart}`,
+    event.end ? `DTEND:${formatIcalUtc(event.end)}` : 'DURATION:PT1M',
+    'TRANSP:TRANSPARENT',
+    `SUMMARY:${escapeIcalText(event.summary)}`,
+    `DESCRIPTION:${escapeIcalText(event.description)}`,
+    ...(event.url ? [`URL:${event.url}`] : []),
+    'END:VEVENT',
+  ];
+}
+
+/** Serialize a public sky-event calendar. Input order does not affect output order or UIDs. */
+export function serializeSkyEvents(
+  events: readonly SkyCalendarEvent[],
+  options: TransitCalendarOptions,
+): string {
+  if (events.length === 0) throw new RangeError('A sky calendar requires at least one event.');
+  const dtstamp = formatIcalUtc(options.generatedAt);
+  const prepared = events
+    .map((event) => ({ event, dtstart: formatIcalUtc(event.start) }))
+    .sort((a, b) => a.dtstart.localeCompare(b.dtstart) || a.event.id.localeCompare(b.event.id));
+
+  const lines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Zodiacs.org//Sky Events 1.0//EN',
+    'CALSCALE:GREGORIAN',
+    `X-WR-CALNAME:${escapeIcalText(options.calendarName ?? 'Zodiacs.org sky events')}`,
+    ...prepared.flatMap(({ event }) => skyEventLines(event, dtstamp)),
+    'END:VCALENDAR',
+  ];
+
+  return lines.map(foldIcalLine).join(CRLF) + CRLF;
+}

@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import { webAnalyticsEnabled as vercelWebAnalyticsFlag } from '../../../lib/web-analytics.mjs';
 
 const updated = '31 de agosto de 2026';
 
@@ -12,6 +13,7 @@ const jsonLd = [
     inLanguage: 'es',
   },
 ];
+const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
 ---
 <Base
   title="Privacidad — Cómo tratamos tus datos | Zodiacs.org"
@@ -261,6 +263,17 @@ const jsonLd = [
         aproximado de cantidad; los demás eventos registran «se guardó una
         carta», nunca de quién.
       </p>
+      {webAnalyticsEnabled && (
+        <p>
+          También contamos visitas a páginas con Vercel Web Analytics, el
+          contador sin cookies integrado en nuestra plataforma de alojamiento.
+          Solo registra la ruta de la página (las cadenas de consulta y los
+          fragmentos se eliminan antes del envío), distingue los dispositivos
+          dentro de un mismo día mediante un hash derivado de la solicitud que
+          se descarta al terminar el día, y no recibe ninguno de los datos de
+          eventos descritos arriba.
+        </p>
+      )}
 
       <h2>Almacenamiento del navegador</h2>
       <p>
