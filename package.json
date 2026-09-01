@@ -147,7 +147,7 @@
     "@fontsource-variable/jetbrains-mono": "^5.2.0",
     "@fontsource/eb-garamond": "^5.2.7",
     "@mcp-b/webmcp-polyfill": "4.0.0",
-    "@types/node": "^22.20.0",
+    "@types/node": "^26.2.0",
     "@zodiacs/sdk": "1.0.1",
     "chrome-launcher": "^1.2.1",
     "esbuild": "^0.28.1",
