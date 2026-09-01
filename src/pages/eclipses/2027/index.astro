@@ -1,0 +1,193 @@
+---
+import Base from '../../../layouts/Base.astro';
+import '../../../styles/rx-table.css';
+import eclipseData from '../../../data/eclipses.json';
+import { signBySlug } from '../../../lib/signs';
+import { formatDate, formatTime } from '../../../lib/i18n/dates';
+import { publishedEventById } from '../../../lib/events/publication';
+
+// The 2027 eclipses, from the same committed data the hub renders — receipts,
+// no client ephemeris. A year page so a search for the year lands on the
+// year, with a calendar file beside it.
+const YEAR = 2027;
+const buildNow = new Date();
+
+const sources = [
+  { label: 'NASA Eclipse Catalog', href: 'https://eclipse.gsfc.nasa.gov/eclipse.html' },
+  { label: 'Astronomy Engine', href: 'https://github.com/cosinekitty/astronomy' },
+  { label: 'IANA Time Zone Database', href: 'https://www.iana.org/time-zones' },
+];
+
+interface EclipseEntry {
+  type: 'solar' | 'lunar';
+  kind: string;
+  peak: string;
+  sign: string;
+  obscuration?: number;
+  totalMinutes?: number;
+}
+
+const eclipses = (eclipseData.eclipses as EclipseEntry[])
+  .filter((e) => e.peak.startsWith(`${YEAR}-`))
+  .map((e) => {
+    const at = new Date(e.peak);
+    const publicationId = `eclipse-${e.peak.slice(0, 10)}`;
+    const pct = typeof e.obscuration === 'number' ? Math.round(e.obscuration * 100) : null;
+    let detail = '';
+    if (e.type === 'solar') {
+      detail = e.kind === 'total'
+        ? 'totality — the Sun fully covered along the track'
+        : e.kind === 'annular'
+          ? `ring eclipse — ${pct}% of the Sun covered at maximum`
+          : 'partial only';
+    } else {
+      detail = e.kind === 'total'
+        ? `totality lasts about ${e.totalMinutes} minutes`
+        : e.kind === 'partial'
+          ? `${pct}% of the Moon in shadow at maximum`
+          : 'penumbral — a subtle shading, easy to miss';
+    }
+    return {
+      ...e,
+      anchorId: `${publicationId}-${e.type}`,
+      at,
+      sign: signBySlug(e.sign),
+      detail,
+      label: `${e.kind === 'annular' ? 'Annular' : e.kind[0].toUpperCase() + e.kind.slice(1)} ${e.type}`,
+      past: at < buildNow,
+      path: publishedEventById.get(publicationId)?.path ?? null,
+    };
+  });
+
+if (eclipses.length === 0) throw new Error(`No ${YEAR} eclipses in eclipses.json`);
+
+const solar = eclipses.filter((e) => e.type === 'solar');
+const lunar = eclipses.filter((e) => e.type === 'lunar');
+const total = eclipses.filter((e) => e.kind === 'total');
+
+const fmtDay = (d: Date) =>
+  formatDate('en', d, { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const fmtTime = (d: Date) =>
+  formatTime('en', d, { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
+const fmtMonthDay = (d: Date) => formatDate('en', d, { month: 'long', day: 'numeric', timeZone: 'UTC' });
+
+const description = `Every solar and lunar eclipse of 2027 with the exact peak in universal time, the eclipse type, and the zodiac sign it falls in, plus a calendar file for the year.`;
+
+const faq = [
+  {
+    q: `How many eclipses are there in ${YEAR}?`,
+    a: `${eclipses.length}: ${solar.length} solar and ${lunar.length} lunar.${total.length ? ` ${total.map((e) => `The ${e.label.toLowerCase()} eclipse on ${fmtMonthDay(e.at)} in ${e.sign.name}`).join('; ')} ${total.length === 1 ? 'is' : 'are'} the ${total.length === 1 ? 'one' : ''} total eclipse${total.length === 1 ? '' : 's'} of the year.` : ''}`,
+  },
+  {
+    q: 'Which sign does an eclipse belong to?',
+    a: 'The sign holding the Sun at a solar eclipse, or the Moon at a lunar one, at the instant of the peak. Eclipses come in pairs about two weeks apart in opposite signs, so each season marks an axis of your chart rather than one house.',
+  },
+  {
+    q: 'Can I see these from where I live?',
+    a: 'A lunar eclipse is visible from the whole night side of Earth at its peak time; a solar eclipse only along a narrow track, so most people see a partial or nothing. The linked eclipse pages describe the track for each one.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: `Eclipses ${YEAR}`,
+    url: `https://zodiacs.org/eclipses/${YEAR}/`,
+    description,
+    isPartOf: { '@type': 'WebPage', url: 'https://zodiacs.org/eclipses/' },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  title="Eclipses 2027 — Every Solar and Lunar Eclipse, Exact | Zodiacs.org"
+  description="Every solar and lunar eclipse of 2027 with the exact peak in universal time, the eclipse type, and the zodiac sign it falls in, plus a calendar file for the year."
+  path={`/eclipses/${YEAR}/`}
+  image="/assets/og/v2/tool/eclipses.png"
+  imageAlt="Eclipses 2027 — Zodiacs.org"
+  jsonLd={jsonLd}
+  sources={sources}
+>
+  <section class="section--tight container container--narrow">
+    <div class="tool-hero reveal">
+      <em class="kicker">Eclipses · {YEAR}</em>
+      <h1 class="display">The eclipses of {YEAR}.</h1>
+      <p>
+        {solar.length} solar and {lunar.length} lunar, each at its exact peak in universal time, with the{' '}
+        <a href="/learn/glossary/#zodiac-sign">sign</a> it lands in. Eclipse seasons arrive twice a year, and each pairs a
+        solar with a lunar eclipse about two weeks apart.
+      </p>
+    </div>
+
+    <div class="rx-now shell tinted reveal" style="--sign:var(--sign-leo)">
+      <div class="core tinted rx-now__core">
+        <span class="mono--label">Calendar file</span>
+        <strong class="rx-now__line">
+          <a href={`/eclipses/${YEAR}.ics`}>Add the {YEAR} eclipses to your calendar</a>
+        </strong>
+        <span class="rx-now__all mono">
+          Peak instants in universal time · every year from 2026 on <a href="/eclipses/">the eclipse page</a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal">
+      <h2>The eclipses, {YEAR}</h2>
+      <p>Peak times in universal time. Solar eclipses are visible along a limited track; lunar eclipses from the whole night side of Earth.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="rx-table">
+        <thead>
+          <tr><th>Peak</th><th>UTC</th><th>Eclipse</th><th>In</th><th>Detail</th></tr>
+        </thead>
+        <tbody>
+          {eclipses.map((e) => (
+            <tr id={e.anchorId} class={e.past ? 'rx-table__past' : ''}>
+              <td data-label="Peak">
+                {e.path ? <a href={e.path}>{fmtDay(e.at)}</a> : fmtDay(e.at)}
+              </td>
+              <td class="mono" data-label="UTC">{fmtTime(e.at)}</td>
+              <td data-label="Eclipse">{e.label}</td>
+              <td data-label="In" style={`color:${e.sign.hue}`}>{e.sign.name}</td>
+              <td data-label="Detail">{e.detail}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head reveal"><h2>Questions</h2></div>
+    <div class="prose reveal">
+      {faq.map(({ q, a }) => (
+        <details class="faq-item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+    <p class="year-page__links reveal">
+      <a href="/eclipses/">All years</a> · <a href={`/full-moon-calendar/${YEAR}/`}>Full moons {YEAR}</a> ·
+      <a href={`/mercury-retrograde/${YEAR}/`}>Mercury retrograde {YEAR}</a> · <a href="/birth-chart/">Your birth chart</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .tool-hero .kicker { display: block; margin-bottom: 10px; }
+  .year-page__links { margin-top: 18px; color: var(--muted); font-size: var(--text-sm); }
+  .year-page__links a { color: var(--text-2); }
+  .faq-item { border-top: 1px solid var(--hair-1); }
+  .faq-item summary { min-height: 44px; padding: 12px 0; cursor: pointer; color: var(--text); }
+  .faq-item p { margin: 0 0 14px; color: var(--muted); }
+</style>

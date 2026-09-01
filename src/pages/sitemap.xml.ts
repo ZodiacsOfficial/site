@@ -38,6 +38,7 @@ const researchLastmod = terminalResearchLastmod(registryResearchPublication);
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
 const AUDIT_REMEDIATION_LASTMOD = '2026-08-23';
 const LEGAL_IDENTITY_LASTMOD = '2026-08-29';
+const YEAR_PAGES_LASTMOD = '2026-09-01';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -134,6 +135,8 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/ru/disclosure/', '/registry/technical/', '/sdk/',
   ].map((loc) => [loc, AUDIT_REMEDIATION_LASTMOD] as const),
   ...['/', '/about/', '/privacy/', '/terms/'].map((loc) => [loc, LEGAL_IDENTITY_LASTMOD] as const),
+  ...['/full-moon-calendar/2027/', '/eclipses/2027/', '/mercury-retrograde/2027/']
+    .map((loc) => [loc, YEAR_PAGES_LASTMOD] as const),
 ]);
 
 function getLastmod(loc: string): string {
@@ -187,6 +190,9 @@ export const GET: APIRoute = async () => {
     { loc: '/transits/', priority: 0.85 },
     { loc: '/eclipses/', priority: 0.85 },
     { loc: '/full-moon-calendar/', priority: 0.85 },
+    { loc: '/full-moon-calendar/2027/', priority: 0.7 },
+    { loc: '/eclipses/2027/', priority: 0.7 },
+    { loc: '/mercury-retrograde/2027/', priority: 0.7 },
     { loc: '/retrogrades/', priority: 0.8 },
     { loc: '/today/', priority: 0.8 },
     ...(eventsPublication.hub.indexEligible
