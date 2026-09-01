@@ -39,6 +39,7 @@ const researchLastmod = terminalResearchLastmod(registryResearchPublication);
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
 const AUDIT_REMEDIATION_LASTMOD = '2026-08-23';
 const LEGAL_IDENTITY_LASTMOD = '2026-08-29';
+const BIG_THREE_LASTMOD = '2026-09-01';
 const YEAR_PAGES_LASTMOD = '2026-09-01';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
@@ -136,6 +137,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     '/ru/disclosure/', '/registry/technical/', '/sdk/',
   ].map((loc) => [loc, AUDIT_REMEDIATION_LASTMOD] as const),
   ...['/', '/about/', '/privacy/', '/terms/'].map((loc) => [loc, LEGAL_IDENTITY_LASTMOD] as const),
+  ['/big-three/', BIG_THREE_LASTMOD] as const,
   ...['/full-moon-calendar/2027/', '/eclipses/2027/', '/mercury-retrograde/2027/']
     .map((loc) => [loc, YEAR_PAGES_LASTMOD] as const),
 ]);
@@ -181,6 +183,7 @@ export const GET: APIRoute = async () => {
     { loc: '/birth-chart/', priority: 0.95 },
     { loc: '/birth-chart/someone-else/', priority: 0.75 },
     { loc: '/birth-chart/three-dimensions/', priority: 0.7 },
+    { loc: '/big-three/', priority: 0.85 },
     { loc: '/compatibility/', priority: 0.9 },
     { loc: '/moon-sign/', priority: 0.9 },
     { loc: '/rising-sign/', priority: 0.9 },
@@ -245,6 +248,13 @@ export const GET: APIRoute = async () => {
       { loc: '/games/history/', priority: 0.6, lastmod: '2026-08-19' },
     ] : []),
     { loc: '/horoscopes/', priority: 0.8, lastmod: horoscopeProgram.anchorDate },
+    // Spanish and Portuguese daily surfaces render the same edition from the
+    // same facts; they date with the edition like /today/ does.
+    ...(['es', 'pt'] as const).flatMap((locale) => [
+      { loc: `/${locale}/today/`, priority: 0.7, lastmod: daily.date },
+      { loc: `/${locale}/horoscopes/`, priority: 0.7, lastmod: daily.date },
+      ...SIGNS.map((sign) => ({ loc: `/${locale}/horoscopes/${sign.slug}/`, priority: 0.66, lastmod: daily.date })),
+    ]),
     ...eventsPublication.pages.map((event) => ({
       loc: event.path,
       priority: 0.64,

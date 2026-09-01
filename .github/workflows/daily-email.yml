@@ -19,6 +19,11 @@ on:
         required: false
         type: string
         default: "200"
+      canary:
+        description: "Send to the DAILY_EMAIL_CANARY_TO recipient only (limit 1), or to nobody"
+        required: false
+        type: boolean
+        default: false
       to:
         description: "Optional exact subscribed address filter"
         required: false
@@ -95,6 +100,10 @@ jobs:
           DAILY_EMAIL_AT: ${{ inputs.at }}
           DAILY_EMAIL_LIMIT: ${{ inputs.limit }}
           DAILY_EMAIL_TO: ${{ inputs.to }}
+          DAILY_EMAIL_CANARY: ${{ inputs.canary }}
+          # The canary recipient is a secret, never a dispatch input, so an
+          # address never appears in the public Actions log.
+          DAILY_EMAIL_CANARY_TO: ${{ inputs.canary == true && secrets.DAILY_EMAIL_CANARY_TO || '' }}
         run: |
           ARGS=(--limit "${DAILY_EMAIL_LIMIT:-200}")
           if [ "${DAILY_EMAIL_DRY_RUN:-false}" = "true" ]; then
@@ -105,5 +114,10 @@ jobs:
           fi
           if [ -n "${DAILY_EMAIL_TO:-}" ]; then
             ARGS+=(--to "$DAILY_EMAIL_TO")
+          fi
+          if [ "${DAILY_EMAIL_CANARY:-false}" = "true" ]; then
+            ARGS=(--canary)
+            if [ "${DAILY_EMAIL_DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
+            if [ -n "${DAILY_EMAIL_AT:-}" ]; then ARGS+=(--at "$DAILY_EMAIL_AT"); fi
           fi
           npx vite-node --script scripts/send-daily-email.ts "${ARGS[@]}"

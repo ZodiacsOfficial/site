@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "id": "web-analytics-privacy-and-month-cap-2026-09-01",
-  "baseCommit": "ef48e769707fdc9be4d1be95134c3dc70801494a",
+  "id": "localized-daily-surfaces-2026-09-01",
+  "baseCommit": "3b77d0a14e64bcd232bc576b7eba41a4033a1319",
   "protectedPaths": [
-    "scripts/registry-research.test.mjs",
-    "src/lib/i18n/ui/build-audit.test.ts",
+    "src/lib/i18n/daily-reading.test.ts",
+    "src/lib/i18n/daily-reading.ts",
     "src/pages/es/[...slug].astro",
-    "src/pages/es/privacy/index.astro",
-    "src/pages/fr/[...slug].astro",
-    "src/pages/fr/privacy/index.astro",
-    "src/pages/it/[...slug].astro",
-    "src/pages/it/privacy/index.astro",
+    "src/pages/es/horoscopes/[sign]/index.astro",
+    "src/pages/es/horoscopes/index.astro",
+    "src/pages/es/today/index.astro",
     "src/pages/pt/[...slug].astro",
-    "src/pages/pt/privacy/index.astro"
+    "src/pages/pt/horoscopes/[sign]/index.astro",
+    "src/pages/pt/horoscopes/index.astro",
+    "src/pages/pt/today/index.astro"
   ]
 }

@@ -11,6 +11,7 @@ const targetPresence = /\/learn\/glossary\/#/;
 // own glossary destinations through the context-help data tests.
 const ASTRO_LINK_COUNTS = new Map(Object.entries({
   'src/pages/baby-zodiac/index.astro': 5,
+  'src/pages/big-three/index.astro': 2,
   'src/pages/birth-chart/index.astro': 2,
   'src/pages/birth-chart/three-dimensions/index.astro': 1,
   'src/pages/birthday/index.astro': 5,
@@ -127,7 +128,7 @@ describe('glossary crosslinks', () => {
       }
     }
 
-    expect(linkedFiles).toHaveLength(155);
-    expect(linkCount).toBe(231);
+    expect(linkedFiles).toHaveLength(156);
+    expect(linkCount).toBe(233);
   });
 });
