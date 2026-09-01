@@ -10,6 +10,7 @@ import { LEGACY_URLS } from '../lib/legacy/urls';
 import { DEFAULT_LOCALE, LOCALE_META, alternatePathEntries, alternatePaths } from '../lib/i18n';
 import { CHINESE_ZODIAC_PATHS } from '../lib/programmatic-paths';
 import { registryAuraSitemapEntry } from '../lib/registry-aura-entry.mjs';
+import { currentHoroscopeMonth, utcMonth } from '../lib/horoscope-month.mjs';
 import { INDEXABLE_PEOPLE, PEOPLE_DIRECTORY_INDEXABLE } from '../lib/people';
 import {
   BIRTHDAY_CUSP_OG_MODIFIED_AT,
@@ -155,7 +156,7 @@ export const GET: APIRoute = async () => {
   const horoscopes = await getCollection('horoscopes', ({ data }) => !data.draft);
   const birthdays = await getCollection('birthdays', ({ data }) => !data.draft);
   const almanac = await getCollection('almanac', ({ data }) => !data.draft);
-  const latestMonth = horoscopes.map((h) => h.data.month).sort().at(-1);
+  const latestMonth = currentHoroscopeMonth(horoscopes.map((h) => h.data.month), utcMonth(daily.date));
   const latestMonthlyBySign = new Map(
     horoscopes
       .filter((entry) => entry.data.month === latestMonth)

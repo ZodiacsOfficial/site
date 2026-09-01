@@ -3,10 +3,12 @@ import { getCollection, render } from 'astro:content';
 import HoroscopeProgramPage from '../../../../components/HoroscopeProgramPage.astro';
 import { SIGN_SLUGS, signBySlug } from '../../../../lib/signs';
 import { dayLabel, eventList, monthLabel, type TransitEvent } from '../../../../lib/horoscopes';
+import { currentHoroscopeMonth, utcMonth } from '../../../../lib/horoscope-month.mjs';
+import daily from '../../../../data/daily.json';
 
 export async function getStaticPaths() {
   const all = await getCollection('horoscopes', ({ data }) => !data.draft);
-  const latestMonth = all.map((entry) => entry.data.month).sort().at(-1);
+  const latestMonth = currentHoroscopeMonth(all.map((entry) => entry.data.month), utcMonth(daily.date));
   if (!latestMonth) throw new Error('Horoscopes collection is empty.');
   const current = all.filter((entry) => entry.data.month === latestMonth);
   const slugs = current.map((entry) => entry.data.sign).sort();
