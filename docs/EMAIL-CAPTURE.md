@@ -43,7 +43,12 @@ A separately authorized release must satisfy every item below before setting
 4. Submit the confirmation form's explicit `POST`. In **Resend → Contacts →
    Segments**, verify that the Contact appears in the intended weekly Segment
    only after that POST. “Audiences” is deprecated terminology.
-5. Send a limit-one forecast canary through the actual standalone sender.
+5. Send a limit-one forecast canary through the actual standalone sender:
+   add the repository secret `DAILY_EMAIL_CANARY_TO` (the owner-controlled
+   address) and dispatch **Daily Email** with `canary=true` — first with
+   `dry_run=true`, then, with explicit approval, `dry_run=false`. The sender
+   sends to that address or to nobody, forces `limit=1`, and prints
+   `daily-email: canary receipt sent=<n> recipient=sha256:<prefix>`.
    Exercise its unsubscribe link and verify provider suppression or list
    removal, then verify the next eligible send does not deliver.
 6. Confirm retry, duplicate-contact, expiry, rate-limit, and failure behavior.

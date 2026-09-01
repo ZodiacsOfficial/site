@@ -44,6 +44,22 @@ describe('Phase 4 send-back share surfaces', () => {
     expect(markup).not.toMatch(/birth date|birth time|birth place|latitude|longitude/i);
   });
 
+  it('offers the same picture and positions-only link on a plain result, phrased as sending', () => {
+    const markup = render(h(SendBackCard, {
+      a: person('Me', true),
+      b: person('Sam', true),
+      summary: {} as PairSummary,
+      inviterLabel: 'Sam',
+      variant: 'share',
+    }));
+
+    expect(markup).toContain('Send this to Sam.');
+    expect(markup).not.toContain('Send the result back.');
+    expect(markup).toContain('Copy the private link');
+    expect(markup).toContain('data-share-card-action="big-three"');
+    expect(markup).not.toMatch(/birth date|birth time|birth place|latitude|longitude/i);
+  });
+
   it('keeps the Big Three action absent for a no-time chart', () => {
     const markup = render(h(SendBackCard, {
       a: person('Frida', true),

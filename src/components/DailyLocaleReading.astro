@@ -1,0 +1,56 @@
+---
+/**
+ * One sign's daily reading in a released locale, rendered from the same
+ * committed facts as the English edition through
+ * src/lib/i18n/daily-reading.ts. The receipts are the shared provenance:
+ * a test pins that every localized line answers to the same house and
+ * body as its English twin, so nothing is written here that the English
+ * pipeline did not compute.
+ */
+import EvidenceDisclosure from './EvidenceDisclosure.astro';
+import PlanetGlyph from './PlanetGlyph';
+import type { DailyReading } from '../lib/daily';
+import { t, type CatalogLocale as Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  reading: DailyReading;
+  headingId?: string;
+}
+
+const { locale, reading, headingId } = Astro.props;
+---
+<div class="daily-locale" aria-labelledby={headingId}>
+  <ul class="daily-locale__lines">
+    {reading.lines.map((line) => (
+      <li><p>{line.text}</p></li>
+    ))}
+  </ul>
+  <EvidenceDisclosure label={t(locale, 'whyThisReading')}>
+    <p>{t(locale, 'todaySolarNote')}.</p>
+    <ul class="evidence-disclosure__list">
+      {reading.lines.map((line) => (
+        <li class="mono evidence-disclosure__receipt">
+          {line.body && <PlanetGlyph body={line.body} hue={line.hue} size={13} class="rcpt-glyph" />}
+          <span>{line.receipt}</span>
+        </li>
+      ))}
+    </ul>
+  </EvidenceDisclosure>
+</div>
+
+<style>
+  .daily-locale__lines {
+    margin: 0 0 12px;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+  .daily-locale__lines p {
+    margin: 0;
+    color: var(--text-2);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+</style>

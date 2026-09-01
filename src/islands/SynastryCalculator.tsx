@@ -584,6 +584,17 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     return () => { cancelled = true; };
   }, [result, copyLinkMod, shareMod, compatShareMod]);
 
+  // A plain result gets the same send step as an invitation return — a
+  // picture plus a positions-only link — loaded only once a result exists.
+  useEffect(() => {
+    if (!result || result.source !== 'plain' || sendBackMod) return;
+    let active = true;
+    void import('./synastry/SendBackExperience').then((module) => {
+      if (active) setSendBackMod(module);
+    });
+    return () => { active = false; };
+  }, [result, sendBackMod]);
+
   useEffect(() => {
     if (!inviteUiActive) return;
     let active = true;
@@ -1382,6 +1393,16 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
                 timeKnown: result.b.timeKnown,
               }}
               summary={result.summary}
+            />
+          )}
+
+          {result.source === 'plain' && sendBackMod && (
+            <sendBackMod.SendBackCard
+              variant="share"
+              a={{ label: result.a.label, bodies: result.a.bodies, asc: result.a.asc, positions: result.a.positions }}
+              b={{ label: result.b.label, bodies: result.b.bodies, asc: result.b.asc, positions: result.b.positions }}
+              summary={result.summary}
+              inviterLabel={result.b.label}
             />
           )}
 

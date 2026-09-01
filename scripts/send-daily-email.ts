@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { createClient } from '@supabase/supabase-js';
 import dailyData from '../src/data/daily.json';
@@ -51,6 +52,8 @@ const PAGE_SIZE = 500;
 export interface DailyEmailCliOptions {
   dryRun: boolean;
   fixture: boolean;
+  /** Send to exactly the recipient named by DAILY_EMAIL_CANARY_TO, or to nobody. */
+  canary: boolean;
   at: Date | null;
   limit: number;
   to: string | null;
@@ -93,6 +96,7 @@ export function parseDailyEmailArgs(argv: string[]): DailyEmailCliOptions {
   const options: DailyEmailCliOptions = {
     dryRun: false,
     fixture: false,
+    canary: false,
     at: null,
     limit: DEFAULT_LIMIT,
     to: null,
@@ -100,6 +104,7 @@ export function parseDailyEmailArgs(argv: string[]): DailyEmailCliOptions {
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--dry-run') options.dryRun = true;
+    else if (arg === '--canary') options.canary = true;
     else if (arg === '--fixture') options.fixture = true;
     else if (arg === '--at') options.at = instant(requiredValue(argv[++index], '--at'));
     else if (arg === '--limit') options.limit = positiveInt(argv[++index], '--limit');
@@ -109,7 +114,25 @@ export function parseDailyEmailArgs(argv: string[]): DailyEmailCliOptions {
       options.to = email;
     } else throw new Error(`Unknown option: ${arg}`);
   }
+  if (options.canary) {
+    // The runbook's limit-one owner send made first-class: the recipient
+    // comes from DAILY_EMAIL_CANARY_TO, never the command line, and a typo
+    // in --limit cannot widen the send.
+    if (options.to) throw new Error('--canary reads DAILY_EMAIL_CANARY_TO; do not pass --to.');
+    options.limit = 1;
+  }
   return options;
+}
+
+/** The canary recipient comes from a secret and is only ever logged as a hash prefix. */
+export function canaryRecipient(value: string | undefined, name: string): string {
+  const email = normalizeEmail((value ?? '').trim());
+  if (!email) throw new Error(`${name} must hold the canary recipient's email address when --canary is used.`);
+  return email;
+}
+
+export function recipientHashPrefix(email: string): string {
+  return createHash('sha256').update(email.trim().toLowerCase()).digest('hex').slice(0, 12);
 }
 
 function requiredEnv(env: NodeJS.ProcessEnv, name: string): string {
@@ -352,6 +375,10 @@ export async function runDailyEmail({
   if (options.fixture && !options.dryRun) {
     throw new Error('--fixture is a smoke mode and requires --dry-run.');
   }
+  if (options.canary) {
+    options.to = canaryRecipient(env.DAILY_EMAIL_CANARY_TO, 'DAILY_EMAIL_CANARY_TO');
+    options.limit = 1;
+  }
   const cohort = options.fixture
     ? null
     : (options.dryRun ? dailyEmailCohort(env) : assertDailyEmailSendInterlocks(env));
@@ -442,6 +469,9 @@ export async function runDailyEmail({
     log,
   });
   log(`daily-email: done considered=${report.considered} reserved=${report.reserved} sent=${report.sent} failed=${report.failed} duplicate=${report.duplicate} dryRun=${report.dryRun}`);
+  if (options.canary && options.to) {
+    log(`daily-email: canary receipt sent=${report.sent} recipient=sha256:${recipientHashPrefix(options.to)} dryRun=${report.dryRun}`);
+  }
   return report;
 }
 

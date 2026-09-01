@@ -136,6 +136,10 @@ export const TOOL_CATALOG: readonly ToolCatalogEntry[] = [
     hub: { order: 2, title: "Someone else's chart", promise: 'Use birth details, the Big Three, or a Zodiacs link — with their permission.', hue: 'var(--sign-pisces)', kind: 'birth', group: 'start' },
   },
   {
+    href: '/big-three/',
+    hub: { order: 16, title: 'Big Three calculator', promise: 'Sun, Moon, and Rising in seconds, with a card to share and one tap into the full chart.', hue: 'var(--sign-leo)', kind: 'birth', group: 'start' },
+  },
+  {
     href: '/today/', label: 'today', footerOrder: 2,
     footerLabel: {
       en: 'Today', es: 'Hoy (en inglés)', pt: 'Hoje (em inglês)',

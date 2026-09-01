@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 import {
   createDigestUnsubscribeCapability,
@@ -47,6 +47,8 @@ const TRANSIT_BODIES = new Set(['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'S
 
 interface CliOptions {
   dryRun: boolean;
+  /** Send to exactly the recipient named by DIGEST_CANARY_TO, or to nobody. */
+  canary: boolean;
   fixture: boolean;
   recoveryOnly: boolean;
   limit: number | null;
@@ -91,6 +93,7 @@ interface DigestTransit {
 function parseArgs(argv: string[]): CliOptions {
   const options: CliOptions = {
     dryRun: false,
+    canary: false,
     fixture: false,
     recoveryOnly: false,
     limit: null,
@@ -100,6 +103,7 @@ function parseArgs(argv: string[]): CliOptions {
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--dry-run') options.dryRun = true;
+    else if (arg === '--canary') options.canary = true;
     else if (arg === '--fixture') options.fixture = true;
     else if (arg === '--recovery-only') options.recoveryOnly = true;
     else if (arg === '--limit') options.limit = positiveInt(argv[++i], '--limit');
@@ -115,8 +119,46 @@ function parseArgs(argv: string[]): CliOptions {
   if (options.recoveryOnly && options.dryRun) {
     throw new Error('--recovery-only is available only for live fenced deliveries.');
   }
+  if (options.canary) {
+    // The canary is the runbook's limit-one owner send made first-class: it
+    // can only ever reach the one recipient named in the environment, and
+    // a typo in --limit cannot widen it.
+    if (options.fixture) throw new Error('--canary selects a real candidate; it cannot be combined with --fixture.');
+    if (options.recoveryOnly) throw new Error('--canary creates one new delivery; it cannot be combined with --recovery-only.');
+    if (options.limit !== null && options.limit !== 1) throw new Error('--canary always sends at most one message; drop --limit or set it to 1.');
+    options.limit = 1;
+  }
 
   return options;
+}
+
+/** The canary recipient comes from a secret, never the command line, and is only ever logged as a hash prefix. */
+function canaryRecipient(value: string | undefined, name: string): string {
+  const email = (value ?? '').trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(email)) {
+    throw new Error(`${name} must hold the canary recipient's email address when --canary is used.`);
+  }
+  return email;
+}
+
+function recipientHashPrefix(email: string): string {
+  return createHash('sha256').update(email.trim().toLowerCase()).digest('hex').slice(0, 12);
+}
+
+/** Narrow this week's bounded candidates to the one canary recipient, or send to nobody. */
+async function canaryCandidates(
+  supabase: SupabaseClient,
+  candidateIds: string[],
+  maxCharts: number,
+  canaryTo: string,
+): Promise<string[]> {
+  for (const userId of candidateIds) {
+    const recipient = await loadRecipientContent(supabase, userId, maxCharts);
+    if (recipient && recipient.email.trim().toLowerCase() === canaryTo) return [userId];
+  }
+  throw new Error(
+    `weekly-digest: the canary recipient is not among this week's ${candidateIds.length} bounded candidate(s); nothing sent`,
+  );
 }
 
 function requiredValue(value: string | undefined, flag: string): string {
@@ -699,6 +741,7 @@ async function run(): Promise<void> {
     HARD_SEND_CEILING,
   );
   const limit = Math.min(options.limit ?? maxSends, maxSends, HARD_SEND_CEILING);
+  const canaryTo = options.canary ? canaryRecipient(process.env.DIGEST_CANARY_TO, 'DIGEST_CANARY_TO') : null;
   const maxCharts = envInt(
     'DIGEST_MAX_CHARTS_PER_USER',
     DEFAULT_CHARTS_PER_USER,
@@ -738,9 +781,10 @@ async function run(): Promise<void> {
   let attempts = 0;
 
   if (options.dryRun) {
-    const candidateIds = options.fixture
+    let candidateIds = options.fixture
       ? [fixtureRecipient().userId]
       : await loadCandidateIds(supabase!, weekStart, limit);
+    if (canaryTo) candidateIds = await canaryCandidates(supabase!, candidateIds, maxCharts, canaryTo);
     console.log(`weekly-digest: ${candidateIds.length} bounded candidate(s), week ${rangeLabel(weekStart)}, dryRun=true`);
     for (const [candidateIndex, userId] of candidateIds.entries()) {
       const recipient = options.fixture
@@ -764,6 +808,7 @@ async function run(): Promise<void> {
       }
     }
     console.log(`weekly-digest: done, sent=0, failed=0, skipped=${skipped}, reconciliation=0, attempted=0, dryRun=true`);
+    if (canaryTo) console.log(`weekly-digest: canary receipt sent=0 recipient=sha256:${recipientHashPrefix(canaryTo)} dryRun=true`);
     return;
   }
 
@@ -835,9 +880,10 @@ async function run(): Promise<void> {
   }
 
   const candidateLimit = limit - attempts;
-  const candidateIds = !options.recoveryOnly && candidateLimit > 0
+  let candidateIds = !options.recoveryOnly && candidateLimit > 0
     ? await loadCandidateIds(supabase!, weekStart, candidateLimit)
     : [];
+  if (canaryTo) candidateIds = await canaryCandidates(supabase!, candidateIds, maxCharts, canaryTo);
   console.log(`weekly-digest: ${candidateIds.length} bounded new candidate(s), week ${rangeLabel(weekStart)}, dryRun=false`);
 
   for (const [candidateIndex, userId] of candidateIds.entries()) {
@@ -935,6 +981,7 @@ async function run(): Promise<void> {
   }
 
   console.log(`weekly-digest: done, sent=${sent}, failed=${failed}, skipped=${skipped}, reconciliation=${reconciliation}, attempted=${attempts}, dryRun=false`);
+  if (canaryTo) console.log(`weekly-digest: canary receipt sent=${sent} recipient=sha256:${recipientHashPrefix(canaryTo)} dryRun=false`);
   if (failed > 0) throw new Error(`weekly-digest: ${failed} explicit provider rejection(s)`);
 }
 
