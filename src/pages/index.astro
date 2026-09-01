@@ -790,7 +790,7 @@ const tools = [
      -webkit-backdrop-filter, so the buttons and nav read as real glass there.
      Chromium additionally refracts the backdrop through the SVG capsule lens,
      gated by the .zdx-lens class (added by a tiny inline script only on
-  Chromium): Safari reports support for url() backdrop filters but paints
+     Chromium): Safari reports support for url() backdrop filters but paints
      nothing, which would otherwise leave these controls flat and transparent. */
   .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
   :global(html.zdx-lens) .hero__ctas .hero__ghost {
