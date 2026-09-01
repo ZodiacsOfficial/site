@@ -6,27 +6,27 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 4
   },
-  "capturedAt": "2026-09-01T05:18:17.104Z",
+  "capturedAt": "2026-09-01T18:53:49.431Z",
   "browser": "Chromium 141.0.7390.37",
   "dailyDate": "2026-09-01",
   "publicationCanonicalSha256": "57cece9cb454f0cdf36831b2d40b9e489987d1e564c75dc735881653ec4be086",
-  "templateSourceSha256": "7f8d26b4fd951fca21fcc1021172963a2522bbb331d44b5334bcf287a700fcf2",
+  "templateSourceSha256": "c906cca4d3f4779cb4e05c446c762b997c6a66f21bccb39093459a58be141c63",
   "renderPayloadSha256": {
     "daily": "0a83689cc87fabf0e3b791a3252041df1dda69a6844bb71cc9650897e67db436",
     "dailyPublication": "77426d9399e5772e2b8fa729065c22ac1fedeb40bc4050f4cf67b112c7051018",
-    "dailyPublicationManifest": "6e7e1590d42d0edad64e251f49563703198ca485241841b1d48b9cd6501db3e4",
+    "dailyPublicationManifest": "0c37267d20251f7cfc8af7d528d5fd8543adb1338aa8f7e796de34c591996f17",
     "horoscopeProgram": "9a9b9489f8cfe4346d9aeefbc697eab807757f9cf38b5186b7ba3b56c8f43921"
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-09-01T05:12:20.577Z",
-    "templateSourceSha256": "7f8d26b4fd951fca21fcc1021172963a2522bbb331d44b5334bcf287a700fcf2",
+    "builtAt": "2026-09-01T18:53:14.137Z",
+    "templateSourceSha256": "c906cca4d3f4779cb4e05c446c762b997c6a66f21bccb39093459a58be141c63",
     "dailyDate": "2026-09-01",
     "publicationCanonicalSha256": "57cece9cb454f0cdf36831b2d40b9e489987d1e564c75dc735881653ec4be086",
     "renderPayloadSha256": {
       "daily": "0a83689cc87fabf0e3b791a3252041df1dda69a6844bb71cc9650897e67db436",
       "dailyPublication": "77426d9399e5772e2b8fa729065c22ac1fedeb40bc4050f4cf67b112c7051018",
-      "dailyPublicationManifest": "6e7e1590d42d0edad64e251f49563703198ca485241841b1d48b9cd6501db3e4",
+      "dailyPublicationManifest": "0c37267d20251f7cfc8af7d528d5fd8543adb1338aa8f7e796de34c591996f17",
       "horoscopeProgram": "9a9b9489f8cfe4346d9aeefbc697eab807757f9cf38b5186b7ba3b56c8f43921"
     }
   },
