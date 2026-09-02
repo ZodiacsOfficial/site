@@ -6701,7 +6701,7 @@
       "source": {
         "provider": "DexScreener",
         "url": "https://api.dexscreener.com/tokens/v1/solana/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv,EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp,ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc,CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ,8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm,Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso,7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe,J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1,8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3,3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2,C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt,3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
-        "readAt": "2026-09-02T08:53:28.291Z"
+        "readAt": "2026-09-02T08:54:35.182Z"
       },
       "coverage": {
         "canonicalAssetCount": 12,
@@ -6716,7 +6716,7 @@
         "fdvAssetCount": 12,
         "liquidityUsd": 252404.16,
         "liquidityReportedPoolCount": 12,
-        "volume24hUsd": 12732.53,
+        "volume24hUsd": 12726.87,
         "volume24hReportedPoolCount": 12,
         "indexedPoolCount": 12
       },
@@ -6769,12 +6769,12 @@
           "symbol": "GEMINI",
           "mint": "ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc",
           "priceUsd": 0.0002177,
-          "change24hPct": -19.07,
+          "change24hPct": -18.92,
           "marketCapUsd": 217744,
           "fdvUsd": 217744,
           "liquidityUsd": 26983.5,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 3049.03,
+          "volume24hUsd": 3043.37,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
