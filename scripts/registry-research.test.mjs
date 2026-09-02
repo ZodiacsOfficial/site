@@ -35,6 +35,19 @@ function deepClone(value) {
   return structuredClone(value);
 }
 
+const DAY_MS = 86_400_000;
+
+// The committed eight-day window can hold no sky event at all (2026-09-02 to
+// 2026-09-09 had none), so the tests that need an event brief plant one
+// deterministic ingress on the edition's second day instead of trusting the
+// calendar. Everything else in the ledger stays the committed evidence.
+function withFixtureEvent(inputs) {
+  const cloned = deepClone(inputs);
+  const at = new Date(Date.parse(`${inputs.daily.date}T00:00:00.000Z`) + DAY_MS + (12 * 60 * 60 * 1000)).toISOString();
+  cloned.transitMonths[0].ingresses.push({ planet: 'Mercury', at, sign: 'libra', retrograde: false });
+  return { inputs: cloned, at };
+}
+
 function approvalFor(item, overrides = {}) {
   return {
     itemId: item.id,
@@ -57,7 +70,12 @@ describe('Registry Research deterministic publication', () => {
     expect(first.items.some((item) => item.kind === 'market-check')).toBe(true);
     const expectsWeekly = new Date(`${inputs.daily.date}T00:00:00.000Z`).getUTCDay() === 1;
     expect(first.items.some((item) => item.kind === 'weekly-outlook')).toBe(expectsWeekly);
-    expect(first.items.some((item) => item.kind === 'event-brief')).toBe(true);
+    const fixture = withFixtureEvent(inputs);
+    const withEvent = buildRegistryResearchLedger(fixture.inputs);
+    const committedBriefs = first.items.filter((item) => item.kind === 'event-brief');
+    const fixtureBriefs = withEvent.items.filter((item) => item.kind === 'event-brief');
+    expect(fixtureBriefs).toHaveLength(committedBriefs.length + 1);
+    expect(fixtureBriefs.some((item) => item.visibleAt === fixture.at && item.slug.startsWith('event-brief-ingress-'))).toBe(true);
     expect(first.items.every((item) => item.method.modelAuthoredProse === false)).toBe(true);
     expect(first.items.every((item) => item.riskStatement.includes('not investment advice'))).toBe(true);
   });
@@ -129,14 +147,15 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('reveals an approved event at its exact time without mutating the immutable item payload', async () => {
-    const inputs = await committedInputs();
+    const fixture = withFixtureEvent(await committedInputs());
+    const inputs = fixture.inputs;
     const ledger = buildRegistryResearchLedger(inputs);
     // The ledger clock is the latest market snapshot's read time, which can
-    // fall after every event in the committed eight-day window (a snapshot
-    // archived late in the day did exactly that on 2026-09-01). Anchor both
-    // phases on the event's own exact time so the reveal is tested at its
-    // boundary regardless of when the snapshot was read.
-    const event = ledger.items.filter((item) => item.kind === 'event-brief').at(-1);
+    // fall after every event in the window (a snapshot archived late in the
+    // day did exactly that on 2026-09-01), and the window can hold no event at
+    // all. Use the planted event and anchor both phases on its exact time so
+    // the reveal is tested at its boundary whatever the calendar holds.
+    const event = ledger.items.find((item) => item.kind === 'event-brief' && item.visibleAt === fixture.at);
     expect(event).toBeDefined();
     const justBefore = new Date(Date.parse(event.visibleAt) - 1).toISOString();
     const manifest = deepClone(inputs.approvalManifest);
