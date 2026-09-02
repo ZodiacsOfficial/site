@@ -73,4 +73,19 @@ if [ "$(git rev-parse "origin/$base^{tree}")" != "$(git rev-parse 'HEAD^{tree}')
   echo "::warning title=Merged tree differs from the verified tree::$base moved between verification and merge; the live-verification step decides whether the published edition still matches." >&2
 fi
 echo "publish-through-pr: merged $pr_url as $merged"
+
+# A merge made with the workflow token does not trigger push workflows, so
+# Site Check would never run on the merged head and a broken deploy on the
+# base would go unnoticed (the calendar-shaped research tests did exactly
+# that on 2026-09-02). workflow_dispatch is the documented exception, so ask
+# for the run explicitly. The protected-scope guard compares against the
+# merged head itself: this publication's diff is generated artifacts the
+# workflow already verified, and the guard exists for pull requests by
+# people. Best effort — the publication itself has already succeeded.
+if gh workflow run site-check.yml --ref "$base" -f "scope_base=$merged" 2>"$tmp/publish-site-check.err"; then
+  echo "publish-through-pr: dispatched site-check.yml on $base for $merged"
+else
+  cat "$tmp/publish-site-check.err" >&2
+  echo "::warning title=Site Check was not dispatched for the merged head::$merged is published, but the workflow token could not dispatch site-check.yml on $base (it needs actions: write). Run it by hand from the Actions tab with scope_base=$merged." >&2
+fi
 echo "$merged"
