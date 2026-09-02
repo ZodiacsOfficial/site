@@ -46,6 +46,7 @@ describe('daily publication operations', () => {
     // which opens and squash-merges a pull request with the workflow token.
     for (const [name, workflow] of Object.entries({ daily, snapshot, transits })) {
       expect(workflow, name).toContain('pull-requests: write');
+      expect(workflow, name).toContain('actions: write');
       expect(workflow, name).toContain('GH_TOKEN: ${{ github.token }}');
       expect(workflow, name).toContain('if grep -q "GH006" "$RUNNER_TEMP/publish-push.err"; then');
       expect(workflow, name).toContain('bash scripts/publish-through-pr.sh');
@@ -57,6 +58,9 @@ describe('daily publication operations', () => {
     expect(publisher).toContain('advanced after verification; rerun the complete workflow');
     expect(publisher).toContain('gh pr create --base "$base" --head "$branch"');
     expect(publisher).toContain('gh pr merge "$pr_url" --squash');
+    // A token-made merge triggers no push workflow, so the publisher asks for
+    // Site Check on the merged head itself (workflow_dispatch is the exception).
+    expect(publisher).toContain('gh workflow run site-check.yml --ref "$base" -f "scope_base=$merged"');
     expect(publisher).toContain('Allow GitHub Actions to create and approve pull requests');
     expect(publisher).not.toContain('--admin');
     expect(publisher).not.toContain('git rebase');
