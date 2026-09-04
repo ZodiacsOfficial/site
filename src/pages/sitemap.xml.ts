@@ -37,7 +37,7 @@ const birthdayFacts = birthdayFactsData as unknown as { days: Record<string, { c
 const researchLastmod = terminalResearchLastmod(registryResearchPublication);
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
 const AUDIT_REMEDIATION_LASTMOD = '2026-08-23';
-const THESIS_LASTMOD = '2026-09-01';
+const THESIS_LASTMOD = '2026-09-04';
 const LEGAL_IDENTITY_LASTMOD = '2026-08-29';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
