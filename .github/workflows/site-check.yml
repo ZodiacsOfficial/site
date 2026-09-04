@@ -45,9 +45,11 @@ jobs:
         # Production tree must be clean at any severity; the full tree
         # (dev included) fails only on high/critical so a low-severity
         # transitive dev advisory cannot block an unrelated deploy.
+        # Retry only recognized, findings-free audit endpoint outages;
+        # every other failure and exhausted retries remain fatal.
         run: |
-          npm audit --omit=dev
-          npm audit --audit-level=high
+          node scripts/audit-with-retry.mjs --omit=dev
+          node scripts/audit-with-retry.mjs --audit-level=high
 
       - name: Install pinned Chromium
         run: npx playwright-core install chromium
