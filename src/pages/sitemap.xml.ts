@@ -38,6 +38,7 @@ const birthdayFacts = birthdayFactsData as unknown as { days: Record<string, { c
 const researchLastmod = terminalResearchLastmod(registryResearchPublication);
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
 const AUDIT_REMEDIATION_LASTMOD = '2026-08-23';
+const THESIS_LASTMOD = '2026-09-04';
 const LEGAL_IDENTITY_LASTMOD = '2026-08-29';
 const BIG_THREE_LASTMOD = '2026-09-01';
 const YEAR_PAGES_LASTMOD = '2026-09-01';
@@ -76,7 +77,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ['/registry/technical/', '2026-08-02'],
   ['/terminal/research/', researchLastmod],
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
-  ['/thesis/', AUDIT_REMEDIATION_LASTMOD],
+  ['/thesis/', THESIS_LASTMOD],
   // Astrofolio, the Terminal market desk, and the Registry's twelve plain-language token records.
   ['/astrofolio/', AUDIT_REMEDIATION_LASTMOD],
   ['/terminal/', AUDIT_REMEDIATION_LASTMOD],

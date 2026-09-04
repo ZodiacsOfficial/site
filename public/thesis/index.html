@@ -25,7 +25,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://zodiacs.org/thesis/" />
   <meta property="article:published_time" content="2026-08-01" />
-  <meta property="article:modified_time" content="2026-08-23" />
+  <meta property="article:modified_time" content="2026-09-04" />
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/thesis.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -57,7 +57,7 @@
         "url": "https://zodiacs.org/thesis/",
         "inLanguage": "en",
         "datePublished": "2026-08-01",
-        "dateModified": "2026-08-23",
+        "dateModified": "2026-09-04",
         "author": { "@type": "Organization", "@id": "https://zodiacs.org/#org", "name": "Zodiacs" },
         "publisher": { "@type": "Organization", "@id": "https://zodiacs.org/#org", "name": "Zodiacs" },
         "isPartOf": { "@type": "WebSite", "@id": "https://zodiacs.org/#site" },
@@ -320,6 +320,11 @@
       display: block; font-style: normal;
       font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.22em;
       text-transform: uppercase; color: var(--ink-dim);
+    }
+    .quote cite a { color: inherit; text-decoration-color: var(--hair-3); text-underline-offset: 3px; }
+    .glyphs {
+      font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', system-ui, sans-serif;
+      font-size: 1.05em; letter-spacing: 0.12em; white-space: nowrap;
     }
 
     /* Stats band */
@@ -1768,6 +1773,52 @@
       html.has-js.motion-ready [data-visual-reveal] > * { opacity:1!important; transform:none!important; transition:none!important; animation:none!important; }
     }
   </style>
+
+  <style>
+    /* Thesis reading plates — static, accessible and independent of scripts. */
+    .thesis-plate { background:var(--surface); }
+    .thesis-plate .zfig-head { font-family:var(--serif); font-size:clamp(22px,3vw,28px); line-height:1.15; letter-spacing:0; text-transform:none; color:var(--ink); }
+    .thesis-plate .fact-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; margin:24px 0 18px; }
+    .thesis-plate .fact-card { background:var(--surface-2); min-width:0; padding:18px; border-radius:12px; }
+    .thesis-plate .fact-card strong { font-size:21px; }
+    .thesis-plate .fact-card__label { text-transform:none; font-size:13px; letter-spacing:0; margin-bottom:9px; color:var(--ink-2); }
+    .thesis-plate .fact-card s { text-decoration-color:var(--ink-dim); text-decoration-thickness:1px; }
+    .thesis-plate .fact-card svg { margin-top:16px; }
+    .thesis-plate svg text.plate-name { font-family:'Instrument Sans',system-ui,sans-serif; font-size:14px; fill:var(--ink-2); }
+    .thesis-plate svg text.plate-code { font-family:var(--mono); font-size:11px; fill:var(--ink-dim); }
+    .thesis-plate svg text.plate-axis { font-family:'Instrument Sans',system-ui,sans-serif; font-size:12px; fill:var(--ink-dim); }
+    .thesis-plate svg text.plate-value, .thesis-plate svg text.plate-date { font-family:var(--mono); font-size:13px; fill:var(--ink-2); }
+    .thesis-plate svg text.plate-event { font-family:var(--serif); font-size:25px; fill:var(--ink); }
+    .thesis-plate .keyboard-grid { grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px; }
+    .thesis-plate .keyboard-grid .plate-name { font-size:14px; }
+    .thesis-plate .keyboard-grid .plate-code { font-size:13px; }
+    .thesis-plate .provenance-grid { gap:22px 32px; }
+    .thesis-plate .provenance-grid a { display:block; min-width:0; text-decoration:none; }
+    .thesis-plate .provenance-grid a:hover { background:var(--surface-2); }
+    .thesis-plate .zfig-src { overflow-wrap:anywhere; }
+    #comparison-drawer { margin-top:20px; }
+    #comparison-drawer .comparison-panel { margin:0; padding:0; }
+    #comparison-drawer .comparison-notes h3 { font-size:21px; }
+    #comparison-drawer .comparison-notes { padding-top:20px; background:transparent; }
+    /* Flat reading surfaces; the twelve sign hues are the only accents. */
+    body { background:var(--bg); }
+    .essay .mov > p { font-family:'Instrument Sans',system-ui,sans-serif; }
+    .hero__veil { background:rgba(6,7,9,.64); }
+    .essay .ztbl-brand svg { color:var(--ink-2); }
+    .essay .era-strip, .essay .test-question, .thesis-close { background:var(--surface); }
+    .essay .era-strip::before, .essay .test-questions::before { background:var(--hair-2); }
+    .essay .quote, .essay .pulse, .essay .proof-loop, .essay .rail-map { background:var(--surface); }
+    .essay .pulse__dot { display:none!important; }
+    .essay .thesis-gallery .gband { background:var(--surface); }
+    .essay .thesis-gallery .gband__chrome::before { background:rgba(6,7,9,.88); }
+    @media (max-width:739px) {
+      .thesis-plate .fact-grid { grid-template-columns:1fr; gap:16px; }
+      .thesis-plate .keyboard-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+      .thesis-plate .authority-summary { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+      .thesis-plate .authority-summary .fact-card { padding:13px; }
+      .thesis-plate .authority-summary strong { font-size:19px; }
+    }
+  </style>
 </head>
 <body>
   <a href="#essay" class="skip">Skip to content</a>
@@ -1834,7 +1885,7 @@
       <p class="hero__sub">
         Your sign already shows up in birthday wishes, dating profiles, gifts, and group chats. Now it can move with you across the digital world.
       </p>
-      <p class="hero__meta"><time datetime="2026-08-01">Published 1 Aug 2026</time><i aria-hidden="true"></i><time datetime="2026-08-23">Updated 23 Aug 2026</time><i aria-hidden="true"></i><span>Evidence checked 31 Jul 2026</span></p>
+      <p class="hero__meta"><time datetime="2026-08-01">Published 1 Aug 2026</time><i aria-hidden="true"></i><time datetime="2026-09-04">Updated 4 Sep 2026</time><i aria-hidden="true"></i><span>Evidence checked 31 Jul 2026</span></p>
       <div class="hero__twelve" aria-label="The twelve digital assets"><a href="/registry/aries/" aria-label="Aries — digital asset" style="--sign:#DE8E79"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/aries.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/taurus/" aria-label="Taurus — digital asset" style="--sign:#B9D4BE"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/taurus.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/gemini/" aria-label="Gemini — digital asset" style="--sign:#B29DD0"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/gemini.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/cancer/" aria-label="Cancer — digital asset" style="--sign:#B6D4E4"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/cancer.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/leo/" aria-label="Leo — digital asset" style="--sign:#E0A9B4"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/leo.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/virgo/" aria-label="Virgo — digital asset" style="--sign:#B7D9B0"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/virgo.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/libra/" aria-label="Libra — digital asset" style="--sign:#D3A9DE"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/libra.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/scorpio/" aria-label="Scorpio — digital asset" style="--sign:#B9DCE8"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/scorpio.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/sagittarius/" aria-label="Sagittarius — digital asset" style="--sign:#E0B080"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/sagittarius.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/capricorn/" aria-label="Capricorn — digital asset" style="--sign:#C0DEA8"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/capricorn.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/aquarius/" aria-label="Aquarius — digital asset" style="--sign:#AE8FC9"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/aquarius.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/pisces/" aria-label="Pisces — digital asset" style="--sign:#A9D4C4"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/pisces.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a></div>
       <p class="hero__clock" data-season-clock></p>
       <div class="hero__cue" aria-hidden="true"><span class="line"></span><span>Read the story</span></div>
@@ -1875,10 +1926,10 @@
         <section class="mov reveal" id="where-the-signs-come-from">
           <div class="mov__head"><span class="mov__no">II</span><h2 class="mov__title">A story that survived <span class="it">every medium.</span></h2></div>
           <p>
-            The twelve-sign zodiac took shape in Babylonian astronomy around the fifth century BCE. Its vocabulary has lasted for roughly 2,400 years because each generation gave it a new format.
+            The twelve-sign zodiac took shape in Babylonian astronomy around the fifth century BCE. Roughly 2,400 years later, you can still name your place in it.
           </p>
           <p>
-            It moved from clay tablets to star maps. Scribes copied it into manuscripts. Printers placed it in almanacs. Newspapers gave it a daily column. Apps turned a birth chart into something you could carry in your pocket. Every medium changed the presentation. The twelve names kept arriving intact.
+            Clay tablets became star maps, manuscripts and printed almanacs. Newspapers gave the zodiac a daily column. Phones put it in your pocket. The twelve names kept arriving.
           </p>
           <figure class="zfig" id="fig-1">
             <figcaption class="zfig-head"><span class="zfig-chip">F1</span> The transmission.</figcaption>
@@ -1903,24 +1954,36 @@
             <p class="zfig-cap">The twelve-sign vocabulary survived by moving with people. Public digital assets are its newest form.</p>
           </figure>
           <p>
-            Gold has endured for a similar human reason. Long before it became a line on a market screen, people made it into rings, offerings, heirlooms, and symbols of status. Its history gives it a meaning that chemistry alone cannot explain. The zodiac also carries an inheritance: stories, symbols, rituals, and recognition gathered across generations.
+            Babylon fell. Rome fell. The denarius stopped being money. The twelve outlasted the worlds beneath that timeline. No living founder can quit or lose their reputation and take the zodiac down with them.
           </p>
+          <p>
+            You need not believe that the stars predict your future to see what survived. People still use the signs to talk about themselves.
+          </p>
+
+
         </section>
 
         <section class="mov reveal" id="attention">
-          <div class="mov__head"><span class="mov__no">III</span><h2 class="mov__title">Attention is the internet’s <span class="it">first currency.</span></h2></div>
+          <div class="mov__head"><span class="mov__no">III</span><h2 class="mov__title">Attention arrives on a <span class="it">schedule.</span></h2></div>
           <p>
-            Platforms sell attention, brands rent it, and creators compete for it. The zodiac follows its own calendar. Every birthday carries a sign, and every month opens another season. Horoscopes, compatibility questions, eclipses, retrogrades, dating profiles, memes, gifts, and group chats keep the same twelve identities in circulation.
+            The Sun enters Scorpio, and your group chat announces Scorpio season. Birthday posts follow. Then the next sign takes its turn. Twelve seasons a year, with no marketing department needed to move the calendar.
           </p>
           <p>
-            People were reading horoscopes, comparing signs, and posting about astrology long before the assets appeared in 2024. The figure below measures that recurring curiosity around the twelve signs; buying intent sits outside its scope.
+            Open your phone’s emoji keyboard. The twelve symbols are already there. <a href="https://www.unicode.org/versions/Unicode1.1.0/" rel="noopener noreferrer">They were in Unicode by June 1993</a>. These coins arrived decades after the symbols became part of the language computers share.
           </p>
           <p>
-            Attention cannot establish value on its own. It gives people a reason to notice, return, and share. The public assets matter only if people turn some of that attention into use by claiming a sign, keeping it, sending it, or carrying it into another app.
+            The audience also came first. In <a href="https://yougov.com/en-us/articles/42292-one-four-americans-say-they-believe-astrology" rel="noopener noreferrer">YouGov’s April 2022 U.S. survey</a>, nine in ten adults picked their sign when shown the twelve.
           </p>
+
           <p>
-            <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">Most Americans who consult astrology or horoscopes say they do it mostly for fun</a>. Culture often travels through small rituals, shared references, and playful ways of saying who we are.
+            Every birthday gives someone a fresh reason to care. The chart below records people looking up the signs. <strong>Pageviews measure curiosity, never demand for the coins.</strong>
           </p>
+          <figure class="zfig thesis-plate" id="fig-keyboard">
+            <figcaption class="zfig-head">Your keyboard already knows the twelve.</figcaption>
+            <div class="fact-grid keyboard-grid"><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-aries"><title id="key-aries">Aries, U+2648, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#DE8E79" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M24 39V15C24 3 6 3 8 17M24 15C24 3 42 3 40 17"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Aries</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+2648</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-taurus"><title id="key-taurus">Taurus, U+2649, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#B9D4BE" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5C10 22 38 22 38 5M35 30A11 11 0 1 1 13 30A11 11 0 1 1 35 30"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Taurus</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+2649</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-gemini"><title id="key-gemini">Gemini, U+264A, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#B29DD0" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7Q24 12 37 7M11 41Q24 36 37 41M17 10V38M31 10V38"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Gemini</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+264A</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-cancer"><title id="key-cancer">Cancer, U+264B, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#B6D4E4" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17C17 5 36 7 39 15M18 17A5 5 0 1 1 8 17A5 5 0 1 1 18 17M39 31C31 43 12 41 9 33M40 31A5 5 0 1 1 30 31A5 5 0 1 1 40 31"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Cancer</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+264B</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-leo"><title id="key-leo">Leo, U+264C, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#E0A9B4" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 27A6 6 0 1 1 5 27A6 6 0 1 1 17 27M17 27C24 17 12 10 22 6C36 1 40 17 32 29C25 42 35 46 42 35"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Leo</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+264C</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-virgo"><title id="key-virgo">Virgo, U+264D, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#B7D9B0" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12Q12 6 12 17V35M12 15Q19 5 20 17V35M20 15Q28 5 28 17V32C28 43 43 34 40 21C38 12 29 17 32 27L42 41"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Virgo</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+264D</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-libra"><title id="key-libra">Libra, U+264E, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#D3A9DE" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 33H18C5 22 16 10 24 10C32 10 43 22 30 33H41M7 40H41"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Libra</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+264E</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-scorpio"><title id="key-scorpio">Scorpio, U+264F, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#B9DCE8" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12Q12 6 12 17V35M12 15Q20 5 20 17V35M20 15Q28 5 28 17V31Q28 40 42 35M36 31L43 35L39 41"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Scorpio</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+264F</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-sagittarius"><title id="key-sagittarius">Sagittarius, U+2650, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#E0B080" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 39L39 9M25 9H39V23M11 20L28 37"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Sagittarius</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+2650</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-capricorn"><title id="key-capricorn">Capricorn, U+2651, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#C0DEA8" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14L11 10L18 37L27 11M27 11L28 34C28 47 45 42 41 32C38 26 28 29 24 39"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Capricorn</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+2651</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-aquarius"><title id="key-aquarius">Aquarius, U+2652, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#AE8FC9" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20L13 12L20 20L28 12L35 20L43 12M5 34L13 26L20 34L28 26L35 34L43 26"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Aquarius</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+2652</text></svg><svg viewBox="0 0 120 118" role="img" aria-labelledby="key-pisces"><title id="key-pisces">Pisces, U+2653, Unicode 1.1, June 1993</title><rect x="1" y="1" width="118" height="116" rx="12" fill="var(--surface)" stroke="var(--hair)"/><g transform="translate(36 12)" fill="none" stroke="#A9D4C4" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6Q28 24 12 42M36 6Q20 24 36 42M6 24H42"/></g><text x="60" y="80" text-anchor="middle" class="plate-name">Pisces</text><text x="60" y="101" text-anchor="middle" class="plate-code">U+2653</text></svg></div>
+            <p class="zfig-cap">The symbols were in Unicode by June 1993, long before these coins. Glyphs redrawn here in the twelve sign hues.</p>
+            <p class="zfig-src"><a href="https://www.unicode.org/Public/17.0.0/ucd/DerivedAge.txt" rel="noopener noreferrer">Unicode character ages</a> · <a href="https://www.unicode.org/versions/Unicode1.1.0/" rel="noopener noreferrer">Unicode 1.1 · June 1993</a></p>
+          </figure>
           <figure class="zfig" id="fig-2">
             <figcaption class="zfig-head"><span class="zfig-chip">F2</span> The rhythm repeats.</figcaption>
             <div class="story-figure">
@@ -2004,7 +2067,7 @@
               <p class="pulse__note">
                 Bare sign terms are ambiguous in English (cancer the disease,
                 gemini the model), so each bar measures the explicit query,
-                an undercount by design. The gold line is the anchor token's
+                an undercount by design. The reference line is the anchor token's
                 search interest over the same twelve months, set to 1.
               </p>
             </div>
@@ -2027,66 +2090,26 @@
         </section>
 
         <section class="mov reveal" id="worth-holding">
-          <div class="mov__head"><span class="mov__no">IV</span><h2 class="mov__title">Ownership becomes <span class="it">personal.</span></h2></div>
+          <div class="mov__head"><span class="mov__no">IV</span><h2 class="mov__title">Twelve, <span class="it">not one.</span></h2></div>
           <p>
-            A public digital asset can be held directly, sent to another person, and checked against a shared record without depending on a platform’s private database. Bitcoin established that model. Zodiacs applies it to symbols people already use.
+            A memecoin is a coin people gather around because of a shared symbol or joke. Its first job is to be remembered. A person can lose the crowd. A news story can expire. Dogecoin reminds you that a joke can endure. The zodiac comes with a calendar that keeps bringing it back.
           </p>
-          <p>
-            The twelve signs arrive with names, colors, stories, and thousands of years of cultural memory. A wallet adds ownership without asking anyone to learn a new identity first.
-          </p>
-          <p>
-            Solana carries the native assets, while listed representations on Base extend the same registry. The technical details sit in the appendix. The intended experience is simple: choose a sign, hold it, and find the same asset across compatible apps.
-          </p>
-          <figure class="zfig" id="fig-3">
-            <figcaption class="zfig-head"><span class="zfig-chip">F3</span> The meeting point.</figcaption>
-            <div class="source-convergence" role="group" aria-label="Gold, Bitcoin, and Solana combine to form Zodiacs" data-visual-reveal>
-              <article class="source-card source-card--gold">
-                <span class="source-card__icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48" data-icon="gold-bar"><path data-gold-bar d="M9 30 15 13h18l6 17-5 6H14l-5-6Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M15 13l4 7h10l4-7M10 30h28M20 25h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                <span class="source-card__eyebrow">Gold</span>
-                <h3>Material language</h3>
-                <p>A visual language of value, ceremony, and permanence.</p>
-              </article>
-              <article class="source-card source-card--bitcoin">
-                <span class="source-card__icon source-card__bitcoin" aria-hidden="true">₿</span>
-                <span class="source-card__eyebrow">Bitcoin</span>
-                <h3>Digital ownership</h3>
-                <p>Scarcity, public verification, direct transfer, and programmable rules.</p>
-              </article>
-              <article class="source-card source-card--solana">
-                <span class="source-card__icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48"><path d="M12 12h27l-6 6H6l6-6Zm3 9h27l-6 6H9l6-6Zm-3 9h27l-6 6H6l6-6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                </span>
-                <span class="source-card__eyebrow">Solana</span>
-                <h3>Speed and efficiency</h3>
-                <p>Fast confirmation and consumer-scale rails.</p>
-              </article>
-              <div class="convergence-flow" data-convergence-connectors aria-hidden="true">
-                <svg class="convergence-flow__desktop" viewBox="0 0 58 220" preserveAspectRatio="none">
-                  <path class="convergence-flow__gold" data-convergence-link="gold" d="M0 36 C31 36 22 110 43 110"/>
-                  <path class="convergence-flow__bitcoin" data-convergence-link="bitcoin" d="M0 110 H43"/>
-                  <path class="convergence-flow__solana" data-convergence-link="solana" d="M0 184 C31 184 22 110 43 110"/>
-                  <circle cx="43" cy="110" r="3.5"/>
-                  <path class="convergence-flow__output" d="M47 110 H57 M53 106 L57 110 53 114"/>
-                </svg>
-                <svg class="convergence-flow__mobile" viewBox="0 0 280 50" preserveAspectRatio="none">
-                  <path class="convergence-flow__gold" data-convergence-link="gold" d="M38 0 C38 20 105 18 137 30"/>
-                  <path class="convergence-flow__bitcoin" data-convergence-link="bitcoin" d="M140 0 V30"/>
-                  <path class="convergence-flow__solana" data-convergence-link="solana" d="M242 0 C242 20 175 18 143 30"/>
-                  <circle cx="140" cy="30" r="3.5"/>
-                  <path class="convergence-flow__output" d="M140 34 V49 M136 45 L140 49 144 45"/>
-                </svg>
-              </div>
-              <div class="convergence-result" data-convergence-result>
-                <span class="brand-wheel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-                <div><strong>Zodiacs</strong><span>Twelve familiar signs, carrying all three.</span></div>
-              </div>
-            </div>
-            <p class="bridge-result">Gold provides the visual language. Bitcoin provides the model for direct digital ownership. Solana carries the native assets. Zodiacs applies those qualities to signs people already use.</p>
-            <p class="comparison-boundary">The digital assets date from 2024. The zodiac vocabulary they carry is ancient.</p>
 
-            <div class="comparison-panel" aria-label="Gold, Bitcoin, and Zodiacs comparison" data-almanac-reveal>
+          <div class="fact-grid" aria-label="What usually ends a meme, and where the twelve stand"><div class="fact-card"><strong>No celebrity to depend on.</strong><p>The zodiac belongs to no living founder.</p></div><div class="fact-card"><strong>A calendar that keeps turning.</strong><p>Each sign returns to the foreground every year.</p></div><div class="fact-card"><strong>A role for you.</strong><p>The joke changes with the person carrying the sign.</p></div><div class="fact-card"><strong>No issuer’s printing key.</strong><p>All twelve native mint authorities are renounced. <a href="#fig-authorities">Dated records below.</a></p></div></div>
+          <p>
+            In the Sun-sign zodiac used here, every birth falls in one of the twelve. You arrive with a place in the story. A Scorpio meme might be about you, your ex or the friend who insists she is nothing like one. The audience supplies new characters every day.
+          </p>
+          <p>
+            You can change your job, your city or your username. Your birthday stays with you. That gives a sign a reason to remain personal after the novelty of owning a coin has passed.
+          </p>
+
+
+          <figure class="zfig thesis-plate" id="fig-3">
+            <figcaption class="zfig-head">A calendar gives the meme a reason to return.</figcaption>
+            <div class="fact-grid attention-patterns"><div class="fact-card"><strong>A person can leave.</strong><svg viewBox="0 0 300 130" role="img" aria-label="Schematic attention around a person fades after a peak."><path d="M10 12V107H290" fill="none" stroke="var(--hair-2)"/><path d="M12 96C33 98 32 31 69 26S100 40 123 60S193 94 286 98" fill="none" stroke="var(--ink-2)" stroke-width="2.5" /><text x="12" y="126" class="plate-axis">Earlier</text><text x="288" y="126" text-anchor="end" class="plate-axis">Later</text></svg></div><div class="fact-card"><strong>A moment can pass.</strong><svg viewBox="0 0 300 130" role="img" aria-label="Schematic attention around a news event peaks sharply, then fades."><path d="M10 12V107H290" fill="none" stroke="var(--hair-2)"/><path d="M12 99L54 98L72 20C86 89 123 98 286 99" fill="none" stroke="var(--ink-2)" stroke-width="2.5" /><text x="12" y="126" class="plate-axis">Earlier</text><text x="288" y="126" text-anchor="end" class="plate-axis">Later</text></svg></div><div class="fact-card"><strong>A joke can wear thin.</strong><svg viewBox="0 0 300 130" role="img" aria-label="Schematic attention around a joke rises then gradually fades."><path d="M10 12V107H290" fill="none" stroke="var(--hair-2)"/><path d="M12 97C38 97 38 24 72 25S106 44 138 66S213 94 286 98" fill="none" stroke="var(--ink-2)" stroke-width="2.5" stroke-dasharray="6 4"/><text x="12" y="126" class="plate-axis">Earlier</text><text x="288" y="126" text-anchor="end" class="plate-axis">Later</text></svg></div><div class="fact-card"><strong>The seasons come back.</strong><svg viewBox="0 0 300 130" role="img" aria-label="Schematic: twelve recurring seasons, one peak in each sign hue. Not measured attention."><path d="M10 12V107H290" fill="none" stroke="var(--hair-2)"/><path d="M12 99L20 29L34 99" stroke="#DE8E79" fill="none" stroke-width="2.5"/><path d="M35 99L43 29L57 99" stroke="#B9D4BE" fill="none" stroke-width="2.5"/><path d="M58 99L66 29L80 99" stroke="#B29DD0" fill="none" stroke-width="2.5"/><path d="M81 99L89 29L103 99" stroke="#B6D4E4" fill="none" stroke-width="2.5"/><path d="M104 99L112 29L126 99" stroke="#E0A9B4" fill="none" stroke-width="2.5"/><path d="M127 99L135 29L149 99" stroke="#B7D9B0" fill="none" stroke-width="2.5"/><path d="M150 99L158 29L172 99" stroke="#D3A9DE" fill="none" stroke-width="2.5"/><path d="M173 99L181 29L195 99" stroke="#B9DCE8" fill="none" stroke-width="2.5"/><path d="M196 99L204 29L218 99" stroke="#E0B080" fill="none" stroke-width="2.5"/><path d="M219 99L227 29L241 99" stroke="#C0DEA8" fill="none" stroke-width="2.5"/><path d="M242 99L250 29L264 99" stroke="#AE8FC9" fill="none" stroke-width="2.5"/><path d="M265 99L273 29L287 99" stroke="#A9D4C4" fill="none" stroke-width="2.5"/><text x="12" y="126" class="plate-axis">Aries</text><text x="288" y="126" text-anchor="end" class="plate-axis">Pisces → repeat</text></svg></div></div>
+            <p class="zfig-cap">Schematic: attention tied to a person, moment or joke can fade. The zodiac renews its subject every season. These curves are illustrative, not measured coin performance.</p>
+            <p class="zfig-src">Illustration · <a href="#fig-2">actual curiosity data in F2</a>. No mortality rate or price forecast is implied.</p>
+          <details class="evidence-drawer" id="comparison-drawer"><summary>Compare the properties of gold, Bitcoin and Zodiacs</summary><div class="evidence-drawer__body"><div class="comparison-panel" aria-label="Gold, Bitcoin, and Zodiacs comparison" data-almanac-reveal>
               <div class="ztblwrap">
                 <table class="ztbl">
                   <caption class="sr-only">A comparison of Gold, Bitcoin, and Zodiacs using twelve yes-or-no properties.</caption>
@@ -2114,8 +2137,8 @@
                   </tbody>
                 </table>
               </div>
-              <details class="evidence-drawer comparison-notes">
-                <summary>How this comparison is measured</summary>
+              <div class="comparison-notes">
+                <h3 class="zfig-head">How this comparison is measured</h3>
                 <div class="evidence-drawer__body comparison-notes__body">
                   <p>The marks describe the property named by each row. They are not investment ratings.</p>
                   <p><strong>History and symbolism</strong> refer to the cultural subject carried by the asset. For Zodiacs, that subject is the ancient zodiac; the public digital assets date from 2024. <strong>Identity from birth</strong> means a zodiac sign is culturally assigned from a birth date, not that it verifies anyone’s identity. <strong>Built-in monthly cultural seasonality</strong> means each sign receives a recurring public season every year. <strong>Everyday cultural participation</strong> means ordinary people actively use zodiac signs in dating profiles, birthday posts, compatibility discussions, celebrity coverage, memes, and group chats.</p>
@@ -2124,27 +2147,28 @@
                   <p><strong>Base-layer settlement in seconds</strong> compares native settlement. Bitcoin Lightning and wrapped gold are separate layers. Zodiacs uses Solana as its native rail.</p>
                   <p class="comparison-sources">Sources: <a href="https://www.gold.org/goldhub/data/how-much-gold" rel="noopener noreferrer">World Gold Council’s estimate</a> · <a href="https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf" rel="noopener noreferrer">USGS Mineral Commodity Summaries</a> · <a href="https://bips.dev/42/" rel="noopener noreferrer">BIP 42</a> · <a href="https://developer.bitcoin.org/devguide/transactions.html" rel="noopener noreferrer">Bitcoin developer guide</a> · <a href="https://solana.com/docs/core/fees" rel="noopener noreferrer">Solana’s fee guide</a> · <a href="https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New" rel="noopener noreferrer">Tinder, 2026</a> · <a href="https://zodiacs.org/registry/zodiacs.registry.json" rel="noopener noreferrer">registry</a> · <a href="https://zodiacs.org/thesis/thesis-disclosure.json" rel="noopener noreferrer">disclosure record</a></p>
                 </div>
-              </details>
-            </div>
-          </figure>
+              </div>
+            </div></div></details></figure>
         </section>
 
         <section class="mov reveal" id="what-holding-means">
-          <div class="mov__head"><span class="mov__no">V</span><h2 class="mov__title">Modern <span class="it">rails.</span></h2></div>
+          <div class="mov__head"><span class="mov__no">V</span><h2 class="mov__title">A gift you can <span class="it">keep.</span></h2></div>
           <p>
-            A good consumer experience makes the machinery disappear. Tap a sign. See it in a wallet. Send it to a friend. Open another app and find the same digital asset waiting there.
+            Imagine sending a friend Leo for her birthday, with a note only she would understand. She holds it in her own wallet. If she changes to another compatible wallet app, she still has the same Leo. The gift does not belong to the app that displayed it.
           </p>
           <p>
-            The native assets live on Solana, where ordinary transfers settle in seconds. Listed representations on Base extend the same records to another widely used blockchain environment. The registry connects each familiar name to its published addresses so wallets and apps can find the same twelve assets.
+            You can copy a lion picture as often as you like. Sending these units moves them out of your wallet and into hers. Copying the symbol cannot create more of the asset. <a href="/registry/leo/">Its published address</a> tells her exactly which Leo she received.
           </p>
-          <div class="rail-map" aria-label="The modern rails underneath Zodiacs" data-almanac-reveal>
-            <div class="rail-map__item" style="--tone:#B6D4E4"><span class="rail-map__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M24 14v10l7 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><strong>Seconds</strong><span>Ordinary native confirmation</span></div>
-            <div class="rail-map__item" style="--tone:#A9D4C4"><span class="rail-map__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M12 18h24v18H12zM17 13h14v5H17z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M18 27h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><strong>Low base fee</strong><span>Built for frequent digital actions</span></div>
-            <div class="rail-map__item" style="--tone:#B29DD0"><span class="rail-map__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 13h20v22H14zM9 19h5m20 0h5M9 29h5m20 0h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="24" cy="24" r="5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></span><strong>Open programs</strong><span>Apps can read the public registry</span></div>
-          </div>
+
           <p>
-            A wallet holds the asset. A public explorer shows the transaction. An app can read the open registry instead of asking a private database which sign is yours. That leaves room for readings that recognize a sign, birthday gifts between friends, profile displays, and creator releases built around a shared symbol.
+            The issuer gave up the native assets’ minting and freezing permissions. No project treasury is reported. Pool shares were burned, with the recorded amounts printed below. Holders can still sell; these rules do not protect the price.
           </p>
+          <figure class="zfig thesis-plate" id="fig-authorities">
+            <figcaption class="zfig-head">The issuer gave up the power to print or freeze.</figcaption>
+            <div class="fact-grid authority-summary"><div class="fact-card"><span class="fact-card__label">Mint more</span><strong><s>Issuer permission</s></strong><p>Removed on all twelve.</p></div><div class="fact-card"><span class="fact-card__label">Freeze your tokens</span><strong><s>Issuer permission</s></strong><p>Removed on all twelve.</p></div><div class="fact-card"><span class="fact-card__label">Project treasury</span><strong>None reported</strong><p>Operator statement; not an audit of insider holdings.</p></div><div class="fact-card"><span class="fact-card__label">Withdraw pool funds</span><strong>Pool shares burned</strong><p>The recorded amounts are below. A partial burn stays partial.</p></div></div><div class="fact-grid burn-grid"><svg viewBox="0 0 320 260" role="img" aria-labelledby="burn-title-0"><title id="burn-title-0">Recorded Raydium pool-share burns: Aries, Taurus, Gemini, Cancer, Leo, Virgo. Snapshot 14 July 2026.</title><text x="0" y="23" class="plate-name">Aries</text><text x="320" y="23" text-anchor="end" class="plate-value">99.99%</text><path d="M0 36H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 36H319.97" stroke="#DE8E79" stroke-width="3"/><text x="0" y="65" class="plate-name">Taurus</text><text x="320" y="65" text-anchor="end" class="plate-value">99.51%</text><path d="M0 78H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 78H318.43" stroke="#B9D4BE" stroke-width="3"/><text x="0" y="107" class="plate-name">Gemini</text><text x="320" y="107" text-anchor="end" class="plate-value">99.98%</text><path d="M0 120H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 120H319.94" stroke="#B29DD0" stroke-width="3"/><text x="0" y="149" class="plate-name">Cancer</text><text x="320" y="149" text-anchor="end" class="plate-value">95.94%</text><path d="M0 162H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 162H307.01" stroke="#B6D4E4" stroke-width="3"/><text x="0" y="191" class="plate-name">Leo</text><text x="320" y="191" text-anchor="end" class="plate-value">92.04%</text><path d="M0 204H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 204H294.53" stroke="#E0A9B4" stroke-width="3"/><text x="0" y="233" class="plate-name">Virgo</text><text x="320" y="233" text-anchor="end" class="plate-value">% not stated</text><path d="M0 246H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 246H320" stroke="#B7D9B0" stroke-width="2" stroke-dasharray="2 6"/></svg><svg viewBox="0 0 320 260" role="img" aria-labelledby="burn-title-6"><title id="burn-title-6">Recorded Raydium pool-share burns: Libra, Scorpio, Sagittarius, Capricorn, Aquarius, Pisces. Snapshot 14 July 2026.</title><text x="0" y="23" class="plate-name">Libra</text><text x="320" y="23" text-anchor="end" class="plate-value">99.42%</text><path d="M0 36H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 36H318.14" stroke="#D3A9DE" stroke-width="3"/><text x="0" y="65" class="plate-name">Scorpio</text><text x="320" y="65" text-anchor="end" class="plate-value">% not stated</text><path d="M0 78H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 78H320" stroke="#B9DCE8" stroke-width="2" stroke-dasharray="2 6"/><text x="0" y="107" class="plate-name">Sagittarius</text><text x="320" y="107" text-anchor="end" class="plate-value">% not stated</text><path d="M0 120H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 120H320" stroke="#E0B080" stroke-width="2" stroke-dasharray="2 6"/><text x="0" y="149" class="plate-name">Capricorn</text><text x="320" y="149" text-anchor="end" class="plate-value">% not stated</text><path d="M0 162H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 162H320" stroke="#C0DEA8" stroke-width="2" stroke-dasharray="2 6"/><text x="0" y="191" class="plate-name">Aquarius</text><text x="320" y="191" text-anchor="end" class="plate-value">99.99%</text><path d="M0 204H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 204H319.97" stroke="#AE8FC9" stroke-width="3"/><text x="0" y="233" class="plate-name">Pisces</text><text x="320" y="233" text-anchor="end" class="plate-value">% not stated</text><path d="M0 246H320" stroke="var(--hair-2)" stroke-width="3"/><path d="M0 246H320" stroke="#A9D4C4" stroke-width="2" stroke-dasharray="2 6"/></svg></div>
+            <p class="zfig-cap">Native Solana assets: no minting or freezing permission remains. Burned pool shares cannot be redeemed; burns are not uniformly complete. Dotted rows report a burn without a percentage.</p>
+            <p class="zfig-src"><a href="/thesis/thesis-disclosure.json">Committed disclosure</a> · authorities: 23 Jul 2026 · pool shares and treasury: 14 Jul 2026 · <a href="#the-instrument">every sign’s receipt</a></p>
+          </figure>
           <aside class="proof-loop" data-real-use-proof aria-labelledby="proof-loop-title" data-almanac-reveal>
             <div class="proof-loop__intro">
               <span class="proof-loop__eyebrow">A public cross-check today</span>
@@ -2231,16 +2255,26 @@
         </section>
 
         <section class="mov reveal" id="the-public-record">
-          <div class="mov__head"><span class="mov__no">VI</span><h2 class="mov__title">Something you can <span class="it">carry.</span></h2></div>
+          <div class="mov__head"><span class="mov__no">VI</span><h2 class="mov__title">Two years in <span class="it">the open.</span></h2></div>
           <p>
-            A digital asset should carry its public history with it. The twelve were created on 5 July 2024, followed by public trading, a registry, dated disclosures, and an open SDK. Each step left a receipt that people and builders can inspect.
+            The twelve were created on <a href="/disclosure/#origin">5 July 2024</a>. Public trading was <a href="/thesis/thesis-history.json">documented the next day</a>. The record soon became less flattering: concentration was challenged, and the archive later recorded “dead bag” criticism.
           </p>
-          <ol class="scrapbook scrapbook--compact" aria-label="Four public milestones for the twelve digital assets" data-almanac-reveal>
-            <li class="scrapbook__entry" style="--tone:#DE8E79"><span class="scrapbook__dot">05·07</span><div class="scrapbook__paper"><span class="scrapbook__stamp" aria-hidden="true">✦</span><strong>Twelve digital assets created.</strong><span>One for every sign, with the <a href="https://zodiacs.org/disclosure/#origin" rel="noopener noreferrer">creation receipt</a> preserved.</span></div></li>
-            <li class="scrapbook__entry" style="--tone:#B9D4BE"><span class="scrapbook__dot">06·07</span><div class="scrapbook__paper"><span class="scrapbook__stamp" aria-hidden="true">↗</span><strong>Public trading begins.</strong><span>The first documented wallet-to-wallet market opens.</span></div></li>
-            <li class="scrapbook__entry" style="--tone:#D3A9DE"><span class="scrapbook__dot">REG</span><div class="scrapbook__paper"><span class="scrapbook__stamp" aria-hidden="true">◎</span><strong>One registry connects them.</strong><span>Each sign maps to its listed Solana and Base addresses.</span></div></li>
-            <li class="scrapbook__entry" style="--tone:#A9D4C4"><span class="scrapbook__dot">NOW</span><div class="scrapbook__paper"><span class="scrapbook__stamp" aria-hidden="true">✓</span><strong>Open to inspect and build on.</strong><span>The registry, disclosures, receipts, and <a href="https://zodiacs.org/sdk/" rel="noopener noreferrer">software kit</a> stay public.</span></div></li>
-          </ol>
+          <p>
+            On <a href="https://x.com/stoolpresidente/status/1891528769770279114" rel="noopener noreferrer">17 February 2025</a>, Dave Portnoy bought this Libra while trying to buy an unrelated token with the same name. He told his followers exactly what had happened:
+          </p>
+          <blockquote class="quote">
+            <p>I bought it by accident. It will be volatile. It will eventually go to zero.</p>
+            <cite><a href="https://x.com/stoolpresidente/status/1891528769770279114" rel="noopener noreferrer">Dave Portnoy · @stoolpresidente · 17 Feb 2025</a> · the address he posted matches the registry, character for character</cite>
+          </blockquote>
+          <p>
+            Anyone can launch another Leo tomorrow. They cannot give it this Leo’s creation date or the transactions that followed. A familiar name can be copied. A public past has to be lived. That history gives these particular twelve a claim. It does not guarantee acceptance.
+          </p>
+          <figure class="zfig thesis-plate" id="fig-provenance">
+            <figcaption class="zfig-head">The public past includes the awkward parts.</figcaption>
+            <div class="fact-grid provenance-grid"><a href="https://zodiacs.org/disclosure/#origin" rel="noopener noreferrer" aria-label="2024-07-05: The twelve are created."><svg viewBox="0 0 310 135" role="img" aria-labelledby="event-origin"><title id="event-origin">2024-07-05: The twelve are created.</title><path d="M1 8V125" stroke="#DE8E79" stroke-width="2"/><text x="18" y="25" class="plate-date">2024-07-05</text><text x="18" y="64" class="plate-event">The twelve</text><text x="18" y="91" class="plate-event">are created.</text><text x="18" y="122" class="plate-axis">Open the receipt ↗</text></svg></a><a href="https://x.com/wantonwallet/status/1812520143638962302" rel="noopener noreferrer" aria-label="2024-07-14: Concentration is challenged."><svg viewBox="0 0 310 135" role="img" aria-labelledby="event-concentration-criticism"><title id="event-concentration-criticism">2024-07-14: Concentration is challenged.</title><path d="M1 8V125" stroke="#B6D4E4" stroke-width="2"/><text x="18" y="25" class="plate-date">2024-07-14</text><text x="18" y="64" class="plate-event">Concentration</text><text x="18" y="91" class="plate-event">is challenged.</text><text x="18" y="122" class="plate-axis">Open the receipt ↗</text></svg></a><a href="https://x.com/stoolpresidente/status/1891528769770279114" rel="noopener noreferrer" aria-label="2025-02-17: Portnoy buys Libra by mistake."><svg viewBox="0 0 310 135" role="img" aria-labelledby="event-accidental-purchase"><title id="event-accidental-purchase">2025-02-17: Portnoy buys Libra by mistake.</title><path d="M1 8V125" stroke="#D3A9DE" stroke-width="2"/><text x="18" y="25" class="plate-date">2025-02-17</text><text x="18" y="64" class="plate-event">Portnoy buys Libra</text><text x="18" y="91" class="plate-event">by mistake.</text><text x="18" y="122" class="plate-axis">Open the receipt ↗</text></svg></a><a href="/thesis/thesis-history.json" rel="noopener noreferrer" aria-label="2025-05-20: “Dead bag” criticism enters the archive.; archive entry, search-only receipt"><svg viewBox="0 0 310 135" role="img" aria-labelledby="event-quiet-dismissals"><title id="event-quiet-dismissals">2025-05-20: “Dead bag” criticism enters the archive.</title><path d="M1 8V125" stroke="#C0DEA8" stroke-width="2"/><text x="18" y="25" class="plate-date">2025-05-20</text><text x="18" y="64" class="plate-event">“Dead bag” criticism</text><text x="18" y="91" class="plate-event">enters the archive.</text><text x="18" y="122" class="plate-axis">Archive · search-only receipt ↗</text></svg></a></div>
+            <p class="zfig-cap">Creation, criticism and an accidental purchase belong in the same history. The “dead bag” entry has a search link rather than an individual post receipt.</p>
+            <p class="zfig-src"><a href="/thesis/thesis-history.json">Public-history register</a> · reviewed 31 Jul 2026. Events are spaced equally, not to a time scale.</p>
+          </figure>
           <figure class="zfig" id="fig-4">
             <figcaption class="zfig-head"><span class="zfig-chip">F4</span> The public record.</figcaption>
             <details class="evidence-drawer">
@@ -2255,7 +2289,7 @@
           <aside class="earned-note" data-earned-note data-honest-limitation>
             <span class="earned-note__eyebrow">What remains unproven</span>
             <strong>The assets are listed and transferable. Their broader standing still has to be earned.</strong>
-            <p>Independent adoption has not yet arrived. That standing will exist only if people and builders choose these assets when they could choose anything else.</p>
+            <p><a href="/thesis/thesis-candidacy.json">All twelve tracked pools were live on 23 July 2026.</a> Independent adoption had not arrived. The scoreboard prints both.</p>
             <a href="#the-candidacy">See the candidacy evidence</a>
           </aside>
         </section>
@@ -2263,20 +2297,17 @@
         <section class="mov reveal" id="the-conclusion">
           <div class="mov__head"><span class="mov__no">VII</span><h2 class="mov__title">The next medium is <span class="it">ownership.</span></h2></div>
           <p>
-            Zodiacs begins with a known identity, recurring rituals, a familiar vocabulary, and daily attention. The public assets add a way to hold and transfer that identity across compatible apps.
+            A gold ring can pass from your grandmother to you without anyone promising a dividend. Gold became a store of value because people kept valuing it and its supply was hard to expand. <a href="https://www.gold.org/history-gold" rel="noopener noreferrer">Its long monetary history</a> came before Bitcoin made <a href="https://bitcoin.org/bitcoin.pdf" rel="noopener noreferrer">scarce digital ownership transferable without a central issuer</a>. Neither metal nor code makes value automatic. Other people must keep accepting it.
           </p>
           <p>
-            The case will be decided by retention, independent integrations, and broader ownership. The preregistered test below measures those outcomes and publishes the result either way.
+            For the twelve to follow that path, people would have to choose these assets, keep them through quiet seasons, and be able to exchange them when needed. Ownership would need to spread beyond the same few wallets. The <a href="#the-candidacy">candidacy scoreboard</a> and <a href="#the-test">preregistered test</a> measure early steps toward that possibility. A fixed supply makes the claim possible; lasting acceptance would make it real. The zodiac has survived. These coins still have to earn that trust.
           </p>
           <p>
-            Attention is the internet’s first currency. The zodiac receives it every day through birthdays, sign seasons, readings, profiles, and conversation. The assets still have to convert that attention into durable use.
-          </p>
-          <p>
-            The twelve signs already give people a shared way to describe themselves and one another. The assets earn a durable digital role when ordinary people choose the public record and carry their signs beyond the platform where they found them.
+            The twelve have been passed from hand to hand for two and a half thousand years. For the first time, one of them can be yours in a way you can prove, give, and carry anywhere. You already know which one it is.
           </p>
         </section>
 
-        <details class="evidence-vault">
+<details class="evidence-vault">
           <summary><span>Evidence &amp; disclosures</span><small>Definitions, tests, risks, and complete receipts</small></summary>
           <div class="evidence-vault__body">
 
