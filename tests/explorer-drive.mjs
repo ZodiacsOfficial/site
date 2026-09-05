@@ -19,6 +19,7 @@ import { setTimeout as wait } from 'node:timers/promises';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { PNG } from 'pngjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
+import { runSearchLearningChecks } from './search-learning-checks.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? await findChromium();
@@ -49,6 +50,8 @@ try {
     executablePath: CHROMIUM,
     args: STABLE_CHROMIUM_ARGS,
   });
+
+  await runSearchLearningChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];

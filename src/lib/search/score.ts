@@ -28,6 +28,18 @@ const KIND_BOOST: Record<string, number> = {
 const wordBoundary = (haystack: string, needle: string) =>
   new RegExp(`(?:^|[^a-z0-9])${needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`).test(haystack);
 
+// Curated singulars cover the demonstrated search variants without stemming
+// proper names such as Pisces or Uranus. Both search interfaces use this path.
+const QUERY_SINGULARS = new Map([
+  ['charts', 'chart'],
+  ['trines', 'trine'],
+  ['eclipses', 'eclipse'],
+]);
+
+export function normalizeSearchQuery(query: string): string {
+  return query.trim().toLowerCase().replace(/\S+/g, (token) => QUERY_SINGULARS.get(token) ?? token);
+}
+
 /**
  * Score one entry against pre-lowercased query tokens. 0 = not a match.
  * Every token must hit the title or the description; titles dominate.
@@ -56,7 +68,7 @@ export function scoreEntry(entry: SearchEntry, tokens: string[]): number {
 
 /** Rank the index for a query; empty below two characters. */
 export function searchIndex(entries: SearchEntry[], query: string, limit = 10): SearchEntry[] {
-  const trimmed = query.trim().toLowerCase();
+  const trimmed = normalizeSearchQuery(query);
   if (trimmed.length < 2) return [];
   const tokens = trimmed.split(/\s+/).filter(Boolean);
   if (!tokens.length) return [];
