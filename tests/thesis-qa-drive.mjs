@@ -101,10 +101,17 @@ const waitForGalleryReady = async (page, timeout = 20_000) => {
   const gallery = page.locator(GALLERY_SELECTOR);
   if (await gallery.count() !== 1) return false;
   await gallery.scrollIntoViewIfNeeded();
-  return page.locator(`${GALLERY_SELECTOR}.is-ready`)
+  const ready = await page.locator(`${GALLERY_SELECTOR}.is-ready`)
     .waitFor({ state: 'attached', timeout })
     .then(() => true)
     .catch(() => false);
+  if (ready) {
+    // Revealing a content-visibility section can move its gallery after the
+    // initial scroll. Measure the ready stage in view, after layout settles.
+    await gallery.scrollIntoViewIfNeeded();
+    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  }
+  return ready;
 };
 
 const VISUAL_MODULES = [
@@ -1093,7 +1100,7 @@ try {
 let failed = 0;
 for (const r of results) {
   if (!r.ok) failed += 1;
-  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.detail.slice(0, 80)}` : ''}`);
+  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.ok ? r.detail.slice(0, 80) : r.detail}` : ''}`);
 }
 console.log(failed ? `\n${results.length - failed} PASSED · ${failed} FAILED` : `\nALL PASS · ${results.length} checks`);
 process.exit(failed ? 1 : 0);

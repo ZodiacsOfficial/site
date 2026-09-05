@@ -127,7 +127,7 @@ export async function attentionFigureSvg() {
     for (let m = 0; m < 12; m++) {
       const d = new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth() + m + (first.getUTCDate() > 1 ? 1 : 0), 1));
       if (d.getTime() < t0 || d.getTime() > t1 || (small && m % 3 !== 0 && m !== 11)) continue;
-      const year = d.getUTCMonth() === 0 || m === 0 || (small && m === 6);
+      const year = !small && (d.getUTCMonth() === 0 || m === 0);
       const tickLabel = d.toLocaleString('en', { month: 'short', timeZone: 'UTC' }) + (year ? ` '${String(d.getUTCFullYear()).slice(2)}` : '');
       const anchor = small ? (m === 0 ? 'start' : m === 11 ? 'end' : 'middle') : 'start';
       const x = dX(d.getTime());
