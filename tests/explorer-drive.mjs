@@ -16,6 +16,7 @@
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
+import { PNG } from 'pngjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
@@ -33,9 +34,13 @@ const kahloNoTime = encodeChart({
 const preview = spawn('npx', ['astro', 'preview', '--port', '4399', '--host', '127.0.0.1'], { stdio: 'ignore', detached: false });
 await wait(2500);
 const results = [];
-const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
+const check = (name, ok, detail = '') => {
+  results.push({ name, ok, detail });
+  // Preserve completed checks even if a later browser action times out.
+  console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? `  · ${detail}` : ''}`);
+};
 const shot = async (target, path, opts = {}) => {
-  if (OUT) await target.screenshot({ path: `${OUT}/${path}`, ...opts }).catch(() => {});
+  if (OUT) return await target.screenshot({ path: `${OUT}/${path}`, ...opts });
 };
 
 try {
@@ -128,16 +133,35 @@ try {
         return {
           receiver: document.documentElement.hasAttribute('data-chart-share-receiver'),
           wingLinks: document.querySelectorAll('a[href="/astrofolio/"],a[href^="/registry/"],a[href^="/sdk/"]').length,
-          left: box?.left, right: box?.right, width: box?.width,
+          left: box?.left, right: box?.right, top: box?.top, bottom: box?.bottom, width: box?.width,
+          visible: Boolean(nav && [nav, nav.closest('.nav-wrap')].every((element) => {
+            if (!element) return false;
+            const style = getComputedStyle(element);
+            return style.display !== 'none' && style.visibility === 'visible' && Number(style.opacity) === 1;
+          })),
           children, controls,
           endGap: box ? box.right - Math.max(...children.map((child) => child.right)) : null,
         };
       });
       const early = await receiverGeometry();
       await navPage.locator('.calc__result').waitFor({ state: 'visible', timeout: 15000 });
+      // Result visibility precedes the calculator's scheduled smooth scroll.
+      // Wait for its real destination and a stable pair of animation frames,
+      // without changing product scrolling or accepting a pre-scroll pause.
+      await navPage.waitForFunction(async () => {
+        const before = scrollY;
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const result = document.querySelector('.calc__result');
+        if (!result) return false;
+        const margin = Number.parseFloat(getComputedStyle(result).scrollMarginTop) || 0;
+        const target = Math.min(Math.max(0, scrollY + result.getBoundingClientRect().top - margin),
+          Math.max(0, document.documentElement.scrollHeight - innerHeight));
+        return Math.abs(scrollY - target) <= 1 && Math.abs(scrollY - before) <= 0.1;
+      });
       const settled = await receiverGeometry();
       const expectedWidth = desktop ? desktopWidth : width <= 360 ? compactWidth : mobileWidth;
       const pass = [early, settled].every((state) => state.receiver
+        && state.visible
         && state.wingLinks === 0
         && Math.abs(state.width - expectedWidth) <= 0.1
         && state.left >= 16 && state.right <= width - 16
@@ -150,7 +174,22 @@ try {
         && Math.abs(early.width - settled.width) <= 0.1;
       receiverPass &&= pass;
       receiverDetails.push(`${prefix || '/en'}@${width}:${pass ? 'ok' : JSON.stringify({ early, settled })}`);
-      await shot(navPage.locator('[data-nav]'), `receiver-nav-${prefix.slice(1) || 'en'}-${width}.png`);
+      // A fixed element's locator capture can sample stale document coordinates
+      // during scrolling. Keep its actual viewport context, including 390/1440.
+      const capture = await shot(navPage, `receiver-nav-${prefix.slice(1) || 'en'}-${width}.png`);
+      if (capture) {
+        const png = PNG.sync.read(capture);
+        let foregroundPixels = 0;
+        for (let y = Math.ceil(settled.top); y < Math.floor(settled.bottom); y += 1) {
+          for (let x = Math.ceil(settled.left); x < Math.floor(settled.right); x += 1) {
+            const offset = (y * png.width + x) * 4;
+            if (Math.max(...png.data.subarray(offset, offset + 3)) > 100) foregroundPixels += 1;
+          }
+        }
+        check(`navigation: ${prefix || '/en'}@${width} receiver viewport captures visible foreground`,
+          png.width === width && png.height === 844 && foregroundPixels >= 30,
+          `${png.width}×${png.height}; ${foregroundPixels} foreground pixels in the nav`);
+      }
       await navPage.close();
     }
   }
@@ -394,6 +433,10 @@ try {
     const wheel = document.querySelector('.xplr__wheelbox');
     return wheel?.getAttribute('data-spotlight-id') === 'body:Sun'
       && Number(wheel?.getAttribute('data-spotlight-run')) > previous
+      // A new halo/run is exposed while primed, before its deferred focus.
+      // Finish that replay before starting a distinct keyboard interaction.
+      && wheel?.getAttribute('data-spotlight-phase') === 'settled'
+      && document.activeElement === wheel
       && document.querySelectorAll('[data-spotlight-target="body:Sun"]').length === 1;
   }, firstSunRun);
   check('visual story: re-clicking the same target replays one spotlight', true);
@@ -899,10 +942,6 @@ try {
   preview.kill();
 }
 
-let failed = 0;
-for (const r of results) {
-  if (!r.ok) failed += 1;
-  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.detail.slice(0, 90)}` : ''}`);
-}
+const failed = results.filter((result) => !result.ok).length;
 console.log(failed ? `\n${failed} FAILURES` : '\nALL PASS');
 process.exit(failed ? 1 : 0);
