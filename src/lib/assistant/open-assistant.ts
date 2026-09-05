@@ -6,7 +6,8 @@
 import './assistant.css';
 import { houseOf, wholeSignCusps } from '../engine/houses';
 import { normalizeLocale as normalizeSiteLocale, type ReleasedLocale as Locale } from '../i18n/core';
-import { PROFILE_KEY } from '../profile/schema';
+import { PROFILE_KEY, type SavedChart } from '../profile/schema';
+import { repairLegacyPolarChart } from '../profile/polar-repair';
 import { profileAccessAllowed } from '../account-v2/profile-access-reader';
 import {
   ACCOUNT_V2_LOCAL_OWNER_KEY,
@@ -664,7 +665,9 @@ function finiteLongitude(value: unknown): value is number {
 
 function parseStoredChart(value: unknown): StoredChart | null {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
-  const candidate = value as Record<string, unknown>;
+  // Match the profile reader's guarded local repair before projecting the
+  // placement-only context. Account selection and attestation stay unchanged.
+  const candidate = repairLegacyPolarChart(value as SavedChart) as unknown as Record<string, unknown>;
   const rawBirth = candidate.birth;
   const rawSummary = candidate.summary;
   if (!rawBirth || typeof rawBirth !== 'object' || Array.isArray(rawBirth)) return null;

@@ -222,28 +222,26 @@ export function comparisonResultSource(
 /** Short handle for sentences: chart names like "Cancer Sun · 1990-02-01" trim to "Cancer Sun". */
 const handleOf = (name: string) => name.split('·')[0].trim() || name;
 
-async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promise<Person> {
+export async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promise<Person> {
   const resolved = await resolveSavedChart(chart, loadEngine);
-  // Retrograde marks come from the stored summary (best effort — a stale
-  // summary's flags may lag a recompute by a hair; cosmetic only).
-  const retro = new Map(chart.summary.bodies.map((b) => [b.body, b.retrograde]));
+  const { summary } = resolved;
   return {
     label: handleOf(chart.name),
     bodies: resolved.bodies,
     asc: resolved.asc,
     timeKnown: resolved.timeKnown,
     wheel: {
-      bodies: resolved.bodies.map(({ body, lon }) => ({ body, lon, retrograde: retro.get(body) })),
-      mc: chart.summary.angles?.mc ?? null,
+      bodies: summary.bodies,
+      mc: summary.angles?.mc ?? null,
       cusps: null,
     },
     // Stored summaries are longitude-only on purpose; the sphere says so.
     depth: null,
     positions: {
       bodies: resolved.bodies as PositionsShareInput['bodies'],
-      angles: chart.summary.angles,
-      houseSystem: chart.summary.houseSystem,
-      engineVersion: chart.summary.engineVersion,
+      angles: summary.angles,
+      houseSystem: summary.houseSystem,
+      engineVersion: summary.engineVersion,
     },
   };
 }
