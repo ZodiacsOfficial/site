@@ -3,6 +3,7 @@ import { chromium } from 'playwright-core';
 import { RU_OG_ROUTE_CARDS } from '../src/strings/seo.ru.mjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
+import { russianDeferredStyleURLs, russianDeferredStylesReady } from './i18n-r2-deferred-styles.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const failures = [];
@@ -237,7 +238,7 @@ await withPreview({ port: 4418 }, async (baseURL) => {
         }
       }).observe({ type: 'layout-shift', buffered: true });
     });
-    await firstPaint.goto(`${baseURL}/ru/birth-chart/`, { waitUntil: 'domcontentloaded' });
+    const firstPaintResponse = await firstPaint.goto(`${baseURL}/ru/birth-chart/`, { waitUntil: 'domcontentloaded' });
     const initialGeometry = await firstPaint.evaluate(() => {
       const rect = (selector) => {
         const bounds = document.querySelector(selector)?.getBoundingClientRect();
@@ -245,17 +246,18 @@ await withPreview({ port: 4418 }, async (baseURL) => {
           .map((value) => Math.round(value * 100) / 100);
       };
       return {
-        toolStyles: Array.from(document.styleSheets)
-          .filter((sheet) => /\/(?:calculator|explorer|ChartCalculator)\..*\.css$/u.test(sheet.href ?? '')).length,
+        stylesheetURLs: Array.from(document.styleSheets, (sheet) => sheet.href),
         core: rect('.calc__core'),
         fields: rect('.calc__fields'),
         date: rect('#birth-date'),
         submit: rect('.calc__submit'),
       };
     });
-    check(initialGeometry.toolStyles === 0, `Russian calculator loaded ${initialGeometry.toolStyles} deferred styles before first paint`);
-    await firstPaint.waitForFunction(() => Array.from(document.styleSheets)
-      .filter((sheet) => /\/(?:calculator|explorer|ChartCalculator)\..*\.css$/u.test(sheet.href ?? '')).length === 3);
+    // Use the served response, since the loader removes templates after activation.
+    const deferredStyleURLs = russianDeferredStyleURLs(await firstPaintResponse.text(), baseURL);
+    const initialToolStyles = initialGeometry.stylesheetURLs.filter((url) => deferredStyleURLs.includes(url));
+    check(initialToolStyles.length === 0, `Russian calculator loaded ${initialToolStyles.length} deferred styles before first paint`);
+    await firstPaint.waitForFunction(russianDeferredStylesReady, deferredStyleURLs);
     await firstPaint.evaluate(() => new Promise((resolve) => {
       requestAnimationFrame(() => requestAnimationFrame(resolve));
     }));
@@ -285,7 +287,7 @@ await withPreview({ port: 4418 }, async (baseURL) => {
     const criticalInteractionContext = await browser.newContext({ viewport: { width: 360, height: 800 } });
     const criticalInteraction = await criticalInteractionContext.newPage();
     await criticalInteraction.route(
-      /\/_astro\/(?:calculator|explorer|ChartCalculator)\..*\.css$/u,
+      (url) => deferredStyleURLs.includes(url.href),
       async (route) => {
         await new Promise((resolve) => setTimeout(resolve, 3_000));
         await route.continue();
@@ -306,14 +308,14 @@ await withPreview({ port: 4418 }, async (baseURL) => {
     await criticalInteraction.locator('#place').fill('New York');
     const criticalPlaceList = criticalInteraction.locator('#place-list');
     await criticalPlaceList.waitFor({ timeout: 10_000 });
-    const criticalPlaceState = await criticalPlaceList.evaluate((list) => ({
+    const criticalPlaceState = await criticalPlaceList.evaluate((list, expectedURLs) => ({
       position: getComputedStyle(list).position,
       listStyle: getComputedStyle(list).listStyleType,
       padding: getComputedStyle(list).padding,
       background: getComputedStyle(list).backgroundColor,
       toolStyles: Array.from(document.styleSheets)
-        .filter((sheet) => /\/(?:calculator|explorer|ChartCalculator)\..*\.css$/u.test(sheet.href ?? '')).length,
-    }));
+        .filter((sheet) => expectedURLs.includes(sheet.href)).length,
+    }), deferredStyleURLs);
     check(criticalPlaceState.toolStyles === 0, 'Russian PlaceSearch test did not hold the deferred styles in flight');
     check(criticalPlaceState.position === 'absolute', `Russian PlaceSearch position=${criticalPlaceState.position} before deferred CSS`);
     check(criticalPlaceState.listStyle === 'none', `Russian PlaceSearch list-style=${criticalPlaceState.listStyle} before deferred CSS`);

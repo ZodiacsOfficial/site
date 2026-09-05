@@ -24,6 +24,20 @@ const PROFILE = JSON.stringify({
   }],
 });
 
+export function savedChartContinuationFailures(state, prefix) {
+  const saved = JSON.parse(PROFILE).charts[0];
+  return [
+    state.pathname === `${prefix}/birth-chart/` || 'wrong chart route',
+    state.hash === '' || 'private chart handoff was not consumed',
+    state.date === saved.birth.date && state.time === saved.birth.time || 'saved birth inputs were not restored',
+    state.subjectMode === 'other' && state.subjectNotices.length === 1
+      && state.subjectNotices[0].includes(saved.name) || 'named other-person result is missing',
+    JSON.stringify(state.computedEvents) === JSON.stringify([{ mode: 'full', sunSign: 'cancer' }])
+      || 'fresh full-chart computation did not finish with the expected Sun sign',
+    state.profile === PROFILE || 'saved private profile was changed',
+  ].filter((failure) => failure !== true);
+}
+
 async function ready(page) {
   await page.locator('.learning-path__bar[role="progressbar"]').waitFor({ state: 'visible' });
 }
@@ -189,13 +203,29 @@ export async function runSearchLearningChecks({ browser, baseURL, check, outDir 
       await page.goto(`${baseURL}${prefix}/profile/`, { waitUntil: 'domcontentloaded' });
       const savedLink = page.locator(`.pf-chart__actions a[href="${prefix}/birth-chart/#profileChartId=${PROFILE_ID}"]`);
       await savedLink.waitFor({ state: 'visible' });
+      // Install before navigating: only a fresh runChart calculation emits
+      // this event. A cached summary or positions-only view cannot supply it.
+      await page.addInitScript(() => {
+        window.__searchLearningComputed = [];
+        window.addEventListener('zodiacs:chart-computed', (event) => {
+          window.__searchLearningComputed.push({ mode: event.detail?.mode, sunSign: event.detail?.sunSign });
+        });
+      });
       await savedLink.click();
       await page.locator('.calc__result').waitFor({ state: 'visible', timeout: 30000 });
+      const continuation = await page.evaluate((key) => ({
+        pathname: location.pathname,
+        hash: location.hash,
+        date: document.querySelector('#birth-date')?.value,
+        time: document.querySelector('#birth-time')?.value,
+        subjectMode: document.querySelector('.calc')?.getAttribute('data-subject-mode'),
+        subjectNotices: Array.from(document.querySelectorAll('.calc__result [data-chart-subject]'), (node) => node.textContent ?? ''),
+        computedEvents: window.__searchLearningComputed,
+        profile: localStorage.getItem(key),
+      }), PROFILE_KEY);
+      const continuationFailures = savedChartContinuationFailures(continuation, prefix);
       check(`learning ${width}: ${prefix || '/en'} saved-chart continuation still computes from private local input`,
-        new URL(page.url()).pathname === `${prefix}/birth-chart/`
-        && await page.locator('#birth-date').inputValue() === '1907-07-06'
-        && await page.locator('[data-chart-person]').count() === 1
-        && await page.evaluate((key) => localStorage.getItem(key), PROFILE_KEY) === PROFILE);
+        continuationFailures.length === 0, continuationFailures.join(' | '));
     } finally {
       await context.close();
     }

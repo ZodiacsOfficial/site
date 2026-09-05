@@ -203,7 +203,16 @@ const jsonLd = [
   .bigthree__item a { color: var(--text); }
 
   .learning-path { --path-accent: var(--sign-cancer); }
-  .learning-path__core { padding: clamp(22px, 4vw, 36px); }
+  .learning-path__core {
+    padding: clamp(22px, 4vw, 36px);
+    /* Keep real lesson controls beside the fixed Guide, at every scroll
+       position. The centered page gutter supplies this room on wide screens. */
+    padding-right: max(clamp(22px, 4vw, 36px), calc(50% - 50vw + 136px + env(safe-area-inset-right)));
+  }
+  @media (max-width: 560px) {
+    /* Guide is a 48px circle here, so the reading column can stay wider. */
+    .learning-path__core { padding-right: max(clamp(22px, 4vw, 36px), calc(50% - 50vw + 72px + env(safe-area-inset-right))); }
+  }
   .learning-path__head {
     display: grid;
     gap: 20px;

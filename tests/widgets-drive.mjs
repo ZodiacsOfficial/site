@@ -47,9 +47,14 @@ export async function verifyWidgetBuilder({ browser, baseURL, check, outDir = nu
       await page.setViewportSize({ width, height: 900 });
       await page.goto(`${baseURL}/widgets/`, { waitUntil: 'networkidle' });
       const builder = page.locator('[data-widget-generator]');
+      // Match each select's actual accessible name; wrapped label text also
+      // contains option text, which is not the combobox's accessible name.
+      const setting = (name) => ['Widget', 'Embed mode', 'Theme'].includes(name)
+        ? builder.getByRole('combobox', { name, exact: true })
+        : builder.getByLabel(name, { exact: true });
       const labels = ['Widget', 'Embed mode', 'Theme', 'Accent', 'Embed code'];
       for (const label of labels) {
-        const control = builder.getByLabel(label, { exact: true });
+        const control = setting(label);
         const presentation = await control.evaluate((element) => {
           const rect = element.getBoundingClientRect();
           const style = getComputedStyle(element);
@@ -71,10 +76,10 @@ export async function verifyWidgetBuilder({ browser, baseURL, check, outDir = nu
 
       // Follow the real keyboard order through the four settings. Checking the
       // computed focus ring catches a missing stylesheet as well as lost labels.
-      await builder.getByLabel('Widget', { exact: true }).focus();
+      await setting('Widget').focus();
       for (const label of ['Embed mode', 'Theme', 'Accent']) {
         await page.keyboard.press('Tab');
-        const focused = await builder.getByLabel(label, { exact: true }).evaluate((element) => {
+        const focused = await setting(label).evaluate((element) => {
           const style = getComputedStyle(element);
           return element === document.activeElement && element.matches(':focus-visible')
             && style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2;
@@ -84,19 +89,19 @@ export async function verifyWidgetBuilder({ browser, baseURL, check, outDir = nu
       check?.(`widgets ${width}: labeled controls fit, meet 44px height, and retain visible keyboard focus`, true);
       await capture(width, 'controls');
 
-      await builder.getByLabel('Widget', { exact: true }).selectOption('sky');
-      await builder.getByLabel('Theme', { exact: true }).selectOption('light');
+      await setting('Widget').selectOption('sky');
+      await setting('Theme').selectOption('light');
       const code = builder.getByLabel('Embed code', { exact: true });
       const frame = builder.locator('[data-widget-preview]');
       if (!(await code.inputValue()).includes('/embed/sky/?theme=light')
         || !(await frame.getAttribute('src')).includes('/embed/sky/?theme=light')) {
         throw new Error('Builder settings did not update the iframe snippet and preview together');
       }
-      await builder.getByLabel('Embed mode', { exact: true }).selectOption('script');
+      await setting('Embed mode').selectOption('script');
       if (!(await code.inputValue()).includes('data-zodiacs-widget="sky"')) {
         throw new Error('Script mode did not produce the selected widget');
       }
-      await builder.getByLabel('Widget', { exact: true }).selectOption('chart');
+      await setting('Widget').selectOption('chart');
       if (!(await code.inputValue()).includes('data-zodiacs-widget="chart"')
         || !(await frame.getAttribute('src')).includes('/embed/chart/?theme=light')) {
         throw new Error('Chart selection did not update the script snippet and preview together');
