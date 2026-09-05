@@ -89,6 +89,18 @@ jobs:
       - name: Typecheck
         run: npm run check
 
+      - name: Thesis reading and evidence at six viewport widths
+        run: OUT_DIR=tests/visual/artifacts/thesis npm run test:thesis:browser
+
+      - name: Upload thesis screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: thesis-browser-${{ github.run_id }}
+          path: tests/visual/artifacts/thesis/
+          if-no-files-found: ignore
+          retention-days: 30
+
       - name: Birth chart export and sharing acceptance
         env:
           T17_SHARE_EVIDENCE: "1"
@@ -105,18 +117,6 @@ jobs:
 
       - name: Link & artifact integrity over dist
         run: node scripts/check-dist.mjs
-
-      - name: Thesis reading and evidence at six viewport widths
-        run: OUT_DIR=tests/visual/artifacts/thesis npm run test:thesis:browser
-
-      - name: Upload thesis screenshots
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: thesis-browser-${{ github.run_id }}
-          path: tests/visual/artifacts/thesis/
-          if-no-files-found: ignore
-          retention-days: 30
 
       - name: I18n route-boundary regression
         run: npm run test:i18n:r0

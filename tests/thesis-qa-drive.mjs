@@ -67,7 +67,21 @@ const shot = async (page, sel, path) => {
     const target = page.locator(sel);
     await target.scrollIntoViewIfNeeded();
     await page.waitForTimeout(350);
-    await target.screenshot({ path: `${OUT}/${path}` }).catch(() => {});
+    const proof = target.locator('[data-real-use-proof]');
+    if (await proof.count() === 1) {
+      // A tall section capture can include a proof card the viewport has not
+      // reached. Trigger its real entrance before returning to the section.
+      check(`${path}: proof content is exposed before capture`, await isVisuallyExposed(proof));
+      await target.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(350);
+    }
+    await target.screenshot({
+      path: `${OUT}/${path}`,
+      // Isolated figure/section captures omit floating site controls. This
+      // style exists only during capture; viewport checks and hero shots keep
+      // the real navigation and Guide launcher visible.
+      style: '.wnav-wrap, [data-guide-launcher] { visibility: hidden !important; }',
+    }).catch(() => {});
   } else {
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await page.waitForTimeout(350);
@@ -100,18 +114,29 @@ const isVisuallyExposed = async (locator) => {
 const waitForGalleryReady = async (page, timeout = 20_000) => {
   const gallery = page.locator(GALLERY_SELECTOR);
   if (await gallery.count() !== 1) return false;
-  await gallery.scrollIntoViewIfNeeded();
-  const ready = await page.locator(`${GALLERY_SELECTOR}.is-ready`)
-    .waitFor({ state: 'attached', timeout })
-    .then(() => true)
-    .catch(() => false);
-  if (ready) {
-    // Revealing a content-visibility section can move its gallery after the
-    // initial scroll. Measure the ready stage in view, after layout settles.
-    await gallery.scrollIntoViewIfNeeded();
-    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  const deadline = Date.now() + timeout;
+  // Materialize the content-visibility section before aiming at its gallery.
+  await page.locator('#what-holding-means').scrollIntoViewIfNeeded({ timeout });
+  await wait(Math.min(200, Math.max(0, deadline - Date.now())));
+  let readyInView = false;
+  while (Date.now() < deadline) {
+    // Earlier sections can resize after a jump, moving the gallery back out
+    // of view before lazy initialization. Reposition while waiting, not only
+    // after .is-ready has appeared. Never manufacture the ready class.
+    await gallery.evaluate((node) => node.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' }));
+    await wait(Math.min(200, Math.max(0, deadline - Date.now())));
+    const state = await gallery.evaluate((node) => {
+      const rect = node.getBoundingClientRect();
+      return node.classList.contains('is-ready')
+        && rect.width > 0 && rect.height > 0
+        && rect.bottom > 0 && rect.top < window.innerHeight;
+    });
+    // Two consecutive samples ensure the caller measures a settled, visible
+    // ready stage rather than the frame before another layout shift.
+    if (state && readyInView) return true;
+    readyInView = state;
   }
-  return ready;
+  return false;
 };
 
 const VISUAL_MODULES = [
@@ -758,7 +783,7 @@ try {
       && annotatedLayout.galleryLeft >= -1
       && annotatedLayout.galleryRight <= annotatedLayout.viewportWidth + 1
       && annotatedLayout.galleryScrollWidth <= annotatedLayout.galleryClientWidth + 1,
-    JSON.stringify(annotatedLayout));
+    JSON.stringify({ ready: annotatedGalleryReady, ...annotatedLayout }));
   check('730px: gallery precedes the next movement without overlap',
     annotatedLayout.galleryBottom <= annotatedLayout.nextSectionTop + 1,
     JSON.stringify(annotatedLayout));
