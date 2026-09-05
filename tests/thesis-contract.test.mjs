@@ -187,7 +187,7 @@ describe('thesis publication metadata contract', () => {
 
     expect(dates).toEqual([
       { datetime: '2026-08-01', label: 'Published 1 Aug 2026' },
-      { datetime: '2026-09-04', label: 'Updated 4 Sep 2026' },
+      { datetime: '2026-09-05', label: 'Updated 5 Sep 2026' },
     ]);
     expect(textOf(hero)).toContain('Evidence checked 31 Jul 2026');
   });
@@ -204,7 +204,7 @@ describe('thesis publication metadata contract', () => {
       headline: 'Why Zodiacs Matter',
       url: 'https://zodiacs.org/thesis/',
       datePublished: '2026-08-01',
-      dateModified: '2026-09-04',
+      dateModified: '2026-09-05',
     });
   });
 });
@@ -301,6 +301,18 @@ describe('thesis feedback simplification contract', () => {
     expect(audienceEvidence).toMatch(/Live and committed data/i);
     expect(attention.indexOf(audienceEvidence)).toBeGreaterThan(attention.indexOf(fig2));
     expect(attention).not.toMatch(/\btruth-panel\b/i);
+  });
+
+  it('exposes the committed measured chart without scripts or opening a drawer', () => {
+    expect(fig2).not.toMatch(/<template\b|<details\b|\bhidden(?:\s|=|>)/i);
+    const charts = tagParts(fig2, 'svg').filter(({ attrs }) => /\bdata-attention-chart\b/.test(attrs));
+    expect(charts).toHaveLength(2);
+    expect(charts.map(({ attrs }) => attrs)).toEqual(expect.arrayContaining([
+      expect.stringContaining('attention-chart--wide'),
+      expect.stringContaining('attention-chart--small'),
+    ]));
+    expect(fig2).toContain('href="/thesis/thesis-attention.json"');
+    expect(textOf(fig2)).toContain('curiosity, not demand for the coins');
   });
 
   it('exposes dated adverse provenance before the complete history drawer', () => {
