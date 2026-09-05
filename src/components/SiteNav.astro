@@ -61,7 +61,7 @@ const visibleNavTools = locale === 'ru'
 const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && localizePath(locale, href) === href;
 ---
 <div class="nav-wrap">
-  <nav class="nav" aria-label={t(locale, 'navPrimary')} data-nav>
+  <nav class:list={['nav', { 'nav--localized': locale !== 'en', 'nav--without-search': locale === 'ru', 'nav--with-today': links.some((link) => link.href === '/today/') }]} aria-label={t(locale, 'navPrimary')} data-nav>
     <a class="nav__mark" href={localizePath(locale, '/')}>
       <span class="nav__name">Zodiacs<span class="nav__sep">·</span><span class="nav__dim">org</span></span>
     </a>
@@ -232,7 +232,14 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
   }
   .nav {
     pointer-events: auto;
-    display: inline-flex;
+    /* Reserve the pill and control tracks before streamed children or fonts
+       arrive. Text is never allowed to determine the centered shell width. */
+    display: grid;
+    grid-template-areas: 'mark search chip menu';
+    grid-template-columns: minmax(0, 1fr) 44px 116px 44px;
+    box-sizing: border-box;
+    width: 336px;
+    max-width: calc(100% - 32px);
     align-items: center;
     gap: 10px;
     height: 52px;
@@ -247,9 +254,27 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
       inset 0 1px 0 rgba(238, 241, 247, 0.06),
       0 12px 32px -14px rgba(0, 0, 0, 0.7);
   }
-  @media (min-width: 820px) { .nav { gap: 10px; } }
-  @media (min-width: 900px) { .nav { gap: 18px; } }
+  .nav--without-search {
+    width: 292px;
+    grid-template-areas: 'mark chip menu';
+    grid-template-columns: minmax(0, 1fr) 116px 44px;
+  }
+  /* Shared-chart pages mark the receiver in <head>, before the nav streams.
+     Their existing boundary removes the wing link. Reserve only the remaining
+     tracks from the first paint, keeping their sizes and the pill centered. */
+  :global(html[data-chart-share-receiver]) .nav {
+    width: 210px;
+    grid-template-areas: 'mark search menu';
+    grid-template-columns: minmax(0, 1fr) 44px 44px;
+  }
+  :global(html[data-chart-share-receiver]) .nav--without-search {
+    width: 166px;
+    grid-template-areas: 'mark menu';
+    grid-template-columns: minmax(0, 1fr) 44px;
+  }
   .nav__mark {
+    grid-area: mark;
+    min-width: 0;
     direction: ltr;
     display: inline-flex;
     align-items: center;
@@ -269,26 +294,42 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
   }
   .nav__sep { color: var(--muted); margin: 0 4px; }
   .nav__dim { color: var(--text-2); font-weight: 500; }
-  @media (max-width: 819.5px) {
-    /* The compact lockup is the name alone. Search follows as its own
-       control, without leaving a decorative separator behind. */
-    .nav__sep,
-    .nav__dim { display: none; }
-  }
+  /* Compact by default; the full lockup appears with the desktop links. */
+  .nav__sep,
+  .nav__dim { display: none; }
 
-  .nav__links { display: none; align-items: center; gap: 2px; }
-  @media (min-width: 820px) { .nav__links { display: inline-flex; } }
+  .nav__links {
+    grid-area: links;
+    display: none;
+    min-width: 0;
+    align-items: center;
+    gap: 2px;
+    grid-template-columns: 74px 74px 64px 62px 102px minmax(0, 1fr);
+  }
+  .nav--localized .nav__links {
+    grid-template-columns: 128px 82px repeat(2, minmax(0, 1fr)) 156px;
+  }
+  /* The server knows the full link set before children stream. Never infer
+     the sixth track from children arriving later in the document. */
+  .nav--localized.nav--with-today .nav__links {
+    grid-template-columns: 128px 82px 52px repeat(2, minmax(0, 1fr)) 144px;
+  }
+  .nav--without-search .nav__links {
+    grid-template-columns: 136px 84px repeat(2, minmax(0, 1fr)) 172px;
+  }
 
   .nav__link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 13px;
+    min-width: 0;
+    padding: 7px 11px;
     border-radius: var(--r-full);
     font-size: 14px;
     font-weight: 500;
     color: var(--text-2);
     text-decoration: none;
+    white-space: nowrap;
   }
   .nav__link:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
   .nav__link[aria-current='page'] { color: var(--text); }
@@ -312,10 +353,13 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
   }
 
   .nav__search {
-    display: inline-flex;
-    align-items: center;
+    grid-area: search;
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
     gap: 7px;
-    padding: 8px 11px;
+    padding: 0;
     border: none;
     border-radius: var(--r-full);
     background: none;
@@ -324,15 +368,6 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
     text-decoration: none;
   }
   .nav__search:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
-  @media (max-width: 819.5px) {
-    .nav__search {
-      display: inline-grid;
-      place-items: center;
-      width: 44px;
-      height: 44px;
-      padding: 0;
-    }
-  }
   .nav__search-kbd {
     display: none;
     font-family: var(--font-nav-mono);
@@ -343,7 +378,7 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
     border-radius: 4px;
     color: var(--faint);
   }
-  @media (min-width: 820px) { .nav__search-kbd { display: inline-block; } }
+  .nav__dropdown-btn { justify-content: space-between; }
   .nav__dropdown-btn svg { transition: transform var(--dur-1) var(--ease); }
   .nav__dropdown-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
 
@@ -354,6 +389,8 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
   /* A permanent door into Astrofolio. It stays compact on phones, then gains
      the divider treatment once the desktop link row appears. */
   .nav__chip {
+    grid-area: chip;
+    min-width: 0;
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -371,14 +408,9 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
   }
   .nav__chip:hover { color: var(--text); }
   .nav__chip[aria-current='page'] { color: var(--text); }
-  @media (min-width: 820px) {
-    .nav__chip {
-      min-height: 34px;
-      letter-spacing: 0.14em;
-    }
-  }
 
   .nav__burger {
+    grid-area: menu;
     position: relative;
     display: inline-block;
     flex: 0 0 auto;
@@ -389,7 +421,6 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
     transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
   }
   .nav__burger:active { transform: scale(0.97); }
-  @media (min-width: 820px) { .nav__burger { display: none; } }
   .nav__burger-line {
     display: block;
     position: absolute;
@@ -414,10 +445,62 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
   /* Keep both 44px controls intact on 320px screens by compacting only the
      surrounding lockup, gaps, padding, and destination label. */
   @media (max-width: 360px) {
+    .nav { width: 272px; grid-template-columns: minmax(0, 1fr) 44px 88px 44px; }
     .nav { gap: 4px; padding-inline: 10px 4px; }
+    .nav--localized { width: 288px; grid-template-columns: minmax(0, 1fr) 44px 100px 44px; }
+    .nav--without-search { width: 224px; grid-template-columns: minmax(0, 1fr) 88px 44px; }
+    :global(html[data-chart-share-receiver]) .nav { width: 180px; }
+    :global(html[data-chart-share-receiver]) .nav--localized { width: 184px; }
+    :global(html[data-chart-share-receiver]) .nav--without-search { width: 132px; }
     .nav__mark { gap: 0; }
     .nav__name { font-size: 11px; letter-spacing: 0.08em; }
     .nav__chip { padding-inline: 7px 0; font-size: 11px; letter-spacing: 0.04em; }
+  }
+
+  /* A desktop row opens only when its complete reserved shell fits. The
+     localized tier accommodates full labels and their English-only cues. */
+  @media (min-width: 920px) {
+    .nav:not(.nav--localized) {
+      width: 884px;
+      grid-template-areas: 'mark links search chip';
+      grid-template-columns: 116px minmax(0, 1fr) 62px 120px;
+      gap: 18px;
+    }
+    :global(html[data-chart-share-receiver]) .nav:not(.nav--localized) {
+      width: 746px;
+      grid-template-areas: 'mark links search';
+      grid-template-columns: 116px minmax(0, 1fr) 62px;
+    }
+    .nav:not(.nav--localized) .nav__links { display: grid; }
+    .nav:not(.nav--localized) .nav__sep,
+    .nav:not(.nav--localized) .nav__dim { display: inline; }
+    .nav:not(.nav--localized) .nav__search { display: inline-flex; align-items: center; width: 62px; padding: 8px 11px; }
+    .nav:not(.nav--localized) .nav__search-kbd { display: inline-block; }
+    .nav:not(.nav--localized) .nav__chip { min-height: 34px; letter-spacing: 0.14em; }
+    .nav:not(.nav--localized) .nav__burger { display: none; }
+  }
+  @media (min-width: 1040px) {
+    .nav--localized {
+      width: 992px;
+      grid-template-areas: 'mark links search chip';
+      grid-template-columns: 116px minmax(0, 1fr) 44px 120px;
+      gap: 18px;
+    }
+    .nav--without-search { grid-template-areas: 'mark links chip'; grid-template-columns: 116px minmax(0, 1fr) 120px; }
+    :global(html[data-chart-share-receiver]) .nav--localized {
+      width: 854px;
+      grid-template-areas: 'mark links search';
+      grid-template-columns: 116px minmax(0, 1fr) 44px;
+    }
+    :global(html[data-chart-share-receiver]) .nav--without-search {
+      grid-template-areas: 'mark links';
+      grid-template-columns: 116px minmax(0, 1fr);
+    }
+    .nav--localized .nav__links { display: grid; }
+    .nav--localized .nav__sep,
+    .nav--localized .nav__dim { display: inline; }
+    .nav--localized .nav__chip { min-height: 34px; letter-spacing: 0.14em; }
+    .nav--localized .nav__burger { display: none; }
   }
 
   /* ── Tools / Signs dropdowns ── */

@@ -16,6 +16,8 @@
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { PNG } from 'pngjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
@@ -33,9 +35,13 @@ const kahloNoTime = encodeChart({
 const preview = spawn('npx', ['astro', 'preview', '--port', '4399', '--host', '127.0.0.1'], { stdio: 'ignore', detached: false });
 await wait(2500);
 const results = [];
-const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
+const check = (name, ok, detail = '') => {
+  results.push({ name, ok, detail });
+  // Preserve completed checks even if a later browser action times out.
+  console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? `  · ${detail}` : ''}`);
+};
 const shot = async (target, path, opts = {}) => {
-  if (OUT) await target.screenshot({ path: `${OUT}/${path}`, ...opts }).catch(() => {});
+  if (OUT) return await target.screenshot({ path: `${OUT}/${path}`, ...opts });
 };
 
 try {
@@ -46,23 +52,36 @@ try {
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];
-  for (const prefix of ['', '/es', '/pt', '/fr', '/it']) {
-    for (const width of [819, 820]) {
+  for (const [prefix, desktopBreakpoint, englishOnlyCue] of [
+    ['', 920, ''],
+    ['/es', 1040, '— por ahora en inglés'],
+    ['/pt', 1040, '— por enquanto em inglês'],
+    ['/fr', 1040, '— pour l’instant en anglais'],
+    ['/it', 1040, '— per ora in inglese'],
+  ]) {
+    // Retain the old 819/820 checks as compact-layout regressions, and check
+    // both sides of the new reserved-shell desktop thresholds independently.
+    for (const width of [819, 820, desktopBreakpoint - 1, desktopBreakpoint]) {
+      const desktop = width >= desktopBreakpoint;
       const navPage = await browser.newPage({ viewport: { width, height: 844 } });
       await navPage.goto(`http://127.0.0.1:4399${prefix}/birth-chart/`, { waitUntil: 'domcontentloaded' });
       const state = await navPage.evaluate(() => {
         const nav = document.querySelector('[data-nav]')?.getBoundingClientRect();
         const chip = document.querySelector('.nav__chip');
         const burger = document.querySelector('[data-menu-toggle]');
+        const links = document.querySelector('.nav__links');
         return {
-          navFits: Boolean(nav && nav.left >= 0 && nav.right <= innerWidth),
+          navFits: Boolean(nav && nav.left >= 16 && nav.right <= innerWidth - 16),
+          navWidth: nav?.width,
           chipVisible: Boolean(chip && getComputedStyle(chip).display !== 'none'),
           chipHref: chip?.getAttribute('href'),
-          chipText: chip?.textContent?.trim(),
+          chipText: (chip?.querySelector(':scope > span') ?? chip)?.textContent?.trim(),
+          chipCue: chip?.querySelector('small')?.textContent?.trim() ?? '',
           burgerVisible: Boolean(burger && getComputedStyle(burger).display !== 'none'),
+          linksVisible: Boolean(links && getComputedStyle(links).display !== 'none'),
         };
       });
-      if (width === 819) {
+      if (!desktop) {
         await navPage.locator('[data-menu-toggle]').click();
         const mobileRegistryVisible = await navPage.locator('.mobile-menu__registry').isVisible();
         state.mobileRegistryVisible = mobileRegistryVisible;
@@ -71,14 +90,145 @@ try {
         && state.chipVisible
         && state.chipHref === '/astrofolio/'
         && state.chipText === 'Astrofolio'
-        && state.burgerVisible === (width === 819)
-        && (width === 820 || state.mobileRegistryVisible === true);
+        && state.chipCue === englishOnlyCue
+        && Math.abs(state.navWidth - (desktop ? (prefix ? 992 : 884) : 336)) <= 0.1
+        && state.burgerVisible === !desktop
+        && state.linksVisible === desktop
+        && (desktop || state.mobileRegistryVisible === true);
       navBreakpointsPass &&= pass;
       navBreakpointsDetail.push(`${prefix || '/en'}@${width}:${pass ? 'ok' : JSON.stringify(state)}`);
       await navPage.close();
     }
   }
-  check('navigation: Astrofolio persists at 819/820px in all five locales', navBreakpointsPass, navBreakpointsDetail.join(' · '));
+  check('navigation: reserved shells and Astrofolio persist at compact and desktop boundaries in all five locales', navBreakpointsPass, navBreakpointsDetail.join(' · '));
+
+  // A shared-chart receiver intentionally removes every wing link. Its head
+  // marker must reserve the shorter shell before hydration, with no empty
+  // destination track and no later movement of the surviving controls.
+  const receiverDetails = [];
+  let receiverPass = true;
+  for (const [prefix, desktopBreakpoint, compactWidth, mobileWidth, desktopWidth] of [
+    ['', 920, 180, 210, 746],
+    ['/es', 1040, 184, 210, 854],
+    ['/ru', 1040, 132, 166, 854],
+  ]) {
+    for (const width of [320, 390, desktopBreakpoint, ...(prefix === '' ? [1440] : [])]) {
+      const desktop = width >= desktopBreakpoint;
+      const navPage = await browser.newPage({ viewport: { width, height: 844 } });
+      await navPage.goto(`http://127.0.0.1:4399${prefix}/birth-chart/${kahlo}`, { waitUntil: 'domcontentloaded' });
+      const receiverGeometry = () => navPage.evaluate(() => {
+        const nav = document.querySelector('[data-nav]');
+        const box = nav?.getBoundingClientRect();
+        const children = [...(nav?.children ?? [])]
+          .filter((element) => getComputedStyle(element).display !== 'none')
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            return { left: rect.left, right: rect.right, width: rect.width, height: rect.height };
+          });
+        const controls = [...document.querySelectorAll('.nav__search, .nav__burger')]
+          .filter((element) => getComputedStyle(element).display !== 'none')
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            return { width: rect.width, height: rect.height };
+          });
+        return {
+          receiver: document.documentElement.hasAttribute('data-chart-share-receiver'),
+          wingLinks: document.querySelectorAll('a[href="/astrofolio/"],a[href^="/registry/"],a[href^="/sdk/"]').length,
+          left: box?.left, right: box?.right, top: box?.top, bottom: box?.bottom, width: box?.width,
+          scrollX, scrollY,
+          viewport: visualViewport && {
+            pageLeft: visualViewport.pageLeft, pageTop: visualViewport.pageTop,
+            offsetLeft: visualViewport.offsetLeft, offsetTop: visualViewport.offsetTop,
+            width: visualViewport.width, height: visualViewport.height, scale: visualViewport.scale,
+          },
+          resultTop: document.querySelector('.calc__result')?.getBoundingClientRect().top,
+          visible: Boolean(nav && [nav, nav.closest('.nav-wrap')].every((element) => {
+            if (!element) return false;
+            const style = getComputedStyle(element);
+            return style.display !== 'none' && style.visibility === 'visible' && Number(style.opacity) === 1;
+          })),
+          children, controls,
+          endGap: box ? box.right - Math.max(...children.map((child) => child.right)) : null,
+        };
+      });
+      const early = await receiverGeometry();
+      await navPage.locator('.calc__result').waitFor({ state: 'visible', timeout: 15000 });
+      await navPage.waitForLoadState('networkidle');
+      await navPage.waitForFunction(() => document.querySelector('.calc__form')?.getAttribute('aria-busy') === 'false');
+      await navPage.evaluate(() => document.fonts.ready.then(() => undefined));
+      // Result visibility precedes the calculator's scheduled smooth scroll.
+      // Wait for its real destination and a stable pair of animation frames,
+      // without changing product scrolling or accepting a pre-scroll pause.
+      await navPage.waitForFunction(async () => {
+        const before = scrollY;
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const result = document.querySelector('.calc__result');
+        if (!result) return false;
+        const margin = Number.parseFloat(getComputedStyle(result).scrollMarginTop) || 0;
+        const target = Math.min(Math.max(0, scrollY + result.getBoundingClientRect().top - margin),
+          Math.max(0, document.documentElement.scrollHeight - innerHeight));
+        return Math.abs(scrollY - target) <= 1 && Math.abs(scrollY - before) <= 0.1;
+      });
+      const settled = await receiverGeometry();
+      const expectedWidth = desktop ? desktopWidth : width <= 360 ? compactWidth : mobileWidth;
+      const pass = [early, settled].every((state) => state.receiver
+        && state.visible
+        && state.wingLinks === 0
+        && Math.abs(state.width - expectedWidth) <= 0.1
+        && state.left >= 16 && state.right <= width - 16
+        && Math.abs(state.left - (width - expectedWidth) / 2) <= 0.1
+        && Math.abs(state.endGap - (width <= 360 ? 5 : 11)) <= 0.1
+        && state.children.every((child) => child.left >= state.left && child.right <= state.right)
+        && state.controls.length === (desktop ? (prefix === '/ru' ? 0 : 1) : (prefix === '/ru' ? 1 : 2))
+        && (desktop || state.controls.every((control) => control.width === 44 && control.height === 44)))
+        && Math.abs(early.left - settled.left) <= 0.1
+        && Math.abs(early.width - settled.width) <= 0.1;
+      receiverPass &&= pass;
+      receiverDetails.push(`${prefix || '/en'}@${width}:${pass ? 'ok' : JSON.stringify({ early, settled })}`);
+      if (OUT) {
+        // Capture the native viewport without Playwright's separate metrics →
+        // document-clip conversion, which can race Chromium's compositor origin.
+        // Keep the exact viewport and nav-region checks; never select a retry.
+        const stem = `receiver-nav-${prefix.slice(1) || 'en'}-${width}`;
+        const session = await navPage.context().newCDPSession(navPage);
+        let capture;
+        try {
+          const { data } = await session.send('Page.captureScreenshot', {
+            format: 'png', captureBeyondViewport: false, fromSurface: true,
+          });
+          capture = Buffer.from(data, 'base64');
+        } finally {
+          await session.detach();
+        }
+        const after = await receiverGeometry();
+        await mkdir(OUT, { recursive: true });
+        await writeFile(`${OUT}/${stem}.png`, capture);
+        await writeFile(`${OUT}/${stem}.json`, `${JSON.stringify({
+          captureMethod: 'Page.captureScreenshot: native viewport, no clip',
+          before: settled, after,
+        }, null, 2)}\n`);
+        check(`navigation: ${prefix || '/en'}@${width} receiver geometry is unchanged across capture`,
+          ['left', 'right', 'top', 'bottom', 'width', 'scrollX', 'scrollY', 'resultTop']
+            .every((key) => Math.abs(settled[key] - after[key]) <= 0.1)
+          && settled.viewport && after.viewport
+          && Object.keys(settled.viewport).every((key) => Math.abs(settled.viewport[key] - after.viewport[key]) <= 0.1),
+          JSON.stringify({ before: settled, after }));
+        const png = PNG.sync.read(capture);
+        let foregroundPixels = 0;
+        for (let y = Math.ceil(settled.top); y < Math.floor(settled.bottom); y += 1) {
+          for (let x = Math.ceil(settled.left); x < Math.floor(settled.right); x += 1) {
+            const offset = (y * png.width + x) * 4;
+            if (Math.max(...png.data.subarray(offset, offset + 3)) > 100) foregroundPixels += 1;
+          }
+        }
+        check(`navigation: ${prefix || '/en'}@${width} receiver viewport captures visible foreground`,
+          png.width === width && png.height === 844 && foregroundPixels >= 30,
+          `${png.width}×${png.height}; ${foregroundPixels} foreground pixels in the nav`);
+      }
+      await navPage.close();
+    }
+  }
+  check('navigation: shared receivers keep stable centered controls without a blank wing track', receiverPass, receiverDetails.join(' · '));
 
   // The site sets `scroll-behavior: smooth`, so scrolls animate — poll the
   // box until it stops moving before clicking.
@@ -318,6 +468,10 @@ try {
     const wheel = document.querySelector('.xplr__wheelbox');
     return wheel?.getAttribute('data-spotlight-id') === 'body:Sun'
       && Number(wheel?.getAttribute('data-spotlight-run')) > previous
+      // A new halo/run is exposed while primed, before its deferred focus.
+      // Finish that replay before starting a distinct keyboard interaction.
+      && wheel?.getAttribute('data-spotlight-phase') === 'settled'
+      && document.activeElement === wheel
       && document.querySelectorAll('[data-spotlight-target="body:Sun"]').length === 1;
   }, firstSunRun);
   check('visual story: re-clicking the same target replays one spotlight', true);
@@ -823,10 +977,6 @@ try {
   preview.kill();
 }
 
-let failed = 0;
-for (const r of results) {
-  if (!r.ok) failed += 1;
-  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.detail.slice(0, 90)}` : ''}`);
-}
+const failed = results.filter((result) => !result.ok).length;
 console.log(failed ? `\n${failed} FAILURES` : '\nALL PASS');
 process.exit(failed ? 1 : 0);

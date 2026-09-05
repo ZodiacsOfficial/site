@@ -275,8 +275,8 @@ export function wingNavScript() {
 export function wingNavCss() {
   return `
   @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
-  @font-face { font-family: 'Instrument Sans Fallback'; src: local('Arial'), local('Liberation Sans'); ascent-override: 97%; descent-override: 25%; line-gap-override: 0%; }
-  @font-face { font-family: 'Instrument Sans Fallback Android'; src: local('Roboto'); ascent-override: 97%; descent-override: 25%; line-gap-override: 0%; }
+  @font-face { font-family: 'Instrument Sans Fallback'; src: local('Arial'), local('Liberation Sans'); size-adjust: 103.5%; ascent-override: 93.7198%; descent-override: 24.1546%; line-gap-override: 0%; }
+  @font-face { font-family: 'Instrument Sans Fallback Android'; src: local('Roboto'); size-adjust: 103.5%; ascent-override: 93.7198%; descent-override: 24.1546%; line-gap-override: 0%; }
   @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
   @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
   @font-face { font-family: 'EB Garamond Fallback'; src: local('Georgia'); size-adjust: 76.8%; ascent-override: 131.12%; descent-override: 38.8%; line-gap-override: 0%; }
