@@ -11,13 +11,12 @@
  *   OUT_DIR=/tmp/shots node tests/thesis-qa-drive.mjs
  */
 import { chromium } from 'playwright-core';
-import { spawn } from 'node:child_process';
+import { startPreview } from './visual/preview-server.mjs';
 import { existsSync } from 'node:fs';
 import { setTimeout as wait } from 'node:timers/promises';
 
 const OUT = process.env.OUT_DIR ?? null;
 const PORT = Number.parseInt(process.env.THESIS_QA_PORT ?? '4399', 10);
-const BASE = `http://127.0.0.1:${PORT}`;
 const ZODIAC_SLUGS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -47,18 +46,8 @@ const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
       ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
       : chromium.executablePath());
 
-const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', String(PORT)], { stdio: 'ignore' });
-// Poll readiness instead of a fixed sleep; cold npx/config loads vary by host.
-{
-  const deadline = Date.now() + 30_000;
-  let up = false;
-  while (!up && Date.now() < deadline) {
-    up = await fetch(`${BASE}/thesis/`, { method: 'HEAD' })
-      .then((r) => r.ok).catch(() => false);
-    if (!up) await wait(250);
-  }
-  if (!up) { preview.kill(); throw new Error(`astro preview did not become ready on :${PORT}`); }
-}
+const preview = await startPreview({ port: PORT });
+const BASE = preview.baseURL;
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
 const shot = async (page, sel, path) => {
@@ -1119,7 +1108,7 @@ try {
   }
   await browser.close();
 } finally {
-  preview.kill();
+  await preview.stop();
 }
 
 let failed = 0;
