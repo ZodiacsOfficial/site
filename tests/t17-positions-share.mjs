@@ -6,6 +6,7 @@ import { chromium } from 'playwright-core';
 import sharp from 'sharp';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
+import { trackHydrationDiagnostics } from './t17-hydration-diagnostics.mjs';
 
 const TIMEOUT = 45_000;
 const BIRTH = {
@@ -23,6 +24,8 @@ const ZOOM_EVIDENCE_FILE = fileURLToPath(new URL(
   '../docs/acceptance/phase4-sharing/chart-sheet-33-percent.png',
   import.meta.url,
 ));
+const HYDRATION_EVIDENCE_DIR = fileURLToPath(new URL('./visual/artifacts/t17/', import.meta.url));
+const hydrationChecks = new WeakMap();
 
 async function waitForHydration(page) {
   await page.locator('.calc__form').waitFor({ state: 'visible', timeout: TIMEOUT });
@@ -36,7 +39,7 @@ async function waitForHydration(page) {
 async function open(page, url) {
   const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
   assert.equal(response?.status(), 200, `${url} must return 200`);
-  await waitForHydration(page);
+  await hydrationChecks.get(page)(() => waitForHydration(page));
 }
 
 async function selectCity(page) {
@@ -186,6 +189,9 @@ try {
       page.on('console', (message) => {
         if (message.type() === 'error') errors.push(`console:${message.text()}`);
       });
+      hydrationChecks.set(page, trackHydrationDiagnostics(page, {
+        baseURL, errors, outputDir: HYDRATION_EVIDENCE_DIR,
+      }));
       return page;
     };
 
@@ -1042,6 +1048,9 @@ try {
       mobile.on('console', (message) => {
         if (message.type() === 'error') errors.push(`mobile-console:${message.text()}`);
       });
+      hydrationChecks.set(mobile, trackHydrationDiagnostics(mobile, {
+        baseURL, errors, outputDir: HYDRATION_EVIDENCE_DIR,
+      }));
       await open(mobile, `${baseURL}/birth-chart/`);
       await computeChart(mobile);
       await mobile.waitForFunction(() => {

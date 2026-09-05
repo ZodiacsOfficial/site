@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "phase-b-transits-ci-review-2026-09-05",
-  "baseCommit": "3929bce28aef84f2079f433e2f5a43ab21181749",
+  "baseCommit": "ac239bc3400ef5c4f39b7fc9041284df343acd43",
   "protectedPaths": [
     "src/pages/es/transits/index.astro",
     "src/pages/fr/transits/index.astro",
