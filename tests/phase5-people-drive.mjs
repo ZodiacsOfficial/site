@@ -3,6 +3,7 @@ import { chromium } from 'playwright-core';
 import peopleData from '../src/data/people.json' with { type: 'json' };
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
+import { waitForPortraitReadiness } from './portrait-readiness.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const failures = [];
@@ -45,8 +46,27 @@ await withPreview({ port: 4425 }, async (baseURL) => {
     const inventoryPage = await inventoryContext.newPage();
     const inventoryErrors = [];
     inventoryPage.on('pageerror', (error) => inventoryErrors.push(error.message));
+    const portraitRequests = new Map();
+    inventoryPage.on('request', (request) => {
+      if (new URL(request.url()).pathname.startsWith('/assets/people/')) {
+        portraitRequests.set(request, { url: request.url(), status: null, finished: false, error: null });
+      }
+    });
+    inventoryPage.on('response', (response) => {
+      const request = portraitRequests.get(response.request());
+      if (request) request.status = response.status();
+    });
+    inventoryPage.on('requestfinished', (request) => {
+      const observed = portraitRequests.get(request);
+      if (observed) observed.finished = true;
+    });
+    inventoryPage.on('requestfailed', (request) => {
+      const observed = portraitRequests.get(request);
+      if (observed) observed.error = request.failure()?.errorText ?? 'request failed';
+    });
 
     for (const route of routes) {
+      portraitRequests.clear();
       const response = await inventoryPage.goto(`${baseURL}${route}`, {
         waitUntil: 'domcontentloaded',
       });
@@ -124,9 +144,25 @@ await withPreview({ port: 4425 }, async (baseURL) => {
 
         if (source?.portrait.available) {
           const image = inventoryPage.locator('[data-person-portrait-image]');
-          await image.waitFor();
+          let portrait;
+          try {
+            await image.waitFor();
+            portrait = await image.evaluate(waitForPortraitReadiness, 10_000);
+          } catch (error) {
+            const state = await image.evaluateAll((nodes) => {
+              const node = nodes[0];
+              return { src: node?.getAttribute('src') ?? null, currentSrc: node?.currentSrc ?? null,
+                complete: node?.complete ?? false, naturalWidth: node?.naturalWidth ?? 0,
+                naturalHeight: node?.naturalHeight ?? 0 };
+            });
+            portrait = { ready: false, error: String(error), ...state };
+          }
+          if (!portrait.ready) {
+            console.error(`portrait diagnostic: ${JSON.stringify({ route, ...portrait,
+              requests: [...portraitRequests.values()] })}`);
+          }
           check(
-            await image.evaluate((node) => node.complete && node.naturalWidth > 0),
+            portrait.ready && portrait.complete && portrait.naturalWidth > 0,
             `${route}: portrait did not load`,
           );
           check(

@@ -48,6 +48,42 @@ state.nonemptySql = Boolean(fs.readFileSync(0, 'utf8').trim());
 if (mode === 'sql-failure' && state.sql === 2) { process.stderr.write('fixture SQL assertion failure\\n'); finish(42); }
 finish(0);
 `, { mode: 0o755 });
+  const eventsPath = join(dir, 'docker-events.txt');
+  writeFileSync(eventsPath, '');
+  if (mode === 'never-ready') {
+    // Preserve all 60 real harness attempts without starting a Node runtime
+    // per failed probe. This shell double records the observed lifecycle;
+    // it never simulates a ready database or a successful SQL assertion.
+    writeFileSync(join(dir, 'docker'), `#!/usr/bin/env bash
+case "$1" in
+  info) exit 0 ;;
+  run) printf 'fixture-container\\n'; exit 0 ;;
+  rm) printf 'cleaned\\n' >> "$GAMES_READINESS_TEST_EVENTS"; exit 0 ;;
+  logs) printf 'logged\\n' >> "$GAMES_READINESS_TEST_EVENTS"; exit 0 ;;
+  exec) ;;
+  *) exit 90 ;;
+esac
+tcp=false; password=false; no_prompt=false; command=false; previous=''
+for argument in "$@"; do
+  if [[ "$previous" == '--host' && "$argument" == '127.0.0.1' ]]; then tcp=true; fi
+  case "$argument" in
+    PGPASSWORD=games-local-test-only) password=true ;;
+    --no-password) no_prompt=true ;;
+    --command) command=true ;;
+  esac
+  previous="$argument"
+done
+if [[ "$command" == true ]]; then
+  printf 'probe\\n' >> "$GAMES_READINESS_TEST_EVENTS"
+  if [[ "$tcp" != true ]]; then exit 0; fi
+  if [[ "$password" != true || "$no_prompt" != true ]]; then exit 91; fi
+  exit 1
+fi
+printf 'sql\\n' >> "$GAMES_READINESS_TEST_EVENTS"
+printf 'temporary database server is shutting down\\n' >&2
+exit 79
+`, { mode: 0o755 });
+  }
   const sleepPath = join(dir, 'sleeps.txt');
   writeFileSync(sleepPath, '');
   // A shell-only fake avoids starting 60 extra Node runtimes for the deadline
@@ -66,10 +102,17 @@ printf '1\\n' >> "$GAMES_READINESS_TEST_SLEEPS"
     cwd: repo, encoding: 'utf8', timeout: 20_000,
     env: { ...process.env, PATH: `${dir}:${process.env.PATH}`,
       GAMES_READINESS_TEST_STATE: statePath, GAMES_READINESS_TEST_MODE: mode,
-      GAMES_READINESS_TEST_SLEEPS: sleepPath },
+      GAMES_READINESS_TEST_SLEEPS: sleepPath, GAMES_READINESS_TEST_EVENTS: eventsPath },
   });
   if (result.error) throw result.error;
   const state = JSON.parse(readFileSync(statePath, 'utf8'));
+  if (mode === 'never-ready') {
+    const events = readFileSync(eventsPath, 'utf8').split('\n').filter(Boolean);
+    state.probes = events.filter((event) => event === 'probe').length;
+    state.sql = events.filter((event) => event === 'sql').length;
+    state.cleaned = events.includes('cleaned');
+    state.logged = events.includes('logged');
+  }
   state.sleeps = readFileSync(sleepPath, 'utf8').split('\n').filter(Boolean).length;
   return { ...result, state };
 }
@@ -95,8 +138,9 @@ describe('Zodiac Games SQL container readiness', () => {
   it('retains the bounded readiness failure, diagnostics and container cleanup', () => {
     const result = run('never-ready');
     expect(result.status).toBe(1);
-    expect(result.state).toMatchObject({ probes: 60, sleeps: 60, sql: 0, cleaned: true, logged: true });
+    expect(result.state).toMatchObject({ probes: 60, sleeps: 60, sql: 0, ready: false, cleaned: true, logged: true });
     expect(result.stderr).toContain('did not become ready within 60 seconds');
+    expect(result.stdout).not.toContain('tests passed.');
   });
 
   it('keeps a real SQL-stage failure fatal without retrying or running later files', () => {

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { observeFooterStyles, observeViewportRegions, viewportRegionFailures } from './locale-capture-readiness.mjs';
+import { observeFooterStyles, observeViewportRegions, viewportRegionFailures,
+  observeMobileToolMenu, mobileToolMenuFailures } from './locale-capture-readiness.mjs';
 
 // Invoked by Explorer in the existing Browser Evidence comparison job. These
 // are real preview navigations; screenshots are review evidence, not baselines.
@@ -19,6 +20,11 @@ const TOOLS = [
 const ENGLISH_CUES = {
   fr: { text: '— pour l’instant en anglais', title: 'Contenu pour l’instant en anglais' },
   it: { text: '— per ora in inglese', title: 'Contenuto per ora in inglese' },
+};
+const BIRTHDAY = {
+  en: { label: 'Birthday', cue: null, title: null },
+  es: { label: 'Cumpleaños (en inglés)', cue: 'inglés', title: 'Contenido por ahora en inglés' },
+  pt: { label: 'Aniversário (em inglês)', cue: 'inglês', title: 'Conteúdo por enquanto em inglês' },
 };
 const TIMEOUT = 15_000;
 const pathFor = (locale, route) => `${locale.prefix}${route}`;
@@ -210,6 +216,90 @@ export async function driveLocaleDiscovery({ browser, baseURL, check, outDir }) 
         await persist();
       }
     };
+    const mobileMenu = async (locale, width) => {
+      const name = `${locale.code}-today-menu-${width}`;
+      const burger = page.locator('[data-menu-toggle]');
+      const guide = page.locator('[data-guide-launcher]');
+      const birthday = page.locator('.mobile-menu__tool[href="/birthday/"]');
+      const waitForGuide = async () => {
+        await page.waitForFunction(() => {
+          const node = document.querySelector('[data-guide-launcher]');
+          if (!node) return false;
+          const style = getComputedStyle(node);
+          return style.visibility === 'visible' && style.pointerEvents !== 'none' && Number(style.opacity) === 1;
+        }, null, { timeout: TIMEOUT });
+      };
+      const settleMenu = async () => {
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForFunction(() => [...document.querySelectorAll('[data-mobile-menu] img, [data-guide-launcher] img')]
+          .every((node) => node.complete && node.naturalWidth > 0), null, { timeout: TIMEOUT });
+        await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      };
+      const measure = async (suffix, requireBirthdayFocus = false) => {
+        const state = await page.evaluate(observeMobileToolMenu);
+        const failures = mobileToolMenuFailures(state, { requireBirthdayFocus });
+        report.captureDiagnostics.push({ name: `${name}-${suffix}`, menu: state });
+        record(`${name} ${suffix}: text, 44px targets and Guide clearance`, failures.length === 0, failures.join('; '));
+        return state;
+      };
+      const tabToBirthday = async () => {
+        const count = await page.locator('[data-mobile-menu] a, [data-mobile-menu] button').count();
+        for (let step = 0; step < count; step += 1) {
+          if (await birthday.evaluate((node) => document.activeElement === node)) break;
+          await page.keyboard.press('Tab');
+        }
+        await settleMenu();
+      };
+      const closeWithEscape = async () => {
+        await page.keyboard.press('Escape');
+        await page.locator('[data-mobile-menu]').waitFor({ state: 'hidden' });
+        record(`${name} Escape returns native focus`, await burger.evaluate((node) => document.activeElement === node)
+          && await burger.getAttribute('aria-expanded') === 'false');
+        await waitForGuide();
+        record(`${name} closed menu restores Guide`, true);
+      };
+
+      await page.evaluate(() => scrollTo(0, 0));
+      await waitForGuide();
+      await burger.click();
+      await settleMenu();
+      const today = page.locator(`.mobile-menu__link[href="${pathFor(locale, '/today/')}"]`);
+      record(`${locale.code} Today mobile discovery@${width}`, await today.isVisible() && (await today.textContent()).trim() === locale.today);
+      const initial = await measure('opened');
+      const expected = BIRTHDAY[locale.code];
+      const observed = initial.rows.find((row) => row.href === '/birthday/');
+      record(`${name} Birthday has one honest language cue`, observed?.text === expected.label
+        && (expected.cue ? observed.ariaLabel?.split(expected.cue).length === 2 && observed.hreflang === 'en'
+          : observed.hreflang === null) && observed.title === expected.title, JSON.stringify(observed));
+      await shot(page, name);
+      await tabToBirthday();
+      await measure('native-birthday-focus', true);
+      await shot(page, `${name}-birthday-focus`);
+      await closeWithEscape();
+
+      // Exercise the same launcher after the real lazy drawer stylesheet loads.
+      // No message is entered or sent; Escape closes the actual dialog.
+      if (locale.code === 'en' && width === 390) {
+        await guide.click();
+        await page.locator('.zassistant__panel[role="dialog"]').waitFor({ state: 'visible' });
+        await page.keyboard.press('Escape');
+        await page.locator('.zassistant').waitFor({ state: 'hidden' });
+        await waitForGuide();
+      }
+      await burger.click();
+      await tabToBirthday();
+      await measure('reopened-native-birthday-focus', true);
+      if (locale.code === 'en' && width === 390) {
+        await shot(page, `${name}-loaded-guide`);
+        await closeWithEscape();
+        await burger.click();
+        await tabToBirthday();
+      }
+      await follow(birthday, '/birthday/');
+      record(`${name} native Birthday click reaches English destination`, await page.locator('html').getAttribute('lang') === 'en');
+      await open(pathFor(locale, '/today/'));
+      await waitForFooter(page, `${name} return to Today`);
+    };
 
     try {
       // Each cycle clicks the actual language rail EN → ES → PT → EN on the
@@ -244,11 +334,15 @@ export async function driveLocaleDiscovery({ browser, baseURL, check, outDir }) 
                 await footerLink.count() === 1 && (await footerLink.textContent()).trim() === locale.today
                 && await footerLink.getAttribute('hreflang') !== 'en');
               if (viewport.width === 390) {
-                await page.locator('[data-menu-toggle]').click();
-                const link = page.locator(`.mobile-menu__link[href="${pathFor(locale, '/today/')}"]`);
-                record(`${locale.code} Today mobile discovery@390`, await link.isVisible() && (await link.textContent()).trim() === locale.today);
-                await shot(page, `${locale.code}-today-menu-390`);
-                await page.locator('[data-menu-toggle]').click();
+                await mobileMenu(locale, 390);
+                if (locale.code === 'pt') {
+                  try {
+                    await page.setViewportSize({ width: 320, height: 844 });
+                    await mobileMenu(locale, 320);
+                  } finally {
+                    await page.setViewportSize(viewport);
+                  }
+                }
               } else {
                 const nav = await page.locator('.nav__links').evaluate((node) => {
                   const bounds = node.getBoundingClientRect();

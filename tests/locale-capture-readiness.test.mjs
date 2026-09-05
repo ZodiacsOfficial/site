@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { observeFooterStyles, observeViewportRegions, viewportRegionFailures } from './locale-capture-readiness.mjs';
+import { observeFooterStyles, observeViewportRegions, viewportRegionFailures,
+  mobileToolMenuFailures } from './locale-capture-readiness.mjs';
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -76,5 +77,72 @@ describe('selected-reading viewport evidence', () => {
     const observed = observeViewportRegions(['.missing', '.hidden']);
     expect(observed.navBottom).toBe(104);
     expect(viewportRegionFailures(observed)).toEqual(['.missing: missing or hidden', '.hidden: missing or hidden']);
+  });
+});
+
+describe('native mobile tool menu evidence', () => {
+  const state = () => ({ width: 390, height: 844, navBottom: 90, open: true, expanded: 'true',
+    guide: { visibility: 'hidden', pointerEvents: 'none', opacity: 1 },
+    rows: Array.from({ length: 9 }, (_, index) => ({ href: index === 7 ? '/birthday/' : `/tool-${index}/`,
+      visible: true, left: 24, right: 366, width: 342, height: 44, scrollWidth: 342, clientWidth: 342,
+      // Rows below the viewport may be reached by the menu's native scrolling.
+      top: 452 + index * 44, bottom: 496 + index * 44,
+      textRects: [{ left: 24, right: 235, top: 468 + index * 44, bottom: 490 + index * 44 }],
+      focused: index === 7, fullyInView: index === 7,
+      hits: index === 7 ? [{ ownTarget: true, x: 220, y: 800 }] : [],
+    })) });
+
+  it('allows natural wrapped lines and vertical menu scrolling without horizontal clipping', () => {
+    const observed = state();
+    observed.rows[0].height = 64;
+    observed.rows[0].textRects.push({ left: 24, right: 162, top: 490, bottom: 512 });
+    expect(mobileToolMenuFailures(observed, { requireBirthdayFocus: true })).toEqual([]);
+  });
+
+  it('rejects the original 43.475px target without rounding it up to 44px', () => {
+    const observed = state();
+    observed.rows[7].height = 43.475;
+    expect(mobileToolMenuFailures(observed)).toContain('/birthday/: target smaller than 44px');
+  });
+
+  it('rejects text Range overflow even when scrollWidth and the anchor itself fit', () => {
+    const observed = state();
+    observed.rows[7].textRects[0].right = 370;
+    expect(mobileToolMenuFailures(observed)).toContain('/birthday/: text clipped horizontally');
+  });
+
+  it('rejects hidden or missing rows and actual horizontal scroll overflow', () => {
+    const observed = state();
+    observed.rows.pop();
+    observed.rows[0].visible = false;
+    observed.rows[1].scrollWidth = 400;
+    expect(mobileToolMenuFailures(observed)).toEqual([
+      'missing mobile tool rows', '/tool-0/: missing or hidden text', '/tool-1/: text clipped horizontally',
+    ]);
+  });
+
+  it('rejects a visible Guide and a Guide hit over otherwise visible Birthday text', () => {
+    const observed = state();
+    observed.guide = { visibility: 'visible', pointerEvents: 'auto', opacity: 1 };
+    observed.rows[7].hits.push({ ownTarget: false, hit: 'BUTTON.zguide-launcher' });
+    expect(mobileToolMenuFailures(observed, { requireBirthdayFocus: true })).toEqual([
+      'Guide remains available over the menu', 'Birthday text or target is obstructed',
+    ]);
+  });
+
+  it('requires actual native focus, full target visibility and hit observations', () => {
+    const observed = state();
+    Object.assign(observed.rows[7], { focused: false, fullyInView: false, hits: [] });
+    expect(mobileToolMenuFailures(observed, { requireBirthdayFocus: true })).toEqual([
+      'Birthday is not reachable by native Tab', 'Birthday is not fully visible after native focus',
+      'Birthday text or target is obstructed',
+    ]);
+  });
+
+  it('does not count an absent launcher or a closed menu as clearance evidence', () => {
+    const observed = state();
+    observed.guide = null;
+    observed.open = false;
+    expect(mobileToolMenuFailures(observed)).toEqual(['mobile menu is not open', 'Guide remains available over the menu']);
   });
 });
