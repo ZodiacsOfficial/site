@@ -1,3 +1,6 @@
+export { default as EntityPicker } from './explorer/EntityPicker';
+export { default as ReadingPath } from './explorer/ReadingPath';
+
 interface SignaturePreview {
   headline: string;
   evidence?: string | null;

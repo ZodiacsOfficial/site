@@ -1,26 +1,15 @@
 {
   "version": 1,
-  "id": "phase-b-locales-ci-review-2026-09-05",
-  "baseCommit": "df967845aad5385c75e2f9661335ea37ecfe942e",
+  "id": "phase-b-moon-keyboard-ci-review-2026-09-05",
+  "baseCommit": "9d23af7fa095a3fa500a4ef83080ff072b74f205",
   "protectedPaths": [
     "src/lib/i18n/index.test.ts",
-    "src/lib/i18n/index.ts",
     "src/lib/i18n/ui/en.ts",
     "src/lib/i18n/ui/es.ts",
     "src/lib/i18n/ui/fr.ts",
     "src/lib/i18n/ui/it.ts",
     "src/lib/i18n/ui/pt.ts",
     "src/lib/i18n/ui/ru.test.ts",
-    "src/lib/i18n/ui/ru.ts",
-    "src/pages/es/horoscopes/[sign]/index.astro",
-    "src/pages/es/horoscopes/index.astro",
-    "src/pages/es/tools/index.astro",
-    "src/pages/fr/index.astro",
-    "src/pages/fr/tools/index.astro",
-    "src/pages/it/index.astro",
-    "src/pages/it/tools/index.astro",
-    "src/pages/pt/horoscopes/[sign]/index.astro",
-    "src/pages/pt/horoscopes/index.astro",
-    "src/pages/pt/tools/index.astro"
+    "src/lib/i18n/ui/ru.ts"
   ]
 }

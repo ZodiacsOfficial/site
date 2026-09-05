@@ -22,6 +22,8 @@ import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { driveLegacyPolarProfile } from './legacy-polar-profile-drive.mjs';
 import { runRecoveryBrowserChecks } from './recovery-browser-checks.mjs';
 import { driveLocaleDiscovery } from './locale-discovery-drive.mjs';
+import { runExplorerKeyboardChecks } from './explorer-keyboard-checks.mjs';
+import { runExplorerMoonChecks } from './explorer-moon-checks.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? await findChromium();
@@ -57,6 +59,14 @@ try {
   });
 
   await driveLocaleDiscovery({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
+
+  await runExplorerKeyboardChecks({
+    browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT,
+    knownFragment: kahlo, unknownFragment: kahloNoTime,
+  });
+  await runExplorerMoonChecks({
+    browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT,
+  });
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];

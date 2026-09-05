@@ -39,6 +39,8 @@ function chart({
   includeMercury?: boolean;
 } = {}): Chart {
   return {
+    // These corpus fixtures supply a settled sign explicitly.
+    moonSignCandidates: [SIGNS[Math.floor(moonLon / 30)]],
     input: { utc: new Date('2000-01-01T00:00:00Z'), houseSystem: 'whole', timeKnown: false },
     bodies: [
       ...(includeMercury ? [body('Mercury', mercuryLon, mercuryRetrograde)] : []),

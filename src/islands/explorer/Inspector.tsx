@@ -14,6 +14,7 @@ import {
 } from '../../lib/signs';
 import { NATAL_HOUSE_THEME, natalAspectLine, planetInHouseLine } from '../../lib/natal';
 import { placementContext } from '../../lib/natal-context';
+import { moonCandidates, moonIsUncertain, moonLabel } from '../../lib/moon-certainty';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
 import { localizePath, t, type CatalogLocale as Locale } from '../../lib/i18n';
 import type { AspectType } from '../../lib/engine/types';
@@ -184,6 +185,18 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
     case 'body': {
       const sb = scene.bodies.find((candidate) => candidate.body === selection.body);
       if (!sb) return null;
+      if (sb.body === 'Moon' && moonIsUncertain(scene)) {
+        title = <><PlanetGlyph body="Moon" size={17} class="insp__pg" />{planetLabel(locale, 'Moon')}</>;
+        body = (
+          <>
+            <p class="insp__note" data-moon-uncertain><strong>{moonLabel(scene, locale)}</strong>{moonCandidates(scene).length > 0 && ` · ${t(locale, 'needsBirthTime')}`}</p>
+            {showsEnglishInterpretation && <Insight label="Where it shows up">{placementContext(sb.body, sb.sign, sb.house, sb.speed).where}</Insight>}
+            <Related>{moonCandidates(scene).map((slug) => signButton(slug as SignSlug, signName(signBySlug(slug), locale)))}</Related>
+            <ExactData><p>{t(locale, 'noTimeNotice')}</p><Receipt label={t(locale, 'position')}>{formatLongitude(sb.lon, locale)}</Receipt></ExactData>
+          </>
+        );
+        break;
+      }
       const sign = signBySlug(sb.sign);
       const context = placementContext(sb.body, sb.sign, sb.house, sb.speed);
       const node = isNode(sb.body);
@@ -275,12 +288,16 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
 
     case 'sign': {
       const sign = signBySlug(selection.sign);
-      const occupants = scene.bodies.filter((candidate) => candidate.sign === selection.sign);
+      const uncertainMoon = moonIsUncertain(scene);
+      const possibleMoon = uncertainMoon && moonCandidates(scene).includes(selection.sign);
+      const occupants = scene.bodies.filter((candidate) => candidate.sign === selection.sign
+        && (candidate.body !== 'Moon' || !uncertainMoon));
       const occupantNames = occupants.map((candidate) => planetLabel(locale, candidate.body));
       const signWhere = [
         occupants.length > 0
           ? `${occupantNames.join(', ')} ${occupants.length === 1 ? 'uses' : 'use'} this style in your chart.`
-          : 'No planet or chart point occupies this sign.',
+          : possibleMoon ? 'The Moon may occupy this sign; a birth time is needed to confirm it.'
+            : 'No confirmed planet or chart point occupies this sign.',
         scene.houses == null
           ? 'A birth time is needed to show which area of life carries that style.'
           : occupants.length === 0
@@ -309,6 +326,7 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
           {planetLabel(locale, candidate.body)} · {formatLongitude(candidate.lon, locale).split(' ')[0]}
         </button>
       ));
+      const moonNote = possibleMoon ? <p class="insp__note">{planetLabel(locale, 'Moon')} · {moonLabel(scene, locale)} · {t(locale, 'needsBirthTime')}</p> : null;
       title = <><SignDisc slug={selection.sign} size={22} /> {signName(sign, locale)}</>;
       body = showsEnglishInterpretation ? (
         <>
@@ -319,6 +337,7 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
             <Insight label="Why it matters here">{occupants.length > 1 ? `With ${occupants.length} chart bodies here, ${sign.name} is a repeating tone rather than a one-off detail.` : 'Read the sign together with the selected planet or point to understand what is being expressed in this style.'}</Insight>
           </div>
           {occupants.length > 0 && <Related>{occupantButtons}</Related>}
+          {moonNote}
           <ExactData>{exact}</ExactData>
           {learn(localizePath(locale, `/${selection.sign}/`), `${t(locale, 'read')} ${signName(sign, locale)}`, false)}
         </>
@@ -326,6 +345,7 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
         <>
           {exact}
           {occupants.length > 0 && <div class="insp__aspects"><span class="mono--label">{t(locale, 'inThisSign')}</span><div class="insp__related-actions">{occupantButtons}</div></div>}
+          {moonNote}
           {learn(localizePath(locale, `/${selection.sign}/`), `${t(locale, 'read')} ${signName(sign, locale)}`, false)}
         </>
       );
@@ -404,6 +424,15 @@ export default function Inspector({ scene, selection, onSelect, locale, banner }
           <PlanetGlyph body={sa.b} size={15} class="insp__pg" /> {planetLabel(locale, sa.b)}
         </>
       );
+      if ((sa.a === 'Moon' || sa.b === 'Moon') && moonIsUncertain(scene)) {
+        body = <>
+          <p class="insp__note">{t(locale, 'moon')} · {moonLabel(scene, locale)} · {t(locale, 'needsBirthTime')}</p>
+          <Related>{bodyButtons}</Related>
+          <ExactData><p class="insp__note">{t(locale, 'noTimeNotice')}</p>{exact}</ExactData>
+          {learn(`/learn/aspects/${sa.type}/`, name)}
+        </>;
+        break;
+      }
       body = showsEnglishInterpretation ? (
         <>
           <div class="insp__story">

@@ -123,6 +123,7 @@ export interface SceneAspect {
 }
 
 export interface ChartSceneModel {
+  moonSignCandidates?: readonly string[];
   engineVersion: string;
   /**
    * Rotation anchor of the wheel. `asc` (chart convention, ASC at 9 o'clock)

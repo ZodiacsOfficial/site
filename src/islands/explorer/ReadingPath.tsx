@@ -6,6 +6,7 @@ import type { Aspect, AspectType, BodyName } from '../../lib/engine/types';
 import type { ChartWeather } from '../../lib/natal';
 import { SIGNS, signEssence, signForLongitude, signName } from '../../lib/signs';
 import { entityId, type EntityRef, type SignSlug } from '../../lib/scene/types';
+import { moonCandidates, moonLabel } from '../../lib/moon-certainty';
 import './ReadingPath.css';
 
 export interface ReadingPathPlacement {
@@ -22,6 +23,7 @@ export interface ReadingPathProps {
   weather: ChartWeather;
   risingLon: number | null;
   housesKnown: boolean;
+  moonSignCandidates?: readonly string[];
   selection?: EntityRef | null;
   onShowOnChart: (selection: EntityRef, scrollBehavior: ReadingScrollBehavior) => void;
 }
@@ -143,9 +145,21 @@ interface BigThreeTileProps {
   entity: EntityRef | null;
   selection?: EntityRef | null;
   onShow: ReadingPathProps['onShowOnChart'];
+  moonSignCandidates?: readonly string[];
 }
 
-function BigThreeTile({ label, lon, entity, selection, onShow }: BigThreeTileProps) {
+function BigThreeTile({ label, lon, entity, selection, onShow, moonSignCandidates }: BigThreeTileProps) {
+  if (label === 'Moon' && moonSignCandidates?.length !== 1) {
+    return (
+      <li class="reading-path__big-tile reading-path__big-tile--missing" data-moon-uncertain>
+        <span class="reading-path__big-label">Moon</span>
+        <span class="reading-path__sign-disc reading-path__sign-disc--missing" aria-hidden="true">?</span>
+        <strong>{moonLabel({ bodies: [], moonSignCandidates: moonSignCandidates ?? [] })}</strong>
+        <p>A birth time is needed to settle your Moon sign.</p>
+        {entity && <ShowButton entity={entity} subject="Moon at the reference time" selection={selection} onShow={onShow} />}
+      </li>
+    );
+  }
   if (lon == null || entity == null) {
     return (
       <li class="reading-path__big-tile reading-path__big-tile--missing">
@@ -194,9 +208,10 @@ interface PlacementListProps {
   housesKnown: boolean;
   selection?: EntityRef | null;
   onShow: ReadingPathProps['onShowOnChart'];
+  moonSignCandidates?: readonly string[];
 }
 
-function PlacementList({ placements, housesKnown, selection, onShow }: PlacementListProps) {
+function PlacementList({ placements, housesKnown, selection, onShow, moonSignCandidates }: PlacementListProps) {
   return (
     <details class="reading-path__placements">
       <summary>
@@ -207,7 +222,10 @@ function PlacementList({ placements, housesKnown, selection, onShow }: Placement
         {placements.map((placement) => {
           const sign = signForLongitude(placement.lon);
           const entity: EntityRef = { kind: 'body', body: placement.body };
-          const place = housesKnown && placement.house != null
+          const uncertainMoon = placement.body === 'Moon' && moonSignCandidates?.length !== 1;
+          const place = uncertainMoon
+            ? `${moonLabel({ bodies: [], moonSignCandidates: moonSignCandidates ?? [] })} · Birth time needed`
+            : housesKnown && placement.house != null
             ? `${signName(sign)} · House ${placement.house}`
             : signName(sign);
           return (
@@ -224,7 +242,7 @@ function PlacementList({ placements, housesKnown, selection, onShow }: Placement
               </span>
               <ShowButton
                 entity={entity}
-                subject={`${placement.body} in ${signName(sign)}`}
+                subject={uncertainMoon ? 'Moon at the reference time' : `${placement.body} in ${signName(sign)}`}
                 selection={selection}
                 onShow={onShow}
               />
@@ -238,7 +256,7 @@ function PlacementList({ placements, housesKnown, selection, onShow }: Placement
 
 interface PlaceMapProps extends PlacementListProps {}
 
-function HouseMap({ placements, housesKnown, selection, onShow }: PlaceMapProps) {
+function HouseMap({ placements, housesKnown, selection, onShow, moonSignCandidates }: PlaceMapProps) {
   if (!housesKnown) {
     return (
       <>
@@ -248,7 +266,8 @@ function HouseMap({ placements, housesKnown, selection, onShow }: PlaceMapProps)
         </p>
         <ul class="reading-path__room-map reading-path__room-map--signs" aria-label="Planets grouped by sign">
           {SIGNS.map((sign) => {
-            const occupants = placements.filter((placement) => signForLongitude(placement.lon).slug === sign.slug);
+            const occupants = placements.filter((placement) => !(placement.body === 'Moon' && moonSignCandidates?.length !== 1)
+              && signForLongitude(placement.lon).slug === sign.slug);
             const entity: EntityRef = { kind: 'sign', sign: sign.slug as SignSlug };
             const hasSelectedBody = selection?.kind === 'body'
               && occupants.some((placement) => placement.body === selection.body);
@@ -283,6 +302,7 @@ function HouseMap({ placements, housesKnown, selection, onShow }: PlaceMapProps)
         </ul>
         <PlacementList
           placements={placements}
+          moonSignCandidates={moonSignCandidates}
           housesKnown={housesKnown}
           selection={selection}
           onShow={onShow}
@@ -331,6 +351,7 @@ function HouseMap({ placements, housesKnown, selection, onShow }: PlaceMapProps)
       </ul>
       <PlacementList
         placements={placements}
+        moonSignCandidates={moonSignCandidates}
         housesKnown={housesKnown}
         selection={selection}
         onShow={onShow}
@@ -429,13 +450,22 @@ export default function ReadingPath({
   weather,
   risingLon,
   housesKnown,
+  moonSignCandidates,
   selection = null,
   onShowOnChart,
 }: ReadingPathProps) {
   const rootRef = useRef<HTMLElement>(null);
   const sun = placements.find((placement) => placement.body === 'Sun') ?? null;
   const moon = placements.find((placement) => placement.body === 'Moon') ?? null;
-  const moonSign = moon ? signForLongitude(moon.lon) : null;
+  const possibleMoonSigns = moonCandidates({ bodies: placements, angles: housesKnown ? {} : null, moonSignCandidates });
+  const uncertainMoon = possibleMoonSigns.length !== 1;
+  const settledPlacements = placements.filter((placement) => placement.body !== 'Moon');
+  const shownElements = uncertainMoon
+    ? Object.fromEntries(ELEMENTS.map(([key]) => [key, settledPlacements.filter((placement) => signForLongitude(placement.lon).element === key).length]))
+    : weather.elements;
+  const shownModalities = uncertainMoon
+    ? Object.fromEntries(MODALITIES.map(([key]) => [key, settledPlacements.filter((placement) => signForLongitude(placement.lon).modality === key).length]))
+    : weather.modalities;
 
   useEffect(() => {
     const root = rootRef.current;
@@ -486,6 +516,7 @@ export default function ReadingPath({
             />
             <BigThreeTile
               label="Moon"
+              moonSignCandidates={possibleMoonSigns}
               lon={moon?.lon ?? null}
               entity={moon ? { kind: 'body', body: 'Moon' } : null}
               selection={selection}
@@ -499,11 +530,11 @@ export default function ReadingPath({
               onShow={onShowOnChart}
             />
           </ul>
-          {moonSign && (
-            <a class="reading-path__placement-link" href={`/learn/placements/moon-in-${moonSign.slug}/`}>
-              Read Moon in {signName(moonSign)} →
+          {possibleMoonSigns.map((slug) => (
+            <a key={slug} class="reading-path__placement-link" href={`/learn/placements/moon-in-${slug}/`}>
+              Read Moon in {signName(SIGNS.find((sign) => sign.slug === slug)!)} →
             </a>
-          )}
+          ))}
         </StoryCard>
 
         <StoryCard
@@ -516,6 +547,7 @@ export default function ReadingPath({
         >
           <HouseMap
             placements={placements}
+            moonSignCandidates={possibleMoonSigns}
             housesKnown={housesKnown}
             selection={selection}
             onShow={onShowOnChart}
@@ -528,7 +560,8 @@ export default function ReadingPath({
           title="Find your strongest push-pulls"
           intro="Aspects are conversations between planets. The tightest ones tend to speak the loudest."
         >
-          <AspectCards aspects={topAspects} selection={selection} onShow={onShowOnChart} />
+          {uncertainMoon && <p class="reading-path__no-time">Moon aspects need a birth time and are left out of this reading.</p>}
+          <AspectCards aspects={topAspects.filter((aspect) => !uncertainMoon || (aspect.a !== 'Moon' && aspect.b !== 'Moon'))} selection={selection} onShow={onShowOnChart} />
         </StoryCard>
 
         <StoryCard
@@ -540,14 +573,15 @@ export default function ReadingPath({
           <div class="reading-path__balance">
             <BalanceGroup
               label="Elements"
-              values={ELEMENTS.map(([key, label]) => [key, label, weather.elements[key]] as const)}
+              values={ELEMENTS.map(([key, label]) => [key, label, shownElements[key]] as const)}
             />
             <BalanceGroup
               label="Ways of moving"
-              values={MODALITIES.map(([key, label]) => [key, label, weather.modalities[key]] as const)}
+              values={MODALITIES.map(([key, label]) => [key, label, shownModalities[key]] as const)}
             />
           </div>
-          {weather.lines.length > 0 && (
+          {uncertainMoon && <p class="reading-path__no-time">The Moon is left out of these totals until its sign is settled.</p>}
+          {!uncertainMoon && weather.lines.length > 0 && (
             <ul class="reading-path__weather">
               {weather.lines.slice(0, 2).map((line) => <li key={line}>{line}</li>)}
             </ul>

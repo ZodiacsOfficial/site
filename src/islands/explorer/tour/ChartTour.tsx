@@ -27,6 +27,7 @@ import {
 import type { ChartSceneModel, EntityRef, SceneEmphasis } from '../../../lib/scene/types';
 import type { Aspect, AspectType, Chart } from '../../../lib/engine/types';
 import { formatLongitude, signForLongitude, signName } from '../../../lib/signs';
+import { moonCandidates, moonIsUncertain, moonLabel } from '../../../lib/moon-certainty';
 import { bigThree } from '../../../lib/interpretations';
 import { aspectLabel, planetLabel } from '../../../lib/i18n/astrology';
 import { englishOnlyCue, localizePath, t, type CatalogLocale as Locale } from '../../../lib/i18n';
@@ -93,9 +94,12 @@ export default function ChartTour({
   onSelect, onAnnounce, onVisual, onEnsure, onTrack, onProgress, onComplete,
   onOpenForecast, onSave, shareLabel, shareStatusLabel, shareDisabled, onShare, onExit, returnFocus,
 }: ChartTourProps) {
+  const uncertainMoon = moonAmbiguous || moonIsUncertain(chart);
   const chapters = useMemo(
-    () => (variant === 'quick' ? deriveFirstReading(scene) : deriveChapters(scene)),
-    [scene, variant],
+    () => (variant === 'quick' ? deriveFirstReading(uncertainMoon ? {
+      ...scene, aspects: scene.aspects.filter((aspect) => aspect.a !== 'Moon' && aspect.b !== 'Moon'),
+    } : scene) : deriveChapters(scene)),
+    [scene, variant, uncertainMoon],
   );
   const stops = useMemo(() => flattenStops(chapters), [chapters]);
 
@@ -371,7 +375,8 @@ export default function ChartTour({
     case 'aspect-focus': {
       const present = [...new Set(scene.aspects.map((a) => a.type))];
       const loudest = topAspects(
-        scene.aspects.map((a) => ({ a: a.a, b: a.b, type: a.type, orb: a.orb, applying: a.applying })),
+        scene.aspects.filter((a) => !uncertainMoon || (a.a !== 'Moon' && a.b !== 'Moon'))
+          .map((a) => ({ a: a.a, b: a.b, type: a.type, orb: a.orb, applying: a.applying })),
         4,
       );
       feature = (
@@ -417,6 +422,7 @@ export default function ChartTour({
           role: tourText(locale, 'quickRoleNeed'),
           label: planetLabel(locale, 'Moon'),
           lon: moon.lon,
+          uncertain: uncertainMoon,
         } : null,
         scene.angles ? {
           role: tourText(locale, 'quickRoleImpression'),
@@ -433,7 +439,7 @@ export default function ChartTour({
                   <>
                     <span class="tour__first-role">{entry.role}</span>
                     <span class="tour__first-value">
-                      <strong>{signName(signForLongitude(entry.lon), locale)}</strong>
+                      <strong>{entry.uncertain ? moonLabel(chart, locale) : signName(signForLongitude(entry.lon), locale)}</strong>
                       <small>{entry.label}</small>
                     </span>
                   </>
@@ -449,7 +455,8 @@ export default function ChartTour({
               </li>
             ))}
           </ul>
-          {moonAmbiguous && <p class="tour__note">{t(locale, 'moonAmbiguousNotice')}</p>}
+          {uncertainMoon && <p class="tour__note">{moonCandidates(chart).length === 2
+            ? t(locale, 'moonAmbiguousNotice') : `${t(locale, 'moon')} · ${t(locale, 'needsBirthTime')}`}</p>}
           <div class="tour__why">
             <span>{tourText(locale, 'quickWhyLabel')}</span>
             <p>{tourText(locale, 'quickBigThreeWhy')}</p>
@@ -604,15 +611,18 @@ export default function ChartTour({
         const sign = signForLongitude(lon);
         const kind = sub.id === 'asc' ? 'rising' : (sub.id as 'sun' | 'moon');
         const label = sub.entity.kind === 'body' ? planetLabel(locale, sub.entity.body) : 'ASC';
+        const uncertain = kind === 'moon' && uncertainMoon;
         paragraphs.push(
           <>
             <span class="mono tour__sub-receipt">
-              {label} · {formatLongitude(lon, locale)} · {signName(sign, locale)}
+              {label} · {uncertain
+                ? `${moonLabel(chart, locale)} · ${t(locale, 'needsBirthTime')}`
+                : `${formatLongitude(lon, locale)} · ${signName(sign, locale)}`}
             </span>
             {/* The reading sentence exists in English only (interpretations.ts
                 has no ES tables — master-plan P10). The receipt above is fully
                 localized; better no sentence than an English one mid-Spanish. */}
-            {locale === 'en' ? <>{' '}{bigThree(kind, sign.slug)}</> : null}
+            {locale === 'en' && !uncertain ? <>{' '}{bigThree(kind, sign.slug)}</> : null}
           </>,
         );
       }
