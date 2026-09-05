@@ -16,6 +16,7 @@
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { PNG } from 'pngjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 
@@ -134,6 +135,13 @@ try {
           receiver: document.documentElement.hasAttribute('data-chart-share-receiver'),
           wingLinks: document.querySelectorAll('a[href="/astrofolio/"],a[href^="/registry/"],a[href^="/sdk/"]').length,
           left: box?.left, right: box?.right, top: box?.top, bottom: box?.bottom, width: box?.width,
+          scrollX, scrollY,
+          viewport: visualViewport && {
+            pageLeft: visualViewport.pageLeft, pageTop: visualViewport.pageTop,
+            offsetLeft: visualViewport.offsetLeft, offsetTop: visualViewport.offsetTop,
+            width: visualViewport.width, height: visualViewport.height, scale: visualViewport.scale,
+          },
+          resultTop: document.querySelector('.calc__result')?.getBoundingClientRect().top,
           visible: Boolean(nav && [nav, nav.closest('.nav-wrap')].every((element) => {
             if (!element) return false;
             const style = getComputedStyle(element);
@@ -145,6 +153,9 @@ try {
       });
       const early = await receiverGeometry();
       await navPage.locator('.calc__result').waitFor({ state: 'visible', timeout: 15000 });
+      await navPage.waitForLoadState('networkidle');
+      await navPage.waitForFunction(() => document.querySelector('.calc__form')?.getAttribute('aria-busy') === 'false');
+      await navPage.evaluate(() => document.fonts.ready.then(() => undefined));
       // Result visibility precedes the calculator's scheduled smooth scroll.
       // Wait for its real destination and a stable pair of animation frames,
       // without changing product scrolling or accepting a pre-scroll pause.
@@ -174,10 +185,34 @@ try {
         && Math.abs(early.width - settled.width) <= 0.1;
       receiverPass &&= pass;
       receiverDetails.push(`${prefix || '/en'}@${width}:${pass ? 'ok' : JSON.stringify({ early, settled })}`);
-      // A fixed element's locator capture can sample stale document coordinates
-      // during scrolling. Keep its actual viewport context, including 390/1440.
-      const capture = await shot(navPage, `receiver-nav-${prefix.slice(1) || 'en'}-${width}.png`);
-      if (capture) {
+      if (OUT) {
+        // Capture the native viewport without Playwright's separate metrics →
+        // document-clip conversion, which can race Chromium's compositor origin.
+        // Keep the exact viewport and nav-region checks; never select a retry.
+        const stem = `receiver-nav-${prefix.slice(1) || 'en'}-${width}`;
+        const session = await navPage.context().newCDPSession(navPage);
+        let capture;
+        try {
+          const { data } = await session.send('Page.captureScreenshot', {
+            format: 'png', captureBeyondViewport: false, fromSurface: true,
+          });
+          capture = Buffer.from(data, 'base64');
+        } finally {
+          await session.detach();
+        }
+        const after = await receiverGeometry();
+        await mkdir(OUT, { recursive: true });
+        await writeFile(`${OUT}/${stem}.png`, capture);
+        await writeFile(`${OUT}/${stem}.json`, `${JSON.stringify({
+          captureMethod: 'Page.captureScreenshot: native viewport, no clip',
+          before: settled, after,
+        }, null, 2)}\n`);
+        check(`navigation: ${prefix || '/en'}@${width} receiver geometry is unchanged across capture`,
+          ['left', 'right', 'top', 'bottom', 'width', 'scrollX', 'scrollY', 'resultTop']
+            .every((key) => Math.abs(settled[key] - after[key]) <= 0.1)
+          && settled.viewport && after.viewport
+          && Object.keys(settled.viewport).every((key) => Math.abs(settled.viewport[key] - after.viewport[key]) <= 0.1),
+          JSON.stringify({ before: settled, after }));
         const png = PNG.sync.read(capture);
         let foregroundPixels = 0;
         for (let y = Math.ceil(settled.top); y < Math.floor(settled.bottom); y += 1) {
