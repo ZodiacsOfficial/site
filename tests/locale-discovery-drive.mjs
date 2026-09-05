@@ -240,6 +240,7 @@ export async function driveLocaleDiscovery({ browser, baseURL, check, outDir }) 
         const failures = mobileToolMenuFailures(state, { requireBirthdayFocus });
         report.captureDiagnostics.push({ name: `${name}-${suffix}`, menu: state });
         record(`${name} ${suffix}: text, 44px targets and Guide clearance`, failures.length === 0, failures.join('; '));
+        if (failures.length) console.log(`Locale menu failure geometry: ${JSON.stringify({ name: `${name}-${suffix}`, menu: state })}`);
         return state;
       };
       const tabToBirthday = async () => {
@@ -275,6 +276,20 @@ export async function driveLocaleDiscovery({ browser, baseURL, check, outDir }) 
       await tabToBirthday();
       await measure('native-birthday-focus', true);
       await shot(page, `${name}-birthday-focus`);
+      await page.keyboard.press('Shift+Tab');
+      await settleMenu();
+      record(`${name} reverse native focus keeps the complete target visible`, await page.evaluate(() => {
+        const menu = document.querySelector('[data-mobile-menu]');
+        const focused = document.activeElement;
+        const preceding = menu?.querySelector('.mobile-menu__tool[href="/birthday/"]')?.previousElementSibling;
+        if (!menu || !focused || focused !== preceding || !menu.contains(focused)) return false;
+        const row = focused.getBoundingClientRect();
+        const navBottom = document.querySelector('[data-nav]')?.parentElement?.getBoundingClientRect().bottom ?? 0;
+        return row.top >= navBottom && row.bottom <= innerHeight && row.height >= 44;
+      }));
+      await page.keyboard.press('Tab');
+      await settleMenu();
+      await measure('returned-native-birthday-focus', true);
       await closeWithEscape();
 
       // Exercise the same launcher after the real lazy drawer stylesheet loads.
