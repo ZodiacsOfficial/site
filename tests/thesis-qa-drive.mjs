@@ -43,7 +43,9 @@ const LEO_MINT = '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm';
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
   ?? (existsSync('/opt/pw-browsers/chromium')
     ? '/opt/pw-browsers/chromium'
-    : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome');
+    : existsSync('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+      ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+      : chromium.executablePath());
 
 const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', String(PORT)], { stdio: 'ignore' });
 // Poll readiness instead of a fixed sleep; cold npx/config loads vary by host.
@@ -107,7 +109,7 @@ const waitForGalleryReady = async (page, timeout = 20_000) => {
 
 const VISUAL_MODULES = [
   ['history transmission', '#fig-1 .transmission'],
-  ['seasonal wheel', '#fig-2 .cadence'],
+  ['measured attention chart', '#fig-2 [data-attention-chart]:visible'],
   ['Unicode keyboard', '#fig-keyboard'],
   ['schematic attention curves', '#fig-3 .attention-patterns'],
   ['native authorities and recorded burns', '#fig-authorities'],
@@ -117,7 +119,7 @@ const VISUAL_MODULES = [
 ];
 
 const checkFigureFit = async (page, width) => {
-  for (const id of ['fig-keyboard', 'fig-3', 'fig-authorities', 'fig-provenance']) {
+  for (const id of ['fig-keyboard', 'fig-2', 'fig-3', 'fig-authorities', 'fig-provenance']) {
     const geometry = await page.locator(`#${id}`).evaluate((node) => {
       const rect = node.getBoundingClientRect();
       const svgOverflow = [...node.querySelectorAll('svg')].some((svg) => {
@@ -130,6 +132,17 @@ const checkFigureFit = async (page, width) => {
       geometry.left >= -1 && geometry.right <= width + 1
         && geometry.scroll <= geometry.client + 1 && !geometry.svgOverflow,
       JSON.stringify(geometry));
+  }
+  const chart = page.locator('#fig-2 [data-attention-chart]:visible');
+  check(`${width}px: exactly one measured attention chart is visible`, await chart.count() === 1);
+  if (await chart.count() === 1) {
+    const smallestLabel = await chart.evaluate((svg) => Math.min(...[...svg.querySelectorAll('text')].map((label) =>
+      Number.parseFloat(getComputedStyle(label).fontSize) * svg.getBoundingClientRect().width / svg.viewBox.baseVal.width)));
+    check(`${width}px: measured chart labels remain readable`, smallestLabel >= 10, `${smallestLabel.toFixed(1)}px`);
+  }
+  if (width <= 390) {
+    const height = await page.locator('#fig-3 .attention-patterns').evaluate((node) => node.getBoundingClientRect().height);
+    check(`${width}px: schematic stays shorter than a phone screen`, height <= 540, `${height}px`);
   }
 };
 
@@ -534,7 +547,9 @@ try {
 
   // The human visual layer renders before the detailed evidence.
   check('seven-era transmission renders', (await page.locator('.transmission .era').count()) === 7);
-  check('twelve-sign seasonal wheel renders', (await page.locator('.zodiac-wheel__sign').count()) === 12);
+  check('F2 exposes measured data outside a template or drawer',
+    await page.locator('#fig-2 [data-attention-chart]:visible').count() === 1
+      && await page.locator('#fig-2 template, #fig-2 details').count() === 0);
   check('F3 draws four accessible schematic attention curves',
     (await page.locator('#fig-3 .attention-patterns .fact-card svg[role="img"]').count()) === 4
       && /Schematic:.*illustrative, not measured coin performance\./s.test(await page.locator('#fig-3 .zfig-cap').textContent() ?? ''));
@@ -629,6 +644,9 @@ try {
   await shot(page, '#what-holding-means', 'thesis-proof-desktop.png');
   await shot(page, GALLERY_SELECTOR, 'thesis-gallery-desktop.png');
   await shot(page, '#the-public-record', 'thesis-history-desktop.png');
+  for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'attention', 'worth-holding', 'the-conclusion']) {
+    await shot(page, `#${id}`, `thesis-${id}-desktop.png`);
+  }
   await page.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(page, '#the-candidacy', 'thesis-v-desktop.png');
   await shot(page, '#the-test', 'thesis-vii-desktop.png');
@@ -1047,6 +1065,9 @@ try {
       await shot(mob, '#fig-1', 'thesis-f1-mobile.png');
       await shot(mob, '#fig-2', 'thesis-f2-mobile.png');
       await shot(mob, '#fig-3', 'thesis-f3-mobile.png');
+      for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'attention', 'worth-holding', 'the-conclusion']) {
+        await shot(mob, `#${id}`, `thesis-${id}-mobile.png`);
+      }
       await shot(mob, '#fig-keyboard', 'thesis-keyboard-mobile.png');
       await shot(mob, '#fig-authorities', 'thesis-authorities-mobile.png');
       await shot(mob, '#fig-provenance', 'thesis-provenance-mobile.png');

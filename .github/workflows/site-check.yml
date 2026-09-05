@@ -106,6 +106,9 @@ jobs:
       - name: Link & artifact integrity over dist
         run: node scripts/check-dist.mjs
 
+      - name: Thesis reading and evidence at six viewport widths
+        run: OUT_DIR=tests/visual/artifacts/thesis npm run test:thesis:browser
+
       - name: I18n route-boundary regression
         run: npm run test:i18n:r0
 
