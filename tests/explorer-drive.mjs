@@ -25,6 +25,7 @@ import { driveLocaleDiscovery } from './locale-discovery-drive.mjs';
 import { runExplorerKeyboardChecks } from './explorer-keyboard-checks.mjs';
 import { runExplorerMoonChecks } from './explorer-moon-checks.mjs';
 import { runSearchLearningChecks } from './search-learning-checks.mjs';
+import { verifyWidgetBuilder } from './widgets-drive.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? await findChromium();
@@ -70,6 +71,10 @@ try {
   });
 
   await runSearchLearningChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
+
+  await verifyWidgetBuilder({
+    browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/widgets` : null,
+  });
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];
