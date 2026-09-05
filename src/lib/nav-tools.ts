@@ -42,6 +42,21 @@ export interface NavTool {
   sublabel: Record<Locale, string>;
 }
 
+// These Birthday catalogue labels already disclose the canonical English page.
+// Match only their existing endings so an unqualified future label still gets
+// the navigation's shared English-only courtesy.
+const BIRTHDAY_ENGLISH_ENDINGS: Partial<Record<Locale, string>> = {
+  es: ' (en inglés)',
+  pt: ' (em inglês)',
+  fr: ' (en anglais)',
+  it: ' (in inglese)',
+};
+
+export function navToolLabelHasEnglishCue(locale: Locale, key: UiKey, text: string): boolean {
+  const ending = BIRTHDAY_ENGLISH_ENDINGS[locale];
+  return key === 'birthday' && Boolean(ending && text.endsWith(ending));
+}
+
 export interface FooterTool {
   href: string;
   label: UiKey;

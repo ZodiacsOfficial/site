@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "phase-b-search-learning-2026-09-05",
-  "baseCommit": "e7d78ae2576ffc534ae79b95f12f48277dcb71a4",
+  "baseCommit": "bf8a3bde6272ce91633497025ae2f0a67de29bc1",
   "protectedPaths": [
     "src/pages/learn/index.astro"
   ]

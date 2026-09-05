@@ -69,17 +69,61 @@ export async function runExplorerMoonChecks({ browser, baseURL, check, outDir })
         (await page.locator('[data-tour-card]').innerText()).includes(CANDIDATES));
       await page.locator('[data-tour-exit]').click();
       await page.locator('[data-first-reading-dismiss]').click();
-      await page.locator('[data-tour-start]').click();
-      await page.locator('[data-tour-card]').waitFor({ state: 'visible', timeout: TIMEOUT });
-      const bigThreeIndex = await page.locator('[data-tour-dot]').evaluateAll((nodes) => nodes.findIndex((node) => /big three/i.test(node.getAttribute('aria-label') ?? '')));
-      if (bigThreeIndex < 0) throw new Error('Full tour is missing the Big Three chapter');
-      await page.locator('[data-tour-dot]').nth(bigThreeIndex).click();
-      await page.locator('[data-tour-next]').click();
-      await page.waitForFunction(() => document.querySelector('.tour__sub-receipt')?.textContent?.trim().startsWith('Moon'), null, { timeout: TIMEOUT });
-      const tourReceipt = await page.locator('.tour__sub-receipt').innerText();
-      check(`Moon ${width}: full tour Moon receipt retains candidates without a reference degree`,
-        tourReceipt.includes(CANDIDATES) && tourReceipt.includes('Needs a birth time') && !tourReceipt.includes('°'), tourReceipt);
-      await page.locator('[data-tour-exit]').click();
+      // Exercise the real mobile launcher cascade before and after the drawer
+      // stylesheet arrives. Loading its public CSS avoids starting a private
+      // conversation merely to verify the layering of a floating button.
+      const launcher = page.locator('[data-guide-launcher]');
+      for (const guideStyles of width < 960 ? ['bootstrap', 'loaded drawer CSS'] : ['bootstrap']) {
+        if (guideStyles === 'loaded drawer CSS') {
+          const [response] = await Promise.all([
+            page.waitForResponse((item) => new URL(item.url()).pathname === '/assets/assistant-drawer.css', { timeout: TIMEOUT }),
+            page.evaluate(() => {
+              const link = document.createElement('link');
+              link.rel = 'stylesheet'; link.href = '/assets/assistant-drawer.css';
+              link.dataset.moonGuideStylesheet = '';
+              document.head.append(link);
+            }),
+          ]);
+          check('Moon mobile: real Guide drawer stylesheet loads successfully', response.status() === 200);
+          await page.waitForFunction(() => Boolean(document.querySelector('[data-moon-guide-stylesheet]')?.sheet), null, { timeout: TIMEOUT });
+        } else {
+          check(`Moon ${width}: launcher begins with its bootstrap styles`, await page.locator('link[href*="/assets/assistant-drawer.css"]').count() === 0);
+        }
+        await launcher.waitFor({ state: 'visible', timeout: TIMEOUT });
+        await page.locator('[data-tour-start]').click();
+        await page.locator('[data-tour-card]').waitFor({ state: 'visible', timeout: TIMEOUT });
+        if (width < 960) {
+          check(`Moon mobile ${guideStyles}: sheet removes the launcher from pointer and keyboard access`, await launcher.evaluate((node) => {
+            const style = getComputedStyle(node);
+            node.focus();
+            return style.visibility === 'hidden' && style.pointerEvents === 'none' && document.activeElement !== node;
+          }));
+        }
+        const bigThreeIndex = await page.locator('[data-tour-dot]').evaluateAll((nodes) => nodes.findIndex((node) => /big three/i.test(node.getAttribute('aria-label') ?? '')));
+        if (bigThreeIndex < 0) throw new Error('Full tour is missing the Big Three chapter');
+        await page.locator('[data-tour-dot]').nth(bigThreeIndex).click();
+        const next = page.locator('[data-tour-next]');
+        await next.scrollIntoViewIfNeeded();
+        const ownership = await next.evaluate((node) => {
+          const rect = node.getBoundingClientRect();
+          const x = rect.left + rect.width / 2; const y = rect.top + rect.height / 2;
+          const hit = document.elementFromPoint(x, y);
+          return { owned: x >= 0 && x < innerWidth && y >= 0 && y < innerHeight && Boolean(hit && node.contains(hit)), hit: hit?.className?.baseVal ?? hit?.className ?? null };
+        });
+        check(`Moon ${width} ${guideStyles}: the real Next pointer target belongs to the tour`, ownership.owned, JSON.stringify(ownership));
+        await next.click();
+        await page.waitForFunction(() => document.querySelector('.tour__sub-receipt')?.textContent?.trim().startsWith('Moon'), null, { timeout: TIMEOUT });
+        const tourReceipt = await page.locator('.tour__sub-receipt').innerText();
+        check(`Moon ${width} ${guideStyles}: full tour Moon receipt retains candidates without a reference degree`,
+          tourReceipt.includes(CANDIDATES) && tourReceipt.includes('Needs a birth time') && !tourReceipt.includes('°'), tourReceipt);
+        if (outDir && width < 960) await page.locator('[data-tour-card]').screenshot({ path: `${outDir}/moon-tour-guide-${guideStyles === 'bootstrap' ? 'bootstrap' : 'loaded'}-390.png`, animations: 'disabled' });
+        await page.locator('[data-tour-exit]').click();
+        await launcher.waitFor({ state: 'visible', timeout: TIMEOUT });
+        if (width < 960) {
+          await launcher.focus();
+          check(`Moon mobile ${guideStyles}: dismissal restores the visible keyboard-accessible launcher`, await launcher.evaluate((node) => getComputedStyle(node).visibility === 'visible' && getComputedStyle(node).pointerEvents !== 'none' && document.activeElement === node));
+        }
+      }
 
       await page.locator('[data-chart-more] > summary').click();
       await page.locator('[data-share-options]').click();
