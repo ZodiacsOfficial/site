@@ -68,4 +68,8 @@ export interface Chart {
   aspects: Aspect[];
   flags: ChartFlag[];
   engineVersion: string;
+  /** Caller-verified Moon signs across an unknown-time local birth date.
+   * One sign is settled; two are alternatives; absent with no angles is unverified.
+   * Presentation metadata only: never changes positions or the share-token wire format. */
+  moonSignCandidates?: readonly string[];
 }

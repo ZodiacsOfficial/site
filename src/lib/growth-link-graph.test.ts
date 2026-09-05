@@ -49,9 +49,9 @@ describe('growth link graph', () => {
       source('../islands/CommunicationRead.tsx'),
     ]);
 
-    expect(readingPath).toContain('href={`/learn/placements/moon-in-${moonSign.slug}/`}');
-    expect(approach).toContain('href={`/learn/placements/moon-in-${read.moon.sign}/`}');
-    expect(communication).toContain('href={`/learn/placements/moon-in-${read.moonSign}/`}');
+    expect(readingPath).toContain('href={`/learn/placements/moon-in-${slug}/`}');
+    expect(approach).toContain('href={`/learn/placements/moon-in-${slug}/`}');
+    expect(communication).toContain('href={`/learn/placements/moon-in-${slug}/`}');
   });
 
   it('sends the Spanish hero to the localized calculator', async () => {

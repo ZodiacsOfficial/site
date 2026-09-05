@@ -42,9 +42,9 @@ async function open(page, url) {
   await hydrationChecks.get(page)(() => waitForHydration(page));
 }
 
-async function selectCity(page) {
+async function selectCity(page, cityQuery = BIRTH.cityQuery) {
   const place = page.locator('#place');
-  await place.fill(BIRTH.cityQuery);
+  await place.fill(cityQuery);
   const option = page.locator('#place-list [role="option"]:not([aria-disabled="true"])').first();
   await option.waitFor({ state: 'visible', timeout: TIMEOUT });
   await option.click();
@@ -65,7 +65,7 @@ async function computeUnknownTimeChart(page) {
   await page.locator('.field__toggle input[type="checkbox"]').check();
   assert.equal(await page.locator('#birth-time').isDisabled(), true,
     'unknown-time calculation must not ask for a hidden exact time');
-  await selectCity(page);
+  await selectCity(page, 'London');
   await page.locator('.calc__form button[type="submit"]').click();
   await page.locator('.calc__result').waitFor({ state: 'visible', timeout: TIMEOUT });
   await page.waitForFunction(() => document.querySelector('.calc__form')?.getAttribute('aria-busy') === 'false', null, { timeout: TIMEOUT });
@@ -996,6 +996,13 @@ try {
         'a no-time Moon image must identify its noon reference');
       assert.equal(unknownMoonCardText.includes('My Moon may change signs without an exact birth time.'), true,
         'a Moon-boundary image must carry the same ambiguity warning as the result');
+      assert.equal(unknownMoonCardText.includes('Aquarius / Pisces'), true,
+        'the London boundary image must name both candidates, including the sign before its noon reference');
+      const unknownMoonHero = unknownMoon.locator('.calc__three [data-moon-uncertain]');
+      assert.match(await unknownMoonHero.innerText(), /Aquarius \/ Pisces/,
+        'the Moon hero must retain the same two candidates as the image');
+      assert.equal(await unknownMoonHero.locator('.three-card__deg').count(), 0,
+        'the boundary hero must not promote a reference degree to a settled Moon identity');
       assert.match(
         (await unknownMoon.locator('.notice').allInnerTexts()).join(' '),
         /Moon also changed signs that day/i,
@@ -1005,6 +1012,8 @@ try {
       const unknownMoonDialog = unknownMoon.locator('[data-share-dialog]');
       await unknownMoonDialog.waitFor({ state: 'visible', timeout: TIMEOUT });
       assert.equal(await unknownMoonDialog.locator('[data-share-primary="placement"] h3').innerText(), 'Moon sign card');
+      assert.match(await unknownMoonDialog.locator('[data-share-placement-preview]').innerText(), /Aquarius \/ Pisces/,
+        'the share dialog preview must not revert to the single reference Moon sign');
       assert.match(await unknownMoonDialog.locator('[data-share-card-action="placement"]').innerText(), /Share my Moon sign/);
       await unknownMoon.close();
 

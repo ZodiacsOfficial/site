@@ -81,7 +81,8 @@ describe('Chart result action contract', () => {
     const dock = await readFile(new URL('./ChartActionDock.tsx', import.meta.url), 'utf8');
 
     expect(calculator).toContain('class="chart-action-dock calc__actions"');
-    expect(calculator).toContain("void import('./ChartActionDock').then(setChartActionDockModule");
+    expect(calculator).toContain("createModuleLoader(() => import('./ChartActionDock'))");
+    expect(calculator).toContain("if (mode === 'full' && !chartActionDockModule) requestChartControls();");
     expect(calculator).toContain('{renderSavePrompt()}');
     expect(calculator).toContain("function isConnectedSaveControl(candidate: EventTarget | null | undefined)");
     expect(calculator).toContain("candidate.hasAttribute('data-save-chart')");

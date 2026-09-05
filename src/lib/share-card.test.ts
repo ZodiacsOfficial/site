@@ -310,7 +310,7 @@ describe('share-card content', () => {
     expect(content.rows.map(({ body, role, sign }) => ({ body, role, sign }))).toEqual([
       { body: 'Rising', role: 'How to open', sign: 'Libra' },
       { body: 'Mercury', role: 'How to say it', sign: 'Aries' },
-      { body: 'Moon', role: 'What builds trust', sign: 'Taurus' },
+      { body: 'Moon', role: 'What builds trust', sign: 'Needs a birth time' },
     ]);
     expect(content.avoid).toMatchObject({
       body: 'Mars',
@@ -332,6 +332,7 @@ describe('share-card content', () => {
     } as Chart);
 
     expect(content.rows.map(({ body }) => body)).toEqual(['Mercury', 'Moon']);
-    expect(content.notes).toEqual(['Birth time would add my Rising sign.']);
+    expect(content.notes).toEqual(['Birth time would add my Rising sign.', 'My Moon may change signs without an exact birth time.']);
+    expect(content.rows.find(({ body }) => body === 'Moon')?.sign).toBe('Needs a birth time');
   });
 });

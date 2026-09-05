@@ -29,6 +29,8 @@ import { shareCardFormat, shareCardText } from './share-card-copy';
 import { communicationRead } from './communication';
 import { approachRead } from './approach';
 import { chartSignature, type ChartSignature } from './chart-signature';
+import { moonIsUncertain, moonLabel } from './moon-certainty';
+import { t } from './i18n';
 import {
   PORTRAIT_SHARE_CARD_BRAND_LAYOUT,
   drawShareBrandLockup,
@@ -76,7 +78,7 @@ export function primaryShareCardVariant(locale: Locale, hasAngles: boolean): Pri
 
 /** The authored chart-signature corpus is deliberately unavailable off EN. */
 export function authoredSignatureForLocale(
-  chart: Pick<Chart, 'bodies' | 'angles' | 'aspects'>,
+  chart: Pick<Chart, 'bodies' | 'angles' | 'aspects' | 'moonSignCandidates'>,
   locale: Locale,
 ): ChartSignature | null {
   return locale === 'en' ? chartSignature(chart, locale) : null;
@@ -174,6 +176,7 @@ function loadSvg(xml: string): Promise<HTMLImageElement> {
 
 /** Shared by every card builder; the 128px discs are the canonical card art. */
 export async function loadDisc(slug: string): Promise<ImageBitmap | null> {
+  if (!slug) return null;
   try {
     const res = await fetch(`/assets/zodiac-icons/128/${slug}.webp`);
     if (!res.ok) return null;
@@ -189,10 +192,11 @@ export interface BigThreePlacement {
   slug: string;
   sign: string;
   degree: number;
+  uncertain?: true;
 }
 
 export function bigThreePlacements(
-  chart: Pick<BigThreeCardChart, 'bodies' | 'angles'>,
+  chart: Pick<BigThreeCardChart, 'bodies' | 'angles' | 'moonSignCandidates'>,
   locale: Locale = 'en',
 ): BigThreePlacement[] {
   const sun = chart.bodies.find((body) => body.body === 'Sun');
@@ -205,11 +209,15 @@ export function bigThreePlacements(
   if (chart.angles) rows.push({ kind: 'rising', lon: chart.angles.asc });
   return rows.map(({ kind, lon }) => {
     const sign = signForLongitude(lon);
+    if (kind === 'moon' && moonIsUncertain(chart)) {
+      return { kind, lon, slug: '', sign: moonLabel(chart, locale), degree: degreeInSign(lon), uncertain: true as const };
+    }
     return { kind, lon, slug: sign.slug, sign: signName(sign, locale), degree: degreeInSign(lon) };
   });
 }
 
-export function dominantProfile(chart: Pick<Chart, 'bodies'>): { element: Element | null; modality: Modality | null } {
+export function dominantProfile(chart: Pick<Chart, 'bodies'> & Partial<Pick<Chart, 'angles' | 'moonSignCandidates'>>): { element: Element | null; modality: Modality | null } {
+  if (moonIsUncertain(chart)) return { element: null, modality: null };
   const elementCounts: Record<Element, number> = { fire: 0, earth: 0, air: 0, water: 0 };
   const modalityCounts: Record<Modality, number> = { cardinal: 0, fixed: 0, mutable: 0 };
   for (const body of chart.bodies) {
@@ -304,7 +312,10 @@ export function communicationCardContent(
     { body: 'Moon' as const, slug: read.moonSign, reading: read.moon },
     { body: 'Mars' as const, slug: read.marsSign, reading: read.mars },
   ];
-  const rows = placements.flatMap((placement) => {
+  const rows = placements.flatMap<CommunicationCardRow>((placement) => {
+    if (placement.body === 'Moon' && moonIsUncertain(chart)) {
+      return [{ body: placement.body, role: COMMUNICATION_ROLES.Moon, slug: '', sign: moonLabel(chart, locale), reading: t(locale, 'needsBirthTime') }];
+    }
     if (!placement.slug || !placement.reading) return [];
     const sign = signBySlug(placement.slug);
     return [{
@@ -342,6 +353,7 @@ export function signatureCardContent(
   locale: Locale = 'en',
   moonAmbiguous = false,
 ): SignatureCardContent {
+  if (moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
   return {
     title: shareCardText(locale, 'signatureTitle'),
     kicker: shareCardText(locale, 'signatureKicker'),
@@ -349,7 +361,7 @@ export function signatureCardContent(
     bigThree: bigThreePlacements(chart, locale),
     notes: shareCardTimeNotes(locale, {
       referenceTime: !chart.input.timeKnown,
-      moonAmbiguous,
+      moonAmbiguous: moonAmbiguous || moonIsUncertain(chart),
     }),
     receipt: chartCardReceipt(chart, locale),
   };
@@ -384,8 +396,9 @@ export function approachCardContent(
   options: Pick<ShareCardOptions, 'locale' | 'moonAmbiguous'> = {},
 ): ApproachCardContent {
   const locale = options.locale ?? 'en';
+  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
   const read = approachRead(chart, { moonAmbiguous: options.moonAmbiguous });
-  const rows = [read.rising, read.mercury, read.moon].flatMap((part) => {
+  const rows = [read.rising, read.mercury, read.moon].flatMap<ApproachCardRow>((part) => {
     if (!part || part.body === 'Mars') return [];
     const sign = signBySlug(part.sign);
     return [{
@@ -396,6 +409,9 @@ export function approachCardContent(
       reading: firstSentence(part.reading),
     }];
   });
+  if (!read.moon && read.moonAmbiguous) {
+    rows.push({ body: 'Moon', role: 'What builds trust', slug: '', sign: moonLabel(chart, locale), reading: t(locale, 'needsBirthTime') });
+  }
   const avoid = read.avoid
     ? {
       body: 'Mars' as const,
@@ -471,7 +487,7 @@ async function drawFullChartCard(
   const locale = options.locale ?? 'en';
   const timeNotes = shareCardTimeNotes(locale, {
     referenceTime: options.referenceTime ?? !chart.input.timeKnown,
-    moonAmbiguous: options.moonAmbiguous,
+    moonAmbiguous: options.moonAmbiguous || moonIsUncertain(chart),
   });
   const placements = bigThreePlacements(chart, locale);
   const trio = placements.map((placement) => ({
@@ -558,9 +574,10 @@ async function drawBigThreeCard(
   chart: BigThreeCardChart,
   options: ShareCardOptions = {},
 ): Promise<Blob> {
+  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
   const locale = options.locale ?? 'en';
   const placements = bigThreePlacements(chart, locale);
-  const timeNotes = shareCardTimeNotes(locale, options);
+  const timeNotes = shareCardTimeNotes(locale, { ...options, moonAmbiguous: options.moonAmbiguous || moonIsUncertain(chart) });
 
   await document.fonts.ready;
   await Promise.all([
@@ -602,14 +619,14 @@ async function drawBigThreeCard(
     ctx.textAlign = 'left';
     ctx.fillStyle = INK_2;
     ctx.font = `400 26px ${MONO}`;
-    ctx.fillText(`${label} · ${placement.degree.toFixed(1)}°`, 334, y + 25);
+    ctx.fillText(placement.uncertain ? label : `${label} · ${placement.degree.toFixed(1)}°`, 334, y + 25);
     ctx.fillStyle = INK_0;
     ctx.font = `500 58px ${SERIF}`;
-    ctx.fillText(placement.sign, 334, y + 84);
+    ctx.fillText(placement.sign, 334, y + 84, W - 400);
     const descriptorKey = `${placement.kind}Descriptor` as 'sunDescriptor' | 'moonDescriptor' | 'risingDescriptor';
     ctx.fillStyle = INK_2;
     ctx.font = `400 28px ${SERIF}`;
-    ctx.fillText(shareCardText(locale, descriptorKey), 334, y + 137);
+    ctx.fillText(placement.uncertain ? t(locale, 'needsBirthTime') : shareCardText(locale, descriptorKey), 334, y + 137, W - 400);
   });
 
   ctx.textAlign = 'center';
@@ -678,7 +695,7 @@ async function drawCommunicationCard(
     ctx.fillText(`${row.body.toUpperCase()} · ${row.role.toUpperCase()}`, 236, top + 16);
     ctx.fillStyle = INK_0;
     ctx.font = `500 48px ${SERIF}`;
-    ctx.fillText(row.sign, 236, top + 69);
+    ctx.fillText(row.sign, 236, top + 69, W - 310);
     ctx.fillStyle = INK_2;
     ctx.font = `400 28px ${SERIF}`;
     drawWrappedText(ctx, row.reading, 236, top + 126, W - 308, 35, 3);
@@ -814,7 +831,7 @@ async function drawSignatureCard(
     ctx.textAlign = 'center';
     ctx.fillStyle = INK_0;
     ctx.font = `500 34px ${SERIF}`;
-    ctx.fillText(placement.sign, center, 1024);
+    ctx.fillText(placement.sign, center, 1024, columnWidth - 24);
     ctx.fillStyle = INK_2;
     ctx.font = `400 20px ${MONO}`;
     ctx.fillText(shareCardText(locale, placement.kind).toUpperCase(), center, 1067);
@@ -890,7 +907,7 @@ async function drawApproachCard(
     ctx.fillText(`${row.body.toUpperCase()} · ${row.role.toUpperCase()}`, 220, top + 13);
     ctx.fillStyle = INK_0;
     ctx.font = `500 44px ${SERIF}`;
-    ctx.fillText(row.sign, 220, top + 64);
+    ctx.fillText(row.sign, 220, top + 64, W - 300);
     ctx.fillStyle = INK_2;
     ctx.font = `400 28px ${SERIF}`;
     drawWrappedText(ctx, row.reading, 220, top + 116, W - 292, 35, 2);
@@ -1192,7 +1209,8 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
     drawSheetLabel(ctx, row.body, tableX, y);
     ctx.fillStyle = INK_0;
     ctx.font = `400 27px ${MONO}`;
-    ctx.fillText(sheetPositionText(row.lon, locale), tableX + 168, y);
+    const uncertainMoon = row.body === 'Moon' && moonIsUncertain(chart);
+    ctx.fillText(uncertainMoon ? moonLabel(chart, locale) : sheetPositionText(row.lon, locale), tableX + 168, y, 580);
     if (chart.houses) {
       ctx.fillStyle = INK_2;
       ctx.font = `400 24px ${MONO}`;
@@ -1255,11 +1273,11 @@ async function drawChartSheet(chart: Chart, options: ShareCardOptions = {}): Pro
     }
   }
 
-  if (options.moonAmbiguous) {
+  if (options.moonAmbiguous || moonIsUncertain(chart)) {
     ctx.textAlign = 'left';
     ctx.fillStyle = INK_2;
     ctx.font = `400 18px ${MONO}`;
-    ctx.fillText(shareCardText(locale, 'approachMoonTimeNote'), 92, 2278, 1180);
+    ctx.fillText(`${shareCardText(locale, 'moon')}: ${moonLabel(chart, locale)} · ${t(locale, 'needsBirthTime')}`, 92, 2278, 1180);
   }
   ctx.textAlign = 'left';
   ctx.fillStyle = INK_2;
@@ -1277,6 +1295,7 @@ async function drawPlacementCard(
   placement: 'moon' | 'rising',
   options: ShareCardOptions = {},
 ): Promise<Blob> {
+  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
   const locale = options.locale ?? 'en';
   const timeNotes = shareCardTimeNotes(locale, options);
   const source = placement === 'moon'
@@ -1284,9 +1303,10 @@ async function drawPlacementCard(
     : chart.angles?.asc;
   if (source == null) throw new Error(`chart missing ${placement}`);
   const sign = signForLongitude(source);
+  const uncertainMoon = placement === 'moon' && moonIsUncertain(chart);
   // A dedicated one-placement composition keeps the existing Big Three card stable.
   await document.fonts.ready;
-  const disc = await loadDisc(sign.slug);
+  const disc = await loadDisc(uncertainMoon ? '' : sign.slug);
   const canvas = document.createElement('canvas');
   canvas.width = W;
   canvas.height = H;
@@ -1308,10 +1328,10 @@ async function drawPlacementCard(
   ctx.fillText(shareCardText(locale, placement), W / 2, 150);
   ctx.fillStyle = INK_0;
   ctx.font = `500 76px ${SERIF}`;
-  ctx.fillText(signName(sign, locale), W / 2, 690);
+  ctx.fillText(uncertainMoon ? moonLabel(chart, locale) : signName(sign, locale), W / 2, 690, W - 140);
   ctx.fillStyle = INK_2;
   ctx.font = `400 30px ${MONO}`;
-  ctx.fillText(`${degreeInSign(source).toFixed(1)}°`, W / 2, 770);
+  ctx.fillText(uncertainMoon ? t(locale, 'needsBirthTime') : `${degreeInSign(source).toFixed(1)}°`, W / 2, 770, W - 140);
   ctx.font = `400 28px ${SERIF}`;
   ctx.fillText(shareCardText(locale, placement === 'moon' ? 'moonDescriptor' : 'risingDescriptor'), W / 2, 850);
   ctx.font = `400 20px ${MONO}`;
@@ -1328,6 +1348,7 @@ export async function drawCard(
   chart: Chart,
   options: ShareCardOptions = {},
 ): Promise<Blob> {
+  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
   if (options.variant === 'sheet') return drawChartSheet(chart, options);
   if (options.variant === 'big-three') return drawBigThreeCard(chart, options);
   if (options.variant === 'communication') return drawCommunicationCard(chart, options);
@@ -1349,6 +1370,7 @@ export interface PreparedChartCard {
 }
 
 export interface BigThreeCardChart {
+  moonSignCandidates?: readonly string[];
   bodies: readonly Pick<BodyPosition, 'body' | 'lon'>[];
   angles: Pick<Angles, 'asc' | 'mc'> | null;
   engineVersion: string;
@@ -1386,6 +1408,7 @@ export async function prepareChartSheet(
   chart: Chart,
   options: Omit<ShareCardOptions, 'variant'> = {},
 ): Promise<PreparedChartCard> {
+  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
   const sheetOptions: ShareCardOptions = { ...options, variant: 'sheet' };
   return {
     blob: await drawChartSheet(chart, sheetOptions),

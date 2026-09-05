@@ -108,6 +108,7 @@ export function buildSceneModel(chart: Chart, opts: BuildOptions = {}): ChartSce
 
   return {
     engineVersion: chart.engineVersion,
+    ...(chart.moonSignCandidates !== undefined ? { moonSignCandidates: chart.moonSignCandidates } : {}),
     anchor: anchorMode === 'aries'
       ? { lon: 0, mode: 'aries' }
       : { lon: chart.angles?.asc ?? 0, mode: 'asc' },

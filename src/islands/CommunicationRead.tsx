@@ -15,6 +15,7 @@ import {
 } from '../lib/share-card';
 import { aspectLabel } from '../lib/i18n/astrology';
 import { signBySlug, signName } from '../lib/signs';
+import { moonCandidates } from '../lib/moon-certainty';
 
 interface Props {
   chart: Chart;
@@ -168,11 +169,11 @@ export default function CommunicationRead({ chart, locale = 'en' }: Props) {
 
       <footer class="calc__deep-read-footer">
         <p class="calc__comm-privacy">Birth details stay off the image.</p>
-        {read.moonSign && (
-          <a href={`/learn/placements/moon-in-${read.moonSign}/`}>
-            Read Moon in {signName(signBySlug(read.moonSign), locale)} →
+        {moonCandidates(chart).map((slug) => (
+          <a key={slug} href={`/learn/placements/moon-in-${slug}/`}>
+            Read Moon in {signName(signBySlug(slug), locale)} →
           </a>
-        )}
+        ))}
       </footer>
       {shareState === 'preparing' && <p class="sr-only" role="status">Preparing your communication card.</p>}
       {shareState === 'saved' && <p class="sr-only" role="status">Your communication card is ready.</p>}
