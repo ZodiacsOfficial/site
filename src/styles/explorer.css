@@ -471,6 +471,12 @@
    inspection is the page's focus. The sheet scrolls independently while the
    page behind it remains spatially stable. */
 @media (max-width: 959.5px) {
+  /* The fixed Guide launcher must not cover sheet navigation or keep focus
+     behind it. Visibility restores automatically when the sheet closes. */
+  body:has(.insp--card) .zguide-launcher {
+    visibility: hidden;
+    pointer-events: none;
+  }
   body:has(.insp--card) .nav-wrap {
     opacity: 0;
     pointer-events: none;
