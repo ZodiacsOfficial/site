@@ -1799,6 +1799,7 @@
     #comparison-drawer { margin-top:20px; }
     #comparison-drawer .comparison-panel { margin:0; padding:0; }
     #comparison-drawer .ztbl-brand svg { min-width:0; }
+    #ownership-details #fig-authorities svg { min-width:0; }
     #comparison-drawer .comparison-notes h3 { font-size:21px; }
     #comparison-drawer .comparison-notes { padding-top:20px; background:transparent; }
     /* Flat reading surfaces; the twelve sign hues are the only accents. */
@@ -2160,6 +2161,10 @@
             You can copy a lion picture as often as you like. Sending these units moves them out of your wallet and into hers. Copying the symbol cannot create more of the asset. <a href="/registry/leo/">Its published address</a> tells her exactly which Leo she received.
           </p>
 
+          <p>Even their creator can’t make more of the original coins.</p>
+          <details class="evidence-drawer" id="ownership-details">
+            <summary>See the supply and ownership records</summary>
+            <div class="evidence-drawer__body">
           <p>
             The issuer gave up the native assets’ minting and freezing permissions. No project treasury is reported. Pool shares were burned, with the recorded amounts printed below. Holders can still sell; these rules do not protect the price.
           </p>
@@ -2169,6 +2174,8 @@
             <p class="zfig-cap">Native Solana assets: no minting or freezing permission remains. Burned pool shares cannot be redeemed; burns are not uniformly complete. Dotted rows report a burn without a percentage.</p>
             <p class="zfig-src"><a href="/thesis/thesis-disclosure.json">Committed disclosure</a> · authorities: 23 Jul 2026 · pool shares and treasury: 14 Jul 2026 · <a href="#the-instrument">every sign’s receipt</a></p>
           </figure>
+            </div>
+          </details>
           <aside class="proof-loop" data-real-use-proof aria-labelledby="proof-loop-title" data-almanac-reveal>
             <div class="proof-loop__intro">
               <span class="proof-loop__eyebrow">A public cross-check today</span>
