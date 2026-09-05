@@ -99,11 +99,6 @@ export default function TodayBrief({
       returning = false;
     }
     setStreak(recordTodayOpen(window.localStorage).count);
-    void import('../../lib/transits')
-      .then(setTransitsModule)
-      .catch(() => {
-        setTransitsFailed(true);
-      });
     if (returning && WEB_PUSH_ENABLED) {
       void import('../PushOptIn').then(setPushModule).catch(() => {});
     }
@@ -120,6 +115,26 @@ export default function TodayBrief({
     },
     [livingChartEnabled, profile],
   );
+  const needsTransits = ready && chart !== null;
+
+  useEffect(() => {
+    if (!needsTransits) {
+      setTransitsFailed(false);
+      return;
+    }
+    if (transitsModule) return;
+    let active = true;
+    setTransitsFailed(false);
+    void import('../../lib/transits')
+      .then((module) => {
+        if (active) setTransitsModule(module);
+      })
+      .catch(() => {
+        if (active) setTransitsFailed(true);
+      });
+    return () => { active = false; };
+  }, [needsTransits, transitsModule]);
+
   const chartSunSign = useMemo(() => {
     const sun = chart?.summary?.bodies?.find((body) => (
       body?.body === 'Sun' && Number.isFinite(body.lon)
@@ -141,7 +156,7 @@ export default function TodayBrief({
   }, [chart, transitsModule]);
   const hasSavedChartHint = typeof document !== 'undefined'
     && document.documentElement.hasAttribute('data-today-saved-chart');
-  const comparisonUnavailable = transitsFailed
+  const comparisonUnavailable = (needsTransits && transitsFailed)
     || (ready && chart === null && hasSavedChartHint)
     || (ready && chart !== null && transitsModule !== null && reading === null);
   const personalized = ready && chart && reading && transitsModule

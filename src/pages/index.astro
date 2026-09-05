@@ -400,7 +400,9 @@ const tools = [
 
   <!-- 02 · The sky, right now -->
   <section class="container ticker-band reveal">
-    <SkyTicker client:visible />
+    <!-- The committed sky receipt has no client interactions or live-clock
+         state. Its complete server-rendered markup needs no hydration. -->
+    <SkyTicker />
   </section>
 
   <!-- 02b · Interactive proof of the hero promise -->

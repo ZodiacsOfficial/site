@@ -101,6 +101,16 @@ describe('homepage first-paint assets', () => {
     expect(page).not.toContain('class="hero__method"');
   });
 
+  it('keeps the deterministic sky receipt server-rendered without a hydration directive', async () => {
+    const page = await readFile(resolve(repositoryRoot, 'src/pages/index.astro'), 'utf8');
+    const ticker = page.match(/<SkyTicker\b[^>]*\/>/gu);
+
+    expect(ticker).toEqual(['<SkyTicker />']);
+    // Personal return state and the interactive sign reading still hydrate.
+    expect(page).toContain('<WelcomeBack client:visible />');
+    expect(page).toContain('<TodayBySign client:visible={{ rootMargin: \'240px\' }} />');
+  });
+
   it.skipIf(!existsSync(resolve(repositoryRoot, 'dist/index.html')))(
     'discovers the poster first and installs client copy after the hero',
     async () => {
@@ -117,6 +127,13 @@ describe('homepage first-paint assets', () => {
       expect(catalog).toBeGreaterThan(hero);
       expect(catalog).toBeLessThan(firstIsland);
       for (const { file } of fontContract) expect(html).toContain(`/assets/home/${file}`);
+
+      // The receipt remains available without JavaScript, and its static
+      // dependency tree must not become a home hydration root again.
+      expect(html).toContain('class="skyticker mono"');
+      expect(html).toContain('class="skyticker__label"');
+      expect(html.match(/class="skyticker__item"/gu)?.length).toBeGreaterThanOrEqual(3);
+      expect(html).not.toMatch(/component-url="[^"]*\/SkyTicker\.[^"]*"/u);
     },
   );
 });

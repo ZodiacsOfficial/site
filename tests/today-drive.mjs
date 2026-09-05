@@ -411,6 +411,13 @@ async function drive(BASE, browser) {
   await returningSign.close();
 
   const empty = await newTodayPage(browser, { viewport: { width: 900, height: 1400 } });
+  const emptyPersonalizationRequests = [];
+  empty.on('request', (request) => {
+    const pathname = new URL(request.url()).pathname;
+    if (/^\/_astro\/(?:transits|compat)\.[^/]+\.js$/.test(pathname)) {
+      emptyPersonalizationRequests.push(pathname);
+    }
+  });
   await observeLayoutShifts(empty);
   await empty.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await empty.waitForSelector('[data-today-state="empty"]');
@@ -441,6 +448,30 @@ async function drive(BASE, browser) {
   check('selected sign keeps its pastel icon', await empty.locator('#today-sun-sign-reading [data-today-sun-sign="leo"] .today-sign-reading__icon img[src$="/leo.webp"]').count() === 1);
   const selectedHash = await empty.evaluate(() => location.hash);
   check('enhanced sign link keeps native hash navigation', selectedHash === '#today-sun-sign-leo', selectedHash);
+  check(
+    'first visit and Sun-sign selection do not request transit or compatibility chunks',
+    emptyPersonalizationRequests.length === 0,
+    JSON.stringify(emptyPersonalizationRequests),
+  );
+  const requestsBeforeChartSave = emptyPersonalizationRequests.length;
+  await empty.evaluate((savedProfile) => {
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify(savedProfile));
+    window.dispatchEvent(new CustomEvent('zodiacs:profile', { detail: savedProfile }));
+  }, profile);
+  await empty.waitForSelector('[data-today-state="chart"]');
+  const chartSaveRequests = emptyPersonalizationRequests.slice(requestsBeforeChartSave);
+  check(
+    'same-window chart save requests transit copy on demand',
+    chartSaveRequests.some((pathname) => pathname.startsWith('/_astro/transits.')),
+    JSON.stringify(chartSaveRequests),
+  );
+  check(
+    'same-window chart save renders the current saved chart and replaces the Sun-sign notes',
+    await empty.locator('.today-reading--resolved').isVisible()
+      && await empty.locator('.today-reading__chart-name').innerText() === profile.charts[0].name
+      && await empty.locator('.today-lines li').count() >= 2
+      && await empty.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 0,
+  );
   await empty.close();
 
   const noJs = await newTodayPage(browser, {
