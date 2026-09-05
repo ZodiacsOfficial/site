@@ -96,6 +96,66 @@ try {
   }
   check('navigation: reserved shells and Astrofolio persist at compact and desktop boundaries in all five locales', navBreakpointsPass, navBreakpointsDetail.join(' · '));
 
+  // A shared-chart receiver intentionally removes every wing link. Its head
+  // marker must reserve the shorter shell before hydration, with no empty
+  // destination track and no later movement of the surviving controls.
+  const receiverDetails = [];
+  let receiverPass = true;
+  for (const [prefix, desktopBreakpoint, compactWidth, mobileWidth, desktopWidth] of [
+    ['', 920, 180, 210, 746],
+    ['/es', 1040, 184, 210, 854],
+    ['/ru', 1040, 132, 166, 854],
+  ]) {
+    for (const width of [320, 390, desktopBreakpoint, ...(prefix === '' ? [1440] : [])]) {
+      const desktop = width >= desktopBreakpoint;
+      const navPage = await browser.newPage({ viewport: { width, height: 844 } });
+      await navPage.goto(`http://127.0.0.1:4399${prefix}/birth-chart/${kahlo}`, { waitUntil: 'domcontentloaded' });
+      const receiverGeometry = () => navPage.evaluate(() => {
+        const nav = document.querySelector('[data-nav]');
+        const box = nav?.getBoundingClientRect();
+        const children = [...(nav?.children ?? [])]
+          .filter((element) => getComputedStyle(element).display !== 'none')
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            return { left: rect.left, right: rect.right, width: rect.width, height: rect.height };
+          });
+        const controls = [...document.querySelectorAll('.nav__search, .nav__burger')]
+          .filter((element) => getComputedStyle(element).display !== 'none')
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            return { width: rect.width, height: rect.height };
+          });
+        return {
+          receiver: document.documentElement.hasAttribute('data-chart-share-receiver'),
+          wingLinks: document.querySelectorAll('a[href="/astrofolio/"],a[href^="/registry/"],a[href^="/sdk/"]').length,
+          left: box?.left, right: box?.right, width: box?.width,
+          children, controls,
+          endGap: box ? box.right - Math.max(...children.map((child) => child.right)) : null,
+        };
+      });
+      const early = await receiverGeometry();
+      await navPage.locator('.calc__result').waitFor({ state: 'visible', timeout: 15000 });
+      const settled = await receiverGeometry();
+      const expectedWidth = desktop ? desktopWidth : width <= 360 ? compactWidth : mobileWidth;
+      const pass = [early, settled].every((state) => state.receiver
+        && state.wingLinks === 0
+        && Math.abs(state.width - expectedWidth) <= 0.1
+        && state.left >= 16 && state.right <= width - 16
+        && Math.abs(state.left - (width - expectedWidth) / 2) <= 0.1
+        && Math.abs(state.endGap - (width <= 360 ? 5 : 11)) <= 0.1
+        && state.children.every((child) => child.left >= state.left && child.right <= state.right)
+        && state.controls.length === (desktop ? (prefix === '/ru' ? 0 : 1) : (prefix === '/ru' ? 1 : 2))
+        && (desktop || state.controls.every((control) => control.width === 44 && control.height === 44)))
+        && Math.abs(early.left - settled.left) <= 0.1
+        && Math.abs(early.width - settled.width) <= 0.1;
+      receiverPass &&= pass;
+      receiverDetails.push(`${prefix || '/en'}@${width}:${pass ? 'ok' : JSON.stringify({ early, settled })}`);
+      await shot(navPage.locator('[data-nav]'), `receiver-nav-${prefix.slice(1) || 'en'}-${width}.png`);
+      await navPage.close();
+    }
+  }
+  check('navigation: shared receivers keep stable centered controls without a blank wing track', receiverPass, receiverDetails.join(' · '));
+
   // The site sets `scroll-behavior: smooth`, so scrolls animate — poll the
   // box until it stops moving before clicking.
   async function settledBox(el) {

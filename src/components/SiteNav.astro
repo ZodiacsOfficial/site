@@ -259,6 +259,19 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
     grid-template-areas: 'mark chip menu';
     grid-template-columns: minmax(0, 1fr) 116px 44px;
   }
+  /* Shared-chart pages mark the receiver in <head>, before the nav streams.
+     Their existing boundary removes the wing link. Reserve only the remaining
+     tracks from the first paint, keeping their sizes and the pill centered. */
+  :global(html[data-chart-share-receiver]) .nav {
+    width: 210px;
+    grid-template-areas: 'mark search menu';
+    grid-template-columns: minmax(0, 1fr) 44px 44px;
+  }
+  :global(html[data-chart-share-receiver]) .nav--without-search {
+    width: 166px;
+    grid-template-areas: 'mark menu';
+    grid-template-columns: minmax(0, 1fr) 44px;
+  }
   .nav__mark {
     grid-area: mark;
     min-width: 0;
@@ -436,6 +449,9 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
     .nav { gap: 4px; padding-inline: 10px 4px; }
     .nav--localized { width: 288px; grid-template-columns: minmax(0, 1fr) 44px 100px 44px; }
     .nav--without-search { width: 224px; grid-template-columns: minmax(0, 1fr) 88px 44px; }
+    :global(html[data-chart-share-receiver]) .nav { width: 180px; }
+    :global(html[data-chart-share-receiver]) .nav--localized { width: 184px; }
+    :global(html[data-chart-share-receiver]) .nav--without-search { width: 132px; }
     .nav__mark { gap: 0; }
     .nav__name { font-size: 11px; letter-spacing: 0.08em; }
     .nav__chip { padding-inline: 7px 0; font-size: 11px; letter-spacing: 0.04em; }
@@ -449,6 +465,11 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
       grid-template-areas: 'mark links search chip';
       grid-template-columns: 116px minmax(0, 1fr) 62px 120px;
       gap: 18px;
+    }
+    :global(html[data-chart-share-receiver]) .nav:not(.nav--localized) {
+      width: 746px;
+      grid-template-areas: 'mark links search';
+      grid-template-columns: 116px minmax(0, 1fr) 62px;
     }
     .nav:not(.nav--localized) .nav__links { display: grid; }
     .nav:not(.nav--localized) .nav__sep,
@@ -466,6 +487,15 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
       gap: 18px;
     }
     .nav--without-search { grid-template-areas: 'mark links chip'; grid-template-columns: 116px minmax(0, 1fr) 120px; }
+    :global(html[data-chart-share-receiver]) .nav--localized {
+      width: 854px;
+      grid-template-areas: 'mark links search';
+      grid-template-columns: 116px minmax(0, 1fr) 44px;
+    }
+    :global(html[data-chart-share-receiver]) .nav--without-search {
+      grid-template-areas: 'mark links';
+      grid-template-columns: 116px minmax(0, 1fr);
+    }
     .nav--localized .nav__links { display: grid; }
     .nav--localized .nav__sep,
     .nav--localized .nav__dim { display: inline; }

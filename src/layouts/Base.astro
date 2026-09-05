@@ -58,6 +58,8 @@ interface Props {
   localChromeTypography?: boolean;
   /** Keep non-LCP chrome preloads desktop-only so mobile can paint without a font race. */
   minimalNavFontPreloads?: boolean;
+  /** Discover the existing mono face before CSS on routes with above-fold data text. */
+  preloadMonoFont?: boolean;
   /** UTC edition rendered by a daily surface; relative wording is enabled only while current. */
   editionDate?: string;
   /** Suppress third-party runtime scripts on pages handling private account data. */
@@ -278,21 +280,21 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
             media={props.minimalNavFontPreloads ? '(min-width: 782px)' : undefined}
           />
         )}
-        {props.minimalNavFontPreloads && props.stableChromeTypography && (
+        {(props.preloadMonoFont || (props.minimalNavFontPreloads && props.stableChromeTypography)) && (
           <link
             rel="preload"
             href="/fonts/jetbrains-mono-latin-wght-normal.woff2"
             as="font"
             type="font/woff2"
             crossorigin
-            media="(min-width: 782px)"
+            media={props.preloadMonoFont ? undefined : '(min-width: 782px)'}
           />
         )}
       </>
     )}
-    <!-- The mono face is decorative metadata, never the LCP typeface. Today
-         may preload it above the desktop breakpoint, but mobile lets CSS
-         discover it without competing with the first meaningful paint. -->
+    <!-- Most routes let CSS discover the mono metadata face. Today keeps its
+         preload desktop-only; People profiles opt in at every width because
+         late font discovery extends their measured first-render path. -->
     <SEO {...props} />
     {locale === 'en' && (
       <script is:inline>
