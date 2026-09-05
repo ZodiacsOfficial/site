@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { observeFooterStyles, observeViewportRegions, viewportRegionFailures } from './locale-capture-readiness.mjs';
 
 // Invoked by Explorer in the existing Browser Evidence comparison job. These
 // are real preview navigations; screenshots are review evidence, not baselines.
@@ -61,7 +62,8 @@ export async function driveLocaleDiscovery({ browser, baseURL, check, outDir }) 
   const directory = outDir ? `${outDir}/locales` : null;
   if (directory) await mkdir(directory, { recursive: true });
   const daily = JSON.parse(await readFile(new URL('../src/data/daily.json', import.meta.url), 'utf8'));
-  const report = { editionDate: daily.date, checks: [], screenshots: [] };
+  const report = { editionDate: daily.date, checks: [], screenshots: [], captureDiagnostics: [] };
+  const footerRequestsByPage = new WeakMap();
   const record = (name, ok, detail = '') => {
     report.checks.push({ name, ok, detail });
     check(`locale discovery: ${name}`, ok, detail);
@@ -69,9 +71,26 @@ export async function driveLocaleDiscovery({ browser, baseURL, check, outDir }) 
   const persist = async () => {
     if (directory) await writeFile(`${directory}/results.json`, `${JSON.stringify(report, null, 2)}\n`);
   };
+  const waitForFooter = async (page, name) => {
+    try {
+      await page.waitForFunction(observeFooterStyles, { readyOnly: true }, { timeout: TIMEOUT });
+    } catch (error) {
+      const diagnostic = { name,
+        footer: await page.evaluate(observeFooterStyles).catch((failure) => ({ error: failure.message })),
+        requests: (footerRequestsByPage.get(page) ?? []).map((row) => ({ ...row })) };
+      report.captureDiagnostics.push(diagnostic);
+      console.error(`locale capture footer readiness: ${JSON.stringify(diagnostic)}`);
+      throw error;
+    }
+    record(`${name} canonical footer CSS applied`, true);
+  };
   const shot = async (target, name, options = {}) => {
     if (!directory) return;
     if (options.fullPage) {
+      // Wait for the site's real deferred request and applied rules before
+      // scrolling or awaiting fonts; neither DOMContentLoaded nor an earlier
+      // document.fonts.ready waits for a stylesheet that has not been added.
+      await waitForFooter(target, name);
       // Match the existing visual/Phase 1 capture preparation: Chromium may
       // otherwise paint the offscreen footer's intrinsic placeholder when it
       // returns to the top for a full-page raster. Only skip that paint
@@ -101,6 +120,40 @@ export async function driveLocaleDiscovery({ browser, baseURL, check, outDir }) 
     await target.screenshot({ path: `${directory}/${name}.png`, animations: 'disabled', ...options });
     report.screenshots.push(`${name}.png`);
   };
+  const selectedSignShots = async (page, name) => {
+    if (!directory) return;
+    await waitForFooter(page, name);
+    await page.waitForFunction(() => [...document.querySelectorAll('.tbs img')]
+      .every((image) => image.complete && image.naturalWidth > 0), undefined, { timeout: TIMEOUT });
+    await page.evaluate(() => document.fonts.ready);
+    const fits = await page.locator('.tbs').evaluate((node) => {
+      const navBottom = document.querySelector('.nav-wrap')?.getBoundingClientRect().bottom ?? 0;
+      return node.getBoundingClientRect().height <= innerHeight - Math.max(0, navBottom) - 32;
+    });
+    const views = fits
+      ? [{ name, anchor: '.tbs', regions: ['.tbs__head', '.tbs__signs', '.tbs__read'] }]
+      : [
+        { name: `${name}-overview`, anchor: '.tbs', regions: ['.tbs__head', '.tbs__signs'] },
+        { name: `${name}-reading`, anchor: '.tbs__read', regions: ['.tbs__read'] },
+      ];
+    for (const view of views) {
+      await page.evaluate(async (selector) => {
+        const node = document.querySelector(selector);
+        if (!node) throw new Error(`missing capture region ${selector}`);
+        const navBottom = document.querySelector('.nav-wrap')?.getBoundingClientRect().bottom ?? 0;
+        scrollTo({ top: scrollY + node.getBoundingClientRect().top - Math.max(0, navBottom) - 16, behavior: 'instant' });
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      }, view.anchor);
+      const state = await page.evaluate(observeViewportRegions, view.regions);
+      const failures = viewportRegionFailures(state);
+      record(`${view.name} important regions clear of navigation and viewport edges`, failures.length === 0, JSON.stringify(state));
+      assert.deepEqual(failures, [], `${view.name}: ${failures.join('; ')}`);
+      // A real viewport preserves the fixed navigation and its relationship
+      // to the reading. A locator crop may silently scroll a tall component
+      // behind that navigation, so it cannot prove this state is readable.
+      await shot(page, view.name);
+    }
+  };
 
   for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1000 }]) {
     const context = await browser.newContext({ viewport, reducedMotion: 'reduce', timezoneId: 'UTC' });
@@ -108,13 +161,37 @@ export async function driveLocaleDiscovery({ browser, baseURL, check, outDir }) 
     page.setDefaultTimeout(TIMEOUT);
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
+    const footerRequests = [];
+    footerRequestsByPage.set(page, footerRequests);
+    const footerRequestRows = new WeakMap();
+    page.on('request', (request) => {
+      const url = new URL(request.url());
+      if (url.origin !== new URL(baseURL).origin || url.pathname !== '/assets/site-footer.css') return;
+      const row = { path: url.pathname, status: null, finished: false, error: null };
+      footerRequestRows.set(request, row);
+      footerRequests.push(row);
+    });
+    page.on('response', (response) => {
+      const row = footerRequestRows.get(response.request());
+      if (row) row.status = response.status();
+    });
+    page.on('requestfinished', (request) => {
+      const row = footerRequestRows.get(request);
+      if (row) row.finished = true;
+    });
+    page.on('requestfailed', (request) => {
+      const row = footerRequestRows.get(request);
+      if (row) row.error = request.failure()?.errorText ?? 'request failed';
+    });
     const open = async (path) => {
+      footerRequests.length = 0;
       const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
       assert.equal(response?.status(), 200, path);
       await page.locator('h1').first().waitFor({ state: 'visible' });
       await page.evaluate(() => document.fonts.ready);
     };
     const follow = async (link, path) => {
+      footerRequests.length = 0;
       const [response] = await Promise.all([
         page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
         link.click(),
@@ -240,7 +317,7 @@ export async function driveLocaleDiscovery({ browser, baseURL, check, outDir }) 
           record(`${code} selected sign has honest destination@${viewport.width}`, await link.getAttribute('href') === expected
             && (cue ? (await link.textContent()).includes(cue.text) && await link.getAttribute('hreflang') === 'en'
               && await link.getAttribute('title') === cue.title : await link.getAttribute('hreflang') === null));
-          await shot(page.locator('.tbs'), `${code}-home-selected-sign-${viewport.width}`);
+          await selectedSignShots(page, `${code}-home-selected-sign-${viewport.width}`);
           await follow(link, expected);
           record(`${code} selected sign opens the available edition@${viewport.width}`,
             await page.locator('html').getAttribute('lang') === (cue ? 'en' : code === 'pt' ? 'pt-BR' : code));
