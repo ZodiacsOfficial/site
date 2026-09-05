@@ -168,7 +168,7 @@ describe('technical audit remediation contracts', () => {
       expect(page).toContain("dateModified: '2026-08-23T00:00:00.000Z'");
     }
     expect(glossary).toContain("const PAGE_DATE = '2026-08-23'");
-    expect(thesis).toContain('property="article:modified_time" content="2026-09-04"');
-    expect(thesis).toContain('"dateModified": "2026-09-04"');
+    expect(thesis).toContain('property="article:modified_time" content="2026-09-05"');
+    expect(thesis).toContain('"dateModified": "2026-09-05"');
   });
 });

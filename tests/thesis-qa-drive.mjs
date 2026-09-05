@@ -11,13 +11,12 @@
  *   OUT_DIR=/tmp/shots node tests/thesis-qa-drive.mjs
  */
 import { chromium } from 'playwright-core';
-import { spawn } from 'node:child_process';
+import { startPreview } from './visual/preview-server.mjs';
 import { existsSync } from 'node:fs';
 import { setTimeout as wait } from 'node:timers/promises';
 
 const OUT = process.env.OUT_DIR ?? null;
 const PORT = Number.parseInt(process.env.THESIS_QA_PORT ?? '4399', 10);
-const BASE = `http://127.0.0.1:${PORT}`;
 const ZODIAC_SLUGS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -43,20 +42,12 @@ const LEO_MINT = '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm';
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
   ?? (existsSync('/opt/pw-browsers/chromium')
     ? '/opt/pw-browsers/chromium'
-    : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome');
+    : existsSync('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+      ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+      : chromium.executablePath());
 
-const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', String(PORT)], { stdio: 'ignore' });
-// Poll readiness instead of a fixed sleep; cold npx/config loads vary by host.
-{
-  const deadline = Date.now() + 30_000;
-  let up = false;
-  while (!up && Date.now() < deadline) {
-    up = await fetch(`${BASE}/thesis/`, { method: 'HEAD' })
-      .then((r) => r.ok).catch(() => false);
-    if (!up) await wait(250);
-  }
-  if (!up) { preview.kill(); throw new Error(`astro preview did not become ready on :${PORT}`); }
-}
+const preview = await startPreview({ port: PORT });
+const BASE = preview.baseURL;
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
 const shot = async (page, sel, path) => {
@@ -65,7 +56,21 @@ const shot = async (page, sel, path) => {
     const target = page.locator(sel);
     await target.scrollIntoViewIfNeeded();
     await page.waitForTimeout(350);
-    await target.screenshot({ path: `${OUT}/${path}` }).catch(() => {});
+    const proof = target.locator('[data-real-use-proof]');
+    if (await proof.count() === 1) {
+      // A tall section capture can include a proof card the viewport has not
+      // reached. Trigger its real entrance before returning to the section.
+      check(`${path}: proof content is exposed before capture`, await isVisuallyExposed(proof));
+      await target.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(350);
+    }
+    await target.screenshot({
+      path: `${OUT}/${path}`,
+      // Isolated figure/section captures omit floating site controls. This
+      // style exists only during capture; viewport checks and hero shots keep
+      // the real navigation and Guide launcher visible.
+      style: '.wnav-wrap, [data-guide-launcher] { visibility: hidden !important; }',
+    }).catch(() => {});
   } else {
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await page.waitForTimeout(350);
@@ -98,16 +103,34 @@ const isVisuallyExposed = async (locator) => {
 const waitForGalleryReady = async (page, timeout = 20_000) => {
   const gallery = page.locator(GALLERY_SELECTOR);
   if (await gallery.count() !== 1) return false;
-  await gallery.scrollIntoViewIfNeeded();
-  return page.locator(`${GALLERY_SELECTOR}.is-ready`)
-    .waitFor({ state: 'attached', timeout })
-    .then(() => true)
-    .catch(() => false);
+  const deadline = Date.now() + timeout;
+  // Materialize the content-visibility section before aiming at its gallery.
+  await page.locator('#what-holding-means').scrollIntoViewIfNeeded({ timeout });
+  await wait(Math.min(200, Math.max(0, deadline - Date.now())));
+  let readyInView = false;
+  while (Date.now() < deadline) {
+    // Earlier sections can resize after a jump, moving the gallery back out
+    // of view before lazy initialization. Reposition while waiting, not only
+    // after .is-ready has appeared. Never manufacture the ready class.
+    await gallery.evaluate((node) => node.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' }));
+    await wait(Math.min(200, Math.max(0, deadline - Date.now())));
+    const state = await gallery.evaluate((node) => {
+      const rect = node.getBoundingClientRect();
+      return node.classList.contains('is-ready')
+        && rect.width > 0 && rect.height > 0
+        && rect.bottom > 0 && rect.top < window.innerHeight;
+    });
+    // Two consecutive samples ensure the caller measures a settled, visible
+    // ready stage rather than the frame before another layout shift.
+    if (state && readyInView) return true;
+    readyInView = state;
+  }
+  return false;
 };
 
 const VISUAL_MODULES = [
   ['history transmission', '#fig-1 .transmission'],
-  ['seasonal wheel', '#fig-2 .cadence'],
+  ['measured attention chart', '#fig-2 [data-attention-chart]:visible'],
   ['Unicode keyboard', '#fig-keyboard'],
   ['schematic attention curves', '#fig-3 .attention-patterns'],
   ['native authorities and recorded burns', '#fig-authorities'],
@@ -117,7 +140,7 @@ const VISUAL_MODULES = [
 ];
 
 const checkFigureFit = async (page, width) => {
-  for (const id of ['fig-keyboard', 'fig-3', 'fig-authorities', 'fig-provenance']) {
+  for (const id of ['fig-keyboard', 'fig-2', 'fig-3', 'fig-authorities', 'fig-provenance']) {
     const geometry = await page.locator(`#${id}`).evaluate((node) => {
       const rect = node.getBoundingClientRect();
       const svgOverflow = [...node.querySelectorAll('svg')].some((svg) => {
@@ -130,6 +153,17 @@ const checkFigureFit = async (page, width) => {
       geometry.left >= -1 && geometry.right <= width + 1
         && geometry.scroll <= geometry.client + 1 && !geometry.svgOverflow,
       JSON.stringify(geometry));
+  }
+  const chart = page.locator('#fig-2 [data-attention-chart]:visible');
+  check(`${width}px: exactly one measured attention chart is visible`, await chart.count() === 1);
+  if (await chart.count() === 1) {
+    const smallestLabel = await chart.evaluate((svg) => Math.min(...[...svg.querySelectorAll('text')].map((label) =>
+      Number.parseFloat(getComputedStyle(label).fontSize) * svg.getBoundingClientRect().width / svg.viewBox.baseVal.width)));
+    check(`${width}px: measured chart labels remain readable`, smallestLabel >= 10, `${smallestLabel.toFixed(1)}px`);
+  }
+  if (width <= 390) {
+    const height = await page.locator('#fig-3 .attention-patterns').evaluate((node) => node.getBoundingClientRect().height);
+    check(`${width}px: schematic stays shorter than a phone screen`, height <= 540, `${height}px`);
   }
 };
 
@@ -534,7 +568,9 @@ try {
 
   // The human visual layer renders before the detailed evidence.
   check('seven-era transmission renders', (await page.locator('.transmission .era').count()) === 7);
-  check('twelve-sign seasonal wheel renders', (await page.locator('.zodiac-wheel__sign').count()) === 12);
+  check('F2 exposes measured data outside a template or drawer',
+    await page.locator('#fig-2 [data-attention-chart]:visible').count() === 1
+      && await page.locator('#fig-2 template, #fig-2 details').count() === 0);
   check('F3 draws four accessible schematic attention curves',
     (await page.locator('#fig-3 .attention-patterns .fact-card svg[role="img"]').count()) === 4
       && /Schematic:.*illustrative, not measured coin performance\./s.test(await page.locator('#fig-3 .zfig-cap').textContent() ?? ''));
@@ -629,6 +665,9 @@ try {
   await shot(page, '#what-holding-means', 'thesis-proof-desktop.png');
   await shot(page, GALLERY_SELECTOR, 'thesis-gallery-desktop.png');
   await shot(page, '#the-public-record', 'thesis-history-desktop.png');
+  for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'attention', 'worth-holding', 'the-conclusion']) {
+    await shot(page, `#${id}`, `thesis-${id}-desktop.png`);
+  }
   await page.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(page, '#the-candidacy', 'thesis-v-desktop.png');
   await shot(page, '#the-test', 'thesis-vii-desktop.png');
@@ -733,7 +772,7 @@ try {
       && annotatedLayout.galleryLeft >= -1
       && annotatedLayout.galleryRight <= annotatedLayout.viewportWidth + 1
       && annotatedLayout.galleryScrollWidth <= annotatedLayout.galleryClientWidth + 1,
-    JSON.stringify(annotatedLayout));
+    JSON.stringify({ ready: annotatedGalleryReady, ...annotatedLayout }));
   check('730px: gallery precedes the next movement without overlap',
     annotatedLayout.galleryBottom <= annotatedLayout.nextSectionTop + 1,
     JSON.stringify(annotatedLayout));
@@ -1047,6 +1086,9 @@ try {
       await shot(mob, '#fig-1', 'thesis-f1-mobile.png');
       await shot(mob, '#fig-2', 'thesis-f2-mobile.png');
       await shot(mob, '#fig-3', 'thesis-f3-mobile.png');
+      for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'attention', 'worth-holding', 'the-conclusion']) {
+        await shot(mob, `#${id}`, `thesis-${id}-mobile.png`);
+      }
       await shot(mob, '#fig-keyboard', 'thesis-keyboard-mobile.png');
       await shot(mob, '#fig-authorities', 'thesis-authorities-mobile.png');
       await shot(mob, '#fig-provenance', 'thesis-provenance-mobile.png');
@@ -1066,13 +1108,13 @@ try {
   }
   await browser.close();
 } finally {
-  preview.kill();
+  await preview.stop();
 }
 
 let failed = 0;
 for (const r of results) {
   if (!r.ok) failed += 1;
-  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.detail.slice(0, 80)}` : ''}`);
+  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.ok ? r.detail.slice(0, 80) : r.detail}` : ''}`);
 }
 console.log(failed ? `\n${results.length - failed} PASSED · ${failed} FAILED` : `\nALL PASS · ${results.length} checks`);
 process.exit(failed ? 1 : 0);
