@@ -5,7 +5,7 @@
  *   OUT_DIR=/tmp/today-shots npm run test:today:browser
  */
 import { chromium } from 'playwright-core';
-import { mkdir, readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
@@ -98,9 +98,23 @@ async function newTodayPage(browser, options) {
 async function observeLayoutShifts(page) {
   await page.addInitScript(() => {
     globalThis.__zdxLayoutShifts = [];
+    globalThis.__zdxLayoutShiftDetails = [];
     new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (!entry.hadRecentInput) globalThis.__zdxLayoutShifts.push(entry.value);
+        if (!entry.hadRecentInput) {
+          globalThis.__zdxLayoutShifts.push(entry.value);
+          globalThis.__zdxLayoutShiftDetails.push({
+            value: entry.value,
+            startTime: entry.startTime,
+            readyState: document.readyState,
+            fonts: document.fonts.status,
+            sources: entry.sources.map(({ node, previousRect, currentRect }) => ({
+              node: node ? { tag: node.nodeName, id: node.id, class: node.getAttribute?.('class') } : null,
+              previousRect: previousRect.toJSON(),
+              currentRect: currentRect.toJSON(),
+            })),
+          });
+        }
       }
     }).observe({ type: 'layout-shift', buffered: true });
   });
@@ -392,7 +406,14 @@ async function drive(BASE, browser) {
       && document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length === 12
   ));
   const returningSignCls = await measuredCls(returningSign);
-  check('stored Sun-sign hydration has exactly zero CLS', returningSignCls === 0, String(returningSignCls));
+  const returningSignShifts = await returningSign.evaluate(() => globalThis.__zdxLayoutShiftDetails);
+  check('stored Sun-sign hydration has exactly zero CLS', returningSignCls === 0, JSON.stringify({ cls: returningSignCls, shifts: returningSignShifts }));
+  if (returningSignCls !== 0) {
+    const failureDir = OUT ?? 'tests/visual/artifacts/today';
+    await mkdir(failureDir, { recursive: true });
+    await writeFile(`${failureDir}/stored-sign-layout-shifts.json`, JSON.stringify(returningSignShifts, null, 2));
+    await returningSign.screenshot({ path: `${failureDir}/stored-sign-layout-shift-900.png`, fullPage: true });
+  }
   const returningSignState = await returningSign.evaluate(() => ({
     totalReadings: document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length,
     visibleReadings: Array.from(document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]'))
