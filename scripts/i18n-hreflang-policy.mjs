@@ -3,9 +3,9 @@
  * TypeScript locale union never changes this release policy.
  */
 export const HREFLANG_LOCALE_POLICY = Object.freeze([
-  { locale: 'en', hreflang: 'en', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac', 'birthday'], expectedBlocks: 575 },
-  { locale: 'es', hreflang: 'es', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac'], expectedBlocks: 209 },
-  { locale: 'pt', hreflang: 'pt-BR', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac'], expectedBlocks: 209 },
+  { locale: 'en', hreflang: 'en', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac', 'birthday', 'daily-reading'], expectedBlocks: 617 },
+  { locale: 'es', hreflang: 'es', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac', 'daily-reading'], expectedBlocks: 251 },
+  { locale: 'pt', hreflang: 'pt-BR', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac', 'daily-reading'], expectedBlocks: 251 },
   { locale: 'fr', hreflang: 'fr', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac'], expectedBlocks: 209 },
   { locale: 'it', hreflang: 'it', indexEligible: true, routeFamilies: ['core', 'sign-guide', 'chinese-zodiac'], expectedBlocks: 209 },
   { locale: 'ru', hreflang: 'ru', indexEligible: true, routeFamilies: ['core'], expectedBlocks: 84 },
@@ -15,7 +15,7 @@ export const HREFLANG_LOCALE_POLICY = Object.freeze([
 export const X_DEFAULT_HREFLANG = Object.freeze({
   hreflang: 'x-default',
   locale: 'en',
-  expectedBlocks: 575,
+  expectedBlocks: 617,
 });
 
 export const ACTIVE_HREFLANGS = Object.freeze(
@@ -44,6 +44,9 @@ const CORE_PATHS = new Set([
   '/baby-zodiac/', '/profile/', '/methodology/', '/privacy/', '/disclosure/',
 ]);
 const SIGN_GUIDE_PATHS = new Set(SIGN_SLUGS.map((slug) => `/${slug}/`));
+const DAILY_READING_PATHS = new Set([
+  '/today/', '/horoscopes/', ...SIGN_SLUGS.map((slug) => `/horoscopes/${slug}/`),
+]);
 const MONTH_LENGTHS = {
   january: 31, february: 29, march: 31, april: 30, may: 31, june: 30,
   july: 31, august: 31, september: 30, october: 31, november: 30, december: 31,
@@ -69,6 +72,7 @@ export function hreflangRouteFamily(path) {
   const clean = canonicalPath(path);
   if (CORE_PATHS.has(clean)) return 'core';
   if (SIGN_GUIDE_PATHS.has(clean)) return 'sign-guide';
+  if (DAILY_READING_PATHS.has(clean)) return 'daily-reading';
   if (clean === '/learn/chinese-zodiac/') return 'chinese-zodiac';
   const animal = clean.match(/^\/learn\/chinese-zodiac\/([a-z]+)\/$/)?.[1];
   if (animal && ANIMALS.has(animal)) return 'chinese-zodiac';

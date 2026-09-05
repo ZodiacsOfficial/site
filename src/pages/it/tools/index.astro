@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import ToolGlyph from '../../../components/ToolGlyph.astro';
+import ToolsPageHeading from '../../../components/ToolsPageHeading.astro';
 import { ENGLISH_ONLY_COPY, localizePath } from '../../../lib/i18n';
 
 const englishOnly = ENGLISH_ONLY_COPY.it;
@@ -38,7 +39,7 @@ const jsonLd = [
 >
   <section class="section container">
     <div class="section-head">
-      <h2>Strumenti astrologici gratuiti</h2>
+      <ToolsPageHeading>Strumenti astrologici gratuiti</ToolsPageHeading>
       <p>Scopri il tuo tema natale, il segno lunare, l’ascendente, le compatibilità e ciò che accade nel cielo adesso. I tuoi dati vengono calcolati nel browser.</p>
     </div>
 
@@ -47,7 +48,7 @@ const jsonLd = [
         <a class="shell tinted" href={'englishOnly' in tool ? tool.href : localizePath('it', tool.href)} hreflang={'englishOnly' in tool ? 'en' : undefined} title={'englishOnly' in tool ? englishOnly.aria : undefined} aria-label={'englishOnly' in tool ? `${tool.title}. ${englishOnly.aria}` : undefined} style={`--sign:${tool.hue}`}>
           <div class="core tinted tool-card">
             <ToolGlyph kind={tool.kind} />
-            <h3>{tool.title}</h3>
+            <h2>{tool.title}</h2>
             <p>{tool.promise}</p>
             <span class="tool-card__go">Apri →</span>
           </div>
@@ -63,7 +64,7 @@ const jsonLd = [
       >
         <div class="core tinted tool-card">
           <ToolGlyph kind="assistant" />
-          <h3>Chiedi a Guide</h3>
+          <h2>Chiedi a Guide</h2>
           <p>Guide può aiutarti con uno strumento, un termine astrologico o un tema che hai salvato qui.</p>
           <span class="tool-card__go">Inizia una conversazione →</span>
         </div>
@@ -73,7 +74,7 @@ const jsonLd = [
     <div class="tools-upcoming">
       <em class="kicker">Disponibile anche in inglese</em>
       <ul>
-        <li><strong>Oroscopi.</strong> Un oroscopo mensile per ogni segno, basato sulle date reali del cielo: <a href="/horoscopes/" hreflang="en">leggi questo mese</a>.</li>
+        <li><strong>Oroscopi.</strong> Il cielo di oggi, segno per segno. L’edizione inglese include anche le letture della settimana e del mese: <a href="/horoscopes/" hreflang="en" title={englishOnly.aria}>scegliere un segno</a>.</li>
         <li><strong>Mercurio retrogrado.</strong> I periodi esatti fino al 2027: <a href="/mercury-retrograde/" hreflang="en">vedi le date</a>.</li>
       </ul>
     </div>
@@ -86,7 +87,7 @@ const jsonLd = [
   @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
   .tool-card { display: flex; flex-direction: column; gap: 10px; padding: 26px 22px; min-height: 210px; }
   /* Tool-card icon disc lives in ToolGlyph.astro. */
-  .tool-card h3 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
+  .tool-card h2 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
   .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
   .tool-card__go { margin-top: auto; font-size: 13px; font-weight: 550; color: var(--text); }
   .assistant-tool { display: block; width: 100%; text-align: start; transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }

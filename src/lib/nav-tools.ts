@@ -140,9 +140,9 @@ export const TOOL_CATALOG: readonly ToolCatalogEntry[] = [
     hub: { order: 16, title: 'Big Three calculator', promise: 'Sun, Moon, and Rising in seconds, with a card to share and one tap into the full chart.', hue: 'var(--sign-leo)', kind: 'birth', group: 'start' },
   },
   {
-    href: '/today/', label: 'today', footerOrder: 2,
+    href: '/today/', label: 'today', footerOrder: 2, footerUsesLocalizedPath: true,
     footerLabel: {
-      en: 'Today', es: 'Hoy (en inglés)', pt: 'Hoje (em inglês)',
+      en: 'Today', es: 'Hoy', pt: 'Hoje',
       fr: 'Aujourd’hui (en anglais)', it: 'Oggi (in inglese)', ru: 'Сегодня — пока по-английски',
     },
     hub: { order: 3, title: 'Today', promise: 'A plain-language daily brief once you have saved a chart.', hue: 'var(--sign-cancer)', kind: 'transit', group: 'start' },

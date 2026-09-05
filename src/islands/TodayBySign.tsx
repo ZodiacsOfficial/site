@@ -9,7 +9,7 @@ import { SIGNS, signName } from '../lib/signs';
 import PlanetGlyph from '../components/PlanetGlyph';
 import EvidenceDisclosure from './EvidenceDisclosure';
 import type { Daily } from '../lib/daily';
-import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
+import { englishOnlyCue, localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { formatDate } from '../lib/i18n/dates';
 import { moonPhaseLabel } from '../lib/i18n/astrology';
 import { dailyReadingForLocale } from '../lib/i18n/daily-reading';
@@ -30,6 +30,9 @@ export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
   }
   const reading = sel ? dailyReadingForLocale(sel, daily as Daily, locale) : null;
   const active = sel ? SIGNS.find((s) => s.slug === sel)! : null;
+  const horoscopePath = active ? `/horoscopes/${active.slug}/` : '/horoscopes/';
+  const horoscopeHref = localizePath(locale, horoscopePath);
+  const englishOnly = horoscopeHref === horoscopePath ? englishOnlyCue(locale) : undefined;
 
   return (
     <section class="tbs" aria-label={t(locale, 'todayBySignTitle')}>
@@ -86,8 +89,8 @@ export default function TodayBySign({ locale: rawLocale = 'en' }: Props) {
                 ))}
               </ul>
             </EvidenceDisclosure>
-            <a class="tbs__more" href={localizePath(locale, `/horoscopes/${active.slug}/`)} hreflang="en">
-              {signName(active, locale)} {t(locale, 'todayHoroscopeLink')} →
+            <a class="tbs__more" href={horoscopeHref} hreflang={englishOnly ? 'en' : undefined} title={englishOnly?.aria}>
+              {signName(active, locale)} {t(locale, 'todayHoroscopeLink')}{englishOnly?.suffix} →
             </a>
           </div>
         ) : (

@@ -6,14 +6,16 @@
  */
 import { SIGNS, signDates, signName } from '../lib/signs';
 import SignIcon from './SignIcon.astro';
-import { englishOnlyCue, localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
+import { availableLocalesForPath, englishOnlyCue, localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { ALL_TOOLS_LABEL, NAV_TOOLS } from '../lib/nav-tools';
 
 interface Props { locale?: Locale }
 const locale = normalizeCatalogLocale(Astro.props.locale);
 const path = Astro.url.pathname;
+const hasDailyReading = availableLocalesForPath('/today/')?.includes(locale) ?? false;
+const todayLabel = t(locale, 'today').replace(/^./u, (letter) => letter.toLocaleUpperCase(locale));
 const links = [
-  ...(locale === 'en' ? [{ href: '/today/', label: 'Today' }] : []),
+  ...(hasDailyReading ? [{ href: '/today/', label: todayLabel }] : []),
   { href: '/learn/', label: t(locale, 'navLearn') },
   { href: '/horoscopes/', label: t(locale, 'navHoroscopes') },
 ] as const;
@@ -174,11 +176,11 @@ const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && local
   <nav aria-label={locale === 'ru' ? 'Мобильная навигация' : 'Mobile'}>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navSite')}</span>
-      {locale === 'en' && <a class="mobile-menu__link" style="--i:0" href="/today/">Today</a>}
-      <a class="mobile-menu__link" style={`--i:${locale === 'en' ? 1 : 0}`} href={localizePath(locale, '/learn/')} hreflang={englishOnlyHref('/learn/') ? 'en' : undefined} title={englishOnlyHref('/learn/') ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{englishOnlyHref('/learn/') ? englishOnly?.suffix : ''}</a>
-      <a class="mobile-menu__link" style={`--i:${locale === 'en' ? 2 : 1}`} href={localizePath(locale, '/horoscopes/')} hreflang={englishOnlyHref('/horoscopes/') ? 'en' : undefined} title={englishOnlyHref('/horoscopes/') ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{englishOnlyHref('/horoscopes/') ? englishOnly?.suffix : ''}</a>
-      <a class="mobile-menu__link" style={`--i:${locale === 'en' ? 3 : 2}`} href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link mobile-menu__registry" style={`--i:${locale === 'en' ? 4 : 3}`} href="/astrofolio/" hreflang={englishOnly ? 'en' : undefined} title={englishOnlyAria}>
+      {hasDailyReading && <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/today/')}>{todayLabel}</a>}
+      <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 1 : 0}`} href={localizePath(locale, '/learn/')} hreflang={englishOnlyHref('/learn/') ? 'en' : undefined} title={englishOnlyHref('/learn/') ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{englishOnlyHref('/learn/') ? englishOnly?.suffix : ''}</a>
+      <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 2 : 1}`} href={localizePath(locale, '/horoscopes/')} hreflang={englishOnlyHref('/horoscopes/') ? 'en' : undefined} title={englishOnlyHref('/horoscopes/') ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{englishOnlyHref('/horoscopes/') ? englishOnly?.suffix : ''}</a>
+      <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 3 : 2}`} href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
+      <a class="mobile-menu__link mobile-menu__registry" style={`--i:${hasDailyReading ? 4 : 3}`} href="/astrofolio/" hreflang={englishOnly ? 'en' : undefined} title={englishOnlyAria}>
         <span>{t(locale, 'navCollect')}</span>
         <small>{astrofolioLabel[locale]}</small>
       </a>

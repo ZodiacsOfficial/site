@@ -39,7 +39,7 @@ afterEach(() => {
 describe('Russian staged catalog', () => {
   it('covers every UI key and preserves every interpolation token', () => {
     const englishKeys = Object.keys(en).sort() as UiKey[];
-    expect(englishKeys).toHaveLength(400);
+    expect(englishKeys).toHaveLength(409);
     expect(Object.keys(ru).sort()).toEqual(englishKeys);
     for (const key of englishKeys) {
       expect(placeholders(ru[key]), `ru.${key}`).toEqual(placeholders(en[key]));

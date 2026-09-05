@@ -1,13 +1,14 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import ToolGlyph from '../../../components/ToolGlyph.astro';
+import ToolsPageHeading from '../../../components/ToolsPageHeading.astro';
 import { ENGLISH_ONLY_COPY, localizePath } from '../../../lib/i18n';
 
 const englishOnly = ENGLISH_ONLY_COPY.es;
 const tools = [
   { href: '/birth-chart/', title: 'Calculadora de carta natal', promise: 'Ve tu Sol, Luna, ascendente, planetas, casas y lo que significan.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
   { href: '/birth-chart/someone-else/', title: 'Carta de otra persona (en inglés)', promise: 'Usa sus datos de nacimiento, sus tres signos principales o un enlace de Zodiacs, con su permiso.', hue: 'var(--sign-pisces)', kind: 'birth' as const, englishOnly: true },
-  { href: '/today/', title: 'Hoy (en inglés)', promise: 'Tu última carta guardada frente al cielo del mediodía, con grados.', hue: 'var(--sign-cancer)', kind: 'transit' as const, englishOnly: true },
+  { href: '/today/', title: 'Hoy', promise: 'El cielo de hoy, leído para los doce signos solares.', hue: 'var(--sign-cancer)', kind: 'transit' as const },
   { href: '/compatibility/', title: 'Compatibilidad', promise: 'Compara dos cartas y mira dónde conectan, chocan y crecen.', hue: 'var(--sign-libra)', kind: 'compat' as const },
   { href: '/moon-sign/', title: 'Calculadora de signo lunar', promise: 'Cómo sientes y qué te ayuda a volver a ti.', hue: 'var(--sign-pisces)', kind: 'moon' as const },
   { href: '/rising-sign/', title: 'Calculadora de ascendente', promise: 'Encuentra la energía que otros notan primero.', hue: 'var(--sign-gemini)', kind: 'rising' as const },
@@ -38,7 +39,7 @@ const jsonLd = [
 >
   <section class="section container">
     <div class="section-head">
-      <h2>Herramientas gratis de astrología</h2>
+      <ToolsPageHeading>Herramientas gratis de astrología</ToolsPageHeading>
       <p>Encuentra tu carta natal, signo lunar, ascendente, compatibilidad y lo que está pasando en el cielo ahora. Tus datos se calculan en tu navegador.</p>
     </div>
 
@@ -47,7 +48,7 @@ const jsonLd = [
         <a class="shell tinted" href={'englishOnly' in tool ? tool.href : localizePath('es', tool.href)} hreflang={'englishOnly' in tool ? 'en' : undefined} title={'englishOnly' in tool ? englishOnly.aria : undefined} aria-label={'englishOnly' in tool ? `${tool.title}. ${englishOnly.aria}` : undefined} style={`--sign:${tool.hue}`}>
           <div class="core tinted tool-card">
             <ToolGlyph kind={tool.kind} />
-            <h3>{tool.title}</h3>
+            <h2>{tool.title}</h2>
             <p>{tool.promise}</p>
             <span class="tool-card__go">Abrir →</span>
           </div>
@@ -63,7 +64,7 @@ const jsonLd = [
       >
         <div class="core tinted tool-card">
           <ToolGlyph kind="assistant" />
-          <h3>Pregunta a Guide</h3>
+          <h2>Pregunta a Guide</h2>
           <p>Guide puede ayudarte con una herramienta, un término astrológico o una carta que hayas guardado aquí.</p>
           <span class="tool-card__go">Iniciar una conversación →</span>
         </div>
@@ -73,7 +74,7 @@ const jsonLd = [
     <div class="tools-upcoming">
       <em class="kicker">También disponible en inglés</em>
       <ul>
-        <li><strong>Horóscopos.</strong> Mensuales para cada signo, escritos con fechas reales del cielo: <a href="/horoscopes/" hreflang="en">leer este mes</a>.</li>
+        <li><strong>Horóscopos.</strong> El cielo de hoy, signo por signo. La edición inglesa también incluye lecturas semanales y mensuales: <a href="/horoscopes/" hreflang="en" title={englishOnly.aria}>elegir signo</a>.</li>
         <li><strong>Mercurio retrógrado.</strong> Ventanas exactas hasta 2027: <a href="/mercury-retrograde/" hreflang="en">ver fechas</a>.</li>
       </ul>
     </div>
@@ -86,7 +87,7 @@ const jsonLd = [
   @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
   .tool-card { display: flex; flex-direction: column; gap: 10px; padding: 26px 22px; min-height: 210px; }
   /* Tool-card icon disc lives in ToolGlyph.astro. */
-  .tool-card h3 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
+  .tool-card h2 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
   .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
   .tool-card__go { margin-top: auto; font-size: 13px; font-weight: 550; color: var(--text); }
   .assistant-tool { display: block; width: 100%; text-align: start; transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }

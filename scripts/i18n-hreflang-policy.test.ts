@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { LOCALES, LOCALE_META } from '../src/lib/i18n';
+import { LOCALES, LOCALE_META, alternatePathEntries } from '../src/lib/i18n';
+import { SIGN_SLUGS } from '../src/lib/signs';
 import {
   ABSENT_LOCALES,
   ACTIVE_HREFLANGS,
@@ -24,12 +25,12 @@ describe('hreflang release policy', () => {
     expect(STAGED_NOINDEX_LOCALES).toEqual([]);
     expect(ABSENT_LOCALES).toEqual(['ar']);
     expect(X_DEFAULT_HREFLANG).toEqual({
-      hreflang: 'x-default', locale: 'en', expectedBlocks: 575,
+      hreflang: 'x-default', locale: 'en', expectedBlocks: 617,
     });
     expect(hreflangRouteFamily('/fr/tools/')).toBe('core');
     expect(hreflangRouteFamily('/birthday/february-29/')).toBe('birthday');
     expect(hreflangRouteFamily('/ru/aries/')).toBe('sign-guide');
-    expect(hreflangRouteFamily('/ru/horoscopes/aries/')).toBeNull();
+    expect(hreflangRouteFamily('/pt/horoscopes/aries/')).toBe('daily-reading');
     expect([...expectedHreflangsForPath('/tools/')]).toEqual(['en', 'es', 'pt-BR', 'fr', 'it', 'ru', 'x-default']);
     expect([...expectedHreflangsForPath('/birthday/february-29/')])
       .toEqual(['en', 'x-default']);
@@ -37,8 +38,23 @@ describe('hreflang release policy', () => {
       .toEqual(['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']);
     expect([...expectedHreflangsForPath('/learn/chinese-zodiac/dragon/')])
       .toEqual(['en', 'es', 'pt-BR', 'fr', 'it', 'x-default']);
-    expect([...expectedHreflangsForPath('/horoscopes/aries/')]).toEqual([]);
+    expect([...expectedHreflangsForPath('/horoscopes/aries/')]).toEqual(['en', 'es', 'pt-BR', 'x-default']);
+    expect([...expectedHreflangsForPath('/horoscopes/aries/weekly/')]).toEqual([]);
     expect(HREFLANG_LOCALE_POLICY.find((entry) => entry.locale === 'ru')?.routeFamilies).toEqual(['core']);
     expect(HREFLANG_LOCALE_POLICY.find((entry) => entry.locale === 'ar')?.routeFamilies).toEqual([]);
+  });
+
+  it('matches application route availability for every published daily edition', () => {
+    for (const path of ['/today/', '/horoscopes/', ...SIGN_SLUGS.map((sign) => `/horoscopes/${sign}/`)]) {
+      for (const prefix of ['', '/es', '/pt']) {
+        const expected = alternatePathEntries(`${prefix}${path}`).map(({ locale }) => LOCALE_META[locale].hreflang);
+        expect([...expectedHreflangsForPath(`${prefix}${path}`)]).toEqual([...expected, 'x-default']);
+      }
+    }
+    // Fourteen route families, each with three existing locale pages.
+    expect(HREFLANG_LOCALE_POLICY.find(({ locale }) => locale === 'en')?.expectedBlocks).toBe(575 + 14 * 3);
+    for (const locale of ['es', 'pt']) {
+      expect(HREFLANG_LOCALE_POLICY.find((entry) => entry.locale === locale)?.expectedBlocks).toBe(209 + 14 * 3);
+    }
   });
 });

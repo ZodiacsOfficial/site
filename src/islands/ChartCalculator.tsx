@@ -132,23 +132,6 @@ const DETAIL_LABELS: Record<ReleasedLocale, { lead: string; placements: string; 
   it: { lead: 'Vedi i dati esatti — ', placements: ' posizioni · ', aspects: ' aspetti' },
 };
 const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
-const WHEEL_ACTION_COPY = {
-  en: { actions: 'Chart actions', guide: 'Take the guided tour', replay: 'Replay the tour', another: 'Read another chart', signatureSelf: 'Your chart signature', signatureOther: 'Their chart signature', compareMine: 'Compare with mine', compareAdd: 'Add my chart to compare', shareOther: 'Share this chart' },
-  es: { actions: 'Acciones de la carta', guide: 'Hacer el recorrido guiado', replay: 'Repetir el recorrido', another: 'Leer otra carta', signatureSelf: 'La firma de tu carta', signatureOther: 'La firma de su carta', compareMine: 'Comparar con la mía', compareAdd: 'Añadir mi carta para comparar', shareOther: 'Compartir esta carta' },
-  pt: { actions: 'Ações do mapa', guide: 'Fazer o tour guiado', replay: 'Repetir o tour', another: 'Ler outro mapa', signatureSelf: 'A assinatura do seu mapa', signatureOther: 'A assinatura deste mapa', compareMine: 'Comparar com o meu', compareAdd: 'Adicionar meu mapa para comparar', shareOther: 'Compartilhar este mapa' },
-  fr: { actions: 'Actions du thème', guide: 'Faire la visite guidée', replay: 'Rejouer la visite', another: 'Lire un autre thème', signatureSelf: 'La signature de ton thème', signatureOther: 'La signature de son thème', compareMine: 'Comparer avec le mien', compareAdd: 'Ajouter mon thème pour comparer', shareOther: 'Partager ce thème' },
-  it: { actions: 'Azioni del tema', guide: 'Inizia il tour guidato', replay: 'Ripeti il tour', another: 'Leggi un altro tema', signatureSelf: 'La firma del tuo tema', signatureOther: 'La firma del suo tema', compareMine: 'Confronta con il mio', compareAdd: 'Aggiungi il mio tema per confrontare', shareOther: 'Condividi questo tema' },
-} as const satisfies Record<ReleasedLocale, {
-  actions: string;
-  guide: string;
-  replay: string;
-  another: string;
-  signatureSelf: string;
-  signatureOther: string;
-  compareMine: string;
-  compareAdd: string;
-  shareOther: string;
-}>;
 const CHART_BOOK_COPY = {
   en: { label: 'Whose chart is this?', save: 'Save', skip: 'Skip' },
   es: { label: '¿De quién es esta carta?', save: 'Guardar', skip: 'Omitir' },
@@ -304,7 +287,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const releasedLocale: ReleasedLocale | null = locale === 'ru' ? null : locale;
   const lensLabels = russianCopy?.chart.lens ?? LENS_LABELS[releasedLocale!];
   const detailLabels = russianCopy?.chart.detail ?? DETAIL_LABELS[releasedLocale!];
-  const wheelActionCopy = russianCopy?.chart.wheelActions ?? WHEEL_ACTION_COPY[releasedLocale!];
+  const wheelActionCopy = russianCopy?.chart.wheelActions ?? {
+    actions: t(locale, 'chartWheelActions'),
+    guide: t(locale, 'chartWheelGuide'),
+    replay: t(locale, 'chartWheelReplay'),
+    another: t(locale, 'chartWheelAnother'),
+    signatureSelf: t(locale, 'chartWheelSignatureSelf'),
+    signatureOther: t(locale, 'chartWheelSignatureOther'),
+    compareMine: t(locale, 'chartWheelCompareMine'),
+    compareAdd: t(locale, 'chartWheelCompareAdd'),
+    shareOther: t(locale, 'chartWheelShareOther'),
+  };
   const chartBookCopy = russianCopy?.chart.chartBook ?? CHART_BOOK_COPY[releasedLocale!];
   const registryAuraCopy = russianCopy?.chart.registryAura ?? REGISTRY_AURA_CHART_COPY[releasedLocale!];
   const otherSubjectCopy = russianCopy

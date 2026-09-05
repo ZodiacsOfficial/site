@@ -21,6 +21,7 @@ import { PNG } from 'pngjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { driveLegacyPolarProfile } from './legacy-polar-profile-drive.mjs';
 import { runRecoveryBrowserChecks } from './recovery-browser-checks.mjs';
+import { driveLocaleDiscovery } from './locale-discovery-drive.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? await findChromium();
@@ -54,6 +55,8 @@ try {
   await runRecoveryBrowserChecks({
     browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT,
   });
+
+  await driveLocaleDiscovery({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];
