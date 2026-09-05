@@ -151,20 +151,26 @@ const VISUAL_MODULES = [
 
 const checkFigureFit = async (page, width) => {
   for (const id of ['fig-keyboard', 'fig-2', 'fig-3', 'fig-authorities', 'fig-provenance']) {
-    const geometry = await page.locator(`#${id}`).evaluate((node) => {
+    const geometry = await page.locator(`#${id}`).evaluate(async (node) => {
       // Measure disclosed figures without scrolling past the above-fold
-      // gallery-loading check. Restore the actual default reading state.
+      // gallery-loading check. Let the opened subtree finish layout before
+      // reading its bounds, then restore the actual default reading state.
       const drawer = node.closest('details');
       const wasOpen = drawer?.open;
-      if (drawer) drawer.open = true;
-      const rect = node.getBoundingClientRect();
-      const svgOverflow = [...node.querySelectorAll('svg')].some((svg) => {
-        const bounds = svg.getBoundingClientRect();
-        return bounds.width > 0 && (bounds.left < rect.left - 1 || bounds.right > rect.right + 1);
-      });
-      const measured = { width: rect.width, left: rect.left, right: rect.right, scroll: node.scrollWidth, client: node.clientWidth, svgOverflow };
-      if (drawer) drawer.open = wasOpen;
-      return measured;
+      try {
+        if (drawer && !wasOpen) {
+          drawer.open = true;
+          await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        }
+        const rect = node.getBoundingClientRect();
+        const svgOverflow = [...node.querySelectorAll('svg')].some((svg) => {
+          const bounds = svg.getBoundingClientRect();
+          return bounds.width > 0 && (bounds.left < rect.left - 1 || bounds.right > rect.right + 1);
+        });
+        return { width: rect.width, left: rect.left, right: rect.right, scroll: node.scrollWidth, client: node.clientWidth, svgOverflow };
+      } finally {
+        if (drawer) drawer.open = wasOpen;
+      }
     });
     check(`${width}px: #${id} and its SVGs fit without horizontal overflow`,
       geometry.width > 0 && geometry.left >= -1 && geometry.right <= width + 1
