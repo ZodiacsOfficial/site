@@ -348,10 +348,12 @@ describe('resolveSavedChart', () => {
       throw new Error('must stay lazy');
     };
 
-    await expect(resolveSavedChart(makeChart('current'), loader)).resolves.toEqual({
+    const chart = makeChart('current');
+    await expect(resolveSavedChart(chart, loader)).resolves.toEqual({
       bodies: [{ body: 'Sun', lon: 280 }],
       asc: 12,
       timeKnown: true,
+      summary: chart.summary,
     });
     expect(loads).toBe(0);
   });
@@ -408,6 +410,14 @@ describe('resolveSavedChart', () => {
       bodies: [{ body: 'Sun', lon: 42 }],
       asc: 5,
       timeKnown: false,
+      summary: {
+        engineVersion: ENGINE_VERSION,
+        utcISO: '1990-01-01T05:00:00.000Z',
+        houseSystem: 'placidus',
+        bodies: [{ body: 'Sun', lon: 42, retrograde: false }],
+        angles: { asc: 5, mc: 95 },
+        flags: [],
+      },
     });
   });
 
@@ -421,6 +431,7 @@ describe('resolveSavedChart', () => {
       bodies: [{ body: 'Sun', lon: 280 }],
       asc: 12,
       timeKnown: true,
+      summary: chart.summary,
     });
   });
 });
