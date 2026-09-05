@@ -1,13 +1,14 @@
 /**
  * Horoscope helpers shared by the hub and the sign pages. The rendered
- * month is always the latest month PRESENT IN THE COLLECTION, labeled
- * from frontmatter — the wall clock never decides what displays, so a
- * stale month renders honestly instead of failing the deploy.
+ * month is selected from committed data using the committed daily edition,
+ * then labeled from its source — the wall clock never decides what displays.
+ * Future ephemeris files must not become the current editorial month.
  */
 import { signBySlug, signName, signPrepositional } from './signs';
 import type { CatalogLocale as Locale } from './i18n';
 import { aspectLabel, planetLabel } from './i18n/astrology';
 import { formatDate } from './i18n/dates';
+import { currentHoroscopeMonth, utcMonth } from './horoscope-month.mjs';
 
 export interface TransitEvent {
   at: string;
@@ -39,10 +40,10 @@ export function transitsFor(month: string): TransitFile | null {
   return null;
 }
 
-/** The newest committed transit month ('YYYY-MM'), or null if none. */
-export function latestTransitMonth(): string | null {
-  const months = Object.values(transitFiles).map((m) => m.default.month).sort();
-  return months.at(-1) ?? null;
+/** Latest available transit month no later than the committed edition. */
+export function transitMonthForEdition(editionDate: string): string | null {
+  const months = Object.values(transitFiles).map((m) => m.default.month);
+  return currentHoroscopeMonth(months, utcMonth(editionDate)) ?? null;
 }
 
 const sn = (slug: string, locale: Locale = 'en') => signName(signBySlug(slug), locale);
