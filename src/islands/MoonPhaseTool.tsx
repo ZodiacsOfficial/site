@@ -18,6 +18,7 @@ import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Loca
 import { formatDateTime } from '../lib/i18n/dates';
 import { moonPhaseLabel } from '../lib/i18n/astrology';
 import { useEngine } from '../lib/hooks/useEngine';
+import CalculationReload, { calculationError } from './CalculationReload';
 
 /**
  * The lit portion of the disc as one path: the limb on the bright side,
@@ -131,7 +132,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
         caption,
       });
     } catch (err) {
-      setError(t(locale, 'moonError'));
+      setError(calculationError(err, locale, t(locale, 'moonError')));
       console.error(err);
     } finally {
       setBusy(false);
@@ -212,6 +213,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
           </button>
           <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
+          <CalculationReload error={error} locale={locale} />
         </div>
       </form>
 

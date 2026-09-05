@@ -1,7 +1,28 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
+import { UI } from '../lib/i18n';
 
 describe('Chart result action contract', () => {
+  it('keeps the exact 3D trigger copy in the per-page catalog rather than an eager locale table', async () => {
+    const calculator = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
+    expect(calculator).not.toContain('DEPTH_TOGGLE');
+    expect(calculator).toContain("t(locale, depthOpen ? 'chartDepthClose' : 'chartDepthOpen')");
+    expect(Object.values(UI).map((copy) => [copy.chartDepthOpen, copy.chartDepthClose])).toEqual([
+      ['See it in three dimensions', 'Hide the third dimension'],
+      ['Verla en tres dimensiones', 'Ocultar la tercera dimensión'],
+      ['Ver em três dimensões', 'Ocultar a terceira dimensão'],
+      ['Voir en trois dimensions', 'Masquer la troisième dimension'],
+      ['Vedilo in tre dimensioni', 'Nascondi la terza dimensione'],
+      ['See it in three dimensions — пока по-английски', 'Hide the third dimension — пока по-английски'],
+    ]);
+  });
+
+  it.each(['ChartCalculator.tsx', 'BigThreeQuick.tsx'])('respects reduced motion when %s scrolls to a result', async (file) => {
+    const source = await readFile(new URL(`./${file}`, import.meta.url), 'utf8');
+    expect(source).toContain("behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'");
+    expect(source).not.toContain("scrollIntoView({ behavior: 'smooth', block: 'start' })");
+  });
+
   it('keeps the ephemeris out of the idle page load and warms it on form focus', async () => {
     const calculator = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
 

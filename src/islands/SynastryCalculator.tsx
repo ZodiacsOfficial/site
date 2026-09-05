@@ -28,8 +28,11 @@ import type { PositionsShareChart, PositionsShareInput } from '../lib/share-posi
 import type { City } from '../lib/geo/search';
 import { LOCALE_META, localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
+import CalculationReload, { calculationError } from './CalculationReload';
+import { loadModule } from '../lib/module-load';
 import { useProfile } from '../lib/hooks/useProfile';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
+import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
 
 interface SlotState {
   source: 'saved' | 'form' | 'link' | 'positions';
@@ -249,7 +252,7 @@ export async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader):
 async function resolveLink(link: { input: ShareChartInput; label: string }, loadEngine: EngineLoader): Promise<Person> {
   const [engine, { resolveLocalToUtc }] = await Promise.all([
     loadEngine(),
-    import('../lib/time/localToUtc'),
+    loadModule(() => import('../lib/time/localToUtc')),
   ]);
   const { input } = link;
   const resolved = resolveLocalToUtc(
@@ -288,7 +291,7 @@ async function resolveLink(link: { input: ShareChartInput; label: string }, load
 async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: EngineLoader): Promise<Person> {
   const [engine, { resolveLocalToUtc }] = await Promise.all([
     loadEngine(),
-    import('../lib/time/localToUtc'),
+    loadModule(() => import('../lib/time/localToUtc')),
   ]);
   const timeKnown = slot.timeKnown && slot.time !== '';
   const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz);
@@ -489,6 +492,19 @@ function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
   );
 }
 
+function LoadRecovery({ error, onRetry, locale, area, reopenLink = false }: {
+  error: string; onRetry: () => void; locale: Locale; area: string; reopenLink?: boolean;
+}) {
+  return (
+    <div data-syn-recovery={area}>
+      <p class="calc__error" role="alert">{error}</p>
+      <button class="btn btn--glass" type="button" onClick={onRetry}>{t(locale, 'calculationRetry')}</button>
+      <CalculationReload error={error} locale={locale} />
+      {reopenLink && <p class="field__help">If you reload, open the original invitation or reading link again.</p>}
+    </div>
+  );
+}
+
 export default function SynastryCalculator({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeCatalogLocale(rawLocale);
   const inviteUiActive = COMPAT_INVITES_UI_ENABLED
@@ -519,8 +535,15 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       payload: import('../lib/invite/types').InvitePublicPayload;
     }
     | { state: 'unavailable' | 'offline' }
+    | { state: 'error'; error: string }
   >({ state: 'idle' });
-  const [returnBand, setReturnBand] = useState<'none' | 'valid' | 'invalid'>('none');
+  const [returnBand, setReturnBand] = useState<'none' | 'loading' | 'valid' | 'invalid'>('none');
+  const [returnError, setReturnError] = useState('');
+  const [sharingLoadError, setSharingLoadError] = useState('');
+  const [sharingRetry, setSharingRetry] = useState(0);
+  const [inviteUiError, setInviteUiError] = useState('');
+  const [inviteUiRetry, setInviteUiRetry] = useState(0);
+  const [accessTick, setAccessTick] = useState(0);
   const [meetingSettled, setMeetingSettled] = useState(true);
   const [invitePanelExpanded, setInvitePanelExpanded] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -541,7 +564,18 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
   const inviteCompletionRef = useRef<number | null>(null);
   const inviteOpenTrackedRef = useRef(false);
   const inviteArrivalHandleRef = useRef('');
+  const returnTokenRef = useRef<string | null>(null);
+  const activeRef = useRef(true);
+  const requestRef = useRef(0);
   const profileAccessGeneration = useProfileAccessGeneration(() => {
+    requestRef.current += 1;
+    inviteArrivalHandleRef.current = '';
+    returnTokenRef.current = null;
+    setArrival({ state: 'idle' });
+    setReturnBand('none');
+    setReturnError('');
+    setSharingLoadError('');
+    setInviteUiError('');
     compareInFlightRef.current = false;
     focusAfterComputeRef.current = false;
     setSlotA(emptySlot());
@@ -559,81 +593,166 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     setError('');
   });
 
+  useEffect(() => {
+    activeRef.current = true;
+    return () => {
+      activeRef.current = false;
+      requestRef.current += 1;
+      inviteArrivalHandleRef.current = '';
+      returnTokenRef.current = null;
+    };
+  }, []);
+
+  const requestIsCurrent = (request: number, access: number) => activeRef.current
+    && request === requestRef.current && access === profileAccessGeneration.current;
+
+  // The access guard invalidates pending downloads on every cutover. Retry
+  // optional controls on the next render, including a grant/restoration.
+  useEffect(() => {
+    const refresh = () => {
+      // A grant also invalidates pending comparisons. Release that request
+      // here; its stale finally block must not release a newer comparison.
+      compareInFlightRef.current = false;
+      focusAfterComputeRef.current = false;
+      setBusy(false);
+      setAccessTick((tick) => tick + 1);
+    };
+    window.addEventListener('zodiacs:profile-access', refresh);
+    return () => window.removeEventListener('zodiacs:profile-access', refresh);
+  }, []);
+
+  useEffect(() => {
+    if (accessTick === 0) return;
+    // A real revocation already cleared these refs. A grant may interrupt
+    // an in-flight link read without revoking its in-memory input.
+    if (arrival.state === 'loading' && inviteArrivalHandleRef.current) void openArrival(inviteArrivalHandleRef.current);
+    if (returnBand === 'loading' && returnTokenRef.current !== null) void openReturnedReading(returnTokenRef.current);
+  }, [accessTick]);
+
   // Result-only actions stay outside the entry form's initial closure.
   useEffect(() => {
-    if (!result) return;
+    if (!result || busy) return;
     let cancelled = false;
-    if (!copyLinkMod || !shareMod) {
-      void Promise.all([
-        import('./CopyLinkButton'),
-        import('../lib/share'),
-      ]).then(([copyModule, shareModule]) => {
-        if (!cancelled) {
-          setCopyLinkMod(copyModule);
-          setShareMod(shareModule);
-        }
-      }).catch(() => {});
-    }
-    if (!compatShareMod) {
-      void import('./CompatibilityShareControl').then((module) => {
-        if (!cancelled) setCompatShareMod(module);
-      }).catch(() => {});
-    }
-    return () => { cancelled = true; };
-  }, [result, copyLinkMod, shareMod, compatShareMod]);
-
-  // A plain result gets the same send step as an invitation return — a
-  // picture plus a positions-only link — loaded only once a result exists.
-  useEffect(() => {
-    if (!result || result.source !== 'plain' || sendBackMod) return;
-    let active = true;
-    void import('./synastry/SendBackExperience').then((module) => {
-      if (active) setSendBackMod(module);
+    const request = requestRef.current;
+    const access = profileAccessGeneration.current;
+    const isCurrent = () => !cancelled && requestIsCurrent(request, access);
+    const install = async <T,>(pending: Promise<T>, assign: (module: T) => void) => {
+      const module = await pending;
+      if (isCurrent()) assign(module);
+    };
+    setSharingLoadError('');
+    void Promise.all([
+      install(copyLinkMod ? Promise.resolve(copyLinkMod) : loadModule(() => import('./CopyLinkButton')), setCopyLinkMod),
+      install(shareMod ? Promise.resolve(shareMod) : loadModule(() => import('../lib/share')), setShareMod),
+      install(compatShareMod ? Promise.resolve(compatShareMod) : loadModule(() => import('./CompatibilityShareControl')), setCompatShareMod),
+      install(sendBackMod ? Promise.resolve(sendBackMod) : loadModule(() => import('./synastry/SendBackExperience')), setSendBackMod),
+    ]).catch((cause) => {
+      if (isCurrent()) setSharingLoadError(calculationError(cause, locale, t(locale, 'cardError')));
     });
-    return () => { active = false; };
-  }, [result, sendBackMod]);
+    return () => { cancelled = true; };
+  }, [result, busy, sharingRetry, locale, accessTick]);
 
   useEffect(() => {
     if (!inviteUiActive) return;
     let active = true;
+    const access = profileAccessGeneration.current;
+    const isCurrent = () => active && activeRef.current && access === profileAccessGeneration.current;
+    const install = async <T,>(pending: Promise<T>, assign: (module: T) => void) => {
+      const module = await pending;
+      if (isCurrent()) assign(module);
+    };
+    setInviteUiError('');
     void Promise.all([
-      import('./synastry/InviteExperience'),
-      import('./synastry/SendBackExperience'),
-    ]).then(([inviteModule, sendModule]) => {
-      if (!active) return;
-      setInviteExperienceMod(inviteModule);
-      setSendBackMod(sendModule);
-    }).catch(() => {});
+      install(loadModule(() => import('./synastry/InviteExperience')), setInviteExperienceMod),
+      install(loadModule(() => import('./synastry/SendBackExperience')), setSendBackMod),
+    ]).catch((cause) => {
+      if (isCurrent()) setInviteUiError(calculationError(cause, locale, 'The invitation controls could not load. Try again.'));
+    });
     return () => { active = false; };
-  }, [inviteUiActive]);
+  }, [inviteUiActive, inviteUiRetry, accessTick]);
 
   async function openArrival(handle: string): Promise<void> {
+    if (!activeRef.current) return;
+    const request = ++requestRef.current;
+    const access = profileAccessGeneration.current;
     inviteArrivalHandleRef.current = handle;
+    compareInFlightRef.current = false;
+    setBusy(false);
     setArrival({ state: 'loading' });
-    const { openInviteSession } = await import('./synastry/inviteClient');
-    const next = await openInviteSession(handle);
-    if (next.state !== 'ready') {
+    try {
+      const { openInviteSession } = await loadModule(() => import('./synastry/inviteClient'));
+      if (!requestIsCurrent(request, access)) return;
+      const next = await openInviteSession(handle);
+      if (!requestIsCurrent(request, access)) return;
       setArrival(next);
+      if (next.state === 'ready') {
+        setSlotA({
+          ...emptySlot(),
+          source: 'positions',
+          positions: { chart: next.payload.positions, label: next.payload.label, invite: true },
+        });
+        setResult(null);
+      }
       if (!inviteOpenTrackedRef.current) {
         inviteOpenTrackedRef.current = true;
         track('invite_opened', { state: next.state });
       }
-      return;
+    } catch (cause) {
+      if (!requestIsCurrent(request, access)) return;
+      setArrival({
+        state: 'error',
+        error: calculationError(cause, locale, 'The invitation could not be opened. Check your connection and try again.'),
+      });
     }
-    setArrival(next);
-    setSlotA({
-      ...emptySlot(),
-      source: 'positions',
-      positions: {
-        chart: next.payload.positions,
-        label: next.payload.label,
-        invite: true,
-      },
-    });
-    setResult(null);
-    if (!inviteOpenTrackedRef.current) {
-      inviteOpenTrackedRef.current = true;
-      track('invite_opened', { state: 'ready' });
+  }
+
+  async function openReturnedReading(token: string): Promise<void> {
+    if (!activeRef.current) return;
+    const request = ++requestRef.current;
+    const access = profileAccessGeneration.current;
+    returnTokenRef.current = token;
+    compareInFlightRef.current = false;
+    setBusy(false);
+    setReturnBand('loading');
+    setReturnError('');
+    try {
+      const [codec, synastry, wheel] = await Promise.all([
+        loadModule(() => import('../lib/share-synastry')),
+        loadModule(() => import('../lib/engine/synastry')),
+        loadModule(() => import('./synastry/RelationshipWheel')),
+      ]);
+      if (!requestIsCurrent(request, access)) return;
+      const decoded = token ? codec.decodeSynastryLink(token) : null;
+      if (!decoded) {
+        returnTokenRef.current = null;
+        setReturnBand('invalid');
+        return;
+      }
+      const a = resolvePositions({
+        chart: decoded.sides[0].chart,
+        label: decoded.sides[0].label || 'Their side',
+      });
+      const b = resolvePositions({
+        chart: decoded.sides[1].chart,
+        label: decoded.sides[1].label || 'The other side',
+      });
+      setWheelMod(wheel);
+      setResult({
+        a,
+        b,
+        summary: synastry.summarizePair(a.bodies, b.bodies, 8),
+        at: Date.now(),
+        sides: [null, null],
+        source: 'returned',
+      });
+      setReturnBand('valid');
+      returnTokenRef.current = null;
+      setMeetingSettled(true);
+      track('compat_computed', { source: 'returned' });
+    } catch (cause) {
+      if (!requestIsCurrent(request, access)) return;
+      setReturnBand('none');
+      setReturnError(calculationError(cause, locale, 'The reading could not be opened. Try again.'));
     }
   }
 
@@ -659,49 +778,18 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       ? returnTokens[0]
       : '';
     history.replaceState(null, '', window.location.pathname + window.location.search);
-    let active = true;
-    void Promise.all([
-      import('../lib/share-synastry'),
-      import('../lib/engine/synastry'),
-      import('./synastry/RelationshipWheel'),
-    ]).then(([codec, synastry, wheel]) => {
-      if (!active) return;
-      const decoded = token ? codec.decodeSynastryLink(token) : null;
-      if (!decoded) {
-        setReturnBand('invalid');
-        return;
-      }
-      const a = resolvePositions({
-        chart: decoded.sides[0].chart,
-        label: decoded.sides[0].label || 'Their side',
-      });
-      const b = resolvePositions({
-        chart: decoded.sides[1].chart,
-        label: decoded.sides[1].label || 'The other side',
-      });
-      setWheelMod(wheel);
-      setResult({
-        a,
-        b,
-        summary: synastry.summarizePair(a.bodies, b.bodies, 8),
-        at: Date.now(),
-        sides: [null, null],
-        source: 'returned',
-      });
-      setReturnBand('valid');
-      setMeetingSettled(true);
-      track('compat_computed', { source: 'returned' });
-    }).catch(() => {
-      if (active) setReturnBand('invalid');
-    });
-    return () => { active = false; };
+    void openReturnedReading(token);
   }, [inviteUiActive]);
 
   useEffect(() => {
-    if (!inviteUiActive) return;
+    if (!inviteUiActive || !profileAccessAllowed()) return;
+    let active = true;
+    const access = profileAccessGeneration.current;
+    const isCurrent = () => active && activeRef.current && profileAccessAllowed()
+      && access === profileAccessGeneration.current;
     const flush = () => {
-      void import('./synastry/inviteClient').then(({ beaconPendingCompletion }) => {
-        beaconPendingCompletion();
+      void loadModule(() => import('./synastry/inviteClient')).then(({ beaconPendingCompletion }) => {
+        if (isCurrent()) beaconPendingCompletion();
       }).catch(() => {});
     };
     const onVisibility = () => {
@@ -709,24 +797,30 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     };
     window.addEventListener('pagehide', flush);
     document.addEventListener('visibilitychange', onVisibility);
-    void import('./synastry/inviteClient').then(({ replayPendingCompletion }) => {
-      void replayPendingCompletion();
+    void loadModule(() => import('./synastry/inviteClient')).then(({ replayPendingCompletion }) => {
+      if (isCurrent()) return replayPendingCompletion();
     }).catch(() => {});
     return () => {
+      active = false;
       window.removeEventListener('pagehide', flush);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [inviteUiActive]);
+  }, [inviteUiActive, accessTick]);
 
   useEffect(() => {
-    if (!result || result.source !== 'invite' || arrival.state !== 'ready') return;
+    if (!profileAccessAllowed() || !result || result.source !== 'invite' || arrival.state !== 'ready') return;
     if (inviteCompletionRef.current === result.at) return;
-    inviteCompletionRef.current = result.at;
-    track('invite_completed');
-    void import('./synastry/inviteClient').then(({ completeInvite }) => (
-      completeInvite(arrival.handle, arrival.payload.expiresAt)
-    )).catch(() => {});
-  }, [result, arrival]);
+    let active = true;
+    const request = requestRef.current;
+    const access = profileAccessGeneration.current;
+    void loadModule(() => import('./synastry/inviteClient')).then(({ completeInvite }) => {
+      if (!active || !profileAccessAllowed() || !requestIsCurrent(request, access)) return;
+      inviteCompletionRef.current = result.at;
+      track('invite_completed');
+      return completeInvite(arrival.handle, arrival.payload.expiresAt);
+    }).catch(() => {});
+    return () => { active = false; };
+  }, [result, arrival, accessTick]);
 
   useEffect(() => {
     if (!result) return;
@@ -1075,6 +1169,12 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
 
   function startOwnInvitationLoop(): void {
     if (slotB.source !== 'form' && slotB.source !== 'saved') return;
+    requestRef.current += 1;
+    compareInFlightRef.current = false;
+    focusAfterComputeRef.current = false;
+    setBusy(false);
+    inviteArrivalHandleRef.current = '';
+    returnTokenRef.current = null;
     setSlotA(slotB);
     setSlotB(emptySlot());
     setResult(null);
@@ -1150,6 +1250,14 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     // `busy` closure, so state can't gate re-entry.
     if (compareInFlightRef.current) return;
     if (!slotReady(slotA) || !slotReady(slotB) || sameSaved) return;
+    const request = ++requestRef.current;
+    returnTokenRef.current = null;
+    setReturnBand('none');
+    setReturnError('');
+    if (arrival.state !== 'ready') {
+      inviteArrivalHandleRef.current = '';
+      setArrival({ state: 'idle' });
+    }
     compareInFlightRef.current = true;
     focusAfterComputeRef.current = e !== undefined;
     setBusy(true);
@@ -1164,10 +1272,10 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       const [a, b, mod, { summarizePair }] = await Promise.all([
         resolve(slotA, t(locale, 'personA')),
         resolve(slotB, t(locale, 'personB')),
-        wheelMod ? Promise.resolve(wheelMod) : import('./synastry/RelationshipWheel'),
-        import('../lib/engine/synastry'),
+        wheelMod ? Promise.resolve(wheelMod) : loadModule(() => import('./synastry/RelationshipWheel')),
+        loadModule(() => import('../lib/engine/synastry')),
       ]);
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      if (!requestIsCurrent(request, accessGeneration)) return;
       const summary = summarizePair(a.bodies, b.bodies, 8);
       const resultSource = comparisonResultSource(
         slotA.source,
@@ -1192,11 +1300,11 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           : slotA.source === 'form' && slotB.source === 'form' ? 'form' : 'restored',
       });
     } catch (err) {
-      if (accessGeneration !== profileAccessGeneration.current) return;
-      setError(t(locale, 'compareError'));
+      if (!requestIsCurrent(request, accessGeneration)) return;
+      setError(calculationError(err, locale, t(locale, 'compareError')));
       console.error(err);
     } finally {
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      if (!requestIsCurrent(request, accessGeneration)) return;
       compareInFlightRef.current = false;
       setBusy(false);
     }
@@ -1237,20 +1345,33 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
 
   return (
     <div class="calc">
-      {sendBackMod && returnBand !== 'none' && (
+      {inviteUiError && <LoadRecovery error={inviteUiError} locale={locale} area="invite-ui" onRetry={() => setInviteUiRetry((n) => n + 1)} />}
+      {returnBand === 'loading' && <p role="status">Opening the returned reading…</p>}
+      {returnError && <LoadRecovery error={returnError} locale={locale} area="return" reopenLink onRetry={() => {
+        if (returnTokenRef.current !== null) void openReturnedReading(returnTokenRef.current);
+      }} />}
+      {sendBackMod && (returnBand === 'valid' || returnBand === 'invalid') && (
         <sendBackMod.ReturnBand
           invalid={returnBand === 'invalid'}
           onDismiss={() => {
+            returnTokenRef.current = null;
             setReturnBand('none');
             requestAnimationFrame(() => resultHeadingRef.current?.focus());
           }}
         />
       )}
-      {inviteExperienceMod && arrival.state !== 'idle' && (
+      {arrival.state === 'error' && <LoadRecovery error={arrival.error} locale={locale} area="arrival" reopenLink onRetry={() => {
+        if (inviteArrivalHandleRef.current) void openArrival(inviteArrivalHandleRef.current);
+      }} />}
+      {inviteExperienceMod && arrival.state !== 'idle' && arrival.state !== 'error' && (
         <inviteExperienceMod.InviteArrival
           view={arrival}
-          onRetry={() => void openArrival(inviteArrivalHandleRef.current)}
+          onRetry={() => { if (inviteArrivalHandleRef.current) void openArrival(inviteArrivalHandleRef.current); }}
           onClear={() => {
+            requestRef.current += 1;
+            compareInFlightRef.current = false;
+            focusAfterComputeRef.current = false;
+            setBusy(false);
             inviteArrivalHandleRef.current = '';
             setSlotA(emptySlot());
             setArrival({ state: 'idle' });
@@ -1330,6 +1451,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             </p>
           )}
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
+          <CalculationReload error={error} locale={locale} />
         </div>
       </form>
 
@@ -1403,6 +1525,8 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
               inviterLabel={result.b.label}
             />
           )}
+
+          {sharingLoadError && <LoadRecovery error={sharingLoadError} locale={locale} area="sharing" onRetry={() => setSharingRetry((n) => n + 1)} />}
 
           {(result.source === 'invite' || result.source === 'invite-restored') && sendBackMod && (
             <>

@@ -55,6 +55,14 @@ export const RUSSIAN_UI_PLURALS = {
 
 /** Reviewed Russian UI catalog. Route publication remains separately gated. */
 const ru = {
+  chartDepthOpen: 'See it in three dimensions — пока по-английски',
+  chartDepthClose: 'Hide the third dimension — пока по-английски',
+  calculationLoadError: 'Не удалось загрузить файлы расчёта. Проверьте подключение и попробуйте снова.',
+  calculationReload: 'Перезагрузить страницу',
+  calculationReloadWarning: 'При перезагрузке несохранённые данные будут удалены.',
+  calculationRetry: 'Попробовать снова',
+  pfdYearError: 'Не удалось завершить разбор на год вперёд. Попробуйте снова.',
+  placeSearching: 'Поиск мест…',
   navPrimary: 'Основное',
   navSigns: 'Знаки',
   navTools: 'Инструменты',

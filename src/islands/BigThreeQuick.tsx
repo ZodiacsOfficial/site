@@ -3,6 +3,8 @@ import { BirthFields } from './BirthFields';
 import type { City } from '../lib/geo/search';
 import { preloadIndex } from '../lib/geo/search';
 import { useEngine } from '../lib/hooks/useEngine';
+import CalculationReload, { calculationError } from './CalculationReload';
+import { loadModule } from '../lib/module-load';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { formatLongitude, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
@@ -45,12 +47,43 @@ export default function BigThreeQuick() {
   const [error, setError] = useState('');
   const [placements, setPlacements] = useState<Placement[] | null>(null);
   const [handoff, setHandoff] = useState('');
-  const [card, setCard] = useState<{ module: CardModule; prepared: PreparedChartCard } | null>(null);
-  const [cardState, setCardState] = useState<'idle' | 'preparing' | 'ready' | 'shared' | 'downloaded' | 'failed'>('idle');
+  const [card, setCard] = useState<{ module: CardModule; prepared: PreparedChartCard; run: number } | null>(null);
+  const [cardState, setCardState] = useState<'idle' | 'preparing' | 'ready' | 'sharing' | 'shared' | 'downloaded' | 'failed'>('idle');
+  const [cardError, setCardError] = useState('');
   const resultRef = useRef<HTMLDivElement>(null);
   const generation = useRef(0);
+  const cardAttempt = useRef(0);
+  const cardSource = useRef<{ chart: Chart; run: number } | null>(null);
 
-  useEffect(() => { void preloadIndex(); }, []);
+  useEffect(() => {
+    void preloadIndex();
+    return () => { generation.current += 1; };
+  }, []);
+
+  async function prepareCard(): Promise<void> {
+    const source = cardSource.current;
+    if (!source || source.run !== generation.current) return;
+    const attempt = ++cardAttempt.current;
+    const isCurrent = () => source.run === generation.current && attempt === cardAttempt.current;
+    setCardState('preparing');
+    setCardError('');
+    try {
+      const module = await loadModule(() => import('../lib/share-card'));
+      if (!isCurrent()) return;
+      const { chart } = source;
+      const prepared = await module.prepareBigThreeCard(
+        { bodies: chart.bodies, angles: chart.angles, engineVersion: chart.engineVersion },
+        'en',
+      );
+      if (!isCurrent()) return;
+      setCard({ module, prepared, run: source.run });
+      setCardState('ready');
+    } catch (cause) {
+      if (!isCurrent()) return;
+      setCardError(calculationError(cause, 'en', 'The share card could not be prepared. Try again.'));
+      setCardState('failed');
+    }
+  }
 
   async function compute(event: Event): Promise<void> {
     event.preventDefault();
@@ -61,11 +94,14 @@ export default function BigThreeQuick() {
     const run = ++generation.current;
     setBusy(true);
     setError('');
+    cardSource.current = null;
     setCard(null);
     setCardState('idle');
+    setCardError('');
     try {
       const resolution = resolveLocalToUtc(date, time, city.tz);
       const engine = await loadEngine();
+      if (run !== generation.current) return;
       const chart: Chart = engine.computeChart({
         utc: resolution.utc,
         latitude: city.lat,
@@ -78,6 +114,7 @@ export default function BigThreeQuick() {
       const sun = chart.bodies.find((body) => body.body === 'Sun');
       const moon = chart.bodies.find((body) => body.body === 'Moon');
       if (!sun || !moon || !chart.angles) throw new Error('incomplete chart');
+      cardSource.current = { chart, run };
       setPlacements([
         { kind: 'sun', title: TITLES.sun, lon: sun.lon },
         { kind: 'moon', title: TITLES.moon, lon: moon.lon },
@@ -95,39 +132,61 @@ export default function BigThreeQuick() {
       })}`);
       track('chart_computed', { mode: 'rising', source: 'fresh' });
       track('result_rendered', { mode: 'rising' });
-      requestAnimationFrame(() => resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-
-      // Render the card now so the share tap can reach navigator.share
-      // synchronously from the gesture (iOS activation).
-      setCardState('preparing');
-      const module = await import('../lib/share-card');
-      const prepared = await module.prepareBigThreeCard(
-        { bodies: chart.bodies, angles: chart.angles, engineVersion: chart.engineVersion },
-        'en',
-      );
-      if (run !== generation.current) return;
-      setCard({ module, prepared });
-      setCardState('ready');
+      requestAnimationFrame(() => {
+        if (run !== generation.current) return;
+        resultRef.current?.scrollIntoView({
+          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'start',
+        });
+      });
     } catch (cause) {
       if (run !== generation.current) return;
       if (cause instanceof RangeError) setError('That date or time is not valid.');
-      else setError('The chart could not be computed. Check the date, time, and place and try again.');
+      else setError(calculationError(cause, 'en', 'The chart could not be computed. Check the date, time, and place and try again.'));
       setPlacements(null);
+      setHandoff('');
+      cardSource.current = null;
       setCardState('idle');
+      return;
     } finally {
       if (run === generation.current) setBusy(false);
     }
+
+    // The result is complete even if its optional image cannot be prepared.
+    // Prepare before the share tap to retain iOS user activation on that tap.
+    void prepareCard();
   }
 
   function share(): void {
-    if (!card) return;
-    track('chart_share', { variant: 'big_three_card' });
-    void card.module.savePreparedChartCard(card.prepared).then((outcome) => {
-      if (outcome === 'shared' || outcome === 'downloaded') {
-        setCardState(outcome);
-        track('share_card_downloaded', { variant: 'big_three_card' });
-      }
-    }).catch(() => setCardState('failed'));
+    if (!card) {
+      void prepareCard();
+      return;
+    }
+    const source = cardSource.current;
+    if (!source || source.run !== generation.current || card.run !== source.run) return;
+    const attempt = ++cardAttempt.current;
+    const isCurrent = () => source.run === generation.current && attempt === cardAttempt.current;
+    setCardError('');
+    setCardState('sharing');
+    const fail = () => {
+      if (!isCurrent()) return;
+      setCardError('The card could not be shared or saved. Try again.');
+      setCardState('failed');
+    };
+    try {
+      track('chart_share', { variant: 'big_three_card' });
+      void card.module.savePreparedChartCard(card.prepared).then((outcome) => {
+        if (!isCurrent()) return;
+        if (outcome === 'shared' || outcome === 'downloaded') {
+          setCardState(outcome);
+          track('share_card_downloaded', { variant: 'big_three_card' });
+        } else {
+          setCardState('ready');
+        }
+      }).catch(fail);
+    } catch {
+      fail();
+    }
   }
 
   return (
@@ -157,6 +216,7 @@ export default function BigThreeQuick() {
             <span class="orb">→</span>
           </button>
           {error && <p class="field__error big-three__error" role="alert">{error}</p>}
+          <CalculationReload error={error} locale="en" />
         </div>
       </form>
 
@@ -194,19 +254,22 @@ export default function BigThreeQuick() {
               type="button"
               class="btn btn--glass"
               onClick={share}
-              disabled={cardState !== 'ready' && cardState !== 'shared' && cardState !== 'downloaded'}
+              disabled={busy || cardState === 'idle' || cardState === 'preparing' || cardState === 'sharing'}
               data-big-three-share
             >
               <span>
                 {cardState === 'preparing' ? 'Preparing your card…'
-                  : cardState === 'shared' ? 'Shared'
-                    : cardState === 'downloaded' ? 'Saved'
-                      : cardState === 'failed' ? 'Card unavailable'
-                        : 'Share your Big Three'}
+                  : cardState === 'sharing' ? 'Sharing…'
+                    : cardState === 'shared' ? 'Shared'
+                      : cardState === 'downloaded' ? 'Saved'
+                        : cardState === 'failed' ? (card ? 'Try sharing again' : 'Retry card')
+                          : 'Share your Big Three'}
               </span>
               <span class="orb">↑</span>
             </button>
           </div>
+          {cardError && <p class="field__error big-three__error" role="alert">Your Big Three are ready. {cardError}</p>}
+          <CalculationReload error={cardError} locale="en" />
           <p class="big-three__note">
             The full chart adds every planet, the houses, and the aspects between them. Your birth details travel in the
             link's fragment, so they stay in this browser.

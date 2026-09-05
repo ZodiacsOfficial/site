@@ -1,11 +1,15 @@
 {
   "version": 1,
-  "id": "phase-b-transits-ci-review-2026-09-05",
-  "baseCommit": "ac239bc3400ef5c4f39b7fc9041284df343acd43",
+  "id": "phase-b-resilience-ci-review-2026-09-05",
+  "baseCommit": "1191b9bef5bf4e046f327b39b187047fb7f519f5",
   "protectedPaths": [
-    "src/pages/es/transits/index.astro",
-    "src/pages/fr/transits/index.astro",
-    "src/pages/it/transits/index.astro",
-    "src/pages/pt/transits/index.astro"
+    "src/lib/i18n/index.test.ts",
+    "src/lib/i18n/ui/en.ts",
+    "src/lib/i18n/ui/es.ts",
+    "src/lib/i18n/ui/fr.ts",
+    "src/lib/i18n/ui/it.ts",
+    "src/lib/i18n/ui/pt.ts",
+    "src/lib/i18n/ui/ru.test.ts",
+    "src/lib/i18n/ui/ru.ts"
   ]
 }

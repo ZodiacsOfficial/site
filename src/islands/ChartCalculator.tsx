@@ -62,6 +62,7 @@ import { CATALOG_LOCALES, RELEASED_LOCALES, localizePath, normalizeCatalogLocale
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import { russianRuntime } from '../lib/i18n/ru-runtime';
 import { useEngine } from '../lib/hooks/useEngine';
+import CalculationReload, { calculationError } from './CalculationReload';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
 import type { AspectType } from '../lib/engine/types';
@@ -122,18 +123,6 @@ const LENS_LABELS: Record<ReleasedLocale, Record<'rail' | 'natal' | LensId, stri
   pt: { rail: 'O mapa ao longo do tempo', natal: 'Natal', sky: 'Céu agora', progressed: 'Progredido', return: 'Retorno solar' },
   fr: { rail: 'Le thème au fil du temps', natal: 'Natal', sky: 'Ciel actuel', progressed: 'Progressé', return: 'Révolution solaire' },
   it: { rail: 'Il tema nel tempo', natal: 'Natale', sky: 'Cielo attuale', progressed: 'Progredito', return: 'Rivoluzione solare' },
-};
-/**
- * The depth view's own strings live beside it, in the lazily-loaded chunk.
- * Only its trigger has to be named out here, so only that is duplicated —
- * importing the view's copy map would drag all six locales into this page.
- */
-const DEPTH_TOGGLE: Record<ReleasedLocale, { open: string; close: string }> = {
-  en: { open: 'See it in three dimensions', close: 'Hide the third dimension' },
-  es: { open: 'Verla en tres dimensiones', close: 'Ocultar la tercera dimensión' },
-  pt: { open: 'Ver em três dimensões', close: 'Ocultar a terceira dimensão' },
-  fr: { open: 'Voir en trois dimensions', close: 'Masquer la troisième dimension' },
-  it: { open: 'Vedilo in tre dimensioni', close: 'Nascondi la terza dimensione' },
 };
 const DETAIL_LABELS: Record<ReleasedLocale, { lead: string; placements: string; aspects: string }> = {
   en: { lead: 'See exact chart data — ', placements: ' placements · ', aspects: ' aspects' },
@@ -1183,10 +1172,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         ...(input.name ? { name: input.name } : {}),
       });
 
-      requestAnimationFrame(() => resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      requestAnimationFrame(() => resultRef.current?.scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start',
+      }));
     } catch (err) {
       if (!runIsCurrent()) return;
-      setError(t(locale, 'chartError'));
+      setError(calculationError(err, locale, t(locale, 'chartError')));
       console.error(err);
     } finally {
       if (runId === runChartIdRef.current) setBusy(false);
@@ -1282,12 +1274,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     }));
   }, [chart]);
 
-  /** Russian keeps the English label with the site's not-yet-translated mark. */
-  const depthToggleLabel = (() => {
-    const set = DEPTH_TOGGLE[releasedLocale ?? 'en'];
-    const text = depthOpen ? set.close : set.open;
-    return releasedLocale ? text : `${text} — пока по-английски`;
-  })();
+  // Trigger copy comes from this page's catalog; the 3D view remains lazy.
+  const depthToggleLabel = t(locale, depthOpen ? 'chartDepthClose' : 'chartDepthOpen');
 
   const sun = chart?.bodies.find((b) => b.body === 'Sun');
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
@@ -1701,6 +1689,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             {subjectMode === 'other' ? otherSubjectCopy.privacy : t(locale, 'privacyDevice')}
           </p>
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
+          <CalculationReload error={error} locale={locale} />
         </div>
       </form>
 

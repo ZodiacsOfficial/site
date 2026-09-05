@@ -2,6 +2,14 @@ import type { UiCatalog } from './schema';
 import { GROWTH_UI_ES } from './growth.js';
 
 const es = {
+    chartDepthOpen: 'Verla en tres dimensiones',
+    chartDepthClose: 'Ocultar la tercera dimensión',
+    calculationLoadError: 'No se pudieron cargar los archivos de cálculo. Comprueba tu conexión e inténtalo de nuevo.',
+    calculationReload: 'Recargar página',
+    calculationReloadWarning: 'Al recargar se borran los datos que no hayas guardado.',
+    calculationRetry: 'Intentar de nuevo',
+    pfdYearError: 'No pudimos completar la lectura del año que viene. Inténtalo de nuevo.',
+    placeSearching: 'Buscando lugares…',
     navPrimary: 'Principal',
     navSigns: 'Signos',
     navTools: 'Herramientas',
