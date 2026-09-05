@@ -6,8 +6,32 @@ import manifest from '../docs/phase5/people-pilot/manifest.json';
 import indexPolicy from '../docs/phase5/people-pilot/index-policy.json';
 import indexDemand from '../docs/phase5/people-pilot/index-demand.json';
 import { resolvePeopleIndexPolicy } from './people-index-policy.mjs';
+import { PEOPLE_DISCIPLINE_FILTERS, peopleDisciplineGroups } from '../src/lib/people';
 
 describe('Phase 5 People pilot contract', () => {
+  it('classifies every published source discipline for directory and birthday cards', () => {
+    const groups = new Set(PEOPLE_DISCIPLINE_FILTERS.map(({ slug }) => slug));
+    for (const person of peopleData.people) {
+      const actual = peopleDisciplineGroups(person);
+      expect(actual.length, person.slug).toBeGreaterThan(0);
+      expect(actual.every((group) => groups.has(group)), person.slug).toBe(true);
+      expect(new Set(actual).size, person.slug).toBe(actual.length);
+    }
+  });
+
+  it.each([
+    ['neil-armstrong', ['public-life']],
+    ['amelia-earhart', ['public-life']],
+    ['maya-angelou', ['writing']],
+  ])('preserves the directory category of the corrected %s identity', (slug, groups) => {
+    expect(peopleDisciplineGroups(peopleData.people.find((person) => person.slug === slug))).toEqual(groups);
+  });
+
+  it('rejects an unreviewed discipline rather than silently omitting it', () => {
+    expect(() => peopleDisciplineGroups({ ...peopleData.people[0], disciplines: ['unreviewed profession'] }))
+      .toThrow('Unmapped People discipline: unreviewed profession');
+  });
+
   it('contains exactly 501 distinct records with the policy-driven release boundary', () => {
     // 500 were published; one was withdrawn on 2026-07-27 because its Sun
     // sign proved undeterminable. Two owner-authorized protected living

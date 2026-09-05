@@ -11,6 +11,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { PRINCIPAL_IDENTITIES, reviewedIdentity } from './principal-identities.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PILOT = join(HERE, '..');
@@ -100,7 +101,15 @@ const people = [];
 for (const candidate of candidates) {
   const existing = existingBySlug.get(candidate.slug);
   if (existing && !protectedLinkSlugs.has(candidate.slug)) {
-    people.push(existing);
+    if (Object.hasOwn(PRINCIPAL_IDENTITIES, candidate.slug)) {
+      const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));
+      const copy = JSON.parse(await readFile(join(PILOT, 'copy', `${candidate.slug}.json`), 'utf8'));
+      const identity = reviewedIdentity(candidate, evidence, existing.shortDescription);
+      if (copy.identity !== identity) throw new Error(`${candidate.slug}: migrate the reviewed copy identity first`);
+      people.push({ ...existing, shortDescription: identity, disciplines: [...candidate.disciplines] });
+    } else {
+      people.push(existing);
+    }
     continue;
   }
   const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));

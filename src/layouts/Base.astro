@@ -440,15 +440,18 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
 
     <!-- The canonical footer sits below every route's primary content, so its
          sizeable shared stylesheet must not delay the first viewport. Keep the
-         request non-render-blocking, then apply it as soon as it is available.
+         request non-render-blocking, and start it when the footer approaches
+         the viewport even if other page resources have not finished loading.
          The no-script import preserves a fully styled document for readers who
          disable JavaScript without making Astro's critical-CSS pass inline it. -->
     <script is:inline>
       (function loadFooterStyles() {
         var requested = false;
+        var observer;
         function appendStylesheet() {
           if (requested) return;
           requested = true;
+          if (observer) observer.disconnect();
           var stylesheet = document.createElement('link');
           stylesheet.rel = 'stylesheet';
           stylesheet.href = '/assets/site-footer.css';
@@ -460,8 +463,23 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
         var footer = document.querySelector('.zfooter');
         var nearViewport = footer && footer.getBoundingClientRect().top <= window.innerHeight + 200;
         if (nearViewport) appendStylesheet();
-        else if (document.readyState === 'complete') appendAfterLoad();
-        else window.addEventListener('load', appendAfterLoad, { once: true });
+        else {
+          if (footer && 'IntersectionObserver' in window) {
+            try {
+              observer = new IntersectionObserver(function (entries) {
+                for (var index = 0; index < entries.length; index += 1) {
+                  if (entries[index].isIntersecting) { appendStylesheet(); return; }
+                }
+              }, { threshold: 0, rootMargin: '0px 0px 200px 0px' });
+              observer.observe(footer);
+            } catch (_) {
+              if (observer) observer.disconnect();
+              observer = null;
+            }
+          }
+          if (document.readyState === 'complete') appendAfterLoad();
+          else window.addEventListener('load', appendAfterLoad, { once: true });
+        }
       })();
     </script>
     <noscript><style>@import url('/assets/site-footer.css');</style></noscript>

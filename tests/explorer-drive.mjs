@@ -12,9 +12,12 @@
  *
  * OUT_DIR is optional — screenshots are skipped without it. In the
  * remote container, Chromium lives at /opt/pw-browsers/chromium.
+ * The three A20 OG candidates always use the generator's fixed review-artifact
+ * directory; production OG files are never updated by this drive.
  */
 import { chromium } from 'playwright-core';
-import { spawn } from 'node:child_process';
+import { execFile, spawn } from 'node:child_process';
+import { promisify } from 'node:util';
 import { setTimeout as wait } from 'node:timers/promises';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { PNG } from 'pngjs';
@@ -26,6 +29,7 @@ import { runExplorerKeyboardChecks } from './explorer-keyboard-checks.mjs';
 import { runExplorerMoonChecks } from './explorer-moon-checks.mjs';
 import { runSearchLearningChecks } from './search-learning-checks.mjs';
 import { verifyWidgetBuilder } from './widgets-drive.mjs';
+import { awaitAppliedFooter, runFooterStyleChecks } from './footer-style-checks.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? await findChromium();
@@ -50,8 +54,36 @@ const check = (name, ok, detail = '') => {
 const shot = async (target, path, opts = {}) => {
   if (OUT) return await target.screenshot({ path: `${OUT}/${path}`, ...opts });
 };
+const identityFixtures = [
+  ['neil-armstrong', 'Neil Armstrong', 'Astronaut and test pilot · United States · 1930–2012'],
+  ['amelia-earhart', 'Amelia Earhart', 'Aircraft pilot · United States · 1897–1939'],
+  ['maya-angelou', 'Maya Angelou', 'Writer · United States · 1928–2014'],
+];
+
+async function readyForPeopleCapture(page, selector) {
+  await page.locator(selector).scrollIntoViewIfNeeded();
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForFunction((target) => [...document.querySelector(target).querySelectorAll('img')]
+    .filter((image) => image.offsetWidth > 0 && image.offsetHeight > 0)
+    .every((image) => image.complete && image.naturalWidth > 0), selector, { timeout: 10000 });
+  await page.locator(selector).evaluate(async (element) => {
+    await Promise.all([...element.querySelectorAll('img')]
+      .filter((image) => image.offsetWidth > 0 && image.offsetHeight > 0)
+      .map((image) => image.decode()));
+  });
+}
+
+async function peopleFit(page, selector) {
+  return page.locator(selector).evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    return document.documentElement.scrollWidth <= innerWidth + 1
+      && box.width > 0 && box.left >= -1 && box.right <= innerWidth + 1
+      && element.scrollWidth <= element.clientWidth + 1;
+  });
+}
 
 try {
+  if (OUT) await mkdir(OUT, { recursive: true });
   const browser = await chromium.launch({
     executablePath: CHROMIUM,
     args: STABLE_CHROMIUM_ARGS,
@@ -75,6 +107,67 @@ try {
   await verifyWidgetBuilder({
     browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/widgets` : null,
   });
+
+  await runFooterStyleChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/footer-styles` : null });
+
+  for (const width of [390, 1440]) {
+    const peoplePage = await browser.newPage({ viewport: { width, height: 1000 }, reducedMotion: 'reduce' });
+    try {
+      const response = await peoplePage.goto('http://127.0.0.1:4399/people/', { waitUntil: 'domcontentloaded' });
+      check(`People index ${width}: HTTP 200 and one plain heading`, response?.status() === 200
+        && (await peoplePage.locator('h1').allTextContents()).join('') === 'People'
+        && await peoplePage.locator('.people-kicker').count() === 0);
+      await readyForPeopleCapture(peoplePage, '.people-page__hero');
+      check(`People index ${width}: hero fits`, await peopleFit(peoplePage, '.people-page__hero'));
+      await shot(peoplePage.locator('.people-page__hero'), `people-index-${width}.png`);
+
+      const navLink = peoplePage.locator('[data-nav] .nav__chip');
+      check(`People index ${width}: visible Astrofolio navigation retains its destination`,
+        await navLink.isVisible()
+        && (await navLink.getAttribute('href')) === '/astrofolio/'
+        && (await navLink.textContent()).trim() === 'Astrofolio');
+      for (const [slug, name, identity] of identityFixtures) {
+        const selector = `[data-person-card][href="/people/${slug}/"]`;
+        const card = peoplePage.locator(selector);
+        check(`People index ${width}: ${name} uses the reviewed identity`,
+          await card.count() === 1 && (await card.locator('small').innerText()).trim() === identity);
+        await readyForPeopleCapture(peoplePage, selector);
+        check(`People index ${width}: ${name} card fits`, await peopleFit(peoplePage, selector));
+        await shot(card, `people-index-${slug}-${width}.png`);
+      }
+
+      const footerGroup = peoplePage.locator('.zfooter__group--wide');
+      await awaitAppliedFooter(peoplePage);
+      await readyForPeopleCapture(peoplePage, '.zfooter__directory');
+      check(`People index ${width}: Registry footer heading and Astrofolio link retain distinct labels`,
+        (await footerGroup.locator('.zfooter__label').textContent()).trim() === 'Registry'
+        && (await footerGroup.getAttribute('aria-label')) === 'Registry'
+        && (await footerGroup.locator('a[href="/astrofolio/"]').textContent()).trim() === 'Astrofolio'
+        && await peopleFit(peoplePage, '.zfooter__directory'));
+      await shot(peoplePage.locator('.zfooter__directory'), `people-footer-${width}.png`);
+    } finally {
+      await peoplePage.close();
+    }
+
+    for (const [slug, name, identity] of identityFixtures) {
+      const personPage = await browser.newPage({ viewport: { width, height: 1000 }, reducedMotion: 'reduce' });
+      try {
+        const response = await personPage.goto(`http://127.0.0.1:4399/people/${slug}/`, { waitUntil: 'domcontentloaded' });
+        await readyForPeopleCapture(personPage, '.person-identity');
+        check(`People profile ${width}: ${name} has the reviewed header without repeated eyebrows`,
+          response?.status() === 200
+          && (await personPage.locator('h1').innerText()).trim() === name
+          && (await personPage.locator('.person-identity__description').innerText()).trim() === identity
+          && await personPage.locator('.people-kicker').count() === 0
+          && await personPage.getByText('The day, read honestly', { exact: true }).count() === 0
+          && await peopleFit(personPage, '.person-identity')
+          && await peopleFit(personPage, '.person-identity__description'));
+        await shot(personPage.locator('.person-identity'), `people-${slug}-${width}.png`);
+      } finally {
+        await personPage.close();
+      }
+    }
+  }
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];
@@ -1000,6 +1093,16 @@ try {
 
   await driveLegacyPolarProfile({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
   await browser.close();
+  // Reuse the owning renderer only after the main browser has closed. Its
+  // closed review mode verifies that every production OG file stays identical.
+  const ogReview = await promisify(execFile)(process.execPath,
+    ['scripts/build-og-void.mjs', '--review-people-identities'], {
+      env: { ...process.env, CHROMIUM_PATH: CHROMIUM },
+      timeout: 120000,
+      maxBuffer: 2 * 1024 * 1024,
+    });
+  check('People identity OG: three review candidates rendered with production files unchanged',
+    /Reviewed 3 People identity cards; production OG files unchanged\./u.test(ogReview.stdout), ogReview.stdout.trim());
 } finally {
   preview.kill();
 }

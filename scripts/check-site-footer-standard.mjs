@@ -84,6 +84,9 @@ await requireMarkers('src/components/SiteFooter.astro', [
   'class="zfooter__colophon"',
   'data-footer-guide',
   '.webp?surface=site-footer',
+  '<nav class="zfooter__group zfooter__group--wide" aria-label={t(locale, \'footerRegistry\')}>',
+  '<span class="zfooter__label">{t(locale, \'footerRegistry\')}</span>',
+  '<a href="/astrofolio/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, \'navCollect\')}{englishSuffix}</a>',
 ]);
 await requireMarkers('src/app.jsx', [
   'function SiteEnd(',
