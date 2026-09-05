@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "phase-b-moon-keyboard-ci-review-2026-09-05",
-  "baseCommit": "b55f6f8072d7f286b83e16cef4dd01fc50db5537",
+  "baseCommit": "53329f76bcc99f1684c812ee7399292c4dfdbd23",
   "protectedPaths": [
     "src/lib/i18n/index.test.ts",
     "src/lib/i18n/ui/en.ts",
