@@ -100,6 +100,16 @@ const isVisuallyExposed = async (locator) => {
   });
 };
 
+const checkOwnershipDrawer = async (page, label) => {
+  const drawer = page.locator('#ownership-details');
+  const figure = drawer.locator('#fig-authorities');
+  check(`${label}: ownership records start collapsed`,
+    await drawer.getAttribute('open') === null && !await figure.isVisible());
+  await drawer.locator(':scope > summary').click();
+  check(`${label}: the ownership summary opens the complete records`,
+    await drawer.getAttribute('open') !== null && await isVisuallyExposed(figure));
+};
+
 const waitForGalleryReady = async (page, timeout = 20_000) => {
   const gallery = page.locator(GALLERY_SELECTOR);
   if (await gallery.count() !== 1) return false;
@@ -142,15 +152,22 @@ const VISUAL_MODULES = [
 const checkFigureFit = async (page, width) => {
   for (const id of ['fig-keyboard', 'fig-2', 'fig-3', 'fig-authorities', 'fig-provenance']) {
     const geometry = await page.locator(`#${id}`).evaluate((node) => {
+      // Measure disclosed figures without scrolling past the above-fold
+      // gallery-loading check. Restore the actual default reading state.
+      const drawer = node.closest('details');
+      const wasOpen = drawer?.open;
+      if (drawer) drawer.open = true;
       const rect = node.getBoundingClientRect();
       const svgOverflow = [...node.querySelectorAll('svg')].some((svg) => {
         const bounds = svg.getBoundingClientRect();
         return bounds.width > 0 && (bounds.left < rect.left - 1 || bounds.right > rect.right + 1);
       });
-      return { left: rect.left, right: rect.right, scroll: node.scrollWidth, client: node.clientWidth, svgOverflow };
+      const measured = { width: rect.width, left: rect.left, right: rect.right, scroll: node.scrollWidth, client: node.clientWidth, svgOverflow };
+      if (drawer) drawer.open = wasOpen;
+      return measured;
     });
     check(`${width}px: #${id} and its SVGs fit without horizontal overflow`,
-      geometry.left >= -1 && geometry.right <= width + 1
+      geometry.width > 0 && geometry.left >= -1 && geometry.right <= width + 1
         && geometry.scroll <= geometry.client + 1 && !geometry.svgOverflow,
       JSON.stringify(geometry));
   }
@@ -566,7 +583,9 @@ try {
     document.querySelector('details.evidence-vault').open = false;
   });
 
-  // The human visual layer renders before the detailed evidence.
+  await checkOwnershipDrawer(page, 'desktop');
+
+  // The human visual layer and optional evidence remain available.
   check('seven-era transmission renders', (await page.locator('.transmission .era').count()) === 7);
   check('F2 exposes measured data outside a template or drawer',
     await page.locator('#fig-2 [data-attention-chart]:visible').count() === 1
@@ -661,6 +680,7 @@ try {
   await shot(page, '#fig-3', 'thesis-f3-desktop.png');
   await shot(page, '#fig-keyboard', 'thesis-keyboard-desktop.png');
   await shot(page, '#fig-authorities', 'thesis-authorities-desktop.png');
+  await page.locator('#ownership-details > summary').click();
   await shot(page, '#fig-provenance', 'thesis-provenance-desktop.png');
   await shot(page, '#what-holding-means', 'thesis-proof-desktop.png');
   await shot(page, GALLERY_SELECTOR, 'thesis-gallery-desktop.png');
@@ -714,6 +734,7 @@ try {
   check('810px: comparison fits without local scrolling',
     reviewTableLayout.scroll <= reviewTableLayout.client + 1,
     `${reviewTableLayout.scroll} vs ${reviewTableLayout.client}`);
+  await checkOwnershipDrawer(review, '810px');
   for (const [name, selector] of VISUAL_MODULES) {
     check(`810px: ${name} is visible`, await isVisuallyExposed(review.locator(selector).first()));
   }
@@ -723,6 +744,7 @@ try {
   await shot(review, '#fig-3', 'thesis-f3-810.png');
   await shot(review, '#fig-keyboard', 'thesis-keyboard-810.png');
   await shot(review, '#fig-authorities', 'thesis-authorities-810.png');
+  await review.locator('#ownership-details > summary').click();
   await shot(review, '#fig-provenance', 'thesis-provenance-810.png');
   await shot(review, '#what-holding-means', 'thesis-proof-810.png');
   await shot(review, GALLERY_SELECTOR, 'thesis-gallery-810.png');
@@ -936,6 +958,7 @@ try {
     }),
     JSON.stringify(nojsFallbackState));
   check('no-JS: static gallery fallback is visibly exposed', await isVisuallyExposed(nojsFallback));
+  await checkOwnershipDrawer(nojs, 'no-JS');
   for (const [name, selector] of VISUAL_MODULES) {
     check(`no-JS: ${name} is visually exposed`, await isVisuallyExposed(nojs.locator(selector).first()));
   }
@@ -999,6 +1022,7 @@ try {
   check('reduced motion: reveal targets have no active transitions or animations',
     reducedStates.every((state) => state.transition.split(',').every((duration) => Number.parseFloat(duration) === 0)
       && state.animation === 'none'));
+  await checkOwnershipDrawer(reduced, 'reduced motion');
   for (const [name, selector] of VISUAL_MODULES) {
     check(`reduced motion: ${name} is visually exposed`, await isVisuallyExposed(reduced.locator(selector).first()));
   }
@@ -1074,6 +1098,7 @@ try {
     await mob.locator('#the-instrument details.evidence-drawer').evaluate((n) => { n.open = true; });
     const discScroll = await mob.locator('.disc-scroll').evaluate((n) => n.scrollWidth > n.clientWidth);
     check(`${width}px: disclosure table scrolls inside its own region`, discScroll);
+    await checkOwnershipDrawer(mob, `${width}px`);
     for (const [name, selector] of VISUAL_MODULES) {
       const nodes = mob.locator(selector);
       const fits = await nodes.evaluateAll((elements, viewportWidth) => elements.length > 0 && elements.every((node) => {
@@ -1091,6 +1116,7 @@ try {
       }
       await shot(mob, '#fig-keyboard', 'thesis-keyboard-mobile.png');
       await shot(mob, '#fig-authorities', 'thesis-authorities-mobile.png');
+      await mob.locator('#ownership-details > summary').click();
       await shot(mob, '#fig-provenance', 'thesis-provenance-mobile.png');
       await shot(mob, '#what-holding-means', 'thesis-proof-mobile.png');
       await shot(mob, GALLERY_SELECTOR, 'thesis-gallery-mobile.png');

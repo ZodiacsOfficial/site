@@ -688,6 +688,20 @@ describe('thesis keyboard and authority figures', () => {
     expect(keyboard).toContain('https://www.unicode.org/versions/Unicode1.1.0/');
   });
 
+  it('keeps ownership records available in a drawer that starts closed', () => {
+    const holding = sliceElement(HTML, /<section\b[^>]*\bid=["']what-holding-means["'][^>]*>/i, 'section');
+    const drawer = sliceElement(holding, /<details\b[^>]*\bid=["']ownership-details["'][^>]*>/i, 'details');
+    const openingTag = drawer.match(/^<details\b[^>]*>/i)?.[0] ?? '';
+    expect(openingTag).toMatch(/\bclass=["'][^"']*\bevidence-drawer\b/);
+    expect(openingTag).not.toMatch(/\sopen(?:\s|=|>)/i);
+    expect(textOf(tagParts(drawer, 'summary')[0]?.inner ?? '')).toBe('See the supply and ownership records');
+    expect(drawer).toContain('id="fig-authorities"');
+    expect(textOf(drawer)).toContain('The issuer gave up the native assets’ minting and freezing permissions.');
+    const readingFlow = classedDetailsRemoved(holding);
+    expect(readingFlow).not.toContain('id="fig-authorities"');
+    expect(textOf(readingFlow)).not.toContain('minting and freezing permissions');
+  });
+
   it('copies recorded pool burns without treating unspecified percentages as complete', () => {
     const authorities = sliceElement(HTML, /<figure\b[^>]*\bid=["']fig-authorities["'][^>]*>/i, 'figure');
     const disclosure = JSON.parse(readFileSync(resolve(ROOT, 'public/thesis/thesis-disclosure.json'), 'utf8'));
