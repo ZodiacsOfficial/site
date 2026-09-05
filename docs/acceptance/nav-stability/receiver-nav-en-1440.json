@@ -1,0 +1,101 @@
+{
+  "captureMethod": "Page.captureScreenshot: native viewport, no clip",
+  "before": {
+    "receiver": true,
+    "wingLinks": 0,
+    "left": 347,
+    "right": 1093,
+    "top": 14,
+    "bottom": 66,
+    "width": 746,
+    "scrollX": 0,
+    "scrollY": 842,
+    "viewport": {
+      "pageLeft": 0,
+      "pageTop": 842,
+      "offsetLeft": 0,
+      "offsetTop": 0,
+      "width": 1440,
+      "height": 844,
+      "scale": 1
+    },
+    "resultTop": 79.859375,
+    "visible": true,
+    "children": [
+      {
+        "left": 368,
+        "right": 484,
+        "width": 116,
+        "height": 13
+      },
+      {
+        "left": 502,
+        "right": 1002,
+        "width": 500,
+        "height": 36.390625
+      },
+      {
+        "left": 1020,
+        "right": 1082,
+        "width": 62,
+        "height": 44
+      }
+    ],
+    "controls": [
+      {
+        "width": 62,
+        "height": 44
+      }
+    ],
+    "endGap": 11
+  },
+  "after": {
+    "receiver": true,
+    "wingLinks": 0,
+    "left": 347,
+    "right": 1093,
+    "top": 14,
+    "bottom": 66,
+    "width": 746,
+    "scrollX": 0,
+    "scrollY": 842,
+    "viewport": {
+      "pageLeft": 0,
+      "pageTop": 842,
+      "offsetLeft": 0,
+      "offsetTop": 0,
+      "width": 1440,
+      "height": 844,
+      "scale": 1
+    },
+    "resultTop": 79.859375,
+    "visible": true,
+    "children": [
+      {
+        "left": 368,
+        "right": 484,
+        "width": 116,
+        "height": 13
+      },
+      {
+        "left": 502,
+        "right": 1002,
+        "width": 500,
+        "height": 36.390625
+      },
+      {
+        "left": 1020,
+        "right": 1082,
+        "width": 62,
+        "height": 44
+      }
+    ],
+    "controls": [
+      {
+        "width": 62,
+        "height": 44
+      }
+    ],
+    "endGap": 11
+  }
+}
