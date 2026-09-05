@@ -135,19 +135,23 @@
 /* Metric-matched local fallbacks so the swap when a webfont arrives doesn't
    rewrap text that's already on screen (overrides = target metric ÷
    size-adjust, one face per fallback family à la capsize/fontaine).
-   Instrument Sans: upem 1000, ascent 970, descent 250, xWidthAvg 458. */
+   Instrument Sans: upem 1000, ascent 970, descent 250, xWidthAvg 458.
+   The 103.5% width correction is also divided out of vertical overrides,
+   preserving the target 97% ascent and 25% descent after adjustment. */
 @font-face {
   font-family: 'Instrument Sans Fallback';
   src: local('Arial'), local('Liberation Sans');
-  ascent-override: 97%;
-  descent-override: 25%;
+  size-adjust: 103.5%;
+  ascent-override: 93.7198%;
+  descent-override: 24.1546%;
   line-gap-override: 0%;
 }
 @font-face {
   font-family: 'Instrument Sans Fallback Android';
   src: local('Roboto');
-  ascent-override: 97%;
-  descent-override: 25%;
+  size-adjust: 103.5%;
+  ascent-override: 93.7198%;
+  descent-override: 24.1546%;
   line-gap-override: 0%;
 }
 

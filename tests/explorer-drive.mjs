@@ -46,23 +46,36 @@ try {
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];
-  for (const prefix of ['', '/es', '/pt', '/fr', '/it']) {
-    for (const width of [819, 820]) {
+  for (const [prefix, desktopBreakpoint, englishOnlyCue] of [
+    ['', 920, ''],
+    ['/es', 1040, '— por ahora en inglés'],
+    ['/pt', 1040, '— por enquanto em inglês'],
+    ['/fr', 1040, '— pour l’instant en anglais'],
+    ['/it', 1040, '— per ora in inglese'],
+  ]) {
+    // Retain the old 819/820 checks as compact-layout regressions, and check
+    // both sides of the new reserved-shell desktop thresholds independently.
+    for (const width of [819, 820, desktopBreakpoint - 1, desktopBreakpoint]) {
+      const desktop = width >= desktopBreakpoint;
       const navPage = await browser.newPage({ viewport: { width, height: 844 } });
       await navPage.goto(`http://127.0.0.1:4399${prefix}/birth-chart/`, { waitUntil: 'domcontentloaded' });
       const state = await navPage.evaluate(() => {
         const nav = document.querySelector('[data-nav]')?.getBoundingClientRect();
         const chip = document.querySelector('.nav__chip');
         const burger = document.querySelector('[data-menu-toggle]');
+        const links = document.querySelector('.nav__links');
         return {
-          navFits: Boolean(nav && nav.left >= 0 && nav.right <= innerWidth),
+          navFits: Boolean(nav && nav.left >= 16 && nav.right <= innerWidth - 16),
+          navWidth: nav?.width,
           chipVisible: Boolean(chip && getComputedStyle(chip).display !== 'none'),
           chipHref: chip?.getAttribute('href'),
-          chipText: chip?.textContent?.trim(),
+          chipText: (chip?.querySelector(':scope > span') ?? chip)?.textContent?.trim(),
+          chipCue: chip?.querySelector('small')?.textContent?.trim() ?? '',
           burgerVisible: Boolean(burger && getComputedStyle(burger).display !== 'none'),
+          linksVisible: Boolean(links && getComputedStyle(links).display !== 'none'),
         };
       });
-      if (width === 819) {
+      if (!desktop) {
         await navPage.locator('[data-menu-toggle]').click();
         const mobileRegistryVisible = await navPage.locator('.mobile-menu__registry').isVisible();
         state.mobileRegistryVisible = mobileRegistryVisible;
@@ -71,14 +84,17 @@ try {
         && state.chipVisible
         && state.chipHref === '/astrofolio/'
         && state.chipText === 'Astrofolio'
-        && state.burgerVisible === (width === 819)
-        && (width === 820 || state.mobileRegistryVisible === true);
+        && state.chipCue === englishOnlyCue
+        && Math.abs(state.navWidth - (desktop ? (prefix ? 992 : 884) : 336)) <= 0.1
+        && state.burgerVisible === !desktop
+        && state.linksVisible === desktop
+        && (desktop || state.mobileRegistryVisible === true);
       navBreakpointsPass &&= pass;
       navBreakpointsDetail.push(`${prefix || '/en'}@${width}:${pass ? 'ok' : JSON.stringify(state)}`);
       await navPage.close();
     }
   }
-  check('navigation: Astrofolio persists at 819/820px in all five locales', navBreakpointsPass, navBreakpointsDetail.join(' · '));
+  check('navigation: reserved shells and Astrofolio persist at compact and desktop boundaries in all five locales', navBreakpointsPass, navBreakpointsDetail.join(' · '));
 
   // The site sets `scroll-behavior: smooth`, so scrolls animate — poll the
   // box until it stops moving before clicking.

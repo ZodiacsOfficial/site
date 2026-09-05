@@ -6,6 +6,7 @@ import mobileConfig from 'lighthouse/core/config/default-config.js';
 import * as chromeLauncher from 'chrome-launcher';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './browser.mjs';
 import { withPreview } from './preview-server.mjs';
+import { saveLighthouseAssets } from './lighthouse-assets.mjs';
 
 const visualRoot = dirname(fileURLToPath(import.meta.url));
 const artifactRoot = resolve(visualRoot, 'artifacts/lighthouse');
@@ -228,6 +229,11 @@ await withPreview({ port: Number(process.env.LIGHTHOUSE_PORT ?? 4328) }, async (
           resolve(artifactRoot, `${route.name}-${index + 1}.json`),
           JSON.stringify(lhr, null, 2),
         );
+        // The audit and browser shutdown are complete before optional disk I/O.
+        // Keep every sample, including outliers, for task-level attribution.
+        if (process.env.LIGHTHOUSE_SAVE_ASSETS === '1') {
+          await saveLighthouseAssets(result, artifactRoot, `${route.name}-${index + 1}`);
+        }
       }
 
       const values = gateSummary(results);

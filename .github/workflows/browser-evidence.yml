@@ -1,0 +1,115 @@
+name: Browser Evidence
+
+# Capture-only companion to Site Check, enabled by this exact PR-body marker:
+# <!-- browser-evidence -->
+# A reviewer first inspects comparison artifacts, then newly adds this marker:
+# <!-- browser-evidence-candidates head=<40-character commit SHA> -->
+# Candidate pixels remain artifacts until explicitly reviewed and committed.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+
+jobs:
+  browser-evidence:
+    name: Browser evidence (${{ github.event.action == 'edited' && 'candidates' || 'compare' }})
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      contains(github.event.pull_request.body, '<!-- browser-evidence -->') &&
+      (github.event.action != 'edited' ||
+        (github.event.changes.body && contains(github.event.pull_request.body,
+          format('<!-- browser-evidence-candidates head={0} -->', github.event.pull_request.head.sha)) &&
+         !contains(github.event.changes.body.from || '',
+          format('<!-- browser-evidence-candidates head={0} -->', github.event.pull_request.head.sha))))
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact PR head
+        id: checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node 22
+        id: node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Verify head-bound capture request
+        id: request
+        run: node scripts/browser-evidence-control.mjs request
+
+      - name: Install
+        id: install
+        run: npm ci
+
+      - name: Install pinned Chromium
+        id: browser
+        run: |
+          npx playwright-core install --with-deps chromium
+          node scripts/browser-evidence-control.mjs browser
+
+      - name: Build exact PR head
+        id: build
+        run: npm run build
+
+      - name: Capture Phase 1 at 360 and 1280 pixels
+        id: acceptance
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: npm run test:phase1:acceptance
+
+      - name: Validate captured Phase 1 receipt
+        id: receipt
+        if: ${{ !cancelled() && steps.acceptance.outcome == 'success' }}
+        run: npm run test:phase1:evidence
+
+      - name: Compare 390 and 1440 pixel visual baselines
+        id: visual
+        if: ${{ !cancelled() && steps.build.outcome == 'success' && steps.request.outputs.mode == 'compare' }}
+        run: npm run test:visual
+
+      - name: Generate reviewed-head baseline candidates
+        id: candidates
+        if: ${{ !cancelled() && steps.build.outcome == 'success' && steps.request.outputs.mode == 'candidates' }}
+        run: npm run test:visual:update
+
+      # An intentional visual difference remains a failed step and a red job.
+      # Continue independent evidence collection without suppressing that exit.
+      - name: Lighthouse across all gated routes, three runs each
+        id: lighthouse
+        if: ${{ !cancelled() && steps.build.outcome == 'success' && steps.request.outputs.mode == 'compare' }}
+        env:
+          LIGHTHOUSE_SAVE_ASSETS: "1"
+        run: npm run test:lighthouse
+
+      - name: Navigation and chart explorer browser drive
+        id: explorer
+        if: ${{ !cancelled() && steps.build.outcome == 'success' && steps.request.outputs.mode == 'compare' }}
+        env:
+          OUT_DIR: tests/visual/artifacts/explorer
+        run: node tests/explorer-drive.mjs
+
+      - name: Record source, browser, outcomes and artifact hashes
+        id: provenance
+        if: ${{ always() && steps.request.outcome == 'success' }}
+        env:
+          BROWSER_EVIDENCE_STEPS: ${{ toJSON(steps) }}
+        run: node scripts/browser-evidence-control.mjs provenance
+
+      - name: Upload evidence for review
+        if: ${{ always() && steps.request.outcome == 'success' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: browser-evidence-${{ steps.request.outputs.mode }}-${{ github.event.pull_request.head.sha }}-${{ github.run_id }}
+          path: |
+            docs/acceptance/phase1/screenshots/
+            tests/visual/baselines/linux/
+            tests/visual/artifacts/
+          if-no-files-found: error
+          retention-days: 90
