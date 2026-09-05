@@ -13,6 +13,7 @@ const CORE_LOCALES = [
 const PROGRAMMATIC_LOCALES = CORE_LOCALES.filter((entry) => entry.code !== 'ru');
 const CORE_HREFLANGS = [...CORE_LOCALES.map((entry) => entry.hreflang), 'x-default'];
 const PROGRAMMATIC_HREFLANGS = [...PROGRAMMATIC_LOCALES.map((entry) => entry.hreflang), 'x-default'];
+const FORECAST_LOCALES = CORE_LOCALES.filter((entry) => ['en', 'es', 'pt'].includes(entry.code));
 const failures = [];
 const check = (condition, message) => { if (!condition) failures.push(message); };
 const localizedPath = (prefix, path) => `${prefix}${path}` || '/';
@@ -31,6 +32,12 @@ async function routeState(page) {
       '.footer__languages .footer__language-option, .zfooter__locales .zfooter__locale',
     ))
       .map((node) => node.textContent?.replace(/^\s*·\s*/, '').trim()),
+    forecastSelector: Array.from(document.querySelectorAll('.zfooter__locales .zfooter__locale'))
+      .map((node) => ({
+        lang: node.getAttribute('lang'),
+        href: node.getAttribute('href'),
+        current: node.getAttribute('aria-current'),
+      })),
     russian: /Русский/u.test(document.body.textContent ?? '')
       || Boolean(document.querySelector('a[href="/ru"], a[href^="/ru/"]')),
     arabic: /العربية/u.test(document.body.textContent ?? '')
@@ -113,9 +120,36 @@ await withPreview({ port: 4417 }, async (baseURL) => {
         check(!state.russian && !state.arabic, `${path}: deferred locale leaked into birthday output`);
       }
 
+      // These forecasts have a released EN/ES/PT route family. Verify exact
+      // reciprocal destinations; the remaining deferred routes stay separate.
+      for (const route of ['/today/', '/horoscopes/', '/horoscopes/aries/']) {
+        const expectedAlternates = [
+          ...FORECAST_LOCALES.map((entry) => [entry.hreflang, `https://zodiacs.org${localizedPath(entry.prefix, route)}`]),
+          ['x-default', `https://zodiacs.org${route}`],
+        ];
+        for (const locale of FORECAST_LOCALES) {
+          const path = localizedPath(locale.prefix, route);
+          const response = await page.goto(`${baseURL}${path}`, { waitUntil: 'domcontentloaded' });
+          check(response?.status() === 200, `${path}@${viewport.width}: released forecast is unavailable`);
+          const state = await routeState(page);
+          check(state.lang === locale.lang && state.dirAttribute === null,
+            `${path}: forecast language/direction ${state.lang}/${state.dirAttribute}`);
+          check(state.canonical === `https://zodiacs.org${path}`, `${path}: canonical ${state.canonical}`);
+          check(JSON.stringify(state.alternates) === JSON.stringify(expectedAlternates),
+            `${path}: forecast alternates ${JSON.stringify(state.alternates)}`);
+          const expectedSelector = FORECAST_LOCALES.map((entry) => ({
+            lang: entry.lang,
+            href: entry.code === locale.code ? null : localizedPath(entry.prefix, route),
+            current: entry.code === locale.code ? 'page' : null,
+          }));
+          check(JSON.stringify(state.forecastSelector) === JSON.stringify(expectedSelector),
+            `${path}: forecast route selector ${JSON.stringify(state.forecastSelector)}`);
+          check(state.width <= state.viewport + 1, `${path}@${viewport.width}: ${state.width}px overflow`);
+          check(!state.russian && !state.arabic, `${path}: unavailable forecast locale leaked`);
+        }
+      }
+
       for (const { path, selectorCount } of [
-        { path: '/today/', selectorCount: 5 },
-        { path: '/horoscopes/aries/', selectorCount: 5 },
         { path: '/events/', selectorCount: 5 },
         { path: '/registry/', selectorCount: 5 },
       ]) {
@@ -196,4 +230,4 @@ if (failures.length) {
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
-console.log('i18n-r0-drive: Russian is public only on core routes; programmatic/deferred rails stay five-locale and Arabic stays absent');
+console.log('i18n-r0-drive: core, programmatic, EN/ES/PT forecast and deferred route boundaries pass; Arabic stays absent');

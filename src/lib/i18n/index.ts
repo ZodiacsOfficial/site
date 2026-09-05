@@ -77,6 +77,14 @@ const CORE_LOCALIZED_PATHS = [
  */
 export const CORE_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it', 'ru'] as const satisfies readonly Locale[];
 
+/** Published daily editions; longer-range forecasts remain English-only. */
+export const DAILY_READING_ROUTE_LOCALES = ['en', 'es', 'pt'] as const satisfies readonly Locale[];
+const DAILY_READING_PATHS = [
+  '/today/',
+  '/horoscopes/',
+  ...SIGN_SLUGS.map((slug) => `/horoscopes/${slug}/`),
+];
+
 /** RU sign-guide shells stay renderable but are withheld from discovery. */
 export const INDEXABLE_SIGN_GUIDE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
 
@@ -90,14 +98,15 @@ export const PROGRAMMATIC_ROUTE_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as cons
 export const LEGACY_HOME_SELECTOR_LOCALES = ['en', 'es', 'pt', 'fr', 'it'] as const satisfies readonly Locale[];
 
 /** Locales in which each translated route is actually available. */
-export const LOCALIZED_PATHS: ReadonlyMap<string, readonly Locale[]> = new Map(
-  CORE_LOCALIZED_PATHS.map((path) => [
+export const LOCALIZED_PATHS: ReadonlyMap<string, readonly Locale[]> = new Map<string, readonly Locale[]>([
+  ...CORE_LOCALIZED_PATHS.map((path) => [
     path,
     SIGN_SLUGS.some((slug) => path === `/${slug}/`)
       ? INDEXABLE_SIGN_GUIDE_LOCALES
       : CORE_ROUTE_LOCALES,
   ] as const),
-);
+  ...DAILY_READING_PATHS.map((path) => [path, DAILY_READING_ROUTE_LOCALES] as const),
+]);
 
 const BIRTHDAY_MONTH_LENGTHS: Readonly<Record<string, number>> = Object.freeze({
   january: 31,
@@ -147,6 +156,7 @@ export function renderableLocalesForPath(path: string): readonly Locale[] | unde
   if (CORE_LOCALIZED_PATHS.includes(canonical)) {
     return [...CORE_ROUTE_LOCALES, ...STAGED_CORE_ROUTE_LOCALES];
   }
+  if (DAILY_READING_PATHS.includes(canonical)) return DAILY_READING_ROUTE_LOCALES;
   return isLocalizedChineseZodiacPath(canonical) || isLocalizedBirthdayPath(canonical)
     ? PROGRAMMATIC_ROUTE_LOCALES
     : undefined;

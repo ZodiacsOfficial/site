@@ -6,9 +6,10 @@ import SkyTicker from '../../islands/SkyTicker';
 import TodayBySign from '../../islands/TodayBySign';
 import WelcomeBack from '../../islands/WelcomeBack';
 import { SIGNS, signDates, signName } from '../../lib/signs';
-import { localizePath } from '../../lib/i18n';
+import { englishOnlyCue, localizePath } from '../../lib/i18n';
 import glassMaps from '../../data/glass-maps.json';
 import '../../styles/today.css';
+const englishOnly = englishOnlyCue('fr');
 
 const tools = [
   { href: '/birth-chart/', title: 'Thème astral', promise: 'Ton Soleil, ta Lune, ton ascendant, tes planètes, tes maisons et leur signification.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
@@ -66,7 +67,7 @@ const jsonLd = [
           <p>Thèmes astraux, signe lunaire, compatibilité et horoscopes gratuits : précis, confidentiels et faciles à comprendre.</p>
           <div class="hero-es__ctas">
             <a class="btn btn--primary" href={localizePath('fr', '/birth-chart/')}><span>Obtiens ton thème astral gratuit</span><span class="orb">↗</span></a>
-            <a class="btn btn--ghost hero-es__ghost" href="/fr/horoscopes/"><span>Voir les prévisions</span></a>
+            <a class="btn btn--ghost hero-es__ghost" href={localizePath('fr', '/horoscopes/')} hreflang="en" title={englishOnly?.aria}><span>Voir les prévisions{englishOnly?.suffix}</span></a>
           </div>
           <div class="hero-es__trustlines">
             <p class="hero-es__trust">Gratuit · Sans inscription · Calculé dans ton navigateur</p>
