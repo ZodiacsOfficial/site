@@ -13,9 +13,10 @@ import type { City } from '../lib/geo/search';
 import type { ReturnSeason, SaturnReturnResult } from '../lib/engine/returns';
 import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { formatShortDate } from '../lib/i18n/dates';
+import { createModuleLoader } from '../lib/module-load';
+import CalculationReload, { calculationError } from './CalculationReload';
 
-let modsPromise: Promise<typeof import('../lib/engine/returns')> | null = null;
-const loadReturns = () => (modsPromise ??= import('../lib/engine/returns'));
+const loadReturns = createModuleLoader(() => import('../lib/engine/returns'));
 
 function seasonStatus(season: ReturnSeason, now: Date): 'past' | 'active' | 'upcoming' {
   if (season.last.getTime() < now.getTime()) return 'past';
@@ -39,26 +40,32 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
+  const generation = useRef(0);
+
+  useEffect(() => () => { generation.current += 1; }, []);
 
   const approximate = !showDetail || time === '' || city === null;
 
   async function compute(e: Event) {
     e.preventDefault();
-    if (!date) return;
+    if (!date || busy) return;
+    const run = ++generation.current;
     focusAfterComputeRef.current = true;
     setBusy(true);
     setError('');
     try {
       const returns = await loadReturns();
+      if (run !== generation.current) return;
       const utc = showDetail && city
         ? resolveLocalToUtc(date, time || '12:00', city.tz).utc
         : new Date(`${date}T12:00:00Z`);
       setResult(returns.saturnReturns(utc));
     } catch (err) {
-      setError(t(locale, 'returnError'));
+      if (run !== generation.current) return;
+      setError(calculationError(err, locale, t(locale, 'returnError')));
       console.error(err);
     } finally {
-      setBusy(false);
+      if (run === generation.current) setBusy(false);
     }
   }
 
@@ -88,7 +95,7 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
               <input
                 id="sr-date" class="field__input" type="date" required
                 min="1800-01-01" max="2199-12-31" value={date}
-                onFocus={() => loadReturns()}
+                onFocus={() => { void loadReturns(); }}
                 onInput={(e) => setDate((e.target as HTMLInputElement).value)}
               />
               <p class="field__help">
@@ -123,6 +130,7 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
           </button>
           <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
+          <CalculationReload error={error} locale={locale} />
         </div>
       </form>
 

@@ -14,6 +14,8 @@ import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
+import { loadModule } from '../lib/module-load';
+import CalculationReload, { calculationError } from './CalculationReload';
 import { useProfile } from '../lib/hooks/useProfile';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import type { TransitSky } from './transit/TransitRing';
@@ -163,6 +165,8 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
   const initialProfileReadRef = useRef(false);
+  const mounted = useRef(true);
+  const inFlight = useRef(false);
   const profileAccessGeneration = useProfileAccessGeneration(() => {
     setResult(null);
     setRingMod(null);
@@ -173,6 +177,21 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
       ? { source: 'form', savedId: '', date: '', time: '', timeKnown: true, city: null }
       : current);
   });
+
+  useEffect(() => {
+    mounted.current = true;
+    const onAccess = () => {
+      inFlight.current = false;
+      focusAfterComputeRef.current = false;
+      setBusy(false);
+    };
+    window.addEventListener('zodiacs:profile-access', onAccess);
+    return () => {
+      mounted.current = false;
+      inFlight.current = false;
+      window.removeEventListener('zodiacs:profile-access', onAccess);
+    };
+  }, []);
 
   useEffect(() => {
     if (!profileReady || initialProfileReadRef.current) return;
@@ -193,17 +212,19 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
 
   async function check(e?: Event) {
     e?.preventDefault();
-    if (!ready || busy) return;
+    if (!mounted.current || !ready || inFlight.current) return;
+    inFlight.current = true;
     focusAfterComputeRef.current = e !== undefined;
     setBusy(true);
     setError('');
     const accessGeneration = profileAccessGeneration.current;
+    const isCurrent = () => mounted.current && accessGeneration === profileAccessGeneration.current;
     try {
       const [engine, mod] = await Promise.all([
         loadEngine(),
-        ringMod ? Promise.resolve(ringMod) : import('./transit/TransitRing'),
+        ringMod ? Promise.resolve(ringMod) : loadModule(() => import('./transit/TransitRing')),
       ]);
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      if (!isCurrent()) return;
       const natal = slot.source === 'saved'
         ? natalFromSaved(charts.find((c) => c.id === slot.savedId)!, engine)
         : natalFromForm(slot, engine);
@@ -211,16 +232,19 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
         engine.computeBodies(when)
           .filter((b) => TRANSIT_BODIES.has(b.body))
           .map(({ body, lon, retrograde }) => ({ body, lon, retrograde }));
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      if (!isCurrent()) return;
       setRingMod(mod);
       setSearchFocus(null);
       setResult({ natal, computeSky, nowMs: Date.now() });
     } catch (err) {
-      if (accessGeneration !== profileAccessGeneration.current) return;
-      setError(t(locale, 'transitError'));
+      if (!isCurrent()) return;
+      setError(calculationError(err, locale, t(locale, 'transitError')));
       console.error(err);
     } finally {
-      if (accessGeneration === profileAccessGeneration.current) setBusy(false);
+      if (isCurrent()) {
+        inFlight.current = false;
+        setBusy(false);
+      }
     }
   }
 
@@ -329,6 +353,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
             </p>
           )}
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
+          <CalculationReload error={error} locale={locale} />
         </div>
       </form>
 

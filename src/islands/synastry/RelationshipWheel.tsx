@@ -3,7 +3,7 @@
  * views so the /compatibility/ form stays light: the original bi-wheel, a
  * chart-A-by-chart-B aspect grid, and a house-free composite wheel.
  */
-import { useMemo, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import Wheel from '../../lib/wheel/Wheel';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import AspectGlyph from '../../components/AspectGlyph';
@@ -34,6 +34,8 @@ import {
 } from './synastryLines';
 import './relationship.css';
 import EvidenceDisclosure from '../EvidenceDisclosure';
+import CalculationReload, { calculationError } from '../CalculationReload';
+import { loadModule } from '../../lib/module-load';
 
 export interface WheelPerson {
   label: string;
@@ -214,10 +216,24 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
   const c = COPY[locale];
   const [tab, setTab] = useState<RelationshipTab>('wheel');
   const [sphereMod, setSphereMod] = useState<typeof import('../chart3d/EclipticView') | null>(null);
+  const [sphereError, setSphereError] = useState('');
+  const [sphereRetry, setSphereRetry] = useState(0);
   const [flipped, setFlipped] = useState(false);
   // Canonical focus ids are always chart-A-first and live above every tab.
   const [sel, setSel] = useState<string | null>(null);
   const compositeTracked = useRef(false);
+
+  useEffect(() => {
+    if (tab !== 'depth' || sphereMod) return;
+    let active = true;
+    setSphereError('');
+    void loadModule(() => import('../chart3d/EclipticView'))
+      .then((module) => { if (active) setSphereMod(module); })
+      .catch((cause) => {
+        if (active) setSphereError(calculationError(cause, locale, t(locale, 'compareError')));
+      });
+    return () => { active = false; };
+  }, [tab, sphereMod, sphereRetry, locale]);
 
   const inner = flipped ? b : a;
   const outer = flipped ? a : b;
@@ -294,9 +310,6 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
     if (next === 'composite' && !compositeTracked.current) {
       compositeTracked.current = true;
       track('composite_view');
-    }
-    if (next === 'depth' && !sphereMod) {
-      void import('../chart3d/EclipticView').then((mod) => setSphereMod(mod));
     }
   }
 
@@ -598,6 +611,12 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
               locale={locale}
               size={460}
             />
+          ) : sphereError ? (
+            <div>
+              <p class="field__error" role="alert">{sphereError}</p>
+              <button class="btn btn--glass" type="button" onClick={() => setSphereRetry((value) => value + 1)}>{t(locale, 'calculationRetry')}</button>
+              <CalculationReload error={sphereError} locale={locale} />
+            </div>
           ) : (
             <p class="field__help rwheel__hint" aria-live="polite">…</p>
           )}

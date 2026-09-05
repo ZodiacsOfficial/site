@@ -4,14 +4,16 @@
  * arithmetic over committed data (no ephemeris); the year scan — solar
  * return, Jupiter/Saturn hits on Sun/Moon/ASC, Saturn-return seasons —
  * loads the engine once per chart and caches in localStorage keyed by
- * chart id + engine version, refreshed every two weeks.
+ * chart id + calculation inputs + engine version, refreshed every two weeks.
  */
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useProfile } from '../lib/hooks/useProfile';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';
 import PlanetGlyph from '../components/PlanetGlyph';
 import EvidenceDisclosure from './EvidenceDisclosure';
+import CalculationReload, { calculationError } from './CalculationReload';
+import { loadModule } from '../lib/module-load';
 import { houseLine, wholeSignHouseFromAsc, type DailyBody } from '../lib/daily';
 import { type EclipseRecord } from '../lib/upcoming';
 import {
@@ -46,12 +48,15 @@ const ECLIPSES = (eclipsesData as { eclipses: EclipseRecord[] }).eclipses;
 const INGRESSES = (ingressesData as { windows: IngressWindow[] }).windows;
 const YEAR_MS = 366 * 86400_000;
 
-type YearCacheFile = Record<string, YearScanCache>;
+type ChartYearCache = YearScanCache & { chartKey: string };
+type YearCacheFile = Record<string, ChartYearCache>;
+type YearState = { key: string; entry: ChartYearCache | null; busy: boolean; error: string | null };
 
 const readYearCache = (): YearCacheFile => {
   if (!profileAccessAllowed()) return {};
   try {
-    return JSON.parse(localStorage.getItem(YEAR_AHEAD_CACHE_KEY) ?? '{}') as YearCacheFile;
+    const file: unknown = JSON.parse(localStorage.getItem(YEAR_AHEAD_CACHE_KEY) ?? '{}');
+    return file && typeof file === 'object' && !Array.isArray(file) ? file as YearCacheFile : {};
   } catch {
     return {};
   }
@@ -65,10 +70,20 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
     [profile.charts],
   );
   const [sel, setSel] = useState<string | null>(null);
-  const [year, setYear] = useState<YearScanCache | null>(null);
-  const [yearBusy, setYearBusy] = useState(false);
+  const [yearState, setYearState] = useState<YearState | null>(null);
+  const [yearAttempt, setYearAttempt] = useState(0);
 
   const chart = charts.find((c) => c.id === sel) ?? charts[0] ?? null;
+  // A saved chart can be recomputed without changing its id or engine version.
+  // Hide the previous scan immediately, before this render's effect runs.
+  const chartKey = chart ? JSON.stringify([chart.id, chart.birth.timeKnown, chart.summary]) : null;
+  const requestKey = JSON.stringify([chartKey, locale, yearAttempt]);
+  const currentRequest = useRef(requestKey);
+  currentRequest.current = requestKey;
+  const currentYear = yearState?.key === requestKey ? yearState : null;
+  const year = currentYear?.entry ?? null;
+  const yearBusy = currentYear?.busy ?? Boolean(chart && profileAccessAllowed());
+  const yearError = currentYear?.error ?? null;
   const natalPointLabel = (body: string) => locale === 'ru'
     ? `${body === 'Moon' || body === 'Venus' ? 'натальная' : 'натальный'} ${planetLabel(locale, body)}`
     : `${t(locale, 'natal')} ${planetLabel(locale, body)}`;
@@ -76,54 +91,78 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
   // Year scan: cache first; compute (lazy engine) only on a miss or after
   // two weeks, so repeat visits stay ephemeris-free.
   useEffect(() => {
-    setYear(null);
-    if (!chart) return;
-    const cached = readYearCache()[chart.id];
-    if (cached && yearCacheFresh(cached, chart.summary.engineVersion, new Date())) {
-      setYear(cached);
-      return;
-    }
+    setYearState(null);
+    if (!chart || !chartKey || !profileAccessAllowed()) return;
     let cancelled = false;
-    setYearBusy(true);
-    (async () => {
+    const active = () => !cancelled && currentRequest.current === requestKey && profileAccessAllowed();
+    // Revocation permanently cancels this request. A quick revoke/restore can
+    // be batched into one render with the same chart, so explicitly start a new
+    // attempt on restoration instead of leaving the cancelled attempt busy.
+    let restartQueued = false;
+    const onProfileAccess = () => {
+      if (!profileAccessAllowed()) cancelled = true;
+      else if (cancelled && !restartQueued && currentRequest.current === requestKey) {
+        restartQueued = true;
+        setYearAttempt((attempt) => attempt + 1);
+      }
+    };
+    window.addEventListener('zodiacs:profile-access', onProfileAccess);
+    const cleanup = () => {
+      cancelled = true;
+      window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+    };
+    const cached = readYearCache()[chart.id];
+    if (cached?.chartKey === chartKey && yearCacheFresh(cached, chart.summary.engineVersion, new Date())) {
+      if (active()) setYearState({ key: requestKey, entry: cached, busy: false, error: null });
+      return cleanup;
+    }
+    if (!active()) return cleanup;
+    setYearState({ key: requestKey, entry: null, busy: true, error: null });
+    void (async () => {
       try {
-        const { yearScan } = await import('../lib/engine/year-scan');
         const bodies = chart.summary.bodies;
         const sunLon = bodies.find((b) => b.body === 'Sun')?.lon;
-        if (sunLon == null) return;
+        const moonLon = bodies.find((b) => b.body === 'Moon')?.lon ?? null;
+        const ascLon = chart.birth.timeKnown ? chart.summary.angles?.asc ?? null : null;
+        const birthUtc = new Date(chart.summary.utcISO);
+        if (sunLon == null || !Number.isFinite(sunLon) ||
+          (moonLon != null && !Number.isFinite(moonLon)) ||
+          (ascLon != null && !Number.isFinite(ascLon)) || !Number.isFinite(birthUtc.getTime())) {
+          throw new RangeError('Saved chart is missing year-scan inputs');
+        }
+        const { yearScan } = await loadModule(() => import('../lib/engine/year-scan'));
+        if (!active()) return;
         const from = new Date();
         const to = new Date(from.getTime() + YEAR_MS);
-        const scan = yearScan(
-          {
-            sunLon,
-            moonLon: bodies.find((b) => b.body === 'Moon')?.lon ?? null,
-            ascLon: chart.birth.timeKnown ? chart.summary.angles?.asc ?? null : null,
-            birthUtc: new Date(chart.summary.utcISO),
-          },
-          from,
-          to,
-        );
-        const entry: YearScanCache = {
+        const scan = yearScan({ sunLon, moonLon, ascLon, birthUtc }, from, to);
+        const entry: ChartYearCache = {
+          chartKey,
           engineVersion: chart.summary.engineVersion,
           computedAt: from.toISOString(),
           from: from.toISOString(),
           to: to.toISOString(),
           scan,
         };
-        if (cancelled || !profileAccessAllowed()) return;
+        if (!active()) return;
         try {
           const file = readYearCache();
           file[chart.id] = entry;
-          if (!profileAccessAllowed()) return;
+          if (!active()) return;
           localStorage.setItem(YEAR_AHEAD_CACHE_KEY, JSON.stringify(file));
         } catch { /* cache is best-effort */ }
-        if (!profileAccessAllowed()) return;
-        setYear(entry);
-      } catch { /* engine failed to load — the card shows the quiet line */ }
-      if (!cancelled) setYearBusy(false);
+        if (!active()) return;
+        setYearState({ key: requestKey, entry, busy: false, error: null });
+      } catch (cause) {
+        if (active()) setYearState({
+          key: requestKey, entry: null, busy: false,
+          error: calculationError(cause, locale, t(locale, 'pfdYearError')),
+        });
+      } finally {
+        if (active()) setYearState((state) => state?.key === requestKey ? { ...state, busy: false } : state);
+      }
     })();
-    return () => { cancelled = true; };
-  }, [chart?.id, chart?.summary.engineVersion]);
+    return cleanup;
+  }, [requestKey]);
 
   const today = useMemo(() => {
     if (!chart) return null;
@@ -263,6 +302,16 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
             <h2>{t(locale, 'pfdYearAhead')}</h2>
             <span class="mono pfd__stamp">{chart.name}</span>
           </div>
+          {yearError && (
+            <div>
+              <p class="field__error" role="alert">{yearError}</p>
+              <button class="btn btn--glass" type="button" onClick={() => setYearAttempt((attempt) => attempt + 1)}>
+                {t(locale, 'calculationRetry')}
+              </button>
+              <CalculationReload error={yearError} locale={locale} />
+            </div>
+          )}
+          {yearBusy && <p class="pfd__quiet" role="status">{t(locale, 'pfdYearBusy')}</p>}
           {locale === 'ru' ? (
             <p class="pfd__quiet">Персональное чтение года впереди пока доступно по-английски. Расчёт выполняется на вашем устройстве.</p>
           ) : timeline.length > 0 ? (
@@ -273,14 +322,9 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
                 </li>
               ))}
             </ul>
-          ) : yearBusy ? (
-            <p class="pfd__quiet">{t(locale, 'pfdYearBusy')}</p>
-          ) : (
+          ) : !yearBusy && !yearError ? (
             <p class="pfd__quiet">{t(locale, 'pfdQuietAhead')}</p>
-          )}
-          {locale !== 'ru' && timeline.length > 0 && yearBusy && (
-            <p class="pfd__quiet">{t(locale, 'pfdYearBusy')}</p>
-          )}
+          ) : null}
           {locale !== 'ru' && timeline.length > 0 && (
             <EvidenceDisclosure label={t(locale, 'whyThisReading')}>
               <p>{t(locale, 'pfdYearNote')}</p>

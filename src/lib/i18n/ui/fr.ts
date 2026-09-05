@@ -2,6 +2,14 @@ import type { UiCatalog } from './schema';
 import { GROWTH_UI_EN } from './growth.js';
 
 const fr = {
+  chartDepthOpen: 'Voir en trois dimensions',
+  chartDepthClose: 'Masquer la troisième dimension',
+  calculationLoadError: 'Les fichiers de calcul n’ont pas pu être chargés. Vérifie ta connexion et réessaie.',
+  calculationReload: 'Recharger la page',
+  calculationReloadWarning: 'Le rechargement efface les données non enregistrées.',
+  calculationRetry: 'Réessayer',
+  pfdYearError: 'Nous n’avons pas pu terminer la lecture de l’année à venir. Réessaie.',
+  placeSearching: 'Recherche de lieux…',
   navPrimary: 'Navigation principale',
   navSigns: 'Signes',
   navTools: 'Outils',

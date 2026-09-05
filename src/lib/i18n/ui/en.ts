@@ -1,6 +1,14 @@
 import { GROWTH_UI_EN } from './growth.js';
 
 const en = {
+    chartDepthOpen: 'See it in three dimensions',
+    chartDepthClose: 'Hide the third dimension',
+    calculationLoadError: 'The calculation files could not load. Check your connection and try again.',
+    calculationReload: 'Reload page',
+    calculationReloadWarning: 'Reloading clears unsaved entries.',
+    calculationRetry: 'Try again',
+    pfdYearError: 'We couldn’t finish your year-ahead reading. Try again.',
+    placeSearching: 'Searching places…',
     navPrimary: 'Primary',
     navSigns: 'Signs',
     navTools: 'Tools',
