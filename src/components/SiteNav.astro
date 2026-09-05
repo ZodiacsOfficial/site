@@ -791,22 +791,17 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
   const toolsDropdown = dropdown(toolsBtn, toolsMenu, 2);
   const signsDropdown = dropdown(signsBtn, signsMenu, 3);
 
-  toolsDropdown?.button.addEventListener('click', () => {
-    const open = !toolsDropdown.isOpen();
-    signsDropdown?.setOpen(false);
-    toolsDropdown.setOpen(open);
-  });
-  toolsDropdown?.button.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') signsDropdown?.setOpen(false);
-  });
-  signsDropdown?.button.addEventListener('click', () => {
-    const open = !signsDropdown.isOpen();
-    toolsDropdown?.setOpen(false);
-    signsDropdown.setOpen(open);
-  });
-  signsDropdown?.button.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') toolsDropdown?.setOpen(false);
-  });
+  for (const [current, other] of [[toolsDropdown, signsDropdown], [signsDropdown, toolsDropdown]]) {
+    if (!current) continue;
+    current.button.addEventListener('click', () => {
+      const open = !current.isOpen();
+      other?.setOpen(false);
+      current.setOpen(open);
+    });
+    current.button.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') other?.setOpen(false);
+    });
+  }
 
   // An open dropdown must not float over content once keyboard focus has
   // moved on (WCAG 1.4.13-adjacent) — close when focus leaves both parts.
@@ -824,6 +819,15 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
   const mobileFocusables = () => Array.from(
     mobileMenu?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? [],
   );
+  mobileMenu?.addEventListener('focusin', ({ target }) => requestAnimationFrame(() => {
+    // Native focus may leave the end of a tall translated row below the
+    // viewport. Reveal that whole row in the fixed, inset-zero overlay after
+    // native scrolling, leaving focus and the covered document unchanged.
+    if (mobileMenu!.hidden || document.activeElement !== target) return;
+    const { top, bottom } = (target as HTMLElement).getBoundingClientRect();
+    const edge = navWrap!.getBoundingClientRect().bottom + 8;
+    mobileMenu!.scrollTop += Math.min(0, top - edge) || Math.max(0, bottom - innerHeight + 8);
+  }));
 
   function setMobile(open: boolean) {
     if (!burger || !mobileMenu) return;
