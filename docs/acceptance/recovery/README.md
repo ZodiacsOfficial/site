@@ -28,3 +28,11 @@ Big Three optional-card recovery, Saturn warm-up, return-calculator access/unmou
 These are independent raw maxima and minimum scores across three samples; maxima can come from different samples. Focal accessibility and SEO scores are 100. All existing thresholds passed, including the documented 2,800 ms natal LCP calibration. Thesis LCP was only 6.16735 ms below its 2,500 ms cap. No thresholds changed. Laboratory evidence does not establish production performance or deployment.
 
 The initial Site Check reported 3,313 passing tests and the sole unsuppressed stale Phase 1 receipt failure. This verified import addresses that receipt. The full unchanged Site Check on the final evidence head remains the merge gate. The exact protected allowance remains limited to the same eight catalogue/test paths and is repinned to the actual transit base.
+
+## SQL harness startup repair
+
+The later final Site Check `33963716418` on `a99c8fc2aceff74ef6ef5bbab1280a53cf1d82fa` failed its Games SQL job `101299975112` before any SQL assertion. At 2026-09-05T11:35:22.653Z, the first bootstrap connection reported that the database was shutting down. The image had just initialized; the harness's readiness query and bootstrap both used a Unix socket.
+
+The [official PostgreSQL image entrypoint](https://github.com/docker-library/postgres/blob/master/docker-entrypoint.sh) starts a socket-only initialization server and stops it before launching the final TCP server. The harness now probes and executes against the same loopback TCP endpoint with its existing test-only password. The 60-attempt bound, fatal SQL errors, migration sequence, replay checks and container cleanup are unchanged. No application SQL, database permissions or workflow is edited.
+
+Four regression checks execute the actual Bash harness with a simulated Docker lifecycle: initialization cannot advance bootstrap, restoring the old socket behavior reproduces the premature failure, readiness exhaustion remains fatal, and a SQL-stage failure stops subsequent files without retry. This verifies harness behavior; it does not replace the real PostgreSQL SQL suite. Docker is unavailable in the local runtime, so the actual database gate must pass in CI before merge. The captured product evidence above retains its original provenance; a final passing Site Check is still required.
