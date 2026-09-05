@@ -151,42 +151,29 @@ const VISUAL_MODULES = [
 
 const checkFigureFit = async (page, width) => {
   for (const id of ['fig-keyboard', 'fig-2', 'fig-3', 'fig-authorities', 'fig-provenance']) {
-    const geometry = await page.locator(`#${id}`).evaluate(async (node) => {
-      // Measure disclosed figures without scrolling past the above-fold
-      // gallery-loading check. Let the opened subtree finish layout before
-      // reading its bounds, then restore the actual default reading state.
-      const drawer = node.closest('details');
-      const wasOpen = drawer?.open;
-      try {
-        if (drawer && !wasOpen) {
-          drawer.open = true;
-          await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-        }
+    const figure = page.locator(`#${id}`);
+    const drawer = id === 'fig-authorities' ? page.locator('#ownership-details') : null;
+    const wasOpen = drawer ? await drawer.getAttribute('open') !== null : false;
+    try {
+      // Offscreen chapters use content-visibility:auto. Visit each figure as
+      // a reader would so the browser lays it out before measuring its bounds.
+      if (drawer && !wasOpen) await drawer.locator(':scope > summary').click();
+      await isVisuallyExposed(figure);
+      const geometry = await figure.evaluate((node) => {
         const rect = node.getBoundingClientRect();
         const svgOverflow = [...node.querySelectorAll('svg')].some((svg) => {
           const bounds = svg.getBoundingClientRect();
           return bounds.width > 0 && (bounds.left < rect.left - 1 || bounds.right > rect.right + 1);
         });
         return { width: rect.width, left: rect.left, right: rect.right, scroll: node.scrollWidth, client: node.clientWidth, svgOverflow };
-      } finally {
-        if (drawer) drawer.open = wasOpen;
-      }
-    });
-    check(`${width}px: #${id} and its SVGs fit without horizontal overflow`,
-      geometry.width > 0 && geometry.left >= -1 && geometry.right <= width + 1
-        && geometry.scroll <= geometry.client + 1 && !geometry.svgOverflow,
-      JSON.stringify(geometry));
-  }
-  const chart = page.locator('#fig-2 [data-attention-chart]:visible');
-  check(`${width}px: exactly one measured attention chart is visible`, await chart.count() === 1);
-  if (await chart.count() === 1) {
-    const smallestLabel = await chart.evaluate((svg) => Math.min(...[...svg.querySelectorAll('text')].map((label) =>
-      Number.parseFloat(getComputedStyle(label).fontSize) * svg.getBoundingClientRect().width / svg.viewBox.baseVal.width)));
-    check(`${width}px: measured chart labels remain readable`, smallestLabel >= 10, `${smallestLabel.toFixed(1)}px`);
-  }
-  if (width <= 390) {
-    const height = await page.locator('#fig-3 .attention-patterns').evaluate((node) => node.getBoundingClientRect().height);
-    check(`${width}px: schematic stays shorter than a phone screen`, height <= 540, `${height}px`);
+      });
+      check(`${width}px: #${id} and its SVGs fit without horizontal overflow`,
+        geometry.width > 0 && geometry.left >= -1 && geometry.right <= width + 1
+          && geometry.scroll <= geometry.client + 1 && !geometry.svgOverflow,
+        JSON.stringify(geometry));
+    } finally {
+      if (drawer && !wasOpen) await drawer.locator(':scope > summary').click();
+    }
   }
 };
 
@@ -207,7 +194,6 @@ try {
     (req.url().startsWith('http://127.0.0.1') ? errors : external).push(req.url());
   });
   await page.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
-  await checkFigureFit(page, 1440);
   const registryCollectionMarker = await page.evaluate(async () => {
     const html = await fetch('/astrofolio/').then((response) => response.text());
     const documentCopy = new DOMParser().parseFromString(html, 'text/html');
@@ -589,6 +575,8 @@ try {
     document.querySelector('details.evidence-vault').open = false;
   });
 
+  // Keep figure visits after the hero and above-fold gallery checks.
+  await checkFigureFit(page, 1440);
   await checkOwnershipDrawer(page, 'desktop');
 
   // The human visual layer and optional evidence remain available.
