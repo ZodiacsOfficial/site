@@ -1,6 +1,23 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
-import { UI } from '../lib/i18n';
+
+import { CATALOG_LOCALES, UI } from '../lib/i18n';
+
+const wheelActionKeys = [
+  'chartWheelActions', 'chartWheelGuide', 'chartWheelReplay', 'chartWheelAnother',
+  'chartWheelSignatureSelf', 'chartWheelSignatureOther', 'chartWheelCompareMine',
+  'chartWheelCompareAdd', 'chartWheelShareOther',
+] as const;
+
+// Freeze the released wording while moving it out of the eager island bundle.
+const wheelActionCopy = {
+  en: ['Chart actions', 'Take the guided tour', 'Replay the tour', 'Read another chart', 'Your chart signature', 'Their chart signature', 'Compare with mine', 'Add my chart to compare', 'Share this chart'],
+  es: ['Acciones de la carta', 'Hacer el recorrido guiado', 'Repetir el recorrido', 'Leer otra carta', 'La firma de tu carta', 'La firma de su carta', 'Comparar con la mía', 'Añadir mi carta para comparar', 'Compartir esta carta'],
+  pt: ['Ações do mapa', 'Fazer o tour guiado', 'Repetir o tour', 'Ler outro mapa', 'A assinatura do seu mapa', 'A assinatura deste mapa', 'Comparar com o meu', 'Adicionar meu mapa para comparar', 'Compartilhar este mapa'],
+  fr: ['Actions du thème', 'Faire la visite guidée', 'Rejouer la visite', 'Lire un autre thème', 'La signature de ton thème', 'La signature de son thème', 'Comparer avec le mien', 'Ajouter mon thème pour comparer', 'Partager ce thème'],
+  it: ['Azioni del tema', 'Inizia il tour guidato', 'Ripeti il tour', 'Leggi un altro tema', 'La firma del tuo tema', 'La firma del suo tema', 'Confronta con il mio', 'Aggiungi il mio tema per confrontare', 'Condividi questo tema'],
+  ru: ['Действия с картой', 'Пройти экскурсию', 'Повторить экскурсию', 'Прочитать другую карту — пока по-английски', 'Характерный рисунок вашей карты', 'Характерный рисунок этой карты', 'Сравнить с моей — пока по-английски', 'Добавить мою карту для сравнения — пока по-английски', 'Поделиться этой картой'],
+};
 
 describe('Chart result action contract', () => {
   it('keeps the exact 3D trigger copy in the per-page catalog rather than an eager locale table', async () => {
@@ -21,6 +38,17 @@ describe('Chart result action contract', () => {
     const source = await readFile(new URL(`./${file}`, import.meta.url), 'utf8');
     expect(source).toContain("behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'");
     expect(source).not.toContain("scrollIntoView({ behavior: 'smooth', block: 'start' })");
+  });
+
+  it.each(CATALOG_LOCALES)('preserves the exact %s wheel action wording in the per-page catalog', (locale) => {
+    expect(wheelActionKeys.map((key) => UI[locale][key])).toEqual(wheelActionCopy[locale]);
+  });
+
+  it('reads wheel action labels from the page catalog and retains the Russian runtime override', async () => {
+    const calculator = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
+    expect(calculator).not.toContain('WHEEL_ACTION_COPY');
+    expect(calculator).toContain('russianCopy?.chart.wheelActions ?? {');
+    for (const key of wheelActionKeys) expect(calculator).toContain(`t(locale, '${key}')`);
   });
 
   it('keeps the ephemeris out of the idle page load and warms it on form focus', async () => {

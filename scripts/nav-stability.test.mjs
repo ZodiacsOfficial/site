@@ -17,6 +17,18 @@ function value(body, property) {
   return declarations.match(new RegExp(`(?:^|;)\\s*${property}:\\s*([^;]+);`, 'u'))?.[1].trim();
 }
 
+function hasChildDependentNavigation(source) {
+  // This exact rule hides the out-of-flow Guide while the native menu is open.
+  // It cannot change reserved nav geometry. Strip it once, with only its two
+  // reviewed declarations; every other :has and child-dependent grid stays banned.
+  const withoutComments = source.replace(/\/\*[\s\S]*?\*\//gu, '');
+  const withoutGuideVisibility = withoutComments.replace(
+    /(^|[{}])\s*:global\(body:has\(\[data-mobile-menu\]:not\(\[hidden\]\)\) \.zguide-launcher\) \{\s*visibility: hidden;\s*pointer-events: none;\s*\}/u,
+    '$1',
+  );
+  return /:has\(|:nth-child\([^}]+grid-template-/u.test(withoutGuideVisibility);
+}
+
 describe('navigation first-paint reservation', () => {
   it('reserves a bounded pill before any child content is streamed', () => {
     const shell = rule('.nav');
@@ -89,12 +101,28 @@ describe('navigation first-paint reservation', () => {
     expect(value(rule('.nav--localized.nav--with-today .nav__links'), 'grid-template-columns'))
       .toBe('128px 82px 52px repeat(2, minmax(0, 1fr)) 144px');
     expect(nav).toContain("'nav--with-today': links.some((link) => link.href === '/today/')");
-    expect(css).not.toMatch(/:has\(|:nth-child\([^}]+grid-template-/u);
+    expect(hasChildDependentNavigation(css)).toBe(false);
     expect(value(rule('.nav--without-search .nav__links'), 'grid-template-columns'))
       .toBe('136px 84px repeat(2, minmax(0, 1fr)) 172px');
     expect(rule('.nav__link')).not.toMatch(/overflow:\s*hidden|text-overflow|font-size:\s*0/u);
     expect(value(rule('.nav__link'), 'white-space')).toBe('nowrap');
     expect(value(rule('.nav__dropdown-btn'), 'justify-content')).toBe('space-between');
+  });
+
+  it.each([
+    ['Guide grid declaration', (source) => source.replace('pointer-events: none;\n  }\n  .mobile-menu', 'pointer-events: none; grid-template-columns: 1fr;\n  }\n  .mobile-menu')],
+    ['Guide display declaration', (source) => source.replace('pointer-events: none;\n  }\n  .mobile-menu', 'pointer-events: none; display: none;\n  }\n  .mobile-menu')],
+    ['Guide width declaration', (source) => source.replace('pointer-events: none;\n  }\n  .mobile-menu', 'pointer-events: none; width: 0;\n  }\n  .mobile-menu')],
+    ['different target', (source) => source.replace('.zguide-launcher) {', '.nav) {')],
+    ['selector list', (source) => source.replace(':global(body:has(', '.nav, :global(body:has(')],
+    ['selector prefix', (source) => source.replace(':global(body:has(', '.nav :global(body:has(')],
+    ['another :has rule', (source) => `${source}\n.nav:has(.nav__chip) { opacity: 1; }`],
+    ['child-dependent grid', (source) => `${source}\n.nav__link:nth-child(6) { grid-template-columns: 1fr; }`],
+    ['duplicate Guide exception', (source) => `${source}\n:global(body:has([data-mobile-menu]:not([hidden])) .zguide-launcher) { visibility: hidden; pointer-events: none; }`],
+  ])('keeps rejecting %s outside the exact Guide visibility exception', (_label, mutate) => {
+    const changed = mutate(css);
+    expect(changed).not.toBe(css);
+    expect(hasChildDependentNavigation(changed)).toBe(true);
   });
 
   it('leaves headroom around weight-500 dropdown labels without taking space needed by other links', () => {

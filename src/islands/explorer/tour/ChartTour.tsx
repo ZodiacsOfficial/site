@@ -29,7 +29,7 @@ import type { Aspect, AspectType, Chart } from '../../../lib/engine/types';
 import { formatLongitude, signForLongitude, signName } from '../../../lib/signs';
 import { bigThree } from '../../../lib/interpretations';
 import { aspectLabel, planetLabel } from '../../../lib/i18n/astrology';
-import { localizePath, t, type CatalogLocale as Locale } from '../../../lib/i18n';
+import { englishOnlyCue, localizePath, t, type CatalogLocale as Locale } from '../../../lib/i18n';
 import PlanetGlyph from '../../../components/PlanetGlyph';
 import AspectGlyph from '../../../components/AspectGlyph';
 import AstroTerm from '../../AstroTerm';
@@ -538,6 +538,10 @@ export default function ChartTour({
     case 'first-next': {
       const sun = scene.bodies.find((body) => body.body === 'Sun');
       const sunSign = sun ? signForLongitude(sun.lon) : null;
+      // The tour promises a monthly forecast; those editions are still English-only.
+      const horoscopePath = sunSign ? `/horoscopes/${sunSign.slug}/monthly/` : '/horoscopes/';
+      const horoscopeHref = localizePath(locale, horoscopePath);
+      const englishOnly = horoscopeHref === horoscopePath ? englishOnlyCue(locale) : undefined;
       feature = (
         <div class="tour__feature">
           <div class="tour__future-grid">
@@ -552,8 +556,9 @@ export default function ChartTour({
             </div>
             <a
               class="tour__future-card tour__future-card--link"
-              href={localizePath(locale, sunSign ? `/horoscopes/${sunSign.slug}/` : '/horoscopes/')}
-              title={locale === 'ru' ? 'Материал пока доступен по-английски' : undefined}
+              href={horoscopeHref}
+              hreflang={englishOnly ? 'en' : undefined}
+              title={englishOnly?.aria}
               onClick={() => onComplete?.()}
             >
               <span>{tourText(locale, 'quickHoroscopeLabel')}</span>
@@ -562,7 +567,7 @@ export default function ChartTour({
               <em>{sunSign
                 ? tourFormat(locale, 'quickHoroscopeAction', { sign: signName(sunSign, locale) })
                 : tourText(locale, 'quickHoroscopeLabel')} →</em>
-              {locale !== 'en' && <small>{tourText(locale, 'quickHoroscopeEnglishNote')}</small>}
+              {englishOnly && <small>{tourText(locale, 'quickHoroscopeEnglishNote')}</small>}
             </a>
           </div>
           <div class="tour__why">

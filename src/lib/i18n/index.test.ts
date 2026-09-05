@@ -5,6 +5,7 @@ import {
   LOCALE_PATH_PREFIX,
   LOCALIZED_PATHS,
   CORE_ROUTE_LOCALES,
+  DAILY_READING_ROUTE_LOCALES,
   CATALOG_LOCALES,
   LEGACY_HOME_SELECTOR_LOCALES,
   INDEXABLE_SIGN_GUIDE_LOCALES,
@@ -25,11 +26,12 @@ import {
   UI,
   type UiKey,
 } from './index';
+import { SIGN_SLUGS } from '../signs';
 
 describe('i18n helpers', () => {
-  it('keeps every localized UI catalog aligned with all 400 English keys', () => {
+  it('keeps every localized UI catalog aligned with all 409 English keys', () => {
     const englishKeys = Object.keys(UI.en).sort();
-    expect(englishKeys).toHaveLength(400);
+    expect(englishKeys).toHaveLength(409);
     for (const locale of CATALOG_LOCALES) {
       expect(Object.keys(UI[locale]).sort()).toEqual(englishKeys);
     }
@@ -172,6 +174,41 @@ describe('i18n helpers', () => {
     }
   });
 
+  it('keeps the published daily editions reciprocal without publishing other forecast families', () => {
+    expect(DAILY_READING_ROUTE_LOCALES).toEqual(['en', 'es', 'pt']);
+    for (const path of ['/today/', '/horoscopes/', ...SIGN_SLUGS.map((sign) => `/horoscopes/${sign}/`)]) {
+      const expected = { en: path, es: `/es${path}`, pt: `/pt${path}` };
+      for (const [locale, href] of Object.entries(expected)) {
+        expect(availableLocalesForPath(href)).toEqual(DAILY_READING_ROUTE_LOCALES);
+        expect(renderableLocalesForPath(href)).toEqual(DAILY_READING_ROUTE_LOCALES);
+        expect(alternatePaths(href)).toEqual(expected);
+        expect(renderableAlternatePathEntries(href)).toEqual(
+          Object.entries(expected).map(([language, target]) => ({ locale: language, href: target })),
+        );
+        expect(localizePath(locale as 'en' | 'es' | 'pt', path)).toBe(href);
+      }
+      for (const locale of ['fr', 'it', 'ru', 'ar'] as const) {
+        expect(localizePath(locale, path)).toBe(path);
+      }
+    }
+    for (const path of [
+      '/horoscopes/not-a-sign/', '/horoscopes/aries/weekly/',
+      '/horoscopes/aries/monthly/', '/horoscopes/aries/tomorrow/',
+      '/horoscopes/aries/love/', '/horoscopes/aries/career/', '/horoscopes/aries/2027/',
+    ]) {
+      expect(alternatePaths(path)).toBeNull();
+      expect(localizePath('es', path)).toBe(path);
+      expect(localizePath('pt', path)).toBe(path);
+    }
+  });
+
+  it('keeps the English courtesy outside footer link labels to avoid repeated cues', () => {
+    for (const locale of ['es', 'pt', 'fr', 'it'] as const) {
+      expect(UI[locale].footerZodiacDates).not.toContain('(');
+      expect(UI[locale].footerGlossary).not.toContain('(');
+    }
+  });
+
   it('localizes data-driven WS5 routes while keeping pair prose English-only', () => {
     expect(LOCALIZED_PATHS.has('/compatibility/aries-taurus/')).toBe(false);
     expect(alternatePaths('/compatibility/aries-taurus/')).toBeNull();
@@ -218,7 +255,7 @@ describe('i18n helpers', () => {
     expect(tf('pt', 'pairingCta', { a: 'Áries', b: 'Touro' })).toBe('Leia a combinação entre Áries e Touro');
     expect(tf('it', 'skyPlanetRetrograde', { planet: 'Plutone' })).toBe('Plutone retrogrado');
     expect(tf('it', 'pairingCta', { a: 'Ariete', b: 'Toro' })).toBe('Leggi l’abbinamento fra Ariete e Toro');
-    expect(localizePath('es', '/horoscopes/aries/')).toBe('/horoscopes/aries/');
+    expect(localizePath('es', '/horoscopes/aries/weekly/')).toBe('/horoscopes/aries/weekly/');
   });
 
   it('renders the chart Registry bridge as complete localized sentences', () => {
