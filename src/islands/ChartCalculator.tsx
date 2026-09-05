@@ -17,7 +17,9 @@ import AspectGlyph from '../components/AspectGlyph';
 import Wheel from '../lib/wheel/Wheel';
 import Inspector from './explorer/Inspector';
 import LayerChips from './explorer/LayerChips';
-import ReadingPath, { type ReadingScrollBehavior } from './explorer/ReadingPath';
+import { moonCandidates, moonCandidatesFromEndpoints, moonIsUncertain, moonLabel } from '../lib/moon-certainty';
+import { createModuleLoader } from '../lib/module-load';
+import type { ReadingScrollBehavior } from './explorer/ReadingPath';
 import {
   EMPTY_FIRST_READING,
   readFirstReadingProgress,
@@ -62,6 +64,7 @@ import { CATALOG_LOCALES, RELEASED_LOCALES, localizePath, normalizeCatalogLocale
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import { russianRuntime } from '../lib/i18n/ru-runtime';
 import { useEngine } from '../lib/hooks/useEngine';
+import CalculationReload, { calculationError, calculationLoadMessage } from './CalculationReload';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
 import type { AspectType } from '../lib/engine/types';
@@ -99,6 +102,7 @@ type ChartSignature = import('../lib/chart-signature').ChartSignature;
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 type ShareDialogModule = typeof import('./ChartShareDialog');
 type ChartActionDockModule = typeof import('./ChartActionDock');
+const loadChartControls = createModuleLoader(() => import('./ChartActionDock'));
 type PreparedPrimaryShare = Awaited<ReturnType<ShareSurfaceModule['preparePrimaryShareArtifact']>>;
 type PrimaryShareHandle = {
   artifact: PreparedPrimaryShare;
@@ -123,18 +127,6 @@ const LENS_LABELS: Record<ReleasedLocale, Record<'rail' | 'natal' | LensId, stri
   fr: { rail: 'Le thème au fil du temps', natal: 'Natal', sky: 'Ciel actuel', progressed: 'Progressé', return: 'Révolution solaire' },
   it: { rail: 'Il tema nel tempo', natal: 'Natale', sky: 'Cielo attuale', progressed: 'Progredito', return: 'Rivoluzione solare' },
 };
-/**
- * The depth view's own strings live beside it, in the lazily-loaded chunk.
- * Only its trigger has to be named out here, so only that is duplicated —
- * importing the view's copy map would drag all six locales into this page.
- */
-const DEPTH_TOGGLE: Record<ReleasedLocale, { open: string; close: string }> = {
-  en: { open: 'See it in three dimensions', close: 'Hide the third dimension' },
-  es: { open: 'Verla en tres dimensiones', close: 'Ocultar la tercera dimensión' },
-  pt: { open: 'Ver em três dimensões', close: 'Ocultar a terceira dimensão' },
-  fr: { open: 'Voir en trois dimensions', close: 'Masquer la troisième dimension' },
-  it: { open: 'Vedilo in tre dimensioni', close: 'Nascondi la terza dimensione' },
-};
 const DETAIL_LABELS: Record<ReleasedLocale, { lead: string; placements: string; aspects: string }> = {
   en: { lead: 'See exact chart data — ', placements: ' placements · ', aspects: ' aspects' },
   es: { lead: 'Ver los datos exactos — ', placements: ' posiciones · ', aspects: ' aspectos' },
@@ -143,23 +135,6 @@ const DETAIL_LABELS: Record<ReleasedLocale, { lead: string; placements: string; 
   it: { lead: 'Vedi i dati esatti — ', placements: ' posizioni · ', aspects: ' aspetti' },
 };
 const DETAIL_STORAGE_KEY = 'zodiacs.detail.v1';
-const WHEEL_ACTION_COPY = {
-  en: { actions: 'Chart actions', guide: 'Take the guided tour', replay: 'Replay the tour', another: 'Read another chart', signatureSelf: 'Your chart signature', signatureOther: 'Their chart signature', compareMine: 'Compare with mine', compareAdd: 'Add my chart to compare', shareOther: 'Share this chart' },
-  es: { actions: 'Acciones de la carta', guide: 'Hacer el recorrido guiado', replay: 'Repetir el recorrido', another: 'Leer otra carta', signatureSelf: 'La firma de tu carta', signatureOther: 'La firma de su carta', compareMine: 'Comparar con la mía', compareAdd: 'Añadir mi carta para comparar', shareOther: 'Compartir esta carta' },
-  pt: { actions: 'Ações do mapa', guide: 'Fazer o tour guiado', replay: 'Repetir o tour', another: 'Ler outro mapa', signatureSelf: 'A assinatura do seu mapa', signatureOther: 'A assinatura deste mapa', compareMine: 'Comparar com o meu', compareAdd: 'Adicionar meu mapa para comparar', shareOther: 'Compartilhar este mapa' },
-  fr: { actions: 'Actions du thème', guide: 'Faire la visite guidée', replay: 'Rejouer la visite', another: 'Lire un autre thème', signatureSelf: 'La signature de ton thème', signatureOther: 'La signature de son thème', compareMine: 'Comparer avec le mien', compareAdd: 'Ajouter mon thème pour comparer', shareOther: 'Partager ce thème' },
-  it: { actions: 'Azioni del tema', guide: 'Inizia il tour guidato', replay: 'Ripeti il tour', another: 'Leggi un altro tema', signatureSelf: 'La firma del tuo tema', signatureOther: 'La firma del suo tema', compareMine: 'Confronta con il mio', compareAdd: 'Aggiungi il mio tema per confrontare', shareOther: 'Condividi questo tema' },
-} as const satisfies Record<ReleasedLocale, {
-  actions: string;
-  guide: string;
-  replay: string;
-  another: string;
-  signatureSelf: string;
-  signatureOther: string;
-  compareMine: string;
-  compareAdd: string;
-  shareOther: string;
-}>;
 const CHART_BOOK_COPY = {
   en: { label: 'Whose chart is this?', save: 'Save', skip: 'Skip' },
   es: { label: '¿De quién es esta carta?', save: 'Guardar', skip: 'Omitir' },
@@ -315,7 +290,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const releasedLocale: ReleasedLocale | null = locale === 'ru' ? null : locale;
   const lensLabels = russianCopy?.chart.lens ?? LENS_LABELS[releasedLocale!];
   const detailLabels = russianCopy?.chart.detail ?? DETAIL_LABELS[releasedLocale!];
-  const wheelActionCopy = russianCopy?.chart.wheelActions ?? WHEEL_ACTION_COPY[releasedLocale!];
+  const wheelActionCopy = russianCopy?.chart.wheelActions ?? {
+    actions: t(locale, 'chartWheelActions'),
+    guide: t(locale, 'chartWheelGuide'),
+    replay: t(locale, 'chartWheelReplay'),
+    another: t(locale, 'chartWheelAnother'),
+    signatureSelf: t(locale, 'chartWheelSignatureSelf'),
+    signatureOther: t(locale, 'chartWheelSignatureOther'),
+    compareMine: t(locale, 'chartWheelCompareMine'),
+    compareAdd: t(locale, 'chartWheelCompareAdd'),
+    shareOther: t(locale, 'chartWheelShareOther'),
+  };
   const chartBookCopy = russianCopy?.chart.chartBook ?? CHART_BOOK_COPY[releasedLocale!];
   const registryAuraCopy = russianCopy?.chart.registryAura ?? REGISTRY_AURA_CHART_COPY[releasedLocale!];
   const otherSubjectCopy = russianCopy
@@ -371,6 +356,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [depthOpen, setDepthOpen] = useState(false);
   const [calendarSurface, setCalendarSurface] = useState<CalendarSubscribeModule | null>(null);
   const [chartActionDockModule, setChartActionDockModule] = useState<ChartActionDockModule | null>(null);
+  const [controlsError, setControlsError] = useState(false);
   const [communicationSurface, setCommunicationSurface] = useState<CommunicationReadModule | null>(null);
   const [approachSurface, setApproachSurface] = useState<ApproachReadModule | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -507,7 +493,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     : null;
 
   useEffect(() => {
-    void import('./ChartActionDock').then(setChartActionDockModule, () => {});
     return () => { spotlightArrivalCleanupRef.current?.(); };
   }, []);
 
@@ -649,7 +634,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         if (!b) return '';
         return [
           planetLabel(locale, b.body),
-          formatLongitude(b.lon, locale),
+          b.body === 'Moon' && chart && moonIsUncertain(chart)
+            ? `${moonLabel(chart, locale)} · ${t(locale, 'needsBirthTime')}`
+            : formatLongitude(b.lon, locale),
           b.house != null ? `${t(locale, 'house')} ${b.house}` : '',
           b.retrograde ? 'Rx' : '',
         ].filter(Boolean).join(', ');
@@ -1100,6 +1087,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setRegistryRecordSlug(null);
     setSubjectMode(input.subjectMode ?? 'self');
     setMineHandoff(input.mine ?? null);
+    if (mode === 'full' && !chartActionDockModule) requestChartControls();
     try {
       const engine = await loadEngine();
       if (!runIsCurrent()) return;
@@ -1125,7 +1113,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         const endpoints = localDateEndpointsUtc(input.date, input.city.tz);
         const startBodies = engine.computeBodies(endpoints.start);
         const endBodies = engine.computeBodies(endpoints.end);
-        nextMoonAmbiguous = stableBodySignSlug('Moon', startBodies, endBodies) === null;
+        result.moonSignCandidates = moonCandidatesFromEndpoints(startBodies, endBodies);
+        nextMoonAmbiguous = moonIsUncertain(result);
         const stableSunSlug = stableBodySignSlug('Sun', startBodies, endBodies);
         nextRegistryRecordSlug = mode === 'full' && stableSunSlug === computedSunSlug
           ? stableSunSlug
@@ -1183,10 +1172,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         ...(input.name ? { name: input.name } : {}),
       });
 
-      requestAnimationFrame(() => resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      requestAnimationFrame(() => resultRef.current?.scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start',
+      }));
     } catch (err) {
       if (!runIsCurrent()) return;
-      setError(t(locale, 'chartError'));
+      setError(calculationError(err, locale, t(locale, 'chartError')));
       console.error(err);
     } finally {
       if (runId === runChartIdRef.current) setBusy(false);
@@ -1229,6 +1221,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       mine: mineHandoff,
       ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),
     }, true);
+  }
+
+  function requestChartControls(returnFocus = false) {
+    setControlsError(false);
+    void loadChartControls().then((module) => {
+      setChartActionDockModule(module);
+      if (returnFocus) requestAnimationFrame(() => resultRef.current?.querySelector<HTMLSelectElement>('[data-explorer-entity-picker]')?.focus());
+    }, () => {
+      setControlsError(true);
+      if (returnFocus) requestAnimationFrame(() => resultRef.current?.querySelector<HTMLButtonElement>('[data-chart-controls-retry]')?.focus());
+    });
   }
 
   const shareUrl = () =>
@@ -1282,12 +1285,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     }));
   }, [chart]);
 
-  /** Russian keeps the English label with the site's not-yet-translated mark. */
-  const depthToggleLabel = (() => {
-    const set = DEPTH_TOGGLE[releasedLocale ?? 'en'];
-    const text = depthOpen ? set.close : set.open;
-    return releasedLocale ? text : `${text} — пока по-английски`;
-  })();
+  // Trigger copy comes from this page's catalog; the 3D view remains lazy.
+  const depthToggleLabel = t(locale, depthOpen ? 'chartDepthClose' : 'chartDepthOpen');
 
   const sun = chart?.bodies.find((b) => b.body === 'Sun');
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
@@ -1535,14 +1534,16 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           signSlug: sign.slug,
         };
       });
+    const settled = ps.filter((placement) => placement.body !== 'Moon' || !moonIsUncertain(chart));
     return {
       ps,
       top: topAspects(
-        chart.aspects.filter((aspect) => !aspect.a.includes('Node') && !aspect.b.includes('Node')),
+        chart.aspects.filter((aspect) => !aspect.a.includes('Node') && !aspect.b.includes('Node')
+          && (!moonIsUncertain(chart) || (aspect.a !== 'Moon' && aspect.b !== 'Moon'))),
         4,
       ),
       weather: chartWeather(
-        ps.map((p) => ({ body: p.body, lon: p.lon, retrograde: p.retrograde, sign: p.signSlug })),
+        settled.map((p) => ({ body: p.body, lon: p.lon, retrograde: p.retrograde, sign: p.signSlug })),
         chart.houses ? (b) => ps.find((x) => x.body === b)?.house ?? null : undefined,
       ),
     };
@@ -1566,6 +1567,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const PositionsOnlyView = shareRuntimeRef.current.surface?.PositionsOnlyResult;
   const ShareDialog = shareRuntimeRef.current.dialog;
   const ChartActionDock = chartActionDockModule?.default;
+  const EntityPicker = chartActionDockModule?.EntityPicker;
+  const ReadingPath = chartActionDockModule?.ReadingPath;
   const saveError = saved === 'full'
     ? t(locale, 'chartSaveFull')
     : saved === 'error' ? t(locale, 'chartSaveError') : null;
@@ -1701,6 +1704,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             {subjectMode === 'other' ? otherSubjectCopy.privacy : t(locale, 'privacyDevice')}
           </p>
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
+          <CalculationReload error={error} locale={locale} />
         </div>
       </form>
 
@@ -1761,6 +1765,22 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {/* Big three / hero cards */}
           <div class={`calc__three calc__three--${heroCards.length}`}>
             {heroCards.map(({ kind, title, lon }) => {
+              if (kind === 'moon' && moonIsUncertain(chart)) {
+                return (
+                  <div class="three-card shell" key={kind} data-moon-uncertain>
+                    <div class="core three-card__core">
+                      <span class="mono--label">{title}</span>
+                      <span class="three-card__sign">{moonLabel(chart, locale)}</span>
+                      <p class="three-card__read">{t(locale, 'needsBirthTime')}</p>
+                      {moonCandidates(chart).map((slug) => (
+                        <a class="three-card__more" key={slug} href={localizePath(locale, `/${slug}/`)}>
+                          {t(locale, 'read')} {signName(signBySlug(slug), locale)} →
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
               if (lon === null) {
                 return (
                   <div class="three-card shell" key={kind}>
@@ -1978,6 +1998,28 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         hasHouses={chart.houses != null}
                         locale={locale}
                       />
+                      {EntityPicker ? <EntityPicker
+                        scene={scene}
+                        selection={selection}
+                        locale={locale}
+                        onSelect={(ref) => {
+                          if (ref?.kind === 'aspect') {
+                            resetLens();
+                            setAspectTypes((current) => current.includes(ref.type) ? current : [...current, ref.type]);
+                          }
+                          applySelect(ref);
+                        }}
+                      /> : (
+                        <div class="xplr-entity-picker" data-chart-controls-state={controlsError ? 'error' : 'loading'}>
+                          <p class="field__help" role={controlsError ? 'alert' : 'status'}>
+                            {t(locale, controlsError ? 'explorerControlsError' : 'explorerControlsLoading')}
+                          </p>
+                          {controlsError && <>
+                            <button class="btn btn--glass" type="button" data-chart-controls-retry onClick={() => requestChartControls(true)}>{t(locale, 'calculationRetry')}</button>
+                            <CalculationReload error={calculationLoadMessage(locale)} locale={locale} />
+                          </>}
+                        </div>
+                      )}
                       <div class="calc__depth">
                         <button
                           type="button"
@@ -2148,13 +2190,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               </div>
 
               {/* A visual story leads; exact data remains available below. */}
-              {showsEnglishInterpretation && reading && (
+              {showsEnglishInterpretation && reading && ReadingPath && (
                 <ReadingPath
                   placements={reading.ps}
                   topAspects={reading.top}
                   weather={reading.weather}
                   risingLon={asc}
                   housesKnown={chart.houses != null}
+                  moonSignCandidates={moonCandidates(chart)}
                   selection={selection}
                   onShowOnChart={showOnChartFromReading}
                 />
@@ -2347,7 +2390,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                               )}
                             </td>
                             <td class="mono">{p.label.split(' ')[0]}</td>
-                            <td><SignChip lon={p.lon} locale={locale} /></td>
+                            <td>{p.body === 'Moon' && moonIsUncertain(chart)
+                              ? <>{moonLabel(chart, locale)} · {t(locale, 'needsBirthTime')}</>
+                              : <SignChip lon={p.lon} locale={locale} />}</td>
                             {chart.houses && <td class="mono">{p.house}</td>}
                             <td class="mono calc__retro">{p.retrograde ? 'Rx' : ''}</td>
                           </tr>

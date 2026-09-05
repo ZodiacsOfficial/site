@@ -1,8 +1,11 @@
 /** Birthplace typeahead over the offline GeoNames index. */
-import { useRef, useState } from 'preact/hooks';
-import { preloadIndex, searchCities } from '../lib/geo/search';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import type { City } from '../lib/geo/search';
 import { t, type CatalogLocale as Locale } from '../lib/i18n';
+import { loadModule } from '../lib/module-load';
+import CalculationReload, { calculationError } from './CalculationReload';
+
+const loadSearch = () => loadModule(() => import('../lib/geo/search'));
 
 interface Props {
   onSelect: (city: City | null) => void;
@@ -27,10 +30,26 @@ export default function PlaceSearch({
   const [results, setResults] = useState<City[]>([]);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const debounce = useRef<ReturnType<typeof setTimeout>>();
   const requestToken = useRef(0);
+  const inputRef = useRef<HTMLInputElement>(null);
   const pickHint = validationError || (!selected && query.trim() ? selectionHint : '');
+
+  useEffect(() => () => {
+    clearTimeout(debounce.current);
+    ++requestToken.current;
+  }, []);
+
+  useEffect(() => {
+    if (selected) {
+      clearTimeout(debounce.current);
+      ++requestToken.current;
+      setOpen(false);
+      setLoading(false);
+    }
+  }, [selected]);
 
   function onInput(value: string) {
     const token = ++requestToken.current;
@@ -38,29 +57,37 @@ export default function PlaceSearch({
     onSelect(null);
     clearTimeout(debounce.current);
     setOpen(false);
-    setError(false);
+    setError('');
     value = value.trim();
+    setLoading(value.length >= 2);
 
     if (!value[1]) return;
 
     debounce.current = setTimeout(async () => {
       try {
+        const { searchCities } = await loadSearch();
+        if (token !== requestToken.current) return;
         const cities = await searchCities(value);
         if (token === requestToken.current) {
           setResults(cities);
           setActive(0);
           setOpen(true);
         }
-      } catch {
-        if (token === requestToken.current) setError(true);
+      } catch (cause) {
+        if (token === requestToken.current) setError(calculationError(cause, locale, t(locale, 'placeError')));
+      } finally {
+        if (token === requestToken.current) setLoading(false);
       }
     }, 120);
   }
 
   function choose(city: City) {
+    clearTimeout(debounce.current);
+    ++requestToken.current;
     onSelect(city);
     setQuery('');
     setOpen(false);
+    setLoading(false);
   }
 
   function onKeyDown(e: KeyboardEvent) {
@@ -93,10 +120,12 @@ export default function PlaceSearch({
         clearTimeout(debounce.current);
         ++requestToken.current;
         setOpen(false);
+        setLoading(false);
       }
     }}>
       <input
         id={id}
+        ref={inputRef}
         class="field__input"
         role="combobox"
         aria-expanded={open}
@@ -109,7 +138,7 @@ export default function PlaceSearch({
         placeholder={t(locale, 'placePlaceholder')}
         autocomplete="off"
         value={query}
-        onFocus={() => preloadIndex().catch(() => setError(true))}
+        onFocus={() => { void loadSearch().then(({ preloadIndex }) => { void preloadIndex(); }, () => {}); }}
         onInput={(e) => onInput((e.target as HTMLInputElement).value)}
         onKeyDown={onKeyDown}
       />
@@ -122,7 +151,17 @@ export default function PlaceSearch({
           {pickHint}
         </p>
       )}
-      {error && <p class="place__error" role="alert">{t(locale, 'placeError')}</p>}
+      {loading && <p class="place__hint" role="status">{t(locale, 'placeSearching')}</p>}
+      {error && (
+        <div class="place__error">
+          <p role="alert">{error}</p>
+          <button class="btn btn--glass" type="button" onClick={() => {
+            inputRef.current?.focus();
+            onInput(query);
+          }}>{t(locale, 'calculationRetry')}</button>
+          <CalculationReload error={error} locale={locale} />
+        </div>
+      )}
       {open && (
         <ul class="place__list" id={`${id}-list`} role="listbox">
           {results.length ? (

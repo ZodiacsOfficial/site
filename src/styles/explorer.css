@@ -168,6 +168,8 @@
 }
 .xplr-chip[aria-pressed='false'] .xplr-chip__glyph { opacity: 0.5; }
 
+.xplr-entity-picker { margin-top: 16px; }
+
 /* ── Inspector card (shared bones) ── */
 .insp {
   border: 1px solid var(--hair-1);

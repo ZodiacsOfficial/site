@@ -26,20 +26,37 @@ let indexPromise: Promise<CityIndex> | null = null;
 const shardCache = new Map<string, Promise<Row[]>>();
 
 async function fetchJson<T>(url: string): Promise<T> {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`fetch ${url}: ${response.status}`);
-  return response.json() as Promise<T>;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15_000);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) throw new Error(`fetch ${url}: ${response.status}`);
+    return await response.json() as T;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 export function preloadIndex(): Promise<CityIndex> {
-  indexPromise ??= fetchJson<CityIndex>('/data/cities/index.json');
+  if (!indexPromise) {
+    const pending = fetchJson<CityIndex>('/data/cities/index.json');
+    indexPromise = pending;
+    void pending.catch(() => {
+      if (indexPromise === pending) indexPromise = null;
+    });
+  }
   return indexPromise;
 }
 
 function shard(key: string): Promise<Row[]> {
-  const p = shardCache.get(key) || fetchJson<Row[]>(`/data/cities/${key}.json`);
-  shardCache.set(key, p);
-  return p;
+  const cached = shardCache.get(key);
+  if (cached) return cached;
+  const pending = fetchJson<Row[]>(`/data/cities/${key}.json`);
+  shardCache.set(key, pending);
+  void pending.catch(() => {
+    if (shardCache.get(key) === pending) shardCache.delete(key);
+  });
+  return pending;
 }
 
 const fold = (s: string) =>

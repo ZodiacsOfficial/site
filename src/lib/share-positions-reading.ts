@@ -2,6 +2,7 @@ import { ASPECT_BODIES, matchAspect } from './engine/aspects';
 import { houseOf, wholeSignCusps } from './engine/houses';
 import type { AspectType, BodyName } from './engine/types';
 import type { PositionsShareChart } from './share-positions';
+import { moonIsUncertain } from './moon-certainty';
 
 export interface SharedAspect {
   a: BodyName;
@@ -57,7 +58,8 @@ export function positionsReading(chart: PositionsShareChart): SharedPositionsRea
     cusps,
     houses,
     aspects,
-    topAspects: [...aspects].sort((a, b) => scoreAspect(a) - scoreAspect(b)).slice(0, 4),
+    topAspects: aspects.filter((aspect) => !moonIsUncertain(chart) || (aspect.a !== 'Moon' && aspect.b !== 'Moon'))
+      .sort((a, b) => scoreAspect(a) - scoreAspect(b)).slice(0, 4),
     reconstructedWholeSign: chart.angles !== null,
   };
 }

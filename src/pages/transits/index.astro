@@ -3,12 +3,13 @@ import Base from '../../layouts/Base.astro';
 import AstroTerm from '../../components/AstroTerm.astro';
 import TransitTracker from '../../islands/TransitTracker.tsx';
 import PlanetGlyph from '../../components/PlanetGlyph';
-import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../lib/horoscopes';
+import { dayLabel, eventList, transitMonthForEdition, monthLabel } from '../../lib/horoscopes';
+import daily from '../../data/daily.json';
 import '../../styles/calculator.css';
 
 // The month's receipts render statically from the committed transit
 // JSON — the island handles the personal part.
-const month = latestTransitMonth();
+const month = transitMonthForEdition(daily.date);
 const events = month ? eventList(month) : [];
 const label = month ? monthLabel(month) : null;
 
@@ -79,10 +80,10 @@ const jsonLd = [
       <div class="section-head reveal">
         <h2>The sky in {label}</h2>
         <p>
-          Key dates this month: <AstroTerm term="ingress" label="ingresses" surface="transits-page" />,{' '}
+          Key dates for {label}: <AstroTerm term="ingress" label="ingresses" surface="transits-page" />,{' '}
           <AstroTerm term="lunation" label="lunations" surface="transits-page" />, <AstroTerm term="station" label="stations" surface="transits-page" />, and major{' '}
           <AstroTerm term="aspect" label="aspects" surface="transits-page" />.
-          Use them with the <a href="/horoscopes/">monthly horoscopes</a> or keep them as a calendar.
+          Use them with the <a href="/horoscopes/">horoscopes</a> or keep them as a calendar.
         </p>
       </div>
       <ul class="trn-events reveal">

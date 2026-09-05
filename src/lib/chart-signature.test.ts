@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Aspect, BodyName, BodyPosition, Chart } from './engine/types';
 import { chartSignature } from './chart-signature';
+import { signForLongitude } from './signs';
 
 function body(bodyName: BodyName, lon: number): BodyPosition {
   return { body: bodyName, lon, lat: 0, speed: 1, retrograde: false };
@@ -13,10 +14,12 @@ function aspect(a: BodyName, b: BodyName, type: Aspect['type'], orb: number): As
 function chart(
   bodies: BodyPosition[],
   options: { aspects?: Aspect[]; rising?: number | null } = {},
-): Pick<Chart, 'bodies' | 'angles' | 'aspects'> {
+): Pick<Chart, 'bodies' | 'angles' | 'aspects' | 'moonSignCandidates'> {
   const rising = options.rising === undefined ? null : options.rising;
   return {
     bodies,
+    // Ranking fixtures assume a settled Moon; unknown-time evidence has its own suite.
+    moonSignCandidates: bodies.filter((body) => body.body === 'Moon').map((body) => signForLongitude(body.lon).slug),
     angles: rising == null ? null : {
       asc: rising,
       dsc: (rising + 180) % 360,

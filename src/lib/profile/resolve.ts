@@ -1,11 +1,13 @@
-import { ENGINE_VERSION } from '../engine/types';
 import type { Chart } from '../engine/types';
 import type { SavedChart } from './schema';
+import { currentSavedCalculation, repairLegacyPolarChart } from './polar-repair';
 
 export interface ResolvedSavedChart {
   bodies: { body: string; lon: number }[];
   asc: number | null;
   timeKnown: boolean;
+  /** All derived fields belong to the same calculation, including share receipts. */
+  summary: SavedChart['summary'];
 }
 
 export type SavedChartEngineLoader = () => Promise<{
@@ -19,15 +21,17 @@ export type SavedChartEngineLoader = () => Promise<{
  * lossless birth input and fall back quietly on any failure.
  */
 export async function resolveSavedChart(
-  chart: SavedChart,
+  source: SavedChart,
   loadEngine: SavedChartEngineLoader,
 ): Promise<ResolvedSavedChart> {
+  const chart = repairLegacyPolarChart(source);
   const stored: ResolvedSavedChart = {
     bodies: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
     asc: chart.summary.angles?.asc ?? null,
     timeKnown: chart.birth.timeKnown,
+    summary: chart.summary,
   };
-  if (chart.summary.engineVersion === ENGINE_VERSION || !chart.birth.place) return stored;
+  if (currentSavedCalculation(chart.summary.engineVersion) || !chart.birth.place) return stored;
 
   try {
     const [engine, { resolveLocalToUtc }] = await Promise.all([
@@ -51,6 +55,14 @@ export async function resolveSavedChart(
       bodies: result.bodies.map(({ body, lon }) => ({ body, lon })),
       asc: result.angles?.asc ?? null,
       timeKnown: chart.birth.timeKnown,
+      summary: {
+        engineVersion: result.engineVersion,
+        utcISO: result.input.utc.toISOString(),
+        houseSystem: result.houses?.system ?? result.input.houseSystem,
+        bodies: result.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
+        angles: result.angles ? { asc: result.angles.asc, mc: result.angles.mc } : null,
+        flags: result.flags,
+      },
     };
   } catch {
     return stored;

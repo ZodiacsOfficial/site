@@ -9,6 +9,7 @@ import { mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
+import { driveLegacyPolarGuide } from './legacy-polar-guide-drive.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const GUIDE_AVATAR_ONLY = process.env.GUIDE_AVATAR_ONLY === '1';
@@ -430,6 +431,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       && await desktopPage.locator('[data-guide-launcher]').evaluate((node) => document.activeElement === node));
     if (OUT) await desktopPage.screenshot({ path: `${OUT}/guide-desktop.png`, fullPage: false });
     await desktop.close();
+    await driveLegacyPolarGuide({ browser, baseURL, check, outDir: OUT, installGuideRoute, accountId: ACCOUNT_ID });
   } finally {
     await browser.close();
   }

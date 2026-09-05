@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
+import { moonCandidates, moonLabel } from '../lib/moon-certainty';
 import PlanetGlyph from '../components/PlanetGlyph';
 import { approachRead, type ApproachPart } from '../lib/approach';
 import { trackAnalytics } from '../lib/analytics';
@@ -169,16 +170,16 @@ export default function ApproachRead({
 
       {read.moonAmbiguous && (
         <p class="calc__approach-warning" role="note">
-          The Moon may have changed signs that day. An exact birth time could change the trust guidance.
+          {moonLabel(chart, locale)} · A birth time is needed to settle the Moon reading.
         </p>
       )}
       <footer class="calc__deep-read-footer">
         <p class="calc__approach-privacy">Birth details stay off the image.</p>
-        {read.moon && (
-          <a href={`/learn/placements/moon-in-${read.moon.sign}/`}>
-            Read Moon in {signName(signBySlug(read.moon.sign), locale)} →
+        {moonCandidates(chart).map((slug) => (
+          <a key={slug} href={`/learn/placements/moon-in-${slug}/`}>
+            Read Moon in {signName(signBySlug(slug), locale)} →
           </a>
-        )}
+        ))}
       </footer>
       {shareState === 'preparing' && <p class="sr-only" role="status">Preparing your approach card.</p>}
       {shareState === 'saved' && <p class="sr-only" role="status">Your approach card is ready.</p>}

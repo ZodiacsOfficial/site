@@ -13,6 +13,7 @@ import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale }
 import { intlLocale } from '../lib/i18n/dates';
 import { planetLabel } from '../lib/i18n/astrology';
 import { useEngine } from '../lib/hooks/useEngine';
+import CalculationReload, { calculationError } from './CalculationReload';
 import sky from '../data/sky.json';
 
 interface Props { locale?: Locale }
@@ -107,8 +108,8 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
         retro,
         birthdayHref: `/birthday/${birthdaySlug(m, day)}/`,
       });
-    } catch {
-      setError(t(locale, 'babyError'));
+    } catch (cause) {
+      setError(calculationError(cause, locale, t(locale, 'babyError')));
     }
     setBusy(false);
   };
@@ -151,6 +152,7 @@ export default function BabyZodiac({ locale: rawLocale = 'en' }: Props) {
           </button>
         </div>
         {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
+        <CalculationReload error={error} locale={locale} />
       </form>
 
       {reading && (

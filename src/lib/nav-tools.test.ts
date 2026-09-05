@@ -59,4 +59,18 @@ describe('NAV_TOOLS', () => {
       expect(catalogueHrefs.has(tool.href)).toBe(true);
     }
   });
+
+  it('links Today to released daily editions and preserves unreleased-language cues', () => {
+    const today = FOOTER_TOOLS.find((tool) => tool.href === '/today/');
+    expect(today?.localized).toBe(true);
+    expect(today?.labels?.es).toBe('Hoy');
+    expect(today?.labels?.pt).toBe('Hoje');
+    for (const locale of ['es', 'pt'] as const) {
+      expect(localizePath(locale, '/today/')).toBe(`/${locale}/today/`);
+    }
+    for (const locale of ['fr', 'it', 'ru'] as const) {
+      expect(localizePath(locale, '/today/')).toBe('/today/');
+      expect(today?.labels?.[locale]).toMatch(/anglais|inglese|английски/u);
+    }
+  });
 });

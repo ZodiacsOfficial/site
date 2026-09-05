@@ -3,6 +3,7 @@ import { dignityFor, type Dignity } from './dignities';
 import type { Aspect, BodyName, Chart } from './engine/types';
 import type { Locale } from './i18n';
 import { natalAspectLine } from './natal';
+import { moonCandidates, moonIsUncertain, moonLabel } from './moon-certainty';
 import {
   elementLabel,
   modalityLabel,
@@ -229,18 +230,19 @@ function balanceSignature(
 }
 
 function bigThreeSignature(
-  chart: Pick<Chart, 'bodies' | 'angles'>,
+  chart: Pick<Chart, 'bodies' | 'angles' | 'moonSignCandidates'>,
   locale: Locale,
 ): ChartSignature {
   const rows = [
     { body: 'Sun' as const, placement: bodyByName(chart, 'Sun'), suffix: 'Sun' },
     { body: 'Moon' as const, placement: bodyByName(chart, 'Moon'), suffix: 'Moon' },
   ];
+  const uncertainMoon = moonIsUncertain(chart);
   const titles = rows.flatMap(({ placement, suffix }) => placement
-    ? [`${signName(signForLongitude(placement.lon), locale)} ${suffix}`]
+    ? [`${suffix === 'Moon' ? moonLabel(chart, locale) : signName(signForLongitude(placement.lon), locale)} ${suffix}`]
     : []);
-  const slugs = rows.flatMap(({ placement }) => placement
-    ? [signForLongitude(placement.lon).slug]
+  const slugs = rows.flatMap(({ placement, body }) => placement
+    ? body === 'Moon' ? [...moonCandidates(chart)] : [signForLongitude(placement.lon).slug]
     : []);
   const bodies: BodyName[] = rows.flatMap(({ placement, body }) => placement ? [body] : []);
   if (chart.angles) {
@@ -253,7 +255,9 @@ function bigThreeSignature(
     eyebrow: 'Standout in your chart',
     title: titles.join(' · ') || 'A chart all its own',
     summary: 'Your core direction, emotional needs, and first impression form a chart fingerprint no single Sun-sign label can explain.',
-    detail: chart.angles ? 'Your Big Three' : 'Sun and Moon · Rising needs a birth time',
+    detail: uncertainMoon
+      ? chart.angles ? 'Moon sign needs a birth time' : 'Moon sign and Rising need a birth time'
+      : chart.angles ? 'Your Big Three' : 'Sun and Moon · Rising needs a birth time',
     signSlugs: [...new Set(slugs)],
     bodies,
   };
@@ -266,12 +270,18 @@ function bigThreeSignature(
  * supported dignity, stellium, clear balance, then an honest Big Three fallback.
  */
 export function chartSignature(
-  chart: Pick<Chart, 'bodies' | 'angles' | 'aspects'>,
+  chart: Pick<Chart, 'bodies' | 'angles' | 'aspects' | 'moonSignCandidates'>,
   locale: Locale = 'en',
 ): ChartSignature {
-  return aspectSignature(chart)
-    ?? dignitySignature(chart, locale)
-    ?? stelliumSignature(chart, locale)
-    ?? balanceSignature(chart, locale)
+  const uncertainMoon = moonIsUncertain(chart);
+  const settled = uncertainMoon ? {
+    ...chart,
+    bodies: chart.bodies.filter((body) => body.body !== 'Moon'),
+    aspects: chart.aspects.filter((aspect) => aspect.a !== 'Moon' && aspect.b !== 'Moon'),
+  } : chart;
+  return aspectSignature(settled)
+    ?? dignitySignature(settled, locale)
+    ?? stelliumSignature(settled, locale)
+    ?? (uncertainMoon ? null : balanceSignature(chart, locale))
     ?? bigThreeSignature(chart, locale);
 }

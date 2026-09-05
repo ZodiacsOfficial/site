@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import ToolGlyph from '../../../components/ToolGlyph.astro';
+import ToolsPageHeading from '../../../components/ToolsPageHeading.astro';
 const tools = [
   { href: '/ru/birth-chart/', title: 'Натальная карта', promise: 'Солнце, Луна, асцендент, планеты, дома и их значение.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
   { href: '/birth-chart/someone-else/', title: 'Карта другого человека — пока по-английски', promise: 'Используйте данные рождения, большую тройку или ссылку Zodiacs — с согласия человека.', hue: 'var(--sign-pisces)', kind: 'birth' as const, englishOnly: true },
@@ -35,7 +36,7 @@ const jsonLd = [
 >
   <section class="section container">
     <div class="section-head">
-      <h2>Бесплатные астроинструменты</h2>
+      <ToolsPageHeading>Бесплатные астроинструменты</ToolsPageHeading>
       <p>Найдите свою натальную карту, лунный знак, асцендент и совместимость, а затем посмотрите, что происходит в небе сейчас. Данные считаются в вашем браузере.</p>
     </div>
 
@@ -44,7 +45,7 @@ const jsonLd = [
         <a class="shell tinted" href={tool.href} hreflang={'englishOnly' in tool ? 'en' : undefined} title={'englishOnly' in tool ? 'Материал пока доступен по-английски' : undefined} aria-label={'englishOnly' in tool ? `${tool.title}. Материал пока доступен по-английски` : undefined} style={`--sign:${tool.hue}`}>
           <div class="core tinted tool-card">
             <ToolGlyph kind={tool.kind} />
-            <h3>{tool.title}</h3>
+            <h2>{tool.title}</h2>
             <p>{tool.promise}</p>
             <span class="tool-card__go">Открыть →</span>
           </div>
@@ -55,7 +56,7 @@ const jsonLd = [
     <div class="tools-upcoming">
       <em class="kicker">Пока доступно по-английски</em>
       <ul>
-        <li><strong>Гороскопы.</strong> Ежемесячные выпуски для каждого знака, основанные на реальных датах неба: <a href="/horoscopes/" hreflang="en" title="Материал пока доступен по-английски">читать этот месяц — пока по-английски</a>.</li>
+        <li><strong>Гороскопы.</strong> Сегодняшнее небо для каждого знака. Английская версия также включает прогнозы на неделю и месяц: <a href="/horoscopes/" hreflang="en" title="Материал пока доступен по-английски">выбрать знак — пока по-английски</a>.</li>
         <li><strong>Ретроградный Меркурий.</strong> Точные периоды до 2027 года: <a href="/mercury-retrograde/" hreflang="en" title="Материал пока доступен по-английски">посмотреть даты — пока по-английски</a>.</li>
       </ul>
     </div>
@@ -68,7 +69,7 @@ const jsonLd = [
   @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
   .tool-card { display: flex; flex-direction: column; gap: 10px; padding: 26px 22px; min-height: 210px; }
   /* Tool-card icon disc lives in ToolGlyph.astro. */
-  .tool-card h3 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
+  .tool-card h2 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
   .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
   .tool-card__go { margin-top: auto; font-size: 13px; font-weight: 550; color: var(--text); }
   .tools-upcoming { margin-top: clamp(28px, 5vw, 44px); padding-top: 24px; border-top: 1px solid var(--hair-1); }

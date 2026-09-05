@@ -1154,11 +1154,12 @@ const sitemapPolicy = {
   birthdays: 366,
   chineseZodiac: 65,
   disclosures: 6,
-  horoscopePages: 84,
+  extendedHoroscopePages: 72,
+  dailyReadingPages: 42,
   eventPages: publishedEventPaths.size,
   peoplePages: indexablePeoplePaths.size,
   registryResearchPages: indexedRegistryResearchPaths.size,
-  translatedBlocks: 575,
+  translatedBlocks: 617,
 };
 const indexedFamilies = [
   { label: 'compatibility pairs', pattern: /^\/compatibility\/[a-z]+-[a-z]+\/$/, expected: sitemapPolicy.compatibilityPairs, localized: false },
@@ -1166,10 +1167,16 @@ const indexedFamilies = [
   { label: 'Chinese zodiac', pattern: /^\/(?:(?:es|pt|fr|it)\/)?learn\/chinese-zodiac(?:\/[a-z]+)?\/$/, expected: sitemapPolicy.chineseZodiac, localized: true },
   { label: 'disclosures', pattern: /^\/(?:(?:es|pt|fr|it|ru)\/)?disclosure\/$/, expected: sitemapPolicy.disclosures, localized: true },
   {
-    label: 'horoscope program pages',
-    pattern: /^\/horoscopes\/(?:aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)(?:\/(?:tomorrow|weekly|monthly|love|career|2027))?\/$/,
-    expected: sitemapPolicy.horoscopePages,
+    label: 'English-only extended horoscope pages',
+    pattern: /^\/horoscopes\/(?:aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)\/(?:tomorrow|weekly|monthly|love|career|2027)\/$/,
+    expected: sitemapPolicy.extendedHoroscopePages,
     localized: false,
+  },
+  {
+    label: 'published daily editions',
+    pattern: /^\/(?:(?:es|pt)\/)?(?:today|horoscopes(?:\/(?:aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces))?)\/$/,
+    expected: sitemapPolicy.dailyReadingPages,
+    localized: true,
   },
   {
     label: 'Phase 2 event pages',

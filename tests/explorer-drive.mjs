@@ -19,6 +19,11 @@ import { setTimeout as wait } from 'node:timers/promises';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { PNG } from 'pngjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
+import { driveLegacyPolarProfile } from './legacy-polar-profile-drive.mjs';
+import { runRecoveryBrowserChecks } from './recovery-browser-checks.mjs';
+import { driveLocaleDiscovery } from './locale-discovery-drive.mjs';
+import { runExplorerKeyboardChecks } from './explorer-keyboard-checks.mjs';
+import { runExplorerMoonChecks } from './explorer-moon-checks.mjs';
 import { runSearchLearningChecks } from './search-learning-checks.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
@@ -49,6 +54,19 @@ try {
   const browser = await chromium.launch({
     executablePath: CHROMIUM,
     args: STABLE_CHROMIUM_ARGS,
+  });
+  await runRecoveryBrowserChecks({
+    browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT,
+  });
+
+  await driveLocaleDiscovery({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
+
+  await runExplorerKeyboardChecks({
+    browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT,
+    knownFragment: kahlo, unknownFragment: kahloNoTime,
+  });
+  await runExplorerMoonChecks({
+    browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT,
   });
 
   await runSearchLearningChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
@@ -975,6 +993,7 @@ try {
     && (Math.abs(rmSunAfter.x - rmSunBefore.x) > 2 || Math.abs(rmSunAfter.y - rmSunBefore.y) > 2));
   await rm.close();
 
+  await driveLegacyPolarProfile({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
   await browser.close();
 } finally {
   preview.kill();

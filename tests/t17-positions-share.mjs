@@ -6,6 +6,7 @@ import { chromium } from 'playwright-core';
 import sharp from 'sharp';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
+import { trackHydrationDiagnostics } from './t17-hydration-diagnostics.mjs';
 
 const TIMEOUT = 45_000;
 const BIRTH = {
@@ -23,6 +24,8 @@ const ZOOM_EVIDENCE_FILE = fileURLToPath(new URL(
   '../docs/acceptance/phase4-sharing/chart-sheet-33-percent.png',
   import.meta.url,
 ));
+const HYDRATION_EVIDENCE_DIR = fileURLToPath(new URL('./visual/artifacts/t17/', import.meta.url));
+const hydrationChecks = new WeakMap();
 
 async function waitForHydration(page) {
   await page.locator('.calc__form').waitFor({ state: 'visible', timeout: TIMEOUT });
@@ -36,12 +39,12 @@ async function waitForHydration(page) {
 async function open(page, url) {
   const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
   assert.equal(response?.status(), 200, `${url} must return 200`);
-  await waitForHydration(page);
+  await hydrationChecks.get(page)(() => waitForHydration(page));
 }
 
-async function selectCity(page) {
+async function selectCity(page, cityQuery = BIRTH.cityQuery) {
   const place = page.locator('#place');
-  await place.fill(BIRTH.cityQuery);
+  await place.fill(cityQuery);
   const option = page.locator('#place-list [role="option"]:not([aria-disabled="true"])').first();
   await option.waitFor({ state: 'visible', timeout: TIMEOUT });
   await option.click();
@@ -62,7 +65,7 @@ async function computeUnknownTimeChart(page) {
   await page.locator('.field__toggle input[type="checkbox"]').check();
   assert.equal(await page.locator('#birth-time').isDisabled(), true,
     'unknown-time calculation must not ask for a hidden exact time');
-  await selectCity(page);
+  await selectCity(page, 'London');
   await page.locator('.calc__form button[type="submit"]').click();
   await page.locator('.calc__result').waitFor({ state: 'visible', timeout: TIMEOUT });
   await page.waitForFunction(() => document.querySelector('.calc__form')?.getAttribute('aria-busy') === 'false', null, { timeout: TIMEOUT });
@@ -186,6 +189,9 @@ try {
       page.on('console', (message) => {
         if (message.type() === 'error') errors.push(`console:${message.text()}`);
       });
+      hydrationChecks.set(page, trackHydrationDiagnostics(page, {
+        baseURL, errors, outputDir: HYDRATION_EVIDENCE_DIR,
+      }));
       return page;
     };
 
@@ -990,6 +996,13 @@ try {
         'a no-time Moon image must identify its noon reference');
       assert.equal(unknownMoonCardText.includes('My Moon may change signs without an exact birth time.'), true,
         'a Moon-boundary image must carry the same ambiguity warning as the result');
+      assert.equal(unknownMoonCardText.includes('Aquarius / Pisces'), true,
+        'the London boundary image must name both candidates, including the sign before its noon reference');
+      const unknownMoonHero = unknownMoon.locator('.calc__three [data-moon-uncertain]');
+      assert.match(await unknownMoonHero.innerText(), /Aquarius \/ Pisces/,
+        'the Moon hero must retain the same two candidates as the image');
+      assert.equal(await unknownMoonHero.locator('.three-card__deg').count(), 0,
+        'the boundary hero must not promote a reference degree to a settled Moon identity');
       assert.match(
         (await unknownMoon.locator('.notice').allInnerTexts()).join(' '),
         /Moon also changed signs that day/i,
@@ -999,6 +1012,8 @@ try {
       const unknownMoonDialog = unknownMoon.locator('[data-share-dialog]');
       await unknownMoonDialog.waitFor({ state: 'visible', timeout: TIMEOUT });
       assert.equal(await unknownMoonDialog.locator('[data-share-primary="placement"] h3').innerText(), 'Moon sign card');
+      assert.match(await unknownMoonDialog.locator('[data-share-placement-preview]').innerText(), /Aquarius \/ Pisces/,
+        'the share dialog preview must not revert to the single reference Moon sign');
       assert.match(await unknownMoonDialog.locator('[data-share-card-action="placement"]').innerText(), /Share my Moon sign/);
       await unknownMoon.close();
 
@@ -1042,6 +1057,9 @@ try {
       mobile.on('console', (message) => {
         if (message.type() === 'error') errors.push(`mobile-console:${message.text()}`);
       });
+      hydrationChecks.set(mobile, trackHydrationDiagnostics(mobile, {
+        baseURL, errors, outputDir: HYDRATION_EVIDENCE_DIR,
+      }));
       await open(mobile, `${baseURL}/birth-chart/`);
       await computeChart(mobile);
       await mobile.waitForFunction(() => {

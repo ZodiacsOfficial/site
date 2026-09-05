@@ -53,6 +53,7 @@ const englishOnly = englishOnlyCue(locale);
 const englishSuffix = englishOnly?.suffix ?? '';
 const englishOnlyAria = englishOnly?.aria;
 const englishHreflang = englishOnly ? ('en' as const) : undefined;
+const englishOnlyHref = (href: string): boolean => Boolean(englishOnly) && localizePath(locale, href) === href;
 const privacyHref = localizePath(locale, '/privacy/');
 const fontLicenseHref = locale === 'ru' ? '/fonts/OFL-golos-text.txt' : '/fonts/OFL-instrument-sans.txt';
 const consumerPath = stripLocale(Astro.url.pathname);
@@ -93,11 +94,11 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
           {FOOTER_TOOLS.map((tool) => (
             <a
               href={tool.localized ? localizePath(locale, tool.href) : tool.href}
-              hreflang={!tool.localized ? 'en' : undefined}
-              title={!tool.localized ? englishOnlyAria : undefined}
+              hreflang={englishOnlyHref(tool.href) ? 'en' : undefined}
+              title={englishOnlyHref(tool.href) ? englishOnlyAria : undefined}
             >
               {tool.labels?.[locale] ?? t(locale, tool.label)}
-              {!tool.localized && !tool.labels ? englishSuffix : ''}
+              {englishOnlyHref(tool.href) && !tool.labels ? englishSuffix : ''}
             </a>
           ))}
         </div>
@@ -107,7 +108,7 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
         <span class="zfooter__label">{t(locale, 'navLearn')}</span>
         <div class="zfooter__links">
           <a href="/learn/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerStartHere')}{englishSuffix}</a>
-          <a href="/horoscopes/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'navHoroscopes')}{englishSuffix}</a>
+          <a href={localizePath(locale, '/horoscopes/')} hreflang={englishOnlyHref('/horoscopes/') ? 'en' : undefined} title={englishOnlyHref('/horoscopes/') ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{englishOnlyHref('/horoscopes/') ? englishSuffix : ''}</a>
           <a href="/learn/planets/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerPlanets')}{englishSuffix}</a>
           <a href="/learn/houses/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerHouses')}{englishSuffix}</a>
           <a href="/learn/zodiac-dates/" hreflang="en" title={englishOnlyAria}>{t(locale, 'footerZodiacDates')}{englishSuffix}</a>

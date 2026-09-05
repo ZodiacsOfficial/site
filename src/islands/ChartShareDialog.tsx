@@ -15,6 +15,7 @@ import {
 import { ensurePastelZodiacIconEmbedding } from '../lib/share-card-pastel-icons';
 import { shareCardText } from '../lib/share-card-copy';
 import { signForLongitude, signName } from '../lib/signs';
+import { moonIsUncertain, moonLabel } from '../lib/moon-certainty';
 import Wheel from '../lib/wheel/Wheel';
 import { CopyLinkButton, type CopyLinkState } from './CopyLinkButton';
 import { shareText } from './PositionsShareSurface';
@@ -97,7 +98,10 @@ export default function ChartShareDialog({
   const placementLongitude = mode === 'moon'
     ? chart.bodies.find((body) => body.body === 'Moon')?.lon
     : mode === 'rising' ? chart.angles?.asc : undefined;
-  const placementSign = placementLongitude == null ? null : signForLongitude(placementLongitude);
+  const placementChart = moonAmbiguous && chart.moonSignCandidates === undefined
+    ? { ...chart, moonSignCandidates: [] } : chart;
+  const uncertainMoon = mode === 'moon' && moonIsUncertain(placementChart);
+  const placementSign = uncertainMoon || placementLongitude == null ? null : signForLongitude(placementLongitude);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -298,6 +302,10 @@ export default function ChartShareDialog({
                 cusps={chart.houses?.cusps ?? null}
                 aspects={chart.aspects.filter((aspect) => aspect.orb < 6)}
               />
+            </div>
+          ) : uncertainMoon ? (
+            <div class="calc-share-dialog__placement" data-share-placement-preview>
+              <span>{moonLabel(placementChart, locale)}</span>
             </div>
           ) : placementSign ? (
             <div class="calc-share-dialog__placement" style={`--sign:${placementSign.hue}`} aria-hidden="true" data-share-placement-preview>
