@@ -40,9 +40,13 @@ games_container_id="$(docker run \
 
 games_ready="false"
 for games_attempt in {1..60}; do
-  if docker exec "${games_container_id}" \
+  # The image's initialization server accepts Unix sockets before stopping.
+  # Only its final server listens on TCP; wait for that same endpoint below.
+  if docker exec --env PGPASSWORD=games-local-test-only "${games_container_id}" \
     psql \
       --no-psqlrc \
+      --no-password \
+      --host 127.0.0.1 \
       --quiet \
       --tuples-only \
       --username postgres \
@@ -65,9 +69,11 @@ fi
 run_games_sql_file() {
   local games_sql_file="$1"
   echo "SQL test [${games_database}]: ${games_sql_file#"${games_repo_root}/"}"
-  docker exec --interactive "${games_container_id}" \
+  docker exec --interactive --env PGPASSWORD=games-local-test-only "${games_container_id}" \
     psql \
       --no-psqlrc \
+      --no-password \
+      --host 127.0.0.1 \
       --set ON_ERROR_STOP=1 \
       --username postgres \
       --dbname "${games_database}" \
