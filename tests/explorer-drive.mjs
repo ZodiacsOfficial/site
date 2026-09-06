@@ -23,6 +23,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { PNG } from 'pngjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { driveLegacyPolarProfile } from './legacy-polar-profile-drive.mjs';
+import { runPersonalChartHandoff } from './personal-chart-handoff.mjs';
 import { runRecoveryBrowserChecks } from './recovery-browser-checks.mjs';
 import { driveLocaleDiscovery } from './locale-discovery-drive.mjs';
 import { runExplorerKeyboardChecks } from './explorer-keyboard-checks.mjs';
@@ -1220,6 +1221,7 @@ try {
   await rm.close();
 
   await driveLegacyPolarProfile({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
+  await runPersonalChartHandoff({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
   await browser.close();
   // Reuse the owning renderer only after the main browser has closed. Its
   // closed review mode verifies that every production OG file stays identical.

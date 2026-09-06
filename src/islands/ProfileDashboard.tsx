@@ -8,6 +8,8 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useProfile } from '../lib/hooks/useProfile';
+import { explicitSelfChart } from '../lib/profile/personal-chart';
+import { livingChartCaptureEnabled } from '../lib/living-chart/feature-flags';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';
 import PlanetGlyph from '../components/PlanetGlyph';
@@ -73,7 +75,8 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
   const [yearState, setYearState] = useState<YearState | null>(null);
   const [yearAttempt, setYearAttempt] = useState(0);
 
-  const chart = charts.find((c) => c.id === sel) ?? charts[0] ?? null;
+  const personalChart = livingChartCaptureEnabled() ? explicitSelfChart(charts) : null;
+  const chart = charts.find((c) => c.id === sel) ?? personalChart ?? charts[0] ?? null;
   // A saved chart can be recomputed without changing its id or engine version.
   // Hide the previous scan immediately, before this render's effect runs.
   const chartKey = chart ? JSON.stringify([chart.id, chart.birth.timeKnown, chart.summary]) : null;

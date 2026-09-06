@@ -7,22 +7,41 @@
 import SignChip from './SignChip';
 import { NextActionCard } from '../components/NextActionCard';
 import { useProfile } from '../lib/hooks/useProfile';
+import { explicitSelfChart } from '../lib/profile/personal-chart';
+import { livingChartCaptureEnabled } from '../lib/living-chart/feature-flags';
 import { encodeChartLink } from '../lib/share';
 import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 
 export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeCatalogLocale(rawLocale);
   const { profile } = useProfile();
-  const chart = [...profile.charts]
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0] ?? null;
+  const personalToday = locale === 'en' && livingChartCaptureEnabled();
+  const chart = personalToday
+    ? explicitSelfChart(profile.charts)
+    : [...profile.charts].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0] ?? null;
   const count = profile.charts.length;
 
-  if (!chart) return null;
+  if (count === 0) return null;
+  if (!chart) {
+    return (
+      <section class="container" aria-label={t(locale, 'savedChartAria')}>
+        <NextActionCard
+          className="wb-card"
+          cue={t(locale, 'recommendedNext')}
+          title="Make today personal"
+          body="Choose which saved chart is yours to see your daily reading."
+          primary={<a class="btn btn--primary" href="/today/"><span>Choose my chart</span><span class="orb" aria-hidden="true">→</span></a>}
+          secondary={<a class="next-action__quiet" href="/profile/">{t(locale, 'yourCharts')} ({count})</a>}
+        />
+      </section>
+    );
+  }
 
   const find = (name: string) => chart.summary.bodies.find((b) => b.body === name);
   const sun = find('Sun');
-  const moon = find('Moon');
-  const asc = chart.summary.angles?.asc ?? null;
+  // The stored summary has no across-day Moon proof for an unknown birth time.
+  const moon = chart.birth.timeKnown ? find('Moon') : null;
+  const asc = chart.birth.timeKnown ? chart.summary.angles?.asc ?? null : null;
   const handle = chart.name.split('·')[0].trim() || chart.name;
 
   // Reopen the saved chart straight in the calculator (needs coordinates to
