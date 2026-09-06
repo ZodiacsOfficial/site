@@ -41,7 +41,7 @@ const TOOL_ROOTS = new Set([
   'transits',
   'widgets',
 ]);
-const EXCLUDED_PREFIXES = ['/es/', '/astrofolio/', '/terminal/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
+const EXCLUDED_PREFIXES = ['/es/', '/astrofolio/', '/fomo/', '/terminal/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
 const NAMED_ENTITIES = Object.freeze({
   amp: '&',
   apos: "'",

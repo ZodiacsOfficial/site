@@ -19,10 +19,23 @@ is ordered alphabetically and never ranked.
 
 | File | Source | Retrieved | Notes |
 | --- | --- | --- | --- |
-| `fomo-official.svg` | `fomo.family/favicon.svg` | 2026-08-25 | Fomo's full-colour app icon, used only as an `<img>` inside the consumer handoff button. It is never used as a CSS mask or presented as an endorsement. |
+| `fomo-official.svg` | `fomo.family/favicon.svg` | 2026-08-25 | Fomo's full-colour app icon, used only as an `<img>`: inside the consumer handoff buttons (the Astrofolio vitrine and `/fomo/`) and in the `/fomo/` phone mock-up header, where it identifies the app being depicted. It is never used as a CSS mask or presented as an endorsement. |
 | `coinbase.svg` | `static-assets.coinbase.com/ui-infra/illustration/v1/pictogram/svg/light/coinbaseLogoNavigation-4.svg` | 2026-08-05 | Coinbase's own navigation pictogram. Brand blue replaced with ink; viewBox tightened 40→34 units. |
 | `moonpay.svg` | `www.moonpay.com/safari-pinned-tab.svg` | 2026-08-05 | MoonPay's Safari pinned-tab mask — already monochrome on transparency. Potrace preamble and metadata stripped; viewBox tightened. |
 | `ramp.svg` | `cdn.prod.website-files.com/…/6a4bbd700ee30b63d3ba9652_Logo%20sign.svg` (linked from `rampnetwork.com`) | 2026-08-05 | Ramp Network's logo sign. Fill replaced with ink. Preferred over their 32px favicon PNG, which would soften at 2× density. |
+
+## Store badges (`public/assets/badges/`)
+
+Apple's and Google's own download badges, used unmodified as `<img>` links to
+the Fomo listings on `/fomo/`. Each program publishes its badge for exactly
+this use and forbids redrawing, recolouring, or cropping it. The Google PNG
+keeps its built-in clear space and is scaled so its visible badge matches the
+Apple badge's 48px height, which is above Apple's 40px minimum.
+
+| File | Source | Retrieved | Notes |
+| --- | --- | --- | --- |
+| `app-store-en.svg` | `developer.apple.com/assets/elements/badges/download-on-the-app-store.svg` | 2026-09-01 | Black "Download on the App Store", en-US, 119.66×40 units, with its published light outline for dark backgrounds. |
+| `google-play-en.png` | `play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png` | 2026-09-01 | "Get it on Google Play", English, 646×250 including clear space. |
 
 ## House glyphs (ours, not the vendor's)
 

@@ -36,7 +36,8 @@ The CONTENT boundary survives the visual merge:
    carries token, market, or acquisition copy. Two carve-outs: the in-`src/` wing lanes
    (canonical registry: `WING_ONLY_SOURCE` in
    `scripts/consumer-boundary-lib.mjs` — `src/pages/registry/`,
-   `src/pages/terminal/`, `src/pages/astrofolio/how-to-buy/`, `src/exchange/`,
+   `src/pages/terminal/`, `src/pages/astrofolio/how-to-buy/`, `src/pages/fomo/`
+   (the Astrofolio-on-Fomo landing page), `src/exchange/`,
    `src/trade/`, the wallet/aura modules), which carry wing register under the
    scanner's own rules, and the legal pages (Privacy, Terms, Disclosure)
    carry the wallet/provider/market-risk disclosures that the Registry
