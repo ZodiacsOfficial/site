@@ -57,3 +57,16 @@ assertion, timeout, budget or stored receipt was weakened or rewritten.
 
 Actual-main scope, fresh receipt/captures, real browser/PNG review, final CI
 and production acceptance remain pending. No release approval is claimed.
+
+## First native image review and type adjustment
+
+The cumulative prepared Wave23 preview at b1b614c4 rendered the four native
+context disclosures and a genuine English shape image for the synthetic
+1999-08-11 chart. The short shape card was legible but used small text with
+excess empty space. Its adaptive type now starts at42px instead of28px and
+retains the same22px minimum, line wrapping, spacing and overflow failure.
+Dense cards can fall through the identical previous sizes; facts, convention,
+private-data exclusions, fonts, dimensions and resource deadline are unchanged.
+All31 renderer tests pass. New real-image review and the complete six-locale
+390/1440 browser suite remain required; this updates a preparation candidate,
+not an approved release or the earlier frozen-source test claim.
