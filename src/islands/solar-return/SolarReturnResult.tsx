@@ -1,22 +1,22 @@
-import { useEffect, useRef } from 'preact/hooks';
+import { useEffect, useMemo, useRef } from 'preact/hooks';
 import type { ComponentType } from 'preact';
 import type { WheelProps } from '../../lib/wheel/Wheel';
 import { houseOf } from '../../lib/engine/houses';
 import { formatLongitude, signForLongitude } from '../../lib/signs';
 import type { SolarReturnResultData } from './compute';
-import { planetsOnlyReturnReading, SR_COPY } from './copy';
+import { SR_COPY } from './copy';
+import { solarReturnExportModel } from './export-model';
+import SolarReturnActions from './SolarReturnActions';
 import EvidenceDisclosure from '../EvidenceDisclosure';
 
 export interface SolarReturnResultProps { result: SolarReturnResultData; Wheel: ComponentType<WheelProps> }
 
 export function SolarReturnResult({ result, Wheel }: SolarReturnResultProps) {
   const { chart } = result;
+  const model = useMemo(() => solarReturnExportModel(result), [result]);
+  const { wheel } = model;
   const sun = chart.bodies.find((body) => body.body === 'Sun')!;
-  const sunHouse = chart.houses ? houseOf(sun.lon, chart.houses.cusps) : null;
-  const ascSign = chart.angles ? signForLongitude(chart.angles.asc) : null;
-  const planetsOnly = !ascSign && !sunHouse
-    ? planetsOnlyReturnReading(chart.bodies, chart.aspects)
-    : null;
+  const planetsOnly = model.reading[0]?.kind === 'planets-only';
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -27,20 +27,12 @@ export function SolarReturnResult({ result, Wheel }: SolarReturnResultProps) {
   }, [chart.input.utc]);
 
   return (
-    <div class="sr-result" data-solar-return-result data-sr-asc={chart.angles?.asc ?? undefined} data-sr-sun={sun.lon} data-sr-no-time={result.noTime} data-sr-no-place={result.noPlace}>
+    <div class="sr-result" data-solar-return-result data-sr-asc={wheel.angles?.asc ?? undefined} data-sr-sun={sun.lon} data-sr-no-time={result.noTime} data-sr-no-place={result.noPlace}>
       <section class="shell sr-result__reading" aria-labelledby="solar-return-reading-title">
         <div class="core sr-result__core">
           <span class="mono--label">Your {result.returnYear} return</span>
           <h2 id="solar-return-reading-title" ref={headingRef} tabIndex={-1}>Your year, at a glance</h2>
-          {ascSign && (
-            <p class="sr-result__line" data-sr-corpus="asc">{SR_COPY.asc[ascSign.slug as keyof typeof SR_COPY.asc]}</p>
-          )}
-          {sunHouse && <p class="sr-result__line" data-sr-corpus="sun-house">{SR_COPY.sunHouse[sunHouse]}</p>}
-          {planetsOnly && (
-            <p class="sr-result__line" data-sr-corpus="planets-only">
-              {planetsOnly.text}
-            </p>
-          )}
+          {model.reading.map((reading) => <p key={reading.kind} class="sr-result__line" data-sr-corpus={reading.kind}>{reading.text}</p>)}
         </div>
       </section>
 
@@ -51,16 +43,18 @@ export function SolarReturnResult({ result, Wheel }: SolarReturnResultProps) {
         <div class="core calc__wheel-core">
           <div aria-hidden="true">
             <Wheel
-              bodies={chart.bodies.filter((body) => body.body !== 'South Node')}
-              asc={chart.angles?.asc ?? null}
-              mc={chart.angles?.mc ?? null}
-              cusps={chart.houses?.cusps ?? null}
-              aspects={chart.aspects.filter((aspect) => aspect.orb < 6)}
+              bodies={wheel.bodies.filter((body) => body.body !== 'South Node')}
+              asc={wheel.angles?.asc ?? null}
+              mc={wheel.angles?.mc ?? null}
+              cusps={wheel.houses?.cusps ?? null}
+              aspects={wheel.aspects.filter((aspect) => aspect.orb < 6)}
               animate
             />
           </div>
         </div>
       </section>
+
+      <SolarReturnActions model={model} />
 
       <div class="calc__actions">
         <a class="btn btn--ghost" href="/birth-chart/">Open your full birth chart →</a>
@@ -78,26 +72,25 @@ export function SolarReturnResult({ result, Wheel }: SolarReturnResultProps) {
           </p>
           {planetsOnly && (
             <p class="sr-result__instant mono" data-sr-planets-only-receipt>
-              Reading basis · {planetsOnly.receipt}
+              Reading basis · {model.readingBasis.join(' · ')}
             </p>
           )}
-          {(ascSign || sunHouse) && (
+          {!planetsOnly && (
             <p class="sr-result__instant mono" data-sr-reading-basis>
               Reading basis
-              {ascSign && chart.angles ? ` · Ascendant ${formatLongitude(chart.angles.asc)}` : ''}
-              {sunHouse ? ` · Sun in house ${sunHouse}` : ''}
+              {` · ${model.readingBasis.join(' · ')}`}
             </p>
           )}
           <h2>Return placements</h2>
           <div class="calc__table-wrap">
             <table class="calc__table">
               <caption class="sr-only">Solar return placements</caption>
-              <thead><tr><th>Body</th><th>Sign</th><th>Degree</th>{chart.houses && <th>House</th>}</tr></thead>
+              <thead><tr><th>Body</th><th>Sign</th><th>Degree</th>{wheel.houses && <th>House</th>}</tr></thead>
               <tbody>
                 {chart.bodies.map((body) => {
                   const sign = signForLongitude(body.lon);
                   const degree = formatLongitude(body.lon).split(' ')[0];
-                  return <tr key={body.body}><td>{body.body}</td><td>{sign.name}</td><td class="mono">{degree}</td>{chart.houses && <td class="mono">{houseOf(body.lon, chart.houses.cusps)}</td>}</tr>;
+                  return <tr key={body.body}><td>{body.body}</td><td>{sign.name}</td><td class="mono">{degree}</td>{wheel.houses && <td class="mono">{houseOf(body.lon, wheel.houses.cusps)}</td>}</tr>;
                 })}
               </tbody>
             </table>

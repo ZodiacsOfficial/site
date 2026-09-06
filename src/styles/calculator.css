@@ -532,6 +532,11 @@
 .sr-result__details { overflow: clip; }
 .sr-result__details-content { display: grid; gap: 16px; }
 .sr-result__details-content h2 { margin: 0; font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 500; }
+.sr-result__exports { display: grid; justify-items: start; gap: 12px; }
+.sr-result__exports .calc__actions { margin: 0; }
+.sr-result__exports .btn { min-height: 44px; max-width: 100%; white-space: normal; }
+.sr-result__exports .field__help,
+.sr-result__exports .calc__error { margin: 0; }
 @media (max-width: 359px) { .sr-result__core { padding-inline: 16px; } }
 
 .calendar-subscribe {

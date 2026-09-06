@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   CHART_SHEET_LAYOUT,
   CHART_SHEET_ASPECT_LEGEND,
@@ -17,14 +17,76 @@ import {
   chartSheetSettings,
   communicationCardContent,
   dominantProfile,
+  downloadPreparedChartCard,
   firstSentence,
   primaryShareCardVariant,
   shareCardTimeNotes,
   signatureCardContent,
+  savePreparedChartCard,
 } from './share-card';
 import type { Chart } from './engine/types';
 
 const CHART = { engineVersion: '1.0.0' } as Chart;
+
+describe('prepared image handoff', () => {
+  afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.useRealTimers(); });
+  const prepared = () => ({ blob: new Blob(['png'], { type: 'image/png' }), filename: 'zodiacs-solar-return-2024.png' });
+  function setup(canShare: () => boolean = () => false, share = vi.fn()) {
+    const anchor = { href: '', download: '', click: vi.fn(), remove: vi.fn() };
+    vi.stubGlobal('document', { createElement: () => anchor, body: { appendChild: vi.fn() } });
+    vi.stubGlobal('navigator', { canShare, share });
+    vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:prepared-image');
+    vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
+    vi.useFakeTimers();
+    return { anchor, share };
+  }
+
+  it('explicit Save starts a download without opening native share and then releases its URL', () => {
+    const { anchor, share } = setup(() => true);
+    expect(downloadPreparedChartCard(prepared())).toBe('downloaded');
+    expect(anchor.download).toBe('zodiacs-solar-return-2024.png');
+    expect(anchor.click).toHaveBeenCalledOnce();
+    expect(share).not.toHaveBeenCalled();
+    expect(anchor.remove).toHaveBeenCalledOnce();
+    expect(URL.revokeObjectURL).not.toHaveBeenCalled();
+    vi.runAllTimers();
+    expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:prepared-image');
+  });
+
+  it('reaches native file sharing synchronously and sends only the prepared file', async () => {
+    const { anchor, share } = setup(() => true, vi.fn().mockResolvedValue(undefined));
+    const outcome = savePreparedChartCard(prepared());
+    expect(share).toHaveBeenCalledExactlyOnceWith({ files: [expect.any(File)] });
+    expect(Object.keys(share.mock.calls[0][0])).toEqual(['files']);
+    expect(await outcome).toBe('shared');
+    expect(anchor.click).not.toHaveBeenCalled();
+  });
+
+  it('keeps native cancellation neutral without downloading another copy', async () => {
+    const { anchor } = setup(() => true, vi.fn().mockRejectedValue(new DOMException('Cancelled', 'AbortError')));
+    expect(await savePreparedChartCard(prepared())).toBe('cancelled');
+    expect(anchor.click).not.toHaveBeenCalled();
+    expect(URL.createObjectURL).not.toHaveBeenCalled();
+  });
+
+  it.each(['unsupported', 'capability-error', 'share-error'])('retains download fallback after %s', async (kind) => {
+    const { anchor } = setup(() => {
+      if (kind === 'capability-error') throw new TypeError('File checks unavailable');
+      return kind !== 'unsupported';
+    }, vi.fn().mockRejectedValue(new Error('Share refused')));
+    expect(await savePreparedChartCard(prepared())).toBe('downloaded');
+    expect(anchor.click).toHaveBeenCalledOnce();
+  });
+
+  it('does not report a blocked click as downloaded and still releases its resources', () => {
+    const { anchor } = setup();
+    anchor.click.mockImplementation(() => { throw new Error('Download blocked'); });
+    expect(() => downloadPreparedChartCard(prepared())).toThrow('Download blocked');
+    expect(anchor.remove).toHaveBeenCalledOnce();
+    vi.runAllTimers();
+    expect(URL.revokeObjectURL).toHaveBeenCalledOnce();
+  });
+});
 
 describe('chartCardReceipt', () => {
   it('uses only the engine version by default', () => {

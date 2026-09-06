@@ -4,6 +4,7 @@ import {
   mostRecentSolarReturnInstant, solarReturnChart, solarReturnInstant,
 } from './solar-return';
 import { yearScan } from './year-scan';
+import independentCrossings from './solar-return-crossings.fixture.json';
 
 const KAHLO_BIRTH = new Date('1907-07-06T15:06:36Z');
 const KAHLO_SUN_LON = bodyLongitude('Sun', KAHLO_BIRTH);
@@ -15,7 +16,22 @@ function angleDiff(a: number, b: number): number {
   return distance > 180 ? 360 - distance : distance;
 }
 
-describe('solar returns', () => {
+// These external longitude → instant vectors validate the crossing solver.
+// They are not independently published natal-birth → next-year return reports.
+describe('solarReturnInstant against independent longitude-crossing fixtures', () => {
+  it.each(independentCrossings.fixtures)('$id', (fixture) => {
+    const instant = solarReturnInstant(fixture.targetLongitudeDegrees, new Date(fixture.nearUTC));
+    const residualSeconds = (instant.getTime() - Date.parse(fixture.expectedUTC)) / 1000;
+    const diagnostic = `${fixture.id}: ${instant.toISOString()}, signed residual ${residualSeconds}s`;
+
+    // Opt-in diagnostics report actual solver output without regenerating any
+    // expected value or changing the predeclared provider-parity tolerances.
+    if (process.env.SOLAR_RETURN_FIXTURE_REPORT === '1') console.info(diagnostic);
+    expect(Math.abs(residualSeconds), diagnostic).toBeLessThanOrEqual(fixture.toleranceSeconds);
+  });
+});
+
+describe('solar returns: same-engine consistency and chart behavior', () => {
   it('agrees with yearScan for the same scan window within one minute', () => {
     const from = new Date(NEAR.getTime() - 200 * DAY_MS);
     const to = new Date(NEAR.getTime() + 200 * DAY_MS);

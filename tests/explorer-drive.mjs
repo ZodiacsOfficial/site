@@ -29,6 +29,7 @@ import { runExplorerKeyboardChecks } from './explorer-keyboard-checks.mjs';
 import { runExplorerCrowdedWheelChecks } from './explorer-crowded-wheel-checks.mjs';
 import { runExplorerMoonChecks } from './explorer-moon-checks.mjs';
 import { runSearchLearningChecks } from './search-learning-checks.mjs';
+import { runSolarReturnChecks } from './solar-return-drive.mjs';
 import { runEventTransitChecks } from './event-transit-checks.mjs';
 import { verifyWidgetBuilder } from './widgets-drive.mjs';
 import { awaitAppliedFooter, runFooterStyleChecks } from './footer-style-checks.mjs';
@@ -202,6 +203,8 @@ try {
   await runSearchLearningChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
 
   await runEventTransitChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/event-transits` : null });
+
+  await runSolarReturnChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/solar-return` : null });
 
   await verifyWidgetBuilder({
     browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/widgets` : null,

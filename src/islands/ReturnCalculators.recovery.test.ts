@@ -1,5 +1,5 @@
 import type { VNode } from 'preact';
-import type { SavedChart } from '../lib/profile/schema';
+import type { Profile, SavedChart } from '../lib/profile/schema';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const harness = vi.hoisted(() => ({
@@ -9,7 +9,7 @@ const harness = vi.hoisted(() => ({
   writes: vi.fn(), returnsImport: vi.fn(), loadReturns: vi.fn(), solarImport: vi.fn(),
   access: { current: 0 },
   compute: vi.fn(),
-  charts: [] as SavedChart[],
+  profile: { version: 1, charts: [], settings: { houseSystem: 'whole' } } as Profile,
 }));
 vi.mock('preact/hooks', () => ({
   useState: (initial: unknown) => {
@@ -37,8 +37,10 @@ vi.mock('preact/hooks', () => ({
   },
 }));
 vi.mock('../lib/hooks/useProfile', () => ({
-  useProfile: () => ({ profile: { charts: harness.charts, settings: { houseSystem: 'whole' } }, ready: true }),
+  useProfile: () => ({ profile: harness.profile, ready: true }),
 }));
+vi.mock('../lib/profile/read-store', () => ({ loadProfile: () => harness.profile }));
+vi.mock('../lib/account-v2/profile-access-reader', () => ({ profileAccessAllowed: () => true }));
 vi.mock('../lib/hooks/useProfileAccessGeneration', () => ({ useProfileAccessGeneration: () => harness.access }));
 vi.mock('../lib/hooks/useEngine', () => ({ useEngine: () => async () => ({
   computeChart: harness.compute, computeBodies: () => [],
@@ -56,6 +58,7 @@ import SaturnReturnCalculator from './SaturnReturnCalculator';
 import SolarReturnCalculator from './SolarReturnCalculator';
 import TransitTracker from './TransitTracker';
 import { BirthFields } from './BirthFields';
+import PlaceSearch from './PlaceSearch';
 import CalculationReload, { calculationLoadMessage } from './CalculationReload';
 
 const city = { name: 'London', lat: 51.5, lon: -0.12, tz: 'Europe/London', country: 'GB', admin1: '', pop: 1 };
@@ -84,7 +87,7 @@ beforeEach(async () => {
   harness.writes.mockClear(); harness.access.current = 0;
   harness.returnsImport.mockReset(); harness.solarImport.mockReset();
   harness.compute.mockReset();
-  harness.charts = [];
+  harness.profile = { version: 1, charts: [], settings: { houseSystem: 'whole' } };
   vi.stubGlobal('window', new EventTarget());
   const actual = await vi.importActual<typeof import('../lib/module-load')>('../lib/module-load');
   harness.loadReturns.mockReset().mockImplementation(actual.createModuleLoader(harness.returnsImport));
@@ -306,7 +309,7 @@ describe('event transit ownership', () => {
   });
 
   it('uses a captured saved chart and rejects pending results after the saved profile changes', async () => {
-    harness.charts = [{
+    harness.profile.charts = [{
       id: 'saved-event', name: 'Saved chart', createdAt: instant, updatedAt: instant,
       birth: { date: '1990-01-01', time: null, timeKnown: false, place: null },
       summary: { engineVersion: 'test', utcISO: instant, houseSystem: 'whole',
@@ -316,7 +319,7 @@ describe('event transit ownership', () => {
     let resolve!: (value: unknown) => void;
     harness.solarImport.mockReturnValueOnce(new Promise((done) => { resolve = done; }));
     const old = submit(transit);
-    harness.charts[0].summary.bodies[0].lon = 75;
+    harness.profile.charts[0].summary.bodies[0].lon = 75;
     window.dispatchEvent(new Event('zodiacs:profile'));
     resolve({ default: Ring }); await old;
     expect(ring()).toBeUndefined();
@@ -335,5 +338,113 @@ describe('event transit ownership', () => {
     expect(ring().props.eventDate).toBeUndefined();
     expect(nodes(render(transit)).some((node) => node.props.role === 'status'
       && String(node.props.children).includes('invalid date'))).toBe(true);
+  });
+});
+
+describe('solar-return result ownership', () => {
+  const Result = () => null;
+  const returned = () => ({ chart: { input: { utc: new Date('2024-07-06T12:00:00Z') } }, returnYear: 2024 });
+  const modules = () => [
+    { computeSolarReturn: harness.compute }, { SolarReturnResult: Result }, { StaticWheel: () => null },
+  ];
+  const fill = () => {
+    const fields = nodes(render(solar)).find((node) => node.type === BirthFields)!.props;
+    fields.onDateChange('1990-01-01'); fields.onTimeChange('12:00'); fields.onCityChange(city);
+  };
+  const resultNode = () => nodes(render(solar)).find((node) => node.type === Result);
+  const savedChart = (): SavedChart => ({
+    id: 'saved-one', name: 'Private name', createdAt: '2026-09-06T00:00:00Z', updatedAt: '2026-09-06T00:00:00Z', birth: { date: '1990-01-01', time: '12:00', timeKnown: true, place: city },
+    summary: { engineVersion: 'test', utcISO: '1990-01-01T12:00:00Z', flags: [], angles: null, houseSystem: 'whole', bodies: [{ body: 'Sun', lon: 280, retrograde: false }] },
+  });
+
+  it('discards an old draft request and leaves a newer result untouched', async () => {
+    let resolve!: (value: unknown) => void;
+    harness.compute.mockReturnValue(returned());
+    harness.solarImport.mockReturnValueOnce(new Promise((done) => { resolve = done; })).mockResolvedValue(modules());
+    fill();
+    const stale = submit(solar);
+    nodes(render(solar)).find((node) => node.type === BirthFields)!.props.onDateChange('1991-02-03');
+    expect(nodes(render(solar)).find((node) => node.type === 'form')!.props['aria-busy']).toBe(false);
+    await submit(solar);
+    expect(harness.compute).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ birthDate: '1991-02-03' }));
+    const current = resultNode();
+    const writes = harness.writes.mock.calls.length;
+    resolve(modules()); await stale;
+    expect(harness.writes).toHaveBeenCalledTimes(writes);
+    expect(resultNode()?.key).toBe(current?.key);
+    expect(harness.compute).toHaveBeenCalledOnce();
+  });
+
+  it('clears completed exports on year/time edits and gives same-instant relocation a new result key', async () => {
+    harness.compute.mockReturnValue(returned());
+    harness.solarImport.mockResolvedValue(modules());
+    fill(); await submit(solar);
+    const firstKey = resultNode()!.key;
+    const toggle = nodes(render(solar)).find((node) => node.type === 'input' && node.props.type === 'checkbox')!;
+    toggle.props.onChange({ target: { checked: true } });
+    expect(resultNode()).toBeUndefined();
+    const relocated = { ...city, name: 'Paris', lat: 48.8566, lon: 2.3522, tz: 'Europe/Paris' };
+    nodes(render(solar)).find((node) => node.type === PlaceSearch)!.props.onSelect(relocated);
+    await submit(solar);
+    expect(harness.compute).toHaveBeenLastCalledWith(expect.objectContaining({ castLocation: relocated }));
+    expect(resultNode()!.key).not.toBe(firstKey);
+    nodes(render(solar)).find((node) => node.props.id === 'sr-year-mode')!.props.onChange({ target: { value: 'custom' } });
+    expect(resultNode()).toBeUndefined();
+    nodes(render(solar)).find((node) => node.props['aria-label'] === 'Custom return year')!.props.onInput({ target: { value: '2025' } });
+    await submit(solar);
+    expect(harness.compute).toHaveBeenLastCalledWith(expect.objectContaining({ year: 2025 }));
+    nodes(render(solar)).find((node) => node.type === BirthFields)!.props.onTimeKnownChange(false);
+    expect(resultNode()).toBeUndefined();
+    await submit(solar);
+    expect(harness.compute).toHaveBeenLastCalledWith(expect.objectContaining({ timeKnown: false, castLocation: city }));
+  });
+
+  it('cancels at a saved-chart edit event before an old import can commit', async () => {
+    harness.profile.charts = [savedChart()];
+    harness.compute.mockReturnValue(returned());
+    let resolve!: (value: unknown) => void;
+    harness.solarImport.mockReturnValueOnce(new Promise((done) => { resolve = done; })).mockResolvedValue(modules());
+    render(solar);
+    const stale = submit(solar);
+    harness.profile = { ...harness.profile, charts: [{ ...savedChart(), birth: { ...savedChart().birth, date: '1992-03-04' } }] };
+    window.dispatchEvent(new Event('zodiacs:profile'));
+    resolve(modules()); await stale;
+    expect(harness.compute).not.toHaveBeenCalled();
+    await submit(solar);
+    expect(harness.compute).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ birthDate: '1992-03-04' }));
+  });
+
+  it('preserves a result through a rename, then clears a deleted selection and restores manual input', async () => {
+    harness.profile.charts = [savedChart()];
+    harness.compute.mockReturnValue(returned());
+    harness.solarImport.mockResolvedValue(modules());
+    render(solar); await submit(solar);
+    const key = resultNode()!.key;
+    harness.profile = { ...harness.profile, charts: [{ ...savedChart(), name: 'Renamed privately' }] };
+    window.dispatchEvent(new Event('zodiacs:profile'));
+    expect(resultNode()!.key).toBe(key);
+    harness.profile = { ...harness.profile, charts: [] };
+    window.dispatchEvent(new Event('zodiacs:profile'));
+    expect(resultNode()).toBeUndefined();
+    expect(nodes(render(solar)).some((node) => node.type === BirthFields)).toBe(true);
+    fill(); await submit(solar);
+    expect(resultNode()).toBeDefined();
+  });
+
+  it('keeps an edited unknown-time saved chart usable when an unfinished relocation becomes hidden', async () => {
+    harness.profile.charts = [savedChart()];
+    harness.compute.mockReturnValue(returned());
+    harness.solarImport.mockResolvedValue(modules());
+    render(solar);
+    nodes(render(solar)).find((node) => node.type === 'input' && node.props.type === 'checkbox')!
+      .props.onChange({ target: { checked: true } });
+    expect(nodes(render(solar)).find((node) => node.props.type === 'submit')!.props.disabled).toBe(true);
+    harness.profile = { ...harness.profile, charts: [{ ...savedChart(), birth: { ...savedChart().birth, time: null, timeKnown: false } }] };
+    window.dispatchEvent(new Event('zodiacs:profile'));
+    expect(nodes(render(solar)).some((node) => node.type === PlaceSearch)).toBe(false);
+    expect(nodes(render(solar)).find((node) => node.props.type === 'submit')!.props.disabled).toBe(false);
+    await submit(solar);
+    expect(harness.compute).toHaveBeenCalledWith(expect.objectContaining({ timeKnown: false }));
+    expect(resultNode()).toBeDefined();
   });
 });
