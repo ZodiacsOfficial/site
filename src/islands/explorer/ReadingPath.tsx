@@ -2,9 +2,9 @@ import type { ComponentChildren } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
 import AspectGlyph from '../../components/AspectGlyph';
 import PlanetGlyph from '../../components/PlanetGlyph';
-import type { Aspect, AspectType, BodyName } from '../../lib/engine/types';
-import type { ChartWeather } from '../../lib/natal';
-import { SIGNS, signEssence, signForLongitude, signName } from '../../lib/signs';
+import type { Aspect, BodyName } from '../../lib/engine/types';
+import { natalAspectLine, type ChartWeather } from '../../lib/natal';
+import { SIGNS, signForLongitude, signName } from '../../lib/signs';
 import { entityId, type EntityRef, type SignSlug } from '../../lib/scene/types';
 import { moonCandidates, moonLabel } from '../../lib/moon-certainty';
 import './ReadingPath.css';
@@ -40,14 +40,6 @@ const MODALITIES = [
   ['fixed', 'Fixed'],
   ['mutable', 'Mutable'],
 ] as const;
-
-const ASPECT_MEANING: Record<AspectType, string> = {
-  conjunction: 'These parts of you act as one, which makes them powerful and hard to separate.',
-  sextile: 'These parts of you can cooperate easily when you give them an opening.',
-  square: 'These parts create friction that asks for practice and can become a real strength.',
-  trine: 'These parts support each other so naturally that you may overlook the gift.',
-  opposition: 'These parts pull from opposite ends and ask you to make room for both.',
-};
 
 const BIG_THREE_ROLE = {
   Sun: 'The part of you that chooses a direction',
@@ -184,15 +176,15 @@ function BigThreeTile({ label, lon, entity, selection, onShow, moonSignCandidate
         <source srcset={`/assets/zodiac-icons/48/${sign.slug}.avif`} type="image/avif" />
         <img
           src={`/assets/zodiac-icons/48/${sign.slug}.webp`}
-          width="52"
-          height="52"
+          width="40"
+          height="40"
           alt=""
           loading="lazy"
           decoding="async"
         />
       </picture>
       <strong>{signName(sign)}</strong>
-      <p><span>{BIG_THREE_ROLE[label]}.</span> {signEssence(sign)}</p>
+      <p>{BIG_THREE_ROLE[label]}.</p>
       <ShowButton
         entity={entity}
         subject={`${label} in ${signName(sign)}`}
@@ -403,7 +395,7 @@ function AspectCards({ aspects, selection, onShow }: AspectCardsProps) {
               </span>
             </div>
             <h4>{title}</h4>
-            <p>{ASPECT_MEANING[aspect.type]}</p>
+            <p>{natalAspectLine(aspect.a, aspect.type, aspect.b)}</p>
             <span class="reading-path__orb">{cap(aspect.type)} · {aspect.orb.toFixed(1)}° orb</span>
             <ShowButton
               entity={entity}
@@ -491,11 +483,10 @@ export default function ReadingPath({
   return (
     <section class="reading-path" aria-labelledby="reading-path-title" ref={rootRef}>
       <header class="reading-path__head">
-        <span class="reading-path__eyebrow">Your chart story</span>
-        <h2 id="reading-path-title">See the story inside your chart.</h2>
+        <h2 id="reading-path-title">Read your chart, one step at a time.</h2>
         <p>
-          Start with your core, then see where life clusters, which parts pull on each other,
-          and the pattern underneath it all.
+          Locate your big three, explore where your planets gather, then read the connections
+          between them. Each highlight takes you back to the wheel.
         </p>
       </header>
 
@@ -503,8 +494,8 @@ export default function ReadingPath({
         <StoryCard
           number="01"
           slug="big-three"
-          title="Meet your big three"
-          intro="Your center, your needs, and your first impression — the quickest way into the chart."
+          title="Locate your big three"
+          intro="Use these three reference points to find your way around the wheel."
         >
           <ul class="reading-path__big-three">
             <BigThreeTile

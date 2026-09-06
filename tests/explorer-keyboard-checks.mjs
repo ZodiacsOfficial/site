@@ -72,6 +72,37 @@ export async function runExplorerKeyboardChecks({ browser, baseURL, check, outDi
     }
   }
 
+  const selectedChartURL = `${baseURL}/birth-chart/?sel=body%3ASun${knownFragment}`;
+  const loadingContext = await browser.newContext({ viewport: { width: 390, height: 1000 } });
+  let releaseReadings;
+  const readingsReady = new Promise((resolve) => { releaseReadings = resolve; });
+  try {
+    await loadingContext.route(/\/_astro\/ChartActionDock\.[^/]+\.js$/, async (route) => {
+      await readingsReady;
+      await route.continue();
+    });
+    const page = await loadingContext.newPage();
+    await page.goto(selectedChartURL, { waitUntil: 'domcontentloaded' });
+    await page.locator('.wheel--interactive').waitFor({ state: 'visible', timeout: 30000 });
+    check('natal reader: a pending module keeps the wheel and selection with an announced loading state',
+      await page.locator('[data-chart-controls-state="loading"]').getByRole('status').isVisible()
+      && (await page.locator('[data-chart-controls-state="loading"]').textContent()).includes('readings and controls')
+      && new URL(page.url()).searchParams.get('sel') === 'body:Sun'
+      && await page.locator('[data-first-reading-start]').isDisabled()
+      && await page.locator('[data-tour-card]').count() === 0);
+    releaseReadings();
+    await page.locator('[data-explorer-entity-picker]').waitFor({ state: 'visible', timeout: 30000 });
+    await page.locator('.reading-path').waitFor({ state: 'visible' });
+    check('natal reader: module arrival restores the selected inspector, reading and quick guide',
+      await page.locator('[data-explorer-entity-picker]').inputValue() === 'body:Sun'
+      && (await page.locator('[data-inspector-heading]').textContent()).includes('Sun')
+      && await page.locator('[data-first-reading-start]').isEnabled()
+      && await page.locator('.reading-path__big-three button[aria-pressed="true"]').count() === 1);
+  } finally {
+    releaseReadings();
+    await loadingContext.close();
+  }
+
   const failureContext = await browser.newContext({ viewport: { width: 390, height: 1000 } });
   try {
     let blockedRequests = 0;
@@ -83,13 +114,16 @@ export async function runExplorerKeyboardChecks({ browser, baseURL, check, outDi
     await page.goto(`${baseURL}/birth-chart/`, { waitUntil: 'networkidle' });
     check('keyboard controls: result module is not fetched while the form is idle', blockedRequests === 0);
     await page.goto('about:blank');
-    await page.goto(`${baseURL}/birth-chart/${knownFragment}`, { waitUntil: 'domcontentloaded' });
+    await page.goto(selectedChartURL, { waitUntil: 'domcontentloaded' });
     await page.locator('.calc__result').waitFor({ state: 'visible', timeout: 30000 });
     const retry = page.locator('[data-chart-controls-retry]');
     await retry.waitFor({ state: 'visible' });
     check('keyboard controls: failed module leaves the valid chart visible with explicit recovery',
       blockedRequests > 0 && await page.locator('.wheel--interactive').isVisible()
       && await page.locator('[data-chart-controls-state="error"]').getByRole('alert').isVisible()
+      && (await page.locator('[data-chart-controls-state="error"]').textContent()).includes('readings and controls')
+      && await page.locator('[data-first-reading-start]').isDisabled()
+      && new URL(page.url()).searchParams.get('sel') === 'body:Sun'
       && await page.locator('.calc__form .calc__error').count() === 0);
     if (outDir) await page.locator('.calc__wheel').screenshot({ path: `${outDir}/entity-picker-recovery-390.png`, animations: 'disabled' });
     await failureContext.unroute(/\/_astro\/ChartActionDock\.[^/]+\.js$/);
@@ -120,9 +154,14 @@ export async function runExplorerKeyboardChecks({ browser, baseURL, check, outDi
         await page.locator('#birth-date').inputValue() === ''
         && await page.locator('.calc__result').count() === 0);
       await page.goto('about:blank');
-      await page.goto(`${baseURL}/birth-chart/${knownFragment}`, { waitUntil: 'domcontentloaded' });
+      await page.goto(selectedChartURL, { waitUntil: 'domcontentloaded' });
       await page.locator('[data-explorer-entity-picker]').waitFor({ state: 'visible', timeout: 30000 });
     }
+    await page.locator('.reading-path').waitFor({ state: 'visible' });
+    check('natal reader: recovery restores the inspector and story for the selected Sun',
+      await page.locator('[data-explorer-entity-picker]').inputValue() === 'body:Sun'
+      && (await page.locator('[data-inspector-heading]').textContent()).includes('Sun')
+      && await page.locator('.reading-path__big-three button[aria-pressed="true"]').count() === 1);
     await chooseWithKeys(page, 'house:12');
     check('keyboard controls: keyboard recovery restores native selection and the chart', await page.locator('.calc__result').isVisible());
   } finally {

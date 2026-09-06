@@ -1,8 +1,13 @@
 {
   "version": 1,
-  "id": "phase-b-search-learning-2026-09-05",
-  "baseCommit": "cf6b0edf7b4ff6c58c01a685e1ebd48e69d0d1e1",
+  "id": "wave13-natal-result-readings",
+  "baseCommit": "32a8082e2e5294d68b0a7bcfe1d33b95839fb19f",
   "protectedPaths": [
-    "src/pages/learn/index.astro"
+    "src/lib/i18n/ui/en.ts",
+    "src/lib/i18n/ui/es.ts",
+    "src/lib/i18n/ui/fr.ts",
+    "src/lib/i18n/ui/it.ts",
+    "src/lib/i18n/ui/pt.ts",
+    "src/lib/i18n/ui/ru.ts"
   ]
 }

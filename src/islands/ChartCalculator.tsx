@@ -15,7 +15,6 @@ import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
 import AspectGlyph from '../components/AspectGlyph';
 import Wheel from '../lib/wheel/Wheel';
-import Inspector from './explorer/Inspector';
 import LayerChips from './explorer/LayerChips';
 import { moonCandidates, moonCandidatesFromEndpoints, moonIsUncertain, moonLabel } from '../lib/moon-certainty';
 import { createModuleLoader } from '../lib/module-load';
@@ -35,7 +34,6 @@ import {
 } from '../lib/scene/types';
 import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
-import { chartWeather, natalAspectLine, planetInHouseLine, topAspects } from '../lib/natal';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { localDateEndpointsUtc, stableBodySignSlug } from '../lib/chart-date-certainty';
 import { houseOf } from '../lib/engine/houses';
@@ -544,6 +542,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   }
 
   async function startTour(kind: 'quick' | 'full' = 'full') {
+    if (!chartActionDockModule) return;
     try {
       const mod = tourMod ?? await import('./explorer/tour');
       setTourMod(mod);
@@ -565,6 +564,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   }
 
   function startFirstReading() {
+    if (!chartActionDockModule) return;
     const resume = firstReading.status === 'in_progress';
     const next = resume ? firstReading : persistFirstReading('in_progress', 0);
     track('first_reading_prompt', { action: resume ? 'resume' : 'start' });
@@ -1521,7 +1521,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   // The visual story uses planets only (nodes stay in exact data), plus the
   // strongest aspects and whole-chart balance derived once per result.
   const reading = useMemo(() => {
-    if (!chart || mode !== 'full') return null;
+    if (!chart || mode !== 'full' || !chartActionDockModule) return null;
     const ps = placements
       .filter((p) => !p.body.includes('Node'))
       .map((p) => {
@@ -1537,17 +1537,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     const settled = ps.filter((placement) => placement.body !== 'Moon' || !moonIsUncertain(chart));
     return {
       ps,
-      top: topAspects(
+      top: chartActionDockModule.topAspects(
         chart.aspects.filter((aspect) => !aspect.a.includes('Node') && !aspect.b.includes('Node')
           && (!moonIsUncertain(chart) || (aspect.a !== 'Moon' && aspect.b !== 'Moon'))),
         4,
       ),
-      weather: chartWeather(
+      weather: chartActionDockModule.chartWeather(
         settled.map((p) => ({ body: p.body, lon: p.lon, retrograde: p.retrograde, sign: p.signSlug })),
         chart.houses ? (b) => ps.find((x) => x.body === b)?.house ?? null : undefined,
       ),
     };
-  }, [chart, placements, mode]);
+  }, [chart, placements, mode, chartActionDockModule]);
 
   const heroCards = useMemo(() => {
     if (!chart || !sun || !moon) return [];
@@ -1569,6 +1569,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const ChartActionDock = chartActionDockModule?.default;
   const EntityPicker = chartActionDockModule?.EntityPicker;
   const ReadingPath = chartActionDockModule?.ReadingPath;
+  const Inspector = chartActionDockModule?.Inspector;
   const saveError = saved === 'full'
     ? t(locale, 'chartSaveFull')
     : saved === 'error' ? t(locale, 'chartSaveError') : null;
@@ -1834,7 +1835,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   )}
                 </div>
                 <div class="calc__first-reading-actions">
-                  <button class="btn btn--primary" type="button" onClick={startFirstReading} data-first-reading-start>
+                  <button class="btn btn--primary" type="button" onClick={startFirstReading} disabled={!chartActionDockModule} data-first-reading-start>
                     <span>{firstReading.status === 'in_progress'
                       ? t(locale, 'firstReadingResume')
                       : t(locale, 'firstReadingStart')}</span>
@@ -2063,7 +2064,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                       )}
                     </div>
                     <div class="xplr__aside">
-                      {tourOpen && tourMod ? (
+                      {tourOpen && tourMod && chartActionDockModule && Inspector ? (
                         <tourMod.ChartTour
                         scene={scene}
                         chart={chart}
@@ -2074,9 +2075,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         selection={selection}
                         loadEngine={loadEngine}
                         buildScene={buildSceneModel}
-                        topAspects={topAspects}
-                        readAspect={natalAspectLine}
-                        readHouse={planetInHouseLine}
+                        topAspects={chartActionDockModule.topAspects}
+                        readAspect={chartActionDockModule.natalAspectLine}
+                        readHouse={chartActionDockModule.planetInHouseLine}
                         renderInspector={(inspScene, banner) => (
                           <Inspector
                             scene={inspScene}
@@ -2119,7 +2120,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         onExit={exitTour}
                         returnFocus={() => wheelboxRef.current?.focus()}
                       />
-                      ) : (
+                      ) : Inspector && (
                         <Inspector
                           scene={scene}
                           selection={selection}
@@ -2135,7 +2136,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                             actionLabel={wheelActionCopy.actions}
                             signature={showsEnglishInterpretation && signature ? {
                               headline: signature.title,
-                              evidence: signature.summary,
+                              evidence: signature.kind === 'aspect' ? signature.detail ?? signature.summary : signature.summary,
                             } : null}
                             signatureLabel={subjectMode === 'other'
                               ? wheelActionCopy.signatureOther
