@@ -18,6 +18,7 @@ import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
+import FomoMark from './_FomoMark.astro';
 import { SIGNS } from '../../lib/signs';
 import registryJson from '../../../public/registry/zodiacs.registry.json';
 import marketHistoryJson from '../../../public/assets/data/registry-market-history.v1.json';
@@ -227,9 +228,9 @@ const sources = [
       <div class="fomo-hero__copy">
         <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
         <p class="kicker reveal">Astrofolio, in a trading app</p>
-        <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">The twelve Zodiacs are on Fomo.</h1>
+        <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">The twelve Zodiacs are on Fomo<FomoMark />.</h1>
         <p class="fomo-deck reveal" style="--reveal-delay:120ms">
-          Fomo is a free trading app for iPhone, Android, and the web. All twelve official Zodiacs are listed
+          Fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. All twelve official Zodiacs are listed
           there under their verified Solana addresses, so you can watch your sign, follow the other eleven,
           and buy in a few taps.
         </p>
@@ -308,7 +309,7 @@ const sources = [
           <div class="fomo-alerts__copy reveal" style="--reveal-delay:80ms">
             <p class="kicker">Stay in the loop</p>
             <h2 id="alerts-title" class="display">Alerts when your sign moves.</h2>
-            <p>Fomo sends price alerts like this one for the Zodiacs you watch, so you hear about a move without keeping a chart open.</p>
+            <p>Fomo<FomoMark /> sends price alerts like this one for the Zodiacs you watch, so you hear about a move without keeping a chart open.</p>
           </div>
         </div>
       </section>
@@ -320,7 +321,7 @@ const sources = [
           <div class="fomo-finder__ask">
             <p class="kicker">Not sure which one is yours?</p>
             <h2 id="finder-title" class="display">Find your sign by birthday.</h2>
-            <p>Pick the month and day. You get your sign with its latest figures and a link that opens it in Fomo.</p>
+            <p>Pick the month and day. You get your sign with its latest figures and a link that opens it in Fomo<FomoMark />.</p>
           </div>
           <form class="fomo-finder__form" data-fomo-finder-form novalidate>
             <label class="fomo-finder__field">
@@ -404,7 +405,7 @@ const sources = [
         <div class="fomo-verified__inner">
           <div class="fomo-verified__copy reveal">
             <p class="kicker">Inside the app</p>
-            <h2 id="verified-title" class="display">The twelve, in Fomo’s Verified list.</h2>
+            <h2 id="verified-title" class="display">The twelve, in the Verified list on Fomo<FomoMark />.</h2>
             <p>Fomo lists the Zodiacs in its Verified tab. Before you buy, compare the address on the coin screen with the Registry record; it is the same address every link on this page carries.</p>
             <a href="#signs">Choose a sign ↓</a>
           </div>
@@ -469,7 +470,7 @@ const sources = [
     <section class="fomo-facts section--tight container" aria-labelledby="facts-title">
       <div class="section-head">
         <p class="kicker">Before you start</p>
-        <h2 id="facts-title">What Fomo is, and what it is not</h2>
+        <h2 id="facts-title">What Fomo<FomoMark /> is, and what it is not</h2>
       </div>
       <div class="fomo-facts__grid">
         <div class="tile reveal">
@@ -485,7 +486,7 @@ const sources = [
           <p>Zodiac tokens are speculative and thinly traded. Prices move quickly, liquidity can disappear, and you can lose everything you spend. Nothing here is financial advice, and astrology does not predict prices.</p>
         </div>
         <div class="tile reveal" style="--reveal-delay:240ms">
-          <h3>Your account, Fomo’s support</h3>
+          <h3>Your account, and support from Fomo<FomoMark /></h3>
           <p>Fomo is rated 18+ and may not be available where you live. Read Fomo’s terms and fees inside the app, keep your sign-in details private, and take account questions to Fomo, not to Zodiacs.org.</p>
         </div>
       </div>
@@ -497,27 +498,27 @@ const sources = [
       </div>
       <div class="fomo-faq__items">
         <details>
-          <summary>Do I need a crypto wallet first?<span aria-hidden="true">+</span></summary>
+          <summary><span>Do I need a crypto wallet first?</span><span aria-hidden="true">+</span></summary>
           <p>No. Fomo sets up a wallet inside the app when you sign in. If you already use Phantom, Solflare, or an exchange, you can move USDC or SOL into Fomo from there.</p>
         </details>
         <details>
-          <summary>Is Fomo free?<span aria-hidden="true">+</span></summary>
+          <summary><span>Is Fomo<FomoMark /> free?</span><span aria-hidden="true">+</span></summary>
           <p>The app is free to download. Fomo charges its own trading fees, shown before you confirm a trade. Zodiacs.org adds nothing and receives nothing.</p>
         </details>
         <details>
-          <summary>Which sign should I buy?<span aria-hidden="true">+</span></summary>
+          <summary><span>Which sign should I buy?</span><span aria-hidden="true">+</span></summary>
           <p>That is your decision, and this page does not make it for you. Many people start with their own Sun sign; the Registry lists all twelve with the same standing. Spend only what you can afford to lose.</p>
         </details>
         <details>
-          <summary>Can I use Fomo on a computer?<span aria-hidden="true">+</span></summary>
+          <summary><span>Can I use Fomo<FomoMark /> on a computer?</span><span aria-hidden="true">+</span></summary>
           <p>Yes. fomo.family runs in a browser and syncs with the phone app, so a watchlist you build on one shows up on the other.</p>
         </details>
         <details>
-          <summary>Why do the prices here differ from the app?<span aria-hidden="true">+</span></summary>
+          <summary><span>Why do the prices here differ from the app?</span><span aria-hidden="true">+</span></summary>
           <p>The figures on this page are dated {provider} reads, refreshed when the site rebuilds and, where your browser allows it, once more when the page loads. Fomo shows live prices, and the two will rarely match to the cent.</p>
         </details>
         <details>
-          <summary>Is there another way to buy?<span aria-hidden="true">+</span></summary>
+          <summary><span>Is there another way to buy?</span><span aria-hidden="true">+</span></summary>
           <p>Yes. The <a href="/astrofolio/how-to-buy/">beginner guide</a> walks through a Solana wallet and an optional Jupiter swap, one step at a time.</p>
         </details>
       </div>
@@ -879,6 +880,18 @@ const sources = [
     color: var(--text);
     transition: --fomo-sign 900ms var(--ease-soft);
   }
+
+  /* Fomo's app icon after the word, sized to the text it follows. */
+  .fomo :global(.fomo-mark) {
+    display: inline-block;
+    width: 0.82em;
+    height: 0.82em;
+    margin-left: 0.22em;
+    border-radius: 0.2em;
+    vertical-align: -0.08em;
+    box-shadow: 0 0 0 1px rgba(238, 241, 247, 0.08);
+  }
+  .fomo-hero h1 :global(.fomo-mark) { width: 0.72em; height: 0.72em; border-radius: 0.18em; vertical-align: -0.02em; }
 
   /* ── Hero ────────────────────────────────────────────────────────── */
   .fomo-hero {
@@ -1347,8 +1360,8 @@ const sources = [
     font-weight: 550;
   }
   .fomo-faq summary::-webkit-details-marker { display: none; }
-  .fomo-faq summary span { color: var(--faint); font-size: 20px; line-height: 1; transition: transform var(--dur-1) var(--ease); }
-  .fomo-faq details[open] summary span { transform: rotate(45deg); }
+  .fomo-faq summary > span:last-child { color: var(--faint); font-size: 20px; line-height: 1; transition: transform var(--dur-1) var(--ease); }
+  .fomo-faq details[open] summary > span:last-child { transform: rotate(45deg); }
   .fomo-faq details p { margin: 0 0 20px; max-width: 62ch; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
   .fomo-faq details a { color: var(--text); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
 
