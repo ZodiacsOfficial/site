@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
+import AspectPatternFeature from '../aspect-patterns/AspectPatternFeature';
 import AspectGlyph from '../../components/AspectGlyph';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
@@ -21,11 +22,12 @@ interface CompositePanelProps {
   data: CompositeTabData;
   sourceKey: string;
   /** Both original chart times, independent of which midpoint bodies exist. */
+  sourceTimesKnown: boolean;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
 }
 
-export function CompositePanel({ locale, data, sourceKey, selectedId, onSelect }: CompositePanelProps) {
+export function CompositePanel({ locale, data, sourceKey, sourceTimesKnown, selectedId, onSelect }: CompositePanelProps) {
   const c = COMPOSITE_COPY[locale];
   const selected = compositeSelection(data, selectedId);
   const reading = compositeReading(data, selectedId);
@@ -182,6 +184,9 @@ export function CompositePanel({ locale, data, sourceKey, selectedId, onSelect }
           </>}
         </> : <p class="field__help">{t(locale, 'selectionCleared')}</p>}
       </section>
+
+      {locale === 'en' && <AspectPatternFeature context="composite" points={data.points} aspects={data.aspects}
+        timeKnown={sourceTimesKnown} sourceKey={sourceKey} onSelectBody={(body) => onSelect(compositeBodyId(body))} />}
 
       <div class="rcomp__export">
         <button class="btn btn--glass" type="button" data-composite-export disabled={!data.points.length || (exportOpen && busy)} onClick={prepareImage}>

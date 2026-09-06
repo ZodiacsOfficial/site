@@ -1,3 +1,4 @@
+export { default as AspectPatternFeature } from './aspect-patterns/AspectPatternFeature';
 export { default as EntityPicker } from './explorer/EntityPicker';
 export { default as ReadingPath } from './explorer/ReadingPath';
 export { default as Inspector } from './explorer/Inspector';

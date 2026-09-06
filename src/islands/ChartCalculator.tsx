@@ -1570,6 +1570,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const EntityPicker = chartActionDockModule?.EntityPicker;
   const ReadingPath = chartActionDockModule?.ReadingPath;
   const Inspector = chartActionDockModule?.Inspector;
+  const AspectPatternFeature = chartActionDockModule?.AspectPatternFeature;
   const saveError = saved === 'full'
     ? t(locale, 'chartSaveFull')
     : saved === 'error' ? t(locale, 'chartSaveError') : null;
@@ -2189,6 +2190,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <p class="sr-only" role="status">{announce}</p>
                 </div>
               </div>
+
+              {mode === 'full' && locale === 'en' && AspectPatternFeature && (
+                <AspectPatternFeature context="natal" points={chart.bodies} aspects={chart.aspects}
+                  timeKnown={chart.input.timeKnown && !chart.flags.includes('no-time')}
+                  sourceKey={String(chartContextIdRef.current)}
+                  onSelectBody={(body) => showOnChartFromReading({ kind: 'body', body }, 'instant')} />
+              )}
 
               {/* A visual story leads; exact data remains available below. */}
               {showsEnglishInterpretation && reading && ReadingPath && (

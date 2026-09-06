@@ -599,6 +599,7 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
           data-relationship-panel="composite"
         >
           <CompositePanel locale={locale} data={composite} sourceKey={compositeSource}
+            sourceTimesKnown={a.timeKnown && b.timeKnown}
             selectedId={compositeSelected}
             onSelect={(id) => setCompositeFocus(id ? { source: compositeSource, id } : null)} />
         </section>

@@ -38,6 +38,8 @@ vi.mock('../../lib/module-load', async (importOriginal) => {
   return { ...actual, createModuleLoader: () => () => actual.loadModule(harness.importCard) };
 });
 import { CompositePanel } from './CompositePanel';
+import AspectPatternFeature from '../aspect-patterns/AspectPatternFeature';
+import { buildAspectPatternModel, selectedPatternCard } from '../../lib/aspect-pattern-model';
 import CalculationReload, { calculationLoadMessage } from '../CalculationReload';
 import { COMPOSITE_COPY } from './compositeCopy';
 import { buildCompositeTabData, compositeAspectId, compositeBodyId } from './relationshipData';
@@ -86,13 +88,37 @@ beforeEach(() => {
   harness.prepare.mockReset().mockResolvedValue(prepared);
   harness.share.mockReset().mockResolvedValue('shared'); harness.download.mockReset().mockResolvedValue('downloaded');
   selected.mockReset();
-  props = { locale: 'en', data, sourceKey: 'first pair', selectedId: null, onSelect: selected };
+  props = { locale: 'en', data, sourceKey: 'first pair', sourceTimesKnown: true, selectedId: null, onSelect: selected };
   vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:composite');
   vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
 });
 afterEach(() => { unmount(); vi.restoreAllMocks(); });
 
 describe('composite selection and uncertainty', () => {
+  it.each([false, true].flatMap(sourceTimesKnown => [false, true].map(hasMoon => ({ sourceTimesKnown, hasMoon }))))(
+    'keeps pattern reading/export tied to source times ($sourceTimesKnown), with Moon present: $hasMoon',
+    ({ sourceTimesKnown, hasMoon }) => {
+      const cross = [
+        { body: 'Mercury', lon: 0 }, { body: 'Venus', lon: 90 },
+        { body: 'Mars', lon: 180 }, { body: 'Jupiter', lon: 270 },
+        ...(hasMoon ? [{ body: 'Moon', lon: 45 }] : []),
+      ];
+      const partial = buildCompositeTabData(cross, cross, { aTimeKnown: sourceTimesKnown, bTimeKnown: true });
+      const view = render({ data: partial, sourceTimesKnown });
+      const feature = nodes(view).find(node => node.type === AspectPatternFeature)!;
+      expect(partial.moonProvisional).toBe(hasMoon && !sourceTimesKnown);
+      expect(feature.props.timeKnown).toBe(sourceTimesKnown);
+      const model = buildAspectPatternModel(feature.props as unknown as Parameters<typeof buildAspectPatternModel>[0]);
+      expect(model.roots.some(pattern => pattern.kind === 'grand-cross')).toBe(true);
+      const card = selectedPatternCard(model, model.roots[0].id);
+      if (sourceTimesKnown) expect(card?.pattern.kind).toBe('grand-cross');
+      else {
+        expect(model.scope).toContain('one or both birth times unknown');
+        expect(card).toBeNull();
+      }
+    },
+  );
+
   it('offers every actual point/contact as a native pressed control linked to its live receipt', () => {
     const view = render();
     const all = nodes(view);
