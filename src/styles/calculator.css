@@ -515,6 +515,9 @@
 /* Solar return: the form stays in the host chunk; this result surface arrives
    with the wheel only after calculation. */
 .sr-form__source { margin-bottom: 24px; }
+.lr-input-notice { display: grid; gap: 12px; margin-block: 20px; }
+.lr-input-notice .btn { justify-self: start; min-height: 44px; white-space: normal; }
+[data-lunar-return-calculator] .field__labelrow .field__toggle { min-height: 44px; }
 .sr-form__birth { grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 720px) { .sr-form__birth { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .sr-form__options { align-items: start; }

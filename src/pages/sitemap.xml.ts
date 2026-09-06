@@ -72,6 +72,8 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       : ['/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
   ['/developers/', '2026-08-31'] as const,
+  ['/lunar-return/', '2026-09-06'] as const,
+  ['/tools/', '2026-09-06'] as const,
   // Phase 4 re-exposes the already-reviewed Big Three share card from the
   // birth-chart result sheet.
   ['/birth-chart/', '2026-07-24'],
@@ -193,6 +195,7 @@ export const GET: APIRoute = async () => {
     { loc: '/moon-phase/', priority: 0.85 },
     { loc: '/saturn-return/', priority: 0.85 },
     { loc: '/solar-return/', priority: 0.85 },
+    { loc: '/lunar-return/', priority: 0.85 },
     { loc: '/mercury-retrograde/', priority: 0.85 },
     { loc: '/transits/', priority: 0.85 },
     { loc: '/eclipses/', priority: 0.85 },

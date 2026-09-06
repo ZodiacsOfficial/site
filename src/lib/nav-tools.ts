@@ -201,6 +201,10 @@ export const TOOL_CATALOG: readonly ToolCatalogEntry[] = [
     hub: { order: 10, title: 'Solar return', promise: 'Cast the exact chart of your personal new year, for any year and place.', hue: 'var(--sign-leo)', kind: 'sun', group: 'milestones' },
   },
   {
+    href: '/lunar-return/',
+    hub: { order: 17, title: 'Lunar return', promise: 'Find your next Moon return, explore its chart, and save a moment to check in.', hue: 'var(--sign-cancer)', kind: 'moon', group: 'sky' },
+  },
+  {
     href: '/baby-zodiac/',
     hub: { order: 12, title: 'Baby zodiac', promise: 'What sign a due date makes likely, and what has to wait.', hue: 'var(--sign-cancer)', kind: 'baby', group: 'milestones' },
   },

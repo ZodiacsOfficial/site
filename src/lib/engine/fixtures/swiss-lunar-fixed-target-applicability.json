@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "recordedBeforeApplicationOutput": true,
+  "approval": "Root explicitly approved this bounded applicability amendment before application comparison.",
+  "frozenPolicySHA256": "16c807cfb7374c340200064ba6f4332b98923f77b05f6f24f62ea5541d5aa146",
+  "frozenRawOracleSHA256": "599fdf9d1655e1677c144f74927d573a0073e8dae85d3ea3f2514dc1d98032c4",
+  "completeNatalDerivedCases": ["L-modern-a", "L-modern-b", "L-wrap", "L-year-boundary", "L-range-start", "L-range-end"],
+  "fixedExternalTargetCases": ["L-modern-a", "L-modern-b", "L-wrap"],
+  "omittedFixedExternalTargetIdentityCases": ["L-year-boundary", "L-range-start", "L-range-end"],
+  "rationale": "The strict-start identity is model-relative: each model derives its natal target from the identical initial evaluation. Feeding the Swiss target literally into the product at after==birth breaks that identity and a permitted natal longitude difference may create an immediate extra crossing. Those three fixed-target first-event checks are scientifically unconditioned and are explicitly omitted, not recorded as passing or waived failures. All six complete natal-derived first-event and chronology checks remain required.",
+  "nonidentityConditioning": "The three retained fixed-target windows have the already frozen greater-than-0.30-degree endpoint margins and unchanged independently acquired fixed-target timing bands.",
+  "unchanged": "No numerical tolerance, timestamp, raw target, source oracle, supported range, step, horizon or original policy byte is modified."
+}

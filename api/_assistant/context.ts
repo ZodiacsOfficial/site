@@ -28,6 +28,7 @@ These lines use each live page’s meta description to state what it computes or
 - /compatibility/ — Free astrology compatibility calculator: compare two birth charts privately in your browser, with clear readings and guides to all 78 sign pairings.
 - /eclipses/ — Every solar and lunar eclipse through 2028 with exact peak times and zodiac signs — including the August 12, 2026 total solar eclipse over Iceland and Spain.
 - /full-moon-calendar/ — Every full moon in 2026 and 2027: exact date and universal time, the Moon's zodiac sign and degree, and the traditional name — Wolf to Cold, blue moon included.
+- /lunar-return/ — Find your next lunar return with a known birth time. Explore its chart, save a private image, or add the moment to your calendar.
 - /mercury-retrograde/ — Every Mercury retrograde through 2027, computed from the planet's real motion: exact dates, station positions, and what the window actually asks of you.
 - /moon-phase/ — See tonight's moon phase or look up any date you care about: phase, illumination, and moon sign, free.
 - /moon-sign/ — Find your moon sign free, in seconds — how you feel, what soothes you, and what you need to feel safe. No signup.

@@ -57,6 +57,7 @@ describe('search-index HTML extraction', () => {
     expect(inferSearchKind('/horoscopes/aries/')).toBe('horoscope');
     expect(inferSearchKind('/learn/aspects/')).toBe('learn');
     expect(inferSearchKind('/birth-chart/')).toBe('tool');
+    expect(inferSearchKind('/lunar-return/')).toBe('tool');
     expect(inferSearchKind('/big-three/')).toBe('tool');
     expect(inferSearchKind('/solar-return/')).toBe('tool');
     expect(inferSearchKind('/about/')).toBe('page');

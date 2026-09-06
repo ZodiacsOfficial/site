@@ -35,6 +35,7 @@ describe('assistant site context', () => {
       '/compatibility/',
       '/eclipses/',
       '/full-moon-calendar/',
+      '/lunar-return/',
       '/mercury-retrograde/',
       '/moon-phase/',
       '/moon-sign/',
@@ -53,13 +54,14 @@ describe('assistant site context', () => {
       // /race/ joined the listing in R2.1 and the Trophy Hall joined in
       // R2.3; Packet C removes the two wing-only routes from Guide context;
       // /developers/ (the sky data API documentation) joined the static pages.
-      consumerRoutes: 687,
+      // Lunar return adds one English tool and one consumer route.
+      consumerRoutes: 688,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 48,
-      tools: 17,
+      staticPages: 49,
+      tools: 18,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
