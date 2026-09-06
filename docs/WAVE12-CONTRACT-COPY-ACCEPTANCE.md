@@ -182,3 +182,80 @@ parent is the actual Widget head `1c73ef23`. The only tree change after the
 local gates is the upstream Widget acceptance note, preserved exactly.
 Comparison against this complete Search base passes with 50 changed paths,
 zero protected paths and the unchanged `a805566f` template fingerprint.
+
+## Corrected profile order and reviewed Phase 1 import, 2026-09-06
+
+Published capture head `a810b9287b3595bd8516be08ac4f6a57214d1a0a` has tree
+`7fbdd0bdac7fb87a0335d1d460a5405201b37785` and includes the actual Search
+cache parent `2277cbeca5620cdfd56181285b6a69eaf3aa2c21`. Browser Evidence
+`34005762065` passed build, Phase 1 capture/receipt, all 15 visual comparisons
+and Explorer. Its Lighthouse gate failed; Site Check `34005762036` separately
+passed 13 of 14 jobs, with 3,460 tests passing and only the expected stale
+Phase 1 receipt failure. Neither workflow is recorded as all-green.
+
+Official artifact `9981100241` is 101,230,480 bytes with SHA-256
+`b97ecb35ddd825945bcad3573dbc6d9945fb29baa5fa966e8b19d652d9c4aa1e`.
+All 446 ZIP entries passed CRC validation, and every one of the 445 provenance
+payloads matched its recorded size and SHA-256. Provenance binds the exact
+head, Search base, Node 22, Chromium 149.0.7827.55, run attempt 1 and `a805566f`
+source. All 78 Lighthouse reports and their trace/DevTools companions exist.
+Only `horoscope-weekly-2.json` fails: performance 0.81 and TBT 632.4552 ms;
+its LCP is 2406.0672 ms, CLS is zero, accessibility and SEO are 1. The other
+77 samples pass their unchanged budgets. Two raw renderer tasks take 202.676
+and 163.168 ms wall time with only 6.972 and 0.037 ms recorded thread CPU,
+overlapping stalls on other browser threads. Same-head weekly requests and
+transferred bytes are identical. This supports a browser-wide execution pause,
+but the exact environment or browser cause is unproved. The strict failure,
+unaltered raw artifact and independent trace diagnosis are retained; no retry,
+threshold change or waiver converts that run into acceptance.
+
+Personal image review approved the intact names, portraits, hyphenated names
+and the complete 1060-pixel reading/chart layout, but found a real mobile
+ordering defect on profiles without portrait credits. The explicit name row 3
+left row 2 vacant, allowing the description to appear above the name. Removing
+only that row assignment lets the full-width name follow the portrait or
+fallback naturally, before the description. Explorer additionally records
+rendered rectangles and checks positive, nonoverlapping vertical order for
+name, identity description, birth metadata and quality on all 32 profile cases.
+The failed ordering screenshots remain evidence of the rejected source.
+
+Native preview inspection at 1363 pixels also verified that the 430-pixel
+identity card has no horizontal overflow. Neil Armstrong's complete birth
+metadata and quality note remain reachable through ordinary page scrolling,
+including when the taller card leaves its sticky constraint. This does not
+replace the corrected source's fresh breakpoint captures and image review.
+
+The existing Phase 1 owner contract explicitly excludes People components
+and `src/styles/people.css`; it is unchanged. Therefore the row-order repair
+retains the artifact's exact `a805566f` Phase 1 fingerprint. All 18 genuine
+Phase 1 PNGs in this artifact are byte-identical to the previously reviewed
+and approved `17dd7dc1` artifact. Comparison with the independently approved
+fresh Search captures also proves identical dimensions and every pixel outside
+the previously approved Registry footer heading (75 by 8 pixels on desktop,
+76 by 8 pixels on mobile). The reviewer explicitly approved this bounded
+Phase 1 subset import. All 18 PNGs and the original manifest are copied
+byte-for-byte, retaining their build receipt and hashes. This subset approval
+does not approve the failed Lighthouse run or the rejected People ordering.
+
+The five footer captures and three generated OG cards also remain byte-identical
+to their approved `17dd7dc1` versions. All 13 OG renderer input hashes still
+match, and the capture leaves all 941 production OG files unchanged. Fresh
+Browser Evidence on the corrected People source, personal image review and
+an entirely green final Site Check remain required before release.
+
+Final local verification of the row-order repair and genuine Phase 1 import
+passes: Node 22 build/postbuild, canonical footer, consumer boundary, People
+and dist validation, schema, unchanged bundle budgets and engine isolation.
+Astro checks 918 files with zero errors, zero warnings and 10 existing hints.
+The full suite runs after the completed build and passes all 3,461 tests in
+354 files, including the restored Phase 1 receipt guard. Logs are
+`footer-order-build.log`, `footer-order-check.log` and `footer-order-test.log`.
+The build and imported manifest agree on the unchanged `a805566f` fingerprint.
+
+Final integration includes the actual published Search receipt head
+`1cb17bfa4bfa053d854882504dcaadfff523fa61`, which already carries Widget main
+`788661951d63f0a79c90cb6494dacae8a355ca25`. Only the upstream Search acceptance
+record is added to the locally verified tree. The 13 conflicting Phase 1 paths
+are resolved to this wave's exact approved Footer capture bytes and manifest;
+all 19 receipt files match the original artifact. Production and test source,
+the completed build output and the `a805566f` fingerprint remain unchanged.

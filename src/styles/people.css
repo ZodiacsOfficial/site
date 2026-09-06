@@ -595,7 +595,6 @@
 
   .person-identity__name {
     grid-column: 1 / -1;
-    grid-row: 3;
     min-inline-size: 0;
     align-self: center;
   }

@@ -94,6 +94,14 @@ async function peopleFit(page, selector) {
 async function peopleHeadingGeometry(page) {
   return page.locator('.person-identity h1').evaluate((heading) => {
     const bounds = heading.getBoundingClientRect();
+    const identity = heading.closest('.person-identity');
+    const readingOrder = ['.person-identity__name', '.person-identity__description', '.person-identity__meta', '.person-quality']
+      .map((selector) => {
+        const { top, bottom, height } = identity.querySelector(selector).getBoundingClientRect();
+        return { selector, top, bottom, height };
+      });
+    const readingOrderPass = readingOrder.every((box, index) => box.height > 0
+      && (index === 0 || box.top >= readingOrder[index - 1].bottom - 1));
     const words = [];
     const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
     for (let node = walker.nextNode(); node; node = walker.nextNode()) {
@@ -117,8 +125,8 @@ async function peopleHeadingGeometry(page) {
       fontSize: getComputedStyle(heading).fontSize,
       heading: { left: bounds.left, right: bounds.right, width: bounds.width },
       viewport: innerWidth, documentWidth: document.documentElement.scrollWidth,
-      words,
-      pass: words.length > 0 && words.every((word) => word.intact && word.fits)
+      words, readingOrder, readingOrderPass,
+      pass: readingOrderPass && words.length > 0 && words.every((word) => word.intact && word.fits)
         && heading.scrollWidth <= heading.clientWidth + 1
         && document.documentElement.scrollWidth <= innerWidth + 1,
     };
@@ -213,6 +221,8 @@ try {
         profileGeometry.push({ slug, width, ...geometry });
         check(`People profile ${width}: ${name} preserves whole name parts within the heading`,
           geometry.pass, JSON.stringify(geometry));
+        check(`People profile ${width}: ${name} displays name, identity, birth metadata and quality in order`,
+          geometry.readingOrderPass, JSON.stringify(geometry.readingOrder));
         check(`People profile ${width}: ${name} reading and chart fit`,
           await peopleFit(personPage, '.person-reading')
           && await peopleFit(personPage, '.person-wheel'));
