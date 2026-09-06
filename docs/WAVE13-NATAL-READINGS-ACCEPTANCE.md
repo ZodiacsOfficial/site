@@ -54,3 +54,58 @@ The failed full run is retained. Standard full CI remains mandatory.
 The candidate integrates actual main `8166a051cbb4846bbe0d495cee283014d2efdc9b`.
 Its two scheduled commits update 18 Registry files outside this packet. They
 are inherited unchanged; the six-catalog allowance is pinned to actual main.
+
+The integrated Node 22 build and check pass. The complete unit suite with one
+worker reports 3,467 passes and only the stale Phase 1 receipt failure across
+354 files. No assertion or timeout changed. Initial Site Check run
+34023972489 independently reports the same sole unit failure with its normal
+worker configuration; all thirteen supporting jobs pass. These are incomplete
+acceptance runs until genuine reviewed evidence is committed and final CI passes.
+
+The READY preview deployment `dpl_HrDxWLpTVGBungzTupSQ9FLu8vNz` identifies
+remote head `2eee068c93b45c051a5c8f38c7e6e9d3f504370a`. A separate desktop
+browser check entered the historical Coyoacán fixture through the normal form.
+The loading announcement resolved into the reading controls. Sun–Neptune and
+Venus–Pluto display distinct prose; selecting Sun–Neptune updates the wheel,
+native selector, Inspector and status together. The Inspector and aspect-card
+layout were visually inspected at 1,363px, without horizontal overflow. This
+preview smoke does not replace the required mobile captures or final CI.
+
+## Initial browser comparison
+
+Run 34023972500, attempt 1, artifact 9986708374: 90,555,563 bytes; SHA-256
+`aa4e17f5c127ddc9c4ae1b38e0add69b2877106c3781523488b714ba9a6d3d3c`.
+All 357 ZIP members pass CRC and all 356 declared provenance hashes match.
+Head, base and source fingerprint match this packet. All 78 Lighthouse reports
+and their recorded trace/DevTools files are retained. Every route passes:
+minimum performance 97, all raw CLS values zero, maximum TBT 20 ms, maximum
+LCP 2,486.24415 ms (thesis). The eighteen Phase 1 images are byte-identical to
+the committed images; the fresh receipt validates this source.
+
+Twelve visual cases pass. The three Kahlo result captures change height:
+desktop 8,882 to 8,887 pixels; mobile 13,332 to 13,414 pixels. Personal review
+of full layouts and reading-detail crops accepts the compact orientation,
+distinct pair prose, readable cards and controls. The mobile form and existing
+Big Three content remain pixel-identical apart from small fixed-navigation
+and Guide animation differences that were inspected. Exact-head candidate
+capture run 34025123502 was requested only after this review.
+
+The Explorer run passes natal module loading, selected Inspector restoration
+and failure recovery, then stops at the existing widget helper's chart/script
+preview URL wait (tests/widgets-drive.mjs:44). Its cause is unconfirmed. The
+same settings sequence works in the desktop deployment preview, but that does
+not clear the failed CI run. Preserve the failure and require a complete
+successful Explorer run on the final candidate before release.
+
+## Reviewed evidence import
+
+Candidate run 34025123502 passes its capture and receipt gates. Artifact
+9986863657 is 26,351,861 bytes, SHA-256
+`7fa1ba326a68df77525d0ecc80eea0c20f71df66e43c6b72f496a33b88bf80c2`;
+all 36 CRCs and 35 provenance hashes verify. Head/base/source match the reviewed
+comparison. Each of the three candidate Kahlo images is pixel-identical to its
+personally reviewed comparison actual. Only these three baselines and the
+unchanged-image Phase 1 manifest are imported. All other baseline bytes remain
+unchanged. The candidate job intentionally skips Lighthouse and Explorer; the
+initial failed Explorer result is not reclassified. Final complete CI and
+Explorer acceptance remain required before merge.
