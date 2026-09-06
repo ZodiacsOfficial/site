@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { editorialDates } from '../../../lib/editorial-metadata.mjs';
 import Base from '../../../layouts/Base.astro';
 import AspectGlyph from '../../../components/AspectGlyph';
 import { ASPECTS } from '../../../lib/engine/aspects';
@@ -24,6 +25,7 @@ const aspects = ASPECT_ORDER.map((type) => {
 const jsonLd = [
   {
     '@type': 'CollectionPage',
+    ...editorialDates('/learn/aspects/'),
     name: 'Aspects in astrology',
     url: 'https://zodiacs.org/learn/aspects/',
     description: 'The five major aspects explained: conjunction, sextile, square, trine, and opposition — what each angle means in a birth chart.',
@@ -41,7 +43,8 @@ const jsonLd = [
 ];
 ---
 <Base
-  type="article"
+  type="website"
+  editorialLine
   title="Aspects in Astrology — Conjunction, Square, Trine & More | Zodiacs.org"
   description="The five major aspects of a birth chart explained plainly: conjunction, sextile, square, trine, and opposition — what each angle between planets means."
   path="/learn/aspects/"

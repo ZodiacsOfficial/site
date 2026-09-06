@@ -21,6 +21,8 @@ import { AspectGrid, formatRelationshipCopy, RelationshipContactPoint } from './
 import { CompositePanel } from './CompositePanel';
 import {
   buildCompositeTabData,
+  compositeDataKey,
+  compositeSelection,
   buildRelationshipGrid,
   relationshipContactId,
   type RelationshipContact,
@@ -221,6 +223,7 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
   const [flipped, setFlipped] = useState(false);
   // Canonical focus ids are always chart-A-first and live above every tab.
   const [sel, setSel] = useState<string | null>(null);
+  const [compositeFocus, setCompositeFocus] = useState<{ source: string; id: string } | null>(null);
   const compositeTracked = useRef(false);
 
   useEffect(() => {
@@ -239,7 +242,13 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
   const outer = flipped ? a : b;
   const canonicalId = (aspect: InterAspect) => `${aspect.a}-${aspect.type}-${aspect.b}`;
   const grid = useMemo(() => buildRelationshipGrid(a, b), [a, b]);
-  const composite = useMemo(() => buildCompositeTabData(a.bodies, b.bodies), [a.bodies, b.bodies]);
+  const composite = useMemo(() => buildCompositeTabData(a.bodies, b.bodies, {
+    aTimeKnown: a.timeKnown, bTimeKnown: b.timeKnown,
+  }), [a.bodies, b.bodies, a.timeKnown, b.timeKnown]);
+  const compositeSource = JSON.stringify([a.label, a.bodies, a.timeKnown, b.label, b.bodies, b.timeKnown, compositeDataKey(composite)]);
+  useEffect(() => setCompositeFocus(null), [compositeSource]);
+  const compositeSelected = compositeFocus?.source === compositeSource
+    && compositeSelection(composite, compositeFocus.id) ? compositeFocus.id : null;
   const mercuryA = a.bodies.find((point) => point.body === 'Mercury');
   const mercuryB = b.bodies.find((point) => point.body === 'Mercury');
   const mercurySignA = mercuryA ? signForLongitude(mercuryA.lon) : null;
@@ -589,7 +598,10 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
           class="rwheel__panel"
           data-relationship-panel="composite"
         >
-          <CompositePanel locale={locale} data={composite} />
+          <CompositePanel locale={locale} data={composite} sourceKey={compositeSource}
+            sourceTimesKnown={a.timeKnown && b.timeKnown}
+            selectedId={compositeSelected}
+            onSelect={(id) => setCompositeFocus(id ? { source: compositeSource, id } : null)} />
         </section>
       )}
 

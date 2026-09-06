@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { editorialDates } from '../src/lib/editorial-metadata.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (path) => readFile(resolve(root, path), 'utf8');
@@ -164,9 +165,14 @@ describe('technical audit remediation contracts', () => {
       expect(page).toContain('dateModified: modifiedAt');
     }
     expect(about).toContain("dateModified: '2026-08-29T00:00:00.000Z'");
-    for (const page of [learn, houses]) {
-      expect(page).toContain("dateModified: '2026-08-23T00:00:00.000Z'");
+    for (const [page, path, modified] of [
+      [learn, '/learn/', '2026-09-05T00:00:00.000Z'],
+      [houses, '/learn/houses/', '2026-08-23T00:00:00.000Z'],
+    ]) {
+      expect(page).toContain(`...editorialDates('${path}')`);
+      expect(editorialDates(path)).toEqual({ dateModified: modified });
     }
+    expect(sitemap).toContain('EDITORIAL_METADATA[loc]?.modified');
     expect(glossary).toContain("const PAGE_DATE = '2026-08-23'");
     expect(thesis).toContain('property="article:modified_time" content="2026-09-05"');
     expect(thesis).toContain('"dateModified": "2026-09-05"');

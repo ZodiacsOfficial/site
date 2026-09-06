@@ -76,4 +76,17 @@ const daysWord = daysLeft === 1 ? 'day' : 'days';
     white-space: nowrap;
   }
   .race-ramp__link:hover { color: var(--text); }
+  @media (max-width: 560px) {
+    .race-ramp__link {
+      /* Keep the tap target clear of the fixed 48px Guide launcher. */
+      --launcher-clearance: max(36px, calc(24px + env(safe-area-inset-right, 0px)));
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      max-inline-size: calc(100% - var(--launcher-clearance));
+      margin-inline-start: 0;
+      margin-inline-end: var(--launcher-clearance);
+      white-space: normal;
+    }
+  }
 </style>

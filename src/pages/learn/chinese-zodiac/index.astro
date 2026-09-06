@@ -1,4 +1,5 @@
 ---
+import { editorialDates } from '../../../lib/editorial-metadata.mjs';
 import Base from '../../../layouts/Base.astro';
 import ChineseZodiacBrandRail from '../../../components/ChineseZodiacBrandRail.astro';
 import {
@@ -19,6 +20,7 @@ const sources = [
 const jsonLd = [
   {
     '@type': 'Article',
+    ...editorialDates('/learn/chinese-zodiac/'),
     headline: CHINESE_ZODIAC_COPY.hubTitle,
     description: CHINESE_ZODIAC_COPY.hubIntro,
     url: 'https://zodiacs.org/learn/chinese-zodiac/',

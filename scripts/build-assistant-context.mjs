@@ -34,6 +34,7 @@ export const TOOL_ROUTES = Object.freeze([
   '/compatibility/',
   '/eclipses/',
   '/full-moon-calendar/',
+  '/lunar-return/',
   '/mercury-retrograde/',
   '/moon-phase/',
   '/moon-sign/',

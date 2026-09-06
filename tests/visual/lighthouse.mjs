@@ -18,6 +18,7 @@ const routes = [
   // budgets, so the flagship funnel blocks merges exactly like /ru/ does.
   { name: 'home', path: '/' },
   { name: 'birth-chart', path: '/birth-chart/' },
+  { name: 'lunar-return', path: '/lunar-return/' },
   { name: 'aries', path: '/aries/' },
   { name: 'thesis', path: '/thesis/' },
   { name: 'today', path: '/today/' },

@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { computeBodies } from './full';
+import independentCases from './fixtures/swiss-eight-cases.fixture.json';
+import independentPolicy from './fixtures/swiss-eight-cases-policy.json';
+import { expectIndependentPositions } from './fixtures/independent-validation.test-helpers';
 import {
   PROGRESSION_DAYS_PER_YEAR,
   progressedBodies,
@@ -14,6 +17,17 @@ function eastwardDistance(from: number, to: number): number {
 }
 
 describe('secondary progressions', () => {
+  it('maps a nonzero tropical year onto independently sourced JPL positions', () => {
+    // Constructed convention-and-ephemeris component case, not a published
+    // progression report. Its expected time and JPL longitudes are literal.
+    const input = independentPolicy.progression;
+    const birth = new Date(input.birthUTC);
+    const target = new Date(input.targetUTC);
+    expect(Math.abs(progressedInstant(birth, target).getTime() - Date.parse(input.expectedProgressedUTC)))
+      .toBeLessThanOrEqual(input.maximumInstantErrorMilliseconds);
+    expectIndependentPositions(progressedBodies(birth, target), independentCases.progression.positions);
+  });
+
   it('maps elapsed tropical years to civil days and delegates planetary positions', () => {
     const target = new Date('2026-07-06T00:00:00Z');
     const progressed = progressedInstant(KAHLO_BIRTH, target);

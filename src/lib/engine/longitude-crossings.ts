@@ -41,8 +41,13 @@ export function findLongitudeCrossingsWith(
     const date = new Date(t);
     const cur = delta(targetLon, bodyLongitude(body, date));
 
-    // Sign change without the ±180 wrap (opposite side of the zodiac).
-    if (Math.sign(cur) !== Math.sign(prev) && Math.abs(cur) < 90 && Math.abs(prev) < 90) {
+    // An exact sampled endpoint belongs to this interval once. Skipping a
+    // zero previous sample also keeps the lower bound of (from, to] excluded.
+    // Retain the ±180-wrap guard (opposite side of the zodiac).
+    if (cur === 0 && prev !== 0 && Math.abs(prev) < 90) {
+      out.push({ at: date, retrograde: prev > 0 });
+    } else if (prev !== 0 && cur !== 0 && Math.sign(cur) !== Math.sign(prev)
+      && Math.abs(cur) < 90 && Math.abs(prev) < 90) {
       let lo = prevT;
       let hi = t;
       const rising = cur > prev;

@@ -11,6 +11,7 @@ export interface PublishedEventDescriptor {
   signs: string[];
   summary: string;
   lastModified: string;
+  publishedAt?: string;
   card?: string;
 }
 

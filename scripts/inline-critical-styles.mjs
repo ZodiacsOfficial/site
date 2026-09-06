@@ -57,6 +57,8 @@ const targetPaths = [
   // delay the poster while the settled page keeps its reviewed appearance.
   'index.html',
   'birth-chart/index.html',
+  // The lunar-return hero missed LCP with two blocking stylesheet requests.
+  'lunar-return/index.html',
   'today/index.html',
   ...signs.map((sign) => `horoscopes/${sign}/index.html`),
   'ru/index.html',
@@ -395,9 +397,9 @@ async function main() {
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 17 || stylesheets !== 32) {
+  if (pages + alreadyInlined !== 18 || stylesheets !== 34) {
     throw new Error(
-      `inline-critical-styles: expected 17 pages / 32 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 18 pages / 34 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0

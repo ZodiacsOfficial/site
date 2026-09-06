@@ -4,6 +4,9 @@ import { BirthFields } from './BirthFields';
 import PlaceSearch from './PlaceSearch';
 import { useProfile } from '../lib/hooks/useProfile';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
+import { loadProfile } from '../lib/profile/read-store';
+import type { Profile } from '../lib/profile/schema';
+import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
 import type { City } from '../lib/geo/search';
 import type { SolarReturnResultData } from './solar-return/compute';
 import type { SolarReturnResultProps } from './solar-return/SolarReturnResult';
@@ -12,6 +15,19 @@ import { loadModule } from '../lib/module-load';
 import CalculationReload, { calculationError } from './CalculationReload';
 
 type ResultComponent = ComponentType<SolarReturnResultProps>;
+
+function profileInputKey(profile: Profile, source: 'saved' | 'manual', savedId: string): string {
+  if (source === 'manual') return JSON.stringify(profile.settings.houseSystem);
+  const selected = profile.charts.find((chart) => chart.id === savedId);
+  if (!selected) return 'missing';
+  const { date, time, timeKnown, place } = selected.birth;
+  return JSON.stringify({
+    date, time, timeKnown,
+    place: place ? { lat: place.lat, lon: place.lon, tz: place.tz } : null,
+    houseSystem: selected.summary.houseSystem,
+    savedSun: !place ? selected.summary.bodies.find((body) => body.body === 'Sun')?.lon : null,
+  });
+}
 
 export default function SolarReturnCalculator() {
   const { profile, ready: profileReady } = useProfile();
@@ -25,7 +41,7 @@ export default function SolarReturnCalculator() {
   const [castCity, setCastCity] = useState<City | null>(null);
   const [yearMode, setYearMode] = useState<'current' | 'custom'>('current');
   const [customYear, setCustomYear] = useState(String(new Date().getFullYear()));
-  const [result, setResult] = useState<SolarReturnResultData | null>(null);
+  const [result, setResult] = useState<{ data: SolarReturnResultData; revision: number } | null>(null);
   const [ResultView, setResultView] = useState<ResultComponent | null>(null);
   const [WheelView, setWheelView] = useState<ComponentType<WheelProps> | null>(null);
   const [busy, setBusy] = useState(false);
@@ -34,26 +50,60 @@ export default function SolarReturnCalculator() {
   const initialized = useRef(false);
   const mounted = useRef(true);
   const inFlight = useRef(false);
+  const revision = useRef(0);
+  const selection = useRef({ source, savedId, inputKey: profileInputKey(profile, source, savedId) });
+  selection.current = { source, savedId, inputKey: profileInputKey(profile, source, savedId) };
+
+  function cancelRequest() {
+    revision.current += 1;
+    inFlight.current = false;
+    setBusy(false);
+  }
+
+  function invalidateResult() {
+    cancelRequest();
+    setResult(null);
+    setError('');
+  }
+
   const profileAccessGeneration = useProfileAccessGeneration(() => {
+    cancelRequest();
     setResult(null);
     setResultView(null);
     setWheelView(null);
     setSource('manual');
     setSavedId('');
-    setBusy(false);
     setError('');
   });
 
   useEffect(() => {
     mounted.current = true;
-    const onAccess = () => {
-      inFlight.current = false;
-      setBusy(false);
+    const onProfile = () => {
+      if (!profileAccessAllowed()) return;
+      const latest = loadProfile();
+      const current = selection.current;
+      const nextKey = profileInputKey(latest, current.source, current.savedId);
+      if (nextKey === current.inputKey) return;
+      current.inputKey = nextKey;
+      invalidateResult();
+      if (current.source === 'saved' && nextKey === 'missing') {
+        setSource('manual');
+        setSavedId('');
+        setDifferentPlace(false);
+        setCastCity(null);
+      }
     };
+    const onAccess = () => {
+      cancelRequest();
+      onProfile();
+    };
+    window.addEventListener('zodiacs:profile', onProfile);
     window.addEventListener('zodiacs:profile-access', onAccess);
     return () => {
       mounted.current = false;
+      revision.current += 1;
       inFlight.current = false;
+      window.removeEventListener('zodiacs:profile', onProfile);
       window.removeEventListener('zodiacs:profile-access', onAccess);
     };
   }, []);
@@ -77,11 +127,31 @@ export default function SolarReturnCalculator() {
   async function calculate(event: Event) {
     event.preventDefault();
     if (!mounted.current || !ready || inFlight.current) return;
+    const selected = source === 'saved' ? saved : null;
+    const birthplace = selected ? selected.birth.place : city;
+    const known = selected ? selected.birth.timeKnown && Boolean(selected.birth.time) : timeKnown;
+    if (differentPlace && known && birthplace && !castCity) return;
+    const input = {
+      birthDate: selected?.birth.date ?? date,
+      birthTime: selected?.birth.time ?? (time || null),
+      timeKnown: known,
+      birthplace: birthplace ? { ...birthplace } : null,
+      savedSunLon: selected && !birthplace
+        ? selected.summary.bodies.find((body) => body.body === 'Sun')?.lon ?? null
+        : null,
+      houseSystem: selected?.summary.houseSystem ?? profile.settings.houseSystem,
+      castLocation: selected && !birthplace ? null : (differentPlace ? castCity : birthplace),
+      year: yearMode === 'current' ? 'current' as const : Number(customYear),
+    };
+    if (input.castLocation) input.castLocation = { ...input.castLocation };
+    const request = ++revision.current;
     inFlight.current = true;
+    setResult(null);
     setBusy(true);
     setError('');
     const accessGeneration = profileAccessGeneration.current;
-    const isCurrent = () => mounted.current && accessGeneration === profileAccessGeneration.current;
+    const isCurrent = () => mounted.current && request === revision.current
+      && accessGeneration === profileAccessGeneration.current;
     try {
       const [{ computeSolarReturn }, view, wheel] = await loadModule(() => Promise.all([
         import('./solar-return/compute'),
@@ -89,26 +159,11 @@ export default function SolarReturnCalculator() {
         import('./transit/TransitRing'),
       ]));
       if (!isCurrent()) return;
-      const selected = source === 'saved' ? saved : null;
-      const birthplace = selected ? selected.birth.place : city;
-      const savedSun = selected && !selected.birth.place
-        ? selected.summary.bodies.find((body) => body.body === 'Sun')?.lon ?? null
-        : null;
-      const known = selected ? selected.birth.timeKnown && Boolean(selected.birth.time) : timeKnown;
-      const resultData = computeSolarReturn({
-        birthDate: selected?.birth.date ?? date,
-        birthTime: selected?.birth.time ?? (time || null),
-        timeKnown: known,
-        birthplace,
-        savedSunLon: savedSun,
-        houseSystem: selected?.summary.houseSystem ?? profile.settings.houseSystem,
-        castLocation: selected && !selected.birth.place ? null : (differentPlace ? castCity : birthplace),
-        year: yearMode === 'current' ? 'current' : Number(customYear),
-      });
+      const resultData = computeSolarReturn(input);
       if (!isCurrent()) return;
       setResultView(() => view.SolarReturnResult);
       setWheelView(() => wheel.StaticWheel);
-      setResult(resultData);
+      setResult({ data: resultData, revision: request });
     } catch (cause) {
       if (!isCurrent()) return;
       console.error(cause);
@@ -129,6 +184,7 @@ export default function SolarReturnCalculator() {
             <div class="field sr-form__source">
               <label class="field__label" for="sr-source">Chart</label>
               <select id="sr-source" class="field__input" value={source === 'saved' ? savedId : ''} onChange={(event) => {
+                invalidateResult();
                 const value = (event.target as HTMLSelectElement).value;
                 setSource(value ? 'saved' : 'manual');
                 setSavedId(value);
@@ -146,7 +202,10 @@ export default function SolarReturnCalculator() {
               <BirthFields
                 locale="en" dateId="sr-date" timeId="sr-time" placeId="sr-place"
                 date={date} time={time} timeKnown={timeKnown} city={city}
-                onDateChange={setDate} onTimeChange={setTime} onTimeKnownChange={(known) => { setTimeKnown(known); if (!known) { setDifferentPlace(false); setCastCity(null); } }} onCityChange={setCity}
+                onDateChange={(value) => { invalidateResult(); setDate(value); }}
+                onTimeChange={(value) => { invalidateResult(); setTime(value); }}
+                onTimeKnownChange={(known) => { invalidateResult(); setTimeKnown(known); if (!known) { setDifferentPlace(false); setCastCity(null); } }}
+                onCityChange={(value) => { invalidateResult(); setCity(value); }}
                 requireKnownTime
                 timeHelp="Unknown time uses a noon chart and suppresses houses."
                 placeHelp="A birthplace is required so the birth date can be resolved in its timezone."
@@ -159,33 +218,34 @@ export default function SolarReturnCalculator() {
           <div class="calc__fields sr-form__options">
             <div class="field">
               <label class="field__label" for="sr-year-mode">Return year</label>
-              <select id="sr-year-mode" class="field__input" value={yearMode} onChange={(event) => setYearMode((event.target as HTMLSelectElement).value as 'current' | 'custom')}>
+              <select id="sr-year-mode" class="field__input" value={yearMode} onChange={(event) => { invalidateResult(); setYearMode((event.target as HTMLSelectElement).value as 'current' | 'custom'); }}>
                 <option value="current">Current return</option>
                 <option value="custom">Choose a year</option>
               </select>
-              {yearMode === 'custom' && <input aria-label="Custom return year" class="field__input" type="number" min="1800" max="2200" required value={customYear} onInput={(event) => setCustomYear((event.target as HTMLInputElement).value)} />}
+              {yearMode === 'custom' && <input aria-label="Custom return year" class="field__input" type="number" min="1800" max="2200" required value={customYear} onInput={(event) => { invalidateResult(); setCustomYear((event.target as HTMLInputElement).value); }} />}
             </div>
 
             {effectiveTimeKnown && !(saved && !saved.birth.place) && (
               <div class="field">
                 <label class="field__toggle sr-form__toggle"><input type="checkbox" checked={differentPlace} onChange={(event) => {
+                  invalidateResult();
                   const checked = (event.target as HTMLInputElement).checked;
                   setDifferentPlace(checked);
                   setCastCity(null);
                 }} />Cast for a different place</label>
-                {differentPlace && <><label class="field__label" for="sr-cast-place">Return location</label><PlaceSearch id="sr-cast-place" selected={castCity} onSelect={setCastCity} locale="en" /></>}
+                {differentPlace && <><label class="field__label" for="sr-cast-place">Return location</label><PlaceSearch id="sr-cast-place" selected={castCity} onSelect={(value) => { invalidateResult(); setCastCity(value); }} locale="en" /></>}
                 <p class="field__help">Defaults to the birthplace. Relocation changes angles and houses, not planets.</p>
               </div>
             )}
           </div>
 
-          <button class="btn btn--primary calc__submit" type="submit" disabled={!ready || busy || (differentPlace && !(saved && !saved.birth.place) && !castCity)}><span>{busy ? 'Computing…' : 'Cast solar return'}</span><span class="orb">↗</span></button>
+          <button class="btn btn--primary calc__submit" type="submit" disabled={!ready || busy || (differentPlace && effectiveTimeKnown && !(saved && !saved.birth.place) && !castCity)}><span>{busy ? 'Computing…' : 'Cast solar return'}</span><span class="orb" aria-hidden="true">↗</span></button>
           <p class="calc__privacy"><strong>Private by default.</strong> The chart is calculated on this device; nothing is uploaded.</p>
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
           <CalculationReload error={error} locale="en" />
         </div>
       </form>
-      {result && ResultView && WheelView && <ResultView key={result.chart.input.utc.toISOString()} result={result} Wheel={WheelView} />}
+      {result && ResultView && WheelView && <ResultView key={result.revision} result={result.data} Wheel={WheelView} />}
     </div>
   );
 }

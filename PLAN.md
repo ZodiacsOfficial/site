@@ -2,6 +2,18 @@
 
 Last updated: 2026-08-18
 
+September 6 delivery coordination: the owner's instruction to manage the two
+website sessions and finish the approved advanced work is implemented through
+one cumulative release candidate containing Waves 15–23, personal-chart
+continuity PR 393 and the bounded mobile RaceRamp correction from PR 380,
+after released Wave 14. This
+deliberately replaces the audit's one-wave-per-PR delivery sequence for these
+prepared changes only. It does not change the phase definitions, feature
+acceptance criteria, independent review roles, budgets or required workflows.
+Wave 24 remains excluded behind its unresolved independent conditioning gate.
+The exact integration, evidence limits and release checklist are recorded in
+`docs/ADVANCED-INTEGRATION-ACCEPTANCE.md`; this entry is not a release claim.
+
 Active delivery: **Phase 7 — Living Chart. Personalized horoscopes
 and Living Chart form one forecast → moment → history loop. Public sign
 horoscopes remain acquisition surfaces, `/today/` becomes the personal

@@ -30,6 +30,7 @@ const TOOL_ROOTS = new Set([
   'eclipses',
   'full-moon-calendar',
   'mercury-retrograde',
+  'lunar-return',
   'moon-phase',
   'moon-sign',
   'profile',

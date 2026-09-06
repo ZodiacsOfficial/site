@@ -22,9 +22,9 @@ describe("export-image brand coverage", () => {
     expect(source).not.toMatch(/ZODIACS\s*·\s*ORG/);
   });
 
-  it("brands all six portrait chart variants plus the technical sheet", () => {
+  it("brands all six natal portrait variants, the solar return and the technical sheet", () => {
     const source = libSource("share-card.ts");
-    expect(source.match(/await drawPortraitShareBrand\(ctx\);/g)).toHaveLength(6);
+    expect(source.match(/await drawPortraitShareBrand\(ctx\);/g)).toHaveLength(7);
     expect(source).toContain("drawShareBrandLockup(ctx, brandIcon");
     expect(source).toContain("withShareBrandIcon");
   });

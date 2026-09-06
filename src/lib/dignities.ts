@@ -53,3 +53,15 @@ export function dignityFor(planet: string, signSlug: string): Dignity | null {
 export function hasClassicalDignities(planet: string): boolean {
   return planet in TABLE;
 }
+
+/** All four-table labels, without changing the legacy single-label contract. */
+export function dignitiesFor(planet: string, signSlug: string): readonly Dignity[] {
+  if (!Object.hasOwn(TABLE, planet)) return [];
+  const row = TABLE[planet];
+  const result: Dignity[] = [];
+  if (row.domicile.includes(signSlug)) result.push('domicile');
+  if (row.exaltation === signSlug) result.push('exaltation');
+  if (row.detriment.includes(signSlug)) result.push('detriment');
+  if (row.fall === signSlug) result.push('fall');
+  return result;
+}

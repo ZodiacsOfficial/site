@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { editorialDates } from '../../../lib/editorial-metadata.mjs';
 import Base from '../../../layouts/Base.astro';
 import { SIGNS } from '../../../lib/signs';
 import '../../../styles/cluster.css';
@@ -23,10 +24,10 @@ const houses = Array.from({ length: 12 }, (_, i) => {
 const jsonLd = [
   {
     '@type': 'CollectionPage',
+    ...editorialDates('/learn/houses/'),
     name: 'The twelve houses in astrology',
     url: 'https://zodiacs.org/learn/houses/',
     description: 'What the twelve houses of a birth chart mean, from self to solitude — each explained plainly.',
-    dateModified: '2026-08-23T00:00:00.000Z',
   },
   {
     '@type': 'ItemList',
@@ -41,7 +42,8 @@ const jsonLd = [
 ];
 ---
 <Base
-  type="article"
+  type="website"
+  editorialLine
   title="The 12 Houses in Astrology — What Each One Means | Zodiacs.org"
   description="The twelve houses of a birth chart explained plainly: money, home, work, partnership, career, and the rest of life's floor plan — house by house."
   path="/learn/houses/"

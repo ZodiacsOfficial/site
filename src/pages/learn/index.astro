@@ -1,4 +1,5 @@
 ---
+import { editorialDates } from '../../lib/editorial-metadata.mjs';
 import Base from '../../layouts/Base.astro';
 import AskGuideLine from '../../components/AskGuideLine.astro';
 import SignIcon from '../../components/SignIcon.astro';
@@ -10,10 +11,10 @@ import { GLOSSARY } from '../../data/glossary';
 const jsonLd = [
   {
     '@type': 'CollectionPage',
+    ...editorialDates('/learn/'),
     name: 'Learn astrology',
     url: 'https://zodiacs.org/learn/',
     description: 'Zodiac sign guides, the big three, and the full table of zodiac dates, elements, and rulers.',
-    dateModified: '2026-08-23T00:00:00.000Z',
   },
   {
     '@type': 'ItemList',
@@ -30,7 +31,8 @@ const jsonLd = [
 ---
 <Base
   clientUi
-  type="article"
+  type="website"
+  editorialLine
   title="Learn Astrology — Zodiac Signs, Dates & the Big Three | Zodiacs.org"
   description="All 12 zodiac sign guides, the sun–moon–rising big three explained, and the full table of zodiac dates, elements, and rulers."
   path="/learn/"

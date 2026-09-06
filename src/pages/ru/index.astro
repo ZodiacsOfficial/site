@@ -305,7 +305,9 @@ const jsonLd = [
     </svg>
   </section>
 
-  <WelcomeBack client:visible locale="ru" />
+  <!-- The empty SSR island still hydrates automatically, 600ms after load,
+       while its profile modules leave the poster's first paint clear. -->
+  <WelcomeBack client:interaction locale="ru" />
 
   <section class="container ticker-band reveal">
     <SkyTicker client:visible locale="ru" />

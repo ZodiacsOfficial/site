@@ -1,7 +1,9 @@
-import { useEffect, useMemo, useState } from 'preact/hooks';
-
-const STORAGE_KEY = 'zodiacs:learning-path:v2';
-const LEGACY_STORAGE_KEY = 'zodiacs:learning-path:v1';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { activeLearningStep, PAGE_ONLY_COPY, type StepId } from '../lib/learning-progress';
+import { useLearningProgress } from '../lib/use-learning-progress';
+import './LearningPractice.css';
+export { activeLearningStep, normalizeLearningProgress, normalizeLearningState, updateLearningProgress } from '../lib/learning-progress';
+export type { StepId, LearningProgress, LearningStepCue } from '../lib/learning-progress';
 
 const STEPS = [
   {
@@ -56,67 +58,6 @@ const STEPS = [
   },
 ] as const;
 
-export type StepId = (typeof STEPS)[number]['id'];
-export type LearningStepCue = 'Start here' | 'Up next';
-
-export function activeLearningStep(completed: readonly StepId[]): {
-  id: StepId;
-  cue: LearningStepCue;
-} | null {
-  const completedSet = new Set(completed);
-  const next = STEPS.find((step) => !completedSet.has(step.id));
-  if (!next) return null;
-  return { id: next.id, cue: completed.length === 0 ? 'Start here' : 'Up next' };
-}
-
-export function normalizeLearningProgress(value: unknown): StepId[] {
-  if (!Array.isArray(value)) return [];
-  const requested = new Set(value.filter((id): id is string => typeof id === 'string'));
-  return STEPS.map((step) => step.id).filter((id) => requested.has(id));
-}
-
-export interface LearningProgress {
-  started: StepId[];
-  completed: StepId[];
-}
-
-export function normalizeLearningState(value: unknown): LearningProgress {
-  // The old array recorded link opens as completion. Preserve those visits
-  // as started; they cannot establish that somebody read a lesson.
-  if (Array.isArray(value)) return { started: normalizeLearningProgress(value), completed: [] };
-  if (!value || typeof value !== 'object' || !('version' in value) || value.version !== 2) {
-    return { started: [], completed: [] };
-  }
-  const record = value as Record<string, unknown>;
-  const started = normalizeLearningProgress(record.started);
-  return {
-    started,
-    completed: normalizeLearningProgress(record.completed).filter((id) => started.includes(id)),
-  };
-}
-
-export function updateLearningProgress(
-  progress: LearningProgress,
-  action: 'start' | 'complete',
-  id: StepId,
-): LearningProgress {
-  if (action === 'start') {
-    return { ...progress, started: normalizeLearningProgress([...progress.started, id]) };
-  }
-  if (!progress.started.includes(id)) return progress;
-  return { ...progress, completed: normalizeLearningProgress([...progress.completed, id]) };
-}
-
-function readProgress(): LearningProgress {
-  try {
-    const value = JSON.parse(window.localStorage.getItem(STORAGE_KEY)
-      ?? window.localStorage.getItem(LEGACY_STORAGE_KEY) ?? 'null');
-    return normalizeLearningState(value);
-  } catch {
-    return { started: [], completed: [] };
-  }
-}
-
 function track(action: string) {
   (window as Window & {
     zodiacsAnalytics?: { track?: (name: string, properties: Record<string, string>) => void };
@@ -127,36 +68,26 @@ function track(action: string) {
 }
 
 export default function LearningPath() {
-  const [progress, setProgress] = useState<LearningProgress>({ started: [], completed: [] });
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setProgress(readProgress());
-    setReady(true);
-  }, []);
+  const { progress, ready, act } = useLearningProgress();
+  const [savedEntry, setSavedEntry] = useState<typeof import('./LearningSavedEntry') | null>(null);
+  const [entryError, setEntryError] = useState(false);
+  const [entryBusy, setEntryBusy] = useState(false);
+  const entryLoad = useRef(0);
+  const entryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { entryLoad.current += 1; if (entryTimer.current) clearTimeout(entryTimer.current); }, []);
+  const SavedEntry = savedEntry?.default;
 
   const { started, completed } = progress;
   const completedSet = useMemo(() => new Set(completed), [completed]);
   const startedSet = useMemo(() => new Set(started), [started]);
   const activeStep = useMemo(() => activeLearningStep(completed), [completed]);
 
-  function save(next: LearningProgress) {
-    setProgress(next);
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 2, ...next }));
-    } catch {
-      // Progress still works for this visit when storage is unavailable.
-    }
-  }
-
   function complete(id: StepId) {
-    if (completedSet.has(id)) return;
-    save(updateLearningProgress(progress, 'complete', id));
+    if (!completedSet.has(id)) void act({ type: 'complete', id });
   }
 
   function restart() {
-    save({ started: [], completed: [] });
-    track('restart');
+    void act({ type: 'restart' }).then((accepted) => { if (accepted) track('restart'); });
   }
 
   const count = completed.length;
@@ -171,7 +102,7 @@ export default function LearningPath() {
             <span class="mono--label">A guided reading</span>
             <h2 id="learning-path-title">Understand your chart, one step at a time.</h2>
             <p>Start with your personality, then explore repeating patterns, timing, and your horoscope. Follow the path or jump ahead — everything stays in plain English.</p>
-            <p class="learning-path__note">Check off each step yourself after reading and reflecting. Your progress stays on this device.</p>
+            <p class="learning-path__note">Check off each step yourself after reading and reflecting. {progress.pageOnly ? PAGE_ONLY_COPY : 'Your progress stays on this device.'}</p>
           </div>
           <div class="learning-path__progress" aria-live="polite">
             <span>{ready ? `${count} of ${STEPS.length} complete${inProgressCount ? ` · ${inProgressCount} started` : ''}` : `${STEPS.length} steps to explore`}</span>
@@ -188,6 +119,31 @@ export default function LearningPath() {
             </div>}
           </div>
         </header>
+
+        {ready && (SavedEntry ? <SavedEntry /> : <div class="learning-practice learning-practice--entry">
+          <h3>Learn with your chart</h3>
+          <p>Practice a placement, a house and an aspect with a chart saved on this device.</p>
+          <button type="button" class="btn btn--ghost" disabled={entryBusy} onClick={() => {
+            if (entryBusy) return;
+            const operation = ++entryLoad.current;
+            setEntryBusy(true); setEntryError(false);
+            entryTimer.current = setTimeout(() => {
+              if (operation !== entryLoad.current) return;
+              entryLoad.current += 1; setEntryBusy(false); setEntryError(true);
+            }, 15_000);
+            void import('./LearningSavedEntry').then((module) => {
+              if (operation !== entryLoad.current) return;
+              if (entryTimer.current) clearTimeout(entryTimer.current);
+              setSavedEntry(module); setEntryBusy(false);
+            }, () => {
+              if (operation !== entryLoad.current) return;
+              if (entryTimer.current) clearTimeout(entryTimer.current);
+              setEntryError(true); setEntryBusy(false);
+            });
+          }}>{entryBusy ? 'Opening saved charts…' : 'Choose a saved chart'}</button>
+          {entryError && <div role="alert"><p>Saved charts could not load. Reload this page to try again.</p>
+            <button type="button" class="btn btn--ghost" onClick={() => window.location.reload()}>Reload page</button></div>}
+        </div>)}
 
         {ready && allDone && (
           <div class="learning-path__complete" role="status">
@@ -225,7 +181,7 @@ export default function LearningPath() {
                   <p class="learning-step__why"><strong>Why it matters:</strong> {step.why}</p>
                   {ready && hasStarted && !done && (
                     <label class="learning-step__reflection">
-                      <input type="checkbox" onChange={() => complete(step.id)} />
+                      <input type="checkbox" checked={done} onChange={() => complete(step.id)} />
                       <span>{step.reflection}</span>
                     </label>
                   )}
@@ -237,9 +193,15 @@ export default function LearningPath() {
                   <a
                     class={`btn ${active ? 'btn--primary' : 'btn--ghost'} learning-step__action`}
                     href={step.href}
-                    onClick={() => {
-                      save(updateLearningProgress(progress, 'start', step.id));
-                      track(step.id);
+                    onClick={(event) => {
+                      if (event.button !== 0) return;
+                      const nativeNavigation = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+                      if (!nativeNavigation) event.preventDefault();
+                      void act({ type: 'start', id: step.id }).then((accepted) => {
+                        if (!accepted) return;
+                        track(step.id);
+                        if (!nativeNavigation) window.location.assign(step.href);
+                      });
                     }}
                   >
                     <span>{done ? 'Open again' : hasStarted ? 'Continue reading' : step.action}</span>

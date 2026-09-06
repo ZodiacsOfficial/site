@@ -22,6 +22,7 @@ import {
   type Modality,
 } from './signs';
 import type { Angles, AspectType, BodyName, BodyPosition, Chart } from './engine/types';
+import type { SolarReturnExportModel } from '../islands/solar-return/export-model';
 import { ASPECTS } from './engine/aspects';
 import { houseOf } from './engine/houses';
 import type { CatalogLocale as Locale } from './i18n';
@@ -112,7 +113,7 @@ async function drawPortraitShareBrand(
   });
 }
 
-async function wheelSvgString(chart: Chart, technical = false): Promise<string> {
+async function wheelSvgString(chart: Pick<Chart, 'bodies' | 'angles' | 'houses' | 'aspects'>, technical = false): Promise<string> {
   const host = document.createElement('div');
   render(technical
     ? h(TechnicalWheel, {
@@ -1369,6 +1370,78 @@ export interface PreparedChartCard {
   filename: string;
 }
 
+/** A return-specific image; it never passes through a natal card variant. */
+export async function prepareSolarReturnCard(model: SolarReturnExportModel): Promise<PreparedChartCard> {
+  const sans = '"Instrument Sans", system-ui, sans-serif';
+  await document.fonts.ready;
+  const faces = await Promise.all([
+    document.fonts.load(`500 58px ${SERIF}`),
+    document.fonts.load(`400 28px ${sans}`),
+    document.fonts.load(`400 22px ${MONO}`),
+  ]);
+  if (faces.some((loaded) => !loaded.length || loaded.some((face) => face.status !== 'loaded'))) {
+    throw new Error('return card fonts unavailable');
+  }
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('canvas unavailable');
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = HAIR;
+  ctx.strokeRect(28.5, 28.5, W - 57, H - 57);
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  const title = `${model.title} · ${model.returnYear}`;
+  const titlePx = fitText(ctx, title, W - 144, 58, 42, 500, SERIF);
+  ctx.font = `500 ${titlePx}px ${SERIF}`;
+  ctx.fillStyle = INK_0;
+  ctx.fillText(title, 72, 68);
+  ctx.font = `400 22px ${MONO}`;
+  ctx.fillStyle = INK_2;
+  ctx.fillText(`${model.instantUtc.slice(0, 19).replace('T', ' ')} UTC`, 72, 144);
+
+  const wheel = await loadSvg(await wheelSvgString(model.wheel));
+  ctx.drawImage(wheel, (W - 610) / 2, 192, 610, 610);
+  ctx.textAlign = 'center';
+  ctx.font = `400 20px ${MONO}`;
+  ctx.fillText(model.readingBasis.join(' · '), W / 2, 820, W - 144);
+  ctx.beginPath(); ctx.moveTo(72, 864); ctx.lineTo(W - 72, 864); ctx.stroke();
+  ctx.textAlign = 'left';
+
+  // Keep every authored line and uncertainty note. If future copy no longer
+  // fits, fail preparation rather than silently truncating its qualification.
+  const paragraphs = (texts: string[], y: number, height: number, startPx: number, minPx: number, color: string) => {
+    if (!texts.length) return;
+    for (let px = startPx; px >= minPx; px -= 1) {
+      ctx.font = `400 ${px}px ${sans}`;
+      const groups = texts.map((text) => wrappedLines(ctx, text, W - 144, 100));
+      const lineHeight = px + 8;
+      const needed = groups.reduce((sum, lines) => sum + lines.length * lineHeight, 0) + (groups.length - 1) * 12;
+      if (needed > height) continue;
+      ctx.fillStyle = color;
+      let cursor = y;
+      for (const lines of groups) {
+        for (const line of lines) { ctx.fillText(line, 72, cursor); cursor += lineHeight; }
+        cursor += 12;
+      }
+      return;
+    }
+    throw new Error('return card text exceeds its layout');
+  };
+  paragraphs(model.reading.map((reading) => reading.text), 892, 218, 28, 24, INK_0);
+  paragraphs(model.notes, 1130, 110, 22, 20, INK_2);
+  ctx.font = `400 18px ${MONO}`;
+  ctx.fillStyle = INK_2;
+  ctx.textBaseline = 'middle';
+  ctx.fillText(`Engine ${model.engineVersion}`, 72, 1290);
+  await drawPortraitShareBrand(ctx);
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+  if (!blob) throw new Error('png encode failed');
+  return { blob, filename: `zodiacs-${model.noTime ? 'approximate-' : ''}solar-return-${model.returnYear}.png` };
+}
+
 export interface BigThreeCardChart {
   moonSignCandidates?: readonly string[];
   bodies: readonly Pick<BodyPosition, 'body' | 'lon'>[];
@@ -1434,26 +1507,34 @@ export function savePreparedChartCard(prepared: PreparedChartCard): Promise<Card
   return savePngBlob(prepared.blob, prepared.filename);
 }
 
+/** Explicit download: no native share sheet and no async work before the click. */
+export function downloadPreparedChartCard(prepared: PreparedChartCard): 'downloaded' {
+  const url = URL.createObjectURL(prepared.blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = prepared.filename;
+  try {
+    document.body.appendChild(a);
+    a.click();
+  } finally {
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+  }
+  return 'downloaded';
+}
+
 export async function savePngBlob(blob: Blob, filename: string): Promise<CardOutcome> {
   const file = new File([blob], filename, { type: 'image/png' });
 
-  if (navigator.canShare?.({ files: [file] })) {
-    try {
+  try {
+    if (navigator.canShare?.({ files: [file] })) {
       await navigator.share({ files: [file] });
       return 'shared';
-    } catch (err) {
-      if ((err as DOMException)?.name === 'AbortError') return 'cancelled';
-      // Share sheet refused the file — fall through to a plain download.
     }
+  } catch (err) {
+    if ((err as DOMException)?.name === 'AbortError') return 'cancelled';
+    // Capability checks and rejected share sheets both retain the download path.
   }
 
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = file.name;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-  return 'downloaded';
+  return downloadPreparedChartCard({ blob, filename: file.name });
 }

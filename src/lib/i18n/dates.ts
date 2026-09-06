@@ -1,7 +1,6 @@
 import { LOCALE_META, type Locale } from './core';
 
-export const TECHNICAL_OFFSET_LOCALE = 'en-US';
-export const TECHNICAL_WALL_LOCALE = 'en-CA';
+export { TECHNICAL_OFFSET_LOCALE, TECHNICAL_WALL_LOCALE } from '../time/technical-locales';
 
 export function intlLocale(locale: Locale): string {
   return LOCALE_META[locale].intlLocale;

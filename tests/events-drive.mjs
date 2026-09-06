@@ -276,9 +276,12 @@ await withPreview({ port: 4412 }, async (BASE) => {
         && await page.locator('.event-pair__link[data-direction="next"]').count() === 1);
       check('full moon: nearby events carry visible reasons',
         await page.locator('.event-near__reason').count() > 0);
-      check('full moon: one primary action, to the birth chart',
-        await page.locator('.btn--primary[href="/birth-chart/"]').count() === 1
-        && await page.locator('.btn--primary').count() === 1);
+      const personalTransitAction = page.locator('.btn--primary');
+      check('full moon: one primary action, to personal transits at the exact event instant',
+        await personalTransitAction.count() === 1
+        && await personalTransitAction.getAttribute('href')
+          === '/transits/?at=2026-07-29T14%3A35%3A36.043Z'
+        && (await personalTransitAction.innerText()).trim() === 'See this event with my chart');
 
       // Open the evidence by keyboard and confirm the receipts show.
       const summary = page.locator('[data-evidence-disclosure] summary');

@@ -32,6 +32,8 @@ interface Props {
   image?: string;
   imageAlt?: string;
   type?: 'website' | 'article';
+  /** Keep the editorial disclosure visible on curated collection pages. */
+  editorialLine?: boolean;
   noindex?: boolean;
   /** Pair with noindex for routes that must not pass discovery onward. */
   nofollow?: boolean;
@@ -435,7 +437,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
       <slot />
     </main>
 
-    {props.type === 'article' && <EditorialLine locale={locale} />}
+    {(props.editorialLine ?? props.type === 'article') && <EditorialLine locale={locale} />}
     <SourcesLine sources={props.sources} locale={locale} />
     <SiteFooter locale={locale} terminalMarketNotice={props.terminalMarketNotice} />
 

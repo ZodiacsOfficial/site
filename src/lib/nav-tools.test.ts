@@ -67,10 +67,15 @@ describe('NAV_TOOLS', () => {
       '/transits/',
       '/retrogrades/',
     ]);
-    expect(TOOLS_HUB).toHaveLength(16);
+    expect(TOOLS_HUB).toHaveLength(17);
     for (const tool of [...NAV_TOOLS, ...FOOTER_TOOLS, ...TOOLS_HUB]) {
       expect(catalogueHrefs.has(tool.href)).toBe(true);
     }
+  });
+  it('publishes lunar return only in the English tools hub', () => {
+    expect(TOOLS_HUB.find((tool) => tool.href === '/lunar-return/')).toMatchObject({ group: 'sky', kind: 'moon' });
+    expect([...NAV_TOOLS, ...FOOTER_TOOLS].some((tool) => tool.href === '/lunar-return/')).toBe(false);
+    for (const locale of RELEASED_LOCALES) expect(localizePath(locale, '/lunar-return/')).toBe('/lunar-return/');
   });
 
   it('links Today to released daily editions and preserves unreleased-language cues', () => {
