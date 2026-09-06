@@ -79,7 +79,9 @@ export async function prepareChartContextCard(payload:ChartContextCard,parent?:A
       if(title.length>2)throw new Error('context_title_overflow');title.forEach((line,i)=>ctx.fillText(line,64,62+i*56));
       const start=90+title.length*56;
       ctx.strokeStyle='#B9D4BE';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(64,start-12);ctx.lineTo(1016,start-12);ctx.stroke();
-      let rows:string[][]=[],size=28,height=0;
+      // Short sections should use the portrait card's available space. Dense
+      // ruler/chain sections retain the same minimum size and overflow guard.
+      let rows:string[][]=[],size=42,height=0;
       for(;size>=22;size-=2){ctx.font=`500 ${size}px ${SANS}`;rows=facts.lines.map(line=>wrap(ctx,line,952));height=rows.reduce((total,r)=>total+r.length*(size+7)+10,0);if(start+height<=1210)break;}
       if(size<22)throw new Error('context_text_overflow');
       let y=start;ctx.fillStyle='#C6CCDA';
