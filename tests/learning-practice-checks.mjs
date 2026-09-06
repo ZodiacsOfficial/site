@@ -21,6 +21,8 @@ export async function runLearningPracticeChecks({ browser, baseURL, check, outDi
     });
     try {
       await context.addInitScript((charts) => {
+        // Initial about:blank documents have no storage origin; seed real pages only.
+        if (location.origin === 'null') return;
         if (!localStorage.getItem('zodiacs.profile.v1')) localStorage.setItem('zodiacs.profile.v1', JSON.stringify({ version: 1, settings: { houseSystem: 'whole' }, charts }));
       }, [chart(id, true), chart(unknownId, false)]);
       const page = await context.newPage();
@@ -111,6 +113,8 @@ export async function runLearningPracticeChecks({ browser, baseURL, check, outDi
     const context = await browser.newContext({ viewport: { width: 390, height: 1000 } });
     try {
       await context.addInitScript((failure) => {
+        // Initial about:blank documents have no storage origin; seed real pages only.
+        if (location.origin === 'null') return;
         localStorage.setItem('zodiacs:learning-path:v2', JSON.stringify({ version: 2, started: ['aspects'], completed: [] }));
         if (failure === 'missing-locks') Object.defineProperty(navigator, 'locks', { configurable: true, value: undefined });
         if (failure === 'denied-locks') Object.defineProperty(navigator, 'locks', { configurable: true, value: { request: () => Promise.reject(new DOMException('Denied', 'SecurityError')) } });

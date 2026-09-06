@@ -19,7 +19,17 @@ const profile = {
     summary: { engineVersion: 'fixture', utcISO: demo.utc, houseSystem: 'whole', bodies: demo.bodies, angles: demo.angles, flags: demo.flags },
   })),
 };
-const fit = (page) => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1);
+const fit = (page) => page.evaluate(() => {
+  if (document.documentElement.scrollWidth > innerWidth + 1) return false;
+  const ring = document.querySelector('.tring');
+  if (!ring) return false;
+  const bounds = ring.getBoundingClientRect();
+  return [...ring.querySelectorAll('.tring__scrub, .tring__date, .tring__next-link')].every((node) => {
+    const rect = node.getBoundingClientRect();
+    return rect.left >= bounds.left - 1 && rect.right <= bounds.right + 1
+      && node.scrollWidth <= node.clientWidth + 1;
+  });
+});
 const compute = async (page) => {
   await page.locator('.calc__submit').click();
   await page.locator('[data-ring-instant]').waitFor({ timeout: 30_000 });

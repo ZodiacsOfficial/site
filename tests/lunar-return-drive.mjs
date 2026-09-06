@@ -42,6 +42,8 @@ function observe(context) {
 }
 async function seed(context) {
   await context.addInitScript((input) => {
+    // Initial about:blank documents have no storage origin; seed real pages only.
+    if (location.origin === 'null') return;
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(input));
     window.__lrText = []; window.__lrShare = []; window.__lrShareMode = 'shared'; window.__lrEncodeFailures = 0; window.__lrRevoked = [];
     const revoke = URL.revokeObjectURL;

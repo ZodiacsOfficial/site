@@ -172,7 +172,7 @@ export default function LunarReturnCalculator() {
             <p class="field__help">Defaults to the birthplace. A different place changes the rising sign and houses; the return instant and planets stay the same.</p>
           </div>}
           <button class="btn btn--primary calc__submit" type="submit" disabled={!ready || busy || (differentPlace && !castCity)}>
-            <span>{busy ? 'Calculating…' : error ? 'Try calculation again' : 'Find next lunar return'}</span><span class="orb">↗</span>
+            <span>{busy ? 'Calculating…' : error ? 'Try calculation again' : 'Find next lunar return'}</span><span class="orb" aria-hidden="true">↗</span>
           </button>
           <p class="field__help">Finds the next return after the moment you calculate. Each result keeps that reference time.</p>
           <p class="calc__privacy"><strong>Private by default.</strong> The chart is calculated on this device; nothing is uploaded.</p>

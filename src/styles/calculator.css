@@ -1888,7 +1888,7 @@
 .calc__tour-start { flex-shrink: 0; }
 
 /* ── The Transit Ring — the animated bi-wheel + time scrubber ── */
-.tring { display: grid; gap: 18px; }
+.tring { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; gap: 18px; }
 /* Diagram legend for the bi-wheel — the .calc__receipt register (quiet mono,
    no uppercase), not a mono-caps label: it's two full sentences. */
 .tring__caption {
@@ -1903,6 +1903,7 @@
   margin: 0 auto;
 }
 .tring__scrub {
+  min-width: 0;
   max-width: 520px;
   width: 100%;
   margin: 0 auto;
@@ -2035,6 +2036,11 @@
   gap: 4px 8px;
 }
 .tring__next-link {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: start;
   border: none;
   background: none;
   padding: 0;

@@ -211,11 +211,22 @@ try {
   await runEventTransitChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/event-transits` : null });
   await runEditorialMetadataChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/editorial-metadata` : null });
 
-  await runSolarReturnChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/solar-return` : null });
-  await runLunarReturnChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/lunar-return` : null });
-  await runAspectPatternBrowserChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/aspect-patterns` : null });
-  await runChartContextChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/chart-context` : null });
-  await runLearningPracticeChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/learning-practice` : null });
+  // Each feature owns and closes its browser contexts. Collect independent
+  // evidence after a failure, but retain every failure in the final exit code.
+  for (const [name, run] of [
+    ['solar-return', runSolarReturnChecks],
+    ['lunar-return', runLunarReturnChecks],
+    ['aspect-patterns', runAspectPatternBrowserChecks],
+    ['chart-context', runChartContextChecks],
+    ['learning-practice', runLearningPracticeChecks],
+  ]) {
+    try {
+      await run({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/${name}` : null });
+    } catch (error) {
+      check(`${name}: browser drive completed without an unhandled failure`, false,
+        error instanceof Error ? error.stack ?? error.message : String(error));
+    }
+  }
 
   await verifyWidgetBuilder({
     browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/widgets` : null,
