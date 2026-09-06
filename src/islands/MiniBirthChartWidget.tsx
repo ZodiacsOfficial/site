@@ -173,7 +173,7 @@ export default function MiniBirthChartWidget() {
                 autoComplete="off"
                 placeholder={WIDGET_EN.placePlaceholder}
                 value={query}
-                onFocus={() => { preloadIndex().catch(() => setPlaceError(true)); }}
+                onFocus={() => { void preloadIndex(); }}
                 onInput={(event) => updatePlaceQuery((event.currentTarget as HTMLInputElement).value)}
                 onKeyDown={onPlaceKeyDown}
               />

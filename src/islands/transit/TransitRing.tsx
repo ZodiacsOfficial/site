@@ -36,6 +36,8 @@ import { showsEnglishOnlyInterpretation, t, tp, type CatalogLocale as Locale } f
 import { russianRuntime } from '../../lib/i18n/ru-runtime';
 import CalendarSubscribe, { type CalendarPositionsSource } from '../CalendarSubscribe';
 import EvidenceDisclosure from '../EvidenceDisclosure';
+import CalculationReload, { calculationLoadMessage } from '../CalculationReload';
+import { startSlowTransitScan, type SlowTransitScan } from './slow-transit-scan';
 
 export interface TransitSky {
   body: string;
@@ -90,6 +92,8 @@ const COPY = {
     moonOmitted: 'the Moon moves too fast to list, but you can watch it circle',
     announce: 'Sky for',
     scanning: 'Computing the exact dates of the slow transits…',
+    scanError: 'The exact dates could not be calculated. The sky ring is still available.',
+    retry: 'Try again',
     marksLabel: 'Exact slow-transit dates in this window',
     nextUp: 'Next to go exact:',
     noSlowExact: 'No slow transits go exact in this window.',
@@ -112,6 +116,8 @@ const COPY = {
     moonOmitted: 'la Luna se mueve demasiado rápido para aparecer en la lista, pero puedes verla girar',
     announce: 'Cielo del',
     scanning: 'Calculando las fechas exactas de los tránsitos lentos…',
+    scanError: 'No se pudieron calcular las fechas exactas. El anillo del cielo sigue disponible.',
+    retry: 'Intentar de nuevo',
     marksLabel: 'Fechas exactas de tránsitos lentos en esta ventana',
     nextUp: 'Próximos en alcanzar la exactitud:',
     noSlowExact: 'Ningún tránsito lento alcanza la exactitud en esta ventana.',
@@ -134,6 +140,8 @@ const COPY = {
     moonOmitted: 'a Lua se move rápido demais para aparecer na lista, mas você pode acompanhá-la na roda',
     announce: 'Céu de',
     scanning: 'Calculando as datas exatas dos trânsitos lentos…',
+    scanError: 'Não foi possível calcular as datas exatas. O anel do céu continua disponível.',
+    retry: 'Tentar novamente',
     marksLabel: 'Datas exatas dos trânsitos lentos nesta janela',
     nextUp: 'Próximos a chegar ao ponto exato:',
     noSlowExact: 'Nenhum trânsito lento chega ao ponto exato nesta janela.',
@@ -156,6 +164,8 @@ const COPY = {
     moonOmitted: 'la Lune va trop vite pour figurer dans la liste, mais tu peux la suivre sur la roue',
     announce: 'Ciel du',
     scanning: 'Calcul des dates exactes des transits lents…',
+    scanError: 'Les dates exactes n’ont pas pu être calculées. L’anneau du ciel reste disponible.',
+    retry: 'Réessayer',
     marksLabel: 'Dates exactes des transits lents dans cette période',
     nextUp: 'Prochains passages exacts :',
     noSlowExact: 'Aucun transit lent ne devient exact dans cette période.',
@@ -178,6 +188,8 @@ const COPY = {
     moonOmitted: 'la Luna si muove troppo in fretta per comparire nell’elenco, ma puoi seguirla sulla ruota',
     announce: 'Cielo del',
     scanning: 'Calcolo delle date esatte dei transiti lenti…',
+    scanError: 'Non è stato possibile calcolare le date esatte. L’anello del cielo è ancora disponibile.',
+    retry: 'Riprova',
     marksLabel: 'Date esatte dei transiti lenti in questo intervallo',
     nextUp: 'Prossimi passaggi esatti:',
     noSlowExact: 'Nessun transito lento diventa esatto in questo intervallo.',
@@ -200,6 +212,8 @@ const COPY = {
     moonOmitted: 'Луна движется слишком быстро для списка, но её путь виден на колесе',
     announce: 'Небо на',
     scanning: 'Считаем точные даты медленных транзитов…',
+    scanError: 'Не удалось рассчитать точные даты. Кольцо неба по-прежнему доступно.',
+    retry: 'Попробовать снова',
     marksLabel: 'Точные даты медленных транзитов в этом окне',
     nextUp: 'Ближайшие точные аспекты:',
     noSlowExact: 'В этом окне нет точных медленных транзитов.',
@@ -252,6 +266,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
   const [sel, setSel] = useState<string | null>(null);
   const [searchPointFocus, setSearchPointFocus] = useState<TransitContact | null>(null);
   const rafRef = useRef<number | null>(null);
+  const scrubRef = useRef<HTMLInputElement>(null);
 
   const when = useMemo(() => new Date(nowMs + offset * DAY), [nowMs, offset]);
 
@@ -300,35 +315,31 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
   // ── Exact dates: the slow transits (Jupiter–Pluto) across the window. ──
   // The scanner is engine-bound and ~100 ms per body, so it loads lazily and
   // runs one body at a time with a breath between each — the ring stays
-  // responsive while the timeline fills in. Null = still computing.
-  const [events, setEvents] = useState<TransitContact[] | null>(null);
+  // responsive while the timeline fills in. Never treat a failed scan as an
+  // empty sky, or show a previous chart's dates while a new scan starts.
+  const [scanAttempt, setScanAttempt] = useState(0);
+  const scanInput = useMemo(() => ({
+    nowMs,
+    attempt: scanAttempt,
+    chart: {
+      bodies: natal.minimal.map((b) => ({ body: b.body as BodyName, lon: b.lon })),
+      angles: natal.asc != null && natal.mc != null ? { asc: natal.asc, mc: natal.mc } : null,
+    },
+  }), [nowMs, natal.minimal, natal.asc, natal.mc, scanAttempt]);
+  const [scanResult, setScanResult] = useState<{ input: typeof scanInput; value: SlowTransitScan } | null>(null);
+  const scanState: SlowTransitScan = scanResult?.input === scanInput ? scanResult.value : { status: 'loading' };
+  const events = scanState.status === 'ready' ? scanState.events : null;
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const scan = await import('../../lib/engine/transit-scan');
-        const from = new Date(nowMs - WINDOW_DAYS * DAY);
-        const to = new Date(nowMs + WINDOW_DAYS * DAY);
-        const chart = {
-          // MinimalBody carries `string`; these came from the engine, so the
-          // narrowing to BodyName is sound.
-          bodies: natal.minimal.map((b) => ({ body: b.body as BodyName, lon: b.lon })),
-          angles: natal.asc != null && natal.mc != null ? { asc: natal.asc, mc: natal.mc } : null,
-        };
-        const found: TransitContact[] = [];
-        for (const body of scan.SLOW_TRANSIT_BODIES) {
-          if (cancelled) return;
-          found.push(...scan.scanTransitContacts(chart, from, to, { transitBodies: [body] }));
-          await new Promise((r) => setTimeout(r, 0));
-        }
-        if (!cancelled) setEvents(found.sort((a, b) => a.exactUtc.localeCompare(b.exactUtc)));
-      } catch {
-        if (!cancelled) setEvents([]); // scan unavailable — the ring works without it
-      }
-    })();
-    return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return startSlowTransitScan(
+      scanInput.chart,
+      new Date(scanInput.nowMs - WINDOW_DAYS * DAY),
+      new Date(scanInput.nowMs + WINDOW_DAYS * DAY),
+      (value) => setScanResult({ input: scanInput, value }),
+    );
+  }, [scanInput]);
+  const scanError = scanState.status === 'error'
+    ? scanState.moduleFailed ? calculationLoadMessage(locale) : c.scanError
+    : '';
 
   /** Days from now to a contact's exact instant (fractional). */
   const eventOffset = (e: TransitContact) => (Date.parse(e.exactUtc) - nowMs) / DAY;
@@ -437,6 +448,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
         </div>
         <input
           id="tring-date"
+          ref={scrubRef}
           class="tring__range"
           type="range"
           min={-WINDOW_DAYS}
@@ -447,7 +459,17 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
           aria-valuetext={whenLabel}
         />
         {/* Exact slow-transit dates as jump markers along the same timeline. */}
-        {events === null && <p class="tring__scan mono">{c.scanning}</p>}
+        {scanState.status === 'loading' && <p class="tring__scan mono" role="status">{c.scanning}</p>}
+        {scanState.status === 'error' && (
+          <div class="tring__scan">
+            <p role="alert">{scanError}</p>
+            <button class="btn btn--glass" type="button" onClick={() => {
+              scrubRef.current?.focus();
+              setScanAttempt((attempt) => attempt + 1);
+            }}>{c.retry}</button>
+            <CalculationReload error={scanError} locale={locale} />
+          </div>
+        )}
         {events !== null && events.length > 0 && (
           <div class="tring__marks" role="group" aria-label={c.marksLabel}>
             {events.map((e) => {
@@ -501,7 +523,7 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
       <p class="sr-only" role="status">{announced}</p>
 
       {natal.calendarPositions && (
-        <CalendarSubscribe locale={locale} positions={natal.calendarPositions} />
+        <CalendarSubscribe locale={locale} positions={natal.calendarPositions} contacts={events ?? undefined} />
       )}
 
       {/* The selected transit, foregrounded. */}

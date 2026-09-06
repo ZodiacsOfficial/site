@@ -33,10 +33,10 @@ const MANUSCRIPT_MOVEMENTS = [
 const HTML_MOVEMENTS = [
   'The sign you already carry',
   'A story that survived every medium',
-  'Attention is the internet’s first currency',
-  'Ownership becomes personal',
-  'Modern rails',
-  'Something you can carry',
+  'Attention arrives on a schedule',
+  'Twelve, not one',
+  'A gift you can keep',
+  'Two years in the open',
   'The next medium is ownership',
 ];
 
@@ -150,11 +150,9 @@ describe('thesis Nº 09 editorial contract', () => {
     }
   });
 
-  it('keeps defensive and adverse language out of the visible reading path', () => {
+  it('keeps generic defensive language out of the visible reading path', () => {
     const visible = visibleEssayText();
     const rejected = [
-      'dead bag',
-      'adverse events',
       'young records',
       'attention is an input, never proof of demand',
       'demand is not proven',
@@ -189,7 +187,7 @@ describe('thesis publication metadata contract', () => {
 
     expect(dates).toEqual([
       { datetime: '2026-08-01', label: 'Published 1 Aug 2026' },
-      { datetime: '2026-08-23', label: 'Updated 23 Aug 2026' },
+      { datetime: '2026-09-05', label: 'Updated 5 Sep 2026' },
     ]);
     expect(textOf(hero)).toContain('Evidence checked 31 Jul 2026');
   });
@@ -206,7 +204,7 @@ describe('thesis publication metadata contract', () => {
       headline: 'Why Zodiacs Matter',
       url: 'https://zodiacs.org/thesis/',
       datePublished: '2026-08-01',
-      dateModified: '2026-08-23',
+      dateModified: '2026-09-05',
     });
   });
 });
@@ -305,16 +303,35 @@ describe('thesis feedback simplification contract', () => {
     expect(attention).not.toMatch(/\btruth-panel\b/i);
   });
 
-  it('compresses the public history to exactly four consequential milestones', () => {
-    const scrapbook = sliceElement(
-      publicRecord,
-      /<ol\b[^>]*class=["'][^"']*\bscrapbook\b[^"']*\bscrapbook--compact\b[^"']*["'][^>]*>/i,
-      'ol',
-    );
-    expect(scrapbook).not.toBe('');
-    expect(tagParts(scrapbook, 'li')).toHaveLength(4);
-    expect(scrapbook).toMatch(/aria-label=["']Four public milestones for the twelve digital assets["']/i);
-    expect(textOf(scrapbook)).toMatch(/Twelve digital assets created.*Public trading begins.*One registry connects them.*Open to inspect and build on/i);
+  it('exposes the committed measured chart without scripts or opening a drawer', () => {
+    expect(fig2).not.toMatch(/<template\b|<details\b|\bhidden(?:\s|=|>)/i);
+    const charts = tagParts(fig2, 'svg').filter(({ attrs }) => /\bdata-attention-chart\b/.test(attrs));
+    expect(charts).toHaveLength(2);
+    expect(charts.map(({ attrs }) => attrs)).toEqual(expect.arrayContaining([
+      expect.stringContaining('attention-chart--wide'),
+      expect.stringContaining('attention-chart--small'),
+    ]));
+    expect(fig2).toContain('href="/thesis/thesis-attention.json"');
+    expect(textOf(fig2)).toContain('curiosity, not demand for the coins');
+  });
+
+  it('exposes dated adverse provenance before the complete history drawer', () => {
+    const provenance = sliceElement(publicRecord, /<figure\b[^>]*\bid=["']fig-provenance["'][^>]*>/i, 'figure');
+    const grid = sliceElement(provenance, /<div\b[^>]*class=["'][^"']*\bprovenance-grid\b[^"']*["'][^>]*>/i, 'div');
+    const links = tagParts(grid, 'a');
+    expect(provenance).not.toBe('');
+    expect(provenance).not.toMatch(/<details\b/i);
+    expect(links).toHaveLength(4);
+    expect(links.map(({ attrs }) => attrs.match(/\bhref=["']([^"']+)["']/i)?.[1])).toEqual([
+      'https://zodiacs.org/disclosure/#origin',
+      'https://x.com/wantonwallet/status/1812520143638962302',
+      'https://x.com/stoolpresidente/status/1891528769770279114',
+      '/thesis/thesis-history.json',
+    ]);
+    expect(textOf(provenance)).toMatch(/2024-07-05.*2024-07-14.*2025-02-17.*2025-05-20/s);
+    expect(textOf(provenance)).toMatch(/Concentration.*by mistake.*Dead bag/is);
+    expect(textOf(provenance)).toContain('search link rather than an individual post receipt');
+    expect(publicRecord.indexOf(provenance)).toBeLessThan(publicRecord.indexOf('id="fig-4"'));
   });
 
   it('keeps the committed closing state fail-closed with catalogue and copy actions', () => {
@@ -335,8 +352,7 @@ describe('thesis feedback simplification contract', () => {
     expect(close).not.toMatch(/href=["']#the-twelve["']|href=["']\/registry\/#verify["']/i);
   });
 
-  it('uses digital-asset language on the public milestone and closing actions', () => {
-    expect(textOf(publicRecord)).toContain('Twelve digital assets created.');
+  it('uses digital-asset language on the closing actions', () => {
     expect(textOf(close)).toContain('Choose the sign you already carry.');
     expect(textOf(close)).toContain('Open the twelve digital assets');
   });
@@ -420,7 +436,7 @@ describe('thesis transmission and gallery contract', () => {
     expect(finalEra?.inner).not.toMatch(/<svg\b/i);
   });
 
-  it('places one gallery after the Section IV network evidence drawer', () => {
+  it('places one gallery after the Section V network evidence drawer', () => {
     const allGalleryTags = [...HTML.matchAll(new RegExp(galleryTag.source, 'gi'))];
     const sectionGalleryTags = [...holding.matchAll(new RegExp(galleryTag.source, 'gi'))];
     const drawer = sliceElement(
@@ -553,7 +569,7 @@ describe('thesis real-use proof and honest-limitation contract', () => {
 
   it('keeps exactly one honest limitation in the visible essay', () => {
     const visible = visibleEssayText();
-    const exactLimitation = 'Independent adoption has not yet arrived. That standing will exist only if people and builders choose these assets when they could choose anything else.';
+    const exactLimitation = 'Independent adoption had not arrived. The scoreboard prints both.';
 
     expect([...HTML.matchAll(/\bdata-honest-limitation\b/g)]).toHaveLength(1);
     expect(limitation).not.toBe('');
@@ -561,48 +577,41 @@ describe('thesis real-use proof and honest-limitation contract', () => {
     expect(textOf(limitation)).toContain('What remains unproven');
     expect(textOf(limitation)).toContain('The assets are listed and transferable. Their broader standing still has to be earned.');
     expect(textOf(limitation)).toContain(exactLimitation);
-    expect((visible.match(/independent adoption has not yet arrived\./g) ?? [])).toHaveLength(1);
+    expect(textOf(limitation)).toContain('All twelve tracked pools were live on 23 July 2026.');
+    expect(limitation).toContain('href="/thesis/thesis-candidacy.json"');
+    expect((visible.match(/independent adoption had not arrived\./g) ?? [])).toHaveLength(1);
   });
 });
 
 describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
   const fig3 = sliceElement(HTML, /<figure\b[^>]*\bid=["']fig-3["'][^>]*>/i, 'figure');
-  const convergence = sliceElement(
-    fig3,
-    /<div\b[^>]*class=["'][^"']*\bsource-convergence\b[^"']*["'][^>]*>/i,
-    'div',
-  );
+  const patterns = sliceElement(fig3, /<div\b[^>]*class=["'][^"']*\battention-patterns\b[^"']*["'][^>]*>/i, 'div');
   const table = sliceElement(fig3, /<table\b[^>]*class=["'][^"']*\bztbl\b[^"']*["'][^>]*>/i, 'table');
+  const drawer = sliceElement(fig3, /<details\b[^>]*\bid=["']comparison-drawer["'][^>]*>/i, 'details');
 
-  it('explicitly connects all three sources to the Zodiacs result', () => {
-    const links = [...convergence.matchAll(
-      /\bdata-convergence-link=["']([^"']+)["']/gi,
-    )].map((match) => match[1]);
-
-    expect(convergence).not.toBe('');
-    expect([...new Set(links)]).toEqual(['gold', 'bitcoin', 'solana']);
-    expect(links).toHaveLength(6);
-    expect(convergence).toMatch(/\bdata-convergence-connectors\b/i);
-    expect(convergence).toMatch(/\bdata-convergence-result\b/i);
-    expect(convergence).toMatch(/\brole=["']group["']/i);
-    expect(convergence).toMatch(
-      /aria-label=["']Gold, Bitcoin, and Solana combine to form Zodiacs["']/i,
-    );
+  it('labels all four attention curves as schematic rather than measured performance', () => {
+    const charts = tagParts(patterns, 'svg');
+    expect(charts).toHaveLength(4);
+    for (const { attrs } of charts) {
+      expect(attrs).toMatch(/\brole=["']img["']/i);
+      expect(attrs).toMatch(/\baria-label=["']Schematic/i);
+    }
+    expect(textOf(fig3)).toContain('These curves are illustrative, not measured coin performance.');
+    expect(fig3).toContain('href="#fig-2"');
+    expect([...charts.at(-1).inner.matchAll(/\bstroke=["']#[a-f0-9]{6}["']/gi)]).toHaveLength(12);
   });
 
-  it('uses a single bullion-bar mark for Gold in the diagram and table', () => {
-    expect([...fig3.matchAll(/\bdata-icon=["']gold-bar["']/gi)]).toHaveLength(2);
-    expect([...fig3.matchAll(/\bdata-gold-bar\b/gi)]).toHaveLength(2);
+  it('retains the bullion-bar mark in the comparison table', () => {
+    expect([...table.matchAll(/\bdata-icon=["']gold-bar["']/gi)]).toHaveLength(1);
+    expect([...table.matchAll(/\bdata-gold-bar\b/gi)]).toHaveLength(1);
   });
 
-  it('is always visible rather than nested in a disclosure', () => {
+  it('keeps the complete comparison in a closed evidence drawer', () => {
     expect(fig3).not.toBe('');
     expect(table).not.toBe('');
-    const tableStart = fig3.indexOf(table);
-    const beforeTable = fig3.slice(0, tableStart);
-    const openedDetails = (beforeTable.match(/<details\b/gi) ?? []).length;
-    const closedDetails = (beforeTable.match(/<\/details>/gi) ?? []).length;
-    expect(openedDetails, 'comparison table has an open <details> ancestor').toBe(closedDetails);
+    expect(drawer).not.toBe('');
+    expect(drawer.match(/^<details\b[^>]*>/i)?.[0]).not.toMatch(/\bopen(?:\s|=|>)/i);
+    expect(drawer).toContain(table);
     expect(fig3).toMatch(/class=["'][^"']*\bcomparison-panel\b/);
   });
 
@@ -661,6 +670,53 @@ describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
     )?.[0] ?? '';
     expect(textOf(measurementDrawer)).toMatch(/How this comparison is measured/i);
     expect(visibleTextOf(table)).not.toMatch(/\b(?:yes|no|limited|unproven)\b/i);
+  });
+});
+
+describe('thesis keyboard and authority figures', () => {
+  it('prints all twelve Unicode code points with the dated Unicode source', () => {
+    const keyboard = sliceElement(HTML, /<figure\b[^>]*\bid=["']fig-keyboard["'][^>]*>/i, 'figure');
+    const symbols = tagParts(keyboard, 'svg');
+    expect(symbols).toHaveLength(12);
+    symbols.forEach(({ attrs, inner }, index) => {
+      const codePoint = `U+${(0x2648 + index).toString(16).toUpperCase()}`;
+      expect(attrs).toMatch(/\brole=["']img["']/i);
+      expect(textOf(inner)).toContain(codePoint);
+      expect(textOf(inner)).toContain('June 1993');
+    });
+    expect(keyboard).toContain('https://www.unicode.org/Public/17.0.0/ucd/DerivedAge.txt');
+    expect(keyboard).toContain('https://www.unicode.org/versions/Unicode1.1.0/');
+  });
+
+  it('keeps ownership records available in a drawer that starts closed', () => {
+    const holding = sliceElement(HTML, /<section\b[^>]*\bid=["']what-holding-means["'][^>]*>/i, 'section');
+    const drawer = sliceElement(holding, /<details\b[^>]*\bid=["']ownership-details["'][^>]*>/i, 'details');
+    const openingTag = drawer.match(/^<details\b[^>]*>/i)?.[0] ?? '';
+    expect(openingTag).toMatch(/\bclass=["'][^"']*\bevidence-drawer\b/);
+    expect(openingTag).not.toMatch(/\sopen(?:\s|=|>)/i);
+    expect(textOf(tagParts(drawer, 'summary')[0]?.inner ?? '')).toBe('See the supply and ownership records');
+    expect(drawer).toContain('id="fig-authorities"');
+    expect(textOf(drawer)).toContain('The issuer gave up the native assets’ minting and freezing permissions.');
+    const readingFlow = classedDetailsRemoved(holding);
+    expect(readingFlow).not.toContain('id="fig-authorities"');
+    expect(textOf(readingFlow)).not.toContain('minting and freezing permissions');
+  });
+
+  it('copies recorded pool burns without treating unspecified percentages as complete', () => {
+    const authorities = sliceElement(HTML, /<figure\b[^>]*\bid=["']fig-authorities["'][^>]*>/i, 'figure');
+    const disclosure = JSON.parse(readFileSync(resolve(ROOT, 'public/thesis/thesis-disclosure.json'), 'utf8'));
+    const labels = tagParts(authorities, 'text')
+      .filter(({ attrs }) => /class=["']plate-value["']/i.test(attrs))
+      .map(({ inner }) => textOf(inner));
+    expect(labels).toEqual(SIGNS.map((sign) => (
+      disclosure.signs[sign].liquidity.value.match(/LP (\d+(?:\.\d+)?%) burned/)?.[1] ?? '% not stated'
+    )));
+    expect(textOf(authorities)).toContain('burns are not uniformly complete');
+    expect(textOf(authorities)).toContain('Operator statement; not an audit of insider holdings.');
+    expect(textOf(authorities)).toContain('23 Jul 2026');
+    expect(textOf(authorities)).toContain('14 Jul 2026');
+    expect(authorities).toContain('href="/thesis/thesis-disclosure.json"');
+    expect(authorities).not.toMatch(/\bdata-field=/i);
   });
 });
 

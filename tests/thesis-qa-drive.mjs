@@ -4,20 +4,19 @@
  * statically for no-JavaScript readers, re-hydrated from JSON with scripts
  * on), no amber pending chip remains, the hydration script stays silent on
  * console, and every illustrated module fits 375/390/730/810/1280/1440 viewports.
- * It also verifies the always-visible binary comparison, no-JavaScript
+ * It also verifies the disclosed binary comparison, no-JavaScript
  * visibility, and the reduced-motion final state.
  *
  *   npm run build
  *   OUT_DIR=/tmp/shots node tests/thesis-qa-drive.mjs
  */
 import { chromium } from 'playwright-core';
-import { spawn } from 'node:child_process';
+import { startPreview } from './visual/preview-server.mjs';
 import { existsSync } from 'node:fs';
 import { setTimeout as wait } from 'node:timers/promises';
 
 const OUT = process.env.OUT_DIR ?? null;
 const PORT = Number.parseInt(process.env.THESIS_QA_PORT ?? '4399', 10);
-const BASE = `http://127.0.0.1:${PORT}`;
 const ZODIAC_SLUGS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -43,20 +42,12 @@ const LEO_MINT = '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm';
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
   ?? (existsSync('/opt/pw-browsers/chromium')
     ? '/opt/pw-browsers/chromium'
-    : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome');
+    : existsSync('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+      ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+      : chromium.executablePath());
 
-const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', String(PORT)], { stdio: 'ignore' });
-// Poll readiness instead of a fixed sleep; cold npx/config loads vary by host.
-{
-  const deadline = Date.now() + 30_000;
-  let up = false;
-  while (!up && Date.now() < deadline) {
-    up = await fetch(`${BASE}/thesis/`, { method: 'HEAD' })
-      .then((r) => r.ok).catch(() => false);
-    if (!up) await wait(250);
-  }
-  if (!up) { preview.kill(); throw new Error(`astro preview did not become ready on :${PORT}`); }
-}
+const preview = await startPreview({ port: PORT });
+const BASE = preview.baseURL;
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
 const shot = async (page, sel, path) => {
@@ -65,7 +56,21 @@ const shot = async (page, sel, path) => {
     const target = page.locator(sel);
     await target.scrollIntoViewIfNeeded();
     await page.waitForTimeout(350);
-    await target.screenshot({ path: `${OUT}/${path}` }).catch(() => {});
+    const proof = target.locator('[data-real-use-proof]');
+    if (await proof.count() === 1) {
+      // A tall section capture can include a proof card the viewport has not
+      // reached. Trigger its real entrance before returning to the section.
+      check(`${path}: proof content is exposed before capture`, await isVisuallyExposed(proof));
+      await target.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(350);
+    }
+    await target.screenshot({
+      path: `${OUT}/${path}`,
+      // Isolated figure/section captures omit floating site controls. This
+      // style exists only during capture; viewport checks and hero shots keep
+      // the real navigation and Guide launcher visible.
+      style: '.wnav-wrap, [data-guide-launcher] { visibility: hidden !important; }',
+    }).catch(() => {});
   } else {
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await page.waitForTimeout(350);
@@ -95,25 +100,82 @@ const isVisuallyExposed = async (locator) => {
   });
 };
 
+const checkOwnershipDrawer = async (page, label) => {
+  const drawer = page.locator('#ownership-details');
+  const figure = drawer.locator('#fig-authorities');
+  check(`${label}: ownership records start collapsed`,
+    await drawer.getAttribute('open') === null && !await figure.isVisible());
+  await drawer.locator(':scope > summary').click();
+  check(`${label}: the ownership summary opens the complete records`,
+    await drawer.getAttribute('open') !== null && await isVisuallyExposed(figure));
+};
+
 const waitForGalleryReady = async (page, timeout = 20_000) => {
   const gallery = page.locator(GALLERY_SELECTOR);
   if (await gallery.count() !== 1) return false;
-  await gallery.scrollIntoViewIfNeeded();
-  return page.locator(`${GALLERY_SELECTOR}.is-ready`)
-    .waitFor({ state: 'attached', timeout })
-    .then(() => true)
-    .catch(() => false);
+  const deadline = Date.now() + timeout;
+  // Materialize the content-visibility section before aiming at its gallery.
+  await page.locator('#what-holding-means').scrollIntoViewIfNeeded({ timeout });
+  await wait(Math.min(200, Math.max(0, deadline - Date.now())));
+  let readyInView = false;
+  while (Date.now() < deadline) {
+    // Earlier sections can resize after a jump, moving the gallery back out
+    // of view before lazy initialization. Reposition while waiting, not only
+    // after .is-ready has appeared. Never manufacture the ready class.
+    await gallery.evaluate((node) => node.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' }));
+    await wait(Math.min(200, Math.max(0, deadline - Date.now())));
+    const state = await gallery.evaluate((node) => {
+      const rect = node.getBoundingClientRect();
+      return node.classList.contains('is-ready')
+        && rect.width > 0 && rect.height > 0
+        && rect.bottom > 0 && rect.top < window.innerHeight;
+    });
+    // Two consecutive samples ensure the caller measures a settled, visible
+    // ready stage rather than the frame before another layout shift.
+    if (state && readyInView) return true;
+    readyInView = state;
+  }
+  return false;
 };
 
 const VISUAL_MODULES = [
   ['history transmission', '#fig-1 .transmission'],
-  ['seasonal wheel', '#fig-2 .cadence'],
-  ['history, ownership, and rails convergence', '#fig-3 .source-convergence'],
-  ['comparison', '#fig-3 .comparison-panel'],
+  ['measured attention chart', '#fig-2 [data-attention-chart]:visible'],
+  ['Unicode keyboard', '#fig-keyboard'],
+  ['schematic attention curves', '#fig-3 .attention-patterns'],
+  ['native authorities and recorded burns', '#fig-authorities'],
   ['real-use proof', '[data-real-use-proof]'],
   ['pastel zodiac gallery', GALLERY_SELECTOR],
-  ['public scrapbook', '.scrapbook'],
+  ['public provenance', '#fig-provenance'],
 ];
+
+const checkFigureFit = async (page, width) => {
+  for (const id of ['fig-keyboard', 'fig-2', 'fig-3', 'fig-authorities', 'fig-provenance']) {
+    const figure = page.locator(`#${id}`);
+    const drawer = id === 'fig-authorities' ? page.locator('#ownership-details') : null;
+    const wasOpen = drawer ? await drawer.getAttribute('open') !== null : false;
+    try {
+      // Offscreen chapters use content-visibility:auto. Visit each figure as
+      // a reader would so the browser lays it out before measuring its bounds.
+      if (drawer && !wasOpen) await drawer.locator(':scope > summary').click();
+      await isVisuallyExposed(figure);
+      const geometry = await figure.evaluate((node) => {
+        const rect = node.getBoundingClientRect();
+        const svgOverflow = [...node.querySelectorAll('svg')].some((svg) => {
+          const bounds = svg.getBoundingClientRect();
+          return bounds.width > 0 && (bounds.left < rect.left - 1 || bounds.right > rect.right + 1);
+        });
+        return { width: rect.width, left: rect.left, right: rect.right, scroll: node.scrollWidth, client: node.clientWidth, svgOverflow };
+      });
+      check(`${width}px: #${id} and its SVGs fit without horizontal overflow`,
+        geometry.width > 0 && geometry.left >= -1 && geometry.right <= width + 1
+          && geometry.scroll <= geometry.client + 1 && !geometry.svgOverflow,
+        JSON.stringify(geometry));
+    } finally {
+      if (drawer && !wasOpen) await drawer.locator(':scope > summary').click();
+    }
+  }
+};
 
 try {
   const browser = await chromium.launch({ executablePath: CHROMIUM });
@@ -352,7 +414,7 @@ try {
   await page.keyboard.press('Enter');
 
   // The last historical form is the branded digital asset, and the gallery
-  // upgrades its authored fallback only when the reader reaches Section IV.
+  // upgrades its authored fallback only when the reader reaches Section V.
   const finalEraState = await page.locator('#fig-1 .era').last().evaluate((era) => {
     const image = era.querySelector('.era__object img');
     return {
@@ -372,7 +434,7 @@ try {
     JSON.stringify(finalEraState));
 
   const galleryReady = await waitForGalleryReady(page);
-  check('gallery bundle loads once when Section IV approaches',
+  check('gallery bundle loads once when Section V approaches',
     galleryReady && galleryRequests.length === 1,
     `${galleryReady ? 'ready' : 'not ready'} · ${galleryRequests.length} request(s)`);
   const railButtons = thesisGallery.locator('[data-gallery-rail]').getByRole('button');
@@ -443,10 +505,15 @@ try {
   check('test card admits the test has not begun', /has not begun/.test(tcard));
   check('test card fixes the no-later-than date', /2026-10-31/.test(tcard));
 
-  // F3 stays open and uses the current twelve-property comparison.
+  // F3 puts the complete twelve-property comparison behind a native disclosure.
   const comparison = page.locator('#fig-3 .comparison-panel .ztbl');
-  check('comparison is always visible', await isVisuallyExposed(comparison));
-  check('comparison is not nested in details', (await page.locator('#fig-3 details .ztbl').count()) === 0);
+  const comparisonNotes = page.locator('#comparison-drawer');
+  check('comparison starts collapsed in its evidence drawer',
+    await comparisonNotes.getAttribute('open') === null && !await comparison.isVisible());
+  await comparisonNotes.locator(':scope > summary').focus();
+  await page.keyboard.press('Enter');
+  check('comparison evidence opens from the keyboard and exposes the full matrix',
+    await comparisonNotes.getAttribute('open') !== null && await isVisuallyExposed(comparison));
   check('comparison has four scoped column headers',
     (await comparison.locator('thead th[scope="col"]').count()) === 4);
   const propertyLabels = (await comparison.locator('tbody th[scope="row"]').allTextContents())
@@ -482,12 +549,10 @@ try {
   check('Zodiacs is checked on all twelve properties',
     zodiacsMarks.length === COMPARISON_ROWS.length && zodiacsMarks.every((mark) => mark === '✓'),
     JSON.stringify(zodiacsMarks));
-  const comparisonNotes = page.locator('#fig-3 details.evidence-drawer');
-  await comparisonNotes.locator('summary').focus();
+  await comparisonNotes.locator(':scope > summary').focus();
   await page.keyboard.press('Enter');
-  check('comparison evidence drawer opens from the keyboard', await comparisonNotes.getAttribute('open') !== null);
-  await page.keyboard.press('Enter');
-  check('comparison evidence drawer closes from the keyboard', await comparisonNotes.getAttribute('open') === null);
+  check('comparison evidence drawer closes from the keyboard',
+    await comparisonNotes.getAttribute('open') === null && !await comparison.isVisible());
   const evidenceVault = page.locator('details.evidence-vault');
   const appendix = page.locator('#appendix');
   check('technical appendix starts hidden inside the closed evidence vault',
@@ -510,22 +575,27 @@ try {
     document.querySelector('details.evidence-vault').open = false;
   });
 
-  // The human visual layer renders before the detailed evidence.
+  // Keep figure visits after the hero and above-fold gallery checks.
+  await checkFigureFit(page, 1440);
+  await checkOwnershipDrawer(page, 'desktop');
+
+  // The human visual layer and optional evidence remain available.
   check('seven-era transmission renders', (await page.locator('.transmission .era').count()) === 7);
-  check('twelve-sign seasonal wheel renders', (await page.locator('.zodiac-wheel__sign').count()) === 12);
-  check('Gold, Bitcoin, and Solana convergence renders',
-    (await page.locator('#fig-3 .source-convergence .source-card').count()) === 3);
-  const convergenceLinks = await page.locator('#fig-3 [data-convergence-link]').evaluateAll((paths) => paths.map((path) => ({
-    source: path.getAttribute('data-convergence-link'),
-    length: path.getTotalLength(),
-  })));
-  check('three color-matched paths visibly converge into Zodiacs',
-    convergenceLinks.length === 6
-      && [...new Set(convergenceLinks.map(({ source }) => source))].join(',') === 'gold,bitcoin,solana'
-      && convergenceLinks.every(({ length }) => length > 0)
-      && (await page.locator('#fig-3 [data-convergence-result]').count()) === 1);
-  check('Gold uses the bullion-bar mark in the diagram and table',
-    (await page.locator('#fig-3 [data-icon="gold-bar"] [data-gold-bar]').count()) === 2);
+  check('F2 exposes measured data outside a template or drawer',
+    await page.locator('#fig-2 [data-attention-chart]:visible').count() === 1
+      && await page.locator('#fig-2 template, #fig-2 details').count() === 0);
+  check('F3 draws four accessible schematic attention curves',
+    (await page.locator('#fig-3 .attention-patterns .fact-card svg[role="img"]').count()) === 4
+      && /Schematic:.*illustrative, not measured coin performance\./s.test(await page.locator('#fig-3 .zfig-cap').textContent() ?? ''));
+  check('the keyboard figure identifies twelve Unicode symbols',
+    (await page.locator('#fig-keyboard .keyboard-grid svg[role="img"]').count()) === 12
+      && /June 1993/.test(await page.locator('#fig-keyboard .zfig-src').textContent() ?? ''));
+  check('the authority figure distinguishes partial and unspecified burns',
+    (await page.locator('#fig-authorities .authority-summary .fact-card').count()) === 4
+      && (await page.locator('#fig-authorities .burn-grid svg[role="img"]').count()) === 2
+      && /burns are not uniformly complete/.test(await page.locator('#fig-authorities .zfig-cap').textContent() ?? ''));
+  check('Gold retains its bullion-bar mark in the comparison table',
+    (await comparison.locator('[data-icon="gold-bar"] [data-gold-bar]').count()) === 1);
   check('gallery display labels are removed',
     (await page.locator('.thesis-gallery__head, .gband__fallback-title').count()) === 0);
   check('comparison headers render Gold, Bitcoin, and the complete zodiac wheel',
@@ -549,18 +619,23 @@ try {
   check('wallet proof states its third-party boundary',
     /Solflare is a third-party wallet surface\.[\s\S]*does not show that Solflare consumes the Zodiacs Registry or SDK\./
       .test(await realUseProof.textContent() ?? ''));
-  check('public history is a compact four-milestone strip',
-    (await page.locator('.scrapbook--compact .scrapbook__entry').count()) === 4);
+  const provenance = page.locator('#fig-provenance');
+  check('four dated provenance entries expose criticism and the mistaken purchase',
+    (await provenance.locator('.provenance-grid a > svg').count()) === 4
+      && /Concentration[\s\S]*by mistake[\s\S]*Dead bag/i.test(await provenance.textContent() ?? '')
+      && /search link rather than an individual post receipt/.test(await provenance.locator('.zfig-cap').textContent() ?? ''));
+
   const honestLimitation = page.locator('[data-honest-limitation]');
   check('the main reading path visibly states what remains unproven',
     await isVisuallyExposed(honestLimitation)
       && /The assets are listed and transferable\. Their broader standing still has to be earned\./
         .test(await honestLimitation.textContent() ?? '')
-      && /Independent adoption has not yet arrived\./.test(await honestLimitation.textContent() ?? '')
-      && await honestLimitation.locator('a').getAttribute('href') === '#the-candidacy');
+      && /Independent adoption had not arrived\./.test(await honestLimitation.textContent() ?? '')
+      && /23 July 2026/.test(await honestLimitation.textContent() ?? '')
+      && (await honestLimitation.locator('a[href="#the-candidacy"]').count()) === 1);
   check('plain candidacy snapshot renders', (await page.locator('.human-score__item').count()) === 4);
   check('three-question test renders', (await page.locator('.test-question').count()) === 3);
-  check('plain-language instrument renders', (await page.locator('.fact-card').count()) === 6);
+  check('plain-language instrument renders', (await page.locator('#the-instrument .fact-card').count()) === 6);
   check('technical evidence is progressively disclosed', (await page.locator('details.evidence-drawer').count()) >= 6);
 
   // Entrances use one short transition and a restrained 50ms child stagger.
@@ -597,9 +672,16 @@ try {
   await shot(page, '#fig-1', 'thesis-f1-desktop.png');
   await shot(page, '#fig-2', 'thesis-f2-desktop.png');
   await shot(page, '#fig-3', 'thesis-f3-desktop.png');
+  await shot(page, '#fig-keyboard', 'thesis-keyboard-desktop.png');
+  await shot(page, '#fig-authorities', 'thesis-authorities-desktop.png');
+  await page.locator('#ownership-details > summary').click();
+  await shot(page, '#fig-provenance', 'thesis-provenance-desktop.png');
   await shot(page, '#what-holding-means', 'thesis-proof-desktop.png');
   await shot(page, GALLERY_SELECTOR, 'thesis-gallery-desktop.png');
   await shot(page, '#the-public-record', 'thesis-history-desktop.png');
+  for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'attention', 'worth-holding', 'the-conclusion']) {
+    await shot(page, `#${id}`, `thesis-${id}-desktop.png`);
+  }
   await page.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(page, '#the-candidacy', 'thesis-v-desktop.png');
   await shot(page, '#the-test', 'thesis-vii-desktop.png');
@@ -614,6 +696,7 @@ try {
   // 1280px shots for the release evidence set.
   const mid = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
   await mid.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
+  await checkFigureFit(mid, 1280);
   await wait(600);
   await mid.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(mid, '#the-instrument', 'thesis-x-1280.png');
@@ -626,6 +709,7 @@ try {
   review.on('pageerror', (err) => reviewErrors.push(String(err)));
   review.on('requestfailed', (req) => { if (req.url().startsWith('http://127.0.0.1')) reviewErrors.push(req.url()); });
   await review.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
+  await checkFigureFit(review, 810);
   await wait(600);
   const reviewOverflow = await review.evaluate(() => ({
     doc: document.documentElement.scrollWidth,
@@ -633,6 +717,7 @@ try {
   }));
   check('810px: no page-level horizontal overflow', reviewOverflow.doc <= reviewOverflow.win,
     `${reviewOverflow.doc} vs ${reviewOverflow.win}`);
+  await review.locator('#comparison-drawer > summary').click();
   const reviewTable = review.locator('#fig-3 .ztbl');
   const reviewTableLayout = await reviewTable.evaluate((table) => ({
     row: getComputedStyle(table.tBodies[0].rows[0]).display,
@@ -643,12 +728,18 @@ try {
   check('810px: comparison fits without local scrolling',
     reviewTableLayout.scroll <= reviewTableLayout.client + 1,
     `${reviewTableLayout.scroll} vs ${reviewTableLayout.client}`);
+  await checkOwnershipDrawer(review, '810px');
   for (const [name, selector] of VISUAL_MODULES) {
     check(`810px: ${name} is visible`, await isVisuallyExposed(review.locator(selector).first()));
   }
+  await review.locator('#comparison-drawer > summary').click();
   await shot(review, '#fig-1', 'thesis-f1-810.png');
   await shot(review, '#fig-2', 'thesis-f2-810.png');
   await shot(review, '#fig-3', 'thesis-f3-810.png');
+  await shot(review, '#fig-keyboard', 'thesis-keyboard-810.png');
+  await shot(review, '#fig-authorities', 'thesis-authorities-810.png');
+  await review.locator('#ownership-details > summary').click();
+  await shot(review, '#fig-provenance', 'thesis-provenance-810.png');
   await shot(review, '#what-holding-means', 'thesis-proof-810.png');
   await shot(review, GALLERY_SELECTOR, 'thesis-gallery-810.png');
   await shot(review, '#the-public-record', 'thesis-history-810.png');
@@ -669,6 +760,7 @@ try {
     if (req.url().startsWith('http://127.0.0.1')) annotatedErrors.push(req.url());
   });
   await annotated.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
+  await checkFigureFit(annotated, 730);
   const annotatedGalleryReady = await waitForGalleryReady(annotated);
   await wait(350);
   const annotatedLayout = await annotated.evaluate((selector) => {
@@ -696,7 +788,7 @@ try {
       && annotatedLayout.galleryLeft >= -1
       && annotatedLayout.galleryRight <= annotatedLayout.viewportWidth + 1
       && annotatedLayout.galleryScrollWidth <= annotatedLayout.galleryClientWidth + 1,
-    JSON.stringify(annotatedLayout));
+    JSON.stringify({ ready: annotatedGalleryReady, ...annotatedLayout }));
   check('730px: gallery precedes the next movement without overlap',
     annotatedLayout.galleryBottom <= annotatedLayout.nextSectionTop + 1,
     JSON.stringify(annotatedLayout));
@@ -767,8 +859,6 @@ try {
 
   const compactModules = [
     ['history transmission', '#fig-1 .story-figure', 0.24],
-    ['source convergence', '#fig-3 .source-convergence', 0.44],
-    ['modern rails', '.rail-map', 0.20],
     ['real-use proof', '[data-real-use-proof]', 0.48],
   ];
   for (const [name, selector, maxViewportFraction] of compactModules) {
@@ -802,12 +892,11 @@ try {
       .map((node) => Math.round(node.getBoundingClientRect().top));
     return {
       eras: sameRow('#fig-1 .era'),
-      rails: sameRow('.rail-map__item'),
       proof: proofTops.length === 3 && new Set(proofTops).size === 2,
     };
   });
   check('623px: compact modules use their intended responsive summaries',
-    compactRows.eras && compactRows.rails && compactRows.proof,
+    compactRows.eras && compactRows.proof,
     JSON.stringify(compactRows));
   await shot(compact, '#fig-1', 'thesis-f1-623.png');
   await shot(compact, '#fig-3', 'thesis-f3-623.png');
@@ -863,10 +952,17 @@ try {
     }),
     JSON.stringify(nojsFallbackState));
   check('no-JS: static gallery fallback is visibly exposed', await isVisuallyExposed(nojsFallback));
+  await checkOwnershipDrawer(nojs, 'no-JS');
   for (const [name, selector] of VISUAL_MODULES) {
     check(`no-JS: ${name} is visually exposed`, await isVisuallyExposed(nojs.locator(selector).first()));
   }
   await shot(nojs, GALLERY_SELECTOR, 'thesis-gallery-nojs.png');
+  check('no-JS: comparison starts collapsed',
+    await nojs.locator('#comparison-drawer').getAttribute('open') === null);
+  await nojs.locator('#comparison-drawer > summary').click();
+  check('no-JS: comparison opens and exposes the full matrix',
+    await isVisuallyExposed(nojs.locator('#comparison-drawer .ztbl')));
+  await nojs.locator('#comparison-drawer > summary').click();
   await nojsContext.close();
 
   // Reduced motion shows final states without transitions or transforms.
@@ -920,9 +1016,16 @@ try {
   check('reduced motion: reveal targets have no active transitions or animations',
     reducedStates.every((state) => state.transition.split(',').every((duration) => Number.parseFloat(duration) === 0)
       && state.animation === 'none'));
+  await checkOwnershipDrawer(reduced, 'reduced motion');
   for (const [name, selector] of VISUAL_MODULES) {
     check(`reduced motion: ${name} is visually exposed`, await isVisuallyExposed(reduced.locator(selector).first()));
   }
+  check('reduced motion: comparison starts collapsed',
+    await reduced.locator('#comparison-drawer').getAttribute('open') === null);
+  await reduced.locator('#comparison-drawer > summary').click();
+  check('reduced motion: comparison opens and exposes the full matrix',
+    await isVisuallyExposed(reduced.locator('#comparison-drawer .ztbl')));
+  await reduced.locator('#comparison-drawer > summary').click();
   await reducedContext.close();
 
   // A preference change after load must stop the ambient video immediately.
@@ -947,6 +1050,7 @@ try {
     mob.on('pageerror', (err) => mobErrors.push(String(err)));
     mob.on('requestfailed', (req) => { if (req.url().startsWith('http://127.0.0.1')) mobErrors.push(req.url()); });
     await mob.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
+    await checkFigureFit(mob, width);
     await wait(600);
     const heroRibbon = await mob.locator('.hero__twelve').evaluate((row) => {
       const links = [...row.querySelectorAll('a')];
@@ -964,6 +1068,7 @@ try {
       doc: document.documentElement.scrollWidth, win: window.innerWidth,
     }));
     check(`${width}px: no page-level horizontal overflow`, overflow.doc <= overflow.win, `${overflow.doc} vs ${overflow.win}`);
+    await mob.locator('#comparison-drawer > summary').click();
     const mobileTable = await mob.locator('#fig-3 .ztbl').evaluate((table) => ({
       row: getComputedStyle(table.tBodies[0].rows[0]).display,
       scroll: table.parentElement.scrollWidth,
@@ -982,10 +1087,12 @@ try {
       mobileBodyDecorations.length === COMPARISON_ROWS.length && mobileBodyDecorations.every((decorations) => (
         decorations.length === 3 && decorations.every((image) => image === 'none')
       )));
+    await mob.locator('#comparison-drawer > summary').click();
     await mob.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
     await mob.locator('#the-instrument details.evidence-drawer').evaluate((n) => { n.open = true; });
     const discScroll = await mob.locator('.disc-scroll').evaluate((n) => n.scrollWidth > n.clientWidth);
     check(`${width}px: disclosure table scrolls inside its own region`, discScroll);
+    await checkOwnershipDrawer(mob, `${width}px`);
     for (const [name, selector] of VISUAL_MODULES) {
       const nodes = mob.locator(selector);
       const fits = await nodes.evaluateAll((elements, viewportWidth) => elements.length > 0 && elements.every((node) => {
@@ -998,6 +1105,13 @@ try {
       await shot(mob, '#fig-1', 'thesis-f1-mobile.png');
       await shot(mob, '#fig-2', 'thesis-f2-mobile.png');
       await shot(mob, '#fig-3', 'thesis-f3-mobile.png');
+      for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'attention', 'worth-holding', 'the-conclusion']) {
+        await shot(mob, `#${id}`, `thesis-${id}-mobile.png`);
+      }
+      await shot(mob, '#fig-keyboard', 'thesis-keyboard-mobile.png');
+      await shot(mob, '#fig-authorities', 'thesis-authorities-mobile.png');
+      await mob.locator('#ownership-details > summary').click();
+      await shot(mob, '#fig-provenance', 'thesis-provenance-mobile.png');
       await shot(mob, '#what-holding-means', 'thesis-proof-mobile.png');
       await shot(mob, GALLERY_SELECTOR, 'thesis-gallery-mobile.png');
       await shot(mob, '#the-public-record', 'thesis-history-mobile.png');
@@ -1014,13 +1128,13 @@ try {
   }
   await browser.close();
 } finally {
-  preview.kill();
+  await preview.stop();
 }
 
 let failed = 0;
 for (const r of results) {
   if (!r.ok) failed += 1;
-  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.detail.slice(0, 80)}` : ''}`);
+  console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.ok ? r.detail.slice(0, 80) : r.detail}` : ''}`);
 }
 console.log(failed ? `\n${results.length - failed} PASSED · ${failed} FAILED` : `\nALL PASS · ${results.length} checks`);
 process.exit(failed ? 1 : 0);

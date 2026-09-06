@@ -23,6 +23,7 @@ const SIGN_NAMES = Object.freeze([
 const SIGN_PATTERN = SIGNS.join('|');
 const TOOL_ROOTS = new Set([
   'baby-zodiac',
+  'big-three',
   'birth-chart',
   'birthday',
   'compatibility',
@@ -35,6 +36,7 @@ const TOOL_ROOTS = new Set([
   'retrogrades',
   'rising-sign',
   'saturn-return',
+  'solar-return',
   'tools',
   'transits',
   'widgets',

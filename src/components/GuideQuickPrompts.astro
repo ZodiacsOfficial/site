@@ -1,0 +1,70 @@
+---
+/**
+ * A short row of ready questions that open Guide with the question already
+ * in the composer. Each chip is a real link to the Guide home at /ask/, so
+ * it works without JavaScript; with the loader present the drawer opens in
+ * place and the text sits in the visitor's own draft until they choose to
+ * send it. The prompt never becomes page context — see
+ * `prefillFromOpener` in src/lib/assistant/open-assistant.ts.
+ */
+import { englishOnlyCue } from '../lib/i18n/english-only';
+
+interface Props {
+  prompts: readonly string[];
+  locale?: 'en' | 'es' | 'pt' | 'fr' | 'it';
+  label?: string;
+}
+
+const { prompts, locale = 'en', label = 'Ask Guide' } = Astro.props;
+const cue = englishOnlyCue(locale);
+const shown = prompts.filter((prompt) => prompt.trim().length > 0).slice(0, 4);
+---
+{shown.length > 0 && (
+  <nav class="guide-prompts" aria-label={label}>
+    <ul class="guide-prompts__list">
+      {shown.map((prompt) => (
+        <li>
+          <a
+            class="guide-prompts__chip"
+            href="/ask/"
+            hreflang={cue ? 'en' : undefined}
+            title={cue?.aria}
+            data-assistant-open
+            data-assistant-locale={locale}
+            data-assistant-prompt={prompt}
+          >{prompt}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  .guide-prompts {
+    margin: 10px 0 0;
+  }
+  .guide-prompts__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .guide-prompts__chip {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid var(--hair-2);
+    border-radius: 999px;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+    line-height: 1.4;
+    text-decoration: none;
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+  .guide-prompts__chip:hover,
+  .guide-prompts__chip:focus-visible {
+    border-color: var(--hair-3);
+    color: var(--text);
+  }
+</style>

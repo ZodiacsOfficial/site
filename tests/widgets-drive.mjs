@@ -1,7 +1,171 @@
 import { createServer } from 'node:http';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
+
+export async function verifyWidgetBuilder({ browser, baseURL, check, outDir = null }) {
+  if (outDir) await mkdir(outDir, { recursive: true });
+  const page = await browser.newPage();
+  const errors = [];
+  const previewRequests = [];
+  page.on('requestfailed', (request) => {
+    if (request.url().includes('/embed/')) previewRequests.push({ url: request.url(), failure: request.failure() });
+  });
+  page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(`console: ${message.text()}`);
+  });
+  const settle = async (target, selector = null) => {
+    await target.waitForFunction((selector) => {
+      const root = selector ? document.querySelector(selector) : document;
+      return root && document.fonts.status === 'loaded'
+        && [...root.querySelectorAll('img')].every((image) => image.complete);
+    }, selector, { timeout: 20_000 });
+    await target.evaluate(async (selector) => {
+      const root = selector ? document.querySelector(selector) : document;
+      await document.fonts.ready;
+      for (const image of root.querySelectorAll('img')) {
+        if (!image.naturalWidth) throw new Error(`Widget capture image failed: ${image.currentSrc}`);
+        await image.decode();
+      }
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    }, selector);
+  };
+  const capture = async (width, state) => {
+    if (!outDir) return;
+    const builder = page.locator('[data-widget-generator]');
+    const frame = builder.locator('[data-widget-preview]');
+    // The real preview is lazy-loaded. Approach it naturally before waiting
+    // for its selected destination; an offscreen frame can defer navigation.
+    await frame.scrollIntoViewIfNeeded();
+    const element = await frame.elementHandle();
+    const preview = await element.contentFrame();
+    if (!preview) throw new Error('Widget preview frame is unavailable for capture');
+    const expected = new URL(await element.getAttribute('src'), baseURL);
+    try {
+      await preview.waitForURL((url) => url.href === expected.href, { waitUntil: 'load' });
+    } catch (error) {
+      const diagnostic = {
+        width, state, expected: expected.href, actual: preview.url(),
+        frames: page.frames().map((child) => child.url()),
+        failedRequests: previewRequests, errors,
+        element: await frame.evaluate((node) => ({
+          src: node.src, loading: node.loading,
+          box: node.getBoundingClientRect().toJSON(),
+          viewport: { width: innerWidth, height: innerHeight },
+        })),
+      };
+      console.error('Widget preview navigation diagnostic:', JSON.stringify(diagnostic));
+      await writeFile(join(outDir, `widget-navigation-${state}-${width}.json`), `${JSON.stringify(diagnostic, null, 2)}\n`);
+      await page.screenshot({ path: join(outDir, `widget-navigation-${state}-${width}.png`), fullPage: true });
+      throw error;
+    }
+    await settle(preview);
+    await settle(page, '[data-widget-generator]');
+    await builder.screenshot({ path: join(outDir, `widget-builder-${state}-${width}.png`), animations: 'disabled' });
+  };
+  try {
+    for (const width of [390, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(`${baseURL}/widgets/`, { waitUntil: 'networkidle' });
+      const builder = page.locator('[data-widget-generator]');
+      // Match each select's actual accessible name; wrapped label text also
+      // contains option text, which is not the combobox's accessible name.
+      const setting = (name) => ['Widget', 'Embed mode', 'Theme'].includes(name)
+        ? builder.getByRole('combobox', { name, exact: true })
+        : builder.getByLabel(name, { exact: true });
+      const labels = ['Widget', 'Embed mode', 'Theme', 'Accent', 'Embed code'];
+      for (const label of labels) {
+        const control = setting(label);
+        const presentation = await control.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const style = getComputedStyle(element);
+          return {
+            height: rect.height,
+            left: rect.left,
+            right: rect.right,
+            background: style.backgroundColor,
+            border: parseFloat(style.borderTopWidth),
+            scheme: style.colorScheme,
+          };
+        });
+        if (presentation.height < 44 || presentation.left < 0 || presentation.right > width
+          || presentation.background === 'rgb(255, 255, 255)' || presentation.background === 'rgba(0, 0, 0, 0)'
+          || presentation.border < 1 || presentation.scheme !== 'dark') {
+          throw new Error(`${label} is unstyled or outside the ${width}px viewport: ${JSON.stringify(presentation)}`);
+        }
+      }
+
+      // Follow the real keyboard order through the four settings. Checking the
+      // computed focus ring catches a missing stylesheet as well as lost labels.
+      await setting('Widget').focus();
+      for (const label of ['Embed mode', 'Theme', 'Accent']) {
+        await page.keyboard.press('Tab');
+        const focused = await setting(label).evaluate((element) => {
+          const style = getComputedStyle(element);
+          return element === document.activeElement && element.matches(':focus-visible')
+            && style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2;
+        });
+        if (!focused) throw new Error(`${label} lacks visible keyboard focus at ${width}px`);
+      }
+      check?.(`widgets ${width}: labeled controls fit, meet 44px height, and retain visible keyboard focus`, true);
+      await capture(width, 'controls');
+
+      await setting('Widget').selectOption('sky');
+      await setting('Theme').selectOption('light');
+      const code = builder.getByLabel('Embed code', { exact: true });
+      const frame = builder.locator('[data-widget-preview]');
+      if (!(await code.inputValue()).includes('/embed/sky/?theme=light')
+        || !(await frame.getAttribute('src')).includes('/embed/sky/?theme=light')) {
+        throw new Error('Builder settings did not update the iframe snippet and preview together');
+      }
+      await setting('Embed mode').selectOption('script');
+      if (!(await code.inputValue()).includes('data-zodiacs-widget="sky"')) {
+        throw new Error('Script mode did not produce the selected widget');
+      }
+      await setting('Widget').selectOption('chart');
+      if (!(await code.inputValue()).includes('data-zodiacs-widget="chart"')
+        || !(await frame.getAttribute('src')).includes('/embed/chart/?theme=light')) {
+        throw new Error('Chart selection did not update the script snippet and preview together');
+      }
+      check?.(`widgets ${width}: native settings keep iframe/script code and actual preview destination aligned`, true);
+      await capture(width, 'chart-script');
+    }
+
+    // These are rendered text assertions: source whitespace alone does not
+    // establish whether Astro preserves a space at an inline-link boundary.
+    const textCases = [
+      ['/widgets/', '.wdg-intro', ['published as machine-readable JSON.']],
+      ['/developers/', 'main', [
+        'the shared sky, and chart calculation stays on the device.',
+        'schema (for example zodiacs.sky-api.today.v1)',
+        'extended; read index.json rather than',
+        'free to use under CC BY 4.0.',
+        'with a link to https://zodiacs.org wherever',
+        'consume JSON, the embeddable widgets',
+        'RSS: daily horoscopes and the daily sky.',
+        'and the theme and accent parameters',
+      ]],
+      ['/people/', '.people-directory__footer', ['Something wrong on one of these pages? Ask us to correct or remove it.']],
+      ['/people/ada-lovelace/', '.person-evidence__correction', ['Something wrong here? Ask us to correct or remove it.']],
+    ];
+    for (const [route, selector, phrases] of textCases) {
+      await page.goto(`${baseURL}${route}`, { waitUntil: 'domcontentloaded' });
+      const text = (await page.locator(selector).textContent()).replace(/\s+/g, ' ').trim();
+      for (const phrase of phrases) {
+        if (!text.includes(phrase)) throw new Error(`${route} has a broken rendered text boundary: ${phrase}`);
+      }
+      check?.(`widgets copy: ${route} preserves inline text spacing`, true);
+    }
+    if (errors.length) throw new Error(`Widget builder emitted unexpected browser errors:\n${errors.join('\n')}`);
+    console.log('widgets-drive: builder labels, mobile controls, keyboard focus, modes, previews, and inline copy pass');
+  } finally {
+    await page.close();
+  }
+}
 
 function listen(server) {
   return new Promise((resolveListen, rejectListen) => {
@@ -18,7 +182,7 @@ function close(server) {
   return new Promise((resolveClose) => server.close(resolveClose));
 }
 
-await withPreview({ port: Number(process.env.WIDGET_PREVIEW_PORT ?? 4331) }, async (baseURL) => {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await withPreview({ port: Number(process.env.WIDGET_PREVIEW_PORT ?? 4331) }, async (baseURL) => {
   const host = createServer((_request, response) => {
     response.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
     response.end(`<!doctype html><html><body>
@@ -74,6 +238,7 @@ await withPreview({ port: Number(process.env.WIDGET_PREVIEW_PORT ?? 4331) }, asy
     const forbidden = requests.filter((url) => /plausible|analytics|session[-_]?record|fingerprint|\/api\//i.test(url));
     if (forbidden.length > 0) throw new Error(`embed made forbidden requests:\n${forbidden.join('\n')}`);
     console.log('widgets-drive: foreign-origin iframe, script mount, branding, icons, and private chart all pass');
+    await verifyWidgetBuilder({ browser, baseURL, outDir: process.env.OUT_DIR ?? 'tests/visual/artifacts/widgets' });
   } finally {
     await browser.close();
     await close(host);

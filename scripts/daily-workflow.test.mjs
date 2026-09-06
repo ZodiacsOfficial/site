@@ -32,6 +32,40 @@ describe('daily publication operations', () => {
     expect(workflow).toContain('git push origin "HEAD:$DEFAULT_BRANCH"');
   });
 
+  it('publishes through a pull request when the protected branch refuses a direct push', async () => {
+    const [daily, snapshot, transits, publisher] = await Promise.all([
+      read('.github/workflows/daily-horoscopes.yml'),
+      read('.github/workflows/registry-market-snapshot.yml'),
+      read('.github/workflows/transits-monthly.yml'),
+      read('scripts/publish-through-pr.sh'),
+    ]);
+
+    // The direct push stays the first attempt (the fast path if a bypass
+    // actor is ever granted); GH006 — "changes must be made through a pull
+    // request" — hands the same verified commit to the shared publisher,
+    // which opens and squash-merges a pull request with the workflow token.
+    for (const [name, workflow] of Object.entries({ daily, snapshot, transits })) {
+      expect(workflow, name).toContain('pull-requests: write');
+      expect(workflow, name).toContain('actions: write');
+      expect(workflow, name).toContain('GH_TOKEN: ${{ github.token }}');
+      expect(workflow, name).toContain('if grep -q "GH006" "$RUNNER_TEMP/publish-push.err"; then');
+      expect(workflow, name).toContain('bash scripts/publish-through-pr.sh');
+    }
+    expect(daily).toContain('bash scripts/publish-through-pr.sh "$DEFAULT_BRANCH" "$VERIFIED_BASE_SHA"');
+    expect(daily).toContain('echo "commit_sha=$(git rev-parse "origin/$DEFAULT_BRANCH")" >> "$GITHUB_OUTPUT"');
+
+    expect(publisher).toContain('set -euo pipefail');
+    expect(publisher).toContain('advanced after verification; rerun the complete workflow');
+    expect(publisher).toContain('gh pr create --base "$base" --head "$branch"');
+    expect(publisher).toContain('gh pr merge "$pr_url" --squash');
+    // A token-made merge triggers no push workflow, so the publisher asks for
+    // Site Check on the merged head itself (workflow_dispatch is the exception).
+    expect(publisher).toContain('gh workflow run site-check.yml --ref "$base" -f "scope_base=$merged"');
+    expect(publisher).toContain('Allow GitHub Actions to create and approve pull requests');
+    expect(publisher).not.toContain('--admin');
+    expect(publisher).not.toContain('git rebase');
+  });
+
   it('declares the daily and Monday-weekly publication boundary at 00:00 UTC', async () => {
     const [workflow, pageData, hub, plan, setup] = await Promise.all([
       read('.github/workflows/daily-horoscopes.yml'),

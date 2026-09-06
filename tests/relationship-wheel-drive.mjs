@@ -14,6 +14,7 @@ import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
+import { driveLegacyPolarProfile } from './legacy-polar-profile-drive.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const PORT = 4399;
@@ -419,6 +420,7 @@ try {
   await shot(mob, 'rwheel-mobile.png');
   await mob.close();
 
+  await driveLegacyPolarProfile({ browser, baseURL: BASE, check, outDir: OUT });
   await browser.close();
 } finally {
   preview.kill();

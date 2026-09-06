@@ -144,7 +144,14 @@ describe('account sync v2 cutover guards', () => {
     expect(base).not.toContain('guideRuntimeEnabled');
     expect(base).toContain('plausibleScriptUrl && (!props.noindex || props.analyticsOnNoindex) && !props.privateSurface');
     expect(base).toContain('&& !accountSyncV2Enabled,');
-    expect(base).toContain('data-guide-analytics-boundary={plausibleEnabled ?');
+    expect(base).toContain('data-guide-analytics-boundary={plausibleEnabled || webAnalyticsEnabled ?');
+    // The flagged Vercel pageview counter sits behind the same surface exclusions
+    // and the same private-session check as Plausible.
+    expect(base).toContain('vercelWebAnalyticsFlag(import.meta.env) && (!props.noindex || props.analyticsOnNoindex) && !props.privateSurface');
+    const vercelBlock = base.slice(base.indexOf('{webAnalyticsEnabled && ('), base.indexOf('<slot name="head" />'));
+    expect(vercelBlock).toContain("sessionStorage.getItem(guidePrivateSessionKey) === '1'");
+    expect(vercelBlock).toContain("insights.src = '/_vercel/insights/script.js';");
+    expect(vercelBlock).toContain('url.search = \'\';');
     expect(base).toContain("sessionStorage.getItem(guidePrivateSessionKey) === '1'");
     expect(guide).toContain('privateSurface');
     expect(base).toContain('Object.keys(value).length === expectedLength');

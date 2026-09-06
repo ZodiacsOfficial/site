@@ -85,7 +85,10 @@ const displayBlocks = person.copy.blocks.map((block) => (
     : block
 ));
 const pageUrl = `https://zodiacs.org/people/${person.slug}/`;
-const image = `/assets/og/v2/people/${person.slug}.png`;
+const identityCardRevision = ['neil-armstrong', 'amelia-earhart', 'maya-angelou'].includes(person.slug)
+  ? '?v=identity-2026-09-05'
+  : '';
+const image = `/assets/og/v2/people/${person.slug}.png${identityCardRevision}`;
 const pageModifiedAt = latestModifiedAt(person.reviewedAtUtc, PEOPLE_TEMPLATE_MODIFIED_AT);
 
 const jsonLd = [
@@ -135,6 +138,7 @@ const jsonLd = [
   nofollow={person.living}
   jsonLd={jsonLd}
   stableTypography
+  preloadMonoFont
 >
   <article class="person-page" style={`--sign:${sign.hue}`}>
     <div class="person-layout">
@@ -145,7 +149,7 @@ const jsonLd = [
               <img
                 src={person.portrait.assetPath}
                 srcset={`/assets/people/${person.slug}-192.webp 192w, ${person.portrait.assetPath} ${person.portrait.width}w`}
-                sizes="(max-width: 559px) 96px, (min-width: 1060px) 278px, calc(100vw - 60px)"
+                sizes="(max-width: 559px) 96px, (min-width: 1060px) 368px, calc(100vw - 60px)"
                 width={person.portrait.width}
                 height={person.portrait.height}
                 alt={person.displayName}
@@ -178,7 +182,6 @@ const jsonLd = [
           </div>
         )}
         <div class="person-identity__name">
-          <p class="people-kicker">People · sourced chart</p>
           <div class="person-identity__top">
             <SignIcon sign={person.sunSign.slug} size={48} loading="eager" />
             <h1 class="display">{person.displayName}</h1>
@@ -203,7 +206,6 @@ const jsonLd = [
       </header>
 
       <div class="person-reading">
-        <p class="people-kicker">The day, read honestly</p>
         <p class="person-lede">{person.copy.lede}</p>
 
         <div class="person-wheel">
@@ -324,7 +326,7 @@ const jsonLd = [
             </div>
           </dl>
           <p class="person-evidence__correction">
-            Something wrong here?
+            Something wrong here?{' '}
             <a href={`mailto:people@zodiacs.org?subject=${encodeURIComponent(`Correction or removal: ${person.displayName}`)}`}>
               Ask us to correct or remove it.
             </a>

@@ -91,14 +91,6 @@ export function rankConsumerSearchEntries(
   entries: SearchEntry[],
   query: string,
 ): WebMcpSearchResult[] {
-  // Page titles tend to use singular nouns while callers naturally ask for
-  // "charts", "trines", or "eclipses". Feed that narrow variation into the
-  // existing scorer; its weights and deterministic tie-breaks stay unchanged.
-  const normalizedQuery = query.replace(/\S+/g, (token) => (
-    token.length > 5 && token.endsWith('s') && !token.endsWith('ss')
-      ? token.slice(0, -1)
-      : token
-  ));
   return searchIndex(
     entries.filter((entry) => (
       entry.kind !== 'astrofolio'
@@ -106,7 +98,7 @@ export function rankConsumerSearchEntries(
       && entry.kind !== 'registry'
       && !/^\/(?:terminal|registry|thesis|sdk|archive|collect)(?:\/|$)/.test(entry.path)
     )),
-    normalizedQuery,
+    query,
     SEARCH_RESULT_LIMIT,
   ).map(({ title, path, kind, description }) => ({ title, path, kind, description }));
 }

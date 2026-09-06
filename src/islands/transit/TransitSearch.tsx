@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { serializeTransitContacts } from '../../lib/ical';
+import { downloadCalendarFile } from '../../lib/ical-download';
 import {
   SLOW_TRANSIT_BODIES,
   TRANSIT_BODY_ORDER,
@@ -184,12 +185,7 @@ export function TransitSearch({
       generatedAt: new Date(),
       calendarName: 'Zodiacs.org transit search',
     });
-    const url = URL.createObjectURL(new Blob([calendar], { type: 'text/calendar;charset=utf-8' }));
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'zodiacs-transit-search.ics';
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 0);
+    downloadCalendarFile(calendar, 'zodiacs-transit-search.ics');
   }
 
   const canRun = natal !== null && natalPoint !== '' && bodies.length > 0 && !busy;

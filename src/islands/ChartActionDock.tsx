@@ -1,3 +1,8 @@
+export { default as EntityPicker } from './explorer/EntityPicker';
+export { default as ReadingPath } from './explorer/ReadingPath';
+export { default as Inspector } from './explorer/Inspector';
+export { chartWeather, natalAspectLine, planetInHouseLine, topAspects } from '../lib/natal';
+
 interface SignaturePreview {
   headline: string;
   evidence?: string | null;

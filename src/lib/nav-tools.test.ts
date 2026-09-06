@@ -3,11 +3,24 @@ import { RELEASED_LOCALES, localizePath, t } from './i18n';
 import {
   FOOTER_TOOLS,
   NAV_TOOLS,
+  navToolLabelHasEnglishCue,
   TOOL_CATALOG,
   TOOLS_HUB,
 } from './nav-tools';
 
 describe('NAV_TOOLS', () => {
+  it.each(['es', 'pt', 'fr', 'it'] as const)('recognizes the existing %s Birthday language cue once', (locale) => {
+    expect(navToolLabelHasEnglishCue(locale, 'birthday', t(locale, 'birthday'))).toBe(true);
+    expect(navToolLabelHasEnglishCue(locale, 'birthday', 'Birthday')).toBe(false);
+    expect(navToolLabelHasEnglishCue(locale, 'birthChart', t(locale, 'birthday'))).toBe(false);
+  });
+
+  it('does not suppress a cue for an unqualified or differently localized label', () => {
+    expect(navToolLabelHasEnglishCue('en', 'birthday', t('en', 'birthday'))).toBe(false);
+    expect(navToolLabelHasEnglishCue('ru', 'birthday', t('ru', 'birthday'))).toBe(false);
+    expect(navToolLabelHasEnglishCue('pt', 'birthday', t('es', 'birthday'))).toBe(false);
+  });
+
   it('keeps the requested eight tools in stable order', () => {
     expect(NAV_TOOLS.map((tool) => tool.href)).toEqual([
       '/birth-chart/',
@@ -54,9 +67,23 @@ describe('NAV_TOOLS', () => {
       '/transits/',
       '/retrogrades/',
     ]);
-    expect(TOOLS_HUB).toHaveLength(15);
+    expect(TOOLS_HUB).toHaveLength(16);
     for (const tool of [...NAV_TOOLS, ...FOOTER_TOOLS, ...TOOLS_HUB]) {
       expect(catalogueHrefs.has(tool.href)).toBe(true);
+    }
+  });
+
+  it('links Today to released daily editions and preserves unreleased-language cues', () => {
+    const today = FOOTER_TOOLS.find((tool) => tool.href === '/today/');
+    expect(today?.localized).toBe(true);
+    expect(today?.labels?.es).toBe('Hoy');
+    expect(today?.labels?.pt).toBe('Hoje');
+    for (const locale of ['es', 'pt'] as const) {
+      expect(localizePath(locale, '/today/')).toBe(`/${locale}/today/`);
+    }
+    for (const locale of ['fr', 'it', 'ru'] as const) {
+      expect(localizePath(locale, '/today/')).toBe('/today/');
+      expect(today?.labels?.[locale]).toMatch(/anglais|inglese|английски/u);
     }
   });
 });

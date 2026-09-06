@@ -29,11 +29,6 @@ const fontContract = [
     sha256: '815a63e9dd8466897f1b84a1751975d0eb0ce9608aa34ff4321380914541d8ad',
   },
   {
-    file: 'eb-garamond-home-400-italic-core.woff2',
-    source: 'public/fonts/eb-garamond-latin-400-italic.woff2',
-    sha256: 'f72e5d6b6bb828cc97df362346c6ab5978e3bbc44fc06a95d71bfc3472f46271',
-  },
-  {
     file: 'eb-garamond-home-500-nav-core.woff2',
     source: 'public/fonts/eb-garamond-latin-500-normal.woff2',
     sha256: 'e1964873156b4f11e1bb5e667986c59030c05b5509cdb48cbc1d1645b4dbd6f8',
@@ -62,17 +57,18 @@ describe('homepage first-paint assets', () => {
     expect(createHash('sha256').update(subset).digest('hex')).toBe(sha256);
   });
 
-  it('keeps optional route subsets and avoids the full font files', async () => {
+  it('keeps route subsets local and avoids the full font files', async () => {
     const css = await readFile(resolve(repositoryRoot, 'src/home/home-first-paint.css'), 'utf8');
 
     expect(css.match(/font-display: optional;/g)).toHaveLength(2);
-    expect(css).not.toContain('font-display: swap;');
+    expect(css.match(/font-display: swap;/g)).toHaveLength(1);
     expect(css).not.toMatch(/url\(['"]?\/fonts\//u);
     expect(css).toContain("--font-nav-serif: 'EB Garamond',");
     expect(css).toContain("--font-nav-sans: 'Instrument Sans',");
     expect(css).toContain("--font-nav-mono: 'JetBrains Mono',");
     expect(css).toContain('/assets/home/eb-garamond-home-400-core.woff2');
-    expect(css).toContain('/assets/home/eb-garamond-home-400-italic-core.woff2');
+    expect(css).toContain('/assets/home/instrument-sans-home-nav-core.woff2');
+    expect(css).toContain('/assets/home/jetbrains-mono-home-nav-core.woff2');
   });
 
   it('keeps the mobile poster motion on the first-render path', async () => {
@@ -82,6 +78,37 @@ describe('homepage first-paint assets', () => {
     expect(css).toContain('@media (max-width: 719px) and (prefers-reduced-motion: no-preference)');
     expect(css).toContain(".hero__poster[data-hero-motion='drift']");
     expect(css).toContain(".hero__poster[data-hero-visible='false'] { animation-play-state: paused; }");
+  });
+
+  it('keeps the pre-August 31 hero hierarchy on the real route fonts', async () => {
+    const [css, page] = await Promise.all([
+      readFile(resolve(repositoryRoot, 'src/home/home-first-paint.css'), 'utf8'),
+      readFile(resolve(repositoryRoot, 'src/pages/index.astro'), 'utf8'),
+    ]);
+
+    expect(css).toMatch(/\.hero__title\s*\{[^}]*font-family: 'Instrument Sans Hero'/su);
+    expect(css).toMatch(/\.hero__sub\s*\{[^}]*font-family: 'Instrument Sans Hero'/su);
+    expect(css).toMatch(/\.hero__ctas\s*\{[^}]*font-family: 'Instrument Sans Hero'/su);
+    expect(css).toMatch(/\.hero__trust\s*\{[^}]*font-family: 'JetBrains Mono Hero'/su);
+    expect(page).toMatch(/\.hero__title\s*\{[^}]*font-family: 'Instrument Sans Hero'/su);
+    expect(page).toMatch(/\.hero__trust\s*\{[^}]*font-family: 'JetBrains Mono Hero'/su);
+    expect(page).toContain('<h1 class="hero__title">Your whole chart, <em>not just your sign.</em></h1>');
+    expect(page).toContain('Free birth charts, moon signs, compatibility, and horoscopes —');
+    expect(page).toContain('Get your free birth chart');
+    expect(page).toContain('See your forecasts');
+    expect(page).toContain('Free · No signup · Calculated in your browser');
+    expect(page).not.toContain('class="hero__story"');
+    expect(page).not.toContain('class="hero__method"');
+  });
+
+  it('keeps the deterministic sky receipt server-rendered without a hydration directive', async () => {
+    const page = await readFile(resolve(repositoryRoot, 'src/pages/index.astro'), 'utf8');
+    const ticker = page.match(/<SkyTicker\b[^>]*\/>/gu);
+
+    expect(ticker).toEqual(['<SkyTicker />']);
+    // Personal return state and the interactive sign reading still hydrate.
+    expect(page).toContain('<WelcomeBack client:visible />');
+    expect(page).toContain('<TodayBySign client:visible={{ rootMargin: \'240px\' }} />');
   });
 
   it.skipIf(!existsSync(resolve(repositoryRoot, 'dist/index.html')))(
@@ -100,6 +127,13 @@ describe('homepage first-paint assets', () => {
       expect(catalog).toBeGreaterThan(hero);
       expect(catalog).toBeLessThan(firstIsland);
       for (const { file } of fontContract) expect(html).toContain(`/assets/home/${file}`);
+
+      // The receipt remains available without JavaScript, and its static
+      // dependency tree must not become a home hydration root again.
+      expect(html).toContain('class="skyticker mono"');
+      expect(html).toContain('class="skyticker__label"');
+      expect(html.match(/class="skyticker__item"/gu)?.length).toBeGreaterThanOrEqual(3);
+      expect(html).not.toMatch(/component-url="[^"]*\/SkyTicker\.[^"]*"/u);
     },
   );
 });

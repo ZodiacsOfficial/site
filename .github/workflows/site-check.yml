@@ -45,9 +45,11 @@ jobs:
         # Production tree must be clean at any severity; the full tree
         # (dev included) fails only on high/critical so a low-severity
         # transitive dev advisory cannot block an unrelated deploy.
+        # Retry only recognized, findings-free audit endpoint outages;
+        # every other failure and exhausted retries remain fatal.
         run: |
-          npm audit --omit=dev
-          npm audit --audit-level=high
+          node scripts/audit-with-retry.mjs --omit=dev
+          node scripts/audit-with-retry.mjs --audit-level=high
 
       - name: Install pinned Chromium
         run: npx playwright-core install chromium
@@ -86,6 +88,18 @@ jobs:
 
       - name: Typecheck
         run: npm run check
+
+      - name: Thesis reading and evidence at six viewport widths
+        run: OUT_DIR=tests/visual/artifacts/thesis npm run test:thesis:browser
+
+      - name: Upload thesis screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: thesis-browser-${{ github.run_id }}
+          path: tests/visual/artifacts/thesis/
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Birth chart export and sharing acceptance
         env:

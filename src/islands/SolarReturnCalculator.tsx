@@ -8,6 +8,8 @@ import type { City } from '../lib/geo/search';
 import type { SolarReturnResultData } from './solar-return/compute';
 import type { SolarReturnResultProps } from './solar-return/SolarReturnResult';
 import type { WheelProps } from '../lib/wheel/Wheel';
+import { loadModule } from '../lib/module-load';
+import CalculationReload, { calculationError } from './CalculationReload';
 
 type ResultComponent = ComponentType<SolarReturnResultProps>;
 
@@ -30,6 +32,8 @@ export default function SolarReturnCalculator() {
   const [error, setError] = useState('');
   const errorRef = useRef<HTMLParagraphElement>(null);
   const initialized = useRef(false);
+  const mounted = useRef(true);
+  const inFlight = useRef(false);
   const profileAccessGeneration = useProfileAccessGeneration(() => {
     setResult(null);
     setResultView(null);
@@ -39,6 +43,20 @@ export default function SolarReturnCalculator() {
     setBusy(false);
     setError('');
   });
+
+  useEffect(() => {
+    mounted.current = true;
+    const onAccess = () => {
+      inFlight.current = false;
+      setBusy(false);
+    };
+    window.addEventListener('zodiacs:profile-access', onAccess);
+    return () => {
+      mounted.current = false;
+      inFlight.current = false;
+      window.removeEventListener('zodiacs:profile-access', onAccess);
+    };
+  }, []);
 
   useEffect(() => {
     if (!profileReady || initialized.current) return;
@@ -58,17 +76,19 @@ export default function SolarReturnCalculator() {
 
   async function calculate(event: Event) {
     event.preventDefault();
-    if (!ready || busy) return;
+    if (!mounted.current || !ready || inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setError('');
     const accessGeneration = profileAccessGeneration.current;
+    const isCurrent = () => mounted.current && accessGeneration === profileAccessGeneration.current;
     try {
-      const [{ computeSolarReturn }, view, wheel] = await Promise.all([
+      const [{ computeSolarReturn }, view, wheel] = await loadModule(() => Promise.all([
         import('./solar-return/compute'),
         import('./solar-return/SolarReturnResult'),
         import('./transit/TransitRing'),
-      ]);
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      ]));
+      if (!isCurrent()) return;
       const selected = source === 'saved' ? saved : null;
       const birthplace = selected ? selected.birth.place : city;
       const savedSun = selected && !selected.birth.place
@@ -85,16 +105,19 @@ export default function SolarReturnCalculator() {
         castLocation: selected && !selected.birth.place ? null : (differentPlace ? castCity : birthplace),
         year: yearMode === 'current' ? 'current' : Number(customYear),
       });
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      if (!isCurrent()) return;
       setResultView(() => view.SolarReturnResult);
       setWheelView(() => wheel.StaticWheel);
       setResult(resultData);
     } catch (cause) {
-      if (accessGeneration !== profileAccessGeneration.current) return;
+      if (!isCurrent()) return;
       console.error(cause);
-      setError('The solar return could not be computed. Check the details and try again.');
+      setError(calculationError(cause, 'en', 'The solar return could not be computed. Check the details and try again.'));
     } finally {
-      if (accessGeneration === profileAccessGeneration.current) setBusy(false);
+      if (isCurrent()) {
+        inFlight.current = false;
+        setBusy(false);
+      }
     }
   }
 
@@ -159,6 +182,7 @@ export default function SolarReturnCalculator() {
           <button class="btn btn--primary calc__submit" type="submit" disabled={!ready || busy || (differentPlace && !(saved && !saved.birth.place) && !castCity)}><span>{busy ? 'Computing…' : 'Cast solar return'}</span><span class="orb">↗</span></button>
           <p class="calc__privacy"><strong>Private by default.</strong> The chart is calculated on this device; nothing is uploaded.</p>
           {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
+          <CalculationReload error={error} locale="en" />
         </div>
       </form>
       {result && ResultView && WheelView && <ResultView key={result.chart.input.utc.toISOString()} result={result} Wheel={WheelView} />}

@@ -5,7 +5,7 @@
  *   OUT_DIR=/tmp/today-shots npm run test:today:browser
  */
 import { chromium } from 'playwright-core';
-import { mkdir, readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
@@ -98,9 +98,23 @@ async function newTodayPage(browser, options) {
 async function observeLayoutShifts(page) {
   await page.addInitScript(() => {
     globalThis.__zdxLayoutShifts = [];
+    globalThis.__zdxLayoutShiftDetails = [];
     new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (!entry.hadRecentInput) globalThis.__zdxLayoutShifts.push(entry.value);
+        if (!entry.hadRecentInput) {
+          globalThis.__zdxLayoutShifts.push(entry.value);
+          globalThis.__zdxLayoutShiftDetails.push({
+            value: entry.value,
+            startTime: entry.startTime,
+            readyState: document.readyState,
+            fonts: document.fonts.status,
+            sources: entry.sources.map(({ node, previousRect, currentRect }) => ({
+              node: node ? { tag: node.nodeName, id: node.id, class: node.getAttribute?.('class') } : null,
+              previousRect: previousRect.toJSON(),
+              currentRect: currentRect.toJSON(),
+            })),
+          });
+        }
       }
     }).observe({ type: 'layout-shift', buffered: true });
   });
@@ -392,7 +406,14 @@ async function drive(BASE, browser) {
       && document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length === 12
   ));
   const returningSignCls = await measuredCls(returningSign);
-  check('stored Sun-sign hydration has exactly zero CLS', returningSignCls === 0, String(returningSignCls));
+  const returningSignShifts = await returningSign.evaluate(() => globalThis.__zdxLayoutShiftDetails);
+  check('stored Sun-sign hydration has exactly zero CLS', returningSignCls === 0, JSON.stringify({ cls: returningSignCls, shifts: returningSignShifts }));
+  if (returningSignCls !== 0) {
+    const failureDir = OUT ?? 'tests/visual/artifacts/today';
+    await mkdir(failureDir, { recursive: true });
+    await writeFile(`${failureDir}/stored-sign-layout-shifts.json`, JSON.stringify(returningSignShifts, null, 2));
+    await returningSign.screenshot({ path: `${failureDir}/stored-sign-layout-shift-900.png`, fullPage: true });
+  }
   const returningSignState = await returningSign.evaluate(() => ({
     totalReadings: document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length,
     visibleReadings: Array.from(document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]'))
@@ -411,6 +432,13 @@ async function drive(BASE, browser) {
   await returningSign.close();
 
   const empty = await newTodayPage(browser, { viewport: { width: 900, height: 1400 } });
+  const emptyPersonalizationRequests = [];
+  empty.on('request', (request) => {
+    const pathname = new URL(request.url()).pathname;
+    if (/^\/_astro\/(?:transits|compat)\.[^/]+\.js$/.test(pathname)) {
+      emptyPersonalizationRequests.push(pathname);
+    }
+  });
   await observeLayoutShifts(empty);
   await empty.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await empty.waitForSelector('[data-today-state="empty"]');
@@ -441,6 +469,30 @@ async function drive(BASE, browser) {
   check('selected sign keeps its pastel icon', await empty.locator('#today-sun-sign-reading [data-today-sun-sign="leo"] .today-sign-reading__icon img[src$="/leo.webp"]').count() === 1);
   const selectedHash = await empty.evaluate(() => location.hash);
   check('enhanced sign link keeps native hash navigation', selectedHash === '#today-sun-sign-leo', selectedHash);
+  check(
+    'first visit and Sun-sign selection do not request transit or compatibility chunks',
+    emptyPersonalizationRequests.length === 0,
+    JSON.stringify(emptyPersonalizationRequests),
+  );
+  const requestsBeforeChartSave = emptyPersonalizationRequests.length;
+  await empty.evaluate((savedProfile) => {
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify(savedProfile));
+    window.dispatchEvent(new CustomEvent('zodiacs:profile', { detail: savedProfile }));
+  }, profile);
+  await empty.waitForSelector('[data-today-state="chart"]');
+  const chartSaveRequests = emptyPersonalizationRequests.slice(requestsBeforeChartSave);
+  check(
+    'same-window chart save requests transit copy on demand',
+    chartSaveRequests.some((pathname) => pathname.startsWith('/_astro/transits.')),
+    JSON.stringify(chartSaveRequests),
+  );
+  check(
+    'same-window chart save renders the current saved chart and replaces the Sun-sign notes',
+    await empty.locator('.today-reading--resolved').isVisible()
+      && await empty.locator('.today-reading__chart-name').innerText() === profile.charts[0].name
+      && await empty.locator('.today-lines li').count() >= 2
+      && await empty.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 0,
+  );
   await empty.close();
 
   const noJs = await newTodayPage(browser, {

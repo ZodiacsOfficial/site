@@ -1,7 +1,8 @@
 import { h } from 'preact';
 import { render } from 'preact-render-to-string';
 import { describe, expect, it } from 'vitest';
-import type { ChartWeather } from '../../lib/natal';
+import { natalAspectLine, type ChartWeather } from '../../lib/natal';
+import { SIGNS, signEssence } from '../../lib/signs';
 import ReadingPath, {
   readingScrollBehavior,
   type ReadingPathPlacement,
@@ -77,6 +78,36 @@ describe('ReadingPath', () => {
     expect(markup).toContain('Birth time is unknown, so houses are not shown.');
     expect(markup).toContain('Birth time needed');
     expect(markup).not.toContain('data-reading-house=');
+  });
+
+  it('reads two conjunctions through their planet pairs and retains their exact highlights', () => {
+    const markup = render(h(ReadingPath, {
+      ...baseProps,
+      topAspects: [
+        { a: 'Neptune', b: 'Sun', type: 'conjunction', orb: 0.6, applying: false },
+        { a: 'Venus', b: 'Pluto', type: 'conjunction', orb: 1.1, applying: false },
+      ],
+      selection: { kind: 'aspect', a: 'Neptune', b: 'Sun', type: 'conjunction' },
+    }));
+    expect(markup).toContain(natalAspectLine('Sun', 'conjunction', 'Neptune'));
+    expect(markup).toContain(natalAspectLine('Venus', 'conjunction', 'Pluto'));
+    expect(markup).toContain('imagination can be woven into your sense of self');
+    expect(markup).toContain('affection and taste can invite deep investment');
+    expect(markup).toContain('0.6° orb');
+    expect(markup).toContain('1.1° orb');
+    expect(markup).toContain('Show on chart: Neptune conjunction Sun');
+    expect(markup).toContain('Show on chart: Venus conjunction Pluto');
+    expect(markup).toContain('Highlighted on chart');
+  });
+
+  it('keeps the first step as a locator without repeating sign interpretations', () => {
+    const markup = render(h(ReadingPath, baseProps));
+    expect(markup).toContain('Locate your big three');
+    expect(markup).toContain('The part of you that chooses a direction.');
+    expect(markup).toContain('What you need in order to feel steady.');
+    expect(markup).toContain('How people first meet you.');
+    expect(markup).not.toContain(signEssence(SIGNS[0]));
+    expect(markup).not.toContain(signEssence(SIGNS[2]));
   });
 
   it('only smooth-scrolls for pointer activation without reduced motion', () => {

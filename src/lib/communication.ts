@@ -1,5 +1,6 @@
 import type { AspectType, BodyName, Chart } from './engine/types';
 import { MOON } from './interpretations';
+import { moonIsUncertain, moonLabel } from './moon-certainty';
 
 export type CommunicationSign = keyof typeof MERCURY_SIGN;
 export type CommunicationAspectTarget = keyof typeof MERCURY_ASPECT;
@@ -125,7 +126,8 @@ export function communicationRead(chart: Chart): CommunicationRead {
   const moon = chart.bodies.find((body) => body.body === 'Moon');
   const mars = chart.bodies.find((body) => body.body === 'Mars');
   const mercurySign = mercury ? signForLongitude(mercury.lon) : null;
-  const moonSign = moon ? signForLongitude(moon.lon) : null;
+  const uncertainMoon = moonIsUncertain(chart);
+  const moonSign = moon && !uncertainMoon ? signForLongitude(moon.lon) : null;
   const marsSign = mars ? signForLongitude(mars.lon) : null;
   const aspects = mercury
     ? chart.aspects
@@ -133,7 +135,7 @@ export function communicationRead(chart: Chart): CommunicationRead {
         const target = aspect.a === 'Mercury'
           ? aspect.b
           : aspect.b === 'Mercury' ? aspect.a : null;
-        return target && ASPECT_TARGETS.has(target)
+        return target && !(target === 'Moon' && uncertainMoon) && ASPECT_TARGETS.has(target)
           ? { ...aspect, target: target as CommunicationAspectTarget }
           : null;
       })
@@ -155,7 +157,7 @@ export function communicationRead(chart: Chart): CommunicationRead {
       ? mercuryAddendum(mercurySign, mercury.retrograde)
       : null,
     aspects,
-    moon: moonSign ? MOON[moonSign] : '',
+    moon: moonSign ? MOON[moonSign] : moon ? `${moonLabel(chart)} · A birth time is needed to settle the Moon reading.` : '',
     moonSign,
     mars: marsSign ? MARS_SIGN[marsSign] : '',
     marsSign,

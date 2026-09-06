@@ -3,10 +3,11 @@ import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
 import TransitTracker from '../../../islands/TransitTracker';
 import PlanetGlyph from '../../../components/PlanetGlyph';
-import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../../lib/horoscopes';
+import { dayLabel, eventList, transitMonthForEdition, monthLabel } from '../../../lib/horoscopes';
+import daily from '../../../data/daily.json';
 import '../../../styles/calculator.css';
 
-const month = latestTransitMonth();
+const month = transitMonthForEdition(daily.date);
 const events = month ? eventList(month, 'fr') : [];
 const label = month ? monthLabel(month, 'fr') : null;
 

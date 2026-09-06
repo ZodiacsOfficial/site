@@ -92,3 +92,31 @@ describe('weekly digest operational boundary', () => {
     expect(sender.match(/rendered\.text/g)).toHaveLength(2);
   });
 });
+
+describe('weekly digest canary', () => {
+  it('can only reach the one recipient named in a secret and never logs an address', async () => {
+    const [sender, workflow] = await Promise.all([
+      readFile(resolve(root, 'scripts/send-weekly-digest.ts'), 'utf8'),
+      readFile(resolve(root, '.github/workflows/weekly-digest.yml'), 'utf8'),
+    ]);
+
+    // The flag forces limit 1 and refuses the modes that would widen or fake it.
+    expect(sender).toContain("else if (arg === '--canary') options.canary = true;");
+    expect(sender).toContain("if (options.limit !== null && options.limit !== 1) throw new Error('--canary always sends at most one message");
+    expect(sender).toContain("if (options.fixture) throw new Error('--canary selects a real candidate");
+    expect(sender).toContain("if (options.recoveryOnly) throw new Error('--canary creates one new delivery");
+    // The recipient comes from the environment, and the candidate set collapses to that one person or to nobody.
+    expect(sender).toContain("canaryRecipient(process.env.DIGEST_CANARY_TO, 'DIGEST_CANARY_TO')");
+    expect(sender).toContain('if (canaryTo) candidateIds = await canaryCandidates(supabase!, candidateIds, maxCharts, canaryTo);');
+    expect(sender).toContain("is not among this week's ${candidateIds.length} bounded candidate(s); nothing sent");
+    // The receipt is machine-checkable and carries a hash prefix, not the address.
+    expect(sender).toContain('canary receipt sent=${sent} recipient=sha256:${recipientHashPrefix(canaryTo)}');
+    expect(sender).not.toMatch(/console\.(?:log|error)\([^\n]*\.email\b/u);
+
+    // The workflow passes the flag from a boolean input and the recipient from a secret only.
+    expect(workflow).toContain('canary:\n        description: "Send to the DIGEST_CANARY_TO recipient only (limit 1), or to nobody"');
+    expect(workflow).toContain("DIGEST_CANARY_TO: ${{ inputs.canary == true && secrets.DIGEST_CANARY_TO || '' }}");
+    expect(workflow).toContain('ARGS=(--canary)');
+    expect(workflow).not.toMatch(/--canary\s+"?\$/u);
+  });
+});

@@ -1,10 +1,7 @@
 /**
  * buildSceneModel — pure derivation from the engine's Chart to the
- * renderer-neutral ChartSceneModel. This is also the single home of the
- * wheel's layout math that must be shared between the interactive wheel,
- * the share-card serialization path, and hit-testing: the collision nudge
- * lives HERE, not in the renderer, so every renderer fans crowded bodies
- * identically.
+ * renderer-neutral ChartSceneModel. Interactive markers and hit-testing
+ * share its drawLon values; static/share wheels retain their pinned layout.
  *
  * Numerical invariant (tested): every SceneBody.lon equals the engine
  * BodyPosition.lon exactly. Only drawLon may differ.
@@ -13,7 +10,7 @@ import type { Aspect, Chart } from '../engine/types';
 import { houseOf } from '../engine/houses';
 import { dignityFor } from '../dignities';
 import { SIGNS, degreeInSign, signForLongitude } from '../signs';
-import { collisionNudge } from './layout';
+import { technicalCollisionFan } from '../wheel/technical-layout';
 import {
   type ChartSceneModel, type SceneAspect, type SceneBody, type SceneHouse,
   type SignSlug, entityId,
@@ -50,7 +47,11 @@ export function buildSceneModel(chart: Chart, opts: BuildOptions = {}): ChartSce
     ? chart.aspects.filter((a) => a.orb < 6)
     : chart.aspects;
 
-  const nudge = collisionNudge(rawBodies);
+  // The live wheel's stroked bubbles need 14° of space. Give exact
+  // conjunctions a stable identity order without changing the input array
+  // or the technical export's existing fan/default spacing.
+  const nudge = technicalCollisionFan([...rawBodies].sort((a, b) =>
+    a.body < b.body ? -1 : a.body > b.body ? 1 : 0), 14);
   const cusps = chart.houses?.cusps ?? null;
 
   const aspects: SceneAspect[] = rawAspects.map((a) => ({
@@ -108,6 +109,7 @@ export function buildSceneModel(chart: Chart, opts: BuildOptions = {}): ChartSce
 
   return {
     engineVersion: chart.engineVersion,
+    ...(chart.moonSignCandidates !== undefined ? { moonSignCandidates: chart.moonSignCandidates } : {}),
     anchor: anchorMode === 'aries'
       ? { lon: 0, mode: 'aries' }
       : { lon: chart.angles?.asc ?? 0, mode: 'asc' },

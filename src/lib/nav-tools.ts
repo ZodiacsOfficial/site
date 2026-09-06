@@ -42,6 +42,21 @@ export interface NavTool {
   sublabel: Record<Locale, string>;
 }
 
+// These Birthday catalogue labels already disclose the canonical English page.
+// Match only their existing endings so an unqualified future label still gets
+// the navigation's shared English-only courtesy.
+const BIRTHDAY_ENGLISH_ENDINGS: Partial<Record<Locale, string>> = {
+  es: ' (en inglés)',
+  pt: ' (em inglês)',
+  fr: ' (en anglais)',
+  it: ' (in inglese)',
+};
+
+export function navToolLabelHasEnglishCue(locale: Locale, key: UiKey, text: string): boolean {
+  const ending = BIRTHDAY_ENGLISH_ENDINGS[locale];
+  return key === 'birthday' && Boolean(ending && text.endsWith(ending));
+}
+
 export interface FooterTool {
   href: string;
   label: UiKey;
@@ -136,9 +151,13 @@ export const TOOL_CATALOG: readonly ToolCatalogEntry[] = [
     hub: { order: 2, title: "Someone else's chart", promise: 'Use birth details, the Big Three, or a Zodiacs link — with their permission.', hue: 'var(--sign-pisces)', kind: 'birth', group: 'start' },
   },
   {
-    href: '/today/', label: 'today', footerOrder: 2,
+    href: '/big-three/',
+    hub: { order: 16, title: 'Big Three calculator', promise: 'Sun, Moon, and Rising in seconds, with a card to share and one tap into the full chart.', hue: 'var(--sign-leo)', kind: 'birth', group: 'start' },
+  },
+  {
+    href: '/today/', label: 'today', footerOrder: 2, footerUsesLocalizedPath: true,
     footerLabel: {
-      en: 'Today', es: 'Hoy (en inglés)', pt: 'Hoje (em inglês)',
+      en: 'Today', es: 'Hoy', pt: 'Hoje',
       fr: 'Aujourd’hui (en anglais)', it: 'Oggi (in inglese)', ru: 'Сегодня — пока по-английски',
     },
     hub: { order: 3, title: 'Today', promise: 'A plain-language daily brief once you have saved a chart.', hue: 'var(--sign-cancer)', kind: 'transit', group: 'start' },

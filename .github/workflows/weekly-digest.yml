@@ -26,6 +26,11 @@ on:
         required: false
         type: string
         default: "80"
+      canary:
+        description: "Send to the DIGEST_CANARY_TO recipient only (limit 1), or to nobody"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -83,6 +88,10 @@ jobs:
           DIGEST_DRY_RUN: ${{ inputs.dry_run }}
           DIGEST_LIMIT: ${{ inputs.limit }}
           DIGEST_RECOVERY_ONLY: ${{ github.event.schedule == '0,15 5,6,7,10,17 * * 2' || inputs.recovery_only == true }}
+          DIGEST_CANARY: ${{ inputs.canary }}
+          # The canary recipient is a secret, never a dispatch input, so an
+          # address never appears in the public Actions log.
+          DIGEST_CANARY_TO: ${{ inputs.canary == true && secrets.DIGEST_CANARY_TO || '' }}
         run: |
           ARGS=(--limit "${DIGEST_LIMIT:-80}")
           if [ "${DIGEST_DRY_RUN:-false}" = "true" ]; then
@@ -90,5 +99,9 @@ jobs:
           fi
           if [ "${DIGEST_RECOVERY_ONLY:-false}" = "true" ]; then
             ARGS+=(--recovery-only)
+          fi
+          if [ "${DIGEST_CANARY:-false}" = "true" ]; then
+            ARGS=(--canary)
+            if [ "${DIGEST_DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
           fi
           npm run digest:weekly -- "${ARGS[@]}"

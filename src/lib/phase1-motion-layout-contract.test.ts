@@ -259,7 +259,8 @@ describe('Phase 1 layout and motion contract', () => {
     expect(base).toContain('href="/fonts/eb-garamond-latin-500-normal.woff2"');
     expect(base).toContain('href="/fonts/jetbrains-mono-latin-wght-normal.woff2"');
     expect(base).toContain("media={props.minimalNavFontPreloads ? '(min-width: 782px)' : undefined}");
-    expect(base).toContain('media="(min-width: 782px)"');
+    expect(base).toContain('props.preloadMonoFont || (props.minimalNavFontPreloads && props.stableChromeTypography)');
+    expect(base).toContain("media={props.preloadMonoFont ? undefined : '(min-width: 782px)'}");
     expect(routeTypography).not.toContain('--font-nav-');
     expect(nav).toMatch(/\.nav-wrap\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);
     expect(nav).toMatch(/\.mobile-menu\s*\{[^}]*font-family:\s*var\(--font-nav-sans\);/u);

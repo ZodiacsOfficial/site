@@ -42,13 +42,25 @@ describe('horoscope freshness gate', () => {
       ...freshPackage,
       monthlyEntries: monthlyEntries.slice(1),
     })).toThrow('monthly horoscope 2026-08 must contain exactly the 12 signs');
-    expect(() => assertHoroscopePackageFreshness({
+    // Next month may be prepared ahead of time; it stays inert until its
+    // first day and never displaces the current edition.
+    expect(assertHoroscopePackageFreshness({
       ...freshPackage,
       monthlyEntries: [
         ...monthlyEntries,
-        { sourceName: 'future.mdx', sign: 'aries', month: '2026-09', draft: false },
+        ...HOROSCOPE_SIGNS.map((sign) => ({
+          sourceName: `future-${sign}.mdx`, sign, month: '2026-09', draft: false,
+        })),
       ],
-    })).toThrow('latest live monthly horoscope 2026-09 does not match current UTC month 2026-08');
+    })).toEqual({ currentDate: '2026-08-01', currentMonth: '2026-08', signCount: 12 });
+    expect(() => assertHoroscopePackageFreshness({
+      ...freshPackage,
+      monthlyEntries: monthlyEntries.map((entry) => ({ ...entry, month: '2026-09' })),
+    })).toThrow('latest live monthly horoscope undefined does not match current UTC month 2026-08');
+    expect(() => assertHoroscopePackageFreshness({
+      ...freshPackage,
+      monthlyEntries: monthlyEntries.map((entry) => ({ ...entry, month: '2026-07' })),
+    })).toThrow('latest live monthly horoscope 2026-07 does not match current UTC month 2026-08');
   });
 
   it('parses explicit and implicit live monthly frontmatter', () => {

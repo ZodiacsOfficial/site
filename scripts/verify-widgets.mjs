@@ -18,8 +18,15 @@ for (const route of routes) {
   }
   if (!html.includes('Powered by Zodiacs.org')) failures.push(`/embed/${route}/ lacks the required backlink`);
   if (!html.includes('/assets/zodiac-icons/48/')) failures.push(`/embed/${route}/ lacks canonical zodiac icons`);
-  if (/plausible|zodiacsAnalytics|session[-_ ]?record|fingerprint/i.test(html)) {
+  if (/plausible|zodiacsAnalytics|_vercel\/insights|session[-_ ]?record|fingerprint/i.test(html)) {
     failures.push(`/embed/${route}/ contains analytics or invasive-tracking code`);
+  }
+  if (!html.includes('data-zodiacs-widget-theme')) failures.push(`/embed/${route}/ lacks the inline theme script`);
+  if (!/:root\[data-theme=light\]/.test(html) || !/<html[^>]*data-theme="(?:dark|light)"/.test(html)) {
+    failures.push(`/embed/${route}/ does not ship both palettes keyed on data-theme`);
+  }
+  if (/fetch\(|XMLHttpRequest|navigator\.sendBeacon|localStorage|document\.cookie/.test(html)) {
+    failures.push(`/embed/${route}/ inline code must not fetch, beacon, or store`);
   }
 }
 
@@ -27,7 +34,7 @@ const loaderPath = resolve(root, 'public/assets/widgets.js');
 const loader = await readFile(loaderPath);
 const loaderGzip = gzipSync(loader).byteLength;
 if (loaderGzip >= 60 * 1024) failures.push(`widget loader is ${loaderGzip} bytes gzip (limit: <60KB)`);
-if (/analytics|plausible|fingerprint/i.test(loader.toString('utf8'))) failures.push('widget loader contains analytics code');
+if (/analytics|plausible|_vercel\/insights|fingerprint/i.test(loader.toString('utf8'))) failures.push('widget loader contains analytics code');
 
 async function initialJavaScriptGzip(route) {
   const htmlPath = resolve(root, 'dist', 'embed', route, 'index.html');

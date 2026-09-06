@@ -15,6 +15,7 @@ import { CHINESE_ZODIAC_COPY } from '../src/data/chinese-zodiac.ts';
 import { DEFAULT_LOCALE, LOCALES } from '../src/lib/i18n/core.ts';
 import { EN } from '../src/strings/en.mjs';
 import { WIDGET_EN } from '../src/strings/widgets.ts';
+import { currentHoroscopeMonth, utcMonth } from '../src/lib/horoscope-month.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_OUTPUT = resolve(repo, 'api/_assistant/context.ts');
@@ -214,7 +215,7 @@ async function loadHoroscopes(root) {
       month: frontmatterField(source, 'month', file),
     });
   }
-  const latestMonth = all.map((entry) => entry.month).sort().at(-1);
+  const latestMonth = currentHoroscopeMonth(all.map((entry) => entry.month), utcMonth(JSON.parse(await readFile(new URL('../src/data/daily.json', import.meta.url), 'utf8')).date));
   if (!latestMonth) throw new Error('Horoscope collection is empty');
   const current = all.filter((entry) => entry.month === latestMonth)
     .sort((a, b) => compareText(a.sign, b.sign));

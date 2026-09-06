@@ -1,7 +1,9 @@
 # Owner setup runbook
 
-Status: reconciled against repository `main` and read-only production probes on
-2026-08-27. This runbook is for the **Zodiacs.org website only**.
+Status: production observations below were recorded on 2026-08-27. Legal-source
+and email-product guidance were reconciled against repository `main` on
+2026-09-05; that source review does not reverify dashboard settings. This
+runbook is for the **Zodiacs.org website only**.
 
 ## 0. Authority and production-preservation rule
 
@@ -58,28 +60,33 @@ enable it. The current security-advisor warning is accepted until then.
 
 ### 1b. Legal identity, jurisdiction, and address
 
-The public Terms still say the operator identity and governing jurisdiction are
-pending. Do not infer them from a domain registration, a filing, a payment
-account, or a registered agent. The owner must provide and explicitly authorize
-all of these facts:
+The committed Terms and Privacy pages, updated 29 August 2026, already identify
+**Zodiacs LLC**, a New Mexico limited liability company, as the site operator
+and data controller. The Terms' “Operator and applicable law” section preserves
+mandatory laws and non-waivable rights; it does not select an exclusive
+governing law or dispute forum. These pages are the current source of truth:
+`src/pages/terms/index.astro` and `src/pages/privacy/index.astro`. The operator
+identity is no longer a pending placeholder.
 
-1. the exact legal operator and data-controller identity;
-2. the operator's jurisdiction/country of establishment;
-3. a postal address valid for that operator's commercial email under the laws
-   that apply;
-4. the governing law for the Terms; and
-5. the chosen venue or dispute forum.
+Before an email release, verify the current legal pages are deployed and that
+the message uses a valid owner-approved postal address. The published identity
+does not establish that the email postal setting is present, current, or
+approved for that use. Any change to the operator/controller identity,
+jurisdiction, address, governing-law wording, or dispute forum still requires
+the owner's exact facts and explicit authorization. Do not infer them from a
+domain registration, a filing, a payment account, or a registered agent.
 
 A PO box or registered-agent address is **not automatically sufficient**. The
 owner must confirm that the chosen address is genuinely usable for the operator
 and applicable jurisdiction and can receive required mail. Obtain legal advice
 if that is uncertain.
 
-Legal identity must be deployed before any new public standalone email capture
-is enabled. An account-digest canary separately requires the genuinely valid,
-owner-approved postal address printed in the message footer.
+The published legal identity must remain deployed before any new public
+standalone email capture is enabled. An account-digest canary separately
+requires the genuinely valid, owner-approved postal address printed in the
+message footer.
 
-After the owner supplies the exact facts, a separate authorized legal PR must:
+If the owner authorizes a later legal change, that separate legal PR must:
 
 - update the operator, controller/contact, applicable-law, and venue text;
 - update the visible `updated` date on every legal page it changes;
@@ -307,13 +314,19 @@ must move through dashboard secret forms, never chat or command-line arguments.
 ### Safe enable order
 
 1. Confirm `DIGEST_ENABLED` is unset/false.
-2. Dispatch **Weekly Digest** with `dry_run=true` and `limit=1`. The fixture body
-   may appear; any real-recipient selection must show only aggregate counts.
-   Addresses, chart names, personalized bodies, and unsubscribe capabilities
-   must remain absent from the public Actions log.
-3. Confirm the intended owner-controlled account is the only opted-in canary.
-   With explicit approval for one live email, dispatch `dry_run=false` and
-   `limit=1`.
+2. Add the repository secret `DIGEST_CANARY_TO` holding the owner-controlled
+   canary address (a secret form, never chat or a dispatch input). Dispatch
+   **Weekly Digest** with `canary=true` and `dry_run=true`. The run narrows this
+   week's candidates to that one address or refuses to send to anyone, and
+   prints `weekly-digest: canary receipt sent=0 recipient=sha256:<prefix>` — a
+   hash prefix, never the address. Addresses, chart names, personalized
+   bodies, and unsubscribe capabilities must remain absent from the public
+   Actions log.
+3. Confirm the canary address is opted in. With explicit approval for one live
+   email, dispatch `canary=true` and `dry_run=false`; the sender forces
+   `limit=1` and refuses `--limit`, `--fixture`, and `--recovery-only` in this
+   mode, so a typo cannot widen the send. The receipt line must read
+   `sent=1`.
 4. Check the received message's sender, content, postal footer, and unsubscribe
    link. A GET of that link must be read-only. Submit the page's explicit POST,
    then verify the profile preference became false, the delivery receipt stays
@@ -347,7 +360,8 @@ runbook does not authorize setting them.
 A later, separately authorized release may enable capture only after all of the
 following exist and pass with an owner-controlled address:
 
-1. the legal identity from §1b is already deployed;
+1. the current legal identity from §1b is verified as deployed and the message
+   uses the owner-approved postal address;
 2. a real Segment-based sender, Resend Broadcast, or Resend Automation sends
    the promised weekly message with a working unsubscribe lifecycle;
 3. submitting the capture sends a double-opt-in confirmation but does not add

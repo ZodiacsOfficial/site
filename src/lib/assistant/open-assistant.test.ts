@@ -88,7 +88,49 @@ const selfChart = (profile = profileJson()) => (
   selectedSelfChartFromJson(profile, ownerJson(), metadataJson())
 );
 
+function polarProfileJson({ corrected = false, malformed = false } = {}) {
+  const profile = JSON.parse(profileJson());
+  const selected = profile.charts[1];
+  selected.birth = {
+    date: '2001-12-21', time: '09:00', timeKnown: true,
+    place: { name: 'Polar fixture', lat: 78.2232, lon: 15.6267, tz: 'UTC' },
+  };
+  selected.summary.engineVersion = '0.1.0';
+  selected.summary.angles = {
+    asc: corrected ? 23.871984112302016 : 203.87198411230202,
+    mc: 242.6868131443143,
+  };
+  if (!malformed) selected.summary.flags = ['polar-fallback'];
+  return JSON.stringify(profile);
+}
+
 describe('saved-chart assistant context', () => {
+  it('uses the same repaired polar ASC and whole-sign houses as the saved profile without revealing birth input', async () => {
+    const chart = selfChart(polarProfileJson());
+    expect(chart?.id).toBe(NEWER_ID);
+    expect(chart?.accountRevision).toBe(1);
+    expect(chart?.summary.angles?.asc).toBeCloseTo(23.871984112302016, 10);
+    expect(chart?.summary.angles?.mc).toBe(242.6868131443143);
+    const summary = await placementSummaryForChart(chart!);
+    expect(summary).toContain('ASC: 23°52′ Aries · house 1');
+    expect(summary).toContain('Sun: 15°00′ Aries · house 1');
+    expect(summary).not.toMatch(/Secret Person|2001-12-21|09:00|Polar fixture|78\.2232|15\.6267|UTC/);
+    expect(selectedSelfChartFromJson(polarProfileJson(), ownerJson(), metadataJson([]))).toBeNull();
+    expect(selectedSelfChartFromJson(polarProfileJson(), ownerJson(), metadataJson([OLDER_ID, NEWER_ID]))).toBeNull();
+  });
+
+  it('does not change an already-correct current polar summary', async () => {
+    const chart = selfChart(polarProfileJson({ corrected: true }));
+    expect(chart?.summary.angles?.asc).toBe(23.871984112302016);
+    expect(await placementSummaryForChart(chart!)).toContain('ASC: 23°52′ Aries · house 1');
+  });
+
+  it('leaves unfamiliar legacy records to the existing context parser without inferring a repair', () => {
+    const chart = selfChart(polarProfileJson({ malformed: true }));
+    expect(chart?.id).toBe(NEWER_ID);
+    expect(chart?.summary.angles?.asc).toBe(203.87198411230202);
+  });
+
   it('uses only the explicitly selected account-v2 self chart and serializes placements without PII', async () => {
     const chart = selfChart();
     expect(chart?.updatedAt).toBe('2026-07-12T00:00:00.000Z');
@@ -165,6 +207,27 @@ describe('Guide day and retry boundaries', () => {
     expect(run).toContain('if (rotateGuideDayIfNeeded())');
     expect(retry).toContain('prior.body.contextEpoch !== state.contextEpoch');
     expect(retry).toContain('prior.body.baseRevision !== state.revision');
+  });
+});
+
+describe('Guide quick prompts', () => {
+  it('drafts an opener prompt into the composer only, never into context or the URL', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    const open = source.slice(
+      source.indexOf('export async function openAssistant('),
+      source.indexOf('function prefillFromOpener('),
+    );
+    const prefill = source.slice(
+      source.indexOf('function prefillFromOpener('),
+      source.indexOf('function prefillFromOpener(') + 600,
+    );
+    expect(open).toContain('prefillFromOpener(from);\n  textarea!.focus();');
+    expect(prefill).toContain('from?.dataset?.assistantPrompt?.trim()');
+    expect(prefill).toContain('textarea.value.trim()) return;');
+    expect(prefill).toContain('textarea.value = prompt.slice(0, 280);');
+    expect(prefill).not.toContain('location.');
+    expect(prefill).not.toContain('contextScope');
+    expect(prefill).not.toContain('submitQuestion');
   });
 });
 
@@ -582,7 +645,7 @@ describe('assistant profile-access privacy fence', () => {
     expect(base).not.toContain('guideRuntimeEnabled');
     expect(base).toContain('plausibleScriptUrl && (!props.noindex || props.analyticsOnNoindex) && !props.privateSurface');
     expect(base).toContain('&& !accountSyncV2Enabled,');
-    expect(base).toContain('data-guide-analytics-boundary={plausibleEnabled ?');
+    expect(base).toContain('data-guide-analytics-boundary={plausibleEnabled || webAnalyticsEnabled ?');
     expect(base).toContain("sessionStorage.getItem(guidePrivateSessionKey) === '1'");
     expect(loader).toContain("export const GUIDE_PRIVATE_SESSION_KEY = 'zodiacs.guide.private-session.v1';");
     expect(loader).toContain("sessionStorage.setItem(privateSessionKey, '1');");

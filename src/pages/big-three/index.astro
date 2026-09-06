@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import BigThreeQuick from '../../islands/BigThreeQuick';
+import '../../styles/calculator.css';
+
+// The fastest useful summary of a chart: three fields, three placements,
+// computed in the browser by the same engine as the full calculator. The
+// full chart is one tap further, carrying the details in a URL fragment.
+const faq = [
+  {
+    q: 'What are the Big Three?',
+    a: 'Your Sun, Moon, and Rising signs: the sign the Sun occupied at your birth, the sign the Moon occupied, and the sign rising on the eastern horizon at that moment from that place. The Sun is the shorthand most people know; the Moon and Rising are what make a chart feel like a specific person.',
+  },
+  {
+    q: 'Why does it need my birth time?',
+    a: 'The Rising sign changes roughly every two hours, so the time decides it. The Sun and Moon usually do not need it — the Moon changes sign about every two and a half days — but on a boundary day the time matters for them too. Without a time, use the moon sign calculator, which says plainly when your birthday is one of those days.',
+  },
+  {
+    q: 'Where does my birth data go?',
+    a: 'Nowhere. The positions are computed in your browser, the share image is drawn in your browser, and the link into the full chart carries your details in the part of the URL that never reaches a server.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Big Three Calculator',
+    url: 'https://zodiacs.org/big-three/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Big Three Calculator — Sun, Moon, and Rising in Seconds | Zodiacs.org"
+  description="Enter a birth date, time, and place and get your Sun, Moon, and Rising signs with exact degrees, a card to share, and one tap into the full birth chart. Free, computed in your browser."
+  path="/big-three/"
+  image="/assets/og/v2/tool/birth-chart.png"
+  imageAlt="Big Three calculator — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <em class="kicker">Sun · Moon · Rising</em>
+      <h1 class="display">Your Big Three, in ten seconds.</h1>
+      <p>
+        Three fields, three placements. The <a href="/learn/glossary/#sun">Sun</a> is who you are, the{' '}
+        <a href="/learn/glossary/#moon">Moon</a> is how you feel, and the Rising sign is how people first read you.
+        Each comes with its exact degree, computed here in your browser.
+      </p>
+    </div>
+
+    <BigThreeQuick client:load />
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>After the three</h2>
+      <p>
+        The Big Three are a summary, not the chart. The full calculator adds every planet, the twelve houses, and
+        the aspects between them, and it explains what each placement means. The button under your result
+        carries your details across so you do not type them twice. If you only know the date, start with the{' '}
+        <a href="/moon-sign/">moon sign calculator</a>; if you want a second person's chart,{' '}
+        <a href="/compatibility/">compatibility</a> reads two charts together.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head"><h2>Questions</h2></div>
+    <div class="prose">
+      {faq.map(({ q, a }) => (
+        <details class="faq-item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero .kicker { display: block; margin-bottom: 10px; }
+  .faq-item { border-top: 1px solid var(--hair-1); }
+  .faq-item summary { min-height: 44px; padding: 12px 0; cursor: pointer; color: var(--text); }
+  .faq-item p { margin: 0 0 14px; color: var(--muted); }
+  :global(.big-three) { margin-top: clamp(18px, 3vw, 28px); }
+  :global(.big-three__form) { display: grid; gap: 14px; max-width: 560px; }
+  :global(.big-three__actions) { display: grid; gap: 10px; }
+  :global(.big-three__error) { margin: 0; }
+  :global(.big-three__result) { margin-top: clamp(24px, 4vw, 40px); scroll-margin-top: 24px; }
+  :global(.big-three__next) { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  :global(.big-three__note) { margin: 12px 0 0; color: var(--muted); font-size: var(--text-sm); max-width: 62ch; }
+</style>

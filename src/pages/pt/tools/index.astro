@@ -1,13 +1,14 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import ToolGlyph from '../../../components/ToolGlyph.astro';
+import ToolsPageHeading from '../../../components/ToolsPageHeading.astro';
 import { ENGLISH_ONLY_COPY, localizePath } from '../../../lib/i18n';
 
 const englishOnly = ENGLISH_ONLY_COPY.pt;
 const tools = [
   { href: '/birth-chart/', title: 'Calculadora de mapa astral', promise: 'Veja seu Sol, sua Lua, seu ascendente, seus planetas, suas casas e o que tudo isso significa.', hue: 'var(--sign-cancer)', kind: 'birth' as const },
   { href: '/birth-chart/someone-else/', title: 'Mapa de outra pessoa (em inglês)', promise: 'Use os dados de nascimento, os três signos principais ou um link do Zodiacs, com a permissão dela.', hue: 'var(--sign-pisces)', kind: 'birth' as const, englishOnly: true },
-  { href: '/today/', title: 'Hoje (em inglês)', promise: 'Seu último mapa salvo comparado ao céu do meio-dia, com os graus.', hue: 'var(--sign-cancer)', kind: 'transit' as const, englishOnly: true },
+  { href: '/today/', title: 'Hoje', promise: 'O céu de hoje, lido para os doze signos solares.', hue: 'var(--sign-cancer)', kind: 'transit' as const },
   { href: '/compatibility/', title: 'Compatibilidade', promise: 'Compare dois mapas e veja onde eles se conectam, entram em conflito e crescem.', hue: 'var(--sign-libra)', kind: 'compat' as const },
   { href: '/moon-sign/', title: 'Calculadora de signo lunar', promise: 'Como você vive as emoções e o que ajuda a voltar ao seu centro.', hue: 'var(--sign-pisces)', kind: 'moon' as const },
   { href: '/rising-sign/', title: 'Calculadora de ascendente', promise: 'Descubra como as outras pessoas percebem você de início.', hue: 'var(--sign-gemini)', kind: 'rising' as const },
@@ -38,7 +39,7 @@ const jsonLd = [
 >
   <section class="section container">
     <div class="section-head">
-      <h2>Ferramentas gratuitas de astrologia</h2>
+      <ToolsPageHeading>Ferramentas gratuitas de astrologia</ToolsPageHeading>
       <p>Descubra seu mapa astral, signo lunar, ascendente, compatibilidade e o que está acontecendo no céu agora. Seus dados são calculados no navegador.</p>
     </div>
 
@@ -47,7 +48,7 @@ const jsonLd = [
         <a class="shell tinted" href={'englishOnly' in tool ? tool.href : localizePath('pt', tool.href)} hreflang={'englishOnly' in tool ? 'en' : undefined} title={'englishOnly' in tool ? englishOnly.aria : undefined} aria-label={'englishOnly' in tool ? `${tool.title}. ${englishOnly.aria}` : undefined} style={`--sign:${tool.hue}`}>
           <div class="core tinted tool-card">
             <ToolGlyph kind={tool.kind} />
-            <h3>{tool.title}</h3>
+            <h2>{tool.title}</h2>
             <p>{tool.promise}</p>
             <span class="tool-card__go">Abrir →</span>
           </div>
@@ -63,7 +64,7 @@ const jsonLd = [
       >
         <div class="core tinted tool-card">
           <ToolGlyph kind="assistant" />
-          <h3>Pergunte ao Guide</h3>
+          <h2>Pergunte ao Guide</h2>
           <p>O Guide pode ajudar com uma ferramenta, um termo astrológico ou um mapa que você salvou aqui.</p>
           <span class="tool-card__go">Iniciar uma conversa →</span>
         </div>
@@ -73,7 +74,7 @@ const jsonLd = [
     <div class="tools-upcoming">
       <em class="kicker">Também disponível em inglês</em>
       <ul>
-        <li><strong>Horóscopos.</strong> Um por mês para cada signo, escrito com datas reais do céu: <a href="/horoscopes/" hreflang="en">leia este mês</a>.</li>
+        <li><strong>Horóscopos.</strong> O céu de hoje, signo por signo. A edição em inglês também inclui leituras semanais e mensais: <a href="/horoscopes/" hreflang="en" title={englishOnly.aria}>escolher signo</a>.</li>
         <li><strong>Mercúrio retrógrado.</strong> Períodos exatos até 2027: <a href="/mercury-retrograde/" hreflang="en">veja as datas</a>.</li>
       </ul>
     </div>
@@ -85,7 +86,7 @@ const jsonLd = [
   @media (min-width: 700px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
   .tool-card { display: flex; flex-direction: column; gap: 10px; padding: 26px 22px; min-height: 210px; }
-  .tool-card h3 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
+  .tool-card h2 { margin: 4px 0 0; font-size: var(--text-lg); font-weight: 620; color: var(--text); }
   .tool-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
   .tool-card__go { margin-top: auto; font-size: 13px; font-weight: 550; color: var(--text); }
   .assistant-tool { display: block; width: 100%; text-align: start; transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }

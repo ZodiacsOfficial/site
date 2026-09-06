@@ -66,6 +66,7 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
   living_chart_deleted: [],
   living_chart_export: ['format'],
   calendar_subscribe: [],
+  calendar_download: [],
   chart_save: ['source'],
   chart_share: ['variant'],
   wing_entry: ['source'],

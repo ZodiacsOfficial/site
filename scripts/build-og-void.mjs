@@ -26,6 +26,7 @@
  *   npm run data:og -- --only-homepage    # refresh the cache-busted homepage card
  *   npm run data:og -- --only-wing        # refresh the shared Astrofolio / Terminal card
  *   npm run data:og -- --only-fomo        # refresh the /fomo/ card
+ *   npm run data:og -- --review-people-identities # three A20 candidates, artifacts only
  *
  * Deterministic and offline: fonts and disc art are inlined as data:
  * URIs; Chromium comes from playwright-core (PLAYWRIGHT_MODULE and
@@ -33,13 +34,20 @@
  */
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import { createRequire } from 'node:module';
 import sharp from 'sharp';
+import {
+  fileSha256, peopleIdentityReviewOptions, productionOgHashes, reviewedPeople,
+} from './people-identity-og-review.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const OUT = resolve(root, 'public/assets/og/v2');
+// Parse before any output directory or browser is created. Review mode never
+// writes production cards or manifests, including the separate wing family.
+const peopleIdentityReview = peopleIdentityReviewOptions(process.argv.slice(2), root);
+const OUT = peopleIdentityReview?.output ?? resolve(root, 'public/assets/og/v2');
 const HOMEPAGE_CARD = 'share-pastel-wheel-20260809.png';
 
 // Import-free, test-pinned projection of the canonical sign table. The live
@@ -73,9 +81,27 @@ const {
 const EVENTS_PUBLICATION = JSON.parse(
   await readFile(resolve(root, 'src/data/events-publication.json'), 'utf8'),
 );
-const PEOPLE_PILOT = JSON.parse(
-  await readFile(resolve(root, 'src/data/people.json'), 'utf8'),
-).people;
+const peopleSource = await readFile(resolve(root, 'src/data/people.json'), 'utf8');
+const PEOPLE_PILOT = JSON.parse(peopleSource).people;
+const identityReviewPeople = peopleIdentityReview ? reviewedPeople(PEOPLE_PILOT) : null;
+const productionOgBefore = peopleIdentityReview ? await productionOgHashes(root) : null;
+const identityReviewSources = {};
+if (peopleIdentityReview) {
+  const sourcePaths = [
+    'src/data/people.json', 'scripts/build-og-void.mjs', 'package-lock.json',
+    'scripts/people-identity-og-review.mjs', 'tests/visual/browser.mjs',
+    'docs/phase5/people-pilot/tools/principal-identities.mjs', 'src/strings/seo.signs.mjs',
+    'public/fonts/eb-garamond-latin-500-normal.woff2',
+    'public/fonts/eb-garamond-latin-400-italic.woff2',
+    'public/fonts/instrument-sans-latin-wght-normal.woff2',
+    'public/fonts/jetbrains-mono-latin-wght-normal.woff2',
+    ...new Set(identityReviewPeople.map((person) => `public/assets/zodiac-icons/128/${person.sunSign.slug}.webp`)),
+  ];
+  for (const path of sourcePaths) identityReviewSources[path] = await fileSha256(resolve(root, path));
+  if (identityReviewSources['src/data/people.json'] !== createHash('sha256').update(peopleSource).digest('hex')) {
+    throw new Error('People data changed while preparing the review');
+  }
+}
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright-core');
 const executablePath =
@@ -672,12 +698,18 @@ async function writeEnglishManifest() {
 }
 
 // ── Render loop ───────────────────────────────────────────────────────
-for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'events', 'people', 'pin', 'ru', 'ru/sign', 'ru/tool']) {
+// A failed rerun may leave candidate PNGs, but must never leave an earlier
+// success receipt beside partially replaced output.
+if (peopleIdentityReview) await rm(resolve(OUT, 'receipt.json'), { force: true });
+for (const dir of peopleIdentityReview ? ['people'] : ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'events', 'people', 'pin', 'ru', 'ru/sign', 'ru/tool']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
-await mkdir(WING_OUT, { recursive: true });
+if (!peopleIdentityReview) await mkdir(WING_OUT, { recursive: true });
 
-const browser = await chromium.launch({ executablePath });
+const reviewLaunchOptions = peopleIdentityReview
+  ? { args: (await import('../tests/visual/browser.mjs')).STABLE_CHROMIUM_ARGS }
+  : {};
+const browser = await chromium.launch({ executablePath, ...reviewLaunchOptions });
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
 const onlyHoroscopes = process.argv.includes('--only-horoscopes');
 const onlyInvite = process.argv.includes('--only-compatibility-invite');
@@ -695,6 +727,25 @@ let russianTotal = 0;
 async function shoot(html, outPath, outputRoot = OUT) {
   await page.setContent(html, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
+  let reviewFonts;
+  if (peopleIdentityReview) {
+    reviewFonts = await page.evaluate(async () => {
+      const specs = ['500 24px "EB Garamond"', 'italic 400 30px "EB Garamond"', '400 24px "Instrument Sans"', '400 20px "JetBrains Mono"'];
+      const loaded = await Promise.all(specs.map(async (spec) => {
+        const faces = await document.fonts.load(spec);
+        if (!faces.length || faces.some((face) => face.status !== 'loaded')) throw new Error(`Card font failed: ${spec}`);
+        return spec;
+      }));
+      await Promise.all([...document.images].map((image) => image.decode()));
+      const fits = [...document.querySelectorAll('.display, .sub, .data, .disc, .footer')]
+        .every((element) => {
+          const box = element.getBoundingClientRect();
+          return box.left >= 0 && box.right <= 1200 && box.top >= 0 && box.bottom <= 630;
+        });
+      if (!fits) throw new Error('People identity card overflows the capture');
+      return loaded;
+    });
+  }
   await page.waitForTimeout(120);
   if (outPath.startsWith('ru/')) {
     const layout = await page.evaluate(() => {
@@ -754,6 +805,16 @@ async function shoot(html, outPath, outputRoot = OUT) {
   if (outPath.startsWith('ru/')) russianTotal += buf.length;
   count += 1;
   if (count % 20 === 0) console.log(`  …${count} cards, ${(total / 1024 / 1024).toFixed(1)}MB so far`);
+  if (peopleIdentityReview) {
+    const metadata = await sharp(buf).metadata();
+    if (metadata.width !== 1200 || metadata.height !== 630) throw new Error(`${outPath}: unexpected dimensions`);
+    return {
+      path: outPath, bytes: buf.length, width: metadata.width, height: metadata.height,
+      sha256: createHash('sha256').update(buf).digest('hex'),
+      displayedIdentity: await page.locator('.sub').textContent(),
+      loadedFonts: reviewFonts,
+    };
+  }
 }
 
 async function writeRussianManifest() {
@@ -779,6 +840,44 @@ async function renderRussianCards() {
   if (russianTotal > 600 * 1024) {
     throw new Error(`Russian OG family is ${(russianTotal / 1024).toFixed(1)}KiB; budget is 600KiB`);
   }
+}
+
+if (peopleIdentityReview) {
+  try {
+    const cards = [];
+    for (const person of identityReviewPeople) {
+      const capture = await shoot(personCard(person), `people/${person.slug}.png`);
+      if (capture.displayedIdentity !== person.shortDescription) {
+        throw new Error(`${person.slug}: displayed identity differs from production source`);
+      }
+      cards.push({ slug: person.slug, shortDescription: person.shortDescription, ...capture });
+    }
+    const productionOgAfter = await productionOgHashes(root);
+    if (JSON.stringify(productionOgAfter) !== JSON.stringify(productionOgBefore)) {
+      throw new Error('Review rendering changed production OG files');
+    }
+    for (const [path, before] of Object.entries(identityReviewSources)) {
+      if (await fileSha256(resolve(root, path)) !== before) throw new Error(`${path}: source changed during review rendering`);
+    }
+    const require = createRequire(import.meta.url);
+    await writeFile(resolve(OUT, 'receipt.json'), `${JSON.stringify({
+      schema: 'zodiacs.people-identity-og-review.v1',
+      output: 'tests/visual/artifacts/explorer/people-identity-og',
+      runtime: {
+        node: process.version, platform: process.platform, arch: process.arch,
+        nodeSha256: await fileSha256(process.execPath),
+        chromium: browser.version(), playwright: require('playwright-core/package.json').version,
+        chromiumSha256: await fileSha256(executablePath ?? chromium.executablePath()),
+        sharp: sharp.versions,
+      },
+      sources: identityReviewSources, cards,
+      productionOg: { unchanged: true, before: productionOgBefore, after: productionOgAfter },
+    }, null, 2)}\n`);
+    console.log(`Reviewed ${count} People identity cards; production OG files unchanged.`);
+  } finally {
+    await browser.close();
+  }
+  process.exit(0);
 }
 
 if (onlyWing) {

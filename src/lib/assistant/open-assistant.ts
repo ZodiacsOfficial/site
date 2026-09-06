@@ -6,7 +6,8 @@
 import './assistant.css';
 import { houseOf, wholeSignCusps } from '../engine/houses';
 import { normalizeLocale as normalizeSiteLocale, type ReleasedLocale as Locale } from '../i18n/core';
-import { PROFILE_KEY } from '../profile/schema';
+import { PROFILE_KEY, type SavedChart } from '../profile/schema';
+import { repairLegacyPolarChart } from '../profile/polar-repair';
 import { profileAccessAllowed } from '../account-v2/profile-access-reader';
 import {
   ACCOUNT_V2_LOCAL_OWNER_KEY,
@@ -664,7 +665,9 @@ function finiteLongitude(value: unknown): value is number {
 
 function parseStoredChart(value: unknown): StoredChart | null {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
-  const candidate = value as Record<string, unknown>;
+  // Match the profile reader's guarded local repair before projecting the
+  // placement-only context. Account selection and attestation stay unchanged.
+  const candidate = repairLegacyPolarChart(value as SavedChart) as unknown as Record<string, unknown>;
   const rawBirth = candidate.birth;
   const rawSummary = candidate.summary;
   if (!rawBirth || typeof rawBirth !== 'object' || Array.isArray(rawBirth)) return null;
@@ -2070,6 +2073,21 @@ export async function openAssistant(requestedLocale?: string, from?: HTMLElement
   launcher?.setAttribute('aria-expanded', 'true');
   document.documentElement.style.overflow = 'hidden';
   setStatus();
+  prefillFromOpener(from);
   textarea!.focus();
   track('guide_open');
+}
+
+/**
+ * A quick-prompt opener may carry `data-assistant-prompt`. The text lands in
+ * the visitor's own composer as an editable draft and nothing else: it is not
+ * sent, not added to the page context, and never read from the URL or page
+ * text (see `syncPageBoundary`). An existing draft is left alone.
+ */
+function prefillFromOpener(from?: HTMLElement | null): void {
+  const prompt = from?.dataset?.assistantPrompt?.trim();
+  if (!prompt || !textarea || textarea.value.trim()) return;
+  textarea.value = prompt.slice(0, 280);
+  syncTextareaHeight();
+  syncSendState();
 }

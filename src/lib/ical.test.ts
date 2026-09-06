@@ -148,3 +148,51 @@ describe('/transits/sample.ics', () => {
     }
   });
 });
+
+describe('sky event calendars', () => {
+  const generatedAt = '2026-09-01T00:00:00Z';
+
+  it('serializes instants and windows with stable ids, no personal data, and sorted output', async () => {
+    const { serializeSkyEvents } = await import('./ical');
+    const calendar = serializeSkyEvents([
+      {
+        id: 'mercury-retrograde-2027-02-09',
+        start: '2027-02-09T13:00:00Z',
+        end: '2027-03-03T04:00:00Z',
+        summary: 'Mercury retrograde',
+        description: 'Station to station.',
+        url: 'https://zodiacs.org/mercury-retrograde/2027/#mercury-retrograde-2027-02-09',
+      },
+      {
+        id: 'full-moon-2027-01-22',
+        start: '2027-01-22T12:17:00Z',
+        summary: 'Full moon in Leo',
+        description: 'Full moon at 2°32′ Leo; exact at 12:17 UTC.',
+      },
+    ], { generatedAt, calendarName: 'Zodiacs.org test' });
+
+    const lines = calendar.split('\r\n');
+    expect(lines[0]).toBe('BEGIN:VCALENDAR');
+    expect(lines).toContain('PRODID:-//Zodiacs.org//Sky Events 1.0//EN');
+    expect(lines).toContain('X-WR-CALNAME:Zodiacs.org test');
+    expect(calendar.match(/BEGIN:VEVENT/g)).toHaveLength(2);
+    // Earlier instant first, regardless of input order.
+    expect(calendar.indexOf('UID:sky-full-moon-2027-01-22@zodiacs.org'))
+      .toBeLessThan(calendar.indexOf('UID:sky-mercury-retrograde-2027-02-09@zodiacs.org'));
+    expect(lines).toContain('DTSTART:20270122T121700Z');
+    expect(lines).toContain('DURATION:PT1M');
+    expect(lines).toContain('DTSTART:20270209T130000Z');
+    expect(lines).toContain('DTEND:20270303T040000Z');
+    expect(lines).toContain('DESCRIPTION:Full moon at 2°32′ Leo\\; exact at 12:17 UTC.');
+    // The URL runs past 75 octets, so it arrives folded; unfold before asserting.
+    expect(calendar.replace(/\r\n /g, ''))
+      .toContain('\r\nURL:https://zodiacs.org/mercury-retrograde/2027/#mercury-retrograde-2027-02-09\r\n');
+    expect(calendar.endsWith('END:VCALENDAR\r\n')).toBe(true);
+    expect(lines.every((line) => new TextEncoder().encode(line).byteLength <= 75)).toBe(true);
+  });
+
+  it('refuses an empty calendar', async () => {
+    const { serializeSkyEvents } = await import('./ical');
+    expect(() => serializeSkyEvents([], { generatedAt })).toThrow(RangeError);
+  });
+});
