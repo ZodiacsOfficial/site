@@ -109,3 +109,23 @@ unchanged-image Phase 1 manifest are imported. All other baseline bytes remain
 unchanged. The candidate job intentionally skips Lighthouse and Explorer; the
 initial failed Explorer result is not reclassified. Final complete CI and
 Explorer acceptance remain required before merge.
+
+## Widget prerequisite integrated — September 6
+
+PR390 merged as actual main `32a8082e2e5294d68b0a7bcfe1d33b95839fb19f`,
+with all14 Site Check jobs and complete Browser Evidence passing. This candidate
+now inherits that exact tree, including the Registry snapshot, preview loading
+fix and native reading-card reveal assertions. Its pre-existing widget diagnostic
+is identical to main, leaving25 Wave13 paths and the exact six-locale scope.
+The original reviewed three Kahlo baselines and genuine Phase1 receipt remain.
+Fresh complete source gates and exact-head release CI are required; earlier
+widget/performance/focus failures remain historical evidence, not erased.
+
+The widget production deployment is READY at the exact32a808 merge on both
+canonical aliases. Live rapid sky/light/script/chart changes show the mini chart,
+matching code and no horizontal overflow. Wave13 fresh complete build/postbuild
+and Astro check918 pass, with unchanged source7dc482dc9402e84ab87cd8b8c7a4bf2379035de135264d3f0760e1ad0b507f67.
+The initial parallel full unit run had3463 passes and five existing timeouts.
+A complete serial run retains every assertion and original timeout and passes
+all3468 tests in354 files (397.72s). Both logs are preserved; no CI config or
+time limit was changed. Fresh exact-head CI/browser acceptance follows.
