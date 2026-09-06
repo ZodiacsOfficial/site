@@ -1,5 +1,6 @@
 import { timelineLine } from '../src/lib/events/format';
 import type { CatalogEvent } from '../src/lib/events/types';
+import { EVENT_READING_REVISION, REVISED_EVENT_READINGS } from '../src/lib/events/revised-readings';
 
 export const EVENTS_PUBLICATION_SCHEMA = 'zodiacs.events-publication.v1' as const;
 export const EVENTS_PUBLICATION_FROM = '2026-01-01T00:00:00.000Z';
@@ -35,7 +36,8 @@ const publicDescriptor = (event: CatalogEvent) => ({
   bodies: event.facts.bodies,
   signs: event.facts.signs,
   summary: timelineLine(event.facts),
-  lastModified: EVENTS_PUBLICATION_LASTMOD,
+  lastModified: Object.hasOwn(REVISED_EVENT_READINGS, event.facts.id)
+    ? EVENT_READING_REVISION : EVENTS_PUBLICATION_LASTMOD,
 });
 
 /**

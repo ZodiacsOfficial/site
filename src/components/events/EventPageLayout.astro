@@ -23,6 +23,7 @@ import {
 } from '../../lib/events/format';
 import { signBySlug } from '../../lib/signs';
 import type { CatalogEvent } from '../../lib/events/types';
+import { eventTransitHref } from '../../lib/events/transit-link';
 
 interface Props {
   event: CatalogEvent;
@@ -63,6 +64,7 @@ const heading = (() => {
 })();
 
 const anchorIso = facts.at ?? facts.start!;
+const personalTransitHref = eventTransitHref(anchorIso);
 const monthLabel = new Date(anchorIso).toLocaleDateString('en-US', {
   month: 'long', year: 'numeric', timeZone: 'UTC',
 });
@@ -140,7 +142,7 @@ const followLinks: { href: string; label: string }[] = [
 
 const canonicalUrl = `https://zodiacs.org${facts.path}`;
 const articleImage = `https://zodiacs.org${published?.card ?? '/assets/og/v2/share.png'}`;
-const publicationDate = published
+const modifiedDate = published
   ? `${published.lastModified}T00:00:00.000Z`
   : event.lastModified;
 const jsonLd = [
@@ -154,10 +156,8 @@ const jsonLd = [
     image: articleImage,
     author: { '@id': 'https://zodiacs.org/#org' },
     publisher: { '@id': 'https://zodiacs.org/#org' },
-    ...(publicationDate ? {
-      datePublished: publicationDate,
-      dateModified: publicationDate,
-    } : {}),
+    ...(published?.publishedAt ? { datePublished: published.publishedAt } : {}),
+    ...(modifiedDate ? { dateModified: modifiedDate } : {}),
   },
   {
     '@type': 'BreadcrumbList',
@@ -257,16 +257,16 @@ const sources = [
       <div class="next-action__core core tinted">
         <div class="next-action__copy">
           <p class="next-action__cue mono">Where it lands for you</p>
-          <h2 class="next-action__title">Your chart knows the house</h2>
+          <h2 class="next-action__title">Compare this sky with your chart</h2>
           <p class="next-action__body">
-            The same sky reads differently for everyone — what matters is
-            where {facts.family === 'retrograde' ? 'this cycle' : 'this moment'}{' '}
-            falls in your own chart.
+            Open the transit tool at this event’s exact time. Choose a chart
+            already saved in this browser, or enter your birth details there.
+            A known birth time adds the houses and angles.
           </p>
         </div>
         <div class="next-action__actions">
           <div class="next-action__primary">
-            <a class="btn btn--primary" href="/birth-chart/">Get your free birth chart</a>
+            <a class="btn btn--primary" href={personalTransitHref ?? '/transits/'}>See this event with my chart</a>
           </div>
         </div>
       </div>

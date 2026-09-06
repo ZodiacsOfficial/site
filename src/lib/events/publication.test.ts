@@ -67,3 +67,25 @@ describe('events publication cross-links', () => {
     })).toBeNull();
   });
 });
+
+describe('bounded event reading revision', () => {
+  it('revises exactly five pages and their four timeline entries without changing factual descriptors', async () => {
+    const { buildEventsPublication, EVENTS_PUBLICATION_LASTMOD } = await import('../../../scripts/events-publication-lib');
+    const { eventsCatalog } = await import('./catalog');
+    const { EVENT_READING_REVISION, REVISED_EVENT_READINGS } = await import('./revised-readings');
+    const { eventsPublication } = await import('./publication');
+    const generated = buildEventsPublication(eventsCatalog());
+    expect(generated).toEqual(eventsPublication);
+    expect(Object.keys(REVISED_EVENT_READINGS).sort()).toEqual([
+      'eclipse-2026-08-28', 'jupiter-enters-leo-2026-06-30', 'neptune-sextile-pluto-2026-09-16',
+      'new-moon-2026-09-11', 'venus-retrograde-2026-10-03',
+    ]);
+    expect(generated.pages.filter((page) => page.lastModified === EVENT_READING_REVISION).map((page) => page.id).sort())
+      .toEqual(Object.keys(REVISED_EVENT_READINGS).sort());
+    expect(generated.timeline.filter((row) => row.lastModified === EVENT_READING_REVISION)).toHaveLength(4);
+    for (const row of [...generated.pages, ...generated.timeline]) {
+      if (!(row.id in REVISED_EVENT_READINGS)) expect(row.lastModified).toBe(EVENTS_PUBLICATION_LASTMOD);
+      expect(row).not.toHaveProperty('publishedAt');
+    }
+  });
+});

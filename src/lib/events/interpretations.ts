@@ -21,6 +21,7 @@ import {
   retrogradeId, retrogradePath, signNameFor,
 } from './format';
 import type { EventFacts, EventInterpretation } from './types';
+import { REVISED_EVENT_READINGS } from './revised-readings';
 
 const INTERPRETATIONS: Record<string, EventInterpretation> = {
   'full-moon-2026-07-29': {
@@ -705,6 +706,8 @@ export function interpretationFor(idOrFacts: string | EventFacts): EventInterpre
   const id = typeof idOrFacts === 'string' ? idOrFacts : idOrFacts.id;
   const bespoke = INTERPRETATIONS[id];
   if (bespoke) return bespoke;
+  const revised = REVISED_EVENT_READINGS[id];
+  if (revised) return revised;
   const facts = typeof idOrFacts === 'string' ? EDITORIAL_FACTS.get(id) : idOrFacts;
   return facts ? generatedInterpretation(facts) : undefined;
 }

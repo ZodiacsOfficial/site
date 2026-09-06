@@ -62,6 +62,7 @@ export interface TransitRingProps {
   nowMs: number;
   /** Exact-date request emitted by the separately lazy transit search. */
   focusRequest?: { contact: TransitContact } | null;
+  eventDate?: { active: boolean; onSelect: () => void; onNow: () => void };
 }
 
 const DAY = 86_400_000;
@@ -85,6 +86,7 @@ const COPY = {
     scrubLabel: 'Move the date',
     scrubHint: 'Drag to move the sky forward or back; the outer ring is where the planets are then.',
     now: 'Now',
+    eventDate: 'Event date',
     back1m: '−1 month',
     fwd1m: '+1 month',
     outerRing: 'Outer ring: the sky then. Inner wheel: your birth chart.',
@@ -109,6 +111,7 @@ const COPY = {
     scrubLabel: 'Mueve la fecha',
     scrubHint: 'Arrastra para mover el cielo hacia adelante o atrás; el anillo exterior muestra dónde están los planetas en ese momento.',
     now: 'Ahora',
+    eventDate: 'Fecha del evento',
     back1m: '−1 mes',
     fwd1m: '+1 mes',
     outerRing: 'Anillo exterior: el cielo de entonces. Rueda interior: tu carta natal.',
@@ -133,6 +136,7 @@ const COPY = {
     scrubLabel: 'Mova a data',
     scrubHint: 'Arraste para mover o céu para a frente ou para trás; o anel externo mostra onde os planetas estão nesse momento.',
     now: 'Agora',
+    eventDate: 'Data do evento',
     back1m: '−1 mês',
     fwd1m: '+1 mês',
     outerRing: 'Anel externo: o céu desse momento. Roda interna: seu mapa astral.',
@@ -157,6 +161,7 @@ const COPY = {
     scrubLabel: 'Déplacer la date',
     scrubHint: 'Fais glisser pour avancer ou reculer dans le ciel ; l’anneau extérieur montre la position des planètes à cet instant.',
     now: 'Maintenant',
+    eventDate: 'Date de l’événement',
     back1m: '−1 mois',
     fwd1m: '+1 mois',
     outerRing: 'Anneau extérieur : le ciel à cette date. Roue intérieure : ton thème natal.',
@@ -181,6 +186,7 @@ const COPY = {
     scrubLabel: 'Sposta la data',
     scrubHint: 'Trascina per spostare il cielo avanti o indietro; l’anello esterno mostra dove si trovano i pianeti in quel momento.',
     now: 'Ora',
+    eventDate: 'Data dell’evento',
     back1m: '−1 mese',
     fwd1m: '+1 mese',
     outerRing: 'Anello esterno: il cielo in quel momento. Ruota interna: il tuo tema natale.',
@@ -205,6 +211,7 @@ const COPY = {
     scrubLabel: 'Сдвинуть дату',
     scrubHint: 'Перетаскивайте, чтобы двигать небо вперёд или назад; внешнее кольцо показывает положения планет в выбранный момент.',
     now: 'Сейчас',
+    eventDate: 'Дата события',
     back1m: '−1 месяц',
     fwd1m: '+1 месяц',
     outerRing: 'Внешнее кольцо — небо тогда. Внутреннее колесо — ваша натальная карта.',
@@ -259,7 +266,7 @@ function NatalPointLabel({ locale, point }: { locale: Locale; point: string }) {
   );
 }
 
-export default function TransitRing({ locale, natal, computeSky, nowMs, focusRequest = null }: TransitRingProps) {
+export default function TransitRing({ locale, natal, computeSky, nowMs, focusRequest = null, eventDate }: TransitRingProps) {
   const c = COPY[locale];
   const showInterpretation = showsEnglishOnlyInterpretation(locale);
   const [offset, setOffset] = useState(0);          // days from now (may be fractional mid-tween)
@@ -509,7 +516,10 @@ export default function TransitRing({ locale, natal, computeSky, nowMs, focusReq
           <button class="btn btn--glass tring__step" type="button" onClick={() => glideTo(offset - 30)}>
             <span>{c.back1m}</span>
           </button>
-          <button class="btn btn--glass tring__step" type="button" onClick={() => glideTo(0)} disabled={Math.round(offset) === 0}>
+          {eventDate && <button class="btn btn--glass tring__step" type="button" onClick={eventDate.onSelect} disabled={eventDate.active && offset === 0}>
+            <span>{c.eventDate}</span>
+          </button>}
+          <button class="btn btn--glass tring__step" type="button" onClick={() => eventDate ? eventDate.onNow() : glideTo(0)} disabled={!eventDate?.active && offset === 0}>
             <span>{c.now}</span>
           </button>
           <button class="btn btn--glass tring__step" type="button" onClick={() => glideTo(offset + 30)}>

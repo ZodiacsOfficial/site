@@ -3,10 +3,13 @@ import { readdir, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, relative, resolve, sep } from 'node:path';
 import { WEB_APPLICATION_PATHS } from '../src/strings/seo.en.mjs';
+import { eventArticleDateFailures } from './event-article-dates.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = resolve(repo, 'dist');
 const SITE_ORIGIN = 'https://zodiacs.org';
+const eventPublication = JSON.parse(await readFile(resolve(repo, 'src/data/events-publication.json'), 'utf8'));
+const publishedEvents = new Map(eventPublication.pages.map((event) => [event.path, event]));
 const SIGN_SLUGS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -278,7 +281,11 @@ for (const file of await htmlFiles(dist)) {
     const articles = nodes.filter((node) => hasType(node, 'Article'));
     if (articles.length !== 1) {
       failures.push(`${label}: article content needs exactly one Article (found ${articles.length})`);
-    } else validateArticle(articles[0], label, canonicalUrl, { requireDates: horoscopeContent || eventContent });
+    } else {
+      validateArticle(articles[0], label, canonicalUrl, { requireDates: horoscopeContent });
+      if (eventContent) failures.push(...eventArticleDateFailures(articles[0], publishedEvents.get(pathname))
+        .map((failure) => `${label}: ${failure}`));
+    }
   }
 
   if (horoscopeContent) {

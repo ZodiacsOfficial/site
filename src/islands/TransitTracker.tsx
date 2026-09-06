@@ -20,6 +20,7 @@ import { useProfile } from '../lib/hooks/useProfile';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import type { TransitSky } from './transit/TransitRing';
 import type { CalendarPositionsSource } from './CalendarSubscribe';
+import { eventTransitQuery } from '../lib/events/transit-link';
 import type {
   NatalPoint,
   NatalTransitChart,
@@ -29,6 +30,15 @@ import type {
 
 type RingModule = typeof import('./transit/TransitRing');
 type SearchModule = typeof import('./transit/TransitSearch');
+
+const EVENT_COPY = {
+  en: { invalid: 'This event link has an invalid date. Your chart will open at the current time.', unknownTime: 'Birth time is unknown. The Moon shown is a midday estimate; precise Moon contacts, houses, angles and calendar export are unavailable.' },
+  es: { invalid: 'Este enlace tiene una fecha no válida. Tu carta se abrirá en el momento actual.', unknownTime: 'La hora de nacimiento es desconocida. La Luna es una estimación al mediodía; los contactos lunares precisos, las casas, los ángulos y la exportación al calendario no están disponibles.' },
+  pt: { invalid: 'Este link tem uma data inválida. Seu mapa abrirá no momento atual.', unknownTime: 'A hora de nascimento é desconhecida. A Lua é uma estimativa para o meio-dia; contatos lunares precisos, casas, ângulos e exportação de calendário não estão disponíveis.' },
+  fr: { invalid: 'Ce lien contient une date invalide. Votre thème s’ouvrira à l’heure actuelle.', unknownTime: 'L’heure de naissance est inconnue. La Lune est estimée à midi ; les contacts lunaires précis, les maisons, les angles et l’export de calendrier ne sont pas disponibles.' },
+  it: { invalid: 'Questo link contiene una data non valida. Il tema si aprirà all’ora attuale.', unknownTime: 'L’ora di nascita è sconosciuta. La Luna è stimata a mezzogiorno; i contatti lunari precisi, le case, gli angoli e l’esportazione del calendario non sono disponibili.' },
+  ru: { invalid: 'В этой ссылке указана неверная дата. Карта откроется на текущее время.', unknownTime: 'Время рождения неизвестно. Луна показана приблизительно на полдень; точные лунные аспекты, дома, углы и экспорт календаря недоступны.' },
+} satisfies Record<Locale, { invalid: string; unknownTime: string }>;
 
 // The transiting bodies drawn on the outer ring (planets + the Moon; the Moon
 // circles fast and is left out of the aspect list, but shown so you can watch it).
@@ -57,6 +67,8 @@ interface Result {
   natal: NatalWheel;
   computeSky: (when: Date) => TransitSky[];
   nowMs: number;
+  revision: number;
+  eventActive: boolean;
 }
 
 interface TransitFocusRequest {
@@ -75,17 +87,17 @@ function wheelFromChart(
     bodies: r.bodies
       .filter((b) => b.body !== 'South Node')
       .map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
-    asc: r.angles?.asc ?? null,
-    mc: r.angles?.mc ?? null,
+    asc: timeKnown ? (r.angles?.asc ?? null) : null,
+    mc: timeKnown ? (r.angles?.mc ?? null) : null,
     cusps: timeKnown ? (r.houses?.cusps ?? null) : null,
-    minimal: r.bodies.map(({ body, lon }) => ({ body, lon })),
+    minimal: r.bodies.filter((b) => timeKnown || b.body !== 'Moon').map(({ body, lon }) => ({ body, lon })),
     timeKnown,
-    calendarPositions: {
+    calendarPositions: timeKnown ? {
       bodies: r.bodies,
       angles: r.angles ? { asc: r.angles.asc, mc: r.angles.mc } : null,
       houseSystem,
       engineVersion: r.engineVersion,
-    },
+    } : null,
   };
 }
 
@@ -133,16 +145,17 @@ function natalFromSaved(chart: SavedChart, engine: Engine): NatalWheel {
     return wheelFromChart(r, timeKnown, chart.summary.houseSystem);
   }
   // No stored place — draw from the summary (bodies + ascendant), no house ring.
+  const timeKnown = chart.birth.timeKnown && Boolean(chart.birth.time);
   return {
     bodies: chart.summary.bodies
       .filter((b) => b.body !== 'South Node')
       .map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
-    asc: chart.summary.angles?.asc ?? null,
-    mc: chart.summary.angles?.mc ?? null,
+    asc: timeKnown ? (chart.summary.angles?.asc ?? null) : null,
+    mc: timeKnown ? (chart.summary.angles?.mc ?? null) : null,
     cusps: null,
-    minimal: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
-    timeKnown: chart.birth.timeKnown,
-    calendarPositions: calendarPositionsFromSaved(chart),
+    minimal: chart.summary.bodies.filter((b) => timeKnown || b.body !== 'Moon').map(({ body, lon }) => ({ body, lon })),
+    timeKnown,
+    calendarPositions: timeKnown ? calendarPositionsFromSaved(chart) : null,
   };
 }
 
@@ -161,12 +174,30 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   const [searchFocus, setSearchFocus] = useState<TransitFocusRequest | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [eventContext, setEventContext] = useState<{ at: number | null; invalid: boolean }>({ at: null, invalid: false });
+  const inputRevision = useRef(0);
+  const resultRevision = useRef(0);
+  const slotRef = useRef(slot);
+  slotRef.current = slot;
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
   const initialProfileReadRef = useRef(false);
   const mounted = useRef(true);
   const inFlight = useRef(false);
+  function invalidateInput() {
+    inputRevision.current += 1;
+    inFlight.current = false;
+    focusAfterComputeRef.current = false;
+    setResult(null);
+    setSearchFocus(null);
+    setBusy(false);
+    setError('');
+  }
+  function changeSlot(update: (current: SlotState) => SlotState) {
+    invalidateInput();
+    setSlot(update);
+  }
   const profileAccessGeneration = useProfileAccessGeneration(() => {
     setResult(null);
     setRingMod(null);
@@ -179,17 +210,26 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   });
 
   useEffect(() => {
+    setEventContext(eventTransitQuery(window.location?.search ?? ''));
+  }, []);
+
+  useEffect(() => {
     mounted.current = true;
+    const onProfile = () => {
+      if (slotRef.current.source === 'saved') invalidateInput();
+    };
     const onAccess = () => {
       inFlight.current = false;
       focusAfterComputeRef.current = false;
       setBusy(false);
     };
     window.addEventListener('zodiacs:profile-access', onAccess);
+    window.addEventListener('zodiacs:profile', onProfile);
     return () => {
       mounted.current = false;
       inFlight.current = false;
       window.removeEventListener('zodiacs:profile-access', onAccess);
+      window.removeEventListener('zodiacs:profile', onProfile);
     };
   }, []);
 
@@ -218,16 +258,22 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
     setBusy(true);
     setError('');
     const accessGeneration = profileAccessGeneration.current;
-    const isCurrent = () => mounted.current && accessGeneration === profileAccessGeneration.current;
+    const revision = inputRevision.current;
+    const capturedSlot = { ...slot, city: slot.city ? { ...slot.city } : null };
+    const selected = charts.find((c) => c.id === capturedSlot.savedId);
+    const capturedChart = selected ? structuredClone(selected) : null;
+    const isCurrent = () => mounted.current && accessGeneration === profileAccessGeneration.current
+      && revision === inputRevision.current;
     try {
       const [engine, mod] = await Promise.all([
         loadEngine(),
         ringMod ? Promise.resolve(ringMod) : loadModule(() => import('./transit/TransitRing')),
       ]);
       if (!isCurrent()) return;
-      const natal = slot.source === 'saved'
-        ? natalFromSaved(charts.find((c) => c.id === slot.savedId)!, engine)
-        : natalFromForm(slot, engine);
+      if (capturedSlot.source === 'saved' && !capturedChart) return;
+      const natal = capturedSlot.source === 'saved'
+        ? natalFromSaved(capturedChart!, engine)
+        : natalFromForm(capturedSlot, engine);
       const computeSky = (when: Date): TransitSky[] =>
         engine.computeBodies(when)
           .filter((b) => TRANSIT_BODIES.has(b.body))
@@ -235,7 +281,8 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
       if (!isCurrent()) return;
       setRingMod(mod);
       setSearchFocus(null);
-      setResult({ natal, computeSky, nowMs: Date.now() });
+      setResult({ natal, computeSky, nowMs: eventContext.at ?? Date.now(),
+        eventActive: eventContext.at !== null, revision: ++resultRevision.current });
     } catch (err) {
       if (!isCurrent()) return;
       setError(calculationError(err, locale, t(locale, 'transitError')));
@@ -289,6 +336,13 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
       .finally(() => setSearchLoading(false));
   }
 
+  function resetDate(nowMs: number, eventActive: boolean) {
+    setSearchFocus(null);
+    setResult((current) => current ? {
+      ...current, nowMs, eventActive, revision: ++resultRevision.current,
+    } : null);
+  }
+
   return (
     <div class="calc">
       <form class="calc__form shell" onSubmit={check} aria-busy={busy}>
@@ -305,7 +359,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
                     value={slot.source === 'saved' ? slot.savedId : ''}
                     onChange={(e) => {
                       const v = (e.target as HTMLSelectElement).value;
-                      setSlot((s) => (v === ''
+                      changeSlot((s) => (v === ''
                         ? { ...s, source: 'form', savedId: '' }
                         : { ...s, source: 'saved', savedId: v }));
                     }}
@@ -326,10 +380,10 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
                   time={slot.time}
                   timeKnown={slot.timeKnown}
                   city={slot.city}
-                  onDateChange={(date) => setSlot((s) => ({ ...s, date }))}
-                  onTimeChange={(time) => setSlot((s) => ({ ...s, time }))}
-                  onTimeKnownChange={(timeKnown) => setSlot((s) => ({ ...s, timeKnown }))}
-                  onCityChange={(city) => setSlot((s) => ({ ...s, city }))}
+                  onDateChange={(date) => changeSlot((s) => ({ ...s, date }))}
+                  onTimeChange={(time) => changeSlot((s) => ({ ...s, time }))}
+                  onTimeKnownChange={(timeKnown) => changeSlot((s) => ({ ...s, timeKnown }))}
+                  onCityChange={(city) => changeSlot((s) => ({ ...s, city }))}
                   onWarm={loadEngine}
                 />
               )}
@@ -338,6 +392,12 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
             <div class="trans__side">
               <span class="mono--label">{t(locale, 'theSky')}</span>
               <p class="field__help">{t(locale, 'transitRingLede')}</p>
+              {eventContext.at !== null && (
+                <p class="field__help" data-event-transit-instant>
+                  <time dateTime={new Date(eventContext.at).toISOString()}>{new Date(eventContext.at).toISOString()}</time>
+                </p>
+              )}
+              {eventContext.invalid && <p class="notice" role="status">{EVENT_COPY[locale].invalid}</p>}
             </div>
           </div>
 
@@ -361,18 +421,23 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
         <div class="calc__result">
           <h2 class="sr-only" tabIndex={-1} ref={resultHeadingRef}>{t(locale, 'transits')}</h2>
           {!result.natal.timeKnown && (
-            <p class="notice" role="status">{t(locale, 'noTransitTimeNotice')}</p>
+            <p class="notice" role="status">{EVENT_COPY[locale].unknownTime}</p>
           )}
-          {/* Keyed on the compute instant: a fresh result remounts the ring,
+          {/* Keyed on the result revision: a fresh result remounts the ring,
               so a stale scrub offset or focused contact never carries over
               from a previous chart. */}
           <RingComponent
-            key={result.nowMs}
+            key={result.revision}
             locale={locale}
             natal={result.natal}
             computeSky={result.computeSky}
             nowMs={result.nowMs}
             focusRequest={searchFocus}
+            eventDate={eventContext.at !== null ? {
+              active: result.eventActive,
+              onSelect: () => resetDate(eventContext.at!, true),
+              onNow: () => resetDate(Date.now(), false),
+            } : undefined}
           />
         </div>
       )}
@@ -386,7 +451,7 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
           <div class="core tsearch-host__core">
             {SearchComponent ? (
               <SearchComponent
-                key={result?.nowMs ?? 'no-chart'}
+                key={result?.revision ?? 'no-chart'}
                 natal={searchNatal}
                 natalPoints={searchNatalPoints}
                 nowMs={result?.nowMs ?? Date.now()}
