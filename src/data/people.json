@@ -8,7 +8,7 @@
     "withdrawn": 1
   },
   "reviewedAtUtc": "2026-07-25T00:00:00Z",
-  "sourceManifestSha256": "11a29b0d706762fe3c0b205683708c348c1f1e63c3ae52afe7ee2c4ae00b56e3",
+  "sourceManifestSha256": "ca8c5709feea970f99e9762c0dbb157f7e52e233211fd281b52a37635243f4e2",
   "sourceIndexPolicySha256": "4201c07861790e33830b4b5a9029e049e5971d3f2dea9a40218cc47b1921b905",
   "sourceIndexDemandSha256": "7a7cedd3769e26085a6cb63fac082fbef981418b67600c96bf246659a41ebefb",
   "indexPolicyApprovedAtUtc": "2026-07-26T16:50:40Z",
@@ -9769,10 +9769,9 @@
       "qid": "Q3355",
       "slug": "amelia-earhart",
       "displayName": "Amelia Earhart",
-      "shortDescription": "Journalist and women's rights activist · United States · 1897–1939",
+      "shortDescription": "Aircraft pilot · United States · 1897–1939",
       "disciplines": [
-        "journalist",
-        "women's rights activist"
+        "aircraft pilot"
       ],
       "birthDate": {
         "storedValue": "1897-07-24",
@@ -169178,10 +169177,9 @@
       "qid": "Q19526",
       "slug": "maya-angelou",
       "displayName": "Maya Angelou",
-      "shortDescription": "Politician and comedian · United States · 1928–2014",
+      "shortDescription": "Writer · United States · 1928–2014",
       "disciplines": [
-        "politician",
-        "comedian"
+        "writer"
       ],
       "birthDate": {
         "storedValue": "1928-04-04",
@@ -178219,9 +178217,10 @@
       "qid": "Q1615",
       "slug": "neil-armstrong",
       "displayName": "Neil Armstrong",
-      "shortDescription": "University teacher · United States · 1930–2012",
+      "shortDescription": "Astronaut and test pilot · United States · 1930–2012",
       "disciplines": [
-        "university teacher"
+        "astronaut",
+        "test pilot"
       ],
       "birthDate": {
         "storedValue": "1930-08-05",

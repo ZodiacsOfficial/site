@@ -1,6 +1,8 @@
+import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import {
   NATAL_HOUSE_THEME,
+  NATAL_ASPECT_LINES,
   chartWeather,
   natalAspectLine,
   planetInHouseLine,
@@ -73,6 +75,91 @@ describe('natalAspectLine', () => {
         }
       }
     }
+  });
+
+  it('covers the approved 36 natal combinations in either planet order', () => {
+    const expectedKeys = [
+    'Moon:square:Saturn',
+    'Sun:conjunction:Mercury',
+    'Sun:conjunction:Moon',
+    'Sun:opposition:Moon',
+    'Sun:square:Moon',
+    'Venus:conjunction:Mars',
+    'Sun:sextile:Mars',
+    'Sun:square:Neptune',
+    'Sun:trine:Jupiter',
+    'Sun:conjunction:Venus',
+    'Sun:trine:Pluto',
+    'Sun:sextile:Pluto',
+    'Sun:square:Mars',
+    'Sun:sextile:Uranus',
+    'Sun:sextile:Saturn',
+    'Sun:square:Saturn',
+    'Mars:sextile:Uranus',
+    'Sun:sextile:Neptune',
+    'Sun:square:Pluto',
+    'Sun:conjunction:Jupiter',
+    'Sun:square:Jupiter',
+    'Sun:conjunction:Mars',
+    'Sun:trine:Mars',
+    'Mercury:trine:Saturn',
+    'Sun:trine:Neptune',
+    'Mars:trine:Neptune',
+    'Sun:opposition:Mars',
+    'Sun:conjunction:Neptune',
+    'Venus:conjunction:Pluto',
+    'Mars:opposition:Neptune',
+    'Venus:conjunction:Jupiter',
+    'Sun:sextile:Moon',
+    'Sun:trine:Moon',
+    'Moon:conjunction:Mercury',
+    'Moon:square:Mercury',
+    'Moon:trine:Venus',
+    ];
+    expect(Object.keys(NATAL_ASPECT_LINES).sort()).toEqual(expectedKeys.sort());
+    for (const key of expectedKeys) {
+      const [a, type, b] = key.split(':');
+      expect(natalAspectLine(a, type, b)).toBe(NATAL_ASPECT_LINES[key]);
+      expect(natalAspectLine(b, type, a)).toBe(natalAspectLine(a, type, b));
+    }
+  });
+
+  it('keeps the six original aspect readings and eight original house readings intact', () => {
+    const originals = [
+      planetInHouseLine('Sun', 1),
+      planetInHouseLine('Moon', 4),
+      planetInHouseLine('Saturn', 12),
+      planetInHouseLine('Pluto', 1),
+      planetInHouseLine('Neptune', 10),
+      planetInHouseLine('Mars', 7),
+      planetInHouseLine('Venus', 2),
+      planetInHouseLine('Mercury', 3),
+      natalAspectLine('Sun', 'conjunction', 'Moon'),
+      natalAspectLine('Sun', 'opposition', 'Moon'),
+      natalAspectLine('Sun', 'square', 'Moon'),
+      natalAspectLine('Venus', 'conjunction', 'Mars'),
+      natalAspectLine('Moon', 'square', 'Saturn'),
+      natalAspectLine('Sun', 'conjunction', 'Mercury'),
+    ];
+    expect(createHash('sha256').update(JSON.stringify(originals)).digest('hex'))
+      .toBe('2e94f742ad84d5ad333df876579fab3aa83aac2bf83f7204c0c726e8bbb1e94c');
+  });
+
+  it('gives different conjunctions different meanings beyond the planet names', () => {
+    const imagination = natalAspectLine('Sun', 'conjunction', 'Neptune').split(' — ')[1];
+    const affection = natalAspectLine('Venus', 'conjunction', 'Pluto').split(' — ')[1];
+    expect(imagination).toContain('imagination');
+    expect(affection).toContain('affection');
+    expect(affection).not.toBe(imagination);
+    expect(new Set(Object.values(NATAL_ASPECT_LINES).map((line) => line.split(' — ')[1])).size)
+      .toBe(36);
+  });
+
+  it('keeps the general reader for pairs outside the authored coverage', () => {
+    expect(natalAspectLine('Jupiter', 'trine', 'Neptune')).toBe(
+      'Your Jupiter runs downhill into your Neptune — your appetite for more and your imagination help each other so smoothly the gift is easy to miss.',
+    );
+    expect(natalAspectLine('Chiron', 'unknown', 'Moon')).toBe('Your Chiron aspects your Moon.');
   });
 
   it('serves the full-moon curated line', () => {

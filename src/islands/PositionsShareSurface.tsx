@@ -18,6 +18,7 @@ import {
 } from '../lib/share-card';
 import { ensurePastelZodiacIconEmbedding } from '../lib/share-card-pastel-icons';
 import { formatLongitude } from '../lib/signs';
+import { moonIsUncertain } from '../lib/moon-certainty';
 import { positionsReading } from '../lib/share-positions-reading';
 import Wheel from '../lib/wheel/Wheel';
 import SignChip from './SignChip';
@@ -252,6 +253,7 @@ export function PositionsOnlyResult({ chart, locale }: PositionsOnlyResultProps)
         {shareText(locale, 'positionsOnlyTitle')}
       </h2>
       <p class="notice" role="status">{shareText(locale, 'positionsOnlyNotice')}</p>
+      {moonIsUncertain(chart) && <p class="notice" data-moon-uncertain>{t(locale, 'moon')} · {t(locale, 'needsBirthTime')}</p>}
       <p class="calc__positions-privacy">{shareText(locale, 'positionsOnlyPrivacy')}</p>
 
       <div class="calc__wheel shell">
@@ -282,7 +284,7 @@ export function PositionsOnlyResult({ chart, locale }: PositionsOnlyResultProps)
                   {row.label}
                 </td>
                 <td class="mono">{formatLongitude(row.lon, locale).split(' ')[0]}</td>
-                <td><SignChip lon={row.lon} locale={locale} /></td>
+                <td>{row.body === 'Moon' && moonIsUncertain(chart) ? t(locale, 'needsBirthTime') : <SignChip lon={row.lon} locale={locale} />}</td>
                 {reading.cusps && <td class="mono">{reading.houses.get(row.body ?? (row.key === 'asc' ? 'ASC' : 'MC'))}</td>}
               </tr>
             ))}

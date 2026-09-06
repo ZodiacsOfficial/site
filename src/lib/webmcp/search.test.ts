@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { SearchEntry } from '../search/score';
+import { searchIndex, type SearchEntry } from '../search/score';
 import {
   executeWebMcpSearch,
   rankConsumerSearchEntries,
@@ -185,12 +185,22 @@ describe('WebMCP consumer search', () => {
 
   it.each([
     ['birth charts', '/birth-chart/'],
+    ['BIRTH CHARTS', '/birth-chart/'],
     ['trines', '/learn/aspects/trine/'],
     ['Aries', '/aries/'],
     ['eclipses', '/eclipses/'],
   ])('places the intended route in the top three for %s', (query, expectedPath) => {
     const paths = rankConsumerSearchEntries(entries, query).map((entry) => entry.path);
     expect(paths.slice(0, 3)).toContain(expectedPath);
+  });
+
+  it('uses the visible-search ranking for the same consumer entries', () => {
+    const consumerEntries = entries.filter((entry) => !['registry', 'astrofolio', 'terminal'].includes(entry.kind));
+    for (const query of ['birth charts', 'BIRTH CHARTS', 'trines', 'eclipses', 'Aries']) {
+      expect(rankConsumerSearchEntries(consumerEntries, query)).toEqual(
+        searchIndex(consumerEntries, query, SEARCH_RESULT_LIMIT),
+      );
+    }
   });
 
   it.each(['registry', 'thesis', 'astrofolio', 'aries record'])

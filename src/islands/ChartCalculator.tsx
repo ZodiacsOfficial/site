@@ -15,9 +15,10 @@ import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
 import AspectGlyph from '../components/AspectGlyph';
 import Wheel from '../lib/wheel/Wheel';
-import Inspector from './explorer/Inspector';
 import LayerChips from './explorer/LayerChips';
-import ReadingPath, { type ReadingScrollBehavior } from './explorer/ReadingPath';
+import { moonCandidates, moonCandidatesFromEndpoints, moonIsUncertain, moonLabel } from '../lib/moon-certainty';
+import { createModuleLoader } from '../lib/module-load';
+import type { ReadingScrollBehavior } from './explorer/ReadingPath';
 import {
   EMPTY_FIRST_READING,
   readFirstReadingProgress,
@@ -33,7 +34,6 @@ import {
 } from '../lib/scene/types';
 import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
-import { chartWeather, natalAspectLine, planetInHouseLine, topAspects } from '../lib/natal';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { localDateEndpointsUtc, stableBodySignSlug } from '../lib/chart-date-certainty';
 import { houseOf } from '../lib/engine/houses';
@@ -62,7 +62,7 @@ import { CATALOG_LOCALES, RELEASED_LOCALES, localizePath, normalizeCatalogLocale
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import { russianRuntime } from '../lib/i18n/ru-runtime';
 import { useEngine } from '../lib/hooks/useEngine';
-import CalculationReload, { calculationError } from './CalculationReload';
+import CalculationReload, { calculationError, calculationLoadMessage } from './CalculationReload';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
 import type { AspectType } from '../lib/engine/types';
@@ -100,6 +100,7 @@ type ChartSignature = import('../lib/chart-signature').ChartSignature;
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 type ShareDialogModule = typeof import('./ChartShareDialog');
 type ChartActionDockModule = typeof import('./ChartActionDock');
+const loadChartControls = createModuleLoader(() => import('./ChartActionDock'));
 type PreparedPrimaryShare = Awaited<ReturnType<ShareSurfaceModule['preparePrimaryShareArtifact']>>;
 type PrimaryShareHandle = {
   artifact: PreparedPrimaryShare;
@@ -353,6 +354,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [depthOpen, setDepthOpen] = useState(false);
   const [calendarSurface, setCalendarSurface] = useState<CalendarSubscribeModule | null>(null);
   const [chartActionDockModule, setChartActionDockModule] = useState<ChartActionDockModule | null>(null);
+  const [controlsError, setControlsError] = useState(false);
   const [communicationSurface, setCommunicationSurface] = useState<CommunicationReadModule | null>(null);
   const [approachSurface, setApproachSurface] = useState<ApproachReadModule | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -489,7 +491,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     : null;
 
   useEffect(() => {
-    void import('./ChartActionDock').then(setChartActionDockModule, () => {});
     return () => { spotlightArrivalCleanupRef.current?.(); };
   }, []);
 
@@ -541,6 +542,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   }
 
   async function startTour(kind: 'quick' | 'full' = 'full') {
+    if (!chartActionDockModule) return;
     try {
       const mod = tourMod ?? await import('./explorer/tour');
       setTourMod(mod);
@@ -562,6 +564,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   }
 
   function startFirstReading() {
+    if (!chartActionDockModule) return;
     const resume = firstReading.status === 'in_progress';
     const next = resume ? firstReading : persistFirstReading('in_progress', 0);
     track('first_reading_prompt', { action: resume ? 'resume' : 'start' });
@@ -631,7 +634,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         if (!b) return '';
         return [
           planetLabel(locale, b.body),
-          formatLongitude(b.lon, locale),
+          b.body === 'Moon' && chart && moonIsUncertain(chart)
+            ? `${moonLabel(chart, locale)} · ${t(locale, 'needsBirthTime')}`
+            : formatLongitude(b.lon, locale),
           b.house != null ? `${t(locale, 'house')} ${b.house}` : '',
           b.retrograde ? 'Rx' : '',
         ].filter(Boolean).join(', ');
@@ -1082,6 +1087,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setRegistryRecordSlug(null);
     setSubjectMode(input.subjectMode ?? 'self');
     setMineHandoff(input.mine ?? null);
+    if (mode === 'full' && !chartActionDockModule) requestChartControls();
     try {
       const engine = await loadEngine();
       if (!runIsCurrent()) return;
@@ -1107,7 +1113,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         const endpoints = localDateEndpointsUtc(input.date, input.city.tz);
         const startBodies = engine.computeBodies(endpoints.start);
         const endBodies = engine.computeBodies(endpoints.end);
-        nextMoonAmbiguous = stableBodySignSlug('Moon', startBodies, endBodies) === null;
+        result.moonSignCandidates = moonCandidatesFromEndpoints(startBodies, endBodies);
+        nextMoonAmbiguous = moonIsUncertain(result);
         const stableSunSlug = stableBodySignSlug('Sun', startBodies, endBodies);
         nextRegistryRecordSlug = mode === 'full' && stableSunSlug === computedSunSlug
           ? stableSunSlug
@@ -1214,6 +1221,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       mine: mineHandoff,
       ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),
     }, true);
+  }
+
+  function requestChartControls(returnFocus = false) {
+    setControlsError(false);
+    void loadChartControls().then((module) => {
+      setChartActionDockModule(module);
+      if (returnFocus) requestAnimationFrame(() => resultRef.current?.querySelector<HTMLSelectElement>('[data-explorer-entity-picker]')?.focus());
+    }, () => {
+      setControlsError(true);
+      if (returnFocus) requestAnimationFrame(() => resultRef.current?.querySelector<HTMLButtonElement>('[data-chart-controls-retry]')?.focus());
+    });
   }
 
   const shareUrl = () =>
@@ -1503,7 +1521,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   // The visual story uses planets only (nodes stay in exact data), plus the
   // strongest aspects and whole-chart balance derived once per result.
   const reading = useMemo(() => {
-    if (!chart || mode !== 'full') return null;
+    if (!chart || mode !== 'full' || !chartActionDockModule) return null;
     const ps = placements
       .filter((p) => !p.body.includes('Node'))
       .map((p) => {
@@ -1516,18 +1534,20 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           signSlug: sign.slug,
         };
       });
+    const settled = ps.filter((placement) => placement.body !== 'Moon' || !moonIsUncertain(chart));
     return {
       ps,
-      top: topAspects(
-        chart.aspects.filter((aspect) => !aspect.a.includes('Node') && !aspect.b.includes('Node')),
+      top: chartActionDockModule.topAspects(
+        chart.aspects.filter((aspect) => !aspect.a.includes('Node') && !aspect.b.includes('Node')
+          && (!moonIsUncertain(chart) || (aspect.a !== 'Moon' && aspect.b !== 'Moon'))),
         4,
       ),
-      weather: chartWeather(
-        ps.map((p) => ({ body: p.body, lon: p.lon, retrograde: p.retrograde, sign: p.signSlug })),
+      weather: chartActionDockModule.chartWeather(
+        settled.map((p) => ({ body: p.body, lon: p.lon, retrograde: p.retrograde, sign: p.signSlug })),
         chart.houses ? (b) => ps.find((x) => x.body === b)?.house ?? null : undefined,
       ),
     };
-  }, [chart, placements, mode]);
+  }, [chart, placements, mode, chartActionDockModule]);
 
   const heroCards = useMemo(() => {
     if (!chart || !sun || !moon) return [];
@@ -1547,6 +1567,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const PositionsOnlyView = shareRuntimeRef.current.surface?.PositionsOnlyResult;
   const ShareDialog = shareRuntimeRef.current.dialog;
   const ChartActionDock = chartActionDockModule?.default;
+  const EntityPicker = chartActionDockModule?.EntityPicker;
+  const ReadingPath = chartActionDockModule?.ReadingPath;
+  const Inspector = chartActionDockModule?.Inspector;
   const saveError = saved === 'full'
     ? t(locale, 'chartSaveFull')
     : saved === 'error' ? t(locale, 'chartSaveError') : null;
@@ -1743,6 +1766,22 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {/* Big three / hero cards */}
           <div class={`calc__three calc__three--${heroCards.length}`}>
             {heroCards.map(({ kind, title, lon }) => {
+              if (kind === 'moon' && moonIsUncertain(chart)) {
+                return (
+                  <div class="three-card shell" key={kind} data-moon-uncertain>
+                    <div class="core three-card__core">
+                      <span class="mono--label">{title}</span>
+                      <span class="three-card__sign">{moonLabel(chart, locale)}</span>
+                      <p class="three-card__read">{t(locale, 'needsBirthTime')}</p>
+                      {moonCandidates(chart).map((slug) => (
+                        <a class="three-card__more" key={slug} href={localizePath(locale, `/${slug}/`)}>
+                          {t(locale, 'read')} {signName(signBySlug(slug), locale)} →
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
               if (lon === null) {
                 return (
                   <div class="three-card shell" key={kind}>
@@ -1796,7 +1835,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   )}
                 </div>
                 <div class="calc__first-reading-actions">
-                  <button class="btn btn--primary" type="button" onClick={startFirstReading} data-first-reading-start>
+                  <button class="btn btn--primary" type="button" onClick={startFirstReading} disabled={!chartActionDockModule} data-first-reading-start>
                     <span>{firstReading.status === 'in_progress'
                       ? t(locale, 'firstReadingResume')
                       : t(locale, 'firstReadingStart')}</span>
@@ -1960,6 +1999,28 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         hasHouses={chart.houses != null}
                         locale={locale}
                       />
+                      {EntityPicker ? <EntityPicker
+                        scene={scene}
+                        selection={selection}
+                        locale={locale}
+                        onSelect={(ref) => {
+                          if (ref?.kind === 'aspect') {
+                            resetLens();
+                            setAspectTypes((current) => current.includes(ref.type) ? current : [...current, ref.type]);
+                          }
+                          applySelect(ref);
+                        }}
+                      /> : (
+                        <div class="xplr-entity-picker" data-chart-controls-state={controlsError ? 'error' : 'loading'}>
+                          <p class="field__help" role={controlsError ? 'alert' : 'status'}>
+                            {t(locale, controlsError ? 'explorerControlsError' : 'explorerControlsLoading')}
+                          </p>
+                          {controlsError && <>
+                            <button class="btn btn--glass" type="button" data-chart-controls-retry onClick={() => requestChartControls(true)}>{t(locale, 'calculationRetry')}</button>
+                            <CalculationReload error={calculationLoadMessage(locale)} locale={locale} />
+                          </>}
+                        </div>
+                      )}
                       <div class="calc__depth">
                         <button
                           type="button"
@@ -2003,7 +2064,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                       )}
                     </div>
                     <div class="xplr__aside">
-                      {tourOpen && tourMod ? (
+                      {tourOpen && tourMod && chartActionDockModule && Inspector ? (
                         <tourMod.ChartTour
                         scene={scene}
                         chart={chart}
@@ -2014,9 +2075,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         selection={selection}
                         loadEngine={loadEngine}
                         buildScene={buildSceneModel}
-                        topAspects={topAspects}
-                        readAspect={natalAspectLine}
-                        readHouse={planetInHouseLine}
+                        topAspects={chartActionDockModule.topAspects}
+                        readAspect={chartActionDockModule.natalAspectLine}
+                        readHouse={chartActionDockModule.planetInHouseLine}
                         renderInspector={(inspScene, banner) => (
                           <Inspector
                             scene={inspScene}
@@ -2059,7 +2120,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         onExit={exitTour}
                         returnFocus={() => wheelboxRef.current?.focus()}
                       />
-                      ) : (
+                      ) : Inspector && (
                         <Inspector
                           scene={scene}
                           selection={selection}
@@ -2075,7 +2136,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                             actionLabel={wheelActionCopy.actions}
                             signature={showsEnglishInterpretation && signature ? {
                               headline: signature.title,
-                              evidence: signature.summary,
+                              evidence: signature.kind === 'aspect' ? signature.detail ?? signature.summary : signature.summary,
                             } : null}
                             signatureLabel={subjectMode === 'other'
                               ? wheelActionCopy.signatureOther
@@ -2130,13 +2191,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               </div>
 
               {/* A visual story leads; exact data remains available below. */}
-              {showsEnglishInterpretation && reading && (
+              {showsEnglishInterpretation && reading && ReadingPath && (
                 <ReadingPath
                   placements={reading.ps}
                   topAspects={reading.top}
                   weather={reading.weather}
                   risingLon={asc}
                   housesKnown={chart.houses != null}
+                  moonSignCandidates={moonCandidates(chart)}
                   selection={selection}
                   onShowOnChart={showOnChartFromReading}
                 />
@@ -2329,7 +2391,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                               )}
                             </td>
                             <td class="mono">{p.label.split(' ')[0]}</td>
-                            <td><SignChip lon={p.lon} locale={locale} /></td>
+                            <td>{p.body === 'Moon' && moonIsUncertain(chart)
+                              ? <>{moonLabel(chart, locale)} · {t(locale, 'needsBirthTime')}</>
+                              : <SignChip lon={p.lon} locale={locale} />}</td>
                             {chart.houses && <td class="mono">{p.house}</td>}
                             <td class="mono calc__retro">{p.retrograde ? 'Rx' : ''}</td>
                           </tr>

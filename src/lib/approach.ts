@@ -1,6 +1,7 @@
 import type { Chart } from './engine/types';
 import type { CommunicationSign } from './communication';
 import { signForLongitude } from './signs';
+import { moonIsUncertain } from './moon-certainty';
 
 /**
  * Audience-facing advice for meeting the chart owner. These lines are
@@ -113,10 +114,10 @@ function bodyPart(
 
 /** Pure positions-to-reading layer; it never reads Chart.input. */
 export function approachRead(
-  chart: Pick<Chart, 'bodies' | 'angles'>,
+  chart: Pick<Chart, 'bodies' | 'angles' | 'moonSignCandidates'>,
   options: ApproachReadOptions = {},
 ): ApproachRead {
-  const moonAmbiguous = options.moonAmbiguous === true;
+  const moonAmbiguous = options.moonAmbiguous === true || moonIsUncertain(chart);
   const rising = chart.angles
     ? (() => {
       const sign = signSlug(chart.angles.asc);
@@ -135,7 +136,7 @@ export function approachRead(
   return {
     rising,
     mercury: bodyPart(chart, 'Mercury', 'How to say it', APPROACH_MERCURY),
-    moon: bodyPart(chart, 'Moon', 'What builds trust', APPROACH_MOON),
+    moon: moonAmbiguous ? null : bodyPart(chart, 'Moon', 'What builds trust', APPROACH_MOON),
     avoid: bodyPart(chart, 'Mars', 'What to avoid under pressure', APPROACH_MARS),
     moonAmbiguous,
     limitations,

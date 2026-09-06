@@ -37,7 +37,7 @@ const jsonLd = [{
       <p>{WIDGET_EN.pageIntro}</p>
       <p>
         Building something of your own instead? The computed sky behind these
-        widgets is also published as
+        widgets is also published as{' '}
         <a href="/developers/">machine-readable JSON</a>.
       </p>
     </div>
@@ -56,7 +56,7 @@ const jsonLd = [{
       <div class="wdg-controls">
         <h2 id="widget-generator-title">{WIDGET_EN.generatorTitle}</h2>
         <div class="wdg-fields">
-          <label class="field">
+          <label class="field wdg-choice">
             <span class="field__label">{WIDGET_EN.widgetLabel}</span>
             <select class="field__input" data-widget-kind>
               <option value="moon">{WIDGET_EN.moonOption}</option>
@@ -64,7 +64,7 @@ const jsonLd = [{
               <option value="chart">{WIDGET_EN.chartOption}</option>
             </select>
           </label>
-          <label class="field">
+          <label class="field wdg-choice">
             <span class="field__label">{WIDGET_EN.modeLabel}</span>
             <select class="field__input" data-widget-mode>
               <option value="iframe">{WIDGET_EN.iframeOption}</option>
@@ -144,7 +144,11 @@ const jsonLd = [{
         const options = { origin: publicOrigin, kind, theme, accent, title };
         if (code) code.value = mode === 'iframe' ? iframeEmbedCode(options) : scriptEmbedCode(options);
         if (preview) {
-          preview.src = widgetEmbedUrl(window.location.origin, kind, theme, accent);
+          // A settings change is explicit preview intent. A lazy iframe can
+          // retain its previous document after rapid destination changes.
+          preview.loading = 'eager';
+          const destination = widgetEmbedUrl(window.location.origin, kind, theme, accent);
+          if (preview.src !== destination) preview.src = destination;
           preview.title = title;
           preview.width = String(WIDGET_DIMENSIONS[kind].width);
           preview.height = String(WIDGET_DIMENSIONS[kind].height);
@@ -181,14 +185,38 @@ const jsonLd = [{
   .wdg-generator h2 { margin: 0 0 var(--s-4); font-size: var(--text-lg); }
   .wdg-controls, .wdg-output { min-width: 0; }
   .wdg-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4); }
+  /* The calculator field recipe, scoped to this builder so documentation
+     does not need the calculator's result and wheel stylesheet. */
+  .wdg-generator .field { display: flex; flex-direction: column; gap: var(--s-2); min-width: 0; }
+  .wdg-generator .field__label { font-size: var(--text-sm); font-weight: 500; color: var(--text-2); }
+  .wdg-generator .field__input {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 46px;
+    padding: 10px 14px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    color: var(--text);
+    font-size: 16px;
+    color-scheme: dark;
+  }
+  .wdg-generator .field__input:hover { border-color: var(--hair-3); }
+  .wdg-generator .field__input:focus { border-color: color-mix(in oklab, var(--accent) 60%, transparent); }
+  .wdg-generator .field__input:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--accent) 75%, white);
+    outline-offset: 2px;
+  }
   .wdg-fields .field { margin: 0; }
-  .wdg-accent input { min-height: 46px; padding: 5px; cursor: pointer; }
+  .wdg-fields .wdg-choice { grid-column: 1 / -1; }
+  .wdg-generator .wdg-accent input { height: 46px; padding: 5px; cursor: pointer; }
   .wdg-note { max-width: 62ch; margin: var(--s-3) 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; letter-spacing: .025em; }
   .wdg-output { display: grid; gap: var(--s-3); }
   .wdg-output h2 { margin-bottom: 0; }
   .wdg-preview { min-height: 276px; display: grid; place-items: center; overflow: auto; padding: var(--s-3); border: 1px solid var(--hair-2); border-radius: var(--r-md); background: var(--void-1); }
   .wdg-preview iframe { display: block; max-width: 100%; border: 0; border-radius: var(--r-md); overflow: hidden; }
-  .wdg-code { width: 100%; min-height: 138px; resize: vertical; font-family: var(--font-mono); font-size: 11px; line-height: 1.55; }
+  .wdg-generator .wdg-code { min-height: 138px; resize: vertical; font-family: var(--font-mono); font-size: 12px; line-height: 1.55; }
   .wdg-copy { justify-self: start; }
   @media (min-width: 900px) {
     .wdg-generator { grid-template-columns: minmax(250px, .72fr) minmax(0, 1.28fr); align-items: start; gap: var(--s-12); }
@@ -197,6 +225,7 @@ const jsonLd = [{
   @media (max-width: 560px) {
     .wdg-fields { grid-template-columns: 1fr; }
     .wdg-preview { justify-content: start; }
+    .wdg-generator .wdg-code { font-size: 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .wdg-preview iframe { transition: none; }

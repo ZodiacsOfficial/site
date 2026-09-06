@@ -30,9 +30,10 @@ gate.
 A separately authorized release must satisfy every item below before setting
 `STANDALONE_WEEKLY_EMAIL_ENABLED=1`:
 
-1. Deploy the confirmed legal operator/controller identity and a genuinely
-   valid physical postal address appropriate to that operator and
-   jurisdiction.
+1. Verify the current legal operator/controller identity is deployed and the
+   message uses a valid owner-approved postal address. The committed Terms and
+   Privacy pages already name Zodiacs LLC; see the remaining address and
+   authorization requirements in `docs/OWNER-SETUP-RUNBOOK.md` §1b.
 2. Implement and review a real weekly sender, or configure and document a
    Resend Broadcast/Automation lifecycle, that selects only the intended
    Segment and includes the provider's unsubscribe control. Merely collecting
@@ -43,14 +44,15 @@ A separately authorized release must satisfy every item below before setting
 4. Submit the confirmation form's explicit `POST`. In **Resend → Contacts →
    Segments**, verify that the Contact appears in the intended weekly Segment
    only after that POST. “Audiences” is deprecated terminology.
-5. Send a limit-one forecast canary through the actual standalone sender:
-   add the repository secret `DAILY_EMAIL_CANARY_TO` (the owner-controlled
-   address) and dispatch **Daily Email** with `canary=true` — first with
-   `dry_run=true`, then, with explicit approval, `dry_run=false`. The sender
-   sends to that address or to nobody, forces `limit=1`, and prints
-   `daily-email: canary receipt sent=<n> recipient=sha256:<prefix>`.
-   Exercise its unsubscribe link and verify provider suppression or list
-   removal, then verify the next eligible send does not deliver.
+5. Send a limit-one forecast canary through the actual standalone weekly
+   sender implemented in step 2. That release must document its exact sender
+   or provider procedure and its dedicated secret for the owner-controlled
+   recipient; no such standalone sender or canary command exists here yet.
+   First prove a dry run selects that address or nobody, then obtain explicit
+   approval for one live message. Keep the address out of dispatch inputs and
+   logs; record delivery counts and a recipient hash prefix. Exercise that
+   message's unsubscribe link and verify provider suppression or list removal,
+   then verify the next eligible send does not deliver.
 6. Confirm retry, duplicate-contact, expiry, rate-limit, and failure behavior.
    Only then may the owner explicitly enable the standalone release flag and
    redeploy.
@@ -58,6 +60,11 @@ A separately authorized release must satisfy every item below before setting
 Do not treat mocked tests as provider acceptance. They prove the code's request
 shape and scanner-safe ordering, not live Segment membership, cadence, or
 unsubscribe suppression.
+
+The **Daily Email** workflow and `DAILY_EMAIL_CANARY_TO` exercise only the
+confirmed daily test cohort. **Weekly Digest** and `DIGEST_CANARY_TO` exercise
+the account-linked digest described in `docs/WEEKLY-DIGEST.md`. Neither sends
+to the standalone weekly list, so their receipts cannot satisfy step 5.
 
 ## Dormant adapter contract
 
