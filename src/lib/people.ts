@@ -377,6 +377,7 @@ const DISCIPLINE_GROUP_BY_SOURCE: Readonly<Record<string, PeopleDisciplineGroup>
   'political activist': 'public-life', philanthropist: 'public-life',
   'social reformer': 'public-life', nun: 'public-life', missionary: 'public-life',
   explorer: 'public-life', aviator: 'public-life', astronaut: 'public-life',
+  'aircraft pilot': 'public-life', 'test pilot': 'public-life',
   'polar explorer': 'public-life', teacher: 'public-life', 'university teacher': 'public-life',
   pedagogue: 'public-life', feminist: 'public-life',
   'association football player': 'sport', footballer: 'sport', 'baseball player': 'sport',

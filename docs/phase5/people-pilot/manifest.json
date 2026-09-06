@@ -533,7 +533,7 @@
      "longitude": 139.73655555555555,
      "sourceEntity": "Q11432209",
      "sourceEntityLabel": "Ōi",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -1670,7 +1670,7 @@
      "longitude": -4.2537544,
      "sourceEntity": "Q56619307",
      "sourceEntityLabel": "Lochfield",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -2645,7 +2645,7 @@
      "longitude": -2.9994438888889,
      "sourceEntity": "Q9427",
      "sourceEntityLabel": "Timbuktu",
-     "wikidataPrecision": 2.7777777777778e-07,
+     "wikidataPrecision": 2.7777777777778e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -2971,7 +2971,7 @@
      "longitude": -80.3573053,
      "sourceEntity": "Q13415476",
      "sourceEntityLabel": "Silver",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -3429,10 +3429,9 @@
    "qid": "Q3355",
    "slug": "amelia-earhart",
    "displayName": "Amelia Earhart",
-   "shortDescription": "Journalist and women's rights activist · United States · 1897–1939",
+   "shortDescription": "Aircraft pilot · United States · 1897–1939",
    "disciplines": [
-    "journalist",
-    "women's rights activist"
+    "aircraft pilot"
    ],
    "birthDate": {
     "storedValue": "1897-07-24",
@@ -5250,7 +5249,7 @@
      "longitude": 1.10871,
      "sourceEntity": "Q487096",
      "sourceEntityLabel": "Reus",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -6538,7 +6537,7 @@
      "longitude": 4.7200227,
      "sourceEntity": "Q2960786",
      "sourceEntityLabel": "Charleville",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -6701,7 +6700,7 @@
      "longitude": 18.6540233,
      "sourceEntity": "Q1792",
      "sourceEntityLabel": "Gdańsk",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -6863,7 +6862,7 @@
      "longitude": 15.8579,
      "sourceEntity": "Q10715638",
      "sourceEntityLabel": "Vimmerby Parish",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -7189,7 +7188,7 @@
      "longitude": 4.361803,
      "sourceEntity": "Q80336784",
      "sourceEntityLabel": "Rue Keyenveld - Keienveldstraat",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -7503,7 +7502,7 @@
      "longitude": -46.633947222222,
      "sourceEntity": "Q174",
      "sourceEntityLabel": "São Paulo",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 1,
      "precisionDowngrade": "coordinates taken from São Paulo, one administrative step above the recorded birthplace"
     },
@@ -8479,7 +8478,7 @@
      "longitude": 6.792383846790134,
      "sourceEntity": "Q852238",
      "sourceEntityLabel": "Onitsha",
-     "wikidataPrecision": 1e-08,
+     "wikidataPrecision": 1e-8,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -9130,7 +9129,7 @@
      "longitude": -46.633947222222,
      "sourceEntity": "Q174",
      "sourceEntityLabel": "São Paulo",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -10732,7 +10731,7 @@
      "longitude": 3.08526,
      "sourceEntity": "Q111362759",
      "sourceEntityLabel": "birth house of Blaise Pascal",
-     "wikidataPrecision": 1e-08,
+     "wikidataPrecision": 1e-8,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -12334,7 +12333,7 @@
      "longitude": 2.3793055555556,
      "sourceEntity": "Q169293",
      "sourceEntityLabel": "11th arrondissement of Paris",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -12659,7 +12658,7 @@
      "longitude": -99.13589,
      "sourceEntity": "Q1489",
      "sourceEntityLabel": "Mexico City",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -14449,7 +14448,7 @@
      "longitude": -24.987983333333,
      "sourceEntity": "Q495547",
      "sourceEntityLabel": "Mindelo",
-     "wikidataPrecision": 2.778e-07,
+     "wikidataPrecision": 2.778e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -14612,7 +14611,7 @@
      "longitude": -72.483,
      "sourceEntity": "Q3321937",
      "sourceEntityLabel": "Progreso District",
-     "wikidataPrecision": 2.777777777778e-05,
+     "wikidataPrecision": 0.00002777777777778,
      "escalationSteps": 1,
      "precisionDowngrade": "coordinates taken from Progreso District, one administrative step above the recorded birthplace"
     },
@@ -14937,7 +14936,7 @@
      "longitude": 2.332578,
      "sourceEntity": "Q15149908",
      "sourceEntityLabel": "former 11th arrondissement of Paris",
-     "wikidataPrecision": 2.77777777778e-06,
+     "wikidataPrecision": 0.00000277777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -15100,7 +15099,7 @@
      "longitude": -2.76334,
      "sourceEntity": "Q2412935",
      "sourceEntityLabel": "Q2412935",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -16389,7 +16388,7 @@
      "longitude": 26.09777777777778,
      "sourceEntity": "Q19660",
      "sourceEntityLabel": "Bucharest",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -16552,7 +16551,7 @@
      "longitude": 12.3747329,
      "sourceEntity": "Q2079",
      "sourceEntityLabel": "Leipzig",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -17690,7 +17689,7 @@
      "longitude": 31.240833,
      "sourceEntity": "Q7504605",
      "sourceEntityLabel": "Shobra",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -19465,7 +19464,7 @@
      "longitude": 26.09777777777778,
      "sourceEntity": "Q19660",
      "sourceEntityLabel": "Bucharest",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -20606,7 +20605,7 @@
      "longitude": -8.75713,
      "sourceEntity": "Q200459",
      "sourceEntityLabel": "Póvoa de Varzim",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -22195,7 +22194,7 @@
      "longitude": -6.565876,
      "sourceEntity": "Q987759",
      "sourceEntityLabel": "Enniscorthy",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -22845,7 +22844,7 @@
      "longitude": -1.48882,
      "sourceEntity": "Q114682119",
      "sourceEntityLabel": "Coxhoe Hall",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -23972,7 +23971,7 @@
      "longitude": 12.466925,
      "sourceEntity": "Q2517648",
      "sourceEntityLabel": "Palazzo Corsini",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -24135,7 +24134,7 @@
      "longitude": -88.7033888888889,
      "sourceEntity": "Q667727",
      "sourceEntityLabel": "Tupelo",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -24599,7 +24598,7 @@
      "longitude": -1.84867,
      "sourceEntity": "Q17534538",
      "sourceEntityLabel": "The Brontë Birthplace",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -26388,7 +26387,7 @@
      "longitude": 31.248863,
      "sourceEntity": "Q6021507",
      "sourceEntityLabel": "El-Senbellawein",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -26876,7 +26875,7 @@
      "longitude": -75.56758450069736,
      "sourceEntity": "Q48278",
      "sourceEntityLabel": "Medellín",
-     "wikidataPrecision": 1e-08,
+     "wikidataPrecision": 1e-8,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -27038,7 +27037,7 @@
      "longitude": -9.139016,
      "sourceEntity": "Q597",
      "sourceEntityLabel": "Lisbon",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -27362,7 +27361,7 @@
      "longitude": 6.80944,
      "sourceEntity": "Q3510973",
      "sourceEntityLabel": "Oguta",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -27675,7 +27674,7 @@
      "longitude": -83.9500261,
      "sourceEntity": "Q719",
      "sourceEntityLabel": "Saginaw",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -29465,7 +29464,7 @@
      "longitude": -99.13589,
      "sourceEntity": "Q1489",
      "sourceEntityLabel": "Mexico City",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 1,
      "precisionDowngrade": "coordinates taken from Mexico City, one administrative step above the recorded birthplace"
     },
@@ -32554,7 +32553,7 @@
      "longitude": 2.36375,
      "sourceEntity": "Q2845758",
      "sourceEntityLabel": "former 6th arrondissement of Paris",
-     "wikidataPrecision": 2.77777777778e-06,
+     "wikidataPrecision": 0.00000277777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -33516,7 +33515,7 @@
      "longitude": 13.552530555556,
      "sourceEntity": "Q83362",
      "sourceEntityLabel": "Recanati",
-     "wikidataPrecision": 2.77777777778e-06,
+     "wikidataPrecision": 0.00000277777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -33678,7 +33677,7 @@
      "longitude": 12.9133,
      "sourceEntity": "Q13134",
      "sourceEntityLabel": "Pesaro",
-     "wikidataPrecision": 2.77777777778e-06,
+     "wikidataPrecision": 0.00000277777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -34165,7 +34164,7 @@
      "longitude": 9.3280792,
      "sourceEntity": "Q13649",
      "sourceEntityLabel": "Nuoro",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -34651,7 +34650,7 @@
      "longitude": 42.23111,
      "sourceEntity": "Q1875896",
      "sourceEntityLabel": "Ejersa Goro",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -34964,7 +34963,7 @@
      "longitude": 131.93513888889,
      "sourceEntity": "Q6933111",
      "sourceEntityLabel": "Muikaichi",
-     "wikidataPrecision": 2.7777777777778e-05,
+     "wikidataPrecision": 0.000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -37542,7 +37541,7 @@
      "longitude": 139.737082,
      "sourceEntity": "Q793432",
      "sourceEntityLabel": "Azabu",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -37704,7 +37703,7 @@
      "longitude": 140.10480555555554,
      "sourceEntity": "Q669633",
      "sourceEntityLabel": "Inawashiro",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -38341,7 +38340,7 @@
      "longitude": -5.53685,
      "sourceEntity": "Q208209",
      "sourceEntityLabel": "Penzance",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -38830,7 +38829,7 @@
      "longitude": 20.509305555555557,
      "sourceEntity": "Q4120832",
      "sourceEntityLabel": "Königsberg",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -39156,7 +39155,7 @@
      "longitude": 18.08112778,
      "sourceEntity": "Q10519255",
      "sourceEntityLabel": "Hedvig Eleonora parish",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -39793,7 +39792,7 @@
      "longitude": 132.45530555555555,
      "sourceEntity": "Q34664",
      "sourceEntityLabel": "Hiroshima",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -41081,7 +41080,7 @@
      "longitude": -1.218889,
      "sourceEntity": "Q1231836",
      "sourceEntityLabel": "Steventon",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -42219,7 +42218,7 @@
      "longitude": -73.977063,
      "sourceEntity": "Q2607610",
      "sourceEntityLabel": "Park Slope",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -42382,7 +42381,7 @@
      "longitude": -80.60811,
      "sourceEntity": "Q949779",
      "sourceEntityLabel": "Melbourne",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -42869,7 +42868,7 @@
      "longitude": 4.943333333333333,
      "sourceEntity": "Q582916",
      "sourceEntityLabel": "Betondorp",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -44006,7 +44005,7 @@
      "longitude": -56.817444,
      "sourceEntity": "Q55854",
      "sourceEntityLabel": "Yapeyú",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -45935,7 +45934,7 @@
      "longitude": 140.49322222222222,
      "sourceEntity": "Q1348269",
      "sourceEntityLabel": "Miharu",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -46098,7 +46097,7 @@
      "longitude": 36.012314,
      "sourceEntity": "Q181167",
      "sourceEntityLabel": "Bsharri",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -47699,7 +47698,7 @@
      "longitude": 20.509305555555557,
      "sourceEntity": "Q4120832",
      "sourceEntityLabel": "Königsberg",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -48511,7 +48510,7 @@
      "longitude": 135.483,
      "sourceEntity": "Q193428",
      "sourceEntityLabel": "Sakai",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -48662,7 +48661,7 @@
      "longitude": 6.423056,
      "sourceEntity": "Q109031",
      "sourceEntityLabel": "Voss Municipality",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -49301,7 +49300,7 @@
      "longitude": 116.407526,
      "sourceEntity": "Q956",
      "sourceEntityLabel": "Beijing",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -49615,7 +49614,7 @@
      "longitude": 6.826565,
      "sourceEntity": "Q140600977",
      "sourceEntityLabel": "Q140600977",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -49778,7 +49777,7 @@
      "longitude": -61.55035074976497,
      "sourceEntity": "Q49295424",
      "sourceEntityLabel": "Petit Valley",
-     "wikidataPrecision": 2.77778e-07,
+     "wikidataPrecision": 2.77778e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -50405,7 +50404,7 @@
      "longitude": 114.16032722949979,
      "sourceEntity": "Q1054923",
      "sourceEntityLabel": "British Hong Kong",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -51382,7 +51381,7 @@
      "longitude": 2.3322333333333,
      "sourceEntity": "Q245546",
      "sourceEntityLabel": "6th arrondissement of Paris",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -51858,7 +51857,7 @@
      "longitude": 10.92572,
      "sourceEntity": "Q279",
      "sourceEntityLabel": "Modena",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -52021,7 +52020,7 @@
      "longitude": -70.090889,
      "sourceEntity": "Q49149",
      "sourceEntityLabel": "Nantucket",
-     "wikidataPrecision": 2.778e-07,
+     "wikidataPrecision": 2.778e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -52672,7 +52671,7 @@
      "longitude": 2.2764888888889,
      "sourceEntity": "Q194420",
      "sourceEntityLabel": "16th arrondissement of Paris",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -53310,7 +53309,7 @@
      "longitude": 130.11019444444443,
      "sourceEntity": "Q877177",
      "sourceEntityLabel": "Taku",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -54122,7 +54121,7 @@
      "longitude": 35.18016389,
      "sourceEntity": "Q2914542",
      "sourceEntityLabel": "Al-Birwa",
-     "wikidataPrecision": 2.77777777778e-06,
+     "wikidataPrecision": 0.00000277777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -54284,7 +54283,7 @@
      "longitude": 2.2764888888889,
      "sourceEntity": "Q194420",
      "sourceEntityLabel": "16th arrondissement of Paris",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -54760,7 +54759,7 @@
      "longitude": 106.6966172,
      "sourceEntity": "Q2681546",
      "sourceEntityLabel": "Gia Định",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -55412,7 +55411,7 @@
      "longitude": 13.325680555556,
      "sourceEntity": "Q123941",
      "sourceEntityLabel": "Chiaravalle",
-     "wikidataPrecision": 2.77777777778e-06,
+     "wikidataPrecision": 0.00000277777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -55737,7 +55736,7 @@
      "longitude": -17.432,
      "sourceEntity": "Q3718",
      "sourceEntityLabel": "Dakar",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -56226,7 +56225,7 @@
      "longitude": -91.79025,
      "sourceEntity": "Q537803",
      "sourceEntityLabel": "Florida",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -56389,7 +56388,7 @@
      "longitude": 13.362222,
      "sourceEntity": "Q464401",
      "sourceEntityLabel": "Rote Insel",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -57827,7 +57826,7 @@
      "longitude": 35.29785,
      "sourceEntity": "Q430776",
      "sourceEntityLabel": "Nazareth",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -57959,10 +57958,9 @@
    "qid": "Q19526",
    "slug": "maya-angelou",
    "displayName": "Maya Angelou",
-   "shortDescription": "Politician and comedian · United States · 1928–2014",
+   "shortDescription": "Writer · United States · 1928–2014",
    "disciplines": [
-    "politician",
-    "comedian"
+    "writer"
    ],
    "birthDate": {
     "storedValue": "1928-04-04",
@@ -58792,7 +58790,7 @@
      "longitude": -2.922136,
      "sourceEntity": "Q65559008",
      "sourceEntityLabel": "Q65559008",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -59118,7 +59116,7 @@
      "longitude": 28.041638888889,
      "sourceEntity": "Q34647",
      "sourceEntityLabel": "Johannesburg",
-     "wikidataPrecision": 2.7777777777778e-05,
+     "wikidataPrecision": 0.000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -60256,7 +60254,7 @@
      "longitude": 2.3369666666667,
      "sourceEntity": "Q275118",
      "sourceEntityLabel": "9th arrondissement of Paris",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -60732,7 +60730,7 @@
      "longitude": 13.361261944444445,
      "sourceEntity": "Q2656",
      "sourceEntityLabel": "Palermo",
-     "wikidataPrecision": 2.7777777777777776e-07,
+     "wikidataPrecision": 2.7777777777777776e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -60895,7 +60893,7 @@
      "longitude": 139.7224138888889,
      "sourceEntity": "Q11419038",
      "sourceEntityLabel": "Kikuichō",
-     "wikidataPrecision": 2.777777777777778e-06,
+     "wikidataPrecision": 0.000002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -61027,9 +61025,10 @@
    "qid": "Q1615",
    "slug": "neil-armstrong",
    "displayName": "Neil Armstrong",
-   "shortDescription": "University teacher · United States · 1930–2012",
+   "shortDescription": "Astronaut and test pilot · United States · 1930–2012",
    "disciplines": [
-    "university teacher"
+    "astronaut",
+    "test pilot"
    ],
    "birthDate": {
     "storedValue": "1930-08-05",
@@ -61057,7 +61056,7 @@
      "longitude": -84.194167,
      "sourceEntity": "Q492796",
      "sourceEntityLabel": "Wapakoneta",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -62673,7 +62672,7 @@
      "longitude": -16.27075,
      "sourceEntity": "Q202776",
      "sourceEntityLabel": "Ziguinchor",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -64123,7 +64122,7 @@
      "longitude": 13.7381437,
      "sourceEntity": "Q1731",
      "sourceEntityLabel": "Dresden",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -64598,7 +64597,7 @@
      "longitude": 5.3875,
      "sourceEntity": "Q33421377",
      "sourceEntityLabel": "Amersfoort",
-     "wikidataPrecision": 1e-05,
+     "wikidataPrecision": 0.00001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -67188,7 +67187,7 @@
      "longitude": 11.04333333,
      "sourceEntity": "Q966777",
      "sourceEntityLabel": "Borge Municipality",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -68164,7 +68163,7 @@
      "longitude": -99.13589,
      "sourceEntity": "Q1489",
      "sourceEntityLabel": "Mexico City",
-     "wikidataPrecision": 1e-06,
+     "wikidataPrecision": 0.000001,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -68815,7 +68814,7 @@
      "longitude": 139.66375,
      "sourceEntity": "Q234087",
      "sourceEntityLabel": "Nakano",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -70602,7 +70601,7 @@
      "longitude": 13.200138888889,
      "sourceEntity": "Q10728500",
      "sourceEntityLabel": "Östra Ämtervik church parish",
-     "wikidataPrecision": 2.7777777777778e-05,
+     "wikidataPrecision": 0.000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -70764,7 +70763,7 @@
      "longitude": -83.9500261,
      "sourceEntity": "Q719",
      "sourceEntityLabel": "Saginaw",
-     "wikidataPrecision": 1e-07,
+     "wikidataPrecision": 1e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -70926,7 +70925,7 @@
      "longitude": 139.63422222222223,
      "sourceEntity": "Q38283",
      "sourceEntityLabel": "Yokohama",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -71901,7 +71900,7 @@
      "longitude": 2.3322333333333,
      "sourceEntity": "Q245546",
      "sourceEntityLabel": "6th arrondissement of Paris",
-     "wikidataPrecision": 2.7777777777778e-06,
+     "wikidataPrecision": 0.0000027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -73666,7 +73665,7 @@
      "longitude": 112.73776722222222,
      "sourceEntity": "Q11462",
      "sourceEntityLabel": "Surabaya",
-     "wikidataPrecision": 2.7777777777777776e-07,
+     "wikidataPrecision": 2.7777777777777776e-7,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -73992,7 +73991,7 @@
      "longitude": 88.36736111,
      "sourceEntity": "Q7288812",
      "sourceEntityLabel": "Swami Vivekananda's Ancestral House & Cultural Centre",
-     "wikidataPrecision": 2.777777777778e-05,
+     "wikidataPrecision": 0.00002777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -75780,7 +75779,7 @@
      "longitude": 139.74244166666668,
      "sourceEntity": "Q11501909",
      "sourceEntityLabel": "Shin-ogawamachi",
-     "wikidataPrecision": 2.777777777777778e-06,
+     "wikidataPrecision": 0.000002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -79775,7 +79774,7 @@
      "longitude": 135.5021111111111,
      "sourceEntity": "Q35765",
      "sourceEntityLabel": "Osaka",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
@@ -80099,7 +80098,7 @@
      "longitude": 135.483,
      "sourceEntity": "Q193428",
      "sourceEntityLabel": "Sakai",
-     "wikidataPrecision": 2.777777777777778e-05,
+     "wikidataPrecision": 0.00002777777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },

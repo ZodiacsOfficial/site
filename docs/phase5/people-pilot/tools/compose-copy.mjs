@@ -14,15 +14,19 @@
  *
  *   node docs/phase5/people-pilot/tools/compose-copy.mjs
  *   node docs/phase5/people-pilot/tools/compose-copy.mjs --migrate-articles
+ *   node docs/phase5/people-pilot/tools/compose-copy.mjs --migrate-identities
  *   node docs/phase5/people-pilot/tools/compose-copy.mjs --check
  *
  * Released copy is deliberately frozen. --migrate-articles applies the one
  * approved corpus-wide grammar migration; --check verifies that migration is
  * complete and that the derived depth report still matches the frozen copy.
+ * --migrate-identities changes only the three reviewed A20 identity labels;
+ * all readings, source facts, dates and measurements remain frozen.
  */
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { PRINCIPAL_IDENTITIES, reviewedIdentity } from './principal-identities.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PILOT = join(HERE, '..');
@@ -634,8 +638,11 @@ function figuresBlock(record, slug) {
 const FREEZE = process.env.FREEZE_EXISTING === '1';
 const CHECK = process.argv.includes('--check');
 const MIGRATE_ARTICLES = process.argv.includes('--migrate-articles');
-if ([CHECK, MIGRATE_ARTICLES].filter(Boolean).length > 1 || ((CHECK || MIGRATE_ARTICLES) && FREEZE)) {
-  throw new Error('Choose one of --check, --migrate-articles, or FREEZE_EXISTING=1');
+const MIGRATE_IDENTITIES = process.argv.includes('--migrate-identities');
+const MIGRATION = MIGRATE_ARTICLES || MIGRATE_IDENTITIES;
+let migratedIdentities = 0;
+if ([CHECK, MIGRATE_ARTICLES, MIGRATE_IDENTITIES].filter(Boolean).length > 1 || ((CHECK || MIGRATION) && FREEZE)) {
+  throw new Error('Choose one of --check, --migrate-articles, --migrate-identities, or FREEZE_EXISTING=1');
 }
 /* Deterministic similarity repair: reseeds.json maps slug → round.
    A bumped round changes every pooled pick on that one page. */
@@ -650,6 +657,7 @@ const existingCopy = new Set((await readdir(join(PILOT, 'copy')))
   .filter((file) => file.endsWith('.json'))
   .map((file) => file.replace(/\.json$/u, '')));
 const candidateSlugs = new Set(candidates.map((candidate) => candidate.slug));
+const candidatesBySlug = new Map(candidates.map((candidate) => [candidate.slug, candidate]));
 const orphanCopy = [...existingCopy].filter((slug) => !candidateSlugs.has(slug)).sort();
 if (orphanCopy.length > 0) {
   throw new Error(`Generated copy has orphan file(s): ${orphanCopy.join(', ')}`);
@@ -674,11 +682,28 @@ if (CHECK || MIGRATE_ARTICLES) {
     }
   }
 }
+if (CHECK || MIGRATE_IDENTITIES) {
+  for (const slug of Object.keys(PRINCIPAL_IDENTITIES)) {
+    const candidate = candidatesBySlug.get(slug);
+    if (!candidate || !existingCopy.has(slug)) throw new Error(`${slug}: reviewed identity source is missing`);
+    const copyPath = join(PILOT, 'copy', `${slug}.json`);
+    const existing = JSON.parse(await readFile(copyPath, 'utf8'));
+    const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${slug}.json`), 'utf8'));
+    const identity = reviewedIdentity(candidate, evidence, existing.identity);
+    if (CHECK && existing.identity !== identity) {
+      throw new Error(`${slug}: identity drift; run compose-copy.mjs --migrate-identities`);
+    }
+    if (MIGRATE_IDENTITIES && existing.identity !== identity) {
+      await writeFile(copyPath, `${JSON.stringify({ ...existing, identity }, null, 2)}\n`, 'utf8');
+      migratedIdentities += 1;
+    }
+  }
+}
 
 const pages = [];
 const bySign = {};
 for (const candidate of candidates) {
-  if (CHECK || MIGRATE_ARTICLES) {
+  if (CHECK || MIGRATION) {
     if (!existingCopy.has(candidate.slug)) throw new Error(`${candidate.slug}: generated copy is missing`);
     continue;
   }
@@ -689,7 +714,7 @@ for (const candidate of candidates) {
 
 let composed = 0;
 for (const candidate of candidates) {
-  if (CHECK || MIGRATE_ARTICLES) continue;
+  if (CHECK || MIGRATION) continue;
   const seedRound = reseeds[candidate.slug] ?? 0;
   if (FREEZE && existingCopy.has(candidate.slug)) {
     const existing = JSON.parse(await readFile(join(PILOT, 'copy', `${candidate.slug}.json`), 'utf8'));
@@ -806,7 +831,7 @@ if (CHECK) {
   await writeFile(reportPath, serializedReport, 'utf8');
 }
 
-console.log(`${CHECK ? 'Checked' : MIGRATE_ARTICLES ? 'Migrated' : 'Composed'} ${CHECK || MIGRATE_ARTICLES ? allPages.length : FREEZE ? composed : pages.length} pages; measured ${allPages.length} total.`);
+console.log(`${CHECK ? 'Checked' : MIGRATION ? 'Migrated' : 'Composed'} ${MIGRATE_IDENTITIES ? migratedIdentities : CHECK || MIGRATION ? allPages.length : FREEZE ? composed : pages.length} pages; measured ${allPages.length} total.`);
 console.log(`Original words: min ${report.originalWords.min}, median ${report.originalWords.median}, max ${report.originalWords.max}`);
 console.log(`Substantive statements: min ${report.substantiveStatements.min}, max ${report.substantiveStatements.max}`);
 console.log(`Highest cross-page similarity: ${report.highestSimilarity.similarity} (${report.highestSimilarity.pair.join(' <> ')})`);
