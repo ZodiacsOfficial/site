@@ -5,8 +5,14 @@
  * Wing lane (see WING_ONLY_SOURCE in scripts/consumer-boundary-lib.mjs): this
  * page carries acquisition register on purpose. Every "Open in Fomo" link is
  * built from the verified Solana address in the Zodiacs Registry, and every
- * figure on the page is either a dated DexScreener read from the committed
- * market history or a labelled headline figure with its own date.
+ * figure on the page is a dated DexScreener read from the committed market
+ * history, refreshed once in the browser when the network allows.
+ *
+ * Hero footage: an owner-supplied screen recording of the Fomo app
+ * (2026-09-02, iPhone, 1206×2622 HEVC). Encoded for the web with ffmpeg:
+ * top 200px cropped (the iOS status bar and recording indicator), scaled to
+ * 638×1280, 30fps, 0.3s fades so the loop point reads as a screen dim;
+ * libx264 crf 27 and libaom-av1 crf 34; posters are the 3.6s frame.
  */
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
@@ -45,6 +51,16 @@ const APP_STORE_BADGE = '/assets/badges/app-store-en.svg';
 const GOOGLE_PLAY_BADGE = '/assets/badges/google-play-en.png';
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+/* Hero footage and its poster (see the header comment for provenance). */
+const FOOTAGE = Object.freeze({
+  av1: '/assets/fomo/fomo-zodiacs-av1.mp4',
+  h264: '/assets/fomo/fomo-zodiacs.mp4',
+  posterAvif: '/assets/fomo/fomo-zodiacs-poster.avif',
+  posterWebp: '/assets/fomo/fomo-zodiacs-poster.webp',
+  width: 638,
+  height: 1280,
+});
+
 const SPARK_DAYS = 14;
 const registryAssets = registryJson.assets as RegistryAsset[];
 const snapshots = (marketHistoryJson as unknown as { snapshots: Snapshot[] }).snapshots;
@@ -78,24 +94,16 @@ function fmtChange(value: number | null | undefined): string {
   if (value < 0) return `▼ ${magnitude}%`;
   return `${magnitude}%`;
 }
-function describeChange(value: number | null | undefined): string {
-  if (value == null || !Number.isFinite(value)) return 'no 24-hour change available';
-  const magnitude = Math.abs(value).toFixed(2);
-  if (value > 0) return `up ${magnitude}% in 24 hours`;
-  if (value < 0) return `down ${magnitude}% in 24 hours`;
-  return 'unchanged in 24 hours';
-}
 function changeClass(value: number | null | undefined): string {
   if (value == null || !Number.isFinite(value) || value === 0) return '';
   return value > 0 ? 'is-up' : 'is-down';
 }
 
-/* A 240×64 sparkline from the last SPARK_DAYS daily reads. Missing days are
-   skipped rather than invented; fewer than two reads draws a level line. */
-function sparkPath(values: Array<number | null>): { line: string; area: string } {
+/* A 240-wide sparkline from the last SPARK_DAYS daily reads. Missing days
+   are skipped rather than invented; fewer than two reads draws a level line. */
+function sparkPath(values: Array<number | null>, H: number): { line: string; area: string } {
   const W = 240;
-  const H = 64;
-  const P = 4;
+  const P = 3;
   const points = values
     .map((value, index) => [index, value] as const)
     .filter((point): point is readonly [number, number] => typeof point[1] === 'number' && Number.isFinite(point[1]) && point[1] > 0);
@@ -134,7 +142,8 @@ const records = SIGNS.map((sign) => {
   if (!asset || !solana?.address) throw new Error(`Fomo page: missing verified Solana record for ${sign.slug}`);
   const market = latest.assets.find((candidate) => candidate.sign === sign.slug);
   const series = history.map((snapshot) => snapshot.assets.find((candidate) => candidate.sign === sign.slug)?.priceUsd ?? null);
-  const spark = sparkPath(series);
+  const spark = sparkPath(series, 64);
+  const cardSpark = sparkPath(series, 48);
   return {
     slug: sign.slug,
     name: asset.displayName,
@@ -151,6 +160,8 @@ const records = SIGNS.map((sign) => {
     marketCap: market?.marketCapUsd ?? null,
     sparkLine: spark.line,
     sparkArea: spark.area,
+    cardLine: cardSpark.line,
+    cardArea: cardSpark.area,
   };
 });
 
@@ -234,61 +245,51 @@ const sources = [
               <span class="fomo-phone__island"></span>
               <span class="fomo-phone__signal"><i></i><i></i><i></i><i></i></span>
             </div>
-            <div class="fomo-phone__bar" aria-hidden="true">
-              <img src="/assets/venues/fomo-official.svg" width="30" height="30" alt="" />
-              <span class="fomo-phone__wordmark">fomo</span>
-              <span class="fomo-phone__portfolio">Zodiacs</span>
-            </div>
-            <div class="fomo-phone__tabs" aria-hidden="true">
-              <span class="is-on">★ Watchlist</span><span>Tokens</span><span>Perps</span>
-            </div>
-            <ul class="fomo-phone__list" role="list" aria-label="The twelve Zodiacs as they appear in a Fomo watchlist" data-fomo-list>
-              {records.map((record, index) => (
-                <li style={`--i:${index};--sign:${record.hue}`}>
-                  <button
-                    type="button"
-                    class="fomo-row"
-                    data-sign={record.slug}
-                    aria-pressed={record.slug === initial.slug ? 'true' : 'false'}
-                    aria-label={`${record.name}, ${fmtPrice(record.price)}, ${describeChange(record.change)}`}
-                  >
-                    <SignIcon sign={record.slug} size={40} loading="eager" />
-                    <span class="fomo-row__id"><strong>{record.symbol}</strong><small data-row-mcap>{fmtCompact(record.marketCap)} MC</small></span>
-                    <span class="fomo-row__px"><strong data-row-price>{fmtPrice(record.price)}</strong><small class:list={['fomo-delta', changeClass(record.change)]} data-row-change>{fmtChange(record.change)}</small></span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <section class="fomo-sheet" data-fomo-sheet>
-              <div class="fomo-sheet__head">
-                <img data-sheet-icon src={initial.icon} width="44" height="44" alt="" />
-                <div class="fomo-sheet__id">
-                  <strong data-sheet-name>{initial.name}</strong>
-                  <small><span data-sheet-symbol>{initial.symbol}</span> · Solana</small>
-                </div>
-                <div class="fomo-sheet__px">
-                  <strong data-sheet-price>{fmtPrice(initial.price)}</strong>
-                  <small class:list={['fomo-delta', changeClass(initial.change)]} data-sheet-change>{fmtChange(initial.change)} · 24h</small>
-                </div>
-              </div>
-              <svg class="fomo-sheet__spark" viewBox="0 0 240 64" aria-hidden="true" focusable="false">
-                <path class="fomo-sheet__area" data-sheet-area d={initial.sparkArea} />
-                <path class="fomo-sheet__line" data-sheet-line d={initial.sparkLine} />
-              </svg>
-              <div class="fomo-sheet__foot">
-                <span class="fomo-sheet__range" data-sheet-range>{history.length} daily reads · {provider}</span>
-                <a class="fomo-sheet__open" data-sheet-open href={initial.fomo} rel="external nofollow noopener">Open in Fomo ↗</a>
-              </div>
-            </section>
-            <div class="fomo-phone__dock" aria-hidden="true">
-              <span class="is-on"></span><span></span><span></span><span></span><span></span>
+            <div class="fomo-phone__stage" data-fomo-stage>
+              <picture>
+                <source type="image/avif" srcset={FOOTAGE.posterAvif} />
+                <img
+                  class="fomo-phone__poster"
+                  src={FOOTAGE.posterWebp}
+                  width={FOOTAGE.width}
+                  height={FOOTAGE.height}
+                  alt="The Fomo app showing the twelve Zodiacs in a holdings list, each with its value and 24-hour change."
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                  data-fomo-poster
+                />
+              </picture>
+              <video
+                class="fomo-phone__video"
+                muted
+                loop
+                playsinline
+                preload="none"
+                disablepictureinpicture
+                aria-hidden="true"
+                tabindex="-1"
+                data-fomo-video
+                data-playback="poster"
+              >
+                <source data-src={FOOTAGE.av1} type='video/mp4; codecs="av01.0.08M.08"' />
+                <source data-src={FOOTAGE.h264} type="video/mp4" />
+              </video>
             </div>
           </div>
         </div>
+        <div class="fomo-alert" role="img" aria-label="Example of a Fomo alert: Capricorn is up 5.98 percent. 50 top traders bought $88,203.12." data-fomo-alert>
+          <img src="/assets/venues/fomo-official.svg" width="40" height="40" alt="" />
+          <div class="fomo-alert__body">
+            <div class="fomo-alert__title">
+              <strong>CAPRICORN <span class="fomo-alert__sign"><SignIcon sign="capricorn" size={18} loading="eager" /></span> is up 5.98%</strong>
+              <span class="fomo-alert__time">9:41 AM</span>
+            </div>
+            <div class="fomo-alert__text"><span class="fomo-alert__dot" aria-hidden="true"></span>50 top traders bought $88,203.12</div>
+          </div>
+        </div>
         <figcaption class="fomo-phone__caption">
-          <span data-fomo-live-note>Prices: {provider}, read {readAtLabel}.</span>{' '}
-          <span>The app shows live figures.</span>{' '}
-          <a href="/registry/technical/#market-transparency">Data &amp; methodology</a>
+          Footage from the Fomo app, recorded September 2026. The alert shows the kind of price notification Fomo can send; its figures are an example.
         </figcaption>
       </figure>
     </section>
@@ -299,7 +300,7 @@ const sources = [
           <div class="fomo-finder__ask">
             <p class="kicker">Not sure which one is yours?</p>
             <h2 id="finder-title" class="display">Find your sign by birthday.</h2>
-            <p>Pick the month and day. The phone above switches to your sign, and the link below opens it in Fomo.</p>
+            <p>Pick the month and day. You get your sign with its latest figures and a link that opens it in Fomo.</p>
           </div>
           <form class="fomo-finder__form" data-fomo-finder-form novalidate>
             <label class="fomo-finder__field">
@@ -316,14 +317,34 @@ const sources = [
                 {Array.from({ length: 31 }, (_, index) => <option value={index + 1}>{index + 1}</option>)}
               </select>
             </label>
-            <p class="fomo-finder__result" data-finder-result aria-live="polite" role="status"></p>
-            <div class="fomo-finder__actions" data-finder-actions hidden>
-              <a class="fomo-cta" href={initial.fomo} rel="external nofollow noopener" data-finder-open>
-                <img src="/assets/venues/fomo-official.svg" width="40" height="40" alt="" />
-                <span class="fomo-cta__copy"><small data-finder-symbol>{initial.symbol}</small><strong>Open <span data-finder-name>{initial.name}</span> in Fomo</strong></span>
-                <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
-              </a>
-              <a class="fomo-finder__card-link" href={`#sign-${initial.slug}`} data-finder-card>See the <span data-finder-name>{initial.name}</span> card ↓</a>
+            <p class="fomo-finder__note" data-finder-note role="status" aria-live="polite"></p>
+            <div class="fomo-finder__card" data-finder-card hidden>
+              <div class="fomo-finder__card-head">
+                <img data-finder-icon src={initial.icon} width="48" height="48" alt="" />
+                <div class="fomo-finder__card-id">
+                  <strong data-finder-name>{initial.name}</strong>
+                  <small><span data-finder-dates>{initial.dates}</span> · <span data-finder-symbol>{initial.symbol}</span></small>
+                </div>
+                <div class="fomo-finder__card-px">
+                  <strong data-finder-price>{fmtPrice(initial.price)}</strong>
+                  <small class:list={['fomo-delta', changeClass(initial.change)]} data-finder-change>{fmtChange(initial.change)} · 24h</small>
+                </div>
+              </div>
+              <svg class="fomo-spark" viewBox="0 0 240 64" aria-hidden="true" focusable="false">
+                <path class="fomo-spark__area" data-finder-area d={initial.sparkArea} />
+                <path class="fomo-spark__line" data-finder-line d={initial.sparkLine} />
+              </svg>
+              <div class="fomo-finder__card-foot">
+                <span class="fomo-finder__range">{history.length} daily reads · {provider}</span>
+                <div class="fomo-finder__actions">
+                  <a class="fomo-cta fomo-cta--compact" href={initial.fomo} rel="external nofollow noopener" data-finder-open>
+                    <img src="/assets/venues/fomo-official.svg" width="30" height="30" alt="" />
+                    <span class="fomo-cta__copy"><small data-finder-symbol>{initial.symbol}</small><strong>Open in Fomo</strong></span>
+                    <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
+                  </a>
+                  <a class="fomo-finder__card-link" href={`#sign-${initial.slug}`} data-finder-jump>See the <span data-finder-name>{initial.name}</span> card ↓</a>
+                </div>
+              </div>
             </div>
           </form>
         </div>
@@ -341,7 +362,7 @@ const sources = [
           <span class="fomo-steps__num">01</span>
           <h3>Get the app</h3>
           <p>Download Fomo from the App Store or Google Play, or open fomo.family in a browser. Sign in with an email address or Apple ID; Fomo sets up the wallet inside the app.</p>
-          <a href="#top-stores" data-fomo-get="steps">Get the app ↑</a>
+          <a href="#top-stores">Get the app ↑</a>
         </li>
         <li class="tile reveal" style="--reveal-delay:80ms">
           <span class="fomo-steps__num">02</span>
@@ -374,6 +395,10 @@ const sources = [
                 <p class="fomo-card__dates">{record.dates}</p>
               </div>
             </div>
+            <svg class="fomo-spark fomo-spark--card" viewBox="0 0 240 48" aria-hidden="true" focusable="false" data-card-spark>
+              <path class="fomo-spark__area" d={record.cardArea} />
+              <path class="fomo-spark__line" d={record.cardLine} />
+            </svg>
             <dl class="fomo-card__data">
               <div><dt>Price</dt><dd data-card-price>{fmtPrice(record.price)}</dd></div>
               <div><dt>24h</dt><dd class:list={['fomo-delta', changeClass(record.change)]} data-card-change>{fmtChange(record.change)}</dd></div>
@@ -391,8 +416,10 @@ const sources = [
         ))}
       </ul>
       <p class="fomo-grid__note">
-        Every link carries the address published in the Zodiacs Registry. Fomo is a separate app; check that the
-        address on its screen matches the record before you approve anything.
+        <span data-fomo-live-note>Prices and the {history.length}-day lines: {provider}, read {readAtLabel}.</span>
+        {' '}Every link carries the address published in the Zodiacs Registry. Fomo is a separate app; check that
+        the address on its screen matches the record before you approve anything.
+        {' '}<a href="/registry/technical/#market-transparency">Data &amp; methodology</a>
       </p>
     </section>
 
@@ -495,6 +522,8 @@ const sources = [
     marketCap: number | null;
     sparkLine: string;
     sparkArea: string;
+    cardLine: string;
+    cardArea: string;
   };
   type FomoPayload = { readAt: string; provider: string; days: number; records: FomoRecord[] };
   type DexPair = {
@@ -504,17 +533,12 @@ const sources = [
     marketCap?: number | string;
     liquidity?: { usd?: number | string };
   };
+  type NetworkInformation = { saveData?: boolean; effectiveType?: string };
 
   const dataNode = document.querySelector<HTMLScriptElement>('#fomo-records');
   const payload = JSON.parse(dataNode?.textContent || '{"records":[]}') as FomoPayload;
   const records = payload.records ?? [];
-  const bySlug = new Map(records.map((record) => [record.slug, record]));
   const page = document.querySelector<HTMLElement>('[data-fomo-page]');
-  const phone = document.querySelector<HTMLElement>('[data-fomo-phone]');
-  const list = document.querySelector<HTMLElement>('[data-fomo-list]');
-  const rows = Array.from(document.querySelectorAll<HTMLButtonElement>('.fomo-row[data-sign]'));
-  const sheetLine = document.querySelector<SVGPathElement>('[data-sheet-line]');
-  const sheetArea = document.querySelector<SVGPathElement>('[data-sheet-area]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   document.querySelector<HTMLAnchorElement>('.nav__chip[href="/astrofolio/"]')?.setAttribute('aria-current', 'page');
@@ -540,13 +564,6 @@ const sources = [
     if (value < 0) return `▼ ${magnitude}%`;
     return `${magnitude}%`;
   }
-  function describeChange(value: number | null): string {
-    if (value == null || !Number.isFinite(value)) return 'no 24-hour change available';
-    const magnitude = Math.abs(value).toFixed(2);
-    if (value > 0) return `up ${magnitude}% in 24 hours`;
-    if (value < 0) return `down ${magnitude}% in 24 hours`;
-    return 'unchanged in 24 hours';
-  }
   function paintDelta(node: HTMLElement | null, value: number | null, suffix = '') {
     if (!node) return;
     node.textContent = `${fmtChange(value)}${suffix}`;
@@ -557,95 +574,54 @@ const sources = [
     scope.querySelectorAll<HTMLElement>(selector).forEach((node) => { node.textContent = text; });
   }
 
-  let active = bySlug.get(page?.dataset.initialSign || '') ?? records[0];
-  let cycleTimer: number | null = null;
-  let paused = false;
-  let chosen = false;
-
-  function drawSpark(record: FomoRecord, animate: boolean) {
-    if (!sheetLine || !sheetArea) return;
-    sheetArea.setAttribute('d', record.sparkArea);
-    sheetLine.setAttribute('d', record.sparkLine);
-    sheetLine.style.transition = 'none';
-    sheetArea.style.transition = 'none';
+  /* Sparkline draw-in: the dash length is the path's own length, so the
+     line traces itself from the oldest read to the newest. */
+  function drawSpark(line: SVGPathElement | null, area: SVGPathElement | null, animate: boolean) {
+    if (!line) return;
+    line.style.transition = 'none';
+    if (area) area.style.transition = 'none';
     if (!animate || reducedMotion.matches) {
-      sheetLine.style.strokeDasharray = '';
-      sheetLine.style.strokeDashoffset = '';
-      sheetArea.style.opacity = '';
+      line.style.strokeDasharray = '';
+      line.style.strokeDashoffset = '';
+      if (area) area.style.opacity = '';
       return;
     }
-    const length = sheetLine.getTotalLength();
-    sheetLine.style.strokeDasharray = `${length}`;
-    sheetLine.style.strokeDashoffset = `${length}`;
-    sheetArea.style.opacity = '0';
-    void sheetLine.getBoundingClientRect();
-    sheetLine.style.transition = 'stroke-dashoffset 900ms cubic-bezier(0.22, 1, 0.36, 1)';
-    sheetArea.style.transition = 'opacity 700ms ease 300ms';
-    sheetLine.style.strokeDashoffset = '0';
-    sheetArea.style.opacity = '';
+    const length = line.getTotalLength();
+    line.style.strokeDasharray = `${length}`;
+    line.style.strokeDashoffset = `${length}`;
+    if (area) area.style.opacity = '0';
+    void line.getBoundingClientRect();
+    line.style.transition = 'stroke-dashoffset 900ms cubic-bezier(0.22, 1, 0.36, 1)';
+    line.style.strokeDashoffset = '0';
+    if (area) {
+      area.style.transition = 'opacity 700ms ease 300ms';
+      area.style.opacity = '';
+    }
   }
 
-  function scrollRowIntoView(row: HTMLElement) {
-    if (!list) return;
-    const target = row.offsetTop - (list.clientHeight - row.offsetHeight) / 2;
-    list.scrollTo({ top: Math.max(0, target), behavior: reducedMotion.matches ? 'auto' : 'smooth' });
-  }
-
-  function select(record: FomoRecord, { animate = true } = {}) {
-    active = record;
-    page?.style.setProperty('--fomo-sign', record.hue);
-    rows.forEach((row) => {
-      const selected = row.dataset.sign === record.slug;
-      row.setAttribute('aria-pressed', selected ? 'true' : 'false');
-      if (selected) scrollRowIntoView(row);
+  /* Card sparklines trace once, when their card first scrolls into view. */
+  const cardSparks = Array.from(document.querySelectorAll<SVGSVGElement>('[data-card-spark]'));
+  if (!reducedMotion.matches && 'IntersectionObserver' in window && cardSparks.length) {
+    cardSparks.forEach((spark) => {
+      const line = spark.querySelector<SVGPathElement>('.fomo-spark__line');
+      if (line) {
+        const length = line.getTotalLength();
+        line.style.strokeDasharray = `${length}`;
+        line.style.strokeDashoffset = `${length}`;
+      }
+      const area = spark.querySelector<SVGPathElement>('.fomo-spark__area');
+      if (area) area.style.opacity = '0';
     });
-    const icon = document.querySelector<HTMLImageElement>('[data-sheet-icon]');
-    if (icon && icon.getAttribute('src') !== record.icon) icon.src = record.icon;
-    setText('[data-sheet-name]', record.name);
-    setText('[data-sheet-symbol]', record.symbol);
-    setText('[data-sheet-price]', fmtPrice(record.price));
-    paintDelta(document.querySelector<HTMLElement>('[data-sheet-change]'), record.change, ' · 24h');
-    const open = document.querySelector<HTMLAnchorElement>('[data-sheet-open]');
-    if (open) open.href = record.fomo;
-    drawSpark(record, animate);
+    const sparkObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const spark = entry.target as SVGSVGElement;
+        drawSpark(spark.querySelector('.fomo-spark__line'), spark.querySelector('.fomo-spark__area'), true);
+        sparkObserver.unobserve(spark);
+      }
+    }, { threshold: 0.4 });
+    cardSparks.forEach((spark) => sparkObserver.observe(spark));
   }
-
-  function next() {
-    if (!records.length) return;
-    const index = records.findIndex((record) => record.slug === active?.slug);
-    select(records[(index + 1) % records.length]);
-  }
-
-  function stopCycle() {
-    if (cycleTimer !== null) window.clearInterval(cycleTimer);
-    cycleTimer = null;
-  }
-  function startCycle() {
-    stopCycle();
-    if (chosen || reducedMotion.matches || paused || document.hidden || records.length < 2) return;
-    cycleTimer = window.setInterval(next, 2800);
-  }
-
-  rows.forEach((row) => {
-    row.addEventListener('click', () => {
-      const record = bySlug.get(row.dataset.sign || '');
-      if (!record) return;
-      /* A deliberate choice ends the tour; the phone then holds that sign. */
-      chosen = true;
-      select(record);
-      stopCycle();
-    });
-  });
-  phone?.addEventListener('pointerenter', () => { paused = true; stopCycle(); });
-  phone?.addEventListener('pointerleave', () => { paused = false; startCycle(); });
-  phone?.addEventListener('focusin', () => { paused = true; stopCycle(); });
-  phone?.addEventListener('focusout', (event) => {
-    if (phone.contains(event.relatedTarget as Node | null)) return;
-    paused = false;
-    startCycle();
-  });
-  document.addEventListener('visibilitychange', () => { if (document.hidden) stopCycle(); else startCycle(); });
-  reducedMotion.addEventListener('change', () => startCycle());
 
   /* Store badges: lead with the visitor's own store. Desktop keeps the published order. */
   const agent = navigator.userAgent;
@@ -657,14 +633,71 @@ const sources = [
     });
   }
 
+  /* Hero footage: the poster is the complete reduced-motion and constrained-
+     data experience. Sources attach only once the phone is on screen, and
+     playback pauses whenever it scrolls away or the tab hides. */
+  const video = document.querySelector<HTMLVideoElement>('[data-fomo-video]');
+  const stage = document.querySelector<HTMLElement>('[data-fomo-stage]');
+  const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
+  const constrained = Boolean(connection && (connection.saveData || ['slow-2g', '2g'].includes(connection.effectiveType ?? '')));
+  if (video && stage && !reducedMotion.matches && !constrained && 'IntersectionObserver' in window) {
+    let attached = false;
+    let onScreen = false;
+    const settle = (state: string) => { video.dataset.playback = state; stage.dataset.playing = String(state === 'playing'); };
+    const attach = () => {
+      if (attached) return;
+      attached = true;
+      video.querySelectorAll<HTMLSourceElement>('source[data-src]').forEach((source) => {
+        source.src = source.dataset.src ?? '';
+        source.removeAttribute('data-src');
+      });
+      video.load();
+      settle('loading');
+    };
+    const play = () => {
+      video.play().then(() => settle('playing')).catch(() => settle('poster'));
+    };
+    const rest = () => {
+      if (!attached || video.paused) return;
+      video.pause();
+      settle('paused');
+    };
+    const footageObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        onScreen = entry.isIntersecting;
+        if (onScreen) {
+          attach();
+          play();
+        } else {
+          rest();
+        }
+      }
+    }, { threshold: 0.25 });
+    footageObserver.observe(stage);
+    video.addEventListener('playing', () => settle('playing'));
+    video.addEventListener('error', () => settle('poster'), true);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) rest();
+      else if (attached && onScreen) play();
+    });
+    reducedMotion.addEventListener('change', () => {
+      if (!reducedMotion.matches) return;
+      footageObserver.disconnect();
+      if (!video.paused) video.pause();
+      settle('poster');
+    });
+  }
+
   /* Find your sign by birthday. Tropical dates from the site's sign table. */
   const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const MONTH_LENGTHS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const finderForm = document.querySelector<HTMLFormElement>('[data-fomo-finder-form]');
   const finderMonth = document.querySelector<HTMLSelectElement>('[data-finder-month]');
   const finderDay = document.querySelector<HTMLSelectElement>('[data-finder-day]');
-  const finderResult = document.querySelector<HTMLElement>('[data-finder-result]');
-  const finderActions = document.querySelector<HTMLElement>('[data-finder-actions]');
+  const finderNote = document.querySelector<HTMLElement>('[data-finder-note]');
+  const finderCard = document.querySelector<HTMLElement>('[data-finder-card]');
+  let found: FomoRecord | null = null;
+
   function signForDate(month: number, day: number): FomoRecord | undefined {
     const value = month * 100 + day;
     return records.find((record) => {
@@ -673,43 +706,53 @@ const sources = [
       return start <= end ? value >= start && value <= end : value >= start || value <= end;
     });
   }
+  function paintFinder(record: FomoRecord) {
+    if (!finderCard) return;
+    const icon = finderCard.querySelector<HTMLImageElement>('[data-finder-icon]');
+    if (icon && icon.getAttribute('src') !== record.icon) icon.src = record.icon;
+    setText('[data-finder-name]', record.name, finderCard);
+    setText('[data-finder-dates]', record.dates, finderCard);
+    setText('[data-finder-symbol]', record.symbol, finderCard);
+    setText('[data-finder-price]', fmtPrice(record.price), finderCard);
+    paintDelta(finderCard.querySelector<HTMLElement>('[data-finder-change]'), record.change, ' · 24h');
+    const open = finderCard.querySelector<HTMLAnchorElement>('[data-finder-open]');
+    if (open) open.href = record.fomo;
+    const jump = finderCard.querySelector<HTMLAnchorElement>('[data-finder-jump]');
+    if (jump) jump.href = `#sign-${record.slug}`;
+    const area = finderCard.querySelector<SVGPathElement>('[data-finder-area]');
+    const line = finderCard.querySelector<SVGPathElement>('[data-finder-line]');
+    area?.setAttribute('d', record.sparkArea);
+    line?.setAttribute('d', record.sparkLine);
+    drawSpark(line, area, true);
+  }
   function runFinder() {
-    if (!finderResult || !finderActions) return;
+    if (!finderNote || !finderCard) return;
     const month = Number(finderMonth?.value);
     const day = Number(finderDay?.value);
     if (!month || !day) {
-      finderResult.textContent = '';
-      finderActions.hidden = true;
+      finderNote.textContent = '';
+      finderCard.hidden = true;
+      found = null;
       return;
     }
     if (day > MONTH_LENGTHS[month - 1]) {
-      finderResult.textContent = `${MONTHS[month - 1]} has ${MONTH_LENGTHS[month - 1]} days.`;
-      finderActions.hidden = true;
+      finderNote.textContent = `${MONTHS[month - 1]} has ${MONTH_LENGTHS[month - 1]} days.`;
+      finderCard.hidden = true;
+      found = null;
       return;
     }
     const record = signForDate(month, day);
     if (!record) return;
-    const name = document.createElement('strong');
-    name.textContent = record.name;
-    finderResult.replaceChildren(name, document.createTextNode(` · ${record.dates}`));
-    setText('[data-finder-name]', record.name, finderActions);
-    setText('[data-finder-symbol]', record.symbol, finderActions);
-    const open = finderActions.querySelector<HTMLAnchorElement>('[data-finder-open]');
-    if (open) open.href = record.fomo;
-    const card = finderActions.querySelector<HTMLAnchorElement>('[data-finder-card]');
-    if (card) card.href = `#sign-${record.slug}`;
-    finderActions.hidden = false;
-    chosen = true;
-    select(record);
-    stopCycle();
+    found = record;
+    finderNote.textContent = '';
+    finderCard.hidden = false;
+    finderCard.style.setProperty('--sign', record.hue);
+    page?.style.setProperty('--fomo-sign', record.hue);
+    paintFinder(record);
   }
   finderForm?.addEventListener('submit', (event) => event.preventDefault());
   finderMonth?.addEventListener('change', runFinder);
   finderDay?.addEventListener('change', runFinder);
-
-  if (active) select(active, { animate: false });
-  const cycleStartDelay = reducedMotion.matches ? 0 : 1600;
-  window.setTimeout(startCycle, cycleStartDelay);
 
   /* One public read of the same DexScreener batch the daily snapshot uses.
      A failure leaves the dated figures and their caption exactly as built. */
@@ -746,13 +789,6 @@ const sources = [
         record.change = change != null && Number.isFinite(change) ? change : null;
         record.marketCap = marketCap != null && Number.isFinite(marketCap) ? marketCap : null;
         updated += 1;
-        const row = document.querySelector<HTMLElement>(`.fomo-row[data-sign="${record.slug}"]`);
-        if (row) {
-          setText('[data-row-price]', fmtPrice(record.price), row);
-          setText('[data-row-mcap]', `${fmtCompact(record.marketCap)} MC`, row);
-          paintDelta(row.querySelector<HTMLElement>('[data-row-change]'), record.change);
-          row.setAttribute('aria-label', `${record.name}, ${fmtPrice(record.price)}, ${describeChange(record.change)}`);
-        }
         const card = document.querySelector<HTMLElement>(`[data-sign-card="${record.slug}"]`);
         if (card) {
           setText('[data-card-price]', fmtPrice(record.price), card);
@@ -761,14 +797,14 @@ const sources = [
         }
       }
       if (!updated) return;
-      if (active) {
-        setText('[data-sheet-price]', fmtPrice(active.price));
-        paintDelta(document.querySelector<HTMLElement>('[data-sheet-change]'), active.change, ' · 24h');
+      if (found && finderCard) {
+        setText('[data-finder-price]', fmtPrice(found.price), finderCard);
+        paintDelta(finderCard.querySelector<HTMLElement>('[data-finder-change]'), found.change, ' · 24h');
       }
       const now = new Date();
       const hh = String(now.getUTCHours()).padStart(2, '0');
       const mm = String(now.getUTCMinutes()).padStart(2, '0');
-      setText('[data-fomo-live-note]', `Prices: ${payload.provider}, live at ${hh}:${mm} UTC.`);
+      setText('[data-fomo-live-note]', `Prices: ${payload.provider}, live at ${hh}:${mm} UTC; the ${payload.days}-day lines are its daily reads.`);
     } catch {
       /* Offline, blocked, or slow: the dated snapshot stands. */
     } finally {
@@ -783,7 +819,7 @@ const sources = [
 </Base>
 
 <style>
-  /* The one transitioning hue on the page: the highlighted sign's disc colour,
+  /* The one transitioning hue on the page: the found sign's disc colour,
      registered so the glow can ease between signs instead of snapping. */
   @property --fomo-sign {
     syntax: '<color>';
@@ -834,6 +870,7 @@ const sources = [
     line-height: 1.55;
     text-wrap: pretty;
   }
+
   /* Official store badges. Apple's SVG at 48px; Google's PNG keeps its built-in
      clear space, scaled so the visible badge is also 48px and pulled in by
      negative margins so the pair sits on one baseline. */
@@ -880,69 +917,6 @@ const sources = [
     font-size: var(--text-sm);
   }
   .fomo-facts-strip strong { margin-right: 5px; color: var(--text); font-weight: 600; }
-
-  /* ── Finder ─────────────────────────────────────────────────────── */
-  .fomo-finder { padding-block: 0 clamp(8px, 2vw, 16px); }
-  .fomo-finder__core {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    align-items: center;
-    gap: clamp(24px, 4vw, 56px);
-    padding: clamp(24px, 4vw, 44px);
-    background:
-      radial-gradient(90% 80% at 0% 0%, color-mix(in oklab, var(--fomo-sign) 9%, transparent), transparent 62%),
-      linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
-  }
-  .fomo-finder__ask .kicker { margin: 0 0 10px; }
-  .fomo-finder__ask h2 { margin: 0; font-size: var(--text-xl); }
-  .fomo-finder__ask p:not(.kicker) { max-width: 42ch; margin: 12px 0 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.6; text-wrap: pretty; }
-  .fomo-finder__form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .fomo-finder__field { display: grid; gap: 6px; }
-  .fomo-finder__field span {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  .fomo-finder__field select {
-    appearance: none;
-    -webkit-appearance: none;
-    min-height: 48px;
-    padding: 0 40px 0 14px;
-    border: 1px solid var(--hair-2);
-    border-radius: var(--r-md);
-    background:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M3 5.25 7 9.25l4-4' stroke='%238E96AB' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center,
-      rgba(198, 204, 218, 0.05);
-    color: var(--text);
-    font: 500 15px/1 var(--font-sans);
-  }
-  .fomo-finder__field select:focus-visible { outline: 1.5px solid var(--ink-0); outline-offset: 2px; }
-  .fomo-finder__result {
-    grid-column: 1 / -1;
-    min-height: 1.5em;
-    margin: 2px 0 0;
-    color: var(--text-2);
-    font-size: var(--text-base);
-  }
-  .fomo-finder__result strong {
-    color: var(--text);
-    font-family: var(--font-serif);
-    font-size: 1.4em;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  .fomo-finder__actions {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px 16px;
-  }
-  .fomo-finder__actions[hidden] { display: none; }
-  .fomo-finder__card-link { color: var(--muted); font-size: var(--text-sm); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
-  .fomo-finder__card-link:hover { color: var(--text); }
 
   /* ── Branded Fomo hand-off (the same pill the Astrofolio vitrine uses) ── */
   .fomo-cta {
@@ -1012,7 +986,7 @@ const sources = [
   .fomo-cta:active { transform: scale(0.975); }
   .fomo-cta:focus-visible { outline: 2px solid #7f88ff; outline-offset: 3px; }
 
-  /* ── Phone ───────────────────────────────────────────────────────── */
+  /* ── Phone with the footage ──────────────────────────────────────── */
   .fomo-phone {
     position: relative;
     margin: 0;
@@ -1025,7 +999,7 @@ const sources = [
     /* Horizontal insets stay non-negative: an absolutely positioned box past
        the viewport edge would add sideways scroll on phones, while the blur
        itself is ink overflow and bleeds without doing so. */
-    inset: 6% 0 4%;
+    inset: 6% 0 10%;
     z-index: -1;
     border-radius: 50%;
     background: radial-gradient(58% 46% at 50% 50%, color-mix(in oklab, var(--fomo-sign) 28%, transparent), transparent 72%);
@@ -1034,7 +1008,6 @@ const sources = [
   }
   .fomo-phone__frame {
     width: min(340px, 84vw);
-    aspect-ratio: 9 / 19;
     padding: 10px;
     border-radius: 54px;
     background: linear-gradient(160deg, #2b303f 0%, #14171f 42%, #0a0c12 100%);
@@ -1047,25 +1020,22 @@ const sources = [
     transform-style: preserve-3d;
     transition: transform var(--dur-3) var(--ease-soft), box-shadow 900ms var(--ease-soft);
   }
-  /* The thing you are about to touch stops drifting and faces you. */
   .fomo-phone:hover .fomo-phone__frame,
-  .fomo-phone:focus-within .fomo-phone__frame { transform: none; animation-play-state: paused; }
+  .fomo-phone:focus-within .fomo-phone__frame { transform: none; }
   .fomo-phone__screen {
     position: relative;
     display: grid;
-    grid-template-rows: auto auto auto minmax(0, 1fr) auto auto;
-    height: 100%;
+    grid-template-rows: auto minmax(0, 1fr);
     overflow: hidden;
     border-radius: 44px;
     background: #07080c;
     color: var(--ink-0);
-    font-family: var(--font-sans);
   }
   .fomo-phone__status {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    padding: 14px 24px 0;
+    padding: 14px 24px 8px;
     font: 600 13px/1 var(--font-sans);
   }
   .fomo-phone__island {
@@ -1081,135 +1051,91 @@ const sources = [
   .fomo-phone__signal i:nth-child(2) { height: 7px; }
   .fomo-phone__signal i:nth-child(3) { height: 9px; }
   .fomo-phone__signal i:nth-child(4) { height: 12px; }
-  .fomo-phone__bar {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 10px;
-    padding: 18px 20px 6px;
+  .fomo-phone__stage {
+    position: relative;
+    aspect-ratio: 638 / 1280;
+    overflow: hidden;
+    background: #07080c;
   }
-  .fomo-phone__bar img { width: 30px; height: 30px; border-radius: 9px; }
-  .fomo-phone__wordmark { font: 700 19px/1 var(--font-sans); letter-spacing: -0.03em; }
-  .fomo-phone__portfolio { font: 500 12px/1 var(--font-mono); letter-spacing: 0.06em; color: var(--ink-2); text-transform: uppercase; }
-  .fomo-phone__tabs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 6px 20px 0;
-    border-bottom: 1px solid var(--hair-1);
-    font: 600 12.5px/1 var(--font-sans);
-    color: var(--ink-3);
+  .fomo-phone__stage picture,
+  .fomo-phone__poster,
+  .fomo-phone__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
-  .fomo-phone__tabs span { padding: 8px 0 12px; text-align: center; border-bottom: 2px solid transparent; }
-  .fomo-phone__tabs .is-on { color: var(--ink-0); border-bottom-color: var(--fomo-blue); }
-  .fomo-phone__list {
-    margin: 0;
-    padding: 4px 8px;
-    list-style: none;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: none;
-    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 12px, #000 calc(100% - 18px), transparent 100%);
-    mask-image: linear-gradient(180deg, transparent 0, #000 12px, #000 calc(100% - 18px), transparent 100%);
+  .fomo-phone__poster { object-fit: cover; transition: opacity 600ms var(--ease-soft); z-index: 2; }
+  .fomo-phone__video { object-fit: cover; z-index: 1; }
+  .fomo-phone__stage[data-playing='true'] .fomo-phone__poster { opacity: 0; }
+  .fomo-phone__stage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(7, 8, 12, 0.35), transparent 14%, transparent 86%, rgba(7, 8, 12, 0.5));
   }
-  .fomo-phone__list::-webkit-scrollbar { display: none; }
-  .fomo-row {
+
+  /* The example alert, hung over the phone's top edge like an iOS banner. */
+  .fomo-alert {
+    position: absolute;
+    top: 9%;
+    left: 50%;
+    z-index: 4;
     display: grid;
-    grid-template-columns: 40px minmax(0, 1fr) auto;
+    grid-template-columns: 40px minmax(0, 1fr);
     align-items: center;
     gap: 12px;
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 14px;
-    text-align: left;
-    color: inherit;
-    transition: background-color 260ms var(--ease), box-shadow 260ms var(--ease), transform 260ms var(--ease);
-  }
-  .fomo-row :global(.sign-icon) { box-shadow: 0 0 0 1px color-mix(in oklab, var(--sign) 40%, transparent); border-radius: 50%; }
-  .fomo-row__id, .fomo-row__px { display: grid; gap: 3px; min-width: 0; }
-  .fomo-row__px { text-align: right; justify-items: end; }
-  .fomo-row__id strong {
-    overflow: hidden;
-    font: 650 13.5px/1.1 var(--font-sans);
-    letter-spacing: 0.01em;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .fomo-row__id small, .fomo-row__px small { font: 500 11px/1 var(--font-mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
-  .fomo-row__px strong { font: 500 13.5px/1.1 var(--font-mono); font-variant-numeric: tabular-nums; }
-  .fomo-row[aria-pressed='true'] {
-    background: color-mix(in oklab, var(--sign) 13%, transparent);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--sign) 42%, transparent);
-  }
-  .fomo-row:focus-visible { outline: 1.5px solid var(--ink-0); outline-offset: -2px; }
-  @media (hover: hover) and (pointer: fine) {
-    .fomo-row:hover { background: rgba(198, 204, 218, 0.06); }
-  }
-  .fomo-delta.is-up { color: var(--up); }
-  .fomo-delta.is-down { color: var(--down); }
-
-  .fomo-sheet {
-    margin: 0 8px;
-    padding: 14px 14px 12px;
+    width: min(96%, 352px);
+    padding: 12px 14px;
     border-radius: 22px;
-    border: 1px solid color-mix(in oklab, var(--fomo-sign) 34%, var(--hair-2));
-    background:
-      radial-gradient(120% 90% at 50% 0%, color-mix(in oklab, var(--fomo-sign) 12%, transparent), transparent 60%),
-      linear-gradient(180deg, #10131b, #0b0d13);
-    box-shadow: inset 0 1px 0 rgba(238, 241, 247, 0.06), 0 -18px 40px -30px color-mix(in oklab, var(--fomo-sign) 40%, transparent);
-    transition: border-color 900ms var(--ease-soft);
+    background: rgba(38, 40, 46, 0.92);
+    color: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 24px 60px -24px rgba(0, 0, 0, 0.9),
+      0 0 0 1px rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    font-family: var(--font-sans);
+    translate: -46% 0;
   }
-  .fomo-sheet__head {
-    display: grid;
-    grid-template-columns: 44px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 11px;
-  }
-  .fomo-sheet__head img { width: 44px; height: 44px; border-radius: 50%; }
-  .fomo-sheet__id, .fomo-sheet__px { display: grid; gap: 3px; min-width: 0; }
-  .fomo-sheet__px { text-align: right; justify-items: end; }
-  .fomo-sheet__id strong { font: 650 16px/1.1 var(--font-sans); letter-spacing: -0.01em; }
-  .fomo-sheet__id small, .fomo-sheet__px small { font: 500 11px/1 var(--font-mono); color: var(--ink-2); white-space: nowrap; }
-  .fomo-sheet__px strong { font: 500 16px/1.1 var(--font-mono); font-variant-numeric: tabular-nums; }
-  .fomo-sheet__spark { display: block; width: 100%; height: auto; margin-top: 10px; overflow: visible; }
-  .fomo-sheet__area { fill: color-mix(in oklab, var(--fomo-sign) 26%, transparent); stroke: none; }
-  .fomo-sheet__line {
-    fill: none;
-    stroke: var(--fomo-sign);
-    stroke-width: 1.75;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .fomo-sheet__foot {
+  .fomo-alert img { width: 40px; height: 40px; border-radius: 11px; }
+  .fomo-alert__body { display: grid; gap: 3px; min-width: 0; }
+  .fomo-alert__title {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     gap: 10px;
-    margin-top: 10px;
   }
-  .fomo-sheet__range { font: 500 10.5px/1 var(--font-mono); letter-spacing: 0.04em; color: var(--ink-3); text-transform: uppercase; }
-  .fomo-sheet__open {
+  .fomo-alert__title strong {
     display: inline-flex;
     align-items: center;
-    min-height: 34px;
-    padding: 0 14px;
-    border-radius: var(--r-full);
-    background: var(--fomo-paper);
-    color: var(--fomo-ink);
-    font: 650 12px/1 var(--font-sans);
-    letter-spacing: -0.01em;
-    text-decoration: none;
+    gap: 5px;
+    overflow: hidden;
+    font: 650 14.5px/1.2 var(--font-sans);
+    letter-spacing: 0.005em;
     white-space: nowrap;
-    box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(83, 93, 221, 0.14);
+    text-overflow: ellipsis;
   }
-  .fomo-sheet__open:hover { background: #fff; }
-  .fomo-phone__dock {
+  .fomo-alert__sign { display: inline-flex; line-height: 0; }
+  .fomo-alert__sign :global(.sign-icon) { border-radius: 50%; }
+  .fomo-alert__time { flex-shrink: 0; color: rgba(255, 255, 255, 0.55); font: 400 12px/1.2 var(--font-sans); }
+  .fomo-alert__text {
     display: flex;
-    justify-content: center;
-    gap: 22px;
-    padding: 12px 0 16px;
+    align-items: center;
+    gap: 7px;
+    font: 400 14px/1.25 var(--font-sans);
+    color: rgba(255, 255, 255, 0.92);
   }
-  .fomo-phone__dock span { width: 22px; height: 22px; border-radius: 7px; background: rgba(198, 204, 218, 0.14); }
-  .fomo-phone__dock .is-on { background: rgba(238, 241, 247, 0.9); }
+  .fomo-alert__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #7be08a, #22a544 70%);
+    box-shadow: inset 0 -1px 1px rgba(0, 0, 0, 0.25);
+  }
   .fomo-phone__caption {
     max-width: 340px;
     margin: 18px auto 0;
@@ -1221,30 +1147,112 @@ const sources = [
     text-align: center;
     text-wrap: pretty;
   }
-  .fomo-phone__caption a { color: var(--muted); text-decoration-color: var(--hair-3); text-underline-offset: 3px; }
-  .fomo-phone__caption a:hover { color: var(--text); }
 
   @media (prefers-reduced-motion: no-preference) {
     .fomo-phone__frame { animation: fomo-float 7s ease-in-out infinite; }
-    .fomo-phone__list li {
+    .fomo-phone:hover .fomo-phone__frame,
+    .fomo-phone:focus-within .fomo-phone__frame { animation-play-state: paused; }
+    .fomo-alert {
       opacity: 0;
-      translate: 0 10px;
-      animation: fomo-row-in 560ms var(--ease-soft) forwards;
-      animation-delay: calc(420ms + var(--i) * 55ms);
+      animation: fomo-alert-in 800ms var(--ease-soft) 1400ms forwards;
     }
-    .fomo-sheet { animation: fomo-sheet-in 700ms var(--ease-soft) 900ms both; }
   }
   @keyframes fomo-float {
     0%, 100% { translate: 0 0; }
     50% { translate: 0 -9px; }
   }
-  @keyframes fomo-row-in {
-    to { opacity: 1; translate: 0 0; }
+  @keyframes fomo-alert-in {
+    from { opacity: 0; translate: -46% -22px; }
+    to { opacity: 1; translate: -46% 0; }
   }
-  @keyframes fomo-sheet-in {
-    from { opacity: 0; translate: 0 18px; }
-    to { opacity: 1; translate: 0 0; }
+
+  /* ── Finder ─────────────────────────────────────────────────────── */
+  .fomo-finder { padding-block: 0 clamp(8px, 2vw, 16px); }
+  .fomo-finder__core {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+    gap: clamp(24px, 4vw, 56px);
+    padding: clamp(24px, 4vw, 44px);
+    background:
+      radial-gradient(90% 80% at 0% 0%, color-mix(in oklab, var(--fomo-sign) 9%, transparent), transparent 62%),
+      linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
   }
+  .fomo-finder__ask .kicker { margin: 0 0 10px; }
+  .fomo-finder__ask h2 { margin: 0; font-size: var(--text-xl); }
+  .fomo-finder__ask p:not(.kicker) { max-width: 42ch; margin: 12px 0 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.6; text-wrap: pretty; }
+  .fomo-finder__form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .fomo-finder__field { display: grid; gap: 6px; }
+  .fomo-finder__field span {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .fomo-finder__field select {
+    appearance: none;
+    -webkit-appearance: none;
+    min-height: 48px;
+    padding: 0 40px 0 14px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M3 5.25 7 9.25l4-4' stroke='%238E96AB' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center,
+      rgba(198, 204, 218, 0.05);
+    color: var(--text);
+    font: 500 15px/1 var(--font-sans);
+  }
+  .fomo-finder__field select:focus-visible { outline: 1.5px solid var(--ink-0); outline-offset: 2px; }
+  .fomo-finder__note {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  .fomo-finder__note:empty { display: none; }
+  .fomo-finder__card {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 12px;
+    margin-top: 4px;
+    padding: 16px;
+    border: 1px solid color-mix(in oklab, var(--sign, var(--fomo-sign)) 38%, var(--hair-2));
+    border-radius: var(--r-lg);
+    background:
+      radial-gradient(120% 90% at 50% 0%, color-mix(in oklab, var(--sign, var(--fomo-sign)) 12%, transparent), transparent 60%),
+      rgba(6, 7, 9, 0.5);
+  }
+  .fomo-finder__card[hidden] { display: none; }
+  .fomo-finder__card-head {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+  }
+  .fomo-finder__card-head img { width: 48px; height: 48px; border-radius: 50%; }
+  .fomo-finder__card-id, .fomo-finder__card-px { display: grid; gap: 3px; min-width: 0; }
+  .fomo-finder__card-px { text-align: right; justify-items: end; }
+  .fomo-finder__card-id strong { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 500; line-height: 1; letter-spacing: -0.01em; }
+  .fomo-finder__card-id small, .fomo-finder__card-px small { font: 500 11px/1.2 var(--font-mono); color: var(--ink-2); }
+  .fomo-finder__card-px strong { font: 500 17px/1.1 var(--font-mono); font-variant-numeric: tabular-nums; }
+  .fomo-finder__card-foot { display: grid; gap: 12px; }
+  .fomo-finder__range { font: 500 10.5px/1 var(--font-mono); letter-spacing: 0.04em; color: var(--ink-3); text-transform: uppercase; }
+  .fomo-finder__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  .fomo-finder__card-link { color: var(--muted); font-size: var(--text-sm); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+  .fomo-finder__card-link:hover { color: var(--text); }
+
+  /* ── Sparklines ─────────────────────────────────────────────────── */
+  .fomo-spark { display: block; width: 100%; height: auto; overflow: visible; }
+  .fomo-spark__area { fill: color-mix(in oklab, var(--sign, var(--fomo-sign)) 24%, transparent); stroke: none; }
+  .fomo-spark__line {
+    fill: none;
+    stroke: var(--sign, var(--fomo-sign));
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .fomo-spark--card { margin-top: -2px; opacity: 0.9; }
 
   /* ── Steps ───────────────────────────────────────────────────────── */
   .fomo-steps, .fomo-signs, .fomo-facts, .fomo-faq { border-top: 1px solid var(--hair-1); }
@@ -1255,7 +1263,6 @@ const sources = [
     margin: 0;
     padding: 0;
     list-style: none;
-    counter-reset: none;
   }
   .fomo-steps__list li { display: grid; align-content: start; gap: 10px; padding: clamp(20px, 2.6vw, 28px); }
   .fomo-steps__num {
@@ -1297,7 +1304,7 @@ const sources = [
     padding: 0;
     list-style: none;
   }
-  .fomo-card { display: grid; gap: 14px; padding: 18px; }
+  .fomo-card { display: grid; gap: 12px; padding: 18px; }
   .fomo-card__head { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 12px; }
   .fomo-card h3 { font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
   .fomo-card__dates { margin: 3px 0 0; color: var(--faint); font-size: var(--text-xs); }
@@ -1313,18 +1320,22 @@ const sources = [
   .fomo-card__data div { display: grid; gap: 4px; }
   .fomo-card__data dt { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); }
   .fomo-card__data dd { margin: 0; font-family: var(--font-mono); font-size: 12.5px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .fomo-delta.is-up { color: var(--up); }
+  .fomo-delta.is-down { color: var(--down); }
   .fomo-card__actions { display: grid; gap: 10px; }
   .fomo-card__actions .fomo-cta { width: 100%; }
   .fomo-card__actions .fomo-cta .fomo-cta__arrow { margin-left: auto; }
   .fomo-card__record { justify-self: start; color: var(--muted); font-size: var(--text-xs); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
   .fomo-card__record:hover { color: var(--text); }
   .fomo-grid__note {
-    max-width: 62ch;
+    max-width: 68ch;
     margin: 22px 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
     line-height: 1.6;
   }
+  .fomo-grid__note a { color: var(--text-2); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+  .fomo-grid__note a:hover { color: var(--text); }
 
   /* ── Facts ───────────────────────────────────────────────────────── */
   .fomo-facts__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -1374,15 +1385,16 @@ const sources = [
   }
   @media (max-width: 900px) {
     .fomo-hero { grid-template-columns: 1fr; gap: clamp(36px, 8vw, 56px); }
-    .fomo-finder__core { grid-template-columns: 1fr; }
     .fomo-hero h1 { max-width: 14ch; }
     .fomo-phone__frame { transform: none; }
+    .fomo-finder__core { grid-template-columns: 1fr; }
     .fomo-steps__list { grid-template-columns: 1fr; }
   }
   @media (max-width: 720px) {
     .fomo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .fomo-facts__grid { grid-template-columns: 1fr; }
     .fomo-finder__form { grid-template-columns: 1fr 1fr; }
+    .fomo-alert { width: min(94%, 330px); translate: -50% 0; }
   }
   @media (max-width: 460px) {
     .fomo-grid { grid-template-columns: 1fr; }
@@ -1391,7 +1403,7 @@ const sources = [
     .fomo-cta .fomo-cta__arrow { margin-left: auto; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .fomo, .fomo-phone__frame, .fomo-sheet, .fomo-cta, .fomo-cta__arrow, .fomo-row { transition: none; }
+    .fomo, .fomo-phone__frame, .fomo-phone__poster, .fomo-cta, .fomo-cta__arrow, .fomo-badge { transition: none; }
     .fomo-phone__frame { transform: none; }
   }
 </style>
