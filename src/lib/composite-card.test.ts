@@ -29,8 +29,8 @@ function install({ encode = true, imageLoads = true, contextAvailable = true } =
   const canvas = { width: 0, height: 0, getContext: vi.fn(() => contextAvailable ? context : null),
     toBlob: vi.fn((callback: (value: Blob | null) => void) => callback(encode ? new Blob(['encoded-png'], { type: 'image/png' }) : null)) };
   const attributes = new Map<string, string>();
-  const imageAttributes = new Map([['href', `/assets/zodiac-icons/128/test-${++serial}.webp`]]);
-  const svgImage = { getAttribute: (key: string) => imageAttributes.get(key), setAttribute: (key: string, value: string) => imageAttributes.set(key, value) };
+  const imageAttributes = new Map([['data-href', `/assets/zodiac-icons/128/test-${++serial}.webp`]]);
+  const svgImage = { getAttribute: (key: string) => imageAttributes.get(key), setAttribute: (key: string, value: string) => imageAttributes.set(key, value), removeAttribute: (key: string) => imageAttributes.delete(key) };
   const svg = { setAttribute: (key: string, value: string) => attributes.set(key, value), querySelectorAll: () => [svgImage],
     get outerHTML() { return `<svg xmlns="${attributes.get('xmlns')}" width="${attributes.get('width')}" height="${attributes.get('height')}"><image href="${imageAttributes.get('href')}"/></svg>`; } };
   const host = { querySelector: () => svg };
@@ -70,6 +70,7 @@ describe('dedicated composite image receipts', () => {
     expect(text).not.toMatch(/\b(?:ASC|MC|Rx|applying|separating)\b|Chart A|Chart B|\d{4}-\d{2}-\d{2}/u);
     expect(harness.render.mock.calls[0][0].props.data).toBe(input);
     expect(harness.render.mock.calls[0][0].props.onSelect).toBeUndefined();
+    expect(harness.render.mock.calls[0][0].props.deferIcons).toBe(true);
     expect(fixture.fonts.load).toHaveBeenCalledTimes(3);
     expect(fixture.urls).toHaveLength(1);
     const serialized = await fixture.urls[0].text();

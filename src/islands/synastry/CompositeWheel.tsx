@@ -23,9 +23,11 @@ interface Props {
   selection?: string | null;
   onSelect?: (id: string) => void;
   size?: number;
+  /** Export embeds artwork before assigning active SVG image URLs. */
+  deferIcons?: boolean;
 }
 
-export function CompositeWheel({ data, label, selection = null, onSelect, size = 420 }: Props) {
+export function CompositeWheel({ data, label, selection = null, onSelect, size = 420, deferIcons = false }: Props) {
   const draw = compositeWheelLayout(data);
   const marks = (geo: WheelGeometry): ComponentChildren => (
     <g data-composite-marks>
@@ -83,5 +85,5 @@ export function CompositeWheel({ data, label, selection = null, onSelect, size =
   // Use only the shared zodiac frame/geometry. Supplying a fabricated natal
   // scene would invent houses, speeds and applying/separating information.
   return <Wheel bodies={[]} aspects={[]} asc={null} mc={null} cusps={null}
-    size={size} ariaLabel={label} renderOverlay={marks} />;
+    size={size} ariaLabel={label} renderOverlay={marks} deferIcons={deferIcons} />;
 }

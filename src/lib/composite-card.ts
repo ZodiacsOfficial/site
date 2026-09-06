@@ -66,7 +66,7 @@ function embeddedIcon(path: string): Promise<string> {
 
 async function wheelImage(data: CompositeTabData, label: string, signal: AbortSignal): Promise<HTMLImageElement> {
   const host = document.createElement('div');
-  render(h(CompositeWheel, { data, label, size: 780 }), host);
+  render(h(CompositeWheel, { data, label, size: 780, deferIcons: true }), host);
   const svg = host.querySelector('svg')!;
   try {
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
@@ -74,8 +74,11 @@ async function wheelImage(data: CompositeTabData, label: string, signal: AbortSi
     // Detached SVG images cannot fetch their own external artwork. Embed the
     // canonical pastel discs, without installing a global DOM override.
     await bounded(() => Promise.all([...svg.querySelectorAll('image')].map(async (image) => {
-      const href = image.getAttribute('href');
-      if (href) image.setAttribute('href', await embeddedIcon(href));
+      const href = image.getAttribute('data-href');
+      if (href) {
+        image.setAttribute('href', await embeddedIcon(href));
+        image.removeAttribute('data-href');
+      }
     })), signal);
     signal.throwIfAborted();
     const url = URL.createObjectURL(new Blob([svg.outerHTML], { type: 'image/svg+xml' }));

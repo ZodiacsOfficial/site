@@ -283,4 +283,15 @@ describe('composite wheel geometry and rendered facts', () => {
       expect(glyph![2].match(/fill="currentColor"/g)).toHaveLength(filledMarks);
     }
   });
+
+  it('defers all twelve export icon URLs without changing default live artwork', () => {
+    const data = atSamePositions([{ body: 'Sun', lon: 0 }]);
+    const exported = render(h(CompositeWheel, { data, label: 'Composite', deferIcons: true }));
+    const live = render(h(CompositeWheel, { data, label: 'Composite' }));
+    expect(exported.match(/<image\b/g)).toHaveLength(12);
+    expect(exported.match(/data-href="\/assets\/zodiac-icons\/128\//g)).toHaveLength(12);
+    expect(exported).not.toMatch(/<image\b[^>]*\shref=/);
+    expect(live.match(/<image\b[^>]*\shref="\/assets\/zodiac-icons\/128\//g)).toHaveLength(12);
+    expect(live).not.toContain('data-href=');
+  });
 });
