@@ -280,7 +280,7 @@ await withPreview({ port: 4412 }, async (BASE) => {
       check('full moon: one primary action, to personal transits at the exact event instant',
         await personalTransitAction.count() === 1
         && await personalTransitAction.getAttribute('href')
-          === '/transits/?at=2026-07-29T14%3A35%3A00.000Z'
+          === '/transits/?at=2026-07-29T14%3A35%3A36.043Z'
         && (await personalTransitAction.innerText()).trim() === 'See this event with my chart');
 
       // Open the evidence by keyboard and confirm the receipts show.
