@@ -133,6 +133,8 @@ for (const s of SIGNS) {
 // Fomo's own app icon, as published (docs/VENUE-MARKS.md); it identifies the
 // app the /fomo/ card is about and is never redrawn or recoloured.
 const FOMO_ICON = await b64('public/assets/venues/fomo-official.svg', 'image/svg+xml');
+// The owner's phone render of Fomo's Verified list, keyed to transparency, used as delivered.
+const FOMO_PHONE = await b64('public/assets/fomo/fomo-verified.png', 'image/png');
 
 // ── Shared chrome ─────────────────────────────────────────────────────
 const INK = '#EEF1F7';
@@ -336,22 +338,19 @@ function shareCard() {
   return shell(body, OG_EN.site);
 }
 
-/** /fomo/ — Astrofolio on the Fomo app: the wheel of twelve around Fomo's
- *  icon. Wing register on purpose; emitted alone via --only-fomo. */
+/** /fomo/ — Astrofolio on the Fomo app: the owner's phone render beside the
+ *  headline. Wing register on purpose; emitted alone via --only-fomo. */
 function fomoCard() {
   const body = `
   <div class="stage">
-    <div class="left" style="max-width: 640px;">
+    <div class="left" style="max-width: 560px; flex: none;">
       <span class="kicker">Astrofolio, in a trading app</span>
-      <div class="display" style="font-size: 74px; max-width: 620px;">The twelve Zodiacs are on Fomo<img src="${FOMO_ICON}" width="52" height="52" alt="" style="display:inline-block;width:0.74em;height:0.74em;border-radius:0.18em;vertical-align:-0.02em;margin-left:0.2em" />.</div>
+      <div class="display" style="font-size: 66px; max-width: 560px;">The twelve Zodiacs are on Fomo<img src="${FOMO_ICON}" width="52" height="52" alt="" style="display:inline-block;width:0.74em;height:0.74em;border-radius:0.18em;vertical-align:-0.02em;margin-left:0.2em" />.</div>
       <div class="sub" style="max-width: 600px;">Every official Zodiac, listed in the free Fomo app under its verified Solana address.</div>
       <div class="data">iPhone · Android · fomo.family</div>
     </div>
-    <span style="position:relative;display:block;width:380px;height:380px;flex:none">
-      ${wheelMark(380, 64)}
-      <img src="${FOMO_ICON}" width="116" height="116" alt=""
-        style="position:absolute;left:132px;top:132px;width:116px;height:116px;border-radius:30px;display:block;box-shadow:0 30px 70px rgba(0,0,0,.65), 0 0 0 1px rgba(238,241,247,.08)" />
-    </span>
+    <img src="${FOMO_PHONE}" width="500" height="509" alt=""
+      style="display:block;height:509px;width:auto;flex:none;margin-right:-28px;filter:drop-shadow(0 34px 70px rgba(0,0,0,.6))" />
   </div>`;
   return shell(body, 'zodiacs.org/fomo/');
 }

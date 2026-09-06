@@ -14,8 +14,6 @@
  * 720×1566 and re-encodes it as H.264 (libx264 crf 26) and AV1 (libaom crf
  * 34), audio track dropped; the posters are the 3.6s frame.
  */
-import { existsSync } from 'node:fs';
-import { resolve } from 'node:path';
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import FomoMark from './_FomoMark.astro';
@@ -54,20 +52,33 @@ const APP_STORE_BADGE = '/assets/badges/app-store-en.svg';
 const GOOGLE_PLAY_BADGE = '/assets/badges/google-play-en.png';
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-/* Owner-supplied renders, used exactly as delivered: Fomo's example alert
-   and the phone showing Fomo's Verified list. Each block renders only when
-   its file is present under public/assets/fomo/, so a build never points at
-   an image that has not arrived yet. Dimensions are the renders' own. */
-const ownerAsset = (file: string, width: number, height: number) => ({
-  src: `/assets/fomo/${file}`,
-  width,
-  height,
-  present: existsSync(resolve(process.cwd(), 'public/assets/fomo', file)),
-});
-const ALERT_RENDER = ownerAsset('fomo-alert.png', 1425, 1104);
-const VERIFIED_RENDER = ownerAsset('fomo-verified.png', 1243, 1265);
+/* Owner-supplied renders, used as delivered: Fomo's example alert and the
+   phone showing Fomo's Verified list. The phone is the hero's largest paint,
+   so AVIF and WebP encodes of the same pixels are offered first and the
+   original PNG stays the fallback. Dimensions are the renders' own. */
+const ALERT_RENDER = { src: '/assets/fomo/fomo-alert.png', width: 1425, height: 1104 };
+const VERIFIED_RENDER = {
+  png: '/assets/fomo/fomo-verified.png',
+  avif: '/assets/fomo/fomo-verified.avif',
+  webp: '/assets/fomo/fomo-verified.webp',
+  width: 1243,
+  height: 1265,
+};
 
 /* Hero footage and its poster (see the header comment for provenance). */
+/* The owner's Astrofolio film: the twelve glyphs over footage, ending on the
+   eye. Conformed to 25 fps, its tail dissolved into its head so it loops
+   without a cut, sound dropped (it autoplays muted), AV1 with an H.264
+   fallback. */
+const FILM = Object.freeze({
+  av1: '/assets/fomo/fomo-film-av1.mp4',
+  h264: '/assets/fomo/fomo-film.mp4',
+  posterAvif: '/assets/fomo/fomo-film-poster.avif',
+  posterWebp: '/assets/fomo/fomo-film-poster.webp',
+  width: 1080,
+  height: 1920,
+});
+
 const FOOTAGE = Object.freeze({
   av1: '/assets/fomo/fomo-zodiacs-av1.mp4',
   h264: '/assets/fomo/fomo-zodiacs.mp4',
@@ -224,77 +235,105 @@ const sources = [
   terminalMarketNotice
 >
   <article class="fomo" data-fomo-page data-initial-sign={initial.slug} style={`--fomo-sign:${initial.hue}`}>
-    <section class="fomo-hero container" aria-labelledby="fomo-title">
-      <div class="fomo-hero__copy">
-        <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
-        <p class="kicker reveal">Astrofolio, in a trading app</p>
-        <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">The twelve Zodiacs are on Fomo<FomoMark />.</h1>
-        <p class="fomo-deck reveal" style="--reveal-delay:120ms">
-          Fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. All twelve official Zodiacs are listed
-          there under their verified Solana addresses, so you can watch your sign, follow the other eleven,
-          and buy in a few taps.
-        </p>
-        <div class="fomo-stores reveal" id="top-stores" style="--reveal-delay:180ms" data-fomo-stores>
-          <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
-            <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
-          </a>
-          <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
-            <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
-          </a>
-        </div>
-        <p class="fomo-web reveal" style="--reveal-delay:220ms">
-          <span>Or on a computer:</span>
-          <a href={FOMO_SITE} rel="external nofollow noopener">fomo.family in a browser ↗</a>
-        </p>
-        <ul class="fomo-facts-strip reveal" style="--reveal-delay:260ms" role="list">
-          <li><strong>12</strong> official Zodiacs</li>
-          <li><strong>Solana</strong> one verified address each</li>
-          <li><strong>Free</strong> app, rated 18+</li>
-        </ul>
+    <section class="fomo-hero" aria-labelledby="fomo-title">
+      <div class="fomo-film" data-fomo-film aria-hidden="true">
+        <picture>
+          <source type="image/avif" srcset={FILM.posterAvif} />
+          <img
+            class="fomo-film__poster"
+            src={FILM.posterWebp}
+            width={FILM.width}
+            height={FILM.height}
+            alt=""
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
+        <video
+          class="fomo-film__video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          disablepictureinpicture
+          tabindex="-1"
+          data-fomo-film-video
+          data-playback="poster"
+        >
+          <source data-src={FILM.av1} type='video/mp4; codecs="av01.0.08M.08"' />
+          <source data-src={FILM.h264} type="video/mp4" />
+        </video>
+        <div class="fomo-film__shade"></div>
       </div>
 
-      <figure class="fomo-phone reveal" style="--reveal-delay:140ms" data-fomo-phone>
-        <div class="fomo-phone__frame">
-          <div class="fomo-phone__screen">
-            <div class="fomo-phone__stage" data-fomo-stage>
-              <picture>
-                <source type="image/avif" srcset={FOOTAGE.posterAvif} />
-                <img
-                  class="fomo-phone__poster"
-                  src={FOOTAGE.posterWebp}
-                  width={FOOTAGE.width}
-                  height={FOOTAGE.height}
-                  alt="The Fomo app showing the twelve Zodiacs in a holdings list, each with its value and 24-hour change."
-                  loading="eager"
-                  fetchpriority="high"
-                  decoding="async"
-                  data-fomo-poster
-                />
-              </picture>
-              <video
-                class="fomo-phone__video"
-                muted
-                loop
-                playsinline
-                preload="none"
-                disablepictureinpicture
-                aria-hidden="true"
-                tabindex="-1"
-                data-fomo-video
-                data-playback="poster"
-              >
-                <source data-src={FOOTAGE.av1} type='video/mp4; codecs="av01.0.08M.08"' />
-                <source data-src={FOOTAGE.h264} type="video/mp4" />
-              </video>
-            </div>
+      <div class="fomo-hero__inner container">
+        <div class="fomo-hero__copy">
+          <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
+          <p class="kicker reveal">Astrofolio, in a trading app</p>
+          <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">The twelve Zodiacs are on Fomo<FomoMark />.</h1>
+          <p class="fomo-deck reveal" style="--reveal-delay:120ms">
+            Fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. All twelve official Zodiacs are listed
+            there under their verified Solana addresses, so you can watch your sign, follow the other eleven,
+            and buy in a few taps.
+          </p>
+          <div class="fomo-stores reveal" id="top-stores" style="--reveal-delay:180ms" data-fomo-stores>
+            <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
+              <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
+            </a>
+            <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
+              <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
+            </a>
           </div>
+          <p class="fomo-web reveal" style="--reveal-delay:220ms">
+            <span>Or on a computer:</span>
+            <a href={FOMO_SITE} rel="external nofollow noopener">fomo.family in a browser ↗</a>
+          </p>
+          <ul class="fomo-facts-strip reveal" style="--reveal-delay:260ms" role="list">
+            <li><strong>12</strong> official Zodiacs</li>
+            <li><strong>Solana</strong> one verified address each</li>
+            <li><strong>Free</strong> app, rated 18+</li>
+          </ul>
         </div>
-        <figcaption class="fomo-phone__caption">Footage from the Fomo app, recorded September 2026.</figcaption>
-      </figure>
+
+        <figure class="fomo-hero__render reveal" style="--reveal-delay:140ms">
+          <picture>
+            <source type="image/avif" srcset={VERIFIED_RENDER.avif} />
+            <source type="image/webp" srcset={VERIFIED_RENDER.webp} />
+            <img
+              src={VERIFIED_RENDER.png}
+              width={VERIFIED_RENDER.width}
+              height={VERIFIED_RENDER.height}
+              alt="A phone showing Fomo’s Verified list with the Zodiacs, each marked with a blue check."
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </figure>
+      </div>
     </section>
 
-    {ALERT_RENDER.present && (
-      <section class="fomo-alerts container" id="alerts" aria-labelledby="alerts-title">
+    <section class="fomo-tape" aria-label="The twelve Zodiacs, latest prices">
+      <div class="fomo-tape__track">
+        {[0, 1].map((copy) => (
+          <ul class="fomo-tape__group" role="list" aria-hidden={copy === 1 ? 'true' : undefined}>
+            {records.map((record) => (
+              <li>
+                <a href={`#sign-${record.slug}`} tabindex={copy === 1 ? -1 : undefined}>
+                  <SignIcon sign={record.slug} size={18} />
+                  <span class="fomo-tape__name">{record.name}</span>
+                  <span class="fomo-tape__px" data-tape-price={record.slug}>{fmtPrice(record.price)}</span>
+                  <span class:list={['fomo-delta', changeClass(record.change)]} data-tape-change={record.slug}>{fmtChange(record.change)}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </section>
+
+    <section class="fomo-alerts container" id="alerts" aria-labelledby="alerts-title">
         <div class="fomo-alerts__inner">
           <figure class="fomo-alerts__figure reveal">
             <img
@@ -313,7 +352,6 @@ const sources = [
           </div>
         </div>
       </section>
-    )}
 
     <section class="fomo-finder container" id="your-sign" aria-labelledby="finder-title" data-fomo-finder>
       <div class="shell fomo-finder__shell">
@@ -400,28 +438,53 @@ const sources = [
       </ol>
     </section>
 
-    {VERIFIED_RENDER.present && (
-      <section class="fomo-verified section--tight container" id="verified" aria-labelledby="verified-title">
-        <div class="fomo-verified__inner">
-          <div class="fomo-verified__copy reveal">
-            <p class="kicker">Inside the app</p>
-            <h2 id="verified-title" class="display">The twelve, in the Verified list on Fomo<FomoMark />.</h2>
-            <p>Fomo lists the Zodiacs in its Verified tab. Before you buy, compare the address on the coin screen with the Registry record; it is the same address every link on this page carries.</p>
-            <a href="#signs">Choose a sign ↓</a>
-          </div>
-          <figure class="fomo-verified__figure reveal" style="--reveal-delay:80ms">
-            <img
-              src={VERIFIED_RENDER.src}
-              width={VERIFIED_RENDER.width}
-              height={VERIFIED_RENDER.height}
-              alt="A phone showing Fomo’s Verified list with the Zodiacs, each marked with a blue check."
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
+    <section class="fomo-footage section--tight container" id="inside" aria-labelledby="footage-title">
+      <div class="fomo-footage__inner">
+        <div class="fomo-footage__copy reveal">
+          <p class="kicker">Inside the app</p>
+          <h2 id="footage-title" class="display">This is what Fomo<FomoMark /> looks like.</h2>
+          <p>A short recording from the app: a Zodiac’s sheet with its chart and your position, the list of all twelve, and the buy and sell buttons at the foot of every sheet.</p>
+          <a href="#signs">Choose a sign ↓</a>
         </div>
-      </section>
-    )}
+        <figure class="fomo-phone reveal" style="--reveal-delay:80ms" data-fomo-phone>
+          <div class="fomo-phone__frame">
+            <div class="fomo-phone__screen">
+              <div class="fomo-phone__stage" data-fomo-stage>
+                <picture>
+                  <source type="image/avif" srcset={FOOTAGE.posterAvif} />
+                  <img
+                    class="fomo-phone__poster"
+                    src={FOOTAGE.posterWebp}
+                    width={FOOTAGE.width}
+                    height={FOOTAGE.height}
+                    alt="The Fomo app showing the twelve Zodiacs in a holdings list, each with its value and 24-hour change."
+                    loading="lazy"
+                    decoding="async"
+                    data-fomo-poster
+                  />
+                </picture>
+                <video
+                  class="fomo-phone__video"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  disablepictureinpicture
+                  aria-hidden="true"
+                  tabindex="-1"
+                  data-fomo-video
+                  data-playback="poster"
+                >
+                  <source data-src={FOOTAGE.av1} type='video/mp4; codecs="av01.0.08M.08"' />
+                  <source data-src={FOOTAGE.h264} type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </div>
+          <figcaption class="fomo-phone__caption">Footage from the Fomo app, recorded September 2026.</figcaption>
+        </figure>
+      </div>
+    </section>
 
     <section class="fomo-signs section--tight container" id="signs" aria-labelledby="signs-title">
       <div class="section-head">
@@ -677,16 +740,17 @@ const sources = [
     });
   }
 
-  /* Hero footage: the poster is the complete reduced-motion and constrained-
-     data experience. Sources attach only once the phone is on screen, and
-     playback pauses whenever it scrolls away or the tab hides. */
-  const video = document.querySelector<HTMLVideoElement>('[data-fomo-video]');
-  const stage = document.querySelector<HTMLElement>('[data-fomo-stage]');
+  /* Films: the poster is the complete reduced-motion and constrained-data
+     experience. Sources attach only once a film is on screen (on phones the
+     hero waits for the load event, so its poster stays the LCP), and
+     playback rests whenever the film scrolls away or the tab hides. */
   const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
   const constrained = Boolean(connection && (connection.saveData || ['slow-2g', '2g'].includes(connection.effectiveType ?? '')));
-  if (video && stage && !reducedMotion.matches && !constrained && 'IntersectionObserver' in window) {
+  function runFilm(video: HTMLVideoElement | null, stage: HTMLElement | null, options: { threshold: number; afterLoad: boolean }) {
+    if (!video || !stage || reducedMotion.matches || constrained || !('IntersectionObserver' in window)) return;
     let attached = false;
     let onScreen = false;
+    let ready = !options.afterLoad || document.readyState === 'complete';
     const settle = (state: string) => { video.dataset.playback = state; stage.dataset.playing = String(state === 'playing'); };
     const attach = () => {
       if (attached) return;
@@ -699,6 +763,8 @@ const sources = [
       settle('loading');
     };
     const play = () => {
+      if (!ready || !onScreen || document.hidden) return;
+      attach();
       video.play().then(() => settle('playing')).catch(() => settle('poster'));
     };
     const rest = () => {
@@ -706,31 +772,39 @@ const sources = [
       video.pause();
       settle('paused');
     };
-    const footageObserver = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         onScreen = entry.isIntersecting;
-        if (onScreen) {
-          attach();
-          play();
-        } else {
-          rest();
-        }
+        if (onScreen) play();
+        else rest();
       }
-    }, { threshold: 0.25 });
-    footageObserver.observe(stage);
+    }, { threshold: options.threshold });
+    observer.observe(stage);
+    if (!ready) window.addEventListener('load', () => { ready = true; play(); }, { once: true });
     video.addEventListener('playing', () => settle('playing'));
     video.addEventListener('error', () => settle('poster'), true);
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) rest();
-      else if (attached && onScreen) play();
+      else play();
     });
+    window.addEventListener('pageshow', (event) => { if (event.persisted) play(); });
     reducedMotion.addEventListener('change', () => {
       if (!reducedMotion.matches) return;
-      footageObserver.disconnect();
+      observer.disconnect();
       if (!video.paused) video.pause();
       settle('poster');
     });
   }
+  runFilm(
+    document.querySelector<HTMLVideoElement>('[data-fomo-film-video]'),
+    document.querySelector<HTMLElement>('[data-fomo-film]'),
+    { threshold: 0.01, afterLoad: window.matchMedia('(max-width: 900px)').matches },
+  );
+  runFilm(
+    document.querySelector<HTMLVideoElement>('[data-fomo-video]'),
+    document.querySelector<HTMLElement>('[data-fomo-stage]'),
+    { threshold: 0.25, afterLoad: false },
+  );
 
   /* Find your sign by birthday. Tropical dates from the site's sign table. */
   const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -839,6 +913,8 @@ const sources = [
           setText('[data-card-mcap]', fmtCompact(record.marketCap), card);
           paintDelta(card.querySelector<HTMLElement>('[data-card-change]'), record.change);
         }
+        document.querySelectorAll<HTMLElement>(`[data-tape-price="${record.slug}"]`).forEach((node) => { node.textContent = fmtPrice(record.price); });
+        document.querySelectorAll<HTMLElement>(`[data-tape-change="${record.slug}"]`).forEach((node) => paintDelta(node, record.change));
       }
       if (!updated) return;
       if (found && finderCard) {
@@ -893,14 +969,66 @@ const sources = [
   }
   .fomo-hero h1 :global(.fomo-mark) { width: 0.72em; height: 0.72em; border-radius: 0.18em; vertical-align: -0.02em; }
 
-  /* ── Hero ────────────────────────────────────────────────────────── */
+  /* ── Hero: the film as wallpaper, the copy over its shade ─────────── */
   .fomo-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    min-height: clamp(640px, 92svh, 980px);
+    margin-top: calc(-1 * var(--nav-space, 96px));
+    overflow: hidden;
+    background: var(--void-1);
+    color: var(--ink-0, #eef1f7);
+  }
+  .fomo-film {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--void-1);
+  }
+  .fomo-film__poster,
+  .fomo-film__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 36%;
+  }
+  .fomo-film__video { opacity: 0; transition: opacity 560ms ease; }
+  .fomo-film[data-playing='true'] .fomo-film__video { opacity: 1; }
+  /* Three ramps: dark where the copy sits, a lift along the foot for the
+     cue and the note, a lift along the head under the nav. */
+  .fomo-film__shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(90deg, rgba(6, 7, 9, 0.94) 0%, rgba(6, 7, 9, 0.8) 32%, rgba(6, 7, 9, 0.3) 62%, rgba(6, 7, 9, 0.12) 100%),
+      linear-gradient(180deg, rgba(6, 7, 9, 0) 60%, rgba(6, 7, 9, 0.66) 100%),
+      linear-gradient(180deg, rgba(6, 7, 9, 0.5) 0%, rgba(6, 7, 9, 0) 26%);
+  }
+  .fomo-hero__inner {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     align-items: center;
     gap: clamp(32px, 6vw, 88px);
-    padding-block: clamp(20px, 4vw, 56px) clamp(56px, 8vw, 112px);
+    min-height: inherit;
+    padding-top: calc(var(--nav-space, 96px) + clamp(8px, 2vw, 24px));
+    padding-bottom: clamp(40px, 6vw, 72px);
   }
+  .fomo-hero .kicker { color: rgba(238, 241, 247, 0.74); }
+  .fomo-hero .fomo-back { margin-bottom: clamp(14px, 2vw, 20px); color: rgba(238, 241, 247, 0.62); }
+  .fomo-hero .fomo-back:hover { color: #fff; }
+  .fomo-hero h1 { color: var(--ink-0, #eef1f7); text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55); }
+  .fomo-hero .fomo-deck { margin-top: clamp(16px, 2.4vw, 22px); color: rgba(238, 241, 247, 0.84); text-shadow: 0 1px 18px rgba(6, 7, 9, 0.6); }
+  .fomo-hero .fomo-stores { margin-top: clamp(22px, 3vw, 30px); }
+  .fomo-hero .fomo-facts-strip { margin-top: clamp(22px, 3vw, 30px); padding-top: 14px; color: rgba(238, 241, 247, 0.68); border-top-color: rgba(238, 241, 247, 0.16); }
+  .fomo-hero .fomo-facts-strip strong { color: #fff; }
+  .fomo-hero .fomo-web { color: rgba(238, 241, 247, 0.56); }
+  .fomo-hero .fomo-web a { color: rgba(238, 241, 247, 0.82); text-decoration-color: rgba(238, 241, 247, 0.3); }
+  .fomo-hero .fomo-web a:hover { color: #fff; }
   .fomo-back {
     display: inline-flex;
     align-items: center;
@@ -915,7 +1043,7 @@ const sources = [
   .fomo-hero h1 {
     margin: 0;
     max-width: 11ch;
-    font-size: clamp(2.9rem, 1.6rem + 5.4vw, 5.6rem);
+    font-size: clamp(2.8rem, 1.5rem + 5vw, 5.2rem);
     line-height: 0.98;
   }
   .fomo-deck {
@@ -1042,6 +1170,25 @@ const sources = [
   .fomo-cta:active { transform: scale(0.975); }
   .fomo-cta:focus-visible { outline: 2px solid #7f88ff; outline-offset: 3px; }
 
+  /* ── Hero render: the owner's phone, as delivered, over the film ──── */
+  .fomo-hero__render {
+    position: relative;
+    width: min(500px, 92vw);
+    margin: 0;
+    justify-self: center;
+  }
+  .fomo-hero__render::before {
+    content: '';
+    position: absolute;
+    inset: 8% 4% 6%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(56% 46% at 50% 52%, color-mix(in oklab, var(--fomo-sign) 26%, transparent), transparent 72%);
+    filter: blur(36px);
+    pointer-events: none;
+  }
+  .fomo-hero__render img { display: block; width: 100%; height: auto; filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55)); }
+
   /* ── Phone with the footage ──────────────────────────────────────── */
   .fomo-phone {
     position: relative;
@@ -1125,6 +1272,7 @@ const sources = [
   }
 
   @media (prefers-reduced-motion: no-preference) {
+    .fomo-hero__render img { animation: fomo-float 8s ease-in-out infinite; }
     .fomo-phone__frame { animation: fomo-float 7s ease-in-out infinite; }
     .fomo-phone:hover .fomo-phone__frame,
     .fomo-phone:focus-within .fomo-phone__frame { animation-play-state: paused; }
@@ -1134,8 +1282,44 @@ const sources = [
     50% { translate: 0 -9px; }
   }
 
+  /* ── Tape: the twelve at the latest read, rolling under the film ──── */
+  .fomo-tape {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border-bottom: 1px solid var(--hair-1);
+    background: var(--void-1);
+  }
+  .fomo-tape__track {
+    display: flex;
+    width: max-content;
+    animation: fomo-tape 72s linear infinite;
+  }
+  .fomo-tape:hover .fomo-tape__track,
+  .fomo-tape:focus-within .fomo-tape__track { animation-play-state: paused; }
+  .fomo-tape__group { display: flex; margin: 0; padding: 0; list-style: none; }
+  .fomo-tape__group a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 24px;
+    border-right: 1px solid var(--hair-1);
+    color: var(--text-2);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .fomo-tape__group a:hover { color: var(--text); background: rgba(198, 204, 218, 0.04); }
+  .fomo-tape__group img { width: 18px; height: 18px; }
+  .fomo-tape__name { color: var(--text); }
+  .fomo-tape__px { font-variant-numeric: tabular-nums; }
+  @keyframes fomo-tape { to { transform: translateX(-50%); } }
+
   /* ── Owner renders: the alert on its own, and the Verified list ───── */
-  .fomo-alerts { padding-block: clamp(8px, 2vw, 16px) clamp(24px, 4vw, 40px); }
+  .fomo-alerts { padding-block: clamp(40px, 6vw, 72px) clamp(24px, 4vw, 40px); }
   .fomo-alerts__inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1147,17 +1331,17 @@ const sources = [
   .fomo-alerts__copy .kicker { margin: 0 0 10px; }
   .fomo-alerts__copy h2 { margin: 0; font-size: var(--text-xl); }
   .fomo-alerts__copy p:not(.kicker) { max-width: 44ch; margin: 12px 0 0; color: var(--text-2); font-size: var(--text-base); line-height: 1.6; text-wrap: pretty; }
-  .fomo-verified { border-top: 1px solid var(--hair-1); }
-  .fomo-verified__inner {
+  .fomo-footage { border-top: 1px solid var(--hair-1); }
+  .fomo-footage__inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
     gap: clamp(24px, 5vw, 72px);
   }
-  .fomo-verified__copy .kicker { margin: 0 0 10px; }
-  .fomo-verified__copy h2 { margin: 0; font-size: var(--text-2xl); }
-  .fomo-verified__copy p:not(.kicker) { max-width: 46ch; margin: 14px 0 0; color: var(--text-2); font-size: var(--text-base); line-height: 1.6; text-wrap: pretty; }
-  .fomo-verified__copy a {
+  .fomo-footage__copy .kicker { margin: 0 0 10px; }
+  .fomo-footage__copy h2 { margin: 0; font-size: var(--text-2xl); }
+  .fomo-footage__copy p:not(.kicker) { max-width: 46ch; margin: 14px 0 0; color: var(--text-2); font-size: var(--text-base); line-height: 1.6; text-wrap: pretty; }
+  .fomo-footage__copy a {
     display: inline-block;
     margin-top: 18px;
     color: var(--text);
@@ -1166,8 +1350,7 @@ const sources = [
     text-decoration-color: var(--hair-3);
     text-underline-offset: 4px;
   }
-  .fomo-verified__figure { margin: 0; }
-  .fomo-verified__figure img { width: 100%; max-width: 560px; height: auto; margin-inline: auto; }
+  .fomo-footage .fomo-phone { justify-self: center; }
 
   /* ── Finder ─────────────────────────────────────────────────────── */
   .fomo-finder { padding-block: 0 clamp(8px, 2vw, 16px); }
@@ -1387,12 +1570,18 @@ const sources = [
     .fomo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
   @media (max-width: 900px) {
-    .fomo-hero { grid-template-columns: 1fr; gap: clamp(36px, 8vw, 56px); }
     .fomo-hero h1 { max-width: 14ch; }
+    .fomo-film__poster, .fomo-film__video { object-position: 50% 50%; }
+    /* The film keeps the head of the hero; the copy and the render stack on
+       the ramp beneath it. */
+    .fomo-film__shade {
+      background: linear-gradient(180deg, rgba(6, 7, 9, 0.16) 0px, rgba(6, 7, 9, 0.22) 200px, rgba(6, 7, 9, 0.86) 380px, rgba(6, 7, 9, 0.985) 640px);
+    }
+    .fomo-hero__inner { grid-template-columns: 1fr; gap: clamp(36px, 8vw, 56px); padding-top: calc(var(--nav-space, 96px) + clamp(120px, 26svh, 260px)); padding-bottom: clamp(40px, 6vw, 56px); }
     .fomo-phone__frame { transform: none; }
     .fomo-finder__core { grid-template-columns: 1fr; }
-    .fomo-alerts__inner, .fomo-verified__inner { grid-template-columns: 1fr; }
-    .fomo-verified__figure { order: -1; }
+    .fomo-alerts__inner, .fomo-footage__inner { grid-template-columns: 1fr; }
+    .fomo-footage .fomo-phone { order: -1; }
     .fomo-steps__list { grid-template-columns: 1fr; }
   }
   @media (max-width: 720px) {
@@ -1408,6 +1597,10 @@ const sources = [
   }
   @media (prefers-reduced-motion: reduce) {
     .fomo, .fomo-phone__frame, .fomo-phone__poster, .fomo-cta, .fomo-cta__arrow, .fomo-badge { transition: none; }
+    .fomo-hero__render img { animation: none; }
+    .fomo-film__video { transition: none; }
+    .fomo-tape__track { animation: none; width: auto; overflow-x: auto; }
+    .fomo-tape__group[aria-hidden='true'] { display: none; }
     .fomo-phone__frame { transform: none; }
   }
 </style>
