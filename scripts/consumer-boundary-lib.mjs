@@ -33,6 +33,7 @@ const WING_ONLY_SOURCE = Object.freeze([
   /^src\/islands\/aura\//u,
   /^src\/lib\/(?:aura(?:-|\/)|registry(?:-|\/)|wallet\/)\S*/u,
   /^src\/pages\/astrofolio\/how-to-buy\//u,
+  /^src\/pages\/fomo\//u,
   /^src\/pages\/(?:registry|terminal)\//u,
   /^src\/pages\/feeds\/market-research\.json\.ts$/u,
   /^src\/strings\/wallet-chart\.ts$/u,
@@ -57,8 +58,8 @@ const VOCABULARY = Object.freeze([
 ]);
 
 const EXTERNAL_WING_DESTINATION = /\b(?:astrofolio\.xyz|api\.dexscreener\.com|dexscreener\.com|jup\.ag|raydium\.io|orca\.so|fomo\.family|wallet\.coinbase\.com|web3\.okx\.com|phantom\.com|solflare\.com|binance\.com\/en\/web3wallet|bybit\.com\/web3)\b/giu;
-const INTERNAL_WING_DESTINATION = /(?:^|[\s("'`=]|https?:\/\/(?:www\.)?zodiacs\.org)(\/(?:archive|astrofolio|disclosure|registry|sdk|terminal|thesis)(?:(?:\/|[?#])[a-z0-9._/?=&%#${}…-]*)?)(?=$|[\s("'`=),.;:<>])/giu;
-const SOURCE_PROBE = /(?:astrofolio\.xyz|jup\.ag|raydium\.io|orca\.so|fomo\.family|wallet\.coinbase\.com|web3\.okx\.com|phantom\.com|solflare\.com|binance\.com\/en\/web3wallet|bybit\.com\/web3|\/(?:archive|astrofolio|disclosure|registry|sdk|terminal|thesis)(?:\/|[?#]|(?=$))|(?<![\p{L}\p{N}_])(?:acquir(?:e|ed|ing)|acquisition|altcoins?|assets?|blockchains?|buy(?:ing)?|coins?|crypto(?:currenc(?:y|ies))?|cryptomonnaie?s?|cripto(?:moned\p{L}*|moed\p{L}*|valut\p{L}*)?|крипто(?:валют\p{L}*)?|dexscreener|erc-?20|getton\p{L}*|jeton\p{L}*|liquidity|markets?|marchés?|mercad\p{L}*|mercat\p{L}*|memecoins?|on-?chain|purchas(?:e|ed|ing)|рын\p{L}*|sell(?:ing)?|solana|spl|t[oó]kens?|tokens?|токен\p{L}*|trad(?:e|ed|ing)|web3|zodiac)(?![\p{L}\p{N}_]))/iu;
+const INTERNAL_WING_DESTINATION = /(?:^|[\s("'`=]|https?:\/\/(?:www\.)?zodiacs\.org)(\/(?:archive|astrofolio|disclosure|fomo|registry|sdk|terminal|thesis)(?:(?:\/|[?#])[a-z0-9._/?=&%#${}…-]*)?)(?=$|[\s("'`=),.;:<>])/giu;
+const SOURCE_PROBE = /(?:astrofolio\.xyz|jup\.ag|raydium\.io|orca\.so|fomo\.family|wallet\.coinbase\.com|web3\.okx\.com|phantom\.com|solflare\.com|binance\.com\/en\/web3wallet|bybit\.com\/web3|\/(?:archive|astrofolio|disclosure|fomo|registry|sdk|terminal|thesis)(?:\/|[?#]|(?=$))|(?<![\p{L}\p{N}_])(?:acquir(?:e|ed|ing)|acquisition|altcoins?|assets?|blockchains?|buy(?:ing)?|coins?|crypto(?:currenc(?:y|ies))?|cryptomonnaie?s?|cripto(?:moned\p{L}*|moed\p{L}*|valut\p{L}*)?|крипто(?:валют\p{L}*)?|dexscreener|erc-?20|getton\p{L}*|jeton\p{L}*|liquidity|markets?|marchés?|mercad\p{L}*|mercat\p{L}*|memecoins?|on-?chain|purchas(?:e|ed|ing)|рын\p{L}*|sell(?:ing)?|solana|spl|t[oó]kens?|tokens?|токен\p{L}*|trad(?:e|ed|ing)|web3|zodiac)(?![\p{L}\p{N}_]))/iu;
 
 const LEGAL_PATH = /^(?:src\/components\/LocalizedDisclosurePage\.astro|src\/lib\/disclosure\.ts|src\/pages\/(?:privacy|terms|disclosure)\/|src\/pages\/(?:es|fr|it|pt|ru)\/(?:privacy|terms|disclosure)\/)/u;
 const LEGAL_DEFENSIVE_CONTEXT = /(?:\b(?:can|cannot|disclosure|does not|do not|independent(?:ly)?|irreversible|liable|loss|may|never|no|not|only|privacy|risk|speculative|terms|third part|verify|volatile|without)\b|\b(?:aucun(?:e)?|confidentialit[eé]|ind[eé]pendant|irr[eé]versible|jamais|ne|ni|pas|perte|peut|risque|sans|seulement|uniquement|v[eé]rif\p{L}*)\b|\b(?:indipendente|irreversibile|mai|nessun[ao]?|non|perdita|privacy|pu[oò]|rischio|senza|solo|verific\p{L}*)\b|\b(?:apenas|independente|irrevers[ií]vel|jamais|n[aã]o|nenhum[ao]?|perda|pode|privacidade|risco|sem|somente|verific\p{L}*)\b|\b(?:independiente|irreversible|nunca|ning[uú]n|no|p[eé]rdida|puede|privacidad|riesgo|sin|solo|verific\p{L}*)\b|(?:^|\s)(?:без|может|не|нет|потеря|провер\p{L}*|риск|только)(?:\s|$))/iu;
@@ -87,7 +88,7 @@ const SANCTIONED_INTERNAL_LINKS = Object.freeze([
   [/^src\/pages\/terms\/index\.astro$/u, /^\/(?:astrofolio\/how-to-buy|disclosure)\/$/u],
   [/^src\/pages\/ru\/\[sign\]\/index\.astro$/u, /^\/registry\/\$\{…\}\/$/u],
   [/^src\/pages\/ru\/disclosure\/index\.astro$/u, /^\/terminal\/$/u],
-  [/^src\/pages\/sitemap\.xml\.ts$/u, /^\/(?:astrofolio|disclosure|registry|sdk|terminal|thesis)\//u],
+  [/^src\/pages\/sitemap\.xml\.ts$/u, /^\/(?:astrofolio|disclosure|fomo|registry|sdk|terminal|thesis)\//u],
 ]);
 
 function toPosix(value) {
@@ -245,7 +246,7 @@ function extractAstro(source, file) {
 
   // Astro expression attributes often wrap a template or quoted literal in
   // braces. Read only strings carrying a boundary probe, not CSS/classes.
-  for (const match of template.matchAll(/(["'`])([^\n]*?(?:astrofolio\.xyz|\/(?:archive|astrofolio|disclosure|registry|sdk|terminal|thesis)\/|\b(?:crypto|market|memecoin|solana|token)\b)[^\n]*?)\1/giu)) {
+  for (const match of template.matchAll(/(["'`])([^\n]*?(?:astrofolio\.xyz|\/(?:archive|astrofolio|disclosure|fomo|registry|sdk|terminal|thesis)\/|\b(?:crypto|market|memecoin|solana|token)\b)[^\n]*?)\1/giu)) {
     fragments.push({
       file,
       kind: 'expression',

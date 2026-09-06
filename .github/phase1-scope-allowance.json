@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "advanced-astrology-and-personal-continuity",
-  "baseCommit": "2738713a6787d84d05bd3b8e2f401adbc42d7ea7",
+  "baseCommit": "4d1f9085c83a2acb2f1a096331b9be7ff64a46f7",
   "protectedPaths": [
     "src/lib/i18n/dates.ts",
     "src/pages/es/index.astro",

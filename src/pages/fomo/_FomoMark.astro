@@ -1,0 +1,11 @@
+---
+/**
+ * Fomo's own app icon at text size, set after the word "Fomo" in headings and
+ * prominent copy on /fomo/. Decorative: the word carries the meaning, so the
+ * image is hidden from assistive technology. The underscore keeps this file
+ * out of routing; the folder keeps it inside the wing lane.
+ */
+interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<img class:list={['fomo-mark', className]} src="/assets/venues/fomo-official.svg" width="20" height="20" alt="" aria-hidden="true" decoding="async" />

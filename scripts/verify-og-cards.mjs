@@ -52,6 +52,7 @@ const expected = [
   ...(eventsPublication.hub.indexEligible ? ['events/index.png'] : []),
   ...eventsPublication.pages.map((event) => `events/${event.id}.png`),
   ...peoplePilot.map((person) => `people/${person.slug}.png`),
+  'fomo.png',
   'registry.png',
   'thesis.png',
   'disclosure.png',

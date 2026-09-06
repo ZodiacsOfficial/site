@@ -1150,7 +1150,8 @@ const sitemapPolicy = {
   // +28 for the Spanish and Portuguese daily surfaces (today, hub, twelve signs each).
   // +3 for the 2027 full-moon, eclipse, and Mercury-retrograde year pages.
   // +1 for the English-only lunar-return calculator.
-  total: 978 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
+  // +1 for /fomo/, the Astrofolio-on-Fomo landing page (wing register, indexable).
+  total: 979 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,

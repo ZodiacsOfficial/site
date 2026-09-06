@@ -1,0 +1,1413 @@
+---
+/**
+ * /fomo/ — the consumer landing page for Astrofolio on the Fomo app.
+ *
+ * Wing lane (see WING_ONLY_SOURCE in scripts/consumer-boundary-lib.mjs): this
+ * page carries acquisition register on purpose. Every "Open in Fomo" link is
+ * built from the verified Solana address in the Zodiacs Registry, and every
+ * figure on the page is a dated DexScreener read from the committed market
+ * history, refreshed once in the browser when the network allows.
+ *
+ * Hero footage: an owner-supplied screen recording of the Fomo app
+ * (2026-09-02, iPhone, 1206×2622 HEVC, 60fps), used exactly as recorded.
+ * The only processing is what browsers need: ffmpeg scales the full frame to
+ * 720×1566 and re-encodes it as H.264 (libx264 crf 26) and AV1 (libaom crf
+ * 34), audio track dropped; the posters are the 3.6s frame.
+ */
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import Base from '../../layouts/Base.astro';
+import SignIcon from '../../components/SignIcon.astro';
+import FomoMark from './_FomoMark.astro';
+import { SIGNS } from '../../lib/signs';
+import registryJson from '../../../public/registry/zodiacs.registry.json';
+import marketHistoryJson from '../../../public/assets/data/registry-market-history.v1.json';
+
+type RegistryRepresentation = { chain: string; address: string; symbol?: string };
+type RegistryAsset = { sign: string; displayName: string; representations: RegistryRepresentation[] };
+type SnapshotAsset = {
+  sign: string;
+  priceUsd?: number | null;
+  change24hPct?: number | null;
+  marketCapUsd?: number | null;
+};
+type Snapshot = {
+  date: string;
+  source?: { provider?: string; readAt?: string };
+  assets: SnapshotAsset[];
+};
+
+/* Fomo's own destinations. The coin deep link is the same one the Astrofolio
+   vitrine uses (src/app.jsx); no referral or partner parameter is ever added. */
+const FOMO_SITE = 'https://fomo.family/';
+const FOMO_APP_STORE = 'https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427';
+const FOMO_PLAY = 'https://play.google.com/store/apps/details?id=family.fomo.app';
+const FOMO_SOLANA_CHAIN_ID = '1399811149';
+const fomoCoinUrl = (mint: string) =>
+  `https://fomo.family/coin?address=${encodeURIComponent(mint)}&chainId=${FOMO_SOLANA_CHAIN_ID}`;
+
+/* Official store badges, unmodified, self-hosted for the CSP (see
+   docs/VENUE-MARKS.md, "Store badges"). Apple's badge is an SVG at its
+   published 119.66×40 proportions; Google's PNG carries its own clear space,
+   so it is drawn taller to match the visible badge height. */
+const APP_STORE_BADGE = '/assets/badges/app-store-en.svg';
+const GOOGLE_PLAY_BADGE = '/assets/badges/google-play-en.png';
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+/* Owner-supplied renders, used exactly as delivered: Fomo's example alert
+   and the phone showing Fomo's Verified list. Each block renders only when
+   its file is present under public/assets/fomo/, so a build never points at
+   an image that has not arrived yet. Dimensions are the renders' own. */
+const ownerAsset = (file: string, width: number, height: number) => ({
+  src: `/assets/fomo/${file}`,
+  width,
+  height,
+  present: existsSync(resolve(process.cwd(), 'public/assets/fomo', file)),
+});
+const ALERT_RENDER = ownerAsset('fomo-alert.png', 1425, 1104);
+const VERIFIED_RENDER = ownerAsset('fomo-verified.png', 1243, 1265);
+
+/* Hero footage and its poster (see the header comment for provenance). */
+const FOOTAGE = Object.freeze({
+  av1: '/assets/fomo/fomo-zodiacs-av1.mp4',
+  h264: '/assets/fomo/fomo-zodiacs.mp4',
+  posterAvif: '/assets/fomo/fomo-zodiacs-poster.avif',
+  posterWebp: '/assets/fomo/fomo-zodiacs-poster.webp',
+  width: 720,
+  height: 1566,
+});
+
+const SPARK_DAYS = 14;
+const registryAssets = registryJson.assets as RegistryAsset[];
+const snapshots = (marketHistoryJson as unknown as { snapshots: Snapshot[] }).snapshots;
+if (!Array.isArray(snapshots) || snapshots.length === 0) {
+  throw new Error('Fomo page: registry market history has no snapshots');
+}
+const latest = snapshots[snapshots.length - 1];
+const history = snapshots.slice(-SPARK_DAYS);
+const readAtIso = latest.source?.readAt ?? `${latest.date}T00:00:00.000Z`;
+const readAtLabel = `${readAtIso.slice(0, 10)} ${readAtIso.slice(11, 16)} UTC`;
+const provider = latest.source?.provider ?? 'DexScreener';
+
+function fmtPrice(value: number | null | undefined): string {
+  if (value == null || !Number.isFinite(value) || value <= 0) return '—';
+  if (value >= 1) return `$${value.toFixed(2)}`;
+  if (value >= 0.01) return `$${value.toFixed(4)}`;
+  if (value >= 0.000001) return `$${value.toFixed(6)}`;
+  return `$${value.toFixed(9)}`;
+}
+function fmtCompact(value: number | null | undefined): string {
+  if (value == null || !Number.isFinite(value) || value <= 0) return '—';
+  if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+  if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
+  if (value >= 1e3) return `$${(value / 1e3).toFixed(1)}K`;
+  return `$${value.toFixed(0)}`;
+}
+function fmtChange(value: number | null | undefined): string {
+  if (value == null || !Number.isFinite(value)) return '—';
+  const magnitude = Math.abs(value).toFixed(2);
+  if (value > 0) return `▲ ${magnitude}%`;
+  if (value < 0) return `▼ ${magnitude}%`;
+  return `${magnitude}%`;
+}
+function changeClass(value: number | null | undefined): string {
+  if (value == null || !Number.isFinite(value) || value === 0) return '';
+  return value > 0 ? 'is-up' : 'is-down';
+}
+
+/* A 240-wide sparkline from the last SPARK_DAYS daily reads. Missing days
+   are skipped rather than invented; fewer than two reads draws a level line. */
+function sparkPath(values: Array<number | null>, H: number): { line: string; area: string } {
+  const W = 240;
+  const P = 3;
+  const points = values
+    .map((value, index) => [index, value] as const)
+    .filter((point): point is readonly [number, number] => typeof point[1] === 'number' && Number.isFinite(point[1]) && point[1] > 0);
+  if (points.length < 2) {
+    const y = H / 2;
+    return { line: `M${P} ${y} L${W - P} ${y}`, area: '' };
+  }
+  const steps = Math.max(1, values.length - 1);
+  const min = Math.min(...points.map((point) => point[1]));
+  const max = Math.max(...points.map((point) => point[1]));
+  const flat = max === min;
+  const x = (index: number) => P + (index / steps) * (W - 2 * P);
+  const y = (value: number) => (flat ? H / 2 : H - P - ((value - min) / (max - min)) * (H - 2 * P));
+  const coords = points.map(([index, value]) => [x(index), y(value)] as const);
+  const line = coords.map(([px, py], k) => `${k ? 'L' : 'M'}${px.toFixed(1)} ${py.toFixed(1)}`).join(' ');
+  const first = coords[0];
+  const last = coords[coords.length - 1];
+  const area = `${line} L${last[0].toFixed(1)} ${H} L${first[0].toFixed(1)} ${H} Z`;
+  return { line, area };
+}
+
+function currentSignSlug(now: Date): string {
+  const today = (now.getUTCMonth() + 1) * 100 + now.getUTCDate();
+  for (const sign of SIGNS) {
+    const start = sign.start[0] * 100 + sign.start[1];
+    const end = sign.end[0] * 100 + sign.end[1];
+    const inside = start <= end ? today >= start && today <= end : today >= start || today <= end;
+    if (inside) return sign.slug;
+  }
+  return 'leo';
+}
+
+const records = SIGNS.map((sign) => {
+  const asset = registryAssets.find((candidate) => candidate.sign === sign.slug);
+  const solana = asset?.representations.find((representation) => representation.chain === 'solana');
+  if (!asset || !solana?.address) throw new Error(`Fomo page: missing verified Solana record for ${sign.slug}`);
+  const market = latest.assets.find((candidate) => candidate.sign === sign.slug);
+  const series = history.map((snapshot) => snapshot.assets.find((candidate) => candidate.sign === sign.slug)?.priceUsd ?? null);
+  const spark = sparkPath(series, 64);
+  const cardSpark = sparkPath(series, 48);
+  return {
+    slug: sign.slug,
+    name: asset.displayName,
+    symbol: solana.symbol ?? sign.name.toUpperCase(),
+    dates: sign.dates,
+    start: sign.start,
+    end: sign.end,
+    hue: sign.hue,
+    mint: solana.address,
+    fomo: fomoCoinUrl(solana.address),
+    icon: `/assets/zodiac-icons/128/${sign.slug}.webp`,
+    price: market?.priceUsd ?? null,
+    change: market?.change24hPct ?? null,
+    marketCap: market?.marketCapUsd ?? null,
+    sparkLine: spark.line,
+    sparkArea: spark.area,
+    cardLine: cardSpark.line,
+    cardArea: cardSpark.area,
+  };
+});
+
+if (records.length !== 12 || new Set(records.map((record) => record.mint)).size !== 12) {
+  throw new Error('Fomo page: expected twelve unique verified Solana records');
+}
+
+const initial = records.find((record) => record.slug === currentSignSlug(new Date())) ?? records[4];
+const recordsJson = JSON.stringify({
+  readAt: readAtIso,
+  provider,
+  days: history.length,
+  records,
+}).replaceAll('<', '\\u003c');
+
+const title = 'Zodiacs on Fomo | Astrofolio';
+const description = 'Every official Zodiac is listed in the free Fomo app under its verified Solana address. Get the app, add funds, and open your sign in a few taps.';
+const breadcrumb = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+    { '@type': 'ListItem', position: 2, name: 'Astrofolio', item: 'https://zodiacs.org/astrofolio/' },
+    { '@type': 'ListItem', position: 3, name: 'Zodiacs on Fomo', item: 'https://zodiacs.org/fomo/' },
+  ],
+};
+const sources = [
+  { label: 'Fomo (fomo.family)', href: FOMO_SITE },
+  { label: 'Fomo on the App Store', href: FOMO_APP_STORE },
+  { label: 'Fomo on Google Play', href: FOMO_PLAY },
+  { label: 'Zodiacs Registry', href: '/registry/' },
+  { label: `${provider} token pairs API`, href: 'https://docs.dexscreener.com/api/reference' },
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  path="/fomo/"
+  image="/assets/og/v2/fomo.png"
+  imageAlt="The twelve Zodiacs are on Fomo. Astrofolio, in a trading app."
+  jsonLd={[breadcrumb]}
+  sources={sources}
+  glass
+  terminalMarketNotice
+>
+  <article class="fomo" data-fomo-page data-initial-sign={initial.slug} style={`--fomo-sign:${initial.hue}`}>
+    <section class="fomo-hero container" aria-labelledby="fomo-title">
+      <div class="fomo-hero__copy">
+        <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
+        <p class="kicker reveal">Astrofolio, in a trading app</p>
+        <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">The twelve Zodiacs are on Fomo<FomoMark />.</h1>
+        <p class="fomo-deck reveal" style="--reveal-delay:120ms">
+          Fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. All twelve official Zodiacs are listed
+          there under their verified Solana addresses, so you can watch your sign, follow the other eleven,
+          and buy in a few taps.
+        </p>
+        <div class="fomo-stores reveal" id="top-stores" style="--reveal-delay:180ms" data-fomo-stores>
+          <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
+            <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
+          </a>
+          <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
+            <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
+          </a>
+        </div>
+        <p class="fomo-web reveal" style="--reveal-delay:220ms">
+          <span>Or on a computer:</span>
+          <a href={FOMO_SITE} rel="external nofollow noopener">fomo.family in a browser ↗</a>
+        </p>
+        <ul class="fomo-facts-strip reveal" style="--reveal-delay:260ms" role="list">
+          <li><strong>12</strong> official Zodiacs</li>
+          <li><strong>Solana</strong> one verified address each</li>
+          <li><strong>Free</strong> app, rated 18+</li>
+        </ul>
+      </div>
+
+      <figure class="fomo-phone reveal" style="--reveal-delay:140ms" data-fomo-phone>
+        <div class="fomo-phone__frame">
+          <div class="fomo-phone__screen">
+            <div class="fomo-phone__stage" data-fomo-stage>
+              <picture>
+                <source type="image/avif" srcset={FOOTAGE.posterAvif} />
+                <img
+                  class="fomo-phone__poster"
+                  src={FOOTAGE.posterWebp}
+                  width={FOOTAGE.width}
+                  height={FOOTAGE.height}
+                  alt="The Fomo app showing the twelve Zodiacs in a holdings list, each with its value and 24-hour change."
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                  data-fomo-poster
+                />
+              </picture>
+              <video
+                class="fomo-phone__video"
+                muted
+                loop
+                playsinline
+                preload="none"
+                disablepictureinpicture
+                aria-hidden="true"
+                tabindex="-1"
+                data-fomo-video
+                data-playback="poster"
+              >
+                <source data-src={FOOTAGE.av1} type='video/mp4; codecs="av01.0.08M.08"' />
+                <source data-src={FOOTAGE.h264} type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+        <figcaption class="fomo-phone__caption">Footage from the Fomo app, recorded September 2026.</figcaption>
+      </figure>
+    </section>
+
+    {ALERT_RENDER.present && (
+      <section class="fomo-alerts container" id="alerts" aria-labelledby="alerts-title">
+        <div class="fomo-alerts__inner">
+          <figure class="fomo-alerts__figure reveal">
+            <img
+              src={ALERT_RENDER.src}
+              width={ALERT_RENDER.width}
+              height={ALERT_RENDER.height}
+              alt="A Fomo notification: Capricorn is up 5.98 percent. 50 top traders bought $88,203.12."
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <div class="fomo-alerts__copy reveal" style="--reveal-delay:80ms">
+            <p class="kicker">Stay in the loop</p>
+            <h2 id="alerts-title" class="display">Alerts when your sign moves.</h2>
+            <p>Fomo<FomoMark /> sends price alerts like this one for the Zodiacs you watch, so you hear about a move without keeping a chart open.</p>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <section class="fomo-finder container" id="your-sign" aria-labelledby="finder-title" data-fomo-finder>
+      <div class="shell fomo-finder__shell">
+        <div class="core fomo-finder__core">
+          <div class="fomo-finder__ask">
+            <p class="kicker">Not sure which one is yours?</p>
+            <h2 id="finder-title" class="display">Find your sign by birthday.</h2>
+            <p>Pick the month and day. You get your sign with its latest figures and a link that opens it in Fomo<FomoMark />.</p>
+          </div>
+          <form class="fomo-finder__form" data-fomo-finder-form novalidate>
+            <label class="fomo-finder__field">
+              <span>Month</span>
+              <select name="month" data-finder-month required>
+                <option value="" selected>Month</option>
+                {MONTHS.map((month, index) => <option value={index + 1}>{month}</option>)}
+              </select>
+            </label>
+            <label class="fomo-finder__field">
+              <span>Day</span>
+              <select name="day" data-finder-day required>
+                <option value="" selected>Day</option>
+                {Array.from({ length: 31 }, (_, index) => <option value={index + 1}>{index + 1}</option>)}
+              </select>
+            </label>
+            <p class="fomo-finder__note" data-finder-note role="status" aria-live="polite"></p>
+            <div class="fomo-finder__card" data-finder-card hidden>
+              <div class="fomo-finder__card-head">
+                <img data-finder-icon src={initial.icon} width="48" height="48" alt="" />
+                <div class="fomo-finder__card-id">
+                  <strong data-finder-name>{initial.name}</strong>
+                  <small><span data-finder-dates>{initial.dates}</span> · <span data-finder-symbol>{initial.symbol}</span></small>
+                </div>
+                <div class="fomo-finder__card-px">
+                  <strong data-finder-price>{fmtPrice(initial.price)}</strong>
+                  <small class:list={['fomo-delta', changeClass(initial.change)]} data-finder-change>{fmtChange(initial.change)} · 24h</small>
+                </div>
+              </div>
+              <svg class="fomo-spark" viewBox="0 0 240 64" aria-hidden="true" focusable="false">
+                <path class="fomo-spark__area" data-finder-area d={initial.sparkArea} />
+                <path class="fomo-spark__line" data-finder-line d={initial.sparkLine} />
+              </svg>
+              <div class="fomo-finder__card-foot">
+                <span class="fomo-finder__range">{history.length} daily reads · {provider}</span>
+                <div class="fomo-finder__actions">
+                  <a class="fomo-cta fomo-cta--compact" href={initial.fomo} rel="external nofollow noopener" data-finder-open>
+                    <img src="/assets/venues/fomo-official.svg" width="30" height="30" alt="" />
+                    <span class="fomo-cta__copy"><small data-finder-symbol>{initial.symbol}</small><strong>Open in Fomo</strong></span>
+                    <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
+                  </a>
+                  <a class="fomo-finder__card-link" href={`#sign-${initial.slug}`} data-finder-jump>See the <span data-finder-name>{initial.name}</span> card ↓</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="fomo-steps section--tight container" id="how" aria-labelledby="how-title">
+      <div class="section-head">
+        <p class="kicker">Three steps</p>
+        <h2 id="how-title">How it works</h2>
+        <p>From download to your first Zodiac in a few minutes. Nobody needs your recovery phrase at any point.</p>
+      </div>
+      <ol class="fomo-steps__list">
+        <li class="tile reveal">
+          <span class="fomo-steps__num">01</span>
+          <h3>Get the app</h3>
+          <p>Download Fomo from the App Store or Google Play, or open fomo.family in a browser. Sign in with an email address or Apple ID; Fomo sets up the wallet inside the app.</p>
+          <a href="#top-stores">Get the app ↑</a>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:80ms">
+          <span class="fomo-steps__num">02</span>
+          <h3>Add funds</h3>
+          <p>Fomo takes Apple Pay where it is offered, or a transfer of USDC or SOL from a wallet or exchange you already use. Send a small test amount first and the rest once it lands.</p>
+          <a href="/astrofolio/how-to-buy/#fund-wallet">Funding basics ↗</a>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:160ms">
+          <span class="fomo-steps__num">03</span>
+          <h3>Open your sign</h3>
+          <p>Tap your sign below. The link opens that Zodiac in Fomo with the verified address already in place. Compare it against the Registry record before you buy.</p>
+          <a href="#signs">Choose a sign ↓</a>
+        </li>
+      </ol>
+    </section>
+
+    {VERIFIED_RENDER.present && (
+      <section class="fomo-verified section--tight container" id="verified" aria-labelledby="verified-title">
+        <div class="fomo-verified__inner">
+          <div class="fomo-verified__copy reveal">
+            <p class="kicker">Inside the app</p>
+            <h2 id="verified-title" class="display">The twelve, in the Verified list on Fomo<FomoMark />.</h2>
+            <p>Fomo lists the Zodiacs in its Verified tab. Before you buy, compare the address on the coin screen with the Registry record; it is the same address every link on this page carries.</p>
+            <a href="#signs">Choose a sign ↓</a>
+          </div>
+          <figure class="fomo-verified__figure reveal" style="--reveal-delay:80ms">
+            <img
+              src={VERIFIED_RENDER.src}
+              width={VERIFIED_RENDER.width}
+              height={VERIFIED_RENDER.height}
+              alt="A phone showing Fomo’s Verified list with the Zodiacs, each marked with a blue check."
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </section>
+    )}
+
+    <section class="fomo-signs section--tight container" id="signs" aria-labelledby="signs-title">
+      <div class="section-head">
+        <p class="kicker">Every sign, one tap</p>
+        <h2 id="signs-title">Choose your sign</h2>
+        <p>Each link opens that Zodiac in Fomo under its verified Solana address. Figures are {provider} reads from {latest.date}; the app shows live prices.</p>
+      </div>
+      <ul class="fomo-grid" role="list">
+        {records.map((record, index) => (
+          <li class="tile fomo-card reveal" id={`sign-${record.slug}`} style={`--sign:${record.hue};--reveal-delay:${(index % 4) * 60}ms`} data-sign-card={record.slug}>
+            <div class="fomo-card__head">
+              <SignIcon sign={record.slug} size={56} />
+              <div>
+                <h3>{record.name}</h3>
+                <p class="fomo-card__dates">{record.dates}</p>
+              </div>
+            </div>
+            <svg class="fomo-spark fomo-spark--card" viewBox="0 0 240 48" aria-hidden="true" focusable="false" data-card-spark>
+              <path class="fomo-spark__area" d={record.cardArea} />
+              <path class="fomo-spark__line" d={record.cardLine} />
+            </svg>
+            <dl class="fomo-card__data">
+              <div><dt>Price</dt><dd data-card-price>{fmtPrice(record.price)}</dd></div>
+              <div><dt>24h</dt><dd class:list={['fomo-delta', changeClass(record.change)]} data-card-change>{fmtChange(record.change)}</dd></div>
+              <div><dt>Market cap</dt><dd data-card-mcap>{fmtCompact(record.marketCap)}</dd></div>
+            </dl>
+            <div class="fomo-card__actions">
+              <a class="fomo-cta fomo-cta--compact" href={record.fomo} rel="external nofollow noopener" aria-label={`Open ${record.name} in Fomo`} data-fomo-open={record.slug}>
+                <img src="/assets/venues/fomo-official.svg" width="30" height="30" alt="" />
+                <span class="fomo-cta__copy"><small>{record.symbol}</small><strong>Open in Fomo</strong></span>
+                <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
+              </a>
+              <a class="fomo-card__record" href={`/registry/${record.slug}/`}>Registry record →</a>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="fomo-grid__note">
+        <span data-fomo-live-note>Prices and the {history.length}-day lines: {provider}, read {readAtLabel}.</span>
+        {' '}Every link carries the address published in the Zodiacs Registry. Fomo is a separate app; check that
+        the address on its screen matches the record before you approve anything.
+        {' '}<a href="/registry/technical/#market-transparency">Data &amp; methodology</a>
+      </p>
+    </section>
+
+    <section class="fomo-facts section--tight container" aria-labelledby="facts-title">
+      <div class="section-head">
+        <p class="kicker">Before you start</p>
+        <h2 id="facts-title">What Fomo<FomoMark /> is, and what it is not</h2>
+      </div>
+      <div class="fomo-facts__grid">
+        <div class="tile reveal">
+          <h3>An independent app</h3>
+          <p>Fomo is made by FOMO Labs Inc. It is not part of Zodiacs.org. Zodiacs.org has no referral account or fee arrangement with Fomo and receives nothing when you trade there.</p>
+        </div>
+        <div class="tile reveal" style="--reveal-delay:80ms">
+          <h3>The same twelve addresses</h3>
+          <p>The links on this page carry the Solana addresses published in the Zodiacs Registry. Here, “official” means listed in that Registry. It is not approval by a regulator, wallet, or exchange.</p>
+        </div>
+        <div class="tile reveal" style="--reveal-delay:160ms">
+          <h3>Real money, real risk</h3>
+          <p>Zodiac tokens are speculative and thinly traded. Prices move quickly, liquidity can disappear, and you can lose everything you spend. Nothing here is financial advice, and astrology does not predict prices.</p>
+        </div>
+        <div class="tile reveal" style="--reveal-delay:240ms">
+          <h3>Your account, and support from Fomo<FomoMark /></h3>
+          <p>Fomo is rated 18+ and may not be available where you live. Read Fomo’s terms and fees inside the app, keep your sign-in details private, and take account questions to Fomo, not to Zodiacs.org.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="fomo-faq section--tight container container--narrow" aria-labelledby="faq-title">
+      <div class="section-head">
+        <h2 id="faq-title">Questions people ask</h2>
+      </div>
+      <div class="fomo-faq__items">
+        <details>
+          <summary><span>Do I need a crypto wallet first?</span><span aria-hidden="true">+</span></summary>
+          <p>No. Fomo sets up a wallet inside the app when you sign in. If you already use Phantom, Solflare, or an exchange, you can move USDC or SOL into Fomo from there.</p>
+        </details>
+        <details>
+          <summary><span>Is Fomo<FomoMark /> free?</span><span aria-hidden="true">+</span></summary>
+          <p>The app is free to download. Fomo charges its own trading fees, shown before you confirm a trade. Zodiacs.org adds nothing and receives nothing.</p>
+        </details>
+        <details>
+          <summary><span>Which sign should I buy?</span><span aria-hidden="true">+</span></summary>
+          <p>That is your decision, and this page does not make it for you. Many people start with their own Sun sign; the Registry lists all twelve with the same standing. Spend only what you can afford to lose.</p>
+        </details>
+        <details>
+          <summary><span>Can I use Fomo<FomoMark /> on a computer?</span><span aria-hidden="true">+</span></summary>
+          <p>Yes. fomo.family runs in a browser and syncs with the phone app, so a watchlist you build on one shows up on the other.</p>
+        </details>
+        <details>
+          <summary><span>Why do the prices here differ from the app?</span><span aria-hidden="true">+</span></summary>
+          <p>The figures on this page are dated {provider} reads, refreshed when the site rebuilds and, where your browser allows it, once more when the page loads. Fomo shows live prices, and the two will rarely match to the cent.</p>
+        </details>
+        <details>
+          <summary><span>Is there another way to buy?</span><span aria-hidden="true">+</span></summary>
+          <p>Yes. The <a href="/astrofolio/how-to-buy/">beginner guide</a> walks through a Solana wallet and an optional Jupiter swap, one step at a time.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="fomo-close container" aria-labelledby="close-title">
+      <div class="shell fomo-close__shell">
+        <div class="core fomo-close__core">
+          <p class="kicker">Start with your own sign</p>
+          <h2 id="close-title" class="display">Your sign is already listed.</h2>
+          <p>Get the app, add a little, and open your sign. Read every screen before you approve.</p>
+          <div class="fomo-stores fomo-stores--center" data-fomo-stores>
+            <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
+              <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
+            </a>
+            <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
+              <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
+            </a>
+          </div>
+          <div class="fomo-close__actions">
+            <a class="btn btn--glass" href={FOMO_SITE} rel="external nofollow noopener">Continue on the web <span class="orb" aria-hidden="true">↗</span></a>
+            <a class="btn btn--ghost" href="/astrofolio/">Back to Astrofolio</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <script is:inline type="application/json" id="fomo-records" set:html={recordsJson}></script>
+
+<script>
+  type FomoRecord = {
+    slug: string;
+    name: string;
+    symbol: string;
+    dates: string;
+    start: [number, number];
+    end: [number, number];
+    hue: string;
+    mint: string;
+    fomo: string;
+    icon: string;
+    price: number | null;
+    change: number | null;
+    marketCap: number | null;
+    sparkLine: string;
+    sparkArea: string;
+    cardLine: string;
+    cardArea: string;
+  };
+  type FomoPayload = { readAt: string; provider: string; days: number; records: FomoRecord[] };
+  type DexPair = {
+    baseToken?: { address?: string };
+    priceUsd?: string | number;
+    priceChange?: { h24?: number | string };
+    marketCap?: number | string;
+    liquidity?: { usd?: number | string };
+  };
+  type NetworkInformation = { saveData?: boolean; effectiveType?: string };
+
+  const dataNode = document.querySelector<HTMLScriptElement>('#fomo-records');
+  const payload = JSON.parse(dataNode?.textContent || '{"records":[]}') as FomoPayload;
+  const records = payload.records ?? [];
+  const page = document.querySelector<HTMLElement>('[data-fomo-page]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelector<HTMLAnchorElement>('.nav__chip[href="/astrofolio/"]')?.setAttribute('aria-current', 'page');
+
+  function fmtPrice(value: number | null): string {
+    if (value == null || !Number.isFinite(value) || value <= 0) return '—';
+    if (value >= 1) return `$${value.toFixed(2)}`;
+    if (value >= 0.01) return `$${value.toFixed(4)}`;
+    if (value >= 0.000001) return `$${value.toFixed(6)}`;
+    return `$${value.toFixed(9)}`;
+  }
+  function fmtCompact(value: number | null): string {
+    if (value == null || !Number.isFinite(value) || value <= 0) return '—';
+    if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+    if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
+    if (value >= 1e3) return `$${(value / 1e3).toFixed(1)}K`;
+    return `$${value.toFixed(0)}`;
+  }
+  function fmtChange(value: number | null): string {
+    if (value == null || !Number.isFinite(value)) return '—';
+    const magnitude = Math.abs(value).toFixed(2);
+    if (value > 0) return `▲ ${magnitude}%`;
+    if (value < 0) return `▼ ${magnitude}%`;
+    return `${magnitude}%`;
+  }
+  function paintDelta(node: HTMLElement | null, value: number | null, suffix = '') {
+    if (!node) return;
+    node.textContent = `${fmtChange(value)}${suffix}`;
+    node.classList.toggle('is-up', value != null && value > 0);
+    node.classList.toggle('is-down', value != null && value < 0);
+  }
+  function setText(selector: string, text: string, scope: ParentNode = document) {
+    scope.querySelectorAll<HTMLElement>(selector).forEach((node) => { node.textContent = text; });
+  }
+
+  /* Sparkline draw-in: the dash length is the path's own length, so the
+     line traces itself from the oldest read to the newest. */
+  function drawSpark(line: SVGPathElement | null, area: SVGPathElement | null, animate: boolean) {
+    if (!line) return;
+    line.style.transition = 'none';
+    if (area) area.style.transition = 'none';
+    if (!animate || reducedMotion.matches) {
+      line.style.strokeDasharray = '';
+      line.style.strokeDashoffset = '';
+      if (area) area.style.opacity = '';
+      return;
+    }
+    const length = line.getTotalLength();
+    line.style.strokeDasharray = `${length}`;
+    line.style.strokeDashoffset = `${length}`;
+    if (area) area.style.opacity = '0';
+    void line.getBoundingClientRect();
+    line.style.transition = 'stroke-dashoffset 900ms cubic-bezier(0.22, 1, 0.36, 1)';
+    line.style.strokeDashoffset = '0';
+    if (area) {
+      area.style.transition = 'opacity 700ms ease 300ms';
+      area.style.opacity = '';
+    }
+  }
+
+  /* Card sparklines trace once, when their card first scrolls into view. */
+  const cardSparks = Array.from(document.querySelectorAll<SVGSVGElement>('[data-card-spark]'));
+  if (!reducedMotion.matches && 'IntersectionObserver' in window && cardSparks.length) {
+    cardSparks.forEach((spark) => {
+      const line = spark.querySelector<SVGPathElement>('.fomo-spark__line');
+      if (line) {
+        const length = line.getTotalLength();
+        line.style.strokeDasharray = `${length}`;
+        line.style.strokeDashoffset = `${length}`;
+      }
+      const area = spark.querySelector<SVGPathElement>('.fomo-spark__area');
+      if (area) area.style.opacity = '0';
+    });
+    const sparkObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const spark = entry.target as SVGSVGElement;
+        drawSpark(spark.querySelector('.fomo-spark__line'), spark.querySelector('.fomo-spark__area'), true);
+        sparkObserver.unobserve(spark);
+      }
+    }, { threshold: 0.4 });
+    cardSparks.forEach((spark) => sparkObserver.observe(spark));
+  }
+
+  /* Store badges: lead with the visitor's own store. Desktop keeps the published order. */
+  const agent = navigator.userAgent;
+  const ownStore = /iPhone|iPad|iPod/iu.test(agent) ? 'apple' : /Android/iu.test(agent) ? 'google' : '';
+  if (ownStore) {
+    document.querySelectorAll<HTMLElement>('[data-fomo-stores]').forEach((row) => {
+      const first = row.querySelector<HTMLElement>(`[data-store="${ownStore}"]`);
+      if (first) row.prepend(first);
+    });
+  }
+
+  /* Hero footage: the poster is the complete reduced-motion and constrained-
+     data experience. Sources attach only once the phone is on screen, and
+     playback pauses whenever it scrolls away or the tab hides. */
+  const video = document.querySelector<HTMLVideoElement>('[data-fomo-video]');
+  const stage = document.querySelector<HTMLElement>('[data-fomo-stage]');
+  const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
+  const constrained = Boolean(connection && (connection.saveData || ['slow-2g', '2g'].includes(connection.effectiveType ?? '')));
+  if (video && stage && !reducedMotion.matches && !constrained && 'IntersectionObserver' in window) {
+    let attached = false;
+    let onScreen = false;
+    const settle = (state: string) => { video.dataset.playback = state; stage.dataset.playing = String(state === 'playing'); };
+    const attach = () => {
+      if (attached) return;
+      attached = true;
+      video.querySelectorAll<HTMLSourceElement>('source[data-src]').forEach((source) => {
+        source.src = source.dataset.src ?? '';
+        source.removeAttribute('data-src');
+      });
+      video.load();
+      settle('loading');
+    };
+    const play = () => {
+      video.play().then(() => settle('playing')).catch(() => settle('poster'));
+    };
+    const rest = () => {
+      if (!attached || video.paused) return;
+      video.pause();
+      settle('paused');
+    };
+    const footageObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        onScreen = entry.isIntersecting;
+        if (onScreen) {
+          attach();
+          play();
+        } else {
+          rest();
+        }
+      }
+    }, { threshold: 0.25 });
+    footageObserver.observe(stage);
+    video.addEventListener('playing', () => settle('playing'));
+    video.addEventListener('error', () => settle('poster'), true);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) rest();
+      else if (attached && onScreen) play();
+    });
+    reducedMotion.addEventListener('change', () => {
+      if (!reducedMotion.matches) return;
+      footageObserver.disconnect();
+      if (!video.paused) video.pause();
+      settle('poster');
+    });
+  }
+
+  /* Find your sign by birthday. Tropical dates from the site's sign table. */
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const MONTH_LENGTHS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const finderForm = document.querySelector<HTMLFormElement>('[data-fomo-finder-form]');
+  const finderMonth = document.querySelector<HTMLSelectElement>('[data-finder-month]');
+  const finderDay = document.querySelector<HTMLSelectElement>('[data-finder-day]');
+  const finderNote = document.querySelector<HTMLElement>('[data-finder-note]');
+  const finderCard = document.querySelector<HTMLElement>('[data-finder-card]');
+  let found: FomoRecord | null = null;
+
+  function signForDate(month: number, day: number): FomoRecord | undefined {
+    const value = month * 100 + day;
+    return records.find((record) => {
+      const start = record.start[0] * 100 + record.start[1];
+      const end = record.end[0] * 100 + record.end[1];
+      return start <= end ? value >= start && value <= end : value >= start || value <= end;
+    });
+  }
+  function paintFinder(record: FomoRecord) {
+    if (!finderCard) return;
+    const icon = finderCard.querySelector<HTMLImageElement>('[data-finder-icon]');
+    if (icon && icon.getAttribute('src') !== record.icon) icon.src = record.icon;
+    setText('[data-finder-name]', record.name, finderCard);
+    setText('[data-finder-dates]', record.dates, finderCard);
+    setText('[data-finder-symbol]', record.symbol, finderCard);
+    setText('[data-finder-price]', fmtPrice(record.price), finderCard);
+    paintDelta(finderCard.querySelector<HTMLElement>('[data-finder-change]'), record.change, ' · 24h');
+    const open = finderCard.querySelector<HTMLAnchorElement>('[data-finder-open]');
+    if (open) open.href = record.fomo;
+    const jump = finderCard.querySelector<HTMLAnchorElement>('[data-finder-jump]');
+    if (jump) jump.href = `#sign-${record.slug}`;
+    const area = finderCard.querySelector<SVGPathElement>('[data-finder-area]');
+    const line = finderCard.querySelector<SVGPathElement>('[data-finder-line]');
+    area?.setAttribute('d', record.sparkArea);
+    line?.setAttribute('d', record.sparkLine);
+    drawSpark(line, area, true);
+  }
+  function runFinder() {
+    if (!finderNote || !finderCard) return;
+    const month = Number(finderMonth?.value);
+    const day = Number(finderDay?.value);
+    if (!month || !day) {
+      finderNote.textContent = '';
+      finderCard.hidden = true;
+      found = null;
+      return;
+    }
+    if (day > MONTH_LENGTHS[month - 1]) {
+      finderNote.textContent = `${MONTHS[month - 1]} has ${MONTH_LENGTHS[month - 1]} days.`;
+      finderCard.hidden = true;
+      found = null;
+      return;
+    }
+    const record = signForDate(month, day);
+    if (!record) return;
+    found = record;
+    finderNote.textContent = '';
+    finderCard.hidden = false;
+    finderCard.style.setProperty('--sign', record.hue);
+    page?.style.setProperty('--fomo-sign', record.hue);
+    paintFinder(record);
+  }
+  finderForm?.addEventListener('submit', (event) => event.preventDefault());
+  finderMonth?.addEventListener('change', runFinder);
+  finderDay?.addEventListener('change', runFinder);
+
+  /* One public read of the same DexScreener batch the daily snapshot uses.
+     A failure leaves the dated figures and their caption exactly as built. */
+  async function refreshLive() {
+    if (!records.length || !navigator.onLine) return;
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 8000);
+    try {
+      const mints = records.map((record) => record.mint).join(',');
+      const response = await fetch(`https://api.dexscreener.com/tokens/v1/solana/${mints}`, {
+        signal: controller.signal,
+        headers: { accept: 'application/json' },
+      });
+      if (!response.ok) return;
+      const pairs = await response.json() as unknown;
+      if (!Array.isArray(pairs)) return;
+      const deepest = new Map<string, DexPair>();
+      for (const pair of pairs as DexPair[]) {
+        const mint = pair?.baseToken?.address;
+        if (!mint) continue;
+        const liquidity = Number(pair.liquidity?.usd ?? 0);
+        const current = deepest.get(mint);
+        if (!current || liquidity > Number(current.liquidity?.usd ?? 0)) deepest.set(mint, pair);
+      }
+      let updated = 0;
+      for (const record of records) {
+        const pair = deepest.get(record.mint);
+        if (!pair) continue;
+        const price = Number(pair.priceUsd);
+        const change = pair.priceChange?.h24 == null ? null : Number(pair.priceChange.h24);
+        const marketCap = pair.marketCap == null ? null : Number(pair.marketCap);
+        if (!Number.isFinite(price) || price <= 0) continue;
+        record.price = price;
+        record.change = change != null && Number.isFinite(change) ? change : null;
+        record.marketCap = marketCap != null && Number.isFinite(marketCap) ? marketCap : null;
+        updated += 1;
+        const card = document.querySelector<HTMLElement>(`[data-sign-card="${record.slug}"]`);
+        if (card) {
+          setText('[data-card-price]', fmtPrice(record.price), card);
+          setText('[data-card-mcap]', fmtCompact(record.marketCap), card);
+          paintDelta(card.querySelector<HTMLElement>('[data-card-change]'), record.change);
+        }
+      }
+      if (!updated) return;
+      if (found && finderCard) {
+        setText('[data-finder-price]', fmtPrice(found.price), finderCard);
+        paintDelta(finderCard.querySelector<HTMLElement>('[data-finder-change]'), found.change, ' · 24h');
+      }
+      const now = new Date();
+      const hh = String(now.getUTCHours()).padStart(2, '0');
+      const mm = String(now.getUTCMinutes()).padStart(2, '0');
+      setText('[data-fomo-live-note]', `Prices: ${payload.provider}, live at ${hh}:${mm} UTC; the ${payload.days}-day lines are its daily reads.`);
+    } catch {
+      /* Offline, blocked, or slow: the dated snapshot stands. */
+    } finally {
+      window.clearTimeout(timeout);
+    }
+  }
+  const scheduleRefresh = typeof window.requestIdleCallback === 'function'
+    ? (callback: () => void) => { window.requestIdleCallback(callback); }
+    : (callback: () => void) => { window.setTimeout(callback, 1200); };
+  scheduleRefresh(() => { void refreshLive(); });
+</script>
+</Base>
+
+<style>
+  /* The one transitioning hue on the page: the found sign's disc colour,
+     registered so the glow can ease between signs instead of snapping. */
+  @property --fomo-sign {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #b7d9b0;
+  }
+
+  .fomo {
+    --up: #a9d4c4;
+    --down: #d4603f;
+    --fomo-blue: #535ddd;
+    --fomo-paper: #f1f0ec;
+    --fomo-ink: #111318;
+    color: var(--text);
+    transition: --fomo-sign 900ms var(--ease-soft);
+  }
+
+  /* Fomo's app icon after the word, sized to the text it follows. */
+  .fomo :global(.fomo-mark) {
+    display: inline-block;
+    width: 0.82em;
+    height: 0.82em;
+    margin-left: 0.22em;
+    border-radius: 0.2em;
+    vertical-align: -0.08em;
+    box-shadow: 0 0 0 1px rgba(238, 241, 247, 0.08);
+  }
+  .fomo-hero h1 :global(.fomo-mark) { width: 0.72em; height: 0.72em; border-radius: 0.18em; vertical-align: -0.02em; }
+
+  /* ── Hero ────────────────────────────────────────────────────────── */
+  .fomo-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: center;
+    gap: clamp(32px, 6vw, 88px);
+    padding-block: clamp(20px, 4vw, 56px) clamp(56px, 8vw, 112px);
+  }
+  .fomo-back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-bottom: clamp(20px, 4vw, 44px);
+    color: var(--muted);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+  .fomo-back:hover { color: var(--text); }
+  .fomo-hero__copy .kicker { margin: 0 0 14px; }
+  .fomo-hero h1 {
+    margin: 0;
+    max-width: 11ch;
+    font-size: clamp(2.9rem, 1.6rem + 5.4vw, 5.6rem);
+    line-height: 0.98;
+  }
+  .fomo-deck {
+    max-width: 52ch;
+    margin: clamp(20px, 3vw, 30px) 0 0;
+    color: var(--text-2);
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  /* Official store badges. Apple's SVG at 48px; Google's PNG keeps its built-in
+     clear space, scaled so the visible badge is also 48px and pulled in by
+     negative margins so the pair sits on one baseline. */
+  .fomo-stores {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 14px;
+    margin-top: clamp(24px, 3.4vw, 36px);
+  }
+  .fomo-stores--center { justify-content: center; margin-top: 6px; }
+  .fomo-badge {
+    display: inline-flex;
+    border-radius: 8px;
+    line-height: 0;
+    transition: transform var(--dur-1) var(--ease), opacity var(--dur-1) var(--ease);
+  }
+  .fomo-badge img { display: block; width: auto; }
+  .fomo-badge--apple img { height: 48px; }
+  .fomo-badge--google img { height: 71.43px; margin: -11.71px -11.71px -11.71px -11.71px; }
+  @media (hover: hover) and (pointer: fine) {
+    .fomo-badge:hover { transform: translateY(-1px); opacity: 0.94; }
+  }
+  .fomo-badge:focus-visible { outline: 1.5px solid var(--ink-0); outline-offset: 4px; }
+  .fomo-web {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    margin: 16px 0 0;
+    color: var(--faint);
+    font-size: var(--text-sm);
+  }
+  .fomo-web a { color: var(--muted); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+  .fomo-web a:hover { color: var(--text); }
+  .fomo-facts-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin: clamp(26px, 4vw, 40px) 0 0;
+    padding: 18px 0 0;
+    border-top: 1px solid var(--hair-1);
+    list-style: none;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .fomo-facts-strip strong { margin-right: 5px; color: var(--text); font-weight: 600; }
+
+  /* ── Branded Fomo hand-off (the same pill the Astrofolio vitrine uses) ── */
+  .fomo-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 54px;
+    padding: 6px 8px 6px 7px;
+    border-radius: var(--r-full);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    color: var(--fomo-ink);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(229, 228, 224, 0.98)),
+      var(--fomo-paper);
+    box-shadow:
+      inset 0 1px 0 #fff,
+      inset 0 -1px 0 rgba(17, 19, 24, 0.1),
+      0 0 0 1px rgba(83, 93, 221, 0.12),
+      0 18px 36px -22px rgba(0, 0, 0, 0.95);
+    text-decoration: none;
+    transition: transform 120ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms var(--ease);
+  }
+  .fomo-cta img {
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(17, 19, 24, 0.08), 0 6px 14px -8px rgba(0, 0, 0, 0.8);
+  }
+  .fomo-cta__copy { display: grid; gap: 3px; min-width: 0; text-align: left; }
+  .fomo-cta__copy small {
+    color: rgba(17, 19, 24, 0.58);
+    font: 600 9.5px/1 var(--font-sans);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .fomo-cta__copy strong {
+    color: var(--fomo-ink);
+    font: 650 15px/1 var(--font-sans);
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+  }
+  .fomo-cta__arrow {
+    flex: 0 0 38px;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    margin-left: 6px;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--fomo-blue);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 6px 14px -8px rgba(43, 49, 142, 0.92);
+    font: 650 16px/1 var(--font-sans);
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms var(--ease);
+  }
+  .fomo-cta--compact { min-height: 46px; gap: 9px; padding: 5px 6px 5px 6px; }
+  .fomo-cta--compact img { flex-basis: 30px; width: 30px; height: 30px; border-radius: 9px; }
+  .fomo-cta--compact .fomo-cta__copy small { font-size: 8.5px; }
+  .fomo-cta--compact .fomo-cta__copy strong { font-size: 13px; }
+  .fomo-cta--compact .fomo-cta__arrow { flex-basis: 30px; width: 30px; height: 30px; margin-left: 4px; font-size: 14px; }
+  @media (hover: hover) and (pointer: fine) {
+    .fomo-cta:hover { transform: translateY(-1px); background-color: #f8f7f4; border-color: #fff; }
+    .fomo-cta:hover .fomo-cta__arrow { transform: translate(1px, -1px); background-color: #626ce9; }
+  }
+  .fomo-cta:active { transform: scale(0.975); }
+  .fomo-cta:focus-visible { outline: 2px solid #7f88ff; outline-offset: 3px; }
+
+  /* ── Phone with the footage ──────────────────────────────────────── */
+  .fomo-phone {
+    position: relative;
+    margin: 0;
+    justify-self: center;
+    perspective: 1600px;
+  }
+  .fomo-phone::before {
+    content: '';
+    position: absolute;
+    /* Horizontal insets stay non-negative: an absolutely positioned box past
+       the viewport edge would add sideways scroll on phones, while the blur
+       itself is ink overflow and bleeds without doing so. */
+    inset: 6% 0 10%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(58% 46% at 50% 50%, color-mix(in oklab, var(--fomo-sign) 28%, transparent), transparent 72%);
+    filter: blur(34px);
+    pointer-events: none;
+  }
+  .fomo-phone__frame {
+    width: min(340px, 84vw);
+    padding: 10px;
+    border-radius: 54px;
+    background: linear-gradient(160deg, #2b303f 0%, #14171f 42%, #0a0c12 100%);
+    box-shadow:
+      0 0 0 1px rgba(238, 241, 247, 0.1),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 50px 110px -46px rgba(0, 0, 0, 0.95),
+      0 28px 60px -34px color-mix(in oklab, var(--fomo-sign) 40%, transparent);
+    transform: rotateY(-9deg) rotateX(3deg);
+    transform-style: preserve-3d;
+    transition: transform var(--dur-3) var(--ease-soft), box-shadow 900ms var(--ease-soft);
+  }
+  .fomo-phone:hover .fomo-phone__frame,
+  .fomo-phone:focus-within .fomo-phone__frame { transform: none; }
+  .fomo-phone__screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: 44px;
+    background: #07080c;
+    color: var(--ink-0);
+  }
+  /* The recording's own proportions (1206×2622); its status bar is part of it. */
+  .fomo-phone__stage {
+    position: relative;
+    aspect-ratio: 1206 / 2622;
+    overflow: hidden;
+    background: #07080c;
+  }
+  .fomo-phone__stage picture,
+  .fomo-phone__poster,
+  .fomo-phone__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .fomo-phone__poster { object-fit: cover; transition: opacity 600ms var(--ease-soft); z-index: 2; }
+  .fomo-phone__video { object-fit: cover; z-index: 1; }
+  .fomo-phone__stage[data-playing='true'] .fomo-phone__poster { opacity: 0; }
+  .fomo-phone__stage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 84%, rgba(7, 8, 12, 0.45));
+  }
+
+  .fomo-phone__caption {
+    max-width: 340px;
+    margin: 18px auto 0;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fomo-phone__frame { animation: fomo-float 7s ease-in-out infinite; }
+    .fomo-phone:hover .fomo-phone__frame,
+    .fomo-phone:focus-within .fomo-phone__frame { animation-play-state: paused; }
+  }
+  @keyframes fomo-float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -9px; }
+  }
+
+  /* ── Owner renders: the alert on its own, and the Verified list ───── */
+  .fomo-alerts { padding-block: clamp(8px, 2vw, 16px) clamp(24px, 4vw, 40px); }
+  .fomo-alerts__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(20px, 4vw, 56px);
+  }
+  .fomo-alerts__figure { margin: 0; }
+  .fomo-alerts__figure img { width: 100%; max-width: 520px; height: auto; margin-inline: auto; }
+  .fomo-alerts__copy .kicker { margin: 0 0 10px; }
+  .fomo-alerts__copy h2 { margin: 0; font-size: var(--text-xl); }
+  .fomo-alerts__copy p:not(.kicker) { max-width: 44ch; margin: 12px 0 0; color: var(--text-2); font-size: var(--text-base); line-height: 1.6; text-wrap: pretty; }
+  .fomo-verified { border-top: 1px solid var(--hair-1); }
+  .fomo-verified__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 5vw, 72px);
+  }
+  .fomo-verified__copy .kicker { margin: 0 0 10px; }
+  .fomo-verified__copy h2 { margin: 0; font-size: var(--text-2xl); }
+  .fomo-verified__copy p:not(.kicker) { max-width: 46ch; margin: 14px 0 0; color: var(--text-2); font-size: var(--text-base); line-height: 1.6; text-wrap: pretty; }
+  .fomo-verified__copy a {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--text);
+    font-size: var(--text-sm);
+    font-weight: 550;
+    text-decoration-color: var(--hair-3);
+    text-underline-offset: 4px;
+  }
+  .fomo-verified__figure { margin: 0; }
+  .fomo-verified__figure img { width: 100%; max-width: 560px; height: auto; margin-inline: auto; }
+
+  /* ── Finder ─────────────────────────────────────────────────────── */
+  .fomo-finder { padding-block: 0 clamp(8px, 2vw, 16px); }
+  .fomo-finder__core {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+    gap: clamp(24px, 4vw, 56px);
+    padding: clamp(24px, 4vw, 44px);
+    background:
+      radial-gradient(90% 80% at 0% 0%, color-mix(in oklab, var(--fomo-sign) 9%, transparent), transparent 62%),
+      linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
+  }
+  .fomo-finder__ask .kicker { margin: 0 0 10px; }
+  .fomo-finder__ask h2 { margin: 0; font-size: var(--text-xl); }
+  .fomo-finder__ask p:not(.kicker) { max-width: 42ch; margin: 12px 0 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.6; text-wrap: pretty; }
+  .fomo-finder__form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .fomo-finder__field { display: grid; gap: 6px; }
+  .fomo-finder__field span {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .fomo-finder__field select {
+    appearance: none;
+    -webkit-appearance: none;
+    min-height: 48px;
+    padding: 0 40px 0 14px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M3 5.25 7 9.25l4-4' stroke='%238E96AB' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center,
+      rgba(198, 204, 218, 0.05);
+    color: var(--text);
+    font: 500 15px/1 var(--font-sans);
+  }
+  .fomo-finder__field select:focus-visible { outline: 1.5px solid var(--ink-0); outline-offset: 2px; }
+  .fomo-finder__note {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  .fomo-finder__note:empty { display: none; }
+  .fomo-finder__card {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 12px;
+    margin-top: 4px;
+    padding: 16px;
+    border: 1px solid color-mix(in oklab, var(--sign, var(--fomo-sign)) 38%, var(--hair-2));
+    border-radius: var(--r-lg);
+    background:
+      radial-gradient(120% 90% at 50% 0%, color-mix(in oklab, var(--sign, var(--fomo-sign)) 12%, transparent), transparent 60%),
+      rgba(6, 7, 9, 0.5);
+  }
+  .fomo-finder__card[hidden] { display: none; }
+  .fomo-finder__card-head {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+  }
+  .fomo-finder__card-head img { width: 48px; height: 48px; border-radius: 50%; }
+  .fomo-finder__card-id, .fomo-finder__card-px { display: grid; gap: 3px; min-width: 0; }
+  .fomo-finder__card-px { text-align: right; justify-items: end; }
+  .fomo-finder__card-id strong { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 500; line-height: 1; letter-spacing: -0.01em; }
+  .fomo-finder__card-id small, .fomo-finder__card-px small { font: 500 11px/1.2 var(--font-mono); color: var(--ink-2); }
+  .fomo-finder__card-px strong { font: 500 17px/1.1 var(--font-mono); font-variant-numeric: tabular-nums; }
+  .fomo-finder__card-foot { display: grid; gap: 12px; }
+  .fomo-finder__range { font: 500 10.5px/1 var(--font-mono); letter-spacing: 0.04em; color: var(--ink-3); text-transform: uppercase; }
+  .fomo-finder__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  .fomo-finder__card-link { color: var(--muted); font-size: var(--text-sm); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+  .fomo-finder__card-link:hover { color: var(--text); }
+
+  /* ── Sparklines ─────────────────────────────────────────────────── */
+  .fomo-spark { display: block; width: 100%; height: auto; overflow: visible; }
+  .fomo-spark__area { fill: color-mix(in oklab, var(--sign, var(--fomo-sign)) 24%, transparent); stroke: none; }
+  .fomo-spark__line {
+    fill: none;
+    stroke: var(--sign, var(--fomo-sign));
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .fomo-spark--card { margin-top: -2px; opacity: 0.9; }
+
+  /* ── Steps ───────────────────────────────────────────────────────── */
+  .fomo-steps, .fomo-signs, .fomo-facts, .fomo-faq { border-top: 1px solid var(--hair-1); }
+  .fomo-steps__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .fomo-steps__list li { display: grid; align-content: start; gap: 10px; padding: clamp(20px, 2.6vw, 28px); }
+  .fomo-steps__num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--faint);
+  }
+  .fomo-steps__list h3, .fomo-card h3, .fomo-facts h3 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.1;
+  }
+  .fomo-steps__list p, .fomo-facts p {
+    margin: 0;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+  .fomo-steps__list a {
+    margin-top: 4px;
+    color: var(--text);
+    font-size: var(--text-sm);
+    font-weight: 550;
+    text-decoration-color: var(--hair-3);
+    text-underline-offset: 4px;
+  }
+
+  /* ── The twelve ──────────────────────────────────────────────────── */
+  .fomo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .fomo-card { display: grid; gap: 12px; padding: 18px; }
+  .fomo-card__head { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 12px; }
+  .fomo-card h3 { font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
+  .fomo-card__dates { margin: 3px 0 0; color: var(--faint); font-size: var(--text-xs); }
+  .fomo-card__data {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0;
+    padding: 12px 0;
+    border-block: 1px solid var(--hair-1);
+  }
+  .fomo-card__data div { display: grid; gap: 4px; }
+  .fomo-card__data dt { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); }
+  .fomo-card__data dd { margin: 0; font-family: var(--font-mono); font-size: 12.5px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .fomo-delta.is-up { color: var(--up); }
+  .fomo-delta.is-down { color: var(--down); }
+  .fomo-card__actions { display: grid; gap: 10px; }
+  .fomo-card__actions .fomo-cta { width: 100%; }
+  .fomo-card__actions .fomo-cta .fomo-cta__arrow { margin-left: auto; }
+  .fomo-card__record { justify-self: start; color: var(--muted); font-size: var(--text-xs); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+  .fomo-card__record:hover { color: var(--text); }
+  .fomo-grid__note {
+    max-width: 68ch;
+    margin: 22px 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .fomo-grid__note a { color: var(--text-2); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+  .fomo-grid__note a:hover { color: var(--text); }
+
+  /* ── Facts ───────────────────────────────────────────────────────── */
+  .fomo-facts__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .fomo-facts__grid .tile { display: grid; gap: 10px; align-content: start; padding: clamp(20px, 2.6vw, 28px); }
+
+  /* ── FAQ ─────────────────────────────────────────────────────────── */
+  .fomo-faq .section-head { margin-bottom: 8px; }
+  .fomo-faq details { border-top: 1px solid var(--hair-1); }
+  .fomo-faq details:last-child { border-bottom: 1px solid var(--hair-1); }
+  .fomo-faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 0;
+    cursor: pointer;
+    list-style: none;
+    font-size: var(--text-base);
+    font-weight: 550;
+  }
+  .fomo-faq summary::-webkit-details-marker { display: none; }
+  .fomo-faq summary > span:last-child { color: var(--faint); font-size: 20px; line-height: 1; transition: transform var(--dur-1) var(--ease); }
+  .fomo-faq details[open] summary > span:last-child { transform: rotate(45deg); }
+  .fomo-faq details p { margin: 0 0 20px; max-width: 62ch; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+  .fomo-faq details a { color: var(--text); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+
+  /* ── Close ───────────────────────────────────────────────────────── */
+  .fomo-close { padding-block: clamp(16px, 3vw, 32px) clamp(48px, 7vw, 88px); }
+  .fomo-close__core {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    padding: clamp(32px, 6vw, 64px) clamp(20px, 5vw, 56px);
+    text-align: center;
+    background:
+      radial-gradient(90% 70% at 50% 0%, color-mix(in oklab, var(--fomo-sign) 10%, transparent), transparent 62%),
+      linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
+  }
+  .fomo-close__core .kicker { margin: 0; }
+  .fomo-close__core h2 { margin: 0; font-size: var(--text-2xl); }
+  .fomo-close__core p:not(.kicker) { max-width: 44ch; margin: 0; color: var(--text-2); font-size: var(--text-base); text-wrap: pretty; }
+  .fomo-close__actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 14px; margin-top: 14px; }
+
+  /* ── Responsive ──────────────────────────────────────────────────── */
+  @media (max-width: 1040px) {
+    .fomo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 900px) {
+    .fomo-hero { grid-template-columns: 1fr; gap: clamp(36px, 8vw, 56px); }
+    .fomo-hero h1 { max-width: 14ch; }
+    .fomo-phone__frame { transform: none; }
+    .fomo-finder__core { grid-template-columns: 1fr; }
+    .fomo-alerts__inner, .fomo-verified__inner { grid-template-columns: 1fr; }
+    .fomo-verified__figure { order: -1; }
+    .fomo-steps__list { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .fomo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fomo-facts__grid { grid-template-columns: 1fr; }
+    .fomo-finder__form { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 460px) {
+    .fomo-grid { grid-template-columns: 1fr; }
+    .fomo-close__actions .btn { width: 100%; justify-content: space-between; }
+    .fomo-cta { width: 100%; }
+    .fomo-cta .fomo-cta__arrow { margin-left: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fomo, .fomo-phone__frame, .fomo-phone__poster, .fomo-cta, .fomo-cta__arrow, .fomo-badge { transition: none; }
+    .fomo-phone__frame { transform: none; }
+  }
+</style>

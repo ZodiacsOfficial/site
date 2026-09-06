@@ -52,6 +52,7 @@ export const BANNED_CONSUMER_VOCABULARY = Object.freeze([
   'coin',
   'crypto',
   'cryptocurrency',
+  'fomo',
   'investment',
   'investor',
   'market',
@@ -74,12 +75,13 @@ const LOCALIZED_PAGE_PREFIXES = LOCALES
   .filter((locale) => locale !== DEFAULT_LOCALE)
   .map((locale) => `${locale}/`);
 // Reachable does not mean recommendable. Keep the reviewed People pilot and
-// every Astrofolio/Registry/Terminal route out of the consumer astrology catalog.
+// every Astrofolio/Fomo/Registry/Terminal route out of the consumer astrology catalog.
 const UNLISTED_ROUTE_PREFIXES = Object.freeze([
   '/astrofolio/',
   '/bio/',
   '/disclosure/',
   '/feeds/market-research',
+  '/fomo/',
   '/people/',
   '/registry/',
   '/terminal/',
