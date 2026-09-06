@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "declaredOnUTC": "2026-09-05",
+  "authorization": "Root approved these values and rationale before any application comparison; raw Swiss provenance and tuples require root review before application execution.",
+  "purpose": "Engineering product acceptance gates, not provider accuracy guarantees or a complete mathematical error envelope.",
+  "trueNode": {
+    "definition": "Traditional osculating ascending lunar node of the instantaneous lunar orbit; never substitute mean or interpolated node.",
+    "longitudeCircularDifferenceDegreesMaximum": 0.1,
+    "longitudeSpeedAbsoluteDifferenceDegreesPerDayMaximum": 0.02,
+    "directionDeadbandDegreesPerDay": 0.02,
+    "directionPolicy": "Require matching direct/retrograde direction only when BOTH the reference and application absolute longitude speeds exceed 0.02 degrees/day.",
+    "rationale": "The application and Swiss reference use the same broad osculating-plane definition with different lunar-state and velocity models. Swiss documents small JPL-versus-Swiss node differences, larger Moshier differences and substantially different interpolated-node values; none is a published complete error bound for this application's r-cross-v node or finite-difference speed. These conservative engineering gates must not be represented as such a bound."
+  },
+  "polar": {
+    "ascendantCircularDifferenceDegreesMaximum": 0.1,
+    "midheavenCircularDifferenceDegreesMaximum": 0.1,
+    "wholeHouseCuspCircularDifferenceDegreesMaximum": 0.2,
+    "rationale": "Retain the existing independent Swiss house/angle acceptance gates in src/lib/engine/engine.test.ts. Product whole-house fallback policy and Swiss Placidus error/Porphyry fallback status are evaluated separately from numeric parity."
+  },
+  "failurePolicy": "Preserve unexpected failures for diagnosis. Do not regenerate external expectations with the application or widen limits after observing residuals.",
+  "sources": [
+    "https://www.astro.com/swisseph/swisseph.htm",
+    "https://www.astro.com/swisseph/swephprg.htm",
+    "wave16-return-exports/src/lib/engine/engine.test.ts"
+  ]
+}

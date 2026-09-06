@@ -7,6 +7,9 @@
 import { describe, expect, it } from 'vitest';
 import { groupIntoSeasons, saturnReturns } from './returns';
 import type { Crossing } from './returns';
+import independentCases from './fixtures/swiss-eight-cases.fixture.json';
+import independentPolicy from './fixtures/swiss-eight-cases-policy.json';
+import { angularDifference, expectIndependentTime } from './fixtures/independent-validation.test-helpers';
 
 const YEAR = 365.25 * 86400_000;
 
@@ -32,6 +35,28 @@ describe('groupIntoSeasons', () => {
 });
 
 describe('saturnReturns', () => {
+  it('matches all independent nominal-UT1 return passes and three seasons', () => {
+    // The complete birth/search chronology uses nominal UT1. Future ISO Z
+    // strings are numeric transport, not a civil-UTC prediction.
+    const actual = saturnReturns(new Date(independentPolicy.saturn.productDateTransport));
+    const reference = independentCases.saturn;
+    expect(angularDifference(actual.natalLon, reference.natalLongitudeDegrees))
+      .toBeLessThanOrEqual(independentPolicy.gates.planetLongitudeCircularDegreesMaximum);
+    expect(actual.natalRetrograde).toBe(reference.natalRetrograde);
+    expect(actual.seasons).toHaveLength(reference.seasons.length);
+    actual.seasons.forEach((season, index) => {
+      const expected = reference.seasons[index];
+      expect(season.index).toBe(expected.index);
+      expect(season.crossings).toHaveLength(expected.crossings.length);
+      season.crossings.forEach((crossing, pass) => {
+        expectIndependentTime(crossing.at, expected.crossings[pass]);
+        expect(crossing.retrograde).toBe(expected.crossings[pass].retrograde);
+      });
+      expect(season.first).toEqual(season.crossings[0].at);
+      expect(season.last).toEqual(season.crossings.at(-1)!.at);
+    });
+  });
+
   const births = [
     new Date('1990-02-01T12:00:00Z'),
     new Date('1961-08-04T00:00:00Z'),

@@ -6,7 +6,8 @@
  * the same frame the engine computes. Fetched 2026-07-05.
  */
 import { describe, expect, it } from 'vitest';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 import {
   Body, Observer, SearchHourAngle, SearchRiseSet, MakeTime, SiderealTime,
@@ -21,6 +22,11 @@ import { sunLongitude, moonLongitude, moonPhaseAngle } from './lite';
 import { resolveLocalToUtc } from '../time/localToUtc';
 import { formatLongitude, signForLongitude } from '../signs';
 import type { BodyPosition } from './types';
+import independentSwiss from './fixtures/swiss-node-polar.fixture.json';
+import swissPolicy from './fixtures/swiss-node-polar-policy.json';
+import independentCases from './fixtures/swiss-eight-cases.fixture.json';
+import independentPolicy from './fixtures/swiss-eight-cases-policy.json';
+import { expectIndependentPositions } from './fixtures/independent-validation.test-helpers';
 
 const lonOf = (bodies: BodyPosition[], name: string) =>
   bodies.find((b) => b.body === name)!.lon;
@@ -29,6 +35,87 @@ const angleDiff = (a: number, b: number) => {
   const d = Math.abs(norm(a - b));
   return d > 180 ? 360 - d : d;
 };
+
+// Raw provider returns and the predeclared engineering gates are preserved
+// byte-for-byte. The offline generation recipe and conventions live in
+// docs/engine-validation/swiss-node-polar/README.md; no Swiss runtime is needed.
+describe('independent Swiss true node and polar references', () => {
+  it('retains the reviewed oracle and pre-comparison policy bytes', () => {
+    const digest = (name: string) => createHash('sha256')
+      .update(readFileSync(new URL(`./fixtures/${name}`, import.meta.url)))
+      .digest('hex');
+    expect(digest('swiss-node-polar.fixture.json'))
+      .toBe('022fbc030185b84aa0954411aab266577cd75f50a1947dc4717e92d8a9db9260');
+    expect(digest('swiss-node-polar-policy.json'))
+      .toBe('7742cb2bc7cd0932a344ddcb708e45dad07b91cb653ea1f55538c2d73fa18e96');
+  });
+
+  it.each(independentSwiss.trueNode)('$id', (reference) => {
+    const node = computeBodies(new Date(reference.input.utc))
+      .find((body) => body.body === 'North Node')!;
+    const policy = swissPolicy.trueNode;
+    expect(Number.isFinite(node.lon)).toBe(true);
+    expect(Number.isFinite(node.speed)).toBe(true);
+    expect(angleDiff(node.lon, reference.longitudeDegrees))
+      .toBeLessThanOrEqual(policy.longitudeCircularDifferenceDegreesMaximum);
+    expect(Math.abs(node.speed - reference.longitudeSpeedDegreesPerDay))
+      .toBeLessThanOrEqual(policy.longitudeSpeedAbsoluteDifferenceDegreesPerDayMaximum);
+    expect(node.retrograde).toBe(node.speed < 0);
+    if (Math.abs(node.speed) > policy.directionDeadbandDegreesPerDay
+      && Math.abs(reference.longitudeSpeedDegreesPerDay) > policy.directionDeadbandDegreesPerDay) {
+      expect(node.retrograde).toBe(reference.longitudeSpeedDegreesPerDay < 0);
+    }
+  });
+
+  for (const houseSystem of ['whole', 'placidus'] as const) {
+    it.each(independentSwiss.polar)(`$id, requested ${houseSystem}`, (reference) => {
+      const chart = computeChart({
+        utc: new Date(reference.input.utc),
+        latitude: reference.latitudeDegrees,
+        longitude: reference.longitudeDegreesEastPositive,
+        houseSystem,
+        timeKnown: true,
+      });
+      const policy = swissPolicy.polar;
+      expect(chart.angles).not.toBeNull();
+      expect(chart.houses?.system).toBe('whole');
+      expect(chart.flags.includes('polar-fallback')).toBe(houseSystem === 'placidus');
+      expect(angleDiff(chart.angles!.asc, reference.whole.ascendantDegrees))
+        .toBeLessThanOrEqual(policy.ascendantCircularDifferenceDegreesMaximum);
+      expect(angleDiff(chart.angles!.mc, reference.whole.midheavenDegrees))
+        .toBeLessThanOrEqual(policy.midheavenCircularDifferenceDegreesMaximum);
+      expect(chart.houses!.cusps).toHaveLength(12);
+      chart.houses!.cusps.forEach((cusp, index) => {
+        expect(angleDiff(cusp, reference.whole.cuspsDegrees[index]))
+          .toBeLessThanOrEqual(policy.wholeHouseCuspCircularDifferenceDegreesMaximum);
+      });
+      // Swiss reports Placidus failure and returns Porphyry arrays. They are
+      // evidence of that status, never expected product whole-house cusps.
+      expect(reference.placidusRequest.cStatus).toBe(-1);
+      expect(reference.whole.cStatus).toBe(0);
+    });
+  }
+});
+
+describe('independent Swiss representative supported epochs', () => {
+  it('retains compact extraction and the pre-acquisition policy bytes', () => {
+    const digest = (name: string) => createHash('sha256')
+      .update(readFileSync(new URL(`./fixtures/${name}`, import.meta.url)))
+      .digest('hex');
+    expect(digest('swiss-eight-cases.fixture.json'))
+      .toBe('e51073b6c78ce721a4cd284d6626566c1c267c63075e6c81654302d6d5f9c7ed');
+    expect(digest('swiss-eight-cases-policy.json'))
+      .toBe('9dfc069be7c6854da1f0dff578c0b213e64624e720d21e27c6301b7612fd79a4');
+  });
+
+  it.each(independentCases.epochs)('$id', (reference) => {
+    const input = independentPolicy.fixedEpochs.find((row) => row.id === reference.id)!;
+    // E1800/E2199 Z strings transport nominal UT1, not historical/future UTC.
+    // Moon correction differences and differing Delta-T models are disclosed
+    // in the frozen policy; these points do not certify every supported date.
+    expectIndependentPositions(computeBodies(new Date(input.productDateTransport)), reference.positions);
+  });
+});
 
 /**
  * Independent angle/house vectors generated 2026-07-10 with Astrodienst's

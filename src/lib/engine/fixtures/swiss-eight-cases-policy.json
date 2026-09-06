@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "declaredOnUTC": "2026-09-05",
+  "authorization": "Root approved the exact eight-case remaining-acquisition-plan.md before new oracle acquisition and before any new application comparison.",
+  "purpose": "Engineering acceptance policy, not a provider accuracy guarantee or uniform error envelope over the supported epoch range.",
+  "immutablePriorEvidence": {
+    "sixReferenceSHA256": "022fbc030185b84aa0954411aab266577cd75f50a1947dc4717e92d8a9db9260",
+    "sixReferencePolicySHA256": "7742cb2bc7cd0932a344ddcb708e45dad07b91cb653ea1f55538c2d73fa18e96",
+    "solarCrossingGates": "The existing five independent solar-longitude crossings retain their original 60/120-second gates; this policy does not change them."
+  },
+  "fixedEpochs": [
+    { "id": "E1800", "civilLabel": "1800-01-02T12:00:00", "timeScale": "nominal UT1", "productDateTransport": "1800-01-02T12:00:00Z" },
+    { "id": "E2000", "civilLabel": "2000-02-29T12:00:00Z", "timeScale": "UTC", "productDateTransport": "2000-02-29T12:00:00Z", "expectedTTMinusNominalUTCSeconds": 64.184 },
+    { "id": "E2199", "civilLabel": "2199-12-31T12:00:00", "timeScale": "nominal UT1", "productDateTransport": "2199-12-31T12:00:00Z" }
+  ],
+  "stations": [
+    { "id": "Mstation", "body": "Mercury", "fromUTC": "2026-03-01T00:00:00Z", "toUTC": "2026-04-01T00:00:00Z", "kind": "minimum", "targetOffsetFromExtremumDegrees": 0.1 },
+    { "id": "Sstation", "body": "Saturn", "fromUTC": "2026-06-01T00:00:00Z", "toUTC": "2026-09-01T00:00:00Z", "kind": "maximum", "targetOffsetFromExtremumDegrees": -0.1 }
+  ],
+  "progression": {
+    "id": "P2020", "birthUTC": "2019-12-31T00:00:00Z", "targetUTC": "2020-12-30T05:48:46.080Z", "expectedProgressedUTC": "2020-01-01T00:00:00Z",
+    "daysPerYear": 365.2422, "maximumInstantErrorMilliseconds": 1,
+    "positionSource": "Existing literal HORIZONS_2020 ten-body tuple, src/lib/engine/engine.test.ts; do not regenerate it.",
+    "scope": "Constructed nonzero convention-and-ephemeris component case, not a published progression report."
+  },
+  "solar": {
+    "id": "Solar1990", "birthUTC": "1990-02-01T12:00:00Z", "nearUTC": "2025-02-01T12:00:00Z", "currentSelectionAtUTC": "2025-02-15T12:00:00Z",
+    "nearestSearchDaysEachSide": 200, "mostRecentSearchDaysBefore": 370,
+    "latitudeDegrees": 19.4326, "longitudeDegreesEastPositive": -99.1332, "houseSystem": "Placidus",
+    "expectedBirthTTMinusNominalUTCSeconds": 57.184, "expectedSearchTTMinusNominalUTCSeconds": 69.184,
+    "returnedChartPolicy": "Root separately authorizes Swiss evaluation at the product-return timestamp for same-instant returned-chart parity. Preserve the original independent natal/root/chart references and enforce the pre-acquired return-time band independently; never use application longitudes as external expectations."
+  },
+  "saturn": {
+    "id": "Saturn1990", "birthCivilLabel": "1990-02-01T12:00:00", "timeScale": "nominal UT1", "productDateTransport": "1990-02-01T12:00:00Z",
+    "searchFromUniformDaysAfterBirth": 9496.5, "searchToUniformDaysAfterBirth": 33603,
+    "searchInterval": "(birth + 26*365.25 days, birth + 92*365.25 days]",
+    "natalDirectionSampleDaysEachSide": 1, "seasonMaximumAdjacentGapDays": 400,
+    "scope": "Complete existing Saturn return result within its declared scan interval using one consistent nominal-UT1 model, including future dates; not a future civil-UTC prediction."
+  },
+  "timeAndFrame": {
+    "calendar": "Proleptic Gregorian",
+    "utc": "swe.utc_to_jd -> TT for positions and Swiss-model UT1 for houses; verify intended leap-second branch using explicit offsets.",
+    "nominalUT1": "swe.julday -> jdUT1; jdTT = jdUT1 + swe.deltat_ex(jdUT1, SWIEPH). ISO Z strings are product numeric transports only, not claims of historical or future civil UTC.",
+    "provider": "Unmodified Swiss 2.10.03 / pyswisseph 2.10.3.2 with already hashed official DE441 sepl_18.se1 and semo_18.se1, explicit path, flags SWIEPH|SPEED = 258.",
+    "providerCoordinates": "Apparent geocentric tropical ecliptic of date with nutation under default flags; no J2000, NONUT, sidereal, topocentric or TRUEPOS flags.",
+    "knownMoonDifference": "The product EclipticGeoMoon path computes Moon state at MakeTime(date) and transforms with precession/nutation into true ecliptic/equinox of date, without an explicit light-time/aberration pass. Swiss retains apparent flags 258. This known convention difference is disclosed under the unchanged Moon 0.15-degree gate; identical apparent corrections are not claimed for every body.",
+    "optionalFiles": "Record presence and hashes of seleapsec.txt and swe_deltat.txt. Do not silently add or update either file.",
+    "runtimePolicy": "Verify source/file hashes and actual SWIEPH flags on every external evaluation; preserve first-call warnings and loaded-file metadata."
+  },
+  "gates": {
+    "planetLongitudeCircularDegreesMaximum": 0.05,
+    "moonLongitudeCircularDegreesMaximum": 0.15,
+    "nodeLongitudeCircularDegreesMaximum": 0.1,
+    "nodeSpeedAbsoluteDegreesPerDayMaximum": 0.02,
+    "directionDeadbandDegreesPerDay": 0.02,
+    "directionDeadbandPolicy": "Where the deadband applies, require direction agreement only when BOTH absolute speeds exceed the deadband.",
+    "ascendantCircularDegreesMaximum": 0.1,
+    "midheavenCircularDegreesMaximum": 0.1,
+    "houseCuspCircularDegreesMaximum": 0.2,
+    "fixedTargetLongitudeBandDegrees": 0.05,
+    "birthDerivedReturnLongitudeBandDegrees": 0.1,
+    "rootBracketSecondsMaximum": 0.1,
+    "eventTimeBandFormattingPaddingSeconds": 1,
+    "planetarySpeedPolicy": "Report analytic and matching +/-6-hour finite-difference speed residuals; no newly invented tight planetary speed gate. Contact timing/count/order is the station acceptance check.",
+    "eventTimeBandRationale": "Fixed-target bands propagate the existing +/-0.05-degree longitude budget. Birth-derived return bands use +/-0.10 degrees for natal plus transit budgets. Bands are independently acquired from Swiss before product comparisons, not fitted to observed product timing errors. They are engineering acceptance intervals, not published event-time accuracy guarantees."
+  },
+  "conditioning": {
+    "stationCount": "Require exactly one independent extremum of the declared kind in each fixed station window.",
+    "stationTarget": "Use minimum+0.10 degrees or maximum-0.10 degrees; do not use an exact tangent target for cross-model pass-count assertions.",
+    "timeBands": "Require complete, disjoint, connected monotonic bands around every root, with neither an extremum nor search endpoint inside a band. Retain exact roots, band boundary brackets and directions before application execution.",
+    "resultStructure": "Match complete event counts, chronological order, crossing direction, applicable pass numbering and 400-day Saturn season grouping.",
+    "failurePolicy": "Stop and report acquisition/conditioning failures without selecting alternate windows, tuning ephemerides, regenerating prior oracles or widening gates. Preserve all residuals and failures."
+  }
+}

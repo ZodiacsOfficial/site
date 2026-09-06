@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { bodyLongitude } from './full';
+import { bodyLongitude, computeChart } from './full';
+import independentCases from './fixtures/swiss-eight-cases.fixture.json';
+import independentPolicy from './fixtures/swiss-eight-cases-policy.json';
+import { angularDifference, expectIndependentChart, expectIndependentTime } from './fixtures/independent-validation.test-helpers';
 import {
   mostRecentSolarReturnInstant, solarReturnChart, solarReturnInstant,
 } from './solar-return';
@@ -28,6 +31,42 @@ describe('solarReturnInstant against independent longitude-crossing fixtures', (
     // expected value or changing the predeclared provider-parity tolerances.
     if (process.env.SOLAR_RETURN_FIXTURE_REPORT === '1') console.info(diagnostic);
     expect(Math.abs(residualSeconds), diagnostic).toBeLessThanOrEqual(fixture.toleranceSeconds);
+  });
+});
+
+describe('independent natal-to-solar return and chart', () => {
+  const input = independentPolicy.solar;
+  const reference = independentCases.solar;
+  const location = { latitude: input.latitudeDegrees, longitude: input.longitudeDegreesEastPositive };
+
+  it('matches the full independent return time, returned chart and unlocated mode', () => {
+    const natalSun = bodyLongitude('Sun', new Date(input.birthUTC));
+    expect(angularDifference(natalSun, reference.natalLongitudeDegrees))
+      .toBeLessThanOrEqual(independentPolicy.gates.planetLongitudeCircularDegreesMaximum);
+    const nearest = solarReturnChart(natalSun, new Date(input.nearUTC), location, 'placidus');
+    const recent = solarReturnChart(natalSun, new Date(input.currentSelectionAtUTC), location, 'placidus', 'most-recent');
+    expectIndependentTime(nearest.input.utc, reference.nearest);
+    expectIndependentTime(recent.input.utc, reference.mostRecent);
+    // This input exercises both paths but selects the same event; it does not
+    // independently distinguish nearest from most-recent selection behavior.
+    for (const chart of [nearest, recent]) {
+      // Exact clock equality is fixture applicability, not ephemeris accuracy.
+      // If solver output changes within the unchanged independent timing band,
+      // acquire a NEW same-time Swiss chart and retain all original evidence.
+      expect(chart.input.utc.toISOString(), 'Same-time Swiss fixture no longer applies; independent acquisition at the new product timestamp is required')
+        .toBe(reference.returnedChartUTC);
+      expectIndependentChart(chart, reference.returnedChart);
+    }
+    const unlocated = solarReturnChart(natalSun, new Date(input.nearUTC), null, 'placidus');
+    expect(unlocated.input.utc).toEqual(nearest.input.utc);
+    expect(unlocated.bodies).toEqual(nearest.bodies);
+    expect(unlocated.angles).toBeNull();
+    expect(unlocated.houses).toBeNull();
+  });
+
+  it('matches the separately preserved independent fixed-instant chart', () => {
+    const chart = computeChart({ utc: new Date(reference.independentChartUTC), ...location, houseSystem: 'placidus', timeKnown: true });
+    expectIndependentChart(chart, reference.independentChart);
   });
 });
 
