@@ -140,3 +140,75 @@ profile access checks, bounded lock failure, progress migration semantics and
 unknown-time interpretation exclusions were retained. No blocking issue was
 found in that bounded source review. It is not a raw-oracle attestation or a
 substitute for the remaining numerical, browser and visual gates.
+
+## First complete candidate: preserved failures and bounded corrections
+
+Draft PR 394 publishes remote head `c351bb64efcab790c7eb714690206ec6c6c28dab`,
+exactly matching local frozen head `7b6b40d5` at tree
+`113de1537bb4fe713cc4e5c5fa757ec185a30185`. Complete Node 22 build/postbuild
+passes (203.3 seconds), with source fingerprint
+`11d720654113e801c502e1246eb37093a28c88c7fcc8ed1fb35b1445ae06181f`.
+Check passes 996 files, zero errors/warnings and eleven existing hints. The
+full serial suite passes 4,173 tests and fails one of 4,174 across 396 files
+(447.32 seconds): the committed Phase 1 receipt still describes the old source.
+The monthly regeneration passes under its unchanged 120-second limit.
+Site Check `34042475957` independently records the same sole receipt failure;
+all thirteen supporting jobs pass. Neither suite is described as fully green.
+
+Browser Evidence `34042475962` preserves artifact `9992371542`, 92,175,926 bytes,
+ZIP SHA-256 `fdaf74e91c3bdce0f6057d148f48e8f121282dad135ddf647e12e09501ea6f0f`.
+ZIP integrity and all 362 provenance-listed file sizes/hashes were verified
+against exact head `c351bb64`, source `11d72065` and pinned Chromium. Build,
+fresh Phase 1 capture and capture-receipt validation pass. Visual comparison,
+Lighthouse and Explorer fail, as follows; the original artifact remains intact.
+
+| Visual case | Expected size | Captured size |
+| --- | --- | --- |
+| Birth chart, desktop and reduced motion | 1440 × 8887 | 1440 × 9502 |
+| Birth chart, mobile | 390 × 13414 | 390 × 14010 |
+| Full-moon article, desktop and reduced motion | 1440 × 4726 | 1440 × 4785 |
+| Full-moon article, mobile | 390 × 6814 | 390 × 6887 |
+
+The other nine visual cases pass. Dimension changes produce six actual-image
+artifacts, without pixel-diff images. Root independently reviewed all six
+against committed baselines, including original-resolution details and reduced
+motion: the new optional chart disclosures and event handoff explain the
+additional height, with readable controls and no observed overlap. Root then
+requested baseline candidates for that exact unchanged `c351bb64` head through
+the existing reviewed-head marker. No baseline is silently accepted or generated
+from a different source. Candidate-image review/import remains separate.
+
+The complete Lighthouse sweep fails lunar return at 2.64-second LCP and Russian
+Home at 2.56 seconds, over their unchanged 2.50-second limit. Both show performance
+96, accessibility/SEO 100, CLS zero and TBT zero; those scores do not waive LCP.
+The lunar route now opts into Base's existing `inlineCriticalCss` path after
+the saved report identifies blocking stylesheets. Russian Home's empty returning
+chart island uses the existing interaction directive, including its automatic
+600ms post-load fallback. The owner-card still appears without requiring input,
+while profile modules leave the first poster paint clear. No hero, font, asset,
+directive implementation, numerical algorithm or performance budget changes.
+Fresh unchanged-limit Lighthouse verification remains required for both routes.
+
+Explorer reaches the existing learning regression at 390px, then times out at
+`tests/search-learning-checks.mjs:195`. Control/Meta-click opens the houses lesson
+in a new tab, but the reconstructed LearningPath handler exits before submitting
+the start transaction. This is a product regression; its browser assertion is
+retained. Modified primary clicks now submit the same owned start while leaving
+default browser navigation untouched. Ordinary clicks alone prevent default and
+navigate after acceptance. Seven component-handler tests cover Control, Meta,
+Shift, Alt, pending ordinary navigation and rejected transactions. The four-file
+owning suite passes 36 tests; it does not claim real-browser completion.
+
+Explorer stopped before the advanced feature helpers. Their pending status must
+not be replaced with passing claims from the earlier successful checks. These
+three bounded corrections will be built and checked together, with the reviewed
+candidate pixels included only after their separate review. Final capture,
+feature browsers, native image review and all required workflows remain gates.
+
+## Reviewed reference images and postbuild scope
+
+Head-bound candidate run 34043890167 on c351bb64 succeeded. Its ZIP digest is d794316b2d7e15d71f60620396743e88fd5c5d934713e51e7ca2b1700716edf2; all 35 artifact hashes verify the original source fingerprint. The six approved chart/full-moon candidates are byte-identical to the independently reviewed actual comparison images. Only those six reference images are imported. The older capture receipt is not imported as evidence of the corrected source.
+
+The first corrected build reached postbuild and rejected the lunar-return inline marker because that new route was absent from the explicit delivery allowlist. Added only lunar-return/index.html to the existing CSS delivery pass, retaining its strict exact counts at 18 pages and 34 stylesheets. No CSS contents, font treatment or performance threshold change. Resuming the postbuild over the completed corrected build; final clean CI remains required.
+
+Corrected local postbuild completed successfully: all distribution, schema, bundle-budget and engine-isolation gates pass. The lunar HTML contains two inline stylesheet blocks and no blocking stylesheet links. Corrected source fingerprint: `5b8ad6cc481429cea121454dae7b6a18d7917f5c349411e66076f3ffbb683943`. The five focused files pass all 45 tests, and exact scope passes with 213 changed paths and 12 protected paths. Fresh corrected-source browser evidence and required CI remain pending.

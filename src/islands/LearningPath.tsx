@@ -194,12 +194,13 @@ export default function LearningPath() {
                     class={`btn ${active ? 'btn--primary' : 'btn--ghost'} learning-step__action`}
                     href={step.href}
                     onClick={(event) => {
-                      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                      event.preventDefault();
+                      if (event.button !== 0) return;
+                      const nativeNavigation = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+                      if (!nativeNavigation) event.preventDefault();
                       void act({ type: 'start', id: step.id }).then((accepted) => {
                         if (!accepted) return;
                         track(step.id);
-                        window.location.assign(step.href);
+                        if (!nativeNavigation) window.location.assign(step.href);
                       });
                     }}
                   >
