@@ -85,8 +85,9 @@ export interface SceneBody {
   /** True ecliptic longitude — MUST equal the engine's value exactly. */
   lon: number;
   /**
-   * Collision-nudged draw longitude (bodies <7° apart fan outward).
-   * Markers draw here; degree ticks always draw at the true `lon`.
+   * Interactive marker longitude, fanned to leave 14° between bodies.
+   * Markers and selection use this; ticks/aspects keep the true `lon`.
+   * The static/share wheel retains its separate pinned collision layout.
    */
   drawLon: number;
   sign: SignSlug;

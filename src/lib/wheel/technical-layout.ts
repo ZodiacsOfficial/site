@@ -1,5 +1,5 @@
 /**
- * Audit-friendly collision fan for the lazily loaded technical export.
+ * Collision fan shared by the technical export and interactive scene.
  * Circular isotonic regression preserves zodiac order while guaranteeing
  * enough angular separation for the sheet's planet bubbles.
  */
@@ -19,7 +19,8 @@ export function technicalCollisionFan(
   let largestGap = -1;
   normalized.forEach((body, index) => {
     const next = normalized[(index + 1) % normalized.length];
-    const gap = ((next.normalizedLon - body.normalizedLon) % 360 + 360) % 360;
+    // The closing gap is 360°, not 0°, when every longitude coincides.
+    const gap = next.normalizedLon - body.normalizedLon + (index === normalized.length - 1 ? 360 : 0);
     if (gap > largestGap) {
       largestGap = gap;
       largestGapIndex = index;
