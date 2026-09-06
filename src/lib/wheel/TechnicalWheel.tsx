@@ -23,6 +23,8 @@ export interface TechnicalWheelProps {
   cusps?: number[] | null;
   aspects?: { a: string; b: string; type: string }[];
   size?: number;
+  /** Pre-embedded artwork for exporters that must never start native requests. */
+  signImageHrefs?: Readonly<Record<string, string>>;
 }
 
 const ASPECT_COLOR: Record<string, string> = {
@@ -44,6 +46,7 @@ export default function TechnicalWheel({
   cusps = null,
   aspects = [],
   size = 420,
+  signImageHrefs,
 }: TechnicalWheelProps) {
   const cx = size / 2;
   const cy = size / 2;
@@ -124,7 +127,7 @@ export default function TechnicalWheel({
               stroke-width="2" stroke-linecap="round"
             />
             <image
-              href={`/assets/zodiac-icons/128/${sign.slug}.webp`}
+              href={signImageHrefs?.[sign.slug] ?? `/assets/zodiac-icons/128/${sign.slug}.webp`}
               x={(center.x - disc / 2).toFixed(2)}
               y={(center.y - disc / 2).toFixed(2)}
               width={disc.toFixed(2)} height={disc.toFixed(2)}

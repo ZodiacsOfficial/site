@@ -18,6 +18,7 @@ import { h } from 'preact';
 import { render } from 'preact-render-to-string';
 import Wheel from './Wheel';
 import TechnicalWheel from './TechnicalWheel';
+import { SIGNS } from '../signs';
 import frida from '../../data/demo-chart-frida.json';
 
 type FixtureBody = { body: string; lon: number; retrograde: boolean };
@@ -72,6 +73,15 @@ describe('Wheel share-card serialization', () => {
     expect(markup).toContain('data-angle-label="IC"');
     expect(markup).toContain('>IC</text>');
     expect(markup).toContain('data-body-leader="South Node"');
+    expect(markup.match(/href="\/assets\/zodiac-icons\/128\//g)).toHaveLength(12);
+  });
+
+  it('serializes embedded technical artwork without any external image request', () => {
+    const signImageHrefs = Object.fromEntries(SIGNS.map((sign) => [sign.slug, 'data:image/webp;base64,dGVzdA==']));
+    const markup = render(h(TechnicalWheel, { ...shareCardProps(), signImageHrefs }));
+    expect(markup.match(/href="data:image\/webp;base64,dGVzdA=="/g)).toHaveLength(12);
+    expect(markup).not.toContain('/assets/zodiac-icons/');
+    expect(markup.match(/data-degree-tick=/g)).toHaveLength(360);
   });
 });
 

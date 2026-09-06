@@ -6,6 +6,7 @@ import { BRAND_ICON_PATHS } from './brand-icons.mjs';
 import { drawShareBrandLockup, PORTRAIT_SHARE_CARD_BRAND_LAYOUT, type LoadedShareBrandIcon } from './share-card-brand';
 import { downloadPreparedChartCard, type PreparedChartCard, type CardOutcome } from './share-card';
 import { lunarReturnTimestamp } from './lunar-return-ical';
+import { SIGNS } from './signs';
 
 export const LUNAR_RETURN_CARD_SIZE = Object.freeze({ width: 1080, height: 1350 });
 export const downloadLunarReturnCard = downloadPreparedChartCard;
@@ -97,17 +98,26 @@ async function brandIcon(signal: AbortSignal): Promise<LoadedShareBrandIcon> {
 }
 
 async function wheelImage(model: LunarReturnExportModel, signal: AbortSignal): Promise<HTMLImageElement> {
-  // Template content belongs to an inert document. Rendering into an ordinary
-  // detached div starts redundant SVG image requests that are cancelled when
-  // their hrefs are replaced by the embedded artwork below.
+  // Embed before render: Preact creates elements in the active document before
+  // adopting them into template content, so even an inert host is insufficient
+  // to prevent native requests when external hrefs are assigned initially.
   const host = document.createElement('template').content;
   const release = () => render(null, host);
   signal.addEventListener('abort', release, { once: true });
   try {
+    const signImageHrefs = Object.fromEntries(await Promise.all(SIGNS.map(async (sign) => {
+      const blob = await fetchBlob(`/assets/zodiac-icons/128/${sign.slug}.webp`, signal);
+      const bytes = new Uint8Array(await blob.arrayBuffer());
+      signal.throwIfAborted();
+      let binary = '';
+      for (const value of bytes) binary += String.fromCharCode(value);
+      return [sign.slug, `data:${blob.type || 'image/webp'};base64,${btoa(binary)}`];
+    })));
+    signal.throwIfAborted();
     const chart = model.wheel;
     render(h(TechnicalWheel, {
       bodies: chart.bodies, ...chart.angles, cusps: chart.houses?.cusps,
-      aspects: chart.aspects, size: 780,
+      aspects: chart.aspects, size: 780, signImageHrefs,
     }), host);
     const svg = host.querySelector('svg');
     if (!svg) throw new Error('lunar_wheel_unavailable');
@@ -118,18 +128,6 @@ async function wheelImage(model: LunarReturnExportModel, signal: AbortSignal): P
     svg.querySelectorAll('text').forEach((text) => {
       text.setAttribute('font-family', 'ui-monospace, Menlo, Consolas, monospace');
     });
-    // A detached SVG cannot load external artwork: embed the canonical discs
-    // in this one snapshot, with no global image hook or rejected asset cache.
-    await Promise.all([...svg.querySelectorAll('image')].map(async (image) => {
-      const href = image.getAttribute('href');
-      if (!href) throw new Error('lunar_artwork_unavailable');
-      const blob = await fetchBlob(href, signal);
-      const bytes = new Uint8Array(await blob.arrayBuffer());
-      signal.throwIfAborted();
-      let binary = '';
-      for (const value of bytes) binary += String.fromCharCode(value);
-      image.setAttribute('href', `data:${blob.type || 'image/webp'};base64,${btoa(binary)}`);
-    }));
     signal.throwIfAborted();
     return await decodeImage(new Blob([svg.outerHTML], { type: 'image/svg+xml' }), signal);
   } finally {

@@ -100,7 +100,9 @@ describe('dedicated lunar image content', () => {
     const node = hooks.render.mock.calls[0][0] as VNode;
     expect(node.props).toMatchObject({ bodies: card.wheel.bodies, ...card.wheel.angles, cusps: card.wheel.houses!.cusps, aspects: card.wheel.aspects });
     expect(node.props).not.toHaveProperty('input');
-    expect(fixture.discs.every((disc) => disc.getAttribute().startsWith('data:image/webp;base64,'))).toBe(true);
+    const hrefs = (node.props as { signImageHrefs: Record<string, string> }).signImageHrefs;
+    expect(Object.keys(hrefs)).toHaveLength(12);
+    expect(Object.values(hrefs).every((href) => href.startsWith('data:image/webp;base64,'))).toBe(true);
     expect(fixture.fetch).toHaveBeenCalledTimes(13);
     expect(fixture.context.drawImage).toHaveBeenCalledTimes(2);
     expect(hooks.render).toHaveBeenLastCalledWith(null, fixture.host);

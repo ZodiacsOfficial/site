@@ -69,9 +69,12 @@ living_container_id="$(docker run \
 )"
 
 living_ready="false"
+# The initialization server accepts local sockets, then stops. Only the final
+# server listens on TCP; wait for it before handing migrations to psql.
 for living_attempt in {1..60}; do
-  if docker exec "${living_container_id}" \
+  if docker exec --env PGPASSWORD="living-chart-local-test-only" "${living_container_id}" \
     psql \
+      --host 127.0.0.1 \
       --no-psqlrc \
       --quiet \
       --tuples-only \

@@ -216,6 +216,7 @@ export async function runLunarReturnChecks({ browser, baseURL, check, outDir }) 
       }
       await page.locator('#lr-source').selectOption('fold'); await page.locator('button[type=submit]').click();
       await page.getByRole('alert').filter({ hasText: 'skipped or repeated' }).waitFor();
+      await page.waitForFunction(() => document.activeElement?.getAttribute('role') === 'alert');
       check(`Lunar ${width}: ambiguous IANA time focuses its explanation with no result`, await page.evaluate(() => document.activeElement?.getAttribute('role') === 'alert') && await result.count() === 0);
       await page.locator('#lr-source').selectOption('timed'); await cast(page);
       await page.evaluate(() => { window.__lrEncodeFailures = 1; }); await page.locator('[data-lr-create-image]').click();

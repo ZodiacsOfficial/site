@@ -403,7 +403,8 @@
 @media (prefers-reduced-motion: reduce) { .wheel--animate { animation: none; } }
 
 /* Placements table */
-.calc__table-wrap { overflow-x: auto; }
+/* Keep absolutely positioned accessible labels inside the table's scroller. */
+.calc__table-wrap { position: relative; overflow-x: auto; }
 .calc__table {
   width: 100%;
   border-collapse: collapse;

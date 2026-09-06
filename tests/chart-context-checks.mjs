@@ -74,6 +74,8 @@ export async function runChartContextChecks({browser,baseURL,check,outDir}){
         await summary.click();
       }
       if(locale==='en'){
+        // A new fragment on the same document does not initialize a new chart.
+        await page.goto('about:blank');
         await page.goto(`${baseURL}/birth-chart/${fragment(false)}`,{waitUntil:'networkidle'});await page.locator('.wheel--interactive').waitFor({timeout:30_000});
         const unknown=page.locator('[data-chart-context]');await unknown.waitFor({timeout:15_000});check(`context unknown/${width}: no invented house or angle controls`,await unknown.locator('[data-context-entity^="house:"],[data-context-entity^="angle:"]').count()===0);
         const shape=unknown.locator('[data-context-section="shape"]');await shape.locator(':scope > summary').click();
