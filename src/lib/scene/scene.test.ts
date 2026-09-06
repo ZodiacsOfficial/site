@@ -1,7 +1,7 @@
 /**
  * Scene-model gates:
  *  1. Numerical parity — every SceneBody.lon equals the engine longitude
- *     exactly; drawLon reproduces the Wheel's historical collision fan.
+ *     exactly; drawLon gives interactive markers enough visual space.
  *  2. A committed snapshot of the full Kahlo SceneModel — the fixture the
  *     interactive wheel, inspector, and (later) spatial chapter all render
  *     from. A diff here means the presentation model changed for every
@@ -11,7 +11,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { computeChart } from '../engine/full';
-import { buildSceneModel, collisionNudge } from './build';
+import { buildSceneModel } from './build';
 import { technicalCollisionFan } from '../wheel/technical-layout';
 import { emphasisFor, emphasisOpacity } from './emphasis';
 import { entityId, parseEntityId, type EntityRef } from './types';
@@ -59,20 +59,14 @@ describe('buildSceneModel parity', () => {
     expect(full.bodies.some((b) => b.body === 'South Node')).toBe(true);
   });
 
-  it('drawLon matches the historical collision fan and keeps ticks true', () => {
+  it('separates the crowded Venus/Pluto markers while keeping ticks true', () => {
     const chart = kahlo();
     const scene = buildSceneModel(chart);
-    const expected = collisionNudge(
-      chart.bodies.filter((b) => b.body !== 'South Node'),
-    );
-    for (const sb of scene.bodies) {
-      expect(sb.drawLon).toBe(expected.get(sb.body));
-    }
     // Venus (84.34°) and Pluto (83.75°) sit 0.6° apart — the fan must
     // separate their markers without moving their true longitudes.
     const venus = scene.bodies.find((b) => b.body === 'Venus')!;
     const pluto = scene.bodies.find((b) => b.body === 'Pluto')!;
-    expect(Math.abs(venus.drawLon - pluto.drawLon)).toBeGreaterThanOrEqual(6.9);
+    expect(Math.abs(venus.drawLon - pluto.drawLon)).toBeGreaterThanOrEqual(13.999999);
     expect(Math.abs(venus.lon - pluto.lon)).toBeLessThan(1);
   });
 
@@ -99,6 +93,11 @@ describe('buildSceneModel parity', () => {
 });
 
 describe('technicalCollisionFan', () => {
+  it('retains the technical export default of 11°', () => {
+    const fan = technicalCollisionFan([{ body: 'Venus', lon: 84 }, { body: 'Pluto', lon: 83 }]);
+    expect(Math.abs(fan.get('Venus')! - fan.get('Pluto')!)).toBe(11);
+  });
+
   it('keeps crowded markers separated across 0° Aries without changing their order', () => {
     const bodies = [
       { body: 'A', lon: 356 },
