@@ -924,7 +924,8 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
       var btn = document.querySelector('[data-search-open]');
       if (!btn) return;
       function open(from) {
-        import('/assets/search-ui.js').then(function (mod) {
+        // A new URL releases browsers that cached the old stable bundle as immutable.
+        import('/assets/search-ui.js?v=search-ranking-2').then(function (mod) {
           mod.openSearch(from || btn);
         });
       }

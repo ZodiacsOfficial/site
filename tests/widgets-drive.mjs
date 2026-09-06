@@ -33,7 +33,11 @@ export async function verifyWidgetBuilder({ browser, baseURL, check, outDir = nu
   const capture = async (width, state) => {
     if (!outDir) return;
     const builder = page.locator('[data-widget-generator]');
-    const element = await builder.locator('[data-widget-preview]').elementHandle();
+    const frame = builder.locator('[data-widget-preview]');
+    // The real preview is lazy-loaded. Approach it naturally before waiting
+    // for its selected destination; an offscreen frame can defer navigation.
+    await frame.scrollIntoViewIfNeeded();
+    const element = await frame.elementHandle();
     const preview = await element.contentFrame();
     if (!preview) throw new Error('Widget preview frame is unavailable for capture');
     const expected = new URL(await element.getAttribute('src'), baseURL);
