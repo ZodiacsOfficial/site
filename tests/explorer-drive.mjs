@@ -27,6 +27,7 @@ import { runPersonalChartHandoff } from './personal-chart-handoff.mjs';
 import { runRecoveryBrowserChecks } from './recovery-browser-checks.mjs';
 import { driveLocaleDiscovery } from './locale-discovery-drive.mjs';
 import { runExplorerKeyboardChecks } from './explorer-keyboard-checks.mjs';
+import { runExplorerCrowdedWheelChecks } from './explorer-crowded-wheel-checks.mjs';
 import { runExplorerMoonChecks } from './explorer-moon-checks.mjs';
 import { runSearchLearningChecks } from './search-learning-checks.mjs';
 import { verifyWidgetBuilder } from './widgets-drive.mjs';
@@ -282,6 +283,10 @@ try {
   }
 
   if (OUT) await writeFile(`${OUT}/people-heading-geometry.json`, `${JSON.stringify(profileGeometry, null, 2)}\n`);
+
+  await runExplorerCrowdedWheelChecks({
+    browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT,
+  });
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];

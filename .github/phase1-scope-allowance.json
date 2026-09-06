@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "personal-chart-home-hydration",
-  "baseCommit": "8ccf127ce4f8061db8a9569c1444a054723634e0",
+  "baseCommit": "2738713a6787d84d05bd3b8e2f401adbc42d7ea7",
   "protectedPaths": [
     "src/pages/es/index.astro",
     "src/pages/fr/index.astro",

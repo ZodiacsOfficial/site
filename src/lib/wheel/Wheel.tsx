@@ -23,6 +23,7 @@ import type { ChartSceneModel, EntityRef, SceneEmphasis, SignSlug } from '../sce
 import { entityId } from '../scene/types';
 import { collisionNudge } from '../scene/layout';
 import { emphasisOpacity } from '../scene/emphasis';
+import { bodyLeaderPath } from './body-leader';
 
 /**
  * Geometry handed to an overlay slot so a second ring (transits, synastry)
@@ -248,12 +249,29 @@ export default function Wheel({
     ].join(' ');
   };
 
-  // Collision layout is shared with the scene model so every renderer fans
-  // crowded bodies identically; in interactive mode the scene already
-  // carries the result.
+  // Interactive drawing and hit-testing use the scene's spaced markers.
+  // The static/share path retains its pinned historical layout.
   const drawLon = ix
     ? new Map(ix.scene.bodies.map((b) => [b.body, b.drawLon]))
     : collisionNudge(bodies);
+
+  // Overlay chord hit strokes are painted above natal markers. A tap inside
+  // a visible natal circle belongs to that body, even where a chord ends.
+  // Outside those circles the overlay keeps its own native hit targets.
+  const captureMarkerClick = ix && renderOverlay ? (ev: MouseEvent) => {
+    const svg = ev.currentTarget as SVGSVGElement;
+    const matrix = svg.getScreenCTM();
+    if (!matrix) return;
+    const point = new DOMPoint(ev.clientX, ev.clientY).matrixTransform(matrix.inverse());
+    for (const body of ix.scene.bodies) {
+      const marker = pt(body.drawLon, rBodies);
+      if (Math.hypot(point.x - marker.x, point.y - marker.y) <= size * 0.033) {
+        ev.stopPropagation();
+        toggleSelect({ kind: 'body', body: body.body });
+        return;
+      }
+    }
+  } : undefined;
 
   // Padding keeps the ASC/MC labels inside the viewBox; with an overlay
   // ring it grows to seat the outer ring. Non-overlay padding is unchanged,
@@ -283,6 +301,7 @@ export default function Wheel({
         ix ? 'wheel--interactive' : '',
       ].filter(Boolean).join(' ')}
       onClick={resolveClick}
+      onClickCapture={captureMarkerClick}
     >
       {/* Ring backgrounds */}
       <circle cx={cx} cy={cy} r={rSigns} fill="none" stroke="rgba(198,204,218,0.16)" stroke-width="1" />
@@ -515,6 +534,9 @@ export default function Wheel({
         const bodyRef: EntityRef = { kind: 'body', body: b.body as any };
         const id = `body:${b.body}`;
         const selected = ix?.selection && entityId(ix.selection) === id;
+        const leader = ix ? bodyLeaderPath(b.lon, lonDraw, rSignsIn - size * 0.014, rBodies + size * 0.033, pt) : null;
+        const insetRx = ix && b.retrograde;
+        const glyphSize = size * (insetRx ? 0.042 : 0.05);
         return (
           <g
             key={b.body}
@@ -523,6 +545,7 @@ export default function Wheel({
             {...(ix ? { opacity: opacityOf(id), ...mark(bodyRef) } : {})}
           >
             <line x1={tick1.x} y1={tick1.y} x2={tick2.x} y2={tick2.y} stroke={sign.hue} stroke-width="1.4" />
+            {leader && <path data-body-leader={b.body} d={leader} fill="none" stroke={sign.hue} stroke-opacity="0.6" stroke-width="1" pointer-events="none" />}
             {selected && (
               <g key={spotlightKey(id)} {...spotlightMark(id, 'body')}>
                 <circle
@@ -540,19 +563,20 @@ export default function Wheel({
                 />
               </g>
             )}
-            <circle cx={p.x} cy={p.y} r={size * 0.033} fill="rgba(15,18,26,0.92)" stroke={sign.hue} stroke-opacity="0.55" stroke-width="1" />
+            <circle data-body-marker={ix ? b.body : undefined} cx={p.x} cy={p.y} r={size * 0.033} fill="rgba(15,18,26,0.92)" stroke={sign.hue} stroke-opacity="0.55" stroke-width="1" />
             <g
-              transform={`translate(${p.x} ${p.y}) scale(${(size * 0.05) / 24}) translate(-12 -12)`}
+              data-body-glyph={ix ? b.body : undefined}
+              transform={`translate(${p.x} ${insetRx ? p.y - size * 0.011 : p.y}) scale(${glyphSize / 24}) translate(-12 -12)`}
               fill="none"
               stroke="#EEF1F7"
-              stroke-width={1.4 * 24 / (size * 0.05)}
+              stroke-width={1.4 * 24 / glyphSize}
               stroke-linecap="round"
               stroke-linejoin="round"
               style="color:#EEF1F7"
               dangerouslySetInnerHTML={{ __html: PLANET_GLYPH[b.body] ?? '' }}
             />
             {b.retrograde && (
-              <text x={p.x + size * 0.032} y={p.y + size * 0.028} text-anchor="middle" font-size={size * 0.017} fill="rgba(224,176,128,0.9)" font-family="var(--font-mono)">Rx</text>
+              <text data-body-retrograde={ix ? b.body : undefined} x={insetRx ? p.x : p.x + size * 0.032} y={p.y + size * (insetRx ? 0.022 : 0.028)} text-anchor="middle" font-size={size * (insetRx ? 0.015 : 0.017)} fill={ix ? sign.hue : 'rgba(224,176,128,0.9)'} font-family="var(--font-mono)">Rx</text>
             )}
           </g>
         );

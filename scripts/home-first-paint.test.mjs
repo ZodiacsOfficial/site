@@ -106,8 +106,9 @@ describe('homepage first-paint assets', () => {
     const ticker = page.match(/<SkyTicker\b[^>]*\/>/gu);
 
     expect(ticker).toEqual(['<SkyTicker />']);
-    // Personal return state and the interactive sign reading still hydrate.
-    expect(page).toContain('<WelcomeBack client:visible />');
+    // The saved-profile island has no SSR child for visibility observation.
+    // Idle hydration makes returning state reachable without changing the sky receipt.
+    expect(page).toContain('<WelcomeBack client:idle />');
     expect(page).toContain('<TodayBySign client:visible={{ rootMargin: \'240px\' }} />');
   });
 

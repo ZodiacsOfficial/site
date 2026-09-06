@@ -27,3 +27,7 @@ Do not repeat an optional complete browser sweep solely because reviewed screens
 ## Push-enabled bundle correction
 
 Initial CI found Today slightly above its unchanged 21.5KB limit with push enabled. The new standalone resolver chunk was the added overhead. Colocating the same pure selector in the already-loaded profile reader removes that extra request. The targeted push-enabled Astro build and all bundle/engine-isolation gates now pass; all 32 focused tests still pass. The initial failed run remains recorded as evidence, not retried unchanged.
+
+## Released base integration
+
+Merged production main `2738713a6787d84d05bd3b8e2f401adbc42d7ea7`, preserving the reviewed crowded-wheel renderer and its browser regression. The protected-scope allowance now names this exact base. The corrected push-enabled CI build and browser drive passed on `671885bb`; the remaining main-job failure is being inspected before final integrated-source acceptance.
