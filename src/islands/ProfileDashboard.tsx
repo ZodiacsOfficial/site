@@ -8,7 +8,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useProfile } from '../lib/hooks/useProfile';
-import { explicitSelfChart } from '../lib/profile/personal-chart';
+import { explicitSelfChart } from '../lib/profile/read-store';
 import { livingChartCaptureEnabled } from '../lib/living-chart/feature-flags';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';

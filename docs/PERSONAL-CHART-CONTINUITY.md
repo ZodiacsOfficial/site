@@ -9,7 +9,7 @@ Owner authorization: 6 September 2026, continue the advanced capabilities, impro
 - Profile's chart browser defaults to the explicit owner when available and retains intentional selection of other saved charts. Its existing fallback for an unclassified chart library remains a browsable chart, not a new ownership classification. Feature-off behavior retains the latest-chart path.
 - A saved summary does not contain all-day Moon evidence for an unknown birth time. The homepage no longer presents its reference Moon or a stale rising angle as settled.
 
-No chart, relationship label, account consent, storage record or Guide context is written by the new resolver. It imports types only and adds no engine or network dependency. The existing profile-access guard still controls all profile reads.
+No chart, relationship label, account consent, storage record or Guide context is written by the new resolver. The resolver lives in the existing lightweight profile reader and adds no engine or network dependency. The existing profile-access guard still controls all profile reads.
 
 ## Validation
 
@@ -23,3 +23,7 @@ No chart, relationship label, account consent, storage record or Guide context i
 The prototype remains separately published at `codex/show-me-prototype`; it is not included in this product patch. PR 380 has a separate owner for the mobile Race/Guide overlap fix. Integrate finally released main before merging this branch, preserve the crowded-marker correction from PR 392, refresh this allowance to that exact base, and retain only evidence that matches the integrated source.
 
 Do not repeat an optional complete browser sweep solely because reviewed screenshots/receipt metadata are committed. Reuse verified evidence only if its product-source fingerprint still matches; any source change requires the relevant fresh checks. Required repository release gates remain in force.
+
+## Push-enabled bundle correction
+
+Initial CI found Today slightly above its unchanged 21.5KB limit with push enabled. The new standalone resolver chunk was the added overhead. Colocating the same pure selector in the already-loaded profile reader removes that extra request. The targeted push-enabled Astro build and all bundle/engine-isolation gates now pass; all 32 focused tests still pass. The initial failed run remains recorded as evidence, not retried unchanged.

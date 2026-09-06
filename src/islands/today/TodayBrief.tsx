@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import dailyData from '../../data/daily.json';
 import { useProfile } from '../../lib/hooks/useProfile';
-import { explicitSelfChart } from '../../lib/profile/personal-chart';
+import { explicitSelfChart } from '../../lib/profile/read-store';
 import { SIGNS, signForLongitude } from '../../lib/signs';
 import {
   natalPointsForChart,

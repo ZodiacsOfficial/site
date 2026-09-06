@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { explicitSelfChart } from './personal-chart';
+import { explicitSelfChart } from './read-store';
 import type { SavedChart } from './schema';
 
 const chart = (id: string, relationship?: SavedChart['relationship']): SavedChart => ({

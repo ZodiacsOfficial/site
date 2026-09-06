@@ -7,7 +7,7 @@
 import SignChip from './SignChip';
 import { NextActionCard } from '../components/NextActionCard';
 import { useProfile } from '../lib/hooks/useProfile';
-import { explicitSelfChart } from '../lib/profile/personal-chart';
+import { explicitSelfChart } from '../lib/profile/read-store';
 import { livingChartCaptureEnabled } from '../lib/living-chart/feature-flags';
 import { encodeChartLink } from '../lib/share';
 import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';

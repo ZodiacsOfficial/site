@@ -1,6 +1,12 @@
 import { profileAccessAllowed } from '../account-v2/profile-access-reader';
-import { EMPTY_PROFILE, PROFILE_KEY, type Profile } from './schema';
+import { EMPTY_PROFILE, PROFILE_KEY, type Profile, type SavedChart } from './schema';
 import { repairLegacyPolarChart } from './polar-repair';
+
+/** Only an unambiguous, explicit owner choice identifies a personal chart. */
+export function explicitSelfChart(charts: readonly SavedChart[]): SavedChart | null {
+  const own = charts.filter((chart) => chart.relationship === 'self');
+  return own.length === 1 ? own[0] : null;
+}
 
 /** Lightweight, fail-closed profile reader for read-only route islands. */
 export function loadProfile(): Profile {
