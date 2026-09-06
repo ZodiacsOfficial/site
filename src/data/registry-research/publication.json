@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-publication.v1",
-  "generatedAt": "2026-09-05T10:56:56.298Z",
+  "generatedAt": "2026-09-06T00:08:16.841Z",
   "publisher": "Zodiacs.org Research System",
   "method": {
     "id": "zodiacs.registry-research-method.v1",
@@ -16,8 +16,8 @@
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-06T00:00:00.000Z",
-    "endsBefore": "2026-09-13T00:00:00.000Z"
+    "startsAt": "2026-08-07T00:00:00.000Z",
+    "endsBefore": "2026-09-14T00:00:00.000Z"
   },
   "rollingItemIds": [],
   "items": []
