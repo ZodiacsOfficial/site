@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { editorialDates } from '../../../lib/editorial-metadata.mjs';
 import Base from '../../../layouts/Base.astro';
 import SignIcon from '../../../components/SignIcon.astro';
 import PlanetGlyph from '../../../components/PlanetGlyph';
@@ -19,6 +20,7 @@ const placementCount = (await getCollection('learn', (e) => e.data.kind === 'pla
 const jsonLd = [
   {
     '@type': 'CollectionPage',
+    ...editorialDates('/learn/placements/'),
     name: 'Placements: every planet in every sign',
     url: 'https://zodiacs.org/learn/placements/',
     description: 'What each planet means in each zodiac sign — plain-language guides to all 120 placements, with computed transit windows and classical dignities.',
@@ -36,7 +38,8 @@ const jsonLd = [
 ];
 ---
 <Base
-  type="article"
+  type="website"
+  editorialLine
   title="Placements — Every Planet in Every Sign | Zodiacs.org"
   description="All 120 planet-in-sign placements explained plainly: how each planet behaves in each sign, with computed transit windows and the classical dignities as data."
   path="/learn/placements/"

@@ -27,6 +27,8 @@ import eventsPublicationData from '../data/events-publication.json';
 import registryResearchPublicationData from '../data/registry-research/publication.json';
 import type { EventsPublication } from '../lib/events/publication';
 
+import { EDITORIAL_METADATA } from '../lib/editorial-metadata.mjs';
+
 const SITE = 'https://zodiacs.org';
 const eventsPublication = eventsPublicationData as EventsPublication;
 type RegistryResearchPublication = {
@@ -144,7 +146,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
 ]);
 
 function getLastmod(loc: string): string {
-  const date = EVERGREEN_LASTMOD.get(loc);
+  const date = EDITORIAL_METADATA[loc]?.modified ?? EVERGREEN_LASTMOD.get(loc);
   if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     throw new Error(`Missing evergreen lastmod for ${loc}`);
   }

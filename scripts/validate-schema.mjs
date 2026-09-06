@@ -2,6 +2,8 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, relative, resolve, sep } from 'node:path';
+import { EDITORIAL_METADATA } from '../src/lib/editorial-metadata.mjs';
+import { editorialGraphErrors, editorialSitemapErrors } from './editorial-metadata-checks.mjs';
 import { WEB_APPLICATION_PATHS } from '../src/strings/seo.en.mjs';
 import { eventArticleDateFailures } from './event-article-dates.mjs';
 
@@ -16,6 +18,7 @@ const SIGN_SLUGS = [
 ];
 const signSlugs = new Set(SIGN_SLUGS);
 const failures = [];
+const seenEditorial = new Set();
 let documentCount = 0;
 let nodeCount = 0;
 
@@ -230,6 +233,10 @@ for (const file of await htmlFiles(dist)) {
 
   const documents = structuredDocuments(html, label);
   const nodes = nodesOf(documents);
+  if (EDITORIAL_METADATA[pathname]) {
+    seenEditorial.add(pathname);
+    failures.push(...editorialGraphErrors(pathname, nodes).map((error) => `${label}: ${error}`));
+  }
   documentCount += documents.length;
   nodeCount += nodes.length;
 
@@ -327,10 +334,15 @@ for (const file of await htmlFiles(dist)) {
   }
 }
 
+for (const path of Object.keys(EDITORIAL_METADATA)) {
+  if (!seenEditorial.has(path)) failures.push(`${path}: editorial owner missing from indexable output`);
+}
+failures.push(...editorialSitemapErrors(await readFile(resolve(dist, 'sitemap.xml'), 'utf8')));
+
 if (failures.length) {
   console.error(`validate-schema: ${failures.length} failure(s)`);
   failures.forEach((failure) => console.error(`  - ${failure}`));
   process.exit(1);
 }
 
-console.log(`validate-schema: OK — ${documentCount} JSON-LD documents, ${nodeCount} graph nodes, 0 errors`);
+console.log(`validate-schema: OK — ${documentCount} JSON-LD documents, ${nodeCount} graph nodes, ${seenEditorial.size} editorial owners, 0 errors`);
