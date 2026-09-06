@@ -229,9 +229,9 @@ await withPreview({ port: Number(process.env.LIGHTHOUSE_PORT ?? 4328) }, async (
           resolve(artifactRoot, `${route.name}-${index + 1}.json`),
           JSON.stringify(lhr, null, 2),
         );
-        // The audit and browser shutdown are complete before optional disk I/O.
-        // Keep every sample, including outliers, for task-level attribution.
-        if (process.env.LIGHTHOUSE_SAVE_ASSETS === '1') {
+        // The audit and browser shutdown are complete before diagnostic disk I/O.
+        // CI keeps every sample so a failed gate can be traced to actual tasks.
+        if (process.env.LIGHTHOUSE_SAVE_ASSETS === '1' || process.env.CI === 'true') {
           await saveLighthouseAssets(result, artifactRoot, `${route.name}-${index + 1}`);
         }
       }
