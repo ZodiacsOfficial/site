@@ -49,7 +49,7 @@ const jsonLd = [{
         as versioned JSON. The files are static, cached at the edge, and open
         to any origin. There is no key, no signup, and no rate ceiling beyond
         ordinary CDN behavior, and none of it involves anyone's birth data:
-        these endpoints describe the shared sky, and
+        these endpoints describe the shared sky, and{' '}
         <a href="/methodology/">chart calculation stays on the device</a>.
       </p>
     </div>
@@ -81,12 +81,12 @@ for (const body of sky.bodies) {
       <p>
         Positions are apparent geocentric tropical longitudes from the same
         engine the calculators use, tested against NASA JPL Horizons reference
-        data; every payload names its schema (for example
+        data; every payload names its schema (for example{' '}
         <code>zodiacs.sky-api.today.v1</code>) and carries its generation
         time. Within v1, fields are added, never renamed or removed. A
         breaking change would ship under <code>/api/v2/</code> and v1 would
         keep working. Year files cover {firstYear}–{lastYear} today and grow
-        as the underlying data is extended; read
+        as the underlying data is extended; read{' '}
         <a href="/api/v1/index.json"><code>index.json</code></a> rather than
         assuming which years exist. All instants are UTC, in ISO 8601.
       </p>
@@ -95,9 +95,9 @@ for (const body of sky.bodies) {
     <h2 class="dev-h2">License and attribution</h2>
     <div class="prose">
       <p>
-        The data is free to use under
+        The data is free to use under{' '}
         <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener noreferrer">CC BY 4.0</a>.
-        Credit "Zodiacs.org" with a link to
+        Credit "Zodiacs.org" with a link to{' '}
         <a href="/">https://zodiacs.org</a> wherever the data is shown.
       </p>
     </div>
@@ -105,11 +105,11 @@ for (const body of sky.bodies) {
     <h2 class="dev-h2">Widgets and feeds</h2>
     <div class="prose">
       <p>
-        If you would rather embed a finished surface than consume JSON, the
+        If you would rather embed a finished surface than consume JSON, the{' '}
         <a href="/widgets/">embeddable widgets</a> render tonight's moon,
         today's sky, and a mini birth chart inside a sandboxed iframe. Dated
-        editorial is available as RSS:
-        <a href="/feeds/horoscopes.xml">daily horoscopes</a> and
+        editorial is available as RSS:{' '}
+        <a href="/feeds/horoscopes.xml">daily horoscopes</a> and{' '}
         <a href="/feeds/daily-sky.xml">the daily sky</a>. AI agents can start
         from <a href="/llms.txt">llms.txt</a>.
       </p>
@@ -119,7 +119,7 @@ for (const body of sky.bodies) {
     <div class="prose">
       <p>
         The same daily edition as <code>/api/v1/sky/today.json</code>, as a
-        finished card: one iframe, no script on your page, and the
+        finished card: one iframe, no script on your page, and the{' '}
         <code>theme</code> and <code>accent</code> parameters are applied
         inside the frame. The card links back to zodiacs.org, which is the
         attribution.
