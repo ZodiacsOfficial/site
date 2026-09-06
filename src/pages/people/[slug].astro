@@ -85,7 +85,10 @@ const displayBlocks = person.copy.blocks.map((block) => (
     : block
 ));
 const pageUrl = `https://zodiacs.org/people/${person.slug}/`;
-const image = `/assets/og/v2/people/${person.slug}.png`;
+const identityCardRevision = ['neil-armstrong', 'amelia-earhart', 'maya-angelou'].includes(person.slug)
+  ? '?v=identity-2026-09-05'
+  : '';
+const image = `/assets/og/v2/people/${person.slug}.png${identityCardRevision}`;
 const pageModifiedAt = latestModifiedAt(person.reviewedAtUtc, PEOPLE_TEMPLATE_MODIFIED_AT);
 
 const jsonLd = [

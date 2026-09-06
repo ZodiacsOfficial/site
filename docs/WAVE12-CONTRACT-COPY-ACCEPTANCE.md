@@ -259,3 +259,77 @@ record is added to the locally verified tree. The 13 conflicting Phase 1 paths
 are resolved to this wave's exact approved Footer capture bytes and manifest;
 all 19 receipt files match the original artifact. Production and test source,
 the completed build output and the `a805566f` fingerprint remain unchanged.
+
+## Corrected-source browser acceptance and OG delivery, 2026-09-06
+
+Corrected head `8e9b93c367d86a1cbc61c7bfb96bd660149bcf11`, tree
+`428f78edebdc29873954a1933a78c761ea815d63`, passes Browser Evidence
+`34007124088`. Official artifact `9981519099` is 100,648,043 bytes, SHA-256
+`397287ba39541d4c008bb4109711efc189fe99e66f29880f667c95f1fdad6520`.
+All 446 ZIP entries and 445 provenance payloads verify. All 32 whole-word,
+horizontal-bounds and independently recomputed vertical-order cases pass.
+Only four People PNGs differ from the prior capture: Chandrasekhar and Paula
+Modersohn-Becker at 360 and 390 pixels. Both reviewers personally approved
+the four original images; the other 39 People PNGs, including the full 1060
+layout, retain reviewed bytes. All 18 Phase 1 PNGs, five footer modes and three
+approved OG cards also retain their reviewed bytes. The independent raw
+Lighthouse audit passes all 78 samples and validates all 156 companions,
+with no warnings, errors or invalid attempts. Accessibility and gated SEO
+are 1, CLS is zero, and maximum TBT is 4.5 ms throughout.
+
+The first Site Check `34007124094` attempt on that same tree nevertheless
+fails two raw Lighthouse samples: Ada Lovelace sample 3 has performance 0.90
+and TBT 342.0215 ms; Serena Williams sample 3 has performance 0.92 and TBT
+300.8225 ms. All 3,461 tests and the other 13 jobs pass. Failed artifact
+`9981615438` is 100,676,073 bytes, SHA-256
+`833d81ab31ce4cf6ffa3e9ec87979c1e7a97a865f61b3165e331af738cbb0f05`;
+all 378 ZIP entries pass CRC verification. The actual tested merge commit
+`ee040ce7` has exactly the reviewed `428f78ed` tree. Independent comparison
+of 12 matched samples isolates native pre-execution ScriptCatchup pauses of
+148.462 and 134.274 ms with only 0.062 and 0.047 ms recorded CPU, concurrent
+browser native waits, identical requests/bytes and page work within passing
+controls. This supports a suspected external execution pause without proving
+a particular infrastructure cause. The reviewer invokes exactly the one
+confirmation retry permitted by the original mandate, on unchanged `8e9`.
+Attempt 1 remains failed and preserved; attempt 2 is still running at this
+checkpoint. No second retry on that head is authorized or performed.
+
+A subsequent read-only delivery check finds that the three changed OG files
+have unversioned metadata URLs and an existing explicit seven-day cache policy
+(`public, max-age=604800`), confirmed by all three public HTTP responses.
+They do not have the one-year immutable policy initially suspected. Their
+payloads have changed, so a still-fresh cache could nevertheless retain an old
+identity card. The approved narrow repair adds `?v=identity-2026-09-05` only
+to Neil Armstrong, Amelia Earhart and Maya Angelou's `og:image` and
+`twitter:image` URLs. Image bytes, every other People URL, headers, renderer
+inputs and the Phase 1 owner contract are unchanged. Existing built-output
+checks already validate the underlying local image through the URL pathname;
+no assertion or test needs weakening or replacement.
+
+The actual published Search repair `eac352c32326b6da28a57dd354833098878769ae`
+is integrated. Its sole change is the exact iframe approach repair already
+present here (blob `6dc3eb214d0f3ef2de4f1f874a0d477d5ee62a29`), so integration
+adds no production or test bytes. Before rebuilding the metadata change,
+the requested three corrected profiles plus Ada and Serena have complete
+body HTML snapshots; all 501 built People routes also have body hashes and
+social metadata snapshots. The delivery revision requires fresh local gates
+and a new Site Check. Browser evidence is reusable only after proving unchanged
+body output, renderer inputs and the existing Phase 1 fingerprint.
+
+The rebuilt output proves that all 501 People bodies are byte-identical and
+the other 498 social-image URL sets are unchanged. All five requested body
+snapshots match exactly; Ada and Serena's entire HTML also matches. Each of
+the three corrected profiles' complete HTML differs only in its two intended
+image URL occurrences. All three approved OG hashes and all 13 renderer input
+hashes still match; every referenced underlying image exists. Build/postbuild
+and Astro check pass, with the same `a805566f` receipt. These observed output
+and source boundaries preserve the approved visual/OG/Phase 1 evidence without
+a redundant Browser Evidence capture; the meaningful metadata revision still
+requires its own entirely green final Site Check.
+
+Final local gates for that delivery revision pass sequentially: Node 22
+build/postbuild, Astro check (918 files, zero errors/warnings and 10 existing
+hints), then all 3,461 tests across 354 files. The canonical footer, consumer
+boundary, People/dist/schema, engine isolation and unchanged bundle budgets
+pass. Logs and exact before/after comparisons are retained under
+`footer-og-delivery`; no generated image or visual baseline changes.
