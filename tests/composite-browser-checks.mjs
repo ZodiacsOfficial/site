@@ -158,6 +158,7 @@ async function clickAspectStroke(page, id) {
 
 async function installObservation(context, profile) {
   await context.addInitScript((saved) => {
+    if (location.origin === 'null') return;
     const key = 'zodiacs.profile.v1';
     if (!sessionStorage.getItem('composite-fixture-seeded')) {
       localStorage.setItem(key, JSON.stringify(saved, null, 2));
@@ -198,6 +199,9 @@ async function installObservation(context, profile) {
 
 async function openFixture(page, baseURL, locale, options = {}) {
   const route = locale === 'en' ? '/compatibility/' : `/${locale}/compatibility/`;
+  // Each positions-only fixture must initialize a fresh comparison. Changing
+  // only the fragment of an existing page is a same-document navigation.
+  await page.goto('about:blank');
   const response = await page.goto(`${baseURL}${route}#s=${compositeFixtureToken(options)}`, { waitUntil: 'networkidle' });
   if (response?.status() !== 200) throw new Error(`Composite fixture ${locale}: HTTP ${response?.status()}`);
   await page.locator('[data-relationship-tab="composite"]').waitFor({ timeout: 30000 });
