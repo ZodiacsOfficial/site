@@ -52,3 +52,26 @@ no protected scope changes. Integrated focused geometry/scene/browser-observer
 coverage passes 47 tests in three files. Fresh complete build, type check,
 serial unit suite, comparison captures, browser acceptance and personal review
 are pending on this integrated source. This is a draft CI candidate.
+
+## First actual-main browser result and overlay correction
+
+PR 392 head fe095ecaee966726cea0a4cda4c677072931fa7d on released
+8ccf127ce4f8061db8a9569c1444a054723634e0 passed visual comparison,
+Phase 1 capture/validation and Lighthouse. Explorer passed Kahlo natal
+geometry and pointer/keyboard checks at 390px, then failed sky-overlay Rx
+containment and timed out selecting a natal marker. Run 34036501819,
+artifact 9990623075: 93,277,027 bytes, SHA-256
+d6ea8587b275a53954d4bbf3c6e1a84008dca9fa9f965137031c17987b393826;
+all 408 provenance hashes verified against this exact head/base/source.
+Site Check 34036501810 passed 3,500 tests and failed only the old Phase 1
+receipt. Neither failed run is acceptance.
+
+The overlay's invisible chord hit strokes paint above natal markers. The
+interactive wheel now reserves taps inside visible natal circles during
+capture, using the actual SVG screen transform; other overlay targets retain
+their own handlers. Rx baseline moves inward by 0.84 SVG units to allow for
+font bounds at the smaller overlay scale. Static/share markup remains pinned.
+A focused test covers transformed circle interiors and untouched outside
+targets. The browser helper preserves overlay measurements/screenshots before
+input checks so a later exception cannot discard diagnostic evidence.
+Fresh full gates and browser review remain required.

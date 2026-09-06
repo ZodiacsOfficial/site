@@ -255,6 +255,24 @@ export default function Wheel({
     ? new Map(ix.scene.bodies.map((b) => [b.body, b.drawLon]))
     : collisionNudge(bodies);
 
+  // Overlay chord hit strokes are painted above natal markers. A tap inside
+  // a visible natal circle belongs to that body, even where a chord ends.
+  // Outside those circles the overlay keeps its own native hit targets.
+  const captureMarkerClick = ix && renderOverlay ? (ev: MouseEvent) => {
+    const svg = ev.currentTarget as SVGSVGElement;
+    const matrix = svg.getScreenCTM();
+    if (!matrix) return;
+    const point = new DOMPoint(ev.clientX, ev.clientY).matrixTransform(matrix.inverse());
+    for (const body of ix.scene.bodies) {
+      const marker = pt(body.drawLon, rBodies);
+      if (Math.hypot(point.x - marker.x, point.y - marker.y) <= size * 0.033) {
+        ev.stopPropagation();
+        toggleSelect({ kind: 'body', body: body.body });
+        return;
+      }
+    }
+  } : undefined;
+
   // Padding keeps the ASC/MC labels inside the viewBox; with an overlay
   // ring it grows to seat the outer ring. Non-overlay padding is unchanged,
   // so the pinned share-card viewBox never shifts.
@@ -283,6 +301,7 @@ export default function Wheel({
         ix ? 'wheel--interactive' : '',
       ].filter(Boolean).join(' ')}
       onClick={resolveClick}
+      onClickCapture={captureMarkerClick}
     >
       {/* Ring backgrounds */}
       <circle cx={cx} cy={cy} r={rSigns} fill="none" stroke="rgba(198,204,218,0.16)" stroke-width="1" />
@@ -557,7 +576,7 @@ export default function Wheel({
               dangerouslySetInnerHTML={{ __html: PLANET_GLYPH[b.body] ?? '' }}
             />
             {b.retrograde && (
-              <text data-body-retrograde={ix ? b.body : undefined} x={insetRx ? p.x : p.x + size * 0.032} y={p.y + size * (insetRx ? 0.024 : 0.028)} text-anchor="middle" font-size={size * (insetRx ? 0.015 : 0.017)} fill={ix ? sign.hue : 'rgba(224,176,128,0.9)'} font-family="var(--font-mono)">Rx</text>
+              <text data-body-retrograde={ix ? b.body : undefined} x={insetRx ? p.x : p.x + size * 0.032} y={p.y + size * (insetRx ? 0.022 : 0.028)} text-anchor="middle" font-size={size * (insetRx ? 0.015 : 0.017)} fill={ix ? sign.hue : 'rgba(224,176,128,0.9)'} font-family="var(--font-mono)">Rx</text>
             )}
           </g>
         );

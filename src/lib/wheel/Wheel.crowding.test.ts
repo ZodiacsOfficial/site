@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { render } from 'preact-render-to-string';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import frida from '../../data/demo-chart-frida.json';
 import people from '../../data/people.json';
 import { computeChart } from '../engine/full';
@@ -181,6 +181,40 @@ describe.each(fixtures)('crowded interactive wheel: %s', (_name, chart) => {
       expect(svg).toContain(`data-spotlight-target="body:${body.body}"`);
     }
   });
+});
+
+it('reserves visible natal markers before overlay hit strokes, leaving other overlay targets available', () => {
+  const scene = buildSceneModel(kahlo), selected: (EntityRef | null)[] = [];
+  const props = { bodies: scene.bodies, size, renderOverlay: () => null,
+    interactive: { scene, selection: null, emphasis: emphasisFor(scene, null), label: 'Chart',
+      onSelect: (value: EntityRef | null) => selected.push(value) } };
+  const svg = Wheel(props);
+  const capture = svg.props.onClickCapture as (event: MouseEvent) => void;
+  // A nontrivial screen transform checks that viewBox padding/scale does not
+  // change ownership. Browser coverage exercises the native DOM matrix.
+  vi.stubGlobal('DOMPoint', class {
+    constructor(public x: number, public y: number) {}
+    matrixTransform() { return { x: (this.x - 17) / 0.6, y: (this.y - 31) / 0.6 }; }
+  });
+  try {
+    for (const marker of markers(svgFor(kahlo))) {
+      for (const offset of [0, -0.72, 0.72]) {
+        const stop = vi.fn();
+        capture({ clientX: (marker.x + marker.radius * offset) * 0.6 + 17,
+          clientY: marker.y * 0.6 + 31, stopPropagation: stop,
+          currentTarget: { getScreenCTM: () => ({ inverse: () => ({}) }) } } as unknown as MouseEvent);
+        expect(stop).toHaveBeenCalledOnce();
+        expect(selected.at(-1)).toEqual({ kind: 'body', body: marker.body });
+      }
+    }
+    const count = selected.length, stop = vi.fn();
+    capture({ clientX: 17, clientY: 31, stopPropagation: stop,
+      currentTarget: { getScreenCTM: () => ({ inverse: () => ({}) }) } } as unknown as MouseEvent);
+    expect(stop).not.toHaveBeenCalled();
+    expect(selected).toHaveLength(count);
+    expect(Wheel({ ...props, renderOverlay: undefined }).props.onClickCapture).toBeUndefined();
+    expect(Wheel({ bodies: scene.bodies }).props.onClickCapture).toBeUndefined();
+  } finally { vi.unstubAllGlobals(); }
 });
 
 describe('interactive layout identity at boundaries', () => {

@@ -252,11 +252,13 @@ export async function runExplorerCrowdedWheelChecks({ browser, baseURL, check, o
         await page.waitForLoadState('networkidle');
         const overlay = await renderedGeometry(page, fixture);
         const overlayCheck = inspectCrowdedGeometry(overlay);
+        // Preserve measured geometry and the actual view even if input checks throw.
+        measurements.push({ fixture: fixture.slug, width, lens: 'sky', ...overlay, ...overlayCheck });
+        if (output) await page.locator('.calc__wheel').screenshot({ path: `${output}/${fixture.slug}-sky-${width}.png`, animations: 'disabled' });
         check(`${label}: added sky-ring padding preserves crowded natal geometry`, overlayCheck.failures.length === 0, JSON.stringify(overlayCheck));
         await checkPointersAndKeys(page, overlay, `${label} sky lens`, check);
         await chooseWithKeys(page, '');
         if (output) await page.locator('.calc__wheel').screenshot({ path: `${output}/${fixture.slug}-sky-${width}.png`, animations: 'disabled' });
-        measurements.push({ fixture: fixture.slug, width, lens: 'sky', ...overlay, ...overlayCheck });
       }
       check(`${label}: no browser errors`, errors.length === 0, JSON.stringify(errors));
     } finally {
