@@ -97,10 +97,10 @@ describe('dedicated lunar image content', () => {
     card.reading.forEach((row) => expect(text).toContain(row.text));
     [...card.readingBasis, ...card.notes].forEach((value) => expect(text).toContain(value));
     expect(text).toContain('zodiacs.org'); expect(text).not.toContain('NEVER_PAINT_PRIVATE');
-    const node = hooks.render.mock.calls[0][0] as VNode;
+    const node = hooks.render.mock.calls[0][0] as VNode<{ signImageHrefs: Record<string, string> }>;
     expect(node.props).toMatchObject({ bodies: card.wheel.bodies, ...card.wheel.angles, cusps: card.wheel.houses!.cusps, aspects: card.wheel.aspects });
     expect(node.props).not.toHaveProperty('input');
-    const hrefs = (node.props as { signImageHrefs: Record<string, string> }).signImageHrefs;
+    const hrefs = node.props.signImageHrefs;
     expect(Object.keys(hrefs)).toHaveLength(12);
     expect(Object.values(hrefs).every((href) => href.startsWith('data:image/webp;base64,'))).toBe(true);
     expect(fixture.fetch).toHaveBeenCalledTimes(13);
