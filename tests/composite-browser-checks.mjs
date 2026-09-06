@@ -105,13 +105,22 @@ async function artworkTimeout({ page, check, output, expectedAborts }) {
   const requested = new Promise((resolve) => { intercepted = resolve; });
   let first = null;
   let began = 0;
+  let settled;
+  const handling = new Promise((resolve) => { settled = resolve; });
+  let handlingError;
   const handler = async (route) => {
     // Keep normal DOM/SVG image loading genuine; stall only export's fetch.
     if (route.request().resourceType() !== 'fetch' || first) return route.continue();
     first = route.request(); began = performance.now(); expectedAborts.add(first);
     intercepted();
-    await held;
-    await route.continue();
+    try {
+      await held;
+      // The deadline already aborted the held fetch. Do not continue an
+      // aborted request, and finish this handler before removing its route.
+      if (!first.failure()) await route.continue();
+    } catch (error) {
+      handlingError = error;
+    } finally { settled(); }
   };
   await page.route(matcher, handler);
   try {
@@ -127,6 +136,8 @@ async function artworkTimeout({ page, check, output, expectedAborts }) {
       && await page.locator('[data-composite-image]').count() === 0, JSON.stringify({ elapsed, failure: first.failure() }));
     if (output) await page.locator('[data-composite-panel]').screenshot({ path: `${output}/en-390-artwork-timeout.png`, animations: 'disabled' });
     release();
+    await handling;
+    if (handlingError) throw handlingError;
     await page.unroute(matcher, handler);
     const requestedAgain = page.waitForRequest((request) => request.resourceType() === 'fetch' && new URL(request.url()).pathname === path, { timeout: 30_000 });
     await Promise.all([requestedAgain, page.locator('[data-composite-export]').click()]);
@@ -138,8 +149,10 @@ async function artworkTimeout({ page, check, output, expectedAborts }) {
     await page.locator('[data-composite-export-close]').click();
   } finally {
     release();
+    if (first) await handling;
     await page.unroute(matcher, handler);
     if (first) expectedAborts.delete(first);
+    if (handlingError) throw handlingError;
   }
 }
 
