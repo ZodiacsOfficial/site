@@ -36,6 +36,20 @@ export function compositeFixtureToken({ unknown = false, bothUnknown = false, re
   return `s1.${encode({ p: sides.map(([values, known]) => positions(values, known)), l: sides.map(([, , name]) => name), k: sides.map(([, known]) => known) })}`;
 }
 
+export function compositeSavedFixtures() {
+  return [true, false].flatMap((known) => [FIRST, SECOND].map((values, index) => ({
+    id: `composite-${index}-${known ? 'timed' : 'unknown'}`,
+    name: `Composite fixture ${index === 0 ? 'A' : 'B'}`,
+    createdAt: '2026-07-11T00:00:00Z', updatedAt: '2026-07-11T00:00:00Z',
+    birth: { date: '2000-01-01', time: known ? '12:00' : null, timeKnown: known, place: null },
+    summary: {
+      engineVersion: '0.1.0', utcISO: '2000-01-01T12:00:00Z', houseSystem: 'whole',
+      bodies: BODY_ORDER.map((body, i) => ({ body, lon: values[i], retrograde: false })),
+      angles: known ? { asc: 15, mc: 105 } : null, flags: [],
+    },
+  })));
+}
+
 /** Inspect the bytes from the actual browser download, including image body. */
 export function inspectCompositePng(bytes) {
   const png = PNG.sync.read(bytes);
@@ -194,16 +208,24 @@ async function installObservation(context, profile) {
         if (window.__compositeProbe.shareOutcome === 'error') throw new DOMException('Fixture share unavailable', 'NotAllowedError');
       },
     });
-  }, profile);
+  }, { ...profile, charts: [...profile.charts, ...compositeSavedFixtures()] });
 }
 
 async function openFixture(page, baseURL, locale, options = {}) {
   const route = locale === 'en' ? '/compatibility/' : `/${locale}/compatibility/`;
-  // Each positions-only fixture must initialize a fresh comparison. Changing
-  // only the fragment of an existing page is a same-document navigation.
+  // The returned-reading fragment is invite-feature-gated and English-only.
+  // Exercise the public saved-chart comparison path in every locale instead.
   await page.goto('about:blank');
-  const response = await page.goto(`${baseURL}${route}#s=${compositeFixtureToken(options)}`, { waitUntil: 'networkidle' });
+  const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' });
   if (response?.status() !== 200) throw new Error(`Composite fixture ${locale}: HTTP ${response?.status()}`);
+  const ids = [
+    `composite-0-${options.bothUnknown ? 'unknown' : 'timed'}`,
+    `composite-1-${options.unknown || options.bothUnknown ? 'unknown' : 'timed'}`,
+  ];
+  if (options.reversed) ids.reverse();
+  await page.locator('#syn-a-source').selectOption(ids[0]);
+  await page.locator('#syn-b-source').selectOption(ids[1]);
+  await page.locator('.calc__submit').click();
   await page.locator('[data-relationship-tab="composite"]').waitFor({ timeout: 30000 });
   await page.locator('[data-relationship-tab="composite"]').click();
   await page.locator('[data-composite-panel]').waitFor();

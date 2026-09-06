@@ -1,9 +1,23 @@
 import assert from 'node:assert/strict';
 import { test } from 'vitest';
 import { PNG } from 'pngjs';
-import { compositeFixtureToken, inspectCompositePng, inspectCompositeTextLayout, isExpectedCompositeAbort } from './composite-browser-checks.mjs';
+import { compositeFixtureToken, compositeSavedFixtures, inspectCompositePng, inspectCompositeTextLayout, isExpectedCompositeAbort } from './composite-browser-checks.mjs';
+import { resolveSavedChart } from '../src/lib/profile/resolve';
 
 const decode = (token) => JSON.parse(Buffer.from(token.slice(token.indexOf('.') + 1), 'base64url').toString());
+
+test('saved composite fixtures resolve exact synthetic positions without an ephemeris or birth-data rewrite', async () => {
+  const fixtures = compositeSavedFixtures();
+  const before = JSON.stringify(fixtures);
+  assert.equal(new Set(fixtures.map((chart) => chart.id)).size, 4);
+  for (const chart of fixtures) {
+    const resolved = await resolveSavedChart(chart, async () => { throw new Error('Imported positions must not recompute'); });
+    assert.deepEqual(resolved.bodies, chart.summary.bodies.map(({ body, lon }) => ({ body, lon })));
+    assert.equal(resolved.timeKnown, chart.birth.timeKnown);
+    assert.equal(resolved.asc, chart.birth.timeKnown ? 15 : null);
+  }
+  assert.equal(JSON.stringify(fixtures), before);
+});
 
 test('composite browser fixtures stay within the positions-only grammar and preserve explicit unknown time', () => {
   for (const options of [{}, { unknown: true }, { bothUnknown: true }, { reversed: true }]) {
