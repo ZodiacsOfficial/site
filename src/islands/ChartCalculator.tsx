@@ -65,6 +65,7 @@ import { useEngine } from '../lib/hooks/useEngine';
 import CalculationReload, { calculationError, calculationLoadMessage } from './CalculationReload';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
+import { learningInputIdentity } from '../lib/learning-input-identity';
 import type { AspectType } from '../lib/engine/types';
 import { trackAnalytics } from '../lib/analytics';
 import {
@@ -373,6 +374,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
   const chartContextIdRef = useRef(0);
+  const inputRevisionRef = useRef(0);
+  const [inputRevision, setInputRevision] = useState(0);
+  function advanceInputRevision(): void {
+    inputRevisionRef.current += 1;
+    setInputRevision(inputRevisionRef.current);
+  }
   const registryBridgeImpressionChartRef = useRef<Chart | null>(null);
   const primaryProfileOriginRef = useRef(false);
   const primaryProfileChartIdRef = useRef<string | null>(null);
@@ -396,6 +403,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     primaryProfileChartIdRef.current = null;
     runChartIdRef.current += 1;
     chartContextIdRef.current += 1;
+    advanceInputRevision();
     clearPostChartContext();
     setDate('');
     setTime('');
@@ -433,6 +441,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   });
 
   function invalidateProfileHandoff(): void {
+    advanceInputRevision();
     profileHandoffIdRef.current += 1;
     primaryProfileChartIdRef.current = null;
     if (!primaryProfileOriginRef.current) return;
@@ -1056,6 +1065,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     focusAfterCompute: boolean,
     source: ChartComputedSource = 'fresh',
   ) {
+    advanceInputRevision();
     const signatureModule = mode === 'full' && showsEnglishInterpretation
       ? import('../lib/chart-signature')
       : null;
@@ -1570,6 +1580,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const EntityPicker = chartActionDockModule?.EntityPicker;
   const ReadingPath = chartActionDockModule?.ReadingPath;
   const Inspector = chartActionDockModule?.Inspector;
+  const ChartContext = chartActionDockModule?.ChartContext;
+  const AspectPatternFeature = chartActionDockModule?.AspectPatternFeature;
   const saveError = saved === 'full'
     ? t(locale, 'chartSaveFull')
     : saved === 'error' ? t(locale, 'chartSaveError') : null;
@@ -2190,9 +2202,26 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 </div>
               </div>
 
+              {mode === 'full' && locale === 'en' && AspectPatternFeature && (
+                <AspectPatternFeature context="natal" points={chart.bodies} aspects={chart.aspects}
+                  timeKnown={chart.input.timeKnown && !chart.flags.includes('no-time')}
+                  sourceKey={String(chartContextIdRef.current)}
+                  onSelectBody={(body) => showOnChartFromReading({ kind: 'body', body }, 'instant')} />
+              )}
+
               {/* A visual story leads; exact data remains available below. */}
               {showsEnglishInterpretation && reading && ReadingPath && (
                 <ReadingPath
+                  practiceSource={primaryProfileChartIdRef.current && computedInput ? {
+                    id: primaryProfileChartIdRef.current,
+                    identity: learningInputIdentity({ ...computedInput, subjectMode: computedInput.subjectMode ?? 'self' }),
+                    run: chartContextIdRef.current, inputRevision,
+                    isCurrent: (run, revision) => run === chartContextIdRef.current && revision === inputRevisionRef.current
+                      && primaryProfileChartIdRef.current !== null && profileAccessAllowed(),
+                  } : null}
+                  timeKnown={chart.input.timeKnown && !chart.flags.includes('no-time')}
+                  effectiveHouseSystem={chart.houses?.system ?? null}
+                  polarFallback={chart.flags.includes('polar-fallback')}
                   placements={reading.ps}
                   topAspects={reading.top}
                   weather={reading.weather}
@@ -2202,6 +2231,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   selection={selection}
                   onShowOnChart={showOnChartFromReading}
                 />
+              )}
+
+              {mode === 'full' && ChartContext && (
+                <ChartContext input={{ bodies: chart.bodies, timeKnown: chart.input.timeKnown,
+                  moonSignCandidates: chart.moonSignCandidates, angles: chart.angles, houses: chart.houses }}
+                  locale={locale} inputRevision={inputRevision}
+                  isInputCurrent={(revision) => inputRevisionRef.current === revision}
+                  selection={selection} onShowOnChart={showOnChartFromReading} />
               )}
 
               {mode === 'full' && showsEnglishInterpretation && ApproachRead && (

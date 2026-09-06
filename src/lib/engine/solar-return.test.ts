@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { bodyLongitude } from './full';
+import { bodyLongitude, computeChart } from './full';
+import independentCases from './fixtures/swiss-eight-cases.fixture.json';
+import independentPolicy from './fixtures/swiss-eight-cases-policy.json';
+import { angularDifference, expectIndependentChart, expectIndependentTime } from './fixtures/independent-validation.test-helpers';
 import {
   mostRecentSolarReturnInstant, solarReturnChart, solarReturnInstant,
 } from './solar-return';
 import { yearScan } from './year-scan';
+import independentCrossings from './solar-return-crossings.fixture.json';
 
 const KAHLO_BIRTH = new Date('1907-07-06T15:06:36Z');
 const KAHLO_SUN_LON = bodyLongitude('Sun', KAHLO_BIRTH);
@@ -15,7 +19,58 @@ function angleDiff(a: number, b: number): number {
   return distance > 180 ? 360 - distance : distance;
 }
 
-describe('solar returns', () => {
+// These external longitude → instant vectors validate the crossing solver.
+// They are not independently published natal-birth → next-year return reports.
+describe('solarReturnInstant against independent longitude-crossing fixtures', () => {
+  it.each(independentCrossings.fixtures)('$id', (fixture) => {
+    const instant = solarReturnInstant(fixture.targetLongitudeDegrees, new Date(fixture.nearUTC));
+    const residualSeconds = (instant.getTime() - Date.parse(fixture.expectedUTC)) / 1000;
+    const diagnostic = `${fixture.id}: ${instant.toISOString()}, signed residual ${residualSeconds}s`;
+
+    // Opt-in diagnostics report actual solver output without regenerating any
+    // expected value or changing the predeclared provider-parity tolerances.
+    if (process.env.SOLAR_RETURN_FIXTURE_REPORT === '1') console.info(diagnostic);
+    expect(Math.abs(residualSeconds), diagnostic).toBeLessThanOrEqual(fixture.toleranceSeconds);
+  });
+});
+
+describe('independent natal-to-solar return and chart', () => {
+  const input = independentPolicy.solar;
+  const reference = independentCases.solar;
+  const location = { latitude: input.latitudeDegrees, longitude: input.longitudeDegreesEastPositive };
+
+  it('matches the full independent return time, returned chart and unlocated mode', () => {
+    const natalSun = bodyLongitude('Sun', new Date(input.birthUTC));
+    expect(angularDifference(natalSun, reference.natalLongitudeDegrees))
+      .toBeLessThanOrEqual(independentPolicy.gates.planetLongitudeCircularDegreesMaximum);
+    const nearest = solarReturnChart(natalSun, new Date(input.nearUTC), location, 'placidus');
+    const recent = solarReturnChart(natalSun, new Date(input.currentSelectionAtUTC), location, 'placidus', 'most-recent');
+    expectIndependentTime(nearest.input.utc, reference.nearest);
+    expectIndependentTime(recent.input.utc, reference.mostRecent);
+    // This input exercises both paths but selects the same event; it does not
+    // independently distinguish nearest from most-recent selection behavior.
+    for (const chart of [nearest, recent]) {
+      // Exact clock equality is fixture applicability, not ephemeris accuracy.
+      // If solver output changes within the unchanged independent timing band,
+      // acquire a NEW same-time Swiss chart and retain all original evidence.
+      expect(chart.input.utc.toISOString(), 'Same-time Swiss fixture no longer applies; independent acquisition at the new product timestamp is required')
+        .toBe(reference.returnedChartUTC);
+      expectIndependentChart(chart, reference.returnedChart);
+    }
+    const unlocated = solarReturnChart(natalSun, new Date(input.nearUTC), null, 'placidus');
+    expect(unlocated.input.utc).toEqual(nearest.input.utc);
+    expect(unlocated.bodies).toEqual(nearest.bodies);
+    expect(unlocated.angles).toBeNull();
+    expect(unlocated.houses).toBeNull();
+  });
+
+  it('matches the separately preserved independent fixed-instant chart', () => {
+    const chart = computeChart({ utc: new Date(reference.independentChartUTC), ...location, houseSystem: 'placidus', timeKnown: true });
+    expectIndependentChart(chart, reference.independentChart);
+  });
+});
+
+describe('solar returns: same-engine consistency and chart behavior', () => {
   it('agrees with yearScan for the same scan window within one minute', () => {
     const from = new Date(NEAR.getTime() - 200 * DAY_MS);
     const to = new Date(NEAR.getTime() + 200 * DAY_MS);

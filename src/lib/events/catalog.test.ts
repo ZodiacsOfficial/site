@@ -103,7 +103,7 @@ describe('events catalog — construction', () => {
     expect(new Set(eligible.map((event) => event.facts.id))).toEqual(publishedIds);
     for (const event of eligible) {
       expect(event.interpretation, event.facts.id).toBeDefined();
-      expect(event.lastModified, event.facts.id).toBe('2026-07-20');
+      expect(event.lastModified, event.facts.id).toBe(publishedEventPages.find((page) => page.id === event.facts.id)!.lastModified);
     }
     for (const event of catalog.events.filter((candidate) => !publishedIds.has(candidate.facts.id))) {
       expect(event.indexEligible, event.facts.id).toBe(false);

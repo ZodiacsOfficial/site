@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { bodyLongitude } from './full';
+import { bodyLongitude, longitudeSpeed } from './full';
+import independentCases from './fixtures/swiss-eight-cases.fixture.json';
+import independentPolicy from './fixtures/swiss-eight-cases-policy.json';
+import { angularDifference, expectIndependentTime } from './fixtures/independent-validation.test-helpers';
 import {
   DEFAULT_TRANSIT_BODIES,
   SLOW_TRANSIT_BODIES,
@@ -8,7 +11,7 @@ import {
   natalTransitPoints,
   scanTransitContacts,
 } from './transit-scan';
-import type { NatalTransitChart } from './transit-scan';
+import type { NatalTransitChart, TransitBody } from './transit-scan';
 import type { BodyName } from './types';
 
 const normalize = (lon: number) => ((lon % 360) + 360) % 360;
@@ -16,6 +19,43 @@ const at = (body: BodyName, lon: number) => ({ body, lon });
 const utcMinute = (iso: string) => new Date(
   Math.round(new Date(iso).getTime() / 60_000) * 60_000,
 ).toISOString().slice(0, 16);
+
+describe('independent conditioned station contacts', () => {
+  it.each(independentCases.stations)('$id', (reference) => {
+    const input = independentPolicy.stations.find((row) => row.id === reference.id)!;
+    const body = input.body as TransitBody;
+    const contacts = scanTransitContacts(
+      { bodies: [at('Sun', reference.targetLongitudeDegrees)] },
+      new Date(input.fromUTC), new Date(input.toUTC),
+      { transitBodies: [body], natalPoints: ['Sun'], aspects: ['conjunction'] },
+    );
+    expect(contacts).toHaveLength(reference.crossings.length);
+    contacts.forEach((contact, index) => {
+      const expected = reference.crossings[index];
+      expectIndependentTime(new Date(contact.exactUtc), expected);
+      expect(contact.transitBody).toBe(body);
+      expect(contact.natalPoint).toBe('Sun');
+      expect(contact.aspect).toBe('conjunction');
+      expect(contact.pass).toBe(index + 1);
+      expect(contact.passCount).toBe(reference.crossings.length);
+      const speed = longitudeSpeed(body, new Date(contact.exactUtc));
+      expect(Number.isFinite(speed)).toBe(true);
+      // Both Saturn contacts fall inside this approved deadband. Their
+      // directions are intentionally not asserted across independent models.
+      if (Math.abs(speed) > independentPolicy.gates.directionDeadbandDegreesPerDay
+        && Math.abs(expected.speedDegreesPerDay) > independentPolicy.gates.directionDeadbandDegreesPerDay) {
+        expect(speed < 0).toBe(expected.retrograde);
+      }
+      if (index > 0) expect(Date.parse(contact.exactUtc)).toBeGreaterThan(Date.parse(contacts[index - 1].exactUtc));
+    });
+    expect(angularDifference(
+      bodyLongitude(body, new Date(reference.analyticStationMilliseconds)), reference.analyticStationLongitudeDegrees,
+    )).toBeLessThanOrEqual(independentPolicy.gates.planetLongitudeCircularDegreesMaximum);
+    // Finite speed is a diagnostic contract; the independently acquired
+    // longitude-derived contact bands are not tight station-time guarantees.
+    expect(Number.isFinite(longitudeSpeed(body, new Date(reference.finiteDifferenceStationMilliseconds)))).toBe(true);
+  });
+});
 
 describe('transit-contact geometry', () => {
   it('uses the canonical planet sets and keeps the Moon opt-in', () => {

@@ -23,12 +23,20 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { PNG } from 'pngjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { driveLegacyPolarProfile } from './legacy-polar-profile-drive.mjs';
+import { runPersonalChartHandoff } from './personal-chart-handoff.mjs';
 import { runRecoveryBrowserChecks } from './recovery-browser-checks.mjs';
 import { driveLocaleDiscovery } from './locale-discovery-drive.mjs';
 import { runExplorerKeyboardChecks } from './explorer-keyboard-checks.mjs';
 import { runExplorerCrowdedWheelChecks } from './explorer-crowded-wheel-checks.mjs';
 import { runExplorerMoonChecks } from './explorer-moon-checks.mjs';
 import { runSearchLearningChecks } from './search-learning-checks.mjs';
+import { runSolarReturnChecks } from './solar-return-drive.mjs';
+import { runChartContextChecks } from './chart-context-checks.mjs';
+import { runLearningPracticeChecks } from './learning-practice-checks.mjs';
+import { runAspectPatternBrowserChecks } from './aspect-pattern-browser-checks.mjs';
+import { runLunarReturnChecks } from './lunar-return-drive.mjs';
+import { runEventTransitChecks } from './event-transit-checks.mjs';
+import { runEditorialMetadataChecks } from './editorial-metadata-drive.mjs';
 import { verifyWidgetBuilder } from './widgets-drive.mjs';
 import { awaitAppliedFooter, runFooterStyleChecks } from './footer-style-checks.mjs';
 
@@ -199,6 +207,15 @@ try {
   });
 
   await runSearchLearningChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
+
+  await runEventTransitChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/event-transits` : null });
+  await runEditorialMetadataChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/editorial-metadata` : null });
+
+  await runSolarReturnChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/solar-return` : null });
+  await runLunarReturnChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/lunar-return` : null });
+  await runAspectPatternBrowserChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/aspect-patterns` : null });
+  await runChartContextChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/chart-context` : null });
+  await runLearningPracticeChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/learning-practice` : null });
 
   await verifyWidgetBuilder({
     browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/widgets` : null,
@@ -1225,6 +1242,7 @@ try {
   await rm.close();
 
   await driveLegacyPolarProfile({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
+  await runPersonalChartHandoff({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
   await browser.close();
   // Reuse the owning renderer only after the main browser has closed. Its
   // closed review mode verifies that every production OG file stays identical.

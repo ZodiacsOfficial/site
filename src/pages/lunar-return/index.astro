@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import LunarReturnCalculator from '../../islands/LunarReturnCalculator';
+import '../../styles/calculator.css';
+
+const faq = [
+  { q: 'What is a lunar return?', a: 'A lunar return is the moment the Moon reaches the same tropical zodiac longitude it occupied at your birth. This tool finds the first return after you calculate, then casts a chart for that moment. Astrologers use it as a short-term reflection chart.' },
+  { q: 'Why do I need my birth time?', a: 'The Moon moves enough during a day that a birth date or Moon sign alone cannot establish the return time. Use a known time and birthplace. If a clock change makes the local birth time ambiguous, check the original record before proceeding.' },
+  { q: 'Which location should I choose?', a: 'The tool defaults to your birthplace. You can also cast the return for another place. The event time and planets stay the same; the rising sign and houses change. Astrology has several traditions for choosing a return location, so the choice is left to you.' },
+  { q: 'Can I save the result?', a: 'You can create a private image of the return chart and reading, then save or share it. You can also download a calendar marker. Names, birth details, and place coordinates are omitted from these files. The result is not added to your saved birth charts.' },
+  { q: 'What dates does the calculator support?', a: 'The calculation accepts resolved birth and reference instants from January 2, 1800, with a latest reference of November 21, 2199. It searches up to 40 days ahead. Historical and distant future dates use the engine’s time model and do not establish exact civil-clock accuracy.' },
+];
+const jsonLd = [
+  { '@type': 'WebApplication', name: 'Lunar Return Calculator', url: 'https://zodiacs.org/lunar-return/', applicationCategory: 'LifestyleApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } },
+  { '@type': 'FAQPage', mainEntity: faq.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+];
+---
+<Base clientUi title="Lunar Return Calculator — Your Next Moon Return" description="Find your next lunar return with a known birth time. Explore its chart, save a private image, or add the moment to your calendar." path="/lunar-return/" jsonLd={jsonLd}>
+  <section class="section--tight container">
+    <div class="tool-hero"><h1 class="display">Your lunar return</h1><p>Find the next time the Moon returns to its place in your birth chart. Explore a fresh set of prompts for everyday care, connection, and attention.</p></div>
+    <LunarReturnCalculator client:load />
+    <noscript><p>This lunar return calculator needs JavaScript to calculate the chart on your device.</p></noscript>
+  </section>
+  <section class="section--tight container container--narrow">
+    <div class="section-head"><h2>Questions, answered</h2></div>
+    <div class="faq">{faq.map(({ q, a }) => <details class="faq__item"><summary>{q}</summary><p>{a}</p></details>)}</div>
+  </section>
+</Base>
+<style>
+  .tool-hero { max-width: 66ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 500; line-height: 1.04; text-wrap: balance; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .faq { display: grid; gap: 8px; }
+  .faq__item { border: 1px solid var(--hair-1); border-radius: var(--r-md); background: var(--void-1); padding: 4px 18px; }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); min-height: 44px; }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>

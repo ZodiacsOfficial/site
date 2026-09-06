@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "scope": "Independent apparent geocentric solar-longitude to crossing-instant fixtures, not independent natal-birth to next-year Solar Return reports.",
+  "expectationPolicy": "Target longitudes and expected UTC instants are transcribed from external sources. Never regenerate them with the application engine or widen tolerances to match its output.",
+  "transcribedOn": "2026-09-05",
+  "sources": {
+    "usno-seasons-2022": {
+      "provider": "U.S. Naval Observatory, Astronomical Applications Department",
+      "retrievedOn": "2026-09-05",
+      "url": "https://aa.usno.navy.mil/calculated/seasons?dst=false&submit=Get+Data&tz=2&tz_label=false&tz_sign=1&year=2022",
+      "conventionUrl": "https://aa.usno.navy.mil/faq/asa_glossary",
+      "timeScaleUrl": "https://aa.usno.navy.mil/data/api",
+      "longitudeConvention": "Apparent geocentric solar ecliptic longitude of date: March equinox 0 degrees, June solstice 90 degrees, September equinox 180 degrees, December solstice 270 degrees.",
+      "timeScale": "UTC; the retrieved output displays UTC+02:00 with daylight saving disabled.",
+      "utcConversion": "Subtract exactly two hours from each published local timestamp; publishedLocal below includes that fixed +02:00 offset.",
+      "ephemerisVersion": null,
+      "versionNote": "The retrieved source does not state an ephemeris or model version.",
+      "sourcePrecision": "Event times are published to the minute; each target longitude is the exact seasonal-event definition.",
+      "toleranceRationale": "The predeclared 120-second bound allows minute-resolution publication and differences between the independent ephemeris models. It is not a claim of 120-second uncertainty in the provider's calculation."
+    },
+    "jpl-horizons-2020": {
+      "provider": "NASA/JPL Horizons",
+      "upstreamRetrievalDate": "2026-07-05",
+      "retrievalDateBasis": "Recorded in the existing src/lib/engine/engine.test.ts provenance header; no fresh ephemeris query was used to create this fixture.",
+      "repositorySource": "src/lib/engine/engine.test.ts:HORIZONS_2020.Sun",
+      "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+      "conventionUrl": "https://ssd.jpl.nasa.gov/horizons/manual.html",
+      "apiDocumentationUrl": "https://ssd-api.jpl.nasa.gov/doc/horizons.html",
+      "originalQueryUrl": null,
+      "queryNote": "The repository retains the value, epoch, quantity and centre, but not the original full query URL or response headers.",
+      "documentedQuery": { "COMMAND": "10", "CENTER": "500@399", "QUANTITIES": "31", "epochUTC": "2020-01-01T00:00:00Z" },
+      "longitudeConvention": "Quantity 31: apparent geocentric observer ecliptic longitude of date, IAU76/80, including light-time and aberration.",
+      "timeScale": "UTC at this 2020 epoch. Horizons UT before 1962 is UT1; historic repository vectors are deliberately excluded here.",
+      "ephemerisVersion": null,
+      "versionNote": "The original Horizons ephemeris and EOP version headers are not retained in the repository.",
+      "sourcePrecision": "The solar longitude is retained to seven decimal places in degrees at the specified exact UTC epoch; this is inversion of a positional datum, not a rounded published event time.",
+      "toleranceRationale": "The predeclared 60-second bound allows differences between the independent apparent-longitude models; the printed longitude precision alone is much finer. Expected time remains the literal external epoch."
+    }
+  },
+  "fixtures": [
+    {
+      "id": "usno-2022-march-equinox-zero-wrap",
+      "source": "usno-seasons-2022",
+      "targetLongitudeDegrees": 0,
+      "publishedLocal": "2022-03-20T17:33:00+02:00",
+      "expectedUTC": "2022-03-20T15:33:00Z",
+      "nearUTC": "2022-03-20T00:00:00Z",
+      "toleranceSeconds": 120
+    },
+    {
+      "id": "usno-2022-june-solstice",
+      "source": "usno-seasons-2022",
+      "targetLongitudeDegrees": 90,
+      "publishedLocal": "2022-06-21T11:14:00+02:00",
+      "expectedUTC": "2022-06-21T09:14:00Z",
+      "nearUTC": "2022-06-21T00:00:00Z",
+      "toleranceSeconds": 120
+    },
+    {
+      "id": "usno-2022-september-equinox",
+      "source": "usno-seasons-2022",
+      "targetLongitudeDegrees": 180,
+      "publishedLocal": "2022-09-23T03:04:00+02:00",
+      "expectedUTC": "2022-09-23T01:04:00Z",
+      "nearUTC": "2022-09-23T00:00:00Z",
+      "toleranceSeconds": 120
+    },
+    {
+      "id": "usno-2022-december-solstice",
+      "source": "usno-seasons-2022",
+      "targetLongitudeDegrees": 270,
+      "publishedLocal": "2022-12-21T23:48:00+02:00",
+      "expectedUTC": "2022-12-21T21:48:00Z",
+      "nearUTC": "2022-12-21T00:00:00Z",
+      "toleranceSeconds": 120
+    },
+    {
+      "id": "jpl-2020-sun-near-preceding-civil-year",
+      "source": "jpl-horizons-2020",
+      "targetLongitudeDegrees": 280.0094920,
+      "expectedUTC": "2020-01-01T00:00:00Z",
+      "nearUTC": "2019-12-31T12:00:00Z",
+      "toleranceSeconds": 60
+    }
+  ]
+}

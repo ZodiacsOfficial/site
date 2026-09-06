@@ -44,7 +44,29 @@ export interface RelationshipGridData {
 export interface CompositeTabData {
   points: CompositePoint[];
   aspects: CompositeAspect[];
+  /** Existing reference positions; no invented daily endpoints or bounds. */
+  moonProvisional: boolean;
 }
+
+export const compositeBodyId = (body: BodyName): string => `composite:body:${body}`;
+export const compositeAspectId = (aspect: Pick<CompositeAspect, 'a' | 'b' | 'type'>): string =>
+  `composite:aspect:${aspect.a}:${aspect.type}:${aspect.b}`;
+
+export type CompositeSelection =
+  | { kind: 'body'; id: string; point: CompositePoint; provisional: boolean }
+  | { kind: 'aspect'; id: string; aspect: CompositeAspect; provisional: boolean };
+
+export function compositeSelection(data: CompositeTabData, id: string | null): CompositeSelection | null {
+  if (!id) return null;
+  const point = data.points.find((point) => compositeBodyId(point.body) === id);
+  if (point) return { kind: 'body', id, point, provisional: data.moonProvisional && point.body === 'Moon' };
+  const aspect = data.aspects.find((aspect) => compositeAspectId(aspect) === id);
+  return aspect ? { kind: 'aspect', id, aspect,
+    provisional: data.moonProvisional && (aspect.a === 'Moon' || aspect.b === 'Moon') } : null;
+}
+
+/** Selection and prepared images belong to these exact midpoint inputs. */
+export const compositeDataKey = (data: CompositeTabData): string => JSON.stringify(data);
 
 function isBodyPoint(point: { body: string; lon: number }): point is { body: BodyName; lon: number } {
   return BODY_NAMES.has(point.body as BodyName);
@@ -92,10 +114,13 @@ export function buildRelationshipGrid(
 export function buildCompositeTabData(
   a: readonly { body: string; lon: number }[],
   b: readonly { body: string; lon: number }[],
+  certainty?: { aTimeKnown: boolean; bTimeKnown: boolean },
 ): CompositeTabData {
   const points = compositeMidpoints(a.filter(isBodyPoint), b.filter(isBodyPoint));
   return {
     points,
     aspects: compositeAspects(points),
+    moonProvisional: points.some((point) => point.body === 'Moon')
+      && !(certainty?.aTimeKnown && certainty?.bTimeKnown),
   };
 }

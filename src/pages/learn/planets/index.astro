@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { editorialDates } from '../../../lib/editorial-metadata.mjs';
 import Base from '../../../layouts/Base.astro';
 import PlanetGlyph from '../../../components/PlanetGlyph';
 import '../../../styles/cluster.css';
@@ -37,6 +38,7 @@ const planets = PLANET_ORDER.map((name) => {
 const jsonLd = [
   {
     '@type': 'CollectionPage',
+    ...editorialDates('/learn/planets/'),
     name: 'The planets in astrology',
     url: 'https://zodiacs.org/learn/planets/',
     description: 'What each planet means in a birth chart, from the Sun to Pluto — plain-language guides to all ten.',
@@ -54,7 +56,8 @@ const jsonLd = [
 ];
 ---
 <Base
-  type="article"
+  type="website"
+  editorialLine
   title="The Planets in Astrology — What Each One Means | Zodiacs.org"
   description="What every planet means in a birth chart: the Sun and Moon, Mercury through Mars, and the slow outer planets — each explained plainly, with its cycle and rulerships."
   path="/learn/planets/"

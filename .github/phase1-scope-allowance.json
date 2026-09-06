@@ -1,13 +1,19 @@
 {
   "version": 1,
-  "id": "wave13-natal-result-readings",
-  "baseCommit": "32a8082e2e5294d68b0a7bcfe1d33b95839fb19f",
+  "id": "advanced-astrology-and-personal-continuity",
+  "baseCommit": "2738713a6787d84d05bd3b8e2f401adbc42d7ea7",
   "protectedPaths": [
-    "src/lib/i18n/ui/en.ts",
-    "src/lib/i18n/ui/es.ts",
-    "src/lib/i18n/ui/fr.ts",
-    "src/lib/i18n/ui/it.ts",
-    "src/lib/i18n/ui/pt.ts",
-    "src/lib/i18n/ui/ru.ts"
+    "src/lib/i18n/dates.ts",
+    "src/pages/es/index.astro",
+    "src/pages/fr/index.astro",
+    "src/pages/it/index.astro",
+    "src/pages/learn/aspects/index.astro",
+    "src/pages/learn/chinese-zodiac/[animal]/index.astro",
+    "src/pages/learn/chinese-zodiac/index.astro",
+    "src/pages/learn/houses/index.astro",
+    "src/pages/learn/index.astro",
+    "src/pages/learn/placements/index.astro",
+    "src/pages/learn/planets/index.astro",
+    "src/pages/pt/index.astro"
   ]
 }

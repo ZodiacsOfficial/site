@@ -15,6 +15,7 @@ import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { driveLegacyPolarProfile } from './legacy-polar-profile-drive.mjs';
+import { runCompositeBrowserChecks } from './composite-browser-checks.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const PORT = 4399;
@@ -421,6 +422,7 @@ try {
   await mob.close();
 
   await driveLegacyPolarProfile({ browser, baseURL: BASE, check, outDir: OUT });
+  await runCompositeBrowserChecks({ browser, baseURL: BASE, check, outDir: OUT, profile });
   await browser.close();
 } finally {
   preview.kill();

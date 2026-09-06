@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import dailyData from '../../data/daily.json';
 import { useProfile } from '../../lib/hooks/useProfile';
+import { explicitSelfChart } from '../../lib/profile/read-store';
 import { SIGNS, signForLongitude } from '../../lib/signs';
 import {
   natalPointsForChart,
@@ -110,8 +111,7 @@ export default function TodayBrief({
   const chart = useMemo(
     () => {
       if (!livingChartEnabled) return newestSavedChart(profile);
-      const selfCharts = profile.charts.filter((candidate) => candidate.relationship === 'self');
-      return selfCharts.length === 1 ? selfCharts[0] ?? null : null;
+      return explicitSelfChart(profile.charts);
     },
     [livingChartEnabled, profile],
   );

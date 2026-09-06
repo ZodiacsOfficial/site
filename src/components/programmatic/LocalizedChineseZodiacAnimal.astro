@@ -1,4 +1,5 @@
 ---
+import { editorialDates } from '../../lib/editorial-metadata.mjs';
 import Base from '../../layouts/Base.astro';
 import ChineseZodiacBrandRail from '../ChineseZodiacBrandRail.astro';
 import { chineseYearsForAnimal } from '../../data/chinese-zodiac';
@@ -34,6 +35,7 @@ const sources = [
 const jsonLd = [
   {
     '@type': 'Article',
+    ...editorialDates(path),
     headline: chineseZodiacLocalizedText(locale, 'yearOf', { animal: animal.name }),
     description,
     url: `https://zodiacs.org${path}`,

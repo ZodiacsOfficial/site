@@ -1,111 +1,211 @@
+import { useEffect, useRef, useState } from 'preact/hooks';
+import AspectPatternFeature from '../aspect-patterns/AspectPatternFeature';
 import AspectGlyph from '../../components/AspectGlyph';
 import PlanetGlyph from '../../components/PlanetGlyph';
 import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
-import { type CatalogLocale as Locale } from '../../lib/i18n';
+import { t, type CatalogLocale as Locale } from '../../lib/i18n';
 import { formatLongitude } from '../../lib/signs';
-import Wheel from '../../lib/wheel/Wheel';
-import type { CompositeTabData } from './relationshipData';
+import { createModuleLoader } from '../../lib/module-load';
+import type { PreparedChartCard } from '../../lib/share-card';
+import CalculationReload, { calculationError } from '../CalculationReload';
+import { CompositeWheel } from './CompositeWheel';
+import { COMPOSITE_COPY } from './compositeCopy';
+import { compositeReading } from './compositeReadings';
+import { compositeAspectId, compositeBodyId, compositeSelection, type CompositeTabData } from './relationshipData';
+export { COMPOSITE_NOTE } from './compositeCopy';
 
-export const COMPOSITE_NOTE = `A composite chart is the midpoint of two charts — a portrait of the relationship itself rather than either person. Composite houses need a location convention we won't fake, so this chart is shown without houses.`;
-
-const COPY = {
-  en: {
-    title: 'Two charts, one midpoint',
-    placements: 'Composite placements',
-    aspects: 'Composite aspects',
-    noAspects: 'No major composite aspects are in orb.',
-    note: COMPOSITE_NOTE,
-  },
-  es: {
-    title: 'Dos cartas, un punto medio',
-    placements: 'Posiciones de la carta compuesta',
-    aspects: 'Aspectos de la carta compuesta',
-    noAspects: 'No hay aspectos mayores dentro del orbe.',
-    note: 'Una carta compuesta es el punto medio de dos cartas: un retrato de la relación en sí, no de ninguna de las dos personas. Las casas compuestas requieren una convención de ubicación que no vamos a fingir, por eso esta carta se muestra sin casas.',
-  },
-  pt: {
-    title: 'Dois mapas, um ponto médio',
-    placements: 'Posições do mapa composto',
-    aspects: 'Aspectos do mapa composto',
-    noAspects: 'Nenhum aspecto maior está dentro do orbe.',
-    note: 'Um mapa composto é o ponto médio de dois mapas: um retrato da própria relação, não de nenhuma das duas pessoas. As casas do mapa composto exigem uma convenção de localização, e não vamos fingir que adotamos uma; por isso, este mapa é mostrado sem casas.',
-  },
-  fr: {
-    title: 'Deux thèmes, un point médian',
-    placements: 'Positions du thème composite',
-    aspects: 'Aspects du thème composite',
-    noAspects: 'Aucun aspect majeur du thème composite ne se trouve dans l’orbe.',
-    note: 'Un thème composite correspond aux points médians de deux thèmes : il décrit la relation elle-même, et non l’une ou l’autre personne. Les maisons du thème composite exigent une convention de lieu que nous n’allons pas inventer ; ce thème est donc présenté sans maisons.',
-  },
-  it: {
-    title: 'Due temi, un punto medio',
-    placements: 'Posizioni del tema composito',
-    aspects: 'Aspetti del tema composito',
-    noAspects: 'Nessun aspetto maggiore del tema composito rientra nell’orbita.',
-    note: 'Un tema composito corrisponde ai punti medi di due temi: descrive la relazione stessa, non l’una o l’altra persona. Le case del tema composito richiedono una convenzione sul luogo che non intendiamo inventare, quindi questo tema viene mostrato senza case.',
-  },
-  ru: {
-    title: 'Две карты, одна середина',
-    placements: 'Положения композитной карты',
-    aspects: 'Аспекты композитной карты',
-    noAspects: 'Мажорных композитных аспектов в орбисе нет.',
-    note: 'Композитная карта строится по средним точкам двух карт и описывает сами отношения, а не одного из людей. Для композитных домов нужна договорённость о месте, которую мы не станем выдумывать, поэтому карта показана без домов.',
-  },
-} as const;
-
+type CardModule = typeof import('../../lib/composite-card');
+const loadCard = createModuleLoader(() => import('../../lib/composite-card'));
+interface ReadyCard { source: string; prepared: PreparedChartCard; module: CardModule; url: string }
 interface CompositePanelProps {
   locale: Locale;
   data: CompositeTabData;
+  sourceKey: string;
+  /** Both original chart times, independent of which midpoint bodies exist. */
+  sourceTimesKnown: boolean;
+  selectedId: string | null;
+  onSelect: (id: string | null) => void;
 }
 
-export function CompositePanel({ locale, data }: CompositePanelProps) {
-  const c = COPY[locale];
-  return (
-    <div class="rcomp" data-composite-panel>
-      <h3 class="rcomp__title" id="relationship-composite-title">{c.title}</h3>
-      {/* The shared static Wheel names itself "Birth chart wheel". The
-          complete placements/aspects below are this panel's accessible
-          representation, so suppress that misleading inherited label here. */}
-      <div class="tring__wheelbox rcomp__wheel" aria-hidden="true" data-composite-wheel>
-        <Wheel
-          bodies={data.points.filter((point) => point.body !== 'South Node')}
-          asc={null}
-          mc={null}
-          cusps={null}
-          aspects={data.aspects}
-        />
-      </div>
+export function CompositePanel({ locale, data, sourceKey, sourceTimesKnown, selectedId, onSelect }: CompositePanelProps) {
+  const c = COMPOSITE_COPY[locale];
+  const selected = compositeSelection(data, selectedId);
+  const reading = compositeReading(data, selectedId);
+  const identity = `${locale}:${sourceKey}`;
+  const currentIdentity = useRef(identity);
+  currentIdentity.current = identity;
+  const generation = useRef(0);
+  const mounted = useRef(true);
+  const panel = useRef<HTMLDivElement>(null);
+  const delivering = useRef(false);
+  const creating = useRef<string | null>(null);
+  const cardUrl = useRef<string | null>(null);
+  const [exportOwner, setExportOwner] = useState('');
+  const [open, setOpen] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [ready, setReady] = useState<ReadyCard | null>(null);
+  const [error, setError] = useState('');
+  const [outcome, setOutcome] = useState<'shared' | 'downloaded' | 'cancelled' | null>(null);
+  const exportOpen = open && exportOwner === identity;
+  const image = ready?.source === identity ? ready : null;
 
+  function releasePreview() {
+    if (cardUrl.current) URL.revokeObjectURL(cardUrl.current);
+    cardUrl.current = null;
+  }
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      generation.current += 1;
+      creating.current = null;
+      delivering.current = false;
+      releasePreview();
+    };
+  }, [identity]);
+
+  async function prepareImage() {
+    if (!mounted.current || currentIdentity.current !== identity || !data.points.length || creating.current === identity || delivering.current) return;
+    const request = ++generation.current;
+    const current = () => mounted.current && generation.current === request && currentIdentity.current === identity;
+    creating.current = identity;
+    setExportOwner(identity); setOpen(true); setBusy(true); setError(''); setOutcome(null);
+    releasePreview(); setReady(null);
+    try {
+      const module = await loadCard();
+      if (!current()) return;
+      const prepared = await module.prepareCompositeCard(data, locale);
+      if (!current()) return;
+      const url = URL.createObjectURL(prepared.blob);
+      cardUrl.current = url;
+      setReady({ source: identity, prepared, module, url });
+    } catch (cause) {
+      if (current()) setError(calculationError(cause, locale, c.shareError));
+    } finally {
+      if (current()) { creating.current = null; setBusy(false); }
+    }
+  }
+
+  function closeImage() {
+    if (!mounted.current || currentIdentity.current !== identity) return;
+    generation.current += 1;
+    delivering.current = false;
+    creating.current = null;
+    releasePreview(); setReady(null); setOpen(false); setBusy(false); setError(''); setOutcome(null);
+  }
+
+  async function deliver(download: boolean) {
+    if (!mounted.current || !image || busy || delivering.current || currentIdentity.current !== identity) return;
+    delivering.current = true;
+    const request = generation.current;
+    setBusy(true); setError(''); setOutcome(null);
+    try {
+      // Prepared bytes and transport are already loaded before this native tap.
+      const next = await (download
+        ? image.module.downloadCompositeCard(image.prepared)
+        : image.module.shareCompositeCard(image.prepared));
+      if (mounted.current && request === generation.current && currentIdentity.current === identity) setOutcome(next);
+    } catch {
+      if (mounted.current && request === generation.current && currentIdentity.current === identity) setError(c.shareError);
+    } finally {
+      if (mounted.current && request === generation.current && currentIdentity.current === identity) { delivering.current = false; setBusy(false); }
+    }
+  }
+
+  const choose = (id: string) => onSelect(id === selectedId ? null : id);
+  function clearSelection() {
+    // The clear control disappears with the detail; return focus to its receipt.
+    panel.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')?.focus();
+    onSelect(null);
+  }
+  return (
+    <div class="rcomp" data-composite-panel ref={panel}>
+      <h3 class="rcomp__title" id="relationship-composite-title">{c.title}</h3>
+      <div class="tring__wheelbox rcomp__wheel" data-composite-wheel>
+        <CompositeWheel data={data} label={c.wheelLabel} selection={selectedId} onSelect={choose} />
+      </div>
       <p class="rcomp__note" data-composite-note>{c.note}</p>
+      <p class="rcomp__note">{c.oppositeConvention}</p>
+      {data.moonProvisional && <p class="notice" data-composite-provisional>{c.moonTimeNotice}</p>}
+      <p class="field__help">{c.selectionHint}</p>
 
       <div class="rcomp__lists">
         <section aria-labelledby="composite-placements-heading">
           <h4 class="mono--label" id="composite-placements-heading">{c.placements}</h4>
-          <ul class="rcomp__placements mono" role="list">
-            {data.points.map((point) => (
-              <li key={point.body} data-composite-point={point.body}>
-                <span><PlanetGlyph body={point.body} size={13} class="pg-inline" /> {planetLabel(locale, point.body)}</span>
-                <span>{formatLongitude(point.lon, locale)}</span>
-              </li>
-            ))}
-          </ul>
+          {data.points.length ? <ul class="rcomp__placements mono" role="list">
+            {data.points.map((point) => {
+              const id = compositeBodyId(point.body);
+              return <li key={id}>
+                <button type="button" class="rcomp__pick" data-composite-point={point.body}
+                  data-composite-longitude={point.lon} aria-pressed={selectedId === id}
+                  aria-controls="composite-selected-detail" onClick={() => choose(id)}>
+                  <span><PlanetGlyph body={point.body} size={13} class="pg-inline" /> {planetLabel(locale, point.body)}</span>
+                  <span>{formatLongitude(point.lon, locale)}{point.body === 'Moon' && data.moonProvisional ? ` · ${c.provisionalMoon}` : ''}</span>
+                </button>
+              </li>;
+            })}
+          </ul> : <p class="field__help">{c.noPlacements}</p>}
         </section>
-
         <section aria-labelledby="composite-aspects-heading">
           <h4 class="mono--label" id="composite-aspects-heading">{c.aspects}</h4>
-          {data.aspects.length > 0 ? (
-            <ul class="rcomp__aspects mono" role="list">
-              {data.aspects.map((aspect) => (
-                <li key={`${aspect.a}-${aspect.type}-${aspect.b}`}>
-                  <span><PlanetGlyph body={aspect.a} size={13} class="pg-inline" /> {planetLabel(locale, aspect.a)}</span>
-                  <span><AspectGlyph type={aspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, aspect.type)}</span>
-                  <span><PlanetGlyph body={aspect.b} size={13} class="pg-inline" /> {planetLabel(locale, aspect.b)}</span>
-                  <span>{aspect.orb.toFixed(1)}°</span>
-                </li>
-              ))}
-            </ul>
-          ) : <p class="field__help">{c.noAspects}</p>}
+          {data.aspects.length ? <ul class="rcomp__aspects mono" role="list">
+            {data.aspects.map((aspect) => {
+              const id = compositeAspectId(aspect);
+              const provisional = data.moonProvisional && (aspect.a === 'Moon' || aspect.b === 'Moon');
+              return <li key={id}>
+                <button type="button" class="rcomp__pick" data-composite-aspect={id}
+                  data-composite-orb={aspect.orb} aria-pressed={selectedId === id}
+                  aria-controls="composite-selected-detail" onClick={() => choose(id)}>
+                  <span><PlanetGlyph body={aspect.a} size={13} class="pg-inline" /> {planetLabel(locale, aspect.a)}
+                    {' '}<AspectGlyph type={aspect.type} size={13} class="pg-inline" /> {aspectLabel(locale, aspect.type)}
+                    {' '}<PlanetGlyph body={aspect.b} size={13} class="pg-inline" /> {planetLabel(locale, aspect.b)}</span>
+                  <span>{t(locale, 'orb')} {aspect.orb.toFixed(1)}°{provisional ? ` · ${c.referenceContact}` : ''}</span>
+                </button>
+              </li>;
+            })}
+          </ul> : <p class="field__help">{c.noAspects}</p>}
         </section>
+      </div>
+
+      <section id="composite-selected-detail" class="rcomp__detail" data-composite-detail aria-live="polite" aria-atomic="true">
+        {selected ? <>
+          <div class="rcomp__detail-head">
+            <h4>{selected.kind === 'body' ? <>{planetLabel(locale, selected.point.body)} · {formatLongitude(selected.point.lon, locale)}</>
+              : <>{planetLabel(locale, selected.aspect.a)} {aspectLabel(locale, selected.aspect.type)} {planetLabel(locale, selected.aspect.b)} · {t(locale, 'orb')} {selected.aspect.orb.toFixed(1)}°</>}</h4>
+            <button class="btn btn--glass" type="button" onClick={clearSelection} data-composite-clear>{c.clearSelection}</button>
+          </div>
+          {selected.provisional ? <p>{c.moonTimeNotice}</p> : reading && <>
+            {locale !== 'en' && <p class="field__help">{c.englishNarrative}</p>}
+            <div data-composite-reading lang="en">
+              {reading.role && <p><span class="mono--label" lang={locale}>{c.roleTitle}</span>{reading.role}</p>}
+              {reading.theme && <p><span class="mono--label" lang={locale}>{c.pairTitle}</span>{reading.theme}</p>}
+              {reading.prompt && <p><span class="mono--label" lang={locale}>{c.promptTitle}</span>{reading.prompt}</p>}
+            </div>
+          </>}
+        </> : <p class="field__help">{t(locale, 'selectionCleared')}</p>}
+      </section>
+
+      {locale === 'en' && <AspectPatternFeature context="composite" points={data.points} aspects={data.aspects}
+        timeKnown={sourceTimesKnown} sourceKey={sourceKey} onSelectBody={(body) => onSelect(compositeBodyId(body))} />}
+
+      <div class="rcomp__export">
+        <button class="btn btn--glass" type="button" data-composite-export disabled={!data.points.length || (exportOpen && busy)} onClick={prepareImage}>
+          {exportOpen && !image && error ? c.retry : c.imageAction}
+        </button>
+        {exportOpen && <section class="rcomp__image-panel" aria-label={c.imageTitle}>
+          <div class="rcomp__detail-head">
+            <h4>{c.imageTitle}</h4>
+            <button class="btn btn--glass" type="button" data-composite-export-close onClick={closeImage}>{c.closeImage}</button>
+          </div>
+          {image && <img data-composite-image class="rcomp__image" src={image.url} width="1080" height="1350" alt={c.imageAlt} />}
+          {image && <div class="rcomp__image-actions">
+            <button class="btn btn--glass" type="button" data-composite-share disabled={busy} onClick={() => deliver(false)}>{c.shareAction}</button>
+            <button class="btn btn--glass" type="button" data-composite-download disabled={busy} onClick={() => deliver(true)}>{c.downloadAction}</button>
+          </div>}
+          <p class="field__help" role="status" data-composite-export-status>{busy ? c.shareBusy : outcome ? c[outcome] : image ? c.imageReady : ''}</p>
+          {error && <p class="calc__error" role="alert">{error}</p>}
+          <CalculationReload error={error} locale={locale} />
+        </section>}
       </div>
     </div>
   );

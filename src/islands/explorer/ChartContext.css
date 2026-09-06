@@ -1,0 +1,17 @@
+.cctx{margin-block:32px;min-width:0;color:var(--text)}
+.cctx h2{font-family:var(--font-serif);font-weight:500;font-size:2rem}
+.cctx>details{margin-block:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);min-width:0}
+.cctx summary{min-height:44px;padding:12px 16px;cursor:pointer;font-family:var(--font-serif);font-size:1.4rem}
+.cctx__content{padding:0 16px 20px;overflow-wrap:anywhere;min-width:0}
+.cctx__content p{line-height:1.65;margin-block:12px}
+.cctx__controls{display:grid;gap:8px}
+.cctx__row{display:flex;flex-wrap:wrap;gap:8px}
+.cctx__pick{min-height:44px;max-width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;overflow-wrap:anywhere}
+.cctx__pick[aria-pressed=true]{background:var(--surface-2);box-shadow:inset 2px 0 currentColor}
+.cctx__pick:focus-visible,.cctx summary:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.cctx__chain{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:decimal;padding-inline-start:22px}
+.cctx__convention{font-size:.8rem;color:var(--muted)}
+.cctx__image{display:block;max-width:100%;width:460px;height:auto;margin:16px auto}
+.cctx__actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.cctx__actions .btn{min-height:44px}
+.cctx button{min-height:44px}
