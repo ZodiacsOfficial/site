@@ -9,10 +9,10 @@
  * history, refreshed once in the browser when the network allows.
  *
  * Hero footage: an owner-supplied screen recording of the Fomo app
- * (2026-09-02, iPhone, 1206×2622 HEVC). Encoded for the web with ffmpeg:
- * top 200px cropped (the iOS status bar and recording indicator), scaled to
- * 638×1280, 30fps, 0.3s fades so the loop point reads as a screen dim;
- * libx264 crf 27 and libaom-av1 crf 34; posters are the 3.6s frame.
+ * (2026-09-02, iPhone, 1206×2622 HEVC, 60fps), used exactly as recorded.
+ * The only processing is what browsers need: ffmpeg scales the full frame to
+ * 720×1566 and re-encodes it as H.264 (libx264 crf 26) and AV1 (libaom crf
+ * 34), audio track dropped; the posters are the 3.6s frame.
  */
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
@@ -57,8 +57,8 @@ const FOOTAGE = Object.freeze({
   h264: '/assets/fomo/fomo-zodiacs.mp4',
   posterAvif: '/assets/fomo/fomo-zodiacs-poster.avif',
   posterWebp: '/assets/fomo/fomo-zodiacs-poster.webp',
-  width: 638,
-  height: 1280,
+  width: 720,
+  height: 1566,
 });
 
 const SPARK_DAYS = 14;
@@ -240,11 +240,6 @@ const sources = [
       <figure class="fomo-phone reveal" style="--reveal-delay:140ms" data-fomo-phone>
         <div class="fomo-phone__frame">
           <div class="fomo-phone__screen">
-            <div class="fomo-phone__status" aria-hidden="true">
-              <span>9:41</span>
-              <span class="fomo-phone__island"></span>
-              <span class="fomo-phone__signal"><i></i><i></i><i></i><i></i></span>
-            </div>
             <div class="fomo-phone__stage" data-fomo-stage>
               <picture>
                 <source type="image/avif" srcset={FOOTAGE.posterAvif} />
@@ -1024,36 +1019,15 @@ const sources = [
   .fomo-phone:focus-within .fomo-phone__frame { transform: none; }
   .fomo-phone__screen {
     position: relative;
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
     overflow: hidden;
     border-radius: 44px;
     background: #07080c;
     color: var(--ink-0);
   }
-  .fomo-phone__status {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    padding: 14px 24px 8px;
-    font: 600 13px/1 var(--font-sans);
-  }
-  .fomo-phone__island {
-    width: 96px;
-    height: 28px;
-    border-radius: 999px;
-    background: #000;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-  }
-  .fomo-phone__signal { display: flex; justify-content: flex-end; align-items: flex-end; gap: 2px; height: 12px; }
-  .fomo-phone__signal i { width: 3px; border-radius: 1px; background: var(--ink-0); }
-  .fomo-phone__signal i:nth-child(1) { height: 5px; }
-  .fomo-phone__signal i:nth-child(2) { height: 7px; }
-  .fomo-phone__signal i:nth-child(3) { height: 9px; }
-  .fomo-phone__signal i:nth-child(4) { height: 12px; }
+  /* The recording's own proportions (1206×2622); its status bar is part of it. */
   .fomo-phone__stage {
     position: relative;
-    aspect-ratio: 638 / 1280;
+    aspect-ratio: 1206 / 2622;
     overflow: hidden;
     background: #07080c;
   }
@@ -1074,13 +1048,13 @@ const sources = [
     inset: 0;
     z-index: 3;
     pointer-events: none;
-    background: linear-gradient(180deg, rgba(7, 8, 12, 0.35), transparent 14%, transparent 86%, rgba(7, 8, 12, 0.5));
+    background: linear-gradient(180deg, transparent 84%, rgba(7, 8, 12, 0.45));
   }
 
   /* The example alert, hung over the phone's top edge like an iOS banner. */
   .fomo-alert {
     position: absolute;
-    top: 9%;
+    top: 8%;
     left: 50%;
     z-index: 4;
     display: grid;
