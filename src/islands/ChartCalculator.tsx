@@ -65,6 +65,7 @@ import { useEngine } from '../lib/hooks/useEngine';
 import CalculationReload, { calculationError, calculationLoadMessage } from './CalculationReload';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
+import { learningInputIdentity } from '../lib/learning-input-identity';
 import type { AspectType } from '../lib/engine/types';
 import { trackAnalytics } from '../lib/analytics';
 import {
@@ -2211,6 +2212,16 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               {/* A visual story leads; exact data remains available below. */}
               {showsEnglishInterpretation && reading && ReadingPath && (
                 <ReadingPath
+                  practiceSource={primaryProfileChartIdRef.current && computedInput ? {
+                    id: primaryProfileChartIdRef.current,
+                    identity: learningInputIdentity({ ...computedInput, subjectMode: computedInput.subjectMode ?? 'self' }),
+                    run: chartContextIdRef.current, inputRevision,
+                    isCurrent: (run, revision) => run === chartContextIdRef.current && revision === inputRevisionRef.current
+                      && primaryProfileChartIdRef.current !== null && profileAccessAllowed(),
+                  } : null}
+                  timeKnown={chart.input.timeKnown && !chart.flags.includes('no-time')}
+                  effectiveHouseSystem={chart.houses?.system ?? null}
+                  polarFallback={chart.flags.includes('polar-fallback')}
                   placements={reading.ps}
                   topAspects={reading.top}
                   weather={reading.weather}

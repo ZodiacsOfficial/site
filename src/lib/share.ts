@@ -7,7 +7,7 @@
  * future-versioned token rather than throwing into an island.
  */
 import type { HouseSystem } from './engine/types';
-import { TECHNICAL_OFFSET_LOCALE } from './i18n/dates';
+import { TECHNICAL_OFFSET_LOCALE } from './time/technical-locales';
 
 export interface ShareChartInput {
   date: string;            // YYYY-MM-DD

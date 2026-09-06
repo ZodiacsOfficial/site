@@ -7,7 +7,7 @@
  * Coverage and tzdb version therefore depend on that runtime. Never hand-roll
  * offsets.
  */
-import { TECHNICAL_OFFSET_LOCALE, TECHNICAL_WALL_LOCALE } from '../i18n/dates';
+import { TECHNICAL_OFFSET_LOCALE, TECHNICAL_WALL_LOCALE } from './technical-locales';
 
 export interface LocalTimeResolution {
   utc: Date;

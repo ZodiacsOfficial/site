@@ -8,6 +8,8 @@ import { SIGNS, signForLongitude, signName } from '../../lib/signs';
 import { entityId, type EntityRef, type SignSlug } from '../../lib/scene/types';
 import { moonCandidates, moonLabel } from '../../lib/moon-certainty';
 import './ReadingPath.css';
+import LearningPractice, { type PracticeSource } from './LearningPractice';
+import type { HouseSystem } from '../../lib/engine/types';
 
 export interface ReadingPathPlacement {
   body: BodyName;
@@ -18,6 +20,10 @@ export interface ReadingPathPlacement {
 export type ReadingScrollBehavior = 'instant' | 'smooth';
 
 export interface ReadingPathProps {
+  practiceSource?: PracticeSource | null;
+  timeKnown?: boolean;
+  effectiveHouseSystem?: HouseSystem | null;
+  polarFallback?: boolean;
   placements: readonly ReadingPathPlacement[];
   topAspects: readonly Aspect[];
   weather: ChartWeather;
@@ -445,6 +451,10 @@ export default function ReadingPath({
   moonSignCandidates,
   selection = null,
   onShowOnChart,
+  practiceSource = null,
+  timeKnown = false,
+  effectiveHouseSystem = null,
+  polarFallback = false,
 }: ReadingPathProps) {
   const rootRef = useRef<HTMLElement>(null);
   const sun = placements.find((placement) => placement.body === 'Sun') ?? null;
@@ -579,6 +589,12 @@ export default function ReadingPath({
           )}
         </StoryCard>
       </ol>
+      {practiceSource && <LearningPractice
+        key={`${practiceSource.id}:${practiceSource.run}:${practiceSource.inputRevision}`}
+        source={practiceSource} placements={placements} topAspects={topAspects}
+        timeKnown={timeKnown} risingLon={risingLon} housesKnown={housesKnown}
+        moonSignCandidates={moonSignCandidates} effectiveHouseSystem={effectiveHouseSystem}
+        requestedHouseSystem={null} polarFallback={polarFallback} onShow={onShowOnChart} />}
     </section>
   );
 }

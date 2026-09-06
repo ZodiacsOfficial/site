@@ -31,6 +31,7 @@ import { runExplorerMoonChecks } from './explorer-moon-checks.mjs';
 import { runSearchLearningChecks } from './search-learning-checks.mjs';
 import { runSolarReturnChecks } from './solar-return-drive.mjs';
 import { runChartContextChecks } from './chart-context-checks.mjs';
+import { runLearningPracticeChecks } from './learning-practice-checks.mjs';
 import { runAspectPatternBrowserChecks } from './aspect-pattern-browser-checks.mjs';
 import { runLunarReturnChecks } from './lunar-return-drive.mjs';
 import { runEventTransitChecks } from './event-transit-checks.mjs';
@@ -213,6 +214,7 @@ try {
   await runLunarReturnChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/lunar-return` : null });
   await runAspectPatternBrowserChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/aspect-patterns` : null });
   await runChartContextChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/chart-context` : null });
+  await runLearningPracticeChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/learning-practice` : null });
 
   await verifyWidgetBuilder({
     browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/widgets` : null,
