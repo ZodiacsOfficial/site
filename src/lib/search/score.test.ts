@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { scoreEntry, searchIndex, type SearchEntry } from './score';
+import { normalizeSearchQuery, scoreEntry, searchIndex, type SearchEntry } from './score';
 
 const entries: SearchEntry[] = [
   { path: '/saturn-return/', title: 'Saturn return', description: 'The exact dates your Saturn return hits.', kind: 'tool' },
@@ -37,6 +37,21 @@ describe('scoreEntry', () => {
 });
 
 describe('searchIndex', () => {
+  it('finds the flagship calculator for singular and plural birth-chart queries', () => {
+    const index = [
+      ...entries,
+      { path: '/', title: 'Free Birth Charts and Astrology', description: 'Astrology tools.', kind: 'page' },
+      { path: '/widgets/', title: 'Astrology Widgets — Birth Chart', description: 'Embed charts.', kind: 'tool' },
+    ];
+    for (const query of ['birth chart', 'birth charts', '  BIRTH CHARTS  ']) {
+      expect(searchIndex(index, query)[0].path).toBe('/birth-chart/');
+    }
+  });
+
+  it('normalizes only the supported plural nouns and preserves proper names', () => {
+    expect(normalizeSearchQuery('Charts Trines Eclipses')).toBe('chart trine eclipse');
+    expect(normalizeSearchQuery('Aries Pisces Uranus Venus houses thesis')).toBe('aries pisces uranus venus houses thesis');
+  });
   it('returns nothing below two characters', () => {
     expect(searchIndex(entries, 's')).toHaveLength(0);
     expect(searchIndex(entries, ' ')).toHaveLength(0);
