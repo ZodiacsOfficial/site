@@ -54,12 +54,12 @@ export default function LearningPractice({ source, onShow, ...input }: Props) {
     <p>Look, answer, then reflect. A correct answer is a starting point; you decide when the lesson feels understood.</p>
     {!available ? <p role="status">This practice no longer matches an available saved chart. Open your saved chart again to begin a fresh attempt.</p> : <>
       <label>Practice
-        <select value={id} onChange={(event) => { reset(); setId(event.currentTarget.value as ExerciseId); }}>
+        <select aria-label="Practice" value={id} onChange={(event) => { reset(); setId(event.currentTarget.value as ExerciseId); }}>
           <option value="big-three">Your big three</option><option value="planets-houses">Planets and houses</option><option value="aspects">A connection between planets</option>
         </select>
       </label>
       {id === 'big-three' && <label>Choose a reference point
-        <select value={focus} onChange={(event) => { reset(); setFocus(event.currentTarget.value as typeof focus); }}>
+        <select aria-label="Choose a reference point" value={focus} onChange={(event) => { reset(); setFocus(event.currentTarget.value as typeof focus); }}>
           <option>Sun</option><option>Moon</option><option>Rising</option>
         </select>
       </label>}

@@ -19,17 +19,17 @@ const profile = {
     summary: { engineVersion: 'fixture', utcISO: demo.utc, houseSystem: 'whole', bodies: demo.bodies, angles: demo.angles, flags: demo.flags },
   })),
 };
-const fit = (page) => page.evaluate(() => {
+const fit = (page, ringExpected = false) => page.evaluate((required) => {
   if (document.documentElement.scrollWidth > innerWidth + 1) return false;
   const ring = document.querySelector('.tring');
-  if (!ring) return false;
+  if (!ring) return !required;
   const bounds = ring.getBoundingClientRect();
   return [...ring.querySelectorAll('.tring__scrub, .tring__date, .tring__next-link')].every((node) => {
     const rect = node.getBoundingClientRect();
     return rect.left >= bounds.left - 1 && rect.right <= bounds.right + 1
       && node.scrollWidth <= node.clientWidth + 1;
   });
-});
+}, ringExpected);
 const compute = async (page) => {
   await page.locator('.calc__submit').click();
   await page.locator('[data-ring-instant]').waitFor({ timeout: 30_000 });
@@ -83,7 +83,7 @@ export async function runEventTransitChecks({ browser, baseURL, check, outDir = 
       check(`event transit ${width}: recomputing the same event resets scrub and selection`,
         await instant() === events[0].anchor && await page.locator('.tring__range').inputValue() === '0'
         && await page.locator('.tring__focus').count() === 0);
-      check(`event transit ${width}: date controls fit the viewport`, await fit(page));
+      check(`event transit ${width}: date controls fit the viewport`, await fit(page, true));
       if (outDir) await page.locator('.tring').screenshot({ path: `${outDir}/event-transit-known-${width}.png`, animations: 'disabled' });
 
       await page.locator('#trans-source').selectOption('event-unknown');
@@ -93,7 +93,7 @@ export async function runEventTransitChecks({ browser, baseURL, check, outDir = 
         await instant() === events[0].anchor
         && (await page.locator('.calc__result .notice').innerText()).includes('precise Moon contacts')
         && !(await page.locator('.tring__row').allTextContents()).some((text) => text.includes('Natal Moon'))
-        && await fit(page));
+        && await fit(page, true));
       if (outDir) await page.locator('.calc__result').screenshot({ path: `${outDir}/event-transit-unknown-${width}.png`, animations: 'disabled' });
       check(`event transit ${width}: no unexpected JavaScript errors`, errors.length === 0, errors.join('; '));
     } finally { await context.close(); }

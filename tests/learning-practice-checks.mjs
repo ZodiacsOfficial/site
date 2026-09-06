@@ -30,11 +30,14 @@ export async function runLearningPracticeChecks({ browser, baseURL, check, outDi
       await page.getByRole('button', { name: 'Choose a saved chart', exact: true }).click();
       await page.getByRole('button', { name: 'Practice with this saved chart', exact: true }).waitFor();
       check(`practice ${width}: ordinary five destinations remain`, await page.locator('[data-learning-step] a').count() === 5);
+      const handoffs = [];
+      page.on('framenavigated', (frame) => { if (frame === page.mainFrame()) handoffs.push(frame.url()); });
       await page.getByRole('button', { name: 'Practice with this saved chart', exact: true }).click();
       await page.waitForURL(`**/birth-chart/#profileChartId=${id}`);
       const practice = page.getByRole('region', { name: 'Try it with your chart', exact: true });
       await practice.getByRole('button', { name: 'Begin this exercise', exact: true }).waitFor({ timeout: 45_000 });
-      check(`practice ${width}: opaque-only handoff`, new URL(page.url()).hash === `#profileChartId=${id}` && !new URL(page.url()).search);
+      check(`practice ${width}: opaque-only handoff`, handoffs.some((value) => { const url = new URL(value); return url.pathname === '/birth-chart/' && url.hash === `#profileChartId=${id}` && !url.search; })
+        && !new URL(page.url()).hash && !new URL(page.url()).search);
       const initial = await page.evaluate(() => JSON.parse(localStorage.getItem('zodiacs:learning-path:v2')));
       check(`practice ${width}: entry starts only big three, completes nothing`, JSON.stringify(initial) === JSON.stringify({ version: 2, started: ['big-three'], completed: [] }));
       await practice.getByRole('button', { name: 'Begin this exercise', exact: true }).click();

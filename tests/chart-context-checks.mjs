@@ -45,8 +45,10 @@ export async function runChartContextChecks({browser,baseURL,check,outDir}){
         check(`context ${locale}/${width}/${section}: native Enter opens disclosure`,await owner.evaluate(n=>n.open));
         const body=owner.locator('[data-context-entity="body:Sun"]').first();
         if(await body.count()){await body.focus();await page.keyboard.press('Space');check(`context ${locale}/${width}/${section}: native body selection reaches Sun`,await body.getAttribute('aria-pressed')==='true');}
-        check(`context ${locale}/${width}/${section}: controls fit and retain 44px targets`,await owner.evaluate(n=>document.documentElement.scrollWidth<=innerWidth&&n.scrollWidth<=n.clientWidth+1
-          &&[...n.querySelectorAll('button,summary')].filter(el=>el.getClientRects().length).every(el=>el.getBoundingClientRect().height>=44)));
+        const geometry=await owner.evaluate(n=>({pageWidth:document.documentElement.scrollWidth,viewport:innerWidth,scroll:n.scrollWidth,client:n.clientWidth,
+          controls:[...n.querySelectorAll('button,summary')].filter(el=>el.getClientRects().length).map(el=>({tag:el.tagName,text:el.textContent.trim().slice(0,80),height:el.getBoundingClientRect().height,scroll:el.scrollWidth,client:el.clientWidth}))}));
+        const geometryFits=geometry.pageWidth<=geometry.viewport&&geometry.scroll<=geometry.client+1&&geometry.controls.every(el=>el.height>=44);
+        check(`context ${locale}/${width}/${section}: controls fit and retain 44px targets`,geometryFits,geometryFits?'':JSON.stringify(geometry));
         const facts=await owner.locator('[data-context-facts] p').allTextContents();await page.evaluate(()=>{window.__contextProbe.ink=[];});
         await owner.locator('[data-context-create]').click();await owner.locator('[data-context-image]').waitFor({timeout:20_000});
         const waiting=page.waitForEvent('download');await owner.locator('[data-context-save]').click();const download=await waiting,path=await download.path();if(!path)throw new Error('Context PNG missing');
@@ -89,7 +91,9 @@ export async function runChartContextChecks({browser,baseURL,check,outDir}){
     const shape=page.locator('[data-context-section="shape"]');await shape.waitFor({timeout:30_000});await shape.locator(':scope > summary').click();
     await shape.locator('[data-context-create]').click();await shape.locator('[role="alert"]').waitFor({timeout:20_000});
     check('context recovery: failed renderer preserves facts and explicit reload',expected.size===1&&await shape.locator('[data-context-entity="body:Sun"]').count()===1&&await shape.getByRole('button',{name:'Reload page',exact:true}).count()===1);
-    await page.unroute(matcher);await shape.getByRole('button',{name:'Reload page',exact:true}).click();
+    await page.unroute(matcher);await Promise.all([page.waitForNavigation({waitUntil:'networkidle'}),shape.getByRole('button',{name:'Reload page',exact:true}).click()]);
+    check('context reload: warned unsaved input is cleared',await page.locator('.wheel--interactive').count()===0&&await page.locator('#birth-date').inputValue()==='');
+    await page.goto('about:blank');await page.goto(`${baseURL}/birth-chart/${fragment(true)}`,{waitUntil:'networkidle'});
     await page.locator('.wheel--interactive').waitFor({timeout:30_000});await shape.locator(':scope > summary').click();
     await shape.locator('[data-context-create]').click();await shape.locator('[data-context-image]').waitFor({timeout:20_000});
     check('context recovery: reloaded real renderer prepares an image',await shape.locator('[data-context-image]').isVisible());

@@ -82,6 +82,8 @@ async function cast(page) {
   await page.locator('[data-lunar-return-calculator] button[type="submit"]').click();
   await page.locator('[data-lunar-return-result]').waitFor({ state: 'visible', timeout: TIMEOUT });
   await page.waitForFunction(() => document.activeElement?.id === 'lunar-return-reading-title');
+  // Finish the real wheel image requests before the next deliberate form edit.
+  await page.waitForLoadState('networkidle');
 }
 async function prepare(page) {
   await page.evaluate(() => { window.__lrText = []; });

@@ -150,6 +150,10 @@
   font-size: 15px;
   line-height: 1;
 }
+/* Return relocation stays usable at phone widths after a place is selected. */
+[data-lunar-return-calculator] .place__chip { max-width: 100%; }
+[data-lunar-return-calculator] .place__chip-value { min-height: 44px; }
+[data-lunar-return-calculator] .place__clear { min-width: 44px; min-height: 44px; flex-shrink: 0; }
 .place__clear:hover { color: var(--text); border-color: var(--hair-3); }
 .place__error { margin: 8px 0 0; font-size: 12.5px; color: var(--sign-aries); }
 .place__hint { margin: 8px 0 0; font-size: 12.5px; color: var(--faint); }
@@ -1924,6 +1928,8 @@
 }
 .tring__range {
   width: 100%;
+  min-width: 0;
+  margin-inline: 0;
   accent-color: var(--accent);
   cursor: ew-resize;
 }

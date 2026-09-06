@@ -270,7 +270,9 @@ export async function runAspectPatternBrowserChecks({ browser, baseURL, check, o
     await page.waitForFunction(() => document.querySelector('[data-pattern-panel]') || document.querySelector('[data-aspect-patterns] [role="alert"]'));
     if (!await feature.locator('[data-pattern-panel]').count()) {
       await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle' }), feature.getByRole('button', { name: 'Reload page', exact: true }).click()]);
-      await page.locator('.wheel--interactive').waitFor({ timeout: 30_000 });
+      check('pattern reload: warned unsaved input is cleared', await page.locator('.wheel--interactive').count() === 0 && await page.locator('#birth-date').inputValue() === '');
+      await page.goto('about:blank');
+      await openNatal(page, baseURL);
       await feature.locator(':scope > summary').click();
     }
     await feature.locator('[data-pattern-panel]').waitFor({ timeout: 15_000 });
