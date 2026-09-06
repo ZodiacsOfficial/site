@@ -1,6 +1,5 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
-
 import { CATALOG_LOCALES, UI } from '../lib/i18n';
 
 const wheelActionKeys = [
@@ -94,5 +93,18 @@ describe('Chart result action contract', () => {
     expect(calculator).toContain('saveReturnRef.current = null;');
     expect(dock).toContain('onSave?.(event.currentTarget)');
     expect(dock).not.toContain('savePrompt');
+  });
+
+  it('loads natal readings with result controls and keeps the quick guide unavailable until they arrive', async () => {
+    const calculator = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
+    const result = await readFile(new URL('./ChartActionDock.tsx', import.meta.url), 'utf8');
+    expect(calculator).not.toMatch(/import .*from ['"](?:\.\/explorer\/Inspector|\.\.\/lib\/natal)['"]/);
+    expect(result).toContain("export { default as Inspector } from './explorer/Inspector'");
+    expect(result).toContain("export { chartWeather, natalAspectLine, planetInHouseLine, topAspects } from '../lib/natal'");
+    expect(calculator).toContain('disabled={!chartActionDockModule} data-first-reading-start');
+    expect(calculator).toContain('const Inspector = chartActionDockModule?.Inspector');
+    expect(calculator).toContain('if (!chart || mode !== \'full\' || !chartActionDockModule) return null;');
+    expect(UI.en.explorerControlsLoading).toContain('readings and controls');
+    expect(UI.en.explorerControlsError).toContain('readings and controls');
   });
 });

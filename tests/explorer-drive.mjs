@@ -133,6 +133,50 @@ async function peopleHeadingGeometry(page) {
   });
 }
 
+async function checkKahloNatalReading(page, viewport) {
+  const aspects = page.locator('[data-reading-card="aspects"]');
+  await aspects.waitFor({ state: 'visible' });
+  const lines = await aspects.locator('.reading-path__aspect-list > li').evaluateAll((items) =>
+    Object.fromEntries(items.map((item) => [
+      item.querySelector('h4')?.textContent?.trim(),
+      { text: item.querySelector('p')?.textContent?.trim(), orb: item.querySelector('.reading-path__orb')?.textContent?.trim() },
+    ])));
+  const sunNeptune = lines['Sun conjunction Neptune'];
+  const venusPluto = lines['Venus conjunction Pluto'];
+  check(`${viewport}: conjunction readings depend on the actual planet pair`,
+    sunNeptune?.text?.includes('imagination can be woven into your sense of self')
+      && venusPluto?.text?.includes('affection and taste can invite deep investment')
+      && sunNeptune.text !== venusPluto.text
+      && sunNeptune.orb === 'Conjunction · 1.0° orb'
+      && venusPluto.orb === 'Conjunction · 0.6° orb');
+  const orientation = page.locator('[data-reading-card="big-three"]');
+  check(`${viewport}: big three is a compact locator with all three chart controls`,
+    JSON.stringify(await orientation.locator('.reading-path__big-tile > p').allTextContents()) === JSON.stringify([
+      'The part of you that chooses a direction.',
+      'What you need in order to feel steady.',
+      'How people first meet you.',
+    ]) && await orientation.locator('.reading-path__show').count() === 3);
+  for (const [card, name] of [[orientation, 'orientation'], [aspects, 'pair-readings']]) {
+    await card.scrollIntoViewIfNeeded();
+    await page.waitForFunction((slug) => document.querySelector(`[data-reading-card="${slug}"]`)?.getAttribute('data-visible') === 'true',
+      await card.getAttribute('data-reading-card'));
+    await card.locator('img').evaluateAll(async (images) => {
+      await Promise.all(images.map(async (image) => {
+        if (!image.complete) await new Promise((resolve, reject) => {
+          image.addEventListener('load', resolve, { once: true });
+          image.addEventListener('error', () => reject(new Error('Natal orientation image failed to load')), { once: true });
+        });
+        await image.decode();
+      }));
+    });
+    check(`${viewport}: ${name} fits its container and retains 44px actions`, await card.evaluate((node) =>
+      node.scrollWidth <= node.clientWidth + 1
+      && Array.from(node.querySelectorAll('.reading-path__show')).every((control) => control.getBoundingClientRect().height >= 43.5)));
+    await shot(card, `${viewport}-natal-${name}.png`, { animations: 'disabled' });
+  }
+  await page.locator('.xplr__wheelbox').scrollIntoViewIfNeeded();
+}
+
 try {
   if (OUT) await mkdir(OUT, { recursive: true });
   const browser = await chromium.launch({
@@ -535,6 +579,7 @@ try {
       && document.querySelectorAll('.reading-path__aspect-list > li').length > 0
       && document.querySelectorAll('.reading-path__bar-fill').length === 7;
   }));
+  await checkKahloNatalReading(page, 'desktop');
   check('visual story: explicit Show on chart controls are keyboard-operable', await page.evaluate(() => {
     const controls = Array.from(document.querySelectorAll('.reading-path__show'))
       .filter((control) => control.getClientRects().length > 0);
@@ -883,6 +928,19 @@ try {
       .some((entry) => /\/CommunicationRead\.[^/]+\.js$/.test(new URL(entry.name).pathname))));
   await es.close();
 
+  // A real timed chart with an aspect signature keeps its interpretation in
+  // the reading and only the computed orb in the compact wheel dock.
+  const aspectSignature = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  const aspectBirth = encodeChart({ d: '2000-05-01', t: '12:00', z: 'UTC', la: 51.5, lo: 0 });
+  const aspectResponse = await aspectSignature.goto(`http://127.0.0.1:4399/birth-chart/${aspectBirth}`, { waitUntil: 'networkidle' });
+  check('aspect signature: fixture route responds successfully', aspectResponse?.status() === 200);
+  await aspectSignature.waitForSelector('.chart-action-dock__signature small', { timeout: 15000 });
+  check('aspect signature: dock uses the computed orb without repeating the reading',
+    await aspectSignature.locator('.chart-action-dock__signature strong').textContent() === 'Moon sextile Neptune'
+      && await aspectSignature.locator('.chart-action-dock__signature small').textContent() === '0.3° orb');
+  await shot(aspectSignature.locator('[data-chart-action-dock]'), 'desktop-natal-aspect-signature.png', { animations: 'disabled' });
+  await aspectSignature.close();
+
   // ── Desktop: guided tour ──
   const tp = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
   // Replace the no-op analytics shim before the page scripts run so the
@@ -1016,6 +1074,7 @@ try {
   await mob.goto(`http://127.0.0.1:4399/birth-chart/${kahlo}`, { waitUntil: 'networkidle' });
   await mob.waitForSelector('.wheel--interactive', { timeout: 15000 });
   await revealFullGuide(mob);
+  await checkKahloNatalReading(mob, 'mobile');
   check('mobile: hint hidden', !(await mob.locator('.insp--hint').isVisible().catch(() => false)));
   check('mobile: Save + Guide + Share + Read another dock is full-width below the interactive chart', await mob.evaluate(() => {
     const wheel = document.querySelector('.xplr__wheelbox')?.getBoundingClientRect();

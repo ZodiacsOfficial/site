@@ -1,4 +1,3 @@
-import { BODY_ROLE } from './compat';
 import { dignityFor, type Dignity } from './dignities';
 import type { Aspect, BodyName, Chart } from './engine/types';
 import type { Locale } from './i18n';
@@ -156,7 +155,7 @@ function aspectSignature(
     eyebrow: 'Standout in your chart',
     title: `${a} ${winner.type} ${b}`,
     summary: natalAspectLine(a, winner.type, b),
-    detail: `${winner.orb.toFixed(1)}° orb · a natural line between ${BODY_ROLE[a] ?? a.toLowerCase()} and ${BODY_ROLE[b] ?? b.toLowerCase()}`,
+    detail: `${winner.orb.toFixed(1)}° orb`,
     signSlugs: [...new Set(signSlugs)],
     bodies: [a, b],
   };

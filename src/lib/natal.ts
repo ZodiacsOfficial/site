@@ -86,8 +86,7 @@ const NATAL_ASPECT: Record<string, { verb: string; gloss: string }> = {
 
 /**
  * Hand-tuned lines for combinations where the composed sentence reads
- * canned. Keys: `${body}:${house}` and `${a}:${type}:${b}` (aspect keys
- * in the order the engine reports them).
+ * canned. House keys are `${body}:${house}`.
  */
 const CURATED: Record<string, string> = {
   'Sun:1': 'Your Sun sits in the first house — the self and the surface are the same layer, and people meet most of who you are in the first minute.',
@@ -98,13 +97,60 @@ const CURATED: Record<string, string> = {
   'Mars:7': 'Your Mars spends its heat in the seventh house — you meet your own drive most clearly in other people, which makes partners both the spark and the sparring ring.',
   'Venus:2': 'Your Venus looks for beauty in the second house — taste and security share a wallet, and what you own has to please you, not just hold value.',
   'Mercury:3': 'Your Mercury does its thinking in the third house — its home terrain; the everyday mind runs fast, in words, and mostly out loud.',
+};
+
+/** Authored natal readings. Pair order follows the ten planets below. */
+export const NATAL_ASPECT_LINES: Readonly<Record<string, string>> = {
   'Sun:conjunction:Moon': 'Your Sun is fused to your Moon — you were born near a new moon, and what you want and what you need mostly agree; the risk is not noticing there are two of them.',
   'Sun:opposition:Moon': 'Your Sun faces off with your Moon — a full-moon birth; wanting and needing sit at opposite ends of one axis, and the life work is refusing to pick a permanent side.',
   'Sun:square:Moon': 'Your Sun grinds against your Moon — what you are building and what would feel like home pull at right angles, and every big decision has to answer to both.',
   'Venus:conjunction:Mars': 'Your Venus is fused to your Mars — wanting and pursuing fire together; the charm has momentum, and the appetite has taste.',
   'Moon:square:Saturn': 'Your Moon grinds against your Saturn — feelings meet a strict doorman, and the early lesson that comfort must be earned takes deliberate unlearning.',
   'Sun:conjunction:Mercury': 'Your Sun is fused to your Mercury — the self and its narrator share a desk, which makes the account vivid and the distance between you and your own opinions small.',
+  'Sun:sextile:Mars': 'Your Sun has an open line to your Mars — a clear purpose can give you the push to begin. Choose a first step small enough to take while the intention is fresh.',
+  'Sun:square:Neptune': 'Your Sun grinds against your Neptune — an imagined version of yourself can compete with the life you are living. Try an idea in ordinary conditions before treating it as your calling.',
+  'Sun:trine:Jupiter': 'Your Sun runs downhill into your Jupiter — confidence can grow through learning, travel, or a wider view. Give that optimism a specific question to explore.',
+  'Sun:conjunction:Venus': 'Your Sun is fused to your Venus — what you value can be closely tied to how you see yourself. Notice which preferences remain yours when nobody else is there to approve them.',
+  'Sun:trine:Pluto': 'Your Sun runs downhill into your Pluto — sustained attention can help you remake something that no longer fits. Choose what deserves that depth, and leave room for what can stay simple.',
+  'Sun:sextile:Pluto': 'Your Sun has an open line to your Pluto — an honest look beneath the surface can clarify your next direction. Start with one pattern you have the power to change.',
+  'Sun:square:Mars': 'Your Sun grinds against your Mars — the urge to act can outrun the purpose behind it. Before taking on a challenge, ask whether winning it would move you toward what matters.',
+  'Sun:sextile:Uranus': 'Your Sun has an open line to your Uranus — trying a different route can reveal a direction that feels more your own. A small experiment gives you room to change without overturning everything.',
+  'Sun:sextile:Saturn': 'Your Sun has an open line to your Saturn — a manageable commitment can turn intention into something lasting. Pick a rhythm you can keep, then let the repeated effort count.',
+  'Sun:square:Saturn': 'Your Sun grinds against your Saturn — high standards can make each choice feel like a test of your worth. Define what is enough for this task before asking yourself for more.',
+  'Mars:sextile:Uranus': 'Your Mars has an open line to your Uranus — a change of method can restore momentum when effort stalls. Test a different tool or approach before simply pushing harder.',
+  'Sun:sextile:Neptune': 'Your Sun has an open line to your Neptune — imagination can suggest a direction that a practical plan has missed. Give the idea a small, tangible form and see what it teaches you.',
+  'Sun:square:Pluto': 'Your Sun grinds against your Pluto — holding to your direction can become tangled with holding control. Notice where a firm choice would serve you better than a struggle for the last word.',
+  'Sun:conjunction:Jupiter': 'Your Sun is fused to your Jupiter — growth can feel central to who you are, making the next possibility hard to pass up. Choose which opportunity deserves your full attention.',
+  'Sun:square:Jupiter': 'Your Sun grinds against your Jupiter — enthusiasm can stretch a promise beyond the time or energy available. Check the size of the commitment while there is still room to adjust it.',
+  'Sun:conjunction:Mars': 'Your Sun is fused to your Mars — acting on a desire can feel like declaring who you are. Leave yourself a pause in which changing your approach is allowed to count as strength.',
+  'Sun:trine:Mars': 'Your Sun runs downhill into your Mars — purpose and action can reinforce each other with little persuasion. Use that ease on a chosen goal, and check whether the goal still fits as you go.',
+  'Mercury:trine:Saturn': 'Your Mercury runs downhill into your Saturn — patient thinking can turn a complicated idea into a clear structure. Use an outline or a careful question, while leaving space for evidence that changes the plan.',
+  'Sun:trine:Neptune': 'Your Sun runs downhill into your Neptune — imagination and empathy can become natural ways of expressing yourself. Give them a medium, and keep time for your own wishes alongside what you absorb from others.',
+  'Mars:trine:Neptune': 'Your Mars runs downhill into your Neptune — an image, cause, or creative practice can draw effort from you without much forcing. Notice which inspiration still supports action after the first rush fades.',
+  'Sun:opposition:Mars': 'Your Sun faces off with your Mars — pursuing your direction and answering a challenge can pull you into different positions. Decide what you want before letting a contest set the terms.',
+  'Sun:conjunction:Neptune': 'Your Sun is fused to your Neptune — imagination can be woven into your sense of self, making possibilities feel personal. Let a vision guide an experiment without requiring it to explain your whole life.',
+  'Venus:conjunction:Pluto': 'Your Venus is fused to your Pluto — affection and taste can invite deep investment. Make room to name what you want and to hear a different answer without turning closeness into a test.',
+  'Mars:opposition:Neptune': 'Your Mars faces off with your Neptune — direct action and an ideal can pull apart when the next step is unclear. Name what is yours to do, then choose a step whose result you can observe.',
+  'Venus:conjunction:Jupiter': 'Your Venus is fused to your Jupiter — enjoyment and generosity can grow together, making a good experience easy to extend. Choose what you want to share and how much room you have for it.',
+  'Sun:sextile:Moon': 'Your Sun has an open line to your Moon — checking what you need can help you choose a direction. Make that check part of a decision, instead of waiting for discomfort to interrupt it.',
+  'Sun:trine:Moon': 'Your Sun runs downhill into your Moon — your direction and your need for comfort can support each other easily. Notice when familiar choices nourish you and when you are ready to try something else.',
+  'Moon:conjunction:Mercury': 'Your Moon is fused to your Mercury — feelings can quickly become words, and words can change how you feel. Leave room to describe an emotion before deciding what it means.',
+  'Moon:square:Mercury': 'Your Moon grinds against your Mercury — the explanation that makes sense may not match the feeling underneath it. Give each a separate sentence before asking them to agree.',
+  'Moon:trine:Venus': 'Your Moon runs downhill into your Venus — comfort and affection can meet in small gestures, familiar pleasures, or a welcoming space. Ask which gesture would feel caring to the person receiving it.',
 };
+
+const NATAL_PLANET_ORDER = [
+  'Sun', 'Moon', 'Mercury', 'Venus', 'Mars',
+  'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto',
+];
+
+function aspectKey(a: string, type: string, b: string): string {
+  const first = NATAL_PLANET_ORDER.indexOf(a);
+  const second = NATAL_PLANET_ORDER.indexOf(b);
+  return first >= 0 && second >= 0 && first > second
+    ? `${b}:${type}:${a}`
+    : `${a}:${type}:${b}`;
+}
 
 /**
  * One sentence for a planet living in a house. House must be 1–12;
@@ -132,7 +178,7 @@ export function planetInHouseLine(
  * life pull in directions ninety degrees apart…"
  */
 export function natalAspectLine(a: string, type: string, b: string): string {
-  const curated = CURATED[`${a}:${type}:${b}`];
+  const curated = NATAL_ASPECT_LINES[aspectKey(a, type, b)];
   if (curated) return curated;
   const roleA = BODY_ROLE[a] ?? a.toLowerCase();
   const roleB = BODY_ROLE[b] ?? b.toLowerCase();

@@ -877,6 +877,37 @@ try {
         'positions result must remain read-only without share/save surfaces');
       assert.ok(await positions.locator('.calc__positions-aspects li').count() > 0,
         'positions receiver must recompute readable major aspects');
+
+      // Production-adapter positions for the Explorer's Kahlo fixture,
+      // rounded to the v2 wire precision. No birth inputs enter this token.
+      const pairWire = {
+        b: [103.376, 59.712, 126.336, 84.339, 283.396, 110.435, 357.445, 280.612, 102.399, 83.747, 113.413, 293.413],
+        a: [143.513, 53.328], h: 'w', v: ENGINE_VERSION,
+      };
+      const pairPage = await trackedPage();
+      await open(pairPage, `${baseURL}/birth-chart/#p=2.${Buffer.from(JSON.stringify(pairWire)).toString('base64url')}`);
+      const pairResult = pairPage.locator('[data-positions-only]');
+      await pairResult.waitFor({ state: 'visible', timeout: TIMEOUT });
+      const pairReadings = await pairResult.locator('.calc__positions-aspects li').evaluateAll((items) =>
+        items.map((item) => ({ label: item.querySelector('.mono')?.textContent?.replace(/\s+/g, ' ').trim(), text: item.querySelector('p + p')?.textContent?.trim() })));
+      const imagination = pairReadings.find((item) => item.label?.includes('Sun conjunction Neptune'));
+      const affection = pairReadings.find((item) => item.label?.includes('Venus conjunction Pluto'));
+      assert.match(imagination?.text ?? '', /imagination can be woven into your sense of self/,
+        'positions receiver must retain the Sun–Neptune reading');
+      assert.match(affection?.text ?? '', /affection and taste can invite deep investment/,
+        'positions receiver must use a distinct Venus–Pluto reading');
+      assert.match(imagination.label, /orb 1\.0°$/i);
+      assert.match(affection.label, /orb 0\.6°$/i);
+      assert.notEqual(imagination.text, affection.text, 'same-type aspects must not repeat a generic paragraph');
+      assert.equal(new URL(pairPage.url()).hash, '', 'pair-reading receiver must consume its fragment');
+      assert.equal(await pairPage.locator(SHARE_WING_LINKS).count(), 0, 'pair-reading receiver must retain share privacy boundaries');
+      if (process.env.T17_SHARE_EVIDENCE === '1') {
+        const evidenceDir = fileURLToPath(new URL('../tests/visual/artifacts/sharing/', import.meta.url));
+        await mkdir(evidenceDir, { recursive: true });
+        await pairResult.locator('.calc__positions-aspects').screenshot({ path: `${evidenceDir}/natal-pair-readings.png` });
+      }
+      transcript.natalPairReadings = pairReadings;
+      await pairPage.close();
       const receivedHeadings = await positions.locator('th').allTextContents();
       assert.equal(receivedHeadings.some((label) => /house/i.test(label)), true,
         'positions receiver must derive whole-sign houses from the shared Ascendant');
