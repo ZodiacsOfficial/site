@@ -146,6 +146,35 @@ async function settlePage(page, { result, normalizeEventsHub, name }) {
       try { video.currentTime = 0; } catch { /* poster remains deterministic */ }
     }
   });
+  if (result) {
+    // A timed sweep can pass below-the-fold story cards before their effect
+    // installs the observer on a busy runner. Exercise their real reveal
+    // behavior and require the settled state; never force data-visible or
+    // opacity, which would hide a broken observer from the visual gate.
+    for (const slug of ['big-three', 'places', 'aspects', 'pattern']) {
+      const selector = `.reading-path [data-reading-card="${slug}"]`;
+      const card = page.locator(selector);
+      await card.waitFor({ state: 'attached', timeout: 30_000 });
+      await card.evaluate((element) => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
+      try {
+        await page.waitForFunction((target) => {
+          const element = document.querySelector(target);
+          return element?.getAttribute('data-visible') === 'true'
+            && getComputedStyle(element).opacity === '1';
+        }, selector, { timeout: 30_000 });
+      } catch (error) {
+        const state = await card.evaluate((element) => ({
+          visible: element.getAttribute('data-visible'),
+          opacity: getComputedStyle(element).opacity,
+          rectangle: element.getBoundingClientRect().toJSON(),
+        }));
+        await writeFile(resolve(artifactRoot, `reading-reveal-${slug}.json`), JSON.stringify(state, null, 2));
+        await page.screenshot({ path: resolve(artifactRoot, `reading-reveal-${slug}.png`), fullPage: true });
+        throw error;
+      }
+    }
+    await page.evaluate(() => window.scrollTo(0, 0));
+  }
   // After hydration is done: the live row keeps its element (the mask
   // presence check still counts it) but reads the canonical line, so the
   // day's receipt can never change how many lines it wraps to.

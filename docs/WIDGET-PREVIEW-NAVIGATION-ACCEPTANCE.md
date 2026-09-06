@@ -27,3 +27,21 @@ The diagnostic run also failed Russian Aries Lighthouse sample 1 (performance90,
 TBT389.632ms; same-head controls99/TBT0), and the independent post-chart job failed
 one of291 focus checks. Those failures are preserved. This widget correction does
 not claim to explain or remedy either independent failure.
+
+## Follow-up capture finding
+
+The widget fix passed exact-head Browser Evidence34027779390, including both
+390px and1440px widget interactions, all15 visual cases and78 Lighthouse samples.
+Site Check attempt1 failed a Russian birth-chart performance sample with a
+149.62ms wall-time task using1.99ms CPU; sibling and independent controls pass.
+One unchanged-head retry then failed the mobile Kahlo screenshot: all four
+chart-story cards remained hidden, with unchanged total image dimensions.
+The original failure archives and images are preserved; no baseline is updated.
+
+The generic35ms scroll sweep did not assert that each story card had revealed.
+Visual capture now visits each of the four real cards and waits for its actual
+data-visible state and computed opacity. It does not force attributes/styles or
+change the observer, baseline, pixel threshold or existing30-second wait limit.
+A failed reveal preserves its state and screenshot before rethrowing. This
+strengthens the capture's readiness contract while retaining a failing gate for
+broken product reveals. The changed head requires fresh CI/browser acceptance.
