@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright-core';
@@ -10,6 +10,10 @@ export async function verifyWidgetBuilder({ browser, baseURL, check, outDir = nu
   if (outDir) await mkdir(outDir, { recursive: true });
   const page = await browser.newPage();
   const errors = [];
+  const previewRequests = [];
+  page.on('requestfailed', (request) => {
+    if (request.url().includes('/embed/')) previewRequests.push({ url: request.url(), failure: request.failure() });
+  });
   page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
   page.on('console', (message) => {
     if (message.type() === 'error') errors.push(`console: ${message.text()}`);
@@ -41,7 +45,24 @@ export async function verifyWidgetBuilder({ browser, baseURL, check, outDir = nu
     const preview = await element.contentFrame();
     if (!preview) throw new Error('Widget preview frame is unavailable for capture');
     const expected = new URL(await element.getAttribute('src'), baseURL);
-    await preview.waitForURL((url) => url.href === expected.href, { waitUntil: 'load' });
+    try {
+      await preview.waitForURL((url) => url.href === expected.href, { waitUntil: 'load' });
+    } catch (error) {
+      const diagnostic = {
+        width, state, expected: expected.href, actual: preview.url(),
+        frames: page.frames().map((child) => child.url()),
+        failedRequests: previewRequests, errors,
+        element: await frame.evaluate((node) => ({
+          src: node.src, loading: node.loading,
+          box: node.getBoundingClientRect().toJSON(),
+          viewport: { width: innerWidth, height: innerHeight },
+        })),
+      };
+      console.error('Widget preview navigation diagnostic:', JSON.stringify(diagnostic));
+      await writeFile(join(outDir, `widget-navigation-${state}-${width}.json`), `${JSON.stringify(diagnostic, null, 2)}\n`);
+      await page.screenshot({ path: join(outDir, `widget-navigation-${state}-${width}.png`), fullPage: true });
+      throw error;
+    }
     await settle(preview);
     await settle(page, '[data-widget-generator]');
     await builder.screenshot({ path: join(outDir, `widget-builder-${state}-${width}.png`), animations: 'disabled' });

@@ -144,7 +144,11 @@ const jsonLd = [{
         const options = { origin: publicOrigin, kind, theme, accent, title };
         if (code) code.value = mode === 'iframe' ? iframeEmbedCode(options) : scriptEmbedCode(options);
         if (preview) {
-          preview.src = widgetEmbedUrl(window.location.origin, kind, theme, accent);
+          // A settings change is explicit preview intent. A lazy iframe can
+          // retain its previous document after rapid destination changes.
+          preview.loading = 'eager';
+          const destination = widgetEmbedUrl(window.location.origin, kind, theme, accent);
+          if (preview.src !== destination) preview.src = destination;
           preview.title = title;
           preview.width = String(WIDGET_DIMENSIONS[kind].width);
           preview.height = String(WIDGET_DIMENSIONS[kind].height);
