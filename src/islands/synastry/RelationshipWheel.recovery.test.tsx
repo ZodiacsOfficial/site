@@ -40,6 +40,7 @@ vi.mock('../../lib/module-load', async (importOriginal) => {
 });
 
 import RelationshipWheel, { type WheelPerson } from './RelationshipWheel';
+import { CompositePanel } from './CompositePanel';
 import CalculationReload, { calculationLoadMessage } from '../CalculationReload';
 import { summarizePair } from '../../lib/engine/synastry';
 
@@ -49,10 +50,10 @@ const a: WheelPerson = {
 };
 const b: WheelPerson = { ...a, label: 'Chart B', bodies: [{ body: 'Sun', lon: 180 }, { body: 'Moon', lon: 20 }] };
 const sphere = { default: () => null };
-function render() {
+function render(personA = a, personB = b) {
   harness.cursor = 0;
   harness.effectCursor = 0;
-  const view = RelationshipWheel({ locale: 'en', a, b, summary: summarizePair(a.bodies, b.bodies) });
+  const view = RelationshipWheel({ locale: 'en', a: personA, b: personB, summary: summarizePair(personA.bodies, personB.bodies) });
   harness.pending.splice(0).forEach((effect) => effect());
   return view;
 }
@@ -102,5 +103,59 @@ describe('relationship 3D download recovery', () => {
     reject(new Error('late network failure'));
     await flush();
     expect(harness.writes).toHaveBeenCalledTimes(writes);
+  });
+});
+
+
+describe('composite selection belongs to the comparison inputs', () => {
+  const panel = (view = render()) => nodes(view).find((node) => node.type === CompositePanel)!;
+
+  it.each([false, true].flatMap(aTimeKnown => [false, true].flatMap(bTimeKnown =>
+    [false, true].map(hasMoon => ({ aTimeKnown, bTimeKnown, hasMoon })))))(
+    'passes actual source certainty for A:$aTimeKnown B:$bTimeKnown, with Moon present: $hasMoon',
+    ({ aTimeKnown, bTimeKnown, hasMoon }) => {
+      choose('composite');
+      const points = (person: WheelPerson) => person.bodies.filter(point => hasMoon || point.body !== 'Moon');
+      const actual = panel(render(
+        { ...a, bodies: points(a), timeKnown: aTimeKnown },
+        { ...b, bodies: points(b), timeKnown: bTimeKnown },
+      ));
+      expect(actual.props.data.moonProvisional).toBe(hasMoon && !(aTimeKnown && bTimeKnown));
+    },
+  );
+
+  it('keeps the independent composite selection across tabs and presentation-only ring swaps', () => {
+    const first = panel(choose('composite'));
+    first.props.onSelect('composite:body:Sun');
+    expect(panel().props.selectedId).toBe('composite:body:Sun');
+    choose('grid'); choose('composite');
+    expect(panel().props.selectedId).toBe('composite:body:Sun');
+    const wheel = choose('wheel');
+    nodes(wheel).find((node) => Object.hasOwn(node.props, 'data-swap'))!.props.onClick();
+    expect(panel(choose('composite')).props.selectedId).toBe('composite:body:Sun');
+    expect(panel().props.sourceKey).toBe(first.props.sourceKey);
+  });
+
+  it('clears selection for replacement source positions even when all their midpoints are identical', () => {
+    const first = panel(choose('composite'));
+    first.props.onSelect('composite:body:Sun');
+    const replacementA = { ...a, bodies: a.bodies.map((point) => ({ ...point, lon: point.lon + 1 })) };
+    const replacementB = { ...b, bodies: b.bodies.map((point) => ({ ...point, lon: point.lon - 1 })) };
+    const next = panel(render(replacementA, replacementB));
+    expect(next.props.data).toEqual(first.props.data);
+    expect(next.props.sourceKey).not.toBe(first.props.sourceKey);
+    expect(next.props.selectedId).toBeNull();
+    expect(panel(render()).props.selectedId).toBeNull();
+  });
+
+  it('invalidates selected Moon when birth-time certainty changes', () => {
+    const knownA = { ...a, timeKnown: true }; const knownB = { ...b, timeKnown: true };
+    choose('composite');
+    const known = panel(render(knownA, knownB));
+    known.props.onSelect('composite:body:Moon');
+    expect(panel(render(knownA, knownB)).props.selectedId).toBe('composite:body:Moon');
+    const unknown = panel(render(knownA, b));
+    expect(unknown.props.selectedId).toBeNull();
+    expect(unknown.props.data.moonProvisional).toBe(true);
   });
 });
