@@ -115,6 +115,11 @@ export async function runSearchLearningChecks({ browser, baseURL, check, outDir 
     const context = await browser.newContext({ viewport: { width, height: 1000 } });
     try {
       const page = await context.newPage();
+      const searchAssetRequests = [];
+      page.on('request', (request) => {
+        const url = new URL(request.url());
+        if (url.pathname === '/assets/search-ui.js') searchAssetRequests.push(url);
+      });
       // Click the actual rendered search result so the badge and destination
       // are verified together; index-only assertions would miss dialog bugs.
       for (const [query, title, path] of [
@@ -128,6 +133,10 @@ export async function runSearchLearningChecks({ browser, baseURL, check, outDir 
         await page.locator('.zsearch__input').fill(query);
         const result = page.locator('.zsearch__opt').filter({ has: page.getByText(title, { exact: true }) });
         await result.waitFor({ state: 'visible' });
+        check(`search ${width}: ${query} loads the refreshed ranking cache key`,
+          searchAssetRequests.length > 0
+          && searchAssetRequests.every((url) => url.search === '?v=search-ranking-2'),
+          searchAssetRequests.map((url) => `${url.pathname}${url.search}`).join(', '));
         check(`search ${width}: ${query} exposes its Tool result`,
           await result.locator('.zsearch__kind').textContent() === 'Tool');
         await result.click();

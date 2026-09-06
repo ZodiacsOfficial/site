@@ -38,6 +38,10 @@ async function enumerateAndCall(page) {
     const envelope = decoded?.structuredContent ?? decoded;
     return {
       tools,
+      assetRequests: performance.getEntriesByType('resource')
+        .map((entry) => new URL(entry.name))
+        .filter((url) => url.pathname === '/assets/webmcp-register.js')
+        .map((url) => `${url.pathname}${url.search}`),
       responseShape: decoded?.structuredContent ? 'CallToolResult' : 'raw envelope',
       envelope,
     };
@@ -45,6 +49,11 @@ async function enumerateAndCall(page) {
 }
 
 function assertCall(label, capture) {
+  if (!capture.assetRequests.length || capture.assetRequests.some((url) => (
+    url !== '/assets/webmcp-register.js?v=search-ranking-2'
+  ))) {
+    throw new Error(`${label}: WebMCP must load the refreshed Search ranking cache key`);
+  }
   if (capture.tools.length !== 1 || capture.tools[0].name !== 'zodiacs.search') {
     throw new Error(`${label}: expected only zodiacs.search`);
   }
