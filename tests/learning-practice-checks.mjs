@@ -59,8 +59,12 @@ export async function runLearningPracticeChecks({ browser, baseURL, check, outDi
       await practice.getByText('This practice no longer matches an available saved chart.', { exact: false }).waitFor();
       check(`practice ${width}: real cross-tab source edit scrubs attempt controls`, await practice.getByRole('button', { name: 'Check my answer', exact: true }).count() === 0);
 
+      // A fragment-only navigation does not remount the calculator. Enter the
+      // second saved chart from another page, as the learning handoff does.
+      await page.goto(`${baseURL}/learn/`, { waitUntil: 'networkidle' });
       await page.goto(`${baseURL}/birth-chart/#profileChartId=${unknownId}`, { waitUntil: 'networkidle' });
       await practice.getByRole('button', { name: 'Begin this exercise', exact: true }).waitFor({ timeout: 45_000 });
+      check(`practice unknown ${width}: fresh saved source has no birth time`, await page.locator('#birth-time').inputValue() === '');
       await practice.getByLabel('Choose a reference point', { exact: true }).selectOption('Rising');
       check(`practice unknown ${width}: no invented rising exercise`, await practice.getByRole('button', { name: 'Begin this exercise', exact: true }).count() === 0);
       await practice.getByLabel('Practice', { exact: true }).selectOption('planets-houses');

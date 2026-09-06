@@ -91,3 +91,19 @@ bounded page-only fallback, queue drainage proving no late write, absent or
 denied locks and blocked storage writes. Syntax passes; browser execution and
 visual review are still pending. These are preparation results on the old
 Wave 22 base, not final release approval.
+
+## Native preview check on the preserved candidate
+
+Remote recovery head b1b614c4ede803ba43d5d41455697fa51f79faa4 has a READY
+private preview. At the browser's1363px viewport, the empty saved-chart state
+was truthful. A synthetic1999-08-11UTC12:00,51.5/0 chart was computed and
+saved through native controls. Learn's saved chooser opened that chart;
+Begin -> Leo -> Check showed the correct explanation with completion disabled
+until reflection. Separate completion then returned to1 of5 complete on Learn.
+These are manual desktop checks, not the pending390/1440 browser/fault suite.
+
+The unknown-source browser case now enters from Learn before navigating to
+its different saved-chart fragment. The calculator consumes handoff fragments
+on mount, so a same-page hash change does not test a fresh source. An explicit
+empty birth-time assertion ensures the unknown fixture was actually loaded.
+No product code or acceptance assertion was relaxed.
