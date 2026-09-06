@@ -30,6 +30,8 @@ const fit = (page, ringExpected = false) => page.evaluate((required) => {
       && node.scrollWidth <= node.clientWidth + 1;
   });
 }, ringExpected);
+const ringGeometry = (page) => page.evaluate(() => ({page:document.documentElement.scrollWidth,viewport:innerWidth,
+  nodes:[...document.querySelectorAll('.tring,.tring__scrub,.tring__date,.tring__marks,.tring__mark,.tring__next-link')].map(n=>{const r=n.getBoundingClientRect();return {class:n.className,left:r.left,right:r.right,scroll:n.scrollWidth,client:n.clientWidth};})}));
 const compute = async (page) => {
   await page.locator('.calc__submit').click();
   await page.locator('[data-ring-instant]').waitFor({ timeout: 30_000 });
@@ -83,7 +85,8 @@ export async function runEventTransitChecks({ browser, baseURL, check, outDir = 
       check(`event transit ${width}: recomputing the same event resets scrub and selection`,
         await instant() === events[0].anchor && await page.locator('.tring__range').inputValue() === '0'
         && await page.locator('.tring__focus').count() === 0);
-      check(`event transit ${width}: date controls fit the viewport`, await fit(page, true));
+      const knownFits = await fit(page, true);
+      check(`event transit ${width}: date controls fit the viewport`, knownFits, knownFits ? '' : JSON.stringify(await ringGeometry(page)));
       if (outDir) await page.locator('.tring').screenshot({ path: `${outDir}/event-transit-known-${width}.png`, animations: 'disabled' });
 
       await page.locator('#trans-source').selectOption('event-unknown');
@@ -93,7 +96,7 @@ export async function runEventTransitChecks({ browser, baseURL, check, outDir = 
         await instant() === events[0].anchor
         && (await page.locator('.calc__result .notice').innerText()).includes('precise Moon contacts')
         && !(await page.locator('.tring__row').allTextContents()).some((text) => text.includes('Natal Moon'))
-        && await fit(page, true));
+        && await fit(page, true), JSON.stringify(await ringGeometry(page)));
       if (outDir) await page.locator('.calc__result').screenshot({ path: `${outDir}/event-transit-unknown-${width}.png`, animations: 'disabled' });
       check(`event transit ${width}: no unexpected JavaScript errors`, errors.length === 0, errors.join('; '));
     } finally { await context.close(); }

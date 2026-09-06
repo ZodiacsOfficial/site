@@ -44,7 +44,14 @@ export async function runChartContextChecks({browser,baseURL,check,outDir}){
         await summary.focus();await page.keyboard.press('Enter');
         check(`context ${locale}/${width}/${section}: native Enter opens disclosure`,await owner.evaluate(n=>n.open));
         const body=owner.locator('[data-context-entity="body:Sun"]').first();
-        if(await body.count()){await body.focus();await page.keyboard.press('Space');check(`context ${locale}/${width}/${section}: native body selection reaches Sun`,await body.getAttribute('aria-pressed')==='true');}
+        if(await body.count()){
+          await body.focus();await page.keyboard.press('Space');check(`context ${locale}/${width}/${section}: native body selection reaches Sun`,await body.getAttribute('aria-pressed')==='true');
+          const selectedGeometry=await page.evaluate(()=>({pageWidth:document.documentElement.scrollWidth,viewport:innerWidth,
+            overflow:[...document.querySelectorAll('body *')].filter(n=>n instanceof HTMLElement&&n.getBoundingClientRect().right>innerWidth+1&&getComputedStyle(n).visibility!=='hidden').slice(0,24).map(n=>({tag:n.tagName,class:n.className,text:n.textContent.trim().slice(0,100),left:n.getBoundingClientRect().left,right:n.getBoundingClientRect().right,scroll:n.scrollWidth,client:n.clientWidth}))}));
+          check(`context ${locale}/${width}/${section}: selected detail panel retains viewport bounds`,selectedGeometry.pageWidth<=selectedGeometry.viewport,JSON.stringify(selectedGeometry));
+          await page.locator('.insp__close').click();
+          check(`context ${locale}/${width}/${section}: detail panel closes before returning to facts`,await body.getAttribute('aria-pressed')==='false');
+        }
         const geometry=await owner.evaluate(n=>({pageWidth:document.documentElement.scrollWidth,viewport:innerWidth,scroll:n.scrollWidth,client:n.clientWidth,
           controls:[...n.querySelectorAll('button,summary')].filter(el=>el.getClientRects().length).map(el=>({tag:el.tagName,text:el.textContent.trim().slice(0,80),height:el.getBoundingClientRect().height,scroll:el.scrollWidth,client:el.clientWidth}))}));
         const geometryFits=geometry.pageWidth<=geometry.viewport&&geometry.scroll<=geometry.client+1&&geometry.controls.every(el=>el.height>=44);

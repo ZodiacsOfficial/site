@@ -2006,6 +2006,8 @@
   position: relative;
   height: 16px;
   margin-top: -4px;
+  /* Centered 8px endpoint markers stay inside the scrubber. */
+  margin-inline: 4px;
 }
 .tring__mark {
   position: absolute;

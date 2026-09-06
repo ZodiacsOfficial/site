@@ -123,6 +123,10 @@ async function inspectPanel(page, check, label, screenshot, measurements) {
   check(`${label}: native member action addresses the owning chart body`, context === 'natal'
     ? new URL(page.url()).searchParams.get('sel') === `body:${body}`
     : await page.locator(`[data-composite-point="${body}"]`).getAttribute('aria-pressed') === 'true');
+  if (context === 'natal') {
+    await page.locator('.insp__close').click();
+    check(`${label}: detail panel closes before returning to the pattern`, !new URL(page.url()).searchParams.has('sel'));
+  }
   await feature.scrollIntoViewIfNeeded();
   await screenshot(feature, `${label}-included`);
 

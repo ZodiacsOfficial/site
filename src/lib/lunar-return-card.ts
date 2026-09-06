@@ -97,7 +97,10 @@ async function brandIcon(signal: AbortSignal): Promise<LoadedShareBrandIcon> {
 }
 
 async function wheelImage(model: LunarReturnExportModel, signal: AbortSignal): Promise<HTMLImageElement> {
-  const host = document.createElement('div');
+  // Template content belongs to an inert document. Rendering into an ordinary
+  // detached div starts redundant SVG image requests that are cancelled when
+  // their hrefs are replaced by the embedded artwork below.
+  const host = document.createElement('template').content;
   const release = () => render(null, host);
   signal.addEventListener('abort', release, { once: true });
   try {

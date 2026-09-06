@@ -130,7 +130,11 @@ export async function runLearningPracticeChecks({ browser, baseURL, check, outDi
         }
       }, mode);
       const page = await context.newPage(); await page.goto(`${baseURL}/learn/`, { waitUntil: 'networkidle' });
-      await page.locator('[data-learning-step="aspects"] input[type="checkbox"]').check();
+      // Completion intentionally removes this input; check() cannot verify an
+      // already-unmounted checkbox. Use its native keyboard action, then assert
+      // the durable/page-only completion state below.
+      await page.locator('[data-learning-step="aspects"] input[type="checkbox"]').focus();
+      await page.keyboard.press('Space');
       await page.getByText('Changes on this page cannot be saved. Returning may show your last saved progress.', { exact: false }).waitFor();
       check(`practice ${mode}: honest in-memory completion, disk unchanged`, await page.locator('[data-learning-step="aspects"]').getAttribute('data-learning-state') === 'completed'
         && (await page.evaluate(() => JSON.parse(localStorage.getItem('zodiacs:learning-path:v2')).completed)).length === 0);

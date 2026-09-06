@@ -63,7 +63,7 @@ function install() {
     set src(value: string) { this.value = value; if (value && imageControl.complete) queueMicrotask(() => this.onload?.()); }
     get src() { return this.value; }
   });
-  vi.stubGlobal('document', { fonts, createElement: vi.fn((tag: string) => tag === 'canvas' ? canvas : host) });
+  vi.stubGlobal('document', { fonts, createElement: vi.fn((tag: string) => tag === 'canvas' ? canvas : tag === 'template' ? { content: host } : host) });
   vi.stubGlobal('fetch', fetch); vi.stubGlobal('createImageBitmap', vi.fn(async () => ({ close })));
   let serial = 0;
   vi.spyOn(URL, 'createObjectURL').mockImplementation(() => `blob:lunar-${++serial}`);
