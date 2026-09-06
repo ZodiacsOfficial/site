@@ -107,3 +107,78 @@ fresh build output remain unchanged. The exact comparison against that
 Widget head passes with 47 changed paths and no protected paths. The inherited
 scope allowance is unchanged. Browser Evidence and the three People OG
 imports remain pending as stated above.
+
+## Browser review and People header repair, 2026-09-06
+
+The published recovered head `17dd7dc1ae47dde2eca595d2bc6981e0aa33d73d`
+passed Site Check `34003741341` and Browser Evidence `34003741374`.
+Official artifact `9980533890` is 95,952,759 bytes with SHA-256
+`2d626420c8427daa8f9c9fec79a3dd6b523ca03ab3f79c32e9ffc490ab9c36c9`.
+All 418 ZIP entries passed CRC validation; all 417 provenance payloads
+matched their size and SHA-256. The source, browser, 18 Phase 1 captures,
+five footer loading modes and all 78 raw Lighthouse reports were verified.
+The independent Lighthouse review found no failed attempt, missing companion,
+warning or threshold violation. These remain evidence for the old source.
+
+The owning OG renderer produced and the reviewer approved the three identity
+cards. All 13 renderer input hashes match this source; all 941 production OG
+files were unchanged during capture. Only the approved 1200-by-630 generated
+cards are imported:
+
+| Card | SHA-256 |
+| --- | --- |
+| Neil Armstrong | `984cd47afce528929ac495dea27b370256cd5deb89f907b5c01bf6ff66ef5a1c` |
+| Amelia Earhart | `9e92b35b3b5d3e702907eca0a8a83cecb1fac1359ab63e0bcc6e1c6b50253044` |
+| Maya Angelou | `2490f5840123488536c1174817afdb3c7b2008f8b0525cd9232fb0d6f88b2987` |
+
+Visual review nevertheless rejected the People headers: Armstrong and Angelou
+split within a surname. The original horizontal sign and title row provided
+only 216 pixels on desktop and less on mobile. Actual browser Range rectangles
+at the existing 60.8-pixel display size measured Wollstonecraft at 347.47 pixels,
+Subrahmanyan at 357.25 and Chandrasekhar at 362.73. The approved scoped repair
+places the sign above the name, gives the mobile name its own full-width row,
+uses normal word wrapping and widens the desktop identity column to 430 pixels
+(368 usable pixels). The responsive portrait hint matches that width. Fonts,
+tokens, identities and frozen birth-chart prose are unchanged.
+
+Explorer now checks rendered word rectangles, heading bounds, page overflow
+and reading/chart bounds for eight profiles at 360, 390, 1060 and 1440 pixels.
+The fixtures cover the three corrected identities, Wollstonecraft,
+Chandrasekhar and three hyphenated names; explicit hyphens remain natural
+breakpoints. All 32 headers and the complete Neil Armstrong layout at 1060
+pixels are captured for review. Browser acceptance of this new source remains
+pending; the old green runs do not establish that it passes.
+
+The separately reviewed Search cache fix `d2190262` is included before the
+next capture so its navigation and Base source changes do not invalidate a
+later Phase 1 import. The combined template fingerprint is
+`a805566f20bc6d0271215e64242245163c2812044e2c7934b396a2c303391652`.
+The committed Phase 1 manifest correctly remains bound to the old `5c7d842f`
+source until genuine fresh captures are obtained and reviewed.
+
+A preliminary local test run overlapped the 412-pixel experimental build,
+causing 19 dist-dependent failures while output was being regenerated, plus
+the expected stale Phase 1 failure. That execution-order failure is retained
+in `footer-layout-test.log`; no assertion was relaxed. The final 430-pixel
+combined source is rebuilt before the complete test suite is run again.
+
+Final local gates on the combined 430-pixel source pass for build/postbuild,
+Astro check, canonical footer and consumer boundary. Dist validation covers
+4,302 HTML files; schema validation covers 1,176 documents and 4,474 graph
+nodes with zero errors. People validation, widget integrity, engine isolation
+and the unchanged bundle budgets pass. After that completed build, the full
+suite passes 3,460 tests across 354 files with exactly one failure: the existing
+Phase 1 fingerprint guard expects `a805566f` but correctly finds the retained
+`5c7d842f` receipt. All 19 preliminary dist-dependent failures are resolved.
+Logs are `footer-layout-final-build.log`, `footer-layout-final-check.log` and
+`footer-layout-final-test.log`. The local scope comparison to prior Widget
+`f225e9e3` passes with 56 paths and no protected paths; the inherited allowance
+is unchanged. Final stacking must use the published Search cache base, and
+release still requires its fresh browser evidence, genuine Phase 1 import,
+image approval and all-green Site Check.
+
+The capture stack then merges Search cache integration `6f56f1f1`, whose
+parent is the actual Widget head `1c73ef23`. The only tree change after the
+local gates is the upstream Widget acceptance note, preserved exactly.
+Comparison against this complete Search base passes with 50 changed paths,
+zero protected paths and the unchanged `a805566f` template fingerprint.

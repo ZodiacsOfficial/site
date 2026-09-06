@@ -301,7 +301,8 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
         (function () {
           var context = document.modelContext || Reflect.get(navigator, 'modelContext');
           if (!context || typeof context.registerTool !== 'function') return;
-          import('/assets/webmcp-register.js')
+          // This bundle shares Search ranking; bypass the previous immutable URL.
+          import('/assets/webmcp-register.js?v=search-ranking-2')
             .then(function (module) { return module.registerWebMcpSearch(context); })
             .catch(function () {});
         })();

@@ -648,8 +648,11 @@ if (!(await exists(webMcpPath))) {
 
 for (const relativePath of ['index.html', 'aries/index.html']) {
   const html = await readFile(resolve(root, relativePath), 'utf8');
-  if (!html.includes("import('/assets/webmcp-register.js')")) {
-    fail(`webmcp: ${relativePath} is missing the English feature detector`);
+  for (const asset of ['search-ui', 'webmcp-register']) {
+    if (!html.includes(`import('/assets/${asset}.js?v=search-ranking-2')`)
+        || html.includes(`import('/assets/${asset}.js')`)) {
+      fail(`${asset}: ${relativePath} must use the refreshed Search ranking cache key`);
+    }
   }
 }
 for (const relativePath of [

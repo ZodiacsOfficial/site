@@ -60,6 +60,15 @@ const identityFixtures = [
   ['maya-angelou', 'Maya Angelou', 'Writer · United States · 1928–2014'],
 ];
 
+const profileLayoutFixtures = [
+  ...identityFixtures,
+  ['mary-wollstonecraft', 'Mary Wollstonecraft', 'Translator and feminist · United Kingdom · 1759–1797'],
+  ['subrahmanyan-chandrasekhar', 'Subrahmanyan Chandrasekhar', 'Mathematician and university teacher · Pakistan · 1910–1995'],
+  ['cecilia-payne-gaposchkin', 'Cecilia Payne-Gaposchkin', 'Astronomer and university teacher · United Kingdom · 1900–1979'],
+  ['henri-cartier-bresson', 'Henri Cartier-Bresson', 'Photographer and journalist · France · 1908–2004'],
+  ['paula-modersohn-becker', 'Paula Modersohn-Becker', 'Painter · Germany · 1876–1907'],
+];
+
 async function readyForPeopleCapture(page, selector) {
   await page.locator(selector).scrollIntoViewIfNeeded();
   await page.evaluate(() => document.fonts.ready);
@@ -79,6 +88,40 @@ async function peopleFit(page, selector) {
     return document.documentElement.scrollWidth <= innerWidth + 1
       && box.width > 0 && box.left >= -1 && box.right <= innerWidth + 1
       && element.scrollWidth <= element.clientWidth + 1;
+  });
+}
+
+async function peopleHeadingGeometry(page) {
+  return page.locator('.person-identity h1').evaluate((heading) => {
+    const bounds = heading.getBoundingClientRect();
+    const words = [];
+    const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      // Spaces and explicit hyphens are natural breakpoints; letters within
+      // an unbroken part of a name must stay on one rendered line.
+      for (const match of node.textContent.matchAll(/[^\s\-\u2010]+/gu)) {
+        const range = document.createRange();
+        range.setStart(node, match.index);
+        range.setEnd(node, match.index + match[0].length);
+        const rects = [...range.getClientRects()].filter((rect) => rect.width > 0)
+          .map(({ left, right, top, width, height }) => ({ left, right, top, width, height }));
+        words.push({
+          text: match[0], rects,
+          intact: rects.length > 0 && rects.every((rect) => Math.abs(rect.top - rects[0].top) < 1),
+          fits: rects.every((rect) => rect.left >= bounds.left - 1 && rect.right <= bounds.right + 1),
+        });
+      }
+    }
+    return {
+      name: heading.textContent.trim(),
+      fontSize: getComputedStyle(heading).fontSize,
+      heading: { left: bounds.left, right: bounds.right, width: bounds.width },
+      viewport: innerWidth, documentWidth: document.documentElement.scrollWidth,
+      words,
+      pass: words.length > 0 && words.every((word) => word.intact && word.fits)
+        && heading.scrollWidth <= heading.clientWidth + 1
+        && document.documentElement.scrollWidth <= innerWidth + 1,
+    };
   });
 }
 
@@ -149,7 +192,11 @@ try {
       await peoplePage.close();
     }
 
-    for (const [slug, name, identity] of identityFixtures) {
+  }
+
+  const profileGeometry = [];
+  for (const width of [360, 390, 1060, 1440]) {
+    for (const [slug, name, identity] of profileLayoutFixtures) {
       const personPage = await browser.newPage({ viewport: { width, height: 1000 }, reducedMotion: 'reduce' });
       try {
         const response = await personPage.goto(`http://127.0.0.1:4399/people/${slug}/`, { waitUntil: 'domcontentloaded' });
@@ -162,12 +209,24 @@ try {
           && await personPage.getByText('The day, read honestly', { exact: true }).count() === 0
           && await peopleFit(personPage, '.person-identity')
           && await peopleFit(personPage, '.person-identity__description'));
+        const geometry = await peopleHeadingGeometry(personPage);
+        profileGeometry.push({ slug, width, ...geometry });
+        check(`People profile ${width}: ${name} preserves whole name parts within the heading`,
+          geometry.pass, JSON.stringify(geometry));
+        check(`People profile ${width}: ${name} reading and chart fit`,
+          await peopleFit(personPage, '.person-reading')
+          && await peopleFit(personPage, '.person-wheel'));
         await shot(personPage.locator('.person-identity'), `people-${slug}-${width}.png`);
+        if (width === 1060 && slug === 'neil-armstrong') {
+          await shot(personPage.locator('.person-layout'), 'people-layout-neil-armstrong-1060.png');
+        }
       } finally {
         await personPage.close();
       }
     }
   }
+
+  if (OUT) await writeFile(`${OUT}/people-heading-geometry.json`, `${JSON.stringify(profileGeometry, null, 2)}\n`);
 
   let navBreakpointsPass = true;
   const navBreakpointsDetail = [];
