@@ -373,6 +373,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
   const chartContextIdRef = useRef(0);
+  const inputRevisionRef = useRef(0);
+  const [inputRevision, setInputRevision] = useState(0);
+  function advanceInputRevision(): void {
+    inputRevisionRef.current += 1;
+    setInputRevision(inputRevisionRef.current);
+  }
   const registryBridgeImpressionChartRef = useRef<Chart | null>(null);
   const primaryProfileOriginRef = useRef(false);
   const primaryProfileChartIdRef = useRef<string | null>(null);
@@ -396,6 +402,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     primaryProfileChartIdRef.current = null;
     runChartIdRef.current += 1;
     chartContextIdRef.current += 1;
+    advanceInputRevision();
     clearPostChartContext();
     setDate('');
     setTime('');
@@ -433,6 +440,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   });
 
   function invalidateProfileHandoff(): void {
+    advanceInputRevision();
     profileHandoffIdRef.current += 1;
     primaryProfileChartIdRef.current = null;
     if (!primaryProfileOriginRef.current) return;
@@ -1056,6 +1064,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     focusAfterCompute: boolean,
     source: ChartComputedSource = 'fresh',
   ) {
+    advanceInputRevision();
     const signatureModule = mode === 'full' && showsEnglishInterpretation
       ? import('../lib/chart-signature')
       : null;
@@ -1570,6 +1579,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const EntityPicker = chartActionDockModule?.EntityPicker;
   const ReadingPath = chartActionDockModule?.ReadingPath;
   const Inspector = chartActionDockModule?.Inspector;
+  const ChartContext = chartActionDockModule?.ChartContext;
   const AspectPatternFeature = chartActionDockModule?.AspectPatternFeature;
   const saveError = saved === 'full'
     ? t(locale, 'chartSaveFull')
@@ -2210,6 +2220,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   selection={selection}
                   onShowOnChart={showOnChartFromReading}
                 />
+              )}
+
+              {mode === 'full' && ChartContext && (
+                <ChartContext input={{ bodies: chart.bodies, timeKnown: chart.input.timeKnown,
+                  moonSignCandidates: chart.moonSignCandidates, angles: chart.angles, houses: chart.houses }}
+                  locale={locale} inputRevision={inputRevision}
+                  isInputCurrent={(revision) => inputRevisionRef.current === revision}
+                  selection={selection} onShowOnChart={showOnChartFromReading} />
               )}
 
               {mode === 'full' && showsEnglishInterpretation && ApproachRead && (
