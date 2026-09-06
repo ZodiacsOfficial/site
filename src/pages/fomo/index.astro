@@ -14,6 +14,8 @@
  * 720×1566 and re-encodes it as H.264 (libx264 crf 26) and AV1 (libaom crf
  * 34), audio track dropped; the posters are the 3.6s frame.
  */
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import Base from '../../layouts/Base.astro';
 import SignIcon from '../../components/SignIcon.astro';
 import { SIGNS } from '../../lib/signs';
@@ -50,6 +52,19 @@ const fomoCoinUrl = (mint: string) =>
 const APP_STORE_BADGE = '/assets/badges/app-store-en.svg';
 const GOOGLE_PLAY_BADGE = '/assets/badges/google-play-en.png';
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+/* Owner-supplied renders, used exactly as delivered: Fomo's example alert
+   and the phone showing Fomo's Verified list. Each block renders only when
+   its file is present under public/assets/fomo/, so a build never points at
+   an image that has not arrived yet. Dimensions are the renders' own. */
+const ownerAsset = (file: string, width: number, height: number) => ({
+  src: `/assets/fomo/${file}`,
+  width,
+  height,
+  present: existsSync(resolve(process.cwd(), 'public/assets/fomo', file)),
+});
+const ALERT_RENDER = ownerAsset('fomo-alert.png', 1125, 877);
+const VERIFIED_RENDER = ownerAsset('fomo-verified.png', 1243, 1265);
 
 /* Hero footage and its poster (see the header comment for provenance). */
 const FOOTAGE = Object.freeze({
@@ -273,21 +288,31 @@ const sources = [
             </div>
           </div>
         </div>
-        <div class="fomo-alert" role="img" aria-label="Example of a Fomo alert: Capricorn is up 5.98 percent. 50 top traders bought $88,203.12." data-fomo-alert>
-          <img src="/assets/venues/fomo-official.svg" width="40" height="40" alt="" />
-          <div class="fomo-alert__body">
-            <div class="fomo-alert__title">
-              <strong>CAPRICORN <span class="fomo-alert__sign"><SignIcon sign="capricorn" size={18} loading="eager" /></span> is up 5.98%</strong>
-              <span class="fomo-alert__time">9:41 AM</span>
-            </div>
-            <div class="fomo-alert__text"><span class="fomo-alert__dot" aria-hidden="true"></span>50 top traders bought $88,203.12</div>
-          </div>
-        </div>
-        <figcaption class="fomo-phone__caption">
-          Footage from the Fomo app, recorded September 2026. The alert shows the kind of price notification Fomo can send; its figures are an example.
-        </figcaption>
+        <figcaption class="fomo-phone__caption">Footage from the Fomo app, recorded September 2026.</figcaption>
       </figure>
     </section>
+
+    {ALERT_RENDER.present && (
+      <section class="fomo-alerts container" id="alerts" aria-labelledby="alerts-title">
+        <div class="fomo-alerts__inner">
+          <figure class="fomo-alerts__figure reveal">
+            <img
+              src={ALERT_RENDER.src}
+              width={ALERT_RENDER.width}
+              height={ALERT_RENDER.height}
+              alt="A Fomo notification: Capricorn is up 5.98 percent. 50 top traders bought $88,203.12."
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <div class="fomo-alerts__copy reveal" style="--reveal-delay:80ms">
+            <p class="kicker">Stay in the loop</p>
+            <h2 id="alerts-title" class="display">Alerts when your sign moves.</h2>
+            <p>Fomo sends price alerts like this one for the Zodiacs you watch, so you hear about a move without keeping a chart open.</p>
+          </div>
+        </div>
+      </section>
+    )}
 
     <section class="fomo-finder container" id="your-sign" aria-labelledby="finder-title" data-fomo-finder>
       <div class="shell fomo-finder__shell">
@@ -373,6 +398,29 @@ const sources = [
         </li>
       </ol>
     </section>
+
+    {VERIFIED_RENDER.present && (
+      <section class="fomo-verified section--tight container" id="verified" aria-labelledby="verified-title">
+        <div class="fomo-verified__inner">
+          <div class="fomo-verified__copy reveal">
+            <p class="kicker">Inside the app</p>
+            <h2 id="verified-title" class="display">The twelve, in Fomo’s Verified list.</h2>
+            <p>Fomo lists the Zodiacs in its Verified tab. Before you buy, compare the address on the coin screen with the Registry record; it is the same address every link on this page carries.</p>
+            <a href="#signs">Choose a sign ↓</a>
+          </div>
+          <figure class="fomo-verified__figure reveal" style="--reveal-delay:80ms">
+            <img
+              src={VERIFIED_RENDER.src}
+              width={VERIFIED_RENDER.width}
+              height={VERIFIED_RENDER.height}
+              alt="A phone showing Fomo’s Verified list with the Zodiacs, each marked with a blue check."
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </section>
+    )}
 
     <section class="fomo-signs section--tight container" id="signs" aria-labelledby="signs-title">
       <div class="section-head">
@@ -1051,65 +1099,6 @@ const sources = [
     background: linear-gradient(180deg, transparent 84%, rgba(7, 8, 12, 0.45));
   }
 
-  /* The example alert, hung over the phone's top edge like an iOS banner. */
-  .fomo-alert {
-    position: absolute;
-    top: 8%;
-    left: 50%;
-    z-index: 4;
-    display: grid;
-    grid-template-columns: 40px minmax(0, 1fr);
-    align-items: center;
-    gap: 12px;
-    width: min(96%, 352px);
-    padding: 12px 14px;
-    border-radius: 22px;
-    background: rgba(38, 40, 46, 0.92);
-    color: #fff;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 24px 60px -24px rgba(0, 0, 0, 0.9),
-      0 0 0 1px rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
-    font-family: var(--font-sans);
-    translate: -46% 0;
-  }
-  .fomo-alert img { width: 40px; height: 40px; border-radius: 11px; }
-  .fomo-alert__body { display: grid; gap: 3px; min-width: 0; }
-  .fomo-alert__title {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .fomo-alert__title strong {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    overflow: hidden;
-    font: 650 14.5px/1.2 var(--font-sans);
-    letter-spacing: 0.005em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .fomo-alert__sign { display: inline-flex; line-height: 0; }
-  .fomo-alert__sign :global(.sign-icon) { border-radius: 50%; }
-  .fomo-alert__time { flex-shrink: 0; color: rgba(255, 255, 255, 0.55); font: 400 12px/1.2 var(--font-sans); }
-  .fomo-alert__text {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font: 400 14px/1.25 var(--font-sans);
-    color: rgba(255, 255, 255, 0.92);
-  }
-  .fomo-alert__dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #7be08a, #22a544 70%);
-    box-shadow: inset 0 -1px 1px rgba(0, 0, 0, 0.25);
-  }
   .fomo-phone__caption {
     max-width: 340px;
     margin: 18px auto 0;
@@ -1126,19 +1115,46 @@ const sources = [
     .fomo-phone__frame { animation: fomo-float 7s ease-in-out infinite; }
     .fomo-phone:hover .fomo-phone__frame,
     .fomo-phone:focus-within .fomo-phone__frame { animation-play-state: paused; }
-    .fomo-alert {
-      opacity: 0;
-      animation: fomo-alert-in 800ms var(--ease-soft) 1400ms forwards;
-    }
   }
   @keyframes fomo-float {
     0%, 100% { translate: 0 0; }
     50% { translate: 0 -9px; }
   }
-  @keyframes fomo-alert-in {
-    from { opacity: 0; translate: -46% -22px; }
-    to { opacity: 1; translate: -46% 0; }
+
+  /* ── Owner renders: the alert on its own, and the Verified list ───── */
+  .fomo-alerts { padding-block: clamp(8px, 2vw, 16px) clamp(24px, 4vw, 40px); }
+  .fomo-alerts__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(20px, 4vw, 56px);
   }
+  .fomo-alerts__figure { margin: 0; }
+  .fomo-alerts__figure img { width: 100%; max-width: 520px; height: auto; margin-inline: auto; }
+  .fomo-alerts__copy .kicker { margin: 0 0 10px; }
+  .fomo-alerts__copy h2 { margin: 0; font-size: var(--text-xl); }
+  .fomo-alerts__copy p:not(.kicker) { max-width: 44ch; margin: 12px 0 0; color: var(--text-2); font-size: var(--text-base); line-height: 1.6; text-wrap: pretty; }
+  .fomo-verified { border-top: 1px solid var(--hair-1); }
+  .fomo-verified__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 5vw, 72px);
+  }
+  .fomo-verified__copy .kicker { margin: 0 0 10px; }
+  .fomo-verified__copy h2 { margin: 0; font-size: var(--text-2xl); }
+  .fomo-verified__copy p:not(.kicker) { max-width: 46ch; margin: 14px 0 0; color: var(--text-2); font-size: var(--text-base); line-height: 1.6; text-wrap: pretty; }
+  .fomo-verified__copy a {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--text);
+    font-size: var(--text-sm);
+    font-weight: 550;
+    text-decoration-color: var(--hair-3);
+    text-underline-offset: 4px;
+  }
+  .fomo-verified__figure { margin: 0; }
+  .fomo-verified__figure img { width: 100%; max-width: 560px; height: auto; margin-inline: auto; }
 
   /* ── Finder ─────────────────────────────────────────────────────── */
   .fomo-finder { padding-block: 0 clamp(8px, 2vw, 16px); }
@@ -1362,13 +1378,14 @@ const sources = [
     .fomo-hero h1 { max-width: 14ch; }
     .fomo-phone__frame { transform: none; }
     .fomo-finder__core { grid-template-columns: 1fr; }
+    .fomo-alerts__inner, .fomo-verified__inner { grid-template-columns: 1fr; }
+    .fomo-verified__figure { order: -1; }
     .fomo-steps__list { grid-template-columns: 1fr; }
   }
   @media (max-width: 720px) {
     .fomo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .fomo-facts__grid { grid-template-columns: 1fr; }
     .fomo-finder__form { grid-template-columns: 1fr 1fr; }
-    .fomo-alert { width: min(94%, 330px); translate: -50% 0; }
   }
   @media (max-width: 460px) {
     .fomo-grid { grid-template-columns: 1fr; }
