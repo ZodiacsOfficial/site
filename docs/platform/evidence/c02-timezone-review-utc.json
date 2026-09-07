@@ -1,0 +1,278 @@
+{
+  "observedAt": "2026-09-07T20:55:07.598Z",
+  "node": "v22.23.2",
+  "icu": "78.2",
+  "tz": "2026a",
+  "hostTimezone": "UTC",
+  "sources": {
+    "src/lib/time/localToUtc.ts": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64",
+    "src/lib/time/technical-locales.ts": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+    "src/lib/time/civil-date.ts": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+  },
+  "rejectionCases": [
+    {
+      "index": 0,
+      "type": "undefined",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 0,
+      "type": "undefined",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 1,
+      "type": "object",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 1,
+      "type": "object",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 2,
+      "type": "string",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 2,
+      "type": "string",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 3,
+      "type": "string",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 3,
+      "type": "string",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 4,
+      "type": "string",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 4,
+      "type": "string",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 5,
+      "type": "string",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 5,
+      "type": "string",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 6,
+      "type": "number",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 6,
+      "type": "number",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 7,
+      "type": "boolean",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 7,
+      "type": "boolean",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 8,
+      "type": "object",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 8,
+      "type": "object",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 9,
+      "type": "object",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 9,
+      "type": "object",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 10,
+      "type": "object",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 10,
+      "type": "object",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 11,
+      "type": "symbol",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 11,
+      "type": "symbol",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 12,
+      "type": "object",
+      "api": "resolveLocalToUtc",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "index": 12,
+      "type": "object",
+      "api": "offsetAt",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    }
+  ],
+  "coercions": 0,
+  "controls": [
+    {
+      "zone": "UTC",
+      "date": "2001-01-01",
+      "time": "12:00",
+      "actual": "2001-01-01T12:00:00.000Z",
+      "offset": 0,
+      "flags": []
+    },
+    {
+      "zone": "Etc/UTC",
+      "date": "0000-02-29",
+      "time": "12:00",
+      "actual": "0000-02-29T12:00:00.000Z",
+      "offset": 0,
+      "flags": []
+    },
+    {
+      "zone": "GMT",
+      "date": "0099-12-31",
+      "time": "12:00",
+      "actual": "0099-12-31T12:00:00.000Z",
+      "offset": 0,
+      "flags": []
+    },
+    {
+      "zone": "utc",
+      "date": "0100-01-01",
+      "time": "12:00",
+      "actual": "0100-01-01T12:00:00.000Z",
+      "offset": 0,
+      "flags": []
+    },
+    {
+      "zone": "US/Eastern",
+      "date": "2024-11-03",
+      "time": "01:30",
+      "actual": "2024-11-03T05:30:00.000Z",
+      "offset": -240,
+      "flags": [
+        "dst-fold"
+      ]
+    },
+    {
+      "zone": "America/New_York",
+      "date": "2024-03-10",
+      "time": "02:30",
+      "actual": "2024-03-10T07:30:00.000Z",
+      "offset": -240,
+      "flags": [
+        "dst-gap"
+      ]
+    },
+    {
+      "zone": "Asia/Kolkata",
+      "date": "2001-01-01",
+      "time": "12:00",
+      "actual": "2001-01-01T06:30:00.000Z",
+      "offset": 330,
+      "flags": []
+    },
+    {
+      "zone": "Etc/GMT-1",
+      "date": "0000-01-01",
+      "time": "00:30",
+      "actual": "-000001-12-31T23:30:00.000Z",
+      "offset": 60,
+      "flags": []
+    },
+    {
+      "zone": "America/Mexico_City",
+      "date": "1907-07-06",
+      "time": "08:30",
+      "actual": "1907-07-06T15:06:36.000Z",
+      "offset": -396.6,
+      "flags": [
+        "lmt"
+      ]
+    }
+  ],
+  "failures": []
+}

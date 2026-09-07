@@ -106,6 +106,9 @@ jobs:
           T17_SHARE_EVIDENCE: "1"
         run: node tests/t17-positions-share.mjs
 
+      - name: Imported calendar input boundaries
+        run: node tests/platform-share-boundary-drive.mjs
+
       - name: Engine accuracy vectors
         run: npm test
 

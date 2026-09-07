@@ -152,3 +152,41 @@ The source-aware consumer guard distinguishes only the complete Node hashing
 module specifier in the exact setup fragment. It continues checking all
 surrounding text and destinations. This avoids a whole-page exemption while
 retaining a reproducible checksum check on the already-documented Node runtime.
+
+## C-001 — Validate civil inputs before resolving an instant
+
+The legacy v1 birth-share decoder admitted impossible Gregorian dates. The
+site resolver normalized those dates, then described the mismatch as a DST
+gap. Passing the resulting Date to the strict engine could no longer recover
+the invalid original input. Validate at both the imported-share boundary and
+the shared civil-time resolver. Keep the parser import-free, preserve the
+share format and 1800–2199 window, and reject clock rollover.
+
+Use explicit Gregorian/Latin fields and astronomical year conversion for Intl
+wall comparisons; Date.UTC's 1900 remapping is unsuitable for years 0000–0099.
+Syntactic support for four-digit years does not enlarge the engine's numerical
+accuracy claim. Preserve earlier-fold, forward-gap, historical sub-minute
+offset and unknown-time behavior. Require an explicit supported timezone so
+missing data cannot select the host zone. Reject untrusted timezone coercions
+and keep errors free of submitted values.
+
+Failed recomputation retains the original saved receipt; do not rewrite birth
+inputs, pretend an old result was recalculated, or silently migrate storage.
+Existing malformed records are not newly certified valid by this fallback.
+
+## C-002 — Preserve requested settings before correcting remote receipts
+
+The account restore adapter currently labels a computed polar whole-sign
+result with requested Placidus in its single house-system field. Replacing
+that field with the actual system alone was considered and rejected: the next
+rerun/upload/restore requests whole-sign and loses the fallback flag. An
+optional local requested-system field alone is also insufficient because the
+current canonical sync wire omits it.
+
+A subsequent contract change must represent requested and actual settings,
+legacy unknown provenance, and backward-compatible export/sync behavior
+together. Existing canonical mutation fingerprints and saved identities need
+explicit compatibility handling. Preserve the synthetic defect and
+counterexample in evidence; leave this adapter unchanged until that coherent
+change is tested. This is an unresolved C02 requirement, not an owner-only
+permission blocker or a reason to halt other authorized work.

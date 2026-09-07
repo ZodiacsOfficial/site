@@ -166,6 +166,33 @@ describe('legacy polar saved-chart repair', () => {
     expect(JSON.parse(raw).charts[0]).toEqual(saved);
   });
 
+  it.each([
+    { date: '2001-02-29', time: '09:00' },
+    { date: '2001-12-21', time: '24:00' },
+  ])('keeps an invalid stored birth input without recomputing a different instant: %j', async (input) => {
+    const saved = legacySaved(13.7563);
+    Object.assign(saved.birth, input);
+    const before = structuredClone(saved);
+    const computeChart = vi.fn(engine.computeChart);
+    const resolved = await resolveSavedChart(saved, async () => ({ computeChart }));
+    expect(computeChart).not.toHaveBeenCalled();
+    expect(resolved.summary).toBe(saved.summary);
+    expect(saved).toEqual(before);
+    expect(resolved.summary.engineVersion).not.toBe(ENGINE_VERSION);
+  });
+
+  it.each([undefined, '', 'Synthetic/Private_Zone'])('keeps a stored receipt when its timezone is unavailable: %s', async (tz) => {
+    const saved = legacySaved(13.7563);
+    saved.birth.place!.tz = tz as string;
+    const before = structuredClone(saved);
+    const computeChart = vi.fn(engine.computeChart);
+    const resolved = await resolveSavedChart(saved, async () => ({ computeChart }));
+    expect(computeChart).not.toHaveBeenCalled();
+    expect(resolved.summary).toBe(saved.summary);
+    expect(saved).toEqual(before);
+    expect(resolved.summary.engineVersion).not.toBe(ENGINE_VERSION);
+  });
+
   it('does not hide the other saved charts when one legacy record is unfamiliar', () => {
     const ordinary = legacySaved(13.7563);
     ordinary.id = 'ordinary';

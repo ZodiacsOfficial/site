@@ -8,6 +8,7 @@
  * offsets.
  */
 import { TECHNICAL_OFFSET_LOCALE, TECHNICAL_WALL_LOCALE } from './technical-locales';
+import { parseCivilDate, parseCivilTime } from './civil-date';
 
 export interface LocalTimeResolution {
   utc: Date;
@@ -20,9 +21,19 @@ const offsetFormatters = new Map<string, Intl.DateTimeFormat>();
 const wallFormatters = new Map<string, Intl.DateTimeFormat>();
 
 function offsetFormatter(tz: string): Intl.DateTimeFormat {
+  // Intl treats undefined as the machine's timezone. Imported or stored
+  // inputs must select an explicit zone, including at this public offset boundary.
+  if (typeof tz !== 'string' || tz.length === 0) {
+    throw new RangeError('An explicit supported timezone is required.');
+  }
   let f = offsetFormatters.get(tz);
   if (!f) {
-    f = new Intl.DateTimeFormat(TECHNICAL_OFFSET_LOCALE, { timeZone: tz, timeZoneName: 'longOffset' });
+    try {
+      f = new Intl.DateTimeFormat(TECHNICAL_OFFSET_LOCALE, { timeZone: tz, timeZoneName: 'longOffset' });
+    } catch {
+      // Do not include a potentially private, untrusted zone value in errors.
+      throw new RangeError('An explicit supported timezone is required.');
+    }
     offsetFormatters.set(tz, f);
   }
   return f;
@@ -33,6 +44,7 @@ function wallFormatter(tz: string): Intl.DateTimeFormat {
   if (!f) {
     f = new Intl.DateTimeFormat(TECHNICAL_WALL_LOCALE, {
       timeZone: tz,
+      calendar: 'gregory', numberingSystem: 'latn', era: 'short',
       year: 'numeric', month: '2-digit', day: '2-digit',
       hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
     });
@@ -56,12 +68,28 @@ export function offsetAt(tz: string, utcMs: number): number {
 }
 
 function wallStringAt(tz: string, utcMs: number): string {
-  // TECHNICAL_WALL_LOCALE yields "YYYY-MM-DD, HH:mm"
-  return wallFormatter(tz).format(utcMs).replace(', ', 'T');
+  const parts = wallFormatter(tz).formatToParts(utcMs);
+  const part = (type: Intl.DateTimeFormatPartTypes): string =>
+    parts.find((candidate) => candidate.type === type)?.value ?? '';
+  // Intl's Gregorian years are unpadded and count BCE from 1; ISO/Date
+  // use astronomical years, where 1 BCE is 0000. Compare civil fields,
+  // independently of the locale's display order and punctuation.
+  const era = part('era');
+  if (era !== 'AD' && era !== 'BC') throw new RangeError('Could not read Gregorian era.');
+  const year = era === 'BC' ? 1 - Number(part('year')) : Number(part('year'));
+  const isoYear = year >= 0 && year <= 9999
+    ? String(year).padStart(4, '0')
+    : `${year < 0 ? '-' : '+'}${String(Math.abs(year)).padStart(6, '0')}`;
+  return `${isoYear}-${part('month')}-${part('day')}T${part('hour')}:${part('minute')}`;
 }
 
 /**
  * Resolve a wall-clock date + time in an IANA zone to UTC.
+ * Inputs must be a real proleptic Gregorian YYYY-MM-DD (0000–9999) and
+ * HH:MM (00:00–23:59). This syntax is not an astronomical accuracy claim;
+ * callers such as birth sharing enforce their own narrower year window.
+ * An explicit timezone supported by the host's Intl data is required;
+ * omitted or invalid zones never fall back to the machine's timezone.
  *
  * Ambiguous times (clocks fell back — two instants match) resolve to the
  * earlier instant with a `dst-fold` flag. Skipped times (clocks sprang
@@ -73,18 +101,19 @@ export function resolveLocalToUtc(
   time: string, // 'HH:MM'
   tz: string
 ): LocalTimeResolution {
-  // The wall-clock verification below compares built strings against
-  // Intl's zero-padded output, so a non-canonical input ('8:30',
-  // '1990-6-15') would never match and fall silently into the dst-gap
-  // branch, returning a plausible instant flagged as a gap. Reject the
-  // shape up front instead — a shared exported function must not hand a
-  // future caller a silently shifted time.
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time)) {
-    throw new RangeError(`resolveLocalToUtc needs 'YYYY-MM-DD' and 'HH:MM' input, got '${date}' '${time}'`);
+  // Reject before any Date normalization or timezone conversion. An
+  // impossible date must not become a different date marked as a DST gap.
+  const civilDate = parseCivilDate(date);
+  const civilTime = parseCivilTime(time);
+  if (!civilDate || !civilTime) {
+    throw new RangeError('resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time.');
   }
-  const [y, mo, d] = date.split('-').map(Number);
-  const [hh, mm] = time.split(':').map(Number);
-  const wallMs = Date.UTC(y, mo - 1, d, hh, mm);
+  // Date.UTC remaps years 0–99 into 1900–1999. Preserve the typed year,
+  // including year 0000's leap day, before asking Intl about its offset.
+  const wallDate = new Date(0);
+  wallDate.setUTCFullYear(civilDate.year, civilDate.month - 1, civilDate.day);
+  wallDate.setUTCHours(civilTime.hour, civilTime.minute, 0, 0);
+  const wallMs = wallDate.getTime();
   const wallStr = `${date}T${time}`;
 
   // Candidate offsets sampled around the wall instant.
