@@ -5,6 +5,7 @@ import { WIDGET_EN } from '../../strings/widgets';
 import { completeTransitYears } from '../../lib/sky-api/build';
 import { PLANET_SLUGS } from '../../lib/sky-api/meta';
 import skyQuickStart from '../../lib/sky-api/examples/today.mjs?raw';
+import candidate from '../../data/platform-engine-candidate.json';
 
 // The same month snapshots the generator reads decide which year files exist,
 // so this page and the deployed API can never disagree about coverage.
@@ -41,33 +42,67 @@ const documents = [
 
 const skyEmbed = iframeEmbedCode({ origin: 'https://zodiacs.org', kind: 'sky', theme: 'dark', title: WIDGET_EN.widgetTitleSky });
 
-const description = 'Free sky data under CC BY 4.0, built for people and AI agents alike: today\'s sky and the next 60 days, one file per planet, the twelve signs, and per-year retrogrades, stations, ingresses, moon phases, eclipses, and aspects as self-describing JSON with JSON Schemas, OpenAPI, and an agent guide. No key, no signup.';
+const description = 'Build with Zodiacs: evaluate the local TypeScript chart engine, fetch free shared-sky JSON, or embed a moon, sky, or mini-chart widget. Current support, release status, and calculation limits in one place.';
 
 const jsonLd = [{
   '@type': 'WebPage',
-  name: 'Sky data API for developers and AI agents',
+  name: 'Zodiacs developer tools: charts, sky data, and embeds',
   url: 'https://zodiacs.org/developers/',
-  description: 'Free machine-readable astronomy data from zodiacs.org: self-describing JSON for today’s sky, upcoming events, planets, signs, retrogrades, ingresses, moon phases, eclipses, and aspects, with JSON Schemas, OpenAPI, and an agent guide, under CC BY 4.0.',
+  description,
 }];
 ---
 <Base
-  title="Free Sky Data API — Retrogrades, Eclipses, Moon Phases & Today's Sky as JSON | Zodiacs.org"
+  title="Developer Tools — Local Charts, Sky Data & Embeds | Zodiacs.org"
   description={description}
   path="/developers/"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">For developers and AI agents</em>
-    <h1 class="dev-title display">Machine-readable sky data.</h1>
+    <h1 class="dev-title display">Charts, data, and embeds.</h1>
 
+    <nav aria-label="Developer integration paths">
+      <ul class="dev-paths">
+        <li>
+          <p class="dev-status">{candidate.releaseLabel} · {candidate.version}</p>
+          <h2><a href="/developers/examples/#natal">Calculate locally</a></h2>
+          <p>Use TypeScript or JavaScript for tropical charts, transits, and synastry in your own browser or Node.js app. Core calculations make no network requests.</p>
+        </li>
+        <li>
+          <p class="dev-status">Available · public files</p>
+          <h2><a href="#sky-data">Fetch shared sky data</a></h2>
+          <p>Read the daily sky and dated events as JSON. No account or API key; check the edition and snapshot before displaying them.</p>
+        </li>
+        <li>
+          <p class="dev-status">Available · hosted embeds</p>
+          <h2><a href="/widgets/">Embed a tool</a></h2>
+          <p>Choose a Moon, sky, or mini birth-chart iframe. Set its theme and size, and keep the built-in Zodiacs.org credit.</p>
+        </li>
+        <li>
+          <p class="dev-status">Planned · no public endpoint</p>
+          <h2><a href="/developers/support/#hosted">Use hosted computation</a></h2>
+          <p>A personalized chart API is planned. Its input contract, privacy limits, and release approval remain open.</p>
+        </li>
+      </ul>
+    </nav>
+    <div class="prose">
+      <p><a href="/developers/examples/">Run the three examples</a>: local natal chart, personalized transits, and a publisher widget.</p>
+      <p><a href="/developers/support/">Compare support, runtime requirements, and known limits</a> before choosing an integration.</p>
+      <p>
+        The <a href="/sdk/">optional ownership SDK</a> is a separate,
+        read-only integration for registry verification and public ownership
+        reads. Charts, sky data, and widgets do not require it or a wallet.
+      </p>
+    </div>
+
+    <h2 id="sky-data" class="dev-h2">Shared sky data</h2>
     <div class="prose dev-intro">
       <p>
         The computed dates behind this site's calendars — today's sky, the
         weeks ahead, retrograde windows, stations, sign ingresses, moon phases,
         eclipses, and exact aspects — are published as versioned JSON. The
         files are static, cached at the edge, and open to any origin. There is
-        no key, no signup, and no rate ceiling beyond ordinary CDN behavior,
-        and none of it involves anyone's birth data: these endpoints describe
+        no key or signup. These files contain no personal birth data: they describe
         the shared sky, and{' '}
         <a href="/methodology/">chart calculation stays on the device</a>.
       </p>
@@ -228,6 +263,13 @@ const jsonLd = [{
 <style>
   .dev-title { margin: var(--s-1) 0 var(--s-4); }
   .dev-intro { max-width: 68ch; }
+  .dev-paths { list-style: none; padding: 0; margin: var(--s-8) 0; display: grid; gap: var(--s-6); }
+  .dev-paths li { min-width: 0; padding-top: var(--s-4); border-top: 1px solid var(--hair-2); }
+  .dev-paths h2 { margin: var(--s-2) 0; font-size: var(--text-lg); }
+  .dev-paths p { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.65; }
+  .dev-paths .dev-status { font-size: 12px; color: var(--text-2); }
+  .dev-paths a:focus-visible { outline: 2px solid var(--text-2); outline-offset: 4px; }
+  @media (min-width: 700px) { .dev-paths { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .dev-h2 { margin: var(--s-12) 0 var(--s-4); font-size: var(--text-lg); }
   .dev-code {
     margin: 0;

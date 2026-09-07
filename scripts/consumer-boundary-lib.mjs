@@ -85,6 +85,10 @@ const SANCTIONED_INTERNAL_LINKS = Object.freeze([
   [/^src\/strings\/seo\.(?:en|ru)\.mjs$/u, /^\/disclosure\/$/u],
   [/^src\/pages\/about\/index\.astro$/u, /^\/(?:astrofolio|disclosure|registry|terminal)\/$/u],
   [/^src\/pages\/bio\/index\.astro$/u, /^\/astrofolio\/$/u],
+  // The developer front door identifies the separate, optional read-only SDK.
+  // Keep this bridge exact: consumer pages and other wing routes remain checked.
+  [/^src\/pages\/developers\/index\.astro$/u, /^\/sdk\/$/u],
+  [/^src\/pages\/developers\/support\/index\.astro$/u, /^\/sdk\/(?:engine\/)?$/u],
   [/^src\/pages\/terms\/index\.astro$/u, /^\/(?:astrofolio\/how-to-buy|disclosure)\/$/u],
   [/^src\/pages\/ru\/\[sign\]\/index\.astro$/u, /^\/registry\/\$\{…\}\/$/u],
   [/^src\/pages\/ru\/disclosure\/index\.astro$/u, /^\/terminal\/$/u],
@@ -388,6 +392,15 @@ function vocabularyAllowed(fragment) {
     || isTechnicalState(fragment);
 }
 
+function vocabularyText(fragment) {
+  // This rendered setup block imports Node's hashing API for archive integrity.
+  // Exclude only that complete module specifier, not surrounding code or prose.
+  if (fragment.file === 'src/pages/developers/examples/index.astro' && fragment.key === 'setup') {
+    return fragment.text.replace(/\bfrom (['"])node:crypto\1/gu, 'from "node:hashing-module"');
+  }
+  return fragment.text;
+}
+
 function externalDestinationAllowed(fragment, destination) {
   return DISCLOSURE_CATALOG_SOURCE.test(fragment.file)
     && DISCLOSURE_OPERATOR_KEY.test(fragment.key)
@@ -425,7 +438,7 @@ export function findConsumerBoundaryViolations(source, file) {
   for (const fragment of fragments) {
     if (!vocabularyAllowed(fragment)) {
       for (const [rule, pattern] of VOCABULARY) {
-        const match = fragment.text.match(pattern)?.[0];
+        const match = vocabularyText(fragment).match(pattern)?.[0];
         if (match) add(fragment, rule, match);
       }
     }

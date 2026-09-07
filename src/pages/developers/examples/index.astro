@@ -1,0 +1,95 @@
+---
+import Base from '../../../layouts/Base.astro';
+import candidate from '../../../data/platform-engine-candidate.json';
+import starter from '../../../../public/examples/platform-starter.json';
+
+const repository = 'https://github.com/ZodiacsOfficial/site';
+const archiveUrl = `https://raw.githubusercontent.com/ZodiacsOfficial/site/${starter.artifactCommit}/public/examples/${starter.file}`;
+const readmeUrl = `${repository}/blob/${starter.artifactCommit}/examples/platform/README.md`;
+const setup = `( set -eu
+mkdir zodiacs-starter
+cd zodiacs-starter
+curl --disable --fail --silent --show-error --proto '=https' --max-time 30 \\
+  '${archiveUrl}' -o '${starter.file}'
+node --input-type=module <<'JS'
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+const bytes = readFileSync('${starter.file}');
+const expected = '${starter.sha256}';
+if (createHash('sha256').update(bytes).digest('hex') !== expected) {
+  throw new Error('Archive checksum mismatch. Do not extract or install.');
+}
+console.log('Archive verified');
+JS
+tar -xzf '${starter.file}'
+cd package
+npm ci --ignore-scripts --no-audit --no-fund
+npm test
+npm run build
+npm start
+)`;
+const description = 'Run three Zodiacs examples from a verified candidate archive: local natal charts, personalized transit snapshots, and a publisher sky widget. No account or private setup.';
+---
+<Base title="Three Runnable Developer Examples | Zodiacs.org" description={description} path="/developers/examples/">
+  <section class="section container container--narrow examples-page">
+    <em class="kicker">Developer examples</em>
+    <h1 class="display">Start with a working result.</h1>
+    <div class="prose">
+      <p>One small JavaScript project contains a local natal calculator, a personalized transit snapshot, and a publisher sky iframe. No framework, account, API key, wallet, or private environment is required.</p>
+      <p>Starter <code>{starter.version}</code> includes <code>{candidate.name}@{candidate.version}</code>, an <strong>{candidate.releaseLabel.toLowerCase()}</strong>. Review and npm publication gates remain open. The hosted iframe uses its own deployment.</p>
+      <p><a href="/developers/support/">Check supported inputs, runtimes, and numerical limits</a> before adapting the examples.</p>
+    </div>
+
+    <h2 id="setup">Set up once</h2>
+    <div class="prose">
+      <p>Use Node.js 22 and npm, plus a POSIX shell with curl and tar (macOS, Linux, or WSL). Start in a directory where <code>zodiacs-starter</code> does not exist. The block runs in a subshell and stops if any step fails.</p>
+      <p><a href={archiveUrl}>Download starter {starter.version} (.tgz)</a> or use the commands below. They fetch the exact public archive and verify SHA-256 before extraction. Installation downloads pinned public dependencies; calculation stays local.</p>
+    </div>
+    <pre tabindex="0" role="region" aria-label="Starter setup commands"><code>{setup}</code></pre>
+    <div class="prose">
+      <p>Open <code>http://127.0.0.1:4178/</code>. The test step should report 24 passing tests. Stop the local server with Ctrl+C. If port 4178 is occupied, run <code>cd zodiacs-starter/package</code>, then <code>node scripts/server.mjs 4179</code> and use its printed address. This server is a local demo, with no request logging or chart endpoint.</p>
+      <p>The archive includes its <a href={readmeUrl}>full README, source, and failure cases</a>, locked dependencies, candidate identity, and dependency notices. It uses the public engine entry point and no workspace-only imports.</p>
+    </div>
+
+    <h2 id="natal">1. Calculate a natal chart locally</h2>
+    <div class="prose">
+      <p>Open <code>/natal.html</code> on the local server and select <strong>Calculate locally</strong>. The synthetic default is December 21, 2001 at 09:00 UTC, latitude 78.2232°, longitude 15.6267°, requesting Placidus houses.</p>
+      <p><strong>Success:</strong> 12 bodies, an ascendant near 23.871984° Aries, and whole-sign houses with <code>polar-fallback</code>. Requested and actual house systems are both visible.</p>
+      <p><strong>Try a failure:</strong> enter <code>2001-02-29T09:00:00Z</code>. The impossible date must show an error and clear the previous result.</p>
+      <p>Unknown time uses 12:00 UTC on the entered date, carries <code>no-time</code>, and omits angles and houses. It does not infer local noon. Resolve actual birthplace timezone rules before supplying a known instant.</p>
+    </div>
+
+    <h2 id="transits">2. Inspect a personalized transit snapshot</h2>
+    <div class="prose">
+      <p>Open <code>/transits.html</code> and calculate the synthetic default at <code>2026-09-07T12:00:00Z</code>. This is an explicitly dated example, not a live “today” result.</p>
+      <p><strong>Success:</strong> 12 moving positions and major moving-to-natal body aspects, with the entered offsets, normalized instants, engine version, artifact hash, conventions, and requested/actual natal houses. Change the transit date to see different positions.</p>
+      <p><strong>Try a failure:</strong> remove the transit instant’s <code>Z</code> without adding an offset. An unresolved local time must be rejected. These are snapshot aspects, not exact-pass times or natal ASC/MC contacts.</p>
+    </div>
+    <aside class="prose privacy-note" aria-label="Local calculation privacy check">
+      <p><strong>Verify privacy on both calculator pages:</strong> load the page, watch the Network panel, disconnect network access, change an input, and calculate again. The loaded tab still works with no calculation request. The example writes no persistent storage and puts no birth input in a URL. Refresh/navigation need the server; browser history restoration and extensions are outside the app’s control.</p>
+      <p>Adapt <code>src/calculate.mjs</code> and <code>src/app.mjs</code> for your interface. The visible provenance is example metadata; a complete portable receipt contract remains under review.</p>
+    </aside>
+
+    <h2 id="widget">3. Embed a publisher sky widget</h2>
+    <div class="prose">
+      <p>Open <code>/widget.html</code>, choose Dark or Light and a six-digit accent such as <code>#7B6DA8</code>, then select <strong>Load widget</strong>. No Zodiacs.org request occurs before that click.</p>
+      <p><strong>Success:</strong> the hosted sky card fits the page, its displayed date is visible, and its <strong>Powered by Zodiacs.org</strong> credit remains reachable. Check the date before presenting it as current. The frame may adjust the accent for readable contrast.</p>
+      <p><strong>Try a failure:</strong> enter <code>red</code> as the accent; it must fail validation. Block the external frame to check that <strong>Open the sky on Zodiacs.org</strong> remains usable. A frame load event alone does not prove current content.</p>
+      <p>The hosted request exposes ordinary connection information and the referring origin. This page collects no birth details. Keep the title, official sandbox, referrer policy, responsive sizing, fallback, and attribution when adapting <code>src/widget.mjs</code>. Use the existing <a href="/widgets/">widget builder</a> for Moon and mini-chart variants.</p>
+    </div>
+    <div class="prose">
+      <p>Return to <a href="/developers/">developer tools</a> for shared-sky JSON, or use the <a href="/developers/support/#engine-candidate">support matrix and discrepancy-reporting guidance</a>. Automated internal checks are recorded in the repository; unfamiliar-developer walkthroughs and external adoption remain unmeasured.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .examples-page h1 { margin: var(--s-1) 0 var(--s-4); }
+  .examples-page h2 { margin: var(--s-12) 0 var(--s-4); font-size: var(--text-lg); scroll-margin-top: 96px; }
+  .examples-page .prose { max-width: 68ch; }
+  .examples-page code { font-family: var(--font-mono); font-size: .9em; overflow-wrap: anywhere; }
+  pre { margin: var(--s-6) 0; padding: var(--s-4); border: 1px solid var(--hair-2); border-radius: var(--radius-sm); max-width: 100%; overflow-x: auto; font-size: var(--text-sm); line-height: 1.7; }
+  pre:focus-visible { outline: 2px solid var(--text-2); outline-offset: 4px; }
+  pre code { overflow-wrap: normal; }
+  .privacy-note { margin-top: var(--s-6); padding-left: var(--s-4); border-left: 1px solid var(--hair-2); }
+</style>

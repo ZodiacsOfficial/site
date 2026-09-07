@@ -1,0 +1,34 @@
+{
+  "type": "internal timed walkthrough; not external onboarding or adoption",
+  "startedAt": "2026-09-07T20:01:18.932Z",
+  "completedAt": "2026-09-07T20:01:20.162Z",
+  "elapsedMs": 1230,
+  "archive": "/Users/chiburashka/.codex/worktrees/4806/site/public/examples/zodiacs-platform-starter-0.1.0-rc.2.tgz",
+  "archiveSHA256": "d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420",
+  "consumerDirectory": "/private/tmp/zodiacs-platform-starter-rc2-consumer-mb7sxL/package",
+  "evidenceDirectory": "/private/tmp/zodiacs-platform-starter-browser-evidence-rc2",
+  "node": "v22.23.2",
+  "cache": "existing host npm dependency cache; not a cold network-install timing",
+  "phases": [
+    {
+      "label": "extract immutable local rc2 archive",
+      "elapsedMs": 12,
+      "output": ""
+    },
+    {
+      "label": "npm ci --ignore-scripts (host dependency cache warm)",
+      "elapsedMs": 494,
+      "output": "\nadded 4 packages in 411ms\n"
+    },
+    {
+      "label": "npm test including build and loopback server tests",
+      "elapsedMs": 562,
+      "output": "\n> zodiacs-platform-starter@0.1.0-rc.2 test\n> node scripts/build.mjs && node --test tests/*.check.mjs\n\nBuilt three examples with candidate 0.1.1-rc.1; artifact SHA256 f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17\nTAP version 13\n# Subtest: real candidate returns coherent polar fallback and provenance\nok 1 - real candidate returns coherent polar fallback and provenance\n  ---\n  duration_ms: 21.225958\n  type: 'test'\n  ...\n# Subtest: offset equivalent instants calculate identically and keep entered provenance\nok 2 - offset equivalent instants calculate identically and keep entered provenance\n  ---\n  duration_ms: 1.999541\n  type: 'test'\n  ...\n# Subtest: unknown time uses stated UTC noon and suppresses angles and houses\nok 3 - unknown time uses stated UTC noon and suppresses angles and houses\n  ---\n  duration_ms: 0.726417\n  type: 'test'\n  ...\n# Subtest: transit snapshot uses the actual public API result and explicit instant\nok 4 - transit snapshot uses the actual public API result and explicit instant\n  ---\n  duration_ms: 3.447708\n  type: 'test'\n  ...\n# Subtest: public API rejects impossible calendar dates before rollover and preserves leap days\nok 5 - public API rejects impossible calendar dates before rollover and preserves leap days\n  ---\n  duration_ms: 1.580625\n  type: 'test'\n  ...\n# Subtest: rejects unresolved or malformed instants: \"\"\nok 6 - rejects unresolved or malformed instants: \"\"\n  ---\n  duration_ms: 0.472167\n  type: 'test'\n  ...\n# Subtest: rejects unresolved or malformed instants: \" \"\nok 7 - rejects unresolved or malformed instants: \" \"\n  ---\n  duration_ms: 0.29175\n  type: 'test'\n  ...\n# Subtest: rejects unresolved or malformed instants: \"2001-12-21\"\nok 8 - rejects unresolved or malformed instants: \"2001-12-21\"\n  ---\n  duration_ms: 0.129833\n  type: 'test'\n  ...\n# Subtest: rejects unresolved or malformed instants: \"2001-12-21T09:00:00\"\nok 9 - rejects unresolved or malformed instants: \"2001-12-21T09:00:00\"\n  ---\n  duration_ms: 0.245583\n  type: 'test'\n  ...\n# Subtest: rejects unresolved or malformed instants: \"2001-12-21T09:00:00Z\\\\n\"\nok 10 - rejects unresolved or malformed instants: \"2001-12-21T09:00:00Z\\\\n\"\n  ---\n  duration_ms: 0.254084\n  type: 'test'\n  ...\n# Subtest: rejects unresolved or malformed instants: \"2001-12-21T09:00:00+25:00\"\nok 11 - rejects unresolved or malformed instants: \"2001-12-21T09:00:00+25:00\"\n  ---\n  duration_ms: 1.287917\n  type: 'test'\n  ...\n# Subtest: rejects empty/nonfinite or nondecimal coordinates: \"\"\nok 12 - rejects empty/nonfinite or nondecimal coordinates: \"\"\n  ---\n  duration_ms: 0.076875\n  type: 'test'\n  ...\n# Subtest: rejects empty/nonfinite or nondecimal coordinates: \" \"\nok 13 - rejects empty/nonfinite or nondecimal coordinates: \" \"\n  ---\n  duration_ms: 0.03725\n  type: 'test'\n  ...\n# Subtest: rejects empty/nonfinite or nondecimal coordinates: \"NaN\"\nok 14 - rejects empty/nonfinite or nondecimal coordinates: \"NaN\"\n  ---\n  duration_ms: 0.029792\n  type: 'test'\n  ...\n# Subtest: rejects empty/nonfinite or nondecimal coordinates: \"Infinity\"\nok 15 - rejects empty/nonfinite or nondecimal coordinates: \"Infinity\"\n  ---\n  duration_ms: 0.02925\n  type: 'test'\n  ...\n# Subtest: rejects empty/nonfinite or nondecimal coordinates: \"0x10\"\nok 16 - rejects empty/nonfinite or nondecimal coordinates: \"0x10\"\n  ---\n  duration_ms: 0.029042\n  type: 'test'\n  ...\n# Subtest: rejects empty/nonfinite or nondecimal coordinates: \"1e999\"\nok 17 - rejects empty/nonfinite or nondecimal coordinates: \"1e999\"\n  ---\n  duration_ms: 0.028958\n  type: 'test'\n  ...\n# Subtest: rejects empty/nonfinite or nondecimal coordinates: \"12\\\\n\"\nok 18 - rejects empty/nonfinite or nondecimal coordinates: \"12\\\\n\"\n  ---\n  duration_ms: 0.027667\n  type: 'test'\n  ...\n# Subtest: rejects empty/nonfinite or nondecimal coordinates: undefined\nok 19 - rejects empty/nonfinite or nondecimal coordinates: undefined\n  ---\n  duration_ms: 0.026792\n  type: 'test'\n  ...\n# Subtest: rejects out-of-range and unsupported exact-pole inputs and invalid options\nok 20 - rejects out-of-range and unsupported exact-pole inputs and invalid options\n  ---\n  duration_ms: 0.11675\n  type: 'test'\n  ...\n# Subtest: recalculation works with network and persistent storage APIs unavailable\nok 21 - recalculation works with network and persistent storage APIs unavailable\n  ---\n  duration_ms: 3.3485\n  type: 'test'\n  ...\n# Subtest: localhost server serves only exact built assets and never accepts submissions\nok 22 - localhost server serves only exact built assets and never accepts submissions\n  ---\n  duration_ms: 25.454042\n  type: 'test'\n  ...\n# Subtest: widget URL has only constrained display inputs at the canonical HTTPS origin\nok 23 - widget URL has only constrained display inputs at the canonical HTTPS origin\n  ---\n  duration_ms: 0.912416\n  type: 'test'\n  ...\n# Subtest: local pages cannot submit birth fields when JavaScript fails; hosted fallback remains available\nok 24 - local pages cannot submit birth fields when JavaScript fails; hosted fallback remains available\n  ---\n  duration_ms: 4.022084\n  type: 'test'\n  ...\n1..24\n# tests 24\n# suites 0\n# pass 24\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 94.112666\n"
+    },
+    {
+      "label": "npm run build",
+      "elapsedMs": 161,
+      "output": "\n> zodiacs-platform-starter@0.1.0-rc.2 build\n> node scripts/build.mjs\n\nBuilt three examples with candidate 0.1.1-rc.1; artifact SHA256 f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17\n"
+    }
+  ]
+}

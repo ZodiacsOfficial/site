@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local transit snapshot example — Zodiacs</title><link rel="stylesheet" href="/styles.css"><link rel="icon" href="/favicon.svg"><script type="module" src="/app.js"></script></head>
+<body data-example="transits">
+<nav aria-label="Examples"><a href="/natal.html">Local natal chart</a><a href="/transits.html">Personalized transit snapshot</a><a href="/widget.html">Publisher sky widget</a></nav>
+<h1>Calculate a personalized transit snapshot</h1>
+<p>Synthetic birth inputs and a fixed, explicit transit instant run locally with the unpublished <strong>0.1.1-rc.1</strong> candidate. No account, birth upload, or remote calculation is used.</p>
+<p class="note">This is a snapshot at the entered instant, not a live forecast or timing search. In each aspect, <code>a</code> is the moving body and <code>b</code> is the natal body. This API does not include natal ASC/MC contacts.</p>
+<fieldset><legend>Synthetic inputs</legend>
+<label>Birth time <select id="timeKnown"><option value="known">Known — resolved instant</option><option value="unknown">Unknown — noon UTC approximation</option></select></label>
+<label>Resolved birth instant <input id="birthInstant" type="text" value="2001-12-21T09:00:00Z" autocomplete="off" spellcheck="false"></label>
+<label>Birth date for unknown time <input id="birthDate" type="text" value="2001-12-21" autocomplete="off" spellcheck="false" disabled></label>
+<label>Latitude in degrees <input id="latitude" type="text" inputmode="decimal" value="78.2232" autocomplete="off"></label>
+<label>Longitude in degrees <input id="longitude" type="text" inputmode="decimal" value="15.6267" autocomplete="off"></label>
+<label>Requested natal house system <select id="houseSystem"><option value="placidus">Placidus</option><option value="whole">Whole sign</option></select></label>
+<label>Resolved transit instant <input id="transitInstant" type="text" value="2026-09-07T12:00:00Z" autocomplete="off" spellcheck="false"></label>
+<button id="calculate" type="button" disabled>Calculate locally</button>
+</fieldset>
+<noscript>JavaScript is required for local calculation. No input is submitted.</noscript>
+<p id="status" role="status">Ready with a synthetic birth and a fixed September 7, 2026 snapshot.</p><p id="error" role="alert"></p>
+<h2>Calculation provenance</h2><pre id="receipt">No calculation yet.</pre>
+<h2>Moving positions and aspects to natal bodies</h2><pre id="result">No calculation yet.</pre>
+<p>Unknown birth times use 12:00 UTC on the entered date and produce approximate natal positions with no angles or houses. An explicit offset does not verify a historical birthplace timezone; resolve local time before integrating real inputs.</p>
+<p>Offline demonstration: load this page completely, disconnect the network, change the transit instant, and calculate again. Navigation and refresh still need the local server; there is no service worker or persistent storage.</p>
+<p>Finite numerical reference coverage is not a broad date-range guarantee. These provenance fields are example metadata; complete durable receipts remain future work. <a href="/THIRD_PARTY_NOTICES.txt">Dependency notices</a>.</p>
+</body></html>

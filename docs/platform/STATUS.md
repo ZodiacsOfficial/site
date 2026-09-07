@@ -1,6 +1,6 @@
 # Zodiacs Platform status
 
-Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A candidate and bounded B03 implemented/tested; CI integration corrections verified; review/preview delivery in progress. Owner mandate: `ZODIACS-PLATFORM-MASTER-BRIEF.md` v1.0.
+Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A candidate and bounded B03 implemented/tested; Stage A exact-head CI green; B01/B02 developer delivery in progress. Owner mandate: `ZODIACS-PLATFORM-MASTER-BRIEF.md` v1.0.
 
 ## Current delivery
 
@@ -80,8 +80,19 @@ that incorrectly used the new engine as its legacy oracle. The bounded
 correction preserves the budget, defers contact arithmetic, and freezes actual
 0.1.0 records. Final correction: **4,447 tests / 405 files**, normal/push builds,
 check, 18 captures, Today/push/Guide/compatibility/solar-return browser flows
-passed. Verify the next exact-head CI run in the PR before integration.
-B01 front-door/support content is prepared for the next separate review slice;
-B02 runnable integration work is in progress. Preserve the SDK hold.
+passed. Exact-head CI [34156030961](https://github.com/ZodiacsOfficial/site/actions/runs/34156030961)
+passed all 14 jobs at `4bb0d70e`, including visual, Lighthouse and widget
+gates. Its READY preview passed the remote Today drive (59 checks).
+B01 front door/support matrix is implemented and locally verified on
+`codex/platform-developer-entry`, stacked on `4bb0d70e`. B02 has a public immutable starter rc.2: 24 clean-consumer tests,
+185 actual browser checks and the literal rendered setup passed. Final site
+suite: 4,493 tests / 407 files; build/check and three developer-page browser
+journeys passed. Commit `80dff5f1` hosts the archive; final onboarding-page
+commit, separate draft PR and exact-head remote verification are in progress. Preserve the SDK hold.
 Continue only dependency-ready work; hosted execution depends on the reviewed
 contract, privacy and limits. No background execution after this session is implied.
+
+The next unblocked C02 slice has a synthetic reproduction: legacy birth-detail
+share imports accept impossible calendar dates which normalize with a false
+DST-gap flag. A bounded shared civil-input validation patch is being prepared;
+no hosted endpoint or new receipt schema is required.
