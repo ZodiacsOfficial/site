@@ -19,6 +19,7 @@ is ordered alphabetically and never ranked.
 
 | File | Source | Retrieved | Notes |
 | --- | --- | --- | --- |
+| `public/assets/fomo/fomo-eyes.png` | derived from `fomo-official.svg` (below) | 2026-09-07 | fomo's eyes alone, kept with the page's own assets rather than in this folder: the embedded raster's glyph cropped to its bounds with the dark tile keyed to alpha by luminance, nothing redrawn. Set after the word "fomo" on `/fomo/` and its share card at text size, in place of the tiled icon. |
 | `fomo-official.svg` | `fomo.family/favicon.svg` | 2026-08-25 | Fomo's full-colour app icon, used only as an `<img>`: inside the consumer handoff buttons (the Astrofolio vitrine and `/fomo/`) and in the `/fomo/` phone mock-up header, where it identifies the app being depicted. It is never used as a CSS mask or presented as an endorsement. |
 | `coinbase.svg` | `static-assets.coinbase.com/ui-infra/illustration/v1/pictogram/svg/light/coinbaseLogoNavigation-4.svg` | 2026-08-05 | Coinbase's own navigation pictogram. Brand blue replaced with ink; viewBox tightened 40→34 units. |
 | `moonpay.svg` | `www.moonpay.com/safari-pinned-tab.svg` | 2026-08-05 | MoonPay's Safari pinned-tab mask — already monochrome on transparency. Potrace preamble and metadata stripped; viewBox tightened. |
@@ -53,6 +54,12 @@ honest presentation when we cannot use the real thing.
 | File | Basis |
 | --- | --- |
 | `applepay.svg` | An in-house reproduction of the Apple Pay lockup ( + "Pay"). Apple's official mark is distributed through their marketing portal under the Apple Pay Identity Guidelines and is not fetchable; the owner accepted a reproduction on 2026-08-02 rather than ship the words "Apple Pay" as plain text. It appears only beside a payment provider that actually offers Apple Pay, never as a claim that zodiacs.org accepts it. Replace this file if the official asset is ever obtained. |
+
+## Third-party glyphs on the /fomo/ page and share card
+
+| Files | Basis |
+| --- | --- |
+| `public/assets/emoji/zodiac/2648.svg` … `2653.svg` | The twelve zodiac emoji (U+2648–U+2653). The white glyph shapes are Twemoji 14.0.2's, fetched 2026-09-07 from `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/{codepoint}.svg` (graphics © Twitter, Inc. and other contributors, CC-BY 4.0); Twemoji's flat square is replaced by an in-house rounded tile with a purple gradient and a top highlight, drawn to sit close to the keyboard emoji people know. Used in the `/fomo/` headline and on its generated share card (`scripts/build-og-void.mjs`), so the twelve appear as the same tile on every device and in the card. Credited in the page's sources line. |
 
 ## Adding a mark
 
