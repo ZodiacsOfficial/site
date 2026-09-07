@@ -102,6 +102,7 @@ const history = snapshots.slice(-SPARK_DAYS);
 const readAtIso = latest.source?.readAt ?? `${latest.date}T00:00:00.000Z`;
 const readAtLabel = `${readAtIso.slice(0, 10)} ${readAtIso.slice(11, 16)} UTC`;
 const provider = latest.source?.provider ?? 'DexScreener';
+const latestDateLabel = new Date(`${latest.date}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' });
 
 function fmtPrice(value: number | null | undefined): string {
   if (value == null || !Number.isFinite(value) || value <= 0) return '—';
@@ -549,7 +550,7 @@ const sources = [
       <div class="section-head">
         <p class="kicker">Every sign, one tap</p>
         <h2 id="signs-title">Choose your sign</h2>
-        <p>Tap a sign and it opens in fomo, ready to buy. Prices here are from {latest.date}; the app shows them live.</p>
+        <p>Tap a sign and it opens in fomo, ready to buy. Prices here are from {latestDateLabel}; the app shows them live.</p>
       </div>
       <ul class="fomo-grid" role="list">
         {records.map((record, index) => (
