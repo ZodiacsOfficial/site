@@ -12,7 +12,9 @@ import { consumerEnvironment, readPackageArchive, starterFiles, verifyPlatformSt
 const root = process.cwd();
 const read = (path) => readFileSync(join(root, path));
 const metadata = JSON.parse(read('public/examples/platform-starter.json'));
-const candidate = JSON.parse(read('src/data/platform-engine-candidate.json'));
+const candidate = JSON.parse(read('examples/platform/candidate.json'));
+const siteCandidate = JSON.parse(read('src/data/platform-engine-candidate.json'));
+const enginePath = `vendor/zodiacs-engine-${candidate.version}.tgz`;
 const archive = read(`public/examples/${metadata.file}`);
 const originalFiles = readPackageArchive(archive);
 const temporary = [];
@@ -38,7 +40,7 @@ function pack(entries) {
   return gzipSync(Buffer.concat([...blocks, Buffer.alloc(1024)]));
 }
 
-function fixture({ mutateFiles, mutateCandidate, mutateMetadata } = {}) {
+function fixture({ mutateFiles, mutateCandidate, mutateMetadata, sourceMatchesArchive = false } = {}) {
   const path = mkdtempSync(join(tmpdir(), 'zodiacs-starter-verifier-test-'));
   temporary.push(path);
   const put = (name, bytes) => { mkdirSync(dirname(join(path, name)), { recursive: true }); writeFileSync(join(path, name), bytes); };
@@ -49,21 +51,52 @@ function fixture({ mutateFiles, mutateCandidate, mutateMetadata } = {}) {
   mutateMetadata?.(changedMetadata);
   put('public/examples/platform-starter.json', JSON.stringify(changedMetadata));
   put(`public/examples/${metadata.file}`, changedArchive);
-  const changedCandidate = structuredClone(candidate);
-  mutateCandidate?.(changedCandidate);
-  put('src/data/platform-engine-candidate.json', JSON.stringify(changedCandidate));
-  put(candidate.artifactPath, read(candidate.artifactPath));
   // Keep the repository source independent from the mutated archive.
-  for (const [name, bytes] of originalFiles) put(`examples/platform/${name}`, bytes);
+  for (const [name, bytes] of sourceMatchesArchive ? files : originalFiles) put(`examples/platform/${name}`, bytes);
+  if (mutateCandidate) {
+    const changedCandidate = structuredClone(candidate);
+    mutateCandidate(changedCandidate);
+    put('examples/platform/candidate.json', JSON.stringify(changedCandidate));
+  }
   return { root: path, put, files };
 }
 
+// Repack a synthetic contained engine, updating all claimed digests and source
+// bytes. These fixtures test the checks beyond agreement of matching metadata.
+function engineFixture(change) {
+  return fixture({ sourceMatchesArchive: true, mutateFiles(files) {
+    const engineFiles = readPackageArchive(files.get(enginePath));
+    change(engineFiles);
+    const engineBytes = pack([...engineFiles].map(([path, bytes]) => ({ path: `package/${path}`, bytes })));
+    files.set(enginePath, engineBytes);
+    const value = JSON.parse(files.get('candidate.json'));
+    value.sha256 = createHash('sha256').update(engineBytes).digest('hex');
+    files.set('candidate.json', Buffer.from(JSON.stringify(value)));
+    const lock = JSON.parse(files.get('npm-shrinkwrap.json'));
+    lock.packages['node_modules/@zodiacs/engine'].integrity = `sha512-${createHash('sha512').update(engineBytes).digest('base64')}`;
+    files.set('npm-shrinkwrap.json', Buffer.from(JSON.stringify(lock)));
+  } });
+}
+
 describe('platform starter archive and source identity (offline)', () => {
+  it('verifies the starter without the application engine pin', () => {
+    const test = fixture();
+    const result = verifyPlatformStarter(test);
+    expect(result.candidate).toEqual(candidate);
+    expect(result.enginePath).toBe(enginePath);
+  });
+
+  it('allows the application to retain a different engine and artifact', () => {
+    const test = fixture();
+    test.put('src/data/platform-engine-candidate.json', JSON.stringify({ ...siteCandidate, version: '99.0.0-rc.0', sha256: '0'.repeat(64) }));
+    expect(verifyPlatformStarter(test).candidate).toEqual(candidate);
+  });
+
   it('verifies the public-directory archive against every source byte and the candidate', () => {
     const result = verifyPlatformStarter();
     expect(result.metadata).toEqual(metadata);
     expect([...result.files.keys()].sort()).toEqual(starterFiles(candidate.version).sort());
-    expect(result.files.size).toBe(20);
+    expect(result.files.size).toBe(21);
   });
 
   it('detects an archive digest change before reading package data', () => {
@@ -71,7 +104,7 @@ describe('platform starter archive and source identity (offline)', () => {
     expect(() => verifyPlatformStarter(test)).toThrow('Starter archive SHA-256 mismatch');
   });
 
-  it.each([undefined, 'main', '80dff5f', 'g'.repeat(40), 'a'.repeat(41), 123, ['a'.repeat(40)]])('requires a full immutable starter commit: %j', (artifactCommit) => {
+  it.each([undefined, 'main', '80dff5f', 'g'.repeat(40), 'a'.repeat(41), 'a'.repeat(40) + '\n', 123, ['a'.repeat(40)]])('requires a full immutable starter commit: %j', (artifactCommit) => {
     const test = fixture({ mutateMetadata: (value) => { value.artifactCommit = artifactCommit; } });
     expect(() => verifyPlatformStarter(test)).toThrow('Invalid immutable starter commit');
   });
@@ -83,7 +116,7 @@ describe('platform starter archive and source identity (offline)', () => {
 
   it('detects candidate provenance drift independently of starter source and digest', () => {
     const test = fixture({ mutateCandidate: (value) => { value.sourceCommit = 'a'.repeat(40); } });
-    expect(() => verifyPlatformStarter(test)).toThrow('Candidate metadata mismatch: sourceCommit');
+    expect(() => verifyPlatformStarter(test)).toThrow('Archive/source byte mismatch: candidate.json');
   });
 
   it('rejects mutable artifact URLs even when both metadata copies match', () => {
@@ -91,14 +124,156 @@ describe('platform starter archive and source identity (offline)', () => {
       const value = JSON.parse(files.get('candidate.json'));
       value.url = value.url.replace(value.artifactCommit, 'main');
       files.set('candidate.json', Buffer.from(JSON.stringify(value)));
-    }, mutateCandidate: (value) => { value.artifactUrl = value.artifactUrl.replace(/\/site\/[a-f0-9]{40}\//, '/site/main/'); } });
+    }, sourceMatchesArchive: true });
     test.put('examples/platform/candidate.json', test.files.get('candidate.json'));
     expect(() => verifyPlatformStarter(test)).toThrow('Candidate URL must identify the immutable artifact');
   });
 
+  it.each([
+    ['schemaVersion', 2, 'Invalid candidate package identity'],
+    ['schemaVersion', '1', 'Invalid candidate package identity'],
+    ['package', '@elsewhere/engine', 'Invalid candidate package identity'],
+    ['version', ['0.1.1-rc.3'], 'Invalid candidate package identity'],
+    ['version', '00.1.1-rc.3', 'Invalid candidate package identity'],
+    ['version', '0.1.1', 'Invalid candidate package identity'],
+    ['version', '0.1.1-rc.3\n', 'Invalid candidate package identity'],
+    ['status', 'Published and approved', 'Candidate release status mismatch'],
+    ['sha256', ['a'.repeat(64)], 'Invalid candidate SHA-256'],
+    ['sha256', 'a'.repeat(63), 'Invalid candidate SHA-256'],
+    ['sha256', 'a'.repeat(64) + '\n', 'Invalid candidate SHA-256'],
+    ['artifactRepository', 'https://github.com/ZodiacsOfficial/sdk.evil', 'Invalid candidate repository provenance'],
+    ['artifactRepository', 'https://github.com/other/sdk', 'Invalid candidate repository provenance'],
+    ['artifactRepository', 'https://user:secret@github.com/ZodiacsOfficial/sdk', 'Invalid candidate repository provenance'],
+    ['artifactCommit', 'main', 'Invalid candidate repository provenance'],
+    ['artifactCommit', 'a'.repeat(40) + '\n', 'Invalid candidate repository provenance'],
+    ['artifactCommit', ['a'.repeat(40)], 'Invalid candidate repository provenance'],
+    ['sourceRepository', 'https://github.com/ZodiacsOfficial/site', 'Invalid candidate repository provenance'],
+    ['sourceCommit', 'main', 'Invalid candidate repository provenance'],
+    ['sourceCommit', ['a'.repeat(40)], 'Invalid candidate repository provenance'],
+    ['sourcePackagePath', 'packages/../engine', 'Invalid candidate repository provenance'],
+    ['artifactPath', '../private.tgz', 'Candidate URL must identify the immutable artifact'],
+    ['artifactPath', 'artifacts/%2e%2e/private.tgz', 'Candidate URL must identify the immutable artifact'],
+    ['url', 'https://raw.githubusercontent.com/ZodiacsOfficial/sdk/main/artifacts/engine.tgz', 'Candidate URL must identify the immutable artifact'],
+    ['url', 'https://example.invalid/unfetched.tgz', 'Candidate URL must identify the immutable artifact'],
+  ])('rejects hostile or ambiguous candidate %s: %j', (key, value, message) => {
+    const test = fixture({ mutateCandidate: (record) => { record[key] = value; } });
+    expect(() => verifyPlatformStarter(test)).toThrow(message);
+  });
+
+  it.each(['unknownField', 'name', 'releaseStatus'])('rejects unrecognized candidate field %s', (key) => {
+    const test = fixture({ mutateCandidate: (value) => { value[key] = 'ambiguous'; } });
+    expect(() => verifyPlatformStarter(test)).toThrow('Invalid candidate metadata schema');
+  });
+
+  it.each(['artifactPath', 'sourcePackagePath', 'schemaVersion', 'ephemeris'])('requires candidate field %s', (key) => {
+    const test = fixture({ mutateCandidate: (value) => { delete value[key]; } });
+    expect(() => verifyPlatformStarter(test)).toThrow('Invalid candidate metadata schema');
+  });
+
+  it.each([
+    null, [], {}, 'astronomy-engine@2.1.19',
+    { name: 'astronomy-engine' }, { version: '2.1.19' },
+    { name: 'other-ephemeris', version: '2.1.19' },
+    { name: 'astronomy-engine', version: '2.1.19', status: 'authenticated' },
+    ...['^2.1.19', '~2.1.19', 'latest', '02.1.19', '2.1', '2.1.19-01', '2.1.19\n', ['2.1.19'], 2].map((version) => ({ name: 'astronomy-engine', version })),
+  ])('rejects missing, extra or non-exact ephemeris facts: %j', (ephemeris) => {
+    const test = fixture({ mutateCandidate: (value) => { value.ephemeris = ephemeris; } });
+    expect(() => verifyPlatformStarter(test)).toThrow('Invalid candidate ephemeris provenance');
+  });
+
+  it('rejects a claimed ephemeris version that differs from the resolved shrinkwrap', () => {
+    const test = fixture({ sourceMatchesArchive: true, mutateFiles: (files) => {
+      const value = JSON.parse(files.get('candidate.json'));
+      value.ephemeris.version = '9.9.9';
+      files.set('candidate.json', Buffer.from(JSON.stringify(value)));
+    } });
+    expect(() => verifyPlatformStarter(test)).toThrow('Locked ephemeris version mismatch');
+  });
+
+  it('rejects a missing resolved ephemeris entry', () => {
+    const test = fixture({ sourceMatchesArchive: true, mutateFiles: (files) => {
+      const lock = JSON.parse(files.get('npm-shrinkwrap.json'));
+      delete lock.packages['node_modules/astronomy-engine'];
+      files.set('npm-shrinkwrap.json', Buffer.from(JSON.stringify(lock)));
+    } });
+    expect(() => verifyPlatformStarter(test)).toThrow('Locked ephemeris version mismatch');
+  });
+
+  it.each(['?token=synthetic', '#fragment', '/extra'])('rejects URL suffix %s even with matching source bytes', (suffix) => {
+    const test = fixture({ sourceMatchesArchive: true, mutateFiles: (files) => {
+      const value = JSON.parse(files.get('candidate.json'));
+      value.url += suffix;
+      files.set('candidate.json', Buffer.from(JSON.stringify(value)));
+    } });
+    expect(() => verifyPlatformStarter(test)).toThrow('Candidate URL must identify the immutable artifact');
+  });
+
+  it('keeps source provenance distinct from the artifact host commit', () => {
+    const test = fixture({ sourceMatchesArchive: true, mutateFiles: (files) => {
+      const value = JSON.parse(files.get('candidate.json'));
+      value.url = value.url.replace(value.artifactCommit, value.sourceCommit);
+      files.set('candidate.json', Buffer.from(JSON.stringify(value)));
+    } });
+    expect(() => verifyPlatformStarter(test)).toThrow('Candidate URL must identify the immutable artifact');
+  });
+
+  it('accepts the official site artifact host independently of the SDK source repository', () => {
+    const test = fixture({ sourceMatchesArchive: true, mutateFiles: (files) => {
+      const value = JSON.parse(files.get('candidate.json'));
+      value.artifactRepository = 'https://github.com/ZodiacsOfficial/site';
+      value.artifactPath = enginePath;
+      value.url = `https://raw.githubusercontent.com/ZodiacsOfficial/site/${value.artifactCommit}/${value.artifactPath}`;
+      files.set('candidate.json', Buffer.from(JSON.stringify(value)));
+    } });
+    const result = verifyPlatformStarter(test);
+    expect(result.candidate.sourceRepository).toBe('https://github.com/ZodiacsOfficial/sdk');
+    expect(result.candidate.artifactRepository).toBe('https://github.com/ZodiacsOfficial/site');
+  });
+
+  it.each(['.', './geo', './receipt'])('requires the public %s export even when hashes are updated', (entry) => {
+    const test = engineFixture((files) => {
+      const manifest = JSON.parse(files.get('package.json'));
+      delete manifest.exports[entry];
+      files.set('package.json', Buffer.from(JSON.stringify(manifest)));
+    });
+    expect(() => verifyPlatformStarter(test)).toThrow(`Missing public engine export: ${entry}`);
+  });
+
+  it.each([
+    ['version', '9.9.9-rc.0'], ['name', '@elsewhere/engine'], ['type', 'commonjs'], ['license', 'UNLICENSED'],
+    ['repository', { type: 'git', url: 'git+https://github.com/ZodiacsOfficial/site.git', directory: 'packages/engine' }],
+  ])('rejects substituted engine package %s despite matching claimed hashes', (key, value) => {
+    const test = engineFixture((files) => {
+      const manifest = JSON.parse(files.get('package.json'));
+      manifest[key] = value;
+      files.set('package.json', Buffer.from(JSON.stringify(manifest)));
+    });
+    expect(() => verifyPlatformStarter(test)).toThrow('Contained engine package identity mismatch');
+  });
+
+  it.each(['import', 'types'])('requires contained bytes for the receipt %s target', (kind) => {
+    const test = engineFixture((files) => {
+      const manifest = JSON.parse(files.get('package.json'));
+      files.delete(manifest.exports['./receipt'][kind].slice(2));
+    });
+    expect(() => verifyPlatformStarter(test)).toThrow(`Missing public engine export: ./receipt ${kind}`);
+  });
+
+  it.each(['README.md', 'LICENSE', 'NOTICE', 'LICENSING.md'])('requires the retained engine %s document', (path) => {
+    const test = engineFixture((files) => files.delete(path));
+    expect(() => verifyPlatformStarter(test)).toThrow(`Missing engine notice/document: ${path}`);
+  });
+
+  it('rejects a blank license and unlisted engine secrets despite matching claimed hashes', () => {
+    expect(() => verifyPlatformStarter(engineFixture((files) => files.set('LICENSE', Buffer.from(' \n')))))
+      .toThrow('Missing engine notice/document: LICENSE');
+    expect(() => verifyPlatformStarter(engineFixture((files) => files.set('.env', Buffer.from('synthetic-only')))))
+      .toThrow('Unexpected engine package file: .env');
+  });
+
   it('rejects a repacked engine even when starter source and its own digest agree', () => {
-    const test = fixture({ mutateFiles: (files) => files.set(candidate.artifactPath, Buffer.from('different engine')) });
-    test.put(`examples/platform/${candidate.artifactPath}`, test.files.get(candidate.artifactPath));
+    const test = fixture({ mutateFiles: (files) => files.set(enginePath, Buffer.from('different engine')) });
+    test.put(`examples/platform/${enginePath}`, test.files.get(enginePath));
     expect(() => verifyPlatformStarter(test)).toThrow('Contained engine artifact mismatch');
   });
 
@@ -122,6 +297,15 @@ describe('platform starter archive and source identity (offline)', () => {
     expect(() => verifyPlatformStarter(test)).toThrow('Locked engine integrity mismatch');
   });
 
+  it('rejects an unpinned registry dependency even when source bytes agree', () => {
+    const test = fixture({ sourceMatchesArchive: true, mutateFiles: (files) => {
+      const lock = JSON.parse(files.get('npm-shrinkwrap.json'));
+      lock.packages['node_modules/esbuild'].resolved = 'https://example.invalid/esbuild.tgz';
+      files.set('npm-shrinkwrap.json', Buffer.from(JSON.stringify(lock)));
+    } });
+    expect(() => verifyPlatformStarter(test)).toThrow('Dependency must use an integrity-pinned public registry archive');
+  });
+
   it('rejects source symlinks even if the target contains matching bytes', () => {
     const test = fixture();
     const target = join(test.root, 'examples/platform/README.md');
@@ -142,7 +326,7 @@ describe('examples page artifact identity', () => {
       resolve(root, dirname(pagePath), statement.moduleSpecifier.text), statement.importClause?.name?.text,
     ]));
     const starterBinding = bindings.get(join(root, 'public/examples/platform-starter.json'));
-    const candidateBinding = bindings.get(join(root, 'src/data/platform-engine-candidate.json'));
+    const candidateBinding = bindings.get(join(root, 'examples/platform/candidate.json'));
     expect(starterBinding).toBeTypeOf('string');
     expect(candidateBinding).toBeTypeOf('string');
     const declarations = source.statements.filter((statement) => !ts.isImportDeclaration(statement)).map((statement) => statement.getFullText(source)).join('\n');
@@ -171,14 +355,14 @@ describe('examples page artifact identity', () => {
 
     const original = render(metadata, candidate);
     const changedStarter = { ...metadata, version: '8.7.6-rc.5', file: 'zodiacs-platform-starter-8.7.6-rc.5.tgz', sha256: 'b'.repeat(64), artifactCommit: 'a'.repeat(40) };
-    const changedCandidate = { ...candidate, name: '@example/engine', version: '9.8.7-rc.6', releaseLabel: 'Unpublished test candidate' };
+    const changedCandidate = { ...candidate, package: '@example/engine', version: '9.8.7-rc.6', status: 'Unpublished test candidate' };
     const changed = render(changedStarter, changedCandidate);
     expect(changed.links).toContain(`https://raw.githubusercontent.com/ZodiacsOfficial/site/${changedStarter.artifactCommit}/public/examples/${changedStarter.file}`);
     expect(changed.links).toContain(`https://github.com/ZodiacsOfficial/site/blob/${changedStarter.artifactCommit}/examples/platform/README.md`);
     expect(changed.setup).toBe(original.setup.replaceAll(metadata.file, changedStarter.file)
       .replaceAll(metadata.sha256, changedStarter.sha256).replaceAll(metadata.artifactCommit, changedStarter.artifactCommit));
     for (const value of [changedStarter.file, changedStarter.sha256, changedStarter.artifactCommit]) expect(changed.setup).toContain(value);
-    for (const value of [changedStarter.version, `${changedCandidate.name}@${changedCandidate.version}`, changedCandidate.releaseLabel.toLowerCase()]) expect(changed.visible).toContain(value);
+    for (const value of [changedStarter.version, `${changedCandidate.package}@${changedCandidate.version}`, changedCandidate.status]) expect(changed.visible.toLowerCase()).toContain(value.toLowerCase());
     for (const value of [metadata.file, metadata.sha256, metadata.artifactCommit, candidate.version]) expect(changed.visible).not.toContain(value);
   });
 });

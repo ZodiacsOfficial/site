@@ -15,8 +15,9 @@ await mkdir(outDir, { recursive: true });
 const candidate = JSON.parse(await readFile(join(consumer, 'candidate.json'), 'utf8'));
 const starterArchive = process.env.PLATFORM_STARTER_ARCHIVE ? resolve(process.env.PLATFORM_STARTER_ARCHIVE) : null;
 const starterArchiveHash = starterArchive ? createHash('sha256').update(await readFile(starterArchive)).digest('hex') : null;
-const engineHash = createHash('sha256').update(await readFile(join(consumer, 'vendor/zodiacs-engine-0.1.1-rc.1.tgz'))).digest('hex');
-assert.equal(engineHash, 'f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17');
+const engineHash = createHash('sha256').update(await readFile(join(consumer, `vendor/zodiacs-engine-${candidate.version}.tgz`))).digest('hex');
+assert.equal(candidate.package, '@zodiacs/engine');
+assert.match(candidate.version, /^\d+\.\d+\.\d+-rc\.\d+$/);
 assert.equal(candidate.sha256, engineHash);
 const { startServer } = await import(pathToFileURL(join(consumer, 'scripts/server.mjs')).href);
 const results = [];
@@ -29,7 +30,25 @@ const check = (name, value, detail = null) => {
   assert.ok(value, `${name}${detail ? `: ${JSON.stringify(detail)}` : ''}`);
 };
 const capture = (page, name) => page.screenshot({ path: join(outDir, `${name}.png`), fullPage: true, animations: 'disabled' });
-const parse = async (page) => ({ receipt: JSON.parse(await page.locator('#receipt').textContent()), result: JSON.parse(await page.locator('#result').textContent()) });
+const parse = async (page) => {
+  const displayedReceipt = JSON.parse(await page.locator('#receipt').textContent());
+  const result = JSON.parse(await page.locator('#result').textContent());
+  if (await page.locator('body').getAttribute('data-example') !== 'natal') return { receipt: displayedReceipt, result };
+  assert.equal(displayedReceipt.schema, 'zodiacs.calculation-receipt.draft-v1');
+  // Compare the same semantic assertions across the natal draft receipt and
+  // unchanged transit example metadata; retain the actual displayed schema too.
+  const receipt = {
+    engine: { version: displayedReceipt.engine.version,
+      artifactSHA256: displayedReceipt.provenance?.artifact?.sha256 },
+    birthUtc: displayedReceipt.instant,
+    birthTimeKnown: displayedReceipt.timeKnown,
+    submittedBirthInstant: displayedReceipt.sourceInstant,
+    requestedHouseSystem: displayedReceipt.houses.requested,
+    actualHouseSystem: displayedReceipt.houses.actual,
+    flags: displayedReceipt.resultFlags,
+  };
+  return { receipt, displayedReceipt, result };
+};
 const noOverflow = (page) => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1
   && [...document.querySelectorAll('input, select, button')].every((node) => {
     const rect = node.getBoundingClientRect();
@@ -108,7 +127,7 @@ async function driveLocal(browser, baseURL, mode, width) {
     }
     const initial = await calculate('default via keyboard', true);
     check(`${label}: 12 positions and exact candidate provenance`, (initial.result.bodies ?? initial.result.positions).length === 12
-      && initial.receipt.engine.version === '0.1.1-rc.1' && initial.receipt.engine.artifactSHA256 === engineHash);
+      && initial.receipt.engine.version === candidate.version && initial.receipt.engine.artifactSHA256 === engineHash);
     check(`${label}: requested Placidus, actual whole sign and polar flag`, initial.receipt.requestedHouseSystem === 'placidus'
       && initial.receipt.actualHouseSystem === 'whole' && JSON.stringify(initial.receipt.flags) === '["polar-fallback"]');
     if (mode === 'natal') check(`${label}: independently specified corrected polar ASC`, Math.abs(initial.result.angles.asc - 23.871984112302016) < 1e-10);
@@ -194,6 +213,142 @@ async function driveScriptBlocked(browser, baseURL) {
   } finally { await context.close(); contexts.delete(context); }
 }
 
+async function driveReceipts(browser, baseURL, width) {
+  const label = `receipt-${width}`;
+  const context = await localContext(browser, width);
+  const observed = observe(context);
+  const page = await context.newPage();
+  const engineRoot = join(consumer, 'node_modules/@zodiacs/engine/dist');
+  const { natalChart } = await import(pathToFileURL(join(engineRoot, 'index.js')).href);
+  const { createNatalEnvelope, parseNatalEnvelope, serializeNatalEnvelope } = await import(pathToFileURL(join(engineRoot, 'receipt.js')).href);
+  const sourceInstant = '2001-12-21T08:30:00-00:00';
+  const unknown = createNatalEnvelope(natalChart({ utc: sourceInstant, timeKnown: false,
+    latitude: 78.2232, longitude: 15.6267, houseSystem: 'placidus' }), { sourceInstant,
+    extensions: { private: 'SYNTHETIC-PRIVATE-EXTENSION', html: '<img src=x onerror="window.__receiptInjection=1">' } });
+  const encodedUnknown = serializeNatalEnvelope(unknown);
+  try {
+    await page.goto(`${baseURL}/natal.html`, { waitUntil: 'networkidle' });
+    const before = observed.requests.length;
+    await context.setOffline(true);
+    await page.evaluate(() => {
+      window.__receiptBlobs = { created: 0, revoked: 0 };
+      const create = URL.createObjectURL, revoke = URL.revokeObjectURL;
+      URL.createObjectURL = function (...args) { window.__receiptBlobs.created++; return Reflect.apply(create, this, args); };
+      URL.revokeObjectURL = function (...args) { window.__receiptBlobs.revoked++; return Reflect.apply(revoke, this, args); };
+    });
+    const display = async () => ({ receipt: JSON.parse(await page.locator('#receipt').textContent()), result: JSON.parse(await page.locator('#result').textContent()) });
+    const select = (contents, name = 'synthetic-private-name.json') => page.locator('#importFile').setInputFiles({ name, mimeType: 'application/json', buffer: Buffer.isBuffer(contents) ? contents : Buffer.from(contents) });
+    const importFile = async (contents) => {
+      await select(contents);
+      await page.locator('#importEnvelope').click();
+      await page.waitForFunction(() => /Imported stored result|No imported result/.test(document.getElementById('status').textContent));
+    };
+    const download = async () => {
+      const pending = page.waitForEvent('download');
+      await page.locator('#exportEnvelope').click();
+      const item = await pending;
+      assert.equal(item.suggestedFilename(), 'zodiacs-natal-envelope-draft-v1.json');
+      const stream = await item.createReadStream();
+      assert(stream, 'The actual browser download must be readable');
+      const chunks = [];
+      for await (const bytes of stream) chunks.push(bytes);
+      const parsed = parseNatalEnvelope(Buffer.concat(chunks).toString('utf8'));
+      assert.equal(parsed.ok, true);
+      return parsed.envelope;
+    };
+    check(`${label}: no export or diagnostic before a valid result`, await page.locator('#exportEnvelope').isDisabled() && await page.locator('#showDiagnostic').isDisabled());
+    await page.locator('#calculate').click();
+    const fresh = await download();
+    check(`${label}: actual downloaded fresh receipt retains source and resolved dependency facts`, fresh.receipt.houses.requested === 'placidus'
+      && fresh.receipt.houses.actual === 'whole' && fresh.receipt.provenance.artifact.sha256 === engineHash
+      && fresh.receipt.provenance.source.commit === candidate.sourceCommit
+      && fresh.receipt.provenance.ephemeris.version === candidate.ephemeris.version);
+    const formBefore = await page.locator('fieldset').first().locator('input,select').evaluateAll((nodes) => nodes.map((node) => [node.id, node.value, node.disabled]));
+    await importFile(encodedUnknown);
+    const imported = await display();
+    check(`${label}: imported unknown 08:30 stays a supplied reference`, imported.receipt.instant === '2001-12-21T08:30:00.000Z'
+      && imported.receipt.sourceInstant === sourceInstant && imported.receipt.reference === 'supplied-instant'
+      && imported.receipt.timeKnown === false && imported.result.angles === null && imported.result.houses === null);
+    assert.deepEqual(await page.locator('fieldset').first().locator('input,select').evaluateAll((nodes) => nodes.map((node) => [node.id, node.value, node.disabled])), formBefore);
+    check(`${label}: import leaves the birth form unchanged and labels claims`, (await page.locator('#status').textContent()).includes('unverified claims'));
+    assert.deepEqual(await download(), unknown);
+    check(`${label}: download round trip preserves precision and inert extensions`, true);
+    check(`${label}: extensions create no display nodes, text or execution`, !(await page.locator('body').textContent()).includes('SYNTHETIC-PRIVATE-EXTENSION')
+      && await page.locator('#receipt img,#result img,#diagnostic img').count() === 0 && await page.evaluate(() => window.__receiptInjection === undefined));
+    await page.locator('#showDiagnostic').focus();
+    await page.keyboard.press('Enter');
+    const diagnostic = JSON.parse(await page.locator('#diagnostic').textContent());
+    check(`${label}: keyboard diagnostic is fixed and excludes precise input`, diagnostic.status === 'redacted-not-anonymous'
+      && Object.keys(diagnostic).sort().join(',') === 'houses,inputFlags,resultFlags,schema,status,timeKnown'
+      && !JSON.stringify(diagnostic).includes('2001') && !JSON.stringify(diagnostic).includes('78.2232'));
+    await capture(page, `${label}-imported`);
+    await page.locator('#importFile').scrollIntoViewIfNeeded();
+    await page.screenshot({ path: join(outDir, `${label}-controls-viewport.png`), animations: 'disabled' });
+
+    const otherVersion = structuredClone(fresh);
+    otherVersion.receipt.engine.version = '999.0.0';
+    otherVersion.receipt.provenance.artifact.packageVersion = '999.0.0';
+    otherVersion.receipt.provenance.runtime = { name: '<img src=x onerror="window.__receiptInjection=1">' };
+    await importFile(JSON.stringify(otherVersion));
+    check(`${label}: imported version claims survive without recomputation or markup`, (await display()).receipt.engine.version === '999.0.0'
+      && await page.locator('#receipt img').count() === 0 && await page.evaluate(() => window.__receiptInjection === undefined));
+    assert.deepEqual(await download(), otherVersion);
+
+    await page.evaluate(() => {
+      window.__receiptFileReads = 0;
+      const original = File.prototype.arrayBuffer;
+      File.prototype.arrayBuffer = function (...args) { window.__receiptFileReads++; return Reflect.apply(original, this, args); };
+    });
+    const unknownSchema = { ...unknown, schema: 'SYNTHETIC-PRIVATE-VERSION' };
+    const required = { ...unknown, requiredFeatures: ['SYNTHETIC-PRIVATE-FEATURE'] };
+    for (const [name, bytes, code] of [
+      ['oversize', ' '.repeat(65537), 'size_limit'],
+      ['invalid UTF-8', Buffer.from([255]), 'invalid_file'],
+      ['private malformed JSON', 'SYNTHETIC-PRIVATE-ERROR{', 'invalid_json'],
+      ['duplicate keys', `{"schema":"foreign",${encodedUnknown.slice(1)}`, 'invalid_json'],
+      ['unknown schema', JSON.stringify(unknownSchema), 'unsupported_version'],
+      ['required feature', JSON.stringify(required), 'unsupported_feature'],
+    ]) {
+      await importFile(bytes);
+      check(`${label}: ${name} clears stale output with a fixed error`, (await page.locator('#error').textContent()) === `Import rejected (${code}). No previous chart is active.`
+        && await page.locator('#receipt').textContent() === '' && await page.locator('#result').textContent() === ''
+        && await page.locator('#diagnostic').textContent() === '' && await page.locator('#exportEnvelope').isDisabled() && await page.locator('#showDiagnostic').isDisabled());
+      if (name === 'oversize') check(`${label}: oversized native File is never read`, await page.evaluate(() => window.__receiptFileReads === 0));
+    }
+
+    const holdRead = async () => page.evaluate(() => {
+      const original = File.prototype.arrayBuffer;
+      File.prototype.arrayBuffer = function () {
+        File.prototype.arrayBuffer = original;
+        return new Promise((resolve) => { window.__releaseReceiptRead = () => original.call(this).then(resolve); });
+      };
+    });
+    const release = async () => { await page.evaluate(() => window.__releaseReceiptRead()); await tick(page); };
+    for (const scenario of ['new calculation', 'new selection', 'cancel', 'new import']) {
+      await select(encodedUnknown); await holdRead(); await page.locator('#importEnvelope').click();
+      await page.waitForFunction(() => typeof window.__releaseReceiptRead === 'function');
+      if (scenario === 'new calculation') await page.locator('#calculate').click();
+      else if (scenario === 'new selection') await select(JSON.stringify(fresh));
+      else if (scenario === 'cancel') await page.locator('#importFile').dispatchEvent('cancel');
+      else await importFile(JSON.stringify(fresh));
+      await release();
+      if (scenario === 'new calculation' || scenario === 'new import') check(`${label}: pending import cannot replace ${scenario}`, (await display()).receipt.instant === fresh.receipt.instant);
+      else check(`${label}: pending import cannot restore a result after ${scenario}`, await page.locator('#receipt').textContent() === '' && await page.locator('#exportEnvelope').isDisabled());
+      await page.evaluate(() => { delete window.__releaseReceiptRead; });
+    }
+    await page.waitForFunction(() => window.__receiptBlobs.created === window.__receiptBlobs.revoked);
+    check(`${label}: every temporary download URL is revoked`, await page.evaluate(() => window.__receiptBlobs.created >= 3 && window.__receiptBlobs.created === window.__receiptBlobs.revoked));
+    check(`${label}: controls reflow without horizontal overflow`, await noOverflow(page));
+    check(`${label}: imports, exports and diagnostics make no network request`, observed.requests.length === before
+      && (await page.evaluate(() => window.__starterNetworkAttempts)).length === 0);
+    const stored = await storage(page);
+    check(`${label}: no automatic storage, cookie, URL data or page error`, Object.values(stored).every((value) => Array.isArray(value) ? value.length === 0 : value === 0)
+      && (await context.cookies()).length === 0 && page.url() === `${baseURL}/natal.html` && observed.errors.length === 0 && observed.failures.length === 0);
+  } catch (error) {
+    await capture(page, `${label}-failure`).catch(() => {}); throw error;
+  } finally { await context.close(); contexts.delete(context); }
+}
+
 async function driveWidget(browser, baseURL, width) {
   const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
   contexts.add(context);
@@ -254,15 +409,30 @@ async function driveWidget(browser, baseURL, width) {
       check(`widget-${width}-${theme}: frame fits responsive bounds`, rect.width <= 480 && rect.x >= 0 && rect.x + rect.width <= width + 1 && rect.height === 300, rect);
       await capture(page, `widget-${width}-${theme}`);
       await page.locator('#load-widget').focus();
-      let reachedFrame = false;
-      let reachedFallback = false;
-      for (let index = 0; index < 6; index += 1) {
+      const focusTrace = [];
+      variant.focusTrace = focusTrace;
+      const sampleFocus = async (phase) => focusTrace.push({ phase,
+        parent: await page.evaluate(() => ({ tag: document.activeElement.tagName, href: document.activeElement.href ?? null })),
+        attribution: await attribution.evaluate((a) => ({ active: a === document.activeElement, documentFocused: document.hasFocus() })),
+      });
+      let reachedBoth = false;
+      try {
         await page.keyboard.press('Tab');
-        const focus = await page.evaluate(() => ({ tag: document.activeElement.tagName, href: document.activeElement.href ?? null }));
-        if (focus.tag === 'IFRAME') reachedFrame ||= await attribution.evaluate((a) => a === document.activeElement);
-        if (focus.href === 'https://zodiacs.org/today/') { reachedFallback = true; break; }
+        await sampleFocus('first-tab-immediate');
+        // Cross-process iframe focus can settle after key dispatch returns.
+        // Wait for the actual credit, without pressing extra Tab keys or
+        // substituting a programmatic focus for keyboard accessibility.
+        await page.waitForFunction((node) => node === document.activeElement, await element.elementHandle(), { timeout: 2500 });
+        await frame.waitForFunction((node) => node === document.activeElement && document.hasFocus(), await attribution.elementHandle(), { timeout: 2500 });
+        await sampleFocus('branding-settled');
+        await page.keyboard.press('Tab');
+        await page.waitForFunction(() => document.activeElement.href === 'https://zodiacs.org/today/', null, { timeout: 2500 });
+        await sampleFocus('fallback-settled');
+        reachedBoth = true;
+      } catch {
+        await sampleFocus('failed').catch(() => {});
       }
-      check(`widget-${width}-${theme}: Tab reaches inside-frame branding and fallback`, reachedFrame && reachedFallback);
+      check(`widget-${width}-${theme}: Tab reaches inside-frame branding and fallback`, reachedBoth, focusTrace);
     }
     const beforeInvalid = observed.requests.length;
     const previousSrc = await page.locator('iframe').getAttribute('src');
@@ -317,6 +487,7 @@ try {
     catch (error) { fatal.push({ label, message: error.stack ?? String(error) }); console.error(`${label}: ${error.message}`); }
   };
   for (const width of [390, 1280]) for (const mode of ['natal', 'transits']) await run(`${mode}-${width}`, () => driveLocal(browser, baseURL, mode, width));
+  for (const width of [320, 1280]) await run(`receipt-${width}`, () => driveReceipts(browser, baseURL, width));
   await run('script-blocked', () => driveScriptBlocked(browser, baseURL));
   for (const width of [390, 1280]) await run(`widget-${width}`, () => driveWidget(browser, baseURL, width));
   await run('widget-blocked', () => driveBlockedWidget(browser, baseURL));
@@ -325,7 +496,7 @@ finally {
   for (const context of contexts) await context.close().catch(() => {});
   await browser?.close();
   if (server) await new Promise((resolve) => server.close(resolve));
-  const evidence = { type: 'internal archive-consumer browser acceptance; not external adoption', startedAt,
+  const evidence = { type: starterArchive ? 'internal archive-consumer browser acceptance; not external adoption' : 'pre-pack source browser check; no archive-consumer or external adoption claim', startedAt,
     completedAt: new Date().toISOString(), consumer, starterArchive, starterArchiveHash, candidate, engineHash, node: process.version,
     results, fatal, localRuns, widgetRuns };
   await writeFile(join(outDir, 'browser.json'), `${JSON.stringify(evidence, null, 2)}\n`);

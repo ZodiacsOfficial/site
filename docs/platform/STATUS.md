@@ -70,7 +70,7 @@ branch. Engine rc.3 SHA-256 is
 It does not change site pins, account sync or stored records. The active next
 slice integrates local receipt export/import and redaction into a new standalone
 starter candidate, preserving the old rc.2 starter and the site's engine rc.1.
-No new starter acceptance or artifact is claimed yet. Invalid civil
+Starter rc.3 source now passes all 39 Node checks and 231 actual Chrome assertions, including offline receipt export/import, redaction and stale-read controls. Its new immutable archive, fresh consumer and public setup verification are pending at this source checkpoint. Invalid civil
 fields and missing timezones now fail before normalization; failed saved-chart
 recomputation retains its old receipt without rewriting storage.
 

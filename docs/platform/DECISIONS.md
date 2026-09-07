@@ -243,3 +243,15 @@ exclude extensions/provenance strings from redacted diagnostics. Guard async fil
 selection races and oversize files before reading. Full export includes private
 birth inputs; no account migration, network upload or persistent identifier is
 needed for this local integration.
+
+
+## C-005 — Validate resolved build provenance before writing output
+
+A dependency range does not identify the ephemeris that performed a calculation.
+The standalone candidate records its resolved version, and build verifies the
+lock, installed manifest and actual esbuild module input agree. This candidate
+allows one flat Astronomy Engine installation; different nested resolution
+fails explicitly instead of inheriting an unrelated version claim. Validation
+precedes output writes so a failed build preserves previous valid output.
+These checks support a verified install; they do not authenticate arbitrary
+locally modified dependencies or imported provenance claims.

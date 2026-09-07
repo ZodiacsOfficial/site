@@ -12,17 +12,51 @@ const MAX_TAR_BYTES = 16 * 1024 * 1024;
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const requireValue = (condition, message) => { if (!condition) throw new Error(message); };
 const json = (bytes) => JSON.parse(bytes.toString('utf8'));
+const RC_VERSION = /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)-rc\.(?:0|[1-9]\d*)$/;
+const isRcVersion = (value) => typeof value === 'string' && value.trim() === value && RC_VERSION.test(value);
+const isCommit = (value) => typeof value === 'string' && value.length === 40 && /^[a-f0-9]{40}$/.test(value);
+const isSha256 = (value) => typeof value === 'string' && value.length === 64 && /^[a-f0-9]{64}$/.test(value);
+const isVersion = (value) => {
+  if (typeof value !== 'string' || value.length > 64) return false;
+  const match = /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/.exec(value);
+  return Boolean(match && match[0] === value && (!match[1] || match[1].split('.').every((part) => !/^\d+$/.test(part) || part === '0' || !part.startsWith('0'))));
+};
 
 export function starterFiles(engineVersion) {
-  requireValue(/^\d+\.\d+\.\d+-rc\.\d+$/.test(engineVersion), 'Invalid candidate version');
+  requireValue(isRcVersion(engineVersion), 'Invalid candidate version');
   return [
     'README.md', 'candidate.json', 'npm-shrinkwrap.json', 'package.json',
     'scripts/build.mjs', 'scripts/fetch-engine.mjs', 'scripts/server.mjs',
     'src/app.mjs', 'src/calculate.mjs', 'src/favicon.svg', 'src/natal.html',
     'src/styles.css', 'src/transits.html', 'src/widget-contract.mjs', 'src/widget.html', 'src/widget.mjs',
-    'tests/calculate.check.mjs', 'tests/server.check.mjs', 'tests/widget.check.mjs',
+    'tests/calculate.check.mjs', 'tests/receipt.check.mjs', 'tests/server.check.mjs', 'tests/widget.check.mjs',
     `vendor/zodiacs-engine-${engineVersion}.tgz`,
   ];
+}
+
+/** The standalone starter owns this pin; the site's application pin is unrelated.
+ * All URLs are checked as data. Verification never fetches an imported URL.
+ */
+function validateCandidate(candidate) {
+  const fields = ['schemaVersion', 'package', 'version', 'status', 'artifactRepository', 'artifactCommit',
+    'artifactPath', 'sourceRepository', 'sourceCommit', 'sourcePackagePath', 'url', 'sha256', 'ephemeris'];
+  requireValue(candidate !== null && typeof candidate === 'object' && !Array.isArray(candidate)
+    && Object.keys(candidate).length === fields.length && fields.every((key) => Object.hasOwn(candidate, key)), 'Invalid candidate metadata schema');
+  requireValue(candidate.schemaVersion === 1 && candidate.package === '@zodiacs/engine'
+    && isRcVersion(candidate.version), 'Invalid candidate package identity');
+  requireValue(candidate.status === 'Unpublished npm release candidate; review and publication gates remain open', 'Candidate release status mismatch');
+  requireValue(isSha256(candidate.sha256), 'Invalid candidate SHA-256');
+  const ephemeris = candidate.ephemeris;
+  requireValue(ephemeris !== null && typeof ephemeris === 'object' && !Array.isArray(ephemeris)
+    && Object.keys(ephemeris).length === 2 && Object.hasOwn(ephemeris, 'name') && Object.hasOwn(ephemeris, 'version')
+    && ephemeris.name === 'astronomy-engine' && isVersion(ephemeris.version), 'Invalid candidate ephemeris provenance');
+  requireValue(['https://github.com/ZodiacsOfficial/site', 'https://github.com/ZodiacsOfficial/sdk'].includes(candidate.artifactRepository)
+    && isCommit(candidate.artifactCommit) && candidate.sourceRepository === 'https://github.com/ZodiacsOfficial/sdk'
+    && isCommit(candidate.sourceCommit) && candidate.sourcePackagePath === 'packages/engine', 'Invalid candidate repository provenance');
+  const repository = candidate.artifactRepository.slice('https://github.com/'.length);
+  const directory = repository === 'ZodiacsOfficial/sdk' ? 'artifacts' : 'vendor';
+  requireValue(candidate.artifactPath === `${directory}/zodiacs-engine-${candidate.version}.tgz`
+    && candidate.url === `https://raw.githubusercontent.com/${repository}/${candidate.artifactCommit}/${candidate.artifactPath}`, 'Candidate URL must identify the immutable artifact');
 }
 
 function tarString(field) {
@@ -102,13 +136,14 @@ function readRegularFile(root, relative) {
 export function verifyPlatformStarter({ root = ROOT } = {}) {
   const metadata = json(readRegularFile(root, 'public/examples/platform-starter.json'));
   requireValue(metadata.schemaVersion === 1 && metadata.name === 'zodiacs-platform-starter'
-    && /^\d+\.\d+\.\d+-rc\.\d+$/.test(metadata.version), 'Invalid starter metadata identity');
+    && isRcVersion(metadata.version), 'Invalid starter metadata identity');
   requireValue(metadata.file === `${metadata.name}-${metadata.version}.tgz`, 'Invalid starter archive filename');
-  requireValue(/^[a-f0-9]{64}$/.test(metadata.sha256), 'Invalid starter SHA-256');
-  requireValue(typeof metadata.artifactCommit === 'string' && /^[a-f0-9]{40}$/.test(metadata.artifactCommit), 'Invalid immutable starter commit');
+  requireValue(isSha256(metadata.sha256), 'Invalid starter SHA-256');
+  requireValue(isCommit(metadata.artifactCommit), 'Invalid immutable starter commit');
   const archive = readRegularFile(root, `public/examples/${metadata.file}`);
   requireValue(sha256(archive) === metadata.sha256, 'Starter archive SHA-256 mismatch');
-  const candidate = json(readRegularFile(root, 'src/data/platform-engine-candidate.json'));
+  const candidate = json(readRegularFile(root, 'examples/platform/candidate.json'));
+  validateCandidate(candidate);
   const files = readPackageArchive(archive, starterFiles(candidate.version));
   for (const [path, bytes] of files) {
     requireValue(bytes.equals(readRegularFile(root, `examples/platform/${path}`)), `Archive/source byte mismatch: ${path}`);
@@ -116,49 +151,44 @@ export function verifyPlatformStarter({ root = ROOT } = {}) {
   const manifest = json(files.get('package.json'));
   requireValue(manifest.name === metadata.name && manifest.version === metadata.version
     && manifest.private === true && manifest.type === 'module' && manifest.engines?.node === '22.x', 'Starter package identity/private/runtime mismatch');
-  const engine = json(files.get('candidate.json'));
-  requireValue(candidate.schemaVersion === 1 && candidate.name === '@zodiacs/engine'
-    && candidate.releaseStatus === 'unpublished-candidate'
-    && engine.status === 'Unpublished npm release candidate; review and publication gates remain open', 'Candidate release status mismatch');
-  for (const [starterKey, siteKey] of Object.entries({ package: 'name', version: 'version', url: 'artifactUrl', sha256: 'sha256', sourceRepository: 'sourceRepository', sourceCommit: 'sourceCommit' })) {
-    requireValue(engine[starterKey] === candidate[siteKey], `Candidate metadata mismatch: ${starterKey}`);
-  }
-  requireValue(engine.artifactRepository === 'https://github.com/ZodiacsOfficial/site'
-    && /^[a-f0-9]{40}$/.test(engine.artifactCommit)
-    && engine.sourceRepository === 'https://github.com/ZodiacsOfficial/sdk'
-    && /^[a-f0-9]{40}$/.test(engine.sourceCommit), 'Invalid candidate repository provenance');
   const enginePath = `vendor/zodiacs-engine-${candidate.version}.tgz`;
-  requireValue(candidate.artifactPath === enginePath
-    && engine.url === `https://raw.githubusercontent.com/ZodiacsOfficial/site/${engine.artifactCommit}/${enginePath}`, 'Candidate URL must identify the immutable artifact');
   const engineBytes = files.get(enginePath);
-  requireValue(sha256(engineBytes) === candidate.sha256
-    && engineBytes.equals(readRegularFile(root, enginePath)), 'Contained engine artifact mismatch');
+  requireValue(sha256(engineBytes) === candidate.sha256, 'Contained engine artifact mismatch');
   const engineFiles = readPackageArchive(engineBytes);
   const engineManifest = json(engineFiles.get('package.json'));
-  requireValue(engineManifest.name === candidate.name && engineManifest.version === candidate.version
+  requireValue(engineManifest.name === candidate.package && engineManifest.version === candidate.version
+    && engineManifest.type === 'module' && engineManifest.license === 'MIT'
     && engineManifest.repository?.url === `git+${candidate.sourceRepository}.git`
     && engineManifest.repository?.directory === candidate.sourcePackagePath, 'Contained engine package identity mismatch');
-  for (const entry of ['.', './geo']) {
+  for (const path of engineFiles.keys()) {
+    requireValue(['package.json', 'README.md', 'CHANGELOG.md', 'LICENSE', 'LICENSING.md', 'NOTICE'].includes(path)
+      || /^dist\/[A-Za-z0-9_.-]+\.(?:js|d\.ts)$/.test(path), `Unexpected engine package file: ${path}`);
+  }
+  for (const path of ['README.md', 'LICENSE', 'LICENSING.md', 'NOTICE']) {
+    requireValue(engineFiles.has(path) && engineFiles.get(path).toString('utf8').trim().length > 0, `Missing engine notice/document: ${path}`);
+  }
+  for (const entry of ['.', './geo', './receipt']) {
     for (const kind of ['import', 'types']) {
       const target = engineManifest.exports?.[entry]?.[kind];
       requireValue(typeof target === 'string' && target.startsWith('./') && engineFiles.has(target.slice(2)), `Missing public engine export: ${entry} ${kind}`);
     }
   }
-  requireValue(JSON.stringify(manifest.dependencies) === JSON.stringify({ [candidate.name]: `file:${enginePath}` }), 'Starter must install the contained engine');
+  requireValue(JSON.stringify(manifest.dependencies) === JSON.stringify({ [candidate.package]: `file:${enginePath}` }), 'Starter must install the contained engine');
   const lock = json(files.get('npm-shrinkwrap.json'));
   requireValue(lock.lockfileVersion === 3 && lock.name === manifest.name && lock.version === manifest.version, 'Starter shrinkwrap identity mismatch');
   for (const key of ['dependencies', 'devDependencies', 'engines']) {
     requireValue(JSON.stringify(lock.packages?.['']?.[key]) === JSON.stringify(manifest[key]), `Starter shrinkwrap mismatch: ${key}`);
   }
-  const lockedEngine = lock.packages?.[`node_modules/${candidate.name}`];
+  const lockedEngine = lock.packages?.[`node_modules/${candidate.package}`];
   requireValue(lockedEngine?.version === candidate.version && lockedEngine.resolved === `file:${enginePath}`
     && lockedEngine.integrity === `sha512-${createHash('sha512').update(engineBytes).digest('base64')}`, 'Locked engine integrity mismatch');
+  requireValue(lock.packages?.['node_modules/astronomy-engine']?.version === candidate.ephemeris.version, 'Locked ephemeris version mismatch');
   for (const [path, dependency] of Object.entries(lock.packages)) {
-    if (!path || path === `node_modules/${candidate.name}`) continue;
+    if (!path || path === `node_modules/${candidate.package}`) continue;
     requireValue(typeof dependency.resolved === 'string' && dependency.resolved.startsWith('https://registry.npmjs.org/')
       && /^sha512-[A-Za-z0-9+/]+={0,2}$/.test(dependency.integrity), `Dependency must use an integrity-pinned public registry archive: ${path}`);
   }
-  return { metadata, candidate, files };
+  return { metadata, candidate, enginePath, files };
 }
 
 /** Do not inherit auth tokens, personal npm config, caches, or NODE_OPTIONS. */
@@ -207,7 +237,8 @@ if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.m
     const verified = verifyPlatformStarter();
     const consumer = process.argv.includes('--install') ? installFreshConsumer(verified) : null;
     console.log(JSON.stringify({ schemaVersion: 1, result: 'passed', mode: consumer ? 'fresh-consumer' : 'offline',
-      starter: verified.metadata, engine: { name: verified.candidate.name, version: verified.candidate.version, sha256: verified.candidate.sha256 },
+      starter: verified.metadata, engine: { name: verified.candidate.package, version: verified.candidate.version,
+        sha256: verified.candidate.sha256, ephemeris: verified.candidate.ephemeris },
       filesVerified: verified.files.size, runtime: { node: process.version, platform: process.platform, arch: process.arch },
       consumer, elapsedSeconds: Number(((performance.now() - started) / 1000).toFixed(3)) }, null, 2));
   } catch (error) {

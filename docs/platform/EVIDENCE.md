@@ -864,3 +864,60 @@ accepted evidence. Browser/server cleanup is recorded. No source defect was
 reproduced and no immutable archive was rewritten. This finite Chromium corpus
 is not all-browser or assistive-technology certification. A changed starter will
 receive affected functional/browser checks again.
+
+
+## Standalone natal receipt source — September 7, 22:38 UTC
+
+The next starter is `0.1.0-rc.3`, containing the immutable SDK engine
+`0.1.1-rc.3` from distribution commit `2000377b1b537c1b08c873889059acc8edacc4fe`
+and runtime source `aaade67d0d49e8b10d1bc5c59cf345d6106dc270`. The site application's
+rc.1 pin, account records and existing starter archives remain unchanged.
+
+The natal example exports actual local JSON files, imports bounded strict UTF-8
+files as unverified stored results, retains exact unknown-time references and
+full numeric precision, and emits an allowlisted redacted diagnostic. Imported
+records never refill the birth form or trigger recalculation. Generation guards
+prevent older asynchronous reads replacing a newer calculation, selection,
+cancellation or import. Imported extensions survive export but are not rendered;
+errors do not include filenames or file content. Explicit full exports contain
+birth details; redaction is not described as anonymity.
+
+- All **39 Node checks** pass with the actual loopback server. The initial
+  restricted invocation had one `listen EPERM` failure; it is retained separately
+  from the successful authorized local-server run.
+- All **231 actual Chrome assertions** pass in the final pre-pack source run:
+  ordinary natal/transit flows, 320/1280 receipt controls, actual downloaded
+  bytes, 08:30 unknown-time import/re-export, mixed-version unverified claims,
+  malformed/oversized files, overlap races, revoked Blob URLs, offline operation,
+  no automatic storage/URL disclosure, and widget branding/fallback keyboard use.
+  The two raw receipt-control viewport captures were visually inspected.
+- The first browser run reported **222/223** checks, missing mobile dark widget
+  focus. The original cause did not recur in focused comparisons; it is not
+  labeled a proven product or timing defect. The harness now waits a bounded
+  interval for exact iframe/credit focus after the first Tab, then for fallback
+  focus after the second Tab, and records focus samples. It does not press extra
+  Tabs or programmatically focus the credit. Initial evidence is preserved.
+- **113 synthetic archive-fixture tests** pass for the decoupled verifier. The
+  authoritative candidate belongs to the starter; exact archive/source bytes,
+  provenance, repository paths, dependency lock, public exports, notices and
+  tar/path limits remain checked. This is not yet a real rc.3 archive check.
+- Independent build review caught a rejected nested ephemeris bundle being
+  written before provenance validation. Build now uses `write: false`, checks
+  the actual bundled module path against the locked installation, then writes.
+  All six good/bad controls pass; all eight pre-existing output files remain
+  byte-identical on rejection. Receipt ephemeris facts identify actual locked
+  version 2.1.19, separately from the engine's dependency range.
+
+[Evidence inputs and original hashes](evidence/starter-receipt/checkpoint-inputs.json),
+[39 tests](evidence/starter-receipt/tests-local-final.log),
+[final source browser](evidence/starter-receipt/browser-final-source.json),
+[initial browser](evidence/starter-receipt/browser-prepack-initial.json),
+[build correction review](evidence/starter-receipt/build-review-final.md),
+[all-output preservation](evidence/starter-receipt/build-rejection-output-stability.json).
+All chart data is synthetic. These are finite local/source checks, not fresh
+archive acceptance, external developer adoption, human expert review, npm
+publication or production deployment.
+
+Fresh repository reads at this checkpoint still show site main `7f953e3f` and
+SDK main `b49e0f14`. SDK #5 remains OPEN/draft at `cced0116`, zero submitted
+reviews and an explicit merge/publication hold.
