@@ -7,6 +7,7 @@
  * future-versioned token rather than throwing into an island.
  */
 import type { HouseSystem } from './engine/types';
+import { parseCivilDate, parseCivilTime } from './time/civil-date';
 import { TECHNICAL_OFFSET_LOCALE } from './time/technical-locales';
 
 export interface ShareChartInput {
@@ -82,9 +83,6 @@ export function encodeChartLink(input: ShareChartInput): string {
   return VERSION_PREFIX + toBase64Url(new TextEncoder().encode(JSON.stringify(wire)));
 }
 
-const DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
-const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
-
 function validTz(tz: string): boolean {
   if (typeof tz !== 'string' || tz.length === 0 || tz.length > 64) return false;
   try {
@@ -110,15 +108,13 @@ export function decodeChartLink(token: string): ShareChartInput | null {
   const w = wire as Record<string, unknown>;
 
   if (typeof w.d !== 'string') return null;
-  const dm = DATE_RE.exec(w.d);
-  if (!dm) return null;
-  const [year, month, day] = [Number(dm[1]), Number(dm[2]), Number(dm[3])];
+  const date = parseCivilDate(w.d);
   // Same window the calculator form accepts.
-  if (year < 1800 || year > 2199 || month < 1 || month > 12 || day < 1 || day > 31) return null;
+  if (!date || date.year < 1800 || date.year > 2199) return null;
 
   let time: string | null = null;
   if (w.t !== undefined) {
-    if (typeof w.t !== 'string' || !TIME_RE.test(w.t)) return null;
+    if (typeof w.t !== 'string' || !parseCivilTime(w.t)) return null;
     time = w.t;
   }
 

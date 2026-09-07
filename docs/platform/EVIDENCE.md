@@ -631,3 +631,109 @@ was pushed without merge, making the exact example bytes publicly available.
 Its automatic review preview `dpl_HMB36sGh7emiAFHFTvb6tmEYW9g3` is READY.
 The final onboarding-page commit, its separate draft PR, exact-head CI and
 remote preview verification remain the next release-evidence steps.
+
+
+### B01/B02 review delivery and actual remote preview
+
+[Draft PR #417](https://github.com/ZodiacsOfficial/site/pull/417) is stacked on
+#415; final source is `8343f173e4db2e8ab6628bd04590e41b056872ce`.
+Exact preview `dpl_6okY3r99rF7qVw5Emkaod8XLh31V` is READY at
+https://zodiacs-bxcsjv13g-zodiacsofficial.vercel.app . At 20:29 UTC actual
+Chrome ran all three developer-page journeys at 1280/390, with canonical
+footer, correct public starter link/setup, reduced motion, focus/scroll and
+CSS zoom checks passing. [Receipt](evidence/b02-preview-developers-browser.json),
+[front door](evidence/b02-preview-developer-entry-1280.png),
+[mobile examples](evidence/b02-preview-developer-examples-390-zoom1.png).
+Temporary access file and browser wrapper were deleted; no bearer URL or
+cookie was saved in repository evidence. Exact-head CI [34159295138](https://github.com/ZodiacsOfficial/site/actions/runs/34159295138) passed all 14 jobs; [result](evidence/b02-ci-success.json).
+Production remains `7f953e3f` / `dpl_BrntzbFYa2gzetKWgeq91GFeaM6W`.
+New concurrent PR #416 (`f1293bbb`, Astrofolio verification status only)
+has no file overlap; no other contributor branch was changed.
+
+### C02 civil imports and explicit timezone boundary — final local gates
+
+Base source `8343f173e4db2e8ab6628bd04590e41b056872ce`, branch
+`codex/platform-civil-inputs`. A synthetic v1 birth-share token containing
+`2001-02-29` was accepted and calculated as March 1 with a false DST-gap flag.
+The public engine rejects the original invalid ISO string, but cannot recover
+it after an adapter has normalized it to a valid Date. The
+[original reproduction](evidence/c02-civil-input-analysis.md) preserves source
+hashes, exact synthetic input and failed-before/passed-after evidence.
+Trailing-newline inputs already failed on the baseline; they are controls.
+
+The import-free Gregorian parser now rejects impossible dates and clock
+rollover at both share decoding and local-time resolution. Share v1 shape,
+1800–2199 window, unknown-time behavior, labels and house settings stay intact.
+The resolver preserves astronomical years 0000–0099 using setUTCFullYear and
+explicit Gregorian/Latin/era fields; this is syntax/time handling, not an
+extension of numerical accuracy claims. Missing/coerced/unsupported timezones
+cannot select the host zone. Errors do not echo submitted values or invoke
+untrusted coercion hooks. Invalid stored inputs keep their original cached
+receipt without recalculation, re-versioning or storage mutation.
+
+Reproduction commands from the site root with installed Node 22 toolchain:
+
+```sh
+TZ=Asia/Bangkok node node_modules/vitest/vitest.mjs run src/lib/time/civil-date.test.ts src/lib/time/localToUtc.test.ts src/lib/share.test.ts src/lib/profile/polar-repair.test.ts
+npm run build
+npm run check
+ASTRO_PREVIEW_BACKGROUND=0 npm run test:phase1:acceptance
+ASTRO_PREVIEW_BACKGROUND=0 node tests/platform-share-boundary-drive.mjs
+npm test
+PUBLIC_WEB_PUSH_ENABLED=1 PUSH_ENABLED=1 npm run build
+T17_SHARE_EVIDENCE=1 ASTRO_PREVIEW_BACKGROUND=0 node tests/t17-positions-share.mjs
+ASTRO_PREVIEW_BACKGROUND=0 npm run test:compatibility:browser
+node docs/platform/evidence/c02-civil-review-probe.mjs
+TZ=UTC node docs/platform/evidence/c02-timezone-review-probe.mjs
+TZ=America/Los_Angeles node docs/platform/evidence/c02-timezone-review-probe.mjs
+```
+
+- Final focused suite: **201/201** on Node 22.23.2 with Bangkok host and Node
+  24.19.0 with UTC host. [Node 22](evidence/c02-final-focused-node22.log),
+  [Node 24](evidence/c02-final-focused-node24.log).
+- Full suite: **4,624 tests / 408 files, no skips**, 66.91s.
+  [Tests](evidence/c02-final-tests.log). Full
+  [normal build](evidence/c02-final-build.log),
+  [push-enabled build](evidence/c02-final-push-build.log) and
+  [check](evidence/c02-final-check.log) pass, 0 errors/warnings, 11 hints;
+  existing bundle limits unchanged and passing.
+- **18/18** exact-width Phase 1 captures pass. Final images are byte-identical
+  to the base; the manifest records the new source fingerprint
+  `3998a3896d8408b2dc0b73d29c85f0822cd294c228be679c83bc08e400282cf1`.
+  [Capture log](evidence/c02-final-phase1.log). An intermediate capture had
+  slight yearly-image raster differences; the final run returned the base bytes.
+- **12/12** actual Chrome 152.0.7977.83 journeys at 1280/390: impossible dates
+  and 24:00 produce no result, form population or calculation event; valid
+  leap-day known/unknown inputs still calculate. No overflow/page errors or
+  saved-profile writes. [Receipt](evidence/c02-share-boundary-browser.json),
+  [rejected import](evidence/c02-share-rejected-390.png),
+  [unknown-time control](evidence/c02-share-unknown-390.png).
+  The same driver is now a required Site Check step and its output falls
+  within the existing browser-artifact upload path.
+- Existing birth-chart export/sharing passed, including native-share and
+  zoom controls: [log](evidence/c02-final-t17.log),
+  [current 33% chart-sheet capture](evidence/c02-chart-sheet-33-percent.png).
+  The driver regenerated the older general T17 capture; its current rendering
+  is archived here while the pre-existing historical capture remains unchanged.
+  No chart-renderer source was modified in this slice.
+- Existing compatibility/composite browser drive: **962 checks, ALL PASS**.
+  [Log](evidence/c02-final-compatibility.log).
+- A second tool-backed reviewer found and then verified the explicit timezone
+  guard. The portable probes were rerun against final source by the integrator:
+  **148,800 calendar cases, 3,344 known-instant checks across 418 runtime zones**,
+  plus Lord Howe half-hour fold/gap, Apia day gap and Mexico City LMT controls.
+  [Final corpus](evidence/c02-civil-review-node22.json). Each separate UTC and
+  Los Angeles host run passed **26 rejection cases and 9 valid controls**, with
+  zero coercion hooks: [UTC](evidence/c02-timezone-review-utc.json),
+  [Los Angeles](evidence/c02-timezone-review-los-angeles.json). Runtime ICU 78.2,
+  tzdata 2026a. These finite same-runtime checks are not independent historical
+  tzdb verification or human review. Normalized terminal log hashes and the
+  exact normalization are [recorded](evidence/c02-log-normalization.json).
+
+The shared candidate archive and ownership SDK bytes are unchanged. The
+[separate remote receipt defect and withdrawn fix](evidence/c02-remote-house-analysis.md)
+remain explicit: actual whole-sign results can retain a Placidus summary label,
+but changing that single field discards the requested setting through rerun/sync.
+Its two original synthetic JSON records are preserved; no account operation or
+migration was performed. C02 is partially implemented, not a completed portable
+receipt contract. Review PR/CI/preview delivery follows these local gates.
