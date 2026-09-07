@@ -656,7 +656,19 @@ describe('normalizeName', () => {
       }
       expect(caught).toBeInstanceOf(NumerologyInputError);
       expect((caught as NumerologyInputError).code).toBe('unsupported-letters');
+      expect((caught as NumerologyInputError).detail).toMatch(/^\p{L}$/u);
     }
+  });
+
+  it('names the first letter it cannot read', () => {
+    let caught: unknown;
+    try {
+      normalizeName('Anna Иванова');
+    } catch (error) {
+      caught = error;
+    }
+    expect((caught as NumerologyInputError).detail).toBe('И');
+    expect((caught as NumerologyInputError).message).toContain('"И" cannot be read');
   });
 
   it('rejects names with nothing left', () => {

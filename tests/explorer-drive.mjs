@@ -36,6 +36,7 @@ import { runLearningPracticeChecks } from './learning-practice-checks.mjs';
 import { runAspectPatternBrowserChecks } from './aspect-pattern-browser-checks.mjs';
 import { runLunarReturnChecks } from './lunar-return-drive.mjs';
 import { runEventTransitChecks } from './event-transit-checks.mjs';
+import { runTransitItineraryChecks } from './transit-itinerary-checks.mjs';
 import { runEditorialMetadataChecks } from './editorial-metadata-drive.mjs';
 import { verifyWidgetBuilder } from './widgets-drive.mjs';
 import { awaitAppliedFooter, runFooterStyleChecks } from './footer-style-checks.mjs';
@@ -214,6 +215,7 @@ try {
   // Each feature owns and closes its browser contexts. Collect independent
   // evidence after a failure, but retain every failure in the final exit code.
   for (const [name, run] of [
+    ['transit-itinerary', runTransitItineraryChecks],
     ['solar-return', runSolarReturnChecks],
     ['lunar-return', runLunarReturnChecks],
     ['aspect-patterns', runAspectPatternBrowserChecks],
@@ -1265,6 +1267,12 @@ try {
     });
   check('People identity OG: three review candidates rendered with production files unchanged',
     /Reviewed 3 People identity cards; production OG files unchanged\./u.test(ogReview.stdout), ogReview.stdout.trim());
+  const factsReview = await promisify(execFile)(process.execPath,
+    ['scripts/build-og-void.mjs', '--review-people-facts'], {
+      env: { ...process.env, CHROMIUM_PATH: CHROMIUM }, timeout: 120000, maxBuffer: 2 * 1024 * 1024,
+    });
+  check('People facts OG: seven source corrections rendered with production files unchanged',
+    /Reviewed 7 People facts cards; production OG files unchanged\./u.test(factsReview.stdout), factsReview.stdout.trim());
 } finally {
   preview.kill();
 }

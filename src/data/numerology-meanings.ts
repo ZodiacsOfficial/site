@@ -113,7 +113,7 @@ export const NUMBER_MEANINGS: Readonly<Record<CoreNumber, NumberMeaning>> = Obje
     name: 'The intuitive',
     keywords: ['intuition', 'sensitivity', 'inspiration', 'nerves'],
     summary:
-      "11 is the first master number: a 2 with the volume turned up. It carries the 2's sensitivity and diplomacy plus a restless, intuitive streak that senses what is coming before the evidence arrives. The tradition writes it 11/2 because on ordinary days it lives as a 2.",
+      "11 is the first master number: a 2 with the volume turned up. It carries the 2's sensitivity and diplomacy plus a restless, intuitive streak that forms a view before the evidence is in. The tradition writes it 11/2 because on ordinary days it lives as a 2.",
     strengths: "Perceptive, inspiring, idealistic, and quick to read a room's undercurrent.",
     growth: 'Grounding the nerves that come with all that reception, and choosing one vision to act on instead of feeling all of them.',
   },
@@ -174,7 +174,7 @@ export const POSITIONS: readonly PositionMeaning[] = Object.freeze([
     label: 'Expression',
     source: 'every letter of your full name at birth',
     description:
-      'Also called the Destiny number. The sum of all the letters, read as the abilities you have to work with and the direction you tend to grow into.',
+      'Also called the Destiny number. Every letter of the name, each part reduced on its own before the parts are added, read as the abilities you have to work with and the direction you tend to grow into.',
   },
   {
     key: 'soulUrge',
@@ -212,14 +212,14 @@ export const POSITIONS: readonly PositionMeaning[] = Object.freeze([
 
 export const PERSONAL_YEAR_MEANINGS: Readonly<Record<SingleDigit, string>> = Object.freeze({
   1: 'A year for starting. The tradition treats it as the opening of a nine-year cycle: new work, new places, decisions made alone. Momentum matters more than polish.',
-  2: 'A year for patience and partnership. Things begun last year develop slowly; the useful work is listening, cooperating, and letting a relationship or a plan take its time.',
-  3: 'A year for expression. Social life widens, creative work comes easily, and the risk is scattering. Say the thing, make the thing, and pick one to finish.',
-  4: 'A year for foundations. Work, order, health, and the unglamorous tasks that make the next years possible. Effort is rewarded; shortcuts are not.',
+  2: 'A year for patience and partnership. The tradition expects what was begun last year to develop slowly; the useful work is listening, cooperating, and letting a relationship or a plan take its time.',
+  3: 'A year for expression. The tradition associates it with a wider social life and easier creative work, and warns of scattering. Say the thing, make the thing, and pick one to finish.',
+  4: 'A year for foundations. Work, order, health, and the unglamorous tasks that make the next years possible. The tradition reads it as a year that repays effort and not shortcuts.',
   5: 'A year for change. Travel, new people, and a restlessness the tradition says is worth following, within reason. Freedom is the theme; discipline is the counterweight.',
-  6: 'A year for responsibility. Family, home, and the people who depend on you take the foreground. Care given now tends to be returned later.',
+  6: 'A year for responsibility. Family, home, and the people who depend on you take the foreground. The tradition pairs the care given in this year with care returned in later ones.',
   7: 'A year for the inward turn. Study, rest, and questions that need quiet to answer. Less is happening on the surface than underneath.',
-  8: 'A year for results. Ambition, authority, and the return on the last seven years of effort. Decisions carry weight; so do their consequences.',
-  9: 'A year for completion. Endings, clearing out, and finishing what the cycle started. The tradition says to let go now so the next 1 year starts clear.',
+  8: 'A year for results. Ambition, authority, and what the last seven years of effort add up to. Decisions carry weight; so do their consequences.',
+  9: 'A year for completion. Endings, clearing out, and finishing what the cycle started. The tradition says to let go now so the 1 year that follows starts clear.',
 });
 
 export const KARMIC_DEBT_MEANINGS: Readonly<Record<KarmicDebt, string>> = Object.freeze({
@@ -238,7 +238,7 @@ export function baseDigit(number: CoreNumber): SingleDigit {
 }
 
 /**
- * One pastel sign hue per core number, for the tinted result cards. The
+ * One pastel sign hue per core number, for the result cards' labels. The
  * twelve disc hues are the site's only chroma, so each number borrows one
  * and no two numbers share a hue.
  */

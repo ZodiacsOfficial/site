@@ -1,0 +1,113 @@
+import { describe, expect, it } from 'vitest';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import fixtures from './fixtures/transit-window-independent.json';
+import { bodyLongitude, computeBodies, computeChart } from './full';
+import { createTransitWindowScanner, cropTransitWindows, type TransitWindow, type WindowNatalChart, type WindowNatalPoint, type SlowTransitBody, type WindowAspect } from './transit-window-core';
+
+type Minimum = { orbDegrees: number; timeEnvelopeMs: number[]; sourceBestUtc: string };
+type SourceCrop = { fromUtc: string; toUtc: string; boundaries: { membershipAmbiguousWithinBudget: boolean; exactCountAmbiguousWithinBudget: boolean }[]; portions: { startClipped: boolean; endClipped: boolean; sourceExactCount: number }[] };
+type Component = {
+  startUtc: string; endUtc: string; startClipped: boolean; endClipped: boolean;
+  entryBandMs: number[] | null; exitBandMs: number[] | null; exactBandsMs: number[][];
+  exactTopology: string; globalMinimumKind: string; globalMinimum: Minimum | null; localMinima: Minimum[];
+  possibleExactRegionMs?: number[] | null; possibleMinimumRegionMs?: number[] | null;
+};
+function inBand(value: string, band: number[], label: string) {
+  const time = Date.parse(value);
+  expect(time, label).toBeGreaterThanOrEqual(band[0]);
+  expect(time, label).toBeLessThanOrEqual(band[1]);
+}
+const circular = (a: number, b: number) => Math.abs(((a - b + 540) % 360) - 180);
+function verifyWindow(window: TransitWindow, expected: Component, budget: number, label: string) {
+  expect(window.startClipped, label).toBe(expected.startClipped);
+  expect(window.endClipped, label).toBe(expected.endClipped);
+  if (expected.entryBandMs) inBand(window.startUtc, expected.entryBandMs, `${label} entry`);
+  else expect(window.startUtc, label).toBe(expected.startUtc);
+  if (expected.exitBandMs) inBand(window.endUtc, expected.exitBandMs, `${label} exit`);
+  else expect(window.endUtc, label).toBe(expected.endUtc);
+  expect(window.membershipStatus, label).toBe('resolved');
+  expect(window.boundaryTouch, label).not.toBe(true);
+  if (expected.exactTopology === 'uncertain') {
+    expect(window.exactTopologyStatus, label).toBe('uncertain');
+    expect(window.peak.kind, label).toBe('uncertain');
+    expect(window.peak.atUtc, label).toBeUndefined();
+    for (const pass of window.exactPassesUtc) inBand(pass, expected.possibleExactRegionMs!, `${label} possible exact`);
+    if (window.peak.fromUtc && window.peak.toUtc) {
+      expect(Date.parse(window.peak.fromUtc), label).toBeLessThanOrEqual(expected.possibleMinimumRegionMs![1]);
+      expect(Date.parse(window.peak.toUtc), label).toBeGreaterThanOrEqual(expected.possibleMinimumRegionMs![0]);
+    }
+  } else {
+    expect(window.exactTopologyStatus, label).toBe('resolved');
+    expect(window.exactPassesUtc.length, label).toBe(expected.exactBandsMs.length);
+    expected.exactBandsMs.forEach((band, i) => inBand(window.exactPassesUtc[i], band, `${label} exact ${i}`));
+    if (expected.globalMinimumKind === 'exact') expect(window.peak.kind, label).toBe('exact');
+    else if (expected.globalMinimum) {
+      expect(window.peak.kind, label).toBe('closest-approach');
+      inBand(window.peak.atUtc!, expected.globalMinimum.timeEnvelopeMs, `${label} closest approach`);
+      expect(Math.abs(window.peak.orbDegrees! - expected.globalMinimum.orbDegrees), label).toBeLessThanOrEqual(budget);
+    } else expect(window.peak.kind, label).toBe('none');
+  }
+  // D's uncertain exact topology can also create/remove a positive local minimum.
+  // Its cross-model local-minimum count is deliberately not certified.
+  if (expected.exactTopology === 'uncertain') return;
+  expect(window.localMinima?.length ?? 0, label).toBe(expected.localMinima.length);
+  for (const sourceMinimum of expected.localMinima) {
+    const matched = window.localMinima?.find((x) => sourceMinimum.timeEnvelopeMs[0] <= Date.parse(x.atUtc) && Date.parse(x.atUtc) <= sourceMinimum.timeEnvelopeMs[1]);
+    expect(matched, `${label} retained local minimum`).toBeTruthy();
+    expect(Math.abs(matched!.orbDegrees - sourceMinimum.orbDegrees), label).toBeLessThanOrEqual(budget);
+  }
+}
+
+describe('immutable independent A–I source comparisons', () => {
+  it('retains the independently reviewed fixture bytes and failed original contract', () => {
+    const bytes = readFileSync(new URL('./fixtures/transit-window-independent.json', import.meta.url));
+    expect(createHash('sha256').update(bytes).digest('hex')).toBe('db4ddce1d2761ad0ada1ab7aaf456d74d2f79b6b6a3434b1b8f6b9895ad66c3a');
+    expect(fixtures.originalPackStatus).toBe('failed-incomplete');
+    expect(fixtures.cases).toHaveLength(9);
+    expect(fixtures.cases.reduce((sum, item) => sum + item.geometries.length, 0)).toBe(30);
+  });
+  for (const source of fixtures.cases) it(source.id, () => {
+    const point = source.natalPoint as WindowNatalPoint;
+    let target = source.targetLongitudeDegrees;
+    if (source.id.startsWith('B-')) {
+      const birth = new Date((source.input as { birthProductNumericTransport: string }).birthProductNumericTransport);
+      target = computeBodies(birth).find((x) => x.body === point)!.lon;
+    } else if (/^[GHI]-/.test(source.id)) {
+      const natal = fixtures.coherentNatalInput;
+      const computed = computeChart({ utc: new Date(natal.birthUTC), latitude: natal.latitudeDegrees, longitude: natal.longitudeDegreesEastPositive, houseSystem: 'placidus', timeKnown: true });
+      target = point === 'ASC' ? computed.angles!.asc : point === 'MC' ? computed.angles!.mc : computed.bodies.find((x) => x.body === point)!.lon;
+    }
+    if (source.natalComponentBudgetDegrees !== null) expect(circular(target, source.targetLongitudeDegrees), `${source.id} separate natal gate`).toBeLessThanOrEqual(source.natalComponentBudgetDegrees);
+    const natal: WindowNatalChart = point === 'ASC' || point === 'MC' ? { bodies: [], angles: { asc: point === 'ASC' ? target : 0, mc: point === 'MC' ? target : 0 } } : { bodies: [{ body: point, lon: target }] };
+    const aspects = [...new Set(source.geometries.map((x) => x.aspect))] as WindowAspect[];
+    const windows = createTransitWindowScanner({ bodyLongitude }).scanTransitWindows(natal, new Date(source.fromUtc), new Date(source.toUtc), { timeKnown: true, transitBodies: [source.movingBody as SlowTransitBody], natalPoints: [point], aspects, angularBudgetDegrees: source.angularBudgetDegrees });
+    for (const aspect of aspects) {
+      const expected = source.geometries.filter((x) => x.aspect === aspect).flatMap<Component>((x) => x.components).sort((a, b) => a.startUtc.localeCompare(b.startUtc));
+      const actual = windows.filter((x) => x.aspect === aspect);
+      expect(actual.length, `${source.id} ${aspect}, including conditioned empty branches`).toBe(expected.length);
+      expected.forEach((component, i) => verifyWindow(actual[i], component, source.angularBudgetDegrees, `${source.id} ${aspect} component ${i}`));
+    }
+    const groups = new Map<string, SourceCrop[]>();
+    for (const crop of source.crops) {
+      const key = `${crop.fromUtc}|${crop.toUtc}`;
+      groups.set(key, [...groups.get(key) ?? [], crop]);
+    }
+    for (const [label, sourceCrops] of groups) {
+      const first = sourceCrops[0];
+      const cropped = cropTransitWindows(windows, new Date(first.fromUtc), new Date(first.toUtc));
+      if (sourceCrops.every((x) => x.boundaries.every((b) => !b.membershipAmbiguousWithinBudget))) {
+        expect(cropped.length, `${source.id} ${label} crop components`).toBe(sourceCrops.reduce((sum, x) => sum + x.portions.length, 0));
+        const expectedFlags = sourceCrops.flatMap((x) => x.portions.map((p) => `${p.startClipped}:${p.endClipped}`)).sort();
+        expect(cropped.map((x) => `${x.startClipped}:${x.endClipped}`).sort(), `${source.id} ${label} clipping`).toEqual(expectedFlags);
+      }
+      if (!source.id.startsWith('D-') && sourceCrops.every((x) => x.boundaries.every((b) => !b.exactCountAmbiguousWithinBudget))) {
+        expect(cropped.reduce((sum, x) => sum + x.exactPassesUtc.length, 0), `${source.id} ${label} unambiguous crop exact count`).toBe(sourceCrops.reduce((sum, x) => sum + x.portions.reduce((total, p) => total + p.sourceExactCount, 0), 0));
+      }
+      for (const window of cropped) {
+        if (window.peak.atUtc) expect(Date.parse(window.peak.atUtc) >= Date.parse(first.fromUtc) && Date.parse(window.peak.atUtc) <= Date.parse(first.toUtc)).toBe(true);
+        expect(window.fullQueryPeak, 'Crops retain full-query minimum provenance').toBeDefined();
+      }
+    }
+  });
+});

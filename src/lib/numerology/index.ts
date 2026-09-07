@@ -29,11 +29,14 @@ const ERROR_MESSAGES: Record<NumerologyInputErrorCode, string> = {
 
 export class NumerologyInputError extends Error {
   readonly code: NumerologyInputErrorCode;
+  /** The input fragment at fault when there is one: the first letter outside A–Z for 'unsupported-letters'. */
+  readonly detail?: string;
 
-  constructor(code: NumerologyInputErrorCode, message: string = ERROR_MESSAGES[code]) {
+  constructor(code: NumerologyInputErrorCode, message: string = ERROR_MESSAGES[code], detail?: string) {
     super(message);
     this.name = 'NumerologyInputError';
     this.code = code;
+    if (detail !== undefined) this.detail = detail;
   }
 }
 
@@ -221,6 +224,7 @@ function foldToken(token: string): string {
       throw new NumerologyInputError(
         'unsupported-letters',
         `${ERROR_MESSAGES['unsupported-letters']} "${ch}" cannot be read.`,
+        ch,
       );
     }
   }

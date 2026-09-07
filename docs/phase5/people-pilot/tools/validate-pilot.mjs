@@ -9,6 +9,8 @@ import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { resolvePeopleIndexPolicy } from '../../../../scripts/people-index-policy.mjs';
+import { inspectCohortSpacing } from './cohort-integrity.mjs';
+import { createHash } from 'node:crypto';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PILOT = join(HERE, '..');
@@ -47,28 +49,29 @@ for (const person of people) (bySign[person.sunSign.slug] ??= []).push(person);
 const missingSigns = SIGNS.filter((sign) => !bySign[sign]);
 check('all twelve Sun signs represented', missingSigns.length === 0, missingSigns.join(', '));
 
-/* 3 — same-sign temporal separation. The pilot's 40-year rule scaled to
-   a 500-person directory as a minimum same-sign birth-date gap: no two
-   people who share a Sun sign were born within 365 days of each other
-   (the selection tool enforced 730 days wherever the pool allowed; the
-   relaxations are recorded in selection-report.json). */
-const eraRows = [];
-for (const sign of SIGNS) {
-  const group = (bySign[sign] ?? []).slice()
-    .sort((a, b) => a.birthDate.computedGregorianDate.localeCompare(b.birthDate.computedGregorianDate));
-  let minGap = Infinity;
-  let closest = '';
-  for (let index = 1; index < group.length; index += 1) {
-    const gap = (Date.parse(group[index].birthDate.computedGregorianDate)
-      - Date.parse(group[index - 1].birthDate.computedGregorianDate)) / 86_400_000;
-    if (gap < minGap) {
-      minGap = gap;
-      closest = `${group[index - 1].slug} / ${group[index].slug}`;
-    }
-  }
-  eraRows.push({ sign, count: group.length, minGapDays: Math.round(minGap), closest });
-  check(`same-sign separation ${sign}`, group.length < 2 || minGap >= 365,
-    `${group.length} people; closest ${closest} at ${Math.round(minGap)} days`);
+/* 3 — the 365-day admission threshold is unchanged. Published facts may
+   be corrected without silently removing an existing person. Every resulting
+   close pair must have an exact reviewed correction; it remains a reported
+   selection variance, never a claim that 360 days satisfies 365. */
+const correctionFiles = (await readdir(join(PILOT, 'corrections')))
+  .filter((file) => /^\d{4}-\d{2}-\d{2}-.+\.json$/u.test(file));
+const corrections = await Promise.all(correctionFiles.map(async (file) =>
+  JSON.parse(await readFile(join(PILOT, 'corrections', file), 'utf8'))));
+const baselineBytes = await readFile(join(PILOT, 'corrections', 'published-cohort-2026-09-07.json'));
+const baselineHash = createHash('sha256').update(baselineBytes).digest('hex');
+if (baselineHash !== '4d50a6a6174def1cd224cc1a8f6b42cda2b56dea0fad86f506a6753e6ba487c1') {
+  throw new Error('Published-cohort proof changed; do not rewrite historical admission evidence');
+}
+const spacing = inspectCohortSpacing(people, corrections, JSON.parse(baselineBytes));
+const eraRows = spacing.rows;
+check('factual correction ledger', spacing.invalid.length === 0, spacing.invalid.join(', '));
+for (const row of eraRows) {
+  const unexplained = spacing.unexplained.filter((entry) => entry.sign === row.sign);
+  check(`same-sign admission integrity ${row.sign}`, unexplained.length === 0,
+    `${row.count} people; closest ${row.closest} at ${row.minGapDays} days`);
+}
+for (const variance of spacing.reviewed) {
+  console.log(`REVIEWED SELECTION VARIANCE: ${variance.pair.join(' / ')} — ${variance.gapDays} days, below the unchanged 365-day admission minimum (${variance.correction}).`);
 }
 
 /* 4 — no pilot record is cusp-ambiguous */
@@ -471,7 +474,7 @@ for (const [name, entry] of grouped) {
   console.log(`${status} ${name} — ${entry.pass} passed${entry.fail ? `, ${entry.fail} FAILED` : ''}${entry.sample ? ` · e.g. ${entry.sample}` : ''}`);
 }
 console.log('\nEra separation:');
-for (const row of eraRows) console.log(`  ${row.sign}: ${row.a} / ${row.b} — ${row.years} years`);
+for (const row of eraRows) console.log(`  ${row.sign}: ${row.closest} — ${row.minGapDays} days`);
 console.log('\nExclusions:');
 for (const row of excluded) console.log(`  ${row.slug}: ${row.reasons.join('; ')}`);
 console.log(`\nContent depth: ${depth.originalWords.min}–${depth.originalWords.max} original words `

@@ -4,78 +4,81 @@
   "seedRound": 0,
   "qid": "Q8573",
   "displayName": "Sun Yat-sen",
-  "identity": "Politician and physician · Soviet Union · 1956–2025",
+  "identity": "Politician and physician · China · 1866–1925",
   "title": "Sun Yat-sen's birth chart",
-  "metaDescription": "Sun Yat-sen's chart, computed from a sourced birth date: Sun at 19.8° Scorpio. Birth time unknown, so no houses or rising sign.",
-  "lede": "0.1° separates Mercury and Mars from an exact trine; at that range thinking and drive read as one mechanism. A trine runs downhill — the talent that never announces itself because it never had to.",
-  "ledeFact": "aspect:Mercury:Mars:trine",
+  "metaDescription": "Sun Yat-sen's chart, computed from a sourced birth date: Sun at 19.6° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.4° separates Mercury and Neptune from an exact trine; at that range thinking and imagination read as one mechanism. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Mercury:Neptune:trine",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:19.80",
+        "sun-degree:19.57",
         "decan:scorpio:second"
       ],
-      "text": "The Sun's position resolves to 19.8° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+      "text": "The Sun's position resolves to 19.6° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
     },
     {
       "key": "personal",
       "title": "Closer to the ground",
       "facts": [
-        "personal:Mercury:Scorpio:19.4°",
-        "personal:Venus:Libra:13.7°",
-        "personal:Mars:Pisces:19.5°"
+        "personal:Mercury:Sagittarius:10.8°",
+        "personal:Venus:Sagittarius:25.6°",
+        "personal:Mars:Cancer:27.8°"
       ],
-      "text": "Mercury holds 19.4° Scorpio, Venus holds 13.7° Libra, Mars holds 19.5° Pisces — in the old shorthand, thought steeped in tone and memory; attraction that begins as conversation; effort that surges when it matters."
+      "text": "Mercury holds 10.8° Sagittarius, Venus holds 25.6° Sagittarius, Mars holds 27.8° Cancer — in the old shorthand, thought that arrives already in motion; attraction declared rather than implied; effort that surges when it matters."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mercury:Mars:trine:0.13",
-        "aspect:Sun:Mars:trine:0.28",
-        "aspect:Sun:Mercury:conjunction:0.41"
+        "aspect:Mercury:Neptune:trine:0.36",
+        "aspect:Mars:Jupiter:opposition:0.95",
+        "aspect:Saturn:Pluto:opposition:1.5"
       ],
-      "text": "Nothing in the geometry sits closer than Mercury and Mars: 0.1° from an exact trine. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, the Sun trine Mars at 0.3°, and the Sun conjunction Mercury at 0.4° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+      "text": "Nothing in the geometry sits closer than Mercury and Neptune: 0.4° from an exact trine. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Mars opposition Jupiter at 0.9°, and Saturn opposition Pluto at 1.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
     },
     {
       "key": "figures",
       "title": "What the angles build",
       "facts": [
-        "figure:unaspected:Moon"
+        "figure:t-square:Moon-Uranus:apex-Neptune",
+        "figure:unaspected:Venus"
       ],
-      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+      "text": "The Moon opposes Uranus while both square Neptune. The t-square is the figure the old texts trusted for output: friction with a fixed address. Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
     },
     {
       "key": "dignity",
       "title": "The classical map",
       "facts": [
-        "dignity:Venus:domicile",
-        "dignity:Jupiter:detriment"
+        "dignity:Moon:detriment",
+        "dignity:Mercury:detriment",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:fall"
       ],
-      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Venus in Libra at 13.7° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 25.8° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Moon in Capricorn at 11.0° is in detriment — the planet opposite its home, working against the grain; Mercury in Sagittarius at 10.8° is in detriment; Mars in Cancer at 27.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 26.9° is in fall. Dignity is a statement about conditions, not about worth."
     },
     {
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:water5-earth2-fire2-air1",
-        "modalities:mutable5-fixed4-cardinal1",
+        "elements:water4-earth3-fire3",
+        "modalities:cardinal5-fixed3-mutable2",
         "settled-signs:10",
-        "retrograde:0"
+        "retrograde:3"
       ],
-      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 5, earth 2, fire 2, air 1, and mutable 5, fixed 4, cardinal 1 across the modes. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Every other body stayed direct. Uranus changed direction during the day, so its motion is left open."
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 4, earth 3, fire 3, and cardinal 5, fixed 3, mutable 2 across the modes. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
     },
     {
       "key": "moon",
       "title": "The Moon, and how far it can move",
       "facts": [
-        "moon-sign:pisces",
-        "moon-band:12.1"
+        "moon-sign:capricorn",
+        "moon-band:12.0"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 7.1°."
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.0°."
     }
   ],
   "birthdayLink": {
@@ -87,28 +90,31 @@
     "label": "The Scorpio guide"
   },
   "substantiveFacts": [
-    "aspect:Mercury:Mars:trine",
-    "sun-degree:19.80",
+    "aspect:Mercury:Neptune:trine",
+    "sun-degree:19.57",
     "decan:scorpio:second",
-    "personal:Mercury:Scorpio:19.4°",
-    "personal:Venus:Libra:13.7°",
-    "personal:Mars:Pisces:19.5°",
-    "aspect:Mercury:Mars:trine:0.13",
-    "aspect:Sun:Mars:trine:0.28",
-    "aspect:Sun:Mercury:conjunction:0.41",
-    "figure:unaspected:Moon",
-    "dignity:Venus:domicile",
-    "dignity:Jupiter:detriment",
-    "elements:water5-earth2-fire2-air1",
-    "modalities:mutable5-fixed4-cardinal1",
+    "personal:Mercury:Sagittarius:10.8°",
+    "personal:Venus:Sagittarius:25.6°",
+    "personal:Mars:Cancer:27.8°",
+    "aspect:Mercury:Neptune:trine:0.36",
+    "aspect:Mars:Jupiter:opposition:0.95",
+    "aspect:Saturn:Pluto:opposition:1.5",
+    "figure:t-square:Moon-Uranus:apex-Neptune",
+    "figure:unaspected:Venus",
+    "dignity:Moon:detriment",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:fall",
+    "elements:water4-earth3-fire3",
+    "modalities:cardinal5-fixed3-mutable2",
     "settled-signs:10",
-    "retrograde:0",
-    "moon-sign:pisces",
-    "moon-band:12.1"
+    "retrograde:3",
+    "moon-sign:capricorn",
+    "moon-band:12.0"
   ],
   "measurements": {
-    "originalWords": 383,
-    "substantiveStatements": 18,
+    "originalWords": 443,
+    "substantiveStatements": 21,
     "blocks": 7
   }
 }

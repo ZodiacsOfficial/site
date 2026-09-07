@@ -40,13 +40,14 @@ import { dirname, resolve } from 'node:path';
 import { createRequire } from 'node:module';
 import sharp from 'sharp';
 import {
-  fileSha256, peopleIdentityReviewOptions, productionOgHashes, reviewedPeople,
+  fileSha256, peopleIdentityReviewOptions, peopleFactReviewOptions, productionOgHashes, reviewedPeople, reviewedFactPeople,
 } from './people-identity-og-review.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 // Parse before any output directory or browser is created. Review mode never
 // writes production cards or manifests, including the separate wing family.
-const peopleIdentityReview = peopleIdentityReviewOptions(process.argv.slice(2), root);
+const peopleFactReview = peopleFactReviewOptions(process.argv.slice(2), root);
+const peopleIdentityReview = peopleFactReview ?? peopleIdentityReviewOptions(process.argv.slice(2), root);
 const OUT = peopleIdentityReview?.output ?? resolve(root, 'public/assets/og/v2');
 const HOMEPAGE_CARD = 'share-pastel-wheel-20260809.png';
 
@@ -83,7 +84,8 @@ const EVENTS_PUBLICATION = JSON.parse(
 );
 const peopleSource = await readFile(resolve(root, 'src/data/people.json'), 'utf8');
 const PEOPLE_PILOT = JSON.parse(peopleSource).people;
-const identityReviewPeople = peopleIdentityReview ? reviewedPeople(PEOPLE_PILOT) : null;
+const identityReviewPeople = peopleFactReview ? reviewedFactPeople(PEOPLE_PILOT)
+  : peopleIdentityReview ? reviewedPeople(PEOPLE_PILOT) : null;
 const productionOgBefore = peopleIdentityReview ? await productionOgHashes(root) : null;
 const identityReviewSources = {};
 if (peopleIdentityReview) {
@@ -91,6 +93,7 @@ if (peopleIdentityReview) {
     'src/data/people.json', 'scripts/build-og-void.mjs', 'package-lock.json',
     'scripts/people-identity-og-review.mjs', 'tests/visual/browser.mjs',
     'docs/phase5/people-pilot/tools/principal-identities.mjs', 'src/strings/seo.signs.mjs',
+    'docs/phase5/people-pilot/source-reviews.json', 'docs/phase5/people-pilot/tools/source-reviews.mjs',
     'public/fonts/eb-garamond-latin-500-normal.woff2',
     'public/fonts/eb-garamond-latin-400-italic.woff2',
     'public/fonts/instrument-sans-latin-wght-normal.woff2',
@@ -595,7 +598,7 @@ function personCard(person) {
   const body = `
   <div class="stage">
     <div class="left" style="max-width:700px;">
-      <span class="kicker">People · sourced birth date</span>
+      <span class="kicker">People · ${person.sourceReview?.status === 'adopted-date' ? 'adopted date · uncertain' : 'sourced birth date'}</span>
       <div class="display" style="font-size:${titleSize}px;">${escapeHtml(person.displayName)}</div>
       <div class="sub" style="font-size:24px;color:${MUTED};max-width:680px;">${escapeHtml(person.shortDescription)}</div>
       <div class="data">${escapeHtml(person.sunSign.name)} ${person.sunSign.degree.toFixed(1)}° · Birth time unknown</div>
@@ -874,8 +877,8 @@ if (peopleIdentityReview) {
     }
     const require = createRequire(import.meta.url);
     await writeFile(resolve(OUT, 'receipt.json'), `${JSON.stringify({
-      schema: 'zodiacs.people-identity-og-review.v1',
-      output: 'tests/visual/artifacts/explorer/people-identity-og',
+      schema: peopleFactReview ? 'zodiacs.people-facts-og-review.v1' : 'zodiacs.people-identity-og-review.v1',
+      output: peopleFactReview ? 'tests/visual/artifacts/explorer/people-facts-og' : 'tests/visual/artifacts/explorer/people-identity-og',
       runtime: {
         node: process.version, platform: process.platform, arch: process.arch,
         nodeSha256: await fileSha256(process.execPath),
@@ -886,7 +889,7 @@ if (peopleIdentityReview) {
       sources: identityReviewSources, cards,
       productionOg: { unchanged: true, before: productionOgBefore, after: productionOgAfter },
     }, null, 2)}\n`);
-    console.log(`Reviewed ${count} People identity cards; production OG files unchanged.`);
+    console.log(`Reviewed ${count} People ${peopleFactReview ? 'facts' : 'identity'} cards; production OG files unchanged.`);
   } finally {
     await browser.close();
   }

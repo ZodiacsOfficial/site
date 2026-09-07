@@ -10,6 +10,7 @@
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { reviewedEvidence, sourceReviews } from './source-reviews.mjs';
 import { dirname, join } from 'node:path';
 import { PRINCIPAL_IDENTITIES, reviewedIdentity } from './principal-identities.mjs';
 
@@ -88,10 +89,19 @@ const candidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'ut
   .filter((candidate) => candidate.role === 'pilot' && !withdrawnSlugs.has(candidate.slug));
 const existingManifest = JSON.parse(await readFile(join(PILOT, 'manifest.json'), 'utf8'));
 const existingBySlug = new Map(existingManifest.people.map((person) => [person.slug, person]));
+const correctedSlugs = new Set(process.argv
+  .filter((argument) => argument.startsWith('--slug='))
+  .flatMap((argument) => argument.slice('--slug='.length).split(','))
+  .map((slug) => slug.trim()).filter(Boolean));
+for (const slug of correctedSlugs) {
+  if (!existingBySlug.has(slug) || !candidates.some((candidate) => candidate.slug === slug)) {
+    throw new Error(`Unknown People correction slug: ${slug}`);
+  }
+}
 const depth = JSON.parse(await readFile(join(PILOT, 'depth-report.json'), 'utf8'));
 const thresholds = JSON.parse(await readFile(join(PILOT, 'thresholds.json'), 'utf8'));
 
-const perPageSimilarity = {};
+const perPageSimilarity = { ...depth.perSlugMax };
 for (const pair of depth.topPairs) {
   perPageSimilarity[pair.a] = Math.max(perPageSimilarity[pair.a] ?? 0, pair.similarity);
   perPageSimilarity[pair.b] = Math.max(perPageSimilarity[pair.b] ?? 0, pair.similarity);
@@ -100,9 +110,9 @@ for (const pair of depth.topPairs) {
 const people = [];
 for (const candidate of candidates) {
   const existing = existingBySlug.get(candidate.slug);
-  if (existing && !protectedLinkSlugs.has(candidate.slug)) {
+  if (existing && !protectedLinkSlugs.has(candidate.slug) && !correctedSlugs.has(candidate.slug)) {
     if (Object.hasOwn(PRINCIPAL_IDENTITIES, candidate.slug)) {
-      const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));
+      const evidence = reviewedEvidence(JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8')), candidate.slug);
       const copy = JSON.parse(await readFile(join(PILOT, 'copy', `${candidate.slug}.json`), 'utf8'));
       const identity = reviewedIdentity(candidate, evidence, existing.shortDescription);
       if (copy.identity !== identity) throw new Error(`${candidate.slug}: migrate the reviewed copy identity first`);
@@ -112,7 +122,7 @@ for (const candidate of candidates) {
     }
     continue;
   }
-  const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));
+  const evidence = reviewedEvidence(JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8')), candidate.slug);
   const computed = JSON.parse(await readFile(join(PILOT, 'computed', `${candidate.slug}.json`), 'utf8'));
   const copy = JSON.parse(await readFile(join(PILOT, 'copy', `${candidate.slug}.json`), 'utf8'));
   const month = Number(computed.gregorianDate.slice(5, 7));
@@ -198,20 +208,30 @@ for (const candidate of candidates) {
     },
     moon: computed.moon,
     unknownTimeErrorBandDegrees: computed.unknownTimeErrorBandDegrees,
-    dataQualityLabel: computed.moon.uncertain
+    dataQualityLabel: sourceReviews.people[candidate.slug]?.status === 'adopted-date'
+      ? 'Adopted birth date; date uncertain; birth time unknown'
+      : computed.moon.uncertain
       ? 'Birth date sourced; birth time unknown; Moon sign undetermined'
       : 'Birth date sourced; birth time unknown',
+    ...(sourceReviews.people[candidate.slug] ? { sourceReview: {
+      reviewedOn: sourceReviews.reviewedOn,
+      status: sourceReviews.people[candidate.slug].status,
+      note: sourceReviews.people[candidate.slug].note,
+      sources: sourceReviews.people[candidate.slug].sources,
+    } } : {}),
     sources: {
       ...evidence.sources,
       retrievedAtUtc: evidence.retrievedAtUtc,
     },
     portrait,
     living: evidence.living,
-    reviewedAtUtc: '2026-08-16T00:00:00Z',
+    reviewedAtUtc: correctedSlugs.has(candidate.slug) ? sourceReviews.reviewedAtUtc : '2026-08-16T00:00:00Z',
     computationInputVersion: {
       ephemeris: 'astronomy-engine (repository dependency)',
       aspectTable: '@zodiacs/engine/internal/math',
-      pilotTools: 'docs/phase5/people-pilot/tools @ protected-living-maintenance',
+      pilotTools: correctedSlugs.has(candidate.slug)
+        ? 'docs/phase5/people-pilot/tools @ factual-correction-2026-09-07'
+        : 'docs/phase5/people-pilot/tools @ protected-living-maintenance',
     },
     contentDepth: {
       originalWords: copy.measurements.originalWords,
@@ -226,7 +246,7 @@ for (const candidate of candidates) {
       contentChecksPassed: failures.length === 0,
       contentCheckFailures: failures,
     },
-    suppression: { status: 'active', requestedBy: null, decidedAtUtc: null, note: null },
+    suppression: existing?.suppression ?? { status: 'active', requestedBy: null, decidedAtUtc: null, note: null },
   });
 }
 

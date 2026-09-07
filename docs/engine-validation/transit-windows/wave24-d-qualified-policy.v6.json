@@ -1,0 +1,517 @@
+{
+  "schemaVersion": 6,
+  "policyId": "wave24-d-qualified-gcc-environment-repair-exact-concordance-v6",
+  "declaredOnUTC": "2026-09-07",
+  "status": "Preparation only. The V5 default-Clang setup attempt failed before compiler launch, provider import or numerical observation. Root must approve the disclosed historical GCC environment repair, actual new build receipt, and exact V6 policy/wrapper/manifest hashes before one acquisition.",
+  "purpose": "Produce a separately identified independent D receipt under a new official-source runtime only after all 3414 historical six-tuples and clock transports reproduce exactly. Preserve original scientific criteria and the original failed pack.",
+  "upstreamFiles": [
+    {
+      "bundle": "v2",
+      "role": "v2-policy",
+      "file": "wave24-transit-oracle-policy.v2.json",
+      "sha256": "79b2a73b2dfd3f0ad2280d1b79e09d3b40b757ce56fd463a0880def71f7f2a00"
+    },
+    {
+      "bundle": "v2",
+      "role": "v2-recipe",
+      "file": "acquire-wave24-orb-windows.v2.py",
+      "sha256": "56db099a8f6371a58befa8cfd3d96c4f37bc0eb1fa232ff3165fe52d80540f73"
+    },
+    {
+      "bundle": "v2",
+      "role": "v2-raw",
+      "file": "wave24-orb-windows.v2.partial.json",
+      "sha256": "3c48a6f13c5b0ea080e4b298418422d4b76a9405aeb767f25b61963e085c579b"
+    },
+    {
+      "bundle": "v2",
+      "role": "v2-journal",
+      "file": "wave24-orb-windows.v2.evaluations.jsonl.gz",
+      "sha256": "e859fec313620141843c4a5a0f722bc6247b3cf2c41fe4fcad7281c94a56ade2"
+    },
+    {
+      "bundle": "v2",
+      "role": "v2-checksums",
+      "file": "wave24-orb-windows.v2.SHA256SUMS",
+      "sha256": "07357fbf60e7c3a40cfd2417d15c701845edfbd69af46b76b5ad3d54823f4f8e"
+    },
+    {
+      "bundle": "v3",
+      "role": "v3-policy",
+      "file": "wave24-transit-oracle-policy.v3.json",
+      "sha256": "f0646373a1f9c35eafcfe764008a848e37ec53a8a27a73ffcb66ec0cfa8eecb3"
+    },
+    {
+      "bundle": "v3",
+      "role": "v3-raw",
+      "file": "wave24-orb-windows.v3.partial.json",
+      "sha256": "8faab02e91e8dc1e96652118802e97d5d6a567e9475e5ebe18ed54f80118f62f"
+    },
+    {
+      "bundle": "v3",
+      "role": "v3-journal",
+      "file": "wave24-orb-windows.v3.evaluations.jsonl.gz",
+      "sha256": "0aa976ab455d6bbaeb4587cd2c8225341fd348d57564ab89dd9cef3384d32c7d"
+    }
+  ],
+  "case": {
+    "id": "D-Uranus2020",
+    "movingBody": "Uranus",
+    "targetKind": "fixed external literal",
+    "targetLongitudeDegrees": 32.6940395,
+    "targetSourcePointer": "eight-case-oracle.raw.json#/cases/P2020/expected/Uranus",
+    "targetSourceLimit": "Existing NASA/JPL Horizons quantity31, geocentre500@399 literal; source retrieval2026-07-05, sourceVersion null and full original header unavailable. It is a frozen target, not a new JPL orb-window oracle.",
+    "clock": "UTC -> TT",
+    "anchor": "2020-01-01T00:00:00.000Z",
+    "from": "2019-01-01T00:00:00.000Z",
+    "to": "2020-12-31T00:00:00.000Z",
+    "angularBudgetDegrees": 0.05,
+    "applicationTargetPolicy": "Pass this identical external longitude; do not recompute a natal Jupiter target with the application.",
+    "requiredClassification": "Acquire every actual component, exact pass, extremum and no-root margin over the unchanged A bounds. No forced complete interval or exact-pass count; preserve wholly clipped and empty geometries if independently conditioned.",
+    "aspectTypes": [
+      "conjunction"
+    ],
+    "natalComponentBudgetDegrees": null
+  },
+  "originalFailedWitness": {
+    "point": "Uranus|TT|2019-01-01T00:00:00.000Z|2020-01-01T00:00:00.000Z|2020-12-31T00:00:00.000Z:turn:2:resolution-left",
+    "clockJD": 2458859.5743775074,
+    "evaluationId": 12659,
+    "role": "exact",
+    "circularMarginDegrees": 0.04418806505509565,
+    "requiredGreaterThanDegrees": 0.050000001
+  },
+  "frozenScientificFields": {
+    "convention": {
+      "orbDegrees": 3,
+      "movingBodies": [
+        "Jupiter",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "Pluto"
+      ],
+      "aspectTypes": [
+        "conjunction",
+        "sextile",
+        "square",
+        "trine",
+        "opposition"
+      ],
+      "aspectBranchCoverage": "A-F acquire conjunction; G-I acquire all five aspect types and both nontrivial branches. All target/aspect tuples are predeclared; no post-acquisition contact selection.",
+      "daysEachSide": 365,
+      "secondsPerUniformDay": 86400,
+      "productEpochTransportBounds": [
+        "1800-01-01T00:00:00.000Z",
+        "2200-01-01T00:00:00.000Z"
+      ],
+      "productEpochEndExclusive": true,
+      "membership": "Minimum circular distance from the moving longitude to an aspect target branch is less than or equal to 3 degrees.",
+      "merge": "Union overlapping or touching components of identical moving-body/natal-point/aspect geometry only. Retain every real out-of-orb gap; no season-gap heuristic.",
+      "peaks": "Retain all exact passes. Label positive minimum orb as closest approach. A clipped edge is not an extremum; a nonunique minimum is not assigned an arbitrary instant.",
+      "singleton": "A threshold tangent with zero-duration membership is a boundary touch, not a positive-duration window or fabricated-duration ICS event.",
+      "clipping": "Query intersections preserve explicit unknown external entry/exit. No outward extension beyond the declared range or supported epoch to improve completeness.",
+      "aspectOffsetsDegrees": {
+        "conjunction": [
+          0
+        ],
+        "sextile": [
+          60,
+          300
+        ],
+        "square": [
+          90,
+          270
+        ],
+        "trine": [
+          120,
+          240
+        ],
+        "opposition": [
+          180
+        ]
+      },
+      "queryDomain": "Acquisition full queries are closed at both explicit modern endpoints; each physical endpoint root has one source identity, may be owned by each closed cropped view, and must be deduplicated by that identity when recombining views. Product supported epoch remains end-exclusive; no real evaluation at 2200-01-01 is authorized.",
+      "zeroLengthQuery": "The new interval API rejects from==to as invalid; the prior exact-contact API is unchanged. A singleton physical threshold touch inside a positive-length query is a separate boundary-touch result.",
+      "constantAndNonunique": "Analytic fixtures cover longitude identically at target: one full-query clipped component with an exact plateau range and no arbitrary finite list of passes; identically target+3 or target-3: full-query threshold plateau, positive duration, both ends clipped, no exact pass. A positive constant orb has a nonunique minimum range. Nonunique minima never get an arbitrary timestamp or zero-duration ICS.",
+      "uncertainTopology": "A numerical root bracket is an interval, not proof of equality with a neighboring root. Distinct branch/level identities with overlapping or unordered refined brackets are unresolved topology; fail or retain an explicit unresolved result, never merge by 100ms/1minute/season gaps or synthesize a tangent."
+    },
+    "clockPolicy": {
+      "calendar": "Proleptic Gregorian",
+      "utcCases": [
+        "A-Jupiter2020",
+        "C-SaturnNearApproach2026",
+        "D-Uranus2020",
+        "E-Neptune2020",
+        "F-Pluto2020",
+        "G-Solar1990Moon",
+        "H-Solar1990ASC",
+        "I-Solar1990MC"
+      ],
+      "utcRecipe": "For each civil label use swe.utc_to_jd(..., GREG_CAL); positions use returned JD TT. Retain returned model JD UT1 only as provenance, never as independently measured IERS DUT1. Root search operates on the TT clock; convert estimates and both bracket endpoints through swe.jdet_to_utc and one consistent nearest-millisecond product transport.",
+      "utcExpectedTTMinusNominalUTCSeconds": 69.184,
+      "utcOffsetCheckToleranceSeconds": 0.001,
+      "utcOffsetGuard": "Assert 69.184 seconds for every moving query input/evaluation/transport round trip, and 57.184 seconds for the separate Solar1990 UTC birth; tolerance 0.001 seconds. Preserve raw TT and Swiss-model UT1. Stop on fallback/clock drift; no relabelling, added time files, or mixed birth clocks.",
+      "futureUtcLimitation": "C extends to2027-07-01. Its prospective civil labels use the explicitly frozen no-additional-leap-second assumption and the pinned Swiss time model. They are not a guarantee of future civil UTC. Record this on the receipt; A supplies entirely historical UTC coverage.",
+      "nominalUT1Cases": [
+        "B-Saturn1990"
+      ],
+      "nominalUT1Recipe": "Preserve Wave19's birth and search convention: Gregorian civil numbers -> swe.julday as JD UT1, then JD TT=JD UT1+swe.deltat_ex(JD UT1,SWIEPH). Search uses the nominal-UT1 clock. Z-suffixed product strings encode those uniform numeric civil labels only; never call these roots historical/future civil UTC or mix a UTC birth with this target.",
+      "uniformRangeMeaning": "Every full moving range is exactly 365 uniform days each side of its frozen anchor, using TT under its constant UTC offset or nominal UT1 for B. No browser timezone or DST arithmetic enters acquisition.",
+      "natalUtcExpectedTTMinusNominalUTCSeconds": 57.184
+    },
+    "numerics": {
+      "gridStepDays": 0.5,
+      "centralDifferenceHalfStepDays": 0.25,
+      "maximumStationIsolationWidthDays": 0.5,
+      "maximumRefinementIterations": 80,
+      "geometricResolutionDegrees": 1e-09,
+      "maximumUniquePositionEvaluations": 60000,
+      "maximumWallSeconds": 900,
+      "maximumStationsPerTrajectory": 16,
+      "maximumGridIntervalsPerTrajectory": 1465,
+      "maximumRootsPerAspectBranch": 256,
+      "maximumBandWalkSteps": 1465,
+      "goldenRatioConjugate": 0.6180339887498949,
+      "limitsPolicy": "These hard limits are declared before acquisition. Any limit failure preserves a partial receipt and requires a new reviewed policy/version; never widen a limit in place or choose alternate fixtures."
+    },
+    "gates": {
+      "rootBracketSecondsMaximum": 0.1,
+      "formattingPaddingSeconds": 1,
+      "paddingPolicy": "Use outer raw bracket endpoints plus exactly1s formatting padding on each side. Record raw and padded intervals. Padding is transport allowance, not provider timing accuracy.",
+      "boundaryAndExactBands": "On the same isolated monotonic branch, independently solve longitude(targetLevel)\u00b1B around every threshold and exact root, where B is the case angular budget. Require complete connected padded bands wholly inside the nearest extrema and full query bounds. Match each application root to its ordered source band; preserve signed residuals and edge directions.",
+      "topologyConditioning": "At every full-query endpoint and both sides/best sample of each geometric-resolution cell, require circular distance to every applicable exact/threshold level > B + geometric numerical resolution. This also checks no-root near misses. Root timing bands must remain within their isolated monotonic branch, outside resolution cells, and disjoint after padding within the same aspect geometry. Conditioning failure blocks the vector and preserves all evidence; no alternate cases, tolerance increases, gap merging or dropped geometries.",
+      "closestApproachOrbDifferenceMaximum": "B for the case, comparing the independently matched component minimum to the application component minimum; C uses0.05\u00b0.",
+      "closestApproachTimeEnvelope": "For every isolated local non-exact minimum inside a component, use the actual independently optimized e_min and solve the connected source set e(t) <= e_min + 2B. The padded outer source brackets predeclare its allowed product minimum-time envelope. Require it wholly within the component/full query and free of another extremum or exact pass; retain all local minima and distinguish the component global minimum. For C the level is computed from acquired e_min + 0.10 degrees, never hardcoded 1.6 degrees. The 2B argument assumes uniform function error within the component; passing finite fixtures does not prove that assumption globally.",
+      "minimumEnvelopeFailure": "If either envelope side cannot be bracketed or another extremum/query/component edge lies inside it, preserve the receipt as ill-conditioned and stop for root review. Do not turn a clipped edge into a minimum or replace the envelope with an observed app residual.",
+      "singletonAndPlateauPolicy": "Analytic fixtures cover longitude identically at target: one full-query clipped component with an exact plateau range and no arbitrary finite list of passes; identically target+3 or target-3: full-query threshold plateau, positive duration, both ends clipped, no exact pass. A positive constant orb has a nonunique minimum range. Nonunique minima never get an arbitrary timestamp or zero-duration ICS. A numerical root bracket is an interval, not proof of equality with a neighboring root. Distinct branch/level identities with overlapping or unordered refined brackets are unresolved topology; fail or retain an explicit unresolved result, never merge by 100ms/1minute/season gaps or synthesize a tangent. Cross-model geometry within B of threshold/exact levels is intentionally ill-conditioned, so analytic singleton/plateau tests must not be inferred from this external pack.",
+      "clippedViews": "Derive fixed [from,anchor] and [anchor,to] views from each full receipt without new outward search. At every crop endpoint, separately record threshold-membership ambiguity and exact-root/count ambiguity whenever the source angular margin <= B or a padded relevant source band intersects that endpoint. A shared exact root belongs once to each closed view, and once after identity-based recombination. Ambiguous crop membership/counts are excluded from cross-model topology assertions. Test each model own crop/union consistency separately. For C also derive the exact immutable [2026-07-25T19:56:29.653Z,2026-07-27T19:56:29.653Z] view: require source bounds within the non-exact component, retain full-query minimum/envelope provenance, and do not require an application cropped minimum if its allowed full-query envelope is not wholly contained in the crop. If no verified minimum lies within a portion, say no minimum found within this portion; do not invent a clipped-edge peak or unseen external timestamp.",
+      "outOfRange": "Before every underlying source position call, enforce its approved birth/trajectory query bounds, product epoch [1800,2200), and loaded ephemeris JDTT coverage. +/-6h diagnostic samples are legal only when both endpoints are inside the full query; otherwise mark the diagnostic unavailable at that endpoint. No +/-3ms, +/-500ms or polishing probe may bypass the guard. New product code separately needs bounded or one-sided endpoint samples and analytic spies checking all underlying probes. These modern fixtures do not certify the exact1800 source boundary, where light-time/file support may need earlier data.",
+      "unchangedPriorLimits": "Wave19 component budgets and Wave16 five solar crossing60/120s gates remain immutable; this policy neither widens them nor treats them as orb-window proof.",
+      "failure": "No acquisition until root reviews this policy and the executable recipe. No application execution or new numerical implementation until complete source receipts and conditioning pass root review. Preserve every source/runtime/conditioning failure. No application-derived expectations, residual-fitted bands, alternate dates/targets, silent reruns or overwritten files."
+    },
+    "eligibility": {
+      "knownInput": "G-I require confirmed complete timed birth input, coherent UTC transport and location; Moon from natal TT and ASC/MC from Swiss-model UT1 at the identical frozen UTC birth. No cached or invented coordinates. The real application must independently recompute its natal targets from this same UTC input/location.",
+      "unknownOrUnverifiedBirthTime": "Exclude Moon, ASC and MC from interval/exact result, cached result and every export. Other available natal planetary coordinates can be used only as explicitly labelled reference targets.",
+      "knownMoonConventionDifference": "The product EclipticGeoMoon path computes Moon state at MakeTime(date) and transforms with precession/nutation into true ecliptic/equinox of date, without an explicit light-time/aberration pass. Swiss retains apparent flags 258. This known convention difference is disclosed under the unchanged Moon 0.15-degree gate; identical apparent corrections are not claimed for every body.",
+      "locationScope": "One Mexico City input validates a bounded known-time pipeline; it does not validate polar house cases or all locations/timezones. IANA gap/fold/input validation remains a separate product gate."
+    }
+  },
+  "runtimeIdentity": {
+    "reuseExecutable": "/workspace/scratch/17dfd01b9330/wave19-swiss-acquisition/env/bin/python",
+    "distributionVersion": "2.10.3.2",
+    "swissVersion": "2.10.03",
+    "ephemerisDirectory": "/workspace/scratch/17dfd01b9330/wave19-swiss-acquisition/ephe",
+    "ephemerisFiles": [
+      {
+        "path": "sepl_18.se1",
+        "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+        "deNumber": 441,
+        "jdTTStart": 2378496.5,
+        "jdTTEnd": 2597651.3591467496
+      },
+      {
+        "path": "semo_18.se1",
+        "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+        "deNumber": 441,
+        "jdTTStart": 2378487.555370702,
+        "jdTTEnd": 2597656.4574524714
+      }
+    ],
+    "optionalFilesExpectedAbsent": [
+      "seleapsec.txt",
+      "swe_deltat.txt"
+    ],
+    "flags": 258,
+    "frame": "Apparent geocentric tropical ecliptic/equinox of date with nutation; SWIEPH|SPEED, no sidereal, J2000, NONUT, TRUEPOS, topocentric or aberration-suppression flags.",
+    "evaluationReceipt": "Require flags exactly258 and SWIEPH mask, empty first-call warning buffer, finite six-tuples, matching wrapper/C values, correct loaded-file hashes and JD coverage. No Moshier fallback, file download/update, new runtime or application import.",
+    "historicalExtensionSHA256": "3231b1af57e49a19d0620f9e13f66deb34add7d1b6f05ebdbc5c205f91f11d0a",
+    "newExtensionIdentity": "Exact actual post-build extension SHA-256 in separately reviewed runtime manifest; no claim of original binary identity."
+  },
+  "runtimeManifestContract": {
+    "required": [
+      "pythonExecutable",
+      "extensionPath",
+      "extensionSHA256",
+      "ephemerisDirectory",
+      "wheelPath",
+      "wheelSHA256",
+      "distributionVersion",
+      "swissVersion",
+      "sourceArchivePath",
+      "sourceArchiveSHA256",
+      "sourceArchiveURL",
+      "buildRecipeId",
+      "buildCount",
+      "buildCommand",
+      "compilerIdentity",
+      "pythonBuildIdentity",
+      "buildAttemptCount",
+      "compilerEnvironment",
+      "customOptimizationFlags",
+      "priorProviderImports",
+      "priorProviderEvaluations",
+      "environmentRepairFiles"
+    ],
+    "pathPolicy": "Paths identify the single actual GCC build using the repository-recorded environment. Record the failed prior Clang setup separately. Freeze installed extension/wheel/build-log/source identities in the approved actual manifest. Original ephemeris file hashes remain exact. Acquisition wrapper performs no build, install, fetch or retry.",
+    "sourceBinding": "The D literal and historical trajectory bind to byte-verified Wave24v2/v3. All3414 old D clock values must reproduce exactly before geometric reuse. Missing unrelated Wave19 bytes are neither required nor reconstructed."
+  },
+  "levelSchedule": [
+    {
+      "id": "b1:L-B",
+      "branch": 1,
+      "levelDegrees": 29.6440395,
+      "levelIEEE754Hex": "0x1.da4dfc5cdd50bp+4",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b1:L",
+      "branch": 1,
+      "levelDegrees": 29.694039500000002,
+      "levelIEEE754Hex": "0x1.db1ac929aa1d8p+4",
+      "purpose": "physical-source-root"
+    },
+    {
+      "id": "b1:L+B",
+      "branch": 1,
+      "levelDegrees": 29.744039500000003,
+      "levelIEEE754Hex": "0x1.dbe795f676ea5p+4",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b1:T-B",
+      "branch": 1,
+      "levelDegrees": 32.644039500000005,
+      "levelIEEE754Hex": "0x1.0526fe2e6ea86p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b1:T",
+      "branch": 1,
+      "levelDegrees": 32.6940395,
+      "levelIEEE754Hex": "0x1.058d6494d50ecp+5",
+      "purpose": "physical-source-root"
+    },
+    {
+      "id": "b1:T+B",
+      "branch": 1,
+      "levelDegrees": 32.7440395,
+      "levelIEEE754Hex": "0x1.05f3cafb3b752p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b1:U-B",
+      "branch": 1,
+      "levelDegrees": 35.644039500000005,
+      "levelIEEE754Hex": "0x1.1d26fe2e6ea86p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b1:U",
+      "branch": 1,
+      "levelDegrees": 35.6940395,
+      "levelIEEE754Hex": "0x1.1d8d6494d50ecp+5",
+      "purpose": "physical-source-root"
+    },
+    {
+      "id": "b1:U+B",
+      "branch": 1,
+      "levelDegrees": 35.7440395,
+      "levelIEEE754Hex": "0x1.1df3cafb3b752p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b2:T",
+      "branch": 2,
+      "levelDegrees": 32.6940395,
+      "levelIEEE754Hex": "0x1.058d6494d50ecp+5",
+      "purpose": "physical-source-root"
+    },
+    {
+      "id": "b2:T+B",
+      "branch": 2,
+      "levelDegrees": 32.7440395,
+      "levelIEEE754Hex": "0x1.05f3cafb3b752p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b2:T+2B",
+      "branch": 2,
+      "levelDegrees": 32.794039500000004,
+      "levelIEEE754Hex": "0x1.065a3161a1db9p+5",
+      "purpose": "possible-minimum-envelope-edge"
+    },
+    {
+      "id": "b2:U-B",
+      "branch": 2,
+      "levelDegrees": 35.644039500000005,
+      "levelIEEE754Hex": "0x1.1d26fe2e6ea86p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b2:U",
+      "branch": 2,
+      "levelDegrees": 35.6940395,
+      "levelIEEE754Hex": "0x1.1d8d6494d50ecp+5",
+      "purpose": "physical-source-root"
+    },
+    {
+      "id": "b2:U+B",
+      "branch": 2,
+      "levelDegrees": 35.7440395,
+      "levelIEEE754Hex": "0x1.1df3cafb3b752p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b3:T",
+      "branch": 3,
+      "levelDegrees": 32.6940395,
+      "levelIEEE754Hex": "0x1.058d6494d50ecp+5",
+      "purpose": "physical-source-root"
+    },
+    {
+      "id": "b3:T+B",
+      "branch": 3,
+      "levelDegrees": 32.7440395,
+      "levelIEEE754Hex": "0x1.05f3cafb3b752p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b3:T+2B",
+      "branch": 3,
+      "levelDegrees": 32.794039500000004,
+      "levelIEEE754Hex": "0x1.065a3161a1db9p+5",
+      "purpose": "possible-minimum-envelope-edge"
+    },
+    {
+      "id": "b3:U-B",
+      "branch": 3,
+      "levelDegrees": 35.644039500000005,
+      "levelIEEE754Hex": "0x1.1d26fe2e6ea86p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    },
+    {
+      "id": "b3:U",
+      "branch": 3,
+      "levelDegrees": 35.6940395,
+      "levelIEEE754Hex": "0x1.1d8d6494d50ecp+5",
+      "purpose": "physical-source-root"
+    },
+    {
+      "id": "b3:U+B",
+      "branch": 3,
+      "levelDegrees": 35.7440395,
+      "levelIEEE754Hex": "0x1.1df3cafb3b752p+5",
+      "purpose": "unchanged-B-timing-or-possible-exact-envelope-edge"
+    }
+  ],
+  "membershipWitnessCount": 5,
+  "limits": {
+    "maximumNewPositions": 4014,
+    "maximumNewWallSeconds": 60,
+    "positionGuard": "Conservatively stop at total 4014 positions and at 600 positions after the3414-point concordance. Count replay evaluations as new runtime/provider work. Both are inside original cumulative60000/900 ceilings.",
+    "noRerun": "Create fresh output files exclusively. Any failure preserves a partial and needs separate review before additional work.",
+    "maximumPostReplayPositions": 600
+  },
+  "cumulative": {
+    "upstreamPositions": 25816,
+    "upstreamElapsedSeconds": 4.398302600995521,
+    "newEvaluationIdStart": 25817,
+    "maximumPositions": 60000,
+    "maximumWallSeconds": 900
+  },
+  "qualifiedAcceptance": {
+    "membership": "All 28 original threshold margins > B+1e-9; four ordered physical threshold roots with original <=0.1s raw brackets and independent level\u00b1B bands padded by exactly1s; five witness cells; two complete components and preserved gap.",
+    "exact": "Retain all three physical source exact roots. First component retains original conditioned timing band. Second component is mandatory unresolved-cross-model-count, with connected e<=B possible-exact envelope and e<=2B possible-minimum envelope. No equality of exact-pass count or single peak.",
+    "envelopeMeaning": "B remains original angular acceptance budget; 2B is only the triangle-inequality argmin envelope. Finite source records do not prove uniform model error globally.",
+    "crops": "Original closed halves. Preserve known Jan1 exact-count ambiguity and membership certainty. Identity-based source recombination; no single cropped peak inferred.",
+    "unchangedTiming": "The 12-hour retained-bracket alternative was rejected. Every newly acquired physical root and envelope edge must meet the original <=0.1-second refinement criterion.",
+    "authorization": "Source completion does not authorize product comparison or numerical implementation. Root reviews receipts first. Original pack remains failed-incomplete."
+  },
+  "outputs": {
+    "receipt": "wave24-d-qualified.v6.receipt.json",
+    "partial": "wave24-d-qualified.v6.partial.json",
+    "journal": "wave24-d-qualified.v6.evaluations.jsonl.gz",
+    "checksums": "wave24-d-qualified.v6.SHA256SUMS"
+  },
+  "predecessorV4Preserved": {
+    "policySHA256": "15b4628a1d737b993cd13ff69d8f763bab47d407095cd644df2d24b5f5e40d9f",
+    "wrapperSHA256": "6eb4bdb10301ab5506f67a62d7ba19cafe968cb7c75f3d4f2428e0f28781b54a",
+    "disposition": "V4 requires byte-identical original extension and remains unexecuted. V5 does not substitute a new binary into V4 or rewrite its receipts."
+  },
+  "officialBuild": {
+    "buildRecipeId": "official-pyswisseph-2.10.3.2-python312-recorded-gcc-repair-once",
+    "sourceArchiveFilename": "pyswisseph-2.10.3.2.tar.gz",
+    "sourceArchiveURL": "https://files.pythonhosted.org/packages/66/a6/db70d67a00dda42ebd033538c086879328f4c17f670eafe8aca2f11abfef/pyswisseph-2.10.3.2.tar.gz",
+    "sourceArchiveSHA256": "c54c305e83dbd5d2b71e58d8a69d8ee41de24c4d3328ce09e2af860a3537624d",
+    "sourceArchiveBytes": 6940913,
+    "metadataSource": "https://pypi.org/pypi/pyswisseph/2.10.3.2/json",
+    "metadataVerifiedOnUTC": "2026-09-07",
+    "buildCount": 1,
+    "python": "Current Python 3.12 environment",
+    "compiler": "Repository-recorded GCC/G++ environment; no extra optimization flags.",
+    "process": "Root verifies the same official archive, declares the documented GCC/G++ environment, and performs one actual build without provider import. Use the historical no-index/no-deps/no-build-isolation/no-cache-dir wheel recipe, adapting only absolute scratch paths/executable locations. Preserve prior Clang failure files and create a new GCC build log/receipt. Record all actual source/wheel/extension hashes and review the complete manifest before acquisition.",
+    "onConcordanceFailure": "Preserve failed receipt. No rebuild, retune, alternate compiler, changed comparison tolerance or adaptive retry is authorized.",
+    "compilerEnvironment": {
+      "CC": "gcc",
+      "CXX": "g++",
+      "LDSHARED": "g++ -shared"
+    },
+    "requiredWheelOptions": [
+      "--no-index",
+      "--no-deps",
+      "--no-build-isolation",
+      "--no-cache-dir"
+    ],
+    "buildAttemptCount": 2,
+    "buildCountMeaning": "One actual compiler build after the preserved missing-Clang setup failure; two setup/build command attempts in total.",
+    "historicalCommandTemplate": "CC=gcc CXX=g++ LDSHARED='g++ -shared' python3 -m pip wheel --no-index --no-deps --no-build-isolation --no-cache-dir --wheel-dir downloads downloads/pyswisseph-2.10.3.2.tar.gz"
+  },
+  "concordance": {
+    "case": "D-Uranus2020",
+    "requiredHistoricalPositionCount": 3414,
+    "order": "Ascending historical evaluation ID",
+    "newCache": "Begin empty. Every historical point is newly evaluated by the approved new runtime, with raw C and wrapper tuples recorded under new IDs. Cache only those new rows.",
+    "tupleGate": "Every one of all six finite C tuple fields and all six wrapper fields must exactly match its historical IEEE-754 value (float.hex, including signed zero). New C and wrapper must also satisfy original flags258/warning/finite/parity gates. No tolerance.",
+    "clockGate": "The complete inherited stamp record must exactly equal the historical record, including TT, model UT1, UTC transport and labels.",
+    "historicalGeometryReuse": "Only after all3414 points pass may the unchanged retained branches/resolution cells be reused. Retain a complete upstream-ID to new-ID mapping and both runtime identities. No product values are read.",
+    "hold": "Any first mismatch stops before all root/band/witness work and preserves expected/actual tuples and clocks plus journal. No partial-match acceptance."
+  },
+  "predecessorV5Preserved": {
+    "policySHA256": "b432dc55833e7c72a182cc3715fef4a5e46ee95688d7216ead5ce72156ca7824",
+    "wrapperSHA256": "b2b6ec258937b5900559c5acb492d8a31a42acd3e9a5fdd32ae567a2e9ddbf42",
+    "disposition": "V5 acquisition was never executed. Its default-compiler build failed because clang is absent. Preserve the failed recipe/log and do not relabel it successful."
+  },
+  "environmentRepair": {
+    "reason": "Default Python sysconfig points at absent clang. Setup failed before compiling an extension or importing/evaluating the provider. The repository already documents the actual historical GCC/G++ build recipe and the same missing-Clang issue.",
+    "priorCompilerBuildsCompleted": 0,
+    "priorProviderImports": 0,
+    "priorProviderEvaluations": 0,
+    "historicalCompiler": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+    "historicalBuildCommand": "CC=gcc CXX=g++ LDSHARED='g++ -shared' python3 -m pip wheel --no-index --no-deps --no-build-isolation --no-cache-dir --wheel-dir downloads downloads/pyswisseph-2.10.3.2.tar.gz",
+    "historicalBuildNote": "Unmodified official sdist built with installed GCC/G++; initial default Clang and unset CXX attempts failed because Clang is absent. Logs retained.",
+    "preservedFiles": [
+      {
+        "role": "failed-clang-log",
+        "observedPath": "/workspace/scratch/a2cfacbfee67/swiss-runtime-recovered/build.log",
+        "sha256": "303d9d39fdcc7f3e720cdb9253c415c7d2df4a0def72ccca330d8c57c8390479"
+      },
+      {
+        "role": "failed-clang-recipe",
+        "observedPath": "/workspace/scratch/a2cfacbfee67/swiss-runtime-recovered/build-recipe.json",
+        "sha256": "08f4887969ad4886be93b3648f2b9967c40489704c804e55a961d1fc9a9047a7"
+      },
+      {
+        "role": "historical-runtime-install",
+        "observedPath": "/workspace/scratch/a2cfacbfee67/zodiacs-audit-finish/docs/engine-validation/swiss-node-polar/receipts/runtime-install.json",
+        "sha256": "0bbdfe2d9249459bf362e6d9ca1826ed20cce52db7c8688a8d0175211a60f7ce"
+      },
+      {
+        "role": "historical-runtime-readme",
+        "observedPath": "/workspace/scratch/a2cfacbfee67/zodiacs-audit-finish/docs/engine-validation/swiss-node-polar/README.md",
+        "sha256": "728751b5f62b3d31e11ae4b75fbd9d67637237e0bea2f7df2b2c1fdd888d9e37"
+      }
+    ],
+    "scope": "Replace compiler selection with the documented CC=gcc CXX=g++ LDSHARED=g++ -shared environment before numerical observation. No source patch, parameter tuning, custom optimization flags, different official archive or post-data rebuild."
+  }
+}

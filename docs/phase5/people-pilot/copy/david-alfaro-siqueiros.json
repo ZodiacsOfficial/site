@@ -75,7 +75,7 @@
         "moon-band:14.4"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.4° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 8.9°."
+      "text": "The Moon stayed in Scorpio for the whole of that day at the calculation reference location, covering 14.4° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 8.9°."
     }
   ],
   "birthdayLink": {
@@ -107,7 +107,7 @@
     "moon-band:14.4"
   ],
   "measurements": {
-    "originalWords": 420,
+    "originalWords": 422,
     "substantiveStatements": 18,
     "blocks": 7
   }
