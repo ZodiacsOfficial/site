@@ -114,3 +114,26 @@ engine advances. Freeze legacy data from the preserved artifact and identify its
 digest; do not compute current results and relabel them old. Assertions about
 fresh recomputation use the installed version, while unrecomputable imported
 positions retain their original receipt.
+
+
+## B-002 — Distinguish integration status and verify the downloadable project
+
+Use one candidate identity for the front door, support matrix and package
+checks. Add exact developer-to-SDK reference bridges to the existing boundary
+list; do not exempt whole developer trees or permit promotional vocabulary.
+Reuse the current layout, sky example, API and hosted widget.
+
+The three starter paths share a small plain-JavaScript project. Bundle the
+immutable engine candidate and pin public dependencies in npm-shrinkwrap.json.
+A strict offline verifier checks archive/source equality, provenance, public
+exports, dependency integrity and safe regular-file members. A separate CI
+step installs/tests that exact archive with isolated npm configuration/cache.
+No private workspace imports, install scripts, account or credential is needed.
+
+The local demonstration server binds exact loopback Host, serves an allowlist,
+rejects other methods/queries/traversal, sets restrictive CSP and performs no
+request logging. Calculators do not load the hosted widget or write persistent
+storage. Unknown birth time explicitly uses noon UTC with absent houses/angles;
+it does not infer local noon. Example provenance is not yet a durable receipt
+schema. The hosted iframe stays opt-in with permanent fallback/attribution and
+has its own deployment/version and ordinary network privacy boundary.

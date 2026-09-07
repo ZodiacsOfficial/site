@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local natal chart example — Zodiacs</title><link rel="stylesheet" href="/styles.css"><link rel="icon" href="/favicon.svg"><script type="module" src="/app.js"></script></head>
+<body data-example="natal">
+<nav aria-label="Examples"><a href="/natal.html">Local natal chart</a><a href="/transits.html">Personalized transit snapshot</a><a href="/widget.html">Publisher sky widget</a></nav>
+<h1>Calculate a natal chart locally</h1>
+<p>This example uses synthetic inputs and the unpublished <strong>0.1.1-rc.1</strong> candidate. It needs no account and sends no birth input to a server. Calculations run in this tab.</p>
+<p class="note">Enter a resolved instant with <code>Z</code> or an explicit offset. This example does not infer a timezone or resolve historical daylight-saving gaps and folds. At an unknown birth time, noon UTC is an approximation; the Moon may differ substantially.</p>
+<fieldset><legend>Synthetic birth input</legend>
+<label>Birth time <select id="timeKnown"><option value="known">Known — resolved instant</option><option value="unknown">Unknown — noon UTC approximation</option></select></label>
+<label>Resolved birth instant <input id="birthInstant" type="text" value="2001-12-21T09:00:00Z" autocomplete="off" spellcheck="false"></label>
+<label>Birth date for unknown time <input id="birthDate" type="text" value="2001-12-21" autocomplete="off" spellcheck="false" disabled></label>
+<label>Latitude in degrees <input id="latitude" type="text" inputmode="decimal" value="78.2232" autocomplete="off"></label>
+<label>Longitude in degrees <input id="longitude" type="text" inputmode="decimal" value="15.6267" autocomplete="off"></label>
+<label>Requested house system <select id="houseSystem"><option value="placidus">Placidus</option><option value="whole">Whole sign</option></select></label>
+<button id="calculate" type="button" disabled>Calculate locally</button>
+</fieldset>
+<noscript>JavaScript is required for local calculation. No input is submitted.</noscript>
+<p id="status" role="status">Ready with a synthetic polar case. Expect whole-sign fallback and an Aries ascendant.</p><p id="error" role="alert"></p>
+<h2>Calculation provenance</h2><pre id="receipt">No calculation yet.</pre>
+<h2>Result</h2><pre id="result">No calculation yet.</pre>
+<p>Offline demonstration: load this page completely, disconnect the network, change an input, and calculate again. Navigation and refresh still need the local server; there is no service worker or persistent storage.</p>
+<p>Accepted dates are not a promise of accuracy across that range. Numerical review and publication gates remain open. <a href="/THIRD_PARTY_NOTICES.txt">Dependency notices</a>.</p>
+</body></html>

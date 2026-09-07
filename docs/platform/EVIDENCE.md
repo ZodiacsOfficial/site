@@ -489,3 +489,55 @@ daemon and setting `ASTRO_PREVIEW_BACKGROUND=0` let the unchanged driver own
 its port; the actual journey then passed. This was a local harness setup issue.
 The next exact-head CI result belongs in the linked PR validation record;
 historical failed runs above are not relabeled successful.
+
+
+## Developer entry and frozen starter checkpoint — September 7, 20:03 UTC
+
+B01 replaces the top of the existing developer page with four explicit paths
+and adds a ten-row support matrix, immutable candidate/source/evidence links,
+and a privacy-aware discrepancy report path. The existing sky example and
+canonical layout/footer remain. Public data/widgets are available; local engine
+is an unpublished candidate; personalized hosted computation remains planned.
+The optional read-only ownership SDK stays separate.
+
+- Node 22 build and check passed (0 errors/warnings, 11 hints):
+  [build](evidence/site-b01-build.log), [check](evidence/site-b01-check.log).
+- Candidate/archive/boundary focused suites: **62/62**, passed
+  ([log](evidence/b01-boundary-candidate-tests.log)). Narrow developer SDK links
+  use the existing exact source/destination bridge list; vocabulary, external
+  venues, consumer pages and other wing routes remain guarded.
+- Actual Chrome 152 desktop/mobile checks passed: four destinations, literal
+  sky example, Tab/ArrowRight scrolling, support table keyboard focus, canonical
+  footer, no horizontal overflow/page errors, reduced motion. Support matrix
+  also passes CSS zoom 2 at 1280 pixels; this does not certify native browser
+  zoom controls. [Receipt](evidence/b01-developers-browser.json),
+  [desktop](evidence/b01-developer-entry-1280.png),
+  [mobile](evidence/b01-developer-entry-390.png),
+  [support mobile](evidence/b01-developer-support-390-zoom1.png).
+- The Phase 1 source fingerprint is unchanged from `1d5c7568…a486`; previous
+  18 acceptance captures continue to describe that protected render boundary.
+- Exact Stage A head `4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f` preview
+  `dpl_E98V1wNWvdVq6TT4H5z8DiSCpZY9` is READY. Actual remote Today drive
+  passed **59 checks** ([log](evidence/correction-remote-today.log)).
+  CI run 34156030961 had reached Lighthouse at this checkpoint; its final
+  conclusion must be recorded separately. Production remains the earlier head.
+
+B02 source and private example archive are prepared at `examples/platform/`
+and `public/examples/`. Three pages use only public engine exports, synthetic
+inputs and no account; natal/transit calculation stays in the loaded browser,
+while the publisher widget makes an explicit optional hosted request.
+
+Starter **0.1.0-rc.2**, SHA-256
+`d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420`, contains
+engine **0.1.1-rc.1** unchanged. Fresh isolated Node 22 extraction/install/build
+and **24 tests** passed in **7.79 seconds**, with zero npm advisories
+([receipt](evidence/b02-fresh-consumer-rc2.log)). This is internal machine timing,
+not a builder study or complete onboarding time. [Pack inventory](evidence/b02-pack-rc2.json).
+
+The first unshipped example rc.1 (SHA-256 `49683fa954927e63905d8cbd5933ce9fd90b78c31407b71d60b127d5d80e6e99`)
+failed the real 390px browser check because fieldset intrinsic sizing overflowed.
+Explicit minimum inline sizing fixes the layout in rc.2. That earlier example
+was never pushed/published. Browser rerun, anonymous public-archive installation,
+and the public onboarding page remain pending at this checkpoint. Neither
+archive distribution nor internal tests resolve npm, production or external
+review/adoption gates.

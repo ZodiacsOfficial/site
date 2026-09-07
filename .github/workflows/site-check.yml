@@ -109,6 +109,10 @@ jobs:
       - name: Engine accuracy vectors
         run: npm test
 
+      - name: Platform starter fresh consumer
+        timeout-minutes: 6
+        run: node scripts/verify-platform-starter.mjs --install
+
       - name: Phase 1 exact-width acceptance evidence
         run: npm run test:phase1:evidence
 

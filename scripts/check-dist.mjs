@@ -1153,7 +1153,8 @@ const sitemapPolicy = {
   // +1 for /fomo/, the Astrofolio-on-Fomo landing page (wing register, indexable).
   // +13 for the numerology calculator and the twelve English-only Life Path pages.
   // +1 for the void-of-course Moon calendar.
-  total: 993 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
+  // +1 for the platform capability/support contract at /developers/support/.
+  total: 994 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,

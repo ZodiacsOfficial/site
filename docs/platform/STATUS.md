@@ -81,7 +81,9 @@ correction preserves the budget, defers contact arithmetic, and freezes actual
 0.1.0 records. Final correction: **4,447 tests / 405 files**, normal/push builds,
 check, 18 captures, Today/push/Guide/compatibility/solar-return browser flows
 passed. Verify the next exact-head CI run in the PR before integration.
-B01 front-door/support content is prepared for the next separate review slice;
-B02 runnable integration work is in progress. Preserve the SDK hold.
+B01 front door/support matrix is implemented and locally verified on
+`codex/platform-developer-entry`, stacked on `4bb0d70e`. B02 has a frozen
+private starter rc.2 with 24 clean-consumer tests passed; actual browser rerun,
+public-download onboarding and the separate draft PR are in progress. Preserve the SDK hold.
 Continue only dependency-ready work; hosted execution depends on the reviewed
 contract, privacy and limits. No background execution after this session is implied.
