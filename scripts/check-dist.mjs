@@ -1152,7 +1152,8 @@ const sitemapPolicy = {
   // +1 for the English-only lunar-return calculator.
   // +1 for /fomo/, the Astrofolio-on-Fomo landing page (wing register, indexable).
   // +13 for the numerology calculator and the twelve English-only Life Path pages.
-  total: 992 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
+  // +1 for the void-of-course Moon calendar.
+  total: 993 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,
@@ -1275,6 +1276,11 @@ requireExactSet(
 if (!sitemapBlocksByPath.get('/numerology/')?.includes('<lastmod>2026-09-07</lastmod>')) {
   fail('sitemap.xml: numerology modification date must match the reviewed source revision');
 }
+requireExactSet(
+  'sitemap.xml void-of-course routes',
+  new Set([...sitemapLocs].filter((path) => /^\/(?:(?:es|pt|fr|it|ru)\/)?void-of-course-moon\/$/u.test(path))),
+  new Set(['/void-of-course-moon/']),
+);
 for (const family of indexedFamilies) {
   const locs = [...sitemapLocs].filter((loc) => family.pattern.test(loc));
   if (locs.length !== family.expected) {

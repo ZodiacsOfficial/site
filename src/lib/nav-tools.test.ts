@@ -67,7 +67,7 @@ describe('NAV_TOOLS', () => {
       '/transits/',
       '/retrogrades/',
     ]);
-    expect(TOOLS_HUB).toHaveLength(18);
+    expect(TOOLS_HUB).toHaveLength(19);
     for (const tool of [...NAV_TOOLS, ...FOOTER_TOOLS, ...TOOLS_HUB]) {
       expect(catalogueHrefs.has(tool.href)).toBe(true);
     }

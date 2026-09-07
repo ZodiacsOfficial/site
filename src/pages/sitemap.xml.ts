@@ -49,6 +49,8 @@ const YEAR_PAGES_LASTMOD = '2026-09-01';
 // it. Each Life Path page dates itself from its own `updated` field, the same
 // date its Article markup carries.
 const NUMEROLOGY_LASTMOD = '2026-09-07';
+// The void-of-course Moon calendar shipped in the same review cycle.
+const VOID_OF_COURSE_LASTMOD = '2026-09-07';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -154,6 +156,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
     .map((loc) => [loc, YEAR_PAGES_LASTMOD] as const),
   ...['/numerology/', '/tools/', '/methodology/'].map((loc) => [loc, NUMEROLOGY_LASTMOD] as const),
   ...LIFE_PATH_PAGES.map((page) => [`/numerology/life-path/${page.number}/`, page.updated] as const),
+  ['/void-of-course-moon/', VOID_OF_COURSE_LASTMOD] as const,
 ]);
 
 function getLastmod(loc: string): string {
@@ -206,6 +209,7 @@ export const GET: APIRoute = async () => {
     { loc: '/solar-return/', priority: 0.85 },
     { loc: '/lunar-return/', priority: 0.85 },
     { loc: '/numerology/', priority: 0.85 },
+    { loc: '/void-of-course-moon/', priority: 0.8 },
     ...LIFE_PATH_NUMBERS.map((number) => ({ loc: `/numerology/life-path/${number}/`, priority: 0.7 })),
     { loc: '/mercury-retrograde/', priority: 0.85 },
     { loc: '/transits/', priority: 0.85 },

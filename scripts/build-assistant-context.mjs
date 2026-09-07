@@ -45,6 +45,7 @@ export const TOOL_ROUTES = Object.freeze([
   '/saturn-return/',
   '/solar-return/',
   '/transits/',
+  '/void-of-course-moon/',
   '/widgets/',
 ]);
 

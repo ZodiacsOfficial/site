@@ -1,0 +1,302 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SIGNS } from '../../lib/signs';
+import { voidOfCourseWindows, voidStatus, type VoidWindow } from '../../lib/engine/void-of-course';
+
+// Build-time: every void-of-course window from the start of this month to
+// the end of the month after next, computed in Node with the same engine
+// as every chart on the site. The browser only converts the instants to
+// the reader's time zone and marks the window in progress.
+const buildNow = new Date();
+const rangeFrom = new Date(Date.UTC(buildNow.getUTCFullYear(), buildNow.getUTCMonth(), 1));
+const rangeTo = new Date(Date.UTC(buildNow.getUTCFullYear(), buildNow.getUTCMonth() + 3, 1));
+const windows = voidOfCourseWindows(rangeFrom, rangeTo);
+const status = voidStatus(buildNow);
+
+const monthLabel = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+const dayLabel = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+const clockLabel = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
+const stampLabel = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
+
+// Cell text is "Tue 8 Sep · 14:32"; the zone is stated once above each
+// table, so the browser's local rewrite never changes a cell's length.
+const clock = (date: Date) => `${dayLabel.format(date)} · ${clockLabel.format(date)}`;
+const utc = (date: Date) => `${clock(date)} UTC`;
+const signName = (index: number) => SIGNS[index].name;
+const ASPECT_VERB: Record<string, string> = {
+  conjunction: 'conjunct', sextile: 'sextile', square: 'square', trine: 'trine', opposition: 'opposite',
+};
+const lastAspectLabel = (window: VoidWindow) => (
+  window.lastAspect ? `Moon ${ASPECT_VERB[window.lastAspect.aspect]} ${window.lastAspect.body}` : 'No Ptolemaic aspect in the sign'
+);
+const duration = (window: VoidWindow) => {
+  const minutes = Math.round((window.to.getTime() - window.from.getTime()) / 60_000);
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  if (hours >= 24) return `${Math.floor(hours / 24)}d ${hours % 24}h`;
+  if (hours === 0) return `${rest} min`;
+  return rest === 0 ? `${hours}h` : `${hours}h ${rest}m`;
+};
+
+const months = [...new Set(windows.map((w) => `${w.to.getUTCFullYear()}-${w.to.getUTCMonth()}`))].map((key) => {
+  const [year, month] = key.split('-').map(Number);
+  const first = new Date(Date.UTC(year, month, 1));
+  return { key, label: monthLabel.format(first), windows: windows.filter((w) => w.to.getUTCFullYear() === year && w.to.getUTCMonth() === month) };
+});
+
+// The same three sentence shapes the browser script writes, so a live
+// rewrite changes the timestamps and the zone label, not the layout.
+const statusLine = status.isVoid && status.current
+  ? `As of ${stampLabel.format(buildNow)} UTC: the Moon is void of course in ${signName(status.current.signIndex)}, until it enters ${signName(status.current.nextSignIndex)} at ${utc(status.current.to)}.`
+  : status.next
+    ? `As of ${stampLabel.format(buildNow)} UTC: the Moon is not void of course. The next void begins ${utc(status.next.from)} and ends when the Moon enters ${signName(status.next.nextSignIndex)} at ${utc(status.next.to)}.`
+    : `As of ${stampLabel.format(buildNow)} UTC: the Moon is not void of course.`;
+
+// Every window in range, for the browser's own "right now" reading.
+const windowsJson = JSON.stringify(windows.map((w) => ({
+  from: w.from.toISOString(),
+  to: w.to.toISOString(),
+  sign: signName(w.signIndex),
+  enters: signName(w.nextSignIndex),
+})));
+
+const faq = [
+  {
+    q: 'What does void of course mean?',
+    a: 'The Moon is void of course from its last exact major aspect in a sign until it enters the next sign. During that stretch it makes no further conjunction, sextile, square, trine, or opposition to the Sun or a planet. The tradition reads it as a pause: a poor moment to start something that needs to go somewhere, and a fair one for finishing, resting, or routine.',
+  },
+  {
+    q: 'How long does the void-of-course Moon last?',
+    a: 'Anything from a few minutes to about two days. The Moon changes sign roughly every two and a half days, so there are about thirteen voids a month, and their length depends on how early in the sign the last aspect fell. Most are shorter than a day; the table above gives each one to the minute.',
+  },
+  {
+    q: 'Which planets and aspects count?',
+    a: 'This calendar uses the five Ptolemaic aspects, conjunction, sextile, square, trine, and opposition, between the Moon and the Sun, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, and Pluto. Traditional astrologers stop at Saturn, which makes some voids start earlier and never later. Aspects to the nodes, asteroids, and angles are not counted.',
+  },
+  {
+    q: 'What time zone are the times in?',
+    a: 'The page is computed in universal time. With JavaScript on, every time in the table is shown in your own time zone as well, and the window in progress is marked. The instants themselves do not depend on where you are; only the clock reading does.',
+  },
+  {
+    q: 'Is the void-of-course Moon bad?',
+    a: 'It is a timing convention, not a verdict. The tradition treats a void Moon as unhelpful for launches, signings, and first meetings, and as harmless or even useful for wrapping up, sleeping, and routine work. Nothing here is a measurement of outcomes; the times are exact, the reading is the tradition\'s.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Void-of-Course Moon Calendar',
+    url: 'https://zodiacs.org/void-of-course-moon/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+
+const description = 'Void-of-course Moon times for this month and the next two, to the minute: when each void begins, the last aspect that starts it, and the sign the Moon enters. Shown in your time zone.';
+---
+<Base
+  title="Void-of-Course Moon Calendar — Exact Times This Month and Next | Zodiacs.org"
+  description={description}
+  path="/void-of-course-moon/"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <em class="kicker">Moon calendar</em>
+      <h1 class="display">When the Moon is void of course.</h1>
+      <p>
+        Every void-of-course window from this month through the month after next, computed from the exact
+        aspects between the Moon and the Sun through Pluto. Each row gives the last aspect that starts the
+        void, the minute it begins, and the minute the Moon enters its next sign.
+      </p>
+    </div>
+    <div class="voc-now tile" data-voc-now data-computed={buildNow.toISOString()}>
+      <span class="mono--label">Right now</span>
+      <p class="voc-now__text" data-voc-now-text>{statusLine}</p>
+      <p class="voc-now__note mono">Times in <span data-voc-zone>UTC</span>, converted to your time zone when JavaScript is on.</p>
+    </div>
+    <script is:inline type="application/json" id="voc-windows" set:html={windowsJson}></script>
+    <script is:inline>
+      // Runs while the page is still parsing, right after the tile it
+      // rewrites, so the build-time sentence is replaced before it is
+      // painted. The table cells are rewritten once the DOM is complete;
+      // the tables' fixed column layout keeps that from moving anything.
+      (function () {
+        var data = document.getElementById('voc-windows');
+        var text = document.querySelector('[data-voc-now-text]');
+        if (!data || !text || typeof Intl === 'undefined') return;
+        var windows;
+        try { windows = JSON.parse(data.textContent || '[]'); } catch (error) { return; }
+        var day = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+        var hm = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+        var stamp = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+        var zone = 'local time';
+        var parts = new Intl.DateTimeFormat('en-GB', { timeZoneName: 'short' }).formatToParts(new Date());
+        for (var p = 0; p < parts.length; p += 1) if (parts[p].type === 'timeZoneName') zone = parts[p].value;
+        var at = function (iso) { var d = new Date(iso); return day.format(d) + ' · ' + hm.format(d); };
+        var now = Date.now();
+        var current = null;
+        var next = null;
+        for (var i = 0; i < windows.length; i += 1) {
+          var from = Date.parse(windows[i].from);
+          var to = Date.parse(windows[i].to);
+          if (from <= now && now < to) current = windows[i];
+          else if (from > now && !next) next = windows[i];
+        }
+        var lead = 'As of ' + stamp.format(new Date(now)) + ' ' + zone + ': ';
+        if (current) {
+          text.textContent = lead + 'the Moon is void of course in ' + current.sign + ', until it enters ' + current.enters + ' at ' + at(current.to) + ' ' + zone + '.';
+        } else if (next) {
+          text.textContent = lead + 'the Moon is not void of course. The next void begins ' + at(next.from) + ' ' + zone + ' and ends when the Moon enters ' + next.enters + ' at ' + at(next.to) + ' ' + zone + '.';
+        } else {
+          text.textContent = lead + 'the Moon is not void of course.';
+        }
+        var zones = function () {
+          var spans = document.querySelectorAll('[data-voc-zone]');
+          for (var z = 0; z < spans.length; z += 1) spans[z].textContent = zone;
+        };
+        zones();
+        var finish = function () {
+          zones();
+          var cells = document.querySelectorAll('[data-voc-time]');
+          for (var c = 0; c < cells.length; c += 1) {
+            var t = Date.parse(cells[c].getAttribute('data-voc-time') || '');
+            if (!isNaN(t)) cells[c].textContent = at(t);
+          }
+          if (!current) return;
+          var rows = document.querySelectorAll('tr[data-voc-from]');
+          for (var r = 0; r < rows.length; r += 1) {
+            if (rows[r].getAttribute('data-voc-from') === current.from) {
+              rows[r].setAttribute('aria-current', 'true');
+              rows[r].className += ' voc-table__row--now';
+            }
+          }
+        };
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', finish);
+        else finish();
+      })();
+    </script>
+  </section>
+
+  {months.map((month) => (
+    <section class="section--tight container container--narrow">
+      <div class="section-head">
+        <h2>{month.label}</h2>
+        <p>{month.windows.length} voids. Times in <span data-voc-zone>UTC</span>.</p>
+      </div>
+      <div class="voc-table-wrap">
+        <table class="voc-table">
+          <colgroup>
+            <col class="voc-table__col-time" />
+            <col class="voc-table__col-aspect" />
+            <col class="voc-table__col-time" />
+            <col class="voc-table__col-sign" />
+            <col class="voc-table__col-length" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Void begins</th>
+              <th scope="col">Last aspect</th>
+              <th scope="col">Void ends</th>
+              <th scope="col">Moon enters</th>
+              <th scope="col">Length</th>
+            </tr>
+          </thead>
+          <tbody>
+            {month.windows.map((window) => (
+              <tr data-voc-from={window.from.toISOString()} data-voc-to={window.to.toISOString()}>
+                <td class="mono" data-voc-time={window.from.toISOString()}>{clock(window.from)}</td>
+                <td>{lastAspectLabel(window)}</td>
+                <td class="mono" data-voc-time={window.to.toISOString()}>{clock(window.to)}</td>
+                <td>{signName(window.nextSignIndex)}</td>
+                <td class="mono">{duration(window)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  ))}
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>What void of course means</h2>
+      <p>
+        As the Moon crosses a sign it makes a run of exact aspects to the Sun and the planets. After the last
+        of them there is nothing left to perfect before the sign ends, and the Moon is said to be void of
+        course until it enters the next sign. The tradition reads that stretch as a pause: what is begun then
+        is said to drift, while finishing, resting, and routine go on undisturbed. Whether that holds is for
+        you to judge; the timing is exact either way.
+      </p>
+      <h2>How this calendar is computed</h2>
+      <p>
+        Each void starts at the last exact conjunction, sextile, square, trine, or opposition the Moon makes
+        to the Sun, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, or Pluto while in a sign, and ends
+        at the Moon's ingress into the next sign. Both instants come from the same ephemeris that computes
+        every chart on this site, checked against NASA JPL reference positions, and are found by bisection to
+        well under a second. Astrologers who count only the Sun through Saturn get voids that begin earlier or
+        at the same moment, never later. The nodes, asteroids, and chart angles are not counted, and the
+        applying and separating minor aspects some calendars include are left out. Times are universal time;
+        the browser converts them to your time zone. The method is described on
+        the <a href="/methodology/">methodology page</a>.
+      </p>
+      <h2>Reading the table</h2>
+      <p>
+        A void of a few minutes means the Moon perfected its last aspect just before changing sign; a void of a
+        day and a half means the sign's aspects came early. Both are ordinary. The sign the Moon enters ends
+        the void, and the <a href="/moon-phase/">moon phase</a> and <a href="/full-moon-calendar/">full moon
+        calendar</a> pages carry the rest of the month's lunar timing.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head"><h2>Questions, answered</h2></div>
+    <div class="faq">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item"><summary>{q}</summary><p>{a}</p></details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 {
+    margin: 0 0 16px; font-family: var(--font-serif); font-size: var(--text-2xl);
+    font-weight: 500; letter-spacing: -0.005em; line-height: 1.04;
+    font-variant-numeric: oldstyle-figures; text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .voc-now { max-width: 62ch; padding: 18px 20px; display: grid; gap: 8px; }
+  .voc-now__text { margin: 0; color: var(--text); font-size: var(--text-base); line-height: 1.55; text-wrap: pretty; }
+  .voc-now__note { margin: 0; color: var(--faint); font-size: var(--text-xs); }
+  .voc-table-wrap { overflow-x: auto; border: 1px solid var(--hair-1); border-radius: var(--r-md); background: var(--void-1); }
+  /* Fixed columns: the browser rewrites the time cells in place, and a
+     rewrite must never move a row. */
+  .voc-table { width: 100%; min-width: 720px; border-collapse: collapse; table-layout: fixed; font-size: var(--text-sm); }
+  .voc-table__col-time { width: 24%; }
+  .voc-table__col-aspect { width: 26%; }
+  .voc-table__col-sign { width: 16%; }
+  .voc-table__col-length { width: 10%; }
+  .voc-table th, .voc-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--hair-1); vertical-align: top; }
+  .voc-table th { color: var(--muted); font-weight: 550; font-size: var(--text-xs); }
+  .voc-table tbody tr:last-child td { border-bottom: 0; }
+  .voc-table td.mono { font-size: var(--text-xs); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .voc-table__row--now td { background: var(--void-2); color: var(--text); }
+  .voc-table__row--now td:first-child { box-shadow: inset 3px 0 0 var(--sign-cancer); }
+  .faq { display: grid; gap: 8px; }
+  .faq__item { border: 1px solid var(--hair-1); border-radius: var(--r-md); background: var(--void-1); padding: 4px 18px; }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+</style>
