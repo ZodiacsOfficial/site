@@ -135,12 +135,11 @@ for (const s of SIGNS) {
 const FOMO_ICON = await b64('public/assets/venues/fomo-official.svg', 'image/svg+xml');
 // The owner's phone render of Fomo's Verified list, keyed to transparency, used as delivered.
 const FOMO_PHONE = await b64('public/assets/fomo/fomo-verified.png', 'image/png');
-// The twelve zodiac emoji as Twemoji (X's own set; CC-BY 4.0, see docs/VENUE-MARKS.md),
-// so the card shows the glyphs the way X draws them. The page itself uses the
-// visitor's native emoji font.
+// The twelve zodiac emoji as Twemoji tiles (CC-BY 4.0, see docs/VENUE-MARKS.md),
+// the same files the page's headline uses, so the card and the page match.
 const TWEMOJI_CODEPOINTS = { aries: '2648', taurus: '2649', gemini: '264a', cancer: '264b', leo: '264c', virgo: '264d', libra: '264e', scorpio: '264f', sagittarius: '2650', capricorn: '2651', aquarius: '2652', pisces: '2653' };
 const TWEMOJI = {};
-for (const [slug, cp] of Object.entries(TWEMOJI_CODEPOINTS)) TWEMOJI[slug] = await b64(`scripts/og-assets/twemoji/${cp}.svg`, 'image/svg+xml');
+for (const [slug, cp] of Object.entries(TWEMOJI_CODEPOINTS)) TWEMOJI[slug] = await b64(`public/assets/emoji/twemoji/${cp}.svg`, 'image/svg+xml');
 
 // ── Shared chrome ─────────────────────────────────────────────────────
 const INK = '#EEF1F7';

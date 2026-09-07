@@ -54,11 +54,11 @@ honest presentation when we cannot use the real thing.
 | --- | --- |
 | `applepay.svg` | An in-house reproduction of the Apple Pay lockup ( + "Pay"). Apple's official mark is distributed through their marketing portal under the Apple Pay Identity Guidelines and is not fetchable; the owner accepted a reproduction on 2026-08-02 rather than ship the words "Apple Pay" as plain text. It appears only beside a payment provider that actually offers Apple Pay, never as a claim that zodiacs.org accepts it. Replace this file if the official asset is ever obtained. |
 
-## Third-party glyphs on the /fomo/ share card
+## Third-party glyphs on the /fomo/ page and share card
 
 | Files | Basis |
 | --- | --- |
-| `scripts/og-assets/twemoji/2648.svg` … `2653.svg` | The twelve zodiac emoji (U+2648–U+2653) from Twemoji 14.0.2, fetched 2026-09-07 from `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/{codepoint}.svg`. Graphics © Twitter, Inc. and other contributors, licensed CC-BY 4.0; used unmodified and only on the generated `/fomo/` share card (`scripts/build-og-void.mjs`), so the twelve appear there the way X draws them. The page itself renders the emoji with the visitor's own platform font and ships no artwork. |
+| `public/assets/emoji/twemoji/2648.svg` … `2653.svg` | The twelve zodiac emoji (U+2648–U+2653) from Twemoji 14.0.2, fetched 2026-09-07 from `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/{codepoint}.svg`. Graphics © Twitter, Inc. and other contributors, licensed CC-BY 4.0; used unmodified in the `/fomo/` headline and on its generated share card (`scripts/build-og-void.mjs`), so the twelve appear as the same purple tiles on every device and in the card, the way X draws them. Credited in the page's sources line. |
 
 ## Adding a mark
 

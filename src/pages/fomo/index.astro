@@ -79,6 +79,9 @@ const FILM = Object.freeze({
   height: 1920,
 });
 
+/* The Twemoji tile for a sign's emoji, keyed by its code point (U+2648–U+2653). */
+const emojiTile = (glyph: string): string => `/assets/emoji/twemoji/${(glyph.codePointAt(0) ?? 0).toString(16)}.svg`;
+
 const FOOTAGE = Object.freeze({
   av1: '/assets/fomo/fomo-zodiacs-av1.mp4',
   h264: '/assets/fomo/fomo-zodiacs.mp4',
@@ -220,6 +223,7 @@ const sources = [
   { label: 'Fomo on Google Play', href: FOMO_PLAY },
   { label: 'Zodiacs Registry', href: '/registry/' },
   { label: `${provider} token pairs API`, href: 'https://docs.dexscreener.com/api/reference' },
+  { label: 'Zodiac emoji tiles: Twemoji, CC BY 4.0', href: 'https://github.com/jdecked/twemoji' },
 ];
 ---
 
@@ -282,7 +286,7 @@ const sources = [
         <div class="fomo-hero__copy">
           <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
           <p class="kicker reveal">Astrofolio, in a trading app</p>
-          <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">Trade<span class="fomo-hero__signs" aria-hidden="true">{SIGNS.map((sign) => <span class="fomo-hero__sign">{`${sign.glyph}\uFE0F`}</span>)}</span><span class="sr-only"> the twelve Zodiacs</span> on the Fomo<FomoMark /> app</h1>
+          <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">Trade<span class="fomo-hero__signs" aria-hidden="true">{SIGNS.map((sign) => <img class="fomo-hero__sign" src={emojiTile(sign.glyph)} width="36" height="36" alt="" loading="eager" decoding="async" />)}</span><span class="sr-only"> the twelve Zodiacs</span> on the Fomo<FomoMark /> app</h1>
           <div class="fomo-hero__body">
             <figure class="fomo-hero__render reveal" style="--reveal-delay:100ms">
               <picture>
@@ -1203,21 +1207,18 @@ const sources = [
     line-height: 0.98;
   }
   /* The twelve as the zodiac emoji, on their own line of the headline: the
-     glyphs the audience already types, drawn by each visitor's own platform
-     (a deliberate exception to the twelve-hue rule, on this promotional
-     wing page only). Sized in ems of the headline. */
+     purple tiles people type into bios and captions. Shipped as Twemoji
+     artwork (CC BY 4.0, credited in the sources line) so every device shows
+     the same tile rather than its own platform's drawing; a deliberate
+     exception to the twelve-hue rule, on this promotional wing page only.
+     Sized in ems of the headline. */
   .fomo-hero__signs {
     display: flex;
     align-items: center;
-    gap: 0.05em;
-    margin: 0.08em 0 0.04em;
-    font-size: 0.5em;
-    line-height: 1;
-    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Twemoji Mozilla', sans-serif;
-    font-variant-emoji: emoji;
-    text-shadow: none;
+    gap: 0.06em;
+    margin: 0.1em 0 0.06em;
   }
-  .fomo-hero__sign { display: block; }
+  .fomo-hero__sign { display: block; width: 0.5em; height: 0.5em; }
   .fomo-deck {
     max-width: 52ch;
     margin: clamp(20px, 3vw, 30px) 0 0;
@@ -1757,7 +1758,7 @@ const sources = [
        and the stores at its foot, as on microduck's mobile hero. */
     .fomo-hero { min-height: 100svh; align-items: flex-end; }
     .fomo-hero h1 { font-size: clamp(2.7rem, 11.5vw, 3.6rem); }
-    .fomo-hero__signs { font-size: 0.46em; }
+    .fomo-hero__sign { width: 0.46em; height: 0.46em; }
     .fomo-film__shade { background: rgba(6, 7, 9, 0.5); }
     .fomo-film__reel {
       left: 0;
