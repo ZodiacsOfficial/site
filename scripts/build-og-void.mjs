@@ -356,8 +356,8 @@ function fomoCard() {
   <div class="stage">
     <div class="left" style="max-width: 530px; flex: none;">
       <span class="kicker">Astrology in a trading app</span>
-      <div class="display" style="font-size: 62px; max-width: 530px;">Trade your zodiac<span style="display:flex;gap:5px;margin:14px 0 12px">${SIGNS.map((s) => `<img src="${TWEMOJI[s.slug]}" width="38" height="38" alt="" style="display:block;width:38px;height:38px" />`).join('')}</span>on the fomo<img src="${FOMO_EYES}" width="512" height="326" alt="" style="display:inline-block;height:0.74em;width:auto;vertical-align:-0.05em;margin-left:0.2em" /> app</div>
-      <div class="sub" style="max-width: 530px;">Every official Zodiac, listed in the free fomo app under its verified Solana address.</div>
+      <div class="display" style="font-size: 62px; max-width: 530px;">Trade your zodiac<span style="display:flex;gap:5px;margin:14px 0 12px">${SIGNS.map((s) => `<img src="${TWEMOJI[s.slug]}" width="38" height="38" alt="" style="display:block;width:38px;height:38px" />`).join('')}</span>on the fomo<img src="${FOMO_EYES}" width="512" height="326" alt="" style="display:inline-block;height:0.62em;width:auto;vertical-align:-0.04em;margin-left:0.2em" /> app</div>
+      <div class="sub" style="max-width: 530px;">Buy your sign in a few taps and see what your friends are trading. It’s free.</div>
       <div style="display:flex;align-items:center;gap:14px;margin-top:26px">
         <img src="${APP_STORE_BADGE}" alt="" style="display:block;height:54px;width:auto" />
         <img src="${GOOGLE_PLAY_BADGE}" alt="" style="display:block;height:80px;width:auto;margin:-13px" />

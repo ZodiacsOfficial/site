@@ -1022,18 +1022,22 @@ const sources = [
      keyed away), sized to the text it follows. */
   .fomo :global(.fomo-mark) {
     display: inline-block;
-    height: 0.74em;
+    height: 0.62em;
     width: auto;
     margin-left: 0.2em;
-    vertical-align: -0.1em;
+    vertical-align: -0.08em;
   }
-  .fomo-hero h1 :global(.fomo-mark) { height: 0.74em; width: auto; vertical-align: -0.05em; }
+  .fomo-hero h1 :global(.fomo-mark) { height: 0.62em; width: auto; vertical-align: -0.04em; }
 
   /* ── Promotional chrome: the site nav stands down on this page; a
      wordmark and one action sit over the film instead (the /bio/ landing
      trims the nav the same way). The colophon stays. ── */
   :global(body:has(.fomo) .nav-wrap),
   :global(body:has(.fomo) .mobile-menu) { display: none !important; }
+  /* Guide stands down here too: no floating launcher over the film, no
+     Guide button in the colophon (the /bio/ landing does the same). */
+  :global(body:has(.fomo) .zguide-launcher),
+  :global(body:has(.fomo) .zfooter__guide) { display: none !important; }
   .fomo-top {
     position: absolute;
     inset: 0 0 auto;
