@@ -2,8 +2,8 @@
 
 Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Activated owner mandate:
 `ZODIACS-PLATFORM-MASTER-BRIEF.md` v1.0. Stage A candidate and B01/B02/B03
-are implemented and tested in draft PRs. The next bounded C02 import/time
-correction is implemented and being delivered. The overall program is open.
+are implemented and tested in draft PRs. The bounded C02 import/time
+correction and a separate SDK GeoNames retry candidate are delivered. The overall program is open.
 
 ## Review deliveries
 
@@ -12,7 +12,8 @@ correction is implemented and being delivered. The overall program is open.
 | A02/A03 engine correction | SDK [draft #6](https://github.com/ZodiacsOfficial/sdk/pull/6), `03bf77990f3014b9125eed4976d7a41200aac80d` | 295 tests/26 files; required workspace and clean package-consumer gates pass. Stacked on held SDK #5. |
 | A02/A05 site parity + B03 shared sky | Site [draft #415](https://github.com/ZodiacsOfficial/site/pull/415), `4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f` | 4,447 tests/405 files; all 14 CI jobs passed in run 34156030961. Exact READY preview passed 59 Today checks. |
 | B01/B02 developer entry/support/examples | Site [draft #417](https://github.com/ZodiacsOfficial/site/pull/417), `8343f173e4db2e8ab6628bd04590e41b056872ce` | 4,493 tests/407 files; fresh public starter, 185 browser checks and literal rendered setup pass. Exact READY preview passed all three developer-page journeys. All 14 CI jobs passed in run 34159295138. |
-| C02 civil imports/timezones | `codex/platform-civil-inputs`, stacked on #417 | Final 4,624 tests/408 files, Node 22/24 focused controls, build/check, 18 captures and 12 imported-share browser journeys pass. Normal/flags-on budgets, existing export/sharing and 962 compatibility checks also pass; review delivery is in progress. |
+| C02 civil imports/timezones | Site [draft #418](https://github.com/ZodiacsOfficial/site/pull/418), `a4284d8d6289ed6abfe30d2da883ad07edcfc7bd` | 4,624 tests/408 files; all local gates, 18 captures, 12 share journeys, existing export and 962 compatibility checks pass. Exact READY preview passes all 12 journeys. CI 34161649806 is in progress. |
+| A02/A03 GeoNames recovery | SDK [draft #7](https://github.com/ZodiacsOfficial/sdk/pull/7), `abefc7c347ed22708a6743713d58c843d7166d8e` | Separate engine rc.2, 305 tests/27 files on Node 20/22, all workspace gates, two clean packed consumers and 96 chart parity cases pass. Immutable public artifact verified. Stacked SDK CI does not trigger; local evidence is explicit. |
 
 Candidate engine `0.1.1-rc.1` SHA-256:
 `f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17`.
@@ -59,7 +60,9 @@ model-assisted reviews are not human expert certification.
 ## Next dependency-ordered work
 
 Read [PLAN](PLAN.md), [DECISIONS](DECISIONS.md) and [EVIDENCE](EVIDENCE.md).
-Finish C02 review delivery and exact-head CI/preview recording. Invalid civil
+Finish recording C02 exact-head CI. Active site branch is
+`codex/platform-receipt-contract`, based on delivered #418; its checkpoint
+records the completed deliveries while the next contract slice is inspected. Invalid civil
 fields and missing timezones now fail before normalization; failed saved-chart
 recomputation retains its old receipt without rewriting storage.
 
@@ -68,10 +71,11 @@ save, rerun, export and sync. The tempting remote-label-only fix was withdrawn:
 its synthetic round trip loses requested Placidus intent. Preserve that
 [defect and counterexample](evidence/c02-remote-house-analysis.md). Do not infer
 legacy intent or change canonical sync fingerprints without compatibility tests.
-An independent bounded GeoNames retry-cache reproduction is also in progress;
-any correction needs separate candidate bytes, never an rc.1 replacement.
+GeoNames rejected-request recovery is delivered as separate rc.2, SHA-256
+`b5c0c63bddc8c1ccfc717551bdd57b1bfe7c439568851780575c8586456e0826`.
+Its structurally invalid but parseable JSON/cache policy remains a follow-up;
+site/starter rc.1 adoption is a separate reviewed pin, not an automatic update.
 
 Hosted execution remains dependent on reviewed contracts and explicit
 privacy/limits. Continue independent authorized work during review waits.
-This worktree contains the current C02 slice and its evidence until its delivery
-commit; no background execution after this session is implied.
+The current worktree contains the next receipt-contract checkpoint; no background execution after this session is implied.

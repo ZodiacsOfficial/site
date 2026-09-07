@@ -14,16 +14,17 @@ and candidate preparation do not replace review, release or external adoption.
 | 6 | B03 public data | Implemented: standalone example rejects HTTP/malformed/stale editions; docs match snapshot/build/cache semantics. 39 targeted tests, live example and build/check/browser passed. Headers unchanged; no current stale incident. Combined suite passed: 4,431 tests / 404 files. Final desktop/mobile keyboard-scroller browser regression passed. |
 | 7 | B01/B02 discovery/integrations | B01 implemented and local build/check/desktop/mobile/CSS-zoom checks passed. B02 public starter rc.2 passes 24 fresh-consumer tests, 185 browser checks and the literal rendered setup. Final site suite 4,493/407 passed. Draft PR #417 at 8343f173 is pushed and its exact READY preview passed the three developer-page browser journeys. All 14 jobs passed in exact-head CI 34159295138. Internal timing is not external adoption. |
 | 8 | B04 presentation | Approved homepage/fonts/footer preserved; 18 acceptance captures and desktop/mobile chart/share checks passed. Extend widget keyboard/high-zoom/reduced-motion/offline/privacy evidence before claiming completion. |
-| 9 | A04/C02 contract/receipts | Civil import/clock/timezone correction implemented: final 4,624 tests/408 files, 18 captures and 12 actual share journeys pass; review delivery is in progress. Existing shape, year window, valid DST/LMT and saved-receipt fallback are preserved. Next: resolve requested/actual house semantics across save/rerun/export/sync with legacy-unknown and canonical-wire compatibility; the one-field remote normalization was disproved by a synthetic round trip. Then complete reviewed range/degenerate-angle policy and portable receipts. |
+| 9 | A04/C02 contract/receipts | Civil import/clock/timezone correction implemented: final 4,624 tests/408 files, 18 captures and 12 actual share journeys pass; draft #418 at a4284d8d and its exact READY preview are verified; CI 34161649806 is in progress. Existing shape, year window, valid DST/LMT and saved-receipt fallback are preserved. Next: resolve requested/actual house semantics across save/rerun/export/sync with legacy-unknown and canonical-wire compatibility; the one-field remote normalization was disproved by a synthetic round trip. Then complete reviewed range/degenerate-angle policy and portable receipts. |
 | 10 | C01 hosted beta | Blocked on reviewed contract and explicit privacy/cost limits. No new service is a prerequisite for A/B. Existing infrastructure only; no unapproved spend or commercial terms. |
 | 11 | D01/D02 diagnostics/agents | Depends on safe portable receipts. Seed competing/ambiguous causes and honest abstention; verify an actual supported client before claiming interoperability. |
 | 12 | E01–E03 reference/adoption | Prepare small source-backed review/contribution/partner materials after stable integration paths. Human review, outreach, paying pilots and retained external use require actual authority/evidence. |
 
 ## Bounded follow-ups found during review
 
-- GeoNames client caches rejected preload/shard promises indefinitely after a
-  transient fetch failure. Reproduce retry behavior and clear failed cache entries
-  in a separate package candidate; do not mutate rc.1.
+- GeoNames rejected transport/HTTP/JSON-parsing caches are corrected in SDK
+  draft #7, separate engine rc.2: 305 tests, required gates and two clean
+  packed consumers passed. Structurally invalid fulfilled JSON still needs a
+  schema/cache-policy decision. The site/starter retain immutable rc.1.
 - Core entry validates dates/settings, but arbitrary caller-supplied Chart body,
   aspect and flag arrays and low-level helper arguments do not form a complete
   hostile-input schema. `geo.resolveBirth` settings need aligned validation.

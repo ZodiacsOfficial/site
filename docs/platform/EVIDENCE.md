@@ -737,3 +737,58 @@ but changing that single field discards the requested setting through rerun/sync
 Its two original synthetic JSON records are preserved; no account operation or
 migration was performed. C02 is partially implemented, not a completed portable
 receipt contract. Review PR/CI/preview delivery follows these local gates.
+
+### C02 review delivery and remote boundary proof
+
+[Draft site #418](https://github.com/ZodiacsOfficial/site/pull/418) is stacked
+on #417 at exact source `a4284d8d6289ed6abfe30d2da883ad07edcfc7bd`.
+The unchanged scope guard passes all 42 paths against its exact base, with
+protected scope untouched. Preview `dpl_8SPSZP4ETeK4qdzpYiSsW7r9QrKD` is READY,
+source a4284d8d, at https://zodiacs-c03uosfvw-zodiacsofficial.vercel.app .
+At 21:08 UTC actual Chrome passed all twelve imported-share journeys at
+1280/390, including invalid input rejection, valid known/unknown calculations,
+no overflow/page errors and no saved-profile writes.
+[Remote receipt](evidence/c02-preview-share-boundary-browser.json),
+[rejected mobile import](evidence/c02-preview-share-rejected-390.png).
+Temporary access file and browser wrapper were removed; no bearer URL/cookie
+is saved in repository evidence. Site Check 34161649806 remains in progress;
+local/preview success is not a claimed final CI result.
+
+### A02/A03 separate GeoNames recovery candidate
+
+A rejected optional GeoNames index/shard request previously prevented a later
+explicit call from retrying. Eight expected baseline failures cover rejected
+transport, HTTP 503, JSON parsing and caller-bound injected aborts. Matching
+rejected cache entries are now evicted while retaining shared pending work,
+successful/unrelated entries and the original rejection reason. No automatic
+retry loop, timer, new cancellation API or live GeoNames request was added.
+
+[SDK draft #7](https://github.com/ZodiacsOfficial/sdk/pull/7) is stacked on #6.
+Source commit `0da0941e23035df3be95e5aa40f4f270222b57dd`; artifact/evidence
+commit `abefc7c347ed22708a6743713d58c843d7166d8e`. This separate engine
+`0.1.1-rc.2` archive has **18 files / 21,946 packed bytes / 72,108 unpacked
+bytes**, SHA-256 `b5c0c63bddc8c1ccfc717551bdd57b1bfe7c439568851780575c8586456e0826`.
+[Immutable archive](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/abefc7c347ed22708a6743713d58c843d7166d8e/artifacts/zodiacs-engine-0.1.1-rc.2.tgz)
+was anonymously downloaded with matching bytes/digest at 21:15 UTC:
+[receipt](evidence/geo-public-artifact.json). Site and public starter retain rc.1;
+no existing package version's bytes were changed.
+
+All required SDK lint/typecheck/format/checksum/test/build/export/pack/contents/
+neutrality and TypeDoc gates passed. Full suite **305 tests / 27 files** on
+Node 20.20.2 and 22.23.2. Clean isolated Node 20/22 consumers installed the exact
+archive, compiled public TypeScript 5.9.3 imports, and passed examples, notices,
+optional-dependency isolation and retry through the packed geo export. Isolated
+consumer audit: zero advisories. A second real reviewer passed eleven additional
+strict-unhandled-rejection probes, including immediate concurrent retry waves,
+non-Error reasons and stale-eviction protection. Ninety-six synthetic public
+chart combinations exactly match rc.1 mathematical output after excluding
+engineVersion. This is parity, not independent astronomical accuracy evidence.
+
+[Durable SDK commands/logs/receipts](https://github.com/ZodiacsOfficial/sdk/blob/abefc7c347ed22708a6743713d58c843d7166d8e/docs/platform/EVIDENCE.md)
+include actual failures and finite review limits. SDK CI currently triggers only
+for main-targeting PRs, so no passing CI run is claimed for stacked #7. The
+known auxiliary SDK preview failure and broader app dependency findings remain
+separate. Structurally invalid but parseable GeoNames JSON remains cached in
+both versions; a deliberate validation/cache-policy follow-up is still needed.
+SDK #5's explicit release hold remains. No npm publication, main merge,
+production operation, external review, outreach, spending or adoption occurred.

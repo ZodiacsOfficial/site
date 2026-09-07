@@ -190,3 +190,18 @@ explicit compatibility handling. Preserve the synthetic defect and
 counterexample in evidence; leave this adapter unchanged until that coherent
 change is tested. This is an unresolved C02 requirement, not an owner-only
 permission blocker or a reason to halt other authorized work.
+
+## A-008 — Evict rejected requests and keep each candidate immutable
+
+The optional GeoNames client must allow a later explicit retry after transport,
+HTTP or JSON-parsing rejection. Evict only the matching failed promise and
+rethrow the same reason. Successful and in-flight requests remain shared;
+there is no automatic retry loop or implied per-caller cancellation.
+Structurally invalid but fulfilled JSON requires a separate schema/cache policy;
+clearing caches after arbitrary consumer errors can discard healthy data.
+
+Create engine rc.2 for this change and verify its actual packed public exports.
+Keep site/starter rc.1 fixed until a separately reviewed integration. Candidate
+version, artifact digest and source provenance distinguish the change without
+pretending a mathematical correction or npm publication occurred. The owner-only
+release hold does not prevent this isolated reliability correction and review.
