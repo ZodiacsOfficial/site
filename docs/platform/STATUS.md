@@ -62,7 +62,10 @@ model-assisted reviews are not human expert certification.
 Read [PLAN](PLAN.md), [DECISIONS](DECISIONS.md) and [EVIDENCE](EVIDENCE.md).
 Finish recording C02 exact-head CI. Active site branch is
 `codex/platform-receipt-contract`, based on delivered #418; its checkpoint
-records the completed deliveries while the next contract slice is inspected. Invalid civil
+records the completed deliveries. A new optional SDK draft natal-envelope
+codec is being implemented on its own `codex/platform-receipt-contract` branch;
+it does not change site pins, account sync or stored records. No rc.3 artifact
+exists yet and no codec acceptance is claimed. Invalid civil
 fields and missing timezones now fail before normalization; failed saved-chart
 recomputation retains its old receipt without rewriting storage.
 

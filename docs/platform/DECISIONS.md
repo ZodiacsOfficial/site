@@ -205,3 +205,25 @@ Keep site/starter rc.1 fixed until a separately reviewed integration. Candidate
 version, artifact digest and source provenance distinguish the change without
 pretending a mathematical correction or npm publication occurred. The owner-only
 release hold does not prevent this isolated reliability correction and review.
+
+## C-003 — Start portable receipts as an additive, bounded local codec
+
+First implement a one-natal-chart draft envelope at an optional engine subpath,
+reusing the existing public Chart vocabulary. Keep calculation execution,
+account sync v1 and stored profiles unchanged. A complete request/result envelope
+can preserve requested versus actual houses and full precision without forcing
+an unsafe change through old clients' one-field wire format.
+
+Capture only known provenance at the calculation boundary; unknown time does not
+establish a noon convention, and a supplied artifact hash does not authenticate
+an import. The receipt must distinguish actual absent houses from a requested
+setting, validate fixed flag codes and consistency, and preserve data-only
+extensions under explicit size/depth/node limits. Unknown required features or
+schema versions must fail explicitly. Redacted diagnostics are rebuilt from
+fixed fields and omit imported metadata, dates, coordinates, results, arbitrary
+strings and stable hashes. They are not described as anonymous.
+
+This first codec is an additive Zodiacs draft, not an industry standard, complete
+C02 acceptance or a replacement for account downgrade/migration handling. The
+site stays on its verified rc.1 artifact while the separate candidate is built
+and tested. Required release review and explicit SDK #5 hold still apply.
