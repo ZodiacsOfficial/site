@@ -1,0 +1,40 @@
+{
+  "schema": "zodiacs.phase5.factual-correction.v1",
+  "id": "sun-yat-sen-2026-09-07",
+  "subjectSlug": "sun-yat-sen",
+  "decision": "corrected",
+  "reviewedAtUtc": "2026-09-07T04:46:29.527Z",
+  "previousRelease": "3ce109d2b36985d7f0463f1748f8aca7f5541615",
+  "previous": {
+    "birthDate": "1956-11-12",
+    "deathDate": "2025-03-12",
+    "birthPlace": "Soviet Union"
+  },
+  "corrected": {
+    "birthDate": "1866-11-12",
+    "deathDate": "1925-03-12",
+    "birthPlace": "Cuiheng, Guangdong, China",
+    "timeZone": "Asia/Shanghai",
+    "birthTime": null
+  },
+  "sources": [
+    {
+      "title": "National Dr. Sun Yat-sen Memorial Hall chronology",
+      "url": "https://www.yatsen.gov.tw/en/cp.aspx?n=6695",
+      "supports": "12 November 1866 in Tsuiheng (Cuiheng), Guangdong"
+    },
+    {
+      "title": "Wikidata Q8573, revision 2536272260",
+      "url": "https://www.wikidata.org/w/index.php?title=Q8573&oldid=2536272260",
+      "supports": "Birth and death dates; birthplace entity Q588677"
+    }
+  ],
+  "retainedSelectionVariance": {
+    "pair": ["sun-yat-sen", "marie-curie"],
+    "dates": ["1866-11-12", "1867-11-07"],
+    "sign": "scorpio",
+    "actualGapDays": 360,
+    "admissionMinimumGapDays": 365,
+    "reason": "Both profiles were already published. Correcting a false source date does not admit a new candidate. Preserve the true dates and report this selection variance; the 365-day rule continues to govern new admissions and every unexplained close pair fails validation. Content-depth and similarity limits remain unchanged."
+  }
+}

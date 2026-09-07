@@ -8,7 +8,7 @@
     "withdrawn": 1
   },
   "reviewedAtUtc": "2026-07-25T00:00:00Z",
-  "sourceManifestSha256": "ca8c5709feea970f99e9762c0dbb157f7e52e233211fd281b52a37635243f4e2",
+  "sourceManifestSha256": "86b215f4d413612eb2a80e75d21f3d91d1da7f387ad8b33348e6cc0a795e653f",
   "sourceIndexPolicySha256": "4201c07861790e33830b4b5a9029e049e5971d3f2dea9a40218cc47b1921b905",
   "sourceIndexDemandSha256": "7a7cedd3769e26085a6cb63fac082fbef981418b67600c96bf246659a41ebefb",
   "indexPolicyApprovedAtUtc": "2026-07-26T16:50:40Z",
@@ -17734,7 +17734,7 @@
       "qid": "Q212657",
       "slug": "artemisia-gentileschi",
       "displayName": "Artemisia Gentileschi",
-      "shortDescription": "Painter · Italy · 1593–1653",
+      "shortDescription": "Painter · Italy · 1593–1654 or later",
       "disciplines": [
         "painter"
       ],
@@ -17823,6 +17823,17 @@
         "Pluto": 0.003
       },
       "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sourceReview": {
+        "reviewedOn": "2026-09-07",
+        "status": "uncertain-death",
+        "note": "Her death date is uncertain. The National Gallery reports documentary evidence that she was alive in Naples in August 1654. The earlier 1653 death claim is retained only in the historical source snapshot and is no longer stated as fact. Her birth-date chart is unchanged.",
+        "sources": [
+          {
+            "title": "National Gallery: Artemisia Gentileschi",
+            "url": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+          }
+        ]
+      },
       "sources": {
         "wikidata": {
           "entityUrl": "https://www.wikidata.org/wiki/Q212657",
@@ -17854,11 +17865,11 @@
         "file": "File:Artemisia Gentileschi Selfportrait Martyr.jpg"
       },
       "living": false,
-      "reviewedAtUtc": "2026-07-27T00:00:00Z",
+      "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
       "computationInputVersion": {
         "ephemeris": "astronomy-engine (repository dependency)",
         "aspectTable": "@zodiacs/engine/internal/math",
-        "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+        "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
       },
       "contentDepth": {
         "originalWords": 491,
@@ -28657,7 +28668,18 @@
         "Neptune": 0.028,
         "Pluto": 0.017
       },
-      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "dataQualityLabel": "Adopted birth date; date uncertain; birth time unknown",
+      "sourceReview": {
+        "reviewedOn": "2026-09-07",
+        "status": "adopted-date",
+        "note": "This chart uses the adopted date of 15 April 1894. Her birth year is uncertain: New-York Historical Society discusses 1894 or 1895, and her Cultural Center also notes uncertainty. All placements and readings here are conditional on the adopted date; a different year would produce a different chart.",
+        "sources": [
+          {
+            "title": "New-York Historical Society: Bessie Smith",
+            "url": "https://wams.nyhistory.org/life-story/bessie-smith/"
+          }
+        ]
+      },
       "sources": {
         "wikidata": {
           "entityUrl": "https://www.wikidata.org/wiki/Q93349",
@@ -28702,11 +28724,11 @@
         "assetPath": "/assets/people/bessie-smith.webp"
       },
       "living": false,
-      "reviewedAtUtc": "2026-07-27T00:00:00Z",
+      "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
       "computationInputVersion": {
         "ephemeris": "astronomy-engine (repository dependency)",
         "aspectTable": "@zodiacs/engine/internal/math",
-        "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+        "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
       },
       "contentDepth": {
         "originalWords": 447,
@@ -28940,7 +28962,7 @@
       },
       "copy": {
         "title": "Bessie Smith's birth chart",
-        "metaDescription": "Bessie Smith's chart, computed from a sourced birth date: Sun at 25.7° Aries. Birth time unknown, so no houses or rising sign.",
+        "metaDescription": "Bessie Smith's chart, computed from an adopted, uncertain birth date: Sun at 25.7° Aries. Birth time unknown, so no houses or rising sign.",
         "lede": "The Sun stands at 25.7° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
         "ledeFact": "dignity:Sun:exaltation",
         "blocks": [
@@ -30088,7 +30110,7 @@
       "contentDepth": {
         "originalWords": 394,
         "substantiveStatements": 17,
-        "highestPairwiseSimilarity": 0
+        "highestPairwiseSimilarity": 0.2108
       },
       "indexEligibility": {
         "eligible": false,
@@ -37951,18 +37973,18 @@
       "qid": "Q438907",
       "slug": "carlos-chagas",
       "displayName": "Carlos Chagas",
-      "shortDescription": "Bacteriologist · Brazil · 1879–1934",
+      "shortDescription": "Bacteriologist · Brazil · 1878–1934",
       "disciplines": [
         "bacteriologist"
       ],
       "birthDate": {
-        "storedValue": "1879-07-09",
+        "storedValue": "1878-07-09",
         "precision": "day",
         "calendarModel": "proleptic-gregorian",
         "calendarConversion": "none required — the stored value is already proleptic Gregorian",
-        "displayedDate": "1879-07-09",
-        "computedGregorianDate": "1879-07-09",
-        "birthdayCrossLinkKey": "1879-07-09",
+        "displayedDate": "1878-07-09",
+        "computedGregorianDate": "1878-07-09",
+        "birthdayCrossLinkKey": "1878-07-09",
         "birthdayRoute": "/birthday/july-9/"
       },
       "birthTime": null,
@@ -37991,10 +38013,10 @@
         "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
         "timeZone": "America/Sao_Paulo",
         "civilTime": "12:00",
-        "utcInstant": "1879-07-09T15:06:28.000Z",
+        "utcInstant": "1878-07-09T15:06:28.000Z",
         "utcOffsetMinutesAtBirth": -186.4667,
-        "civilDayStartUtc": "1879-07-09T03:06:28.000Z",
-        "civilDayEndUtc": "1879-07-10T03:06:28.000Z",
+        "civilDayStartUtc": "1878-07-09T03:06:28.000Z",
+        "civilDayEndUtc": "1878-07-10T03:06:28.000Z",
         "latitude": -20.695833333333,
         "longitude": -44.826944444444,
         "coordinateEscalationSteps": 0,
@@ -38010,36 +38032,51 @@
       "sunSign": {
         "slug": "cancer",
         "name": "Cancer",
-        "degree": 16.98,
+        "degree": 17.21,
         "determinable": true,
         "cuspCheck": {
           "ambiguous": false,
           "boundaryUtc": null,
-          "degreesInsideAtWindowStart": 16.3756,
-          "degreesToNextBoundaryAtWindowEnd": 12.6711
+          "degreesInsideAtWindowStart": 16.7307,
+          "degreesToNextBoundaryAtWindowEnd": 12.3159
         }
       },
       "moon": {
-        "sign": "pisces",
-        "signName": "Pisces",
-        "degree": 27.52,
-        "uncertain": true,
-        "signAtCivilDayStart": "pisces",
-        "signAtCivilDayEnd": "aries"
+        "sign": "scorpio",
+        "signName": "Scorpio",
+        "degree": 17.11,
+        "uncertain": false,
+        "signAtCivilDayStart": "scorpio",
+        "signAtCivilDayEnd": "scorpio"
       },
       "unknownTimeErrorBandDegrees": {
         "Sun": 0.953,
-        "Moon": 12.315,
-        "Mercury": 1.634,
-        "Venus": 0.997,
-        "Mars": 0.656,
-        "Jupiter": 0.024,
-        "Saturn": 0.032,
-        "Uranus": 0.049,
-        "Neptune": 0.019,
-        "Pluto": 0.016
+        "Moon": 13.901,
+        "Mercury": 2.084,
+        "Venus": 1.165,
+        "Mars": 0.628,
+        "Jupiter": 0.118,
+        "Saturn": 0.008,
+        "Uranus": 0.051,
+        "Neptune": 0.018,
+        "Pluto": 0.015
       },
-      "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sourceReview": {
+        "reviewedOn": "2026-09-07",
+        "status": "corrected",
+        "note": "This chart adopts 9 July 1878. Fiocruz's archival biography reproduces his baptismal certificate and explains the correction from 1879. Some institutional summaries and the retained Wikidata snapshot still give 1879; the chart follows the documented archival correction.",
+        "sources": [
+          {
+            "title": "Fiocruz: Carlos Chagas, um cientista do Brasil (2009), pages 26–27 and 35",
+            "url": "https://books.scielo.org/id/tpyj4/pdf/kropf-9786557080009-05.pdf"
+          },
+          {
+            "title": "Fiocruz IOC biography — conflicting 1879 date",
+            "url": "https://www.ioc.fiocruz.br/personalidades/carlos-chagas"
+          }
+        ]
+      },
       "sources": {
         "wikidata": {
           "entityUrl": "https://www.wikidata.org/wiki/Q438907",
@@ -38084,16 +38121,16 @@
         "assetPath": "/assets/people/carlos-chagas.webp"
       },
       "living": false,
-      "reviewedAtUtc": "2026-07-27T00:00:00Z",
+      "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
       "computationInputVersion": {
         "ephemeris": "astronomy-engine (repository dependency)",
         "aspectTable": "@zodiacs/engine/internal/math",
-        "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+        "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
       },
       "contentDepth": {
-        "originalWords": 441,
-        "substantiveStatements": 19,
-        "highestPairwiseSimilarity": 0.2608
+        "originalWords": 380,
+        "substantiveStatements": 18,
+        "highestPairwiseSimilarity": 0.1934
       },
       "indexEligibility": {
         "eligible": false,
@@ -38114,200 +38151,208 @@
           "body": "Sun",
           "sign": "cancer",
           "signName": "Cancer",
-          "degree": 16.98,
+          "degree": 17.21,
           "retrograde": false,
-          "speedPerDay": 0.9533,
+          "speedPerDay": 0.9534,
           "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 106.98
+          "longitude": 107.21
         },
         {
           "body": "Moon",
-          "sign": "pisces",
-          "signName": "Pisces",
-          "degree": 27.52,
+          "sign": "scorpio",
+          "signName": "Scorpio",
+          "degree": 17.11,
           "retrograde": false,
-          "speedPerDay": 12.3065,
-          "dignity": null,
-          "stableAcrossDay": false,
-          "retrogradeStableAcrossDay": true,
-          "longitude": 357.52
-        },
-        {
-          "body": "Mercury",
-          "sign": "leo",
-          "signName": "Leo",
-          "degree": 7.73,
-          "retrograde": false,
-          "speedPerDay": 1.6336,
-          "dignity": null,
-          "stableAcrossDay": true,
-          "retrogradeStableAcrossDay": true,
-          "longitude": 127.73
-        },
-        {
-          "body": "Venus",
-          "sign": "virgo",
-          "signName": "Virgo",
-          "degree": 2.38,
-          "retrograde": false,
-          "speedPerDay": 0.9968,
+          "speedPerDay": 13.8995,
           "dignity": "fall",
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 152.38
+          "longitude": 227.11
+        },
+        {
+          "body": "Mercury",
+          "sign": "cancer",
+          "signName": "Cancer",
+          "degree": 23.2,
+          "retrograde": false,
+          "speedPerDay": 2.0836,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 113.2
+        },
+        {
+          "body": "Venus",
+          "sign": "gemini",
+          "signName": "Gemini",
+          "degree": 10.43,
+          "retrograde": false,
+          "speedPerDay": 1.1646,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 70.43
         },
         {
           "body": "Mars",
-          "sign": "aries",
-          "signName": "Aries",
-          "degree": 21.01,
+          "sign": "leo",
+          "signName": "Leo",
+          "degree": 10.42,
           "retrograde": false,
-          "speedPerDay": 0.6561,
-          "dignity": "domicile",
+          "speedPerDay": 0.6285,
+          "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 21.01
+          "longitude": 130.42
         },
         {
           "body": "Jupiter",
-          "sign": "pisces",
-          "signName": "Pisces",
-          "degree": 12.63,
+          "sign": "aquarius",
+          "signName": "Aquarius",
+          "degree": 4.22,
           "retrograde": true,
-          "speedPerDay": -0.0236,
-          "dignity": "domicile",
+          "speedPerDay": -0.118,
+          "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 342.63
+          "longitude": 304.22
         },
         {
           "body": "Saturn",
           "sign": "aries",
           "signName": "Aries",
-          "degree": 15.48,
+          "degree": 2.89,
           "retrograde": false,
-          "speedPerDay": 0.0316,
+          "speedPerDay": 0.0084,
           "dignity": "fall",
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 15.48
+          "longitude": 2.89
         },
         {
           "body": "Uranus",
-          "sign": "virgo",
-          "signName": "Virgo",
-          "degree": 1.73,
+          "sign": "leo",
+          "signName": "Leo",
+          "degree": 27.22,
           "retrograde": false,
-          "speedPerDay": 0.0486,
+          "speedPerDay": 0.0513,
           "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 151.73
+          "longitude": 147.22
         },
         {
           "body": "Neptune",
           "sign": "taurus",
           "signName": "Taurus",
-          "degree": 11.71,
+          "degree": 9.5,
           "retrograde": false,
-          "speedPerDay": 0.0195,
+          "speedPerDay": 0.0183,
           "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 41.71
+          "longitude": 39.5
         },
         {
           "body": "Pluto",
           "sign": "taurus",
           "signName": "Taurus",
-          "degree": 27.02,
+          "degree": 26.09,
           "retrograde": false,
-          "speedPerDay": 0.0155,
+          "speedPerDay": 0.0152,
           "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 57.02
+          "longitude": 56.09
         }
       ],
       "aspectsStableAcrossCivilDay": [
         {
           "a": "Venus",
-          "b": "Uranus",
-          "type": "conjunction",
-          "orb": 0.66,
-          "applying": false
-        },
-        {
-          "a": "Jupiter",
-          "b": "Neptune",
-          "type": "sextile",
-          "orb": 0.93,
-          "applying": true
-        },
-        {
-          "a": "Sun",
-          "b": "Saturn",
-          "type": "square",
-          "orb": 1.5,
-          "applying": false
-        },
-        {
-          "a": "Mercury",
-          "b": "Neptune",
-          "type": "square",
-          "orb": 3.98,
-          "applying": true
-        },
-        {
-          "a": "Sun",
           "b": "Mars",
-          "type": "square",
-          "orb": 4.03,
-          "applying": true
+          "type": "sextile",
+          "orb": 0.02,
+          "applying": false
         },
         {
           "a": "Sun",
-          "b": "Jupiter",
+          "b": "Moon",
           "type": "trine",
-          "orb": 4.35,
+          "orb": 0.1,
+          "applying": false
+        },
+        {
+          "a": "Mars",
+          "b": "Neptune",
+          "type": "square",
+          "orb": 0.92,
           "applying": false
         },
         {
           "a": "Uranus",
           "b": "Pluto",
           "type": "square",
-          "orb": 4.71,
+          "orb": 1.13,
           "applying": false
         },
         {
-          "a": "Venus",
+          "a": "Jupiter",
+          "b": "Saturn",
+          "type": "sextile",
+          "orb": 1.33,
+          "applying": true
+        },
+        {
+          "a": "Mercury",
           "b": "Pluto",
+          "type": "sextile",
+          "orb": 2.9,
+          "applying": true
+        },
+        {
+          "a": "Jupiter",
+          "b": "Neptune",
           "type": "square",
-          "orb": 5.37,
+          "orb": 5.28,
+          "applying": false
+        },
+        {
+          "a": "Sun",
+          "b": "Mercury",
+          "type": "conjunction",
+          "orb": 5.99,
           "applying": false
         },
         {
           "a": "Mars",
-          "b": "Saturn",
-          "type": "conjunction",
-          "orb": 5.53,
+          "b": "Jupiter",
+          "type": "opposition",
+          "orb": 6.19,
+          "applying": false
+        },
+        {
+          "a": "Venus",
+          "b": "Jupiter",
+          "type": "trine",
+          "orb": 6.21,
           "applying": false
         }
       ],
       "patterns": {
-        "settledBodyCount": 9,
+        "settledBodyCount": 10,
         "stelliums": [],
         "elements": {
-          "water": 2,
+          "water": 3,
+          "air": 2,
           "fire": 3,
-          "earth": 4
+          "earth": 2
         },
         "modalities": {
           "cardinal": 3,
-          "fixed": 3,
-          "mutable": 3
+          "fixed": 6,
+          "mutable": 1
         },
         "retrograde": [
           "Jupiter"
@@ -38316,77 +38361,76 @@
       },
       "copy": {
         "title": "Carlos Chagas's birth chart",
-        "metaDescription": "Carlos Chagas's chart, computed from a sourced birth date: Sun at 17.0° Cancer. Birth time unknown, so no houses or rising sign.",
-        "lede": "Tightest of all, Venus holds a conjunction to Uranus at 0.7° — close enough to weld taste to disruption. A conjunction concentrates rather than balances — the pair burns one fuel line.",
-        "ledeFact": "aspect:Venus:Uranus:conjunction",
+        "metaDescription": "Carlos Chagas's chart, computed from a sourced birth date: Sun at 17.2° Cancer. Birth time unknown, so no houses or rising sign.",
+        "lede": "Tightest of all, Venus holds a sextile to Mars at 0.0° — close enough to weld taste to drive. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+        "ledeFact": "aspect:Venus:Mars:sextile",
         "blocks": [
           {
             "key": "sun",
             "title": "Where the Sun actually stood",
             "facts": [
-              "sun-degree:16.98",
+              "sun-degree:17.21",
               "decan:cancer:second"
             ],
-            "text": "17.0° of Cancer is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+            "text": "17.2° of Cancer is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
           },
           {
             "key": "personal",
             "title": "Closer to the ground",
             "facts": [
-              "personal:Mercury:Leo:7.7°",
-              "personal:Venus:Virgo:2.4°",
-              "personal:Mars:Aries:21.0°"
+              "personal:Mercury:Cancer:23.2°",
+              "personal:Venus:Gemini:10.4°",
+              "personal:Mars:Leo:10.4°"
             ],
-            "text": "Day to day the chart speaks through Mercury in Leo (7.7°), Venus in Virgo (2.4°), Mars in Aries (21.0°): thought that arrives already in motion, attraction that grows by reliability, effort spent in bursts and openings."
+            "text": "Day to day the chart speaks through Mercury in Cancer (23.2°), Venus in Gemini (10.4°), Mars in Leo (10.4°): thought steeped in tone and memory, attraction that begins as conversation, effort spent in bursts and openings."
           },
           {
             "key": "geometry",
             "title": "The angles that hold",
             "facts": [
-              "aspect:Venus:Uranus:conjunction:0.66",
-              "aspect:Jupiter:Neptune:sextile:0.93",
-              "aspect:Sun:Saturn:square:1.5"
+              "aspect:Venus:Mars:sextile:0.02",
+              "aspect:Mars:Neptune:square:0.92",
+              "aspect:Uranus:Pluto:square:1.13"
             ],
-            "text": "Nothing in the geometry sits closer than Venus and Uranus: 0.7° from an exact conjunction. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Jupiter sextile Neptune at 0.9°, and the Sun square Saturn at 1.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+            "text": "Nothing in the geometry sits closer than Venus and Mars: 0.0° from an exact sextile. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mars square Neptune at 0.9°, and Uranus square Pluto at 1.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
           },
           {
             "key": "figures",
             "title": "What the angles build",
             "facts": [
-              "figure:unaspected:Moon"
+              "figure:t-square:Mars-Jupiter:apex-Neptune"
             ],
-            "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+            "text": "Mars opposes Jupiter while both square Neptune. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
           },
           {
             "key": "dignity",
             "title": "The classical map",
             "facts": [
-              "dignity:Venus:fall",
-              "dignity:Mars:domicile",
-              "dignity:Jupiter:domicile",
+              "dignity:Moon:fall",
               "dignity:Saturn:fall"
             ],
-            "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Venus in Virgo at 2.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Aries at 21.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 12.6° is in domicile; Saturn in Aries at 15.5° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+            "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. The Moon in Scorpio at 17.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aries at 2.9° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
           },
           {
             "key": "shape",
             "title": "The shape of the whole",
             "facts": [
-              "elements:earth4-fire3-water2",
-              "modalities:cardinal3-fixed3-mutable3",
-              "settled-signs:9",
+              "elements:water3-fire3-air2-earth2",
+              "modalities:fixed6-cardinal3-mutable1",
+              "settled-signs:10",
               "retrograde:1"
             ],
-            "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 4, fire 3, water 2; modalities cardinal 3, fixed 3, mutable 3. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Jupiter was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+            "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 3, fire 3, air 2, earth 2; modalities fixed 6, cardinal 3, mutable 1. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Jupiter was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
           },
           {
             "key": "moon",
-            "title": "The Moon is genuinely open",
+            "title": "The Moon, and how far it can move",
             "facts": [
-              "moon-uncertain:pisces:aries"
+              "moon-sign:scorpio",
+              "moon-band:13.9"
             ],
-            "uncertain": true,
-            "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 12.3° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+            "uncertain": false,
+            "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 17.1°."
           }
         ],
         "birthdayLink": {
@@ -38398,8 +38442,8 @@
           "label": "The Cancer guide"
         },
         "measurements": {
-          "originalWords": 441,
-          "substantiveStatements": 19,
+          "originalWords": 380,
+          "substantiveStatements": 18,
           "blocks": 7
         }
       }
@@ -52126,6 +52170,17 @@
         "Pluto": 0.017
       },
       "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sourceReview": {
+        "reviewedOn": "2026-09-07",
+        "status": "reference-location",
+        "note": "The Mexican Secretariat of Public Education identifies Camargo, Chihuahua, as his birthplace. The retained Wikidata snapshot supplies Chihuahua City. Chihuahua City is shown only as the existing calculation reference; it is not a verified birthplace. No precise Camargo or farm coordinates are inferred, and this time-unknown chart calculates no houses or angles.",
+        "sources": [
+          {
+            "title": "Mexican Secretariat of Public Education: David Alfaro Siqueiros",
+            "url": "https://www.gob.mx/sep/acciones-y-programas/david-alfaro-siqueiros-114931"
+          }
+        ]
+      },
       "sources": {
         "wikidata": {
           "entityUrl": "https://www.wikidata.org/wiki/Q315647",
@@ -52170,16 +52225,16 @@
         "assetPath": "/assets/people/david-alfaro-siqueiros.webp"
       },
       "living": false,
-      "reviewedAtUtc": "2026-07-27T00:00:00Z",
+      "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
       "computationInputVersion": {
         "ephemeris": "astronomy-engine (repository dependency)",
         "aspectTable": "@zodiacs/engine/internal/math",
-        "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+        "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
       },
       "contentDepth": {
-        "originalWords": 420,
+        "originalWords": 422,
         "substantiveStatements": 18,
-        "highestPairwiseSimilarity": 0.2529
+        "highestPairwiseSimilarity": 0.2401
       },
       "indexEligibility": {
         "eligible": false,
@@ -52490,7 +52545,7 @@
               "moon-band:14.4"
             ],
             "uncertain": false,
-            "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.4° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 8.9°."
+            "text": "The Moon stayed in Scorpio for the whole of that day at the calculation reference location, covering 14.4° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 8.9°."
           }
         ],
         "birthdayLink": {
@@ -52502,7 +52557,7 @@
           "label": "The Capricorn guide"
         },
         "measurements": {
-          "originalWords": 420,
+          "originalWords": 422,
           "substantiveStatements": 18,
           "blocks": 7
         }
@@ -61087,6 +61142,17 @@
         "Pluto": 0
       },
       "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+      "sourceReview": {
+        "reviewedOn": "2026-09-07",
+        "status": "reference-location",
+        "note": "The Maryland State Archives places her birth on a farm near Ellicott City, Howard County. The retained Wikidata snapshot instead supplies Baltimore. Baltimore is shown only as the existing calculation reference; it is not a verified birthplace. Both use the America/New_York reference zone, and this time-unknown chart calculates no houses or angles.",
+        "sources": [
+          {
+            "title": "Maryland State Archives: Edith Clarke",
+            "url": "https://msa.maryland.gov/megafile/msa/speccol/sc3500/sc3520/014000/014065/html/14065bio.html"
+          }
+        ]
+      },
       "sources": {
         "wikidata": {
           "entityUrl": "https://www.wikidata.org/wiki/Q21826",
@@ -61117,16 +61183,16 @@
         "reason": "no image claim on the Wikidata entity"
       },
       "living": false,
-      "reviewedAtUtc": "2026-07-27T00:00:00Z",
+      "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
       "computationInputVersion": {
         "ephemeris": "astronomy-engine (repository dependency)",
         "aspectTable": "@zodiacs/engine/internal/math",
-        "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+        "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
       },
       "contentDepth": {
-        "originalWords": 424,
+        "originalWords": 426,
         "substantiveStatements": 17,
-        "highestPairwiseSimilarity": 0.2336
+        "highestPairwiseSimilarity": 0.2214
       },
       "indexEligibility": {
         "eligible": false,
@@ -61442,7 +61508,7 @@
               "moon-uncertain:pisces:aries"
             ],
             "uncertain": true,
-            "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 14.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+            "text": "The Moon crossed from Pisces into Aries during that day at the calculation reference location, travelling 14.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
           }
         ],
         "birthdayLink": {
@@ -61454,7 +61520,7 @@
           "label": "The Aquarius guide"
         },
         "measurements": {
-          "originalWords": 424,
+          "originalWords": 426,
           "substantiveStatements": 17,
           "blocks": 7
         }
@@ -145813,7 +145879,7 @@
       "contentDepth": {
         "originalWords": 406,
         "substantiveStatements": 20,
-        "highestPairwiseSimilarity": 0
+        "highestPairwiseSimilarity": 0.2607
       },
       "indexEligibility": {
         "eligible": false,
@@ -199949,7 +200015,7 @@
       "qid": "Q690790",
       "slug": "rufino-tamayo",
       "displayName": "Rufino Tamayo",
-      "shortDescription": "Painter · Mexico · 1899–1990",
+      "shortDescription": "Painter · Mexico · 1899–1991",
       "disciplines": [
         "painter"
       ],
@@ -200037,7 +200103,26 @@
         "Neptune": 0.019,
         "Pluto": 0.007
       },
-      "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "dataQualityLabel": "Adopted birth date; date uncertain; birth time unknown",
+      "sourceReview": {
+        "reviewedOn": "2026-09-07",
+        "status": "adopted-date",
+        "note": "Death corrected to 24 June 1991. This chart retains the adopted birth date of 26 August 1899, used by El Colegio Nacional and Guggenheim Venice. Museo Tamayo distinguishes birth on 25 August from registration on 26 August. The original registration has not been inspected here; all chart readings are conditional on the adopted date.",
+        "sources": [
+          {
+            "title": "INBAL: thirtieth anniversary of Tamayo's death (2021)",
+            "url": "https://inba.gob.mx/multimedia/prensa/galerias/15340/15340-bol._402_conmemoran_el_30_aniversario_luctuoso_de_rufino_tamayo_con_la_revision_y_digitalizacion_de_su_memoria_documental.pdf"
+          },
+          {
+            "title": "Museo Tamayo: birth versus registration date",
+            "url": "https://www.museotamayo.org/en/agenda/convocatoria-xx-bienal-de-pintura-rufino-tamayo"
+          },
+          {
+            "title": "El Colegio Nacional: adopted 26 August date",
+            "url": "https://colnal.mx/integrantes/rufino-tamayo/"
+          }
+        ]
+      },
       "sources": {
         "wikidata": {
           "entityUrl": "https://www.wikidata.org/wiki/Q690790",
@@ -200082,11 +200167,11 @@
         "assetPath": "/assets/people/rufino-tamayo.webp"
       },
       "living": false,
-      "reviewedAtUtc": "2026-07-27T00:00:00Z",
+      "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
       "computationInputVersion": {
         "ephemeris": "astronomy-engine (repository dependency)",
         "aspectTable": "@zodiacs/engine/internal/math",
-        "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+        "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
       },
       "contentDepth": {
         "originalWords": 394,
@@ -200308,7 +200393,7 @@
       },
       "copy": {
         "title": "Rufino Tamayo's birth chart",
-        "metaDescription": "Rufino Tamayo's chart, computed from a sourced birth date: Sun at 3.3° Virgo. Birth time unknown, so no houses or rising sign.",
+        "metaDescription": "Rufino Tamayo's chart, computed from an adopted, uncertain birth date: Sun at 3.3° Virgo. Birth time unknown, so no houses or rising sign.",
         "lede": "The Moon stands at 18.6° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
         "ledeFact": "dignity:Moon:exaltation",
         "blocks": [
@@ -215607,96 +215692,107 @@
       "qid": "Q8573",
       "slug": "sun-yat-sen",
       "displayName": "Sun Yat-sen",
-      "shortDescription": "Politician and physician · Soviet Union · 1956–2025",
+      "shortDescription": "Politician and physician · China · 1866–1925",
       "disciplines": [
         "politician",
         "physician"
       ],
       "birthDate": {
-        "storedValue": "1956-11-12",
+        "storedValue": "1866-11-12",
         "precision": "day",
         "calendarModel": "proleptic-gregorian",
         "calendarConversion": "none required — the stored value is already proleptic Gregorian",
-        "displayedDate": "1956-11-12",
-        "computedGregorianDate": "1956-11-12",
-        "birthdayCrossLinkKey": "1956-11-12",
+        "displayedDate": "1866-11-12",
+        "computedGregorianDate": "1866-11-12",
+        "birthdayCrossLinkKey": "1866-11-12",
         "birthdayRoute": "/birthday/november-12/"
       },
       "birthTime": null,
       "timeQuality": "unknown",
       "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
       "birthPlace": {
-        "entity": "Q15180",
-        "entityLabel": "Soviet Union",
-        "normalisedLabel": "Soviet Union, Soviet Union",
+        "entity": "Q588677",
+        "entityLabel": "Cuiheng",
+        "normalisedLabel": "Cuiheng, China",
         "country": {
-          "entity": "Q15180",
-          "label": "Soviet Union"
+          "entity": "Q148",
+          "label": "China"
         },
         "coordinates": {
-          "latitude": 65,
-          "longitude": 90,
-          "sourceEntity": "Q15180",
-          "sourceEntityLabel": "Soviet Union",
-          "wikidataPrecision": 1,
+          "latitude": 22.444666666667,
+          "longitude": 113.53673611111,
+          "sourceEntity": "Q588677",
+          "sourceEntityLabel": "Cuiheng",
+          "wikidataPrecision": 0.00027777777777778,
           "escalationSteps": 0,
           "precisionDowngrade": null
         },
-        "timeZone": "Asia/Krasnoyarsk"
+        "timeZone": "Asia/Shanghai"
       },
       "computation": {
         "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
-        "timeZone": "Asia/Krasnoyarsk",
+        "timeZone": "Asia/Shanghai",
         "civilTime": "12:00",
-        "utcInstant": "1956-11-12T05:00:00.000Z",
-        "utcOffsetMinutesAtBirth": 420,
-        "civilDayStartUtc": "1956-11-11T17:00:00.000Z",
-        "civilDayEndUtc": "1956-11-12T17:00:00.000Z",
-        "latitude": 65,
-        "longitude": 90,
+        "utcInstant": "1866-11-12T03:54:17.000Z",
+        "utcOffsetMinutesAtBirth": 485.7167,
+        "civilDayStartUtc": "1866-11-11T15:54:17.000Z",
+        "civilDayEndUtc": "1866-11-12T15:54:17.000Z",
+        "latitude": 22.444666666667,
+        "longitude": 113.53673611111,
         "coordinateEscalationSteps": 0,
-        "coordinateSourceEntity": "Q15180",
+        "coordinateSourceEntity": "Q588677",
         "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
         "aspectTable": "@zodiacs/engine/internal/math",
         "anglesComputed": false,
         "housesComputed": false,
         "sectComputed": false,
-        "meridianResidualMinutes": -60,
-        "meridianResidualMoonDegrees": 0.55
+        "meridianResidualMinutes": -31.57,
+        "meridianResidualMoonDegrees": 0.2894
       },
       "sunSign": {
         "slug": "scorpio",
         "name": "Scorpio",
-        "degree": 19.8,
+        "degree": 19.57,
         "determinable": true,
         "cuspCheck": {
           "ambiguous": false,
           "boundaryUtc": null,
-          "degreesInsideAtWindowStart": 19.5889,
-          "degreesToNextBoundaryAtWindowEnd": 9.4048
+          "degreesInsideAtWindowStart": 19.0671,
+          "degreesToNextBoundaryAtWindowEnd": 9.9258
         }
       },
       "moon": {
-        "sign": "pisces",
-        "signName": "Pisces",
-        "degree": 7.11,
+        "sign": "capricorn",
+        "signName": "Capricorn",
+        "degree": 10.97,
         "uncertain": false,
-        "signAtCivilDayStart": "pisces",
-        "signAtCivilDayEnd": "pisces"
+        "signAtCivilDayStart": "capricorn",
+        "signAtCivilDayEnd": "capricorn"
       },
       "unknownTimeErrorBandDegrees": {
-        "Sun": 1.006,
-        "Moon": 12.105,
-        "Mercury": 1.601,
-        "Venus": 1.213,
-        "Mars": 0.356,
-        "Jupiter": 0.165,
-        "Saturn": 0.116,
-        "Uranus": 0,
-        "Neptune": 0.036,
-        "Pluto": 0.01
+        "Sun": 1.007,
+        "Moon": 11.968,
+        "Mercury": 1.261,
+        "Venus": 0.328,
+        "Mars": 0.231,
+        "Jupiter": 0.153,
+        "Saturn": 0.12,
+        "Uranus": 0.024,
+        "Neptune": 0.02,
+        "Pluto": 0.019
       },
       "dataQualityLabel": "Birth date sourced; birth time unknown",
+      "sourceReview": {
+        "reviewedOn": "2026-09-07",
+        "status": "corrected",
+        "note": "Corrected to 12 November 1866 in Cuiheng, Guangdong, China, with death on 12 March 1925. The chart has been recomputed from the corrected date and Asia/Shanghai reference zone. Birth time remains unknown.",
+        "sources": [
+          {
+            "title": "National Dr. Sun Yat-sen Memorial Hall chronology",
+            "url": "https://www.yatsen.gov.tw/en/cp.aspx?n=6695"
+          }
+        ]
+      },
       "sources": {
         "wikidata": {
           "entityUrl": "https://www.wikidata.org/wiki/Q8573",
@@ -215710,17 +215806,17 @@
             "P17",
             "P131"
           ],
-          "lastrevid": 2522754203
+          "lastrevid": 2536272260
         },
         "wikipedia": {
           "language": "en",
           "title": "Sun Yat-sen",
           "articleUrl": "https://en.wikipedia.org/wiki/Sun_Yat-sen",
           "pageId": 88483,
-          "revisionId": 1365311146,
-          "revisionTimestamp": "2026-07-21T16:30:50Z"
+          "revisionId": 1373507779,
+          "revisionTimestamp": "2026-09-06T10:35:03Z"
         },
-        "retrievedAtUtc": "2026-07-26T18:47:50.947Z"
+        "retrievedAtUtc": "2026-09-07T04:46:29.527Z"
       },
       "portrait": {
         "available": true,
@@ -215741,16 +215837,16 @@
         "assetPath": "/assets/people/sun-yat-sen.webp"
       },
       "living": false,
-      "reviewedAtUtc": "2026-07-27T00:00:00Z",
+      "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
       "computationInputVersion": {
         "ephemeris": "astronomy-engine (repository dependency)",
         "aspectTable": "@zodiacs/engine/internal/math",
-        "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+        "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
       },
       "contentDepth": {
-        "originalWords": 383,
-        "substantiveStatements": 18,
-        "highestPairwiseSimilarity": 0.2204
+        "originalWords": 443,
+        "substantiveStatements": 21,
+        "highestPairwiseSimilarity": 0.2333
       },
       "indexEligibility": {
         "eligible": true,
@@ -215769,277 +215865,276 @@
           "body": "Sun",
           "sign": "scorpio",
           "signName": "Scorpio",
-          "degree": 19.8,
+          "degree": 19.57,
           "retrograde": false,
-          "speedPerDay": 1.0062,
+          "speedPerDay": 1.0072,
           "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 229.8
+          "longitude": 229.57
         },
         {
           "body": "Moon",
-          "sign": "pisces",
-          "signName": "Pisces",
-          "degree": 7.11,
+          "sign": "capricorn",
+          "signName": "Capricorn",
+          "degree": 10.97,
           "retrograde": false,
-          "speedPerDay": 12.106,
-          "dignity": null,
-          "stableAcrossDay": true,
-          "retrogradeStableAcrossDay": true,
-          "longitude": 337.11
-        },
-        {
-          "body": "Mercury",
-          "sign": "scorpio",
-          "signName": "Scorpio",
-          "degree": 19.39,
-          "retrograde": false,
-          "speedPerDay": 1.6007,
-          "dignity": null,
-          "stableAcrossDay": true,
-          "retrogradeStableAcrossDay": true,
-          "longitude": 229.39
-        },
-        {
-          "body": "Venus",
-          "sign": "libra",
-          "signName": "Libra",
-          "degree": 13.72,
-          "retrograde": false,
-          "speedPerDay": 1.2128,
-          "dignity": "domicile",
-          "stableAcrossDay": true,
-          "retrogradeStableAcrossDay": true,
-          "longitude": 193.72
-        },
-        {
-          "body": "Mars",
-          "sign": "pisces",
-          "signName": "Pisces",
-          "degree": 19.52,
-          "retrograde": false,
-          "speedPerDay": 0.3561,
-          "dignity": null,
-          "stableAcrossDay": true,
-          "retrogradeStableAcrossDay": true,
-          "longitude": 349.52
-        },
-        {
-          "body": "Jupiter",
-          "sign": "virgo",
-          "signName": "Virgo",
-          "degree": 25.81,
-          "retrograde": false,
-          "speedPerDay": 0.1652,
+          "speedPerDay": 11.9682,
           "dignity": "detriment",
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 175.81
+          "longitude": 280.97
+        },
+        {
+          "body": "Mercury",
+          "sign": "sagittarius",
+          "signName": "Sagittarius",
+          "degree": 10.8,
+          "retrograde": false,
+          "speedPerDay": 1.2605,
+          "dignity": "detriment",
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 250.8
+        },
+        {
+          "body": "Venus",
+          "sign": "sagittarius",
+          "signName": "Sagittarius",
+          "degree": 25.6,
+          "retrograde": false,
+          "speedPerDay": 0.3277,
+          "dignity": null,
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 265.6
+        },
+        {
+          "body": "Mars",
+          "sign": "cancer",
+          "signName": "Cancer",
+          "degree": 27.84,
+          "retrograde": false,
+          "speedPerDay": 0.2309,
+          "dignity": "fall",
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 117.84
+        },
+        {
+          "body": "Jupiter",
+          "sign": "capricorn",
+          "signName": "Capricorn",
+          "degree": 26.89,
+          "retrograde": false,
+          "speedPerDay": 0.1535,
+          "dignity": "fall",
+          "stableAcrossDay": true,
+          "retrogradeStableAcrossDay": true,
+          "longitude": 296.89
         },
         {
           "body": "Saturn",
-          "sign": "sagittarius",
-          "signName": "Sagittarius",
-          "degree": 3.53,
+          "sign": "scorpio",
+          "signName": "Scorpio",
+          "degree": 15.57,
           "retrograde": false,
-          "speedPerDay": 0.1164,
+          "speedPerDay": 0.1198,
           "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 243.53
+          "longitude": 225.57
         },
         {
           "body": "Uranus",
-          "sign": "leo",
-          "signName": "Leo",
-          "degree": 6.99,
-          "retrograde": false,
-          "speedPerDay": 0.0001,
+          "sign": "cancer",
+          "signName": "Cancer",
+          "degree": 8.03,
+          "retrograde": true,
+          "speedPerDay": -0.0242,
           "dignity": null,
           "stableAcrossDay": true,
-          "retrogradeStableAcrossDay": false,
-          "longitude": 126.99
+          "retrogradeStableAcrossDay": true,
+          "longitude": 98.03
         },
         {
           "body": "Neptune",
-          "sign": "scorpio",
-          "signName": "Scorpio",
-          "degree": 0.88,
-          "retrograde": false,
-          "speedPerDay": 0.0358,
+          "sign": "aries",
+          "signName": "Aries",
+          "degree": 10.45,
+          "retrograde": true,
+          "speedPerDay": -0.0201,
           "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 210.88
+          "longitude": 10.45
         },
         {
           "body": "Pluto",
-          "sign": "virgo",
-          "signName": "Virgo",
-          "degree": 0.35,
-          "retrograde": false,
-          "speedPerDay": 0.0101,
+          "sign": "taurus",
+          "signName": "Taurus",
+          "degree": 14.07,
+          "retrograde": true,
+          "speedPerDay": -0.0186,
           "dignity": null,
           "stableAcrossDay": true,
           "retrogradeStableAcrossDay": true,
-          "longitude": 150.35
+          "longitude": 44.07
         }
       ],
       "aspectsStableAcrossCivilDay": [
         {
           "a": "Mercury",
-          "b": "Mars",
+          "b": "Neptune",
           "type": "trine",
-          "orb": 0.13,
-          "applying": true
-        },
-        {
-          "a": "Sun",
-          "b": "Mars",
-          "type": "trine",
-          "orb": 0.28,
+          "orb": 0.36,
           "applying": false
         },
         {
-          "a": "Sun",
-          "b": "Mercury",
-          "type": "conjunction",
-          "orb": 0.41,
-          "applying": true
-        },
-        {
-          "a": "Neptune",
-          "b": "Pluto",
-          "type": "sextile",
-          "orb": 0.52,
-          "applying": false
-        },
-        {
-          "a": "Saturn",
-          "b": "Pluto",
-          "type": "square",
-          "orb": 3.18,
-          "applying": false
-        },
-        {
-          "a": "Saturn",
-          "b": "Uranus",
-          "type": "trine",
-          "orb": 3.46,
-          "applying": true
-        },
-        {
-          "a": "Uranus",
+          "a": "Moon",
           "b": "Neptune",
           "type": "square",
-          "orb": 6.11,
-          "applying": true
+          "orb": 0.53,
+          "applying": false
         },
         {
           "a": "Mars",
           "b": "Jupiter",
           "type": "opposition",
-          "orb": 6.29,
-          "applying": true
+          "orb": 0.95,
+          "applying": false
+        },
+        {
+          "a": "Saturn",
+          "b": "Pluto",
+          "type": "opposition",
+          "orb": 1.5,
+          "applying": false
+        },
+        {
+          "a": "Uranus",
+          "b": "Neptune",
+          "type": "square",
+          "orb": 2.41,
+          "applying": false
+        },
+        {
+          "a": "Moon",
+          "b": "Uranus",
+          "type": "opposition",
+          "orb": 2.94,
+          "applying": false
+        },
+        {
+          "a": "Sun",
+          "b": "Saturn",
+          "type": "conjunction",
+          "orb": 4,
+          "applying": false
+        },
+        {
+          "a": "Sun",
+          "b": "Pluto",
+          "type": "opposition",
+          "orb": 5.5,
+          "applying": false
         }
       ],
       "patterns": {
         "settledBodyCount": 10,
-        "stelliums": [
-          {
-            "sign": "scorpio",
-            "count": 3
-          }
-        ],
+        "stelliums": [],
         "elements": {
-          "water": 5,
-          "air": 1,
-          "earth": 2,
-          "fire": 2
+          "water": 4,
+          "earth": 3,
+          "fire": 3
         },
         "modalities": {
-          "fixed": 4,
-          "mutable": 5,
-          "cardinal": 1
+          "fixed": 3,
+          "cardinal": 5,
+          "mutable": 2
         },
-        "retrograde": [],
-        "directionUncertain": [
-          "Uranus"
-        ]
+        "retrograde": [
+          "Uranus",
+          "Neptune",
+          "Pluto"
+        ],
+        "directionUncertain": []
       },
       "copy": {
         "title": "Sun Yat-sen's birth chart",
-        "metaDescription": "Sun Yat-sen's chart, computed from a sourced birth date: Sun at 19.8° Scorpio. Birth time unknown, so no houses or rising sign.",
-        "lede": "0.1° separates Mercury and Mars from an exact trine; at that range thinking and drive read as one mechanism. A trine runs downhill — the talent that never announces itself because it never had to.",
-        "ledeFact": "aspect:Mercury:Mars:trine",
+        "metaDescription": "Sun Yat-sen's chart, computed from a sourced birth date: Sun at 19.6° Scorpio. Birth time unknown, so no houses or rising sign.",
+        "lede": "0.4° separates Mercury and Neptune from an exact trine; at that range thinking and imagination read as one mechanism. A trine runs downhill — the talent that never announces itself because it never had to.",
+        "ledeFact": "aspect:Mercury:Neptune:trine",
         "blocks": [
           {
             "key": "sun",
             "title": "Where the Sun actually stood",
             "facts": [
-              "sun-degree:19.80",
+              "sun-degree:19.57",
               "decan:scorpio:second"
             ],
-            "text": "The Sun's position resolves to 19.8° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+            "text": "The Sun's position resolves to 19.6° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
           },
           {
             "key": "personal",
             "title": "Closer to the ground",
             "facts": [
-              "personal:Mercury:Scorpio:19.4°",
-              "personal:Venus:Libra:13.7°",
-              "personal:Mars:Pisces:19.5°"
+              "personal:Mercury:Sagittarius:10.8°",
+              "personal:Venus:Sagittarius:25.6°",
+              "personal:Mars:Cancer:27.8°"
             ],
-            "text": "Mercury holds 19.4° Scorpio, Venus holds 13.7° Libra, Mars holds 19.5° Pisces — in the old shorthand, thought steeped in tone and memory; attraction that begins as conversation; effort that surges when it matters."
+            "text": "Mercury holds 10.8° Sagittarius, Venus holds 25.6° Sagittarius, Mars holds 27.8° Cancer — in the old shorthand, thought that arrives already in motion; attraction declared rather than implied; effort that surges when it matters."
           },
           {
             "key": "geometry",
             "title": "The angles that hold",
             "facts": [
-              "aspect:Mercury:Mars:trine:0.13",
-              "aspect:Sun:Mars:trine:0.28",
-              "aspect:Sun:Mercury:conjunction:0.41"
+              "aspect:Mercury:Neptune:trine:0.36",
+              "aspect:Mars:Jupiter:opposition:0.95",
+              "aspect:Saturn:Pluto:opposition:1.5"
             ],
-            "text": "Nothing in the geometry sits closer than Mercury and Mars: 0.1° from an exact trine. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, the Sun trine Mars at 0.3°, and the Sun conjunction Mercury at 0.4° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+            "text": "Nothing in the geometry sits closer than Mercury and Neptune: 0.4° from an exact trine. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Mars opposition Jupiter at 0.9°, and Saturn opposition Pluto at 1.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
           },
           {
             "key": "figures",
             "title": "What the angles build",
             "facts": [
-              "figure:unaspected:Moon"
+              "figure:t-square:Moon-Uranus:apex-Neptune",
+              "figure:unaspected:Venus"
             ],
-            "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+            "text": "The Moon opposes Uranus while both square Neptune. The t-square is the figure the old texts trusted for output: friction with a fixed address. Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
           },
           {
             "key": "dignity",
             "title": "The classical map",
             "facts": [
-              "dignity:Venus:domicile",
-              "dignity:Jupiter:detriment"
+              "dignity:Moon:detriment",
+              "dignity:Mercury:detriment",
+              "dignity:Mars:fall",
+              "dignity:Jupiter:fall"
             ],
-            "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Venus in Libra at 13.7° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 25.8° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+            "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Moon in Capricorn at 11.0° is in detriment — the planet opposite its home, working against the grain; Mercury in Sagittarius at 10.8° is in detriment; Mars in Cancer at 27.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 26.9° is in fall. Dignity is a statement about conditions, not about worth."
           },
           {
             "key": "shape",
             "title": "The shape of the whole",
             "facts": [
-              "elements:water5-earth2-fire2-air1",
-              "modalities:mutable5-fixed4-cardinal1",
+              "elements:water4-earth3-fire3",
+              "modalities:cardinal5-fixed3-mutable2",
               "settled-signs:10",
-              "retrograde:0"
+              "retrograde:3"
             ],
-            "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 5, earth 2, fire 2, air 1, and mutable 5, fixed 4, cardinal 1 across the modes. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Every other body stayed direct. Uranus changed direction during the day, so its motion is left open."
+            "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 4, earth 3, fire 3, and cardinal 5, fixed 3, mutable 2 across the modes. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
           },
           {
             "key": "moon",
             "title": "The Moon, and how far it can move",
             "facts": [
-              "moon-sign:pisces",
-              "moon-band:12.1"
+              "moon-sign:capricorn",
+              "moon-band:12.0"
             ],
             "uncertain": false,
-            "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 7.1°."
+            "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.0°."
           }
         ],
         "birthdayLink": {
@@ -216051,8 +216146,8 @@
           "label": "The Scorpio guide"
         },
         "measurements": {
-          "originalWords": 383,
-          "substantiveStatements": 18,
+          "originalWords": 443,
+          "substantiveStatements": 21,
           "blocks": 7
         }
       }

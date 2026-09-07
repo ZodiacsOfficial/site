@@ -25,6 +25,15 @@ vi.mock('preact/hooks', () => ({
     if (!(slot in harness.slots)) harness.slots[slot] = { current: initial };
     return harness.slots[slot];
   },
+  useMemo: (factory: () => unknown, dependencies: unknown[]) => {
+    const slot = harness.cursor++;
+    const previous = harness.slots[slot] as { dependencies: unknown[]; value: unknown } | undefined;
+    if (!previous || previous.dependencies.length !== dependencies.length
+      || dependencies.some((value, index) => !Object.is(value, previous.dependencies[index]))) {
+      harness.slots[slot] = { dependencies: [...dependencies], value: factory() };
+    }
+    return (harness.slots[slot] as { value: unknown }).value;
+  },
   useEffect: (effect: () => void | (() => void), dependencies: unknown[]) => {
     const index = harness.effectCursor++;
     const previous = harness.effects[index];
@@ -230,7 +239,7 @@ describe('event transit ownership', () => {
   const chart = {
     bodies: [{ body: 'Sun', lon: 30 }, { body: 'Moon', lon: 100 }],
     angles: { asc: 5, mc: 275 }, houses: { system: 'whole', cusps: Array.from({ length: 12 }, (_, i) => i * 30) },
-    engineVersion: 'test',
+    engineVersion: 'test', flags: [],
   };
   const ring = () => nodes(render(transit)).find((node) => node.type === Ring)!;
   const fill = () => {

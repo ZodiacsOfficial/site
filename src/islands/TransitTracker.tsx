@@ -5,7 +5,7 @@
  * "check", so /transits/ carries the wheel and its animation only when a
  * chart exists to draw. The transiting side is live engine math.
  */
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { BirthFields } from './BirthFields';
 import type { MinimalBody } from '../lib/engine/synastry';
 import type { Chart } from '../lib/engine/types';
@@ -30,9 +30,10 @@ import type {
 
 type RingModule = typeof import('./transit/TransitRing');
 type SearchModule = typeof import('./transit/TransitSearch');
+type ItineraryModule = typeof import('./transit/TransitItinerary');
 
 const EVENT_COPY = {
-  en: { invalid: 'This event link has an invalid date. Your chart will open at the current time.', unknownTime: 'Birth time is unknown. The Moon shown is a midday estimate; precise Moon contacts, houses, angles and calendar export are unavailable.' },
+  en: { invalid: 'This event link has an invalid date. Your chart will open at the current time.', unknownTime: 'Birth time is unknown. The Moon shown is a midday estimate; precise Moon contacts, houses, angles and exact-date calendar links are unavailable.' },
   es: { invalid: 'Este enlace tiene una fecha no válida. Tu carta se abrirá en el momento actual.', unknownTime: 'La hora de nacimiento es desconocida. La Luna es una estimación al mediodía; los contactos lunares precisos, las casas, los ángulos y la exportación al calendario no están disponibles.' },
   pt: { invalid: 'Este link tem uma data inválida. Seu mapa abrirá no momento atual.', unknownTime: 'A hora de nascimento é desconhecida. A Lua é uma estimativa para o meio-dia; contatos lunares precisos, casas, ângulos e exportação de calendário não estão disponíveis.' },
   fr: { invalid: 'Ce lien contient une date invalide. Votre thème s’ouvrira à l’heure actuelle.', unknownTime: 'L’heure de naissance est inconnue. La Lune est estimée à midi ; les contacts lunaires précis, les maisons, les angles et l’export de calendrier ne sont pas disponibles.' },
@@ -60,6 +61,7 @@ interface NatalWheel {
   cusps: number[] | null;
   minimal: MinimalBody[];
   timeKnown: boolean;
+  itineraryTimeKnown: boolean;
   calendarPositions: CalendarPositionsSource | null;
 }
 
@@ -92,6 +94,7 @@ function wheelFromChart(
     cusps: timeKnown ? (r.houses?.cusps ?? null) : null,
     minimal: r.bodies.filter((b) => timeKnown || b.body !== 'Moon').map(({ body, lon }) => ({ body, lon })),
     timeKnown,
+    itineraryTimeKnown: timeKnown && !r.flags.some((flag) => flag === 'no-time' || flag === 'dst-gap' || flag === 'dst-fold'),
     calendarPositions: timeKnown ? {
       bodies: r.bodies,
       angles: r.angles ? { asc: r.angles.asc, mc: r.angles.mc } : null,
@@ -155,6 +158,7 @@ function natalFromSaved(chart: SavedChart, engine: Engine): NatalWheel {
     cusps: null,
     minimal: chart.summary.bodies.filter((b) => timeKnown || b.body !== 'Moon').map(({ body, lon }) => ({ body, lon })),
     timeKnown,
+    itineraryTimeKnown: false,
     calendarPositions: timeKnown ? calendarPositionsFromSaved(chart) : null,
   };
 }
@@ -172,6 +176,9 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState('');
   const [searchFocus, setSearchFocus] = useState<TransitFocusRequest | null>(null);
+  const [itineraryMod, setItineraryMod] = useState<ItineraryModule | null>(null);
+  const [itineraryLoading, setItineraryLoading] = useState(false);
+  const [itineraryError, setItineraryError] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [eventContext, setEventContext] = useState<{ at: number | null; invalid: boolean }>({ at: null, invalid: false });
@@ -310,14 +317,15 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
 
   const RingComponent = ringMod?.default;
   const SearchComponent = searchMod?.TransitSearch;
-  const searchNatal: NatalTransitChart | null = result ? {
+  const ItineraryComponent = itineraryMod?.TransitItinerary;
+  const searchNatal: NatalTransitChart | null = useMemo(() => result ? {
     bodies: result.natal.minimal
       .filter((body) => TRANSIT_BODIES.has(body.body))
       .map((body) => ({ body: body.body as TransitBody, lon: body.lon })),
     angles: result.natal.asc != null && result.natal.mc != null
       ? { asc: result.natal.asc, mc: result.natal.mc }
       : null,
-  } : null;
+  } : null, [result]);
   const searchNatalPoints = searchNatal ? [
     ...searchNatal.bodies.map(({ body }) => ({ name: body as NatalPoint })),
     ...(searchNatal.angles ? [
@@ -334,6 +342,15 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
       .then(setSearchMod)
       .catch(() => setSearchError('The transit search could not load. Close this section and try again.'))
       .finally(() => setSearchLoading(false));
+  }
+
+  function openItinerary(event?: Event): void {
+    if ((event && !(event.currentTarget as HTMLDetailsElement).open) || itineraryMod || itineraryLoading) return;
+    setItineraryLoading(true); setItineraryError('');
+    void loadModule(() => import('./transit/TransitItinerary'))
+      .then((mod) => { if (mounted.current) setItineraryMod(mod); })
+      .catch(() => { if (mounted.current) setItineraryError('The itinerary could not load. Try again.'); })
+      .finally(() => { if (mounted.current) setItineraryLoading(false); });
   }
 
   function resetDate(nowMs: number, eventActive: boolean) {
@@ -440,6 +457,19 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
             } : undefined}
           />
         </div>
+      )}
+
+      {locale === 'en' && result && searchNatal && (
+        <details class="tsearch-host shell" onToggle={openItinerary} data-transit-itinerary-host>
+          <summary class="tsearch-host__summary"><span>Your transit itinerary</span><span class="orb" aria-hidden="true">↗</span></summary>
+          <div class="core tsearch-host__core">
+            {ItineraryComponent ? <ItineraryComponent key={result.revision} natal={searchNatal}
+              timeKnown={result.natal.itineraryTimeKnown} anchorMs={result.nowMs} />
+              : itineraryError ? <div><p class="calc__error" role="alert">{itineraryError}</p>
+                <button type="button" class="btn" onClick={() => openItinerary()}>Try again</button></div>
+                : <p role="status">{itineraryLoading ? 'Loading your itinerary…' : 'Open to explore your longer transit periods.'}</p>}
+          </div>
+        </details>
       )}
 
       {locale === 'en' && (

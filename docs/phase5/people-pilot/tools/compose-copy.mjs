@@ -16,6 +16,7 @@
  *   node docs/phase5/people-pilot/tools/compose-copy.mjs --migrate-articles
  *   node docs/phase5/people-pilot/tools/compose-copy.mjs --migrate-identities
  *   node docs/phase5/people-pilot/tools/compose-copy.mjs --check
+ *   node docs/phase5/people-pilot/tools/compose-copy.mjs --slug=sun-yat-sen
  *
  * Released copy is deliberately frozen. --migrate-articles applies the one
  * approved corpus-wide grammar migration; --check verifies that migration is
@@ -25,6 +26,7 @@
  */
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { reviewedEvidence, sourceReviews } from './source-reviews.mjs';
 import { dirname, join } from 'node:path';
 import { PRINCIPAL_IDENTITIES, reviewedIdentity } from './principal-identities.mjs';
 
@@ -276,7 +278,7 @@ function identityLine(evidence, record, candidate) {
   const disciplines = candidate.disciplines ?? evidence.occupations.slice(0, 1).map((item) => item.label);
   const country = evidence.birthPlace?.country?.label ?? null;
   const born = record.gregorianDate.slice(0, 4);
-  const died = evidence.death?.time?.slice(1, 5) ?? null;
+  const died = sourceReviews.people[candidate.slug]?.deathYearLabel ?? evidence.death?.time?.slice(1, 5) ?? null;
   const years = died ? `${born}–${died}` : `born ${born}`;
   const label = disciplines.length > 1
     ? `${capitalise(disciplines[0])} and ${disciplines.slice(1).join(' and ')}`
@@ -640,6 +642,15 @@ const CHECK = process.argv.includes('--check');
 const MIGRATE_ARTICLES = process.argv.includes('--migrate-articles');
 const MIGRATE_IDENTITIES = process.argv.includes('--migrate-identities');
 const MIGRATION = MIGRATE_ARTICLES || MIGRATE_IDENTITIES;
+// A reviewed factual correction recomposes only its named records. The
+// complete corpus still participates in the unchanged depth/similarity gate.
+const correctedSlugs = new Set(process.argv
+  .filter((argument) => argument.startsWith('--slug='))
+  .flatMap((argument) => argument.slice('--slug='.length).split(','))
+  .map((slug) => slug.trim()).filter(Boolean));
+if (correctedSlugs.size && (CHECK || MIGRATION || FREEZE)) {
+  throw new Error('--slug cannot be combined with check, migration, or freeze modes');
+}
 let migratedIdentities = 0;
 if ([CHECK, MIGRATE_ARTICLES, MIGRATE_IDENTITIES].filter(Boolean).length > 1 || ((CHECK || MIGRATION) && FREEZE)) {
   throw new Error('Choose one of --check, --migrate-articles, --migrate-identities, or FREEZE_EXISTING=1');
@@ -657,6 +668,9 @@ const existingCopy = new Set((await readdir(join(PILOT, 'copy')))
   .filter((file) => file.endsWith('.json'))
   .map((file) => file.replace(/\.json$/u, '')));
 const candidateSlugs = new Set(candidates.map((candidate) => candidate.slug));
+for (const slug of correctedSlugs) {
+  if (!candidateSlugs.has(slug)) throw new Error(`Unknown People correction slug: ${slug}`);
+}
 const candidatesBySlug = new Map(candidates.map((candidate) => [candidate.slug, candidate]));
 const orphanCopy = [...existingCopy].filter((slug) => !candidateSlugs.has(slug)).sort();
 if (orphanCopy.length > 0) {
@@ -715,6 +729,7 @@ for (const candidate of candidates) {
 let composed = 0;
 for (const candidate of candidates) {
   if (CHECK || MIGRATION) continue;
+  if (correctedSlugs.size && !correctedSlugs.has(candidate.slug)) continue;
   const seedRound = reseeds[candidate.slug] ?? 0;
   if (FREEZE && existingCopy.has(candidate.slug)) {
     const existing = JSON.parse(await readFile(join(PILOT, 'copy', `${candidate.slug}.json`), 'utf8'));
@@ -722,7 +737,7 @@ for (const candidate of candidates) {
   }
   const seedSlug = seedRound === 0 ? candidate.slug : `${candidate.slug}#${seedRound}`;
   const record = JSON.parse(await readFile(join(PILOT, 'computed', `${candidate.slug}.json`), 'utf8'));
-  const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));
+  const evidence = reviewedEvidence(JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8')), candidate.slug);
   const opening = lede(record, seedSlug);
   const blocks = [
     sunBlock(record, seedSlug),
@@ -733,6 +748,9 @@ for (const candidate of candidates) {
     shapeBlock(record, seedSlug),
     moonBlock(record, seedSlug),
   ].filter(Boolean);
+  if (sourceReviews.people[candidate.slug]?.status === 'reference-location') {
+    for (const block of blocks) block.text = block.text.replace(/at the birthplace/gu, 'at the calculation reference location');
+  }
   composed += 1;
 
   const month = Number(record.gregorianDate.slice(5, 7));
@@ -745,7 +763,7 @@ for (const candidate of candidates) {
     displayName: record.displayName,
     identity: identityLine(evidence, record, candidate),
     title: `${record.displayName}'s birth chart`,
-    metaDescription: `${record.displayName}'s chart, computed from a sourced birth date: Sun at ${deg(record.sun.degree)} ${record.sun.signName}. Birth time unknown, so no houses or rising sign.`,
+    metaDescription: `${record.displayName}'s chart, computed from ${sourceReviews.people[candidate.slug]?.status === 'adopted-date' ? 'an adopted, uncertain birth date' : 'a sourced birth date'}: Sun at ${deg(record.sun.degree)} ${record.sun.signName}. Birth time unknown, so no houses or rising sign.`,
     lede: opening.text,
     ledeFact: opening.fact,
     blocks,
@@ -763,7 +781,7 @@ for (const candidate of candidates) {
     blocks: blocks.length,
   };
   const copyPath = join(PILOT, 'copy', `${candidate.slug}.json`);
-  const serializedPage = `${JSON.stringify(page, null, 2)}\n`;
+  const serializedPage = migrateArticles(`${JSON.stringify(page, null, 2)}\n`);
   await writeFile(copyPath, serializedPage, 'utf8');
   pages.push(page);
 }

@@ -74,7 +74,7 @@
         "moon-uncertain:pisces:aries"
       ],
       "uncertain": true,
-      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 14.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+      "text": "The Moon crossed from Pisces into Aries during that day at the calculation reference location, travelling 14.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
     }
   ],
   "birthdayLink": {
@@ -105,7 +105,7 @@
     "moon-uncertain:pisces:aries"
   ],
   "measurements": {
-    "originalWords": 424,
+    "originalWords": 426,
     "substantiveStatements": 17,
     "blocks": 7
   }
