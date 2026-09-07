@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.daily-publication.v1",
-  "date": "2026-09-06",
+  "date": "2026-09-07",
   "locale": "en",
   "policy": {
     "id": "org.zodiacs.daily.en",
@@ -14,427 +14,427 @@
   },
   "facts": [
     {
-      "id": "derived:2026-09-06:solar-house:aquarius:h6:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:aquarius:h6:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "aquarius",
       "house": 6
     },
     {
-      "id": "derived:2026-09-06:solar-house:aquarius:h8:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:aquarius:h8:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "aquarius",
       "house": 8
     },
     {
-      "id": "derived:2026-09-06:solar-house:aquarius:h9:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:aquarius:h9:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "aquarius",
       "house": 9
     },
     {
-      "id": "derived:2026-09-06:solar-house:aries:h4:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:aries:h4:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "aries",
       "house": 4
     },
     {
-      "id": "derived:2026-09-06:solar-house:aries:h6:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:aries:h6:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "aries",
       "house": 6
     },
     {
-      "id": "derived:2026-09-06:solar-house:aries:h7:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:aries:h7:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "aries",
       "house": 7
     },
     {
-      "id": "derived:2026-09-06:solar-house:cancer:h1:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:cancer:h1:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "cancer",
       "house": 1
     },
     {
-      "id": "derived:2026-09-06:solar-house:cancer:h3:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:cancer:h3:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "cancer",
       "house": 3
     },
     {
-      "id": "derived:2026-09-06:solar-house:cancer:h4:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:cancer:h4:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "cancer",
       "house": 4
     },
     {
-      "id": "derived:2026-09-06:solar-house:capricorn:h10:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:capricorn:h10:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "capricorn",
       "house": 10
     },
     {
-      "id": "derived:2026-09-06:solar-house:capricorn:h7:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:capricorn:h7:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "capricorn",
       "house": 7
     },
     {
-      "id": "derived:2026-09-06:solar-house:capricorn:h9:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:capricorn:h9:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "capricorn",
       "house": 9
     },
     {
-      "id": "derived:2026-09-06:solar-house:gemini:h2:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:gemini:h2:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "gemini",
       "house": 2
     },
     {
-      "id": "derived:2026-09-06:solar-house:gemini:h4:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:gemini:h4:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "gemini",
       "house": 4
     },
     {
-      "id": "derived:2026-09-06:solar-house:gemini:h5:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:gemini:h5:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "gemini",
       "house": 5
     },
     {
-      "id": "derived:2026-09-06:solar-house:leo:h12:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:leo:h12:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "leo",
       "house": 12
     },
     {
-      "id": "derived:2026-09-06:solar-house:leo:h2:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:leo:h2:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "leo",
       "house": 2
     },
     {
-      "id": "derived:2026-09-06:solar-house:leo:h3:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:leo:h3:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "leo",
       "house": 3
     },
     {
-      "id": "derived:2026-09-06:solar-house:libra:h1:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:libra:h1:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "libra",
       "house": 1
     },
     {
-      "id": "derived:2026-09-06:solar-house:libra:h10:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:libra:h10:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "libra",
       "house": 10
     },
     {
-      "id": "derived:2026-09-06:solar-house:libra:h12:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:libra:h12:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "libra",
       "house": 12
     },
     {
-      "id": "derived:2026-09-06:solar-house:pisces:h5:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:pisces:h5:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "pisces",
       "house": 5
     },
     {
-      "id": "derived:2026-09-06:solar-house:pisces:h7:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:pisces:h7:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "pisces",
       "house": 7
     },
     {
-      "id": "derived:2026-09-06:solar-house:pisces:h8:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:pisces:h8:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "pisces",
       "house": 8
     },
     {
-      "id": "derived:2026-09-06:solar-house:sagittarius:h10:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:sagittarius:h10:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "sagittarius",
       "house": 10
     },
     {
-      "id": "derived:2026-09-06:solar-house:sagittarius:h11:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:sagittarius:h11:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "sagittarius",
       "house": 11
     },
     {
-      "id": "derived:2026-09-06:solar-house:sagittarius:h8:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:sagittarius:h8:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "sagittarius",
       "house": 8
     },
     {
-      "id": "derived:2026-09-06:solar-house:scorpio:h11:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:scorpio:h11:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "scorpio",
       "house": 11
     },
     {
-      "id": "derived:2026-09-06:solar-house:scorpio:h12:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:scorpio:h12:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "scorpio",
       "house": 12
     },
     {
-      "id": "derived:2026-09-06:solar-house:scorpio:h9:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:scorpio:h9:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "scorpio",
       "house": 9
     },
     {
-      "id": "derived:2026-09-06:solar-house:taurus:h3:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:taurus:h3:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "taurus",
       "house": 3
     },
     {
-      "id": "derived:2026-09-06:solar-house:taurus:h5:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:taurus:h5:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "taurus",
       "house": 5
     },
     {
-      "id": "derived:2026-09-06:solar-house:taurus:h6:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:taurus:h6:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "taurus",
       "house": 6
     },
     {
-      "id": "derived:2026-09-06:solar-house:virgo:h1:fact-2026-09-06-body-mercury-1200z",
+      "id": "derived:2026-09-07:solar-house:virgo:h1:fact-2026-09-07-body-mercury-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:mercury:1200z",
+      "sourceFactId": "fact:2026-09-07:body:mercury:1200z",
       "body": "Mercury",
       "sign": "virgo",
       "sunSign": "virgo",
       "house": 1
     },
     {
-      "id": "derived:2026-09-06:solar-house:virgo:h11:fact-2026-09-06-body-moon-1200z",
+      "id": "derived:2026-09-07:solar-house:virgo:h11:fact-2026-09-07-body-moon-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:moon:1200z",
+      "sourceFactId": "fact:2026-09-07:body:moon:1200z",
       "body": "Moon",
       "sign": "cancer",
       "sunSign": "virgo",
       "house": 11
     },
     {
-      "id": "derived:2026-09-06:solar-house:virgo:h2:fact-2026-09-06-body-venus-1200z",
+      "id": "derived:2026-09-07:solar-house:virgo:h2:fact-2026-09-07-body-venus-1200z",
       "kind": "solar-house",
-      "sourceFactId": "fact:2026-09-06:body:venus:1200z",
+      "sourceFactId": "fact:2026-09-07:body:venus:1200z",
       "body": "Venus",
       "sign": "libra",
       "sunSign": "virgo",
       "house": 2
     },
     {
-      "id": "fact:2026-09-06:body:jupiter:1200z",
+      "id": "fact:2026-09-07:body:jupiter:1200z",
       "kind": "body-position",
       "body": "Jupiter",
       "sign": "leo",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 134.8438470201188,
-      "degree": 14.843847020118801,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 135.04951238214056,
+      "degree": 15.049512382140563,
       "retrograde": false
     },
     {
-      "id": "fact:2026-09-06:body:mars:1200z",
+      "id": "fact:2026-09-07:body:mars:1200z",
       "kind": "body-position",
       "body": "Mars",
       "sign": "cancer",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 106.86004781645784,
-      "degree": 16.860047816457836,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 107.48542124667051,
+      "degree": 17.485421246670512,
       "retrograde": false
     },
     {
-      "id": "fact:2026-09-06:body:mercury:1200z",
+      "id": "fact:2026-09-07:body:mercury:1200z",
       "kind": "body-position",
       "body": "Mercury",
       "sign": "virgo",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 172.75766998786412,
-      "degree": 22.75766998786412,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 174.52089292010305,
+      "degree": 24.52089292010305,
       "retrograde": false
     },
     {
-      "id": "fact:2026-09-06:body:moon:1200z",
+      "id": "fact:2026-09-07:body:moon:1200z",
       "kind": "body-position",
       "body": "Moon",
       "sign": "cancer",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 102.81188610629488,
-      "degree": 12.811886106294878,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 117.12692847285433,
+      "degree": 27.12692847285433,
       "retrograde": false
     },
     {
-      "id": "fact:2026-09-06:body:neptune:1200z",
+      "id": "fact:2026-09-07:body:neptune:1200z",
       "kind": "body-position",
       "body": "Neptune",
       "sign": "aries",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 3.5316028836381292,
-      "degree": 3.5316028836381292,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 3.50582579494386,
+      "degree": 3.50582579494386,
       "retrograde": true
     },
     {
-      "id": "fact:2026-09-06:body:pluto:1200z",
+      "id": "fact:2026-09-07:body:pluto:1200z",
       "kind": "body-position",
       "body": "Pluto",
       "sign": "aquarius",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 303.41604942060553,
-      "degree": 3.416049420605532,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 303.39971361914564,
+      "degree": 3.3997136191455866,
       "retrograde": true
     },
     {
-      "id": "fact:2026-09-06:body:saturn:1200z",
+      "id": "fact:2026-09-07:body:saturn:1200z",
       "kind": "body-position",
       "body": "Saturn",
       "sign": "aries",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 13.35054582562907,
-      "degree": 13.35054582562907,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 13.287343355698226,
+      "degree": 13.287343355698226,
       "retrograde": true
     },
     {
-      "id": "fact:2026-09-06:body:sun:1200z",
+      "id": "fact:2026-09-07:body:sun:1200z",
       "kind": "body-position",
       "body": "Sun",
       "sign": "virgo",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 163.9205037438145,
-      "degree": 13.920503743814493,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 164.8909269610192,
+      "degree": 14.890926961019204,
       "retrograde": false
     },
     {
-      "id": "fact:2026-09-06:body:uranus:1200z",
+      "id": "fact:2026-09-07:body:uranus:1200z",
       "kind": "body-position",
       "body": "Uranus",
       "sign": "gemini",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 65.68881895585957,
-      "degree": 5.688818955859574,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 65.69209770922174,
+      "degree": 5.692097709221741,
       "retrograde": false
     },
     {
-      "id": "fact:2026-09-06:body:venus:1200z",
+      "id": "fact:2026-09-07:body:venus:1200z",
       "kind": "body-position",
       "body": "Venus",
       "sign": "libra",
-      "at": "2026-09-06T12:00:00.000Z",
-      "longitude": 207.3526873531734,
-      "degree": 27.35268735317345,
+      "at": "2026-09-07T12:00:00.000Z",
+      "longitude": 208.0652781303233,
+      "degree": 28.06527813032335,
       "retrograde": false
     }
   ],
@@ -445,54 +445,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your fourth house — home, family, and the private floor of your life.",
-          "receipt": "Moon 12.8° Cancer · house 4",
+          "receipt": "Moon 27.1° Cancer · house 4",
           "house": 4,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:aries:h4:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:aries:h4:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your sixth house — work in progress, health routines, and the daily load.",
-          "receipt": "Mercury 22.8° Virgo · house 6",
+          "receipt": "Mercury 24.5° Virgo · house 6",
           "house": 6,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:aries:h6:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:aries:h6:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your seventh house — partners, the people directly across the table.",
-          "receipt": "Venus 27.4° Libra · house 7",
+          "receipt": "Venus 28.1° Libra · house 7",
           "house": 7,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:aries:h7:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:aries:h7:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to home, family, and the private floor of your life.",
-        "receipt": "Moon 12.8° cancer · solar house 4",
+        "receipt": "Moon 27.1° cancer · solar house 4",
         "house": 4,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:aries:h4:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:aries:h4:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -502,54 +502,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your third house — errands, siblings, messages, and the near neighborhood.",
-          "receipt": "Moon 12.8° Cancer · house 3",
+          "receipt": "Moon 27.1° Cancer · house 3",
           "house": 3,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:taurus:h3:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:taurus:h3:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your fifth house — pleasure, romance, children, and what you make for joy.",
-          "receipt": "Mercury 22.8° Virgo · house 5",
+          "receipt": "Mercury 24.5° Virgo · house 5",
           "house": 5,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:taurus:h5:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:taurus:h5:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your sixth house — work in progress, health routines, and the daily load.",
-          "receipt": "Venus 27.4° Libra · house 6",
+          "receipt": "Venus 28.1° Libra · house 6",
           "house": 6,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:taurus:h6:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:taurus:h6:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to errands, siblings, messages, and the near neighborhood.",
-        "receipt": "Moon 12.8° cancer · solar house 3",
+        "receipt": "Moon 27.1° cancer · solar house 3",
         "house": 3,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:taurus:h3:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:taurus:h3:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -559,54 +559,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your second house — money, possessions, and what steadies you.",
-          "receipt": "Moon 12.8° Cancer · house 2",
+          "receipt": "Moon 27.1° Cancer · house 2",
           "house": 2,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:gemini:h2:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:gemini:h2:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your fourth house — home, family, and the private floor of your life.",
-          "receipt": "Mercury 22.8° Virgo · house 4",
+          "receipt": "Mercury 24.5° Virgo · house 4",
           "house": 4,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:gemini:h4:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:gemini:h4:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your fifth house — pleasure, romance, children, and what you make for joy.",
-          "receipt": "Venus 27.4° Libra · house 5",
+          "receipt": "Venus 28.1° Libra · house 5",
           "house": 5,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:gemini:h5:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:gemini:h5:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to money, possessions, and what steadies you.",
-        "receipt": "Moon 12.8° cancer · solar house 2",
+        "receipt": "Moon 27.1° cancer · solar house 2",
         "house": 2,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:gemini:h2:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:gemini:h2:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -616,54 +616,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your first house — how you look, start, and come across.",
-          "receipt": "Moon 12.8° Cancer · house 1",
+          "receipt": "Moon 27.1° Cancer · house 1",
           "house": 1,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:cancer:h1:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:cancer:h1:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your third house — errands, siblings, messages, and the near neighborhood.",
-          "receipt": "Mercury 22.8° Virgo · house 3",
+          "receipt": "Mercury 24.5° Virgo · house 3",
           "house": 3,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:cancer:h3:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:cancer:h3:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your fourth house — home, family, and the private floor of your life.",
-          "receipt": "Venus 27.4° Libra · house 4",
+          "receipt": "Venus 28.1° Libra · house 4",
           "house": 4,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:cancer:h4:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:cancer:h4:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to how you look, start, and come across.",
-        "receipt": "Moon 12.8° cancer · solar house 1",
+        "receipt": "Moon 27.1° cancer · solar house 1",
         "house": 1,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:cancer:h1:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:cancer:h1:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -673,54 +673,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your twelfth house — rest, retreat, and what runs under the surface.",
-          "receipt": "Moon 12.8° Cancer · house 12",
+          "receipt": "Moon 27.1° Cancer · house 12",
           "house": 12,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:leo:h12:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:leo:h12:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your second house — money, possessions, and what steadies you.",
-          "receipt": "Mercury 22.8° Virgo · house 2",
+          "receipt": "Mercury 24.5° Virgo · house 2",
           "house": 2,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:leo:h2:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:leo:h2:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your third house — errands, siblings, messages, and the near neighborhood.",
-          "receipt": "Venus 27.4° Libra · house 3",
+          "receipt": "Venus 28.1° Libra · house 3",
           "house": 3,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:leo:h3:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:leo:h3:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to rest, retreat, and what runs under the surface.",
-        "receipt": "Moon 12.8° cancer · solar house 12",
+        "receipt": "Moon 27.1° cancer · solar house 12",
         "house": 12,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:leo:h12:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:leo:h12:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -730,54 +730,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your eleventh house — friends, groups, and the future you are pointing at.",
-          "receipt": "Moon 12.8° Cancer · house 11",
+          "receipt": "Moon 27.1° Cancer · house 11",
           "house": 11,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:virgo:h11:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:virgo:h11:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your first house — how you look, start, and come across.",
-          "receipt": "Mercury 22.8° Virgo · house 1",
+          "receipt": "Mercury 24.5° Virgo · house 1",
           "house": 1,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:virgo:h1:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:virgo:h1:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your second house — money, possessions, and what steadies you.",
-          "receipt": "Venus 27.4° Libra · house 2",
+          "receipt": "Venus 28.1° Libra · house 2",
           "house": 2,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:virgo:h2:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:virgo:h2:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to friends, groups, and the future you are pointing at.",
-        "receipt": "Moon 12.8° cancer · solar house 11",
+        "receipt": "Moon 27.1° cancer · solar house 11",
         "house": 11,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:virgo:h11:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:virgo:h11:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -787,54 +787,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your tenth house — career, reputation, and what the public sees.",
-          "receipt": "Moon 12.8° Cancer · house 10",
+          "receipt": "Moon 27.1° Cancer · house 10",
           "house": 10,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:libra:h10:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:libra:h10:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your twelfth house — rest, retreat, and what runs under the surface.",
-          "receipt": "Mercury 22.8° Virgo · house 12",
+          "receipt": "Mercury 24.5° Virgo · house 12",
           "house": 12,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:libra:h12:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:libra:h12:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your first house — how you look, start, and come across.",
-          "receipt": "Venus 27.4° Libra · house 1",
+          "receipt": "Venus 28.1° Libra · house 1",
           "house": 1,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:libra:h1:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:libra:h1:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to career, reputation, and what the public sees.",
-        "receipt": "Moon 12.8° cancer · solar house 10",
+        "receipt": "Moon 27.1° cancer · solar house 10",
         "house": 10,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:libra:h10:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:libra:h10:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -844,54 +844,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your ninth house — travel, study, belief, and the longer view.",
-          "receipt": "Moon 12.8° Cancer · house 9",
+          "receipt": "Moon 27.1° Cancer · house 9",
           "house": 9,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:scorpio:h9:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:scorpio:h9:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your eleventh house — friends, groups, and the future you are pointing at.",
-          "receipt": "Mercury 22.8° Virgo · house 11",
+          "receipt": "Mercury 24.5° Virgo · house 11",
           "house": 11,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:scorpio:h11:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:scorpio:h11:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your twelfth house — rest, retreat, and what runs under the surface.",
-          "receipt": "Venus 27.4° Libra · house 12",
+          "receipt": "Venus 28.1° Libra · house 12",
           "house": 12,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:scorpio:h12:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:scorpio:h12:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to travel, study, belief, and the longer view.",
-        "receipt": "Moon 12.8° cancer · solar house 9",
+        "receipt": "Moon 27.1° cancer · solar house 9",
         "house": 9,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:scorpio:h9:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:scorpio:h9:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -901,54 +901,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your eighth house — shared money, debts, intimacy, and what gets merged.",
-          "receipt": "Moon 12.8° Cancer · house 8",
+          "receipt": "Moon 27.1° Cancer · house 8",
           "house": 8,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:sagittarius:h8:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:sagittarius:h8:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your tenth house — career, reputation, and what the public sees.",
-          "receipt": "Mercury 22.8° Virgo · house 10",
+          "receipt": "Mercury 24.5° Virgo · house 10",
           "house": 10,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:sagittarius:h10:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:sagittarius:h10:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your eleventh house — friends, groups, and the future you are pointing at.",
-          "receipt": "Venus 27.4° Libra · house 11",
+          "receipt": "Venus 28.1° Libra · house 11",
           "house": 11,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:sagittarius:h11:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:sagittarius:h11:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to shared money, debts, intimacy, and what gets merged.",
-        "receipt": "Moon 12.8° cancer · solar house 8",
+        "receipt": "Moon 27.1° cancer · solar house 8",
         "house": 8,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:sagittarius:h8:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:sagittarius:h8:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -958,54 +958,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your seventh house — partners, the people directly across the table.",
-          "receipt": "Moon 12.8° Cancer · house 7",
+          "receipt": "Moon 27.1° Cancer · house 7",
           "house": 7,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:capricorn:h7:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:capricorn:h7:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your ninth house — travel, study, belief, and the longer view.",
-          "receipt": "Mercury 22.8° Virgo · house 9",
+          "receipt": "Mercury 24.5° Virgo · house 9",
           "house": 9,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:capricorn:h9:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:capricorn:h9:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your tenth house — career, reputation, and what the public sees.",
-          "receipt": "Venus 27.4° Libra · house 10",
+          "receipt": "Venus 28.1° Libra · house 10",
           "house": 10,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:capricorn:h10:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:capricorn:h10:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to partners, the people directly across the table.",
-        "receipt": "Moon 12.8° cancer · solar house 7",
+        "receipt": "Moon 27.1° cancer · solar house 7",
         "house": 7,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:capricorn:h7:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:capricorn:h7:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -1015,54 +1015,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your sixth house — work in progress, health routines, and the daily load.",
-          "receipt": "Moon 12.8° Cancer · house 6",
+          "receipt": "Moon 27.1° Cancer · house 6",
           "house": 6,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:aquarius:h6:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:aquarius:h6:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your eighth house — shared money, debts, intimacy, and what gets merged.",
-          "receipt": "Mercury 22.8° Virgo · house 8",
+          "receipt": "Mercury 24.5° Virgo · house 8",
           "house": 8,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:aquarius:h8:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:aquarius:h8:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your ninth house — travel, study, belief, and the longer view.",
-          "receipt": "Venus 27.4° Libra · house 9",
+          "receipt": "Venus 28.1° Libra · house 9",
           "house": 9,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:aquarius:h9:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:aquarius:h9:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to work in progress, health routines, and the daily load.",
-        "receipt": "Moon 12.8° cancer · solar house 6",
+        "receipt": "Moon 27.1° cancer · solar house 6",
         "house": 6,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:aquarius:h6:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:aquarius:h6:fact-2026-09-07-body-moon-1200z"
         ]
       }
     },
@@ -1072,54 +1072,54 @@
       "lines": [
         {
           "text": "The Moon spends today in your fifth house — pleasure, romance, children, and what you make for joy.",
-          "receipt": "Moon 12.8° Cancer · house 5",
+          "receipt": "Moon 27.1° Cancer · house 5",
           "house": 5,
           "body": "Moon",
           "hue": "#B6D4E4",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:moon:1200z",
-            "derived:2026-09-06:solar-house:pisces:h5:fact-2026-09-06-body-moon-1200z"
+            "fact:2026-09-07:body:moon:1200z",
+            "derived:2026-09-07:solar-house:pisces:h5:fact-2026-09-07-body-moon-1200z"
           ]
         },
         {
           "text": "Mercury is working your seventh house — partners, the people directly across the table.",
-          "receipt": "Mercury 22.8° Virgo · house 7",
+          "receipt": "Mercury 24.5° Virgo · house 7",
           "house": 7,
           "body": "Mercury",
           "hue": "#B7D9B0",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:mercury:1200z",
-            "derived:2026-09-06:solar-house:pisces:h7:fact-2026-09-06-body-mercury-1200z"
+            "fact:2026-09-07:body:mercury:1200z",
+            "derived:2026-09-07:solar-house:pisces:h7:fact-2026-09-07-body-mercury-1200z"
           ]
         },
         {
           "text": "Venus is warming your eighth house — shared money, debts, intimacy, and what gets merged.",
-          "receipt": "Venus 27.4° Libra · house 8",
+          "receipt": "Venus 28.1° Libra · house 8",
           "house": 8,
           "body": "Venus",
           "hue": "#D3A9DE",
           "templateId": "body-house.v1",
           "scope": "solar-house",
           "evidenceRefs": [
-            "fact:2026-09-06:body:venus:1200z",
-            "derived:2026-09-06:solar-house:pisces:h8:fact-2026-09-06-body-venus-1200z"
+            "fact:2026-09-07:body:venus:1200z",
+            "derived:2026-09-07:solar-house:pisces:h8:fact-2026-09-07-body-venus-1200z"
           ]
         }
       ],
       "todayLine": {
         "text": "Today may draw more attention to pleasure, romance, children, and what you make for joy.",
-        "receipt": "Moon 12.8° cancer · solar house 5",
+        "receipt": "Moon 27.1° cancer · solar house 5",
         "house": 5,
         "body": "Moon",
         "templateId": "today-moon-theme.v1",
         "scope": "solar-house",
         "evidenceRefs": [
-          "fact:2026-09-06:body:moon:1200z",
-          "derived:2026-09-06:solar-house:pisces:h5:fact-2026-09-06-body-moon-1200z"
+          "fact:2026-09-07:body:moon:1200z",
+          "derived:2026-09-07:solar-house:pisces:h5:fact-2026-09-07-body-moon-1200z"
         ]
       }
     }
