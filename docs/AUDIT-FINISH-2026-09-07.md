@@ -122,3 +122,32 @@ Manual native Safari, screen-reader and physical-device certification is not
 implied by Chromium automation. The historical raw-source gaps above remain
 explicit evidence limits. Final release evidence belongs in the PR and the
 subsequent release record with its actual commit and workflow identifiers.
+
+## First combined verification and retained failures
+
+Combined remote head `a0ca50aa` matches reviewed local tree `5d48a700` exactly.
+The Node 22 build/postbuild passes all gates, with Phase 1 source fingerprint
+`dd1d2192aed6cd7dcbec42c0f3bbbe2104e4d78d8033a8caaae8c4921d712875`.
+Transits is 27.0 KB initial gzip against its unchanged 30 KB budget. Check passes
+1,006 files with zero errors/warnings and eleven existing hints after fixing
+fixture union inference in the independent test. The offline projection also
+reproduces the compact source fixture byte-for-byte. All 49 focused itinerary
+tests pass.
+
+The complete serial run records 4,233 passed and ten failed tests across 401
+files (359.72 seconds), not a fully green suite. Nine failures are in the existing
+recovery harness, whose hook stub lacks `useMemo`; its synthetic chart also lacks
+the required flags array. A dependency-aware memo stub and complete fixture
+restore all 21 owning recovery assertions. The tenth failure is the expected
+stale committed Phase 1 screenshot receipt, requiring genuine final-source
+captures rather than a substituted fingerprint.
+
+Root used the authenticated `a0ca50aa` Vercel preview through native form entry
+and actual worker execution. The synthetic 1990 Mexico City chart produced six
+active periods, a next period, upcoming periods, uncertainty and a positive
+closest approach without an exact pass. Native visual inspection found tight
+inner-panel spacing; the bounded responsive-padding correction is published at
+`8aa48d22`. Source-corrected Sun Yat-sen, Bessie Smith and Edith Clarke pages were
+also inspected. Bessie's Person metadata omits the uncertain birth date; Clarke's
+omits the disputed birthplace. No review screenshot is called final proof of a
+later changed source.
