@@ -284,7 +284,6 @@ const sources = [
 
       <div class="fomo-hero__inner container">
         <div class="fomo-hero__copy">
-          <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
           <p class="kicker reveal">Astrology in a trading app</p>
           <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">Trade your zodiac<span class="fomo-hero__signs" aria-hidden="true">{SIGNS.map((sign) => <img class="fomo-hero__sign" src={emojiTile(sign.glyph)} width="36" height="36" alt="" loading="eager" decoding="async" />)}</span> on the fomo<FomoMark /> app</h1>
           <div class="fomo-hero__body">
@@ -304,8 +303,8 @@ const sources = [
             </figure>
             <div class="fomo-hero__text">
               <p class="fomo-deck reveal" style="--reveal-delay:120ms">
-                fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. <span class="fomo-deck__more">All twelve official Zodiacs are
-                listed under their verified Solana addresses: watch your sign, follow the other eleven, and buy in a few taps.</span>
+                fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. <span class="fomo-deck__more">All twelve zodiac signs are on it:
+                buy yours in a few taps, follow your friends, and see what they are trading.</span>
               </p>
               <div class="fomo-stores reveal" id="top-stores" style="--reveal-delay:180ms" data-fomo-stores>
                 <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
@@ -418,7 +417,7 @@ const sources = [
       <div class="section-head">
         <p class="kicker">Three steps</p>
         <h2 id="how-title">How it works</h2>
-        <p>From download to your first Zodiac in a few minutes. Nobody needs your recovery phrase at any point.</p>
+        <p>From download to your first sign in a few minutes. Nobody ever needs your recovery phrase.</p>
       </div>
       <ol class="fomo-steps__list">
         <li class="tile reveal">
@@ -430,13 +429,12 @@ const sources = [
         <li class="tile reveal" style="--reveal-delay:80ms">
           <span class="fomo-steps__num">02</span>
           <h3>Add funds</h3>
-          <p>fomo takes Apple Pay where it is offered, or a transfer of USDC or SOL from a wallet or exchange you already use. Send a small test amount first and the rest once it lands.</p>
-          <a href="/astrofolio/how-to-buy/#fund-wallet">Funding basics ↗</a>
+          <p>Apple Pay where it is offered, or send money in from a wallet or exchange you already use. Start with a small amount and add more once it lands.</p>
         </li>
         <li class="tile reveal" style="--reveal-delay:160ms">
           <span class="fomo-steps__num">03</span>
           <h3>Open your sign</h3>
-          <p>Tap your sign below. The link opens that Zodiac in fomo with the verified address already in place. Compare it against the Registry record before you buy.</p>
+          <p>Tap your sign below and it opens straight in fomo, the real one, so you never have to pick it out of a search list. Read the screen, then buy.</p>
           <a href="#signs">Choose a sign ↓</a>
         </li>
       </ol>
@@ -531,7 +529,7 @@ const sources = [
                 <path class="fomo-spark__line" data-finder-line d={initial.sparkLine} />
               </svg>
               <div class="fomo-finder__card-foot">
-                <span class="fomo-finder__range">{history.length} daily reads · {provider}</span>
+                <span class="fomo-finder__range">Last {history.length} days · {provider}</span>
                 <div class="fomo-finder__actions">
                   <a class="fomo-cta fomo-cta--compact" href={initial.fomo} rel="external nofollow noopener" data-finder-open>
                     <img src="/assets/venues/fomo-official.svg" width="30" height="30" alt="" />
@@ -551,7 +549,7 @@ const sources = [
       <div class="section-head">
         <p class="kicker">Every sign, one tap</p>
         <h2 id="signs-title">Choose your sign</h2>
-        <p>Each link opens that Zodiac in fomo under its verified Solana address. Figures are {provider} reads from {latest.date}; the app shows live prices.</p>
+        <p>Tap a sign and it opens in fomo, ready to buy. Prices here are from {latest.date}; the app shows them live.</p>
       </div>
       <ul class="fomo-grid" role="list">
         {records.map((record, index) => (
@@ -578,16 +576,13 @@ const sources = [
                 <span class="fomo-cta__copy"><small>{record.symbol}</small><strong>Open in fomo</strong></span>
                 <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
               </a>
-              <a class="fomo-card__record" href={`/registry/${record.slug}/`}>Registry record →</a>
             </div>
           </li>
         ))}
       </ul>
       <p class="fomo-grid__note">
         <span data-fomo-live-note>Prices and the {history.length}-day lines: {provider}, read {readAtLabel}.</span>
-        {' '}Every link carries the address published in the Zodiacs Registry. fomo is a separate app; check that
-        the address on its screen matches the record before you approve anything.
-        {' '}<a href="/registry/technical/#market-transparency">Data &amp; methodology</a>
+        {' '}fomo is its own app; read what is on its screen before you confirm anything.
       </p>
     </section>
 
@@ -599,11 +594,11 @@ const sources = [
       <div class="fomo-facts__grid">
         <div class="tile reveal">
           <h3>An independent app</h3>
-          <p>fomo is made by FOMO Labs Inc. It is not part of Zodiacs.org. Zodiacs.org has no referral account or fee arrangement with fomo and receives nothing when you trade there.</p>
+          <p>fomo is made by FOMO Labs Inc. It is not part of Zodiacs.org, which has no referral deal with fomo and earns nothing when you trade there.</p>
         </div>
         <div class="tile reveal" style="--reveal-delay:80ms">
-          <h3>The same twelve addresses</h3>
-          <p>The links on this page carry the Solana addresses published in the Zodiacs Registry. Here, “official” means listed in that Registry. It is not approval by a regulator, wallet, or exchange.</p>
+          <h3>The real twelve</h3>
+          <p>The links on this page open the twelve Zodiacs that Zodiacs.org keeps on record, so you get the real ones and not a lookalike. A record is not approval by a regulator, wallet, or exchange.</p>
         </div>
         <div class="tile reveal" style="--reveal-delay:160ms">
           <h3>Real money, real risk</h3>
@@ -631,19 +626,11 @@ const sources = [
         </details>
         <details>
           <summary><span>Which sign should I buy?</span><span aria-hidden="true">+</span></summary>
-          <p>That is your decision, and this page does not make it for you. Many people start with their own Sun sign; the Registry lists all twelve with the same standing. Spend only what you can afford to lose.</p>
+          <p>That is your call, and this page does not make it for you. Most people start with their own sign. Spend only what you can afford to lose.</p>
         </details>
         <details>
           <summary><span>Can I use fomo<FomoMark /> on a computer?</span><span aria-hidden="true">+</span></summary>
           <p>Yes. fomo.family runs in a browser and syncs with the phone app, so a watchlist you build on one shows up on the other.</p>
-        </details>
-        <details>
-          <summary><span>Why do the prices here differ from the app?</span><span aria-hidden="true">+</span></summary>
-          <p>The figures on this page are dated {provider} reads, refreshed when the site rebuilds and, where your browser allows it, once more when the page loads. fomo shows live prices, and the two will rarely match to the cent.</p>
-        </details>
-        <details>
-          <summary><span>Is there another way to buy?</span><span aria-hidden="true">+</span></summary>
-          <p>Yes. The <a href="/astrofolio/how-to-buy/">beginner guide</a> walks through a Solana wallet and an optional Jupiter swap, one step at a time.</p>
         </details>
       </div>
     </section>
@@ -652,8 +639,8 @@ const sources = [
       <div class="shell fomo-close__shell">
         <div class="core fomo-close__core">
           <p class="kicker">Start with your own sign</p>
-          <h2 id="close-title" class="display">Your sign is already listed.</h2>
-          <p>Get the app, add a little, and open your sign. Read every screen before you approve.</p>
+          <h2 id="close-title" class="display">Your sign is waiting.</h2>
+          <p>Get the app, add a little, and open your sign.</p>
           <div class="fomo-stores fomo-stores--center" data-fomo-stores>
             <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
               <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
