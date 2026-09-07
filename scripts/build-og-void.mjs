@@ -135,6 +135,12 @@ for (const s of SIGNS) {
 const FOMO_ICON = await b64('public/assets/venues/fomo-official.svg', 'image/svg+xml');
 // The owner's phone render of Fomo's Verified list, keyed to transparency, used as delivered.
 const FOMO_PHONE = await b64('public/assets/fomo/fomo-verified.png', 'image/png');
+// The twelve zodiac emoji as Twemoji (X's own set; CC-BY 4.0, see docs/VENUE-MARKS.md),
+// so the card shows the glyphs the way X draws them. The page itself uses the
+// visitor's native emoji font.
+const TWEMOJI_CODEPOINTS = { aries: '2648', taurus: '2649', gemini: '264a', cancer: '264b', leo: '264c', virgo: '264d', libra: '264e', scorpio: '264f', sagittarius: '2650', capricorn: '2651', aquarius: '2652', pisces: '2653' };
+const TWEMOJI = {};
+for (const [slug, cp] of Object.entries(TWEMOJI_CODEPOINTS)) TWEMOJI[slug] = await b64(`scripts/og-assets/twemoji/${cp}.svg`, 'image/svg+xml');
 
 // ── Shared chrome ─────────────────────────────────────────────────────
 const INK = '#EEF1F7';
@@ -345,7 +351,7 @@ function fomoCard() {
   <div class="stage">
     <div class="left" style="max-width: 560px; flex: none;">
       <span class="kicker">Astrofolio, in a trading app</span>
-      <div class="display" style="font-size: 62px; max-width: 560px;">Trade<span style="display:flex;gap:5px;margin:14px 0 10px">${SIGNS.map((s) => `<img src="${DISCS[s.slug]}" width="41" height="41" alt="" style="display:block;width:41px;height:41px" />`).join('')}</span>on the Fomo<img src="${FOMO_ICON}" width="52" height="52" alt="" style="display:inline-block;width:0.74em;height:0.74em;border-radius:0.18em;vertical-align:-0.02em;margin-left:0.2em" /> app</div>
+      <div class="display" style="font-size: 62px; max-width: 560px;">Trade<span style="display:flex;gap:6px;margin:14px 0 12px">${SIGNS.map((s) => `<img src="${TWEMOJI[s.slug]}" width="40" height="40" alt="" style="display:block;width:40px;height:40px" />`).join('')}</span>on the Fomo<img src="${FOMO_ICON}" width="52" height="52" alt="" style="display:inline-block;width:0.74em;height:0.74em;border-radius:0.18em;vertical-align:-0.02em;margin-left:0.2em" /> app</div>
       <div class="sub" style="max-width: 600px;">Every official Zodiac, listed in the free Fomo app under its verified Solana address.</div>
       <div class="data">iPhone · Android · fomo.family</div>
     </div>

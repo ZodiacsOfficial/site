@@ -54,6 +54,12 @@ honest presentation when we cannot use the real thing.
 | --- | --- |
 | `applepay.svg` | An in-house reproduction of the Apple Pay lockup ( + "Pay"). Apple's official mark is distributed through their marketing portal under the Apple Pay Identity Guidelines and is not fetchable; the owner accepted a reproduction on 2026-08-02 rather than ship the words "Apple Pay" as plain text. It appears only beside a payment provider that actually offers Apple Pay, never as a claim that zodiacs.org accepts it. Replace this file if the official asset is ever obtained. |
 
+## Third-party glyphs on the /fomo/ share card
+
+| Files | Basis |
+| --- | --- |
+| `scripts/og-assets/twemoji/2648.svg` … `2653.svg` | The twelve zodiac emoji (U+2648–U+2653) from Twemoji 14.0.2, fetched 2026-09-07 from `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/{codepoint}.svg`. Graphics © Twitter, Inc. and other contributors, licensed CC-BY 4.0; used unmodified and only on the generated `/fomo/` share card (`scripts/build-og-void.mjs`), so the twelve appear there the way X draws them. The page itself renders the emoji with the visitor's own platform font and ships no artwork. |
+
 ## Adding a mark
 
 1. Take the vendor's own file. Prefer a pinned-tab/mask SVG, then a vector logo, then a transparent PNG. Never trace or redraw a logo.
