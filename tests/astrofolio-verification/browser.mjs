@@ -2,6 +2,8 @@
  * Built-page acceptance, using the repository's existing Playwright harness.
  * Run: node tests/astrofolio-verification/browser.mjs
  * Optional: BASE_URL=https://an-authorized-preview.example (or ZODIACS_TEST_BASE_URL).
+ * Protected preview: PREVIEW_STORAGE_STATE points to a private Playwright state file.
+ * Select a bounded subset with SCENARIO=name or SCENARIOS=name,name.
  * Fixtures contain only published Registry identifiers and synthetic near misses.
  */
 import assert from 'node:assert/strict';
@@ -105,18 +107,38 @@ async function run(baseURL) {
   assert.ok(!registry.assets.flatMap((asset) => asset.representations).some((record) => record.address.toLowerCase() === unknown));
   const outDir = resolve(projectRoot, 'docs/astrofolio-trust/evidence');
   await mkdir(outDir, { recursive: true });
+  let previewStorageState;
+  if (process.env.PREVIEW_STORAGE_STATE) {
+    try {
+      previewStorageState = JSON.parse(await readFile(process.env.PREVIEW_STORAGE_STATE, 'utf8'));
+      assert.ok(Array.isArray(previewStorageState.cookies) && Array.isArray(previewStorageState.origins));
+    } catch {
+      throw new Error('The private preview authorization state could not be read.');
+    }
+  }
   const browser = await chromium.launch({ executablePath: await findChromium(), headless: true, args: STABLE_CHROMIUM_ARGS });
   const results = [];
   const origin = new URL(baseURL).origin;
-  const selectedScenario = process.env.ASTROFOLIO_SCENARIO;
+  const requestedScenarios = process.env.SCENARIOS ?? process.env.SCENARIO ?? process.env.ASTROFOLIO_SCENARIO;
+  const selectedScenarios = requestedScenarios ? new Set(requestedScenarios.split(/[,\s]+/u).filter(Boolean)) : null;
+  const previewRun = !['127.0.0.1', 'localhost', '[::1]'].includes(new URL(baseURL).hostname);
+  const capturePrefix = previewRun ? 'preview-' : '';
   const artifactHash = (text) => createHash('sha256').update(text).digest('hex');
   const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: projectRoot, encoding: 'utf8' }).trim();
   const harnessSha256 = artifactHash(await readFile(fileURLToPath(import.meta.url)));
   let servedPageSha256;
 
   async function scenario(name, callback, options = {}) {
-    if (selectedScenario && name !== selectedScenario) return;
-    const context = await browser.newContext({ viewport: { width: 390, height: 900 }, reducedMotion: 'reduce', serviceWorkers: 'block', ...options });
+    if (selectedScenarios && !selectedScenarios.has(name)) return;
+    let context;
+    try {
+      context = await browser.newContext({ viewport: { width: 390, height: 900 }, reducedMotion: 'reduce', serviceWorkers: 'block', ...(previewStorageState ? { storageState: previewStorageState } : {}), ...options });
+    } catch (error) {
+      // Playwright errors involving invalid storage state can include private
+      // values. Never expose its path, cookies or tokens through diagnostics.
+      if (previewStorageState) throw new Error('The protected preview browser context could not be initialized.');
+      throw error;
+    }
     const requests = [];
     const errors = [];
     const expectedFailures = new Set();
@@ -160,12 +182,12 @@ async function run(baseURL) {
     for (const width of [1280, 390, 320]) await scenario(`layout-${width}`, async ({ page, open }) => {
       const response = await open();
       assertStaticFacts(await response.text(), registry);
-      await page.screenshot({ path: resolve(outDir, `verification-${width}-hero.png`), animations: 'disabled' });
+      await page.screenshot({ path: resolve(outDir, `${capturePrefix}verification-${width}-hero.png`), animations: 'disabled' });
       await page.locator('.zfooter').scrollIntoViewIfNeeded();
       await settledFrames(page);
       await page.evaluate(() => window.scrollTo(0, 0));
       await settledFrames(page);
-      await page.screenshot({ path: resolve(outDir, `verification-${width}.png`), fullPage: true, animations: 'disabled' });
+      await page.screenshot({ path: resolve(outDir, `${capturePrefix}verification-${width}.png`), fullPage: true, animations: 'disabled' });
       await expandRecords(page);
       assert.equal(await page.locator('[data-asset]').count(), 12);
       assert.equal(await page.locator('code[data-identifier]').count(), 24);
@@ -204,7 +226,7 @@ async function run(baseURL) {
         const box = await control.boundingBox();
         assert.ok(box && box.height >= 44 && box.width >= 44, `Control ${index} has a 44px touch target`);
       }
-      if (width === 390) await page.locator('.av-records').screenshot({ path: resolve(outDir, 'verification-records-390.png'), animations: 'disabled' });
+      if (width === 390) await page.locator('.av-records').screenshot({ path: resolve(outDir, `${capturePrefix}verification-records-390.png`), animations: 'disabled' });
     }, { viewport: { width, height: 900 } });
 
     await scenario('keyboard-and-privacy', async ({ context, page, open, requests }) => {
@@ -358,10 +380,13 @@ async function run(baseURL) {
     }, { serviceWorkers: 'allow' });
   } finally {
     await browser.close();
-    const reportName = selectedScenario ? `browser-results-${selectedScenario.replace(/[^a-z0-9-]/giu, '')}.json` : 'browser-results.json';
+    const reportSuffix = selectedScenarios?.size === 1 ? `-${[...selectedScenarios][0].replace(/[^a-z0-9-]/giu, '')}` : selectedScenarios ? '-selected' : '';
+    const reportName = `browser-${previewRun ? 'preview-' : ''}results${reportSuffix}.json`;
     await writeFile(resolve(outDir, reportName), `${JSON.stringify({ recordedAt: new Date().toISOString(), baseURL, sourceCommit, servedPageSha256, harnessSha256, node: process.version, chromium: browser.version(), fixture: 'public/registry/zodiacs.registry.json', viewportWidths: [1280, 390, 320], results }, null, 2)}\n`);
   }
   const failures = results.filter((result) => result.status === 'failed');
+  assert.ok(results.length > 0, 'At least one requested browser scenario must run');
+  if (selectedScenarios) assert.equal(results.length, selectedScenarios.size, 'Every requested scenario name must exist');
   assert.equal(failures.length, 0, `${failures.length} browser scenario(s) failed; see docs/astrofolio-trust/evidence/browser-results.json`);
   console.log(`${results.length} Astrofolio browser scenarios passed.`);
 }
