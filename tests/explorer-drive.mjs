@@ -36,6 +36,7 @@ import { runLearningPracticeChecks } from './learning-practice-checks.mjs';
 import { runAspectPatternBrowserChecks } from './aspect-pattern-browser-checks.mjs';
 import { runLunarReturnChecks } from './lunar-return-drive.mjs';
 import { runEventTransitChecks } from './event-transit-checks.mjs';
+import { runTransitItineraryChecks } from './transit-itinerary-checks.mjs';
 import { runEditorialMetadataChecks } from './editorial-metadata-drive.mjs';
 import { verifyWidgetBuilder } from './widgets-drive.mjs';
 import { awaitAppliedFooter, runFooterStyleChecks } from './footer-style-checks.mjs';
@@ -209,6 +210,7 @@ try {
   await runSearchLearningChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
 
   await runEventTransitChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/event-transits` : null });
+  await runTransitItineraryChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/transit-itinerary` : null });
   await runEditorialMetadataChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/editorial-metadata` : null });
 
   // Each feature owns and closes its browser contexts. Collect independent

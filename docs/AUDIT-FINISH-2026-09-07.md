@@ -57,3 +57,68 @@ completed. The original failed Uranus exact-topology receipt remains failed.
 Missing historical Wave 19 raw acquisition files and the later Wave 20 supplement
 remain evidence limitations; compact committed fixtures are not called a fresh
 raw-source audit.
+
+## Combined completion candidate
+
+The seven share cards were captured from exact preparation head `6b6e0edb`
+by Browser Evidence run `34087040753`, artifact `10005994802`. Root inspected
+each genuine PNG, verified all recorded input and output hashes, then imported
+the exact bytes. The adopted-date warning is visible on Bessie Smith and Rufino
+Tamayo cards. The complete People preparation passed all 14 Site Check jobs
+and Browser Evidence. Those results precede the itinerary integration below.
+
+Wave 24's new qualified source review is accepted as documented in
+`engine-validation/transit-windows/README.md`. The failed original exact-topology
+contract remains failed; the feature reports uncertainty instead of asserting
+unsupported peaks. The itinerary adds active, next, upcoming and earlier periods
+to the English Transits tool, with entry/exit, closest-approach semantics and
+genuine duration-based calendar downloads. It loads only when expanded, runs
+the slow-planet calculation in a cancellable worker, and clears stale results
+when the source chart or date changes. Unknown or unverified time excludes
+Moon/angles; calendar files omit names, birth details and chart identifiers.
+
+Root's independent integration reviewer found no new lifecycle, coherence,
+privacy or calendar blockers. Separate analytic and A–I source comparisons own
+the numerical contract. The owning Explorer drive now exercises actual workers,
+keyboard expansion, source replacement, unknown/unverified inputs, real calendar
+downloads and failed-load recovery at 390 and 1440 pixels. Final combined build,
+fresh capture, complete CI and production verification are still required at
+this source-freeze checkpoint; they are not replaced by preparation results.
+
+## Reconciliation with the initial audit
+
+The first 23 waves were released through the earlier audit PRs and the cumulative
+PR 394 release. This continuation retains them and finishes the source corrections
+and Wave 24. The table records implementation coverage; it is not a new claim
+that all platforms or every possible input have been manually certified.
+
+| Initial findings | Implemented work |
+| --- | --- |
+| A01 | People identity/source fixes, now including the seven reviewed factual decisions above. |
+| A02 | Saved-chart input coherence and invalidation of stale summaries. |
+| A03, A18, A24, A25 | Locale-aware navigation and route boundaries. |
+| A04 | Navigation/font delivery corrections. |
+| A05, A06, A09 | Recoverable loading, source changes and error states. |
+| A07, A08, A26 | Accessible chart interaction and unknown-time restrictions. |
+| A10, A11 | Search and learning navigation; later saved-chart practice with separate progress. |
+| A12 | Contextual natal readings. |
+| A13 | Complete solar-return and composite outputs; later lunar returns. |
+| A14, A15 | Widget and user-facing copy corrections. |
+| A16 | Startup/performance fixes under the existing delivery budgets. |
+| A17 | Retry behavior. |
+| A19, A20, A22 | Footer and product-contract copy corrections; no legal opinion is asserted. |
+| A21 | Editorial ownership, date and source metadata. |
+| A23 | Current transit-month behavior. |
+| A27 | Authored event readings and exact-date personal transit handoff. |
+| A28 | Crowded-wheel labels, focus and selection. |
+
+The retained advanced additions include aspect patterns, chart-shape/ruler
+context, personal-chart continuity, saved-chart learning practice and independent
+calculation regressions. Wave 24 builds on those results rather than rebuilding
+them. This work concerns the website; no native iPhone app or distribution task
+is included.
+
+Manual native Safari, screen-reader and physical-device certification is not
+implied by Chromium automation. The historical raw-source gaps above remain
+explicit evidence limits. Final release evidence belongs in the PR and the
+subsequent release record with its actual commit and workflow identifiers.
