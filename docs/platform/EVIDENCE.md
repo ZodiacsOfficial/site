@@ -10,8 +10,9 @@ these are not a deployment of the changed Zodiacs.org site.
 
 - Site: `/Users/chiburashka/.codex/worktrees/4806/site`, branch
   `codex/platform-stage-a`, based on
-  `7f953e3fca0e7d5009e5602a1dad69edff0f54cc`. Site changes are uncommitted at
-  this checkpoint; site logs describe a working tree, not a released SHA.
+  `7f953e3fca0e7d5009e5602a1dad69edff0f54cc`. Stage A source/evidence checkpoint:
+  `40d3f9647a31afc20db007b7cd5269eb4ef73b6a`. Tests describe the source in
+  that commit; it has not been merged or released. B03 changes follow separately.
 - SDK: `/private/tmp/zodiacs-platform-sdk`, branch `codex/platform-stage-a`,
   based on PR #5 head `cced011659d48877b8b73b8a85796815234cf741`.
   Final candidate source: `03bf77990f3014b9125eed4976d7a41200aac80d`.
@@ -304,3 +305,78 @@ production, and adopted externally** distinct in later receipts.
 - Manual browser CLI verified the homepage and birth-chart form without page
   errors. [Birth form capture](evidence/birth-form-desktop.png). Browser images
   are UI evidence, not numerical or privacy oracles.
+
+## B03 — Shared-sky freshness slice
+
+The next dependency-ready slice reuses the current static API. A single literal
+`src/lib/sky-api/examples/today.mjs` is both executable and rendered on the
+developer page via a raw import, avoiding example/source drift. It checks HTTP
+success, the payload kind and fields it consumes, the current UTC edition and
+canonical noon snapshot before any display. A current-day noon snapshot remains
+valid before noon. Fetch has a ten-second deadline. This is narrow validation
+of consumed fields, not a general JSON Schema validator.
+
+The same source templates now distinguish edition date, computed snapshot, build
+time and scheduled publication. Existing deployment headers remain unchanged:
+300-second today JSON, 3,600-second index, 86,400-second remaining API files.
+Separately cached payloads can differ from the index; successful HTTP and a fresh
+build timestamp do not prove current astronomical data. Live reads confirmed
+the documentation mismatch, with no current stale-data incident.
+
+At 18:42 UTC, Node 22 / site Vitest 3.2.6 passed **39/39** focused tests:
+`npm test -- scripts/sky-api-quickstart.test.mjs scripts/sky-api.test.mjs src/lib/edition-freshness.test.ts`.
+The literal example has 21 cases covering error HTTP, wrong/empty/malformed
+payloads, UTC midnight, stale dates with recent build times and valid pre-noon
+snapshots. Final generated build/check/browser results follow when complete.
+
+### Refreshed integration requirements
+
+Working `gh` CLI protection reads supersede the connector's earlier access gap.
+Site main requires the PR path, enforces administrators, disallows force pushes,
+dismisses stale reviews and records zero required approving reviews; required
+status checks are null. SDK main responds **Branch not protected (404)**. These
+settings do not remove the owner's reviewed-PR requirement or the explicit SDK
+PR #5 do-not-merge/do-not-publish hold. No setting was changed.
+
+Fresh PR #289 head `de9bb3b58240286923f3437d32c7b5590490a78a` is open; its
+current file list does not include the developer page or sky-api sources. The
+B03 slice avoids its footer/Base/package edits and PR #413's Vercel changes.
+
+B03 final build/check passed: zero errors/warnings (11 hints), normal full build
+gates and unchanged engine bundle budget. Build receipt
+`90a74dfcc3017c8020a16013091abaa2182f7fe248bfd983d5cbf136ca0f10b6`.
+[Build](evidence/site-b03-build.log), [check](evidence/site-b03-check.log).
+The mandatory Phase 1 capture refresh passed **18/18** against that receipt;
+[log](evidence/site-b03-phase1.log) and the current [manifest](../acceptance/phase1/screenshots/manifest.json)
+replace the earlier source fingerprint with actual captures, not invented hashes.
+
+The exact standalone example also passed against the live public API at
+approximately 18:43 UTC ([output](evidence/b03-live-quickstart.log)). Refreshed
+HTTP/cache/CORS/edition fields and payload hashes are recorded in the
+[live API receipt](evidence/b03-live-api.json). All four endpoints returned 200
+and the September 7 edition; this demonstrates an internal run, not an external
+onboarding session or adoption.
+
+Browser CLI checked `/developers/` at 1280 and 390 pixels. The
+[displayed-source/overflow receipt](evidence/developers-dom.json) matches the
+source example byte for byte, page width equals viewport width (390), and the
+code area scrolls internally (617 pixels inside 348 pixels). No error overlay
+or browser errors. Actual [desktop](evidence/developers-desktop.png) and
+[mobile](evidence/developers-mobile-code.png) captures preserve the approved
+site design. Combined suite passed: **4,431 tests / 404 files, no skips**, 73.34 seconds
+(18:46–18:48 UTC); [final combined log](evidence/site-b03-test.log).
+The final page adds a labeled focusable code region. An initial keyboard probe
+used an incorrect link URL and later lost its active tab; those probe results
+do not establish a pre-change accessibility defect. The corrected isolated
+harness targets the actual accessible link name and passes below.
+
+At **18:56:20 UTC**, `node tests/platform-developers-drive.mjs` passed using
+isolated Chromium **152.0.7977.83** contexts at 1280 and 390 pixels with reduced
+motion. The exact rendered source matches, Tab focuses the named code region,
+ArrowRight scrolls it on mobile, page width stays within the viewport and no
+page errors/overlay occur. [Machine receipt](evidence/developers-browser.json),
+[log](evidence/b03-browser.log), [desktop](evidence/developers-1280.png),
+[mobile](evidence/developers-390.png). Build and check passed again after the
+attribute-only accessibility refinement; source fingerprint remains unchanged.
+The earlier full 4,431-test suite remains applicable to unchanged calculation,
+example and guide sources; this final page refinement has its own browser proof.

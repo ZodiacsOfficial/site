@@ -75,3 +75,18 @@ review with one accountable integrator. Their review is model-assisted internal
 review, not practitioner, legal or external expert approval. The explicit SDK
 PR #5 merge/publication hold persists. Unrelated app/example dependency findings
 and the pre-existing auxiliary Vercel failure remain separately reported.
+
+## B-001 — Validate the consumed edition, keep the example executable
+
+A live response showed that planet/upcoming files cache for 24 hours while the
+index caches for one hour and today JSON for five minutes. Documentation that
+checks only a current index can still present a separately stale payload as
+today. Validate the consumed edition and computed snapshot before rendering.
+`generatedAt` is build provenance, not a substitute for the edition. Midnight
+is the scheduled publication boundary, not an availability guarantee.
+
+Keep one standalone example as a raw-imported source module with executable
+HTTP/shape/UTC boundary regressions. Reusing the private site helper would make
+the copyable example depend on undocumented imports; duplicating its displayed
+text would allow drift. Actual cache-policy changes remain a separate coordinated
+slice because Vercel configuration overlaps existing work.

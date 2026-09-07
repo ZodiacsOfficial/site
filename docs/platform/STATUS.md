@@ -1,7 +1,6 @@
 # Zodiacs Platform status
 
-Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A candidate implemented;
-site acceptance passed; draft integration checkpoint prepared. Owner mandate: `ZODIACS-PLATFORM-MASTER-BRIEF.md` v1.0.
+Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A and bounded B03 implementation complete; final combined suite passed; review/preview delivery in progress. Owner mandate: `ZODIACS-PLATFORM-MASTER-BRIEF.md` v1.0.
 
 ## Current delivery
 
@@ -41,7 +40,10 @@ site acceptance passed; draft integration checkpoint prepared. Owner mandate: `Z
   branch pushes/draft PRs, tests and actual Chrome browser verification work.
   Sandboxed network fails; reviewed network access succeeds. GitHub connector
   writes return 403, but reviewed `gh` CLI authentication and PR creation work.
-  Branch-protection reads return 403; empty rulesets do not prove no protections.
+  Connector protection reads return 403; later CLI reads show enforced site
+  PR protection, zero required approving reviews, force pushes disabled and no
+  required status checks; SDK main reports unprotected. The explicit hold and
+  owner-reviewed PR path still apply.
 - Public npm engine and widgets lookups returned E404 on 2026-09-07. No npm
   publication capability or authorization is inferred from repository access.
 
@@ -64,9 +66,10 @@ site acceptance passed; draft integration checkpoint prepared. Owner mandate: `Z
 ## Runnable continuation
 
 Read [PLAN](PLAN.md), [DECISIONS](DECISIONS.md) and [EVIDENCE](EVIDENCE.md).
-Stage A implementation checkpoint is ready for draft review. Implement the
-bounded B03 freshness example
-and documentation correction using actual payload dates/cache behavior, then
-push the companion draft PR and verify CI/preview while preserving the SDK hold.
+Stage A checkpoint `40d3f9647a31afc20db007b7cd5269eb4ef73b6a` is committed.
+B03 now has a runnable validated example, corrected generated documentation,
+39 focused tests, successful live API execution and desktop/mobile page proof.
+Combined suite: **4,431 tests / 404 files, no skips**, passed. Final keyboard-scroller browser check passed. Commit B03, then push the
+companion draft PR and verify CI/preview while preserving the SDK hold.
 Continue only dependency-ready work; hosted execution depends on the reviewed
 contract, privacy and limits. No background execution after this session is implied.

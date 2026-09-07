@@ -4,6 +4,7 @@ import { iframeEmbedCode } from '../../lib/widgets';
 import { WIDGET_EN } from '../../strings/widgets';
 import { completeTransitYears } from '../../lib/sky-api/build';
 import { PLANET_SLUGS } from '../../lib/sky-api/meta';
+import skyQuickStart from '../../lib/sky-api/examples/today.mjs?raw';
 
 // The same month snapshots the generator reads decide which year files exist,
 // so this page and the deployed API can never disagree about coverage.
@@ -15,9 +16,9 @@ const lastYear = years.at(-1);
 const yearRange = `{${firstYear}–${lastYear}}`;
 
 const dailyEndpoints = [
-  ['/api/v1/sky/today.json', "Today's positions for the Sun, Moon, and eight planets (raw longitudes and formatted labels like 14°53′ Virgo), moon phase and illumination, the active retrograde windows, the next new and full moon with signs and traditional names, the day's exact events, and a plain-language summary. Positions are a 12:00 UTC snapshot; the file is republished at 00:00 UTC."],
+  ['/api/v1/sky/today.json', "Today's positions for the Sun, Moon, and eight planets (raw longitudes and formatted labels like 14°53′ Virgo), moon phase and illumination, the active retrograde windows, the next new and full moon with signs and traditional names, the day's exact events, and a plain-language summary. Positions are a 12:00 UTC snapshot. Daily publication is scheduled from 00:00 UTC; check the payload date because delivery can be delayed."],
   ['/api/v1/sky/upcoming.json', 'Every lunation, sign ingress, station, eclipse, and exact aspect in the next 60 days in order, plus the next occurrence of each kind and the current and next Mercury retrograde.'],
-  [`/api/v1/planets/{${PLANET_SLUGS.join('|')}}.json`, 'One body: position now, whether it is retrograde, its current and next retrograde window, every window in coverage, and its next sign ingress and station.'],
+  [`/api/v1/planets/{${PLANET_SLUGS.join('|')}}.json`, 'One body: position at the daily snapshot, whether it is retrograde, its current and next retrograde window, every window in coverage, and its next sign ingress and station.'],
   ['/api/v1/signs.json', 'The twelve signs: element, modality, ruler and traditional ruler, polarity, house, conventional dates, the computed Sun season for this year, and which bodies occupy each sign today.'],
 ];
 
@@ -73,17 +74,14 @@ const jsonLd = [{
     </div>
 
     <h2 class="dev-h2">Quick start</h2>
-    <pre class="dev-code" is:raw><code>const sky = await fetch('https://zodiacs.org/api/v1/sky/today.json')
-  .then((response) => response.json());
-
-console.log(sky.summary);
-// Monday, September 7, 2026, snapshot at 12:00 UTC. The Sun is at 14°53′ Virgo. …
-
-for (const body of sky.bodies) {
-  console.log(body.body, body.position, body.retrograde ? 'Rx' : '');
-}</code></pre>
+    <pre class="dev-code" tabindex="0" role="region" aria-label="JavaScript quick start"><code>{skyQuickStart}</code></pre>
     <p class="dev-note">
-      Or from a terminal: <code>curl -s https://zodiacs.org/api/v1/sky/today.json</code>
+      This example checks the payload kind, fields used here, and current UTC
+      edition before displaying its computed snapshot. Keep the snapshot time visible; before
+      noon, it describes positions computed for later that day.
+    </p>
+    <p class="dev-note">
+      Or from a terminal: <code>curl --fail --silent --show-error https://zodiacs.org/api/v1/sky/today.json</code>
     </p>
 
     <h2 class="dev-h2">Built for AI agents</h2>
@@ -149,8 +147,8 @@ for (const body of sky.bodies) {
         Positions are apparent geocentric tropical longitudes from the same
         engine the calculators use, tested against NASA JPL Horizons reference
         data. Today's positions are a single snapshot taken at 12:00 UTC
-        (<code>snapshotAt</code>); the daily files are republished at the 00:00
-        UTC publication boundary. All instants are UTC in ISO 8601, and signs
+        (<code>snapshotAt</code>). Publication is scheduled from 00:00 UTC;
+        jobs, deployment, or caches can delay availability. All instants are UTC in ISO 8601, and signs
         are lowercase slugs with an English <code>signName</code> beside them.
       </p>
       <p>
@@ -165,6 +163,28 @@ for (const body of sky.bodies) {
         underlying data is extended; read{' '}
         <a href="/api/v1/index.json"><code>index.json</code></a> rather than
         assuming which years exist.
+      </p>
+    </div>
+
+    <h2 class="dev-h2">Freshness and caching</h2>
+    <div class="prose">
+      <p>
+        Check the file you consume: <code>date</code> identifies the UTC edition
+        for today's sky, planet files, and signs; <code>snapshotAt</code> is
+        its noon snapshot. Upcoming events use <code>from</code> as the snapshot
+        instant. <code>generatedAt</code> records the file build time and can
+        change without a new edition. The index's <code>coverage.dailyDate</code>
+        describes the index; separately cached files can have different dates.
+        Label an older edition by its date or wait for a current one before
+        presenting it as today's sky.
+      </p>
+      <p>
+        Current cache lifetimes are 300 seconds for <code>sky/today.json</code>,
+        3,600 seconds for <code>index.json</code>, and 86,400 seconds for the
+        remaining API files, including upcoming events, planets, signs, and
+        Markdown twins. Revalidation can refresh a cached response; always
+        check its edition date as well. Yearly files remain byte-stable between
+        data refreshes.
       </p>
     </div>
 

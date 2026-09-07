@@ -1,0 +1,33 @@
+{
+  "capturedAt": "2026-09-07T18:56:20.227Z",
+  "browser": "152.0.7977.83",
+  "result": "passed",
+  "checks": [
+    {
+      "width": 1280,
+      "sourceMatches": true,
+      "keyboardFocus": true,
+      "viewport": 1280,
+      "pageWidth": 1280,
+      "codeWidth": 778,
+      "codeScrollWidth": 778,
+      "codeScrollLeft": 0,
+      "reducedMotion": true,
+      "overlay": false,
+      "pageErrors": []
+    },
+    {
+      "width": 390,
+      "sourceMatches": true,
+      "keyboardFocus": true,
+      "viewport": 390,
+      "pageWidth": 390,
+      "codeWidth": 348,
+      "codeScrollWidth": 615,
+      "codeScrollLeft": 1,
+      "reducedMotion": true,
+      "overlay": false,
+      "pageErrors": []
+    }
+  ]
+}

@@ -90,6 +90,36 @@
       "file": "site-test-final.log",
       "rawSHA256": "451e95f82664a928af851597a9ea46419abe73b05fa17be43fce26102d38e07f",
       "storedSHA256": "eea0fcb91b5aadddaad44841f4732f6062eaefef948ba7816213f232afc9d396"
+    },
+    {
+      "file": "site-b03-phase1.log",
+      "rawSHA256": "3a490e42fc663beeb405328d6c6dbe91ff44aeee4100a6d2a0b0b4c4a966f501",
+      "storedSHA256": "3a490e42fc663beeb405328d6c6dbe91ff44aeee4100a6d2a0b0b4c4a966f501"
+    },
+    {
+      "file": "b03-live-quickstart.log",
+      "rawSHA256": "9c261f875743c1f0a883a4a53bcad83a9c2915e8241bd71192d7c0c9cdc659c2",
+      "storedSHA256": "aec31b72d7403badbb72e3b84e7cb761c803e692e2c0306a22067cc0e3356ef3"
+    },
+    {
+      "file": "site-b03-test.log",
+      "rawSHA256": "be2897c0e9d5056e35c0e7e51091b0d78774ab1d3100b52454a151ce8e27fe9e",
+      "storedSHA256": "58a4b2b81a2ed7d2a41df9cfcde4c331b82f264090a3e197eaf18fe2107fd666"
+    },
+    {
+      "file": "site-b03-build.log",
+      "rawSHA256": "c6a82806d651f377fb4f210d6942c8f688e2ba3c4c7ccc2042ef3e1780c58bd0",
+      "storedSHA256": "858438189949e8475b1f190e5d3ad64b91c9d6cd44f3402478a064fdfd1f0b95"
+    },
+    {
+      "file": "site-b03-check.log",
+      "rawSHA256": "a63f8c35ae935bd5a5a725dca2268b73badd1f863fe2b2467f0a03de1b900457",
+      "storedSHA256": "22d4c0232abd271a52e06f9fabde3d1ac6488db9d93cddab10144e5ee293f00d"
+    },
+    {
+      "file": "b03-browser.log",
+      "rawSHA256": "217d4b9cb521e5b37d639d92437e6826195c0259205a7b5aadfde9c77978663f",
+      "storedSHA256": "217d4b9cb521e5b37d639d92437e6826195c0259205a7b5aadfde9c77978663f"
     }
   ]
 }
