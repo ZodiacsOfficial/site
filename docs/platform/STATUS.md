@@ -16,7 +16,7 @@ Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A and bounded B03 im
   remain immutable. See [vendor provenance](../../vendor/README.md).
 - SDK: 295 tests / 26 files and required workspace gates passed. Independent
   site node/polar reference comparisons pass on Node 22 and 24; finite scope,
-  unchanged references/tolerances, no human certification. Site: **4,410 tests / 403 files**, check and full build passed; 18 mobile/desktop
+  unchanged references/tolerances, no human certification. Stage A site checkpoint: **4,410 tests / 403 files**, check and full build passed; 18 mobile/desktop
   acceptance captures and calculation/sharing browser flows passed.
   Details and limits are in [EVIDENCE](EVIDENCE.md).
 - **Not release-ready for an unrestricted launch, not published to npm, not
@@ -67,9 +67,12 @@ Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A and bounded B03 im
 
 Read [PLAN](PLAN.md), [DECISIONS](DECISIONS.md) and [EVIDENCE](EVIDENCE.md).
 Stage A checkpoint `40d3f9647a31afc20db007b7cd5269eb4ef73b6a` is committed.
-B03 now has a runnable validated example, corrected generated documentation,
+B03 checkpoint `73e253e924428aabb0e1c62ca635f5ea68ce5546` has a runnable validated example, corrected generated documentation,
 39 focused tests, successful live API execution and desktop/mobile page proof.
-Combined suite: **4,431 tests / 404 files, no skips**, passed. Final keyboard-scroller browser check passed. Commit B03, then push the
-companion draft PR and verify CI/preview while preserving the SDK hold.
+Combined suite: **4,431 tests / 404 files, no skips**, passed. Final keyboard-scroller browser check passed.
+[Draft site PR #415](https://github.com/ZodiacsOfficial/site/pull/415) is pushed.
+Initial CI stopped at the Phase 1 protected-path gate; its existing exact-file,
+base-pinned allowance now records the authorized engine reference regeneration.
+Verify the follow-up CI and preview while preserving the SDK hold.
 Continue only dependency-ready work; hosted execution depends on the reviewed
 contract, privacy and limits. No background execution after this session is implied.

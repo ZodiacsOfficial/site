@@ -120,6 +120,16 @@
       "file": "b03-browser.log",
       "rawSHA256": "217d4b9cb521e5b37d639d92437e6826195c0259205a7b5aadfde9c77978663f",
       "storedSHA256": "217d4b9cb521e5b37d639d92437e6826195c0259205a7b5aadfde9c77978663f"
+    },
+    {
+      "file": "public-candidate-consumer.log",
+      "rawSHA256": "7e84a1da2c974fb739f2fe267c30d1e7b8a48e9ec378211e3a06f0db7d76b451",
+      "storedSHA256": "7e84a1da2c974fb739f2fe267c30d1e7b8a48e9ec378211e3a06f0db7d76b451"
+    },
+    {
+      "file": "platform-scope-guard.log",
+      "rawSHA256": "a64564327f64b415eaf730a21cdf2df671dddd3b6b04c6c6a5568730e420c482",
+      "storedSHA256": "966f2e1538610ae8e18b40d3862d9c92bcd7dc26da625e9d65fde23be5bc6207"
     }
   ]
 }

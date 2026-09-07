@@ -380,3 +380,37 @@ page errors/overlay occur. [Machine receipt](evidence/developers-browser.json),
 attribute-only accessibility refinement; source fingerprint remains unchanged.
 The earlier full 4,431-test suite remains applicable to unchanged calculation,
 example and guide sources; this final page refinement has its own browser proof.
+
+## Review delivery and remote follow-up
+
+Both source increments are committed and pushed in
+[site draft PR #415](https://github.com/ZodiacsOfficial/site/pull/415):
+Stage A `40d3f9647a31afc20db007b7cd5269eb4ef73b6a`, B03
+`73e253e924428aabb0e1c62ca635f5ea68ce5546`. SDK draft PR #6 links the
+companion and remains held. No merge or production release occurred.
+
+The exact candidate was downloaded **without credentials** from the public
+[immutable site commit](https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz),
+SHA-256 verified, then installed in another new consumer on Node 20.20.2.
+Public ESM/type/examples/invalid-input/notices/isolation checks passed again
+([receipt](evidence/public-candidate-consumer.log)). This is publicly retrievable
+review-candidate distribution through GitHub, **not npm publication** or adoption.
+
+Initial remote [Site Check run 34153727971](https://github.com/ZodiacsOfficial/site/actions/runs/34153727971)
+compared PR head `73e253e9` with main `7f953e3f`. Build & Check stopped before
+installation at the Phase 1 protected-scope guard: 86 generated engine-reference
+paths. Other SQL/legacy checks had passed; browser jobs were still running.
+The existing base-pinned exact-file allowance records authorization from the
+activated Stage A mandate; the guard and release hold remain unchanged. The
+local guard and its tests passed ([receipt](evidence/platform-scope-guard.log)).
+This is a diagnosed CI integration omission, not a calculation-test failure or
+authority to waive review.
+
+Automatic preview `dpl_HbtEtWm3z3VceuCagn2rn3id4NCw` for `73e253e9` was
+building at the first check, URL
+`https://zodiacs-nm6pslv5v-zodiacsofficial.vercel.app`. Production lookup still
+identified `dpl_BrntzbFYa2gzetKWgeq91GFeaM6W` / `7f953e3f` with the
+`zodiacs.org` alias. Follow-up scope-correction CI and preview verification
+are linked in the [draft PR's validation record](https://github.com/ZodiacsOfficial/site/pull/415).
+Inspect that exact commit/run before any integration; this checkpoint does not
+presume their success.

@@ -90,3 +90,13 @@ HTTP/shape/UTC boundary regressions. Reusing the private site helper would make
 the copyable example depend on undocumented imports; duplicating its displayed
 text would allow drift. Actual cache-policy changes remain a separate coordinated
 slice because Vercel configuration overlaps existing work.
+
+## A-006 — Use the existing bounded scope allowance
+
+The initial CI comparison correctly flagged 86 regenerated engine-reference
+paths under the older Phase 1 SDK-page freeze. The owner's activated platform
+mandate explicitly authorizes this Stage A package/reference integration. Use
+the repository's existing one-time allowance, naming exactly those 86 paths
+and current base `7f953e3fca0e7d5009e5602a1dad69edff0f54cc`. Do not edit the
+guard, broaden its patterns, disable CI or clear the SDK review/publication hold.
+The allowance ceases to apply when it is not itself changed in a later diff.
