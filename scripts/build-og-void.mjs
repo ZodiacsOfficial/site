@@ -135,7 +135,7 @@ for (const s of SIGNS) {
 const FOMO_ICON = await b64('public/assets/venues/fomo-official.svg', 'image/svg+xml');
 // fomo's eyes alone (the icon's glyph with the tile keyed away), and the two
 // store badges as the page shows them.
-const FOMO_EYES = await b64('public/assets/venues/fomo-eyes.png', 'image/png');
+const FOMO_EYES = await b64('public/assets/fomo/fomo-eyes.png', 'image/png');
 const APP_STORE_BADGE = await b64('public/assets/badges/app-store-en.svg', 'image/svg+xml');
 const GOOGLE_PLAY_BADGE = await b64('public/assets/badges/google-play-en.png', 'image/png');
 // The owner's phone render of Fomo's Verified list, keyed to transparency, used as delivered.
