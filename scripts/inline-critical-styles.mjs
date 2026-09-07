@@ -59,6 +59,9 @@ const targetPaths = [
   'birth-chart/index.html',
   // The lunar-return hero missed LCP with two blocking stylesheet requests.
   'lunar-return/index.html',
+  // The numerology hero sat a few hundredths over the LCP budget in CI with
+  // calculator.css on the render path and an eagerly hydrated island.
+  'numerology/index.html',
   'today/index.html',
   ...signs.map((sign) => `horoscopes/${sign}/index.html`),
   'ru/index.html',
@@ -397,9 +400,9 @@ async function main() {
     stylesheets += result.stylesheets;
     bytes += result.bytes;
   }
-  if (pages + alreadyInlined !== 18 || stylesheets !== 34) {
+  if (pages + alreadyInlined !== 19 || stylesheets !== 36) {
     throw new Error(
-      `inline-critical-styles: expected 18 pages / 34 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
+      `inline-critical-styles: expected 19 pages / 36 inlined stylesheets, found ${pages + alreadyInlined} / ${stylesheets}`,
     );
   }
   const state = pages > 0

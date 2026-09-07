@@ -32,6 +32,7 @@ These lines use each live page’s meta description to state what it computes or
 - /mercury-retrograde/ — Every Mercury retrograde through 2027, computed from the planet's real motion: exact dates, station positions, and what the window actually asks of you.
 - /moon-phase/ — See tonight's moon phase or look up any date you care about: phase, illumination, and moon sign, free.
 - /moon-sign/ — Find your moon sign free, in seconds — how you feel, what soothes you, and what you need to feel safe. No signup.
+- /numerology/ — Free numerology calculator: Life Path, Birthday, Expression, Soul Urge, Personality, Maturity, and Personal Year from your name and birth date, computed in your browser.
 - /profile/ — Open your saved birth charts, see what is active today, and keep the people and patterns you return to in one place.
 - /retrogrades/ — Which planets are retrograde right now, and when the next windows run: Mercury through Pluto for 2026–2027, station dates and positions computed exactly.
 - /rising-sign/ — Find your rising sign free with your birth time and place — how people first read you, plus the planet that rules your chart.

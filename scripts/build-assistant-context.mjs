@@ -38,6 +38,7 @@ export const TOOL_ROUTES = Object.freeze([
   '/mercury-retrograde/',
   '/moon-phase/',
   '/moon-sign/',
+  '/numerology/',
   '/profile/',
   '/retrogrades/',
   '/rising-sign/',

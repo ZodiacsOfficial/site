@@ -167,6 +167,7 @@ export const WEB_APPLICATION_PATHS = Object.freeze([
   '/rising-sign/',
   '/moon-phase/',
   '/lunar-return/',
+  '/numerology/',
   '/saturn-return/',
   '/birthday/',
   '/today/',

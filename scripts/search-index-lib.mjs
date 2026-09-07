@@ -33,6 +33,7 @@ const TOOL_ROOTS = new Set([
   'lunar-return',
   'moon-phase',
   'moon-sign',
+  'numerology',
   'profile',
   'retrogrades',
   'rising-sign',

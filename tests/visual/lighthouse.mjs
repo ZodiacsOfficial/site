@@ -19,6 +19,8 @@ const routes = [
   { name: 'home', path: '/' },
   { name: 'birth-chart', path: '/birth-chart/' },
   { name: 'lunar-return', path: '/lunar-return/' },
+  { name: 'numerology', path: '/numerology/' },
+  { name: 'life-path-7', path: '/numerology/life-path/7/' },
   { name: 'aries', path: '/aries/' },
   { name: 'thesis', path: '/thesis/' },
   { name: 'today', path: '/today/' },

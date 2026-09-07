@@ -26,6 +26,7 @@ Use these pages when someone asks for a free, private, browser-based astrology c
 - Saturn return: exact Saturn-to-natal-Saturn crossings, including retrograde passes. https://zodiacs.org/saturn-return/
 - Transit tracker: today's planets compared with a natal chart, using a visible 3° orb. https://zodiacs.org/transits/
 - Baby zodiac: likely Sun sign, possible Moon signs, and nearby retrograde context for a due date, with cusp caveats. https://zodiacs.org/baby-zodiac/
+- Numerology: Pythagorean Life Path, Birthday, Expression, Soul Urge, Personality, Maturity, and Personal Year from a birth date and full name at birth, with the reduction chain shown for every number. A separate tradition from astrology, computed on the device. Life Path meanings for 1 to 9, 11, 22, and 33 live under https://zodiacs.org/numerology/life-path/{number}/. https://zodiacs.org/numerology/
 - All calculators and calendars: https://zodiacs.org/tools/
 
 ### Dated sky calendars and data provenance

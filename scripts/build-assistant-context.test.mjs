@@ -39,6 +39,7 @@ describe('assistant site context', () => {
       '/mercury-retrograde/',
       '/moon-phase/',
       '/moon-sign/',
+      '/numerology/',
       '/profile/',
       '/retrogrades/',
       '/rising-sign/',
@@ -55,13 +56,15 @@ describe('assistant site context', () => {
       // R2.3; Packet C removes the two wing-only routes from Guide context;
       // /developers/ (the sky data API documentation) joined the static pages.
       // Lunar return adds one English tool and one consumer route.
-      consumerRoutes: 688,
+      // The numerology calculator adds one English tool and one static page;
+      // its twelve Life Path pages come from a dynamic route and are not counted.
+      consumerRoutes: 689,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 49,
-      tools: 18,
+      staticPages: 50,
+      tools: 19,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
