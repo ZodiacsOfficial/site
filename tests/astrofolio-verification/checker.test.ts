@@ -114,7 +114,7 @@ describe('fresh, address-free Registry loading', () => {
     const result = await loadRegistry({ expectedSha256, fetcher });
     expect(result).toMatchObject({ status: 'ready', registrySha256: expectedSha256, registry });
     expect(fetcher).toHaveBeenCalledWith(REGISTRY_SOURCE_URL, {
-      cache: 'no-store', credentials: 'omit', redirect: 'error', signal: expect.any(AbortSignal),
+      cache: 'no-store', credentials: 'same-origin', redirect: 'error', signal: expect.any(AbortSignal),
     });
     expect(JSON.stringify(fetcher.mock.calls)).not.toContain(solana);
     if (result.status === 'ready') expect(Number.isFinite(Date.parse(result.checkedAt))).toBe(true);

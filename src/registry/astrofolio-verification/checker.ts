@@ -187,7 +187,9 @@ export async function loadRegistry({
   try {
     return await Promise.race([deadline, (async (): Promise<RegistryLoadResult> => {
       const response = await fetcher(REGISTRY_SOURCE_URL, {
-        cache: 'no-store', credentials: 'omit', redirect: 'error', signal: controller.signal,
+        // Deployment protection may require its same-origin authentication cookie.
+        // The request URL and body never contain the pasted identifier.
+        cache: 'no-store', credentials: 'same-origin', redirect: 'error', signal: controller.signal,
       });
       if (!response.ok || response.redirected) return failure;
       const contentType = response.headers.get('content-type') ?? '';
