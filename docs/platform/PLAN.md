@@ -14,7 +14,7 @@ and candidate preparation do not replace review, release or external adoption.
 | 6 | B03 public data | Implemented: standalone example rejects HTTP/malformed/stale editions; docs match snapshot/build/cache semantics. 39 targeted tests, live example and build/check/browser passed. Headers unchanged; no current stale incident. Combined suite passed: 4,431 tests / 404 files. Final desktop/mobile keyboard-scroller browser regression passed. |
 | 7 | B01/B02 discovery/integrations | B01 implemented and local build/check/desktop/mobile/CSS-zoom checks passed. B02 public starter rc.2 passes 24 fresh-consumer tests, 185 browser checks and the literal rendered setup. Final site suite 4,493/407 passed. Draft PR #417 at 8343f173 is pushed and its exact READY preview passed the three developer-page browser journeys. All 14 jobs passed in exact-head CI 34159295138. Internal timing is not external adoption. |
 | 8 | B04 presentation | Approved homepage/fonts/footer preserved; 18 acceptance captures and desktop/mobile chart/share checks passed. Additional rc.2 publisher widget acceptance passes 74 Chrome checks, native 200%/400% zoom, keyboard scrolling, reduced motion, real offline/privacy and style isolation. No new source defect found; finite Chromium coverage only, not all-browser or assistive-technology certification. Repeat affected checks when the next starter changes. |
-| 9 | A04/C02 contract/receipts | Civil correction delivered in site #418: 4,624 tests, exact READY preview and all 14 CI jobs pass. Additive natal codec delivered in SDK #8/engine rc.3: 429 tests, two clean consumers, finite adversarial review and actual browser isolation pass. Standalone export/import/redaction delivered in site draft #419/ starter rc.3: 113 archive tests, 39 fresh-consumer checks, 231 Chrome assertions, literal public setup and 4,699 site tests pass. Exact READY preview and 40 native zoom checks pass; CI Build & Check is running and 13 other jobs pass. Site rc.1/account v1 are unchanged. Requested/actual account save/rerun/sync compatibility and reviewed range/degenerate-angle policy remain open; one-field normalization was disproved by synthetic round trip. |
+| 9 | A04/C02 contract/receipts | Civil correction delivered in site #418: 4,624 tests, exact READY preview and all 14 CI jobs pass. Additive natal codec delivered in SDK #8/engine rc.3: 429 tests, two clean consumers, finite adversarial review and actual browser isolation pass. Standalone export/import/redaction delivered in site draft #419/ starter rc.3: 113 archive tests, 39 fresh-consumer checks, 231 Chrome assertions, literal public setup and 4,699 site tests pass. Exact READY preview and 40 native zoom checks pass; all 14 jobs pass in exact-source CI 34167746529. Site rc.1/account v1 are unchanged. Requested/actual account save/rerun/sync compatibility and reviewed range/degenerate-angle policy remain open; one-field normalization was disproved by synthetic round trip. |
 | 10 | C01 hosted beta | Blocked on reviewed contract and explicit privacy/cost limits. No new service is a prerequisite for A/B. Existing infrastructure only; no unapproved spend or commercial terms. |
 | 11 | D01/D02 diagnostics/agents | Depends on safe portable receipts. Seed competing/ambiguous causes and honest abstention; verify an actual supported client before claiming interoperability. |
 | 12 | E01–E03 reference/adoption | Prepare small source-backed review/contribution/partner materials after stable integration paths. Human review, outreach, paying pilots and retained external use require actual authority/evidence. |
@@ -23,8 +23,14 @@ and candidate preparation do not replace review, release or external adoption.
 
 - GeoNames rejected transport/HTTP/JSON-parsing caches are corrected in SDK
   draft #7, separate engine rc.2: 305 tests, required gates and two clean
-  packed consumers passed. Structurally invalid fulfilled JSON still needs a
-  schema/cache-policy decision. That bounded implementation is active in an isolated SDK checkout, with no new artifact claimed. The site retains immutable rc.1; standalone starter rc.3 contains SDK rc.3.
+  packed consumers passed. Structurally invalid fulfilled JSON/cache integrity is now corrected in SDK
+  draft #9/rc.4: 496 tests, required gates, two clean consumers, 96 chart parity
+  cases and 20 actual Chrome checks pass. Valid mixed-generation dataset
+  mismatch remains undetectable in v1 and is explicitly documented. The site retains immutable rc.1; standalone starter rc.3 contains SDK rc.3.
+- Active bounded follow-up: preserve correct typed derived-flag echoes while
+  rejecting malformed/private/contradictory public input flags; current derived
+  echoes duplicate result flags and conflict with receipt validation. No new
+  implementation or delivery is claimed yet.
 - Core entry validates dates/settings, but arbitrary caller-supplied Chart body,
   aspect and flag arrays and low-level helper arguments do not form a complete
   hostile-input schema. `geo.resolveBirth` settings need aligned validation.

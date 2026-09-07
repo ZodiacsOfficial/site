@@ -1009,3 +1009,62 @@ CI run **34167746529** targets `83bd8aad`: 13 jobs currently pass and Build &
 Check remains running. A passing whole-run result is not claimed at this
 checkpoint. Browser Evidence is conditionally skipped, distinct from the actual
 local and remote browser checks recorded above.
+
+
+## GeoNames schema/cache candidate delivery — September 7, 23:13 UTC
+
+The next independent A02/A03 correction is delivered in SDK
+[draft #9](https://github.com/ZodiacsOfficial/sdk/pull/9), stacked on #8. Source
+`d190d97c981c7cacc6eb4ab6a49bdb8451ca3459` validates compact v1 JSON before cache
+fulfillment and returns metadata array snapshots. Malformed successful responses
+can be retried explicitly, while valid/in-flight caches and original transport
+errors are preserved. The root/ownership code and site's engine rc.1 and starter
+engine rc.3 pins remain unchanged.
+
+Separate engine **0.1.1-rc.4**, **22 files / 33,669 packed / 112,949 unpacked
+bytes**, SHA-256
+`0146fdff7abb6b937cf4d66b4cdaf0c80ecf238ea71f1f4f9fb27eae687a0d20`, is distributed
+at `9ad6a73984e69b897a6422429fab1970a7c89450`. The
+[immutable public artifact](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/9ad6a73984e69b897a6422429fab1970a7c89450/artifacts/zodiacs-engine-0.1.1-rc.4.tgz)
+was anonymously verified at 23:08 UTC.
+
+All **496 workspace tests / 30 files** pass on Node 20/22. Required build,
+typecheck/lint, format, checksum, neutrality, TypeDoc, exports/contents/dry-pack
+gates pass. Two clean packed consumers pass public TypeScript, ordinary engine/
+receipt behavior and new HTTP-200 recovery/mutation controls; isolated audit is
+zero. The 96 exact chart comparisons match rc.3 apart from version. All 33,934
+checked-in rows validate, with baseline results/metadata/request order retained
+in 27 sampled queries. Nine independent strict-unhandled-rejection probes and
+20 actual Chrome packed-consumer controls pass.
+
+[Complete SDK evidence at its browser checkpoint](https://github.com/ZodiacsOfficial/sdk/blob/ef846c82dd284559f1574f69ee901a221a7a722a/docs/platform/EVIDENCE.md#geonames-schema-and-cache-integrity-candidate)
+retains pre-fix failures, exact hashes, commands, model review and harness
+corrections. All browser responses are synthetic. Fixed GET resource paths omit
+full query/birth data but reveal the normalized initial through shard selection.
+Validation cannot authenticate geographic facts or detect in-range table indices
+from another dataset generation; a concrete mismatch is tested/documented.
+No host-dependent timezone rejection, automatic retry, eager requests, new
+response-size budget or custom-fetch sandbox is claimed.
+
+Fresh 23:08 UTC reads retain site main `7f953e3f`, SDK main `b49e0f14` and SDK
+#5's OPEN/draft/zero-review merge-publication hold at `cced0116`. Npm engine/
+widgets return 404; optional ownership remains 1.0.1. No merge, npm publication,
+production operation, external outreach or adoption occurred. Stacked SDK CI
+does not trigger; passing local evidence is not called CI success.
+
+
+### Receipt starter exact-source CI complete — 2026-09-07 23:21 UTC
+
+Site Check run [34167746529](https://github.com/ZodiacsOfficial/site/actions/runs/34167746529)
+completed successfully for delivery source
+**`83bd8aad212e846815eebb07bd3b59fa1c28e1c1`**: **all 14 jobs pass**. This
+supersedes the running-job snapshots above. The long Build & Check job completed
+its existing source, numerical, fresh-consumer, cross-page, visual, performance
+and widget acceptance steps; it was not cancelled to push evidence updates.
+[Exact source/job outcomes](evidence/starter-receipt/ci-final.json).
+
+Subsequent site commits only record verification and the separately delivered
+SDK candidate. They do not change this tested runtime, archive or metadata.
+The exact READY preview already tested uses the same `83bd8aad` delivery source.
+The conditionally skipped Browser Evidence workflow is not counted as a passing
+browser run. No merge or production deployment is implied by all-green CI.

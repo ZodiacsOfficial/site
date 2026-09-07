@@ -14,7 +14,8 @@ correction and a separate SDK GeoNames retry candidate are delivered. The overal
 | B01/B02 developer entry/support/examples | Site [draft #417](https://github.com/ZodiacsOfficial/site/pull/417), `8343f173e4db2e8ab6628bd04590e41b056872ce` | 4,493 tests/407 files; fresh public starter, 185 browser checks and literal rendered setup pass. Exact READY preview passed all three developer-page journeys. All 14 CI jobs passed in run 34159295138. |
 | C02 civil imports/timezones | Site [draft #418](https://github.com/ZodiacsOfficial/site/pull/418), `a4284d8d6289ed6abfe30d2da883ad07edcfc7bd` | 4,624 tests/408 files; all local gates, 18 captures, 12 share journeys, existing export and 962 compatibility checks pass. Exact READY preview passes all 12 journeys. All 14 jobs passed in exact-head CI 34161649806. |
 | A02/A03 GeoNames recovery | SDK [draft #7](https://github.com/ZodiacsOfficial/sdk/pull/7), `4f8903415e95a60969e84f7eb91e72f2f61ad315` | Separate engine rc.2, 305 tests/27 files on Node 20/22, all workspace gates, two clean packed consumers and 96 chart parity cases pass. Immutable public artifact verified. Stacked SDK CI does not trigger; local evidence is explicit. |
-| B02/C02 local receipt integration | Site [draft #419](https://github.com/ZodiacsOfficial/site/pull/419), delivery source `83bd8aad212e846815eebb07bd3b59fa1c28e1c1` | Starter rc.3: 21 files verified, 113 archive tests, 39 fresh-consumer checks, 231 actual Chrome assertions and literal public setup pass. Site: 4,699 tests/408 files, build/check/scope pass. Exact READY preview and 40 native 200%/400% zoom checks pass. Exact-source CI has 13 passing jobs; Build & Check is still running. |
+| A02/A03 GeoNames schema/cache integrity | SDK [draft #9](https://github.com/ZodiacsOfficial/sdk/pull/9), source `d190d97c981c7cacc6eb4ab6a49bdb8451ca3459` | Separate engine rc.4: 496 tests/30 files on Node 20/22, all workspace gates, two clean consumers, 96 chart parity cases, nine independent adversarial controls and 20 actual Chrome checks pass. Public artifact verified. |
+| B02/C02 local receipt integration | Site [draft #419](https://github.com/ZodiacsOfficial/site/pull/419), delivery source `83bd8aad212e846815eebb07bd3b59fa1c28e1c1` | Starter rc.3: 21 files verified, 113 archive tests, 39 fresh-consumer checks, 231 actual Chrome assertions and literal public setup pass. Site: 4,699 tests/408 files, build/check/scope pass. Exact READY preview and 40 native 200%/400% zoom checks pass. All 14 jobs pass in exact-source CI 34167746529. |
 | A04/C02 draft natal receipts | SDK [draft #8](https://github.com/ZodiacsOfficial/sdk/pull/8), runtime source `aaade67d0d49e8b10d1bc5c59cf345d6106dc270` | Separate engine rc.3, 429 tests/29 files on Node 20/22, required gates, two clean packed consumers, 96 parity cases and 23 actual offline Chrome codec checks pass. Immutable public artifact verified. Account v1/site integration is not completed by this codec. |
 
 Site application engine `0.1.1-rc.1` SHA-256:
@@ -77,9 +78,12 @@ receipt export/import/redaction is now implemented and tested in site draft #419
 The immutable rc.3 archive and anonymous URL match; actual fresh installation,
 all three examples, public setup failures and affected developer-page journeys
 pass. Exact READY preview acceptance and all 40 native 200%/400% zoom checks pass.
-The exact-source CI Build & Check job is still running; 13 other jobs pass. The next independent Stage A follow-up is testing
-structurally invalid fulfilled GeoNames data and cache integrity in an isolated
-SDK checkout; no new SDK artifact or delivery is claimed for that work yet.
+All 14 jobs pass in exact-source CI 34167746529. The GeoNames invalid-shape/cache-integrity follow-up is now delivered as separate
+SDK draft #9/engine rc.4, with its site/starter pins unchanged. The next bounded
+Stage A investigation concerns public input flag validation and correct typed
+derived-flag echoes that currently duplicate result flags and conflict with
+receipt validation. An isolated compatibility analysis is active; no new flag
+implementation or release is claimed yet.
 Invalid civil
 fields and missing timezones now fail before normalization; failed saved-chart
 recomputation retains its old receipt without rewriting storage.
@@ -91,8 +95,10 @@ its synthetic round trip loses requested Placidus intent. Preserve that
 legacy intent or change canonical sync fingerprints without compatibility tests.
 GeoNames rejected-request recovery is delivered as separate rc.2, SHA-256
 `b5c0c63bddc8c1ccfc717551bdd57b1bfe7c439568851780575c8586456e0826`.
-Its structurally invalid but parseable JSON/cache policy remains a follow-up;
-site rc.1 adoption is a separate reviewed pin, not an automatic update; the standalone rc.3 starter now includes this recovery through SDK rc.3.
+The standalone starter's engine rc.3 includes that transport/parsing recovery.
+The further structurally invalid JSON/cache-integrity correction is delivered
+in SDK draft #9/engine rc.4. Neither the site's engine rc.1 nor the starter's
+engine rc.3 adopts rc.4; those are separate reviewed pin changes.
 
 Hosted execution remains dependent on reviewed contracts and explicit
 privacy/limits. Continue independent authorized work during review waits.
