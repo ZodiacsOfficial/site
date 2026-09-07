@@ -282,7 +282,7 @@ const sources = [
         <div class="fomo-hero__copy">
           <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
           <p class="kicker reveal">Astrofolio, in a trading app</p>
-          <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">The twelve Zodiacs are on Fomo<FomoMark />.</h1>
+          <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">Trade<span class="fomo-hero__signs" aria-hidden="true">{SIGNS.map((sign) => <SignIcon sign={sign.slug} size={48} />)}</span><span class="sr-only"> the twelve Zodiacs</span> on the Fomo<FomoMark /> app</h1>
           <div class="fomo-hero__body">
             <figure class="fomo-hero__render reveal" style="--reveal-delay:100ms">
               <picture>
@@ -492,7 +492,7 @@ const sources = [
           <div class="fomo-finder__ask">
             <p class="kicker">Not sure which one is yours?</p>
             <h2 id="finder-title" class="display">Find your sign by birthday.</h2>
-            <p>Pick the month and day. You get your sign with its latest figures and a link that opens it in Fomo<FomoMark />.</p>
+            <p>Pick the month and day. You get your sign with its latest figures and a link that opens it in the Fomo<FomoMark /> app.</p>
           </div>
           <form class="fomo-finder__form" data-fomo-finder-form novalidate>
             <label class="fomo-finder__field">
@@ -1199,10 +1199,19 @@ const sources = [
   .fomo-hero__copy .kicker { margin: 0 0 14px; }
   .fomo-hero h1 {
     margin: 0;
-    max-width: 16ch;
     font-size: clamp(2.8rem, 1.4rem + 4.6vw, 4.7rem);
     line-height: 0.98;
   }
+  /* The twelve, as the site's own discs, on their own line of the headline. */
+  .fomo-hero__signs {
+    display: flex;
+    align-items: center;
+    gap: 0.07em;
+    margin: 0.12em 0 0.08em;
+  }
+  /* The component sizes itself from an inline custom property, so the
+     headline's discs take their size here in ems of the headline. */
+  .fomo-hero__signs :global(.sign-icon) { display: block; width: 0.56em !important; height: 0.56em !important; }
   .fomo-deck {
     max-width: 52ch;
     margin: clamp(20px, 3vw, 30px) 0 0;
@@ -1741,7 +1750,7 @@ const sources = [
     /* Phones: the first screen is the film, full height, with the headline
        and the stores at its foot, as on microduck's mobile hero. */
     .fomo-hero { min-height: 100svh; align-items: flex-end; }
-    .fomo-hero h1 { max-width: 12ch; font-size: clamp(2.7rem, 11.5vw, 3.6rem); }
+    .fomo-hero h1 { font-size: clamp(2.7rem, 11.5vw, 3.6rem); }
     .fomo-film__shade { background: rgba(6, 7, 9, 0.5); }
     .fomo-film__reel {
       left: 0;

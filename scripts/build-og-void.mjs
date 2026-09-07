@@ -345,7 +345,7 @@ function fomoCard() {
   <div class="stage">
     <div class="left" style="max-width: 560px; flex: none;">
       <span class="kicker">Astrofolio, in a trading app</span>
-      <div class="display" style="font-size: 66px; max-width: 560px;">The twelve Zodiacs are on Fomo<img src="${FOMO_ICON}" width="52" height="52" alt="" style="display:inline-block;width:0.74em;height:0.74em;border-radius:0.18em;vertical-align:-0.02em;margin-left:0.2em" />.</div>
+      <div class="display" style="font-size: 62px; max-width: 560px;">Trade<span style="display:flex;gap:5px;margin:14px 0 10px">${SIGNS.map((s) => `<img src="${DISCS[s.slug]}" width="41" height="41" alt="" style="display:block;width:41px;height:41px" />`).join('')}</span>on the Fomo<img src="${FOMO_ICON}" width="52" height="52" alt="" style="display:inline-block;width:0.74em;height:0.74em;border-radius:0.18em;vertical-align:-0.02em;margin-left:0.2em" /> app</div>
       <div class="sub" style="max-width: 600px;">Every official Zodiac, listed in the free Fomo app under its verified Solana address.</div>
       <div class="data">iPhone · Android · fomo.family</div>
     </div>
