@@ -1,6 +1,6 @@
 import type { CatalogLocale as Locale, UiKey } from './i18n';
 
-export type ToolGroup = 'start' | 'sky' | 'milestones';
+export type ToolGroup = 'start' | 'sky' | 'milestones' | 'numbers';
 export type ToolGlyphKind =
   | 'birth'
   | 'moon'
@@ -13,7 +13,8 @@ export type ToolGlyphKind =
   | 'moonphase'
   | 'fullmoon'
   | 'eclipse'
-  | 'baby';
+  | 'baby'
+  | 'numerology';
 
 interface ToolHubCard {
   order: number;
@@ -222,6 +223,10 @@ export const TOOL_CATALOG: readonly ToolCatalogEntry[] = [
   },
   {
     href: '/birthday/', label: 'birthday', sublabel: NAV_SUBLABELS.birthday, navOrder: 8,
+  },
+  {
+    href: '/numerology/',
+    hub: { order: 18, title: 'Numerology', promise: 'Life Path, Expression, Soul Urge, and Personal Year, with every step shown.', hue: 'var(--sign-virgo)', kind: 'numerology', group: 'numbers' },
   },
 ];
 

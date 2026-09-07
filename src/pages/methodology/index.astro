@@ -9,7 +9,7 @@ const jsonLd = [
     headline: 'How zodiacs.org computes your chart',
     url: 'https://zodiacs.org/methodology/',
     datePublished: '2026-07-05T10:36:57Z',
-    dateModified: '2026-08-23T00:00:00Z',
+    dateModified: '2026-09-07T00:00:00Z',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/methodology/' },
@@ -139,6 +139,29 @@ const jsonLd = [
         <a href="https://www.geonames.org/" rel="noopener noreferrer">GeoNames</a>{' '}
         (CC BY 4.0), each carrying its IANA time zone. Coordinates are stored
         to ~1 km precision — far finer than a birth chart needs.
+      </p>
+
+      <h2 id="numerology">Numerology</h2>
+      <p>
+        The numerology calculator is a different tradition from everything
+        above: no sky and no clock, only arithmetic on a birth date and a name.
+        It uses the Pythagorean system. Letters take the values 1 to 9 in cycles
+        (A is 1, I is 9, J is 1 again, and so on to Z, which is 8). The birth
+        date's month, day, and year are reduced separately, with 11, 22, and 33
+        kept as master numbers, then added and reduced once more; that final
+        total is the Life Path, and the calculator shows the whole chain, such
+        as 16/7. Name numbers reduce each name part before the parts are added,
+        the convention most modern numerologists follow, so master numbers and
+        the karmic-debt totals 13, 14, 16, and 19 are neither invented nor
+        hidden. Y counts as a vowel unless it sits beside another vowel or opens
+        a name before one, and any Y can be flipped by hand. Personal years,
+        months, and days reduce everything to a single digit. Accents fold to
+        plain letters, hyphens and apostrophes are removed without splitting a
+        name, and letters outside the Latin alphabet are refused rather than
+        dropped. The arithmetic is exact and repeatable and is checked against
+        fifteen worked cases in the test suite; the meanings attached to each
+        number are conventions of the tradition, not measurements or
+        predictions.
       </p>
 
       <h2>Privacy</h2>

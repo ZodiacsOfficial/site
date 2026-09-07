@@ -58,6 +58,8 @@ describe('search-index HTML extraction', () => {
     expect(inferSearchKind('/learn/aspects/')).toBe('learn');
     expect(inferSearchKind('/birth-chart/')).toBe('tool');
     expect(inferSearchKind('/lunar-return/')).toBe('tool');
+    expect(inferSearchKind('/numerology/')).toBe('tool');
+    expect(inferSearchKind('/numerology/life-path/7/')).toBe('tool');
     expect(inferSearchKind('/big-three/')).toBe('tool');
     expect(inferSearchKind('/solar-return/')).toBe('tool');
     expect(inferSearchKind('/about/')).toBe('page');
