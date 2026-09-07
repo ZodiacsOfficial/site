@@ -279,28 +279,40 @@ const sources = [
           <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
           <p class="kicker reveal">Astrofolio, in a trading app</p>
           <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">The twelve Zodiacs are on Fomo<FomoMark />.</h1>
-          <p class="fomo-deck reveal" style="--reveal-delay:120ms">
-            Fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. All twelve official Zodiacs are listed
-            there under their verified Solana addresses, so you can watch your sign, follow the other eleven,
-            and buy in a few taps.
-          </p>
-          <div class="fomo-stores reveal" id="top-stores" style="--reveal-delay:180ms" data-fomo-stores>
-            <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
-              <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
-            </a>
-            <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
-              <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
-            </a>
+          <div class="fomo-hero__body">
+            <figure class="fomo-hero__render reveal" style="--reveal-delay:100ms">
+              <picture>
+                <source type="image/avif" srcset={VERIFIED_RENDER.avif} />
+                <source type="image/webp" srcset={VERIFIED_RENDER.webp} />
+                <img
+                  src={VERIFIED_RENDER.png}
+                  width={VERIFIED_RENDER.width}
+                  height={VERIFIED_RENDER.height}
+                  alt="A phone showing Fomo’s Verified list with the Zodiacs, each marked with a blue check."
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+            </figure>
+            <div class="fomo-hero__text">
+              <p class="fomo-deck reveal" style="--reveal-delay:120ms">
+                Fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. All twelve official Zodiacs are
+                listed under their verified Solana addresses: watch your sign, follow the other eleven, and buy in a few taps.
+              </p>
+              <div class="fomo-stores reveal" id="top-stores" style="--reveal-delay:180ms" data-fomo-stores>
+                <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
+                  <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
+                </a>
+                <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
+                  <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
+                </a>
+              </div>
+              <p class="fomo-web reveal" style="--reveal-delay:220ms">
+                <span>Or on a computer:</span>
+                <a href={FOMO_SITE} rel="external nofollow noopener">fomo.family in a browser ↗</a>
+              </p>
+            </div>
           </div>
-          <p class="fomo-web reveal" style="--reveal-delay:220ms">
-            <span>Or on a computer:</span>
-            <a href={FOMO_SITE} rel="external nofollow noopener">fomo.family in a browser ↗</a>
-          </p>
-          <ul class="fomo-facts-strip reveal" style="--reveal-delay:260ms" role="list">
-            <li><strong>12</strong> official Zodiacs</li>
-            <li><strong>Solana</strong> one verified address each</li>
-            <li><strong>Free</strong> app, rated 18+</li>
-          </ul>
         </div>
       </div>
     </section>
@@ -343,6 +355,36 @@ const sources = [
           </div>
         </div>
       </section>
+
+    <section class="fomo-social section--tight container" id="social" aria-labelledby="social-title">
+      <div class="section-head">
+        <p class="kicker">The social part</p>
+        <h2 id="social-title">Trade alongside the people you follow.</h2>
+        <p>Fomo is a social app before it is a trading app: a feed of what your friends and favourite traders buy, profiles that show how they are doing, a thesis attached to each trade, and one balance that works across chains.</p>
+      </div>
+      <ul class="fomo-social__grid" role="list">
+        <li class="tile reveal">
+          <span class="fomo-steps__num">Feed</span>
+          <h3>Follow your friends</h3>
+          <p>Add the people you trust and the traders you rate, or start from the leaderboard, which ranks traders by their results. Their buys and sells arrive in your feed as they happen.</p>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:80ms">
+          <span class="fomo-steps__num">Profiles</span>
+          <h3>See which Zodiacs they are trading</h3>
+          <p>Open anyone you follow to see what they have been buying and selling and how it has gone, so you know who is in Leo, who just added Pisces, and who got out early.</p>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:160ms">
+          <span class="fomo-steps__num">Thesis</span>
+          <h3>Write your thesis</h3>
+          <p>When you buy, write why. The thesis is posted with the trade, so the people who follow you get the reasoning and not only the ticker, and you keep a record of your own thinking.</p>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:240ms">
+          <span class="fomo-steps__num">Chains</span>
+          <h3>Swap across chains</h3>
+          <p>The Zodiacs live on Solana. Fomo also trades on Base, Ethereum, BNB Chain, Robinhood Chain, and Monad, and moves between them in one step from a single balance, with no bridge and no gas to manage.</p>
+        </li>
+      </ul>
+    </section>
 
     <section class="fomo-finder container" id="your-sign" aria-labelledby="finder-title" data-fomo-finder>
       <div class="shell fomo-finder__shell">
@@ -1049,15 +1091,46 @@ const sources = [
     padding-top: calc(var(--nav-space, 96px) + clamp(8px, 2vw, 24px));
     padding-bottom: clamp(40px, 6vw, 72px);
   }
-  .fomo-hero__copy { max-width: calc(50% - clamp(20px, 2.5vw, 48px)); }
+  .fomo-hero__copy { max-width: calc(50% + 40px); }
+  /* Under the headline: the owner's render on the left, the description and
+     the stores beside it. The render's canvas carries transparent margins
+     either side of the phone (846 of 1243 px wide), so the figure is sized
+     to the phone itself and the image is scaled and shifted to fit it. */
+  .fomo-hero__body {
+    display: grid;
+    grid-template-columns: 272px minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(20px, 2.4vw, 32px);
+    margin-top: clamp(18px, 2.4vw, 28px);
+  }
+  .fomo-hero__render {
+    position: relative;
+    width: 272px;
+    margin: 0;
+  }
+  .fomo-hero__render img { display: block; width: 146.93%; max-width: none; height: auto; margin-left: -21.75%; }
+  .fomo-hero__render::after {
+    content: '';
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 1.5%;
+    height: 5%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.7), transparent 72%);
+    filter: blur(8px);
+    pointer-events: none;
+  }
+  .fomo-hero__text .fomo-deck { margin-top: 0; font-size: var(--text-base); line-height: 1.5; }
+  .fomo-hero__text .fomo-stores { margin-top: 18px; }
+  .fomo-hero__text .fomo-web { margin-top: 12px; }
   .fomo-hero .kicker { color: rgba(238, 241, 247, 0.74); }
   .fomo-hero .fomo-back { margin-bottom: clamp(14px, 2vw, 20px); color: rgba(238, 241, 247, 0.62); }
   .fomo-hero .fomo-back:hover { color: #fff; }
   .fomo-hero h1 { color: var(--ink-0, #eef1f7); text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55); }
   .fomo-hero .fomo-deck { margin-top: clamp(16px, 2.4vw, 22px); color: rgba(238, 241, 247, 0.84); text-shadow: 0 1px 18px rgba(6, 7, 9, 0.6); }
   .fomo-hero .fomo-stores { margin-top: clamp(22px, 3vw, 30px); }
-  .fomo-hero .fomo-facts-strip { margin-top: clamp(22px, 3vw, 30px); padding-top: 14px; color: rgba(238, 241, 247, 0.68); border-top-color: rgba(238, 241, 247, 0.16); }
-  .fomo-hero .fomo-facts-strip strong { color: #fff; }
   .fomo-hero .fomo-web { color: rgba(238, 241, 247, 0.56); }
   .fomo-hero .fomo-web a { color: rgba(238, 241, 247, 0.82); text-decoration-color: rgba(238, 241, 247, 0.3); }
   .fomo-hero .fomo-web a:hover { color: #fff; }
@@ -1074,8 +1147,8 @@ const sources = [
   .fomo-hero__copy .kicker { margin: 0 0 14px; }
   .fomo-hero h1 {
     margin: 0;
-    max-width: 11ch;
-    font-size: clamp(2.8rem, 1.5rem + 5vw, 5.2rem);
+    max-width: 16ch;
+    font-size: clamp(2.8rem, 1.4rem + 4.6vw, 4.7rem);
     line-height: 0.98;
   }
   .fomo-deck {
@@ -1121,18 +1194,6 @@ const sources = [
   }
   .fomo-web a { color: var(--muted); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
   .fomo-web a:hover { color: var(--text); }
-  .fomo-facts-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 22px;
-    margin: clamp(26px, 4vw, 40px) 0 0;
-    padding: 18px 0 0;
-    border-top: 1px solid var(--hair-1);
-    list-style: none;
-    color: var(--muted);
-    font-size: var(--text-sm);
-  }
-  .fomo-facts-strip strong { margin-right: 5px; color: var(--text); font-weight: 600; }
 
   /* ── Branded Fomo hand-off (the same pill the Astrofolio vitrine uses) ── */
   .fomo-cta {
@@ -1202,19 +1263,14 @@ const sources = [
   .fomo-cta:active { transform: scale(0.975); }
   .fomo-cta:focus-visible { outline: 2px solid #7f88ff; outline-offset: 3px; }
 
-  /* ── Steps, with the owner's Verified-list render standing beside them ── */
-  .fomo-steps__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-    align-items: center;
-    gap: clamp(28px, 5vw, 72px);
-  }
-  .fomo-steps__inner .fomo-steps__list { grid-template-columns: 1fr; }
+  /* ── Steps; on phones the owner's Verified-list render follows them ── */
   .fomo-steps__render {
     position: relative;
     width: min(440px, 100%);
-    margin: 0;
-    justify-self: center;
+    margin: clamp(28px, 5vw, 44px) auto 0;
+  }
+  @media (min-width: 901px) {
+    .fomo-steps__render { display: none; }
   }
   .fomo-steps__render::before {
     content: '';
@@ -1502,7 +1558,7 @@ const sources = [
   .fomo-spark--card { margin-top: -2px; opacity: 0.9; }
 
   /* ── Steps ───────────────────────────────────────────────────────── */
-  .fomo-steps, .fomo-signs, .fomo-facts, .fomo-faq { border-top: 1px solid var(--hair-1); }
+  .fomo-steps, .fomo-social, .fomo-signs, .fomo-facts, .fomo-faq { border-top: 1px solid var(--hair-1); }
   .fomo-steps__list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1511,14 +1567,22 @@ const sources = [
     padding: 0;
     list-style: none;
   }
-  .fomo-steps__list li { display: grid; align-content: start; gap: 10px; padding: clamp(20px, 2.6vw, 28px); }
+  .fomo-social__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .fomo-steps__list li, .fomo-social__grid li { display: grid; align-content: start; gap: 10px; padding: clamp(20px, 2.6vw, 28px); }
   .fomo-steps__num {
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 0.18em;
     color: var(--faint);
   }
-  .fomo-steps__list h3, .fomo-card h3, .fomo-facts h3 {
+  .fomo-steps__list h3, .fomo-social__grid h3, .fomo-card h3, .fomo-facts h3 {
     margin: 0;
     font-family: var(--font-serif);
     font-size: 1.5rem;
@@ -1526,7 +1590,7 @@ const sources = [
     letter-spacing: -0.005em;
     line-height: 1.1;
   }
-  .fomo-steps__list p, .fomo-facts p {
+  .fomo-steps__list p, .fomo-social__grid p, .fomo-facts p {
     margin: 0;
     color: var(--text-2);
     font-size: var(--text-sm);
@@ -1654,9 +1718,11 @@ const sources = [
     .fomo-alerts__inner, .fomo-footage__inner { grid-template-columns: 1fr; }
     .fomo-footage .fomo-phone { order: -1; }
     .fomo-steps__list { grid-template-columns: 1fr; }
-    .fomo-steps__inner { grid-template-columns: 1fr; }
+    .fomo-hero__body { display: block; }
+    .fomo-hero__render { display: none; }
   }
   @media (max-width: 720px) {
+    .fomo-social__grid { grid-template-columns: 1fr; }
     .fomo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .fomo-facts__grid { grid-template-columns: 1fr; }
     .fomo-finder__form { grid-template-columns: 1fr 1fr; }
