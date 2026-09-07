@@ -1,0 +1,2009 @@
+{
+  "sourceCommit": "3ce109d2b36985d7f0463f1748f8aca7f5541615",
+  "people": [
+    {
+      "slug": "abdus-salam",
+      "birthDate": "1926-01-29"
+    },
+    {
+      "slug": "ada-lovelace",
+      "birthDate": "1815-12-10"
+    },
+    {
+      "slug": "agnes-varda",
+      "birthDate": "1928-05-30"
+    },
+    {
+      "slug": "akira-kurosawa",
+      "birthDate": "1910-03-23"
+    },
+    {
+      "slug": "alan-turing",
+      "birthDate": "1912-06-23"
+    },
+    {
+      "slug": "albert-camus",
+      "birthDate": "1913-11-07"
+    },
+    {
+      "slug": "albert-einstein",
+      "birthDate": "1879-03-14"
+    },
+    {
+      "slug": "albertina-sisulu",
+      "birthDate": "1918-10-21"
+    },
+    {
+      "slug": "alberto-santos-dumont",
+      "birthDate": "1873-07-20"
+    },
+    {
+      "slug": "alessandro-manzoni",
+      "birthDate": "1785-03-07"
+    },
+    {
+      "slug": "alexander-fleming",
+      "birthDate": "1881-08-06"
+    },
+    {
+      "slug": "alexander-graham-bell",
+      "birthDate": "1847-03-03"
+    },
+    {
+      "slug": "alfonsina-storni",
+      "birthDate": "1892-05-29"
+    },
+    {
+      "slug": "alfred-adler",
+      "birthDate": "1870-02-07"
+    },
+    {
+      "slug": "alfred-hitchcock",
+      "birthDate": "1899-08-13"
+    },
+    {
+      "slug": "alfred-north-whitehead",
+      "birthDate": "1861-02-15"
+    },
+    {
+      "slug": "ali-farka-toure",
+      "birthDate": "1939-10-31"
+    },
+    {
+      "slug": "alma-mahler",
+      "birthDate": "1879-08-31"
+    },
+    {
+      "slug": "althea-gibson",
+      "birthDate": "1927-08-25"
+    },
+    {
+      "slug": "alvar-aalto",
+      "birthDate": "1898-02-03"
+    },
+    {
+      "slug": "amedeo-avogadro",
+      "birthDate": "1776-08-09"
+    },
+    {
+      "slug": "amelia-earhart",
+      "birthDate": "1897-07-24"
+    },
+    {
+      "slug": "amilcar-cabral",
+      "birthDate": "1924-09-12"
+    },
+    {
+      "slug": "amrita-pritam",
+      "birthDate": "1919-08-31"
+    },
+    {
+      "slug": "amy-winehouse",
+      "birthDate": "1983-09-14"
+    },
+    {
+      "slug": "andy-warhol",
+      "birthDate": "1928-08-06"
+    },
+    {
+      "slug": "anita-mui",
+      "birthDate": "1963-10-10"
+    },
+    {
+      "slug": "anne-bronte",
+      "birthDate": "1820-01-17"
+    },
+    {
+      "slug": "anne-sullivan",
+      "birthDate": "1866-04-04"
+    },
+    {
+      "slug": "annie-jump-cannon",
+      "birthDate": "1863-12-11"
+    },
+    {
+      "slug": "antoine-lavoisier",
+      "birthDate": "1743-08-26"
+    },
+    {
+      "slug": "anton-bruckner",
+      "birthDate": "1824-09-04"
+    },
+    {
+      "slug": "antoni-gaudi",
+      "birthDate": "1852-06-25"
+    },
+    {
+      "slug": "antonin-dvorak",
+      "birthDate": "1841-09-08"
+    },
+    {
+      "slug": "antonio-machado",
+      "birthDate": "1875-07-26"
+    },
+    {
+      "slug": "antonio-vivaldi",
+      "birthDate": "1678-03-04"
+    },
+    {
+      "slug": "aretha-franklin",
+      "birthDate": "1942-03-25"
+    },
+    {
+      "slug": "arnold-schoenberg",
+      "birthDate": "1874-09-13"
+    },
+    {
+      "slug": "artemisia-gentileschi",
+      "birthDate": "1593-07-08"
+    },
+    {
+      "slug": "arthur-miller",
+      "birthDate": "1915-10-17"
+    },
+    {
+      "slug": "arthur-rimbaud",
+      "birthDate": "1854-10-20"
+    },
+    {
+      "slug": "arthur-schopenhauer",
+      "birthDate": "1788-02-22"
+    },
+    {
+      "slug": "astrid-lindgren",
+      "birthDate": "1907-11-14"
+    },
+    {
+      "slug": "audre-lorde",
+      "birthDate": "1934-02-18"
+    },
+    {
+      "slug": "audrey-hepburn",
+      "birthDate": "1929-05-04"
+    },
+    {
+      "slug": "august-strindberg",
+      "birthDate": "1849-01-22"
+    },
+    {
+      "slug": "ayrton-senna",
+      "birthDate": "1960-03-21"
+    },
+    {
+      "slug": "ba-jin",
+      "birthDate": "1904-11-25"
+    },
+    {
+      "slug": "babe-ruth",
+      "birthDate": "1895-02-06"
+    },
+    {
+      "slug": "banjo-paterson",
+      "birthDate": "1864-02-17"
+    },
+    {
+      "slug": "barbara-mcclintock",
+      "birthDate": "1902-06-16"
+    },
+    {
+      "slug": "bedrich-smetana",
+      "birthDate": "1824-03-02"
+    },
+    {
+      "slug": "ben-enwonwu",
+      "birthDate": "1921-07-14"
+    },
+    {
+      "slug": "berenice-abbott",
+      "birthDate": "1898-07-17"
+    },
+    {
+      "slug": "bernardo-houssay",
+      "birthDate": "1887-04-10"
+    },
+    {
+      "slug": "bernardo-o-higgins",
+      "birthDate": "1778-08-20"
+    },
+    {
+      "slug": "bertha-lutz",
+      "birthDate": "1894-08-02"
+    },
+    {
+      "slug": "berthe-morisot",
+      "birthDate": "1841-01-14"
+    },
+    {
+      "slug": "bertrand-russell",
+      "birthDate": "1872-05-18"
+    },
+    {
+      "slug": "bessie-coleman",
+      "birthDate": "1892-01-26"
+    },
+    {
+      "slug": "bessie-head",
+      "birthDate": "1937-07-06"
+    },
+    {
+      "slug": "bessie-smith",
+      "birthDate": "1894-04-15"
+    },
+    {
+      "slug": "bette-davis",
+      "birthDate": "1908-04-05"
+    },
+    {
+      "slug": "bhimsen-joshi",
+      "birthDate": "1922-02-04"
+    },
+    {
+      "slug": "bill-gates",
+      "birthDate": "1955-10-28"
+    },
+    {
+      "slug": "billie-holiday",
+      "birthDate": "1915-04-07"
+    },
+    {
+      "slug": "blaise-pascal",
+      "birthDate": "1623-06-19"
+    },
+    {
+      "slug": "bob-marley",
+      "birthDate": "1945-02-06"
+    },
+    {
+      "slug": "bobby-charlton",
+      "birthDate": "1937-10-11"
+    },
+    {
+      "slug": "booker-t-washington",
+      "birthDate": "1856-04-05"
+    },
+    {
+      "slug": "brenda-fassie",
+      "birthDate": "1964-11-03"
+    },
+    {
+      "slug": "bruce-lee",
+      "birthDate": "1940-11-27"
+    },
+    {
+      "slug": "bruno-schulz",
+      "birthDate": "1892-07-12"
+    },
+    {
+      "slug": "buchi-emecheta",
+      "birthDate": "1944-07-21"
+    },
+    {
+      "slug": "buster-keaton",
+      "birthDate": "1895-10-04"
+    },
+    {
+      "slug": "c-v-raman",
+      "birthDate": "1888-11-07"
+    },
+    {
+      "slug": "camille-saint-saens",
+      "birthDate": "1835-10-09"
+    },
+    {
+      "slug": "candido-portinari",
+      "birthDate": "1903-12-29"
+    },
+    {
+      "slug": "cantinflas",
+      "birthDate": "1911-08-12"
+    },
+    {
+      "slug": "carl-friedrich-gauss",
+      "birthDate": "1777-04-30"
+    },
+    {
+      "slug": "carl-sandburg",
+      "birthDate": "1878-01-06"
+    },
+    {
+      "slug": "carlos-chagas",
+      "birthDate": "1879-07-09"
+    },
+    {
+      "slug": "carlos-fuentes",
+      "birthDate": "1928-11-11"
+    },
+    {
+      "slug": "carlos-p-romulo",
+      "birthDate": "1899-01-14"
+    },
+    {
+      "slug": "caroline-herschel",
+      "birthDate": "1750-03-16"
+    },
+    {
+      "slug": "cecile-chaminade",
+      "birthDate": "1857-08-08"
+    },
+    {
+      "slug": "cecilia-meireles",
+      "birthDate": "1901-11-07"
+    },
+    {
+      "slug": "cecilia-payne-gaposchkin",
+      "birthDate": "1900-05-10"
+    },
+    {
+      "slug": "celia-cruz",
+      "birthDate": "1925-10-21"
+    },
+    {
+      "slug": "cesaria-evora",
+      "birthDate": "1941-08-27"
+    },
+    {
+      "slug": "chabuca-granda",
+      "birthDate": "1920-09-03"
+    },
+    {
+      "slug": "chairil-anwar",
+      "birthDate": "1922-07-26"
+    },
+    {
+      "slug": "charles-baudelaire",
+      "birthDate": "1821-04-09"
+    },
+    {
+      "slug": "charles-darwin",
+      "birthDate": "1809-02-12"
+    },
+    {
+      "slug": "charles-dickens",
+      "birthDate": "1812-02-07"
+    },
+    {
+      "slug": "charles-eames",
+      "birthDate": "1907-06-17"
+    },
+    {
+      "slug": "charles-lyell",
+      "birthDate": "1797-11-14"
+    },
+    {
+      "slug": "charlie-chaplin",
+      "birthDate": "1889-04-16"
+    },
+    {
+      "slug": "charlotte-bronte",
+      "birthDate": "1816-04-21"
+    },
+    {
+      "slug": "chien-shiung-wu",
+      "birthDate": "1912-05-31"
+    },
+    {
+      "slug": "christina-rossetti",
+      "birthDate": "1830-12-05"
+    },
+    {
+      "slug": "clara-haskil",
+      "birthDate": "1895-01-07"
+    },
+    {
+      "slug": "clara-schumann",
+      "birthDate": "1819-09-13"
+    },
+    {
+      "slug": "clarice-lispector",
+      "birthDate": "1920-12-10"
+    },
+    {
+      "slug": "claude-debussy",
+      "birthDate": "1862-08-22"
+    },
+    {
+      "slug": "claude-monet",
+      "birthDate": "1840-11-14"
+    },
+    {
+      "slug": "coco-chanel",
+      "birthDate": "1883-08-19"
+    },
+    {
+      "slug": "colette",
+      "birthDate": "1873-01-28"
+    },
+    {
+      "slug": "consuelo-velazquez",
+      "birthDate": "1916-08-29"
+    },
+    {
+      "slug": "dalida",
+      "birthDate": "1933-01-17"
+    },
+    {
+      "slug": "dante-gabriel-rossetti",
+      "birthDate": "1828-05-12"
+    },
+    {
+      "slug": "david-alfaro-siqueiros",
+      "birthDate": "1896-12-29"
+    },
+    {
+      "slug": "david-bowie",
+      "birthDate": "1947-01-08"
+    },
+    {
+      "slug": "david-unaipon",
+      "birthDate": "1872-09-28"
+    },
+    {
+      "slug": "delmira-agustini",
+      "birthDate": "1886-10-24"
+    },
+    {
+      "slug": "denis-diderot",
+      "birthDate": "1713-10-05"
+    },
+    {
+      "slug": "desmond-tutu",
+      "birthDate": "1931-10-07"
+    },
+    {
+      "slug": "dian-fossey",
+      "birthDate": "1932-01-16"
+    },
+    {
+      "slug": "diane-arbus",
+      "birthDate": "1923-03-14"
+    },
+    {
+      "slug": "diego-maradona",
+      "birthDate": "1960-10-30"
+    },
+    {
+      "slug": "dinu-lipatti",
+      "birthDate": "1917-03-19"
+    },
+    {
+      "slug": "dolores-del-rio",
+      "birthDate": "1904-08-03"
+    },
+    {
+      "slug": "doria-shafik",
+      "birthDate": "1908-12-14"
+    },
+    {
+      "slug": "dorothea-lange",
+      "birthDate": "1895-05-26"
+    },
+    {
+      "slug": "dorothy-dandridge",
+      "birthDate": "1922-11-09"
+    },
+    {
+      "slug": "dorothy-day",
+      "birthDate": "1897-11-08"
+    },
+    {
+      "slug": "duke-ellington",
+      "birthDate": "1899-04-29"
+    },
+    {
+      "slug": "eca-de-queiroz",
+      "birthDate": "1845-11-25"
+    },
+    {
+      "slug": "edgar-allan-poe",
+      "birthDate": "1809-01-19"
+    },
+    {
+      "slug": "edgar-degas",
+      "birthDate": "1834-07-19"
+    },
+    {
+      "slug": "edith-clarke",
+      "birthDate": "1883-02-10"
+    },
+    {
+      "slug": "edith-piaf",
+      "birthDate": "1915-12-19"
+    },
+    {
+      "slug": "edith-stein",
+      "birthDate": "1891-10-12"
+    },
+    {
+      "slug": "edmund-hillary",
+      "birthDate": "1919-07-20"
+    },
+    {
+      "slug": "edvard-grieg",
+      "birthDate": "1843-06-15"
+    },
+    {
+      "slug": "edward-elgar",
+      "birthDate": "1857-06-02"
+    },
+    {
+      "slug": "edward-jenner",
+      "birthDate": "1749-05-17"
+    },
+    {
+      "slug": "eileen-gray",
+      "birthDate": "1878-08-08"
+    },
+    {
+      "slug": "eleanor-roosevelt",
+      "birthDate": "1884-10-11"
+    },
+    {
+      "slug": "elis-regina",
+      "birthDate": "1945-03-17"
+    },
+    {
+      "slug": "elisabeth-vigee-le-brun",
+      "birthDate": "1755-04-16"
+    },
+    {
+      "slug": "elizabeth-barrett-browning",
+      "birthDate": "1806-03-06"
+    },
+    {
+      "slug": "elizabeth-bishop",
+      "birthDate": "1911-02-08"
+    },
+    {
+      "slug": "elizabeth-blackwell",
+      "birthDate": "1821-02-03"
+    },
+    {
+      "slug": "elizabeth-cady-stanton",
+      "birthDate": "1815-11-12"
+    },
+    {
+      "slug": "ella-fitzgerald",
+      "birthDate": "1917-04-25"
+    },
+    {
+      "slug": "ellen-kuzwayo",
+      "birthDate": "1914-06-29"
+    },
+    {
+      "slug": "elsa-morante",
+      "birthDate": "1912-08-18"
+    },
+    {
+      "slug": "elsa-schiaparelli",
+      "birthDate": "1890-09-10"
+    },
+    {
+      "slug": "elvis-presley",
+      "birthDate": "1935-01-08"
+    },
+    {
+      "slug": "emil-zatopek",
+      "birthDate": "1922-09-19"
+    },
+    {
+      "slug": "emile-zola",
+      "birthDate": "1840-04-02"
+    },
+    {
+      "slug": "emily-bronte",
+      "birthDate": "1818-07-30"
+    },
+    {
+      "slug": "emmeline-pankhurst",
+      "birthDate": "1858-07-15"
+    },
+    {
+      "slug": "enrico-fermi",
+      "birthDate": "1901-09-29"
+    },
+    {
+      "slug": "erik-satie",
+      "birthDate": "1866-05-17"
+    },
+    {
+      "slug": "ernest-shackleton",
+      "birthDate": "1874-02-15"
+    },
+    {
+      "slug": "erwin-schrodinger",
+      "birthDate": "1887-08-12"
+    },
+    {
+      "slug": "ethel-smyth",
+      "birthDate": "1858-04-22"
+    },
+    {
+      "slug": "eusebio",
+      "birthDate": "1942-01-25"
+    },
+    {
+      "slug": "eva-peron",
+      "birthDate": "1919-05-07"
+    },
+    {
+      "slug": "evariste-galois",
+      "birthDate": "1811-10-25"
+    },
+    {
+      "slug": "fanny-blankers-koen",
+      "birthDate": "1918-04-26"
+    },
+    {
+      "slug": "faten-hamama",
+      "birthDate": "1931-05-27"
+    },
+    {
+      "slug": "fatima-jinnah",
+      "birthDate": "1893-07-31"
+    },
+    {
+      "slug": "federico-fellini",
+      "birthDate": "1920-01-20"
+    },
+    {
+      "slug": "fernando-botero",
+      "birthDate": "1932-04-19"
+    },
+    {
+      "slug": "fernando-pessoa",
+      "birthDate": "1888-06-13"
+    },
+    {
+      "slug": "flannery-o-connor",
+      "birthDate": "1925-03-25"
+    },
+    {
+      "slug": "flora-nwapa",
+      "birthDate": "1931-01-13"
+    },
+    {
+      "slug": "florence-griffith-joyner",
+      "birthDate": "1959-12-21"
+    },
+    {
+      "slug": "florence-knoll",
+      "birthDate": "1917-05-24"
+    },
+    {
+      "slug": "florence-nightingale",
+      "birthDate": "1820-05-12"
+    },
+    {
+      "slug": "francisco-goya",
+      "birthDate": "1746-03-30"
+    },
+    {
+      "slug": "frank-worrell",
+      "birthDate": "1924-08-01"
+    },
+    {
+      "slug": "frantz-fanon",
+      "birthDate": "1925-07-20"
+    },
+    {
+      "slug": "franz-kafka",
+      "birthDate": "1883-07-03"
+    },
+    {
+      "slug": "franz-liszt",
+      "birthDate": "1811-10-22"
+    },
+    {
+      "slug": "franz-schubert",
+      "birthDate": "1797-01-31"
+    },
+    {
+      "slug": "fred-perry",
+      "birthDate": "1909-05-18"
+    },
+    {
+      "slug": "freddie-mercury",
+      "birthDate": "1946-09-05"
+    },
+    {
+      "slug": "frederick-banting",
+      "birthDate": "1891-11-14"
+    },
+    {
+      "slug": "frida-kahlo",
+      "birthDate": "1907-07-06"
+    },
+    {
+      "slug": "fridtjof-nansen",
+      "birthDate": "1861-10-10"
+    },
+    {
+      "slug": "friedrich-engels",
+      "birthDate": "1820-11-28"
+    },
+    {
+      "slug": "friedrich-nietzsche",
+      "birthDate": "1844-10-15"
+    },
+    {
+      "slug": "friedrich-schiller",
+      "birthDate": "1759-11-10"
+    },
+    {
+      "slug": "fukuzawa-yukichi",
+      "birthDate": "1835-01-10"
+    },
+    {
+      "slug": "funmilayo-ransome-kuti",
+      "birthDate": "1900-10-25"
+    },
+    {
+      "slug": "g-e-m-anscombe",
+      "birthDate": "1919-03-18"
+    },
+    {
+      "slug": "gabriel-faure",
+      "birthDate": "1845-05-12"
+    },
+    {
+      "slug": "gabriel-garcia-marquez",
+      "birthDate": "1927-03-06"
+    },
+    {
+      "slug": "gabriele-munter",
+      "birthDate": "1877-02-19"
+    },
+    {
+      "slug": "gaetano-donizetti",
+      "birthDate": "1797-11-29"
+    },
+    {
+      "slug": "garrincha",
+      "birthDate": "1933-10-28"
+    },
+    {
+      "slug": "georg-wilhelm-friedrich-hegel",
+      "birthDate": "1770-08-27"
+    },
+    {
+      "slug": "george-bernard-shaw",
+      "birthDate": "1856-07-26"
+    },
+    {
+      "slug": "george-best",
+      "birthDate": "1946-05-22"
+    },
+    {
+      "slug": "george-eliot",
+      "birthDate": "1819-11-22"
+    },
+    {
+      "slug": "george-gershwin",
+      "birthDate": "1898-09-26"
+    },
+    {
+      "slug": "george-orwell",
+      "birthDate": "1903-06-25"
+    },
+    {
+      "slug": "george-sand",
+      "birthDate": "1804-07-01"
+    },
+    {
+      "slug": "georges-bizet",
+      "birthDate": "1838-10-25"
+    },
+    {
+      "slug": "gertrude-b-elion",
+      "birthDate": "1918-01-23"
+    },
+    {
+      "slug": "gertrude-bell",
+      "birthDate": "1868-07-14"
+    },
+    {
+      "slug": "getulio-vargas",
+      "birthDate": "1882-04-19"
+    },
+    {
+      "slug": "ghassan-kanafani",
+      "birthDate": "1936-04-09"
+    },
+    {
+      "slug": "giacomo-leopardi",
+      "birthDate": "1798-06-29"
+    },
+    {
+      "slug": "gioachino-rossini",
+      "birthDate": "1792-02-29"
+    },
+    {
+      "slug": "giorgos-seferis",
+      "birthDate": "1900-03-13"
+    },
+    {
+      "slug": "grace-kelly",
+      "birthDate": "1929-11-12"
+    },
+    {
+      "slug": "grazia-deledda",
+      "birthDate": "1871-09-27"
+    },
+    {
+      "slug": "gregor-mendel",
+      "birthDate": "1822-07-20"
+    },
+    {
+      "slug": "guy-de-maupassant",
+      "birthDate": "1850-08-05"
+    },
+    {
+      "slug": "haile-selassie",
+      "birthDate": "1892-07-23"
+    },
+    {
+      "slug": "halide-edib-ad-var",
+      "birthDate": "1884-06-11"
+    },
+    {
+      "slug": "hanae-mori",
+      "birthDate": "1926-01-08"
+    },
+    {
+      "slug": "hans-christian-andersen",
+      "birthDate": "1805-04-02"
+    },
+    {
+      "slug": "harriet-beecher-stowe",
+      "birthDate": "1811-06-14"
+    },
+    {
+      "slug": "harriet-taylor-mill",
+      "birthDate": "1807-10-08"
+    },
+    {
+      "slug": "hattie-mcdaniel",
+      "birthDate": "1893-06-10"
+    },
+    {
+      "slug": "hector-berlioz",
+      "birthDate": "1803-12-11"
+    },
+    {
+      "slug": "heinrich-hertz",
+      "birthDate": "1857-02-22"
+    },
+    {
+      "slug": "heitor-villa-lobos",
+      "birthDate": "1887-03-05"
+    },
+    {
+      "slug": "helen-b-taussig",
+      "birthDate": "1898-05-24"
+    },
+    {
+      "slug": "helen-frankenthaler",
+      "birthDate": "1928-12-12"
+    },
+    {
+      "slug": "henri-cartier-bresson",
+      "birthDate": "1908-08-22"
+    },
+    {
+      "slug": "henri-matisse",
+      "birthDate": "1869-12-31"
+    },
+    {
+      "slug": "henri-poincare",
+      "birthDate": "1854-04-29"
+    },
+    {
+      "slug": "henry-lawson",
+      "birthDate": "1867-06-17"
+    },
+    {
+      "slug": "herman-melville",
+      "birthDate": "1819-08-01"
+    },
+    {
+      "slug": "hibari-misora",
+      "birthDate": "1937-05-29"
+    },
+    {
+      "slug": "hideki-yukawa",
+      "birthDate": "1907-01-23"
+    },
+    {
+      "slug": "hideyo-noguchi",
+      "birthDate": "1876-11-09"
+    },
+    {
+      "slug": "hilma-af-klint",
+      "birthDate": "1862-10-26"
+    },
+    {
+      "slug": "homi-j-bhabha",
+      "birthDate": "1909-10-30"
+    },
+    {
+      "slug": "honore-de-balzac",
+      "birthDate": "1799-05-20"
+    },
+    {
+      "slug": "humphry-davy",
+      "birthDate": "1778-12-17"
+    },
+    {
+      "slug": "ida-b-wells",
+      "birthDate": "1862-07-16"
+    },
+    {
+      "slug": "ignaz-semmelweis",
+      "birthDate": "1818-07-01"
+    },
+    {
+      "slug": "immanuel-kant",
+      "birthDate": "1724-04-22"
+    },
+    {
+      "slug": "indira-gandhi",
+      "birthDate": "1917-11-19"
+    },
+    {
+      "slug": "ingrid-bergman",
+      "birthDate": "1915-08-29"
+    },
+    {
+      "slug": "irene-joliot-curie",
+      "birthDate": "1897-09-12"
+    },
+    {
+      "slug": "irma-stern",
+      "birthDate": "1894-10-02"
+    },
+    {
+      "slug": "isabella-bird",
+      "birthDate": "1831-10-15"
+    },
+    {
+      "slug": "issey-miyake",
+      "birthDate": "1938-04-22"
+    },
+    {
+      "slug": "italo-calvino",
+      "birthDate": "1923-10-15"
+    },
+    {
+      "slug": "j-m-w-turner",
+      "birthDate": "1775-04-23"
+    },
+    {
+      "slug": "jacques-derrida",
+      "birthDate": "1930-07-15"
+    },
+    {
+      "slug": "jagadish-chandra-bose",
+      "birthDate": "1858-11-30"
+    },
+    {
+      "slug": "james-clerk-maxwell",
+      "birthDate": "1831-06-13"
+    },
+    {
+      "slug": "james-van-der-zee",
+      "birthDate": "1886-06-29"
+    },
+    {
+      "slug": "jane-addams",
+      "birthDate": "1860-09-06"
+    },
+    {
+      "slug": "jane-austen",
+      "birthDate": "1775-12-16"
+    },
+    {
+      "slug": "janis-joplin",
+      "birthDate": "1943-01-19"
+    },
+    {
+      "slug": "jawaharlal-nehru",
+      "birthDate": "1889-11-14"
+    },
+    {
+      "slug": "jean-bartik",
+      "birthDate": "1924-12-27"
+    },
+    {
+      "slug": "jean-beliveau",
+      "birthDate": "1931-08-31"
+    },
+    {
+      "slug": "jean-jacques-rousseau",
+      "birthDate": "1712-06-28"
+    },
+    {
+      "slug": "jean-luc-godard",
+      "birthDate": "1930-12-03"
+    },
+    {
+      "slug": "jean-michel-basquiat",
+      "birthDate": "1960-12-22"
+    },
+    {
+      "slug": "jim-morrison",
+      "birthDate": "1943-12-08"
+    },
+    {
+      "slug": "joan-didion",
+      "birthDate": "1934-12-05"
+    },
+    {
+      "slug": "joan-miro",
+      "birthDate": "1893-04-20"
+    },
+    {
+      "slug": "johan-cruyff",
+      "birthDate": "1947-04-25"
+    },
+    {
+      "slug": "johann-wolfgang-von-goethe",
+      "birthDate": "1749-08-28"
+    },
+    {
+      "slug": "johannes-brahms",
+      "birthDate": "1833-05-07"
+    },
+    {
+      "slug": "john-constable",
+      "birthDate": "1776-06-11"
+    },
+    {
+      "slug": "john-lennon",
+      "birthDate": "1940-10-09"
+    },
+    {
+      "slug": "john-stuart-mill",
+      "birthDate": "1806-05-20"
+    },
+    {
+      "slug": "jose-clemente-orozco",
+      "birthDate": "1883-11-23"
+    },
+    {
+      "slug": "jose-de-san-martin",
+      "birthDate": "1778-02-25"
+    },
+    {
+      "slug": "jose-marti",
+      "birthDate": "1853-01-28"
+    },
+    {
+      "slug": "jose-rizal",
+      "birthDate": "1861-06-19"
+    },
+    {
+      "slug": "joseph-haydn",
+      "birthDate": "1732-03-31"
+    },
+    {
+      "slug": "joseph-lister",
+      "birthDate": "1827-04-05"
+    },
+    {
+      "slug": "josephine-baker",
+      "birthDate": "1906-06-03"
+    },
+    {
+      "slug": "juana-de-ibarbourou",
+      "birthDate": "1892-03-08"
+    },
+    {
+      "slug": "judith-wright",
+      "birthDate": "1915-05-31"
+    },
+    {
+      "slug": "judy-garland",
+      "birthDate": "1922-06-10"
+    },
+    {
+      "slug": "jules-verne",
+      "birthDate": "1828-02-08"
+    },
+    {
+      "slug": "julia-de-burgos",
+      "birthDate": "1914-02-17"
+    },
+    {
+      "slug": "julius-nyerere",
+      "birthDate": "1922-04-13"
+    },
+    {
+      "slug": "junko-tabei",
+      "birthDate": "1939-09-22"
+    },
+    {
+      "slug": "kahlil-gibran",
+      "birthDate": "1883-01-06"
+    },
+    {
+      "slug": "kalpana-chawla",
+      "birthDate": "1962-03-17"
+    },
+    {
+      "slug": "kamala-surayya",
+      "birthDate": "1934-03-31"
+    },
+    {
+      "slug": "karel-capek",
+      "birthDate": "1890-01-09"
+    },
+    {
+      "slug": "karen-blixen",
+      "birthDate": "1885-04-17"
+    },
+    {
+      "slug": "karen-carpenter",
+      "birthDate": "1950-03-02"
+    },
+    {
+      "slug": "karl-lagerfeld",
+      "birthDate": "1933-09-10"
+    },
+    {
+      "slug": "karl-marx",
+      "birthDate": "1818-05-05"
+    },
+    {
+      "slug": "kartini",
+      "birthDate": "1879-04-21"
+    },
+    {
+      "slug": "katharine-hepburn",
+      "birthDate": "1907-05-12"
+    },
+    {
+      "slug": "kathe-kollwitz",
+      "birthDate": "1867-07-08"
+    },
+    {
+      "slug": "katherine-johnson",
+      "birthDate": "1918-08-26"
+    },
+    {
+      "slug": "katherine-mansfield",
+      "birthDate": "1888-10-14"
+    },
+    {
+      "slug": "kathleen-kenyon",
+      "birthDate": "1906-01-05"
+    },
+    {
+      "slug": "keith-haring",
+      "birthDate": "1958-05-04"
+    },
+    {
+      "slug": "kenzo-tange",
+      "birthDate": "1913-09-04"
+    },
+    {
+      "slug": "knute-rockne",
+      "birthDate": "1888-03-04"
+    },
+    {
+      "slug": "konrad-lorenz",
+      "birthDate": "1903-11-07"
+    },
+    {
+      "slug": "kwame-nkrumah",
+      "birthDate": "1909-09-21"
+    },
+    {
+      "slug": "lal-bahadur-shastri",
+      "birthDate": "1904-10-02"
+    },
+    {
+      "slug": "lao-she",
+      "birthDate": "1899-02-03"
+    },
+    {
+      "slug": "lata-mangeshkar",
+      "birthDate": "1929-09-28"
+    },
+    {
+      "slug": "le-corbusier",
+      "birthDate": "1887-10-06"
+    },
+    {
+      "slug": "learie-constantine",
+      "birthDate": "1901-09-21"
+    },
+    {
+      "slug": "leonardo-dicaprio",
+      "birthDate": "1974-11-11"
+    },
+    {
+      "slug": "leonora-carrington",
+      "birthDate": "1917-04-06"
+    },
+    {
+      "slug": "leos-janacek",
+      "birthDate": "1854-07-03"
+    },
+    {
+      "slug": "leslie-cheung",
+      "birthDate": "1956-09-12"
+    },
+    {
+      "slug": "lin-huiyin",
+      "birthDate": "1904-06-10"
+    },
+    {
+      "slug": "lina-bo-bardi",
+      "birthDate": "1914-12-05"
+    },
+    {
+      "slug": "louis-armstrong",
+      "birthDate": "1901-08-04"
+    },
+    {
+      "slug": "louis-pasteur",
+      "birthDate": "1822-12-27"
+    },
+    {
+      "slug": "louisa-may-alcott",
+      "birthDate": "1832-11-29"
+    },
+    {
+      "slug": "louise-bourgeois",
+      "birthDate": "1911-12-25"
+    },
+    {
+      "slug": "lu-xun",
+      "birthDate": "1881-09-25"
+    },
+    {
+      "slug": "luchino-visconti",
+      "birthDate": "1906-11-02"
+    },
+    {
+      "slug": "luciano-pavarotti",
+      "birthDate": "1935-10-12"
+    },
+    {
+      "slug": "lucretia-mott",
+      "birthDate": "1793-01-03"
+    },
+    {
+      "slug": "lucy-maud-montgomery",
+      "birthDate": "1874-11-30"
+    },
+    {
+      "slug": "ludwig-wittgenstein",
+      "birthDate": "1889-04-26"
+    },
+    {
+      "slug": "luis-barragan",
+      "birthDate": "1902-03-09"
+    },
+    {
+      "slug": "luis-federico-leloir",
+      "birthDate": "1906-09-06"
+    },
+    {
+      "slug": "lynn-margulis",
+      "birthDate": "1938-03-05"
+    },
+    {
+      "slug": "ma-rainey",
+      "birthDate": "1886-04-26"
+    },
+    {
+      "slug": "machado-de-assis",
+      "birthDate": "1839-06-21"
+    },
+    {
+      "slug": "machiko-hasegawa",
+      "birthDate": "1920-01-30"
+    },
+    {
+      "slug": "madeleine-vionnet",
+      "birthDate": "1876-06-22"
+    },
+    {
+      "slug": "madhubala",
+      "birthDate": "1933-02-14"
+    },
+    {
+      "slug": "mahalia-jackson",
+      "birthDate": "1911-10-26"
+    },
+    {
+      "slug": "mahatma-gandhi",
+      "birthDate": "1869-10-02"
+    },
+    {
+      "slug": "mahmoud-darwish",
+      "birthDate": "1941-03-13"
+    },
+    {
+      "slug": "marcel-proust",
+      "birthDate": "1871-07-10"
+    },
+    {
+      "slug": "margaret-ekpo",
+      "birthDate": "1914-07-27"
+    },
+    {
+      "slug": "margaret-mead",
+      "birthDate": "1901-12-16"
+    },
+    {
+      "slug": "marguerite-duras",
+      "birthDate": "1914-04-04"
+    },
+    {
+      "slug": "maria-callas",
+      "birthDate": "1923-12-02"
+    },
+    {
+      "slug": "maria-felix",
+      "birthDate": "1914-05-04"
+    },
+    {
+      "slug": "maria-goeppert-mayer",
+      "birthDate": "1906-06-28"
+    },
+    {
+      "slug": "maria-montessori",
+      "birthDate": "1870-08-31"
+    },
+    {
+      "slug": "maria-zambrano",
+      "birthDate": "1904-04-22"
+    },
+    {
+      "slug": "mariama-ba",
+      "birthDate": "1929-04-17"
+    },
+    {
+      "slug": "marie-curie",
+      "birthDate": "1867-11-07"
+    },
+    {
+      "slug": "marilyn-monroe",
+      "birthDate": "1926-06-01"
+    },
+    {
+      "slug": "mark-twain",
+      "birthDate": "1835-11-30"
+    },
+    {
+      "slug": "marlene-dietrich",
+      "birthDate": "1901-12-27"
+    },
+    {
+      "slug": "martin-luther-king-jr",
+      "birthDate": "1929-01-15"
+    },
+    {
+      "slug": "mary-jackson",
+      "birthDate": "1921-04-09"
+    },
+    {
+      "slug": "mary-oliver",
+      "birthDate": "1935-09-10"
+    },
+    {
+      "slug": "mary-pickford",
+      "birthDate": "1892-04-08"
+    },
+    {
+      "slug": "mary-shelley",
+      "birthDate": "1797-08-30"
+    },
+    {
+      "slug": "mary-wollstonecraft",
+      "birthDate": "1759-04-27"
+    },
+    {
+      "slug": "maryam-mirzakhani",
+      "birthDate": "1977-05-12"
+    },
+    {
+      "slug": "matthew-henson",
+      "birthDate": "1866-08-08"
+    },
+    {
+      "slug": "may-ziadeh",
+      "birthDate": "1886-02-11"
+    },
+    {
+      "slug": "maya-angelou",
+      "birthDate": "1928-04-04"
+    },
+    {
+      "slug": "meena-kumari",
+      "birthDate": "1933-08-01"
+    },
+    {
+      "slug": "mercedes-sosa",
+      "birthDate": "1935-07-09"
+    },
+    {
+      "slug": "michael-faraday",
+      "birthDate": "1791-09-22"
+    },
+    {
+      "slug": "michelangelo-antonioni",
+      "birthDate": "1912-09-29"
+    },
+    {
+      "slug": "miguel-de-unamuno",
+      "birthDate": "1864-09-29"
+    },
+    {
+      "slug": "millicent-fawcett",
+      "birthDate": "1847-06-11"
+    },
+    {
+      "slug": "miriam-makeba",
+      "birthDate": "1932-03-04"
+    },
+    {
+      "slug": "misuzu-kaneko",
+      "birthDate": "1903-04-11"
+    },
+    {
+      "slug": "montesquieu",
+      "birthDate": "1689-01-18"
+    },
+    {
+      "slug": "muhammad-abduh",
+      "birthDate": "1849-01-01"
+    },
+    {
+      "slug": "muhammad-ali-jinnah",
+      "birthDate": "1876-12-25"
+    },
+    {
+      "slug": "muhammad-iqbal",
+      "birthDate": "1877-11-09"
+    },
+    {
+      "slug": "mulk-raj-anand",
+      "birthDate": "1905-12-12"
+    },
+    {
+      "slug": "nadia-boulanger",
+      "birthDate": "1887-09-16"
+    },
+    {
+      "slug": "nadine-gordimer",
+      "birthDate": "1923-11-20"
+    },
+    {
+      "slug": "nargis",
+      "birthDate": "1929-06-01"
+    },
+    {
+      "slug": "natalia-ginzburg",
+      "birthDate": "1916-07-14"
+    },
+    {
+      "slug": "natsume-soseki",
+      "birthDate": "1867-02-09"
+    },
+    {
+      "slug": "neil-armstrong",
+      "birthDate": "1930-08-05"
+    },
+    {
+      "slug": "nellie-bly",
+      "birthDate": "1864-05-05"
+    },
+    {
+      "slug": "nelson-mandela",
+      "birthDate": "1918-07-18"
+    },
+    {
+      "slug": "ngugi-wa-thiong-o",
+      "birthDate": "1938-01-05"
+    },
+    {
+      "slug": "niki-lauda",
+      "birthDate": "1949-02-22"
+    },
+    {
+      "slug": "nise-da-silveira",
+      "birthDate": "1905-02-15"
+    },
+    {
+      "slug": "nusrat-fateh-ali-khan",
+      "birthDate": "1948-10-13"
+    },
+    {
+      "slug": "octavia-hill",
+      "birthDate": "1838-12-03"
+    },
+    {
+      "slug": "oodgeroo-noonuccal",
+      "birthDate": "1920-11-03"
+    },
+    {
+      "slug": "oscar-niemeyer",
+      "birthDate": "1907-12-15"
+    },
+    {
+      "slug": "ousmane-sembene",
+      "birthDate": "1923-01-01"
+    },
+    {
+      "slug": "pablo-neruda",
+      "birthDate": "1904-07-12"
+    },
+    {
+      "slug": "pablo-picasso",
+      "birthDate": "1881-10-25"
+    },
+    {
+      "slug": "paramahansa-yogananda",
+      "birthDate": "1893-01-05"
+    },
+    {
+      "slug": "parvin-e-tesami",
+      "birthDate": "1907-03-16"
+    },
+    {
+      "slug": "patsy-cline",
+      "birthDate": "1932-09-08"
+    },
+    {
+      "slug": "paul-newman",
+      "birthDate": "1925-01-26"
+    },
+    {
+      "slug": "paul-robeson",
+      "birthDate": "1898-04-09"
+    },
+    {
+      "slug": "paul-verlaine",
+      "birthDate": "1844-03-30"
+    },
+    {
+      "slug": "paula-modersohn-becker",
+      "birthDate": "1876-02-08"
+    },
+    {
+      "slug": "peter-tosh",
+      "birthDate": "1944-10-19"
+    },
+    {
+      "slug": "pierre-auguste-renoir",
+      "birthDate": "1841-02-25"
+    },
+    {
+      "slug": "piet-mondrian",
+      "birthDate": "1872-03-07"
+    },
+    {
+      "slug": "premchand",
+      "birthDate": "1880-07-31"
+    },
+    {
+      "slug": "prince",
+      "birthDate": "1958-06-07"
+    },
+    {
+      "slug": "qian-xuesen",
+      "birthDate": "1911-12-11"
+    },
+    {
+      "slug": "qiu-jin",
+      "birthDate": "1875-11-08"
+    },
+    {
+      "slug": "r-k-narayan",
+      "birthDate": "1906-10-10"
+    },
+    {
+      "slug": "rabindranath-tagore",
+      "birthDate": "1861-05-07"
+    },
+    {
+      "slug": "raj-kapoor",
+      "birthDate": "1924-12-14"
+    },
+    {
+      "slug": "raja-ravi-varma",
+      "birthDate": "1848-04-29"
+    },
+    {
+      "slug": "ralph-ellison",
+      "birthDate": "1914-03-01"
+    },
+    {
+      "slug": "ranjitsinhji",
+      "birthDate": "1872-09-10"
+    },
+    {
+      "slug": "ray-eames",
+      "birthDate": "1912-12-15"
+    },
+    {
+      "slug": "rembrandt",
+      "birthDate": "1606-07-15"
+    },
+    {
+      "slug": "rene-descartes",
+      "birthDate": "1596-03-31"
+    },
+    {
+      "slug": "rigoberta-menchu",
+      "birthDate": "1959-01-09"
+    },
+    {
+      "slug": "ritwik-ghatak",
+      "birthDate": "1925-11-04"
+    },
+    {
+      "slug": "roald-amundsen",
+      "birthDate": "1872-07-16"
+    },
+    {
+      "slug": "roberto-clemente",
+      "birthDate": "1934-08-18"
+    },
+    {
+      "slug": "roland-barthes",
+      "birthDate": "1915-11-12"
+    },
+    {
+      "slug": "rosa-bonheur",
+      "birthDate": "1822-03-16"
+    },
+    {
+      "slug": "rosa-parks",
+      "birthDate": "1913-02-04"
+    },
+    {
+      "slug": "rosalind-franklin",
+      "birthDate": "1920-07-25"
+    },
+    {
+      "slug": "rosario-castellanos",
+      "birthDate": "1925-05-25"
+    },
+    {
+      "slug": "ruben-dario",
+      "birthDate": "1867-01-18"
+    },
+    {
+      "slug": "rufino-tamayo",
+      "birthDate": "1899-08-26"
+    },
+    {
+      "slug": "ruth-benedict",
+      "birthDate": "1887-06-05"
+    },
+    {
+      "slug": "ryuichi-sakamoto",
+      "birthDate": "1952-01-17"
+    },
+    {
+      "slug": "s-h-raza",
+      "birthDate": "1922-02-22"
+    },
+    {
+      "slug": "s-ren-kierkegaard",
+      "birthDate": "1813-05-05"
+    },
+    {
+      "slug": "saadat-hasan-manto",
+      "birthDate": "1912-05-11"
+    },
+    {
+      "slug": "sadegh-hedayat",
+      "birthDate": "1903-02-17"
+    },
+    {
+      "slug": "sally-ride",
+      "birthDate": "1951-05-26"
+    },
+    {
+      "slug": "samuel-barber",
+      "birthDate": "1910-03-09"
+    },
+    {
+      "slug": "sandor-marai",
+      "birthDate": "1900-04-11"
+    },
+    {
+      "slug": "sarojini-naidu",
+      "birthDate": "1879-02-13"
+    },
+    {
+      "slug": "satyajit-ray",
+      "birthDate": "1921-05-02"
+    },
+    {
+      "slug": "selena",
+      "birthDate": "1971-04-16"
+    },
+    {
+      "slug": "selma-lagerlof",
+      "birthDate": "1858-11-20"
+    },
+    {
+      "slug": "serena-williams",
+      "birthDate": "1981-09-26"
+    },
+    {
+      "slug": "setsuko-hara",
+      "birthDate": "1920-06-17"
+    },
+    {
+      "slug": "seve-ballesteros",
+      "birthDate": "1957-04-09"
+    },
+    {
+      "slug": "sheikh-mujibur-rahman",
+      "birthDate": "1920-03-17"
+    },
+    {
+      "slug": "sigmund-freud",
+      "birthDate": "1856-05-06"
+    },
+    {
+      "slug": "silvina-ocampo",
+      "birthDate": "1903-07-28"
+    },
+    {
+      "slug": "simon-bolivar",
+      "birthDate": "1783-07-24"
+    },
+    {
+      "slug": "simone-de-beauvoir",
+      "birthDate": "1908-01-09"
+    },
+    {
+      "slug": "smita-patil",
+      "birthDate": "1955-10-17"
+    },
+    {
+      "slug": "sonja-henie",
+      "birthDate": "1912-04-08"
+    },
+    {
+      "slug": "soong-ching-ling",
+      "birthDate": "1893-01-27"
+    },
+    {
+      "slug": "sophie-germain",
+      "birthDate": "1776-04-01"
+    },
+    {
+      "slug": "sri-aurobindo",
+      "birthDate": "1872-08-15"
+    },
+    {
+      "slug": "sridevi",
+      "birthDate": "1963-08-13"
+    },
+    {
+      "slug": "stephen-hawking",
+      "birthDate": "1942-01-08"
+    },
+    {
+      "slug": "steve-biko",
+      "birthDate": "1946-12-18"
+    },
+    {
+      "slug": "subhas-chandra-bose",
+      "birthDate": "1897-01-23"
+    },
+    {
+      "slug": "subrahmanyan-chandrasekhar",
+      "birthDate": "1910-10-19"
+    },
+    {
+      "slug": "sukarno",
+      "birthDate": "1901-06-06"
+    },
+    {
+      "slug": "sun-yat-sen",
+      "birthDate": "1956-11-12"
+    },
+    {
+      "slug": "swami-vivekananda",
+      "birthDate": "1863-01-12"
+    },
+    {
+      "slug": "sylvia-plath",
+      "birthDate": "1932-10-27"
+    },
+    {
+      "slug": "tarsila-do-amaral",
+      "birthDate": "1886-09-01"
+    },
+    {
+      "slug": "teresa-carreno",
+      "birthDate": "1853-12-22"
+    },
+    {
+      "slug": "teresa-teng",
+      "birthDate": "1953-01-29"
+    },
+    {
+      "slug": "thomas-mann",
+      "birthDate": "1875-06-06"
+    },
+    {
+      "slug": "thomas-sankara",
+      "birthDate": "1949-12-21"
+    },
+    {
+      "slug": "thor-heyerdahl",
+      "birthDate": "1914-10-06"
+    },
+    {
+      "slug": "tina-turner",
+      "birthDate": "1939-11-26"
+    },
+    {
+      "slug": "toni-morrison",
+      "birthDate": "1931-02-18"
+    },
+    {
+      "slug": "toshiro-mifune",
+      "birthDate": "1920-04-01"
+    },
+    {
+      "slug": "tsuguharu-foujita",
+      "birthDate": "1886-11-27"
+    },
+    {
+      "slug": "u-thant",
+      "birthDate": "1909-01-22"
+    },
+    {
+      "slug": "victor-hugo",
+      "birthDate": "1802-02-26"
+    },
+    {
+      "slug": "vincent-van-gogh",
+      "birthDate": "1853-03-30"
+    },
+    {
+      "slug": "violeta-parra",
+      "birthDate": "1917-10-04"
+    },
+    {
+      "slug": "virginia-apgar",
+      "birthDate": "1909-06-07"
+    },
+    {
+      "slug": "virginia-woolf",
+      "birthDate": "1882-01-25"
+    },
+    {
+      "slug": "vittorio-de-sica",
+      "birthDate": "1901-07-07"
+    },
+    {
+      "slug": "w-e-b-du-bois",
+      "birthDate": "1868-02-23"
+    },
+    {
+      "slug": "w-g-grace",
+      "birthDate": "1848-07-18"
+    },
+    {
+      "slug": "walt-whitman",
+      "birthDate": "1819-05-31"
+    },
+    {
+      "slug": "walter-gropius",
+      "birthDate": "1883-05-18"
+    },
+    {
+      "slug": "walter-payton",
+      "birthDate": "1954-07-25"
+    },
+    {
+      "slug": "wangari-maathai",
+      "birthDate": "1940-04-01"
+    },
+    {
+      "slug": "whina-cooper",
+      "birthDate": "1895-12-09"
+    },
+    {
+      "slug": "william-blake",
+      "birthDate": "1757-11-28"
+    },
+    {
+      "slug": "william-wilberforce",
+      "birthDate": "1759-08-24"
+    },
+    {
+      "slug": "willie-mays",
+      "birthDate": "1931-05-06"
+    },
+    {
+      "slug": "wilma-rudolph",
+      "birthDate": "1940-06-23"
+    },
+    {
+      "slug": "wilt-chamberlain",
+      "birthDate": "1936-08-21"
+    },
+    {
+      "slug": "wis-awa-szymborska",
+      "birthDate": "1923-07-02"
+    },
+    {
+      "slug": "wolfgang-amadeus-mozart",
+      "birthDate": "1756-01-27"
+    },
+    {
+      "slug": "xiang-jingyu",
+      "birthDate": "1895-09-04"
+    },
+    {
+      "slug": "xiao-hong",
+      "birthDate": "1911-06-01"
+    },
+    {
+      "slug": "xu-beihong",
+      "birthDate": "1895-07-19"
+    },
+    {
+      "slug": "yasunari-kawabata",
+      "birthDate": "1899-06-11"
+    },
+    {
+      "slug": "yogi-berra",
+      "birthDate": "1925-05-12"
+    },
+    {
+      "slug": "yosano-akiko",
+      "birthDate": "1878-12-07"
+    },
+    {
+      "slug": "yu-gwan-sun",
+      "birthDate": "1902-12-17"
+    },
+    {
+      "slug": "yuri-gagarin",
+      "birthDate": "1934-03-09"
+    },
+    {
+      "slug": "zaha-hadid",
+      "birthDate": "1950-10-31"
+    },
+    {
+      "slug": "zhou-enlai",
+      "birthDate": "1898-03-05"
+    }
+  ]
+}

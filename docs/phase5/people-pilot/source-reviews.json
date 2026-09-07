@@ -1,0 +1,102 @@
+{
+  "schema": "zodiacs.people.source-reviews.v1",
+  "reviewedOn": "2026-09-07",
+  "people": {
+    "sun-yat-sen": {
+      "status": "corrected",
+      "countryLabel": "China",
+      "note": "Corrected to 12 November 1866 in Cuiheng, Guangdong, China, with death on 12 March 1925. The chart has been recomputed from the corrected date and Asia/Shanghai reference zone. Birth time remains unknown.",
+      "sources": [
+        {
+          "title": "National Dr. Sun Yat-sen Memorial Hall chronology",
+          "url": "https://www.yatsen.gov.tw/en/cp.aspx?n=6695"
+        }
+      ],
+      "sourceSnapshotSHA256": "9d6b3132c081810da018e5529a4a6a4df369529d66fa81671e1cb9ee76ae3eab"
+    },
+    "carlos-chagas": {
+      "status": "corrected",
+      "birthDate": "1878-07-09",
+      "previousBirthDate": "1879-07-09",
+      "note": "This chart adopts 9 July 1878. Fiocruz's archival biography reproduces his baptismal certificate and explains the correction from 1879. Some institutional summaries and the retained Wikidata snapshot still give 1879; the chart follows the documented archival correction.",
+      "sources": [
+        {
+          "title": "Fiocruz: Carlos Chagas, um cientista do Brasil (2009), pages 26–27 and 35",
+          "url": "https://books.scielo.org/id/tpyj4/pdf/kropf-9786557080009-05.pdf"
+        },
+        {
+          "title": "Fiocruz IOC biography — conflicting 1879 date",
+          "url": "https://www.ioc.fiocruz.br/personalidades/carlos-chagas"
+        }
+      ],
+      "sourceSnapshotSHA256": "99cc5ea7a133c0b2a6dd13befe5866df5516275cfb089777c608b7609bd4ec07"
+    },
+    "rufino-tamayo": {
+      "status": "adopted-date",
+      "deathDate": "1991-06-24",
+      "previousDeathDate": "1990-06-24",
+      "note": "Death corrected to 24 June 1991. This chart retains the adopted birth date of 26 August 1899, used by El Colegio Nacional and Guggenheim Venice. Museo Tamayo distinguishes birth on 25 August from registration on 26 August. The original registration has not been inspected here; all chart readings are conditional on the adopted date.",
+      "sources": [
+        {
+          "title": "INBAL: thirtieth anniversary of Tamayo's death (2021)",
+          "url": "https://inba.gob.mx/multimedia/prensa/galerias/15340/15340-bol._402_conmemoran_el_30_aniversario_luctuoso_de_rufino_tamayo_con_la_revision_y_digitalizacion_de_su_memoria_documental.pdf"
+        },
+        {
+          "title": "Museo Tamayo: birth versus registration date",
+          "url": "https://www.museotamayo.org/en/agenda/convocatoria-xx-bienal-de-pintura-rufino-tamayo"
+        },
+        {
+          "title": "El Colegio Nacional: adopted 26 August date",
+          "url": "https://colnal.mx/integrantes/rufino-tamayo/"
+        }
+      ],
+      "sourceSnapshotSHA256": "0032bc37dd3aa87240e8f33e6f2f9bdfeda4dab2613bee13a1232a776415e282"
+    },
+    "artemisia-gentileschi": {
+      "status": "uncertain-death",
+      "deathYearLabel": "1654 or later",
+      "note": "Her death date is uncertain. The National Gallery reports documentary evidence that she was alive in Naples in August 1654. The earlier 1653 death claim is retained only in the historical source snapshot and is no longer stated as fact. Her birth-date chart is unchanged.",
+      "sources": [
+        {
+          "title": "National Gallery: Artemisia Gentileschi",
+          "url": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+        }
+      ],
+      "sourceSnapshotSHA256": "3e327baed4a6547dd6bb79b177b057c57ea17f414b1509699c0770d006ac77a7"
+    },
+    "bessie-smith": {
+      "status": "adopted-date",
+      "note": "This chart uses the adopted date of 15 April 1894. Her birth year is uncertain: New-York Historical Society discusses 1894 or 1895, and her Cultural Center also notes uncertainty. All placements and readings here are conditional on the adopted date; a different year would produce a different chart.",
+      "sources": [
+        {
+          "title": "New-York Historical Society: Bessie Smith",
+          "url": "https://wams.nyhistory.org/life-story/bessie-smith/"
+        }
+      ],
+      "sourceSnapshotSHA256": "0e90d48973820bdde43a01b58496e8806bd6c114e78778865d223ece974a6876"
+    },
+    "edith-clarke": {
+      "status": "reference-location",
+      "note": "The Maryland State Archives places her birth on a farm near Ellicott City, Howard County. The retained Wikidata snapshot instead supplies Baltimore. Baltimore is shown only as the existing calculation reference; it is not a verified birthplace. Both use the America/New_York reference zone, and this time-unknown chart calculates no houses or angles.",
+      "sources": [
+        {
+          "title": "Maryland State Archives: Edith Clarke",
+          "url": "https://msa.maryland.gov/megafile/msa/speccol/sc3500/sc3520/014000/014065/html/14065bio.html"
+        }
+      ],
+      "sourceSnapshotSHA256": "a2502241dc7c219325f900fca051eb42d15d5fac26126f63743e90c4fce7468e"
+    },
+    "david-alfaro-siqueiros": {
+      "status": "reference-location",
+      "note": "The Mexican Secretariat of Public Education identifies Camargo, Chihuahua, as his birthplace. The retained Wikidata snapshot supplies Chihuahua City. Chihuahua City is shown only as the existing calculation reference; it is not a verified birthplace. No precise Camargo or farm coordinates are inferred, and this time-unknown chart calculates no houses or angles.",
+      "sources": [
+        {
+          "title": "Mexican Secretariat of Public Education: David Alfaro Siqueiros",
+          "url": "https://www.gob.mx/sep/acciones-y-programas/david-alfaro-siqueiros-114931"
+        }
+      ],
+      "sourceSnapshotSHA256": "0e3cab39415d73afdb23d073f83440824c3dbdd9721f5a6bd8eb0fab141e3742"
+    }
+  },
+  "reviewedAtUtc": "2026-09-07T05:16:37.871Z"
+}

@@ -4,79 +4,78 @@
   "seedRound": 0,
   "qid": "Q438907",
   "displayName": "Carlos Chagas",
-  "identity": "Bacteriologist · Brazil · 1879–1934",
+  "identity": "Bacteriologist · Brazil · 1878–1934",
   "title": "Carlos Chagas's birth chart",
-  "metaDescription": "Carlos Chagas's chart, computed from a sourced birth date: Sun at 17.0° Cancer. Birth time unknown, so no houses or rising sign.",
-  "lede": "Tightest of all, Venus holds a conjunction to Uranus at 0.7° — close enough to weld taste to disruption. A conjunction concentrates rather than balances — the pair burns one fuel line.",
-  "ledeFact": "aspect:Venus:Uranus:conjunction",
+  "metaDescription": "Carlos Chagas's chart, computed from a sourced birth date: Sun at 17.2° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a sextile to Mars at 0.0° — close enough to weld taste to drive. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+  "ledeFact": "aspect:Venus:Mars:sextile",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:16.98",
+        "sun-degree:17.21",
         "decan:cancer:second"
       ],
-      "text": "17.0° of Cancer is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+      "text": "17.2° of Cancer is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
     },
     {
       "key": "personal",
       "title": "Closer to the ground",
       "facts": [
-        "personal:Mercury:Leo:7.7°",
-        "personal:Venus:Virgo:2.4°",
-        "personal:Mars:Aries:21.0°"
+        "personal:Mercury:Cancer:23.2°",
+        "personal:Venus:Gemini:10.4°",
+        "personal:Mars:Leo:10.4°"
       ],
-      "text": "Day to day the chart speaks through Mercury in Leo (7.7°), Venus in Virgo (2.4°), Mars in Aries (21.0°): thought that arrives already in motion, attraction that grows by reliability, effort spent in bursts and openings."
+      "text": "Day to day the chart speaks through Mercury in Cancer (23.2°), Venus in Gemini (10.4°), Mars in Leo (10.4°): thought steeped in tone and memory, attraction that begins as conversation, effort spent in bursts and openings."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Uranus:conjunction:0.66",
-        "aspect:Jupiter:Neptune:sextile:0.93",
-        "aspect:Sun:Saturn:square:1.5"
+        "aspect:Venus:Mars:sextile:0.02",
+        "aspect:Mars:Neptune:square:0.92",
+        "aspect:Uranus:Pluto:square:1.13"
       ],
-      "text": "Nothing in the geometry sits closer than Venus and Uranus: 0.7° from an exact conjunction. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Jupiter sextile Neptune at 0.9°, and the Sun square Saturn at 1.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+      "text": "Nothing in the geometry sits closer than Venus and Mars: 0.0° from an exact sextile. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mars square Neptune at 0.9°, and Uranus square Pluto at 1.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
     },
     {
       "key": "figures",
       "title": "What the angles build",
       "facts": [
-        "figure:unaspected:Moon"
+        "figure:t-square:Mars-Jupiter:apex-Neptune"
       ],
-      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+      "text": "Mars opposes Jupiter while both square Neptune. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
     },
     {
       "key": "dignity",
       "title": "The classical map",
       "facts": [
-        "dignity:Venus:fall",
-        "dignity:Mars:domicile",
-        "dignity:Jupiter:domicile",
+        "dignity:Moon:fall",
         "dignity:Saturn:fall"
       ],
-      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Venus in Virgo at 2.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Aries at 21.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 12.6° is in domicile; Saturn in Aries at 15.5° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. The Moon in Scorpio at 17.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aries at 2.9° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
     },
     {
       "key": "shape",
       "title": "The shape of the whole",
       "facts": [
-        "elements:earth4-fire3-water2",
-        "modalities:cardinal3-fixed3-mutable3",
-        "settled-signs:9",
+        "elements:water3-fire3-air2-earth2",
+        "modalities:fixed6-cardinal3-mutable1",
+        "settled-signs:10",
         "retrograde:1"
       ],
-      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 4, fire 3, water 2; modalities cardinal 3, fixed 3, mutable 3. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Jupiter was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 3, fire 3, air 2, earth 2; modalities fixed 6, cardinal 3, mutable 1. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Jupiter was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
     },
     {
       "key": "moon",
-      "title": "The Moon is genuinely open",
+      "title": "The Moon, and how far it can move",
       "facts": [
-        "moon-uncertain:pisces:aries"
+        "moon-sign:scorpio",
+        "moon-band:13.9"
       ],
-      "uncertain": true,
-      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 12.3° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 17.1°."
     }
   ],
   "birthdayLink": {
@@ -88,29 +87,28 @@
     "label": "The Cancer guide"
   },
   "substantiveFacts": [
-    "aspect:Venus:Uranus:conjunction",
-    "sun-degree:16.98",
+    "aspect:Venus:Mars:sextile",
+    "sun-degree:17.21",
     "decan:cancer:second",
-    "personal:Mercury:Leo:7.7°",
-    "personal:Venus:Virgo:2.4°",
-    "personal:Mars:Aries:21.0°",
-    "aspect:Venus:Uranus:conjunction:0.66",
-    "aspect:Jupiter:Neptune:sextile:0.93",
-    "aspect:Sun:Saturn:square:1.5",
-    "figure:unaspected:Moon",
-    "dignity:Venus:fall",
-    "dignity:Mars:domicile",
-    "dignity:Jupiter:domicile",
+    "personal:Mercury:Cancer:23.2°",
+    "personal:Venus:Gemini:10.4°",
+    "personal:Mars:Leo:10.4°",
+    "aspect:Venus:Mars:sextile:0.02",
+    "aspect:Mars:Neptune:square:0.92",
+    "aspect:Uranus:Pluto:square:1.13",
+    "figure:t-square:Mars-Jupiter:apex-Neptune",
+    "dignity:Moon:fall",
     "dignity:Saturn:fall",
-    "elements:earth4-fire3-water2",
-    "modalities:cardinal3-fixed3-mutable3",
-    "settled-signs:9",
+    "elements:water3-fire3-air2-earth2",
+    "modalities:fixed6-cardinal3-mutable1",
+    "settled-signs:10",
     "retrograde:1",
-    "moon-uncertain:pisces:aries"
+    "moon-sign:scorpio",
+    "moon-band:13.9"
   ],
   "measurements": {
-    "originalWords": 441,
-    "substantiveStatements": 19,
+    "originalWords": 380,
+    "substantiveStatements": 18,
     "blocks": 7
   }
 }

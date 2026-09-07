@@ -1,14 +1,14 @@
 ---
 /**
- * /fomo/ — the consumer landing page for Astrofolio on the Fomo app.
+ * /fomo/ — the consumer landing page for Astrofolio on the fomo app.
  *
  * Wing lane (see WING_ONLY_SOURCE in scripts/consumer-boundary-lib.mjs): this
- * page carries acquisition register on purpose. Every "Open in Fomo" link is
+ * page carries acquisition register on purpose. Every "Open in fomo" link is
  * built from the verified Solana address in the Zodiacs Registry, and every
  * figure on the page is a dated DexScreener read from the committed market
  * history, refreshed once in the browser when the network allows.
  *
- * Hero footage: an owner-supplied screen recording of the Fomo app
+ * Hero footage: an owner-supplied screen recording of the fomo app
  * (2026-09-02, iPhone, 1206×2622 HEVC, 60fps), used exactly as recorded.
  * The only processing is what browsers need: ffmpeg scales the full frame to
  * 720×1566 and re-encodes it as H.264 (libx264 crf 26) and AV1 (libaom crf
@@ -35,7 +35,7 @@ type Snapshot = {
   assets: SnapshotAsset[];
 };
 
-/* Fomo's own destinations. The coin deep link is the same one the Astrofolio
+/* fomo's own destinations. The coin deep link is the same one the Astrofolio
    vitrine uses (src/app.jsx); no referral or partner parameter is ever added. */
 const FOMO_SITE = 'https://fomo.family/';
 const FOMO_APP_STORE = 'https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427';
@@ -52,8 +52,8 @@ const APP_STORE_BADGE = '/assets/badges/app-store-en.svg';
 const GOOGLE_PLAY_BADGE = '/assets/badges/google-play-en.png';
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-/* Owner-supplied renders, used as delivered: Fomo's example alert and the
-   phone showing Fomo's Verified list. The phone is the hero's largest paint,
+/* Owner-supplied renders, used as delivered: fomo's example alert and the
+   phone showing fomo's Verified list. The phone is the hero's largest paint,
    so AVIF and WebP encodes of the same pixels are offered first and the
    original PNG stays the fallback. Dimensions are the renders' own. */
 const ALERT_RENDER = { src: '/assets/fomo/fomo-alert.png', width: 1425, height: 1104 };
@@ -79,6 +79,9 @@ const FILM = Object.freeze({
   height: 1920,
 });
 
+/* The tile for a sign's emoji, keyed by its code point (U+2648–U+2653). */
+const emojiTile = (glyph: string): string => `/assets/emoji/zodiac/${(glyph.codePointAt(0) ?? 0).toString(16)}.svg`;
+
 const FOOTAGE = Object.freeze({
   av1: '/assets/fomo/fomo-zodiacs-av1.mp4',
   h264: '/assets/fomo/fomo-zodiacs.mp4',
@@ -92,7 +95,7 @@ const SPARK_DAYS = 14;
 const registryAssets = registryJson.assets as RegistryAsset[];
 const snapshots = (marketHistoryJson as unknown as { snapshots: Snapshot[] }).snapshots;
 if (!Array.isArray(snapshots) || snapshots.length === 0) {
-  throw new Error('Fomo page: registry market history has no snapshots');
+  throw new Error('fomo page: registry market history has no snapshots');
 }
 const latest = snapshots[snapshots.length - 1];
 const history = snapshots.slice(-SPARK_DAYS);
@@ -166,7 +169,7 @@ function currentSignSlug(now: Date): string {
 const records = SIGNS.map((sign) => {
   const asset = registryAssets.find((candidate) => candidate.sign === sign.slug);
   const solana = asset?.representations.find((representation) => representation.chain === 'solana');
-  if (!asset || !solana?.address) throw new Error(`Fomo page: missing verified Solana record for ${sign.slug}`);
+  if (!asset || !solana?.address) throw new Error(`fomo page: missing verified Solana record for ${sign.slug}`);
   const market = latest.assets.find((candidate) => candidate.sign === sign.slug);
   const series = history.map((snapshot) => snapshot.assets.find((candidate) => candidate.sign === sign.slug)?.priceUsd ?? null);
   const spark = sparkPath(series, 64);
@@ -193,7 +196,7 @@ const records = SIGNS.map((sign) => {
 });
 
 if (records.length !== 12 || new Set(records.map((record) => record.mint)).size !== 12) {
-  throw new Error('Fomo page: expected twelve unique verified Solana records');
+  throw new Error('fomo page: expected twelve unique verified Solana records');
 }
 
 const initial = records.find((record) => record.slug === currentSignSlug(new Date())) ?? records[4];
@@ -204,22 +207,23 @@ const recordsJson = JSON.stringify({
   records,
 }).replaceAll('<', '\\u003c');
 
-const title = 'Zodiacs on Fomo | Astrofolio';
-const description = 'Every official Zodiac is listed in the free Fomo app under its verified Solana address. Get the app, add funds, and open your sign in a few taps.';
+const title = 'Zodiacs on fomo | Astrofolio';
+const description = 'Every official Zodiac is listed in the free fomo app under its verified Solana address. Get the app, add funds, and open your sign in a few taps.';
 const breadcrumb = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
     { '@type': 'ListItem', position: 2, name: 'Astrofolio', item: 'https://zodiacs.org/astrofolio/' },
-    { '@type': 'ListItem', position: 3, name: 'Zodiacs on Fomo', item: 'https://zodiacs.org/fomo/' },
+    { '@type': 'ListItem', position: 3, name: 'Zodiacs on fomo', item: 'https://zodiacs.org/fomo/' },
   ],
 };
 const sources = [
-  { label: 'Fomo (fomo.family)', href: FOMO_SITE },
-  { label: 'Fomo on the App Store', href: FOMO_APP_STORE },
-  { label: 'Fomo on Google Play', href: FOMO_PLAY },
+  { label: 'fomo (fomo.family)', href: FOMO_SITE },
+  { label: 'fomo on the App Store', href: FOMO_APP_STORE },
+  { label: 'fomo on Google Play', href: FOMO_PLAY },
   { label: 'Zodiacs Registry', href: '/registry/' },
   { label: `${provider} token pairs API`, href: 'https://docs.dexscreener.com/api/reference' },
+  { label: 'Zodiac glyphs on the emoji tiles: Twemoji, CC BY 4.0', href: 'https://github.com/jdecked/twemoji' },
 ];
 ---
 
@@ -228,7 +232,7 @@ const sources = [
   description={description}
   path="/fomo/"
   image="/assets/og/v2/fomo.png"
-  imageAlt="The twelve Zodiacs are on Fomo. Astrofolio, in a trading app."
+  imageAlt="Trade your zodiac on the fomo app. Astrology in a trading app."
   jsonLd={[breadcrumb]}
   sources={sources}
   glass
@@ -236,82 +240,107 @@ const sources = [
 >
   <article class="fomo" data-fomo-page data-initial-sign={initial.slug} style={`--fomo-sign:${initial.hue}`}>
     <section class="fomo-hero" aria-labelledby="fomo-title">
+      <header class="fomo-top">
+        <a class="fomo-top__brand" href="/">Zodiacs<span class="fomo-top__sep">·</span><span class="fomo-top__dim">org</span></a>
+        <a class="fomo-top__cta" href="#top-stores">Get the app<span aria-hidden="true"> ↓</span></a>
+      </header>
       <div class="fomo-film" data-fomo-film aria-hidden="true">
-        <picture>
+        <picture class="fomo-film__ambient">
           <source type="image/avif" srcset={FILM.posterAvif} />
-          <img
-            class="fomo-film__poster"
-            src={FILM.posterWebp}
-            width={FILM.width}
-            height={FILM.height}
-            alt=""
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
+          <img src={FILM.posterWebp} width={FILM.width} height={FILM.height} alt="" loading="eager" decoding="async" />
         </picture>
-        <video
-          class="fomo-film__video"
-          muted
-          loop
-          playsinline
-          preload="none"
-          disablepictureinpicture
-          tabindex="-1"
-          data-fomo-film-video
-          data-playback="poster"
-        >
-          <source data-src={FILM.av1} type='video/mp4; codecs="av01.0.08M.08"' />
-          <source data-src={FILM.h264} type="video/mp4" />
-        </video>
         <div class="fomo-film__shade"></div>
-      </div>
-
-      <div class="fomo-hero__inner container">
-        <div class="fomo-hero__copy">
-          <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
-          <p class="kicker reveal">Astrofolio, in a trading app</p>
-          <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">The twelve Zodiacs are on Fomo<FomoMark />.</h1>
-          <p class="fomo-deck reveal" style="--reveal-delay:120ms">
-            Fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. All twelve official Zodiacs are listed
-            there under their verified Solana addresses, so you can watch your sign, follow the other eleven,
-            and buy in a few taps.
-          </p>
-          <div class="fomo-stores reveal" id="top-stores" style="--reveal-delay:180ms" data-fomo-stores>
-            <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
-              <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
-            </a>
-            <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
-              <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
-            </a>
-          </div>
-          <p class="fomo-web reveal" style="--reveal-delay:220ms">
-            <span>Or on a computer:</span>
-            <a href={FOMO_SITE} rel="external nofollow noopener">fomo.family in a browser ↗</a>
-          </p>
-          <ul class="fomo-facts-strip reveal" style="--reveal-delay:260ms" role="list">
-            <li><strong>12</strong> official Zodiacs</li>
-            <li><strong>Solana</strong> one verified address each</li>
-            <li><strong>Free</strong> app, rated 18+</li>
-          </ul>
-        </div>
-
-        <figure class="fomo-hero__render reveal" style="--reveal-delay:140ms">
+        <div class="fomo-film__reel">
           <picture>
-            <source type="image/avif" srcset={VERIFIED_RENDER.avif} />
-            <source type="image/webp" srcset={VERIFIED_RENDER.webp} />
+            <source type="image/avif" srcset={FILM.posterAvif} />
             <img
-              src={VERIFIED_RENDER.png}
-              width={VERIFIED_RENDER.width}
-              height={VERIFIED_RENDER.height}
-              alt="A phone showing Fomo’s Verified list with the Zodiacs, each marked with a blue check."
+              class="fomo-film__poster"
+              src={FILM.posterWebp}
+              width={FILM.width}
+              height={FILM.height}
+              alt=""
               loading="eager"
               fetchpriority="high"
               decoding="async"
             />
           </picture>
-        </figure>
+          <video
+            class="fomo-film__video"
+            muted
+            loop
+            playsinline
+            preload="none"
+            disablepictureinpicture
+            tabindex="-1"
+            data-fomo-film-video
+            data-playback="poster"
+          >
+            <source data-src={FILM.av1} type='video/mp4; codecs="av01.0.08M.08"' />
+            <source data-src={FILM.h264} type="video/mp4" />
+          </video>
+        </div>
+        <div class="fomo-film__veil"></div>
       </div>
+
+      <div class="fomo-hero__inner container">
+        <div class="fomo-hero__copy">
+          <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
+          <p class="kicker reveal">Astrology in a trading app</p>
+          <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">Trade your zodiac<span class="fomo-hero__signs" aria-hidden="true">{SIGNS.map((sign) => <img class="fomo-hero__sign" src={emojiTile(sign.glyph)} width="36" height="36" alt="" loading="eager" decoding="async" />)}</span> on the fomo<FomoMark /> app</h1>
+          <div class="fomo-hero__body">
+            <figure class="fomo-hero__render reveal" style="--reveal-delay:100ms">
+              <picture>
+                <source type="image/avif" srcset={VERIFIED_RENDER.avif} />
+                <source type="image/webp" srcset={VERIFIED_RENDER.webp} />
+                <img
+                  src={VERIFIED_RENDER.png}
+                  width={VERIFIED_RENDER.width}
+                  height={VERIFIED_RENDER.height}
+                  alt="A phone showing fomo’s Verified list with the Zodiacs, each marked with a blue check."
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+            </figure>
+            <div class="fomo-hero__text">
+              <p class="fomo-deck reveal" style="--reveal-delay:120ms">
+                fomo<FomoMark /> is a free trading app for iPhone, Android, and the web. <span class="fomo-deck__more">All twelve official Zodiacs are
+                listed under their verified Solana addresses: watch your sign, follow the other eleven, and buy in a few taps.</span>
+              </p>
+              <div class="fomo-stores reveal" id="top-stores" style="--reveal-delay:180ms" data-fomo-stores>
+                <a class="fomo-badge fomo-badge--apple" href={FOMO_APP_STORE} rel="external nofollow noopener" data-store="apple">
+                  <img src={APP_STORE_BADGE} width="144" height="48" alt="Download on the App Store" />
+                </a>
+                <a class="fomo-badge fomo-badge--google" href={FOMO_PLAY} rel="external nofollow noopener" data-store="google">
+                  <img src={GOOGLE_PLAY_BADGE} width="185" height="71" alt="Get it on Google Play" />
+                </a>
+              </div>
+              <p class="fomo-web reveal" style="--reveal-delay:220ms">
+                <span>Or on a computer:</span>
+                <a href={FOMO_SITE} rel="external nofollow noopener">fomo.family in a browser ↗</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="fomo-proof container" aria-label="The Verified list in fomo">
+      <figure class="fomo-proof__render reveal">
+        <picture>
+          <source type="image/avif" srcset={VERIFIED_RENDER.avif} />
+          <source type="image/webp" srcset={VERIFIED_RENDER.webp} />
+          <img
+            src={VERIFIED_RENDER.png}
+            width={VERIFIED_RENDER.width}
+            height={VERIFIED_RENDER.height}
+            alt="A phone showing fomo’s Verified list with the Zodiacs, each marked with a blue check."
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+        <figcaption>fomo’s Verified list: the twelve, each with its blue check.</figcaption>
+      </figure>
     </section>
 
     <section class="fomo-tape" aria-label="The twelve Zodiacs, latest prices">
@@ -340,7 +369,7 @@ const sources = [
               src={ALERT_RENDER.src}
               width={ALERT_RENDER.width}
               height={ALERT_RENDER.height}
-              alt="A Fomo notification: Capricorn is up 5.98 percent. 50 top traders bought $88,203.12."
+              alt="A fomo notification: Capricorn is up 5.98 percent. 50 top traders bought $88,203.12."
               loading="lazy"
               decoding="async"
             />
@@ -348,10 +377,118 @@ const sources = [
           <div class="fomo-alerts__copy reveal" style="--reveal-delay:80ms">
             <p class="kicker">Stay in the loop</p>
             <h2 id="alerts-title" class="display">Alerts when your sign moves.</h2>
-            <p>Fomo<FomoMark /> sends price alerts like this one for the Zodiacs you watch, so you hear about a move without keeping a chart open.</p>
+            <p>fomo<FomoMark /> sends price alerts like this one for the Zodiacs you watch, so you hear about a move without keeping a chart open.</p>
           </div>
         </div>
       </section>
+
+    <section class="fomo-social section--tight container" id="social" aria-labelledby="social-title">
+      <div class="section-head">
+        <p class="kicker">The social part</p>
+        <h2 id="social-title">Trade alongside the people you follow.</h2>
+        <p>fomo is a social app before it is a trading app: a feed of what your friends and favourite traders buy, profiles that show how they are doing, a thesis attached to each trade, and one balance that works across chains.</p>
+      </div>
+      <ul class="fomo-social__grid" role="list">
+        <li class="tile reveal">
+          <span class="fomo-steps__num">Feed</span>
+          <h3>Follow your friends</h3>
+          <p>Add the people you trust and the traders you rate, or start from the leaderboard, which ranks traders by their results. Their buys and sells arrive in your feed as they happen.</p>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:80ms">
+          <span class="fomo-steps__num">Profiles</span>
+          <h3>See which Zodiacs they are trading</h3>
+          <p>Open anyone you follow to see what they have been buying and selling and how it has gone, so you know who is in Leo, who just added Pisces, and who got out early.</p>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:160ms">
+          <span class="fomo-steps__num">Thesis</span>
+          <h3>Write your thesis</h3>
+          <p>When you buy, write why. The thesis is posted with the trade, so the people who follow you get the reasoning and not only the ticker, and you keep a record of your own thinking.</p>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:240ms">
+          <span class="fomo-steps__num">Chains</span>
+          <h3>Swap across chains</h3>
+          <p>The Zodiacs live on Solana. fomo also trades on Base, Ethereum, BNB Chain, Robinhood Chain, and Monad, and moves between them in one step from a single balance, with no bridge and no gas to manage.</p>
+        </li>
+      </ul>
+    </section>
+
+
+
+    <section class="fomo-steps section--tight container" id="how" aria-labelledby="how-title">
+      <div class="section-head">
+        <p class="kicker">Three steps</p>
+        <h2 id="how-title">How it works</h2>
+        <p>From download to your first Zodiac in a few minutes. Nobody needs your recovery phrase at any point.</p>
+      </div>
+      <ol class="fomo-steps__list">
+        <li class="tile reveal">
+          <span class="fomo-steps__num">01</span>
+          <h3>Get the app</h3>
+          <p>Download fomo from the App Store or Google Play, or open fomo.family in a browser. Sign in with an email address or Apple ID; fomo sets up the wallet inside the app.</p>
+          <a href="#top-stores">Get the app ↑</a>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:80ms">
+          <span class="fomo-steps__num">02</span>
+          <h3>Add funds</h3>
+          <p>fomo takes Apple Pay where it is offered, or a transfer of USDC or SOL from a wallet or exchange you already use. Send a small test amount first and the rest once it lands.</p>
+          <a href="/astrofolio/how-to-buy/#fund-wallet">Funding basics ↗</a>
+        </li>
+        <li class="tile reveal" style="--reveal-delay:160ms">
+          <span class="fomo-steps__num">03</span>
+          <h3>Open your sign</h3>
+          <p>Tap your sign below. The link opens that Zodiac in fomo with the verified address already in place. Compare it against the Registry record before you buy.</p>
+          <a href="#signs">Choose a sign ↓</a>
+        </li>
+      </ol>
+    </section>
+
+    <section class="fomo-footage section--tight container" id="inside" aria-labelledby="footage-title">
+      <div class="fomo-footage__inner">
+        <div class="fomo-footage__copy reveal">
+          <p class="kicker">Inside the app</p>
+          <h2 id="footage-title" class="display">This is what fomo<FomoMark /> looks like.</h2>
+          <p>A short recording from the app: a Zodiac’s sheet with its chart and your position, the list of all twelve, and the buy and sell buttons at the foot of every sheet.</p>
+          <a href="#signs">Choose a sign ↓</a>
+        </div>
+        <figure class="fomo-phone reveal" style="--reveal-delay:80ms" data-fomo-phone>
+          <div class="fomo-phone__frame">
+            <div class="fomo-phone__screen">
+              <div class="fomo-phone__stage" data-fomo-stage>
+                <picture>
+                  <source type="image/avif" srcset={FOOTAGE.posterAvif} />
+                  <img
+                    class="fomo-phone__poster"
+                    src={FOOTAGE.posterWebp}
+                    width={FOOTAGE.width}
+                    height={FOOTAGE.height}
+                    alt="The fomo app showing the twelve Zodiacs in a holdings list, each with its value and 24-hour change."
+                    loading="lazy"
+                    decoding="async"
+                    data-fomo-poster
+                  />
+                </picture>
+                <video
+                  class="fomo-phone__video"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  disablepictureinpicture
+                  aria-hidden="true"
+                  tabindex="-1"
+                  data-fomo-video
+                  data-playback="poster"
+                >
+                  <source data-src={FOOTAGE.av1} type='video/mp4; codecs="av01.0.08M.08"' />
+                  <source data-src={FOOTAGE.h264} type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </div>
+          <figcaption class="fomo-phone__caption">Footage from the fomo app, recorded September 2026.</figcaption>
+        </figure>
+      </div>
+    </section>
 
     <section class="fomo-finder container" id="your-sign" aria-labelledby="finder-title" data-fomo-finder>
       <div class="shell fomo-finder__shell">
@@ -359,7 +496,7 @@ const sources = [
           <div class="fomo-finder__ask">
             <p class="kicker">Not sure which one is yours?</p>
             <h2 id="finder-title" class="display">Find your sign by birthday.</h2>
-            <p>Pick the month and day. You get your sign with its latest figures and a link that opens it in Fomo<FomoMark />.</p>
+            <p>Pick the month and day. You get your sign with its latest figures and a link that opens it in the fomo<FomoMark /> app.</p>
           </div>
           <form class="fomo-finder__form" data-fomo-finder-form novalidate>
             <label class="fomo-finder__field">
@@ -398,7 +535,7 @@ const sources = [
                 <div class="fomo-finder__actions">
                   <a class="fomo-cta fomo-cta--compact" href={initial.fomo} rel="external nofollow noopener" data-finder-open>
                     <img src="/assets/venues/fomo-official.svg" width="30" height="30" alt="" />
-                    <span class="fomo-cta__copy"><small data-finder-symbol>{initial.symbol}</small><strong>Open in Fomo</strong></span>
+                    <span class="fomo-cta__copy"><small data-finder-symbol>{initial.symbol}</small><strong>Open in fomo</strong></span>
                     <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
                   </a>
                   <a class="fomo-finder__card-link" href={`#sign-${initial.slug}`} data-finder-jump>See the <span data-finder-name>{initial.name}</span> card ↓</a>
@@ -410,87 +547,11 @@ const sources = [
       </div>
     </section>
 
-    <section class="fomo-steps section--tight container" id="how" aria-labelledby="how-title">
-      <div class="section-head">
-        <p class="kicker">Three steps</p>
-        <h2 id="how-title">How it works</h2>
-        <p>From download to your first Zodiac in a few minutes. Nobody needs your recovery phrase at any point.</p>
-      </div>
-      <ol class="fomo-steps__list">
-        <li class="tile reveal">
-          <span class="fomo-steps__num">01</span>
-          <h3>Get the app</h3>
-          <p>Download Fomo from the App Store or Google Play, or open fomo.family in a browser. Sign in with an email address or Apple ID; Fomo sets up the wallet inside the app.</p>
-          <a href="#top-stores">Get the app ↑</a>
-        </li>
-        <li class="tile reveal" style="--reveal-delay:80ms">
-          <span class="fomo-steps__num">02</span>
-          <h3>Add funds</h3>
-          <p>Fomo takes Apple Pay where it is offered, or a transfer of USDC or SOL from a wallet or exchange you already use. Send a small test amount first and the rest once it lands.</p>
-          <a href="/astrofolio/how-to-buy/#fund-wallet">Funding basics ↗</a>
-        </li>
-        <li class="tile reveal" style="--reveal-delay:160ms">
-          <span class="fomo-steps__num">03</span>
-          <h3>Open your sign</h3>
-          <p>Tap your sign below. The link opens that Zodiac in Fomo with the verified address already in place. Compare it against the Registry record before you buy.</p>
-          <a href="#signs">Choose a sign ↓</a>
-        </li>
-      </ol>
-    </section>
-
-    <section class="fomo-footage section--tight container" id="inside" aria-labelledby="footage-title">
-      <div class="fomo-footage__inner">
-        <div class="fomo-footage__copy reveal">
-          <p class="kicker">Inside the app</p>
-          <h2 id="footage-title" class="display">This is what Fomo<FomoMark /> looks like.</h2>
-          <p>A short recording from the app: a Zodiac’s sheet with its chart and your position, the list of all twelve, and the buy and sell buttons at the foot of every sheet.</p>
-          <a href="#signs">Choose a sign ↓</a>
-        </div>
-        <figure class="fomo-phone reveal" style="--reveal-delay:80ms" data-fomo-phone>
-          <div class="fomo-phone__frame">
-            <div class="fomo-phone__screen">
-              <div class="fomo-phone__stage" data-fomo-stage>
-                <picture>
-                  <source type="image/avif" srcset={FOOTAGE.posterAvif} />
-                  <img
-                    class="fomo-phone__poster"
-                    src={FOOTAGE.posterWebp}
-                    width={FOOTAGE.width}
-                    height={FOOTAGE.height}
-                    alt="The Fomo app showing the twelve Zodiacs in a holdings list, each with its value and 24-hour change."
-                    loading="lazy"
-                    decoding="async"
-                    data-fomo-poster
-                  />
-                </picture>
-                <video
-                  class="fomo-phone__video"
-                  muted
-                  loop
-                  playsinline
-                  preload="none"
-                  disablepictureinpicture
-                  aria-hidden="true"
-                  tabindex="-1"
-                  data-fomo-video
-                  data-playback="poster"
-                >
-                  <source data-src={FOOTAGE.av1} type='video/mp4; codecs="av01.0.08M.08"' />
-                  <source data-src={FOOTAGE.h264} type="video/mp4" />
-                </video>
-              </div>
-            </div>
-          </div>
-          <figcaption class="fomo-phone__caption">Footage from the Fomo app, recorded September 2026.</figcaption>
-        </figure>
-      </div>
-    </section>
-
     <section class="fomo-signs section--tight container" id="signs" aria-labelledby="signs-title">
       <div class="section-head">
         <p class="kicker">Every sign, one tap</p>
         <h2 id="signs-title">Choose your sign</h2>
-        <p>Each link opens that Zodiac in Fomo under its verified Solana address. Figures are {provider} reads from {latest.date}; the app shows live prices.</p>
+        <p>Each link opens that Zodiac in fomo under its verified Solana address. Figures are {provider} reads from {latest.date}; the app shows live prices.</p>
       </div>
       <ul class="fomo-grid" role="list">
         {records.map((record, index) => (
@@ -512,9 +573,9 @@ const sources = [
               <div><dt>Market cap</dt><dd data-card-mcap>{fmtCompact(record.marketCap)}</dd></div>
             </dl>
             <div class="fomo-card__actions">
-              <a class="fomo-cta fomo-cta--compact" href={record.fomo} rel="external nofollow noopener" aria-label={`Open ${record.name} in Fomo`} data-fomo-open={record.slug}>
+              <a class="fomo-cta fomo-cta--compact" href={record.fomo} rel="external nofollow noopener" aria-label={`Open ${record.name} in fomo`} data-fomo-open={record.slug}>
                 <img src="/assets/venues/fomo-official.svg" width="30" height="30" alt="" />
-                <span class="fomo-cta__copy"><small>{record.symbol}</small><strong>Open in Fomo</strong></span>
+                <span class="fomo-cta__copy"><small>{record.symbol}</small><strong>Open in fomo</strong></span>
                 <span class="fomo-cta__arrow" aria-hidden="true">↗</span>
               </a>
               <a class="fomo-card__record" href={`/registry/${record.slug}/`}>Registry record →</a>
@@ -524,7 +585,7 @@ const sources = [
       </ul>
       <p class="fomo-grid__note">
         <span data-fomo-live-note>Prices and the {history.length}-day lines: {provider}, read {readAtLabel}.</span>
-        {' '}Every link carries the address published in the Zodiacs Registry. Fomo is a separate app; check that
+        {' '}Every link carries the address published in the Zodiacs Registry. fomo is a separate app; check that
         the address on its screen matches the record before you approve anything.
         {' '}<a href="/registry/technical/#market-transparency">Data &amp; methodology</a>
       </p>
@@ -533,12 +594,12 @@ const sources = [
     <section class="fomo-facts section--tight container" aria-labelledby="facts-title">
       <div class="section-head">
         <p class="kicker">Before you start</p>
-        <h2 id="facts-title">What Fomo<FomoMark /> is, and what it is not</h2>
+        <h2 id="facts-title">What fomo<FomoMark /> is, and what it is not</h2>
       </div>
       <div class="fomo-facts__grid">
         <div class="tile reveal">
           <h3>An independent app</h3>
-          <p>Fomo is made by FOMO Labs Inc. It is not part of Zodiacs.org. Zodiacs.org has no referral account or fee arrangement with Fomo and receives nothing when you trade there.</p>
+          <p>fomo is made by FOMO Labs Inc. It is not part of Zodiacs.org. Zodiacs.org has no referral account or fee arrangement with fomo and receives nothing when you trade there.</p>
         </div>
         <div class="tile reveal" style="--reveal-delay:80ms">
           <h3>The same twelve addresses</h3>
@@ -549,8 +610,8 @@ const sources = [
           <p>Zodiac tokens are speculative and thinly traded. Prices move quickly, liquidity can disappear, and you can lose everything you spend. Nothing here is financial advice, and astrology does not predict prices.</p>
         </div>
         <div class="tile reveal" style="--reveal-delay:240ms">
-          <h3>Your account, and support from Fomo<FomoMark /></h3>
-          <p>Fomo is rated 18+ and may not be available where you live. Read Fomo’s terms and fees inside the app, keep your sign-in details private, and take account questions to Fomo, not to Zodiacs.org.</p>
+          <h3>Your account, and support from fomo<FomoMark /></h3>
+          <p>fomo is rated 18+ and may not be available where you live. Read fomo’s terms and fees inside the app, keep your sign-in details private, and take account questions to fomo, not to Zodiacs.org.</p>
         </div>
       </div>
     </section>
@@ -562,23 +623,23 @@ const sources = [
       <div class="fomo-faq__items">
         <details>
           <summary><span>Do I need a crypto wallet first?</span><span aria-hidden="true">+</span></summary>
-          <p>No. Fomo sets up a wallet inside the app when you sign in. If you already use Phantom, Solflare, or an exchange, you can move USDC or SOL into Fomo from there.</p>
+          <p>No. fomo sets up a wallet inside the app when you sign in. If you already use Phantom, Solflare, or an exchange, you can move USDC or SOL into fomo from there.</p>
         </details>
         <details>
-          <summary><span>Is Fomo<FomoMark /> free?</span><span aria-hidden="true">+</span></summary>
-          <p>The app is free to download. Fomo charges its own trading fees, shown before you confirm a trade. Zodiacs.org adds nothing and receives nothing.</p>
+          <summary><span>Is fomo<FomoMark /> free?</span><span aria-hidden="true">+</span></summary>
+          <p>The app is free to download. fomo charges its own trading fees, shown before you confirm a trade. Zodiacs.org adds nothing and receives nothing.</p>
         </details>
         <details>
           <summary><span>Which sign should I buy?</span><span aria-hidden="true">+</span></summary>
           <p>That is your decision, and this page does not make it for you. Many people start with their own Sun sign; the Registry lists all twelve with the same standing. Spend only what you can afford to lose.</p>
         </details>
         <details>
-          <summary><span>Can I use Fomo<FomoMark /> on a computer?</span><span aria-hidden="true">+</span></summary>
+          <summary><span>Can I use fomo<FomoMark /> on a computer?</span><span aria-hidden="true">+</span></summary>
           <p>Yes. fomo.family runs in a browser and syncs with the phone app, so a watchlist you build on one shows up on the other.</p>
         </details>
         <details>
           <summary><span>Why do the prices here differ from the app?</span><span aria-hidden="true">+</span></summary>
-          <p>The figures on this page are dated {provider} reads, refreshed when the site rebuilds and, where your browser allows it, once more when the page loads. Fomo shows live prices, and the two will rarely match to the cent.</p>
+          <p>The figures on this page are dated {provider} reads, refreshed when the site rebuilds and, where your browser allows it, once more when the page loads. fomo shows live prices, and the two will rarely match to the cent.</p>
         </details>
         <details>
           <summary><span>Is there another way to buy?</span><span aria-hidden="true">+</span></summary>
@@ -957,19 +1018,68 @@ const sources = [
     transition: --fomo-sign 900ms var(--ease-soft);
   }
 
-  /* Fomo's app icon after the word, sized to the text it follows. */
+  /* fomo's eyes after the word (the glyph of its app icon with the tile
+     keyed away), sized to the text it follows. */
   .fomo :global(.fomo-mark) {
     display: inline-block;
-    width: 0.82em;
-    height: 0.82em;
-    margin-left: 0.22em;
-    border-radius: 0.2em;
+    height: 0.62em;
+    width: auto;
+    margin-left: 0.2em;
     vertical-align: -0.08em;
-    box-shadow: 0 0 0 1px rgba(238, 241, 247, 0.08);
   }
-  .fomo-hero h1 :global(.fomo-mark) { width: 0.72em; height: 0.72em; border-radius: 0.18em; vertical-align: -0.02em; }
+  .fomo-hero h1 :global(.fomo-mark) { height: 0.62em; width: auto; vertical-align: -0.04em; }
 
-  /* ── Hero: the film as wallpaper, the copy over its shade ─────────── */
+  /* ── Promotional chrome: the site nav stands down on this page; a
+     wordmark and one action sit over the film instead (the /bio/ landing
+     trims the nav the same way). The colophon stays. ── */
+  :global(body:has(.fomo) .nav-wrap),
+  :global(body:has(.fomo) .mobile-menu) { display: none !important; }
+  /* Guide stands down here too: no floating launcher over the film, no
+     Guide button in the colophon (the /bio/ landing does the same). */
+  :global(body:has(.fomo) .zguide-launcher),
+  :global(body:has(.fomo) .zfooter__guide) { display: none !important; }
+  .fomo-top {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 12;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: min(100% - 40px, 1120px);
+    margin-inline: auto;
+    min-height: 64px;
+    padding-top: calc(16px + env(safe-area-inset-top));
+  }
+  .fomo-top__brand {
+    color: var(--ink-0, #eef1f7);
+    font-family: var(--font-serif);
+    font-size: 15px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: 0 1px 14px rgba(6, 7, 9, 0.7);
+  }
+  .fomo-top__sep { margin: 0 0.35em; opacity: 0.55; }
+  .fomo-top__dim { opacity: 0.62; }
+  .fomo-top__cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 0 16px;
+    border: 1px solid rgba(238, 241, 247, 0.28);
+    border-radius: var(--r-full);
+    color: var(--ink-0, #eef1f7);
+    background: rgba(10, 12, 17, 0.42);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: 13px;
+    font-weight: 550;
+    text-decoration: none;
+    transition: background-color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  }
+  .fomo-top__cta:hover { background: rgba(10, 12, 17, 0.62); border-color: rgba(238, 241, 247, 0.5); }
+
+  /* ── Hero: the film beside the copy, its blurred still as the wallpaper ── */
   .fomo-hero {
     position: relative;
     isolation: isolate;
@@ -987,6 +1097,34 @@ const sources = [
     z-index: 0;
     background: var(--void-1);
   }
+  /* The still, blurred and dimmed, is the wallpaper. The reel beside the
+     copy carries the whole frame at its own 9:16, so every glyph passes
+     uncropped instead of a third of the picture filling the screen. */
+  .fomo-film__ambient img {
+    position: absolute;
+    inset: -8%;
+    width: 116%;
+    height: 116%;
+    object-fit: cover;
+    object-position: 50% 42%;
+    filter: blur(44px) saturate(1.15);
+    opacity: 0.9;
+  }
+  .fomo-film__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(6, 7, 9, 0.88) 0%, rgba(6, 7, 9, 0.74) 42%, rgba(6, 7, 9, 0.6) 100%);
+  }
+  .fomo-film__reel {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    aspect-ratio: 9 / 16;
+    margin-left: clamp(36px, 5vw, 110px);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
   .fomo-film__poster,
   .fomo-film__video {
     position: absolute;
@@ -994,38 +1132,64 @@ const sources = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 36%;
+    object-position: 50% 50%;
   }
   .fomo-film__video { opacity: 0; transition: opacity 560ms ease; }
   .fomo-film[data-playing='true'] .fomo-film__video { opacity: 1; }
-  /* Three ramps: dark where the copy sits, a lift along the foot for the
-     cue and the note, a lift along the head under the nav. */
-  .fomo-film__shade {
+  /* A lift under the nav and along the foot, over the reel as well. */
+  .fomo-film__veil {
     position: absolute;
     inset: 0;
-    z-index: 1;
-    background:
-      linear-gradient(90deg, rgba(6, 7, 9, 0.94) 0%, rgba(6, 7, 9, 0.8) 32%, rgba(6, 7, 9, 0.3) 62%, rgba(6, 7, 9, 0.12) 100%),
-      linear-gradient(180deg, rgba(6, 7, 9, 0) 60%, rgba(6, 7, 9, 0.66) 100%),
-      linear-gradient(180deg, rgba(6, 7, 9, 0.5) 0%, rgba(6, 7, 9, 0) 26%);
+    background: linear-gradient(180deg, rgba(6, 7, 9, 0.55) 0%, rgba(6, 7, 9, 0) 22%, rgba(6, 7, 9, 0) 74%, rgba(6, 7, 9, 0.7) 100%);
   }
   .fomo-hero__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    display: flex;
     align-items: center;
-    gap: clamp(32px, 6vw, 88px);
     min-height: inherit;
     padding-top: calc(var(--nav-space, 96px) + clamp(8px, 2vw, 24px));
     padding-bottom: clamp(40px, 6vw, 72px);
   }
+  .fomo-hero__copy { max-width: calc(50% + 40px); }
+  /* Under the headline: the owner's render on the left, the description and
+     the stores beside it. The render's canvas carries transparent margins
+     either side of the phone (846 of 1243 px wide), so the figure is sized
+     to the phone itself and the image is scaled and shifted to fit it. */
+  .fomo-hero__body {
+    display: grid;
+    grid-template-columns: 272px minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(20px, 2.4vw, 32px);
+    margin-top: clamp(18px, 2.4vw, 28px);
+  }
+  .fomo-hero__render {
+    position: relative;
+    width: 272px;
+    margin: 0;
+    overflow: hidden; /* the canvas's transparent margins, nothing else */
+  }
+  .fomo-hero__render img { display: block; width: 146.93%; max-width: none; height: auto; margin-left: -21.75%; }
+  .fomo-hero__render::after {
+    content: '';
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 1.5%;
+    height: 5%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.7), transparent 72%);
+    filter: blur(8px);
+    pointer-events: none;
+  }
+  .fomo-hero__text .fomo-deck { margin-top: 0; font-size: var(--text-base); line-height: 1.5; }
+  .fomo-hero__text .fomo-stores { margin-top: 18px; }
+  .fomo-hero__text .fomo-web { margin-top: 12px; }
   .fomo-hero .kicker { color: rgba(238, 241, 247, 0.74); }
   .fomo-hero .fomo-back { margin-bottom: clamp(14px, 2vw, 20px); color: rgba(238, 241, 247, 0.62); }
   .fomo-hero .fomo-back:hover { color: #fff; }
   .fomo-hero h1 { color: var(--ink-0, #eef1f7); text-shadow: 0 2px 28px rgba(6, 7, 9, 0.55); }
   .fomo-hero .fomo-deck { margin-top: clamp(16px, 2.4vw, 22px); color: rgba(238, 241, 247, 0.84); text-shadow: 0 1px 18px rgba(6, 7, 9, 0.6); }
   .fomo-hero .fomo-stores { margin-top: clamp(22px, 3vw, 30px); }
-  .fomo-hero .fomo-facts-strip { margin-top: clamp(22px, 3vw, 30px); padding-top: 14px; color: rgba(238, 241, 247, 0.68); border-top-color: rgba(238, 241, 247, 0.16); }
-  .fomo-hero .fomo-facts-strip strong { color: #fff; }
   .fomo-hero .fomo-web { color: rgba(238, 241, 247, 0.56); }
   .fomo-hero .fomo-web a { color: rgba(238, 241, 247, 0.82); text-decoration-color: rgba(238, 241, 247, 0.3); }
   .fomo-hero .fomo-web a:hover { color: #fff; }
@@ -1042,10 +1206,23 @@ const sources = [
   .fomo-hero__copy .kicker { margin: 0 0 14px; }
   .fomo-hero h1 {
     margin: 0;
-    max-width: 11ch;
-    font-size: clamp(2.8rem, 1.5rem + 5vw, 5.2rem);
+    font-size: clamp(2.8rem, 1.4rem + 4.6vw, 4.7rem);
     line-height: 0.98;
   }
+  /* The twelve as the zodiac emoji, on their own line of the headline: the
+     purple tiles people type into bios and captions. Shipped as artwork
+     (Twemoji's glyphs, CC BY 4.0 and credited in the sources line, on a
+     gradient tile drawn to sit close to the keyboard emoji) so every device
+     shows the same tile rather than its own platform's drawing; a deliberate
+     exception to the twelve-hue rule, on this promotional wing page only.
+     Sized in ems of the headline. */
+  .fomo-hero__signs {
+    display: flex;
+    align-items: center;
+    gap: 0.06em;
+    margin: 0.1em 0 0.06em;
+  }
+  .fomo-hero__sign { display: block; width: 0.5em; height: 0.5em; }
   .fomo-deck {
     max-width: 52ch;
     margin: clamp(20px, 3vw, 30px) 0 0;
@@ -1089,20 +1266,8 @@ const sources = [
   }
   .fomo-web a { color: var(--muted); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
   .fomo-web a:hover { color: var(--text); }
-  .fomo-facts-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 22px;
-    margin: clamp(26px, 4vw, 40px) 0 0;
-    padding: 18px 0 0;
-    border-top: 1px solid var(--hair-1);
-    list-style: none;
-    color: var(--muted);
-    font-size: var(--text-sm);
-  }
-  .fomo-facts-strip strong { margin-right: 5px; color: var(--text); font-weight: 600; }
 
-  /* ── Branded Fomo hand-off (the same pill the Astrofolio vitrine uses) ── */
+  /* ── Branded fomo hand-off (the same pill the Astrofolio vitrine uses) ── */
   .fomo-cta {
     display: inline-flex;
     align-items: center;
@@ -1170,24 +1335,6 @@ const sources = [
   .fomo-cta:active { transform: scale(0.975); }
   .fomo-cta:focus-visible { outline: 2px solid #7f88ff; outline-offset: 3px; }
 
-  /* ── Hero render: the owner's phone, as delivered, over the film ──── */
-  .fomo-hero__render {
-    position: relative;
-    width: min(500px, 92vw);
-    margin: 0;
-    justify-self: center;
-  }
-  .fomo-hero__render::before {
-    content: '';
-    position: absolute;
-    inset: 8% 4% 6%;
-    z-index: -1;
-    border-radius: 50%;
-    background: radial-gradient(56% 46% at 50% 52%, color-mix(in oklab, var(--fomo-sign) 26%, transparent), transparent 72%);
-    filter: blur(36px);
-    pointer-events: none;
-  }
-  .fomo-hero__render img { display: block; width: 100%; height: auto; filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55)); }
 
   /* ── Phone with the footage ──────────────────────────────────────── */
   .fomo-phone {
@@ -1272,7 +1419,6 @@ const sources = [
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .fomo-hero__render img { animation: fomo-float 8s ease-in-out infinite; }
     .fomo-phone__frame { animation: fomo-float 7s ease-in-out infinite; }
     .fomo-phone:hover .fomo-phone__frame,
     .fomo-phone:focus-within .fomo-phone__frame { animation-play-state: paused; }
@@ -1353,7 +1499,7 @@ const sources = [
   .fomo-footage .fomo-phone { justify-self: center; }
 
   /* ── Finder ─────────────────────────────────────────────────────── */
-  .fomo-finder { padding-block: 0 clamp(8px, 2vw, 16px); }
+  .fomo-finder { padding-block: clamp(28px, 4vw, 48px) clamp(8px, 2vw, 16px); }
   .fomo-finder__core {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -1441,7 +1587,7 @@ const sources = [
   .fomo-spark--card { margin-top: -2px; opacity: 0.9; }
 
   /* ── Steps ───────────────────────────────────────────────────────── */
-  .fomo-steps, .fomo-signs, .fomo-facts, .fomo-faq { border-top: 1px solid var(--hair-1); }
+  .fomo-steps, .fomo-social, .fomo-signs, .fomo-facts, .fomo-faq { border-top: 1px solid var(--hair-1); }
   .fomo-steps__list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1450,14 +1596,56 @@ const sources = [
     padding: 0;
     list-style: none;
   }
-  .fomo-steps__list li { display: grid; align-content: start; gap: 10px; padding: clamp(20px, 2.6vw, 28px); }
+  /* ── Phones only: the Verified-list render right under the film ───── */
+  .fomo-proof { display: none; }
+  @media (max-width: 900px) {
+    .fomo-proof { display: block; padding-block: clamp(28px, 7vw, 44px) 10px; }
+    .fomo-proof__render {
+      position: relative;
+      width: min(292px, 76%);
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .fomo-proof__render img { display: block; width: 146.93%; max-width: none; height: auto; margin-left: -21.75%; }
+    .fomo-proof__render::after {
+      content: '';
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 1.5%;
+      height: 5%;
+      z-index: -1;
+      border-radius: 50%;
+      background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.7), transparent 72%);
+      filter: blur(8px);
+      pointer-events: none;
+    }
+    .fomo-proof__render figcaption {
+      margin-top: 12px;
+      color: var(--faint);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      text-align: center;
+      text-wrap: pretty;
+    }
+  }
+  .fomo-social__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .fomo-steps__list li, .fomo-social__grid li { display: grid; align-content: start; gap: 10px; padding: clamp(20px, 2.6vw, 28px); }
   .fomo-steps__num {
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 0.18em;
     color: var(--faint);
   }
-  .fomo-steps__list h3, .fomo-card h3, .fomo-facts h3 {
+  .fomo-steps__list h3, .fomo-social__grid h3, .fomo-card h3, .fomo-facts h3 {
     margin: 0;
     font-family: var(--font-serif);
     font-size: 1.5rem;
@@ -1465,7 +1653,7 @@ const sources = [
     letter-spacing: -0.005em;
     line-height: 1.1;
   }
-  .fomo-steps__list p, .fomo-facts p {
+  .fomo-steps__list p, .fomo-social__grid p, .fomo-facts p {
     margin: 0;
     color: var(--text-2);
     font-size: var(--text-sm);
@@ -1570,21 +1758,47 @@ const sources = [
     .fomo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
   @media (max-width: 900px) {
-    .fomo-hero h1 { max-width: 14ch; }
-    .fomo-film__poster, .fomo-film__video { object-position: 50% 50%; }
-    /* The film keeps the head of the hero; the copy and the render stack on
-       the ramp beneath it. */
-    .fomo-film__shade {
-      background: linear-gradient(180deg, rgba(6, 7, 9, 0.16) 0px, rgba(6, 7, 9, 0.22) 200px, rgba(6, 7, 9, 0.86) 380px, rgba(6, 7, 9, 0.985) 640px);
+    /* Phones: the first screen is the film, full height, with the headline
+       and the stores at its foot, as on microduck's mobile hero. */
+    .fomo-hero { min-height: 100svh; align-items: flex-end; }
+    .fomo-hero h1 { font-size: clamp(2.7rem, 11.5vw, 3.6rem); }
+    .fomo-hero__sign { width: 0.46em; height: 0.46em; }
+    .fomo-film__shade { background: rgba(6, 7, 9, 0.5); }
+    .fomo-film__reel {
+      left: 0;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      margin-left: 0;
+      -webkit-mask-image: none;
+      mask-image: none;
     }
-    .fomo-hero__inner { grid-template-columns: 1fr; gap: clamp(36px, 8vw, 56px); padding-top: calc(var(--nav-space, 96px) + clamp(120px, 26svh, 260px)); padding-bottom: clamp(40px, 6vw, 56px); }
+    .fomo-film__poster, .fomo-film__video { object-position: 50% 40%; }
+    .fomo-film__veil {
+      background: linear-gradient(180deg, rgba(6, 7, 9, 0.42) 0%, rgba(6, 7, 9, 0) 16%, rgba(6, 7, 9, 0) 44%, rgba(6, 7, 9, 0.5) 62%, rgba(6, 7, 9, 0.9) 80%, rgba(6, 7, 9, 0.98) 100%);
+    }
+    .fomo-hero__inner {
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-end;
+      padding-top: calc(var(--nav-space, 96px) + 34svh);
+      padding-bottom: calc(76px + env(safe-area-inset-bottom)); /* clear of the fixed bottom pill */
+    }
+    .fomo-hero__copy { max-width: none; }
+    .fomo-hero .fomo-back, .fomo-hero .fomo-web, .fomo-deck__more { display: none; }
+    .fomo-hero__text .fomo-deck { max-width: 30ch; }
+    .fomo-hero__text .fomo-stores { margin-top: 22px; }
     .fomo-phone__frame { transform: none; }
     .fomo-finder__core { grid-template-columns: 1fr; }
     .fomo-alerts__inner, .fomo-footage__inner { grid-template-columns: 1fr; }
     .fomo-footage .fomo-phone { order: -1; }
     .fomo-steps__list { grid-template-columns: 1fr; }
+    .fomo-hero__body { display: block; }
+    .fomo-hero__render { display: none; }
   }
   @media (max-width: 720px) {
+    .fomo-top__cta { display: none; }
+    .fomo-social__grid { grid-template-columns: 1fr; }
     .fomo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .fomo-facts__grid { grid-template-columns: 1fr; }
     .fomo-finder__form { grid-template-columns: 1fr 1fr; }
@@ -1597,7 +1811,6 @@ const sources = [
   }
   @media (prefers-reduced-motion: reduce) {
     .fomo, .fomo-phone__frame, .fomo-phone__poster, .fomo-cta, .fomo-cta__arrow, .fomo-badge { transition: none; }
-    .fomo-hero__render img { animation: none; }
     .fomo-film__video { transition: none; }
     .fomo-tape__track { animation: none; width: auto; overflow-x: auto; }
     .fomo-tape__group[aria-hidden='true'] { display: none; }

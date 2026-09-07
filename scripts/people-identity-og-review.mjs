@@ -3,11 +3,35 @@ import { createReadStream } from 'node:fs';
 import { readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { PRINCIPAL_IDENTITIES } from '../docs/phase5/people-pilot/tools/principal-identities.mjs';
+import { sourceReviews } from '../docs/phase5/people-pilot/tools/source-reviews.mjs';
 
 export const PEOPLE_IDENTITY_REVIEW_FLAG = '--review-people-identities';
 export const PEOPLE_IDENTITY_REVIEW_SLUGS = Object.freeze([
   'neil-armstrong', 'amelia-earhart', 'maya-angelou',
 ]);
+
+export function peopleFactReviewOptions(argv, root, env = process.env) {
+  const flag = '--review-people-facts';
+  if (!argv.some((arg) => arg === flag || arg.startsWith(`${flag}=`))) return null;
+  if (argv.length !== 1 || argv[0] !== flag) throw new Error(`${flag} must be used alone`);
+  if (env.PLAYWRIGHT_MODULE && env.PLAYWRIGHT_MODULE !== 'playwright-core') {
+    throw new Error('People facts review requires the pinned playwright-core module');
+  }
+  return { output: resolve(root, 'tests/visual/artifacts/explorer/people-facts-og') };
+}
+
+export function reviewedFactPeople(people) {
+  return Object.keys(sourceReviews.people).sort().map((slug) => {
+    const matches = people.filter((person) => person.slug === slug);
+    if (matches.length !== 1) throw new Error(`${slug}: expected exactly one reviewed person`);
+    const person = matches[0];
+    if (person.sourceReview?.note !== sourceReviews.people[slug].note
+      || person.sourceReview?.reviewedOn !== sourceReviews.reviewedOn) {
+      throw new Error(`${slug}: source review has not been generated`);
+    }
+    return person;
+  });
+}
 
 /** Review output has one fixed destination and cannot be combined with a render mode. */
 export function peopleIdentityReviewOptions(argv, root, env = process.env) {

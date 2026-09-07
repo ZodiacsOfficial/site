@@ -40,13 +40,14 @@ import { dirname, resolve } from 'node:path';
 import { createRequire } from 'node:module';
 import sharp from 'sharp';
 import {
-  fileSha256, peopleIdentityReviewOptions, productionOgHashes, reviewedPeople,
+  fileSha256, peopleIdentityReviewOptions, peopleFactReviewOptions, productionOgHashes, reviewedPeople, reviewedFactPeople,
 } from './people-identity-og-review.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 // Parse before any output directory or browser is created. Review mode never
 // writes production cards or manifests, including the separate wing family.
-const peopleIdentityReview = peopleIdentityReviewOptions(process.argv.slice(2), root);
+const peopleFactReview = peopleFactReviewOptions(process.argv.slice(2), root);
+const peopleIdentityReview = peopleFactReview ?? peopleIdentityReviewOptions(process.argv.slice(2), root);
 const OUT = peopleIdentityReview?.output ?? resolve(root, 'public/assets/og/v2');
 const HOMEPAGE_CARD = 'share-pastel-wheel-20260809.png';
 
@@ -83,7 +84,8 @@ const EVENTS_PUBLICATION = JSON.parse(
 );
 const peopleSource = await readFile(resolve(root, 'src/data/people.json'), 'utf8');
 const PEOPLE_PILOT = JSON.parse(peopleSource).people;
-const identityReviewPeople = peopleIdentityReview ? reviewedPeople(PEOPLE_PILOT) : null;
+const identityReviewPeople = peopleFactReview ? reviewedFactPeople(PEOPLE_PILOT)
+  : peopleIdentityReview ? reviewedPeople(PEOPLE_PILOT) : null;
 const productionOgBefore = peopleIdentityReview ? await productionOgHashes(root) : null;
 const identityReviewSources = {};
 if (peopleIdentityReview) {
@@ -91,6 +93,7 @@ if (peopleIdentityReview) {
     'src/data/people.json', 'scripts/build-og-void.mjs', 'package-lock.json',
     'scripts/people-identity-og-review.mjs', 'tests/visual/browser.mjs',
     'docs/phase5/people-pilot/tools/principal-identities.mjs', 'src/strings/seo.signs.mjs',
+    'docs/phase5/people-pilot/source-reviews.json', 'docs/phase5/people-pilot/tools/source-reviews.mjs',
     'public/fonts/eb-garamond-latin-500-normal.woff2',
     'public/fonts/eb-garamond-latin-400-italic.woff2',
     'public/fonts/instrument-sans-latin-wght-normal.woff2',
@@ -133,8 +136,19 @@ for (const s of SIGNS) {
 // Fomo's own app icon, as published (docs/VENUE-MARKS.md); it identifies the
 // app the /fomo/ card is about and is never redrawn or recoloured.
 const FOMO_ICON = await b64('public/assets/venues/fomo-official.svg', 'image/svg+xml');
+// fomo's eyes alone (the icon's glyph with the tile keyed away), and the two
+// store badges as the page shows them.
+const FOMO_EYES = await b64('public/assets/fomo/fomo-eyes.png', 'image/png');
+const APP_STORE_BADGE = await b64('public/assets/badges/app-store-en.svg', 'image/svg+xml');
+const GOOGLE_PLAY_BADGE = await b64('public/assets/badges/google-play-en.png', 'image/png');
 // The owner's phone render of Fomo's Verified list, keyed to transparency, used as delivered.
 const FOMO_PHONE = await b64('public/assets/fomo/fomo-verified.png', 'image/png');
+// The twelve zodiac emoji tiles (Twemoji glyphs, CC-BY 4.0, on the site's own
+// gradient tile; see docs/VENUE-MARKS.md), the same files the page's headline
+// uses, so the card and the page match.
+const TWEMOJI_CODEPOINTS = { aries: '2648', taurus: '2649', gemini: '264a', cancer: '264b', leo: '264c', virgo: '264d', libra: '264e', scorpio: '264f', sagittarius: '2650', capricorn: '2651', aquarius: '2652', pisces: '2653' };
+const TWEMOJI = {};
+for (const [slug, cp] of Object.entries(TWEMOJI_CODEPOINTS)) TWEMOJI[slug] = await b64(`public/assets/emoji/zodiac/${cp}.svg`, 'image/svg+xml');
 
 // ── Shared chrome ─────────────────────────────────────────────────────
 const INK = '#EEF1F7';
@@ -343,15 +357,18 @@ function shareCard() {
 function fomoCard() {
   const body = `
   <div class="stage">
-    <div class="left" style="max-width: 560px; flex: none;">
-      <span class="kicker">Astrofolio, in a trading app</span>
-      <div class="display" style="font-size: 66px; max-width: 560px;">The twelve Zodiacs are on Fomo<img src="${FOMO_ICON}" width="52" height="52" alt="" style="display:inline-block;width:0.74em;height:0.74em;border-radius:0.18em;vertical-align:-0.02em;margin-left:0.2em" />.</div>
-      <div class="sub" style="max-width: 600px;">Every official Zodiac, listed in the free Fomo app under its verified Solana address.</div>
-      <div class="data">iPhone · Android · fomo.family</div>
+    <div class="left" style="max-width: 530px; flex: none;">
+      <span class="kicker">Astrology in a trading app</span>
+      <div class="display" style="font-size: 62px; max-width: 530px;">Trade your zodiac<span style="display:flex;gap:5px;margin:14px 0 12px">${SIGNS.map((s) => `<img src="${TWEMOJI[s.slug]}" width="38" height="38" alt="" style="display:block;width:38px;height:38px" />`).join('')}</span>on the fomo<img src="${FOMO_EYES}" width="512" height="326" alt="" style="display:inline-block;height:0.62em;width:auto;vertical-align:-0.04em;margin-left:0.2em" /> app</div>
+      <div class="sub" style="max-width: 530px;">Buy your sign in a few taps and see what your friends are trading. It’s free.</div>
+      <div style="display:flex;align-items:center;gap:14px;margin-top:26px">
+        <img src="${APP_STORE_BADGE}" alt="" style="display:block;height:54px;width:auto" />
+        <img src="${GOOGLE_PLAY_BADGE}" alt="" style="display:block;height:80px;width:auto;margin:-13px" />
+      </div>
     </div>
-    <img src="${FOMO_PHONE}" width="500" height="509" alt=""
-      style="display:block;height:509px;width:auto;flex:none;margin-right:-28px;filter:drop-shadow(0 34px 70px rgba(0,0,0,.6))" />
-  </div>`;
+  </div>
+  <img src="${FOMO_PHONE}" alt=""
+    style="position:absolute;right:36px;top:60px;z-index:2;height:640px;width:auto;filter:drop-shadow(0 34px 70px rgba(0,0,0,.6))" />`;
   return shell(body, 'zodiacs.org/fomo/');
 }
 
@@ -581,7 +598,7 @@ function personCard(person) {
   const body = `
   <div class="stage">
     <div class="left" style="max-width:700px;">
-      <span class="kicker">People · sourced birth date</span>
+      <span class="kicker">People · ${person.sourceReview?.status === 'adopted-date' ? 'adopted date · uncertain' : 'sourced birth date'}</span>
       <div class="display" style="font-size:${titleSize}px;">${escapeHtml(person.displayName)}</div>
       <div class="sub" style="font-size:24px;color:${MUTED};max-width:680px;">${escapeHtml(person.shortDescription)}</div>
       <div class="data">${escapeHtml(person.sunSign.name)} ${person.sunSign.degree.toFixed(1)}° · Birth time unknown</div>
@@ -860,8 +877,8 @@ if (peopleIdentityReview) {
     }
     const require = createRequire(import.meta.url);
     await writeFile(resolve(OUT, 'receipt.json'), `${JSON.stringify({
-      schema: 'zodiacs.people-identity-og-review.v1',
-      output: 'tests/visual/artifacts/explorer/people-identity-og',
+      schema: peopleFactReview ? 'zodiacs.people-facts-og-review.v1' : 'zodiacs.people-identity-og-review.v1',
+      output: peopleFactReview ? 'tests/visual/artifacts/explorer/people-facts-og' : 'tests/visual/artifacts/explorer/people-identity-og',
       runtime: {
         node: process.version, platform: process.platform, arch: process.arch,
         nodeSha256: await fileSha256(process.execPath),
@@ -872,7 +889,7 @@ if (peopleIdentityReview) {
       sources: identityReviewSources, cards,
       productionOg: { unchanged: true, before: productionOgBefore, after: productionOgAfter },
     }, null, 2)}\n`);
-    console.log(`Reviewed ${count} People identity cards; production OG files unchanged.`);
+    console.log(`Reviewed ${count} People ${peopleFactReview ? 'facts' : 'identity'} cards; production OG files unchanged.`);
   } finally {
     await browser.close();
   }
