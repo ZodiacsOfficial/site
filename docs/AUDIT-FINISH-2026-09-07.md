@@ -151,3 +151,34 @@ inner-panel spacing; the bounded responsive-padding correction is published at
 also inspected. Bessie's Person metadata omits the uncertain birth date; Clarke's
 omits the disputed birthplace. No review screenshot is called final proof of a
 later changed source.
+
+## Final-source capture import and browser harness correction
+
+Head `5843c6b2f3dda6c3cb7b63a255adac05e5df3d98` passed 4,242 of 4,243
+tests; the sole failure was the stale Phase 1 receipt. All other 13 Site Check
+jobs passed. Browser Evidence run `34091641656`, artifact `10007486863`
+(ZIP SHA-256 `05fe8119016cadbb70a4d2b7d705847daeb5bbcb4638129616d40f6b4ce84731`),
+provides genuine final-render-source captures with fingerprint
+`455288f18b7895b0066c48154741f1861ab83975d5249716aa7a83732a634bcc`.
+Root verified every one of its 378 recorded file hashes, all 18 capture hashes,
+the build/capture provenance and the passing capture/receipt/visual outcomes.
+Reviewed all nine template families at both widths and imported the exact PNGs
+and manifest. Differences from the prior day's captures are dated editorial
+payloads; the monthly/yearly images remain byte-identical. The corrected
+itinerary panel was also visually reviewed in the native preview and 390px PNG.
+
+That complete Browser Evidence run remains failed, for two independent reasons.
+Lighthouse recorded one 760.09ms TBT sample on the horoscope hub (the other two
+were 0ms), and one 206.43ms sample on Marie Curie (the other two were 0ms).
+The outliers were dominated by unattributed long tasks, with no page-source
+change explaining them. The unchanged full budgets must pass on the completion
+candidate; these measurements are not discarded or covered by a new exception.
+
+The itinerary drive passed real worker output, mobile layout, actual private
+calendar download and all unknown/unverified/ambiguous-time cases. Its intentional
+load-failure scenario did not reject the cached worker request. That scenario now
+blocks service workers, routes at browser-context scope, and asserts that an
+actual worker request was rejected. It joins the existing catch-and-continue
+feature loop so an error retains a failed exit while independent evidence is
+still collected. These harness and receipt changes leave the render-source
+fingerprint unchanged. Full final CI and production verification remain required.

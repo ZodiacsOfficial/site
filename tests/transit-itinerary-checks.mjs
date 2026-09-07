@@ -19,7 +19,7 @@ const profile = { version: 1, settings: { houseSystem: 'whole' }, charts: [chart
 export async function runTransitItineraryChecks({ browser, baseURL, check, outDir }) {
   if (outDir) await mkdir(outDir, { recursive: true });
   for (const width of [390, 1440]) {
-    const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion: 'reduce', acceptDownloads: true });
+    const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion: 'reduce', acceptDownloads: true, serviceWorkers: 'block' });
     await context.addInitScript((value) => {
       if (location.protocol === 'http:' || location.protocol === 'https:') localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
     }, profile);
@@ -61,11 +61,15 @@ export async function runTransitItineraryChecks({ browser, baseURL, check, outDi
       }
       if (outDir) { await itinerary.scrollIntoViewIfNeeded(); await page.screenshot({ path: `${outDir}/itinerary-reference-${width}.png` }); }
       // A real worker-load failure keeps the result page usable and offers retry.
-      await page.route(/TransitItinerary\.worker[^/]*\.js/, (route) => route.abort());
+      // Block the actual network request; a site service-worker cache must not
+      // silently satisfy the request this failure scenario intends to reject.
+      let blockedWorkers = 0;
+      await context.route(/TransitItinerary\.worker[^/]*\.js/, (route) => { blockedWorkers += 1; return route.abort(); });
       await itinerary.getByRole('button', { name: 'Rebuild itinerary', exact: true }).click();
       await itinerary.getByRole('alert').waitFor({ timeout: 15_000 });
+      check(`itinerary ${width}: failure exercised a real rejected worker request`, blockedWorkers > 0);
       check(`itinerary ${width}: worker failure clears stale calendar`, await itinerary.getByRole('button', { name: /^Calendar for/ }).count() === 0);
-      await page.unroute(/TransitItinerary\.worker[^/]*\.js/);
+      await context.unroute(/TransitItinerary\.worker[^/]*\.js/);
       await itinerary.getByRole('button', { name: 'Build my itinerary', exact: true }).click();
       await itinerary.getByText('Your itinerary is ready.', { exact: true }).waitFor({ timeout: 45_000 });
       check(`itinerary ${width}: retry recovers with no page exceptions`, errors.length === 0, errors.join('; '));

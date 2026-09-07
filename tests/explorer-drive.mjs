@@ -210,12 +210,12 @@ try {
   await runSearchLearningChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT });
 
   await runEventTransitChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/event-transits` : null });
-  await runTransitItineraryChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/transit-itinerary` : null });
   await runEditorialMetadataChecks({ browser, baseURL: 'http://127.0.0.1:4399', check, outDir: OUT ? `${OUT}/editorial-metadata` : null });
 
   // Each feature owns and closes its browser contexts. Collect independent
   // evidence after a failure, but retain every failure in the final exit code.
   for (const [name, run] of [
+    ['transit-itinerary', runTransitItineraryChecks],
     ['solar-return', runSolarReturnChecks],
     ['lunar-return', runLunarReturnChecks],
     ['aspect-patterns', runAspectPatternBrowserChecks],
