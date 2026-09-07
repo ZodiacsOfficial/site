@@ -1752,24 +1752,24 @@ const sources = [
     .fomo-hero h1 { font-size: clamp(2.5rem, 10.6vw, 3.4rem); }
     .fomo-hero__sign { width: 0.46em; height: 0.46em; }
     .fomo-film__shade { background: rgba(6, 7, 9, 0.5); }
-    /* The reel is a centred 9:16 panel at the top of the screen, whole, so
-       every glyph (the middle third of the frame) sits above the copy. The
-       blurred still fills the sides and the foot; the copy starts just
-       under the glyph band and hugs the bottom on taller screens. */
-    .fomo-hero { --reel-w: 74vw; --reel-h: calc(var(--reel-w) * 16 / 9); }
+    /* The film fills the first screen edge to edge and is pinned to the
+       viewport, not the hero, so the copy can push the hero taller without
+       moving the picture. Every clip keeps its glyph in the middle third of
+       the frame (30% to 67% down), so the copy begins under that band: the
+       frame is anchored to the foot of the screen, and the band ends at
+       67% of the frame less whatever the screen crops off the top. */
+    .fomo-hero { --frame-h: max(100svh, 177.78vw); }
     .fomo-film__reel {
       top: 0;
-      left: 50%;
-      width: var(--reel-w);
-      height: var(--reel-h);
+      left: 0;
+      width: 100%;
+      height: 100svh;
       aspect-ratio: auto;
-      margin-left: calc(var(--reel-w) / -2);
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent), linear-gradient(180deg, #000 76%, transparent 100%);
-      -webkit-mask-composite: source-in;
-      mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent), linear-gradient(180deg, #000 76%, transparent 100%);
-      mask-composite: intersect;
+      margin-left: 0;
+      -webkit-mask-image: linear-gradient(180deg, #000 86%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 86%, transparent 100%);
     }
-    .fomo-film__poster, .fomo-film__video { object-position: 50% 50%; }
+    .fomo-film__poster, .fomo-film__video { object-position: 50% 100%; }
     .fomo-film__veil {
       background: linear-gradient(180deg, rgba(6, 7, 9, 0.42) 0%, rgba(6, 7, 9, 0) 14%, rgba(6, 7, 9, 0) 40%, rgba(6, 7, 9, 0.55) 56%, rgba(6, 7, 9, 0.92) 74%, rgba(6, 7, 9, 0.98) 100%);
     }
@@ -1777,11 +1777,11 @@ const sources = [
       flex-direction: column;
       align-items: stretch;
       justify-content: flex-end;
-      padding-top: calc(var(--reel-h) * 0.69 + 6px); /* the copy begins under the glyph band */
+      padding-top: calc(100svh - 0.33 * var(--frame-h) + 12px); /* under the glyph band */
       padding-bottom: calc(28px + env(safe-area-inset-bottom));
     }
     .fomo-hero__copy { max-width: none; }
-    .fomo-hero .fomo-back, .fomo-hero .fomo-web, .fomo-deck__more { display: none; }
+    .fomo-hero .fomo-back, .fomo-hero .fomo-web, .fomo-hero .fomo-deck { display: none; }
     .fomo-hero__text .fomo-deck { max-width: 30ch; }
     .fomo-hero__text .fomo-stores { margin-top: 22px; }
     .fomo-phone__frame { transform: none; }
@@ -1791,6 +1791,11 @@ const sources = [
     .fomo-steps__list { grid-template-columns: 1fr; }
     .fomo-hero__body { display: block; }
     .fomo-hero__render { display: none; }
+  }
+  @media (max-width: 900px) and (max-height: 700px) {
+    /* Short screens (Safari with its bars): the headline and the stores are
+       the first screen; the kicker returns on taller phones. */
+    .fomo-hero .kicker { display: none; }
   }
   @media (max-width: 720px) {
     .fomo-top__cta { display: none; }
