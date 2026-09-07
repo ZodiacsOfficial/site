@@ -5,17 +5,17 @@ import type { SavedChart } from './schema';
 const LEGACY_ENGINE_VERSION = '0.1.0';
 export const POLAR_REPAIR_VERSION = '0.1.0+polar-asc.1';
 
-/** Both receipts use the same planet calculation; the latter records an axis repair. */
+/** Legacy repair receipts remain readable, but require a current calculation. */
 export function currentSavedCalculation(version: string): boolean {
-  return version === ENGINE_VERSION
-    || (ENGINE_VERSION === LEGACY_ENGINE_VERSION && version === POLAR_REPAIR_VERSION);
+  return version === ENGINE_VERSION;
 }
 
 /**
  * Repair only the identified legacy polar defect, without loading an ephemeris.
  * The old package chose the setting ecliptic–horizon intersection for part of
  * the polar day. Its opposite is the rising intersection; MC and planets are
- * unaffected. This is the same axis swap as engine/houses.correctRisingIntersection.
+ * unaffected. The current shared engine selects this axis before house assembly;
+ * this migration remains necessary for legacy saved records.
  *
  * Birth records and timestamps are not rewritten. Positions-only records have
  * no independently retained place/time, so they are never inferred or repaired.

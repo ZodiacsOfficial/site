@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { computeChart as legacyComputeChart } from '@zodiacs/engine/internal';
+import legacyPolar from '../engine/fixtures/legacy-polar-saved.json';
 import * as engine from '../engine/full';
-import { ENGINE_VERSION, type ChartInput } from '../engine/types';
+import { ENGINE_VERSION } from '../engine/types';
 import { yearCacheFresh, type YearScanCache } from '../year-ahead';
 import { resolveSaved } from '../../islands/SynastryCalculator';
 import { loadProfile } from './read-store';
@@ -13,14 +13,8 @@ import { currentSavedCalculation, POLAR_REPAIR_VERSION, repairLegacyPolarChart }
 // this instant it stored the setting intersection (ASC 203.87198411230202°)
 // in place of the rising one (23.871984112302016°).
 function legacySaved(latitude = 78.2232, hour = 9): SavedChart {
-  const input: ChartInput = {
-    utc: new Date(Date.UTC(2001, 11, 21, hour)),
-    latitude,
-    longitude: 15.6267,
-    houseSystem: 'placidus',
-    timeKnown: true,
-  };
-  const chart = legacyComputeChart(input);
+  const fixture = legacyPolar.cases.find((row) => row.latitude === latitude && row.hour === hour);
+  if (!fixture) throw new Error('Missing frozen legacy migration input');
   return {
     id: 'polar-regression', name: 'Kept chart name', relationship: 'self',
     createdAt: '2026-07-01T00:00:00.000Z', updatedAt: '2026-07-02T00:00:00.000Z',
@@ -28,14 +22,7 @@ function legacySaved(latitude = 78.2232, hour = 9): SavedChart {
       date: '2001-12-21', time: `${String(hour).padStart(2, '0')}:00`, timeKnown: true,
       place: { name: 'Polar fixture', admin1: '', country: '', lat: latitude, lon: 15.6267, tz: 'UTC' },
     },
-    summary: {
-      engineVersion: chart.engineVersion,
-      utcISO: input.utc.toISOString(),
-      houseSystem: chart.houses!.system,
-      bodies: chart.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
-      angles: { asc: chart.angles!.asc, mc: chart.angles!.mc },
-      flags: [...chart.flags],
-    },
+    summary: structuredClone(fixture.summary) as SavedChart['summary'],
   };
 }
 
@@ -65,7 +52,9 @@ describe('legacy polar saved-chart repair', () => {
     expect(repaired.summary.bodies).toBe(saved.summary.bodies);
     expect(repaired.summary.angles!.mc).toBe(saved.summary.angles!.mc);
     expect(repairLegacyPolarChart(repaired)).toBe(repaired);
-    expect(currentSavedCalculation(repaired.summary.engineVersion)).toBe(true);
+    // The repaired receipt describes the old engine. The candidate version
+    // must recompute known-time records rather than relabel that cached result.
+    expect(currentSavedCalculation(repaired.summary.engineVersion)).toBe(false);
   });
 
   it.each([78.2232, -78.2232])('matches the current natal/transit engine throughout a day at %s°', (latitude) => {
@@ -84,10 +73,11 @@ describe('legacy polar saved-chart repair', () => {
     expect(repairedCount).toBeGreaterThan(0);
   });
 
-  it('does not alter an already-correct current polar chart with the same package receipt', () => {
+  it('does not alter an already-correct current polar chart', () => {
     const saved = legacySaved();
     const current = freshChart(saved);
     saved.summary.angles = { asc: current.angles!.asc, mc: current.angles!.mc };
+    saved.summary.engineVersion = current.engineVersion;
     expect(saved.summary.engineVersion).toBe(ENGINE_VERSION);
     expect(repairLegacyPolarChart(saved)).toBe(saved);
   });
@@ -154,6 +144,9 @@ describe('legacy polar saved-chart repair', () => {
     unknownTime.birth.time = null;
     unknownTime.summary.angles = null;
     unknownTime.summary.flags = ['no-time'];
+    // Current unknown-time records need no refresh. Stale unknown-time
+    // recomputation is covered separately and must remain angle-free.
+    unknownTime.summary.engineVersion = ENGINE_VERSION;
     expect(repairLegacyPolarChart(unknownTime)).toBe(unknownTime);
     expect((await resolveSavedChart(unknownTime, loader)).asc).toBeNull();
     expect(loader).not.toHaveBeenCalled();
@@ -200,10 +193,16 @@ describe('legacy polar saved-chart repair', () => {
 });
 
 describe('saved comparison calculation coherence', () => {
-  it('uses the repaired profile angles and receipt throughout the wheel and positions share', async () => {
+  it('recomputes the legacy receipt consistently throughout the wheel and positions share', async () => {
     const saved = legacySaved();
     const loader = vi.fn(async () => engine);
-    const profileSummary = repairLegacyPolarChart(saved).summary;
+    const current = freshChart(saved);
+    const profileSummary = {
+      bodies: current.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
+      angles: { asc: current.angles!.asc, mc: current.angles!.mc },
+      houseSystem: current.houses!.system,
+      engineVersion: current.engineVersion,
+    };
     const person = await resolveSaved(saved, loader);
     expect(person.label).toBe(saved.name);
     expect(person.asc).toBe(profileSummary.angles!.asc);
@@ -215,7 +214,7 @@ describe('saved comparison calculation coherence', () => {
       houseSystem: profileSummary.houseSystem,
       engineVersion: profileSummary.engineVersion,
     });
-    expect(loader).not.toHaveBeenCalled();
+    expect(loader).toHaveBeenCalledOnce();
   });
 
   it('uses one newly computed record instead of pairing new bodies with old angles, marks, or version', async () => {

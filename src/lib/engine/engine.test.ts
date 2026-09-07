@@ -13,7 +13,7 @@ import {
   Body, Observer, SearchHourAngle, SearchRiseSet, MakeTime, SiderealTime,
 } from 'astronomy-engine';
 
-import { computeAngles as rawComputeAngles } from '@zodiacs/engine/internal/math';
+import { computeAngles as packageComputeAngles } from '@zodiacs/engine';
 
 import { computeBodies, computeChart } from './full';
 import { computeAngles, meanObliquity, placidusCusps, wholeSignCusps, houseOf, norm } from './houses';
@@ -333,15 +333,11 @@ describe('houses', () => {
   });
 
   it('above the polar circle the ascendant is always the rising intersection', () => {
-    // Longyearbyen, 78.22°N: the raw atan2 formula returns the SETTING
-    // ecliptic–horizon intersection for roughly a third of each sidereal
-    // day here. The site wrapper must always hand back the rising one —
-    // the ascendant sits strictly east of the meridian, norm(asc − mc)
-    // inside (0, 180) — by swapping the axis when the raw result is out
-    // of range.
+    // Longyearbyen, 78.22°N: the shared engine must select the rising
+    // intersection before the site adapter sees it. Public consumers receive
+    // the same angles throughout the sidereal day.
     const latitude = 78.2232;
     const longitude = 15.6267;
-    let flipped = 0;
     for (let step = 0; step < 96; step += 1) {
       const utc = new Date(Date.UTC(2001, 11, 21) + step * 15 * 60_000);
       const input = {
@@ -352,22 +348,13 @@ describe('houses', () => {
           (utc.getTime() - Date.UTC(2000, 0, 1, 12)) / (86400_000 * 36525)
         ),
       };
-      const raw = rawComputeAngles(input);
+      const shared = packageComputeAngles(input);
       const corrected = computeAngles(input);
       const sep = norm(corrected.asc - corrected.mc);
       expect(sep).toBeGreaterThan(0);
       expect(sep).toBeLessThan(180);
-      expect(angleDiff(corrected.mc, raw.mc)).toBeLessThan(1e-9);
-      if (norm(raw.asc - raw.mc) >= 180) {
-        flipped += 1;
-        expect(angleDiff(corrected.asc, raw.dsc)).toBeLessThan(1e-9);
-        expect(angleDiff(corrected.dsc, raw.asc)).toBeLessThan(1e-9);
-      } else {
-        expect(angleDiff(corrected.asc, raw.asc)).toBeLessThan(1e-9);
-      }
+      expect(corrected).toEqual(shared);
     }
-    // The sweep must genuinely exercise the correction, not vacuously pass.
-    expect(flipped).toBeGreaterThan(10);
   });
 
   it('polar computeChart re-anchors whole-sign cusps to the corrected ascendant', () => {

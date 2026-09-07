@@ -1,0 +1,9 @@
+
+> zodiacs-sdk-workspace@ registry:checksum /private/tmp/zodiacs-platform-sdk
+> corepack pnpm --filter @zodiacs/sdk registry:checksum
+
+
+> @zodiacs/sdk@1.0.1 registry:checksum /private/tmp/zodiacs-platform-sdk/packages/sdk
+> node scripts/registry-checksum.mjs --check
+
+Registry checksum OK: 9064925a9cde01c1564673b4165cd0a5ebef30c791292e85195dd4ebd6986fdf

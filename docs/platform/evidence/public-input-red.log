@@ -1,0 +1,195 @@
+
+ RUN  v2.1.9 /private/tmp/zodiacs-platform-sdk
+
+ ❯ packages/engine/src/public-input.test.ts (73 tests | 42 failed) 221ms
+   × public resolved-instant inputs > rejects non-leap February 29 before calculating 35ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects century non-leap February 29 before calculating 9ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects February 30 before calculating 5ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects April 31 before calculating 4ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects 24:00 rollover before calculating 4ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects unresolved local date-time before calculating 3ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects unresolved local minutes before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects compact offset before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects sub-millisecond precision before calculating 3ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects slash date before calculating 2ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects English date before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects space separator before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects partial date before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects non-padded date before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects leading whitespace before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects trailing newline before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects null before calculating 7ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects boolean before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects date array before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects coercible object before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > rejects boxed timestamp before calculating 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > uses the same rejection contract in natalChart 2ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > uses the same rejection contract in moonPhase 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > uses the same rejection contract in transits instant 2ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > uses the same rejection contract in transits birth 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > uses the same rejection contract in synastry birth 1ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > uses the same rejection contract in saturnReturn instant 65ms
+     → expected function to throw an error, but it didn't
+   × public resolved-instant inputs > uses the same rejection contract in saturnReturn birth 49ms
+     → expected function to throw an error, but it didn't
+   × public birth settings > rejects unsupported house system "equal" even without coordinates 2ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects unsupported house system "Placidus" even without coordinates 1ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects unsupported house system "" even without coordinates 0ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects unsupported house system 0 even without coordinates 0ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects unsupported house system false even without coordinates 1ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects unsupported house system null even without coordinates 0ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects unsupported house system {} even without coordinates 0ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects nonboolean timeKnown "false" 0ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects nonboolean timeKnown "true" 1ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects nonboolean timeKnown 0 2ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects nonboolean timeKnown 1 1ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects nonboolean timeKnown null 0ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects nonboolean timeKnown %j 0ms
+     → expected [Function] to throw an error
+   × public birth settings > rejects nonboolean timeKnown {} 0ms
+     → expected [Function] to throw an error
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 42 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects non-leap February 29 before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects century non-leap February 29 before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects February 30 before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects April 31 before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects 24:00 rollover before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects unresolved local date-time before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects unresolved local minutes before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects compact offset before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects sub-millisecond precision before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects slash date before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects English date before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects space separator before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects partial date before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects non-padded date before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects leading whitespace before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects trailing newline before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects null before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects boolean before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects date array before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects coercible object before calculating
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > rejects boxed timestamp before calculating
+AssertionError: expected function to throw an error, but it didn't
+ ❯ packages/engine/src/public-input.test.ts:50:49
+     48|
+     49|   it.each(invalid)("rejects %s before calculating", (_label, input) =>…
+     50|     expect(() => positions(input as DateInput)).toThrow(RangeError);
+       |                                                 ^
+     51|   });
+     52|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/42]⎯
+
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > uses the same rejection contract in natalChart
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > uses the same rejection contract in moonPhase
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > uses the same rejection contract in transits instant
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > uses the same rejection contract in transits birth
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > uses the same rejection contract in synastry birth
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > uses the same rejection contract in saturnReturn instant
+ FAIL  packages/engine/src/public-input.test.ts > public resolved-instant inputs > uses the same rejection contract in saturnReturn birth
+AssertionError: expected function to throw an error, but it didn't
+ ❯ packages/engine/src/public-input.test.ts:89:23
+     87|     ["saturnReturn birth", () => saturnReturn({ utc: invalidCalendar }…
+     88|   ])("uses the same rejection contract in %s", (_label, calculate) => {
+     89|     expect(calculate).toThrow(RangeError);
+       |                       ^
+     90|   });
+     91| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/42]⎯
+
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects unsupported house system "equal" even without coordinates
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects unsupported house system "Placidus" even without coordinates
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects unsupported house system "" even without coordinates
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects unsupported house system 0 even without coordinates
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects unsupported house system false even without coordinates
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects unsupported house system null even without coordinates
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects unsupported house system {} even without coordinates
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ packages/engine/src/public-input.test.ts:97:82
+     95|     "rejects unsupported house system %j even without coordinates",
+     96|     (houseSystem) => {
+     97|       expect(() => natalChart({ utc: "2024-02-29", houseSystem } as Bi…
+       |                                                                                  ^
+     98|         /houseSystem/
+     99|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/42]⎯
+
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects nonboolean timeKnown "false"
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects nonboolean timeKnown "true"
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects nonboolean timeKnown 0
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects nonboolean timeKnown 1
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects nonboolean timeKnown null
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects nonboolean timeKnown %j
+ FAIL  packages/engine/src/public-input.test.ts > public birth settings > rejects nonboolean timeKnown {}
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ packages/engine/src/public-input.test.ts:106:80
+    104|     "rejects nonboolean timeKnown %j",
+    105|     (timeKnown) => {
+    106|       expect(() => natalChart({ utc: "2024-02-29", timeKnown } as Birt…
+       |                                                                                ^
+    107|         /timeKnown/
+    108|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/42]⎯
+
+ Test Files  1 failed (1)
+      Tests  42 failed | 31 passed (73)
+   Start at  00:56:39
+   Duration  1.04s (transform 216ms, setup 0ms, collect 259ms, tests 221ms, environment 0ms, prepare 81ms)

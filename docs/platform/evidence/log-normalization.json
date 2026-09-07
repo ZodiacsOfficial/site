@@ -1,0 +1,95 @@
+{
+  "policy": "Terminal ANSI control sequences and trailing whitespace removed from copied logs; commands/results otherwise unchanged. Raw diagnostics remain in /private/tmp/zodiacs-platform-evidence. This does not change package artifacts.",
+  "logs": [
+    {
+      "file": "geo-required-input-green-utc.log",
+      "rawSHA256": "2c96df44da7b37c8c4759b8c10091661852f515d3b141fc872c063cc9ba53cbd",
+      "storedSHA256": "1e9a721d5d08b03afa774a0fc12515bc41413be9666ec5ccce68dfb44baa21fe"
+    },
+    {
+      "file": "geo-years-red.log",
+      "rawSHA256": "18678899359724c204740aa1db8fc1c5ec4a6fcf3d4d9fda65b0254f75124820",
+      "storedSHA256": "0451fa6fe1a60329dd8c4cc110aa866d6b9d27cb83b17b7b1962dfc04ca03811"
+    },
+    {
+      "file": "packed-consumer-rc1.log",
+      "rawSHA256": "eb0bb06c409e0e749bc1bbdc0d2d985529c9454122ef945e81f0735f30baf588",
+      "storedSHA256": "eb0bb06c409e0e749bc1bbdc0d2d985529c9454122ef945e81f0735f30baf588"
+    },
+    {
+      "file": "public-input-green-utc.log",
+      "rawSHA256": "98244794c2fd54d959adc72ed5deefbbe9deef1d4b35f8efef8bc6a83fec0ee0",
+      "storedSHA256": "135a0cf6d542f2b229608dbef775f955e538aaf9003ce97672734d19849b9dbe"
+    },
+    {
+      "file": "public-input-red.log",
+      "rawSHA256": "f0a0e63212f141a84bbc165811dc36afc5a938dc876281aca55f2ab32aeba868",
+      "storedSHA256": "4c4315ecda4aaa42f508aeae233c488dd2cd3b76699172ef0c91a53e4f250dbc"
+    },
+    {
+      "file": "sdk-baseline.log",
+      "rawSHA256": "255d5e78eaa5e47050ab946d815c4a1456cc089580c013ddecd7874651599517",
+      "storedSHA256": "925cc3153ed8ce44aa1d2f4b536953485ac45c0e01516fee8ce896266c066293"
+    },
+    {
+      "file": "sdk-build.log",
+      "rawSHA256": "4388f7bc9936876c8becd8079a89c9b34353396f51d787f5b6d72180b4c266ae",
+      "storedSHA256": "7d492aa0d1b37005c140bcb594ff709373e7cc90321dbf19519f8ce3e3084155"
+    },
+    {
+      "file": "sdk-final-test.log",
+      "rawSHA256": "bfb044ac891f854a29e1a8bc398ce52d972710b40791e995fcd9b1ccda19c35d",
+      "storedSHA256": "04ee3e3200b75b479730d58ccb1d55382b32da207e20679051d4cc72fb193e18"
+    },
+    {
+      "file": "sdk-neutrality-guard.log",
+      "rawSHA256": "c895534fb0f94b45547a0e8b22b9145ceaf5ace6ae3ff7c87bc67882d2c3fd18",
+      "storedSHA256": "c895534fb0f94b45547a0e8b22b9145ceaf5ace6ae3ff7c87bc67882d2c3fd18"
+    },
+    {
+      "file": "sdk-node20-test.log",
+      "rawSHA256": "0f2c82d817d89cb9dfdb98578101ead83550485cf0a0c87f8e93cafdbf46c141",
+      "storedSHA256": "bd53ca197e59d1475de359487cf6a3b2515bdc83cded43dd01358c1ab94f617c"
+    },
+    {
+      "file": "sdk-polar-green.log",
+      "rawSHA256": "4d248709bbd78974e84330730832934beb8cc10a2edb825ec3b69742118c4ab9",
+      "storedSHA256": "cb27ce3c86dc72055d8cbef67536481caa6e8cb623b1b2ad80e33725da41e1a6"
+    },
+    {
+      "file": "sdk-polar-red.log",
+      "rawSHA256": "cad72bcd8776a20e5bf9811203a12cdf037c3610e79646a00fc6006c326276d8",
+      "storedSHA256": "291bcb8a3e1cacc2c1aebfa01e0ea0993b6737cf7c5115f05d9c41e857817696"
+    },
+    {
+      "file": "sdk-registry-checksum.log",
+      "rawSHA256": "210e30c8e0c21e3a8ea78f4b26306cd41769eb68aabf3a72bcdb065f8b7d6cac",
+      "storedSHA256": "210e30c8e0c21e3a8ea78f4b26306cd41769eb68aabf3a72bcdb065f8b7d6cac"
+    },
+    {
+      "file": "site-build-rc1-final.log",
+      "rawSHA256": "1e00b2ed6aeb1ae7e20425a696cfc564267f9be14704326a5ecf68ede395c029",
+      "storedSHA256": "5d8fdcb0916762c7986f167b55ed498c4f3dad77be9676a2b807b5eff661decb"
+    },
+    {
+      "file": "site-check-final.log",
+      "rawSHA256": "322bbe7c3c9e36e41f734cd7c192cfb807567ce42bf4e44b1e04d599baa01cd5",
+      "storedSHA256": "ff3c1b6dbc855a9e7002bf11b24bc8b02557b751c09e724f856ffc983d53382f"
+    },
+    {
+      "file": "site-phase1-rc1.log",
+      "rawSHA256": "3a490e42fc663beeb405328d6c6dbe91ff44aeee4100a6d2a0b0b4c4a966f501",
+      "storedSHA256": "3a490e42fc663beeb405328d6c6dbe91ff44aeee4100a6d2a0b0b4c4a966f501"
+    },
+    {
+      "file": "site-t17-rc1.log",
+      "rawSHA256": "dada5cdb50c19e571853ccded4157f4f0e47688b64de40d580bfdbaa546a4b26",
+      "storedSHA256": "dada5cdb50c19e571853ccded4157f4f0e47688b64de40d580bfdbaa546a4b26"
+    },
+    {
+      "file": "site-test-final.log",
+      "rawSHA256": "451e95f82664a928af851597a9ea46419abe73b05fa17be43fce26102d38e07f",
+      "storedSHA256": "eea0fcb91b5aadddaad44841f4732f6062eaefef948ba7816213f232afc9d396"
+    }
+  ]
+}

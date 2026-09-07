@@ -311,7 +311,9 @@ try {
         HTMLCanvasElement.prototype.toBlob = function (callback, type, quality) {
           if (globalThis.__t17DelayShareArtifact && this.width === 1080 && this.height === 1350) {
             globalThis.__t17DelayShareArtifact = false;
-            setTimeout(() => original.call(this, callback, type, quality), 250);
+            // Hold the old render until the privacy toggle changes. A timed
+            // delay can finish while the browser is still checking the dialog.
+            globalThis.__t17ReleaseShareArtifact = () => original.call(this, callback, type, quality);
             return;
           }
           return original.call(this, callback, type, quality);
@@ -344,6 +346,13 @@ try {
         document.querySelector('[data-share-card-action="signature"]')?.textContent?.includes('Preparing image')
       ), null, { timeout: TIMEOUT });
       await dialog.locator('[data-hide-birth-details]').uncheck();
+      await source.evaluate(() => {
+        if (typeof globalThis.__t17ReleaseShareArtifact !== 'function') {
+          throw new Error('Expected the previous signature render to remain pending');
+        }
+        globalThis.__t17ReleaseShareArtifact();
+        delete globalThis.__t17ReleaseShareArtifact;
+      });
       assert.equal(
         (await dialog.locator('[data-chart-image-privacy]').innerText()).trim(),
         'This image includes the birth date, local time, place, coordinates, time zone, and resolved UTC. It does not include a name or chart link.',

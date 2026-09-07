@@ -3,13 +3,13 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { relative, resolve, sep } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
-import { ENGINE_VERSION as packageEngineVersion } from '@zodiacs/engine';
+import { ENGINE_VERSION as packageEngineVersion, natalChart } from '@zodiacs/engine';
 import { computeBodies as packageComputeBodies } from '@zodiacs/engine/internal';
 
-import { computeBodies } from './full';
+import { computeBodies, computeChart } from './full';
 import { ENGINE_VERSION } from './types';
 
-const artifactPath = resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.0.tgz');
+const artifactPath = resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.1.tgz');
 const docsPath = resolve(process.cwd(), 'public/sdk/engine');
 
 function walk(directory: string): string[] {
@@ -20,10 +20,38 @@ function walk(directory: string): string[] {
 }
 
 describe('vendored @zodiacs/engine integration', () => {
+  it('matches the public natal entry point across hemispheres, date line, fallback and unknown time', () => {
+    for (const latitude of [-78.2232, -33.8688, 0, 51.5074, 66, 78.2232]) {
+      for (const houseSystem of ['whole', 'placidus'] as const) {
+        for (const longitude of [-180, 15.6267, 180]) {
+          const input = {
+            utc: new Date('2001-12-21T00:00:00Z'), latitude, longitude,
+            houseSystem, timeKnown: true,
+          };
+          const published = natalChart(input);
+          const site = computeChart(input);
+          expect(site).toEqual({
+            ...published,
+            bodies: published.bodies.map(({ body, lon, lat, speed, retrograde }) => ({
+              body, lon, lat, speed, retrograde,
+            })),
+          });
+        }
+      }
+    }
+    const unknown = {
+      utc: new Date('2000-02-29T12:00:00Z'), latitude: 78, longitude: 180,
+      houseSystem: 'placidus' as const, timeKnown: false, flags: ['dst-fold' as const],
+    };
+    expect(computeChart(unknown)).toMatchObject({
+      angles: null, houses: null, flags: natalChart(unknown).flags,
+    });
+  });
+
   it('matches both recorded checksums in the repository', () => {
     const artifact = readFileSync(artifactPath);
     const checksum = readFileSync(
-      resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.0.sha256'),
+      resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.1.sha256'),
       'utf8',
     ).trim().split(/\s+/u)[0];
     const lock = JSON.parse(
@@ -44,7 +72,7 @@ describe('vendored @zodiacs/engine integration', () => {
     const siteBodies = computeBodies(date);
 
     expect(ENGINE_VERSION).toBe(packageEngineVersion);
-    expect(ENGINE_VERSION).toBe('0.1.0');
+    expect(ENGINE_VERSION).toBe('0.1.1-rc.1');
     expect(siteBodies).toEqual(
       packageBodies.map(({ body, lon, lat, speed, retrograde }) => ({
         body,
