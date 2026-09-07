@@ -276,6 +276,50 @@ The final responses must visibly include an `HTTP/... 429` status line and a
 `Retry-After: 60` header. Without the `Origin` header the same-origin guard
 returns 403, which does not test the Firewall rule.
 
+### 3a. Sky data API: keep `/api/v1/` reachable for scripts and agents
+
+The sky data API (`/api/v1/`, documented at `/developers/`) is public, keyless
+static JSON meant to be fetched by scripts and AI agents, so no Deny, Challenge,
+or Attack Challenge Mode rule may ever cover that path.
+
+Observation recorded on 2026-09-07: an agent sandbox on a shared cloud egress
+received intermittent `403 Forbidden` responses carrying
+`x-vercel-mitigated: deny` on every path, including `/`, while the same
+requests from GitHub-hosted runners, Anthropic's fetcher, and Vercel's own
+fetcher all succeeded. That is Vercel's system-level IP mitigation reacting to
+the shared egress, not a project rule. The Daily Sky workflow now requires
+`/api/v1/sky/today.json` from production on every run
+(`scripts/verify-live-daily.mjs`), so a regression that reaches a neutral
+client fails that workflow visibly.
+
+Owner-only diagnostic: in the project's Firewall tab, filter traffic to the
+path `/api/v1/` and the action Denied. If legitimate clients appear there,
+publish one custom rule:
+
+| Field | Value |
+| --- | --- |
+| Name | `sky-data-api-bypass` |
+| If | Request path starts with `/api/v1/` |
+| Then | Bypass, with "bypass system-level mitigations" enabled |
+
+Bypass removes DDoS mitigation for the matched paths, so keep it scoped to
+`/api/v1/` (small, edge-cached static files) and keep the plan's bandwidth
+allowance in view; on a plan with rate limiting, a generous per-IP rate-limit
+rule for the same path can sit above it if abuse ever appears.
+
+Verify from any non-residential network after publishing:
+
+```sh
+for attempt in $(seq 1 12); do
+  curl --silent --show-error --max-time 10 --output /dev/null --dump-header - \
+    https://zodiacs.org/api/v1/index.json \
+    | grep -iE '^(HTTP/|access-control-allow-origin|x-vercel-mitigated)'
+done
+```
+
+Every attempt must print `HTTP/2 200` and `access-control-allow-origin: *`;
+no attempt may print `x-vercel-mitigated`.
+
 ## 4. Account weekly digest: supported, but keep the schedule off
 
 The supported weekly digest is for signed-in account holders who enabled it in
@@ -400,6 +444,9 @@ must use its feature-specific canary and rollback contract.
       fresh-project restore drill satisfies every acceptance check in §2.
 - [ ] Published Firewall rules visibly return 429 and `Retry-After: 60` under
       the header-printing check in §3.
+- [ ] The Firewall traffic view shows no denied legitimate `/api/v1/` clients,
+      or the `sky-data-api-bypass` rule in §3a is published and the twelve-attempt
+      check there prints only `HTTP/2 200` with open CORS.
 - [ ] The digest fixture/redacted dry-run, one-recipient live canary, and
       scanner-safe GET plus explicit unsubscribe POST all pass before
       `DIGEST_ENABLED` is set true.

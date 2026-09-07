@@ -10,6 +10,11 @@ function option(name, fallback) {
   return index >= 0 ? process.argv[index + 1] ?? fallback : fallback;
 }
 const endpoint = option('--url', 'https://zodiacs.org/data/daily-publication.json');
+// The sky data API's today file is built from the same daily facts, so a live
+// edition is only live once production serves it too. Fetching it from the
+// runner's network also proves the public, keyless API is reachable from a
+// neutral client (no firewall denial, open CORS) on every publish.
+const skyApiEndpoint = option('--api-url', `${new URL(endpoint).origin}/api/v1/sky/today.json`);
 const timeoutSeconds = Number(option('--timeout', '0'));
 if (!Number.isInteger(timeoutSeconds) || timeoutSeconds < 0 || timeoutSeconds > 900) {
   throw new Error(`--timeout must be an integer from 0 to 900, received ${timeoutSeconds}`);
@@ -58,6 +63,28 @@ async function check() {
     && sha256(canonicalJson(remote.inputs?.transitSource)) !== localManifest.facts.eventsSourceCanonicalSha256) {
     throw new Error('production transit input hash disagrees with the committed manifest');
   }
+  await checkSkyApi();
+}
+
+async function checkSkyApi() {
+  const response = await fetch(`${skyApiEndpoint}?proof=${Date.now()}`, {
+    headers: { 'cache-control': 'no-cache' },
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!response.ok) {
+    const mitigated = response.headers.get('x-vercel-mitigated');
+    throw new Error(`sky data API returned HTTP ${response.status}${mitigated ? ` (x-vercel-mitigated: ${mitigated})` : ''}`);
+  }
+  if (response.headers.get('access-control-allow-origin') !== '*') {
+    throw new Error('sky data API is missing the open CORS header');
+  }
+  const today = await response.json();
+  if (today.schema !== 'zodiacs.sky-api.today.v1') {
+    throw new Error(`sky data API today file has schema ${today.schema}, not zodiacs.sky-api.today.v1`);
+  }
+  if (today.date !== localManifest.date) {
+    throw new Error(`sky data API serves ${today.date}, not the committed ${localManifest.date} edition`);
+  }
 }
 
 const deadline = Date.now() + timeoutSeconds * 1000;
@@ -65,7 +92,7 @@ let lastError;
 do {
   try {
     await check();
-    console.log(`verify-live-daily: PASS — production serves ${localManifest.date} with matching daily and horoscope inputs`);
+    console.log(`verify-live-daily: PASS — production serves ${localManifest.date} with matching daily and horoscope inputs, and the sky data API agrees`);
     process.exit(0);
   } catch (error) {
     lastError = error;
