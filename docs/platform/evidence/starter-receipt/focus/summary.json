@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "scope": "Read-only investigation of one failed mobile widget keyboard traversal; local scratch copies only.",
+  "originalEvidence": "/private/tmp/zodiacs-platform-starter-receipt-browser-prepack/browser.json",
+  "originalFailure": "widget-390-dark: Tab reaches inside-frame branding and fallback",
+  "originalCause": "Not reproduced; unknown. The results do not prove a timing race.",
+  "sourceComparison": "The rc.2 and current rc.3 pre-pack built widget.html and widget.js are byte-identical; hashes are in source-hashes.json.",
+  "fixedInstrumentedComparisons": {
+    "cases": 16,
+    "report": "focus-trace.json"
+  },
+  "sameLaunchComparisons": {
+    "contexts": 8,
+    "allContextsPassed": true,
+    "checks": 120,
+    "allChecksPassed": true,
+    "report": "direct-focus.json"
+  },
+  "strictPositiveAndNegativeControl": {
+    "cases": 2,
+    "allPassed": true,
+    "report": "strict-focus-control.json"
+  },
+  "recommendation": "Use exactly two Tab actions. After the first, wait with a bounded timeout for both parent activeElement identity equal to the iframe and child document.hasFocus plus activeElement identity equal to attribution; only then Tab to the fallback. Preserve diagnostic states on failure. No repeated Tab retries.",
+  "negativeControl": "The attribution alone was made untabbable in one disposable browser document. First Tab reached fallback; attribution wait failed with TimeoutError, proving fallback alone cannot pass the proposed assertion.",
+  "runtimeSourceEdits": false,
+  "limits": [
+    "Chromium 152.0.7977.83 only",
+    "The original failed run remains a failure in historical evidence",
+    "A passing fixed corpus does not establish the original cause",
+    "No independent human accessibility review, screen reader coverage, or universal browser claim"
+  ],
+  "probes": [
+    "trace-focus.mjs",
+    "direct-focus.mjs",
+    "strict-focus-control.mjs"
+  ]
+}

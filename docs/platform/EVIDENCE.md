@@ -921,3 +921,91 @@ publication or production deployment.
 Fresh repository reads at this checkpoint still show site main `7f953e3f` and
 SDK main `b49e0f14`. SDK #5 remains OPEN/draft at `cced0116`, zero submitted
 reviews and an explicit merge/publication hold.
+
+
+## Immutable receipt starter and draft #419 — September 7, 22:47 UTC
+
+Runtime/source commit **`7da2bdb3a5bc6d65921997ba1cb79609f330c765`** was
+frozen before packing. Distribution commit
+**`dd5d83cdf2a2a5d7096175f01ce985b47824a376`** contains the new archive;
+**`83bd8aad212e846815eebb07bd3b59fa1c28e1c1`** points setup metadata to it.
+Site [draft #419](https://github.com/ZodiacsOfficial/site/pull/419) is stacked
+on delivered #418. No existing artifact was replaced.
+
+`zodiacs-platform-starter-0.1.0-rc.3.tgz` has **21 files, 56,135 packed bytes,
+113,407 unpacked bytes**, SHA-256
+`facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a`.
+The [immutable anonymous download](https://raw.githubusercontent.com/ZodiacsOfficial/site/dd5d83cdf2a2a5d7096175f01ce985b47824a376/public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz)
+was fetched at 22:41:50 UTC and matches local bytes exactly. This supersedes
+`publicDownloadVerified: false` in the earlier pack-time identity record.
+[Pack inventory](evidence/starter-receipt/pack-rc3.json),
+[source identity](evidence/starter-receipt/artifact-rc3.json),
+[public verification](evidence/starter-receipt/public-artifact.json).
+
+| Gate | Exact result |
+| --- | --- |
+| Archive verifier | Offline CLI and **113/113 tests** pass on the real rc.3 archive, including adversarial synthetic mutations of these bytes. |
+| Fresh consumer | Isolated Node 22.23.2/npm 11.17.0 install, all **39 tests** and build pass; npm reports zero vulnerabilities. 3.127 seconds is internal automated timing only. |
+| Packed browser | All **231 assertions** pass in actual Chrome against that fresh consumer and the exact archive hash. No fatal errors. |
+| Developer pages | Actual Chrome passes all three journeys at 1280/390, keyboard focus, responsive sizing and explicitly labeled CSS zoom. Root inspected the mobile example capture; Cosmic Void styling remains intact. |
+| Literal public setup | Download/checksum/install/test/build and all three own-server pages pass; **39 tests**. Existing-directory, simulated HTTP failure and deliberate expected-hash mismatch stop before tar/npm. Success took 2.2 seconds internally. Owned process group is closed. |
+| Full site | **4,699 tests / 408 files** pass. Build, bundle budgets and check pass; **0 errors, 0 warnings, 11 hints**. Assistant context regenerated with no resulting source drift. |
+| Preservation | Scope guard against #418 passes; protected scope untouched. Phase 1 build fingerprint remains `3998a3896d8408b2dc0b73d29c85f0822cd294c228be679c83bc08e400282cf1`. Site engine/ownership pins and account storage are unchanged. |
+
+[All source-to-evidence paths and hashes](evidence/starter-receipt/archive-checkpoint-inputs.json),
+[packed browser receipt](evidence/starter-receipt/browser-archive.json),
+[literal setup receipt](evidence/starter-receipt/onboarding/onboarding.json),
+[site tests](evidence/starter-receipt/starter-rc3-site-tests.log),
+[site build](evidence/starter-receipt/starter-rc3-site-build.log),
+[site check](evidence/starter-receipt/starter-rc3-site-check.log).
+
+The widget focus investigation's fixed corpus did not reproduce the original
+failure. Its strict positive control passes; an intentionally untabbable credit
+correctly fails even when fallback focus succeeds. This validates the stronger
+assertion without establishing a cause for the historical failure.
+[Review](evidence/starter-receipt/focus/REVIEW.md),
+[positive/negative control](evidence/starter-receipt/focus/strict-focus-control.json).
+
+Production was read again and remains READY `dpl_BrntzbFYa2gzetKWgeq91GFeaM6W`,
+`zodiacs.org`, source `7f953e3fca0e7d5009e5602a1dad69edff0f54cc`. These gates
+do not represent npm publication, production release, human expert approval or
+external adoption. Remote CI/preview and native-zoom checks are recorded next.
+
+
+### Exact review preview and native zoom — 2026-09-07 22:53 UTC
+
+Automatic preview **`dpl_9VqGRZZm9sXhvHe86ZjfUaaCCKQt`** is explicitly READY
+for delivery source `83bd8aad212e846815eebb07bd3b59fa1c28e1c1`:
+[open review preview](https://zodiacs-8ok1gtu0v-zodiacsofficial.vercel.app/developers/examples/).
+Actual Chrome passes all three developer-page journeys at desktop/mobile widths
+and CSS zoom. The preview's rendered setup is byte-identical to the literal
+public setup already executed. Root inspected the actual desktop preview capture.
+Temporary access was held in memory; the private access file was removed after
+the browser closed. No access URL, cookie or browser profile is archived.
+[Deployment identity](evidence/starter-receipt/preview-deployment.json),
+[browser receipt](evidence/starter-receipt/preview-browser.json),
+[setup equality](evidence/starter-receipt/preview-setup-equality.json).
+
+A separate actual Chrome native-zoom run passes **40 checks** on the exact
+21-file installed archive at 200% and 400%. Native settings readback, CSS viewport
+and DPR establish zoom; CSS zoom remains 1. Keyboard actions reach and activate
+the new export, file chooser, import and diagnostic controls, with visible focus
+and no horizontal overflow. PageDown reaches the diagnostic's end; reduced-motion
+preference is active. Root inspected raw 400% file-focus and final-reading
+captures. The file chooser was triggered by keyboard and supplied synthetic
+bytes by Playwright; this is not a manual OS-dialog test.
+
+Both earlier harness stops are preserved: strict floating-point equality against
+Chrome's 3.9999999999999996 readback, and sampling native PageDown before scroll
+settled. The accepted probe uses a narrow numeric tolerance plus exact viewport/
+DPR controls and 400 ms scroll settling. No product edit or extra matrix run
+followed the passing result. The report records fractional layout tolerance,
+exact raw captures, source/archive hashes and owned-browser/server cleanup.
+[40-check receipt](evidence/starter-receipt/zoom/result.json),
+[method and limits](evidence/starter-receipt/zoom/REVIEW.md),
+[original input mapping](evidence/starter-receipt/zoom/normalization.json).
+
+CI run **34167746529** targets `83bd8aad`: 13 jobs currently pass and Build &
+Check remains running. A passing whole-run result is not claimed at this
+checkpoint. Browser Evidence is conditionally skipped, distinct from the actual
+local and remote browser checks recorded above.

@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "checks": 40,
+  "failures": [],
+  "cleanup": {
+    "profile": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/chrome-profile-ieJILb",
+    "ownsProfile": true,
+    "copiedAuthentication": false,
+    "restoredZoom": true,
+    "browserClosed": true,
+    "serverClosed": true,
+    "serverPort": 59371
+  },
+  "report": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/result.json"
+}

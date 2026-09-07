@@ -14,13 +14,18 @@ correction and a separate SDK GeoNames retry candidate are delivered. The overal
 | B01/B02 developer entry/support/examples | Site [draft #417](https://github.com/ZodiacsOfficial/site/pull/417), `8343f173e4db2e8ab6628bd04590e41b056872ce` | 4,493 tests/407 files; fresh public starter, 185 browser checks and literal rendered setup pass. Exact READY preview passed all three developer-page journeys. All 14 CI jobs passed in run 34159295138. |
 | C02 civil imports/timezones | Site [draft #418](https://github.com/ZodiacsOfficial/site/pull/418), `a4284d8d6289ed6abfe30d2da883ad07edcfc7bd` | 4,624 tests/408 files; all local gates, 18 captures, 12 share journeys, existing export and 962 compatibility checks pass. Exact READY preview passes all 12 journeys. All 14 jobs passed in exact-head CI 34161649806. |
 | A02/A03 GeoNames recovery | SDK [draft #7](https://github.com/ZodiacsOfficial/sdk/pull/7), `4f8903415e95a60969e84f7eb91e72f2f61ad315` | Separate engine rc.2, 305 tests/27 files on Node 20/22, all workspace gates, two clean packed consumers and 96 chart parity cases pass. Immutable public artifact verified. Stacked SDK CI does not trigger; local evidence is explicit. |
+| B02/C02 local receipt integration | Site [draft #419](https://github.com/ZodiacsOfficial/site/pull/419), delivery source `83bd8aad212e846815eebb07bd3b59fa1c28e1c1` | Starter rc.3: 21 files verified, 113 archive tests, 39 fresh-consumer checks, 231 actual Chrome assertions and literal public setup pass. Site: 4,699 tests/408 files, build/check/scope pass. Exact READY preview and 40 native 200%/400% zoom checks pass. Exact-source CI has 13 passing jobs; Build & Check is still running. |
 | A04/C02 draft natal receipts | SDK [draft #8](https://github.com/ZodiacsOfficial/sdk/pull/8), runtime source `aaade67d0d49e8b10d1bc5c59cf345d6106dc270` | Separate engine rc.3, 429 tests/29 files on Node 20/22, required gates, two clean packed consumers, 96 parity cases and 23 actual offline Chrome codec checks pass. Immutable public artifact verified. Account v1/site integration is not completed by this codec. |
 
-Candidate engine `0.1.1-rc.1` SHA-256:
+Site application engine `0.1.1-rc.1` SHA-256:
 `f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17`.
 Original 0.1.0, intermediate rc.0 and rc.1 bytes are immutable. The public
 starter `0.1.0-rc.2` is anonymously downloadable at commit `80dff5f1`; its
 SHA-256 is `d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420`.
+The new standalone starter `0.1.0-rc.3` is publicly downloadable at distribution
+commit `dd5d83cdf2a2a5d7096175f01ce985b47824a376`, SHA-256
+`facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a`.
+It contains SDK engine rc.3 independently of the site pin.
 [Artifact identity and provenance](../../vendor/README.md),
 [all commands, receipts and limits](EVIDENCE.md).
 
@@ -33,7 +38,7 @@ model-assisted reviews are not human expert certification.
 
 ## Release truth and preservation
 
-- Refreshed before C02 delivery: site main remains
+- Refreshed again during receipt-starter delivery: site main remains
   `7f953e3fca0e7d5009e5602a1dad69edff0f54cc`; SDK main remains
   `b49e0f14f9f17bc84db39486f2c4bb075e0ae3ff`.
 - Production remains READY deployment `dpl_BrntzbFYa2gzetKWgeq91GFeaM6W`,
@@ -67,10 +72,15 @@ records the completed deliveries. A new optional SDK draft natal-envelope
 codec is delivered in SDK draft #8 on its own `codex/platform-receipt-contract`
 branch. Engine rc.3 SHA-256 is
 `aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17`.
-It does not change site pins, account sync or stored records. The active next
-slice integrates local receipt export/import and redaction into a new standalone
-starter candidate, preserving the old rc.2 starter and the site's engine rc.1.
-Starter rc.3 source now passes all 39 Node checks and 231 actual Chrome assertions, including offline receipt export/import, redaction and stale-read controls. Its new immutable archive, fresh consumer and public setup verification are pending at this source checkpoint. Invalid civil
+It does not change site pins, account sync or stored records. Standalone local
+receipt export/import/redaction is now implemented and tested in site draft #419.
+The immutable rc.3 archive and anonymous URL match; actual fresh installation,
+all three examples, public setup failures and affected developer-page journeys
+pass. Exact READY preview acceptance and all 40 native 200%/400% zoom checks pass.
+The exact-source CI Build & Check job is still running; 13 other jobs pass. The next independent Stage A follow-up is testing
+structurally invalid fulfilled GeoNames data and cache integrity in an isolated
+SDK checkout; no new SDK artifact or delivery is claimed for that work yet.
+Invalid civil
 fields and missing timezones now fail before normalization; failed saved-chart
 recomputation retains its old receipt without rewriting storage.
 
@@ -82,7 +92,7 @@ legacy intent or change canonical sync fingerprints without compatibility tests.
 GeoNames rejected-request recovery is delivered as separate rc.2, SHA-256
 `b5c0c63bddc8c1ccfc717551bdd57b1bfe7c439568851780575c8586456e0826`.
 Its structurally invalid but parseable JSON/cache policy remains a follow-up;
-site/starter rc.1 adoption is a separate reviewed pin, not an automatic update.
+site rc.1 adoption is a separate reviewed pin, not an automatic update; the standalone rc.3 starter now includes this recovery through SDK rc.3.
 
 Hosted execution remains dependent on reviewed contracts and explicit
 privacy/limits. Continue independent authorized work during review waits.
