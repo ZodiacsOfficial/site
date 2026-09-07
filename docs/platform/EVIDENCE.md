@@ -792,3 +792,75 @@ separate. Structurally invalid but parseable GeoNames JSON remains cached in
 both versions; a deliberate validation/cache-policy follow-up is still needed.
 SDK #5's explicit release hold remains. No npm publication, main merge,
 production operation, external review, outreach, spending or adoption occurred.
+
+### A04/C02 additive natal codec delivery
+
+[SDK draft #8](https://github.com/ZodiacsOfficial/sdk/pull/8) delivers engine
+`0.1.1-rc.3` separately from the site's rc.1 pin. Runtime source:
+`aaade67d0d49e8b10d1bc5c59cf345d6106dc270`; frozen artifact/evidence commit:
+`2000377b1b537c1b08c873889059acc8edacc4fe`; final browser/delivery checkpoint:
+`b0d7f02549187a9c4a0ca5baa97cf3342fc60707`. The optional `/receipt` entry
+preserves full natal results, requested and actual houses, explicit absent-house
+reasons, original ISO spelling when captured, unknown-time references and
+optional local-resolution assertions without consulting current timezone data.
+
+The Zodiacs draft validates a 64 KiB/depth 12/4,096-value envelope, rejects
+duplicate decoded JSON keys and unsupported versions/features, and emits fixed
+errors/redacted diagnostics without birth details, arbitrary metadata or stable
+hashes. Captured provenance remains an unauthenticated claim. It does not migrate
+account sync v1 or infer legacy intent. [Draft and two synthetic fixtures](https://github.com/ZodiacsOfficial/sdk/blob/2000377b1b537c1b08c873889059acc8edacc4fe/docs/platform/receipt-draft-v1.md).
+
+**429 tests / 29 files** pass on Node 20/22, with all required SDK gates and
+TypeDoc. Two actual clean packed consumers pass public TypeScript 5.9.3 imports,
+core examples, package isolation, GeoNames retry, receipt replay and privacy.
+The isolated consumer has zero reported advisories; broader SDK app findings
+remain. Ninety-six synthetic chart cases match rc.1 exactly after excluding
+engineVersion; replay normalizes absent optional input.flags to an empty list.
+No numerical rounding or broader accuracy claim is involved.
+
+Separate tool-backed review and final integrator reruns cover 60 codec controls,
+21,500 JSON differential cases and three corrected counterexamples. Actual
+Chrome 152 passes 23 offline codec assertions with Intl/storage blocked, no
+network/capability attempts, no cookies and only lightweight receipt chunks.
+This browser probe recreates synthetic Chart values without ephemeris execution.
+[All SDK logs, source hashes, corrections and limits](https://github.com/ZodiacsOfficial/sdk/blob/b0d7f02549187a9c4a0ca5baa97cf3342fc60707/docs/platform/EVIDENCE.md).
+
+The [immutable rc.3 archive](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/2000377b1b537c1b08c873889059acc8edacc4fe/artifacts/zodiacs-engine-0.1.1-rc.3.tgz)
+was anonymously downloaded at 22:05 UTC, **32,079 bytes / 22 files**, SHA-256
+`aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17`.
+[Download receipt](evidence/receipt-public-artifact.json). No successful stacked
+SDK CI is claimed: its workflow targets main PRs only. The explicit #5 hold,
+required human/external review and release/publication authority remain.
+No merge, npm publish, production operation, account migration, outreach,
+spending or external adoption occurred. The active subsequent slice integrates
+this candidate into a new standalone natal starter; acceptance is pending.
+
+### B04 publisher widget accessibility and privacy completion
+
+The existing immutable starter rc.2 was tested in actual isolated Chrome
+152.0.7977.83; all 20 archive files match source. **74 browser matrix assertions**,
+three focused native-zoom/scroll cases and four privacy controls pass. Native
+200%/400% Chrome zoom is independently confirmed by CSS viewport/DPR, rather
+than CSS zoom. Keyboard reaches attribution and fallback, Page Down exposes
+remaining iframe content, and no horizontal overflow occurs. Reduced-motion
+documents have no active animation; conflicting host CSS does not penetrate
+the frame. Real offline failure leaves a reachable fallback and honestly reports
+only that the widget was requested, without promising offline navigation.
+
+No request occurs before activation, no submitted birth data is involved, and
+post-activation requests contain no synthetic parent query/fragment. Referrer
+exposes only origin; parent/frame storage and cookies are empty. The observed
+hosted dark document returned HTTP 200 with SHA-256
+`809285f1b6bb071465a6d2f5c56dc896e41aa495ad9e5a863cba3fa5b0bc8169` and the then-current
+2026-09-07 UTC date. It has its own existing deployment, not a new widget release.
+
+[Independent review and exact scope](evidence/b04/REVIEW.md),
+[results](evidence/b04/summary.json),
+[native 400% dark keyboard focus](evidence/b04/nativeZoom4-dark-attribution-viewport.png),
+[native 400% light scrolled content](evidence/b04/nativeZoom4-light-pagedown-viewport.png).
+The integrator visually inspected both captures. Earlier clipped full-page
+screenshots were harness artifacts and excluded; raw viewport captures are the
+accepted evidence. Browser/server cleanup is recorded. No source defect was
+reproduced and no immutable archive was rewritten. This finite Chromium corpus
+is not all-browser or assistive-technology certification. A changed starter will
+receive affected functional/browser checks again.

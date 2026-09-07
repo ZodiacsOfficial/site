@@ -14,6 +14,7 @@ correction and a separate SDK GeoNames retry candidate are delivered. The overal
 | B01/B02 developer entry/support/examples | Site [draft #417](https://github.com/ZodiacsOfficial/site/pull/417), `8343f173e4db2e8ab6628bd04590e41b056872ce` | 4,493 tests/407 files; fresh public starter, 185 browser checks and literal rendered setup pass. Exact READY preview passed all three developer-page journeys. All 14 CI jobs passed in run 34159295138. |
 | C02 civil imports/timezones | Site [draft #418](https://github.com/ZodiacsOfficial/site/pull/418), `a4284d8d6289ed6abfe30d2da883ad07edcfc7bd` | 4,624 tests/408 files; all local gates, 18 captures, 12 share journeys, existing export and 962 compatibility checks pass. Exact READY preview passes all 12 journeys. All 14 jobs passed in exact-head CI 34161649806. |
 | A02/A03 GeoNames recovery | SDK [draft #7](https://github.com/ZodiacsOfficial/sdk/pull/7), `4f8903415e95a60969e84f7eb91e72f2f61ad315` | Separate engine rc.2, 305 tests/27 files on Node 20/22, all workspace gates, two clean packed consumers and 96 chart parity cases pass. Immutable public artifact verified. Stacked SDK CI does not trigger; local evidence is explicit. |
+| A04/C02 draft natal receipts | SDK [draft #8](https://github.com/ZodiacsOfficial/sdk/pull/8), runtime source `aaade67d0d49e8b10d1bc5c59cf345d6106dc270` | Separate engine rc.3, 429 tests/29 files on Node 20/22, required gates, two clean packed consumers, 96 parity cases and 23 actual offline Chrome codec checks pass. Immutable public artifact verified. Account v1/site integration is not completed by this codec. |
 
 Candidate engine `0.1.1-rc.1` SHA-256:
 `f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17`.
@@ -63,9 +64,13 @@ Read [PLAN](PLAN.md), [DECISIONS](DECISIONS.md) and [EVIDENCE](EVIDENCE.md).
 C02 exact-head CI and preview evidence are complete for draft #418. Active site branch is
 `codex/platform-receipt-contract`, based on delivered #418; its checkpoint
 records the completed deliveries. A new optional SDK draft natal-envelope
-codec is being implemented on its own `codex/platform-receipt-contract` branch;
-it does not change site pins, account sync or stored records. No rc.3 artifact
-exists yet and no codec acceptance is claimed. Invalid civil
+codec is delivered in SDK draft #8 on its own `codex/platform-receipt-contract`
+branch. Engine rc.3 SHA-256 is
+`aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17`.
+It does not change site pins, account sync or stored records. The active next
+slice integrates local receipt export/import and redaction into a new standalone
+starter candidate, preserving the old rc.2 starter and the site's engine rc.1.
+No new starter acceptance or artifact is claimed yet. Invalid civil
 fields and missing timezones now fail before normalization; failed saved-chart
 recomputation retains its old receipt without rewriting storage.
 
@@ -81,4 +86,8 @@ site/starter rc.1 adoption is a separate reviewed pin, not an automatic update.
 
 Hosted execution remains dependent on reviewed contracts and explicit
 privacy/limits. Continue independent authorized work during review waits.
+The outstanding B04 publisher-widget matrix now passes 74 actual Chrome checks,
+native 200%/400% zoom and keyboard scrolling, reduced motion, real offline and
+privacy/style-isolation controls. No source defect required a widget rewrite;
+this is finite Chromium acceptance, not assistive-technology certification.
 The current worktree contains the next receipt-contract checkpoint; no background execution after this session is implied.

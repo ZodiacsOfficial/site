@@ -227,3 +227,19 @@ This first codec is an additive Zodiacs draft, not an industry standard, complet
 C02 acceptance or a replacement for account downgrade/migration handling. The
 site stays on its verified rc.1 artifact while the separate candidate is built
 and tested. Required release review and explicit SDK #5 hold still apply.
+
+## C-004 — Connect receipts through the standalone example first
+
+Engine rc.3 is a separately verified optional-codec candidate. Let the standalone
+starter identify its own engine artifact/source instead of silently changing the
+site application's verified rc.1 pin. Keep strict source/archive/hash/provenance
+checks when decoupling the starter verifier; preserve existing immutable archives.
+
+Import a receipt as an untrusted stored result. Do not refill the existing birth
+form or recalculate automatically: that form's intentional UTC-noon convention
+for new unknown-time calculations would destroy an imported 08:30 reference.
+Retain the complete bounded envelope for re-export, display text safely, and
+exclude extensions/provenance strings from redacted diagnostics. Guard async file
+selection races and oversize files before reading. Full export includes private
+birth inputs; no account migration, network upload or persistent identifier is
+needed for this local integration.
