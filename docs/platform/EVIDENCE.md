@@ -751,8 +751,8 @@ no overflow/page errors and no saved-profile writes.
 [Remote receipt](evidence/c02-preview-share-boundary-browser.json),
 [rejected mobile import](evidence/c02-preview-share-rejected-390.png).
 Temporary access file and browser wrapper were removed; no bearer URL/cookie
-is saved in repository evidence. Site Check 34161649806 remains in progress;
-local/preview success is not a claimed final CI result.
+is saved in repository evidence. Exact-head Site Check [34161649806](https://github.com/ZodiacsOfficial/site/actions/runs/34161649806) passed all 14 jobs, including visual, Lighthouse and widget gates.
+[Final result](evidence/c02-ci-success.json).
 
 ### A02/A03 separate GeoNames recovery candidate
 
