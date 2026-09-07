@@ -18,7 +18,10 @@ const dayLabel = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'nume
 const clockLabel = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
 const stampLabel = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
 
-const utc = (date: Date) => `${dayLabel.format(date)} · ${clockLabel.format(date)} UTC`;
+// Cell text is "Tue 8 Sep · 14:32"; the zone is stated once above each
+// table, so the browser's local rewrite never changes a cell's length.
+const clock = (date: Date) => `${dayLabel.format(date)} · ${clockLabel.format(date)}`;
+const utc = (date: Date) => `${clock(date)} UTC`;
 const signName = (index: number) => SIGNS[index].name;
 const ASPECT_VERB: Record<string, string> = {
   conjunction: 'conjunct', sextile: 'sextile', square: 'square', trine: 'trine', opposition: 'opposite',
@@ -41,11 +44,21 @@ const months = [...new Set(windows.map((w) => `${w.to.getUTCFullYear()}-${w.to.g
   return { key, label: monthLabel.format(first), windows: windows.filter((w) => w.to.getUTCFullYear() === year && w.to.getUTCMonth() === month) };
 });
 
+// The same three sentence shapes the browser script writes, so a live
+// rewrite changes the timestamps and the zone label, not the layout.
 const statusLine = status.isVoid && status.current
-  ? `At ${stampLabel.format(buildNow)} UTC the Moon was void of course in ${signName(status.current.signIndex)}, until it enters ${signName(status.current.nextSignIndex)} at ${utc(status.current.to)}.`
+  ? `As of ${stampLabel.format(buildNow)} UTC: the Moon is void of course in ${signName(status.current.signIndex)}, until it enters ${signName(status.current.nextSignIndex)} at ${utc(status.current.to)}.`
   : status.next
-    ? `At ${stampLabel.format(buildNow)} UTC the Moon was not void of course. The next void begins ${utc(status.next.from)}, after the ${lastAspectLabel(status.next).replace('Moon ', 'Moon ')} aspect, and ends when the Moon enters ${signName(status.next.nextSignIndex)} at ${utc(status.next.to)}.`
-    : `At ${stampLabel.format(buildNow)} UTC the Moon was not void of course.`;
+    ? `As of ${stampLabel.format(buildNow)} UTC: the Moon is not void of course. The next void begins ${utc(status.next.from)} and ends when the Moon enters ${signName(status.next.nextSignIndex)} at ${utc(status.next.to)}.`
+    : `As of ${stampLabel.format(buildNow)} UTC: the Moon is not void of course.`;
+
+// Every window in range, for the browser's own "right now" reading.
+const windowsJson = JSON.stringify(windows.map((w) => ({
+  from: w.from.toISOString(),
+  to: w.to.toISOString(),
+  sign: signName(w.signIndex),
+  enters: signName(w.nextSignIndex),
+})));
 
 const faq = [
   {
@@ -110,18 +123,86 @@ const description = 'Void-of-course Moon times for this month and the next two, 
     <div class="voc-now tile" data-voc-now data-computed={buildNow.toISOString()}>
       <span class="mono--label">Right now</span>
       <p class="voc-now__text" data-voc-now-text>{statusLine}</p>
-      <p class="voc-now__note mono" data-voc-now-note>Times in UTC. With JavaScript, they appear in your own time zone.</p>
+      <p class="voc-now__note mono">Times in <span data-voc-zone>UTC</span>, converted to your time zone when JavaScript is on.</p>
     </div>
+    <script is:inline type="application/json" id="voc-windows" set:html={windowsJson}></script>
+    <script is:inline>
+      // Runs while the page is still parsing, right after the tile it
+      // rewrites, so the build-time sentence is replaced before it is
+      // painted. The table cells are rewritten once the DOM is complete;
+      // the tables' fixed column layout keeps that from moving anything.
+      (function () {
+        var data = document.getElementById('voc-windows');
+        var text = document.querySelector('[data-voc-now-text]');
+        if (!data || !text || typeof Intl === 'undefined') return;
+        var windows;
+        try { windows = JSON.parse(data.textContent || '[]'); } catch (error) { return; }
+        var day = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+        var hm = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+        var stamp = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+        var zone = 'local time';
+        var parts = new Intl.DateTimeFormat('en-GB', { timeZoneName: 'short' }).formatToParts(new Date());
+        for (var p = 0; p < parts.length; p += 1) if (parts[p].type === 'timeZoneName') zone = parts[p].value;
+        var at = function (iso) { var d = new Date(iso); return day.format(d) + ' · ' + hm.format(d); };
+        var now = Date.now();
+        var current = null;
+        var next = null;
+        for (var i = 0; i < windows.length; i += 1) {
+          var from = Date.parse(windows[i].from);
+          var to = Date.parse(windows[i].to);
+          if (from <= now && now < to) current = windows[i];
+          else if (from > now && !next) next = windows[i];
+        }
+        var lead = 'As of ' + stamp.format(new Date(now)) + ' ' + zone + ': ';
+        if (current) {
+          text.textContent = lead + 'the Moon is void of course in ' + current.sign + ', until it enters ' + current.enters + ' at ' + at(current.to) + ' ' + zone + '.';
+        } else if (next) {
+          text.textContent = lead + 'the Moon is not void of course. The next void begins ' + at(next.from) + ' ' + zone + ' and ends when the Moon enters ' + next.enters + ' at ' + at(next.to) + ' ' + zone + '.';
+        } else {
+          text.textContent = lead + 'the Moon is not void of course.';
+        }
+        var zones = function () {
+          var spans = document.querySelectorAll('[data-voc-zone]');
+          for (var z = 0; z < spans.length; z += 1) spans[z].textContent = zone;
+        };
+        zones();
+        var finish = function () {
+          zones();
+          var cells = document.querySelectorAll('[data-voc-time]');
+          for (var c = 0; c < cells.length; c += 1) {
+            var t = Date.parse(cells[c].getAttribute('data-voc-time') || '');
+            if (!isNaN(t)) cells[c].textContent = at(t);
+          }
+          if (!current) return;
+          var rows = document.querySelectorAll('tr[data-voc-from]');
+          for (var r = 0; r < rows.length; r += 1) {
+            if (rows[r].getAttribute('data-voc-from') === current.from) {
+              rows[r].setAttribute('aria-current', 'true');
+              rows[r].className += ' voc-table__row--now';
+            }
+          }
+        };
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', finish);
+        else finish();
+      })();
+    </script>
   </section>
 
   {months.map((month) => (
     <section class="section--tight container container--narrow">
       <div class="section-head">
         <h2>{month.label}</h2>
-        <p>{month.windows.length} voids. Times are UTC; with JavaScript, your time zone.</p>
+        <p>{month.windows.length} voids. Times in <span data-voc-zone>UTC</span>.</p>
       </div>
       <div class="voc-table-wrap">
         <table class="voc-table">
+          <colgroup>
+            <col class="voc-table__col-time" />
+            <col class="voc-table__col-aspect" />
+            <col class="voc-table__col-time" />
+            <col class="voc-table__col-sign" />
+            <col class="voc-table__col-length" />
+          </colgroup>
           <thead>
             <tr>
               <th scope="col">Void begins</th>
@@ -134,9 +215,9 @@ const description = 'Void-of-course Moon times for this month and the next two, 
           <tbody>
             {month.windows.map((window) => (
               <tr data-voc-from={window.from.toISOString()} data-voc-to={window.to.toISOString()}>
-                <td class="mono" data-voc-time={window.from.toISOString()}>{utc(window.from)}</td>
+                <td class="mono" data-voc-time={window.from.toISOString()}>{clock(window.from)}</td>
                 <td>{lastAspectLabel(window)}</td>
-                <td class="mono" data-voc-time={window.to.toISOString()}>{utc(window.to)}</td>
+                <td class="mono" data-voc-time={window.to.toISOString()}>{clock(window.to)}</td>
                 <td>{signName(window.nextSignIndex)}</td>
                 <td class="mono">{duration(window)}</td>
               </tr>
@@ -189,43 +270,6 @@ const description = 'Void-of-course Moon times for this month and the next two, 
   </section>
 </Base>
 
-<script>
-  // Convert every UTC instant to the reader's time zone and mark the
-  // window in progress. Runs once; the table already reads correctly
-  // without it.
-  const format = new Intl.DateTimeFormat(undefined, { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-  const zone = new Intl.DateTimeFormat(undefined, { timeZoneName: 'short' }).formatToParts(new Date()).find((p) => p.type === 'timeZoneName')?.value ?? 'local time';
-  for (const cell of document.querySelectorAll<HTMLElement>('[data-voc-time]')) {
-    const at = new Date(cell.dataset.vocTime ?? '');
-    if (!Number.isNaN(at.getTime())) cell.textContent = `${format.format(at)} ${zone}`;
-  }
-  const now = Date.now();
-  const rows = [...document.querySelectorAll<HTMLTableRowElement>('tr[data-voc-from]')];
-  const current = rows.find((row) => new Date(row.dataset.vocFrom ?? '').getTime() <= now && now < new Date(row.dataset.vocTo ?? '').getTime());
-  const next = rows.find((row) => new Date(row.dataset.vocFrom ?? '').getTime() > now);
-  const text = document.querySelector<HTMLElement>('[data-voc-now-text]');
-  const note = document.querySelector<HTMLElement>('[data-voc-now-note]');
-  const describe = (row: HTMLTableRowElement) => {
-    const cells = row.querySelectorAll('td');
-    return { enters: cells[3]?.textContent ?? '', ends: format.format(new Date(row.dataset.vocTo ?? '')), begins: format.format(new Date(row.dataset.vocFrom ?? '')) };
-  };
-  if (text) {
-    if (current) {
-      const { enters, ends } = describe(current);
-      text.textContent = `The Moon is void of course right now, until it enters ${enters} at ${ends} ${zone}.`;
-      current.setAttribute('aria-current', 'true');
-      current.classList.add('voc-table__row--now');
-    } else if (next) {
-      const { begins, enters, ends } = describe(next);
-      text.textContent = `The Moon is not void of course right now. The next void begins ${begins} ${zone} and ends when the Moon enters ${enters} at ${ends} ${zone}.`;
-    }
-  }
-  for (const section of document.querySelectorAll<HTMLElement>('.section-head p')) {
-    section.textContent = section.textContent?.replace('Times are UTC; with JavaScript, your time zone.', `Times in ${zone}.`) ?? '';
-  }
-  if (note) note.textContent = `Times in ${zone}, from your device clock.`;
-</script>
-
 <style>
   .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
   .tool-hero h1 {
@@ -238,11 +282,17 @@ const description = 'Void-of-course Moon times for this month and the next two, 
   .voc-now__text { margin: 0; color: var(--text); font-size: var(--text-base); line-height: 1.55; text-wrap: pretty; }
   .voc-now__note { margin: 0; color: var(--faint); font-size: var(--text-xs); }
   .voc-table-wrap { overflow-x: auto; border: 1px solid var(--hair-1); border-radius: var(--r-md); background: var(--void-1); }
-  .voc-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: var(--text-sm); }
+  /* Fixed columns: the browser rewrites the time cells in place, and a
+     rewrite must never move a row. */
+  .voc-table { width: 100%; min-width: 720px; border-collapse: collapse; table-layout: fixed; font-size: var(--text-sm); }
+  .voc-table__col-time { width: 24%; }
+  .voc-table__col-aspect { width: 26%; }
+  .voc-table__col-sign { width: 16%; }
+  .voc-table__col-length { width: 10%; }
   .voc-table th, .voc-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--hair-1); vertical-align: top; }
   .voc-table th { color: var(--muted); font-weight: 550; font-size: var(--text-xs); }
   .voc-table tbody tr:last-child td { border-bottom: 0; }
-  .voc-table td.mono { font-size: var(--text-xs); color: var(--text-2); white-space: nowrap; }
+  .voc-table td.mono { font-size: var(--text-xs); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .voc-table__row--now td { background: var(--void-2); color: var(--text); }
   .voc-table__row--now td:first-child { box-shadow: inset 3px 0 0 var(--sign-cancer); }
   .faq { display: grid; gap: 8px; }
