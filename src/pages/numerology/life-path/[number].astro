@@ -3,7 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import NumerologyCalculator from '../../../islands/NumerologyCalculator';
 import { LIFE_PATH_NUMBERS, LIFE_PATH_PAGES, type LifePathPage } from '../../../data/numerology-pages';
 import { baseDigit, MASTER_NUMBERS, NUMBER_MEANINGS, type CoreNumber } from '../../../data/numerology-meanings';
-import { lifePathDistribution, lifePathExample, nextDatesWithLifePath } from '../../../lib/numerology';
+import { lifePathDistribution, lifePathExample, nextDatesWithLifePath, reduceKeepingMasters } from '../../../lib/numerology';
 import { EDITOR_AUTHOR } from '../../../lib/editorial';
 import '../../../styles/calculator.css';
 
@@ -26,10 +26,17 @@ const meaning = NUMBER_MEANINGS[number];
 const path = `/numerology/life-path/${number}/`;
 const url = `https://zodiacs.org${path}`;
 
-const KARMIC_TOTALS = new Set([13, 14, 16, 19]);
 const stats = lifePathDistribution()[number];
 const totals = Object.keys(stats.totals).map(Number).sort((a, b) => a - b);
-const totalsLine = totals.map((t) => (KARMIC_TOTALS.has(t) ? `${t} (karmic debt)` : String(t))).join(' · ');
+// A total is marked when a karmic debt sits anywhere in its reduction chain,
+// the same rule the calculator applies: 49 → 13 → 4 carries the 13.
+const totalsLine = totals
+  .map((t) => {
+    const debt = reduceKeepingMasters(t).karmicDebt;
+    if (!debt) return String(t);
+    return debt === t ? `${t} (karmic debt)` : `${t} (karmic debt ${debt})`;
+  })
+  .join(' · ');
 const share = `${stats.share.toFixed(1)}%`;
 const isMaster = MASTER_NUMBERS.includes(number);
 const masterLine = isMaster ? `Yes, lives as a ${baseDigit(number)}` : 'No';
@@ -40,7 +47,9 @@ const buildToday = new Date().toISOString().slice(0, 10);
 const nextDates = nextDatesWithLifePath(number, buildToday, 3);
 const longDate = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 const nextDatesLine = nextDates.map((iso) => longDate.format(new Date(`${iso}T00:00:00Z`))).join(' · ');
+const asOf = longDate.format(new Date(`${buildToday}T00:00:00Z`));
 const exampleDate = nextDates[0] ?? buildToday;
+const exampleDateLong = longDate.format(new Date(`${exampleDate}T00:00:00Z`));
 const exampleLine = lifePathExample(exampleDate);
 
 const idx = LIFE_PATH_NUMBERS.indexOf(number);
@@ -114,11 +123,11 @@ const jsonLd = [
           <dd>{masterLine}</dd>
         </div>
         <div class="plc-panel__row">
-          <dt>Next birth dates with this number</dt>
+          <dt>Next birth dates from {asOf}</dt>
           <dd>{nextDatesLine}</dd>
         </div>
         <div class="plc-panel__row">
-          <dt>Worked example, {exampleDate}</dt>
+          <dt>Worked example, <time datetime={exampleDate}>{exampleDateLong}</time></dt>
           <dd>{exampleLine}</dd>
         </div>
       </dl>
@@ -142,7 +151,7 @@ const jsonLd = [
           Computed on your device; nothing is sent anywhere.
         </p>
       </div>
-      <NumerologyCalculator client:visible />
+      <NumerologyCalculator client:visible currentLifePath={number} />
       <noscript>
         <p>This numerology calculator needs JavaScript. Enable it and reload to compute your Life Path and name numbers from your birth date and full name.</p>
       </noscript>
@@ -240,6 +249,6 @@ const jsonLd = [
     transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
   }
   .plc-chip:hover { color: var(--text); background: rgba(198, 204, 218, 0.09); }
-  .plc-chip[aria-current='page'] { color: var(--text); border: 1px solid var(--hair-2); }
+  .plc-chip[aria-current='page'] { color: var(--text); box-shadow: inset 0 0 0 1px var(--hair-2); }
   @media (prefers-reduced-motion: reduce) { .plc-chip { transition: none; } }
 </style>

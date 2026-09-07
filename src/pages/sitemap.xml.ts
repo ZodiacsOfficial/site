@@ -5,7 +5,7 @@
  * move the sitemap URL robots.txt points at).
  */
 import type { APIRoute } from 'astro';
-import { LIFE_PATH_NUMBERS } from '../data/numerology-pages';
+import { LIFE_PATH_NUMBERS, LIFE_PATH_PAGES } from '../data/numerology-pages';
 import { getCollection } from 'astro:content';
 import { LEGACY_URLS } from '../lib/legacy/urls';
 import { DEFAULT_LOCALE, LOCALE_META, alternatePathEntries, alternatePaths } from '../lib/i18n';
@@ -45,10 +45,10 @@ const THESIS_LASTMOD = '2026-09-05';
 const LEGAL_IDENTITY_LASTMOD = '2026-08-29';
 const BIG_THREE_LASTMOD = '2026-09-01';
 const YEAR_PAGES_LASTMOD = '2026-09-01';
-// The numerology calculator and its twelve Life Path pages; the tools hub and
-// methodology page changed with them.
+// The numerology calculator; the tools hub and methodology page changed with
+// it. Each Life Path page dates itself from its own `updated` field, the same
+// date its Article markup carries.
 const NUMEROLOGY_LASTMOD = '2026-09-07';
-const NUMEROLOGY_PATHS = ['/numerology/', ...LIFE_PATH_NUMBERS.map((number) => `/numerology/life-path/${number}/`)];
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -152,7 +152,8 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ['/big-three/', BIG_THREE_LASTMOD] as const,
   ...['/full-moon-calendar/2027/', '/eclipses/2027/', '/mercury-retrograde/2027/']
     .map((loc) => [loc, YEAR_PAGES_LASTMOD] as const),
-  ...[...NUMEROLOGY_PATHS, '/tools/', '/methodology/'].map((loc) => [loc, NUMEROLOGY_LASTMOD] as const),
+  ...['/numerology/', '/tools/', '/methodology/'].map((loc) => [loc, NUMEROLOGY_LASTMOD] as const),
+  ...LIFE_PATH_PAGES.map((page) => [`/numerology/life-path/${page.number}/`, page.updated] as const),
 ]);
 
 function getLastmod(loc: string): string {

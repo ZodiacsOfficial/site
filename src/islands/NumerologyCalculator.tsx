@@ -37,7 +37,7 @@ const UNSUPPORTED_LETTERS_MESSAGE =
 const INVALID_DATE_MESSAGE = 'That date is not a real calendar date.';
 const GENERIC_MESSAGE = 'The numbers could not be computed. Check the date and the name and try again.';
 const NAME_EMPTIED_NOTE =
-  'Nothing was left of that name once titles and suffixes were removed, so these are the date numbers only.';
+  'Nothing was left of that name once titles, suffixes, and anything that is not a letter were removed, so these are the date numbers only.';
 
 const POSITION_LABEL: Record<PositionKey, string> = Object.fromEntries(
   POSITIONS.map((p) => [p.key, p.label]),
@@ -88,7 +88,9 @@ function arrows(r: Reduction): string {
 
 function errorMessage(err: unknown): string {
   if (err instanceof NumerologyInputError) {
-    if (err.code === 'unsupported-letters') return UNSUPPORTED_LETTERS_MESSAGE;
+    if (err.code === 'unsupported-letters') {
+      return err.detail ? `${UNSUPPORTED_LETTERS_MESSAGE} The letter "${err.detail}" cannot be read.` : UNSUPPORTED_LETTERS_MESSAGE;
+    }
     if (err.code === 'invalid-date') return INVALID_DATE_MESSAGE;
   }
   return GENERIC_MESSAGE;
@@ -96,20 +98,25 @@ function errorMessage(err: unknown): string {
 
 interface Computed {
   profile: NumerologyProfile;
+  /** The Life Path arithmetic as one mono line, worked once per submit rather than per render. */
+  example: string;
   /** Set when a non-blank name normalised to nothing and the date numbers were computed alone. */
   nameEmptied: boolean;
 }
 
 function compute(input: Submitted, overrides: readonly YOverride[]): Computed {
+  const example = lifePathExample(input.date);
   try {
     return {
       profile: numerologyProfile({ birthDate: input.date, fullName: input.name, today: input.today, yOverrides: overrides }),
+      example,
       nameEmptied: false,
     };
   } catch (err) {
     if (err instanceof NumerologyInputError && err.code === 'empty-name') {
       return {
         profile: numerologyProfile({ birthDate: input.date, today: input.today }),
+        example,
         nameEmptied: input.name.trim() !== '',
       };
     }
@@ -135,7 +142,7 @@ function NumberCard({ position, value, chain = '', summary, meta }: CardProps) {
       <span class="mono--label num__label">{label}</span>
       <div class="num__figure">
         <span class="display num__number">{value}</span>
-        {chain && <span class="mono num__chain" aria-label={`Reduced from ${chain.replace(/\//g, ', then ')}`}>{chain}</span>}
+        {chain && <span class="mono num__chain">{chain}</span>}
       </div>
       {meta && <span class="mono num__meta">{meta}</span>}
       {meaning ? (
@@ -173,7 +180,7 @@ function LetterTable({
                 type="button"
                 class="num__y"
                 aria-pressed={cell.vowel}
-                aria-label={`Count the Y in ${part.raw}, letter ${cell.index + 1}, as a vowel`}
+                aria-label={`Y, value ${cell.value}, letter ${cell.index + 1} of ${part.raw}: count as a vowel`}
                 onClick={() => onToggleY(partIndex, cell.index, !cell.vowel)}
               >
                 <span class="num__letter">Y</span>
@@ -200,6 +207,12 @@ function wholeNameLine(parts: readonly NamePartNumbers[], pick: (p: NamePartNumb
   return `${parts.map((p) => pick(p).value).join(' + ')} = ${arrows(whole)}`;
 }
 
+/** "A", "A and B", "A, B, and C". */
+function listJoin(items: readonly string[]): string {
+  if (items.length < 3) return items.join(' and ');
+  return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
+}
+
 function ageSpan(starts: readonly number[], i: number): string {
   const from = starts[i] ?? 0;
   const next = starts[i + 1];
@@ -208,13 +221,20 @@ function ageSpan(starts: readonly number[], i: number): string {
   return `ages ${from} to ${next - 1}`;
 }
 
-export default function NumerologyCalculator() {
+interface Props {
+  /** The Life Path whose page this island sits on, so the lead does not link the reader to where they already are. */
+  currentLifePath?: CoreNumber;
+}
+
+export default function NumerologyCalculator({ currentLifePath }: Props) {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [submitted, setSubmitted] = useState<Submitted | null>(null);
   const [overrides, setOverrides] = useState<YOverride[]>([]);
   const [result, setResult] = useState<Computed | null>(null);
-  const [busy, setBusy] = useState(false);
+  // Bumped on every submit so the focus effect below runs even when the
+  // outcome (say, the same error message twice) leaves the other state unchanged.
+  const [attempt, setAttempt] = useState(0);
   const [error, setError] = useState('');
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
@@ -222,10 +242,10 @@ export default function NumerologyCalculator() {
 
   function submit(e: Event) {
     e.preventDefault();
-    if (!date || busy) return;
+    if (!date) return;
     focusAfterComputeRef.current = true;
-    setBusy(true);
     setError('');
+    setAttempt((n) => n + 1);
     // Y overrides index into one specific name; a different name starts clean.
     const nextOverrides = submitted && submitted.name === name ? overrides : [];
     const input: Submitted = { name, date, today: localIsoDate(new Date()) };
@@ -235,8 +255,6 @@ export default function NumerologyCalculator() {
       setOverrides(nextOverrides);
     } catch (err) {
       setError(errorMessage(err));
-    } finally {
-      setBusy(false);
     }
   }
 
@@ -247,6 +265,7 @@ export default function NumerologyCalculator() {
       { part, index, as: vowel ? 'vowel' : 'consonant' },
     ];
     try {
+      setError('');
       setResult(compute(submitted, next));
       setOverrides(next);
     } catch (err) {
@@ -255,7 +274,7 @@ export default function NumerologyCalculator() {
   }
 
   useEffect(() => {
-    if (busy || !focusAfterComputeRef.current) return;
+    if (!focusAfterComputeRef.current) return;
     if (error) {
       errorRef.current?.focus();
       focusAfterComputeRef.current = false;
@@ -265,9 +284,10 @@ export default function NumerologyCalculator() {
       resultHeadingRef.current?.focus();
       focusAfterComputeRef.current = false;
     }
-  }, [busy, error, result]);
+  }, [error, result, attempt]);
 
   const profile = result?.profile ?? null;
+  const example = result?.example ?? '';
   const lifePath = profile?.date.lifePath ?? null;
   const lifePathMeaning = lifePath ? meaningFor(lifePath.value) : null;
   const cycles = profile?.personalCycles ?? null;
@@ -286,7 +306,7 @@ export default function NumerologyCalculator() {
 
   return (
     <div class="calc num">
-      <form class="calc__form shell" onSubmit={submit} aria-busy={busy}>
+      <form class="calc__form shell" onSubmit={submit}>
         <div class="core calc__core">
           <div class="calc__fields">
             <div class="field">
@@ -313,12 +333,12 @@ export default function NumerologyCalculator() {
             </div>
           </div>
 
-          <button class="btn btn--primary calc__submit" type="submit" disabled={!date || busy}>
+          <button class="btn btn--primary calc__submit" type="submit" disabled={!date}>
             <span>Find my numbers</span>
             <span class="orb">↗</span>
           </button>
           <p class="calc__privacy">Private by default. Your name and birth date stay in this browser.</p>
-          {error && <p class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
+          {error && <p key={attempt} class="calc__error" role="alert" tabIndex={-1} ref={errorRef}>{error}</p>}
         </div>
       </form>
 
@@ -333,11 +353,7 @@ export default function NumerologyCalculator() {
               <span class="mono--label num__label">Life Path</span>
               <div class="num__figure num__figure--lead">
                 <span class="display num__number num__number--lead">{lifePath.value}</span>
-                {chainIfLonger(lifePath) && (
-                  <span class="mono num__chain" aria-label={`Reduced from ${formatChain(lifePath).replace(/\//g, ', then ')}`}>
-                    {formatChain(lifePath)}
-                  </span>
-                )}
+                {chainIfLonger(lifePath) && <span class="mono num__chain">{formatChain(lifePath)}</span>}
               </div>
               {lifePathMeaning && (
                 <>
@@ -349,9 +365,11 @@ export default function NumerologyCalculator() {
                 </>
               )}
               <p class="mono num__source">From your birth date, {profile.date.iso}</p>
-              <a class="btn btn--ghost num__read" href={`/numerology/life-path/${lifePath.value}/`}>
-                <span>Read about Life Path {lifePath.value}</span><span class="orb">→</span>
-              </a>
+              {lifePath.value !== currentLifePath && (
+                <a class="btn btn--ghost num__read" href={`/numerology/life-path/${lifePath.value}/`}>
+                  <span>Read about Life Path {lifePath.value}</span><span class="orb">→</span>
+                </a>
+              )}
             </div>
           </div>
 
@@ -383,7 +401,7 @@ export default function NumerologyCalculator() {
                 <p key={debt} class="num__debt">
                   <span class="mono num__debt-number">{debt}</span>{' '}
                   <span>
-                    Carried by your {debtCarriers(debt).join(' and ')}. {KARMIC_DEBT_MEANINGS[debt]}
+                    Carried by your {listJoin(debtCarriers(debt))}. {KARMIC_DEBT_MEANINGS[debt]}
                   </span>
                 </p>
               ))}
@@ -393,7 +411,7 @@ export default function NumerologyCalculator() {
           <EvidenceDisclosure label="How we compute" variant="panel" className="num__how">
             <div class="num__how-block">
               <span class="mono--label num__label">Life Path from {profile.date.iso}</span>
-              <p class="mono num__line">{lifePathExample(profile.date.iso)}</p>
+              <p class="mono num__line">{example}</p>
               <p class="num__how-note">
                 Month, day, and the digit sum of the year are each reduced, with 11, 22, and 33 kept; the three are added and reduced once more.
               </p>

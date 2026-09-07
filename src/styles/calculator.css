@@ -2506,6 +2506,8 @@
 @media (min-width: 640px) { .num__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1000px) { .num__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .num__tile { display: grid; gap: 8px; align-content: start; padding: 20px; min-width: 0; transition: none; }
+/* The one place the card's hue shows: its label, tinted towards the number's sign colour. */
+.num__tile .num__label { color: color-mix(in oklab, var(--sign, var(--faint)) 70%, var(--faint)); }
 /* Result tiles are not links; the light tile's hover lift is for link grids. */
 .num__grid .num__tile:hover { transform: none; background: rgba(198, 204, 218, 0.015); border-color: var(--hair-1); }
 
@@ -2547,11 +2549,11 @@
   min-width: 32px;
   padding: 6px 5px 4px;
   border: 1px solid var(--hair-1);
-  border-bottom-width: 2px;
   border-radius: var(--r-sm);
   background: rgba(198, 204, 218, 0.02);
 }
-.num__cell--vowel { border-bottom-color: var(--sign, var(--accent)); }
+/* One mark for every vowel, the plain letters and a Y counted as one alike. */
+.num__cell--vowel .num__letter { text-decoration: underline; text-decoration-color: var(--sign, var(--accent)); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .num__cell:has(> .num__y) { padding: 0; }
 .num__letter { font-size: 14px; font-weight: 600; line-height: 1; color: var(--text); }
 .num__value { font-size: 11px; color: var(--muted); }
@@ -2569,7 +2571,6 @@
 }
 .num__y:hover { background: rgba(198, 204, 218, 0.07); }
 .num__y:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 2px; }
-.num__y[aria-pressed='true'] .num__letter { text-decoration: underline; text-decoration-color: var(--sign, var(--accent)); text-underline-offset: 3px; text-decoration-thickness: 2px; }
 .num__sums { margin: 0; font-size: 11px; color: var(--faint); overflow-wrap: anywhere; }
 .num__whole { margin: 0; display: grid; gap: 4px; font-size: 12px; }
 .num__whole > div { display: grid; gap: 2px 14px; grid-template-columns: minmax(0, 1fr); }

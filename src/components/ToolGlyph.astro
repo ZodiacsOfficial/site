@@ -7,10 +7,10 @@
  * src/lib/glyphs/paths.ts (TOOL_GLYPH), shared with the wider glyph set.
  */
 import { TOOL_GLYPH } from '../lib/glyphs/paths';
+import type { ToolGlyphKind } from '../lib/nav-tools';
 
 interface Props {
-  kind: 'birth' | 'moon' | 'rising' | 'compat' | 'sun' | 'saturn' | 'transit'
-    | 'retrograde' | 'moonphase' | 'fullmoon' | 'eclipse' | 'baby' | 'numerology' | 'assistant';
+  kind: ToolGlyphKind | 'assistant';
   label?: string;
 }
 const { kind, label } = Astro.props;

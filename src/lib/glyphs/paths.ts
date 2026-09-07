@@ -85,8 +85,8 @@ export const TOOL_GLYPH: Record<string, string> = {
   eclipse: `<circle cx="12" cy="12" r="8.2"/><path d="M15 4.6a8.2 8.2 0 1 1 0 14.8 8.2 8.2 0 0 0 0-14.8Z" fill="currentColor" stroke="none"/>`,
   // sparkle — the baby / due-date tool
   baby: `<path d="M12 3.5c.4 4.4 1.6 5.6 6 6-4.4.4-5.6 1.6-6 6-.4-4.4-1.6-5.6-6-6 4.4-.4 5.6-1.6 6-6Z"/>`,
-  // nine dots in a 3×3 grid — the numerology reduction table
-  numerology: [6, 12, 18].flatMap((cy) => [6, 12, 18].map((cx) => DOT(cx, cy, 1.45))).join(''),
+  // a ruled 3×3 table — the numerology letter grid, stroked like the other tools
+  numerology: `<rect x="4.5" y="4.5" width="15" height="15" rx="1.5"/><path d="M4.5 9.5h15M4.5 14.5h15M9.5 4.5v15M14.5 4.5v15"/>`,
   // a plain conversation bubble for the site assistant
   assistant: `<path d="M5 5.5h14v10H10l-4.5 3v-3H5Z"/><path d="M8.5 9.3h7M8.5 12h4.5"/>`,
 };
