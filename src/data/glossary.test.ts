@@ -124,8 +124,11 @@ describe('glossary data', () => {
     expect(bySlug.get('sidereal-zodiac')?.definition).toContain('does not compute sidereal charts');
     expect(bySlug.get('progression')?.definition).toContain('does not calculate progressed charts');
     expect(bySlug.get('composite-chart')?.definition).toContain('not composite charts');
+    // Void-of-course windows are computed since the calendar shipped; the
+    // entry must state the rule used and point at the page.
     expect(bySlug.get('void-of-course-moon')?.definition).toContain(
-      'does not calculate void-of-course intervals',
+      'the five Ptolemaic aspects to the Sun through Pluto',
     );
+    expect(bySlug.get('void-of-course-moon')?.link?.href).toBe('/void-of-course-moon/');
   });
 });

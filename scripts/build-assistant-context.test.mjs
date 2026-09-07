@@ -46,6 +46,7 @@ describe('assistant site context', () => {
       '/saturn-return/',
       '/solar-return/',
       '/transits/',
+      '/void-of-course-moon/',
       '/widgets/',
     ]);
     for (const route of TOOL_ROUTES) expect(context).toContain(`- ${route} —`);
@@ -58,13 +59,14 @@ describe('assistant site context', () => {
       // Lunar return adds one English tool and one consumer route.
       // The numerology calculator adds one English tool and one static page;
       // its twelve Life Path pages come from a dynamic route and are not counted.
-      consumerRoutes: 689,
+      // The void-of-course Moon calendar adds one more English tool and static page.
+      consumerRoutes: 690,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 50,
-      tools: 19,
+      staticPages: 51,
+      tools: 20,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');

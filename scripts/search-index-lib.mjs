@@ -41,6 +41,7 @@ const TOOL_ROOTS = new Set([
   'solar-return',
   'tools',
   'transits',
+  'void-of-course-moon',
   'widgets',
 ]);
 const EXCLUDED_PREFIXES = ['/es/', '/astrofolio/', '/fomo/', '/terminal/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
