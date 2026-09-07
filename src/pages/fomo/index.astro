@@ -237,34 +237,41 @@ const sources = [
   <article class="fomo" data-fomo-page data-initial-sign={initial.slug} style={`--fomo-sign:${initial.hue}`}>
     <section class="fomo-hero" aria-labelledby="fomo-title">
       <div class="fomo-film" data-fomo-film aria-hidden="true">
-        <picture>
+        <picture class="fomo-film__ambient">
           <source type="image/avif" srcset={FILM.posterAvif} />
-          <img
-            class="fomo-film__poster"
-            src={FILM.posterWebp}
-            width={FILM.width}
-            height={FILM.height}
-            alt=""
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
+          <img src={FILM.posterWebp} width={FILM.width} height={FILM.height} alt="" loading="eager" decoding="async" />
         </picture>
-        <video
-          class="fomo-film__video"
-          muted
-          loop
-          playsinline
-          preload="none"
-          disablepictureinpicture
-          tabindex="-1"
-          data-fomo-film-video
-          data-playback="poster"
-        >
-          <source data-src={FILM.av1} type='video/mp4; codecs="av01.0.08M.08"' />
-          <source data-src={FILM.h264} type="video/mp4" />
-        </video>
         <div class="fomo-film__shade"></div>
+        <div class="fomo-film__reel">
+          <picture>
+            <source type="image/avif" srcset={FILM.posterAvif} />
+            <img
+              class="fomo-film__poster"
+              src={FILM.posterWebp}
+              width={FILM.width}
+              height={FILM.height}
+              alt=""
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+          <video
+            class="fomo-film__video"
+            muted
+            loop
+            playsinline
+            preload="none"
+            disablepictureinpicture
+            tabindex="-1"
+            data-fomo-film-video
+            data-playback="poster"
+          >
+            <source data-src={FILM.av1} type='video/mp4; codecs="av01.0.08M.08"' />
+            <source data-src={FILM.h264} type="video/mp4" />
+          </video>
+        </div>
+        <div class="fomo-film__veil"></div>
       </div>
 
       <div class="fomo-hero__inner container">
@@ -295,22 +302,6 @@ const sources = [
             <li><strong>Free</strong> app, rated 18+</li>
           </ul>
         </div>
-
-        <figure class="fomo-hero__render reveal" style="--reveal-delay:140ms">
-          <picture>
-            <source type="image/avif" srcset={VERIFIED_RENDER.avif} />
-            <source type="image/webp" srcset={VERIFIED_RENDER.webp} />
-            <img
-              src={VERIFIED_RENDER.png}
-              width={VERIFIED_RENDER.width}
-              height={VERIFIED_RENDER.height}
-              alt="A phone showing Fomo’s Verified list with the Zodiacs, each marked with a blue check."
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </picture>
-        </figure>
       </div>
     </section>
 
@@ -411,31 +402,50 @@ const sources = [
     </section>
 
     <section class="fomo-steps section--tight container" id="how" aria-labelledby="how-title">
-      <div class="section-head">
-        <p class="kicker">Three steps</p>
-        <h2 id="how-title">How it works</h2>
-        <p>From download to your first Zodiac in a few minutes. Nobody needs your recovery phrase at any point.</p>
+      <div class="fomo-steps__inner">
+        <div class="fomo-steps__text">
+          <div class="section-head">
+            <p class="kicker">Three steps</p>
+            <h2 id="how-title">How it works</h2>
+            <p>From download to your first Zodiac in a few minutes. Nobody needs your recovery phrase at any point.</p>
+          </div>
+          <ol class="fomo-steps__list">
+            <li class="tile reveal">
+              <span class="fomo-steps__num">01</span>
+              <h3>Get the app</h3>
+              <p>Download Fomo from the App Store or Google Play, or open fomo.family in a browser. Sign in with an email address or Apple ID; Fomo sets up the wallet inside the app.</p>
+              <a href="#top-stores">Get the app ↑</a>
+            </li>
+            <li class="tile reveal" style="--reveal-delay:80ms">
+              <span class="fomo-steps__num">02</span>
+              <h3>Add funds</h3>
+              <p>Fomo takes Apple Pay where it is offered, or a transfer of USDC or SOL from a wallet or exchange you already use. Send a small test amount first and the rest once it lands.</p>
+              <a href="/astrofolio/how-to-buy/#fund-wallet">Funding basics ↗</a>
+            </li>
+            <li class="tile reveal" style="--reveal-delay:160ms">
+              <span class="fomo-steps__num">03</span>
+              <h3>Open your sign</h3>
+              <p>Tap your sign below. The link opens that Zodiac in Fomo with the verified address already in place. Compare it against the Registry record before you buy.</p>
+              <a href="#signs">Choose a sign ↓</a>
+            </li>
+          </ol>
+        </div>
+        <figure class="fomo-steps__render reveal" style="--reveal-delay:120ms">
+          <picture>
+            <source type="image/avif" srcset={VERIFIED_RENDER.avif} />
+            <source type="image/webp" srcset={VERIFIED_RENDER.webp} />
+            <img
+              src={VERIFIED_RENDER.png}
+              width={VERIFIED_RENDER.width}
+              height={VERIFIED_RENDER.height}
+              alt="A phone showing Fomo’s Verified list with the Zodiacs, each marked with a blue check."
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <figcaption>Fomo’s Verified list: the twelve, each with its blue check.</figcaption>
+        </figure>
       </div>
-      <ol class="fomo-steps__list">
-        <li class="tile reveal">
-          <span class="fomo-steps__num">01</span>
-          <h3>Get the app</h3>
-          <p>Download Fomo from the App Store or Google Play, or open fomo.family in a browser. Sign in with an email address or Apple ID; Fomo sets up the wallet inside the app.</p>
-          <a href="#top-stores">Get the app ↑</a>
-        </li>
-        <li class="tile reveal" style="--reveal-delay:80ms">
-          <span class="fomo-steps__num">02</span>
-          <h3>Add funds</h3>
-          <p>Fomo takes Apple Pay where it is offered, or a transfer of USDC or SOL from a wallet or exchange you already use. Send a small test amount first and the rest once it lands.</p>
-          <a href="/astrofolio/how-to-buy/#fund-wallet">Funding basics ↗</a>
-        </li>
-        <li class="tile reveal" style="--reveal-delay:160ms">
-          <span class="fomo-steps__num">03</span>
-          <h3>Open your sign</h3>
-          <p>Tap your sign below. The link opens that Zodiac in Fomo with the verified address already in place. Compare it against the Registry record before you buy.</p>
-          <a href="#signs">Choose a sign ↓</a>
-        </li>
-      </ol>
     </section>
 
     <section class="fomo-footage section--tight container" id="inside" aria-labelledby="footage-title">
@@ -969,7 +979,7 @@ const sources = [
   }
   .fomo-hero h1 :global(.fomo-mark) { width: 0.72em; height: 0.72em; border-radius: 0.18em; vertical-align: -0.02em; }
 
-  /* ── Hero: the film as wallpaper, the copy over its shade ─────────── */
+  /* ── Hero: the film beside the copy, its blurred still as the wallpaper ── */
   .fomo-hero {
     position: relative;
     isolation: isolate;
@@ -987,6 +997,34 @@ const sources = [
     z-index: 0;
     background: var(--void-1);
   }
+  /* The still, blurred and dimmed, is the wallpaper. The reel beside the
+     copy carries the whole frame at its own 9:16, so every glyph passes
+     uncropped instead of a third of the picture filling the screen. */
+  .fomo-film__ambient img {
+    position: absolute;
+    inset: -8%;
+    width: 116%;
+    height: 116%;
+    object-fit: cover;
+    object-position: 50% 42%;
+    filter: blur(44px) saturate(1.15);
+    opacity: 0.9;
+  }
+  .fomo-film__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(6, 7, 9, 0.88) 0%, rgba(6, 7, 9, 0.74) 42%, rgba(6, 7, 9, 0.6) 100%);
+  }
+  .fomo-film__reel {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    aspect-ratio: 9 / 16;
+    margin-left: clamp(36px, 5vw, 110px);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
   .fomo-film__poster,
   .fomo-film__video {
     position: absolute;
@@ -994,30 +1032,24 @@ const sources = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 36%;
+    object-position: 50% 50%;
   }
   .fomo-film__video { opacity: 0; transition: opacity 560ms ease; }
   .fomo-film[data-playing='true'] .fomo-film__video { opacity: 1; }
-  /* Three ramps: dark where the copy sits, a lift along the foot for the
-     cue and the note, a lift along the head under the nav. */
-  .fomo-film__shade {
+  /* A lift under the nav and along the foot, over the reel as well. */
+  .fomo-film__veil {
     position: absolute;
     inset: 0;
-    z-index: 1;
-    background:
-      linear-gradient(90deg, rgba(6, 7, 9, 0.94) 0%, rgba(6, 7, 9, 0.8) 32%, rgba(6, 7, 9, 0.3) 62%, rgba(6, 7, 9, 0.12) 100%),
-      linear-gradient(180deg, rgba(6, 7, 9, 0) 60%, rgba(6, 7, 9, 0.66) 100%),
-      linear-gradient(180deg, rgba(6, 7, 9, 0.5) 0%, rgba(6, 7, 9, 0) 26%);
+    background: linear-gradient(180deg, rgba(6, 7, 9, 0.55) 0%, rgba(6, 7, 9, 0) 22%, rgba(6, 7, 9, 0) 74%, rgba(6, 7, 9, 0.7) 100%);
   }
   .fomo-hero__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    display: flex;
     align-items: center;
-    gap: clamp(32px, 6vw, 88px);
     min-height: inherit;
     padding-top: calc(var(--nav-space, 96px) + clamp(8px, 2vw, 24px));
     padding-bottom: clamp(40px, 6vw, 72px);
   }
+  .fomo-hero__copy { max-width: calc(50% - clamp(20px, 2.5vw, 48px)); }
   .fomo-hero .kicker { color: rgba(238, 241, 247, 0.74); }
   .fomo-hero .fomo-back { margin-bottom: clamp(14px, 2vw, 20px); color: rgba(238, 241, 247, 0.62); }
   .fomo-hero .fomo-back:hover { color: #fff; }
@@ -1170,24 +1202,54 @@ const sources = [
   .fomo-cta:active { transform: scale(0.975); }
   .fomo-cta:focus-visible { outline: 2px solid #7f88ff; outline-offset: 3px; }
 
-  /* ── Hero render: the owner's phone, as delivered, over the film ──── */
-  .fomo-hero__render {
+  /* ── Steps, with the owner's Verified-list render standing beside them ── */
+  .fomo-steps__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    align-items: center;
+    gap: clamp(28px, 5vw, 72px);
+  }
+  .fomo-steps__inner .fomo-steps__list { grid-template-columns: 1fr; }
+  .fomo-steps__render {
     position: relative;
-    width: min(500px, 92vw);
+    width: min(440px, 100%);
     margin: 0;
     justify-self: center;
   }
-  .fomo-hero__render::before {
+  .fomo-steps__render::before {
     content: '';
     position: absolute;
     inset: 8% 4% 6%;
     z-index: -1;
     border-radius: 50%;
-    background: radial-gradient(56% 46% at 50% 52%, color-mix(in oklab, var(--fomo-sign) 26%, transparent), transparent 72%);
+    background: radial-gradient(56% 46% at 50% 52%, color-mix(in oklab, var(--fomo-sign) 22%, transparent), transparent 72%);
     filter: blur(36px);
     pointer-events: none;
   }
-  .fomo-hero__render img { display: block; width: 100%; height: auto; filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55)); }
+  /* A contact shadow under the phone, so it rests instead of floating. */
+  .fomo-steps__render::after {
+    content: '';
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    bottom: 4%;
+    height: 7%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.7), transparent 72%);
+    filter: blur(8px);
+    pointer-events: none;
+  }
+  .fomo-steps__render img { display: block; width: 100%; height: auto; }
+  .fomo-steps__render figcaption {
+    margin-top: 10px;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    text-align: center;
+    text-wrap: pretty;
+  }
 
   /* ── Phone with the footage ──────────────────────────────────────── */
   .fomo-phone {
@@ -1272,7 +1334,6 @@ const sources = [
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .fomo-hero__render img { animation: fomo-float 8s ease-in-out infinite; }
     .fomo-phone__frame { animation: fomo-float 7s ease-in-out infinite; }
     .fomo-phone:hover .fomo-phone__frame,
     .fomo-phone:focus-within .fomo-phone__frame { animation-play-state: paused; }
@@ -1570,19 +1631,30 @@ const sources = [
     .fomo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
   @media (max-width: 900px) {
+    .fomo-hero { --fomo-band: clamp(440px, 62svh, 640px); min-height: 0; align-items: start; }
     .fomo-hero h1 { max-width: 14ch; }
-    .fomo-film__poster, .fomo-film__video { object-position: 50% 50%; }
-    /* The film keeps the head of the hero; the copy and the render stack on
-       the ramp beneath it. */
-    .fomo-film__shade {
-      background: linear-gradient(180deg, rgba(6, 7, 9, 0.16) 0px, rgba(6, 7, 9, 0.22) 200px, rgba(6, 7, 9, 0.86) 380px, rgba(6, 7, 9, 0.985) 640px);
+    /* The reel spans the width at the head of the hero, most of the frame
+       tall; the copy begins where its foot fades into the void. */
+    .fomo-film__shade { background: rgba(6, 7, 9, 0.72); }
+    .fomo-film__reel {
+      left: 0;
+      width: 100%;
+      height: var(--fomo-band);
+      aspect-ratio: auto;
+      margin-left: 0;
+      -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
     }
-    .fomo-hero__inner { grid-template-columns: 1fr; gap: clamp(36px, 8vw, 56px); padding-top: calc(var(--nav-space, 96px) + clamp(120px, 26svh, 260px)); padding-bottom: clamp(40px, 6vw, 56px); }
+    .fomo-film__poster, .fomo-film__video { object-position: 50% 42%; }
+    .fomo-film__veil { background: linear-gradient(180deg, rgba(6, 7, 9, 0.5) 0%, rgba(6, 7, 9, 0) 18%); }
+    .fomo-hero__inner { padding-top: calc(var(--fomo-band) - 84px); padding-bottom: clamp(40px, 6vw, 56px); }
+    .fomo-hero__copy { max-width: none; }
     .fomo-phone__frame { transform: none; }
     .fomo-finder__core { grid-template-columns: 1fr; }
     .fomo-alerts__inner, .fomo-footage__inner { grid-template-columns: 1fr; }
     .fomo-footage .fomo-phone { order: -1; }
     .fomo-steps__list { grid-template-columns: 1fr; }
+    .fomo-steps__inner { grid-template-columns: 1fr; }
   }
   @media (max-width: 720px) {
     .fomo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1597,7 +1669,6 @@ const sources = [
   }
   @media (prefers-reduced-motion: reduce) {
     .fomo, .fomo-phone__frame, .fomo-phone__poster, .fomo-cta, .fomo-cta__arrow, .fomo-badge { transition: none; }
-    .fomo-hero__render img { animation: none; }
     .fomo-film__video { transition: none; }
     .fomo-tape__track { animation: none; width: auto; overflow-x: auto; }
     .fomo-tape__group[aria-hidden='true'] { display: none; }
