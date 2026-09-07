@@ -33,6 +33,25 @@
           "type": "string", "minLength": 1, "maxLength": 120,
           "description": "Original identifying line composed from sourced claims. Never copied from an article."
         },
+        "sourceReview": {
+          "type": "object", "additionalProperties": false,
+          "required": ["reviewedOn", "status", "note", "sources"],
+          "properties": {
+            "reviewedOn": { "type": "string", "format": "date" },
+            "status": { "enum": ["corrected", "adopted-date", "uncertain-death", "reference-location"] },
+            "note": { "type": "string", "minLength": 1 },
+            "sources": {
+              "type": "array", "minItems": 1,
+              "items": {
+                "type": "object", "additionalProperties": false, "required": ["title", "url"],
+                "properties": {
+                  "title": { "type": "string", "minLength": 1 },
+                  "url": { "type": "string", "format": "uri", "pattern": "^https://" }
+                }
+              }
+            }
+          }
+        },
         "disciplines": {
           "type": "array", "minItems": 1, "items": { "type": "string" },
           "description": "Editorial selection from this person's own Wikidata P106 claims. Every value must appear in the evidence record."

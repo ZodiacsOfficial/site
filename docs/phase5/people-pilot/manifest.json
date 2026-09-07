@@ -6195,7 +6195,7 @@
    "qid": "Q212657",
    "slug": "artemisia-gentileschi",
    "displayName": "Artemisia Gentileschi",
-   "shortDescription": "Painter · Italy · 1593–1653",
+   "shortDescription": "Painter · Italy · 1593–1654 or later",
    "disciplines": [
     "painter"
    ],
@@ -6284,6 +6284,17 @@
     "Pluto": 0.003
    },
    "dataQualityLabel": "Birth date sourced; birth time unknown",
+   "sourceReview": {
+    "reviewedOn": "2026-09-07",
+    "status": "uncertain-death",
+    "note": "Her death date is uncertain. The National Gallery reports documentary evidence that she was alive in Naples in August 1654. The earlier 1653 death claim is retained only in the historical source snapshot and is no longer stated as fact. Her birth-date chart is unchanged.",
+    "sources": [
+     {
+      "title": "National Gallery: Artemisia Gentileschi",
+      "url": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi"
+     }
+    ]
+   },
    "sources": {
     "wikidata": {
      "entityUrl": "https://www.wikidata.org/wiki/Q212657",
@@ -6315,11 +6326,11 @@
     "file": "File:Artemisia Gentileschi Selfportrait Martyr.jpg"
    },
    "living": false,
-   "reviewedAtUtc": "2026-07-27T00:00:00Z",
+   "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
    "computationInputVersion": {
     "ephemeris": "astronomy-engine (repository dependency)",
     "aspectTable": "@zodiacs/engine/internal/math",
-    "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+    "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
    },
    "contentDepth": {
     "originalWords": 491,
@@ -9986,7 +9997,18 @@
     "Neptune": 0.028,
     "Pluto": 0.017
    },
-   "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+   "dataQualityLabel": "Adopted birth date; date uncertain; birth time unknown",
+   "sourceReview": {
+    "reviewedOn": "2026-09-07",
+    "status": "adopted-date",
+    "note": "This chart uses the adopted date of 15 April 1894. Her birth year is uncertain: New-York Historical Society discusses 1894 or 1895, and her Cultural Center also notes uncertainty. All placements and readings here are conditional on the adopted date; a different year would produce a different chart.",
+    "sources": [
+     {
+      "title": "New-York Historical Society: Bessie Smith",
+      "url": "https://wams.nyhistory.org/life-story/bessie-smith/"
+     }
+    ]
+   },
    "sources": {
     "wikidata": {
      "entityUrl": "https://www.wikidata.org/wiki/Q93349",
@@ -10030,11 +10052,11 @@
     "height": 996
    },
    "living": false,
-   "reviewedAtUtc": "2026-07-27T00:00:00Z",
+   "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
    "computationInputVersion": {
     "ephemeris": "astronomy-engine (repository dependency)",
     "aspectTable": "@zodiacs/engine/internal/math",
-    "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+    "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
    },
    "contentDepth": {
     "originalWords": 447,
@@ -10516,7 +10538,7 @@
    "contentDepth": {
     "originalWords": 394,
     "substantiveStatements": 17,
-    "highestPairwiseSimilarity": 0
+    "highestPairwiseSimilarity": 0.2108
    },
    "indexEligibility": {
     "eligible": false,
@@ -13116,18 +13138,18 @@
    "qid": "Q438907",
    "slug": "carlos-chagas",
    "displayName": "Carlos Chagas",
-   "shortDescription": "Bacteriologist · Brazil · 1879–1934",
+   "shortDescription": "Bacteriologist · Brazil · 1878–1934",
    "disciplines": [
     "bacteriologist"
    ],
    "birthDate": {
-    "storedValue": "1879-07-09",
+    "storedValue": "1878-07-09",
     "precision": "day",
     "calendarModel": "proleptic-gregorian",
     "calendarConversion": "none required — the stored value is already proleptic Gregorian",
-    "displayedDate": "1879-07-09",
-    "computedGregorianDate": "1879-07-09",
-    "birthdayCrossLinkKey": "1879-07-09",
+    "displayedDate": "1878-07-09",
+    "computedGregorianDate": "1878-07-09",
+    "birthdayCrossLinkKey": "1878-07-09",
     "birthdayRoute": "/birthday/july-9/"
    },
    "birthTime": null,
@@ -13156,10 +13178,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Sao_Paulo",
     "civilTime": "12:00",
-    "utcInstant": "1879-07-09T15:06:28.000Z",
+    "utcInstant": "1878-07-09T15:06:28.000Z",
     "utcOffsetMinutesAtBirth": -186.4667,
-    "civilDayStartUtc": "1879-07-09T03:06:28.000Z",
-    "civilDayEndUtc": "1879-07-10T03:06:28.000Z",
+    "civilDayStartUtc": "1878-07-09T03:06:28.000Z",
+    "civilDayEndUtc": "1878-07-10T03:06:28.000Z",
     "latitude": -20.695833333333,
     "longitude": -44.826944444444,
     "coordinateEscalationSteps": 0,
@@ -13175,36 +13197,51 @@
    "sunSign": {
     "slug": "cancer",
     "name": "Cancer",
-    "degree": 16.98,
+    "degree": 17.21,
     "determinable": true,
     "cuspCheck": {
      "ambiguous": false,
      "boundaryUtc": null,
-     "degreesInsideAtWindowStart": 16.3756,
-     "degreesToNextBoundaryAtWindowEnd": 12.6711
+     "degreesInsideAtWindowStart": 16.7307,
+     "degreesToNextBoundaryAtWindowEnd": 12.3159
     }
    },
    "moon": {
-    "sign": "pisces",
-    "signName": "Pisces",
-    "degree": 27.52,
-    "uncertain": true,
-    "signAtCivilDayStart": "pisces",
-    "signAtCivilDayEnd": "aries"
+    "sign": "scorpio",
+    "signName": "Scorpio",
+    "degree": 17.11,
+    "uncertain": false,
+    "signAtCivilDayStart": "scorpio",
+    "signAtCivilDayEnd": "scorpio"
    },
    "unknownTimeErrorBandDegrees": {
     "Sun": 0.953,
-    "Moon": 12.315,
-    "Mercury": 1.634,
-    "Venus": 0.997,
-    "Mars": 0.656,
-    "Jupiter": 0.024,
-    "Saturn": 0.032,
-    "Uranus": 0.049,
-    "Neptune": 0.019,
-    "Pluto": 0.016
+    "Moon": 13.901,
+    "Mercury": 2.084,
+    "Venus": 1.165,
+    "Mars": 0.628,
+    "Jupiter": 0.118,
+    "Saturn": 0.008,
+    "Uranus": 0.051,
+    "Neptune": 0.018,
+    "Pluto": 0.015
    },
-   "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+   "dataQualityLabel": "Birth date sourced; birth time unknown",
+   "sourceReview": {
+    "reviewedOn": "2026-09-07",
+    "status": "corrected",
+    "note": "This chart adopts 9 July 1878. Fiocruz's archival biography reproduces his baptismal certificate and explains the correction from 1879. Some institutional summaries and the retained Wikidata snapshot still give 1879; the chart follows the documented archival correction.",
+    "sources": [
+     {
+      "title": "Fiocruz: Carlos Chagas, um cientista do Brasil (2009), pages 26–27 and 35",
+      "url": "https://books.scielo.org/id/tpyj4/pdf/kropf-9786557080009-05.pdf"
+     },
+     {
+      "title": "Fiocruz IOC biography — conflicting 1879 date",
+      "url": "https://www.ioc.fiocruz.br/personalidades/carlos-chagas"
+     }
+    ]
+   },
    "sources": {
     "wikidata": {
      "entityUrl": "https://www.wikidata.org/wiki/Q438907",
@@ -13248,16 +13285,16 @@
     "height": 310
    },
    "living": false,
-   "reviewedAtUtc": "2026-07-27T00:00:00Z",
+   "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
    "computationInputVersion": {
     "ephemeris": "astronomy-engine (repository dependency)",
     "aspectTable": "@zodiacs/engine/internal/math",
-    "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+    "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
    },
    "contentDepth": {
-    "originalWords": 441,
-    "substantiveStatements": 19,
-    "highestPairwiseSimilarity": 0.2608
+    "originalWords": 380,
+    "substantiveStatements": 18,
+    "highestPairwiseSimilarity": 0.1934
    },
    "indexEligibility": {
     "eligible": false,
@@ -18074,6 +18111,17 @@
     "Pluto": 0.017
    },
    "dataQualityLabel": "Birth date sourced; birth time unknown",
+   "sourceReview": {
+    "reviewedOn": "2026-09-07",
+    "status": "reference-location",
+    "note": "The Mexican Secretariat of Public Education identifies Camargo, Chihuahua, as his birthplace. The retained Wikidata snapshot supplies Chihuahua City. Chihuahua City is shown only as the existing calculation reference; it is not a verified birthplace. No precise Camargo or farm coordinates are inferred, and this time-unknown chart calculates no houses or angles.",
+    "sources": [
+     {
+      "title": "Mexican Secretariat of Public Education: David Alfaro Siqueiros",
+      "url": "https://www.gob.mx/sep/acciones-y-programas/david-alfaro-siqueiros-114931"
+     }
+    ]
+   },
    "sources": {
     "wikidata": {
      "entityUrl": "https://www.wikidata.org/wiki/Q315647",
@@ -18117,16 +18165,16 @@
     "height": 711
    },
    "living": false,
-   "reviewedAtUtc": "2026-07-27T00:00:00Z",
+   "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
    "computationInputVersion": {
     "ephemeris": "astronomy-engine (repository dependency)",
     "aspectTable": "@zodiacs/engine/internal/math",
-    "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+    "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
    },
    "contentDepth": {
-    "originalWords": 420,
+    "originalWords": 422,
     "substantiveStatements": 18,
-    "highestPairwiseSimilarity": 0.2529
+    "highestPairwiseSimilarity": 0.2401
    },
    "indexEligibility": {
     "eligible": false,
@@ -21140,6 +21188,17 @@
     "Pluto": 0
    },
    "dataQualityLabel": "Birth date sourced; birth time unknown; Moon sign undetermined",
+   "sourceReview": {
+    "reviewedOn": "2026-09-07",
+    "status": "reference-location",
+    "note": "The Maryland State Archives places her birth on a farm near Ellicott City, Howard County. The retained Wikidata snapshot instead supplies Baltimore. Baltimore is shown only as the existing calculation reference; it is not a verified birthplace. Both use the America/New_York reference zone, and this time-unknown chart calculates no houses or angles.",
+    "sources": [
+     {
+      "title": "Maryland State Archives: Edith Clarke",
+      "url": "https://msa.maryland.gov/megafile/msa/speccol/sc3500/sc3520/014000/014065/html/14065bio.html"
+     }
+    ]
+   },
    "sources": {
     "wikidata": {
      "entityUrl": "https://www.wikidata.org/wiki/Q21826",
@@ -21170,16 +21229,16 @@
     "reason": "no image claim on the Wikidata entity"
    },
    "living": false,
-   "reviewedAtUtc": "2026-07-27T00:00:00Z",
+   "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
    "computationInputVersion": {
     "ephemeris": "astronomy-engine (repository dependency)",
     "aspectTable": "@zodiacs/engine/internal/math",
-    "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+    "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
    },
    "contentDepth": {
-    "originalWords": 424,
+    "originalWords": 426,
     "substantiveStatements": 17,
-    "highestPairwiseSimilarity": 0.2336
+    "highestPairwiseSimilarity": 0.2214
    },
    "indexEligibility": {
     "eligible": false,
@@ -50039,7 +50098,7 @@
    "contentDepth": {
     "originalWords": 406,
     "substantiveStatements": 20,
-    "highestPairwiseSimilarity": 0
+    "highestPairwiseSimilarity": 0.2607
    },
    "indexEligibility": {
     "eligible": false,
@@ -68458,7 +68517,7 @@
    "qid": "Q690790",
    "slug": "rufino-tamayo",
    "displayName": "Rufino Tamayo",
-   "shortDescription": "Painter · Mexico · 1899–1990",
+   "shortDescription": "Painter · Mexico · 1899–1991",
    "disciplines": [
     "painter"
    ],
@@ -68546,7 +68605,26 @@
     "Neptune": 0.019,
     "Pluto": 0.007
    },
-   "dataQualityLabel": "Birth date sourced; birth time unknown",
+   "dataQualityLabel": "Adopted birth date; date uncertain; birth time unknown",
+   "sourceReview": {
+    "reviewedOn": "2026-09-07",
+    "status": "adopted-date",
+    "note": "Death corrected to 24 June 1991. This chart retains the adopted birth date of 26 August 1899, used by El Colegio Nacional and Guggenheim Venice. Museo Tamayo distinguishes birth on 25 August from registration on 26 August. The original registration has not been inspected here; all chart readings are conditional on the adopted date.",
+    "sources": [
+     {
+      "title": "INBAL: thirtieth anniversary of Tamayo's death (2021)",
+      "url": "https://inba.gob.mx/multimedia/prensa/galerias/15340/15340-bol._402_conmemoran_el_30_aniversario_luctuoso_de_rufino_tamayo_con_la_revision_y_digitalizacion_de_su_memoria_documental.pdf"
+     },
+     {
+      "title": "Museo Tamayo: birth versus registration date",
+      "url": "https://www.museotamayo.org/en/agenda/convocatoria-xx-bienal-de-pintura-rufino-tamayo"
+     },
+     {
+      "title": "El Colegio Nacional: adopted 26 August date",
+      "url": "https://colnal.mx/integrantes/rufino-tamayo/"
+     }
+    ]
+   },
    "sources": {
     "wikidata": {
      "entityUrl": "https://www.wikidata.org/wiki/Q690790",
@@ -68590,11 +68668,11 @@
     "height": 3856
    },
    "living": false,
-   "reviewedAtUtc": "2026-07-27T00:00:00Z",
+   "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
    "computationInputVersion": {
     "ephemeris": "astronomy-engine (repository dependency)",
     "aspectTable": "@zodiacs/engine/internal/math",
-    "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+    "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
    },
    "contentDepth": {
     "originalWords": 394,
@@ -73797,96 +73875,107 @@
    "qid": "Q8573",
    "slug": "sun-yat-sen",
    "displayName": "Sun Yat-sen",
-   "shortDescription": "Politician and physician · Soviet Union · 1956–2025",
+   "shortDescription": "Politician and physician · China · 1866–1925",
    "disciplines": [
     "politician",
     "physician"
    ],
    "birthDate": {
-    "storedValue": "1956-11-12",
+    "storedValue": "1866-11-12",
     "precision": "day",
     "calendarModel": "proleptic-gregorian",
     "calendarConversion": "none required — the stored value is already proleptic Gregorian",
-    "displayedDate": "1956-11-12",
-    "computedGregorianDate": "1956-11-12",
-    "birthdayCrossLinkKey": "1956-11-12",
+    "displayedDate": "1866-11-12",
+    "computedGregorianDate": "1866-11-12",
+    "birthdayCrossLinkKey": "1866-11-12",
     "birthdayRoute": "/birthday/november-12/"
    },
    "birthTime": null,
    "timeQuality": "unknown",
    "birthTimeEvidence": "none — Wikidata carries no birth-time claim for this person",
    "birthPlace": {
-    "entity": "Q15180",
-    "entityLabel": "Soviet Union",
-    "normalisedLabel": "Soviet Union, Soviet Union",
+    "entity": "Q588677",
+    "entityLabel": "Cuiheng",
+    "normalisedLabel": "Cuiheng, China",
     "country": {
-     "entity": "Q15180",
-     "label": "Soviet Union"
+     "entity": "Q148",
+     "label": "China"
     },
     "coordinates": {
-     "latitude": 65,
-     "longitude": 90,
-     "sourceEntity": "Q15180",
-     "sourceEntityLabel": "Soviet Union",
-     "wikidataPrecision": 1,
+     "latitude": 22.444666666667,
+     "longitude": 113.53673611111,
+     "sourceEntity": "Q588677",
+     "sourceEntityLabel": "Cuiheng",
+     "wikidataPrecision": 0.00027777777777778,
      "escalationSteps": 0,
      "precisionDowngrade": null
     },
-    "timeZone": "Asia/Krasnoyarsk"
+    "timeZone": "Asia/Shanghai"
    },
    "computation": {
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
-    "timeZone": "Asia/Krasnoyarsk",
+    "timeZone": "Asia/Shanghai",
     "civilTime": "12:00",
-    "utcInstant": "1956-11-12T05:00:00.000Z",
-    "utcOffsetMinutesAtBirth": 420,
-    "civilDayStartUtc": "1956-11-11T17:00:00.000Z",
-    "civilDayEndUtc": "1956-11-12T17:00:00.000Z",
-    "latitude": 65,
-    "longitude": 90,
+    "utcInstant": "1866-11-12T03:54:17.000Z",
+    "utcOffsetMinutesAtBirth": 485.7167,
+    "civilDayStartUtc": "1866-11-11T15:54:17.000Z",
+    "civilDayEndUtc": "1866-11-12T15:54:17.000Z",
+    "latitude": 22.444666666667,
+    "longitude": 113.53673611111,
     "coordinateEscalationSteps": 0,
-    "coordinateSourceEntity": "Q15180",
+    "coordinateSourceEntity": "Q588677",
     "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
     "aspectTable": "@zodiacs/engine/internal/math",
     "anglesComputed": false,
     "housesComputed": false,
     "sectComputed": false,
-    "meridianResidualMinutes": -60,
-    "meridianResidualMoonDegrees": 0.55
+    "meridianResidualMinutes": -31.57,
+    "meridianResidualMoonDegrees": 0.2894
    },
    "sunSign": {
     "slug": "scorpio",
     "name": "Scorpio",
-    "degree": 19.8,
+    "degree": 19.57,
     "determinable": true,
     "cuspCheck": {
      "ambiguous": false,
      "boundaryUtc": null,
-     "degreesInsideAtWindowStart": 19.5889,
-     "degreesToNextBoundaryAtWindowEnd": 9.4048
+     "degreesInsideAtWindowStart": 19.0671,
+     "degreesToNextBoundaryAtWindowEnd": 9.9258
     }
    },
    "moon": {
-    "sign": "pisces",
-    "signName": "Pisces",
-    "degree": 7.11,
+    "sign": "capricorn",
+    "signName": "Capricorn",
+    "degree": 10.97,
     "uncertain": false,
-    "signAtCivilDayStart": "pisces",
-    "signAtCivilDayEnd": "pisces"
+    "signAtCivilDayStart": "capricorn",
+    "signAtCivilDayEnd": "capricorn"
    },
    "unknownTimeErrorBandDegrees": {
-    "Sun": 1.006,
-    "Moon": 12.105,
-    "Mercury": 1.601,
-    "Venus": 1.213,
-    "Mars": 0.356,
-    "Jupiter": 0.165,
-    "Saturn": 0.116,
-    "Uranus": 0,
-    "Neptune": 0.036,
-    "Pluto": 0.01
+    "Sun": 1.007,
+    "Moon": 11.968,
+    "Mercury": 1.261,
+    "Venus": 0.328,
+    "Mars": 0.231,
+    "Jupiter": 0.153,
+    "Saturn": 0.12,
+    "Uranus": 0.024,
+    "Neptune": 0.02,
+    "Pluto": 0.019
    },
    "dataQualityLabel": "Birth date sourced; birth time unknown",
+   "sourceReview": {
+    "reviewedOn": "2026-09-07",
+    "status": "corrected",
+    "note": "Corrected to 12 November 1866 in Cuiheng, Guangdong, China, with death on 12 March 1925. The chart has been recomputed from the corrected date and Asia/Shanghai reference zone. Birth time remains unknown.",
+    "sources": [
+     {
+      "title": "National Dr. Sun Yat-sen Memorial Hall chronology",
+      "url": "https://www.yatsen.gov.tw/en/cp.aspx?n=6695"
+     }
+    ]
+   },
    "sources": {
     "wikidata": {
      "entityUrl": "https://www.wikidata.org/wiki/Q8573",
@@ -73900,17 +73989,17 @@
       "P17",
       "P131"
      ],
-     "lastrevid": 2522754203
+     "lastrevid": 2536272260
     },
     "wikipedia": {
      "language": "en",
      "title": "Sun Yat-sen",
      "articleUrl": "https://en.wikipedia.org/wiki/Sun_Yat-sen",
      "pageId": 88483,
-     "revisionId": 1365311146,
-     "revisionTimestamp": "2026-07-21T16:30:50Z"
+     "revisionId": 1373507779,
+     "revisionTimestamp": "2026-09-06T10:35:03Z"
     },
-    "retrievedAtUtc": "2026-07-26T18:47:50.947Z"
+    "retrievedAtUtc": "2026-09-07T04:46:29.527Z"
    },
    "portrait": {
     "available": true,
@@ -73930,16 +74019,16 @@
     "height": 1925
    },
    "living": false,
-   "reviewedAtUtc": "2026-07-27T00:00:00Z",
+   "reviewedAtUtc": "2026-09-07T05:16:37.871Z",
    "computationInputVersion": {
     "ephemeris": "astronomy-engine (repository dependency)",
     "aspectTable": "@zodiacs/engine/internal/math",
-    "pilotTools": "docs/phase5/people-pilot/tools @ phase5-completion"
+    "pilotTools": "docs/phase5/people-pilot/tools @ factual-correction-2026-09-07"
    },
    "contentDepth": {
-    "originalWords": 383,
-    "substantiveStatements": 18,
-    "highestPairwiseSimilarity": 0.2204
+    "originalWords": 443,
+    "substantiveStatements": 21,
+    "highestPairwiseSimilarity": 0.2333
    },
    "indexEligibility": {
     "eligible": false,

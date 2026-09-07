@@ -1129,24 +1129,6 @@
       "reasons": []
     },
     {
-      "slug": "carlos-chagas",
-      "qid": "Q438907",
-      "displayName": "Carlos Chagas",
-      "verdict": "accepted",
-      "storedDate": "1879-07-09",
-      "calendarModel": "proleptic-gregorian",
-      "gregorianDate": "1879-07-09",
-      "sun": "Cancer 16.98°",
-      "moonUncertain": true,
-      "cusp": {
-        "ambiguous": false,
-        "boundaryUtc": null,
-        "degreesInsideAtWindowStart": 16.3756,
-        "degreesToNextBoundaryAtWindowEnd": 12.6711
-      },
-      "reasons": []
-    },
-    {
       "slug": "anita-mui",
       "qid": "Q232621",
       "displayName": "Anita Mui",
@@ -2241,24 +2223,6 @@
         "boundaryUtc": null,
         "degreesInsideAtWindowStart": 28.8204,
         "degreesToNextBoundaryAtWindowEnd": 0.2035
-      },
-      "reasons": []
-    },
-    {
-      "slug": "sun-yat-sen",
-      "qid": "Q8573",
-      "displayName": "Sun Yat-sen",
-      "verdict": "accepted",
-      "storedDate": "1956-11-12",
-      "calendarModel": "proleptic-gregorian",
-      "gregorianDate": "1956-11-12",
-      "sun": "Scorpio 19.80°",
-      "moonUncertain": false,
-      "cusp": {
-        "ambiguous": false,
-        "boundaryUtc": null,
-        "degreesInsideAtWindowStart": 19.5889,
-        "degreesToNextBoundaryAtWindowEnd": 9.4048
       },
       "reasons": []
     },
@@ -9173,6 +9137,44 @@
         "boundaryUtc": null,
         "degreesInsideAtWindowStart": 18.546,
         "degreesToNextBoundaryAtWindowEnd": 10.448
+      },
+      "reasons": []
+    },
+    {
+      "slug": "sun-yat-sen",
+      "qid": "Q8573",
+      "displayName": "Sun Yat-sen",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1866-11-12",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1866-11-12",
+      "sun": "Scorpio 19.57°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 19.0671,
+        "degreesToNextBoundaryAtWindowEnd": 9.9258
+      },
+      "reasons": []
+    },
+    {
+      "slug": "carlos-chagas",
+      "qid": "Q438907",
+      "displayName": "Carlos Chagas",
+      "role": "pilot",
+      "verdict": "accepted",
+      "storedDate": "1878-07-09",
+      "calendarModel": "proleptic-gregorian",
+      "gregorianDate": "1878-07-09",
+      "sun": "Cancer 17.21°",
+      "moonUncertain": false,
+      "cusp": {
+        "ambiguous": false,
+        "boundaryUtc": null,
+        "degreesInsideAtWindowStart": 16.7307,
+        "degreesToNextBoundaryAtWindowEnd": 12.3159
       },
       "reasons": []
     }

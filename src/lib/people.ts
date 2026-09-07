@@ -110,6 +110,12 @@ const personSchema = z.object({
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/u),
   displayName: z.string().min(1),
   shortDescription: z.string().min(1),
+  sourceReview: z.object({
+    reviewedOn: isoDateSchema,
+    status: z.enum(['corrected', 'adopted-date', 'uncertain-death', 'reference-location']),
+    note: z.string().min(1),
+    sources: z.array(z.object({ title: z.string().min(1), url: httpsUrlSchema }).strict()).min(1),
+  }).strict().optional(),
   disciplines: z.array(z.string().min(1)).min(1),
   birthDate: z.object({
     storedValue: isoDateSchema,

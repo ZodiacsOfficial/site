@@ -1,0 +1,33 @@
+{
+  "pythonExecutable": "/workspace/scratch/a2cfacbfee67/swiss-runtime-recovered/env/bin/python",
+  "extensionPath": "/workspace/scratch/a2cfacbfee67/swiss-runtime-recovered/env/lib/python3.12/site-packages/swisseph.cpython-312-x86_64-linux-gnu.so",
+  "extensionSHA256": "110f8b328813bf2ebcb7847d78c431503717c882d09796f5c453b53935166250",
+  "ephemerisDirectory": "/workspace/scratch/a2cfacbfee67/swiss-runtime-recovered/ephe",
+  "wheelPath": "/workspace/scratch/a2cfacbfee67/swiss-runtime-recovered/wheels/pyswisseph-2.10.3.2-cp312-cp312-linux_x86_64.whl",
+  "wheelSHA256": "0ecd05eebca56de0ffde4bf949d22a2c05c855d93a3dba3af9f86916f2846a43",
+  "distributionVersion": "2.10.3.2",
+  "swissVersion": "2.10.03",
+  "sourceArchivePath": "/workspace/scratch/a2cfacbfee67/swiss-runtime-recovered/pyswisseph-2.10.3.2.tar.gz",
+  "sourceArchiveSHA256": "c54c305e83dbd5d2b71e58d8a69d8ee41de24c4d3328ce09e2af860a3537624d",
+  "sourceArchiveURL": "https://files.pythonhosted.org/packages/66/a6/db70d67a00dda42ebd033538c086879328f4c17f670eafe8aca2f11abfef/pyswisseph-2.10.3.2.tar.gz",
+  "buildRecipeId": "official-pyswisseph-2.10.3.2-python312-recorded-gcc-repair-once",
+  "buildCount": 1,
+  "buildCommand": "CC=gcc CXX=g++ LDSHARED='g++ -shared' env/bin/python -m pip wheel --no-index --no-deps --no-build-isolation --no-cache-dir --wheel-dir wheels pyswisseph-2.10.3.2.tar.gz",
+  "compilerIdentity": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "pythonBuildIdentity": "3.12.13 (main, Aug  7 2026, 02:25:39) [Clang 22.1.3 ]",
+  "buildAttemptCount": 2,
+  "compilerEnvironment": {
+    "CC": "gcc",
+    "CXX": "g++",
+    "LDSHARED": "g++ -shared"
+  },
+  "customOptimizationFlags": false,
+  "priorProviderImports": 0,
+  "priorProviderEvaluations": 0,
+  "environmentRepairFiles": {
+    "failed-clang-log": "/workspace/scratch/a2cfacbfee67/swiss-runtime-recovered/build.log",
+    "failed-clang-recipe": "/workspace/scratch/a2cfacbfee67/swiss-runtime-recovered/build-recipe.json",
+    "historical-runtime-install": "/workspace/scratch/a2cfacbfee67/zodiacs-audit-finish/docs/engine-validation/swiss-node-polar/receipts/runtime-install.json",
+    "historical-runtime-readme": "/workspace/scratch/a2cfacbfee67/zodiacs-audit-finish/docs/engine-validation/swiss-node-polar/README.md"
+  }
+}
