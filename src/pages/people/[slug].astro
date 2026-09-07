@@ -17,6 +17,8 @@ export function getStaticPaths() {
 }
 
 const { person } = Astro.props as { person: PersonRecord };
+const adoptedDate = person.sourceReview?.status === 'adopted-date';
+const referenceLocation = person.sourceReview?.status === 'reference-location';
 const sign = signBySlug(person.sunSign.slug);
 const longDate = new Intl.DateTimeFormat('en-US', {
   timeZone: 'UTC',
@@ -54,7 +56,8 @@ const profileSourceNote = publishedTimeRecord
   : 'Birth time unknown.';
 const profileQualityNote = publishedTimeRecord
   ? 'Birth date sourced. No time in this profile’s Wikidata source.'
-  : 'Birth date sourced. Birth time unknown.';
+  : adoptedDate ? 'Adopted birth date; date uncertain. Birth time unknown.'
+    : 'Birth date sourced. Birth time unknown.';
 const metaDescription = publishedTimeRecord
   ? `${person.displayName}'s date-sourced chart: Sun at ${person.sunSign.degree.toFixed(1)}° ${person.sunSign.name}. This frozen Wikidata profile omits angles and houses; a separate published-time record is disclosed.`
   : person.copy.metaDescription;
@@ -85,7 +88,9 @@ const displayBlocks = person.copy.blocks.map((block) => (
     : block
 ));
 const pageUrl = `https://zodiacs.org/people/${person.slug}/`;
-const identityCardRevision = ['neil-armstrong', 'amelia-earhart', 'maya-angelou'].includes(person.slug)
+const identityCardRevision = person.sourceReview
+  ? `?v=facts-${person.sourceReview.reviewedOn}`
+  : ['neil-armstrong', 'amelia-earhart', 'maya-angelou'].includes(person.slug)
   ? '?v=identity-2026-09-05'
   : '';
 const image = `/assets/og/v2/people/${person.slug}.png${identityCardRevision}`;
@@ -107,12 +112,12 @@ const jsonLd = [
     '@id': `${pageUrl}#person`,
     name: person.displayName,
     description: person.shortDescription,
-    birthDate: person.birthDate.displayedDate,
-    birthPlace: {
+    ...(!adoptedDate ? { birthDate: person.birthDate.displayedDate } : {}),
+    ...(!referenceLocation ? { birthPlace: {
       '@type': 'Place',
       name: person.birthPlace.normalisedLabel,
       sameAs: `https://www.wikidata.org/wiki/${person.birthPlace.entity}`,
-    },
+    } } : {}),
     sameAs: [
       person.sources.wikidata.entityUrl,
       person.sources.wikipedia.articleUrl,
@@ -133,7 +138,7 @@ const jsonLd = [
   description={metaDescription}
   path={`/people/${person.slug}/`}
   image={image}
-  imageAlt={`${person.displayName}'s sourced birth-date chart — ${publishedTimeRecord ? 'date-only profile source' : 'birth time unknown'}`}
+  imageAlt={`${person.displayName}'s ${adoptedDate ? 'adopted, uncertain birth-date' : 'sourced birth-date'} chart — ${publishedTimeRecord ? 'date-only profile source' : 'birth time unknown'}`}
   noindex={!person.indexEligibility.eligible}
   nofollow={person.living}
   jsonLd={jsonLd}
@@ -189,15 +194,21 @@ const jsonLd = [
         </div>
         <p class="person-identity__description">{person.shortDescription}</p>
         <p class="person-identity__meta">
-          {person.sunSign.name} {person.sunSign.degree.toFixed(1)}° · born {longDate}<br />
+          {person.sunSign.name} {person.sunSign.degree.toFixed(1)}° · {adoptedDate ? 'adopted date' : 'born'} {longDate}<br />
           {profileSourceNote}
         </p>
+        {person.sourceReview && (
+          <p class="person-quality" data-source-review>
+            <strong>{adoptedDate ? 'About the adopted date' : referenceLocation ? 'About the reference location' : 'Source correction'}</strong>
+            <span>{person.sourceReview.note} <a href="#sources">Review the sources</a>.</span>
+          </p>
+        )}
         <p class="person-quality">
           <strong>{profileQualityNote}</strong>
           <span>
             {moonStatement}
             {openSignStatement && ` ${openSignStatement}`}
-            {' '}Everything below uses only what the complete civil day settles.
+            {' '}Everything below uses only what the complete {adoptedDate ? 'adopted ' : ''}civil day settles.
             {publishedTimeRecord && (
               <>{' '}A <a href={publishedTimeRecord.href} target="_blank" rel="noopener noreferrer">separate published-time record</a> is documented in the source panel.</>
             )}
@@ -262,11 +273,11 @@ const jsonLd = [
             </div>
             <div><dt>Retrieved</dt><dd>{person.sources.retrievedAtUtc}</dd></div>
             <div>
-              <dt>Birth date</dt>
+              <dt>{adoptedDate ? 'Adopted birth date' : 'Birth date'}</dt>
               <dd>{person.birthDate.storedValue} · day precision · {person.birthDate.calendarModel}</dd>
             </div>
             <div>
-              <dt>Birthplace</dt>
+              <dt>{referenceLocation ? 'Calculation reference location' : 'Birthplace'}</dt>
               <dd>
                 {person.birthPlace.normalisedLabel} ·{' '}
                 <a href={`https://www.wikidata.org/wiki/${person.birthPlace.entity}`} target="_blank" rel="noopener noreferrer">
@@ -274,6 +285,18 @@ const jsonLd = [
                 </a>
               </dd>
             </div>
+            {person.sourceReview && (
+              <div>
+                <dt>Reviewed source decision · {person.sourceReview.reviewedOn}</dt>
+                <dd>
+                  <p>{person.sourceReview.note}</p>
+                  <ul>{person.sourceReview.sources.map((source) => (
+                    <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></li>
+                  ))}</ul>
+                  <p>The Wikidata and Wikipedia revisions above remain historical source records. Reviewed corrections are recorded separately.</p>
+                </dd>
+              </div>
+            )}
             <div>
               <dt>Coordinates</dt>
               <dd>
@@ -347,7 +370,7 @@ const jsonLd = [
 
         <div style="margin-top:30px">
           <ShareRow
-            text={`${person.displayName}'s chart, computed from a sourced birth date`}
+            text={`${person.displayName}'s chart, computed from ${adoptedDate ? 'an adopted, uncertain birth date' : 'a sourced birth date'}`}
             url={pageUrl}
           />
         </div>

@@ -1265,6 +1265,12 @@ try {
     });
   check('People identity OG: three review candidates rendered with production files unchanged',
     /Reviewed 3 People identity cards; production OG files unchanged\./u.test(ogReview.stdout), ogReview.stdout.trim());
+  const factsReview = await promisify(execFile)(process.execPath,
+    ['scripts/build-og-void.mjs', '--review-people-facts'], {
+      env: { ...process.env, CHROMIUM_PATH: CHROMIUM }, timeout: 120000, maxBuffer: 2 * 1024 * 1024,
+    });
+  check('People facts OG: seven source corrections rendered with production files unchanged',
+    /Reviewed 7 People facts cards; production OG files unchanged\./u.test(factsReview.stdout), factsReview.stdout.trim());
 } finally {
   preview.kill();
 }

@@ -19,6 +19,7 @@
  */
 import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { reviewedEvidence } from './source-reviews.mjs';
 import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
 import { findAspects } from '@zodiacs/engine/internal/math';
@@ -262,7 +263,8 @@ for (const candidate of candidates) {
     screening.push({ slug: candidate.slug, verdict: 'excluded', reason: 'no-evidence-record' });
     continue;
   }
-  const evidence = JSON.parse(await readFile(join(PILOT, EVIDENCE_DIR, `${candidate.slug}.json`), 'utf8'));
+  const rawEvidence = JSON.parse(await readFile(join(PILOT, EVIDENCE_DIR, `${candidate.slug}.json`), 'utf8'));
+  const evidence = EXPANSION ? rawEvidence : reviewedEvidence(rawEvidence, candidate.slug);
   if (evidence.status === 'no-wikidata-entity') {
     screening.push({ slug: candidate.slug, verdict: 'excluded', reasons: ['no-wikidata-entity'] });
     continue;
