@@ -138,6 +138,28 @@ const probes = [
       }
       if (index.schema !== 'zodiacs.sky-api.index.v1') return 'index.json schema is not zodiacs.sky-api.index.v1';
       if (!Array.isArray(index.endpoints) || index.endpoints.length === 0) return 'index.json lists no endpoints';
+      if (!Array.isArray(index.documents) || !index.documents.some((entry) => entry?.path === '/api/v1/llms.txt')) {
+        return 'index.json does not advertise the agent guide';
+      }
+      return null;
+    },
+  },
+  {
+    label: 'sky data api openapi',
+    path: '/api/v1/openapi.json',
+    init: { method: 'GET', headers: sameOriginHeaders },
+    accepts: (status) => status === 200,
+    expectation: 'HTTP 200 OpenAPI document with open CORS',
+    validate: (response, body) => {
+      if ((response.headers.get('access-control-allow-origin') ?? '') !== '*') return 'openapi.json is not readable cross-origin';
+      let document;
+      try {
+        document = JSON.parse(body);
+      } catch {
+        return 'openapi.json is not valid JSON';
+      }
+      if (typeof document.openapi !== 'string' || !document.openapi.startsWith('3.1')) return 'openapi.json is not OpenAPI 3.1';
+      if (!document.paths?.['/api/v1/sky/today.json']) return 'openapi.json does not describe sky/today.json';
       return null;
     },
   },
