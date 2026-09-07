@@ -98,6 +98,9 @@ describe('daily publication operations', () => {
     expect(workflow).toContain("schema: 'zodiacs.daily-operation-receipt.v2'");
     expect(workflow).toContain('horoscopeProgramSha256: canonicalSha256(horoscopeProgram)');
     expect(liveVerifier).toContain('production horoscope program is not the committed program');
+    expect(liveVerifier).toContain('/api/v1/sky/today.json');
+    expect(liveVerifier).toContain('sky data API is missing the open CORS header');
+    expect(liveVerifier).toContain('not the committed ${localManifest.date} edition');
     expect(workflow).toContain(
       'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2',
     );

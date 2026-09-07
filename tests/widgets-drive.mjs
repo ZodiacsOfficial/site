@@ -141,7 +141,10 @@ export async function verifyWidgetBuilder({ browser, baseURL, check, outDir = nu
       ['/widgets/', '.wdg-intro', ['published as machine-readable JSON.']],
       ['/developers/', 'main', [
         'the shared sky, and chart calculation stays on the device.',
-        'schema (for example zodiacs.sky-api.today.v1)',
+        'a $schema link to its JSON Schema, and links to the related files.',
+        'An agent should start at /api/v1/llms.txt: it lists every endpoint',
+        'Tool-calling frameworks can load /api/v1/openapi.json directly, and the daily files',
+        'The site-wide guide for agents is llms.txt.',
         'extended; read index.json rather than',
         'free to use under CC BY 4.0.',
         'with a link to https://zodiacs.org wherever',

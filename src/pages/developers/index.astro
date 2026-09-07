@@ -2,7 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import { iframeEmbedCode } from '../../lib/widgets';
 import { WIDGET_EN } from '../../strings/widgets';
-import { completeTransitYears } from '../../../scripts/build-sky-api.mjs';
+import { completeTransitYears } from '../../lib/sky-api/build';
+import { PLANET_SLUGS } from '../../lib/sky-api/meta';
 
 // The same month snapshots the generator reads decide which year files exist,
 // so this page and the deployed API can never disagree about coverage.
@@ -11,45 +12,62 @@ const monthKeys = Object.keys(import.meta.glob('../../data/transits-*.json'))
 const years = completeTransitYears(monthKeys);
 const firstYear = years.at(0);
 const lastYear = years.at(-1);
+const yearRange = `{${firstYear}–${lastYear}}`;
 
-const endpoints = [
-  ['/api/v1/index.json', 'Every published endpoint, with descriptions and update cadence.'],
-  ['/api/v1/sky/today.json', "Today's planetary positions, moon phase and illumination, active retrogrades with shadow boundaries, next full and new moon, and the day's exact sky events. Refreshed daily at 00:00 UTC."],
-  [`/api/v1/retrogrades/{${firstYear}–${lastYear}}.json`, 'Retrograde windows for the year, station to station, with pre- and post-shadow boundaries.'],
-  [`/api/v1/ingresses/{${firstYear}–${lastYear}}.json`, 'Every planetary sign ingress in the year, with the exact instant and whether the planet entered moving retrograde.'],
-  [`/api/v1/moon-phases/{${firstYear}–${lastYear}}.json`, 'Full and new moon instants for the year, each with its zodiac sign and degree.'],
-  [`/api/v1/eclipses/{${firstYear}–${lastYear}}.json`, 'Solar and lunar eclipses peaking in the year: type, kind, exact peak, sign, and obscuration.'],
+const dailyEndpoints = [
+  ['/api/v1/sky/today.json', "Today's positions for the Sun, Moon, and eight planets (raw longitudes and formatted labels like 14°53′ Virgo), moon phase and illumination, the active retrograde windows, the next new and full moon with signs and traditional names, the day's exact events, and a plain-language summary. Positions are a 12:00 UTC snapshot; the file is republished at 00:00 UTC."],
+  ['/api/v1/sky/upcoming.json', 'Every lunation, sign ingress, station, eclipse, and exact aspect in the next 60 days in order, plus the next occurrence of each kind and the current and next Mercury retrograde.'],
+  [`/api/v1/planets/{${PLANET_SLUGS.join('|')}}.json`, 'One body: position now, whether it is retrograde, its current and next retrograde window, every window in coverage, and its next sign ingress and station.'],
+  ['/api/v1/signs.json', 'The twelve signs: element, modality, ruler and traditional ruler, polarity, house, conventional dates, the computed Sun season for this year, and which bodies occupy each sign today.'],
+];
+
+const yearlyEndpoints = [
+  [`/api/v1/retrogrades/${yearRange}.json`, 'Retrograde windows intersecting the year: retrograde and direct station instants and signs, pre- and post-shadow boundaries, duration, and clipping flags where the data boundary truncates a window.'],
+  [`/api/v1/stations/${yearRange}.json`, 'Every station — a planet turning retrograde or direct — with its sign and degree.'],
+  [`/api/v1/ingresses/${yearRange}.json`, 'Every planetary sign ingress, with the exact instant and whether the planet entered moving retrograde.'],
+  [`/api/v1/moon-phases/${yearRange}.json`, 'Every new and full moon with sign, degree, and the traditional full-moon name (Blue for a second full moon in one month).'],
+  [`/api/v1/eclipses/${yearRange}.json`, 'Solar and lunar eclipses by instant of greatest eclipse: type, kind, sign, obscuration, and totality length.'],
+  [`/api/v1/aspects/${yearRange}.json`, 'Exact planetary aspects (orb 0) across the year, each with a label such as Mars square Saturn.'],
+];
+
+const documents = [
+  ['/api/v1/llms.txt', 'The guide for AI agents: every endpoint, every field, the caveats worth stating, and which file answers which question.'],
+  ['/api/v1/openapi.json', 'OpenAPI 3.1 with every JSON Schema embedded, for tool-calling frameworks and typed clients.'],
+  ['/api/v1/schema/{name}.v1.json', 'Each payload family\'s JSON Schema (draft 2020-12); every payload links its own under $schema.'],
+  ['/api/v1/sky/today.md and /api/v1/sky/upcoming.md', 'The daily files rendered as Markdown for readers that fetch pages as text.'],
+  ['/api/v1/index.json', 'Every endpoint and document above, with coverage and the data vintage.'],
 ];
 
 const skyEmbed = iframeEmbedCode({ origin: 'https://zodiacs.org', kind: 'sky', theme: 'dark', title: WIDGET_EN.widgetTitleSky });
 
-const description = 'Machine-readable sky data, free under CC BY 4.0: today\'s planetary positions, retrograde windows, sign ingresses, moon phases, and eclipse dates as dated JSON. No key, no signup.';
+const description = 'Free sky data under CC BY 4.0, built for people and AI agents alike: today\'s sky and the next 60 days, one file per planet, the twelve signs, and per-year retrogrades, stations, ingresses, moon phases, eclipses, and aspects as self-describing JSON with JSON Schemas, OpenAPI, and an agent guide. No key, no signup.';
 
 const jsonLd = [{
   '@type': 'WebPage',
-  name: 'Sky data API for developers',
+  name: 'Sky data API for developers and AI agents',
   url: 'https://zodiacs.org/developers/',
-  description: 'Free machine-readable astronomy data from zodiacs.org: dated JSON for today’s sky, retrogrades, ingresses, moon phases, and eclipses under CC BY 4.0.',
+  description: 'Free machine-readable astronomy data from zodiacs.org: self-describing JSON for today’s sky, upcoming events, planets, signs, retrogrades, ingresses, moon phases, eclipses, and aspects, with JSON Schemas, OpenAPI, and an agent guide, under CC BY 4.0.',
 }];
 ---
 <Base
-  title="Free Sky Data API — Retrogrades, Eclipses & Moon Phases as JSON | Zodiacs.org"
+  title="Free Sky Data API — Retrogrades, Eclipses, Moon Phases & Today's Sky as JSON | Zodiacs.org"
   description={description}
   path="/developers/"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
-    <em class="kicker">For developers</em>
+    <em class="kicker">For developers and AI agents</em>
     <h1 class="dev-title display">Machine-readable sky data.</h1>
 
     <div class="prose dev-intro">
       <p>
-        The computed dates behind this site's calendars — retrograde windows,
-        sign ingresses, moon phases, eclipses, and today's sky — are published
-        as versioned JSON. The files are static, cached at the edge, and open
-        to any origin. There is no key, no signup, and no rate ceiling beyond
-        ordinary CDN behavior, and none of it involves anyone's birth data:
-        these endpoints describe the shared sky, and{' '}
+        The computed dates behind this site's calendars — today's sky, the
+        weeks ahead, retrograde windows, stations, sign ingresses, moon phases,
+        eclipses, and exact aspects — are published as versioned JSON. The
+        files are static, cached at the edge, and open to any origin. There is
+        no key, no signup, and no rate ceiling beyond ordinary CDN behavior,
+        and none of it involves anyone's birth data: these endpoints describe
+        the shared sky, and{' '}
         <a href="/methodology/">chart calculation stays on the device</a>.
       </p>
     </div>
@@ -58,20 +76,69 @@ const jsonLd = [{
     <pre class="dev-code" is:raw><code>const sky = await fetch('https://zodiacs.org/api/v1/sky/today.json')
   .then((response) => response.json());
 
-console.log(sky.date, sky.moon.phase);
+console.log(sky.summary);
+// Monday, September 7, 2026, snapshot at 12:00 UTC. The Sun is at 14°53′ Virgo. …
+
 for (const body of sky.bodies) {
-  console.log(body.body, body.sign, body.degree.toFixed(1) + '°', body.retrograde ? 'Rx' : '');
+  console.log(body.body, body.position, body.retrograde ? 'Rx' : '');
 }</code></pre>
     <p class="dev-note">
       Or from a terminal: <code>curl -s https://zodiacs.org/api/v1/sky/today.json</code>
     </p>
 
-    <h2 class="dev-h2">Endpoints</h2>
+    <h2 class="dev-h2">Built for AI agents</h2>
+    <div class="prose">
+      <p>
+        Every payload is self-describing. It opens with a{' '}
+        <code>summary</code> — one or two plain sentences that state the
+        file's facts, ready to quote — and carries an <code>about</code> block
+        that defines each field and its units, a <code>$schema</code> link to
+        its JSON Schema, and <code>links</code> to the related files. Raw
+        numbers come with formatted twins (<code>lon</code> alongside{' '}
+        <code>position</code>, <code>illumination</code> alongside{' '}
+        <code>illuminationPercent</code>), and every event carries a{' '}
+        <code>label</code> such as "Mercury retrograde in Scorpio, October 24,
+        2026 – November 13, 2026".
+      </p>
+      <p>
+        An agent should start at{' '}
+        <a href="/api/v1/llms.txt"><code>/api/v1/llms.txt</code></a>: it
+        lists every endpoint, defines every field, states the caveats worth
+        repeating, and maps common questions ("Is Mercury retrograde?", "When
+        is the next full moon?", "When does the Sun enter Libra?") to the file
+        and field that answer them. Tool-calling frameworks can load{' '}
+        <a href="/api/v1/openapi.json"><code>/api/v1/openapi.json</code></a>{' '}
+        directly, and the daily files have Markdown twins for readers that
+        fetch pages as text.
+      </p>
+    </div>
+
+    <h2 class="dev-h2">Daily endpoints</h2>
     <ul class="dev-endpoints">
-      {endpoints.map(([path, description]) => (
+      {dailyEndpoints.map(([path, text]) => (
         <li>
           <code>{path}</code>
-          <p>{description}</p>
+          <p>{text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2 class="dev-h2">Yearly endpoints</h2>
+    <ul class="dev-endpoints">
+      {yearlyEndpoints.map(([path, text]) => (
+        <li>
+          <code>{path}</code>
+          <p>{text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <h2 class="dev-h2">Documents and schemas</h2>
+    <ul class="dev-endpoints">
+      {documents.map(([path, text]) => (
+        <li>
+          <code>{path}</code>
+          <p>{text}</p>
         </li>
       ))}
     </ul>
@@ -81,14 +148,23 @@ for (const body of sky.bodies) {
       <p>
         Positions are apparent geocentric tropical longitudes from the same
         engine the calculators use, tested against NASA JPL Horizons reference
-        data; every payload names its schema (for example{' '}
-        <code>zodiacs.sky-api.today.v1</code>) and carries its generation
-        time. Within v1, fields are added, never renamed or removed. A
-        breaking change would ship under <code>/api/v2/</code> and v1 would
-        keep working. Year files cover {firstYear}–{lastYear} today and grow
-        as the underlying data is extended; read{' '}
+        data. Today's positions are a single snapshot taken at 12:00 UTC
+        (<code>snapshotAt</code>); the daily files are republished at the 00:00
+        UTC publication boundary. All instants are UTC in ISO 8601, and signs
+        are lowercase slugs with an English <code>signName</code> beside them.
+      </p>
+      <p>
+        A retrograde window's <code>from</code> and <code>to</code> are its
+        stations unless <code>clippedStart</code> or <code>clippedEnd</code>{' '}
+        is true, which means the data boundary truncated the window and the
+        real station lies outside coverage. Within v1, fields are added, never
+        renamed or removed; a breaking change would ship under{' '}
+        <code>/api/v2/</code> and v1 would keep working. Yearly files are
+        byte-stable between data refreshes, so conditional requests are cheap.
+        Year files cover {firstYear}–{lastYear} today and grow as the
+        underlying data is extended; read{' '}
         <a href="/api/v1/index.json"><code>index.json</code></a> rather than
-        assuming which years exist. All instants are UTC, in ISO 8601.
+        assuming which years exist.
       </p>
     </div>
 
@@ -110,8 +186,8 @@ for (const body of sky.bodies) {
         today's sky, and a mini birth chart inside a sandboxed iframe. Dated
         editorial is available as RSS:{' '}
         <a href="/feeds/horoscopes.xml">daily horoscopes</a> and{' '}
-        <a href="/feeds/daily-sky.xml">the daily sky</a>. AI agents can start
-        from <a href="/llms.txt">llms.txt</a>.
+        <a href="/feeds/daily-sky.xml">the daily sky</a>. The site-wide guide
+        for agents is <a href="/llms.txt">llms.txt</a>.
       </p>
     </div>
 

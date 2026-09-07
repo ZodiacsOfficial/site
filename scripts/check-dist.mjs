@@ -1480,10 +1480,16 @@ if (await exists(resolve(root, 'api/v1/index.json'))) {
   const skyApiIndex = JSON.parse(await readFile(resolve(root, 'api/v1/index.json'), 'utf8'));
   const advertised = Array.isArray(skyApiIndex.endpoints) ? skyApiIndex.endpoints : [];
   if (advertised.length === 0) fail('api/v1/index.json: no endpoints listed');
-  for (const endpoint of advertised) {
-    const relPath = String(endpoint?.path ?? '').replace(/^\//u, '');
+  const documents = Array.isArray(skyApiIndex.documents) ? skyApiIndex.documents : [];
+  for (const entry of [...advertised, ...documents]) {
+    const relPath = String(entry?.path ?? '').replace(/^\//u, '');
     if (!relPath.startsWith('api/v1/') || !(await exists(resolve(root, relPath)))) {
-      fail(`api/v1/index.json: advertised endpoint missing from dist — ${endpoint?.path}`);
+      fail(`api/v1/index.json: advertised path missing from dist — ${entry?.path}`);
+    }
+  }
+  for (const required of ['/api/v1/llms.txt', '/api/v1/openapi.json', '/api/v1/sky/upcoming.json']) {
+    if (![...advertised, ...documents].some((entry) => entry?.path === required)) {
+      fail(`api/v1/index.json: ${required} is no longer advertised`);
     }
   }
   if (await exists(resolve(root, 'api/v1/sky/today.json'))) {
