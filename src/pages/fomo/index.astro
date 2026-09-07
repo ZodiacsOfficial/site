@@ -57,6 +57,12 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
    so AVIF and WebP encodes of the same pixels are offered first and the
    original PNG stays the fallback. Dimensions are the renders' own. */
 const ALERT_RENDER = { src: '/assets/fomo/fomo-alert.png', width: 1425, height: 1104 };
+/* The owner's screenshots of the social side, cropped only of the phone's status bar (and one network-fee banner); nothing inside the app is touched. */
+const SOCIAL_SHOTS = Object.freeze({
+  friends: { avif: '/assets/fomo/fomo-friends.avif', webp: '/assets/fomo/fomo-friends.webp', width: 720, height: 1397 },
+  holders: { avif: '/assets/fomo/fomo-holders.avif', webp: '/assets/fomo/fomo-holders.webp', width: 720, height: 1421 },
+  thesis: { avif: '/assets/fomo/fomo-thesis.avif', webp: '/assets/fomo/fomo-thesis.webp', width: 720, height: 1466 },
+});
 const VERIFIED_RENDER = {
   png: '/assets/fomo/fomo-verified.png',
   avif: '/assets/fomo/fomo-verified.avif',
@@ -388,28 +394,39 @@ const sources = [
         <h2 id="social-title">Trade alongside the people you follow.</h2>
         <p>fomo is a social app before it is a trading app: a feed of what your friends and favourite traders buy, profiles that show how they are doing, a thesis attached to each trade, and one balance that works across chains.</p>
       </div>
-      <ul class="fomo-social__grid" role="list">
-        <li class="tile reveal">
-          <span class="fomo-steps__num">Feed</span>
+      <ul class="fomo-social__shots" role="list">
+        <li class="reveal">
+          <figure class="fomo-shot">
+            <picture>
+              <source type="image/avif" srcset={SOCIAL_SHOTS.friends.avif} />
+              <img src={SOCIAL_SHOTS.friends.webp} width={SOCIAL_SHOTS.friends.width} height={SOCIAL_SHOTS.friends.height} alt="fomo’s Friends list: the people you follow, each with their gains and the coins they hold." loading="lazy" decoding="async" />
+            </picture>
+          </figure>
           <h3>Follow your friends</h3>
-          <p>Add the people you trust and the traders you rate, or start from the leaderboard, which ranks traders by their results. Their buys and sells arrive in your feed as they happen.</p>
+          <p>Add the people you trust and the traders you rate, or start from the leaderboard. Their buys and sells arrive in your feed as they happen, with how each of them is doing.</p>
         </li>
-        <li class="tile reveal" style="--reveal-delay:80ms">
-          <span class="fomo-steps__num">Profiles</span>
-          <h3>See which Zodiacs they are trading</h3>
-          <p>Open anyone you follow to see what they have been buying and selling and how it has gone, so you know who is in Leo, who just added Pisces, and who got out early.</p>
+        <li class="reveal" style="--reveal-delay:80ms">
+          <figure class="fomo-shot">
+            <picture>
+              <source type="image/avif" srcset={SOCIAL_SHOTS.holders.avif} />
+              <img src={SOCIAL_SHOTS.holders.webp} width={SOCIAL_SHOTS.holders.width} height={SOCIAL_SHOTS.holders.height} alt="Aquarius in fomo: its holders, what each paid, and the thesis they wrote when they bought." loading="lazy" decoding="async" />
+            </picture>
+          </figure>
+          <h3>See who is in your sign</h3>
+          <p>Open any Zodiac to see who holds it, what they paid, and what they said when they bought. Open a friend to see which Zodiacs they are trading.</p>
         </li>
-        <li class="tile reveal" style="--reveal-delay:160ms">
-          <span class="fomo-steps__num">Thesis</span>
+        <li class="reveal" style="--reveal-delay:160ms">
+          <figure class="fomo-shot">
+            <picture>
+              <source type="image/avif" srcset={SOCIAL_SHOTS.thesis.avif} />
+              <img src={SOCIAL_SHOTS.thesis.webp} width={SOCIAL_SHOTS.thesis.width} height={SOCIAL_SHOTS.thesis.height} alt="Writing a thesis in fomo: a few lines on why, posted with a Sagittarius position." loading="lazy" decoding="async" />
+            </picture>
+          </figure>
           <h3>Write your thesis</h3>
-          <p>When you buy, write why. The thesis is posted with the trade, so the people who follow you get the reasoning and not only the ticker, and you keep a record of your own thinking.</p>
-        </li>
-        <li class="tile reveal" style="--reveal-delay:240ms">
-          <span class="fomo-steps__num">Chains</span>
-          <h3>Swap across chains</h3>
-          <p>The Zodiacs live on Solana. fomo also trades on Base, Ethereum, BNB Chain, Robinhood Chain, and Monad, and moves between them in one step from a single balance, with no bridge and no gas to manage.</p>
+          <p>When you buy, say why. It posts with the trade, so the people who follow you get the reasoning and not only the ticker.</p>
         </li>
       </ul>
+      <p class="fomo-social__chains">One balance works everywhere fomo trades: Solana, where the Zodiacs live, plus Base, Ethereum, BNB Chain, Robinhood Chain and Monad. Moving between them is one step, with nothing to bridge and no gas to manage.</p>
     </section>
 
 
@@ -1618,22 +1635,35 @@ const sources = [
       text-wrap: pretty;
     }
   }
-  .fomo-social__grid {
+  .fomo-social__shots {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(18px, 2.6vw, 32px);
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .fomo-steps__list li, .fomo-social__grid li { display: grid; align-content: start; gap: 10px; padding: clamp(20px, 2.6vw, 28px); }
+  .fomo-social__shots li { display: grid; align-content: start; gap: 10px; }
+  /* The owner's screenshots as the phone shows them. */
+  .fomo-shot {
+    margin: 0 0 6px;
+    aspect-ratio: 9 / 17.8;
+    border-radius: 26px;
+    overflow: hidden;
+    border: 1px solid rgba(238, 241, 247, 0.12);
+    background: #0b0b0f;
+    box-shadow: 0 34px 70px -44px rgba(0, 0, 0, 0.95);
+  }
+  .fomo-shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+  .fomo-social__chains { max-width: 64ch; margin: clamp(20px, 3vw, 30px) 0 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; text-wrap: pretty; }
+  .fomo-steps__list li { display: grid; align-content: start; gap: 10px; padding: clamp(20px, 2.6vw, 28px); }
   .fomo-steps__num {
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 0.18em;
     color: var(--faint);
   }
-  .fomo-steps__list h3, .fomo-social__grid h3, .fomo-card h3, .fomo-facts h3 {
+  .fomo-steps__list h3, .fomo-social__shots h3, .fomo-card h3, .fomo-facts h3 {
     margin: 0;
     font-family: var(--font-serif);
     font-size: 1.5rem;
@@ -1641,7 +1671,7 @@ const sources = [
     letter-spacing: -0.005em;
     line-height: 1.1;
   }
-  .fomo-steps__list p, .fomo-social__grid p, .fomo-facts p {
+  .fomo-steps__list p, .fomo-social__shots p, .fomo-facts p {
     margin: 0;
     color: var(--text-2);
     font-size: var(--text-sm);
@@ -1799,7 +1829,16 @@ const sources = [
   }
   @media (max-width: 720px) {
     .fomo-top__cta { display: none; }
-    .fomo-social__grid { grid-template-columns: 1fr; }
+    .fomo-social__shots {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding: 4px 0 12px;
+    }
+    .fomo-social__shots::-webkit-scrollbar { display: none; }
+    .fomo-social__shots li { flex: 0 0 min(76vw, 320px); scroll-snap-align: start; }
     .fomo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .fomo-facts__grid { grid-template-columns: 1fr; }
     .fomo-finder__form { grid-template-columns: 1fr 1fr; }
