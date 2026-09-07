@@ -1151,7 +1151,9 @@ const sitemapPolicy = {
   // +3 for the 2027 full-moon, eclipse, and Mercury-retrograde year pages.
   // +1 for the English-only lunar-return calculator.
   // +1 for /fomo/, the Astrofolio-on-Fomo landing page (wing register, indexable).
-  total: 979 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
+  // +13 for the numerology calculator and the twelve English-only Life Path pages.
+  // +1 for the void-of-course Moon calendar.
+  total: 993 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,
@@ -1195,6 +1197,7 @@ const indexedFamilies = [
     expected: sitemapPolicy.peoplePages,
     localized: false,
   },
+  { label: 'Life Path pages', pattern: /^\/numerology\/life-path\/(?:[1-9]|11|22|33)\/$/, expected: 12, localized: false },
   { label: 'Registry Collection', pattern: /^\/registry\/collection\/$/, expected: Number(registryAuraIndexed), localized: false },
   { label: 'The Race', pattern: /^\/race\/$/, expected: Number(raceIndexed), localized: false },
   { label: 'Trophy Hall', pattern: /^\/games\/history\/$/, expected: Number(trophyHallIndexed), localized: false },
@@ -1265,6 +1268,19 @@ requireExactSet(
 if (!sitemapBlocksByPath.get('/lunar-return/')?.includes('<lastmod>2026-09-06</lastmod>')) {
   fail('sitemap.xml: lunar-return modification date must match the reviewed source revision');
 }
+requireExactSet(
+  'sitemap.xml numerology routes',
+  new Set([...sitemapLocs].filter((path) => /^\/(?:(?:es|pt|fr|it|ru)\/)?numerology\/$/u.test(path))),
+  new Set(['/numerology/']),
+);
+if (!sitemapBlocksByPath.get('/numerology/')?.includes('<lastmod>2026-09-07</lastmod>')) {
+  fail('sitemap.xml: numerology modification date must match the reviewed source revision');
+}
+requireExactSet(
+  'sitemap.xml void-of-course routes',
+  new Set([...sitemapLocs].filter((path) => /^\/(?:(?:es|pt|fr|it|ru)\/)?void-of-course-moon\/$/u.test(path))),
+  new Set(['/void-of-course-moon/']),
+);
 for (const family of indexedFamilies) {
   const locs = [...sitemapLocs].filter((loc) => family.pattern.test(loc));
   if (locs.length !== family.expected) {

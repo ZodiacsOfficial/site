@@ -1,0 +1,254 @@
+---
+import Base from '../../../layouts/Base.astro';
+import NumerologyCalculator from '../../../islands/NumerologyCalculator';
+import { LIFE_PATH_NUMBERS, LIFE_PATH_PAGES, type LifePathPage } from '../../../data/numerology-pages';
+import { baseDigit, MASTER_NUMBERS, NUMBER_MEANINGS, type CoreNumber } from '../../../data/numerology-meanings';
+import { lifePathDistribution, lifePathExample, nextDatesWithLifePath, reduceKeepingMasters } from '../../../lib/numerology';
+import { EDITOR_AUTHOR } from '../../../lib/editorial';
+import '../../../styles/calculator.css';
+
+export function getStaticPaths() {
+  const seen = new Set<CoreNumber>();
+  for (const page of LIFE_PATH_PAGES) {
+    if (!LIFE_PATH_NUMBERS.includes(page.number)) throw new Error(`Life Path page for ${page.number} is not a core number`);
+    if (seen.has(page.number)) throw new Error(`Duplicate Life Path page: ${page.number}`);
+    seen.add(page.number);
+  }
+  if (seen.size !== LIFE_PATH_NUMBERS.length) {
+    throw new Error(`Expected ${LIFE_PATH_NUMBERS.length} Life Path pages, found ${seen.size}`);
+  }
+  return LIFE_PATH_PAGES.map((page) => ({ params: { number: String(page.number) }, props: { page } }));
+}
+
+const { page } = Astro.props as { page: LifePathPage };
+const number = page.number;
+const meaning = NUMBER_MEANINGS[number];
+const path = `/numerology/life-path/${number}/`;
+const url = `https://zodiacs.org${path}`;
+
+const stats = lifePathDistribution()[number];
+const totals = Object.keys(stats.totals).map(Number).sort((a, b) => a - b);
+// A total is marked when a karmic debt sits anywhere in its reduction chain,
+// the same rule the calculator applies: 49 → 13 → 4 carries the 13.
+const totalsLine = totals
+  .map((t) => {
+    const debt = reduceKeepingMasters(t).karmicDebt;
+    if (!debt) return String(t);
+    return debt === t ? `${t} (karmic debt)` : `${t} (karmic debt ${debt})`;
+  })
+  .join(' · ');
+const share = `${stats.share.toFixed(1)}%`;
+const isMaster = MASTER_NUMBERS.includes(number);
+const masterLine = isMaster ? `Yes, lives as a ${baseDigit(number)}` : 'No';
+
+// Build-date facts: the next three birth dates with this number, and the
+// arithmetic for the first of them.
+const buildToday = new Date().toISOString().slice(0, 10);
+const nextDates = nextDatesWithLifePath(number, buildToday, 3);
+const longDate = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const nextDatesLine = nextDates.map((iso) => longDate.format(new Date(`${iso}T00:00:00Z`))).join(' · ');
+const asOf = longDate.format(new Date(`${buildToday}T00:00:00Z`));
+const exampleDate = nextDates[0] ?? buildToday;
+const exampleDateLong = longDate.format(new Date(`${exampleDate}T00:00:00Z`));
+const exampleLine = lifePathExample(exampleDate);
+
+const idx = LIFE_PATH_NUMBERS.indexOf(number);
+const count = LIFE_PATH_NUMBERS.length;
+const prevNumber = LIFE_PATH_NUMBERS[(idx + count - 1) % count];
+const nextNumber = LIFE_PATH_NUMBERS[(idx + 1) % count];
+
+const headline = page.title.replace(/ \| Zodiacs\.org$/, '');
+const toIso = (day: string) => new Date(`${day}T00:00:00Z`).toISOString();
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline,
+    description: page.description,
+    url,
+    datePublished: toIso(page.published),
+    dateModified: toIso(page.updated),
+    author: EDITOR_AUTHOR,
+    publisher: { '@id': 'https://zodiacs.org/#org' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    inLanguage: 'en',
+    image: 'https://zodiacs.org/assets/og/v2/share-pastel-wheel-20260809.png',
+    about: { '@type': 'Thing', name: `Life Path ${number}` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Numerology', item: 'https://zodiacs.org/numerology/' },
+      { '@type': 'ListItem', position: 3, name: `Life Path ${number}`, item: url },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: page.faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title={page.title}
+  description={page.description}
+  path={path}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="container container--narrow lp-page">
+    <header class="lp-hero">
+      <em class="kicker">Life path numbers</em>
+      <h1 class="display">Life Path {number}</h1>
+      <p class="lp-lead">
+        <strong>{meaning.name}.</strong> {meaning.keywords.join(', ')}.
+      </p>
+
+      <dl class="plc-panel mono">
+        <div class="plc-panel__row">
+          <dt>Totals that reduce to {number}</dt>
+          <dd>{totalsLine}</dd>
+        </div>
+        <div class="plc-panel__row">
+          <dt>Share of birth dates, 1900 to 2099</dt>
+          <dd>{share}</dd>
+        </div>
+        <div class="plc-panel__row">
+          <dt>Master number</dt>
+          <dd>{masterLine}</dd>
+        </div>
+        <div class="plc-panel__row">
+          <dt>Next birth dates from {asOf}</dt>
+          <dd>{nextDatesLine}</dd>
+        </div>
+        <div class="plc-panel__row">
+          <dt>Worked example, <time datetime={exampleDate}>{exampleDateLong}</time></dt>
+          <dd>{exampleLine}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <div class="prose">
+      {page.intro.map((paragraph) => <p>{paragraph}</p>)}
+      {page.sections.map((section) => (
+        <>
+          <h2>{section.heading}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </>
+      ))}
+    </div>
+
+    <section class="lp-calc">
+      <div class="section-head">
+        <h2>Find your numbers</h2>
+        <p>
+          Birth date for the date numbers; add your full name at birth for the rest.
+          Computed on your device; nothing is sent anywhere.
+        </p>
+      </div>
+      <NumerologyCalculator client:visible currentLifePath={number} />
+      <noscript>
+        <p>This numerology calculator needs JavaScript. Enable it and reload to compute your Life Path and name numbers from your birth date and full name.</p>
+      </noscript>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>Asked and answered</h2></div>
+      <div class="faq">
+        {page.faq.map(({ q, a }) => (
+          <details class="faq__item">
+            <summary>{q}</summary>
+            <p>{a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <nav class="plc-more" aria-label="Related pages">
+      <div class="plc-more__col">
+        <span class="plc-more__head">Keep reading</span>
+        <div class="plc-more__chips">
+          <a class="plc-chip" href="/numerology/">The numerology calculator</a>
+          <a class="plc-chip" href="/tools/">All tools</a>
+        </div>
+      </div>
+      <div class="plc-more__col">
+        <span class="plc-more__head">Other life paths</span>
+        <div class="plc-more__chips">
+          <a class="plc-chip" href={`/numerology/life-path/${prevNumber}/`}>← Life Path {prevNumber}</a>
+          {LIFE_PATH_NUMBERS.filter((n) => n !== prevNumber && n !== nextNumber).map((n) => (
+            <a class="plc-chip" href={`/numerology/life-path/${n}/`} aria-current={n === number ? 'page' : undefined}>Life Path {n}</a>
+          ))}
+          <a class="plc-chip" href={`/numerology/life-path/${nextNumber}/`}>Life Path {nextNumber} →</a>
+        </div>
+      </div>
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .lp-page { display: grid; gap: clamp(28px, 5vw, 44px); padding-block: clamp(24px, 5vw, 56px) clamp(36px, 6vw, 72px); }
+  .lp-hero { display: grid; gap: 18px; justify-items: start; }
+  .lp-hero h1 {
+    margin: 0;
+    font-size: clamp(2.1rem, 1.4rem + 3.4vw, 3.6rem);
+    line-height: 1.02;
+    font-variant-numeric: lining-nums;
+  }
+  .lp-lead { margin: -6px 0 0; max-width: 58ch; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .lp-lead strong { color: var(--text); font-weight: 600; }
+
+  .plc-panel { margin: 0; display: grid; width: 100%; max-width: 640px; }
+  .plc-panel__row {
+    display: grid;
+    gap: 2px 20px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--hair-1);
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+  }
+  .plc-panel__row:first-child { border-top: 1px solid var(--hair-1); }
+  @media (min-width: 560px) { .plc-panel__row { grid-template-columns: 190px 1fr; } }
+  .plc-panel__row dt { color: var(--faint); text-transform: uppercase; font-size: 10px; letter-spacing: 0.14em; align-self: baseline; }
+  .plc-panel__row dd { margin: 0; color: var(--text-2); overflow-wrap: anywhere; }
+
+  .lp-calc { display: grid; gap: 18px; }
+
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+
+  .plc-more {
+    display: grid;
+    gap: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--hair-1);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) { .plc-more { grid-template-columns: auto 1fr; gap: 20px 48px; } }
+  .plc-more__col { display: grid; gap: 10px; align-content: start; }
+  .plc-more__head { font-weight: 600; font-size: var(--text-sm); color: var(--text); }
+  .plc-more__chips { display: flex; flex-wrap: wrap; gap: 4px 2px; }
+  .plc-chip {
+    padding: 4px 9px;
+    border-radius: var(--r-full);
+    font-size: 12.5px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+  }
+  .plc-chip:hover { color: var(--text); background: rgba(198, 204, 218, 0.09); }
+  .plc-chip[aria-current='page'] { color: var(--text); box-shadow: inset 0 0 0 1px var(--hair-2); }
+  @media (prefers-reduced-motion: reduce) { .plc-chip { transition: none; } }
+</style>

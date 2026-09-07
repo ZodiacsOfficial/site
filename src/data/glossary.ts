@@ -1007,8 +1007,9 @@ const terms: GlossaryTerm[] = [
   {
     slug: 'void-of-course-moon',
     term: 'Void-of-course Moon',
-    definition: 'Under a common modern rule, the Moon is void of course after its last applying major aspect before leaving a sign. Definitions differ over which aspects and bodies count, and this site does not calculate void-of-course intervals.',
+    definition: 'Under the common modern rule, the Moon is void of course from its last exact major aspect in a sign until it enters the next sign. Definitions differ over which aspects and bodies count; this site uses the five Ptolemaic aspects to the Sun through Pluto and lists every void to the minute.',
     related: ['moon', 'applying', 'major-aspect', 'ingress'],
+    link: { href: '/void-of-course-moon/', label: 'See the void-of-course calendar' },
   },
   {
     slug: 'synastry',

@@ -38,12 +38,14 @@ export const TOOL_ROUTES = Object.freeze([
   '/mercury-retrograde/',
   '/moon-phase/',
   '/moon-sign/',
+  '/numerology/',
   '/profile/',
   '/retrogrades/',
   '/rising-sign/',
   '/saturn-return/',
   '/solar-return/',
   '/transits/',
+  '/void-of-course-moon/',
   '/widgets/',
 ]);
 

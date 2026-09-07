@@ -1,0 +1,207 @@
+---
+import Base from '../../layouts/Base.astro';
+import NumerologyCalculator from '../../islands/NumerologyCalculator';
+import { LIFE_PATH_NUMBERS } from '../../data/numerology-pages';
+import { NUMBER_HUES, NUMBER_MEANINGS, POSITIONS } from '../../data/numerology-meanings';
+import '../../styles/calculator.css';
+
+const position = (key: string) => POSITIONS.find((p) => p.key === key);
+const lifePath = position('lifePath');
+const birthday = position('birthday');
+const expression = position('expression');
+const soulUrge = position('soulUrge');
+const personality = position('personality');
+const maturity = position('maturity');
+const attitude = position('attitude');
+const personalYear = position('personalYear');
+
+const faq = [
+  {
+    q: 'How do I calculate my Life Path number?',
+    a: 'Reduce the month, the day, and the year of your birth date separately by adding their digits until you reach a single digit, keeping 11, 22, and 33 as they are. Add the three results and reduce once more. For 15 October 1998: 10 becomes 1, 15 becomes 6, 1998 becomes 27 and then 9, and 1 + 6 + 9 = 16, which reduces to 7. The calculator prints that chain as 16/7.',
+  },
+  {
+    q: 'What are master numbers 11, 22, and 33?',
+    a: 'Totals that the Pythagorean method does not reduce further. 11 would otherwise be 2, 22 would be 4, and 33 would be 6, and the tradition writes them 11/2, 22/4, and 33/6 to show both. They are kept in the core numbers and in the month, day, and year units before they are added; personal years, months, and days, and the Attitude number, always reduce to one digit.',
+  },
+  {
+    q: 'Which name should I use?',
+    a: 'The full name on your birth certificate, including middle names, is the conventional input for Expression, Soul Urge, and Personality. Later names, married names, and nicknames are read by some numerologists as a separate layer, not a replacement. Titles and generational suffixes such as Jr or III are removed before counting.',
+  },
+  {
+    q: 'Is Y a vowel in numerology?',
+    a: 'Usually, yes. The rule the calculator applies treats Y as a vowel unless it follows A, E, I, O, or U, or opens a name and is followed by one of them. So the Y in Lynn and Mary counts as a vowel, the Y in Kay and Yale as a consonant. The rule is a convention and numerologists differ on edge cases, so every Y in the letter table is a button you can flip.',
+  },
+  {
+    q: 'What is a karmic debt number?',
+    a: 'Four totals the tradition singles out before they reduce: 13, 14, 16, and 19, which become 4, 5, 7, and 1. The calculator reports a karmic debt only when one of those totals appears in the reduction chain of the Life Path, Birthday, Expression, Soul Urge, or Personality, and names which position carries it. A Life Path 7 reached through 16 reads differently in the tradition from a 7 reached through 25.',
+  },
+  {
+    q: 'Where do my name and birth date go?',
+    a: 'Nowhere. The arithmetic runs in your browser when you press the button, nothing is saved, and no request is sent to a server. Reload the page and the fields are empty again.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Numerology Calculator',
+    url: 'https://zodiacs.org/numerology/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  inlineCriticalCss
+  title="Numerology Calculator — Life Path, Expression, Soul Urge | Zodiacs.org"
+  description="Free numerology calculator: Life Path, Birthday, Expression, Soul Urge, Personality, Maturity, and Personal Year from your name and birth date, computed in your browser."
+  path="/numerology/"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <em class="kicker">Numerology</em>
+      <h1 class="display">Find your Life Path number.</h1>
+      <p>
+        Your birth date alone gives the Life Path, Birthday, Attitude, and Personal Year.
+        Add your full name at birth and you get Expression, Soul Urge, Personality, and
+        Maturity as well. The calculator uses the Pythagorean system and prints every
+        reduction, so a 7 reached through 16 is shown as 16/7. Nothing you type leaves
+        the browser. Numerology is a separate tradition from astrology, with no sky in
+        it, and it is here for the readers who want both.
+      </p>
+    </div>
+
+    <NumerologyCalculator client:interaction />
+    <noscript>
+      <p>This numerology calculator needs JavaScript. Enable it and reload to compute your Life Path and name numbers from your birth date and full name.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="prose">
+      <h2>The core numbers</h2>
+      <p>
+        Four of them come from the birth date. The <strong>{lifePath?.label}</strong> is
+        the month, day, and year each reduced, then added and reduced again; the tradition
+        treats it as the main number in a chart. The <strong>{birthday?.label}</strong> is the
+        day of the month on its own. The <strong>{attitude?.label}</strong> is month plus day,
+        reduced to one digit, and the <strong>{personalYear?.label}</strong> is month and day
+        added to the current calendar year, a nine-year cycle that runs January to December.
+      </p>
+      <p>
+        The other four need the name. <strong>{expression?.label}</strong> is the sum of every
+        letter; <strong>{soulUrge?.label}</strong> is the vowels alone; <strong>{personality?.label}</strong>{' '}
+        is the consonants alone. <strong>{maturity?.label}</strong> is Life Path plus
+        Expression, which the tradition says comes into focus from the mid-thirties onward.
+        Each card in the result carries the number, the chain it reduced through, and the
+        reading the tradition attaches to it.
+      </p>
+
+      <h2>How the numbers are computed</h2>
+      <p>
+        Letters take the values 1 to 9 in cycles: A to I are 1 to 9, J to R are 1 to 9
+        again, S to Z are 1 to 8. The birth date's month, day, and year are reduced
+        separately, keeping 11, 22, and 33 as master numbers, then added and reduced once
+        more. Each part of a name is reduced on its own before the parts are added, which
+        is how master numbers can survive in a name. Y counts as a vowel unless it
+        directly follows another vowel or opens a name before one (so the Y in Ryan is a
+        vowel and the Y in Kay is not), and any Y in the letter table can be flipped by
+        hand. A 13, 14, 16, or 19 in the reduction chain of the Life Path, Birthday,
+        Expression, Soul Urge, or Personality is reported as a karmic debt; the same
+        totals inside a single name part, in the Maturity number, or in a personal year
+        are not counted. Personal years, months, and days are reduced all the way to one
+        digit.
+        Accents are folded to plain letters (é to E, ñ to N, ß to SS), hyphens and
+        apostrophes are removed without splitting the name, and titles and suffixes such as
+        Dr and Jr are dropped.
+      </p>
+      <p>
+        A worked example, with an invented name: Tobias Alexander Wren, born 14 March 1983.
+        The month is 3, the day is 14 and reduces to 5, and 1983 sums to 21 and reduces to 3;
+        3 + 5 + 3 = 11, a master number, so the Life Path is 11. The Birthday is 14/5.
+        Tobias sums to 21 and reduces to 3, Alexander to 39, 12, then 3, and Wren to 24
+        and then 6; 3 + 3 + 6 = 12, so the Expression is 12/3. The vowels give 7, 3, and 5,
+        which add to 15 and reduce to 6, a Soul Urge of 15/6. The consonants give 5, 9, and
+        1, which also add to 15, a Personality of 15/6. The 14 in the Birthday is a karmic
+        debt, and the calculator says so.
+      </p>
+
+      <h2>What numerology is and is not</h2>
+      <p>
+        The arithmetic is exact and repeatable: the same name and date give the same numbers
+        every time, here or on paper. The meanings attached to the numbers are conventions
+        of the tradition, passed down and revised by the people who practise it. Nothing on
+        this page is a prediction or a measurement of anything, and it has no connection to
+        the positions of the planets. The site follows the convention most modern
+        numerologists use, so the results agree with what a numerologist working by the
+        same method would write down. The method is set out in full on the{' '}
+        <a href="/methodology/#numerology">methodology page</a>.
+      </p>
+
+      <h2>The twelve life paths</h2>
+      <p>Each number has its own page: which totals reduce to it, how common it is, and what the tradition reads into it.</p>
+    </div>
+    <nav class="num-paths" aria-label="Life path numbers">
+      {LIFE_PATH_NUMBERS.map((n) => (
+        <a class="tile num-paths__chip" href={`/numerology/life-path/${n}/`} style={`--sign:${NUMBER_HUES[n]}`}>
+          <span class="num-paths__number">Life Path {n}</span>
+          <span class="num-paths__name">{NUMBER_MEANINGS[n].name}</span>
+        </a>
+      ))}
+    </nav>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <div class="section-head"><h2>Questions, answered</h2></div>
+    <div class="faq">
+      {faq.map(({ q, a }) => (
+        <details class="faq__item">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero .kicker { margin-bottom: 10px; }
+  .tool-hero h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.04;
+    font-variant-numeric: oldstyle-figures;
+    text-wrap: balance;
+  }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .num-paths { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .num-paths__chip { display: grid; gap: 2px; padding: 10px 14px; border-radius: var(--r-md); color: var(--text); }
+  .num-paths__number { font-size: var(--text-sm); font-weight: 600; }
+  .num-paths__name { font-size: 12px; color: var(--muted); }
+  .faq { display: grid; gap: 8px; }
+  .faq__item {
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    padding: 4px 18px;
+  }
+  .faq__item summary { cursor: pointer; padding: 12px 0; font-weight: 550; color: var(--text); }
+  .faq__item p { margin: 2px 0 16px; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+  @media (prefers-reduced-motion: reduce) { .num-paths__chip { transition: none; } }
+</style>

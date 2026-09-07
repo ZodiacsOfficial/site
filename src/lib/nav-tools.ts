@@ -1,6 +1,6 @@
 import type { CatalogLocale as Locale, UiKey } from './i18n';
 
-export type ToolGroup = 'start' | 'sky' | 'milestones';
+export type ToolGroup = 'start' | 'sky' | 'milestones' | 'numbers';
 export type ToolGlyphKind =
   | 'birth'
   | 'moon'
@@ -13,7 +13,8 @@ export type ToolGlyphKind =
   | 'moonphase'
   | 'fullmoon'
   | 'eclipse'
-  | 'baby';
+  | 'baby'
+  | 'numerology';
 
 interface ToolHubCard {
   order: number;
@@ -209,6 +210,10 @@ export const TOOL_CATALOG: readonly ToolCatalogEntry[] = [
     hub: { order: 12, title: 'Baby zodiac', promise: 'What sign a due date makes likely, and what has to wait.', hue: 'var(--sign-cancer)', kind: 'baby', group: 'milestones' },
   },
   {
+    href: '/void-of-course-moon/',
+    hub: { order: 19, title: 'Void-of-course Moon', promise: 'Every void this month and next, to the minute, with the aspect that starts it.', hue: 'var(--sign-cancer)', kind: 'moonphase', group: 'sky' },
+  },
+  {
     href: '/full-moon-calendar/',
     hub: { order: 13, title: 'Full moon calendar', promise: 'Every full moon through 2027: date, sign, and name.', hue: 'var(--sign-taurus)', kind: 'fullmoon', group: 'sky' },
   },
@@ -222,6 +227,10 @@ export const TOOL_CATALOG: readonly ToolCatalogEntry[] = [
   },
   {
     href: '/birthday/', label: 'birthday', sublabel: NAV_SUBLABELS.birthday, navOrder: 8,
+  },
+  {
+    href: '/numerology/',
+    hub: { order: 18, title: 'Numerology', promise: 'Life Path, Expression, Soul Urge, and Personal Year, with every step shown.', hue: 'var(--sign-virgo)', kind: 'numerology', group: 'numbers' },
   },
 ];
 

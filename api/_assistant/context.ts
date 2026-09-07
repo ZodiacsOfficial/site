@@ -32,12 +32,14 @@ These lines use each live page’s meta description to state what it computes or
 - /mercury-retrograde/ — Every Mercury retrograde through 2027, computed from the planet's real motion: exact dates, station positions, and what the window actually asks of you.
 - /moon-phase/ — See tonight's moon phase or look up any date you care about: phase, illumination, and moon sign, free.
 - /moon-sign/ — Find your moon sign free, in seconds — how you feel, what soothes you, and what you need to feel safe. No signup.
+- /numerology/ — Free numerology calculator: Life Path, Birthday, Expression, Soul Urge, Personality, Maturity, and Personal Year from your name and birth date, computed in your browser.
 - /profile/ — Open your saved birth charts, see what is active today, and keep the people and patterns you return to in one place.
 - /retrogrades/ — Which planets are retrograde right now, and when the next windows run: Mercury through Pluto for 2026–2027, station dates and positions computed exactly.
 - /rising-sign/ — Find your rising sign free with your birth time and place — how people first read you, plus the planet that rules your chart.
 - /saturn-return/ — Find your exact Saturn return dates free: every crossing, retrograde passes included, computed from Saturn's real motion on your device. Just needs your birth date.
 - /solar-return/ — See the themes shaping your personal year with a solar return chart for any year and location. Free and private by default.
 - /transits/ — See what is active in your birth chart today, then move the date up to a year forward or back to watch each transit build and release.
+- /void-of-course-moon/ — Void-of-course Moon times for this month and the next two, to the minute: when each void begins, the last aspect that starts it, and the sign the Moon enters. Shown in your time zone.
 - /widgets/ — Embed a moon phase, current sky, or private mini birth chart on any site. Sandboxed iframe and script modes, free with the Zodiacs.org credit intact.
 
 LEARN-HUB TOPICS

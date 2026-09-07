@@ -23,6 +23,9 @@ Free tools:
 - Retrograde windows for all eight planets, 2026–2027: https://zodiacs.org/retrogrades/
 - Full moon calendar 2026–2027 (dates, signs, traditional names, blue moon): https://zodiacs.org/full-moon-calendar/
 - Eclipse dates 2026–2028 (solar and lunar, exact peaks and signs): https://zodiacs.org/eclipses/
+- Void-of-course Moon calendar (exact begin and end times for this month and the next two, the last aspect that starts each void, and the sign the Moon enters; Ptolemaic aspects to the Sun through Pluto, UTC with local conversion): https://zodiacs.org/void-of-course-moon/
+- Numerology calculator (Pythagorean Life Path, Birthday, Expression, Soul Urge, Personality, Maturity, and Personal Year from a birth date and full name, every step shown; a separate tradition from astrology, computed on the device): https://zodiacs.org/numerology/
+- Life Path number meanings, 1 to 9 and the master numbers 11, 22, 33: https://zodiacs.org/numerology/life-path/1/ through https://zodiacs.org/numerology/life-path/33/
 - All tools: https://zodiacs.org/tools/
 
 Spanish core pages:
