@@ -1,8 +1,11 @@
 import { createHash } from 'node:crypto';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { delimiter, dirname, join } from 'node:path';
+import { delimiter, dirname, join, resolve } from 'node:path';
+import { runInNewContext } from 'node:vm';
 import { gunzipSync, gzipSync } from 'node:zlib';
+import { parse } from '@astrojs/compiler';
+import ts from 'typescript';
 import { afterEach, describe, expect, it } from 'vitest';
 import { consumerEnvironment, readPackageArchive, starterFiles, verifyPlatformStarter } from './verify-platform-starter.mjs';
 
@@ -68,6 +71,11 @@ describe('platform starter archive and source identity (offline)', () => {
     expect(() => verifyPlatformStarter(test)).toThrow('Starter archive SHA-256 mismatch');
   });
 
+  it.each([undefined, 'main', '80dff5f', 'g'.repeat(40), 'a'.repeat(41), 123, ['a'.repeat(40)]])('requires a full immutable starter commit: %j', (artifactCommit) => {
+    const test = fixture({ mutateMetadata: (value) => { value.artifactCommit = artifactCommit; } });
+    expect(() => verifyPlatformStarter(test)).toThrow('Invalid immutable starter commit');
+  });
+
   it('detects stale or substituted source even after the public digest is updated', () => {
     const test = fixture({ mutateFiles: (files) => files.set('src/app.mjs', Buffer.from('alert("changed")')) });
     expect(() => verifyPlatformStarter(test)).toThrow('Archive/source byte mismatch: src/app.mjs');
@@ -121,6 +129,57 @@ describe('platform starter archive and source identity (offline)', () => {
     rmSync(target);
     symlinkSync(join(test.root, 'elsewhere.md'), target);
     expect(() => verifyPlatformStarter(test)).toThrow('Source must not contain links or special files');
+  });
+});
+
+describe('examples page artifact identity', () => {
+  it('renders links, setup values, and release identity from shared metadata', async () => {
+    const pagePath = 'src/pages/developers/examples/index.astro';
+    const { ast } = await parse(read(pagePath).toString('utf8'));
+    const frontmatter = ast.children.find((node) => node.type === 'frontmatter').value;
+    const source = ts.createSourceFile(pagePath, frontmatter, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const bindings = new Map(source.statements.filter(ts.isImportDeclaration).map((statement) => [
+      resolve(root, dirname(pagePath), statement.moduleSpecifier.text), statement.importClause?.name?.text,
+    ]));
+    const starterBinding = bindings.get(join(root, 'public/examples/platform-starter.json'));
+    const candidateBinding = bindings.get(join(root, 'src/data/platform-engine-candidate.json'));
+    expect(starterBinding).toBeTypeOf('string');
+    expect(candidateBinding).toBeTypeOf('string');
+    const declarations = source.statements.filter((statement) => !ts.isImportDeclaration(statement)).map((statement) => statement.getFullText(source)).join('\n');
+
+    // Evaluate the actual frontmatter and template expressions with substituted
+    // metadata. This checks data flow without pinning prose or variable names.
+    function render(starterValue, candidateValue) {
+      const evaluate = (expression) => runInNewContext(ts.transpileModule(`${declarations}\n(${expression})`, {
+        compilerOptions: { target: ts.ScriptTarget.ESNext, module: ts.ModuleKind.ESNext },
+      }).outputText, { [starterBinding]: starterValue, [candidateBinding]: candidateValue }, { timeout: 1000 });
+      const text = (node) => node.type === 'expression' ? String(evaluate(node.children.map((child) => child.value).join('')))
+        : node.type === 'text' ? node.value : node.type === 'frontmatter' ? '' : (node.children || []).map(text).join('');
+      const links = [];
+      const pre = [];
+      function walk(node) {
+        if (node.type === 'element' && node.name === 'a') {
+          const href = node.attributes.find((attribute) => attribute.name === 'href');
+          if (href) links.push(href.kind === 'expression' ? evaluate(href.value) : href.value);
+        }
+        if (node.type === 'element' && node.name === 'pre') pre.push(text(node));
+        for (const child of node.children || []) walk(child);
+      }
+      walk(ast);
+      return { links, setup: pre[0], visible: text(ast) };
+    }
+
+    const original = render(metadata, candidate);
+    const changedStarter = { ...metadata, version: '8.7.6-rc.5', file: 'zodiacs-platform-starter-8.7.6-rc.5.tgz', sha256: 'b'.repeat(64), artifactCommit: 'a'.repeat(40) };
+    const changedCandidate = { ...candidate, name: '@example/engine', version: '9.8.7-rc.6', releaseLabel: 'Unpublished test candidate' };
+    const changed = render(changedStarter, changedCandidate);
+    expect(changed.links).toContain(`https://raw.githubusercontent.com/ZodiacsOfficial/site/${changedStarter.artifactCommit}/public/examples/${changedStarter.file}`);
+    expect(changed.links).toContain(`https://github.com/ZodiacsOfficial/site/blob/${changedStarter.artifactCommit}/examples/platform/README.md`);
+    expect(changed.setup).toBe(original.setup.replaceAll(metadata.file, changedStarter.file)
+      .replaceAll(metadata.sha256, changedStarter.sha256).replaceAll(metadata.artifactCommit, changedStarter.artifactCommit));
+    for (const value of [changedStarter.file, changedStarter.sha256, changedStarter.artifactCommit]) expect(changed.setup).toContain(value);
+    for (const value of [changedStarter.version, `${changedCandidate.name}@${changedCandidate.version}`, changedCandidate.releaseLabel.toLowerCase()]) expect(changed.visible).toContain(value);
+    for (const value of [metadata.file, metadata.sha256, metadata.artifactCommit, candidate.version]) expect(changed.visible).not.toContain(value);
   });
 });
 

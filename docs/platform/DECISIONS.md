@@ -137,3 +137,18 @@ storage. Unknown birth time explicitly uses noon UTC with absent houses/angles;
 it does not infer local noon. Example provenance is not yet a durable receipt
 schema. The hosted iframe stays opt-in with permanent fallback/attribution and
 has its own deployment/version and ordinary network privacy boundary.
+
+
+## B-003 — Make the pasted setup fail closed and test what the page displays
+
+Use an exact public archive commit and SHA-256. Put the POSIX setup in a
+subshell with `set -eu`, so failed directory creation, download or checksum
+cannot run later extraction/install steps and cannot change the caller's shell
+options. Disable curl's personal configuration. Capture setup text from the
+real rendered page and execute it in a fresh isolated environment; additionally
+substitute contained command shims to prove failure stops before tar/npm.
+
+The source-aware consumer guard distinguishes only the complete Node hashing
+module specifier in the exact setup fragment. It continues checking all
+surrounding text and destinations. This avoids a whole-page exemption while
+retaining a reproducible checksum check on the already-documented Node runtime.

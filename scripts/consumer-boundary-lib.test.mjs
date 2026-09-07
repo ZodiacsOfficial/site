@@ -178,6 +178,18 @@ const description = 'A free astrology calculator.';
     }
   });
 
+  it('recognizes only the Node hashing import in the displayed starter setup', () => {
+    const block = (code, name = 'setup') => `---\nconst ${name} = \`node <<'JS'\n${code}\nJS\`;\n---\n<pre>{${name}}</pre>`;
+    const file = 'src/pages/developers/examples/index.astro';
+    const moduleImport = "import { createHash } from 'node:crypto';";
+    expect(findConsumerBoundaryViolations(block(moduleImport), file)).toEqual([]);
+    expect(rules(block(moduleImport + "\nconsole.log('Use the crypto market');"), file)).toContain('market vocabulary');
+    expect(rules(block(moduleImport + "\nconsole.log('/registry/');"), file)).toContain('unsanctioned wing link');
+    expect(rules(block(moduleImport, 'promotion'), file)).toContain('crypto vocabulary');
+    expect(rules(block(moduleImport), 'src/pages/index.astro')).toContain('crypto vocabulary');
+    expect(rules(block("import { x } from 'node:crypto-market';"), file)).toContain('crypto vocabulary');
+  });
+
   it('finds raw and fenced MDX wing links before stripping markup', () => {
     expect(rules('<a href="/registry/">Record</a>', 'src/content/example.mdx'))
       .toContain('unsanctioned wing link');

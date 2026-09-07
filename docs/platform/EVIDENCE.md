@@ -541,3 +541,93 @@ was never pushed/published. Browser rerun, anonymous public-archive installation
 and the public onboarding page remain pending at this checkpoint. Neither
 archive distribution nor internal tests resolve npm, production or external
 review/adoption gates.
+
+
+### Stage A final CI and refreshed release state
+
+[Site Check 34156030961](https://github.com/ZodiacsOfficial/site/actions/runs/34156030961)
+at exact `4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f` completed successfully:
+**all 14 jobs**, including visual regression, Lighthouse, widgets, browser
+journeys, SQL and advisory gates. [Machine receipt](evidence/site-stage-a-ci-success.json).
+Draft PR #415 validation now identifies this final result and the matching
+READY preview's 59 passed remote Today checks. Earlier failed runs remain
+historical failed runs.
+
+[Release refresh at 20:05 UTC](evidence/b01-release-refresh.json) confirms the
+same site/SDK main heads and explicit PR #5 hold with no submitted reviews.
+Public unauthenticated npm reads still return 404 for engine/widgets and
+`1.0.1` for the separate ownership SDK. PR #289 remains at `de9bb3b5`;
+PR #413 currently `bf8268d2` has no developer-page overlap, with an additive
+sitemap entry that must be retained during later integration. No main merge,
+production release, package publication, external review or adoption occurred.
+
+The complete starter is publicly downloadable without credentials from
+https://raw.githubusercontent.com/ZodiacsOfficial/site/80dff5f16ec17045bcb52110a8105a9ad3492a99/public/examples/zodiacs-platform-starter-0.1.0-rc.2.tgz .
+Anonymous HTTP 200, 40,481 bytes and SHA-256 `d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420`
+match all 20 local source/archive files. Fresh isolated configuration/cache
+installation, build and 24 tests passed in **7.21 seconds including download**.
+[Receipt](evidence/b02-public-consumer.json). This internal automated check is
+not the complete timed page walkthrough, population usability evidence or npm
+publication. The browser and literal displayed-command checks follow below.
+
+
+### B01/B02 final local and public-archive acceptance — 20:22 UTC
+
+The final developer front door links to `/developers/examples/`, with one
+rendered setup block and three complete success/failure/privacy paths. The
+block runs in a POSIX subshell with `set -eu`; failed mkdir/download/checksum
+cannot continue into extraction or npm. It neither enables an npm release nor
+promises a complete portable receipt schema.
+
+- Full Node 22 suite: **4,493 tests / 407 files, no skips**, passed in 96.21s.
+  [Tests](evidence/site-b02-final-tests.log),
+  [build](evidence/site-b02-final-build.log),
+  [check](evidence/site-b02-final-check.log), 0 errors/warnings, 11 hints.
+  Two earlier full-suite failures identified the generated route inventory's
+  old 690/51 counts; the new routes require 692 consumer routes/53 static pages.
+  The mandated generator changed only three developer inventory lines in
+  `api/_assistant/context.ts`; persona is untouched. PR #413's nearby birthday
+  inventory/sitemap addition must be retained in later integration.
+- Source/metadata/pack drift and adversarial archive checks pass, including
+  exact starter commit, digest, public exports, all source bytes and lockfile
+  integrity. The displayed Node hashing import is narrowly recognized by the
+  consumer boundary; surrounding promotional vocabulary and destinations stay
+  checked. No directory-wide exemption was added.
+- Final actual developer-page browser checks passed at 1280/390 with reduced
+  motion and CSS zoom 2 at 1280: navigation, canonical footer, Tab/ArrowRight
+  scrollers, exact setup identity, no overflow/page errors.
+  [Receipt](evidence/b02-developers-browser.json),
+  [front door](evidence/b02-developer-entry-1280.png),
+  [examples desktop](evidence/b02-developer-examples-1280-zoom1.png),
+  [examples mobile](evidence/b02-developer-examples-390-zoom1.png).
+- Fresh rc.2 starter browser: **185/185** checks passed in actual Chrome
+  152.0.7977.83 at 1280/390. Calculators made zero requests/API calls during
+  recalculation, retained no local/session/IndexedDB/CacheStorage/service-worker
+  state or cookies, rejected malformed/empty/offset-free inputs, preserved
+  offset-equivalent instants and unknown-time qualification, and recalculated
+  offline after load. Widget dark/light requests returned HTTP 200, showing
+  the current UTC date `2026-09-07` at 20:01 UTC; contrast ≥4.5, attribution
+  and fallback remained keyboard-reachable. The blocked-frame scenario uses
+  an explicitly synthetic response. [Receipt](evidence/b02-starter-browser.json),
+  [setup timing](evidence/b02-starter-setup.json),
+  [widget mobile](evidence/b02-starter-widget-390-light.png),
+  [initial rejected rc.1 mobile](evidence/b02-rc1-rejected-mobile.png).
+- The exact setup text extracted from the rendered page was executed unchanged
+  in a new folder with isolated empty npm/curl configuration and empty npm
+  cache. Public download/hash/install, **24/24 tests**, build and the local
+  server passed; each of three served pages was HTTP 200 and byte-equal to
+  that consumer's build. **2.841 seconds** for those automated steps, including
+  startup and HTTP verification. [Receipt](evidence/b02-literal-onboarding.json),
+  [literal text](evidence/b02-literal-rendered-setup.sh),
+  [success log](evidence/b02-literal-success.log).
+  Separate existing-directory, simulated HTTP-failure and genuine checksum
+  rejection checks all stopped before tar/npm. Only owned temporary process
+  groups were stopped, with disappearance verified. This timing does not
+  include a human reading the page or interacting with the charts, and is not
+  evidence about unfamiliar developers or external adoption.
+
+The first B01/archive commit `80dff5f16ec17045bcb52110a8105a9ad3492a99`
+was pushed without merge, making the exact example bytes publicly available.
+Its automatic review preview `dpl_HMB36sGh7emiAFHFTvb6tmEYW9g3` is READY.
+The final onboarding-page commit, its separate draft PR, exact-head CI and
+remote preview verification remain the next release-evidence steps.

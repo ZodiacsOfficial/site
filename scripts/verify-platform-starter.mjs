@@ -105,6 +105,7 @@ export function verifyPlatformStarter({ root = ROOT } = {}) {
     && /^\d+\.\d+\.\d+-rc\.\d+$/.test(metadata.version), 'Invalid starter metadata identity');
   requireValue(metadata.file === `${metadata.name}-${metadata.version}.tgz`, 'Invalid starter archive filename');
   requireValue(/^[a-f0-9]{64}$/.test(metadata.sha256), 'Invalid starter SHA-256');
+  requireValue(typeof metadata.artifactCommit === 'string' && /^[a-f0-9]{40}$/.test(metadata.artifactCommit), 'Invalid immutable starter commit');
   const archive = readRegularFile(root, `public/examples/${metadata.file}`);
   requireValue(sha256(archive) === metadata.sha256, 'Starter archive SHA-256 mismatch');
   const candidate = json(readRegularFile(root, 'src/data/platform-engine-candidate.json'));

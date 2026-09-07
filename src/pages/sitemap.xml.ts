@@ -80,6 +80,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ] as const),
   ['/developers/', '2026-09-07'] as const,
   ['/developers/support/', '2026-09-07'] as const,
+  ['/developers/examples/', '2026-09-07'] as const,
   ['/lunar-return/', '2026-09-06'] as const,
   ['/tools/', '2026-09-06'] as const,
   // Astrofolio on the Fomo app: the consumer landing page for the twelve.
@@ -243,6 +244,7 @@ export const GET: APIRoute = async () => {
     { loc: '/widgets/', priority: 0.6 },
     { loc: '/developers/', priority: 0.6 },
     { loc: '/developers/support/', priority: 0.6 },
+    { loc: '/developers/examples/', priority: 0.6 },
     { loc: '/fomo/', priority: 0.6 },
     { loc: '/disclosure/', priority: 0.5 },
     // Locale variants and hreflang blocks are added below through the same
