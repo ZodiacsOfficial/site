@@ -1829,6 +1829,12 @@ const sources = [
   }
   @media (max-width: 720px) {
     .fomo-top__cta { display: none; }
+    /* The closing card: the two store badges stay side by side on phones, as in the hero,
+       by trimming the card's side padding and scaling the pair to fit a 360px screen. */
+    .fomo-close__core { padding-inline: 16px; }
+    .fomo-stores--center { gap: 10px 12px; }
+    .fomo-stores--center .fomo-badge--apple img { height: 40px; }
+    .fomo-stores--center .fomo-badge--google img { height: 59.53px; margin: -9.76px; }
     .fomo-social__shots {
       display: flex;
       gap: 14px;
@@ -1842,6 +1848,12 @@ const sources = [
     .fomo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .fomo-facts__grid { grid-template-columns: 1fr; }
     .fomo-finder__form { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 340px) {
+    .fomo-hero .fomo-badge--apple img { height: 40px; }
+    .fomo-hero .fomo-badge--google img { height: 59.53px; margin: -9.76px; }
+    .fomo-stores--center .fomo-badge--apple img { height: 34px; }
+    .fomo-stores--center .fomo-badge--google img { height: 50.6px; margin: -8.29px; }
   }
   @media (max-width: 460px) {
     .fomo-grid { grid-template-columns: 1fr; }
