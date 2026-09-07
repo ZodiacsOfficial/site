@@ -1,4 +1,4 @@
-.itinerary { display: grid; gap: 1rem; }
+.itinerary { display: grid; gap: 1rem; min-width: 0; padding: clamp(1rem, 3vw, 1.75rem); }
 .itinerary > p { max-width: 70ch; }
 .itinerary__actions { display: flex; flex-wrap: wrap; gap: .75rem; }
 .itinerary section { display: grid; gap: 1rem; }
@@ -9,7 +9,7 @@
 .itinerary__dates { display: flex; flex-wrap: wrap; gap: .75rem 2rem; margin: 1rem 0; }
 .itinerary__dates dt { color: var(--muted); font-size: .8rem; }
 .itinerary__dates dd { margin: .25rem 0 0; }
-.itinerary__peak { color: var(--ink); }
+.itinerary__peak { color: var(--ink-1); }
 .itinerary details > summary { cursor: pointer; padding: .75rem 0; }
 .itinerary details .itinerary__period { margin-top: .75rem; }
 @media (max-width: 480px) { .itinerary__period { padding: 1rem; } .itinerary__actions .btn { width: 100%; } }
