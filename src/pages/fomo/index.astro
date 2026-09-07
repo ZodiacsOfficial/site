@@ -79,8 +79,8 @@ const FILM = Object.freeze({
   height: 1920,
 });
 
-/* The Twemoji tile for a sign's emoji, keyed by its code point (U+2648–U+2653). */
-const emojiTile = (glyph: string): string => `/assets/emoji/twemoji/${(glyph.codePointAt(0) ?? 0).toString(16)}.svg`;
+/* The tile for a sign's emoji, keyed by its code point (U+2648–U+2653). */
+const emojiTile = (glyph: string): string => `/assets/emoji/zodiac/${(glyph.codePointAt(0) ?? 0).toString(16)}.svg`;
 
 const FOOTAGE = Object.freeze({
   av1: '/assets/fomo/fomo-zodiacs-av1.mp4',
@@ -223,7 +223,7 @@ const sources = [
   { label: 'Fomo on Google Play', href: FOMO_PLAY },
   { label: 'Zodiacs Registry', href: '/registry/' },
   { label: `${provider} token pairs API`, href: 'https://docs.dexscreener.com/api/reference' },
-  { label: 'Zodiac emoji tiles: Twemoji, CC BY 4.0', href: 'https://github.com/jdecked/twemoji' },
+  { label: 'Zodiac glyphs on the emoji tiles: Twemoji, CC BY 4.0', href: 'https://github.com/jdecked/twemoji' },
 ];
 ---
 
@@ -232,7 +232,7 @@ const sources = [
   description={description}
   path="/fomo/"
   image="/assets/og/v2/fomo.png"
-  imageAlt="The twelve Zodiacs are on Fomo. Astrofolio, in a trading app."
+  imageAlt="Trade your zodiac on the Fomo app. Astrology in a trading app."
   jsonLd={[breadcrumb]}
   sources={sources}
   glass
@@ -285,8 +285,8 @@ const sources = [
       <div class="fomo-hero__inner container">
         <div class="fomo-hero__copy">
           <a class="fomo-back" href="/astrofolio/">← Astrofolio</a>
-          <p class="kicker reveal">Astrofolio, in a trading app</p>
-          <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">Trade<span class="fomo-hero__signs" aria-hidden="true">{SIGNS.map((sign) => <img class="fomo-hero__sign" src={emojiTile(sign.glyph)} width="36" height="36" alt="" loading="eager" decoding="async" />)}</span><span class="sr-only"> the twelve Zodiacs</span> on the Fomo<FomoMark /> app</h1>
+          <p class="kicker reveal">Astrology in a trading app</p>
+          <h1 id="fomo-title" class="display reveal" style="--reveal-delay:60ms">Trade your zodiac<span class="fomo-hero__signs" aria-hidden="true">{SIGNS.map((sign) => <img class="fomo-hero__sign" src={emojiTile(sign.glyph)} width="36" height="36" alt="" loading="eager" decoding="async" />)}</span> on the Fomo<FomoMark /> app</h1>
           <div class="fomo-hero__body">
             <figure class="fomo-hero__render reveal" style="--reveal-delay:100ms">
               <picture>
@@ -1207,9 +1207,10 @@ const sources = [
     line-height: 0.98;
   }
   /* The twelve as the zodiac emoji, on their own line of the headline: the
-     purple tiles people type into bios and captions. Shipped as Twemoji
-     artwork (CC BY 4.0, credited in the sources line) so every device shows
-     the same tile rather than its own platform's drawing; a deliberate
+     purple tiles people type into bios and captions. Shipped as artwork
+     (Twemoji's glyphs, CC BY 4.0 and credited in the sources line, on a
+     gradient tile drawn to sit close to the keyboard emoji) so every device
+     shows the same tile rather than its own platform's drawing; a deliberate
      exception to the twelve-hue rule, on this promotional wing page only.
      Sized in ems of the headline. */
   .fomo-hero__signs {

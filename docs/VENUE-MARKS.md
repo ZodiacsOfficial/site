@@ -58,7 +58,7 @@ honest presentation when we cannot use the real thing.
 
 | Files | Basis |
 | --- | --- |
-| `public/assets/emoji/twemoji/2648.svg` … `2653.svg` | The twelve zodiac emoji (U+2648–U+2653) from Twemoji 14.0.2, fetched 2026-09-07 from `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/{codepoint}.svg`. Graphics © Twitter, Inc. and other contributors, licensed CC-BY 4.0; used unmodified in the `/fomo/` headline and on its generated share card (`scripts/build-og-void.mjs`), so the twelve appear as the same purple tiles on every device and in the card, the way X draws them. Credited in the page's sources line. |
+| `public/assets/emoji/zodiac/2648.svg` … `2653.svg` | The twelve zodiac emoji (U+2648–U+2653). The white glyph shapes are Twemoji 14.0.2's, fetched 2026-09-07 from `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/{codepoint}.svg` (graphics © Twitter, Inc. and other contributors, CC-BY 4.0); Twemoji's flat square is replaced by an in-house rounded tile with a purple gradient and a top highlight, drawn to sit close to the keyboard emoji people know. Used in the `/fomo/` headline and on its generated share card (`scripts/build-og-void.mjs`), so the twelve appear as the same tile on every device and in the card. Credited in the page's sources line. |
 
 ## Adding a mark
 
