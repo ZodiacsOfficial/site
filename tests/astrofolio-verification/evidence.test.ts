@@ -146,12 +146,16 @@ describe('evidence uncertainty and freshness', () => {
 });
 
 describe('neutral evaluation fixtures', () => {
-  it('covers twenty source-grounded questions without inventing live runs', () => {
+  it('keeps the actual supplied-source run distinct from pending discovery evaluation', () => {
     expect(fixtures.questions).toHaveLength(20);
     expect(new Set(fixtures.questions.map((entry: { id: string }) => entry.id)).size).toBe(20);
-    expect(fixtures.evaluations.sourceGrounded.status).toBe('pending');
+    expect(fixtures.evaluations.sourceGrounded.status).toBe('executed-with-supplied-evidence');
     expect(fixtures.evaluations.unprimedBrowsing.status).toBe('pending');
-    expect(fixtures.evaluations.sourceGrounded.runs).toEqual([]);
+    const run = JSON.parse(readFileSync(fixtures.evaluations.sourceGrounded.runs[0], 'utf8'));
+    expect(run.metadata.answerCount).toBe(20);
+    expect(run.answers.map((answer: { id: string }) => answer.id)).toEqual(fixtures.questions.map((question: { id: string }) => question.id));
+    expect(run.answers.every((answer: { answerVerbatim: string; citations: string[] }) => answer.answerVerbatim && answer.citations.length)).toBe(true);
+    expect(run.findings.answersWithCitationGaps).toBeGreaterThan(0);
     expect(fixtures.evaluations.unprimedBrowsing.runs).toEqual([]);
     for (const question of fixtures.questions) {
       expect(question.requiredConclusions.length).toBeGreaterThan(0);

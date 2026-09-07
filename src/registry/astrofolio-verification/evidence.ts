@@ -41,7 +41,7 @@ export const COMPARISON_POLICY = {
   base: BASE_COMPARISON_NOTE,
   network: 'Identifiers are compared only on the selected Solana mainnet or Base mainnet (8453) network and representation.',
   source: 'Each check requests the same-origin Registry with no-store, then validates its shape and exact SHA-256 digest against this reviewed snapshot. A failed request or changed digest establishes no match; there is no silent snapshot fallback.',
-  privacy: 'Comparison runs in the browser. The Registry request contains no pasted address. This check does not request a wallet connection, signature, approval, trade or network switch.',
+  privacy: 'Comparison runs in the browser. The Registry request contains no pasted address; same-origin cookies may accompany it for site or preview authentication. This check does not request a wallet connection, signature, approval, trade or network switch.',
   scope: 'A match proves membership in this Registry snapshot on the selected network. It does not prove wallet control, personal identity, legal ownership, safety or current chain state. Base byte comparison is not transaction checksum validation.',
 };
 export interface EvidenceSource { label: string; url: string; revision?: string; sha256?: string }
@@ -256,6 +256,11 @@ export function createEvidence({
   validateClaims(claims);
   return {
     registryVersion: registry.version, registrySha256, sourceRevision,
+    comparisonPolicySources: [{
+      label: 'Comparison and source-loading implementation',
+      url: 'https://github.com/ZodiacsOfficial/site/blob/59923241f49942025add0463b56984cdd0c5c668/src/registry/astrofolio-verification/checker.ts',
+      revision: '59923241f49942025add0463b56984cdd0c5c668',
+    }],
     sourceUrl: '/registry/zodiacs.registry.json', observedAt: inspectedAt,
     observationScope: 'Source adapter inspection only; claim dates and original reviews remain separate.',
     reviewScope: 'Operator-published sources and their dated evidence. This page is not independent certification.',

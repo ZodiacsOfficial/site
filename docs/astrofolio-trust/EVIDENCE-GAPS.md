@@ -31,5 +31,7 @@ not clear the SDK hold or certify primary-session test reports.
 
 Twenty neutral evaluation fixtures are in `evaluation-fixtures.json`. Local
 extraction/consistency results belong in the workstream's sole checkpoint,
-`STATUS.md`. Separate live model and unprimed browsing evaluations remain pending;
-supplied-URL reads and a preview do not measure organic discovery or adoption.
+`STATUS.md`. One supplied-evidence answer evaluation is recorded in
+`evidence/source-grounded-evaluation.json`, including its citation gaps and omitted
+qualifications. Unprimed browsing remains pending; supplied-URL reads and a
+preview do not measure organic discovery or adoption.

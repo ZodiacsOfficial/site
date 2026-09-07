@@ -54,7 +54,7 @@ const jsonLd = [{
           </form>
           <noscript><p class="av-nojs">The interactive check needs JavaScript. You can still compare every identifier in the collection records below and follow its sources.</p></noscript>
           <div id="verify-result" class="av-result" role="status" aria-live="polite" aria-atomic="true" data-state="idle"><p>Ready when you have an identifier.</p></div>
-          <p class="av-privacy">The check fetches this site’s public Registry. Your pasted identifier stays in this page; it is not sent with the request or saved. No wallet connection or signature.</p>
+          <p class="av-privacy">The check fetches this site’s public Registry, using same-origin cookies where access requires them. Your pasted identifier stays in this page; it is not sent with the request or saved. No wallet connection or signature.</p>
         </section>
       </div>
     </section>
@@ -106,7 +106,7 @@ const jsonLd = [{
     </section>
 
     <section class="av-section av-reproduce" aria-labelledby="reproduce-title">
-      <div><p class="kicker">For a second look</p><h2 id="reproduce-title">Make the check reproducible.</h2><p>Compare the complete identifier under the same network and representation in the <a href="/registry/zodiacs.registry.json">published Registry</a>. Follow the <a href="/disclosure/">disclosure</a> for the underlying statements. An explorer link lets you inspect a receipt; it does not mean this page just checked the chain.</p><p>The page’s facts below preserve the same claims, dates, qualifications, and unknowns. A new build does not renew an old attestation.</p></div>
+      <div><p class="kicker">For a second look</p><h2 id="reproduce-title">Make the check reproducible.</h2><p>Compare the complete identifier under the same network and representation in the <a href="/registry/zodiacs.registry.json">published Registry</a>. Follow the <a href="/disclosure/">disclosure</a> for the underlying statements. An explorer link lets you inspect a receipt; it does not mean this page just checked the chain.</p><p>The page’s facts below preserve the same claims, dates, qualifications, and unknowns. A new build does not renew an old attestation. <a href={evidence.comparisonPolicySources[0].url}>Inspect the comparison rules and source-loading code.</a></p></div>
       <dl class="av-revision"><dt>Registry version</dt><dd>{evidence.registryVersion}</dd><dt>Repository revision</dt><dd>{evidence.sourceRevision}</dd><dt>Registry SHA-256</dt><dd>{evidence.registrySha256}</dd></dl>
       <details class="av-machine"><summary>Page facts · JSON</summary><pre tabindex="0" aria-label="Page facts in JSON">{JSON.stringify(evidence, null, 2)}</pre></details>
     </section>
