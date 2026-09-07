@@ -100,3 +100,17 @@ the repository's existing one-time allowance, naming exactly those 86 paths
 and current base `7f953e3fca0e7d5009e5602a1dad69edff0f54cc`. Do not edit the
 guard, broaden its patterns, disable CI or clear the SDK review/publication hold.
 The allowance ceases to apply when it is not itself changed in a later diff.
+
+## A-007 — Restore the lazy calculation boundary and the legacy test oracle
+
+The flags-on CI build measured Today at 22,029 gzip bytes, 13 above its existing
+22,016-byte limit. Keep the budget. Separate unchanged visit/profile helpers
+from personalized contact arithmetic, and request arithmetic and transit phrasing
+concurrently only after a saved chart is ready. Preserve the existing exports,
+cancellation and failure states; do not duplicate engine formulas to save bytes.
+
+The browser migration fixture must retain actual 0.1.0 output after the installed
+engine advances. Freeze legacy data from the preserved artifact and identify its
+digest; do not compute current results and relabel them old. Assertions about
+fresh recomputation use the installed version, while unrecomputable imported
+positions retain their original receipt.

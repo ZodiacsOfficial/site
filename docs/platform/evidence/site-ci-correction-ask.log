@@ -1,0 +1,51 @@
+
+> zodiacs-org@1.0.0 test:phase6:ask
+> node tests/assistant-drive.mjs
+
+PASS  Guide launcher is visible by default as an accessible labelled button
+PASS  pre-action shell does not fetch the private drawer graph · /assets/assistant-ui.js | /assets/assistant-ui.css | /assets/guide-avatar.webp
+PASS  launcher uses the bounded local Guide avatar accessibly
+PASS  quiet shell never volunteers an invite
+PASS  quiet shell neither calls Guide nor reads a chart
+PASS  quiet shell does not steal focus
+PASS  first action fetches the drawer graph exactly once · /assets/assistant-ui.js | /assets/assistant-ui.css | /assets/guide-avatar.webp | /assets/assistant-drawer.js | /assets/assistant-chunks/chunk-7RJD2CFI.js | /assets/assistant-chunks/chunk-5BXQA2BE.js | /assets/assistant-drawer.css | /assets/assistant-chunks/client-KAHIT2HA.js | /assets/guide-avatar.webp
+PASS  drawer adopts the stable launcher without duplicating it
+PASS  drawer header carries the Guide identity avatar
+PASS  user action opens Guide and focuses the composer
+PASS  opening is the first saved-chart read
+PASS  mobile Guide is a bottom sheet · {"x":0,"y":101.28125,"width":390,"height":742.71875}
+PASS  fixed current-page source ignores private query data
+PASS  first send pauses for accurate OpenAI disclosure
+PASS  Guide messages carry the same decorative identity avatar
+PASS  Guide uses the canonical ephemeral transport
+PASS  ordinary turn contains no chart
+PASS  page context is a fixed site_page catalog selector
+PASS  request leaks no query or saved PII
+PASS  approved response paths become safe links
+PASS  the markdown subset renders as DOM structure, never raw markup
+PASS  daily session restores earlier bubbles after navigation
+PASS  a replaced page source renews the visible-scope cloud consent
+PASS  one daily conversation continues across the site
+PASS  replaced page context cuts off prior model history but keeps bubbles visible
+PASS  cloud consent resumes after the changed source is confirmed
+PASS  This page is visibly removable without a cloud call
+PASS  chart consent shows exact placement-only text before a call
+PASS  confirmed chart attaches exactly the placement-only preview
+PASS  chart request contains no saved birth PII
+PASS  account-boundary revocation scrubs transcript and session state
+PASS  no page errors across mobile states
+PASS  Guide analytics contain fixed no-property events only · [["guide_open"],["guide_reply"],["guide_reply"]]
+PASS  an explicit CTA opens Guide before the scheduled shell mount without double loading · /assets/assistant-ui.js | /assets/assistant-ui.css | /assets/assistant-drawer.js | /assets/assistant-chunks/chunk-7RJD2CFI.js | /assets/assistant-chunks/chunk-5BXQA2BE.js | /assets/assistant-drawer.css | /assets/assistant-chunks/client-KAHIT2HA.js
+PASS  CTA remains live while the scheduled shell is waiting for its stylesheet
+PASS  desktop Guide is a right-side drawer · {"x":828,"y":12,"width":440,"height":876}
+PASS  Guide controls retain 44px targets
+PASS  Escape closes and restores the launcher
+PASS  legacy polar Guide: ordinary consent sends no saved chart
+PASS  legacy polar Guide: consent identifies the same chart with corrected Aries ASC and house
+PASS  legacy polar Guide consent: original profile bytes are unchanged without read-time writes · profile writes: 0
+PASS  legacy polar Guide: outgoing chart facts exactly match the corrected consent preview
+PASS  legacy polar Guide: chart name, birth data and account identifiers stay off the wire
+PASS  legacy polar Guide request: original profile bytes are unchanged without read-time writes · profile writes: 0
+PASS  legacy polar Guide has no page errors
+
+ALL 45 CHECKS PASS

@@ -1,6 +1,6 @@
 # Zodiacs Platform status
 
-Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A and bounded B03 implementation complete; final combined suite passed; review/preview delivery in progress. Owner mandate: `ZODIACS-PLATFORM-MASTER-BRIEF.md` v1.0.
+Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A candidate and bounded B03 implemented/tested; CI integration corrections verified; review/preview delivery in progress. Owner mandate: `ZODIACS-PLATFORM-MASTER-BRIEF.md` v1.0.
 
 ## Current delivery
 
@@ -20,8 +20,9 @@ Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A and bounded B03 im
   acceptance captures and calculation/sharing browser flows passed.
   Details and limits are in [EVIDENCE](EVIDENCE.md).
 - **Not release-ready for an unrestricted launch, not published to npm, not
-  merged or deployed, and not externally adopted.** Source PRs and local
-  previews are not releases. Required review and precise broader numerical
+  merged or deployed to production, and not externally adopted.** Vercel review
+  previews are READY; the developer page passed actual remote desktop/mobile
+  browser checks. Required review and precise broader numerical
   support/range decisions remain open.
 
 ## Refreshed baseline and capability
@@ -51,7 +52,8 @@ Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Stage A and bounded B03 im
 
 - SDK PR #4 overlaps ownership SDK/root release docs. Ownership exports, root
   dependencies, read-only behavior and React-free core remain unchanged.
-- Site PR #289 overlaps footer/developers/package manifest; PR #413 overlaps
+- Site PR #289 overlaps footer/package manifest (its refreshed file list does
+  not include the developer page); PR #413 overlaps
   Vercel/routes/generated assistant context. Open branches do not prove active
   sessions. This work avoids protected persona, Registry facts, native apps,
   footer redesign and unrelated deployment settings.
@@ -73,6 +75,13 @@ Combined suite: **4,431 tests / 404 files, no skips**, passed. Final keyboard-sc
 [Draft site PR #415](https://github.com/ZodiacsOfficial/site/pull/415) is pushed.
 Initial CI stopped at the Phase 1 protected-path gate; its existing exact-file,
 base-pinned allowance now records the authorized engine reference regeneration.
-Verify the follow-up CI and preview while preserving the SDK hold.
+Follow-up CI exposed a flags-on Today bundle regression and a browser fixture
+that incorrectly used the new engine as its legacy oracle. The bounded
+correction preserves the budget, defers contact arithmetic, and freezes actual
+0.1.0 records. Final correction: **4,447 tests / 405 files**, normal/push builds,
+check, 18 captures, Today/push/Guide/compatibility/solar-return browser flows
+passed. Verify the next exact-head CI run in the PR before integration.
+B01 front-door/support content is prepared for the next separate review slice;
+B02 runnable integration work is in progress. Preserve the SDK hold.
 Continue only dependency-ready work; hosted execution depends on the reviewed
 contract, privacy and limits. No background execution after this session is implied.

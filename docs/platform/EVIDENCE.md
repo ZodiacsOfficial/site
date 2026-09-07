@@ -414,3 +414,78 @@ identified `dpl_BrntzbFYa2gzetKWgeq91GFeaM6W` / `7f953e3f` with the
 are linked in the [draft PR's validation record](https://github.com/ZodiacsOfficial/site/pull/415).
 Inspect that exact commit/run before any integration; this checkpoint does not
 presume their success.
+
+### Remote preview and diagnosed CI corrections
+
+Preview `dpl_HbtEtWm3z3VceuCagn2rn3id4NCw` reached READY for `73e253e9`.
+At 19:07:45 UTC the actual isolated Chrome 152.0.7977.83 developer-page drive
+passed at 1280/390 pixels with temporary protected-preview access: literal
+example equality, keyboard focus/scroll, reduced motion, no page overflow or
+page errors. [Receipt](evidence/preview-developers-browser.json),
+[desktop](evidence/preview-developers-1280.png),
+[mobile](evidence/preview-developers-390.png),
+[log](evidence/remote-preview-browser.log). Access tokens/cookies are excluded.
+The later scope/docs-only head `2cd8c088` also reached READY as preview
+`dpl_E2T28FXaoopSGYo3UJug4Sw2cd4R`; the browser evidence above identifies the
+earlier app-identical source rather than claiming a second browser run.
+These are preview deployments, not production release.
+
+[Site Check 34154096120](https://github.com/ZodiacsOfficial/site/actions/runs/34154096120)
+at `2cd8c088` passed the corrected scope guard, install/zero-advisory gate,
+default build/check, full unit suite, reference vectors, acceptance evidence,
+SQL/legacy checks and several real browser jobs. Two integration failures
+remain in that historical run:
+
+- Push-enabled Today initial JavaScript: **22,029 bytes**, existing limit
+  **22,016**. Reproduced locally with Node 22 and fixture-only flags
+  `PUBLIC_WEB_PUSH_ENABLED=1 PUSH_ENABLED=1 PUBLIC_VAPID_KEY=AQIDBA npm run build`.
+  [Before closure](evidence/today-bundle-before.json).
+- Ask browser migration fixture imported the current engine while asserting
+  it was 0.1.0. [Exact failed job output](evidence/site-ci-build-check-failed.log).
+  The browser test stopped at fixture construction, before the legacy journey.
+
+The bounded correction defers unchanged contact arithmetic alongside the
+existing transit import. Its red baseline failed two eager-load assertions;
+focused loading/arithmetic/state tests then passed **25/25**, including either
+dependency failing and concurrent request start. The full fixture-flags build
+now passes all budgets; Today measures **21,480 bytes**, 536 below the unchanged
+limit. Final browser/default-build and capture verification are recorded below.
+
+The legacy browser corpus contains 96 synthetic quarter-hour results from the
+SHA-256-verified archived 0.1.0 package. All 24 overlapping north-polar hourly
+records exactly match the earlier corpus. Fixture SHA-256:
+`eedff84d838cea3b56164b6c848eddfea704baad5e99847bf2d143b723194c0f`.
+[Generator and provenance](../../tests/fixtures/generate-legacy-polar-browser.mjs),
+[reproduction log](evidence/legacy-browser-reproduce.log). Browser drives read
+the frozen JSON and retain the full original quarter-hour selection coverage.
+Already-rising inputs remain unchanged; supplied positions-only receipts stay
+0.1.0, while recomputed results identify the installed public engine version.
+
+Final correction verification on Node 22.23.2, September 7 UTC:
+
+- Full suite **4,447 tests / 405 files, no skips**, passed in 82.98 seconds
+  at 19:30–19:31 UTC: `npm test -- --maxWorkers=2`
+  ([log](evidence/site-ci-correction-test.log)).
+- Normal build and required check passed: 0 errors/warnings, 11 hints,
+  all route/chunk budgets retained. [Build](evidence/site-ci-correction-build.log),
+  [check](evidence/site-ci-correction-check.log),
+  [push-enabled build](evidence/site-push-flags-after.log),
+  [measured Today closure](evidence/today-bundle-after.json).
+- Actual Chrome normal/flags-on journeys: Today **59 checks**, fixture-only
+  push **25**, Guide **45**, compatibility/legacy/composite **962**, solar
+  return **46**, all passed. No real push enrollment or outgoing message.
+  [Today](evidence/today-flags-browser.log), [push](evidence/push-flags-browser.log),
+  [Guide](evidence/site-ci-correction-ask.log),
+  [compatibility](evidence/site-ci-correction-compatibility.log),
+  [solar return](evidence/site-ci-correction-solar.log).
+- Phase 1 **18/18** captures and evidence checks passed against normal-build
+  source fingerprint `1d5c7568a8219b906b3c39565fbd817974179a61fec3fa851d67ae4f4c32a486`.
+  [Captures](evidence/site-ci-correction-phase1.log),
+  [receipt validation](evidence/site-ci-correction-evidence.log).
+
+One local compatibility invocation could not connect because its fixed-port
+preview conflicted with this task's existing Astro daemon. Stopping only that
+daemon and setting `ASTRO_PREVIEW_BACKGROUND=0` let the unchanged driver own
+its port; the actual journey then passed. This was a local harness setup issue.
+The next exact-head CI result belongs in the linked PR validation record;
+historical failed runs above are not relabeled successful.
