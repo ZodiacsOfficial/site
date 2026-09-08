@@ -1,0 +1,14 @@
+{
+  "id": "dpl_J3sNfFzjSA6Q8RjRLW9fXLnZJ9kH",
+  "url": "zodiacs-q2i4dgo63-zodiacsofficial.vercel.app",
+  "state": "READY",
+  "readyState": "READY",
+  "target": null,
+  "source": "git",
+  "commit": "4227bb0758d4b34cbd761a3cddd273cbea6c2c1b",
+  "ref": "codex/platform-moon-result-ownership",
+  "pr": "430",
+  "project": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+  "createdAt": 1788855966206,
+  "ready": 1788856230243
+}

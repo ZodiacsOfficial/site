@@ -1,0 +1,299 @@
+{
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "driverSha256": "9ba4cf9d0c15d5375411f8251981b7b6764a280f11f1894821e9399f66da4045",
+  "qualification": "Actual frozen or original ChartCalculator with actual Preact/BirthFields/PlaceSearch and native DOM. Only import promises, geosearch results, engine load and share artifact effects are controlled at explicit wrapper boundaries; actual rc.6 calculation and existing codecs/context store run. IIFE bundle is not production import-graph evidence.",
+  "results": [
+    {
+      "kind": "baseline",
+      "name": "pending-positions-mine-revoke",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: [\"/compatibility/?a=10000000-0000-4000-8000-000000000001#b=1.eyJkIjoiMTk5MC0wMS0wNCIsInoiOiJBc2lhL0Jhbmdrb2siLCJsYSI6MTMuNzUsImxvIjoxMDAuNSwidCI6IjEyOjAwIiwicCI6IlN5bnRoZXRpYyBCYW5na29rIn0\"]\n    at file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:26:825\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:29:855",
+      "pageErrors": [],
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result calc__positions-only"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 1
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 1
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n×\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nUpdate their chart↗\n\nPrivate by default. Their birth details stay in this browser.\n\nSomeone else’s birth chart\n\nYou’re reading someone else’s chart. “You” below means the person whose birth details you entered.\n\nSunCapricorn13°34′ Capricorn\n\nYou play the long game by nature: quiet ambition, dry wit, and receipts. The mountain is real, but so is the view — remember to look at it occasionally.\n\nRead Capricorn →\nMoonAries10°29′ Aries\n\nFeelings arrive as action impulses — anger before sadness, movement before words. You process by doing; hard conversations land better after a run.\n\nRead Aries →\nRisingAries11°00′ Aries\n\nPeople meet your momentum before they meet you — decisive, direct, already halfway out the door. Rooms hand you the lead whether you asked or not.\n\nRead Aries →\nYour 2-minute reading\nWhat does your chart say about you — and what comes next?\n\nSee your personality mix, where it plays out, one pattern you may recognize, and how astrology turns a birth chart into a forecast.\n\nRead my chart→Explore on my own\nCollector’s wingYour Sun is in Capricorn.Capricorn is one of the Twelve—with its own artwork, history, and official Registry record.Explore the Capricorn Registry →\n\nLeft and right arrow keys move between placements; Enter opens the details panel.\n\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\nASC\nMC\nRx\nRx\nRx\nNatalSky nowProgressedSolar return\n conjunction sextile square trine oppositionHouses\nChoose a chart part\nNo selection\nSun\nMoon\nMercury\nVenus\nMars\nJupiter\nSaturn\nUranus\nNeptune\nPluto\nNorth Node\nAries\nTaurus\nGemini\nCancer\nLeo\nVirgo\nLibra\nScorpio\nSagittarius\nCapricorn\nAquarius\nPisces\nHouse 1\nHouse 2\nHouse 3\nHouse 4\nHouse 5\nHouse 6\nHouse 7\nHouse 8\nHouse 9\nHouse 10\nHouse 11\nHouse 12\nASC\nMC\nDSC\nIC\nJupiter opposition Uranus\nSaturn sextile Pluto\nMoon trine Mars\nSun conjunction Neptune\nMoon square Neptune\nSun conjunction Saturn\nSun square Moon\nSun sextile Pluto\nSaturn conjunction Neptune\nMoon square Uranus\nMoon sextile Venus\nMoon square Saturn\nMoon square Jupiter\nSee it in three dimensions\n\nTap any planet, sign, house, or aspect line to inspect it — or focus the wheel and use the arrow keys.\n\nTheir chart signatureMoon trine Mars1.4° orb\nSave this chart+Share this chart↗Compare with mine→\n\nAspect patterns\nRead your chart, one step at a time.\n\nLocate your big three, explore where your planets gather, then read the connections between them. Each highlight takes you back to the wheel.\n\n01\nLocate your big three\n\nUse these three reference points to find your way around the wheel.\n\nSUN\nCapricorn\n\nThe part of you that chooses a direction.\n\nSpotlight Sun\n↑\nMOON\nAries\n\nWhat you need in order to feel steady.\n\nSpotlight Moon\n↑\nRISING\nAries\n\nHow people first meet you.\n\nSpotlight rising\n↑\nRead Moon in Aries →\n02\nSee where life happens\n\nHouses are the life areas where each planet gets expressed. Filled rooms carry more of the story.\n\nHouse 1\nHouse 2\nHouse 3\nHouse 4\nHouse 5\nHouse 6\nHouse 7\nHouse 8\nHouse 9\nHouse 10\nHouse 11\nHouse 12\nSee all placements\n03\nFind your strongest push-pulls\n\nAspects are conversations between planets. The tightest ones tend to speak the loudest.\n\nMoon\nMars\nMoon trine Mars\n\nYour Moon runs downhill into your Mars — your emotional life and your drive help each other so smoothly the gift is easy to miss.\n\nTRINE · 1.4° ORB\nTrace this aspect\n↑\nSun\nNeptune\nSun conjunction Neptune\n\nYour Sun is fused to your Neptune — imagination can be woven into your sense of self, making possibilities feel personal. Let a vision guide an experiment without requiring it to explain your whole life.\n\nCONJUNCTION · 1.4° ORB\nTrace this aspect\n↑\nMoon\nNeptune\nMoon square Neptune\n\nYour Moon grinds against your Neptune — your emotional life and your imagination pull in directions ninety degrees apart — permanent friction, and the strength that comes from working against it.\n\nSQUARE · 1.6° ORB\nTrace this aspect\n↑\nSun\nSaturn\nSun conjunction Saturn\n\nYour Sun is fused to your Saturn — your sense of self and your standards run as one instrument, hard to play separately.\n\nCONJUNCTION · 2.4° ORB\nTrace this aspect\n↑\n04\nRead your overall pattern\n\nElements show your natural fuel. Modalities show how you start, sustain, and adapt.\n\nElements\nFire\n2\nEarth\n5\nAir\n1\nWater\n2\nWays of moving\nCardinal\n7\nFixed\n2\nMutable\n1\nEarth carries 5 of the ten planets — the chart is load-bearing: real things, on real timelines.\nCardinal count 7 of ten: heavy on cardinal signs — better at starting than sustaining.\nShape and classical rulers\nChart shape\nChart and house rulers\nDispositors\nClassical dignities\nA guide for the people in your life\nHow to approach you\nShare how to approach me↗\n\nA practical guide to making a good first move, saying things so they land, building trust, and keeping pressure from becoming conflict.\n\nAriesHow to open\nCapricornHow to say it\nAriesWhat builds trust\nSagittariusWhat to avoid under pressure\nASC\nRising\nHow to open\nAries\n\nLead with the point and keep pace. A confident, direct opening earns attention faster than a long preamble.\n\nMercury\nHow to say it\nCapricorn\n\nLead with the conclusion, the reason, and the next step. Structure is a form of respect here.\n\nMoon\nWhat builds trust\nAries\n\nLet feelings move instead of pinning them down immediately. A little space for action makes honesty easier.\n\nMars\nWhat to avoid under pressure\nSagittarius\n\nDo not match bluntness with a grudge. Say what landed badly while the moment is still small enough to repair.\n\nBirth details stay off the image.\n\nRead Moon in Aries →\nA personal pattern\nHow you communicate\nShare this reading↗\n\nThree placements do most of the talking: Mercury is how you think and phrase things, the Moon is what you need a conversation to feel like, and Mars is how you handle friction.\n\nMercuryCapricorn\nMoonAries\nMarsSagittarius\nMercury\nHow you phrase things\nCapricorn\n\nYou speak in conclusions — brief, structured, already three steps into the plan. Small talk feels like overhead, but your dry aside at minute forty is usually the best line in the meeting.\n\nMercury was retrograde when you were born — the tradition reads this as thinking that runs inward before it runs outward: you draft internally, and your second telling of an idea is always better than your first.\n\nMoon\nWhat helps you feel heard\nAries\n\nFeelings arrive as action impulses — anger before sadness, movement before words. You process by doing; hard conversations land better after a run.\n\nMars\nHow you handle friction\nSagittarius\n\nYou fight honest and loud, and you're over it before the other person has finished being shocked. The bluntness heals fast for you; check that it does for them.\n\nBirth details stay off the image.\n\nRead Moon in Aries →\nMore ways to use this chart+\nSee exact chart data — 12 placements · 17 aspects",
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/scorpio.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/leo.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-positions-mine-revoke",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: [\"/compatibility/?a=10000000-0000-4000-8000-000000000001#b=1.eyJkIjoiMTk5MC0wMS0wNCIsInoiOiJBc2lhL0Jhbmdrb2siLCJsYSI6MTMuNzUsImxvIjoxMDAuNSwidCI6IjEyOjAwIiwicCI6IlN5bnRoZXRpYyBCYW5na29rIn0\"]\n    at file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:26:825\n    at runNextTicks (node:internal/process/task_queues:64:5)\n    at process.processImmediate (node:internal/timers:452:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:29:855",
+      "pageErrors": [],
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 8
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 8
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n×\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nUpdate their chart↗\n\nPrivate by default. Their birth details stay in this browser.\n\nSomeone else’s birth chart\n\nYou’re reading someone else’s chart. “You” below means the person whose birth details you entered.\n\nSunCapricorn13°34′ Capricorn\n\nYou play the long game by nature: quiet ambition, dry wit, and receipts. The mountain is real, but so is the view — remember to look at it occasionally.\n\nRead Capricorn →\nMoonAries10°29′ Aries\n\nFeelings arrive as action impulses — anger before sadness, movement before words. You process by doing; hard conversations land better after a run.\n\nRead Aries →\nRisingAries11°00′ Aries\n\nPeople meet your momentum before they meet you — decisive, direct, already halfway out the door. Rooms hand you the lead whether you asked or not.\n\nRead Aries →\nYour 2-minute reading\nWhat does your chart say about you — and what comes next?\n\nSee your personality mix, where it plays out, one pattern you may recognize, and how astrology turns a birth chart into a forecast.\n\nRead my chart→Explore on my own\nCollector’s wingYour Sun is in Capricorn.Capricorn is one of the Twelve—with its own artwork, history, and official Registry record.Explore the Capricorn Registry →\n\nLeft and right arrow keys move between placements; Enter opens the details panel.\n\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\nASC\nMC\nRx\nRx\nRx\nNatalSky nowProgressedSolar return\n conjunction sextile square trine oppositionHouses\nChoose a chart part\nNo selection\nSun\nMoon\nMercury\nVenus\nMars\nJupiter\nSaturn\nUranus\nNeptune\nPluto\nNorth Node\nAries\nTaurus\nGemini\nCancer\nLeo\nVirgo\nLibra\nScorpio\nSagittarius\nCapricorn\nAquarius\nPisces\nHouse 1\nHouse 2\nHouse 3\nHouse 4\nHouse 5\nHouse 6\nHouse 7\nHouse 8\nHouse 9\nHouse 10\nHouse 11\nHouse 12\nASC\nMC\nDSC\nIC\nJupiter opposition Uranus\nSaturn sextile Pluto\nMoon trine Mars\nSun conjunction Neptune\nMoon square Neptune\nSun conjunction Saturn\nSun square Moon\nSun sextile Pluto\nSaturn conjunction Neptune\nMoon square Uranus\nMoon sextile Venus\nMoon square Saturn\nMoon square Jupiter\nSee it in three dimensions\n\nTap any planet, sign, house, or aspect line to inspect it — or focus the wheel and use the arrow keys.\n\nTheir chart signatureMoon trine Mars1.4° orb\nSave this chart+Share this chart↗Compare with mine→\n\nAspect patterns\nRead your chart, one step at a time.\n\nLocate your big three, explore where your planets gather, then read the connections between them. Each highlight takes you back to the wheel.\n\n01\nLocate your big three\n\nUse these three reference points to find your way around the wheel.\n\nSUN\nCapricorn\n\nThe part of you that chooses a direction.\n\nSpotlight Sun\n↑\nMOON\nAries\n\nWhat you need in order to feel steady.\n\nSpotlight Moon\n↑\nRISING\nAries\n\nHow people first meet you.\n\nSpotlight rising\n↑\nRead Moon in Aries →\n02\nSee where life happens\n\nHouses are the life areas where each planet gets expressed. Filled rooms carry more of the story.\n\nHouse 1\nHouse 2\nHouse 3\nHouse 4\nHouse 5\nHouse 6\nHouse 7\nHouse 8\nHouse 9\nHouse 10\nHouse 11\nHouse 12\nSee all placements\n03\nFind your strongest push-pulls\n\nAspects are conversations between planets. The tightest ones tend to speak the loudest.\n\nMoon\nMars\nMoon trine Mars\n\nYour Moon runs downhill into your Mars — your emotional life and your drive help each other so smoothly the gift is easy to miss.\n\nTRINE · 1.4° ORB\nTrace this aspect\n↑\nSun\nNeptune\nSun conjunction Neptune\n\nYour Sun is fused to your Neptune — imagination can be woven into your sense of self, making possibilities feel personal. Let a vision guide an experiment without requiring it to explain your whole life.\n\nCONJUNCTION · 1.4° ORB\nTrace this aspect\n↑\nMoon\nNeptune\nMoon square Neptune\n\nYour Moon grinds against your Neptune — your emotional life and your imagination pull in directions ninety degrees apart — permanent friction, and the strength that comes from working against it.\n\nSQUARE · 1.6° ORB\nTrace this aspect\n↑\nSun\nSaturn\nSun conjunction Saturn\n\nYour Sun is fused to your Saturn — your sense of self and your standards run as one instrument, hard to play separately.\n\nCONJUNCTION · 2.4° ORB\nTrace this aspect\n↑\n04\nRead your overall pattern\n\nElements show your natural fuel. Modalities show how you start, sustain, and adapt.\n\nElements\nFire\n2\nEarth\n5\nAir\n1\nWater\n2\nWays of moving\nCardinal\n7\nFixed\n2\nMutable\n1\nEarth carries 5 of the ten planets — the chart is load-bearing: real things, on real timelines.\nCardinal count 7 of ten: heavy on cardinal signs — better at starting than sustaining.\nShape and classical rulers\nChart shape\nChart and house rulers\nDispositors\nClassical dignities\nA guide for the people in your life\nHow to approach you\nShare how to approach me↗\n\nA practical guide to making a good first move, saying things so they land, building trust, and keeping pressure from becoming conflict.\n\nAriesHow to open\nCapricornHow to say it\nAriesWhat builds trust\nSagittariusWhat to avoid under pressure\nASC\nRising\nHow to open\nAries\n\nLead with the point and keep pace. A confident, direct opening earns attention faster than a long preamble.\n\nMercury\nHow to say it\nCapricorn\n\nLead with the conclusion, the reason, and the next step. Structure is a form of respect here.\n\nMoon\nWhat builds trust\nAries\n\nLet feelings move instead of pinning them down immediately. A little space for action makes honesty easier.\n\nMars\nWhat to avoid under pressure\nSagittarius\n\nDo not match bluntness with a grudge. Say what landed badly while the moment is still small enough to repair.\n\nBirth details stay off the image.\n\nRead Moon in Aries →\nA personal pattern\nHow you communicate\nShare this reading↗\n\nThree placements do most of the talking: Mercury is how you think and phrase things, the Moon is what you need a conversation to feel like, and Mars is how you handle friction.\n\nMercuryCapricorn\nMoonAries\nMarsSagittarius\nMercury\nHow you phrase things\nCapricorn\n\nYou speak in conclusions — brief, structured, already three steps into the plan. Small talk feels like overhead, but your dry aside at minute forty is usually the best line in the meeting.\n\nMercury was retrograde when you were born — the tradition reads this as thinking that runs inward before it runs outward: you draft internally, and your second telling of an idea is always better than your first.\n\nMoon\nWhat helps you feel heard\nAries\n\nFeelings arrive as action impulses — anger before sadness, movement before words. You process by doing; hard conversations land better after a run.\n\nMars\nHow you handle friction\nSagittarius\n\nYou fight honest and loud, and you're over it before the other person has finished being shocked. The bluntness heals fast for you; check that it does for them.\n\nBirth details stay off the image.\n\nRead Moon in Aries →\nMore ways to use this chart+\nSee exact chart data — 12 placements · 17 aspects",
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    }
+  ],
+  "cleanup": {
+    "browserClosed": true,
+    "contextsClosed": true,
+    "noExternalRequestsExecuted": true
+  }
+}

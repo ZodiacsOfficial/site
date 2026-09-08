@@ -1,0 +1,125 @@
+{
+  "result": "passed",
+  "capturedAt": "2026-09-08T08:39:28.527Z",
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "deployment": "local production build",
+  "source": "4227bb0758d4b34cbd761a3cddd273cbea6c2c1b plus support page SHA-256 7598fca770c5f5e9c26f92603ee37e48c4cc3d087d744ee1ac3783b068a49cea",
+  "base": "http://127.0.0.1:4339",
+  "checks": [
+    {
+      "width": 1280,
+      "path": "/developers/",
+      "status": 200,
+      "layout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "reduced": true
+      }
+    },
+    {
+      "width": 1280,
+      "path": "/developers/support/",
+      "status": 200,
+      "layout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "reduced": true
+      }
+    },
+    {
+      "width": 1280,
+      "path": "/developers/examples/",
+      "status": 200,
+      "layout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "reduced": true
+      }
+    },
+    {
+      "width": 1280,
+      "path": "/birth-chart/",
+      "syntheticResultVersion": "0.1.1-rc.6",
+      "noSavedProfile": true
+    },
+    {
+      "width": 390,
+      "path": "/developers/",
+      "status": 200,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "reduced": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/developers/support/",
+      "status": 200,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "reduced": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/developers/examples/",
+      "status": 200,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "reduced": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/birth-chart/",
+      "syntheticResultVersion": "0.1.1-rc.6",
+      "noSavedProfile": true
+    },
+    {
+      "width": 320,
+      "path": "/developers/",
+      "status": 200,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "reduced": true
+      }
+    },
+    {
+      "width": 320,
+      "path": "/developers/support/",
+      "status": 200,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "reduced": true
+      }
+    },
+    {
+      "width": 320,
+      "path": "/developers/examples/",
+      "status": 200,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "reduced": true
+      }
+    },
+    {
+      "width": 320,
+      "path": "/birth-chart/",
+      "syntheticResultVersion": "0.1.1-rc.6",
+      "noSavedProfile": true
+    },
+    {
+      "path": "/api/v1/sky/today.json",
+      "status": 200,
+      "date": "2026-09-08"
+    }
+  ],
+  "scope": "Local production build of one-file runtime wording correction above Moon candidate; synthetic inputs. No production or account operations."
+}

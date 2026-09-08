@@ -1,0 +1,22 @@
+{
+  "commit": "4227bb0758d4b34cbd761a3cddd273cbea6c2c1b",
+  "files": [
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "bytes": 11616,
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+    },
+    {
+      "path": "tests/visual/browser.mjs",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a"
+    },
+    {
+      "path": "tests/visual/preview-server.mjs",
+      "bytes": 3656,
+      "sha256": "43c17306256473fe4ad0c0a6460fcebc3220d84b47234ec6717d689a6cc184d1"
+    }
+  ],
+  "originalDriverSha256": "c49a46d48c357df2dd0950ca1e3b87d4018186c373aa2a3805fe4f300d7940d7",
+  "localReferenceSha256": "4a753fd775a0f36a864daafa55308d166545c77627fa2446dafcab2104c478ce"
+}

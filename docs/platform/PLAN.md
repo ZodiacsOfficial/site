@@ -153,3 +153,12 @@ bounded draft above #429, then integrate the independently reviewed one-file
 runtime-evidence wording correction while ChartCalculator’s separate four-file
 freeze receives independent adversarial review. Preserve the recorded portrait
 variance and all passing controls; do not change the image gate or date policy.
+
+
+2026-09-08 follow-through: Moon draft #430 is delivered at exact `4227bb07` and
+passes its 12-group READY preview; both #428 and #429 now pass all 14 CI jobs.
+The one-file support evidence correction passes root build/check/4,938 tests and
+13 Chrome groups above #430. Deliver it separately. ChartCalculator Freeze 1
+needs three independently reproduced reference/focus corrections; retain its
+failed evidence and require an exact corrected freeze and independent rerun.
+Do not activate date intervals or richer saved records in either bounded fix.
