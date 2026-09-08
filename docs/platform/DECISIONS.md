@@ -368,3 +368,36 @@ This is deliberately not a claim of an atomic entry-time snapshot across
 same-realm executable getters, nor authentication of provenance. Avoid a second
 context validator merely to suggest such a guarantee. Errors expose one fixed
 message/code, without inspecting or retaining raw exceptions or private input.
+
+## C-008 — Make new saved calculations immutable and owner scoped
+
+The next bounded implementation is a callable profile-domain saved-record
+store, without a default browser instance or active save/account wiring.
+Reuse the SDK receipt codec and the established IndexedDB transaction pattern;
+use a separate `zodiacs-saved-natal-v1` database. Upgrading the existing Living
+Chart database would break older clients that explicitly open database version 1.
+An aggregate localStorage key loses concurrent saves, while per-record keys
+still cannot atomically enforce capacity. A global new key also escapes the
+existing fixed-key handoff/deletion inventory.
+
+Each creation receives a fresh UUID and records an immutable validated envelope,
+explicit owner and creation time, with an optional local label. Do not deduplicate
+different requested calculations through their actual fallback houses. Omit
+overwrite/import-by-ID/update operations, meaningless revision fields and automatic
+legacy migration. Export the SDK envelope alone; keep local owner, record ID and
+label outside that portable payload. A later editable-record contract requires
+its own conflict/deletion semantics.
+
+Enforce owner capacity and insertion in one real readwrite transaction. A bound
+session checks its captured owner/access epoch before, inside and after async
+work, and revocation aborts pending transactions; merely closing an IndexedDB
+connection does not abort them. Distinguish missing records, invalid/future data,
+unavailable storage and stale operations. A stale result after commit must not
+claim that no write occurred or encourage an automatic duplicate retry.
+
+This primitive is not authentication or complete user-data lifecycle coverage.
+Before activation, integrate richer-record discovery/presence, guest ownership,
+account switching/retention, access leases, archive/export and durable deletion/
+retry generations through the existing app coordination. Keep old v1 bytes,
+writers and remote wire behavior unchanged. Synthetic persistence acceptance
+does not authorize migration or deletion of real user records.

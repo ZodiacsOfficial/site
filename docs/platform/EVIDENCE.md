@@ -1337,5 +1337,40 @@ These are synthetic isolated-module cases, not active save/account acceptance.
 manifest SHA-256 `8bdcc73e9544c58727bb2e1a884e89fe25b673e95b36894e6b18408b6e2de464`.
 The first successful narrower-observer run, final strengthened run and
 post-interruption cleanup verification are retained. The tested four source
-files still match the independent frozen patch. Draft delivery and its own CI/
-preview are next; publication, production and external adoption are not claimed.
+files still match the independent frozen patch. Draft [#425](https://github.com/ZodiacsOfficial/site/pull/425)
+is delivered at `dcc4e437a99f812666cd19dc85e6d781dbb3bedc`. Its exact-source
+CI run 34187725308 is in progress. Exact-source Vercel preview
+`dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z` is **READY** at
+https://zodiacs-qi1su4rwh-zodiacsofficial.vercel.app and passes **13 browser/API
+checks**: developer paths at 1280/390/320, keyboard/current artifact/archived
+reference checks, synthetic chart output on rc.5 without saving a profile, and
+the actual September 8 sky endpoint. The changed compact adapter executes in
+those actual chart journeys; the optional receipt module's actual browser
+acceptance is the separate synthetic offline harness above.
+[Preview receipt](evidence/portable-calculation/preview/deployment.json),
+[actual results](evidence/portable-calculation/preview/result.json).
+Temporary protected-preview access was isolated; cookies/auth values were not
+archived, the browser closed and its credential file was deleted. Publication,
+production deployment and external adoption are not claimed.
+
+## C02 saved-record dependency and implementation direction
+
+The refreshed independent investigation runs **nine Node controls and four
+native Chrome controls** against twelve unchanged boundary-source files. It
+reproduces an allowed old-writer interleaving where both saves report success
+but one chart is lost; an invented global key escapes actual account handoff,
+isolation and deletion. Native IndexedDB demonstrates atomic transaction/cap
+behavior, the incompatibility of upgrading the existing Living Chart database
+for old version-1 readers, and that closing a database inside an active
+transaction still allows that transaction to commit.
+
+[Exact contract and activation dependencies](evidence/saved-record-design/DESIGN.md.log),
+[reproductions and native evidence](evidence/saved-record-design/EVIDENCE.md.log),
+[34-record manifest](evidence/saved-record-design/manifest.json), SHA-256
+`63f1401aa3a940208f8caf89ab5d1321f5e5bd45495abc8e8d504343c82096ee`.
+These are synthetic counterexamples and a bounded architecture decision, not
+implemented account lifecycle coverage. A separate author is implementing
+Decision C-008's optional immutable profile store on source `dcc4e437`, without
+UI/account activation or changing existing databases. The next review must
+exercise actual transaction aborts, capacity, corruption, owner/epoch changes
+and stale completion behavior before integration.

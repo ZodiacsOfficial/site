@@ -31,7 +31,8 @@ separates source, artifacts, previews, production and adoption.
   The site draft application now contains engine rc.5. Standalone starter rc.3
   contains engine rc.3; generated TypeDoc remains an explicitly archived rc.1
   reference. Their full identities and commands are in [EVIDENCE](EVIDENCE.md).
-  The following optional portable-calculation boundary is locally implemented
+  Site [#425](https://github.com/ZodiacsOfficial/site/pull/425) adds the optional
+  portable-calculation boundary, locally implemented
   and tested, including actual browser acceptance. It preserves
   complete receipts before compact projection, and activates no saved storage
   or account migration.

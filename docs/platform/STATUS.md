@@ -12,9 +12,11 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Current work — optional portable calculation
+## Delivered candidate — optional portable calculation
 
-Active branch: `codex/platform-portable-calculation`, based on delivered #422
+Draft [#425](https://github.com/ZodiacsOfficial/site/pull/425) is delivered at
+`dcc4e437a99f812666cd19dc85e6d781dbb3bedc` on
+`codex/platform-portable-calculation`, based on delivered #422
 evidence checkpoint `6ab85278bea708337e20947966a54a5072ad0627`. The reviewed
 four-file patch is integrated: `computePortableChart` calculates once, creates
 the complete SDK draft receipt, and projects the existing compact chart. The
@@ -123,9 +125,12 @@ Visual classification and exact-source preview acceptance are complete for #422.
 Finish its remaining CI gate while integrating the separate next C02 slice.
 The C02 prerequisite is now integrated on its separate branch (current work
 above). Local build/test/check/scope, chart-share regression and actual browser
-privacy acceptance pass; separate draft delivery is next. Independent
-design work is examining version-owned storage and cross-tab/account-switch
-counterexamples while the integrator completes this bounded delivery.
+privacy acceptance pass. Draft #425 is delivered; exact-source CI run 34187725308
+is in progress. Its exact-source preview `dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z`
+is READY and passes 13 browser/API checks. The next bounded implementation is
+an explicitly callable immutable saved-receipt store in a separate database,
+with transactional capacity checks and owner/epoch revocation. It remains
+unwired to the active save/account path until lifecycle integration is verified.
 
 Decision C-006 requires a version-owned authoritative saved namespace; legacy
 v1 writers lose requested houses and overwrite richer metadata. Do not infer
