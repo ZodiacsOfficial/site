@@ -1374,3 +1374,14 @@ Decision C-008's optional immutable profile store on source `dcc4e437`, without
 UI/account activation or changing existing databases. The next review must
 exercise actual transaction aborts, capacity, corruption, owner/epoch changes
 and stale completion behavior before integration.
+
+
+### Completed rc.5 adoption CI
+
+Exact-source run [34186236252](https://github.com/ZodiacsOfficial/site/actions/runs/34186236252)
+completed successfully: **all 14 jobs pass** at runtime source
+`8ee0e0183a3c4437af902858b1d76678d3e961a3`, including the full build/browser/visual/
+performance gates on the hosted runner. This does not relabel the separately
+recorded local macOS baseline failures as passed, or transfer source CI to later
+documentation-only heads without qualification.
+[Final job/step receipt](evidence/site-engine-rc5/release/ci-34186236252-final.json).

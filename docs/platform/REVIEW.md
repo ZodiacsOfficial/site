@@ -25,7 +25,7 @@ separates source, artifacts, previews, production and adoption.
   Site [#422](https://github.com/ZodiacsOfficial/site/pull/422) adopts the verified
   rc.5 archive, separates provenance identities, labels the archived API reference
   and fixes a demonstrated developer-note overflow at native 400% zoom. Its exact
-  READY preview and local acceptance pass; the remaining CI job is still active.
+  READY preview, local acceptance and all 14 exact-source CI jobs pass.
 - Latest frozen SDK artifact is engine rc.5, source `97f5e8d0`, distribution
   `33336925`, SHA-256 `1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`.
   The site draft application now contains engine rc.5. Standalone starter rc.3

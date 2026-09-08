@@ -69,8 +69,7 @@ home/chart/sign/event routes. A separate preceding rc.1 candidate reproduces all
 dimensions. Thirteen candidate/control PNGs are byte-identical; all fifteen
 score zero differences at the unchanged perceptual threshold. This establishes
 pre-existing failure relative to rc.5, not a passing baseline gate. Draft [#422](https://github.com/ZodiacsOfficial/site/pull/422) is delivered at
-`8ee0e0183a3c4437af902858b1d76678d3e961a3`; CI run 34186236252 and
-Build & Check is still running (13 jobs pass). The exact-source preview
+`8ee0e0183a3c4437af902858b1d76678d3e961a3`; All 14 jobs pass in exact-source CI run 34186236252. The exact-source preview
 `dpl_BsA6EAM83MD2vyAHiSAsVNzTwPm9` is READY and passes 13 browser/API checks.
 [Current raw evidence](evidence/site-engine-rc5/release/),
 [independent review](evidence/site-engine-rc5/independent-review/REVIEW.md.log).
@@ -122,7 +121,7 @@ Finite numerical/model-assisted review is not human expert certification.
 ## Next dependency-ordered work
 
 Visual classification and exact-source preview acceptance are complete for #422.
-Finish its remaining CI gate while integrating the separate next C02 slice.
+Its exact-source CI also passes all 14 jobs. Continue the separate next C02 slice.
 The C02 prerequisite is now integrated on its separate branch (current work
 above). Local build/test/check/scope, chart-share regression and actual browser
 privacy acceptance pass. Draft #425 is delivered; exact-source CI run 34187725308
