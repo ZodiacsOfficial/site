@@ -583,3 +583,14 @@ late preference results, submit/reset presentation and frame-time focus against
 replacement or clearing. Already-submitted subscription/resend operations still
 complete once; no cancellation, retry, deletion or provider-state change is
 introduced. Keep existing successful-operation analytics without adding data.
+
+The first downstream freeze's full-page run exposes an unread/known-null cache
+confusion. A profile-synced refresh can overtake the initial session lookup and
+supply cleared null as authoritative signed-out state. Independent review
+reproduces it against the unchanged base. Correct the state model: an unread
+cache is distinct from an observed signed-out session. Prefer explicit undefined
+for unread state and null for a confirmed absent session over re-reading every
+null, preserving a current explicit signed-out callback across a later profile
+refresh. Keep the same backend/client and submitted-operation boundaries. Add
+the precise interleaving and known-null positive controls; do not increase a
+timeout or weaken the expected daily-brief state to hide the regression.

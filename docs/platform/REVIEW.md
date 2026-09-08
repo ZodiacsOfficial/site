@@ -150,3 +150,20 @@ decision explicitly permits conservative reference refusal for a nonempty date
 without calling it empty. Independent author/reviewer separation, canonical
 calendar and explicit-zone validation, numerical-call exclusion, localized
 recovery and preserved ownership behavior remain required before integration.
+
+
+The downstream C-012 Freeze1 is independently rejected for an actual unread/null
+session-cache regression. [Freeze2 review](evidence/post-chart-clear/review-freeze2/REVIEW.md)
+accepts25 independently written controller controls and exact-source reuse of the
+unchanged email enhancement's20 controls. Separate final-driver CI compatibility
+passes. Root applies the exact six files and four-line workflow insertion and
+passes normal build/check/4969tests,294full-page assertions,21native cases,
+17existing chart cases and four normal feature-off controls. All18 fresh approved
+captures are byte-identical. Original failures and same-chart late-email-edit
+limitations remain recorded. Refreshed remote source/CI/preview are separate.
+
+C-014 also completes its [independent caller and helper review](evidence/local-date-reference/independent-review/REVIEW.md):
+26caller criteria, nine exact numerical comparisons and92helper controls on each
+Node22/24/nativeChrome. Its12-file source remains separate and awaits root
+integration after the downstream correction. Neither review grants publication,
+production, whole-date astronomical completeness or human numerical/legal signoff.

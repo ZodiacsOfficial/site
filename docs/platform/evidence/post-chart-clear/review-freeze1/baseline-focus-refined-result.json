@@ -1,0 +1,325 @@
+{
+  "variant": "baseline",
+  "browser": "152.0.7977.83",
+  "groups": 3,
+  "passed": 1,
+  "results": [
+    {
+      "name": "queued resend focus cannot select the replacement same-ID result button",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'' !== 'outside'\n\n    at file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/focus-refined-drive.mjs:34:970\n    at async test (file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/focus-refined-drive.mjs:32:82)\n    at async file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/focus-refined-drive.mjs:34:2",
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          },
+          {
+            "id": "outside",
+            "text": ""
+          },
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": "",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "queued ordinary current focus still selects its current resend button",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link\n\nAnother confirmation link is on its way. The newest link is the one that works.",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          },
+          {
+            "id": "outside",
+            "text": ""
+          },
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": "",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "clear during already-started session read suppresses preference fetch",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at f.hidden (file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/focus-refined-drive.mjs:27:47)\n    at async file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/focus-refined-drive.mjs:36:371\n    at async test (file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/focus-refined-drive.mjs:32:82)\n    at async file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/focus-refined-drive.mjs:36:2",
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [],
+        "active": "",
+        "buttonDisabled": false
+      }
+    }
+  ],
+  "scope": "Real Preact controller/context/helper/profile access/client; native fetch to fulfilled owned endpoint. Synthetic auth/Supabase boundary, structural DOM and declared import delay gates. No backend/public page claim."
+}

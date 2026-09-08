@@ -1,0 +1,64 @@
+import { createServer } from 'node:http';
+import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
+import { resolve, extname, sep } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
+import assert from 'node:assert/strict';
+const root=process.cwd(),out=process.env.OUT_DIR;
+assert.ok(out); await mkdir(out,{recursive:true});
+const {chromium}=createRequire(resolve(root,'package.json'))('playwright-core');
+const {findChromium,STABLE_CHROMIUM_ARGS}=await import(pathToFileURL(resolve(root,'tests/visual/browser.mjs')));
+const dist=resolve(root,'dist'),served={},requests=[],results=[];
+const hash=b=>createHash('sha256').update(b).digest('hex');
+const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.woff2':'font/woff2','.jpg':'image/jpeg','.ico':'image/x-icon'};
+const server=createServer(async(req,res)=>{try{
+ let file=resolve(dist,'.'+decodeURIComponent(new URL(req.url,'http://local').pathname));
+ assert.ok(file===dist||file.startsWith(dist+sep));if((await stat(file)).isDirectory())file=resolve(file,'index.html');
+ const data=await readFile(file);served[file.slice(dist.length+1)]={bytes:data.length,sha256:hash(data)};
+ res.writeHead(200,{'Content-Type':mime[extname(file)]??'application/octet-stream','Cache-Control':'no-store'});res.end(data);
+}catch{res.writeHead(404);res.end('Missing');}});
+await new Promise(done=>server.listen(0,'127.0.0.1',done));const origin=`http://127.0.0.1:${server.address().port}`;
+let browser;
+async function state(page){return page.evaluate(()=>({
+ result:!!document.querySelector('.calc__result'),context:window.zodiacsPostChartContext??null,
+ captures:Array.from(document.querySelectorAll('[data-reveal-on-chart="true"]')).map(n=>({hidden:n.hidden,email:n.querySelector('input[type=email]')?.value??null,selected:n.querySelector('input[name=sign]:checked')?.value??null})),
+ unrelated:Array.from(document.querySelectorAll('[data-email-capture-shell]:not([data-reveal-on-chart="true"])')).map(n=>({hidden:n.hidden,email:n.querySelector('input[type=email]')?.value??null})),
+ focused:document.activeElement?.id,signals:window.__rootSignals,
+}));}
+try{
+ browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});
+ for(const locale of ['en','ru'])for(const width of [1280,390]){
+  const name=`${locale}-${width}`,context=await browser.newContext({viewport:{width,height:950},reducedMotion:'reduce'}),errors=[];
+  await context.route('**/*',r=>{const q=r.request(),url=q.url(),allowed=q.method()==='GET'&&url.startsWith(origin+'/');requests.push({name,method:q.method(),url,allowed});return allowed?r.continue():r.abort();});
+  await context.addInitScript(()=>{window.__rootSignals=[];for(const name of ['zodiacs:chart-computed','zodiacs:chart-context-cleared'])addEventListener(name,e=>window.__rootSignals.push({name,detail:e.detail??null}));});
+  const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
+  try{
+   const wire={d:'1990-06-15',t:'14:30',z:'America/New_York',la:40.71,lo:-74,h:'placidus',n:'Synthetic acceptance',p:'Synthetic place'};
+   await page.goto(`${origin}${locale==='en'?'':'/'+locale}/birth-chart/#c=1.${Buffer.from(JSON.stringify(wire)).toString('base64url')}`);
+   await page.locator('.calc__result').waitFor({timeout:30000});
+   await page.waitForFunction(()=>document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false');
+   const fields=page.locator('[data-reveal-on-chart="true"] input[type=email]');
+   assert.ok(await fields.count()>0,'actual page must include the result-driven capture');
+   for(let i=0;i<await fields.count();i++)await fields.nth(i).fill('synthetic@example.test');
+   const before=await state(page);assert.ok(before.captures.every(n=>!n.hidden));
+   await page.locator('#birth-date').fill('1990-07-15');
+   await page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));
+   const edited=await state(page);assert.equal(edited.result,false);assert.equal(edited.context,null);
+   assert.deepEqual(edited.unrelated,before.unrelated);assert.ok(edited.captures.every(n=>n.email==='synthetic@example.test'));assert.equal(edited.focused,'birth-date');
+   const cleared=edited.captures.every(n=>n.hidden);
+   if(process.env.EXPECT_CLEARED==='1')assert.ok(cleared,'all result-driven captures must hide after editing');
+   await page.screenshot({path:resolve(out,`${name}-edited.png`)});
+   await page.locator('.calc__submit').click();await page.locator('.calc__result').waitFor({timeout:30000});
+   await page.waitForFunction(()=>document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false');
+   const recovered=await state(page);assert.ok(recovered.captures.every(n=>!n.hidden&&n.email==='synthetic@example.test'));
+   assert.deepEqual(recovered.unrelated,before.unrelated);assert.deepEqual(errors,[]);
+   results.push({name,passed:true,cleared,before,edited,recovered,errors});
+  }catch(e){results.push({name,passed:false,error:String(e.stack??e),state:await state(page),errors});}
+  finally{await context.close();}
+ }
+}finally{
+ const browserVersion=browser?.version();await browser?.close();await new Promise(done=>server.close(done));
+ await writeFile(resolve(out,'result.json'),JSON.stringify({source:process.env.SOURCE_ID,node:process.version,browserVersion,driverSha256:hash(await readFile(new URL(import.meta.url))),expectedClear:process.env.EXPECT_CLEARED==='1',results,requests,served,qualification:'Unmodified normal production build and synthetic form values. Loopback static server; all non-GET and external traffic blocked. Original run observes old capture visibility; corrected run requires hidden captures. No managed daily-lifecycle fixture or server/write assertion.',cleanup:true},null,2)+'\n');
+ console.log(JSON.stringify(results.map(({name,passed,cleared,error})=>({name,passed,cleared,error}))));if(results.some(r=>!r.passed))process.exitCode=1;
+}

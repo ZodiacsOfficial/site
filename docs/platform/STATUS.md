@@ -70,13 +70,25 @@ are byte-verified and durable. The latter is a structural/pattern scan of all
 decompressed content; deleted preview secrets were unavailable for a fresh exact
 comparison. Original archive bytes and all metadata remain inspectable.
 
-Site Check 34209606308 is complete with thirteen successful jobs, including
-Build & Check, and one failed post-chart job (1/291 assertions). The failing legacy assertion
-expects the old context to survive an edit. Inspection also finds that the
-optional daily panel caches that cleared context and remains visible. A bounded
-clear-signal/listener correction and stronger browser assertions are being
-prepared separately; this candidate is not yet fully CI-accepted or release-ready.
-No production claim.
+Site Check 34209606308 at c7b9eb4 is complete with thirteen successful jobs
+and one failed post-chart job (1/291 assertions). The obsolete context-retention
+assertion also exposed an actual cached-panel ownership defect. The first six-file
+downstream correction was rejected after its full-page run and independent review
+reproduced a session-cache race; the original failure remains retained.
+
+Corrected Freeze 2 now distinguishes unread session state from observed sign-out.
+Its exact six files and separately reviewed four-line CI step are integrated
+locally on this branch. Author checks pass 52 focused tests, 21 native cases,
+294 full-page assertions and six paused-state diagnostic repeats. Independent
+review passes 25 controller criteria; the byte-identical email enhancement retains
+20 previously executed passing controls with exact-source parity. Root's integrated
+fixture build and full-page gate pass 294/294. Normal build/check (1,043 files;
+zero errors/warnings), 4,969 tests / 416 files, 21 native cases, 17 existing chart
+cases, four feature-off edit/recovery cases and exact-base scope pass. All 18
+fresh approved-page captures are byte-identical to c7b9eb4. The follow-up is
+prepared for isolated draft delivery; fresh remote CI/preview remain pending.
+[Correction evidence and retained limits](evidence/post-chart-clear/README.md).
+No full CI acceptance, release-ready state or production deployment is claimed.
 
 ## Delivered candidate — current runtime support evidence
 

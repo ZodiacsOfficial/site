@@ -2162,3 +2162,79 @@ both Node runtimes under one ICU/tzdb identity. Original raw records already say
 Node 22.23.2 uses ICU 78.2/tzdb 2026a and Node 24.19.0 uses ICU 78.3/tzdb 2026b.
 No result/source/counter is changed; the original preparation stays sealed.
 This is a SHA-256 copy manifest, not a cryptographic signature or human signoff.
+
+## Downstream context correction intake — 2026-09-08
+
+The [six-file author freeze](evidence/post-chart-clear/author-freeze1/source-freeze.json.log)
+is `e64eb26e34b1b5442a1a1e12f851b77a8a17d7d820a0e5a9b2b611c583cdd242`,
+patch `391af1a908fece28f57dfffe16ce435d1dce9ead828b9bcc77a505d1b6c0609b`,
+based on c7b9eb4. Root verifies all frozen file bytes and clean applicability
+without source application. Three-record intake manifest:
+`b4c671f9de725b15f3ed637e38431ae8879714428f167f7642ff4e4d175f2620`.
+It changes the clear signal, daily controller, email enhancement and scoped tests;
+calculator/date, backend, auth protocol, SQL and provider code remain unchanged.
+Author 52 focused tests, strict types, check (1,043 files; zero errors/warnings,
+11 hints) and 17 native groups pass. The fixture build succeeds but its full-page
+browser gate times out at a paused panel. That diagnostic is still open; neither
+full-page acceptance nor root integration is claimed by the immutable freeze.
+
+Root's [normal-build controls](evidence/post-chart-clear/normal-build-baseline/manifest.json)
+retain ten records, manifest
+`380376da2ad0111556edcea90b7e7d9de353b4a6dcb9c05eee28221dab9de822`.
+Four initial capture-presence assertions fail because that feature-off build has
+no such markup. The correctly scoped EN/RU desktop/mobile controls pass four
+absence/chart-edit/recovery cases against unchanged c7b9eb4. Exact drivers, raw
+served hashes/requests and screenshots remain. They cannot establish active
+capture or managed daily-brief correctness. All non-GET/external traffic is
+blocked; synthetic data and owned temporary browser contexts are used.
+
+## Corrected downstream source accepted and integrated — 2026-09-08
+
+Freeze 2 is `fc22bd7c2c6d3efa44022f49f42427545a35915afd49ee66fee6b4d7b6a09cbc`,
+patch `7202443237f2bebf826a9a0ef24da3fd8062b4cd2aff2b4edfed02f3a51fc5d8`.
+Root applies and individually verifies all six files plus separately reviewed CI
+patch `f9ce2b49d843e6d6c65b5bd49155554f63aa82b146b48313e13d90ad6a5cadf4`.
+The workflow result is `286ca48156fb294f2af629fdf973d921565c5601142396a4d31fe5f1d95633a9`.
+
+The [author report](evidence/post-chart-clear/author/AUTHOR.md.log) records
+52 focused tests, 21 native groups, 294 full-page assertions and six repeated
+paused-state controls. Root manifest `bd02cd017cd05ca20625a86fb4e71cdbe34f61986318078cc301d61b5b8b5c61`
+contains eight inert records; all 355 ordinary compressed members are verified.
+The original failed full-page compiled output was not retained in full before
+rebuild; source and requested URLs are retained, and final fixture bytes are
+separate. No exact original served-byte claim is made.
+
+The [independent report](evidence/post-chart-clear/review-freeze2/REVIEW.md)
+accepts 25 native controller criteria. Byte-identical email source retains its
+separate 20/20 result by parity without a redundant execution. Root manifest
+`8d9933ae0c7fce5cc23dfb581839c69a4d357914140b040a403ef0fe1fac4638`
+contains 71 inert records with 51 individually verified ordinary archive members.
+The original rejected freeze remains independently inspectable. The current
+signed-out/null and unresolved/undefined cache meanings have positive controls;
+no auth provider, client, account format or submitted-write boundary changes.
+
+Root's integrated fixture build and full page gate pass 294/294. Normal-build,
+full suite and refreshed remote source/CI/preview acceptance are pending; neither
+source review nor fixture success is a release or production claim.
+
+
+[Root C-012 integration](evidence/post-chart-clear/root-integration/README.md)
+passes the normal build, check (1,043files, zero errors/warnings,11hints),
+4,969tests/416files,21native groups,294full-page assertions,17existing chart
+ownership groups, four correctly scoped normal feature-off controls and exact
+#434 base scope. All18 fresh captures are byte-identical to c7b9eb4. Current
+render-source receipt is `e85d852a325e93e76a4a5d46249908da0f134819ccd030c13482b7c6457c6c18`.
+Root manifest `39a9042e61a61ebe56cadf09e47d228f249d17bcce4bd9392091cff03e4d5102`
+contains17records and58individually verified ordinary archive members. The fixture
+gate ran first; normal build/captures followed, so the final local build has no
+fixture feature activation. No numerical/SDK/API/account authority change.
+
+The read-only [pre-integration refresh](evidence/post-chart-clear/release-start/manifest.json)
+retains five public records, manifest
+`f695fac63528f81dcaf670b61f9b4d978579b17587c7665ebca772b06319a3fd`.
+Site main remains79410401 and SDKmainb49e0f14; actual READYproduction is
+dpl_gBmYzHCpqwMCCH36DAToDMjRQ21g at79410401, while this stack has integrated
+main only throughd4d5717d. SDK#5 remains open draft with the explicit do-not-merge/
+publish hold and no reviews. Actual Astrofolio#416 remains draft atb17d6804 with
+36paths; no integration or communication with that separate user session occurs.
+Registry-only later-main updates remain untouched and required at eventual merge.
