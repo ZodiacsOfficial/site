@@ -1,0 +1,1069 @@
+diff --git a/src/islands/ChartCalculator.locale.test.ts b/src/islands/ChartCalculator.locale.test.ts
+index f9d26b52..3ed556c8 100644
+--- a/src/islands/ChartCalculator.locale.test.ts
++++ b/src/islands/ChartCalculator.locale.test.ts
+@@ -54,12 +54,21 @@ describe('Russian chart-result seams', () => {
+       "setDate('');",
+       "setTime('');",
+       'setCity(null);',
++    ]) expect(revocation, scrub).toContain(scrub);
++    expect(revocation).toContain('clearResult();');
++    const clearResult = source.slice(
++      source.indexOf('function clearResult(): void {'),
++      source.indexOf('const registryBridgeImpressionChartRef'),
++    );
++    for (const scrub of [
++      'resultOwnerRef.current = null;',
++      'clearReceiptExport();',
+       'setChart(null);',
+       'setComputedInput(null);',
+       'setShareInput(null);',
+       'setShareDialogOpen(false);',
+       'clearPostChartContext();',
+-    ]) expect(revocation, scrub).toContain(scrub);
++    ]) expect(clearResult, scrub).toContain(scrub);
+ 
+     const run = source.slice(
+       source.indexOf('async function runChart('),
+@@ -70,7 +79,7 @@ describe('Russian chart-result seams', () => {
+     expect(run).toContain('runId === runChartIdRef.current');
+     expect(run).toContain('accessGeneration === profileAccessGeneration.current');
+     expect(run).toContain('const engine = await loadEngine();\n      if (!runIsCurrent()) return;');
+-    expect(run).toContain('if (!runIsCurrent()) return;\n      setError');
++    expect(run).toContain('if (!runIsCurrent()) return;\n      runChartIdRef.current += 1;\n      clearResult();\n      setBusy(false);\n      setError');
+     expect(run).toContain('if (runId === runChartIdRef.current) setBusy(false);');
+     expect(source).toContain('primaryProfileOriginRef.current = true;');
+     expect(source).toContain('primaryProfileOriginRef.current = false;');
+diff --git a/src/islands/ChartCalculator.tsx b/src/islands/ChartCalculator.tsx
+index 28c52af5..266feb8d 100644
+--- a/src/islands/ChartCalculator.tsx
++++ b/src/islands/ChartCalculator.tsx
+@@ -104,14 +104,16 @@ type ShareDialogModule = typeof import('./ChartShareDialog');
+ type ChartActionDockModule = typeof import('./ChartActionDock');
+ const loadChartControls = createModuleLoader(() => import('./ChartActionDock'));
+ const loadCalculatorReceipt = createModuleLoader(() => import('../lib/engine/calculator-receipt'));
+-interface ChartReceiptExport {
++interface ChartResultOwner {
+   chart: Chart;
+-  envelopeJson: string;
+   runId: number;
+   inputRevision: number;
+   accessGeneration: number;
+   requiresProfileAccess: boolean;
+ }
++interface ChartReceiptExport extends ChartResultOwner {
++  envelopeJson: string;
++}
+ type PreparedPrimaryShare = Awaited<ReturnType<ShareSurfaceModule['preparePrimaryShareArtifact']>>;
+ type PrimaryShareHandle = {
+   artifact: PreparedPrimaryShare;
+@@ -340,6 +342,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   const [city, setCity] = useState<City | null>(null);
+   const [houseSystem, setHouseSystem] = useState<HouseSystem>('whole');
+   const [chart, setChart] = useState<Chart | null>(null);
++  const resultOwnerRef = useRef<ChartResultOwner | null>(null);
+   const [receiptExport, setReceiptExport] = useState<ChartReceiptExport | null>(null);
+   const receiptExportRef = useRef<ChartReceiptExport | null>(null);
+   const [receiptDownloadError, setReceiptDownloadError] = useState(false);
+@@ -399,6 +402,45 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     inputRevisionRef.current += 1;
+     setInputRevision(inputRevisionRef.current);
+   }
++  function resultIsCurrent(owner: ChartResultOwner | null): owner is ChartResultOwner {
++    return owner !== null && owner === resultOwnerRef.current
++      && owner.runId === runChartIdRef.current
++      && owner.inputRevision === inputRevisionRef.current
++      && (!owner.requiresProfileAccess || (
++        owner.accessGeneration === profileAccessGeneration.current && profileAccessAllowed()
++      ));
++  }
++  function currentResultOwner(): ChartResultOwner | null {
++    const owner = resultOwnerRef.current;
++    return resultIsCurrent(owner) && owner.chart === chart ? owner : null;
++  }
++  function clearResult(): void {
++    resultOwnerRef.current = null;
++    clearReceiptExport();
++    chartContextIdRef.current += 1;
++    clearPostChartContext();
++    shareRuntimeRef.current.primary = undefined;
++    setChart(null);
++    setComputedInput(null);
++    setShareInput(null);
++    setSignature(null);
++    setRegistryRecordSlug(null);
++    setPositionsOnly(null);
++    setMoonAmbiguous(false);
++    setCard('idle');
++    setSaved('idle');
++    setMatchedName(null);
++    setSavePromptOpen(false);
++    setShareDialogOpen(false);
++    setA2hsHint(null);
++    resetLens();
++    exitTour();
++    cancelSpotlightArrival();
++    setSelection(null);
++    setSpotlight(null);
++    setAnnounce('');
++    setDepthOpen(false);
++  }
+   const registryBridgeImpressionChartRef = useRef<Chart | null>(null);
+   const primaryProfileOriginRef = useRef(false);
+   const primaryProfileChartIdRef = useRef<string | null>(null);
+@@ -406,7 +448,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   const runChartIdRef = useRef(0);
+   useEffect(() => () => {
+     runChartIdRef.current += 1;
++    chartContextIdRef.current += 1;
++    resultOwnerRef.current = null;
+     receiptExportRef.current = null;
++    shareRuntimeRef.current.primary = undefined;
++    clearPostChartContext();
+   }, []);
+   const profileHandoffIdRef = useRef(0);
+   const shareRuntimeRef = useRef<ShareRuntime>({});
+@@ -425,37 +471,18 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     primaryProfileOriginRef.current = false;
+     primaryProfileChartIdRef.current = null;
+     runChartIdRef.current += 1;
+-    chartContextIdRef.current += 1;
+     advanceInputRevision();
+-    clearPostChartContext();
++    clearResult();
+     setDate('');
+     setTime('');
+     setTimeKnown(true);
+     setCity(null);
+     setHouseSystem('whole');
+-    setChart(null);
+-    setSignature(null);
+-    setRegistryRecordSlug(null);
+-    setComputedInput(null);
+-    setShareInput(null);
+-    setPositionsOnly(null);
+     setFromLink(false);
+     setLinkName(null);
+     setSubjectMode('self');
+-    setCard('idle');
+-    setShareDialogOpen(false);
+-    shareRuntimeRef.current.primary = undefined;
+-    setMoonAmbiguous(false);
+     setError('');
+     setFieldErrors({});
+-    resetLens();
+-    exitTour();
+-    cancelSpotlightArrival();
+-    setSelection(null);
+-    setSpotlight(null);
+-    setAnnounce('');
+-    setDepthOpen(false);
+-    setA2hsHint(null);
+     setBusy(false);
+     focusAfterComputeRef.current = false;
+     try {
+@@ -467,9 +494,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     advanceInputRevision();
+     profileHandoffIdRef.current += 1;
+     primaryProfileChartIdRef.current = null;
+-    if (!primaryProfileOriginRef.current) return;
+     runChartIdRef.current += 1;
++    clearResult();
+     setBusy(false);
++    focusAfterComputeRef.current = false;
+   }
+ 
+   // ── Chart Explorer state (full mode) ──
+@@ -574,9 +602,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   }
+ 
+   async function startTour(kind: 'quick' | 'full' = 'full') {
+-    if (!chartActionDockModule) return;
++    const owner = currentResultOwner();
++    if (!owner || !chartActionDockModule) return;
+     try {
+       const mod = tourMod ?? await import('./explorer/tour');
++      if (!resultIsCurrent(owner)) return;
+       setTourMod(mod);
+       resetLens(); // the tour teaches the natal wheel; a lens ring would contradict it
+       if (selection) applySelect(null);
+@@ -585,6 +615,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+       if (kind === 'full') track('tour_start', { variant: 'v1' });
+       keepWheelAboveTour();
+     } catch {
++      if (!resultIsCurrent(owner)) return;
+       setTourKind(null);
+       setError(t(locale, 'chartError'));
+     }
+@@ -623,6 +654,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     setLensRing(null);
+   }
+   async function selectLens(next: 'natal' | LensId) {
++    const owner = currentResultOwner();
++    if (!owner) return;
+     if (next === lens) return;
+     if (next === 'natal') {
+       resetLens();
+@@ -631,11 +664,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     }
+     try {
+       const mod = lensMod ?? await import('./explorer/lens/ChartLens');
++      if (!resultIsCurrent(owner)) return;
+       setLensMod(mod);
+       setLens(next);
+       track('lens_change', { lens: next });
+     } catch {
+-      setError(t(locale, 'chartError'));
++      if (resultIsCurrent(owner)) setError(t(locale, 'chartError'));
+     }
+   }
+ 
+@@ -644,16 +678,19 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+    * default reading, and this chunk never reaches a reader who does not ask.
+    */
+   async function toggleDepth() {
++    const owner = currentResultOwner();
++    if (!owner) return;
+     if (depthOpen) {
+       setDepthOpen(false);
+       return;
+     }
+     try {
+       const mod = depthMod ?? await import('./chart3d/EclipticView');
++      if (!resultIsCurrent(owner)) return;
+       setDepthMod(mod);
+       setDepthOpen(true);
+     } catch {
+-      setError(t(locale, 'chartError'));
++      if (resultIsCurrent(owner)) setError(t(locale, 'chartError'));
+     }
+   }
+ 
+@@ -995,36 +1032,35 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+       };
+     }
+ 
++    let active = true;
++    const revision = inputRevisionRef.current;
++    const initialRun = runChartIdRef.current;
++    const importIsCurrent = () => active && revision === inputRevisionRef.current
++      && initialRun === runChartIdRef.current;
++
+     if (params.has('c') && params.has('p')) {
+       clearFragment();
+-      let active = true;
+       import('./PositionsShareSurface')
+         .then((surface) => {
+-          if (active) setError(surface.shareText(locale, 'shareLinkAmbiguous'));
++          if (importIsCurrent()) setError(surface.shareText(locale, 'shareLinkAmbiguous'));
+         })
+         .catch(() => {
+-          if (active) setError(t(locale, 'chartError'));
++          if (importIsCurrent()) setError(t(locale, 'chartError'));
+         });
+       return () => { active = false; };
+     }
+ 
+     if (params.has('p')) {
+       const token = params.get('p') ?? '';
+-      let active = true;
+       import('./PositionsShareSurface')
+         .then((surface) => {
+-          if (!active) return;
++          if (!importIsCurrent()) return;
+           const decoded = surface.decodePositionsToken(token);
+           if (!decoded) {
+             setError(surface.shareText(locale, 'positionsLinkInvalid'));
+             return;
+           }
+-          setChart(null);
+-          clearReceiptExport();
+-          setSignature(null);
+-          setRegistryRecordSlug(null);
+-          setShareInput(null);
+-          setComputedInput(null);
++          clearResult();
+           shareRuntimeRef.current.surface = surface;
+           setPositionsOnly(decoded);
+           setSubjectMode(nextSubjectMode);
+@@ -1036,7 +1072,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           clearFragment();
+         })
+         .catch(() => {
+-          if (active) setError(t(locale, 'chartError'));
++          if (importIsCurrent()) setError(t(locale, 'chartError'));
+         });
+       return () => { active = false; };
+     }
+@@ -1090,9 +1126,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     source: ChartComputedSource = 'fresh',
+   ) {
+     advanceInputRevision();
+-    const receiptInputRevision = inputRevisionRef.current;
++    clearResult();
++    const runInputRevision = inputRevisionRef.current;
+     const signatureModule = mode === 'full' && showsEnglishInterpretation
+-      ? import('../lib/chart-signature')
++      ? import('../lib/chart-signature').catch(() => null)
+       : null;
+     const accessGeneration = profileAccessGeneration.current;
+     const requiresProfileAccess = primaryProfileOriginRef.current;
+@@ -1100,6 +1137,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     runChartIdRef.current = runId;
+     const runIsCurrent = () => (
+       runId === runChartIdRef.current
++      && runInputRevision === inputRevisionRef.current
+       && (!requiresProfileAccess || (
+         accessGeneration === profileAccessGeneration.current
+         && profileAccessAllowed()
+@@ -1113,13 +1151,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     setSavePromptOpen(false);
+     setA2hsHint(null);
+     setCard('busy');
+-    setSignature(null);
+-    shareRuntimeRef.current.primary = undefined;
+-    resetLens();
+-    setPositionsOnly(null);
+-    setShareDialogOpen(false);
+-    setMoonAmbiguous(false);
+-    setRegistryRecordSlug(null);
+     setSubjectMode(input.subjectMode ?? 'self');
+     setMineHandoff(input.mine ?? null);
+     if (mode === 'full' && !chartActionDockModule) requestChartControls();
+@@ -1173,23 +1204,40 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           ? stableSunSlug
+           : null;
+       }
++      if (!runIsCurrent()) return;
++      const owner: ChartResultOwner = {
++        chart: result, runId, inputRevision: runInputRevision, accessGeneration, requiresProfileAccess,
++      };
++      resultOwnerRef.current = owner;
+       setChart(result);
+-      if (portable && receiptInputRevision === inputRevisionRef.current) {
++      if (portable) {
+         const captured: ChartReceiptExport = {
+-          chart: result, envelopeJson: portable.envelopeJson, runId,
+-          inputRevision: receiptInputRevision, accessGeneration, requiresProfileAccess,
++          ...owner, envelopeJson: portable.envelopeJson,
+         };
+         receiptExportRef.current = captured;
+         setReceiptExport(captured);
+       }
+       if (signatureModule) {
+-        void signatureModule.then(({ chartSignature }) => {
+-          if (runIsCurrent()) setSignature(chartSignature(result, locale));
++        void signatureModule.then((module) => {
++          if (!runIsCurrent() || !module) return;
++          const nextSignature = module.chartSignature(result, locale);
++          if (runIsCurrent()) setSignature(nextSignature);
+         }, () => {});
+       }
+       setMoonAmbiguous(nextMoonAmbiguous);
+       setRegistryRecordSlug(nextRegistryRecordSlug);
+       setComputedInput({ ...input, city: { ...input.city } });
++      setShareInput({
++        date: input.date,
++        time: input.timeKnown ? input.time : null,
++        timeKnown: input.timeKnown,
++        lat: input.city.lat,
++        lon: input.city.lon,
++        tz: input.city.tz,
++        place: input.city.name || undefined,
++        houseSystem: input.houseSystem,
++        ...(input.name ? { name: input.name } : {}),
++      });
+       void import('./PositionsShareSurface').then(async (surface) => {
+         if (!runIsCurrent()) return;
+         const prepared = await surface.preparePrimaryShareArtifact(result, mode, locale, nextMoonAmbiguous);
+@@ -1221,24 +1269,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           contextId,
+         },
+       }));
+-      setShareInput({
+-        date: input.date,
+-        time: input.timeKnown ? input.time : null,
+-        timeKnown: input.timeKnown,
+-        lat: input.city.lat,
+-        lon: input.city.lon,
+-        tz: input.city.tz,
+-        place: input.city.name || undefined,
+-        houseSystem: input.houseSystem,
+-        ...(input.name ? { name: input.name } : {}),
++      requestAnimationFrame(() => {
++        if (runIsCurrent()) resultRef.current?.scrollIntoView({
++          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
++          block: 'start',
++        });
+       });
+-
+-      requestAnimationFrame(() => resultRef.current?.scrollIntoView({
+-        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+-        block: 'start',
+-      }));
+     } catch (err) {
+       if (!runIsCurrent()) return;
++      runChartIdRef.current += 1;
++      clearResult();
++      setBusy(false);
+       setError(calculationError(err, locale, t(locale, 'chartError')));
+       console.error(err);
+     } finally {
+@@ -1317,21 +1358,25 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     })}`;
+ 
+   async function openShareOptions() {
+-    if (!chart || !shareInput) return;
++    const owner = currentResultOwner();
++    if (!owner || !shareInput) return;
+     shareReturnRef.current = document.activeElement instanceof HTMLElement
+       ? document.activeElement
+       : null;
+     try {
+       const surface = await import('./ChartShareDialog');
++      if (!resultIsCurrent(owner)) return;
+       shareRuntimeRef.current.dialog = surface.default;
+       setShareDialogOpen(true);
+     } catch (err) {
+       console.error(err);
+-      setCard('error');
++      if (resultIsCurrent(owner)) setCard('error');
+     }
+   }
+ 
+   function shareChartFromAction() {
++    const owner = currentResultOwner();
++    if (!owner) return;
+     const primary = shareRuntimeRef.current.primary;
+     if (!primary) {
+       void openShareOptions();
+@@ -1341,12 +1386,19 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     setCard('busy');
+     // This call reaches navigator.share before yielding, preserving the
+     // exact tap's activation on iOS. Rendering happened after computation.
+-    void primary.share(primary.artifact, mode).then(setCard);
++    void primary.share(primary.artifact, mode).then((state) => {
++      if (resultIsCurrent(owner)) setCard(state);
++    }, () => {
++      if (resultIsCurrent(owner)) setCard('error');
++    });
+   }
+ 
+   function closeShareDialog(): void {
++    const owner = currentResultOwner();
++    if (!owner) return;
+     setShareDialogOpen(false);
+     requestAnimationFrame(() => {
++      if (!resultIsCurrent(owner)) return;
+       const returnTo = shareReturnRef.current;
+       if (returnTo?.isConnected) returnTo.focus();
+       else wheelboxRef.current?.focus();
+@@ -1399,7 +1451,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     : '/birth-chart/someone-else/';
+ 
+   useEffect(() => {
+-    if (!chart || !computedInput || mode !== 'full') return;
++    const owner = currentResultOwner();
++    if (!owner || !chart || !computedInput || mode !== 'full') return;
+     let active = true;
+     const contextId = chartContextIdRef.current;
+     const accessGeneration = profileAccessGeneration.current;
+@@ -1422,10 +1475,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     void import('../lib/profile/store').then(({ findMatchingChart }) => {
+       if (
+         !active
++        || !resultIsCurrent(owner)
+         || contextId !== chartContextIdRef.current
+         || accessGeneration !== profileAccessGeneration.current
+       ) return;
+       const match = findMatchingChart(identity);
++      if (!resultIsCurrent(owner) || accessGeneration !== profileAccessGeneration.current) return;
+       setMatchedName(match?.name ?? null);
+       publishPostChartContext({
+         mode: 'full',
+@@ -1442,7 +1497,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   }, [savePromptOpen]);
+ 
+   function chartIdentity() {
+-    if (!chart || !computedInput) return null;
++    if (!currentResultOwner() || !chart || !computedInput) return null;
+     return {
+       birth: {
+         date: computedInput.date,
+@@ -1475,8 +1530,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   }
+ 
+   function closeSavePrompt() {
++    const owner = currentResultOwner();
++    if (!owner) return;
+     setSavePromptOpen(false);
+     requestAnimationFrame(() => {
++      if (!resultIsCurrent(owner)) return;
+       const returnTarget = isConnectedSaveControl(saveReturnRef.current)
+         ? saveReturnRef.current
+         : saveFocusFallback();
+@@ -1505,11 +1563,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   }
+ 
+   async function commitSave(explicitName: string | undefined, via: 'prompt' | 'link' | 'skip') {
++    const owner = currentResultOwner();
+     const identity = chartIdentity();
+-    if (!chart || !computedInput || !identity) return;
++    if (!owner || !chart || !computedInput || !identity) return;
+     track('chart_save', { source: saveOriginRef.current });
+     const now = new Date().toISOString();
+     const accessGeneration = profileAccessGeneration.current;
++    const saveUiIsCurrent = () => resultIsCurrent(owner)
++      && accessGeneration === profileAccessGeneration.current;
+     try {
+       const { findMatchingChart, saveChart } = await import('../lib/profile/store');
+       if (accessGeneration !== profileAccessGeneration.current) throw new Error();
+@@ -1529,11 +1590,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           flags: chart.flags,
+         },
+       }, explicitName ? { explicitName } : undefined);
++      // The requested write may already have completed. Only its UI belongs
++      // to this result; an edit does not undo or retry persistence.
++      if (!saveUiIsCurrent()) return;
+       setSaved(status === 'updated' ? 'saved' : status);
+       if (status === 'saved' || status === 'updated') {
+         track('chart_saved', { source: saveOriginRef.current });
+         track('chart_name_set', { via });
+         const match = findMatchingChart(identity);
++        if (!saveUiIsCurrent()) return;
+         setMatchedName(match?.name ?? explicitName ?? matchedName ?? autoName);
+         publishPostChartContext({
+           mode: 'full',
+@@ -1542,15 +1607,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           contextId: chartContextIdRef.current,
+         });
+         void import('../lib/a2hs').then(({ claimA2hsHint }) => {
++          if (!saveUiIsCurrent()) return;
+           const hint = claimA2hsHint(locale, navigator.userAgent, localStorage);
+           const standalone = (navigator as Navigator & { standalone?: boolean }).standalone === true
+             || window.matchMedia('(display-mode: standalone)').matches;
++          if (!saveUiIsCurrent()) return;
+           if (hint && !standalone) setA2hsHint(hint);
+           else loadPushOptIn();
+         }).catch(() => {});
+       }
+-    } catch { setSaved('error'); }
+-    closeSavePrompt();
++    } catch { if (saveUiIsCurrent()) setSaved('error'); }
++    if (saveUiIsCurrent()) closeSavePrompt();
+   }
+ 
+   function submitSaveName(e: Event) {
+@@ -1643,6 +1710,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+ 
+   const PositionsOnlyView = shareRuntimeRef.current.surface?.PositionsOnlyResult;
+   const ShareDialog = shareRuntimeRef.current.dialog;
++  const displayedResultOwner = currentResultOwner();
+   const ChartActionDock = chartActionDockModule?.default;
+   const EntityPicker = chartActionDockModule?.EntityPicker;
+   const ReadingPath = chartActionDockModule?.ReadingPath;
+@@ -2566,8 +2634,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           locale={locale}
+           mode={mode}
+           card={card}
+-          onCardStateChange={setCard}
+-          onClose={closeShareDialog}
++          onCardStateChange={(state) => {
++            if (resultIsCurrent(displayedResultOwner)) setCard(state);
++          }}
++          onClose={() => {
++            if (resultIsCurrent(displayedResultOwner)) closeShareDialog();
++          }}
+           detailsUrl={shareUrl()}
+           receiverPath={localizePath(locale, '/birth-chart/')}
+           birthDetails={computedInput ? {
+diff --git a/src/islands/ChartCalculator.ownership.test.ts b/src/islands/ChartCalculator.ownership.test.ts
+new file mode 100644
+index 00000000..244c5500
+--- /dev/null
++++ b/src/islands/ChartCalculator.ownership.test.ts
+@@ -0,0 +1,212 @@
++import { readFileSync } from 'node:fs';
++import ts from 'typescript';
++import { describe, expect, it } from 'vitest';
++
++// Execute the actual component's ownership functions with controlled async
++// boundaries. The browser driver separately verifies rendered interactions.
++const source = readFileSync(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
++const ast = ts.createSourceFile('ChartCalculator.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
++const names = [
++  'clearReceiptExport', 'advanceInputRevision', 'resultIsCurrent', 'currentResultOwner',
++  'clearResult', 'invalidateProfileHandoff', 'runChart', 'openShareOptions',
++  'shareChartFromAction', 'closeShareDialog', 'closeSavePrompt', 'chartIdentity', 'commitSave',
++  'startTour', 'selectLens', 'toggleDepth', 'resetLens', 'exitTour',
++];
++const declarations = new Map<string, string>();
++let cleanupExpression = '', revokeExpression = '';
++function visit(node: ts.Node): void {
++  if (ts.isFunctionDeclaration(node) && node.name && names.includes(node.name.text)) {
++    declarations.set(node.name.text, node.getText(ast));
++  }
++  if (ts.isCallExpression(node)) {
++    const name = node.expression.getText(ast);
++    const expression = node.arguments[0]?.getText(ast) ?? '';
++    if (name === 'useEffect' && expression.includes('runChartIdRef.current += 1')
++      && expression.includes('receiptExportRef.current = null')) cleanupExpression = expression;
++    if (name === 'useProfileAccessGeneration') revokeExpression = expression;
++  }
++  ts.forEachChild(node, visit);
++}
++visit(ast);
++function deferred<T = any>() {
++  let resolve!: (value: T) => void, reject!: (reason: Error) => void;
++  const promise = new Promise<T>((yes, no) => { resolve = yes; reject = no; });
++  return { promise, resolve, reject };
++}
++const flush = async () => { for (let i = 0; i < 12; i++) await Promise.resolve(); };
++const input = (date = '1990-06-15') => ({ date, time: '14:30', timeKnown: true,
++  city: { name: 'Synthetic place', admin1: '', country: '', tz: 'UTC', lat: 0, lon: 0, pop: 0 }, houseSystem: 'whole' });
++function harness() {
++  const state: Record<string, any> = {
++    chart: null, receiptExport: null, signature: null, computedInput: null, shareInput: null,
++    card: 'idle', saved: 'idle', busy: false, error: '', chartActionDockModule: {},
++    date: '1990-06-15', time: '14:30', city: input().city, timeKnown: true, houseSystem: 'whole',
++    tourOpen: false, depthOpen: false, depthMod: null, lens: 'natal', lensMod: null, tourMod: null, selection: null,
++    matchedName: null, autoName: 'Synthetic owner', subjectMode: 'self', sunSign: { slug: 'aries' },
++  };
++  const calls: string[] = [], frames: (() => void)[] = [], modules = new Map<string, Promise<any>>();
++  const context: Record<string, any> = {
++    ENGINE_VERSION: '0.1.1-rc.6', mode: 'full', showsEnglishInterpretation: true, locale: 'en', ...state,
++    frames, calls, modules, allowed: true, crypto: { randomUUID: () => '12345678-1234-4234-8234-123456789abc' },
++    navigator: { userAgent: 'Synthetic browser' }, localStorage: {},
++    document: { activeElement: null, body: {} }, HTMLElement: class {},
++    window: { dispatchEvent: () => { calls.push('computed-event'); }, matchMedia: () => ({ matches: false }), removeEventListener() {} },
++    CustomEvent: class {}, matchMedia: () => ({ matches: true }),
++    requestAnimationFrame: (callback: () => void) => { frames.push(callback); },
++    console: { error: () => {} }, t: () => 'Generic error', calculationError: () => 'Generic calculation error',
++    profileAccessAllowed: () => context.allowed,
++    clearPostChartContext: () => { context.postContext = null; },
++    publishPostChartContext: (value: unknown) => { context.postContext = value; },
++    requestChartControls: () => {}, resetLens: () => {}, exitTour: () => {},
++    cancelSpotlightArrival: () => {}, isConnectedSaveControl: () => false, saveFocusFallback: () => null,
++    keepWheelAboveTour: () => {}, applySelect: () => {}, loadPushOptIn: () => {},
++    readFirstReadingProgress: () => ({}),
++    track: () => {}, signForLongitude: () => ({ slug: 'aries' }),
++    resolveLocalToUtc: (date: string) => ({ utc: new Date(date + 'T14:30:00Z'), offsetMinutes: 0, flags: [] }),
++    localDateEndpointsUtc: () => ({ start: new Date(0), end: new Date(1) }),
++    moonCandidatesFromEndpoints: () => ['aries'], moonIsUncertain: () => false, stableBodySignSlug: () => 'aries',
++  };
++  for (const name of ['inputRevision', 'runChartId', 'chartContextId', 'profileAccessGeneration', 'profileHandoffId']) context[name + (name === 'profileAccessGeneration' ? '' : 'Ref')] = { current: 0 };
++  for (const name of ['primaryProfileOrigin', 'mineProfileOrigin', 'focusAfterCompute']) context[name + 'Ref'] = { current: false };
++  for (const name of ['resultOwner', 'receiptExport', 'primaryProfileChartId', 'result', 'shareReturn', 'saveReturn', 'wheelbox']) context[name + 'Ref'] = { current: null };
++  context.shareRuntimeRef = { current: {} }; context.saveOriginRef = { current: 'free' };
++  const setterNames = [...source.matchAll(/\b(set[A-Z]\w*)\b/g)].map((match) => match[1]);
++  for (const setter of new Set(setterNames)) {
++    const key = setter[3].toLowerCase() + setter.slice(4);
++    context[setter] = (value: unknown) => {
++      const next = typeof value === 'function' ? value(context[key]) : value;
++      context[key] = state[key] = next;
++    };
++  }
++  const chart = (calculation: any) => ({ input: calculation, bodies: [{ body: 'Sun', lon: 1 }, { body: 'Moon', lon: 2 }], flags: [], houses: null, angles: null, aspects: [] });
++  const engine = { computeChart: (calculation: any) => { calls.push('legacy-natal'); return chart(calculation); }, computeBodies: () => [] };
++  context.loadEngine = () => Promise.resolve(engine);
++  context.loadCalculatorReceipt = () => Promise.resolve({ computeCalculatorReceipt: (calculation: any) => { calls.push('portable-natal'); return { chart: chart(calculation), envelopeJson: 'synthetic exact envelope' }; } });
++  context.importModule = (path: string) => modules.get(path) ?? Promise.resolve(
++    path === '../lib/chart-signature' ? { chartSignature: () => ({ title: 'Synthetic signature' }) }
++      : path === './PositionsShareSurface' ? { preparePrimaryShareArtifact: async () => ({ synthetic: true }), sharePrimaryArtifact: async () => 'saved' }
++      : path === '../lib/profile/store' ? { saveChart: () => { calls.push('save-write'); return 'saved'; }, findMatchingChart: () => null }
++      : { default: () => null },
++  );
++  const functions = names.map((name) => declarations.get(name) ?? '').join('\n').replace(/\bimport\(/g, 'importModule(');
++  const output = ts.transpile(functions + `\nreturn { ${names.filter((name) => declarations.has(name)).join(',')} };`, { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext });
++  Object.assign(context, new Function('context', `with(context){${output}}`)(context));
++  const bind = (expression: string) => new Function('context', `with(context){return (${ts.transpile(expression, { target: ts.ScriptTarget.ES2022 }).trim().replace(/;$/, '')});}`)(context);
++  context.unmount = bind(cleanupExpression)(); context.revoke = bind(revokeExpression);
++  return { context, state, calls, modules, frames, engine };
++}
++function expectEmpty(context: Record<string, any>) {
++  for (const key of ['chart', 'computedInput', 'shareInput', 'receiptExport', 'signature', 'registryRecordSlug']) expect(context[key], key).toBeNull();
++  expect(context.shareRuntimeRef.current.primary).toBeUndefined();
++  expect(context.postContext).toBeNull(); expect(context.card).toBe('idle');
++}
++
++describe('ChartCalculator result ownership', () => {
++  it.each(['engine', 'receipt'])('rejects late completion after an edit during the %s loader', async (boundary) => {
++    const h = harness(), pending = deferred();
++    if (boundary === 'engine') h.context.loadEngine = () => pending.promise;
++    else h.context.loadCalculatorReceipt = () => pending.promise;
++    const work = h.context.runChart(input(), true); await flush();
++    h.context.invalidateProfileHandoff(); h.context.setDate('1991-06-15');
++    expect(h.context.busy).toBe(false);
++    pending.resolve(boundary === 'engine' ? h.engine : { computeCalculatorReceipt: () => { throw Error('Obsolete calculation executed'); } });
++    await work; await flush(); expectEmpty(h.context);
++    expect(h.calls).not.toContain('legacy-natal'); expect(h.calls).not.toContain('portable-natal');
++    expect(h.context.date).toBe('1991-06-15');
++  });
++
++  it('lets a replacement run finish while the obsolete loader remains pending', async () => {
++    const h = harness(), older = deferred(); let loads = 0;
++    h.context.loadEngine = () => ++loads === 1 ? older.promise : Promise.resolve(h.engine);
++    const oldRun = h.context.runChart(input(), false); await flush();
++    h.context.invalidateProfileHandoff(); await h.context.runChart(input('1991-06-15'), false); await flush();
++    const currentChart = h.context.chart; older.resolve(h.engine); await oldRun; await flush();
++    expect(h.context.chart).toBe(currentChart); expect(h.context.computedInput.date).toBe('1991-06-15');
++    expect(h.calls.filter((call) => call === 'portable-natal')).toHaveLength(1);
++  });
++
++  it.each(['calculation', 'coverage'])('clears prior result on a new %s failure and recovers without changing typed fields', async (boundary) => {
++    const h = harness(); await h.context.runChart(input(), true); await flush();
++    const workingLoader = h.context.loadCalculatorReceipt;
++    if (boundary === 'calculation') h.context.loadCalculatorReceipt = () => Promise.resolve({ computeCalculatorReceipt: () => { throw Error('Synthetic private failure'); } });
++    else h.context.localDateEndpointsUtc = () => { throw Error('Synthetic coverage failure'); };
++    await h.context.runChart({ ...input('1991-06-15'), timeKnown: boundary !== 'coverage' }, true); await flush();
++    expectEmpty(h.context); expect(h.context.error).toBe('Generic calculation error'); expect(h.context.busy).toBe(false);
++    expect(h.context.date).toBe('1990-06-15'); expect(h.context.time).toBe('14:30');
++    h.context.loadCalculatorReceipt = workingLoader;
++    await h.context.runChart(input('1992-06-15'), true); await flush();
++    expect(h.context.computedInput.date).toBe('1992-06-15'); expect(h.context.error).toBe('');
++  });
++
++  it('preserves the optional pre-calculation module fallback with exactly one legacy natal calculation', async () => {
++    const h = harness(); h.context.loadCalculatorReceipt = () => Promise.reject(Error('Synthetic download failed'));
++    await h.context.runChart(input(), true); await flush();
++    expect(h.calls.filter((call) => call === 'legacy-natal')).toHaveLength(1);
++    expect(h.calls).not.toContain('portable-natal'); expect(h.context.chart).not.toBeNull(); expect(h.context.receiptExport).toBeNull();
++  });
++
++  it.each(['signature', 'prepared-share'])('does not publish delayed %s for a newer input', async (boundary) => {
++    const h = harness(), pending = deferred();
++    if (boundary === 'signature') h.modules.set('../lib/chart-signature', pending.promise);
++    else h.modules.set('./PositionsShareSurface', Promise.resolve({ preparePrimaryShareArtifact: () => pending.promise, sharePrimaryArtifact: async () => 'saved' }));
++    await h.context.runChart(input(), true); await flush(); h.context.invalidateProfileHandoff();
++    pending.resolve(boundary === 'signature' ? { chartSignature: () => ({ title: 'Obsolete' }) } : { obsolete: true }); await flush();
++    expectEmpty(h.context);
++  });
++
++  it.each(['dialog', 'share-completion'])('ignores a delayed %s after a replacement result', async (boundary) => {
++    const h = harness(), pending = deferred(); await h.context.runChart(input(), false); await flush();
++    let action: Promise<unknown> | undefined;
++    if (boundary === 'dialog') { h.modules.set('./ChartShareDialog', pending.promise); action = h.context.openShareOptions(); }
++    else { h.context.shareRuntimeRef.current.primary.share = () => pending.promise; h.context.shareChartFromAction(); }
++    await h.context.runChart(input('1991-06-15'), false); await flush();
++    pending.resolve(boundary === 'dialog' ? { default: () => null } : 'saved'); await action; await flush();
++    expect(h.context.shareDialogOpen).toBe(false); expect(h.context.card).toBe('idle');
++  });
++
++  it('does not relabel a newer result when an explicitly requested save completes', async () => {
++    const h = harness(), pending = deferred(); await h.context.runChart(input(), false); await flush();
++    h.modules.set('../lib/profile/store', pending.promise); const saving = h.context.commitSave(undefined, 'skip');
++    await h.context.runChart(input('1991-06-15'), false); await flush();
++    pending.resolve({ saveChart: () => { h.calls.push('save-write'); return 'saved'; }, findMatchingChart: () => ({ name: 'Old owner' }) });
++    await saving; await flush();
++    expect(h.calls.filter((call) => call === 'save-write')).toHaveLength(1);
++    expect(h.context.saved).toBe('idle'); expect(h.context.matchedName).toBeNull(); expect(h.context.postContext).toBeNull();
++  });
++
++  it.each(['tour', 'lens', 'depth'])('fences delayed %s controls after an edit', async (kind) => {
++    const h = harness(), pending = deferred(); await h.context.runChart(input(), false); await flush();
++    const path = kind === 'tour' ? './explorer/tour' : kind === 'lens' ? './explorer/lens/ChartLens' : './chart3d/EclipticView';
++    h.modules.set(path, pending.promise);
++    const action = kind === 'tour' ? h.context.startTour() : kind === 'lens' ? h.context.selectLens('sky') : h.context.toggleDepth();
++    h.context.invalidateProfileHandoff(); pending.resolve({ default: () => null }); await action;
++    expect(h.context.tourOpen).toBe(false); expect(h.context.depthOpen).toBe(false); expect(h.context.lens).toBe('natal');
++  });
++
++  it.each(['unmount', 'profile-revoke'])('rejects pending calculations after %s', async (boundary) => {
++    const h = harness(), pending = deferred(); h.context.primaryProfileOriginRef.current = boundary === 'profile-revoke';
++    h.context.loadEngine = () => pending.promise; const work = h.context.runChart(input(), true); await flush();
++    if (boundary === 'unmount') h.context.unmount();
++    else { h.context.allowed = false; h.context.profileAccessGeneration.current++; h.context.revoke(); }
++    pending.resolve(h.engine); await work; await flush();
++    expect(h.context.chart).toBeNull(); expect(h.calls).not.toContain('portable-natal'); expect(h.calls).not.toContain('computed-event');
++    if (boundary === 'profile-revoke') { expect(h.context.date).toBe(''); expect(h.context.city).toBeNull(); expect(h.context.busy).toBe(false); }
++  });
++
++  it('does not move focus when old share and save dialogs close before an edit', async () => {
++    const h = harness(); await h.context.runChart(input(), false); await flush();
++    let focused = 0;
++    h.context.wheelboxRef.current = { focus: () => { focused++; } };
++    h.context.saveFocusFallback = () => ({ focus: () => { focused++; } });
++    h.context.closeShareDialog(); h.context.closeSavePrompt();
++    h.context.invalidateProfileHandoff(); for (const frame of h.frames) frame();
++    expect(focused).toBe(0);
++  });
++
++  it('does not refill share state or scroll after a synchronous result event edits the form', async () => {
++    const h = harness(); h.context.window.dispatchEvent = () => h.context.invalidateProfileHandoff();
++    let scrolled = false; h.context.resultRef.current = { scrollIntoView: () => { scrolled = true; } };
++    await h.context.runChart(input(), true); await flush(); for (const frame of h.frames) frame();
++    expectEmpty(h.context); expect(scrolled).toBe(false);
++  });
++});
+diff --git a/tests/chart-ownership-drive.mjs b/tests/chart-ownership-drive.mjs
+new file mode 100644
+index 00000000..213b3a03
+--- /dev/null
++++ b/tests/chart-ownership-drive.mjs
+@@ -0,0 +1,266 @@
++import { createServer } from 'node:http';
++import { readFile, writeFile, mkdir, stat, readdir } from 'node:fs/promises';
++import { resolve, extname, sep } from 'node:path';
++import { createRequire } from 'node:module';
++import { createHash } from 'node:crypto';
++import assert from 'node:assert/strict';
++
++const root = process.env.ZODIACS_OWNERSHIP_ROOT ?? process.cwd();
++const evidence = process.env.ZODIACS_OWNERSHIP_EVIDENCE ?? '/private/tmp/zodiacs-platform-chart-ownership-evidence';
++const run = resolve(evidence, `browser-${Date.now()}`);
++await mkdir(run, { recursive: true });
++const { chromium } = createRequire(resolve(root, 'package.json'))('playwright-core');
++const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
++const sourcePath = resolve(root, 'src/islands/ChartCalculator.tsx');
++const source = await readFile(sourcePath);
++await writeFile(resolve(run, 'ChartCalculator.source.tsx'), source);
++const dist = resolve(root, 'dist');
++const ts = createRequire(resolve(root, 'package.json'))('typescript');
++const nativeFile = (await readdir(resolve(dist, '_astro'))).find((file) => /^chart-adapter\..*\.js$/.test(file));
++assert.ok(nativeFile);
++const nativeBytes = await readFile(resolve(dist, '_astro', nativeFile));
++const nativeAst = ts.createSourceFile(nativeFile, nativeBytes.toString(), ts.ScriptTarget.Latest, true);
++const nativeFunctions = [];
++function findNative(node) {
++  if (ts.isFunctionDeclaration(node) && node.parameters.length === 1) {
++    const parameter = node.parameters[0].name.getText(nativeAst);
++    const returned = node.body?.statements.find((statement) => ts.isReturnStatement(statement));
++    const expression = returned?.expression;
++    if (expression && ts.isObjectLiteralExpression(expression)) {
++      const properties = new Map(expression.properties.filter(ts.isPropertyAssignment).map((property) => [property.name.getText(nativeAst), property.initializer.getText(nativeAst)]));
++      if (properties.get('input') === parameter && properties.has('bodies') && properties.has('engineVersion')) nativeFunctions.push(node.name.text);
++    }
++  }
++  ts.forEachChild(node, findNative);
++}
++findNative(nativeAst); assert.equal(nativeFunctions.length, 1);
++const nativeIdentity = { file: nativeFile, sha256: sha(nativeBytes), function: nativeFunctions[0], mapping: 'One-argument function returning its exact input plus bodies and engineVersion; parsed from actual served chunk.' };
++const served = {}, requests = [], results = [], contexts = [], releases = [];
++const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2', '.ico': 'image/x-icon', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.webm': 'video/webm' };
++const server = createServer(async (req, res) => {
++  try {
++    let file = resolve(dist, '.' + decodeURIComponent(new URL(req.url, 'http://localhost').pathname));
++    assert.ok(file === dist || file.startsWith(dist + sep));
++    if ((await stat(file)).isDirectory()) file = resolve(file, 'index.html');
++    const bytes = await readFile(file);
++    served[file.slice(dist.length + 1)] = { bytes: bytes.length, sha256: sha(bytes) };
++    res.writeHead(200, { 'Content-Type': mime[extname(file)] ?? 'application/octet-stream', 'Cache-Control': 'no-store' });
++    res.end(bytes);
++  } catch { res.writeHead(404); res.end('Not found'); }
++});
++await new Promise((done) => server.listen(0, '127.0.0.1', done));
++const origin = `http://127.0.0.1:${server.address().port}`;
++const ordinary = { d: '1990-06-15', t: '14:30', z: 'America/New_York', la: 40.71, lo: -74, h: 'placidus', n: 'Synthetic owner', p: 'Synthetic place' };
++const link = (wire = ordinary) => origin + '/birth-chart/#c=1.' + Buffer.from(JSON.stringify(wire)).toString('base64url');
++let browser;
++async function setup(name) {
++  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', acceptDownloads: true });
++  contexts.push(context);
++  const errors = [], external = [];
++  await context.route('**/*', (route) => {
++    const url = route.request().url();
++    if (url.startsWith(origin + '/') || url.startsWith('data:') || url.startsWith('blob:')) return route.continue();
++    external.push(url); return route.abort();
++  });
++  await context.addInitScript(() => {
++    window.__ownership = { computed: [], contexts: [], failReceipt: false, downloads: 0 };
++    addEventListener('zodiacs:chart-computed', (event) => window.__ownership.computed.push(event.detail));
++    addEventListener('zodiacs:chart-context', (event) => window.__ownership.contexts.push(event.detail));
++    const stringify = JSON.stringify;
++    JSON.stringify = function (value, ...args) {
++      if (window.__ownership.failReceipt && value?.schema === 'zodiacs.natal-envelope.draft-v1') throw Error('Synthetic private receipt failure');
++      return stringify.call(this, value, ...args);
++    };
++  });
++  const page = await context.newPage();
++  const cdp = await context.newCDPSession(page);
++  await cdp.send('Profiler.enable'); await cdp.send('Profiler.startPreciseCoverage', { callCount: true, detailed: true });
++  page.on('pageerror', (error) => errors.push(error.message));
++  page.on('request', (request) => requests.push({ case: name, method: request.method(), path: new URL(request.url()).pathname }));
++  return { name, context, page, cdp, errors, external, expectedNatal: 1 };
++}
++async function gate(subject, pattern) {
++  let begin, release;
++  const started = new Promise((done) => { begin = done; });
++  const waiting = new Promise((done) => { release = done; });
++  releases.push(release);
++  await subject.context.route(pattern, async (route) => { begin(); await waiting; await route.continue().catch(() => {}); });
++  return { started, release };
++}
++async function hydrated(subject, url = link()) {
++  await subject.page.goto(url, { waitUntil: 'domcontentloaded' });
++  await subject.page.locator('astro-island[component-url*="ChartCalculator"]:not([ssr])').waitFor();
++}
++async function settled(subject) {
++  await subject.page.waitForFunction(() => document.querySelector('.calc__form')?.getAttribute('aria-busy') === 'false');
++}
++async function observed(subject) {
++  return subject.page.evaluate(() => ({ ...window.__ownership, result: !!document.querySelector('.calc__result'), receipt: !!document.querySelector('[data-calculation-receipt-export]'), share: !!document.querySelector('[data-share-card]'), save: !!document.querySelector('[data-save-chart]'), postContext: window.zodiacsPostChartContext ?? null, date: document.querySelector('#birth-date')?.value, busy: document.querySelector('.calc__form')?.getAttribute('aria-busy'), error: document.querySelector('.calc__error')?.textContent ?? '', alertFocused: document.activeElement?.matches('.calc__error') ?? false }));
++}
++async function assertEmpty(subject) {
++  const state = await observed(subject);
++  assert.equal(state.result, false); assert.equal(state.receipt, false); assert.equal(state.share, false); assert.equal(state.save, false); assert.equal(state.postContext, null);
++  return state;
++}
++async function check(name, action) {
++  const subject = await setup(name);
++  try {
++    const detail = await action(subject);
++    assert.deepEqual(subject.errors, []);
++    const coverage = (await subject.cdp.send('Profiler.takePreciseCoverage')).result.filter((script) => script.url.endsWith('/' + nativeFile));
++    await writeFile(resolve(run, name + '-native-coverage.json'), JSON.stringify(coverage, null, 2) + '\n');
++    const nativeCalls = coverage.flatMap((script) => script.functions).filter((fn) => fn.functionName === nativeIdentity.function).reduce((sum, fn) => sum + fn.ranges[0].count, 0);
++    assert.equal(nativeCalls, subject.expectedNatal, 'Actual native natal calculation count');
++    results.push({ name, status: 'passed', detail, nativeCalls, observation: await observed(subject), external: subject.external });
++  } catch (error) {
++    results.push({ name, status: 'failed', error: error.stack, observation: await observed(subject), pageErrors: subject.errors, external: subject.external });
++    await subject.page.screenshot({ path: resolve(run, name + '-failure.png'), fullPage: true }).catch(() => {});
++  } finally {
++    for (const release of releases.splice(0)) release();
++    await subject.context.close();
++  }
++  console.log(JSON.stringify({ name, status: results.at(-1).status }));
++}
++try {
++  browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: ['--disable-background-networking'] });
++  await check('edit-during-receipt-loader', async (subject) => {
++    subject.expectedNatal = 0;
++    const pending = await gate(subject, '**/calculator-receipt.*.js');
++    await hydrated(subject); await pending.started;
++    await subject.page.locator('#birth-date').fill('1991-06-15');
++    pending.release(); await settled(subject); await subject.page.waitForTimeout(200);
++    const state = await assertEmpty(subject); assert.equal(state.date, '1991-06-15'); assert.equal(state.computed.length, 0);
++    return { obsoleteCalculationSuppressed: true };
++  });
++  await check('edit-after-success-clears-result', async (subject) => {
++    await hydrated(subject); await subject.page.locator('.calc__result').waitFor(); await settled(subject);
++    await subject.page.locator('#birth-time').fill('15:30');
++    const state = await assertEmpty(subject); assert.equal(state.computed.length, 1); assert.equal(state.busy, 'false');
++    return { oldResultAndActionsCleared: true };
++  });
++  await check('failed-new-run-clears-result-and-recovers', async (subject) => {
++    subject.expectedNatal = 3;
++    await hydrated(subject); await subject.page.locator('.calc__result').waitFor(); await settled(subject);
++    await subject.page.locator('#birth-date').fill('1991-06-15');
++    await subject.page.evaluate(() => { window.__ownership.failReceipt = true; });
++    await subject.page.locator('.calc__submit').click(); await subject.page.locator('.calc__error').waitFor(); await settled(subject);
++    await subject.page.waitForFunction(() => document.activeElement?.matches('.calc__error'), undefined, { timeout: 2000 });
++    const failed = await assertEmpty(subject); assert.equal(failed.date, '1991-06-15'); assert.equal(failed.computed.length, 1); assert.equal(failed.alertFocused, true); assert.ok(!failed.error.includes('Synthetic private'));
++    await subject.page.evaluate(() => { window.__ownership.failReceipt = false; });
++    await subject.page.locator('.calc__submit').click(); await subject.page.locator('.calc__result').waitFor(); await settled(subject);
++    assert.equal((await observed(subject)).computed.length, 2);
++    await subject.page.screenshot({ path: resolve(run, 'recovered-result.png'), fullPage: true });
++    return { failed, successfulRetry: true };
++  });
++  await check('edit-during-engine-loader', async (subject) => {
++    subject.expectedNatal = 0;
++    const pending = await gate(subject, '**/full.*.js');
++    await hydrated(subject); await pending.started;
++    await subject.page.locator('#birth-time').fill('15:30');
++    pending.release(); await settled(subject); await subject.page.waitForTimeout(200);
++    const state = await assertEmpty(subject); assert.equal(state.computed.length, 0);
++    return { staleEngineCompletionDiscarded: true };
++  });
++  await check('new-run-while-old-loader-pending', async (subject) => {
++    const pending = await gate(subject, '**/calculator-receipt.*.js');
++    await hydrated(subject); await pending.started;
++    await subject.page.locator('#birth-date').fill('1991-06-15');
++    assert.equal(await subject.page.locator('.calc__submit').isEnabled(), true);
++    await subject.page.locator('.calc__submit').click(); pending.release();
++    await subject.page.locator('.calc__result').waitFor(); await settled(subject);
++    const state = await observed(subject); assert.equal(state.computed.length, 1);
++    assert.ok((await subject.page.locator('[data-chart-receipt]').textContent()).includes('1991-06-15'));
++    return { onlyReplacementCalculated: true };
++  });
++  await check('delayed-share-surface-after-edit', async (subject) => {
++    const pending = await gate(subject, '**/PositionsShareSurface.*.js');
++    await hydrated(subject); await pending.started; await subject.page.locator('.calc__result').waitFor();
++    await subject.page.locator('#birth-date').fill('1991-06-15'); pending.release();
++    await subject.page.waitForTimeout(250); await assertEmpty(subject);
++    return { lateSharePreparationCannotRestoreResult: true };
++  });
++  await check('delayed-share-dialog-after-edit', async (subject) => {
++    const pending = await gate(subject, '**/ChartShareDialog.*.js');
++    await hydrated(subject); await subject.page.locator('.calc__result').waitFor(); await settled(subject);
++    await subject.page.locator('[data-chart-more]>summary').click();
++    await subject.page.locator('[data-share-options]').click(); await pending.started;
++    await subject.page.locator('#birth-date').fill('1991-06-15'); pending.release();
++    await subject.page.waitForTimeout(250); await assertEmpty(subject);
++    assert.equal(await subject.page.locator('[data-share-dialog]').count(), 0);
++    return { obsoleteDialogCannotOpen: true };
++  });
++  await check('positions-only-initialization', async (subject) => {
++    subject.expectedNatal = 0;
++    const token = '2.' + Buffer.from(JSON.stringify({ b: Array.from({ length: 12 }, (_, index) => index * 27), h: 'w', v: '0.1.1-rc.6' })).toString('base64url');
++    await hydrated(subject, origin + '/birth-chart/#p=' + token);
++    await subject.page.locator('[data-positions-only]').waitFor();
++    assert.equal(await subject.page.locator('[data-calculation-receipt-export]').count(), 0);
++    assert.equal((await observed(subject)).computed.length, 0);
++    return { existingPositionsSurfacePreserved: true };
++  });
++  await check('positions-only-loader-after-edit', async (subject) => {
++    subject.expectedNatal = 0;
++    const pending = await gate(subject, '**/PositionsShareSurface.*.js');
++    const token = '2.' + Buffer.from(JSON.stringify({ b: Array.from({ length: 12 }, (_, index) => index * 27), h: 'w', v: '0.1.1-rc.6' })).toString('base64url');
++    await hydrated(subject, origin + '/birth-chart/#p=' + token); await pending.started;
++    await subject.page.locator('#birth-date').fill('1991-06-15'); pending.release();
++    await subject.page.waitForTimeout(250); await assertEmpty(subject);
++    assert.equal(await subject.page.locator('[data-positions-only]').count(), 0);
++    return { delayedImportDoesNotReplaceEditedForm: true };
++  });
++  for (const kind of ['invalid', 'conflicting']) await check('positions-' + kind + '-loader-after-edit', async (subject) => {
++    subject.expectedNatal = 0;
++    const pending = await gate(subject, '**/PositionsShareSurface.*.js');
++    await hydrated(subject, origin + '/birth-chart/#p=invalid' + (kind === 'conflicting' ? '&c=invalid' : '')); await pending.started;
++    await subject.page.locator('#birth-date').fill('1991-06-15'); pending.release();
++    await subject.page.waitForTimeout(250); const state = await assertEmpty(subject);
++    assert.equal(state.error, ''); assert.equal(state.date, '1991-06-15');
++    return { obsoleteFragmentErrorSuppressed: true };
++  });
++  for (const phase of ['pending', 'completed']) await check('profile-revoke-' + phase, async (subject) => {
++    subject.expectedNatal = phase === 'pending' ? 0 : 1;
++    const id = '10000000-0000-4000-8000-000000000001', stamp = '2026-01-01T00:00:00.000Z';
++    const profile = { version: 1, settings: { houseSystem: 'whole' }, charts: [{ id, name: 'Synthetic private chart', relationship: 'self', createdAt: stamp, updatedAt: stamp, birth: { date: '1990-06-15', time: '14:30', timeKnown: true, place: { name: 'Synthetic Place', admin1: '', country: 'US', lat: 40.71, lon: -74, tz: 'America/New_York' } }, summary: { engineVersion: '0.1.1-rc.6', utcISO: '1990-06-15T18:30:00.000Z', houseSystem: 'whole', bodies: [], angles: null, flags: [] } }] };
++    await subject.context.addInitScript((profile) => {
++      localStorage.setItem('zodiacs.profile.v1', JSON.stringify(profile));
++      window.__ownershipAccess = true;
++      const reader = Object.freeze({ canRead: () => window.__ownershipAccess });
++      Object.defineProperty(window, 'zodiacsProfileAccess', { get: () => reader, set: () => {}, configurable: true });
++    }, profile);
++    const pending = phase === 'pending' ? await gate(subject, '**/calculator-receipt.*.js') : null;
++    await hydrated(subject, origin + '/birth-chart/#profileChartId=' + id);
++    if (pending) await pending.started;
++    else { await subject.page.locator('.calc__result').waitFor(); await settled(subject); }
++    await subject.page.evaluate(() => { document.documentElement.setAttribute('data-account-sync-v2', ''); window.__ownershipAccess = false; dispatchEvent(new Event('zodiacs:profile-access')); });
++    pending?.release(); await subject.page.waitForTimeout(250);
++    const state = await assertEmpty(subject); assert.equal(state.date, ''); assert.equal(state.busy, 'false');
++    return { actualProfileResetBoundary: true };
++  });
++  await check('unmount-with-loader-pending', async (subject) => {
++    subject.expectedNatal = 0;
++    const pending = await gate(subject, '**/calculator-receipt.*.js');
++    await hydrated(subject); await pending.started;
++    await subject.page.locator('astro-island[component-url*="ChartCalculator"]').evaluate((island) => island.dispatchEvent(new CustomEvent('astro:unmount')));
++    pending.release(); await subject.page.waitForTimeout(250);
++    assert.equal(await subject.page.locator('.calc').count(), 0);
++    assert.equal((await observed(subject)).computed.length, 0);
++    return { actualAstroPreactUnmountHook: true };
++  });
++  await check('optional-receipt-module-failure', async (subject) => {
++    await subject.context.route('**/calculator-receipt.*.js', (route) => route.abort('failed'));
++    await hydrated(subject); await subject.page.locator('.calc__result').waitFor(); await settled(subject);
++    assert.equal(await subject.page.locator('[data-download-calculation-receipt]').isDisabled(), true);
++    assert.equal((await observed(subject)).computed.length, 1);
++    return { existingSingleCalculationFallbackPreserved: true };
++  });
++} finally {
++  for (const release of releases) release();
++  for (const context of contexts) await context.close().catch(() => {});
++  const browserVersion = browser?.version(); await browser?.close();
++  await new Promise((done) => server.close(done));
++  const report = { run, origin, node: process.version, browser: browserVersion, sourceSha256: sha(source), finalSourceSha256: sha(await readFile(sourcePath)), driverSha256: sha(await readFile(new URL(import.meta.url))), nativeIdentity, results, passed: results.filter((row) => row.status === 'passed').length, failed: results.filter((row) => row.status === 'failed').length, served, requests, cleanup: { contextsClosed: true, browserClosed: true, serverClosed: true } };
++  await writeFile(resolve(run, 'result.json'), JSON.stringify(report, null, 2) + '\n');
++  await writeFile(resolve(evidence, 'browser-latest.json'), JSON.stringify({ run }, null, 2) + '\n');
++  console.log(JSON.stringify({ run, passed: report.passed, failed: report.failed }));
++  if (report.failed) process.exitCode = 1;
++}

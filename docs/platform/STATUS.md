@@ -12,32 +12,55 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Current implementation — result ownership corrections
+## Current implementation — support evidence and birth-chart ownership
 
-Root remains on `codex/platform-moon-result-ownership`, based on delivered #429.
-Real isolated work is preparing two separately reviewable corrections: Moon lookup
-and ChartCalculator result ownership after input edits, delayed modules, new runs
-and calculation failure. Neither correction activates interval coverage or changes
-astronomical certainty, locale catalogs, account formats or Astrofolio sources.
-Moon Freeze1 is integrated exactly: two files, patch
-`ecdc149e2115ee234828f3848b40cab4f6ba2b15074763b28bf936f0abac6858`.
-Author 20 and independent 13 actual browser groups pass; root’s 12 baseline
-production-page controls pass. Root build/check/all 4,938 tests, 20 native ownership groups and 12 actual
-production-page edit/recovery cases pass. All 18 acceptance captures and 12
-successful result texts are identical to #429. Eleven initial component images
-are byte-identical; one has 367 changed pixels only in the existing Guide
-portrait. Three identical-source repeats match the baseline exactly; originals
-and diagnosis are retained. The unchanged native driver is now wired into the
-existing CI job, with separate wiring review and 98 coupled tests passing. The ChartCalculator freeze and final independent review
-remain pending; no completion of that correction is claimed yet. [The read-only caller evidence](evidence/interval-caller-compatibility/)
-retains concrete stale-result and empty/missing-date counterexamples. Date coverage
-and truthful whole-date Sun/Moon claims remain open after these ownership fixes.
+Root is on `codex/platform-runtime-claims`, based on Moon source
+`4227bb0758d4b34cbd761a3cddd273cbea6c2c1b`. The independently reviewed one-file
+support correction is implemented and tested: current candidate evidence replaces
+stale Node 20/22 assertions, and the public-download record is accurately called a
+consumer check. Build, 4,938 tests / 414 files, check (1,041 files; zero errors/
+warnings, 11 hints), exact-base scope and 13 actual Chrome developer/chart/API
+groups pass. The covered Phase 1 fingerprint remains unchanged; its existing 18
+Moon captures are validated, not represented as newly captured. Two fresh developer
+screenshots are retained. [Source and evidence](evidence/runtime-claims/root-source-identity.json).
+Draft delivery and hosted checks are the next release steps.
+
+ChartCalculator Freeze 1 is not accepted for integration. Independent review
+reproduced three remaining paths: a delayed public positions import restores an
+obsolete profile-derived mine reference; controls retry steals focus after a newer
+result; a save-close frame survives mine-only revocation. The first also reproduces
+in the unmodified production build; the other two have the specifically scoped
+native component/callback evidence described in the [review](evidence/chart-result-ownership/review-freeze1/REVIEW-FREEZE1.md).
+This is stale reference/focus behavior, not an established authentication bypass.
+A corrected four-file freeze is being prepared in isolated scratch. Committed
+saves must remain persisted once, public positions and independent primary charts
+must remain usable, and numerical/coverage policy remains unchanged.
+
+## Delivered candidate — Moon result ownership
+
+Draft [#430](https://github.com/ZodiacsOfficial/site/pull/430) delivers source
+`4227bb0758d4b34cbd761a3cddd273cbea6c2c1b` above #429; all 328 actual changed
+paths match the local diff. Its two-file author freeze plus the reviewed four-line
+CI step complete root build/check/4,938 tests, 20 native ownership groups and 12
+production-page edit/recovery cases. Author 20 and independent 13 native groups
+pass. All 18 acceptance captures and 12 successful result texts match #429.
+Eleven initial component images are byte-identical; one differs only within the
+existing Guide portrait. Three identical-source repeats match the baseline;
+originals and diagnosis remain retained without new masks or tolerances.
+
+Exact-source READY preview `dpl_J3sNfFzjSA6Q8RjRLW9fXLnZJ9kH` passes all 12
+locale/width page groups, including clearing/recovery and no saved profile.
+[Preview report](evidence/moon-result-ownership/preview/REVIEW.md.log) retains the
+observed requests, source identity and cleanup limits. Site Check 34204547574 is
+in progress; skipped Browser Evidence is not a pass. No publication, production
+deployment or external adoption is claimed. The [caller counterexamples](evidence/interval-caller-compatibility/)
+for empty/missing dates and whole-date Sun/Moon certainty remain open.
 
 ## Delivered candidate — inactive local-date interval prerequisite
 
 Draft [#429](https://github.com/ZodiacsOfficial/site/pull/429), source
 `65418003c07efc0c435ce1010e3c9ec05b478eb4`, is delivered with all 83 actual
-changed paths verified. Exact-source Site Check 34201151004 is in progress. The READY preview
+changed paths verified. Exact-source Site Check 34201151004 passes all 14 jobs. The READY preview
 `dpl_GLVF1b21yYBFfMo8eWXfGAbMaxBr` passes 13 existing-surface browser/API
 checks; the interval API remains inactive.
 The isolated branch `codex/platform-local-date-intervals` starts from #428 source
@@ -69,8 +92,7 @@ The standard daily builder changed only the engine/generator manifest identities
 
 Draft [#428](https://github.com/ZodiacsOfficial/site/pull/428) is delivered at
 `30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`. All 349 actual draft paths match
-the local diff. Exact-source Site Check 34200151600 has 13 completed successful jobs and the
-remaining build/visual/performance job in progress. The exact-source READY
+the local diff. Exact-source Site Check 34200151600 passes all 14 jobs, including Build & Check. The exact-source READY
 preview passes 27 receipt groups and 13 developer/API checks; no production
 deployment is claimed. Root acceptance passes the normal build, 4,859 tests / 413 files, check across
 1,039 files (zero errors/warnings, 11 hints), and 18 captures byte-identical to
@@ -270,15 +292,19 @@ Finite numerical/model-assisted review is not human expert certification.
 
 ## Next dependency-ordered work
 
-Visual classification and exact-source preview acceptance are complete for #422.
-Its exact-source CI also passes all 14 jobs. Continue the separate next C02 slice.
-The C02 prerequisite is now integrated on its separate branch (current work
-above). Local build/test/check/scope, chart-share regression and actual browser
-privacy acceptance pass. Draft #425 is delivered; all 14 jobs pass in exact-source CI run 34187725308. Its exact-source preview `dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z`
-is READY and passes 13 browser/API checks. The optional saved-receipt store is delivered separately in draft #426.
-The next slice adds explicit local receipt download to the full chart result,
-with truthful captured time context and stale-input/access guards. Rich saving
-remains unwired until lifecycle integration is verified.
+Deliver the completed one-file support correction above #430, then inspect and
+independently review ChartCalculator's corrected exact four-file freeze before
+root integration. Preserve the original failing Freeze 1 evidence. Complete
+root source/build/test/browser acceptance and a separately reviewed scoped CI
+step before delivering the birth-chart correction. Civil-date activation remains
+separate: empty, unresolved and disconnected dates need coherent admission,
+representative instant and whole-date certainty semantics across result/share/
+context surfaces. This is authorized engineering work, not an owner-only hold.
+
+The richer saved-receipt store in #426 stays inactive until owner/access lifecycle,
+discovery, export/delete and failure behavior are integrated and reviewed. The
+current legacy save must retain its requested-write semantics while obsolete UI
+completion is suppressed.
 
 Decision C-006 requires a version-owned authoritative saved namespace; legacy
 v1 writers lose requested houses and overwrite richer metadata. Do not infer

@@ -114,3 +114,12 @@ The one initial portrait-only raster variance is retained with three identical-
 source controls; it is not erased by an updated mask or tolerance. Hosted CI,
 actual preview and required release decisions are still separate. The previously
 reproduced date-coverage defects remain open and unchanged by this fix.
+
+
+The exact one-file support wording correction completes independent evidence
+review and root local acceptance. Moon #430 completes exact-source preview
+acceptance; its hosted CI remains distinct. #428/#429 now complete all 14 CI
+jobs. ChartCalculator Freeze 1 is correction-requested: see its [actual review](evidence/chart-result-ownership/review-freeze1/REVIEW-FREEZE1.md)
+and separate [save/profile findings](evidence/chart-result-ownership/profile-save-review-freeze1/REVIEW-FREEZE1.md).
+No publication, production, human numerical/legal signoff or external adoption
+is implied. SDK #5's hold and the separate Astrofolio integration boundary remain.

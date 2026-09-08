@@ -1,0 +1,45 @@
+# Independent Moon ownership preview acceptance
+
+The exact automatic preview for source `4227bb0758d4b34cbd761a3cddd273cbea6c2c1b` passed **12/12 actual-page groups** in Chrome 152.0.7977.83 / Node 22.23.2. All six locales (en, es, fr, it, pt, ru) passed at 1280 px and 390 px with VERIFY_OWNERSHIP=1.
+
+Public deployment: `dpl_J3sNfFzjSA6Q8RjRLW9fXLnZJ9kH`.
+Preview: https://zodiacs-q2i4dgo63-zodiacsofficial.vercel.app
+Source PR: https://github.com/ZodiacsOfficial/site/pull/430
+The purpose-built deployment inspection returned READY, source=git, preview target (not production), and the exact full commit before testing and again afterward. Initial BUILDING observation is retained; the agent backed off and did not test until READY.
+
+## What passed
+
+- Every page returned HTTP 200, had exactly one standard footer, and had no horizontal overflow at its tested width.
+- Each synthetic 1990-01-04 12:00 UTC lookup rendered and focused a successful result. Its complete result text exactly matched the existing local candidate report for that same locale/width; this is a regression comparison, not an independent numerical oracle.
+- Changing the date cleared the old result, settled busy state, preserved the newly typed date and allowed successful recalculation. Changing time also cleared and recovered.
+- No saved v1 profile existed before or after those actions in each disposable browser context.
+- Twelve calculator screenshots, complete rendered result text, page/error observations, request paths, response byte hashes, and source/driver identities are retained.
+- 646 scoped observed requests were GET. All 624 observed same-origin responses were HTTP 200, with body hashes recorded. There were no uncaught page errors. Twelve external Plausible loader attempts were blocked.
+
+## Scope and qualifications
+
+The existing root driver `site-drive.mjs` was copied unchanged to `original-site-drive.mjs`; a separately retained remote adapter replaces the local static-server wrapper with this immutable preview URL and isolated temporary preview-access cookies. It reads MoonPhaseTool from an immutable `git show` snapshot, not the mutable working tree. The actual page executes the remote product modules. The original synthetic clock fixture remains; no local product implementation or race instrumentation is injected into the remote page.
+
+These checks establish ordinary remote page ownership and recovery. They do not establish remote delayed-loader races, persistence authority, authentication, independent numerical accuracy, or production deployment. The separate native/CI driver supplies loader-race evidence; it is not relabeled as remote acceptance here. Screenshot captures are evidence of the rendered result, not a new pixel-equality assertion.
+
+The exact configured external loader was `https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js`. The route observer blocked its twelve attempts. Temporary preview authentication was bootstrapped in a separate context before scoped request observation, so this report does not claim that the unobserved authentication bootstrap made no requests. No secret URL, token or cookies are archived. The private URL/query values were scanned against evidence with zero matches before the temporary access directory was deleted; the in-memory orchestration values were also cleared.
+
+No browser check failed. A subsequent cleanup assertion mistakenly expected the default Plausible filename `/js/script.js`. The actual existing configured filename above was verified, and that original assertion error is retained. Secret scanning and credential-directory deletion had already succeeded before that assertion. No product change or verification tolerance change followed it.
+
+All browser contexts were closed, and no local server was started. Root checkout, branch, dist, SDK, publication state and frozen four-file ChartCalculator target were untouched. The latter's four hashes were rechecked unchanged after acceptance.
+
+## Reproduce and inspect
+
+Source snapshot: `source-snapshot.json` plus `source/`.
+Original and adapted drivers: `original-site-drive.mjs`, `site-preview-drive.mjs`, and `driver-adaptation.diff`.
+Public deployment observations: `deployment-initial.json`, `deployment-ready.json`, `deployment-after.json`.
+Native page results: `browser/result.json` and `preview.log`.
+Cleanup: `cleanup.json`, `cleanup-initial-failure.log`.
+
+Executed command, with a newly obtained isolated preview-access file supplied only at runtime:
+
+```sh
+OUT_DIR=/private/tmp/zodiacs-platform-moon-preview-review/browser VERIFY_OWNERSHIP=1 ZODIACS_PREVIEW_AUTH_FILE=/private/tmp/zodiacs-platform-moon-preview-auth/access.json /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /private/tmp/zodiacs-platform-moon-preview-review/site-preview-drive.mjs > /private/tmp/zodiacs-platform-moon-preview-review/preview.log 2>&1
+```
+
+The credential directory named in that invocation has been removed. It is not an evidence artifact and must not be reconstructed from this record.

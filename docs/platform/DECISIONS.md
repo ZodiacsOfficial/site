@@ -501,3 +501,22 @@ must obey result ownership. Preventing stale UI completion does not cancel an
 already committed persistence operation or authorize deletion/migration of data.
 Date membership and truthful whole-date Sun/Moon coverage require a separate
 reviewed product contract; these ownership corrections do not solve or conceal it.
+
+
+## C-013 — Runtime support claims follow the exact candidate evidence
+
+A declared runtime minimum is not a tested-runtime claim. When the current
+candidate changes, the support row must point to its immutable evidence and
+scope rather than carry earlier versions' Node results forward. Label manual
+public-archive extraction/examples/declaration checks as a consumer check;
+reserve an installation claim for a record of an actual package installation.
+Retain the existing separate rc.6 clean-install evidence, Node 22/24 comparisons,
+ESM setup, Intl/ICU and finite-coverage limits. This is two text edits in one
+support page, with no package, API, navigation, style or Astrofolio change.
+
+C-012 follow-up review requires access-generation ownership for optional
+profile-derived secondary context and save-focus intent, even when a public or
+anonymous primary remains valid. Cache completion is separate from focus intent.
+An obsolete callback must not focus or clear a newer dialog's return target.
+A save already committed remains committed; suppression of its stale UI is not
+rollback or cancellation. Freeze 1 is explicitly correction-requested.

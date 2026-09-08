@@ -1,0 +1,11 @@
+{
+  "temporaryAccessDirectoryRemoved": true,
+  "exactPrivateUrlAndQueryValueMatchesInEvidenceBeforeRemoval": 0,
+  "immutableSourceHashesRechecked": true,
+  "chartCalculatorFreeze1Unchanged": true,
+  "browserCleanup": "Owned browser contexts closed; no local server started",
+  "onlyObservedExternalRequest": "https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+  "externalLoaderAttemptsBlocked": 12,
+  "qualification": "Temporary authentication bootstrap occurred in a separate context before scoped request observation. This does not claim that the unobserved authentication bootstrap made zero requests.",
+  "initialCleanupAssertion": "Wrong default Plausible filename; original failure preserved separately; credential removal and secret scan had completed before it."
+}

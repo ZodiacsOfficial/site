@@ -1869,3 +1869,65 @@ partial artifacts. No successful Ubuntu/hosted run is claimed before execution.
 Root source identities distinguish the author two-file freeze from this third
 integration file. Publication, production, date-coverage and external-adoption
 claims remain separate.
+
+
+### Moon delivery and runtime support correction — 2026-09-08
+
+Actual Moon draft #430 has exact source `4227bb0758d4b34cbd761a3cddd273cbea6c2c1b`;
+all 328 paginated changed paths match its local #429-based diff. READY preview
+`dpl_J3sNfFzjSA6Q8RjRLW9fXLnZJ9kH` passes 12 actual page groups in Chrome 152:
+six locales at 1,280/390 widths, exact local result text, edit clearing/recovery,
+no saved profile, one footer and no horizontal overflow. Its [source manifest](evidence/moon-result-ownership/preview/source-manifest.json)
+SHA-256 is `fc873f343183390e8328ad8a8ab0e4779861643745b6c2917253d79f33ac4d0c`;
+the inert root copy has 29 records and manifest
+`bb62eb9b1f7818788eb8756f3397391369ae491354308919aa3d4aa828231d72`.
+646 observed GET requests, zero uncaught errors and 12 blocked existing Plausible
+loader attempts are recorded; authentication bootstrap is outside that observer.
+A cleanup-only default-filename assertion failed after browser checks; the actual
+configured hashed loader was verified and the original failure retained. Secret
+scans passed, temporary access was deleted, and no local product injection or
+whole-site zero-network claim is made. The provider source was checked before
+and after execution. Moon's Site Check 34204547574 remains in progress.
+
+The refreshed exact-source #428 run 34200151600 and #429 run 34201151004 both
+complete all 14 jobs successfully. Original API results are retained in the
+[support integration release records](evidence/runtime-claims/integration/manifest.json).
+
+The exact support patch `2a59e5e721a748178f96e5d653434c0515cc5795d7c37d82cd25338dbe83e581`
+is applied above Moon. Resulting file SHA-256 is
+`7598fca770c5f5e9c26f92603ee37e48c4cc3d087d744ee1ac3783b068a49cea`.
+Prior independent review verified the immutable current carrier records and the
+separate actual Node 22/24 SDK installation evidence. Root build/check and all
+4,938 tests / 414 files pass; check covers 1,041 files with zero errors/warnings
+and 11 hints. Thirteen actual Chrome groups additionally assert the new row and
+exact current-carrier consumer URL, retain table keyboard focus and current
+candidate artifact checks, calculate synthetic shared charts without profile
+persistence and check the dated sky API. Two fresh developer screenshots and the
+actual driver are retained. Fingerprint remains
+`3e60d4c18803a51346d35820ff31f256d1cf497bc665237b241e1c05213ab514`;
+the full-suite evidence check validates the existing Moon18 captures. No new
+Phase 1 capture run is claimed for this page-only wording change. The 15-record
+integration manifest is `4cf6faf3e43762996599234a071b6b4202f6c280903fcdcb117f5d93ce7c2dfa`.
+
+### Chart ownership Freeze 1 — correction requested
+
+Root read both actual independent reports before authorizing corrections. Main
+native controls pass 16/18; separate save/profile controls pass 13/14. Public
+positions import reattaches revoked optional mine context; controls retry steals
+focus; save-close focus survives mine-only revocation. The first also reproduces
+on unmodified production output. The exact fixture/production distinction and
+synthetic-reader limitation are retained; no ordinary auth bypass is established.
+Numerical AST parity confirms the existing calculation block unchanged without
+certifying its known date-coverage defects. Committed stores remain persisted.
+
+[Main evidence](evidence/chart-result-ownership/review-freeze1/REVIEW-FREEZE1.md)
+source manifest `cf4546294d6afc03c9ee26a7d6002278a2d8a5b8d93f79b7d2355a979b9eaaa9`
+is verified and copied as 46 inert records, root manifest
+`539b7c95a627f8269c410244dd3bae00405fc66479769e5bf5f0cee51ee43024`.
+[Save/profile evidence](evidence/chart-result-ownership/profile-save-review-freeze1/REVIEW-FREEZE1.md)
+source manifest `f60fce9d8ec82e39c3ad311194c7f3a43f0761fa11ab154dc6ddeaab2bd4db72`
+is verified and copied as 67 inert records, root manifest
+`d4e8e9b76f291c25869c78e2296374822fd06e857196cb0a2a45f2d4a0edebd5`.
+No frozen ChartCalculator source is integrated or approved by this checkpoint.
+
+The separate [Moon preview evidence audit](evidence/moon-result-ownership/preview-audit/REVIEW.md) verifies all 28 supplied records, all 12 cases and the actual draft’s 328 paths/blob identities. Its original manifest is `a5cd3261e40ebf5510cfcf7a2216567fb71a97a7bb4b417992355dc585a09124`. GitHub’s large-diff endpoint returned 406; complete paginated files resolved that retrieval limit. This is independent evidence validation, not a second browser execution.
