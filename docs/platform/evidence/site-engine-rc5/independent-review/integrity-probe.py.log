@@ -1,0 +1,38 @@
+from pathlib import Path
+import subprocess,json,hashlib,tarfile,datetime,base64
+root=Path('/Users/chiburashka/.codex/worktrees/4806/site'); out=Path(__file__).resolve().parent; snap=out/'snapshot'; c=json.loads((snap/'src/data/platform-engine-candidate.json').read_text()); sha=lambda b:hashlib.sha256(b).hexdigest()
+base='ba65375a34cee6a85f94b53ba45861f1b81f34ef'
+lock=json.loads((snap/'package-lock.json').read_text()); oldlock=json.loads(subprocess.check_output(['git','show',f'{base}:package-lock.json'],cwd=root)); changes=[]
+def diff(a,b,p=''):
+ if isinstance(a,dict) and isinstance(b,dict):
+  for k in sorted(a.keys()|b.keys()):
+   if k not in a or k not in b: changes.append(p+'/'+k)
+   else: diff(a[k],b[k],p+'/'+k)
+ elif a!=b: changes.append(p)
+diff(oldlock,lock)
+assert sorted(changes)==sorted(['/packages//dependencies/@zodiacs/engine','/packages/node_modules/@zodiacs/engine/version','/packages/node_modules/@zodiacs/engine/resolved','/packages/node_modules/@zodiacs/engine/integrity']),changes
+payload=(out/f'zodiacs-engine-{c["version"]}.tgz').read_bytes(); assert sha(payload)==c['sha256']
+assert lock['packages']['node_modules/@zodiacs/engine']['integrity']=='sha512-'+base64.b64encode(hashlib.sha512(payload).digest()).decode()
+packed=[]
+with tarfile.open(out/f'zodiacs-engine-{c["version"]}.tgz') as tar:
+ for m in tar.getmembers():
+  assert m.isfile() and m.name.startswith('package/') and '..' not in Path(m.name).parts
+  content=tar.extractfile(m).read(); p=m.name[len('package/'):]; assert (root/'node_modules/@zodiacs/engine'/p).read_bytes()==content
+  packed.append({'path':p,'bytes':len(content),'sha256':sha(content)})
+assert len(packed)==23
+proof=[]
+for key,p in c['evidencePaths'].items():
+ recorded=subprocess.check_output(['git','show',f'{c["evidenceCommit"]}:{p}'],cwd=root); assert (root/p).read_bytes()==recorded
+ proof.append({'key':key,'path':p,'sha256':sha(recorded),'equalToImmutableGitObject':True})
+paths=['examples/platform','public/examples','public/sdk','src/lib/account-v2','src/lib/profile','src/lib/living-chart','src/lib/wallet','src/lib/account-api','src/islands/ChartCalculator.tsx','src/styles','src/components/SiteFooter.astro','src/layouts/Base.astro','src/lib/engine/fixtures','src/lib/engine/full.ts','src/lib/engine/houses.ts','src/lib/engine/aspects.ts','src/lib/engine/types.ts','scripts/platform-engine-report.mjs','vendor/zodiacs-engine-0.1.0.tgz','vendor/zodiacs-engine-0.1.1-rc.0.tgz','vendor/zodiacs-engine-0.1.1-rc.1.tgz']
+tracked=subprocess.check_output(['git','ls-tree','-r','--name-only',base,'--',*paths],cwd=root,text=True).splitlines(); preservation=[]
+for p in tracked:
+ actual=(root/p).read_bytes(); old=subprocess.check_output(['git','show',f'{base}:{p}'],cwd=root); assert actual==old,p
+ preservation.append({'path':p,'sha256':sha(actual)})
+identity=json.loads((out/'snapshot.json').read_text())
+for p,h in identity['sourceFiles'].items(): assert sha((snap/p).read_bytes())==h
+assert (out/'remote-artifact.tgz').read_bytes()==payload
+assert (out/'source-README.md').read_bytes()==(out/'0.1.1-rc.5/node_modules/@zodiacs/engine/README.md').read_bytes()
+result={'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'artifactSHA256':sha(payload),'archiveBytes':len(payload),'packedFiles':packed,'lockChangedPaths':changes,'immutableEvidence':proof,'preservation':{'base':base,'files':preservation},'frozenSourceFiles':len(identity['sourceFiles']),'anonymousArtifactMatches':True,'sourceReadmeMatchesPacked':True}
+(out/'integrity-final.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({'packedMemberMatches':len(packed),'lockChangedPaths':changes,'immutableEvidenceMatches':len(proof),'preservationFiles':len(preservation),'frozenSourceFiles':len(identity['sourceFiles']),'anonymousArtifactMatches':True,'sourceReadmeMatchesPacked':True}))

@@ -1,0 +1,1730 @@
+[
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "adbd341bb564febf7ad6d94e1653fc0e269990f7488df08875c2227972b41485",
+    "newSHA256": "adbd341bb564febf7ad6d94e1653fc0e269990f7488df08875c2227972b41485",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "3e7de9bd376847358b94a1bb418690e1f7a0993fbe8466dc6d787462ed66afe9",
+    "newSHA256": "3e7de9bd376847358b94a1bb418690e1f7a0993fbe8466dc6d787462ed66afe9",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "f76d0d6a46c1bb12d0e86f88e76ce07790f8614fd1eb83d9a366f7c230be3e5a",
+    "newSHA256": "f76d0d6a46c1bb12d0e86f88e76ce07790f8614fd1eb83d9a366f7c230be3e5a",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "baa164076bf5e02efdee0cfd52560cf4be3332375bc02045892a3434c5a31865",
+    "newSHA256": "baa164076bf5e02efdee0cfd52560cf4be3332375bc02045892a3434c5a31865",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "aa456710bea4e811559d4c8b12f4fb52ace3aac667fd0ab047270232bb63b39d",
+    "newSHA256": "aa456710bea4e811559d4c8b12f4fb52ace3aac667fd0ab047270232bb63b39d",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "b7d713976468794fae9e14ed4daee39c96a2e91bd2535631706269684c7234f0",
+    "newSHA256": "b7d713976468794fae9e14ed4daee39c96a2e91bd2535631706269684c7234f0",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "8825696b9de61fa002b965fa8c56a376180bcf96861a7d58a6bb5fa603a5db63",
+    "newSHA256": "8825696b9de61fa002b965fa8c56a376180bcf96861a7d58a6bb5fa603a5db63",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "1d95a17fba6007c873a09707e84025fe2a2a6e9b9ab5f20dacac4e04d4227505",
+    "newSHA256": "1d95a17fba6007c873a09707e84025fe2a2a6e9b9ab5f20dacac4e04d4227505",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "52ec1d9c5a8b52bb4cd7ccd9139b98bed4b2a2f90cbe3469cd7bd3a4c0649539",
+    "newSHA256": "52ec1d9c5a8b52bb4cd7ccd9139b98bed4b2a2f90cbe3469cd7bd3a4c0649539",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "987649c5aaddfe538b175639d735d4b5d789dcde0391b5c74ba99f1145b6d624",
+    "newSHA256": "987649c5aaddfe538b175639d735d4b5d789dcde0391b5c74ba99f1145b6d624",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "463643a31605e3e8cf5e01a1f7927c347f78adc3d65422a67c7e8f52bd1ccfbc",
+    "newSHA256": "463643a31605e3e8cf5e01a1f7927c347f78adc3d65422a67c7e8f52bd1ccfbc",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "5e0f22cc9f63301c70b6479eefc0f724275e3d47ec8b4418c2d9d6b10548dbef",
+    "newSHA256": "5e0f22cc9f63301c70b6479eefc0f724275e3d47ec8b4418c2d9d6b10548dbef",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "7e2b7f8418017b0d82eef50182ab11fb583332b1f25907616f94e907bd57b6f9",
+    "newSHA256": "7e2b7f8418017b0d82eef50182ab11fb583332b1f25907616f94e907bd57b6f9",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "e4c0c090611184d48d0e8f4ca6128c267f3e3ea86fa127303cc486b642eb46bf",
+    "newSHA256": "e4c0c090611184d48d0e8f4ca6128c267f3e3ea86fa127303cc486b642eb46bf",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "5e71215183632069d743c724dcc470e8ee87174e1a6d7184c0bb3eb31c56de0c",
+    "newSHA256": "5e71215183632069d743c724dcc470e8ee87174e1a6d7184c0bb3eb31c56de0c",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0004-02-29T08:30:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "e8e822c3669570a1e55b896abb7fe603a31db22603884ba33c145df1bcbbfad5",
+    "newSHA256": "e8e822c3669570a1e55b896abb7fe603a31db22603884ba33c145df1bcbbfad5",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "0609c99cf95aac0b05126bad68807c88cbfa200efa5dd6b9913e256e8d174b63",
+    "newSHA256": "0609c99cf95aac0b05126bad68807c88cbfa200efa5dd6b9913e256e8d174b63",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "f8575160d6db8f63fe672be40bf099190ca6768bb8516ef8a68d24774c669cba",
+    "newSHA256": "f8575160d6db8f63fe672be40bf099190ca6768bb8516ef8a68d24774c669cba",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "03a140ec2dbf805ce824192e6cbea6363d790505b269cd890f4d841fe94cfc9b",
+    "newSHA256": "03a140ec2dbf805ce824192e6cbea6363d790505b269cd890f4d841fe94cfc9b",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "6d77419d70ed779c077ec7072c46db3f446461111b3aec183710d2af83e09eb0",
+    "newSHA256": "6d77419d70ed779c077ec7072c46db3f446461111b3aec183710d2af83e09eb0",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "25d2f9b76f712c92f507f50feba871c922d64ee9e11d23d1c5ba0648e09ac845",
+    "newSHA256": "25d2f9b76f712c92f507f50feba871c922d64ee9e11d23d1c5ba0648e09ac845",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "313ddaf784c4bc1223c69693b49098eb63892d021b9fa5caa5ef98592ceb9b2a",
+    "newSHA256": "313ddaf784c4bc1223c69693b49098eb63892d021b9fa5caa5ef98592ceb9b2a",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "33b986cf934f72fe81b71b8f735f86710747eb4939e74f9e9279eb6f2fff34bf",
+    "newSHA256": "33b986cf934f72fe81b71b8f735f86710747eb4939e74f9e9279eb6f2fff34bf",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "30a094886098df49015c9c5baa3f3779ce4cb6a1400137b3f7588d83bf8d1a54",
+    "newSHA256": "30a094886098df49015c9c5baa3f3779ce4cb6a1400137b3f7588d83bf8d1a54",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "d518281468ba4c32d7fb39576c0a6f60d760f7c8d5cbfb059808211a0d8debef",
+    "newSHA256": "d518281468ba4c32d7fb39576c0a6f60d760f7c8d5cbfb059808211a0d8debef",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "f1fa04b9cce345ff7f1b7ec02409b78ab6f457e164a142f6afec9cee93fbfa5a",
+    "newSHA256": "f1fa04b9cce345ff7f1b7ec02409b78ab6f457e164a142f6afec9cee93fbfa5a",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "64cb7609d846e9515135c666f7c200c7743e575cb7ef78c9497d709ac4a1d1a5",
+    "newSHA256": "64cb7609d846e9515135c666f7c200c7743e575cb7ef78c9497d709ac4a1d1a5",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "00ef7ffb9aed0b9867e5d8017fcb83cee975bdbe759e3d35c8bd3f4d4d3a043b",
+    "newSHA256": "00ef7ffb9aed0b9867e5d8017fcb83cee975bdbe759e3d35c8bd3f4d4d3a043b",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "ed78cab3726a66996b2da82f6826eb7bdc4c40f44d3bcf0e7cda70eb25c77432",
+    "newSHA256": "ed78cab3726a66996b2da82f6826eb7bdc4c40f44d3bcf0e7cda70eb25c77432",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "db98ecfc2345727cff88d7579e814f332fbba4dbac47860f97d1fbad6921d762",
+    "newSHA256": "db98ecfc2345727cff88d7579e814f332fbba4dbac47860f97d1fbad6921d762",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "e2c994c35e219d847db11e6752ebfd36ff69bc5063f42f41475dfacebd41a5bf",
+    "newSHA256": "e2c994c35e219d847db11e6752ebfd36ff69bc5063f42f41475dfacebd41a5bf",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "0099-12-31T23:59:59.999Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "fa2b2f5415d6bb296195713676e416b7bb3e2166742ed5bb8a294247d08095fe",
+    "newSHA256": "fa2b2f5415d6bb296195713676e416b7bb3e2166742ed5bb8a294247d08095fe",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "428764cbb376f39a5a04fdfdbe7b21c705533d6b0f758a4901eee6a868d14c93",
+    "newSHA256": "428764cbb376f39a5a04fdfdbe7b21c705533d6b0f758a4901eee6a868d14c93",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "3e14c25a8c06926320fdd4e1fd9c95188426da42b80906069fdb2bec66b0a438",
+    "newSHA256": "3e14c25a8c06926320fdd4e1fd9c95188426da42b80906069fdb2bec66b0a438",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "8508cceb38534a6a6e59134a0b32ed89b4feb334759b171dbc766908e903ec35",
+    "newSHA256": "8508cceb38534a6a6e59134a0b32ed89b4feb334759b171dbc766908e903ec35",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "00b353f51e245ff6e171d3f98c6759dfcd3fdff7168e20b7f052032ffc3b8b87",
+    "newSHA256": "00b353f51e245ff6e171d3f98c6759dfcd3fdff7168e20b7f052032ffc3b8b87",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "0b7ee07fe668c9432af86d9b7c5b5246c950b23658170cefd91cd21e00c37efb",
+    "newSHA256": "0b7ee07fe668c9432af86d9b7c5b5246c950b23658170cefd91cd21e00c37efb",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "a879a480fee9f9fde280309b87abb9247b17af865759d0432a66dd9a3c0a4958",
+    "newSHA256": "a879a480fee9f9fde280309b87abb9247b17af865759d0432a66dd9a3c0a4958",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "b5e10ee2752ea878c7c8991027370bd11c975964c9b160151c5c2e40eaac93bb",
+    "newSHA256": "b5e10ee2752ea878c7c8991027370bd11c975964c9b160151c5c2e40eaac93bb",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "b25515c222cad92759ac363134f0945550eea7ea74b4878030781d5e5d5be696",
+    "newSHA256": "b25515c222cad92759ac363134f0945550eea7ea74b4878030781d5e5d5be696",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "dd0d9962f5b1cc3393b0dc4bf311738532bbe4105569935bdb194a24521ebd90",
+    "newSHA256": "dd0d9962f5b1cc3393b0dc4bf311738532bbe4105569935bdb194a24521ebd90",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "d78099c894584d2d91df83e0b56b0d7dc921c3c772c388ace18e6a0bddbc0676",
+    "newSHA256": "d78099c894584d2d91df83e0b56b0d7dc921c3c772c388ace18e6a0bddbc0676",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "ef0b62577b7da8afc19edfdb492f37c39be4dbbbaaa953ea38bb6bdf763632f1",
+    "newSHA256": "ef0b62577b7da8afc19edfdb492f37c39be4dbbbaaa953ea38bb6bdf763632f1",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "4d825b53ae1b1b0aceb54c51c54acbfdcd10d105520e7de275fb06f7aecb85c4",
+    "newSHA256": "4d825b53ae1b1b0aceb54c51c54acbfdcd10d105520e7de275fb06f7aecb85c4",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "ff77fa10cc686b0c94571bd1004f785f9411d8d06d2d2bc7d3590248d1dcd938",
+    "newSHA256": "ff77fa10cc686b0c94571bd1004f785f9411d8d06d2d2bc7d3590248d1dcd938",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "e9cdd65ad23ea0a51ed5dde89390faf9fdeb6a905d48cd165baaf4a2069a290e",
+    "newSHA256": "e9cdd65ad23ea0a51ed5dde89390faf9fdeb6a905d48cd165baaf4a2069a290e",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "83df00a717c258806ac27fdea969ebd4ecc2c490d6e9b41e7f499da0b01173a9",
+    "newSHA256": "83df00a717c258806ac27fdea969ebd4ecc2c490d6e9b41e7f499da0b01173a9",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1600-03-01T00:00:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "faa6aa1314fa2d84c91128afc9de85e2f098df1121757c9270fcdad7c156d873",
+    "newSHA256": "faa6aa1314fa2d84c91128afc9de85e2f098df1121757c9270fcdad7c156d873",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "35280316bfee77e91fa1e19ec2e60529cf33ab0371113aff71c94a568b3baf2b",
+    "newSHA256": "35280316bfee77e91fa1e19ec2e60529cf33ab0371113aff71c94a568b3baf2b",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "c6e8f626db93182b0953aedb147ed50ac0e6acbba910450a14f0b4b8c32ccce4",
+    "newSHA256": "c6e8f626db93182b0953aedb147ed50ac0e6acbba910450a14f0b4b8c32ccce4",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "1dadda672944b6c7475feda500f221f28643b2aed725dd5cd90531833797185f",
+    "newSHA256": "1dadda672944b6c7475feda500f221f28643b2aed725dd5cd90531833797185f",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "3e05ca339097a2daa00bda302a000b7bd14892f92a52d89a95b8b75a6110ce95",
+    "newSHA256": "3e05ca339097a2daa00bda302a000b7bd14892f92a52d89a95b8b75a6110ce95",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "78967debe77c9a9032fd8b7a53819236aba7032a289fafe857272f3ce0c5e649",
+    "newSHA256": "78967debe77c9a9032fd8b7a53819236aba7032a289fafe857272f3ce0c5e649",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "1ef44c81a24d79687ab49f77fdf69c3fe3be2b7da15a7f6baf8a814b77268405",
+    "newSHA256": "1ef44c81a24d79687ab49f77fdf69c3fe3be2b7da15a7f6baf8a814b77268405",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "d5c3aa5c74f1c1541e08c1f09ec66fbc5d37db5dff1f120f5b91788e02cbc9ba",
+    "newSHA256": "d5c3aa5c74f1c1541e08c1f09ec66fbc5d37db5dff1f120f5b91788e02cbc9ba",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "29c53537362fa1791b96d7bbb028bb0a3664367a9f44e19a51e4014f9cd89e57",
+    "newSHA256": "29c53537362fa1791b96d7bbb028bb0a3664367a9f44e19a51e4014f9cd89e57",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "a3195f288e38f36561774be24a980af251e149d5b30b6a48ddcffa916729752c",
+    "newSHA256": "a3195f288e38f36561774be24a980af251e149d5b30b6a48ddcffa916729752c",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "51a2b91949919522851999a6d39f1d61a602aeffc506d8a532c70a410b48ebf9",
+    "newSHA256": "51a2b91949919522851999a6d39f1d61a602aeffc506d8a532c70a410b48ebf9",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "904e62ca388e039190e4a9c3fcb30e60dab01644901c3a5f8cd20fb36ab29e73",
+    "newSHA256": "904e62ca388e039190e4a9c3fcb30e60dab01644901c3a5f8cd20fb36ab29e73",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "ded562593eda419bf3f71dbb64ec7d6eed81ea3116b7676273a90623e7e31118",
+    "newSHA256": "ded562593eda419bf3f71dbb64ec7d6eed81ea3116b7676273a90623e7e31118",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "3e672d6b2afea431417b0b0b6fe46e51feeaa772a9c5ae57b7fd28c0e7999365",
+    "newSHA256": "3e672d6b2afea431417b0b0b6fe46e51feeaa772a9c5ae57b7fd28c0e7999365",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "72e2b7dadaeb5a97b75dbf327bbe1dea193ad18b99c1ae289ed38f67d4a75a30",
+    "newSHA256": "72e2b7dadaeb5a97b75dbf327bbe1dea193ad18b99c1ae289ed38f67d4a75a30",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "b4023852bf1de1fa609b4805466ac6ed8aa2ad015c4f600a071ac3f799d11c58",
+    "newSHA256": "b4023852bf1de1fa609b4805466ac6ed8aa2ad015c4f600a071ac3f799d11c58",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "1900-01-01T00:00:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "c51a7d81368192ffbb5eac85bdcf41d1d202592e2285689d94fbbe71db0fc86d",
+    "newSHA256": "c51a7d81368192ffbb5eac85bdcf41d1d202592e2285689d94fbbe71db0fc86d",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "44abe0a3ebdfac00837e409781debaab0876642b543991c06c7d137c099eff54",
+    "newSHA256": "44abe0a3ebdfac00837e409781debaab0876642b543991c06c7d137c099eff54",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "18530edff6c3c198eb317074d9aa2f3f00b5373f7b31a76ba919e94ae6a16b5d",
+    "newSHA256": "18530edff6c3c198eb317074d9aa2f3f00b5373f7b31a76ba919e94ae6a16b5d",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "ef87e8ae410477a3d266b662bb68e39b3fc46f0dbc893812f770a71d320a4935",
+    "newSHA256": "ef87e8ae410477a3d266b662bb68e39b3fc46f0dbc893812f770a71d320a4935",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "5c604a140274b0e636671f29434f6b4fa1ede69c0621d72dd94eea1633052816",
+    "newSHA256": "5c604a140274b0e636671f29434f6b4fa1ede69c0621d72dd94eea1633052816",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "18fa6eff4fcbb7b268a38c743ed650b296cc4ef0cfbc2b63c9fa79c74c471dd6",
+    "newSHA256": "18fa6eff4fcbb7b268a38c743ed650b296cc4ef0cfbc2b63c9fa79c74c471dd6",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "7a44cb2c6adb74a9efb3bc7cc43d83df8f783f6e5b511dcf776d141a7d85b82f",
+    "newSHA256": "7a44cb2c6adb74a9efb3bc7cc43d83df8f783f6e5b511dcf776d141a7d85b82f",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "e10f31f440dadad224eeb573ba770d979bdc59ca20ea78c56d665fca584789e0",
+    "newSHA256": "e10f31f440dadad224eeb573ba770d979bdc59ca20ea78c56d665fca584789e0",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "c11be81cb7435cc08fa7ff2f156f2925862a57f0552e2a801f0ed650695d731c",
+    "newSHA256": "c11be81cb7435cc08fa7ff2f156f2925862a57f0552e2a801f0ed650695d731c",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "088d0e1a7a8d0cde7af0f2a07d727ad84a8e80603e4a0d6a2b5fe4562d91aae9",
+    "newSHA256": "088d0e1a7a8d0cde7af0f2a07d727ad84a8e80603e4a0d6a2b5fe4562d91aae9",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "d3a34d2aa4ce2c439cbb7a8d3796a7682c54bd4e4f602c4c99253d1f8d13dbcb",
+    "newSHA256": "d3a34d2aa4ce2c439cbb7a8d3796a7682c54bd4e4f602c4c99253d1f8d13dbcb",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "fef70b34793dcce0cf2d0e4d97e466c237a5a90fe841dd9d518595ccbde8959f",
+    "newSHA256": "fef70b34793dcce0cf2d0e4d97e466c237a5a90fe841dd9d518595ccbde8959f",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "f247f33c5766479563cc5fe774ac9b1834a5655921d746e9a117f3b53c309e22",
+    "newSHA256": "f247f33c5766479563cc5fe774ac9b1834a5655921d746e9a117f3b53c309e22",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "350d5432951a2ccb42af69c126d68677337cede33e9f0b155b435c8d8e740ed0",
+    "newSHA256": "350d5432951a2ccb42af69c126d68677337cede33e9f0b155b435c8d8e740ed0",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "7345c47a12a76d38f00ff36e3f283e56cc55495909d0ec62641f0d74a67416e4",
+    "newSHA256": "7345c47a12a76d38f00ff36e3f283e56cc55495909d0ec62641f0d74a67416e4",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "267b6bb9d0927b85db9f185a158a338381f19d7d2f5fd7ee3d1f31c0021bc0ac",
+    "newSHA256": "267b6bb9d0927b85db9f185a158a338381f19d7d2f5fd7ee3d1f31c0021bc0ac",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2000-01-01T12:00:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "70062c0f9840f54d31d578475e8bc0dc510d87fb9f63d8bfb6655fc5361c806f",
+    "newSHA256": "70062c0f9840f54d31d578475e8bc0dc510d87fb9f63d8bfb6655fc5361c806f",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "883c6ae1a7bd543d78a0e242130b2bd2ae9d16ba67b9cf786649cb6e1b5016f8",
+    "newSHA256": "883c6ae1a7bd543d78a0e242130b2bd2ae9d16ba67b9cf786649cb6e1b5016f8",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "c767164fd0741deb64eff697d55e8d7499e6b782af3b3f64e37aa4f1fbeef0cd",
+    "newSHA256": "c767164fd0741deb64eff697d55e8d7499e6b782af3b3f64e37aa4f1fbeef0cd",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "2dc91d912865f8daef6bcfabdc9bd836dbad996009ea675d961e336ac209a8f8",
+    "newSHA256": "2dc91d912865f8daef6bcfabdc9bd836dbad996009ea675d961e336ac209a8f8",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "986e208404615a0627cb1239e28dba9b84cc64080cebf3752a6d2a952fa37dbc",
+    "newSHA256": "986e208404615a0627cb1239e28dba9b84cc64080cebf3752a6d2a952fa37dbc",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "557c8832e766b6db6ba6adf49040628d7500d064cb351d1d8d419b4ce90ee967",
+    "newSHA256": "557c8832e766b6db6ba6adf49040628d7500d064cb351d1d8d419b4ce90ee967",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "5a3aba777041a315575e5c3e387c07a2d423888ad2935d2723e623728e4eb1df",
+    "newSHA256": "5a3aba777041a315575e5c3e387c07a2d423888ad2935d2723e623728e4eb1df",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "5097add0fde3e468f10ce242564a93d384bad1ce4b25e549770f806e7f7e24af",
+    "newSHA256": "5097add0fde3e468f10ce242564a93d384bad1ce4b25e549770f806e7f7e24af",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "f2f6e56a76c7d0a89a303fefd0fd9b24c9c7dff3928e27bfcb3aa884dc40de9b",
+    "newSHA256": "f2f6e56a76c7d0a89a303fefd0fd9b24c9c7dff3928e27bfcb3aa884dc40de9b",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "3138a23401ec358720a08d104f5c5d5acd8c90f0a3781d1140cb021ce4ff9fd4",
+    "newSHA256": "3138a23401ec358720a08d104f5c5d5acd8c90f0a3781d1140cb021ce4ff9fd4",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "4d2b89afad75148c0a5f2e16ab0831ebd8c686abd76bd8af6c7916a9f209ecdf",
+    "newSHA256": "4d2b89afad75148c0a5f2e16ab0831ebd8c686abd76bd8af6c7916a9f209ecdf",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "c5f8ec484dd6a9c63b125b6458560b9f03aaabf904203cfc3d815daf8c62b722",
+    "newSHA256": "c5f8ec484dd6a9c63b125b6458560b9f03aaabf904203cfc3d815daf8c62b722",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "f049366048bfd3dd2c78bd3b23eaa5149cea34e4b90abaf25140fe38f38ddfa0",
+    "newSHA256": "f049366048bfd3dd2c78bd3b23eaa5149cea34e4b90abaf25140fe38f38ddfa0",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "a80349e8aeab7601210df62cffd1ecf0469d0dfc9fd7641951d873aab2edca80",
+    "newSHA256": "a80349e8aeab7601210df62cffd1ecf0469d0dfc9fd7641951d873aab2edca80",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "a2f0e6fb77b11462232aa7ab4c4cbf48bc3dd7a0a30747c529910f6d156cc693",
+    "newSHA256": "a2f0e6fb77b11462232aa7ab4c4cbf48bc3dd7a0a30747c529910f6d156cc693",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "4f68baf2a9a2dc6d9c7f339fe675e7e3441bf77d15a7f73a4792a525a4ba4ec2",
+    "newSHA256": "4f68baf2a9a2dc6d9c7f339fe675e7e3441bf77d15a7f73a4792a525a4ba4ec2",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2024-02-29T08:30:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "86c12ea8c9106f9de481abc4944dea7fb03b1340dad5c0b43d94cf7c0dc4e1cb",
+    "newSHA256": "86c12ea8c9106f9de481abc4944dea7fb03b1340dad5c0b43d94cf7c0dc4e1cb",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "ebc0ef3914ff9650d4d973e55f69bbd214da57aa57ff4c42dd55578bf6c4e8b0",
+    "newSHA256": "ebc0ef3914ff9650d4d973e55f69bbd214da57aa57ff4c42dd55578bf6c4e8b0",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "43e3f017f2dbb5e8e5f20487dc9490724f5a043980286bf95315e73de9d9c767",
+    "newSHA256": "43e3f017f2dbb5e8e5f20487dc9490724f5a043980286bf95315e73de9d9c767",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "0fb782cbb56944559783f2ca066a41b99f09d095fabca1c6e12977d886e0b9dc",
+    "newSHA256": "0fb782cbb56944559783f2ca066a41b99f09d095fabca1c6e12977d886e0b9dc",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "d6ce1b9c4b5f63de15c1d9eb0ebaf85c6dfd19ecdcfadaec7c1059bfa01b3109",
+    "newSHA256": "d6ce1b9c4b5f63de15c1d9eb0ebaf85c6dfd19ecdcfadaec7c1059bfa01b3109",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "c87e044002501a1637a8a610d90ff8bc989f74aaa951886ab2137935a83ae716",
+    "newSHA256": "c87e044002501a1637a8a610d90ff8bc989f74aaa951886ab2137935a83ae716",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "baebe3615acedc968f5db2953a82fb61ab882ecf30ea1d87f66f92d26d598a6a",
+    "newSHA256": "baebe3615acedc968f5db2953a82fb61ab882ecf30ea1d87f66f92d26d598a6a",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "e0a19f9480c0b74271e86f6880abf909fc27daff0aec81ab54d9fd11d73c0279",
+    "newSHA256": "e0a19f9480c0b74271e86f6880abf909fc27daff0aec81ab54d9fd11d73c0279",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "cbe61a92dfe426267245c34a4b6f99b4bea98304447f1b63a37c54c9c60f5e6b",
+    "newSHA256": "cbe61a92dfe426267245c34a4b6f99b4bea98304447f1b63a37c54c9c60f5e6b",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "70cf5422d58964581444fe107cc8561e67f93444bbcb2e468d475bcf52e3160b",
+    "newSHA256": "70cf5422d58964581444fe107cc8561e67f93444bbcb2e468d475bcf52e3160b",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "53b2b9557ca63b027c8bc445b0282d4547914a7051436788321269f897e5eba7",
+    "newSHA256": "53b2b9557ca63b027c8bc445b0282d4547914a7051436788321269f897e5eba7",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "cc351805fc272d884a5c9645dd1330be501f0c4e8db1c5e3cda217dfbe583d4b",
+    "newSHA256": "cc351805fc272d884a5c9645dd1330be501f0c4e8db1c5e3cda217dfbe583d4b",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "1126859277fad91c5ca6bfb95b8b9d4faf2da1e779ad1c32f248dc43e9dd808f",
+    "newSHA256": "1126859277fad91c5ca6bfb95b8b9d4faf2da1e779ad1c32f248dc43e9dd808f",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "e920d7575371640baa5228313515f2e0fa209cb967d597f83e8fbbd8fedb9aa7",
+    "newSHA256": "e920d7575371640baa5228313515f2e0fa209cb967d597f83e8fbbd8fedb9aa7",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "bd9c1849f050323b906651d44f3af078b3651fe403189ae83aa1b8bba7bada01",
+    "newSHA256": "bd9c1849f050323b906651d44f3af078b3651fe403189ae83aa1b8bba7bada01",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "afbbd96bfcded03a55df2c1c13a0b7aa90daf2191b4a3b9e6d7bc26961621140",
+    "newSHA256": "afbbd96bfcded03a55df2c1c13a0b7aa90daf2191b4a3b9e6d7bc26961621140",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2026-09-08T00:00:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "2b37409d6bcb927511f1adf66c50c0d554b2f64e426fb5c1dcbc956a60070ee5",
+    "newSHA256": "2b37409d6bcb927511f1adf66c50c0d554b2f64e426fb5c1dcbc956a60070ee5",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "d439d475d9eb2092f67914a6782c5ba92cd739fa0296568ccaed47c45172a5ea",
+    "newSHA256": "d439d475d9eb2092f67914a6782c5ba92cd739fa0296568ccaed47c45172a5ea",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "eec4a07835a4fc46bd6f7cee25536e76b81c2998cdcaee97f297fa01630b2626",
+    "newSHA256": "eec4a07835a4fc46bd6f7cee25536e76b81c2998cdcaee97f297fa01630b2626",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "3844cdc53eeeb1b4aae961a48a3b9242f0fc8ff66cd8048b61e40eb47f63ed47",
+    "newSHA256": "3844cdc53eeeb1b4aae961a48a3b9242f0fc8ff66cd8048b61e40eb47f63ed47",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "fb7c147f9fef4acabdb3b36338fc0b76dd9fa83ff8136fd0176934561477cdf9",
+    "newSHA256": "fb7c147f9fef4acabdb3b36338fc0b76dd9fa83ff8136fd0176934561477cdf9",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "e2d05e868bee18da2d9736ce128f582f9078c072e4341c6cc8c4208164d6f5ee",
+    "newSHA256": "e2d05e868bee18da2d9736ce128f582f9078c072e4341c6cc8c4208164d6f5ee",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": -33.8688,
+      "longitude": 151.2093,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "8a09f919534158fbac3a1672cf3d94240dd3fa9cfa76184e41c0b4825519b6cd",
+    "newSHA256": "8a09f919534158fbac3a1672cf3d94240dd3fa9cfa76184e41c0b4825519b6cd",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "113191f5eefaef02d62c06ce4ad4ac82cd96480f4dfa8d78ec3629b5a7f39fc7",
+    "newSHA256": "113191f5eefaef02d62c06ce4ad4ac82cd96480f4dfa8d78ec3629b5a7f39fc7",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 66,
+      "longitude": 25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "2bd0ec4d9c2e11ff4e6fcd703142a5f21db36940aa9730decc9eafce67f810ca",
+    "newSHA256": "2bd0ec4d9c2e11ff4e6fcd703142a5f21db36940aa9730decc9eafce67f810ca",
+    "actual": "placidus",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "9ad6a83f0cd934375364c66eb731d64f3a2331d6cc6b18d0604e10634591d448",
+    "newSHA256": "9ad6a83f0cd934375364c66eb731d64f3a2331d6cc6b18d0604e10634591d448",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 66.00001,
+      "longitude": -25,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "885ba9395e99975a6c9d0f51573944b4d13577f1111b0416043ae786c7c3a08e",
+    "newSHA256": "885ba9395e99975a6c9d0f51573944b4d13577f1111b0416043ae786c7c3a08e",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "8879e27aac7f9a093eeb04800958d824712ea403cb8d441b6ac19fe43d43f8c5",
+    "newSHA256": "8879e27aac7f9a093eeb04800958d824712ea403cb8d441b6ac19fe43d43f8c5",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "9689776ef2a6c3e0d404dc607c15598ed10654dd8cf5a8c0c844c6fe382af13d",
+    "newSHA256": "9689776ef2a6c3e0d404dc607c15598ed10654dd8cf5a8c0c844c6fe382af13d",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "fc29808081afddc753e9c0f9e5175766860f6100d33a9fd6a9cc852d04fda904",
+    "newSHA256": "fc29808081afddc753e9c0f9e5175766860f6100d33a9fd6a9cc852d04fda904",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": -78.2232,
+      "longitude": -15.6267,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "a7e71a41af00697cee510227cabcd4208b1e283c4117a4f4b5d13ff9d8c112cd",
+    "newSHA256": "a7e71a41af00697cee510227cabcd4208b1e283c4117a4f4b5d13ff9d8c112cd",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "whole",
+      "timeKnown": true
+    },
+    "oldSHA256": "b236f031c8a49785dc82f22c50cac7f252cde15aa4776f705ae51446be89ef25",
+    "newSHA256": "b236f031c8a49785dc82f22c50cac7f252cde15aa4776f705ae51446be89ef25",
+    "actual": "whole",
+    "flags": []
+  },
+  {
+    "input": {
+      "utc": "2199-12-31T23:59:00.000Z",
+      "latitude": 89.9999,
+      "longitude": 179.9999,
+      "houseSystem": "placidus",
+      "timeKnown": true
+    },
+    "oldSHA256": "030903c9175895fa625362c10ebb8daf5e15b08a979591312275de5b06893849",
+    "newSHA256": "030903c9175895fa625362c10ebb8daf5e15b08a979591312275de5b06893849",
+    "actual": "whole",
+    "flags": [
+      "polar-fallback"
+    ]
+  }
+]

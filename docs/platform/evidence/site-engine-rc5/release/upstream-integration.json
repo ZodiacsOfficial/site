@@ -1,0 +1,140 @@
+{
+  "timestamp": "2026-09-08T03:58:57.416045+00:00",
+  "upstream": "d4d5717d132a28cd6d7cda3007e3b898bb74669f",
+  "integrationCommit": "7266b131f12d5cf16bbfb8a56ae07b362443293c",
+  "files": [
+    {
+      "path": "public/assets/data/registry-market-history.v1.json",
+      "upstreamSha256": "ba14397b97a0cf5c3f94faae4059ff3d83cea6a1e794ca0cb7d71070b782dfb0",
+      "candidateSha256": "ba14397b97a0cf5c3f94faae4059ff3d83cea6a1e794ca0cb7d71070b782dfb0",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/assets/data/registry-research/index.json",
+      "upstreamSha256": "b200db1800518fae3bcfc442fb9d6016bef04f40d30d3d0bdfca0d173f876a01",
+      "candidateSha256": "b200db1800518fae3bcfc442fb9d6016bef04f40d30d3d0bdfca0d173f876a01",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/assets/registry-outlook.json",
+      "upstreamSha256": "3f26d70f3f44156724a49ea542f807700d30ac0635b0fbac70a95032a51d7242",
+      "candidateSha256": "3f26d70f3f44156724a49ea542f807700d30ac0635b0fbac70a95032a51d7242",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/assets/registry-research-feed.json",
+      "upstreamSha256": "d2356de5d5899c7ac5e8526b1e34491a25ce5413cc260490d35ff2f88cdfa665",
+      "candidateSha256": "d2356de5d5899c7ac5e8526b1e34491a25ce5413cc260490d35ff2f88cdfa665",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/aquarius/index.html",
+      "upstreamSha256": "6e9be2d2a696bbacc056e862a53ed6921e292b67470ef375d8a9458036a6715a",
+      "candidateSha256": "6e9be2d2a696bbacc056e862a53ed6921e292b67470ef375d8a9458036a6715a",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/aries/index.html",
+      "upstreamSha256": "66d26bfb89c8840257ab67293ac2acce39ea677beb523a753dfa82419ee018a3",
+      "candidateSha256": "66d26bfb89c8840257ab67293ac2acce39ea677beb523a753dfa82419ee018a3",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/cancer/index.html",
+      "upstreamSha256": "487f7aaeabec3e22ecc1133ff3d48ec65569ff371520fc702d00456f46bcaa4d",
+      "candidateSha256": "487f7aaeabec3e22ecc1133ff3d48ec65569ff371520fc702d00456f46bcaa4d",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/capricorn/index.html",
+      "upstreamSha256": "751cb43201ff5a7c2c2061ac4db22d447dece1db342bfee9799b42c76cd28cd5",
+      "candidateSha256": "751cb43201ff5a7c2c2061ac4db22d447dece1db342bfee9799b42c76cd28cd5",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/gemini/index.html",
+      "upstreamSha256": "b99b9b4f6b2d3ceb246e54b8680331978209ecc820cf33caad44a7edf5ca5404",
+      "candidateSha256": "b99b9b4f6b2d3ceb246e54b8680331978209ecc820cf33caad44a7edf5ca5404",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/leo/index.html",
+      "upstreamSha256": "3fc4a4e5c6cecc5ed628d2c8412b0457dad7940416fef0e049756096f824ee79",
+      "candidateSha256": "3fc4a4e5c6cecc5ed628d2c8412b0457dad7940416fef0e049756096f824ee79",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/libra/index.html",
+      "upstreamSha256": "0b3901a666e50f60de4f68639e0185ab9c1b594232e0622f8d6df32f78ce57b2",
+      "candidateSha256": "0b3901a666e50f60de4f68639e0185ab9c1b594232e0622f8d6df32f78ce57b2",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/pisces/index.html",
+      "upstreamSha256": "e4f37279d63d69eaf309e63c7cfcc4267f5ebe72334e0ef0aaf9c80c8f7c5fb9",
+      "candidateSha256": "e4f37279d63d69eaf309e63c7cfcc4267f5ebe72334e0ef0aaf9c80c8f7c5fb9",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/sagittarius/index.html",
+      "upstreamSha256": "e3cc8132d261b5eb7494be30b8b9a5c97ffdc293d83d49dc0fccbd1ec471e80c",
+      "candidateSha256": "e3cc8132d261b5eb7494be30b8b9a5c97ffdc293d83d49dc0fccbd1ec471e80c",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/scorpio/index.html",
+      "upstreamSha256": "9788d25e0fa7b6a37cf659b4d0ccfeb9998ab5a0b7896c93d5c542f6080cdc8f",
+      "candidateSha256": "9788d25e0fa7b6a37cf659b4d0ccfeb9998ab5a0b7896c93d5c542f6080cdc8f",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/taurus/index.html",
+      "upstreamSha256": "80f7eeb17b8ed8de114d7caf17f0062331e7e3870534ca1e27a55a39b443680b",
+      "candidateSha256": "80f7eeb17b8ed8de114d7caf17f0062331e7e3870534ca1e27a55a39b443680b",
+      "byteIdentical": true
+    },
+    {
+      "path": "public/registry/virgo/index.html",
+      "upstreamSha256": "99ad8831847c7615d6a50a28d038a42e7494e5d29f11b4c6f55cb160b0620cb6",
+      "candidateSha256": "99ad8831847c7615d6a50a28d038a42e7494e5d29f11b4c6f55cb160b0620cb6",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/data/daily-publication-manifest.json",
+      "upstreamSha256": "6e61d34b9ac635a504e95351ef8b3ede1e8b9cce8d8148a30ef88417b36a27a0",
+      "candidateSha256": "d12b85eb74403fab79a0f3bd9596c5ba44a3ae9c08c21cb51daf565006036053",
+      "byteIdentical": false
+    },
+    {
+      "path": "src/data/daily-publication.json",
+      "upstreamSha256": "96d3ce9b1daac4f0cba7dea30f68aec797f82ca58a2717c6aa7291882ba95971",
+      "candidateSha256": "96d3ce9b1daac4f0cba7dea30f68aec797f82ca58a2717c6aa7291882ba95971",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/data/daily.json",
+      "upstreamSha256": "136d3711cc4acc8d10134c968e14da6b5aa1a4a1a6aaddf20499bb528a3d9f61",
+      "candidateSha256": "136d3711cc4acc8d10134c968e14da6b5aa1a4a1a6aaddf20499bb528a3d9f61",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/data/horoscope-program.json",
+      "upstreamSha256": "997243b7e885dac2bf1216692bb7c26b833409035f83abea027ef5a7fe88c3ef",
+      "candidateSha256": "997243b7e885dac2bf1216692bb7c26b833409035f83abea027ef5a7fe88c3ef",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/data/registry-research/drafts.json",
+      "upstreamSha256": "d9ff62c82d514cd2cfeec80cb605becfa76f6e45c3c98074fc1db33b4fe05a06",
+      "candidateSha256": "d9ff62c82d514cd2cfeec80cb605becfa76f6e45c3c98074fc1db33b4fe05a06",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/data/registry-research/publication.json",
+      "upstreamSha256": "b200db1800518fae3bcfc442fb9d6016bef04f40d30d3d0bdfca0d173f876a01",
+      "candidateSha256": "b200db1800518fae3bcfc442fb9d6016bef04f40d30d3d0bdfca0d173f876a01",
+      "byteIdentical": true
+    }
+  ],
+  "exception": "Manifest retains earlier candidate engine/version generator identifiers after a conflict-free merge; existing publication builder will regenerate those fields against rc.5."
+}

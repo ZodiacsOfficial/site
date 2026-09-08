@@ -1,0 +1,26 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
++   absenceReason: null,
+    actual: 'whole',
+    requested: 'placidus'
+  }
+
+    at file:///private/tmp/zodiacs-platform-rc5-independent-review/probe.mjs:113:134
+    at check (file:///private/tmp/zodiacs-platform-rc5-independent-review/probe.mjs:10:25)
+    at file:///private/tmp/zodiacs-platform-rc5-independent-review/probe.mjs:109:37
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: { absenceReason: null, actual: 'whole', requested: 'placidus' },
+  expected: { requested: 'placidus', actual: 'whole' },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

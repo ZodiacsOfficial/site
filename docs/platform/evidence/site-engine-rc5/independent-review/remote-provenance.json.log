@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-08T04:01:06.619571+00:00",
+  "artifact": {
+    "url": "https://raw.githubusercontent.com/ZodiacsOfficial/sdk/333369256af683c560603dd1e6411dd7a07adb1f/artifacts/zodiacs-engine-0.1.1-rc.5.tgz",
+    "sha256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
+    "bytes": 36065,
+    "equalsFrozenAndInstalledArchive": true
+  },
+  "sourceReadme": {
+    "url": "https://raw.githubusercontent.com/ZodiacsOfficial/sdk/97f5e8d01828f4b85ffa845825dee9acff4695e4/packages/engine/README.md",
+    "sha256": "4bb5149b88c323e4730687e92c17ab55c2742f8fe2ac2bc218408cffdb559e1c",
+    "equalsPackedReadme": true
+  },
+  "receiptSpec": {
+    "url": "https://raw.githubusercontent.com/ZodiacsOfficial/sdk/97f5e8d01828f4b85ffa845825dee9acff4695e4/docs/platform/receipt-draft-v1.md",
+    "sha256": "926f22ea0f703cf0f0d52a0a1a39a23679587431a40755f2225b578b72607604"
+  },
+  "limits": [
+    "Immutable source documentation and archive bytes verified; this review did not independently rebuild the SDK source commit.",
+    "No npm registry publication, production deployment or external adoption inferred."
+  ]
+}
