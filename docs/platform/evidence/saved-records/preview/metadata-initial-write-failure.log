@@ -1,0 +1,1 @@
+First metadata-only write used a JavaScript JSON null directly in a Python literal: NameError: name null is not defined. Repeated using json.loads. Browser verification was unaffected; no product or test change.

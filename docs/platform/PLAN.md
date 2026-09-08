@@ -55,7 +55,9 @@ reviewable release to resolution of the unrelated engine publication hold.
   separately from astronomical accuracy; geographic poles and degenerate
   horizon/ecliptic intersections need scoped behavior before wider claims.
 - C-008's optional immutable saved-record store is integrated on
-  `codex/platform-saved-records` above #425's `c761a49c` documentation head.
+  `codex/platform-saved-records` above #425's `c761a49c` documentation head;
+  draft #426 is delivered at `a0bf5517`, all14 exact-source CI jobs pass and
+  its READY preview passes13 browser/API checks.
   Freeze 1 passes 74 focused tests, strict TypeScript and 22 independent native
   Chrome cases. Root acceptance passes 4,787 tests / 411 files, build/check/scope and 18 unchanged captures. It opens no database on import,
   writes no v1 profile and activates no UI/account lifecycle. The following
@@ -66,3 +68,11 @@ Gate A engineering evidence permits a review candidate and independent Stage B
 preparation. Required human/external review and publication authority remain
 separate gates. For rollback, revert the site pin and adapter changes together;
 never replace bytes of an existing candidate or published version.
+
+- Follow-up A04/C02: SDK draft #11 delivers rc.6 seconds-precision time matching
+  above #10. Root579 Node22/24 tests, required workspace gates, two fresh
+  consumers, independent278 Node/37 Chrome cases and public archive verification
+  pass. Adopt its source/artifact pairing on the site separately after the
+  current explicit receipt-export slice. Distinct date-endpoint findings require
+  first-existing-instant and skipped-date policies; do not reuse birth-time gap
+  shifting as proof of civil-date boundaries.

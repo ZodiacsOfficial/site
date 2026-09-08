@@ -12,9 +12,10 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Current work — immutable saved receipts
+## Delivered candidate — immutable saved receipts
 
-Integration branch: `codex/platform-saved-records`, based on delivered #425
+Draft [#426](https://github.com/ZodiacsOfficial/site/pull/426) is delivered at
+`a0bf55176dd4df4d27763bfeb2cf97e36abe4d15` on `codex/platform-saved-records`, based on delivered #425
 documentation head `c761a49c55d125bca48ff38d81b0a9ff6fd5adcf` (runtime source
 `dcc4e437`). The four-file frozen patch for Decision C-008's optional immutable
 profile store is integrated: patch SHA-256
@@ -27,7 +28,18 @@ that failure is retained, and the original build/capture refresh plus full rerun
 pass without changing the guard or baseline policy. Native transaction and
 owner/lifecycle counterexamples are durable under
 [saved-record-design](evidence/saved-record-design/). No active UI/account
-storage is changed by this checkpoint.
+storage is changed by this checkpoint. All 14 exact-source CI jobs pass in run 34190846700.
+The exact-source READY preview `dpl_bhx76pgozg4Djw3mbBayzay7VrxS` passes 13
+browser/API checks. The C02 consumer receipt-export slice is
+being verified separately above #425; it has no saved-store dependency.
+Its review found historical seconds-sized time-resolution and Russian hydration
+replay defects; the latter has a bounded fix under acceptance. SDK draft #11
+delivers the former as engine rc.6 (source `fb57af7a`, carrier `51129a19`),
+579 tests on Node22/24, required gates, two fresh consumers and independent native
+review. Its public review archive matches SHA-256
+`09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e`.
+The site still pins rc.5; its corresponding adoption and distinct civil-date
+endpoint correction remain next numerical work. No npm or production release.
 
 ## Delivered candidate — optional portable calculation
 
@@ -142,10 +154,10 @@ Its exact-source CI also passes all 14 jobs. Continue the separate next C02 slic
 The C02 prerequisite is now integrated on its separate branch (current work
 above). Local build/test/check/scope, chart-share regression and actual browser
 privacy acceptance pass. Draft #425 is delivered; all 14 jobs pass in exact-source CI run 34187725308. Its exact-source preview `dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z`
-is READY and passes 13 browser/API checks. The next bounded implementation is
-an explicitly callable immutable saved-receipt store in a separate database,
-with transactional capacity checks and owner/epoch revocation. It remains
-unwired to the active save/account path until lifecycle integration is verified.
+is READY and passes 13 browser/API checks. The optional saved-receipt store is delivered separately in draft #426.
+The next slice adds explicit local receipt download to the full chart result,
+with truthful captured time context and stale-input/access guards. Rich saving
+remains unwired until lifecycle integration is verified.
 
 Decision C-006 requires a version-owned authoritative saved namespace; legacy
 v1 writers lose requested houses and overwrite richer metadata. Do not infer
