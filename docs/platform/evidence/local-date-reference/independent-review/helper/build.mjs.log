@@ -1,0 +1,10 @@
+import fs from 'node:fs';import crypto from 'node:crypto';import * as esbuild from 'esbuild';import ts from 'typescript';
+const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+const current=fs.readFileSync('source/src/lib/time/localToUtc.ts','utf8'),base=fs.readFileSync('localToUtc.base.ts','utf8'),ast=ts.createSourceFile('current.ts',current,ts.ScriptTarget.Latest,true);let node;
+for(const n of ast.statements)if(ts.isFunctionDeclaration(n)&&n.name?.text==='localDateContainsUtc')node=n;
+if(!node)throw Error('Missing helper');const stripped=current.slice(0,node.getFullStart())+current.slice(node.end);if(stripped!==base)throw Error('Existing source bytes changed beyond helper insertion');
+const imports=s=>{const tree=ts.createSourceFile('file.ts',s,ts.ScriptTarget.Latest,true);return tree.statements.filter(ts.isImportDeclaration).map(n=>n.moduleSpecifier.text)};
+if(JSON.stringify(imports(base))!==JSON.stringify(imports(current)))throw Error('Product import boundary expanded');
+const results={sourceProof:{existingBytesRestoredExactly:true,unchangedImportSpecifiers:imports(base),helperSha256:hash(node.getText(ast)),candidateSha256:hash(current),baseSha256:hash(base)}};
+for(const [name,entry]of [['subject',"export * from './source/src/lib/time/localToUtc';export {runIndependentChecks} from './cases.mjs';"],['interval',"export * from './source/src/lib/time/local-date-intervals';"]])for(const format of ['esm','iife']){const file=`${name}.${format==='esm'?'mjs':'js'}`;const r=await esbuild.build({stdin:{contents:entry,resolveDir:process.cwd()},bundle:true,write:false,platform:'neutral',format,target:'es2022',globalName:format==='iife'?name==='subject'?'helperSubject':'intervalSubject':undefined,metafile:true});const bytes=r.outputFiles[0].contents;fs.writeFileSync(file,bytes);results[file]={sha256:hash(bytes),inputs:Object.keys(r.metafile.inputs).filter(p=>!p.startsWith('<')).map(p=>({path:p,sha256:hash(fs.readFileSync(p))}))}}
+fs.writeFileSync('build-identity.json',JSON.stringify(results,null,2)+'\n');console.log(JSON.stringify(results.sourceProof));

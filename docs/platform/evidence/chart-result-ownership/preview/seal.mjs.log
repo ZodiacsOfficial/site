@@ -1,0 +1,29 @@
+import fs from'node:fs';import path from'node:path';import assert from'node:assert/strict';import{createHash}from'node:crypto';import{execFileSync}from'node:child_process';
+const hash=b=>createHash('sha256').update(b).digest('hex'),root='/Users/chiburashka/.codex/worktrees/4806/site',commit='c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3';
+const result=JSON.parse(fs.readFileSync('browser-run2/result.json','utf8'));assert.equal(result.outcome,'passed');assert.equal(result.checks.length,9);assert.ok(result.checks.every(r=>r.status==='passed'));assert.equal(result.checks.reduce((n,r)=>n+r.nativeCalls,0),12);
+const snapshot=JSON.parse(fs.readFileSync('source-snapshot.json','utf8'));
+for(const row of snapshot.records){assert.equal(hash(fs.readFileSync('source/'+row.path)),row.sha256);assert.equal(hash(execFileSync('git',['show',commit+':'+row.path],{cwd:root})),row.sha256);}
+const before=JSON.parse(fs.readFileSync('deployment-before.json','utf8')),after=JSON.parse(fs.readFileSync('deployment-after.json','utf8'));
+for(const p of[before,after]){assert.equal(p.id,'dpl_2Z94CZozTG7aXCNiEEbCLz2GR27t');assert.equal(p.readyState,'READY');assert.equal(p.meta.githubCommitSha,commit);assert.equal(p.meta.githubPrId,'434');assert.equal(p.target,null);}
+assert.equal(fs.existsSync('/private/tmp/zodiacs-platform-chart-preview-auth'),false);
+const modules=Object.entries(result.moduleIdentities).map(([p,r])=>{const b=fs.readFileSync('browser-run2/remote-modules/'+path.basename(p));assert.equal(hash(b),r.sha256);assert.equal(b.length,r.bytes);return{path:p,archivePath:'remote-modules/'+path.basename(p),...r};});
+for(const row of result.responses)assert.ok(row.status<400&&!row.bodyUnavailable);
+assert.ok(result.requests.every(r=>r.method==='GET'));assert.ok(!result.requests.some(r=>r.path.startsWith('/api/')));
+assert.equal(result.blocks.length,9);assert.ok(result.blocks.every(r=>r.method==='GET'&&r.origin==='https://plausible.io'&&r.path==='/js/pa-HwF2IBb5Sw8eboNPSOgHv.js'));
+const childBytes=fs.readFileSync('pr-identity/manifest.json'),child=JSON.parse(childBytes);let childTotal=0;
+for(const row of child.records){assert.ok(!path.isAbsolute(row.path)&&!row.path.split('/').includes('..'));const b=fs.readFileSync('pr-identity/'+row.path);assert.equal(hash(b),row.sha256);assert.equal(b.length,row.bytes);childTotal+=b.length;}
+const statuses={};for(const r of result.responses)statuses[r.status]=(statuses[r.status]??0)+1;
+const summary={at:new Date().toISOString(),checks:9,passed:9,actualRemoteNativeCalls:12,sourceCommit:commit,sourceFilesVerified:snapshot.records.length,providerBeforeAfter:'READY exact source',requestEvents:result.requests.length,capturedResponseBodies:result.responses.length,responseStatusCounts:statuses,externalBlocked:result.blocks.length,nonGetRequestEvents:0,apiRequestEvents:0,uncaughtPageErrors:0,remoteModules:modules.length,remoteNativeIdentity:result.nativeIdentity,child:{manifestSha256:hash(childBytes),records:child.records.length,bytes:childTotal,allRehashed:true},temporaryAuthDirectoryRemoved:true};
+fs.writeFileSync('summary.json',JSON.stringify(summary,null,2)+'\n');fs.writeFileSync('remote-modules-manifest.json',JSON.stringify({records:modules},null,2)+'\n');
+fs.mkdirSync('delivery',{recursive:true});const map=[];
+function copy(from,to){fs.mkdirSync(path.dirname(to),{recursive:true});fs.copyFileSync(from,to);map.push({original:from,delivery:to.slice('delivery/'.length),sha256:hash(fs.readFileSync(from))});}
+for(const p of['REVIEW.md','COMMANDS.md','source-snapshot.json','deployment-before.json','deployment-after.json','provider-initial-error.json','summary.json','remote-modules-manifest.json','cleanup.json','cleanup.log','snapshot.log','preview-run1.log','preview-run2.log'])copy(p,'delivery/'+p);
+for(const p of['snapshot.mjs','preview-drive.mjs','preview-drive-run1.mjs','cleanup.mjs','seal.mjs'])copy(p,'delivery/'+p+'.log');
+for(const row of snapshot.records)copy('source/'+row.path,'delivery/source/'+row.path+'.log');
+for(const e of fs.readdirSync('browser-run2',{withFileTypes:true}))if(e.isFile())copy('browser-run2/'+e.name,'delivery/browser/'+e.name);
+fs.mkdirSync('delivery/browser',{recursive:true});execFileSync('tar',['-czf',path.resolve('delivery/browser/remote-modules.tar.gz'),'-C',path.resolve('browser-run2'),'remote-modules']);
+function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>{const p=path.join(dir,e.name);return e.isDirectory()?walk(p):[p];});}
+for(const row of child.records)copy('pr-identity/'+row.path,'delivery/pr-identity/'+row.path);copy('pr-identity/manifest.json','delivery/pr-identity/manifest.json');
+fs.writeFileSync('delivery/file-map.json',JSON.stringify({qualification:'Main source and executable drivers copied byte-for-byte with .log suffix; child sealed record names unchanged; actual remote modules archived with separate member hash manifest.',records:map},null,2)+'\n');
+const records=walk('delivery').filter(p=>p!=='delivery/manifest.json').sort().map(p=>{const b=fs.readFileSync(p);return{path:p.slice('delivery/'.length),bytes:b.length,sha256:hash(b)};});
+const bytes=Buffer.from(JSON.stringify({records},null,2)+'\n');fs.writeFileSync('delivery/manifest.json',bytes);console.log(JSON.stringify({...summary,deliveryRecords:records.length,deliveryBytes:records.reduce((n,r)=>n+r.bytes,0),deliveryManifestSha256:hash(bytes)}));

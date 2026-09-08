@@ -22,3 +22,14 @@ are individually hashed and were reverified. Historical date membership and
 whole-date Sun/Moon certainty are unchanged and remain separate open work.
 This is an implemented/tested review candidate, not publication, production,
 human numerical certification or external adoption.
+
+Draft #434's exact c7b9eb4 preview passes nine actual remote browser groups;
+see `preview/REVIEW.md`. Its 199 actual changed files and blobs match the reviewed
+head/base. The `preview-archive-audit/` supplement distinguishes 69 served modules
+from 70 AppleDouble metadata files and qualifies its decompressed-content scan.
+Source, payload and metadata bytes remain immutable.
+
+`release/ci-post-chart-job.log` retains the original CI failure, 1/291 assertions.
+The old retention expectation conflicts with result invalidation; the daily
+panel's cached-context survival is also an actual follow-up requiring correction.
+Do not infer complete CI acceptance or release readiness from the preview pass.

@@ -1,0 +1,77 @@
+import collections, gzip, hashlib, json, pathlib, re, struct, tarfile
+
+ROOT = pathlib.Path('/private/tmp/zodiacs-platform-chart-preview-review/delivery')
+OUT = pathlib.Path(__file__).resolve().parent
+archive = ROOT / 'browser/remote-modules.tar.gz'
+manifest_path = ROOT / 'remote-modules-manifest.json'
+sha = lambda b: hashlib.sha256(b).hexdigest()
+before = {str(p.relative_to(ROOT)): sha(p.read_bytes()) for p in ROOT.rglob('*') if p.is_file()}
+payloads = {r['archivePath']: r for r in json.loads(manifest_path.read_text())['records']}
+patterns = {
+    'protection_bypass_header': rb'x-vercel-(?:protection-bypass|set-bypass-cookie)',
+    'protection_secret_structural_key': rb'VERCEL_AUTOMATION_BYPASS_SECRET|bypassToken|protectionBypass|previewToken|deploymentProtection',
+    'private_preview_hostname': rb'[a-z0-9-]+\.vercel\.app',
+    'vercel_auth_cookie': rb'_vercel_jwt|vercel_toolbar_token',
+    'jwt_shape': rb'eyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}',
+    'provider_token_shape': rb'gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-(?:proj-)?[A-Za-z0-9_-]{24,}',
+    'authorization_bearer_assignment': rb'authorization[\s\x22\x27:=]{1,12}bearer[\s\x22\x27+]{1,12}[A-Za-z0-9_-]{8,}',
+    'generic_token_or_authorization': rb'\b(?:token|authorization|access_token|refresh_token|secret|password)\b',
+}
+compiled = {k: re.compile(v, re.I) for k,v in patterns.items()}
+def scan(data):
+    # Record classification and offsets only, never matched candidate credentials.
+    return {k: {'count': len(m), 'offsets': [x.start() for x in m]} for k, rx in compiled.items() if (m := list(rx.finditer(data)))}
+
+def apple_double(data):
+    magic, version = struct.unpack_from('>II', data)
+    assert magic == 0x00051607 and version == 0x00020000
+    count = struct.unpack_from('>H', data, 24)[0]
+    entries=[]
+    for i in range(count):
+        entry_id, offset, length = struct.unpack_from('>III', data, 26 + i * 12)
+        assert offset + length <= len(data)
+        entries.append({'id':entry_id,'offset':offset,'bytes':length,'sha256':sha(data[offset:offset+length])})
+    at=data.find(b'ATTR')
+    attrs=[]
+    header=None
+    if at >= 0:
+        magic,debug,total,start,length,r1,r2,r3,flags,n = struct.unpack_from('>IIIIIIIIHH',data,at)
+        header={'offset':at,'totalSize':total,'dataStart':start,'dataBytes':length,'flags':flags,'count':n}
+        cursor=at+36
+        for i in range(n):
+            offset,length,flags,namelen = struct.unpack_from('>IIHB',data,cursor)
+            name=data[cursor+11:cursor+11+namelen].rstrip(b'\0').decode('utf-8')
+            assert offset + length <= len(data)
+            value=data[offset:offset+length]
+            attrs.append({'name':name,'offset':offset,'bytes':length,'flags':flags,'sha256':sha(value),'scan':scan(value)})
+            cursor=(cursor+11+namelen+3)&~3
+    return {'magic':hex(magic if at < 0 else 0x00051607),'version':hex(version),'entryCount':count,'entries':entries,'attributeHeader':header,'attributes':attrs}
+
+members=[]
+seen=set()
+with tarfile.open(archive,'r:gz') as tar:
+    for member in tar.getmembers():
+        assert member.name not in seen, 'Duplicate tar member'
+        seen.add(member.name)
+        record={'name':member.name,'type':member.type.decode('ascii'),'bytes':member.size,'paxHeaderKeys':sorted(member.pax_headers),'paxHeaderScan':scan(json.dumps(member.pax_headers).encode())}
+        if member.isfile():
+            data=tar.extractfile(member).read()
+            record.update({'sha256':sha(data),'scan':scan(data)})
+            if pathlib.PurePosixPath(member.name).name.startswith('._'):
+                record['classification']='AppleDouble metadata';record['appleDouble']=apple_double(data)
+            else:
+                record['classification']='manifest JavaScript payload'
+                expected=payloads[member.name]
+                assert expected['sha256']==record['sha256'] and expected['bytes']==len(data), member.name
+                record['manifestMatches']=True
+        elif member.isdir(): record['classification']='directory'
+        else: raise AssertionError('Unexpected nonregular member')
+        members.append(record)
+assert set(payloads)=={m['name'] for m in members if m['classification']=='manifest JavaScript payload'}
+after={str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in ROOT.rglob('*') if p.is_file()}
+assert before==after, 'Original sealed delivery changed'
+decompressed=gzip.decompress(archive.read_bytes())
+report={'archive':str(archive),'archiveSha256':sha(archive.read_bytes()),'payloadManifestSha256':sha(manifest_path.read_bytes()),'originalDeliveryFilesVerifiedUnchanged':len(before),'totalMembers':len(members),'classifications':dict(collections.Counter(m['classification'] for m in members)),'regularMembers':sum(m['type']=='0' for m in members),'allPayloadHashesMatch':True,'xattrNames':dict(collections.Counter(a['name'] for m in members for a in m.get('appleDouble',{}).get('attributes',[]))),'patterns':{k:v.decode() for k,v in patterns.items()},'scanByPattern':dict(collections.Counter({k:sum(m.get('scan',{}).get(k,{}).get('count',0) for m in members) for k in patterns})),'fullDecompressedTarBytes':len(decompressed),'fullDecompressedTarScan':scan(decompressed),'exactSecretValueScan':'Not performed: original exact values are no longer available. Heuristic structural and credential-shape scanning is not a proof of absence.'}
+(OUT/'member-manifest.json').write_text(json.dumps(members,indent=2)+'\n')
+(OUT/'audit-result.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({k:v for k,v in report.items() if k not in ['patterns','fullDecompressedTarScan']}))

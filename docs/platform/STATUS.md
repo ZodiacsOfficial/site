@@ -28,7 +28,9 @@ unchanged. No native Temporal requirement or alternate reference is introduced.
 [real-date controls](evidence/local-date-reference/real-date-controls/REVIEW.md)
 and the [synthetic nonempty-date refusal](evidence/local-date-reference/synthetic-refusal/README.md)
 are byte-verified and retained. The 12-file author freeze is implemented in its
-isolated scratch and undergoing independent review; it is not integrated here.
+isolated scratch and passes [independent review](evidence/local-date-reference/independent-review/REVIEW.md):
+26 accepted caller controls, nine exact output comparisons and 92 helper controls
+on each Node 22/24 and native Chrome. It is not integrated here.
 The separate C-012 downstream-context finding below also requires correction.
 
 ## Delivered candidate — birth-chart result ownership
@@ -62,10 +64,14 @@ actual remote groups: EN/RU desktop/mobile, receipts, edit/recovery, a labeled
 serialization fault, delayed loaders/replacement and positions-only import.
 Native call counts come from the actual served chunk; this is not a remote
 rerun of every local race. Protected-preview bootstrap is separately qualified.
-The sealed preview evidence is being checked for durable archival.
+The [preview report](evidence/chart-result-ownership/preview/REVIEW.md) and
+[supplemental compressed-metadata audit](evidence/chart-result-ownership/preview-archive-audit/REVIEW.md)
+are byte-verified and durable. The latter is a structural/pattern scan of all
+decompressed content; deleted preview secrets were unavailable for a fresh exact
+comparison. Original archive bytes and all metadata remain inspectable.
 
-Site Check 34209606308 has twelve successful jobs, Build & Check in progress,
-and a failed post-chart job (1/291 assertions). The failing legacy assertion
+Site Check 34209606308 is complete with thirteen successful jobs, including
+Build & Check, and one failed post-chart job (1/291 assertions). The failing legacy assertion
 expects the old context to survive an edit. Inspection also finds that the
 optional daily panel caches that cleared context and remains visible. A bounded
 clear-signal/listener correction and stronger browser assertions are being

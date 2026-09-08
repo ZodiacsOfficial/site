@@ -1,0 +1,96 @@
+{
+  "sourceProof": {
+    "existingBytesRestoredExactly": true,
+    "unchangedImportSpecifiers": [
+      "./technical-locales",
+      "./civil-date"
+    ],
+    "helperSha256": "4c0524c6d1ac112dd1e9e747ea346f525b2d8328420a8e87bcfbed26be95aeb4",
+    "candidateSha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb",
+    "baseSha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+  },
+  "subject.mjs": {
+    "sha256": "5333ea8f30704946bc1b32639a6848d6d6ac1fb4cdbb6f3842a6df6bb2d57ebf",
+    "inputs": [
+      {
+        "path": "source/src/lib/time/technical-locales.ts",
+        "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+      },
+      {
+        "path": "source/src/lib/time/civil-date.ts",
+        "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+      },
+      {
+        "path": "source/src/lib/time/localToUtc.ts",
+        "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+      },
+      {
+        "path": "cases.mjs",
+        "sha256": "74dee091be32206891ae5752566614472c2469cc7f2d3e519d53ea2fc92f6f55"
+      }
+    ]
+  },
+  "subject.js": {
+    "sha256": "b9eb7b3d926a499bea9609b11f6565d7a69509ae4da1276f7d977e43b0835295",
+    "inputs": [
+      {
+        "path": "source/src/lib/time/technical-locales.ts",
+        "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+      },
+      {
+        "path": "source/src/lib/time/civil-date.ts",
+        "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+      },
+      {
+        "path": "source/src/lib/time/localToUtc.ts",
+        "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+      },
+      {
+        "path": "cases.mjs",
+        "sha256": "74dee091be32206891ae5752566614472c2469cc7f2d3e519d53ea2fc92f6f55"
+      }
+    ]
+  },
+  "interval.mjs": {
+    "sha256": "98b3b214479136f558e6c0c8fff37bff89f83e7e2d3ba5430a6474a2113a8c21",
+    "inputs": [
+      {
+        "path": "source/src/lib/time/civil-date.ts",
+        "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+      },
+      {
+        "path": "source/src/lib/time/technical-locales.ts",
+        "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+      },
+      {
+        "path": "source/src/lib/time/localToUtc.ts",
+        "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+      },
+      {
+        "path": "source/src/lib/time/local-date-intervals.ts",
+        "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+      }
+    ]
+  },
+  "interval.js": {
+    "sha256": "bd6cb61d43e7783b26b7520c7ef08aa592a94ed2daaf912c89d5b4b916f70c4f",
+    "inputs": [
+      {
+        "path": "source/src/lib/time/civil-date.ts",
+        "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+      },
+      {
+        "path": "source/src/lib/time/technical-locales.ts",
+        "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+      },
+      {
+        "path": "source/src/lib/time/localToUtc.ts",
+        "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+      },
+      {
+        "path": "source/src/lib/time/local-date-intervals.ts",
+        "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+      }
+    ]
+  }
+}

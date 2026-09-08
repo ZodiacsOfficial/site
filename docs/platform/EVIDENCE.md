@@ -2068,3 +2068,97 @@ comparisons and original setup/selector/type failures remain available. The
 fixture is an instrumented actual-component/native-engine execution, not a
 production graph or approved-design gate. Independent review and root integration
 are pending; the separate downstream daily-panel clear-signal finding is open.
+
+## Chart preview delivery and CI follow-up — 2026-09-08
+
+Draft #434 at `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3` has 199 actual
+changed paths and blob identities matching its exact base. READY deployment
+`dpl_2Z94CZozTG7aXCNiEEbCLz2GR27t` retains that source before and after all
+nine [actual remote browser groups](evidence/chart-result-ownership/preview/REVIEW.md).
+The four EN/RU desktop/mobile flows produce four downloaded receipts and eight
+native natal calls; a labeled post-calculation serialization fault/recovery uses
+three; delayed replacement uses one; delayed edit and positions controls use
+zero. All twelve calls are measured against function Et in the actual served
+chart-adapter chunk, SHA256
+`20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95`.
+No local product source or replacement response was injected into the preview.
+
+Root reverified the independent reviewer's 78-record delivery manifest
+`d08cdb14f146eb23cd6470764073b39627464cee0cbc4a4c4d8b4d6e4d62ab7b`.
+The 80-record inert root copy has manifest
+`67eb3b2c8a9a3b82a676f479314a070fe057ce355a5b177e930d8acfb1dfe9ea`.
+There are 1,023 observed request events, 905 captured same-origin response bodies,
+nine blocked Plausible GETs and no observed API/non-GET/uncaught page errors.
+Uncaptured responses are not asserted successful. Protected-preview bootstrap
+is outside that observer; the original raw-file exact-secret scan and cleanup
+are distinct from the later compressed-content audit. Original pre-browser ESM
+setup and provider-scope failures are retained without attributing them to product
+behavior. These nine checks are not all seventeen local race controls.
+
+The original archive has 140 logical members: 69 served JavaScript payloads,
+70 AppleDouble metadata files and one directory. All payload lengths/hashes
+match; root additionally hashes all regular members. The [independent supplement](evidence/chart-result-ownership/preview-archive-audit/REVIEW.md)
+finds only identical 11-byte com.apple.provenance attributes in those metadata
+containers. Its 6-record source manifest is
+`4028b3b6e3d369bfd152befe15ab59345d85557a33632f67bd34ffe3cfe6aeb1`;
+the 7-record inert root copy is
+`69c6603021bf81922c6e3060bba5b370fa3d3ec3650b983f3a2349a5cdb0ceaf`.
+All decompressed members, PAX values and tar bytes pass the recorded structural/
+credential-pattern scan. This is explicitly not a fresh exact-secret comparison:
+the original values had been deleted. All 79 original delivery files remain
+byte-identical. The root's initial active-extension and metadata-count copy
+assertions stopped before copying; their corrected mapping/classification is
+recorded without modifying source bytes or concealing extra archive members.
+
+[Release records](evidence/chart-result-ownership/release/manifest.json) contain
+eight payloads, manifest
+`099b7a8a64feaafadc97b55c47845632622241220dfac98630c11d4db688240c`.
+Support #431's exact-source CI 34206194928 now passes all 14 jobs. Chart #434's
+34209606308 snapshot has twelve successful jobs, Build & Check in progress and
+one failed post-chart job. Its 1/291 failure expects the displayed-result context
+to persist after editing; the remaining visible daily panel also exposes its
+cached context. Root requires a separately reviewed clear-signal/listener fix
+with actual request/UI regression checks. The original job log is retained.
+An initial whole-run log request was unavailable until run completion; reading
+the completed job directly resolved that retrieval limitation.
+
+The [completed CI snapshot](evidence/chart-result-ownership/ci-final/ci.json)
+subsequently confirms thirteen successful jobs, including Build & Check and its
+new birth-chart ownership step. The post-chart job is the sole failure in run
+34209606308. Overall CI remains failed until the separate correction is delivered
+and the affected gates pass against its exact source.
+
+## Independent local-date reference acceptance — 2026-09-08
+
+The [independent frozen review](evidence/local-date-reference/independent-review/REVIEW.md)
+accepts C-014 without a blocking source defect. Source manifest
+`8841255c2f15e2fb71dfa4e9cd7083d99116b930bb804a9667d5b7f9a76dc3cc`
+contains 50 records; root's 52 inert records use manifest
+`d99a3d37c11f006f4a144762a21b73b728565ffc9a8c293df74c06e37e41fe0e`.
+All 276 compressed ordinary files were individually verified; there are no
+unlisted AppleDouble files. Actual input bytes/identities, transformations,
+baseline results and original virtual-entry/disabled-input harness failures remain.
+
+The main reviewer accepts 26 caller controls: 25 passed initially and the one
+affected recovery case passed after correcting only the test's disabled-input
+interaction. Baseline passes 13 of those 26; nine valid numerical outputs match
+exactly. Eight actual skipped-date submissions enter resolution/membership only,
+with no submitted numerical/receipt/endpoint work. This qualification excludes
+the Moon page's independent current-time banner and prior module loading.
+Existing five time functions, 93 module-specifier occurrences and numerical/
+caption blocks are unchanged. The fixture is not a production graph or page gate.
+
+The helper reviewer independently passes 92 controls on each Node 22, Node 24
+and native Chrome, including internal-slot hostile-object and true cross-realm
+checks, calendar/era/second/millisecond boundaries and the nonempty synthetic
+refusal. Its source manifest is
+`7a5cf412191f3c405cc47b02075d3b486b5584ea611d8245994eb30c171fca31`.
+Native import performs no observed Intl/fetch/storage/Temporal work and the
+blank test context records no requests/page errors. These finite checks establish
+the selected-instant contract; broader date/astronomical claims remain open.
+
+The review's appended corrigendum corrects earlier preparation prose that grouped
+both Node runtimes under one ICU/tzdb identity. Original raw records already say
+Node 22.23.2 uses ICU 78.2/tzdb 2026a and Node 24.19.0 uses ICU 78.3/tzdb 2026b.
+No result/source/counter is changed; the original preparation stays sealed.
+This is a SHA-256 copy manifest, not a cryptographic signature or human signoff.
