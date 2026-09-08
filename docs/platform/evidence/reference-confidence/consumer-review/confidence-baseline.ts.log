@@ -1,0 +1,30 @@
+import { signForLongitude } from './site/src/lib/signs';
+import { moonIsUncertain, moonCandidatesFromEndpoints } from './site/src/lib/moon-certainty';
+import { localDateEndpointsUtc as actualEndpoints, stableBodySignSlug } from './site/src/lib/chart-date-certainty';
+import { computeBodies as actualBodies } from './site/src/lib/engine/full';
+export function applyConfidence(result:any,input:any,mode:string,events:any[]) {
+ const runIsCurrent = () => true;
+ const localDateEndpointsUtc = (...args:Parameters<typeof actualEndpoints>) => { events.push({kind:'endpoints',args}); return actualEndpoints(...args); };
+ const engine = {computeBodies: (utc:Date) => {events.push({kind:'computeBodies',utc:utc.toISOString()});return actualBodies(utc);}};
+ const computedSun = result.bodies.find((body) => body.body === 'Sun');
+      const computedSunSlug = computedSun ? signForLongitude(computedSun.lon).slug : null;
+      let nextMoonAmbiguous = false;
+      let nextRegistryRecordSlug = mode === 'full' && input.timeKnown ? computedSunSlug : null;
+      if (!input.timeKnown) {
+        // Compute the local civil date's endpoints once. Moon uncertainty
+        // reaches result/share notices; Sun uncertainty fails the singular
+        // Registry bridge closed instead of trusting the noon reference.
+        const endpoints = localDateEndpointsUtc(input.date, input.city.tz);
+        const startBodies = engine.computeBodies(endpoints.start);
+        const endBodies = engine.computeBodies(endpoints.end);
+        result.moonSignCandidates = moonCandidatesFromEndpoints(startBodies, endBodies);
+        nextMoonAmbiguous = moonIsUncertain(result);
+        const stableSunSlug = stableBodySignSlug('Sun', startBodies, endBodies);
+        nextRegistryRecordSlug = mode === 'full' && stableSunSlug === computedSunSlug
+          ? stableSunSlug
+          : null;
+      }
+      if (!runIsCurrent()) return;
+      
+ return {result,nextMoonAmbiguous,nextRegistryRecordSlug};
+}

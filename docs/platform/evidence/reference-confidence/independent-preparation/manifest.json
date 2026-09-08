@@ -1,0 +1,47 @@
+[
+  {
+    "path": "COMMANDS.md",
+    "bytes": 2425,
+    "sha256": "af57d78e04be6eb2279e49fdff644854ab93bb06e418cc753e88cf34cd50a528"
+  },
+  {
+    "path": "REVIEW.md",
+    "bytes": 6247,
+    "sha256": "ed0271e8e6f40381cf76ac356bf3977b8fae6d01815653334c3124f81207189f"
+  },
+  {
+    "path": "archive-members.json",
+    "bytes": 16191,
+    "sha256": "e503d13d4fb0e139ba13d4621a2e2aaad442116946ef896ba976d0685f370646"
+  },
+  {
+    "path": "consumed-input-identities.json",
+    "bytes": 11350,
+    "sha256": "8674f6162e9d43498a45b8887345e2cf061c1a1110912a199697babba5511801"
+  },
+  {
+    "path": "final-identity.json",
+    "bytes": 438,
+    "sha256": "d1f5d3548a56e0979b1e44132ef4b81f1076261522d3b95611d4e368489d9ef6"
+  },
+  {
+    "path": "node22-result.json",
+    "bytes": 50549,
+    "sha256": "a1534cd2dd3be650854dd56382c5171712682c1298b71d1dc57c88ec014d0da5"
+  },
+  {
+    "path": "raw-evidence.tar.gz",
+    "bytes": 494025,
+    "sha256": "00bb506d68eb798c2a3f2b99aabe351c11723782a399b52de6b33e43878d182d"
+  },
+  {
+    "path": "root-copy-verification.json",
+    "bytes": 186,
+    "sha256": "ce4ffca1c8c725cedc843b83688fb61bc3d3bda22234ef73fc2285ee9112d731"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 1300,
+    "sha256": "8c8ad6a933a5774494286c54341fecccf6f1cfaffdb49e4a3d18a4b0f161a309"
+  }
+]

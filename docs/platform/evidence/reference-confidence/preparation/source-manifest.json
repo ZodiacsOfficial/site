@@ -1,0 +1,42 @@
+{
+  "qualification": "Read-only preparation, exact caller/engine controls and in-memory policy evaluation; no implementation/independent review/product DOM/release claim.",
+  "files": [
+    {
+      "path": "COMMANDS.md.log",
+      "bytes": 2052,
+      "sha256": "0cb4f6356b1aeb951a8aecd29282479969725e47621e27d1148af0df7148954c"
+    },
+    {
+      "path": "REVIEW.md.log",
+      "bytes": 10400,
+      "sha256": "fd7950e04695bc6351eb0ffa29cb77b887b1cb46b1c9b308cdd3b0101c9bb662"
+    },
+    {
+      "path": "archive-members.json",
+      "bytes": 12023,
+      "sha256": "cc5538795b6bbe28512a6a2baf04e90fc31b7329f58e36aac8d429c54f8de95c"
+    },
+    {
+      "path": "final-source-check.json.log",
+      "bytes": 9649,
+      "sha256": "d42626014d031238a76a08e518f7dc73acf338531ad866b76f9872cfa40ae843"
+    },
+    {
+      "path": "identity.json.log",
+      "bytes": 9362,
+      "sha256": "a41f2bfeae9b935be2709d4fba9b78d156196059846571dfafb49882e20ff011"
+    },
+    {
+      "path": "raw-evidence.tar.gz",
+      "bytes": 445107,
+      "sha256": "c9d999b77054d338fa11e8d1dfc4e9de8a84079bcf572c34277b74d28aac2b85"
+    },
+    {
+      "path": "summary.json.log",
+      "bytes": 346,
+      "sha256": "0cf672235f3808fd1e8c5cd0509a67943529183cf5e5ef51ebcb10624e16b3aa"
+    }
+  ],
+  "fileCount": 7,
+  "bytes": 488939
+}

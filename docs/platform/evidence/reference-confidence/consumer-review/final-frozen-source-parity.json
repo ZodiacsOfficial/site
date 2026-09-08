@@ -1,0 +1,98 @@
+[
+  {
+    "path": "src/islands/ChartCalculator.confidence.test.ts",
+    "bytes": 10063,
+    "sha256": "6c523d243fed3dcbc11bf67b0c1ec0703ffaaffa862cc8e1187daac07eb280fb",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/islands/ChartCalculator.ownership.test.ts",
+    "bytes": 20641,
+    "sha256": "a6c463f6b42f5757b3d65b2a5dac0391f4dc11c1b25c050c5f5638fce4208aac",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/islands/ChartCalculator.registry-bridge.test.ts",
+    "bytes": 1765,
+    "sha256": "78652eb861ae1c417c9c2d4cf8acc4ae0913be96965f31367144f7eff9fa127d",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/islands/ChartCalculator.tsx",
+    "bytes": 120334,
+    "sha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/lib/chart-date-certainty.ts",
+    "bytes": 1879,
+    "sha256": "2ba8257d01516622ae425b7b6d8a16ff16831f6e6f2fb9b4ad21b3b354afc936",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/lib/i18n/index.test.ts",
+    "bytes": 15646,
+    "sha256": "51a77f3a712d087e26e951bc637205598c093275e22df109cce8806452c6f96e",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/lib/i18n/ui/en.ts",
+    "bytes": 22131,
+    "sha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/lib/i18n/ui/es.ts",
+    "bytes": 24192,
+    "sha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/lib/i18n/ui/fr.ts",
+    "bytes": 27888,
+    "sha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/lib/i18n/ui/it.ts",
+    "bytes": 26712,
+    "sha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/lib/i18n/ui/pt.ts",
+    "bytes": 25812,
+    "sha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/lib/i18n/ui/ru.test.ts",
+    "bytes": 5247,
+    "sha256": "feeedfe74b08f939e0143e97d566d62878fe1cec7926be41463a206dc165ff44",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "src/lib/i18n/ui/ru.ts",
+    "bytes": 38609,
+    "sha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "tests/chart-reference-confidence-drive.mjs",
+    "bytes": 22843,
+    "sha256": "02e8d4b4fb50ce7e3f93bb4b5c1a963cf0a2ec64f4218eaed4d7172387862ff6",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "tests/local-date-reference-drive.mjs",
+    "bytes": 22380,
+    "sha256": "91a4bfaee6cabfb43d80ead610bc1b7943031c6997abba11bd0c4f04dca29c19",
+    "copiedFrozenSourceMatches": true
+  },
+  {
+    "path": "tests/t17-positions-share.mjs",
+    "bytes": 66986,
+    "sha256": "1b59abf04d279dbcb1283db0c406856acda24051c00592f882918c4629549f28",
+    "copiedFrozenSourceMatches": true
+  }
+]

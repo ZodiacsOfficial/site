@@ -1,0 +1,174 @@
+from pathlib import Path
+import collections
+import datetime
+import hashlib
+import json
+import subprocess
+
+ROOT = Path('/Users/chiburashka/.codex/worktrees/4806/site')
+OUT = Path(__file__).parent
+HEAD = 'f803d2543ad81343b22d49326b8b46d0e2ea03a0'
+BASE = '3845a04bcea822da3c30a18848ef3d8d133b7b66'
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=ROOT)
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+def dump(path, value):
+    (OUT / path).write_text(json.dumps(value, indent=2) + '\n')
+def save(path, data):
+    dest = OUT / path
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(data)
+
+before = json.loads((OUT / 'pr-before.json').read_text())
+after = json.loads((OUT / 'pr-after.json').read_text())
+for p in (before, after):
+    assert (p['number'], p['state'], p['draft']) == (435, 'open', True)
+    assert p['head']['sha'] == HEAD and p['base']['sha'] == BASE
+    assert p['head']['repo']['full_name'] == p['base']['repo']['full_name'] == 'ZodiacsOfficial/site'
+assert before['title'] == after['title']
+assert before['changed_files'] == after['changed_files']
+pages = json.loads((OUT / 'files-pages.json').read_text())
+remote = sum(pages, [])
+assert len(remote) == before['changed_files'] == 314
+assert all(len(p) == 100 for p in pages[:-1]) and len(pages[-1]) == 14
+assert len({r['filename'] for r in remote}) == len(remote)
+merge = git('merge-base', BASE, HEAD).decode().strip()
+assert merge == BASE
+save('local-commit.txt', git('show', '-s', '--format=fuller', HEAD))
+save('local-base.txt', git('show', '-s', '--format=fuller', BASE))
+save('local-merge-base.txt', (merge + '\n').encode())
+
+def tree(ref):
+    value = {}
+    for record in git('ls-tree', '-r', '-z', ref).split(b'\0'):
+        if not record:
+            continue
+        header, name = record.split(b'\t', 1)
+        mode, kind, blob = header.decode().split()
+        value[name.decode()] = dict(mode=mode, kind=kind, sha=blob)
+    return value
+head_tree, base_tree = tree(HEAD), tree(BASE)
+raw_status = git('diff', '--name-status', '-z', '--find-renames', BASE + '...' + HEAD)
+save('local-name-status.raw', raw_status)
+parts = [x.decode() for x in raw_status.split(b'\0') if x]
+statuses, i = {}, 0
+while i < len(parts):
+    code = parts[i]
+    i += 1
+    if code.startswith(('R', 'C')):
+        previous, name = parts[i:i+2]
+        i += 2
+    else:
+        name, previous = parts[i], None
+        i += 1
+    statuses[name] = {'code': code, 'previous': previous}
+assert set(statuses) == {r['filename'] for r in remote}
+
+records = []
+for r in remote:
+    name = r['filename']
+    local = head_tree.get(name)
+    # The actual diff contains additions and modifications only. Fail on expansion.
+    assert r['status'] in ('added', 'modified')
+    assert statuses[name]['code'] == {'added': 'A', 'modified': 'M'}[r['status']]
+    assert local and local['kind'] == 'blob' and local['sha'] == r['sha']
+    data = git('cat-file', 'blob', local['sha'])
+    recomputed_blob = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+    assert recomputed_blob == r['sha']
+    records.append({'path': name, 'status': r['status'], 'localStatus': statuses[name]['code'],
+                    'remoteBlob': r['sha'], 'localBlob': local['sha'], 'recomputedBlob': recomputed_blob,
+                    'sha256': sha(data), 'bytes': len(data), 'mode': local['mode'],
+                    'isDocumentationPath': name.startswith('docs/'), 'verified': True})
+dump('changed-file-identities.json', records)
+
+freeze_inputs = [
+    ('c014-source-freeze.json', Path('/private/tmp/zodiacs-platform-local-date-reference-evidence/source-freeze.json'),
+     '328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2'),
+    ('supplement-identity.json', Path('/private/tmp/zodiacs-platform-local-date-catalog-count-integration/identity.json'),
+     '869d5042d7f355ffb881604e0db7614644cef6db6d51614d14a99a9b4243a400')
+]
+patch_source = Path('/private/tmp/zodiacs-platform-local-date-catalog-count-integration/integration.patch').read_bytes()
+assert sha(patch_source) == '50330a5cc5865f44872f607795b1135bf5c98a0a1ffd06113ccf6cfcebff5922'
+save('integration.patch', patch_source)
+frozen, frozen_paths = [], set()
+for label, source, expected_manifest in freeze_inputs:
+    data = source.read_bytes()
+    if expected_manifest:
+        assert sha(data) == expected_manifest
+    save(label, data)
+    identity = json.loads(data)
+    for item in identity.get('files', identity.get('records')):
+        name = item['path']
+        actual = git('show', HEAD + ':' + name)
+        assert sha(actual) == item['sha256'] and len(actual) == item['bytes']
+        assert name not in frozen_paths
+        frozen_paths.add(name)
+        save('source/' + name, actual)
+        frozen.append({'path': name, 'identitySource': label, 'expectedSha256': item['sha256'],
+                       'actualSha256': sha(actual), 'bytes': len(actual),
+                       'gitBlob': head_tree[name]['sha'], 'verified': True})
+workflow = '.github/workflows/site-check.yml'
+non_docs = [r for r in records if not r['isDocumentationPath']]
+assert {r['path'] for r in non_docs} == frozen_paths | {workflow}
+assert len(frozen) == 16 and len(non_docs) == 16
+workflow_base = git('show', BASE + ':' + workflow)
+workflow_head = git('show', HEAD + ':' + workflow)
+addition = (
+    b'      - name: Unknown-time local date reference\n'
+    b'        timeout-minutes: 5\n'
+    b'        run: OUT_DIR=tests/visual/artifacts/local-date-reference node tests/local-date-reference-drive.mjs\n\n'
+)
+anchor = b'      - name: Engine accuracy vectors\n'
+assert workflow_base.count(anchor) == 1
+assert workflow_base.replace(anchor, addition + anchor) == workflow_head
+assert sha(workflow_head) == '5574577652bc6002884647804e6b99fa45c05840accbb3ce442620f5d32732a0'
+assert b'permissions:\n  contents: read' in workflow_head
+assert b'if: always()' in workflow_head and b'            tests/visual/artifacts/' in workflow_head
+save('workflow-base.yml', workflow_base)
+save('source/' + workflow, workflow_head)
+save('workflow.patch', git('diff', BASE + '...' + HEAD, '--', workflow))
+save('non-documentation.patch', git('diff', BASE + '...' + HEAD, '--', *sorted(frozen_paths | {workflow})))
+unchanged_paths = ['tests/visual/browser.mjs', 'package.json', 'package-lock.json',
+                   'src/islands/BirthFields.tsx', 'scripts/phase1-scope-guard.mjs', 'scripts/report-bundles.mjs']
+unchanged = []
+for name in unchanged_paths:
+    assert head_tree[name] == base_tree[name]
+    unchanged.append({'path': name, 'baseAndHeadBlob': head_tree[name]['sha'], 'verified': True})
+
+allowance = json.loads(git('show', HEAD + ':.github/phase1-scope-allowance.json'))
+expected_protected = [
+    'src/lib/i18n/index.test.ts', 'src/lib/i18n/ui/en.ts', 'src/lib/i18n/ui/es.ts',
+    'src/lib/i18n/ui/fr.ts', 'src/lib/i18n/ui/it.ts', 'src/lib/i18n/ui/pt.ts',
+    'src/lib/i18n/ui/ru.test.ts', 'src/lib/i18n/ui/ru.ts'
+]
+assert allowance['baseCommit'] == BASE and allowance['version'] == 1
+assert allowance['id'] == 'platform-unknown-time-local-date-reference'
+assert allowance['protectedPaths'] == expected_protected
+assert len(set(allowance['protectedPaths'])) == 8
+assert sha(git('show', HEAD + ':.github/phase1-scope-allowance.json')) == '2f26d0a3b85e651e1b248733adae5a818c213885c227af08b98a699acc440797'
+assert before['head']['ref'] == after['head']['ref'] and before['base']['ref'] == after['base']['ref']
+
+result = {
+    'verifiedAtUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'url': before['html_url'], 'title': before['title'], 'state': before['state'], 'draft': before['draft'],
+    'expectedHead': HEAD, 'remoteHeadBefore': before['head']['sha'], 'remoteHeadAfter': after['head']['sha'],
+    'expectedBase': BASE, 'remoteBaseBefore': before['base']['sha'], 'remoteBaseAfter': after['base']['sha'],
+    'headRef': before['head']['ref'], 'baseRef': before['base']['ref'], 'localMergeBase': merge,
+    'pageLengths': [len(p) for p in pages], 'totalChangedFiles': len(remote),
+    'statuses': dict(collections.Counter(r['status'] for r in records)),
+    'documentationPathCount': len(records) - len(non_docs), 'nonDocumentationCount': len(non_docs),
+    'allChangedNamesAndStatusesMatch': True, 'allChangedBlobIdentitiesMatch': True,
+    'allChangedBlobSha1IndependentlyRecomputed': True,
+    'changedFileIdentities': 'changed-file-identities.json', 'nonDocumentationFiles': non_docs,
+    'frozenSourceFiles': frozen, 'unchangedControlFiles': unchanged,
+    'ci': {'exactFourLineAddition': True, 'workflowHeadSha256': sha(workflow_head),
+           'existingPermissionsAndTriggersUnchanged': True, 'dependenciesAndBrowserPinsUnchanged': True,
+           'artifactDirectoriesWithinExistingAlwaysUpload': True, 'timeoutMinutes': 5},
+    'exactEightProtectedPaths': expected_protected, 'allowancePinnedToActualPrBase': True,
+    'qualification': 'Exact read-only PR/source identity and CI wiring only. This does not establish remote CI, preview, deployment, production, backend, or numerical correctness. Documentation contents are identity-matched, not substantively reviewed here.'
+}
+dump('identity-result.json', result)
+print(json.dumps({k: result[k] for k in ['remoteHeadBefore', 'remoteHeadAfter', 'remoteBaseBefore',
+                  'remoteBaseAfter', 'pageLengths', 'totalChangedFiles', 'statuses',
+                  'documentationPathCount', 'nonDocumentationCount', 'allChangedBlobIdentitiesMatch', 'ci']}, indent=2))

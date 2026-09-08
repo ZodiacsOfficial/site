@@ -1,0 +1,20 @@
+[
+  ".github/phase1-scope-allowance.json",
+  ".github/workflows/site-check.yml",
+  "src/islands/ChartCalculator.confidence.test.ts",
+  "src/islands/ChartCalculator.ownership.test.ts",
+  "src/islands/ChartCalculator.registry-bridge.test.ts",
+  "src/islands/ChartCalculator.tsx",
+  "src/lib/chart-date-certainty.ts",
+  "src/lib/i18n/index.test.ts",
+  "src/lib/i18n/ui/en.ts",
+  "src/lib/i18n/ui/es.ts",
+  "src/lib/i18n/ui/fr.ts",
+  "src/lib/i18n/ui/it.ts",
+  "src/lib/i18n/ui/pt.ts",
+  "src/lib/i18n/ui/ru.test.ts",
+  "src/lib/i18n/ui/ru.ts",
+  "tests/chart-reference-confidence-drive.mjs",
+  "tests/local-date-reference-drive.mjs",
+  "tests/t17-positions-share.mjs"
+]

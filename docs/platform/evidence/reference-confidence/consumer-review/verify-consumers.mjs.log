@@ -1,0 +1,55 @@
+import assert from 'node:assert/strict';
+import ts from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/typescript/lib/typescript.js';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { resolve } from 'node:path';
+const root = new URL('./',import.meta.url).pathname;
+const base='f803d2543ad81343b22d49326b8b46d0e2ea03a0';
+const hash=x=>createHash('sha256').update(x).digest('hex');
+const record=[];
+function check(name,fn){fn();record.push({name,passed:true});}
+for(const runtime of ['node22','node24']){
+ const data=JSON.parse(readFileSync(root+runtime+'-result.json','utf8'));
+ check(`${runtime}: four unknown / two known controls`,()=>{assert.equal(data.unknown.length,4);assert.equal(data.known.length,2)});
+ for(const row of data.unknown){
+  check(`${runtime} ${row.input.name}: all eight SSR artifacts retain exact captured hashes`,()=>{
+   for(const section of ['markup','baselineMarkup'])for(const value of Object.values(row[section]))assert.equal(hash(readFileSync(root+'markup/'+value.file)),value.sha256);
+  });
+  if(row.before.candidates.length===1){
+   check(`${runtime} ${row.input.name}: baseline singleton actually exposes Moon interpretation and share glyph; candidate removes them`,()=>{
+    const oldInspector=readFileSync(root+'markup/'+row.baselineMarkup.inspector.file,'utf8');
+    const newInspector=readFileSync(root+'markup/'+row.markup.inspector.file,'utf8');
+    const oldDialog=readFileSync(root+'markup/'+row.baselineMarkup.shareDialog.file,'utf8');
+    const newDialog=readFileSync(root+'markup/'+row.markup.shareDialog.file,'utf8');
+    assert(oldInspector.includes('How the sign shapes it'));assert(!newInspector.includes('How the sign shapes it'));
+    assert(oldDialog.includes('calc-share-dialog__placement-glyph'));assert(!newDialog.includes('calc-share-dialog__placement-glyph'));
+   });
+  }
+ }
+}
+const catalog=[];
+for(const locale of ['en','es','fr','it','pt','ru']){
+ const path=`src/lib/i18n/ui/${locale}.ts`,old=execFileSync('git',['show',`${base}:${path}`],{cwd:root+'site',encoding:'utf8'}),now=readFileSync(root+'site/'+path,'utf8');
+ function properties(source){const ast=ts.createSourceFile(path,source,ts.ScriptTarget.Latest,true);let object;const visit=n=>{if(ts.isVariableDeclaration(n)&&n.name.getText(ast)===locale){let x=n.initializer;while(ts.isAsExpression(x)||ts.isSatisfiesExpression(x))x=x.expression;if(ts.isObjectLiteralExpression(x))object=x;}ts.forEachChild(n,visit);};visit(ast);assert(object);return object.properties.map(p=>({key:p.name?.getText(ast)??'spread:'+p.getText(ast),text:p.getText(ast),node:p}));}
+ const before=properties(old),after=properties(now),addition=after.find(p=>p.key==='moonUnverifiedNotice');assert(addition&&ts.isPropertyAssignment(addition.node)&&ts.isStringLiteral(addition.node.initializer));
+ check(`${locale}: exactly one new catalog property and all previous property text unchanged`,()=>assert.deepEqual(after.filter(p=>p.key!=='moonUnverifiedNotice').map(({key,text})=>({key,text})),before.map(({key,text})=>({key,text}))));
+ catalog.push({locale,path,beforeSha256:hash(old),sha256:hash(now),addedKey:addition.key,value:addition.node.initializer.text});
+}
+const consumed=JSON.parse(readFileSync(root+'consumed-input-identities.json','utf8'));
+const identities=[];
+for(const item of consumed){
+ const actual=readFileSync(resolve(root,item.path));assert.equal(hash(actual),item.sha256);
+ if(!item.path.startsWith('site/'))continue;
+ const p=item.path.slice(5),old=execFileSync('git',['show',`${base}:${p}`],{cwd:root+'site'});
+ const unchanged=hash(old)===item.sha256;
+ assert(unchanged||/^src\/lib\/i18n\/ui\/(en|es|fr|it|pt|ru)\.ts$/.test(p)||p==='src/lib/chart-date-certainty.ts');
+ identities.push({...item,baseSha256:hash(old),unchanged});
+}
+check('Every compiled input still matches recorded hash; all consumed site code equals base except exact catalog additions and helper comments',()=>assert(identities.length>20));
+const printer=ts.createPrinter({removeComments:true});
+const helper='src/lib/chart-date-certainty.ts';
+const executable=source=>printer.printFile(ts.createSourceFile(helper,source,ts.ScriptTarget.Latest,true));
+check('Endpoint helper executable AST unchanged',()=>assert.equal(executable(execFileSync('git',['show',`${base}:${helper}`],{cwd:root+'site',encoding:'utf8'})),executable(readFileSync(root+'site/'+helper,'utf8'))));
+writeFileSync(root+'consumer-verification.json',JSON.stringify({checks:record,passed:record.length,catalogs:catalog,consumedSiteSourceIdentities:identities},null,2)+'\n');
+console.log(JSON.stringify({passed:record.length,consumedInputs:consumed.length,consumedSiteSources:identities.length}));

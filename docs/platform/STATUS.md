@@ -12,7 +12,55 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Current implementation — unknown-time local-date reference
+## Current implementation — unknown-time chart confidence
+
+Root's `codex/platform-reference-confidence` branch starts at delivered C-014
+source `f803d2543ad81343b22d49326b8b46d0e2ea03a0`. Root has verified and applied
+the exact 16-file C-015 Freeze2 candidate for local acceptance. Independent
+consumer and preservation reviews accept the exact source, and root local gates
+pass. This candidate is ready for isolated draft delivery, with hosted and human
+review gates still separate. Two executed historical counterexamples show that endpoint
+samples can miss actual Moon signs within the selected date. The accepted policy
+preserves the admitted reference chart, numerical values and portable receipt,
+withholds verified unknown-time Moon candidates, and conservatively disables the
+endpoint-derived singular Sun Registry link. A dedicated localized notice must
+say the range is unverified, rather than asserting that the Moon changed signs.
+
+[Preparation and scope](evidence/reference-confidence/README.md) and Decision
+C-015 record the alternatives and independent review boundaries. No false Sun
+position has been demonstrated. Reference Sun in downstream context, exact-noon
+captions, Chart's Moon-mode phase wording and MoonPhaseTool's date-wide claims
+remain explicit follow-ups. No engine/provider/schema or canonical Registry
+change is part of this slice. Human review and publication holds remain separate.
+
+Freeze identity: `54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c`;
+patch: `b13527901ee962d462b0ddd2bdbc16f82763ffa8ad7486d797358b46f76fd0a4`.
+Author passes 93 focused controls on each Node22/24, 20 native groups, the existing
+35 date and17 chart groups, sharing, build/check and strict types. A provisional
+test comparator was corrected to compare each legacy/portable path's own exact
+serialization order; product bytes did not change. Two linked-package scratch
+suite failures reproduce on baseline and pass67 affected controls after copying
+the existing package byte-for-byte. The candidate's stale capture fingerprint
+requires fresh root captures; it is not accepted as a baseline exception.
+
+Root now passes normal build/check (1,045 files; zero errors/warnings,11 hints),
+all5,040 tests in418 files,20 native confidence groups,35 date cases,17 chart
+ownership cases and actual sharing. All18 fresh approved captures are
+byte-identical tof803d254; the new source receipt resolves the stale fingerprint.
+Twelve actual localized page groups pass across two executions: ten initially,
+then two English groups after scoping the hero-card assertion to its container.
+The original selector also counted the existing English reading-path marker;
+original failures and source proof remain. Product source is unchanged.
+Each accepted group includes unknown-time notice/withheld link, skipped-date
+refusal/recovery and known-time positive controls. The separately reviewed
+two-file CI/scope patch is applied; root exact-base guard passes. Independent
+preservation passes19 native controls with15 numerical/12 envelope comparisons;
+consumer review passes four unknown/two known controls on Node22/24,32 identical
+consumer-render artifacts,24 source/artifact and eight signature/context checks.
+All six420-key catalogs receive scoped semantic review. No human language or
+practitioner certification is implied. [Review records](evidence/reference-confidence/README.md).
+
+## Delivered candidate — unknown-time local-date reference
 
 The isolated `codex/platform-local-date-reference` branch now starts from delivered
 chart/context source `3845a04bcea822da3c30a18848ef3d8d133b7b66`. The exact
@@ -38,8 +86,17 @@ cases in the first run and 12 affected chart cases after correcting a harness
 assumption about error clearing. Original failures remain retained. Two existing
 catalog tests now expect 419 keys; their count/title-only change and the exact
 base allowance's eight paths have separate independent review. The original
-12-file implementation stays unchanged. This source is prepared for isolated
-draft delivery; remote CI/preview and publication gates remain separate.
+12-file implementation stays unchanged. Draft [#435](https://github.com/ZodiacsOfficial/site/pull/435)
+is delivered at `f803d2543ad81343b22d49326b8b46d0e2ea03a0`, above #434's
+3845a04b. All 314 actual paths/blob identities match: 298 documentation paths and
+16 source/test/metadata paths. Its exact-source READY preview passes ten actual
+remote groups, including real Apia refusal/recovery in English and Russian at
+both widths, known-time controls, local receipts and public positions. Existing
+Moon phase copy is explicitly outside that acceptance. Site Check34220407271
+is complete with all14 jobs successful at that exact source.
+[Preview evidence](evidence/local-date-reference/preview/REVIEW.md) and the
+[normal-page audit](evidence/local-date-reference/normal-page-audit/REVIEW.md)
+retain source, request and credential-cleanup limits. Publication is not implied.
 
 The [combined actual-page control](evidence/local-date-reference/combined-page/REVIEW.md)
 passes a seeded signed-in chart/pending panel → real Apia unknown skipped date →
@@ -104,15 +161,16 @@ fixture build and full-page gate pass 294/294. Normal build/check (1,043 files;
 zero errors/warnings), 4,969 tests / 416 files, 21 native cases, 17 existing chart
 cases, four feature-off edit/recovery cases and exact-base scope pass. All 18
 fresh approved-page captures are byte-identical to c7b9eb4. The follow-up is
-pushed at3845a04b; exact Site Check34217870622 has thirteen successful jobs with Build & Check
-still running at the latest read. The refreshed READY preview
+pushed at3845a04b; exact Site Check34217870622 is complete with all fourteen jobs
+successful. The refreshed READY preview
 `dpl_9PyqUeR6weQFUdYnAREXYEQjUAMZ` passes nine new actual remote groups.
 [Current-source preview evidence](evidence/post-chart-clear/preview/REVIEW.md)
 verifies all 623 paths, native data-free clear signals and temporary-access cleanup.
 It has no chart-linked capture markup; active panel/account proof remains the
 separate exact-source fixtures. The older preview is not substituted for this head.
 [Correction evidence and retained limits](evidence/post-chart-clear/README.md).
-No full CI acceptance, release-ready state or production deployment is claimed.
+Full CI and preview acceptance apply to that exact head. Required human review,
+release-ready state, publication and production deployment remain separate.
 
 ## Delivered candidate — current runtime support evidence
 

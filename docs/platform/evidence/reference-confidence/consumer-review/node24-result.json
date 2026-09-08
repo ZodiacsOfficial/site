@@ -1,0 +1,2064 @@
+{
+  "runtime": {
+    "node": "v24.19.0",
+    "versions": {
+      "node": "24.19.0",
+      "acorn": "8.17.0",
+      "ada": "3.4.4",
+      "amaro": "1.1.10",
+      "ares": "1.34.6",
+      "brotli": "1.2.0",
+      "cldr": "48.0",
+      "icu": "78.3",
+      "llhttp": "9.4.3",
+      "merve": "1.2.2",
+      "modules": "137",
+      "napi": "10",
+      "nbytes": "0.1.4",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.69.0",
+      "nghttp3": "",
+      "ngtcp2": "",
+      "openssl": "3.5.7",
+      "simdjson": "4.6.4",
+      "simdutf": "6.4.0",
+      "sqlite": "3.53.3",
+      "tz": "2026b",
+      "undici": "7.29.0",
+      "unicode": "17.0",
+      "uv": "1.52.1",
+      "uvwasi": "0.0.23",
+      "v8": "13.6.233.17-node.51",
+      "zlib": "1.3.2.1-motley-3246f1b",
+      "zstd": "1.5.7"
+    },
+    "temporalAvailable": false
+  },
+  "qualification": "Actual AST-bounded baseline/frozen confidence span execution in declared synchronous wrappers, actual unchanged consumer helpers and four actual Preact consumer SSR components. No full ChartCalculator/DOM/async ownership execution, no independent ephemeris oracle, no full-date completeness, no persistence or network calls. Coordinates are explicit finite fixture coordinates, not a city-data lookup. Prior preparation numerical/receipt projection assertions retained as additional limited checks, not browser save proof.",
+  "unknown": [
+    {
+      "input": {
+        "name": "Toronto",
+        "date": "1919-03-31",
+        "zone": "America/Toronto",
+        "lat": 43.6532,
+        "lon": -79.3832,
+        "witness": "1919-03-31T04:30:00.000Z",
+        "previous": "1919-03-31T04:29:59.999Z",
+        "sign": "pisces",
+        "candidate": "aries"
+      },
+      "confidenceBranches": {
+        "baseline": {
+          "nextMoonAmbiguous": false,
+          "nextRegistryRecordSlug": "aries",
+          "events": [
+            {
+              "kind": "endpoints",
+              "args": [
+                "1919-03-31",
+                "America/Toronto"
+              ]
+            },
+            {
+              "kind": "computeBodies",
+              "utc": "1919-03-31T05:00:00.000Z"
+            },
+            {
+              "kind": "computeBodies",
+              "utc": "1919-04-01T03:59:59.999Z"
+            }
+          ]
+        },
+        "candidate": {
+          "nextMoonAmbiguous": true,
+          "nextRegistryRecordSlug": null,
+          "events": []
+        }
+      },
+      "markup": {
+        "inspector": {
+          "file": "Toronto-inspector.html",
+          "sha256": "c9ccf9a641732ac0ae73f46ae0c39d24c1662251cb727c4098b6a13b53f2247f",
+          "bytes": 1450
+        },
+        "shareDialog": {
+          "file": "Toronto-shareDialog.html",
+          "sha256": "7a58cfec4a6a2a83a50e18856353cbfdffcf13b5c828f8a7f4cbc5195663053e",
+          "bytes": 1141
+        },
+        "readingPath": {
+          "file": "Toronto-readingPath.html",
+          "sha256": "5953b9bffb69ee93091abda1f53ba8d71e192341d4c5b25c67e84acfcd8db8e2",
+          "bytes": 19093
+        },
+        "positions": {
+          "file": "Toronto-positions.html",
+          "sha256": "9fb90a4feacb90520a9b877cb552956ae73ee9d1a45339576105d14858c47cbb",
+          "bytes": 30462
+        }
+      },
+      "baselineMarkup": {
+        "inspector": {
+          "file": "Toronto-baseline-inspector.html",
+          "sha256": "e106a46bc2094bb99761766fcad908d23b6398582664767e643ae7528d86446e",
+          "bytes": 4266
+        },
+        "shareDialog": {
+          "file": "Toronto-baseline-shareDialog.html",
+          "sha256": "fd05652877f9ca8677014a058d84bc11850eb1b52e6f0d0b92d2e3d6f440fe1b",
+          "bytes": 1229
+        },
+        "readingPath": {
+          "file": "Toronto-baseline-readingPath.html",
+          "sha256": "9a0c469e17196f500899d609e1d6f2b1894ad55ed550755b058d66e9be0c7ec6",
+          "bytes": 21068
+        },
+        "positions": {
+          "file": "Toronto-baseline-positions.html",
+          "sha256": "9fb90a4feacb90520a9b877cb552956ae73ee9d1a45339576105d14858c47cbb",
+          "bytes": 30462
+        }
+      },
+      "reference": {
+        "utc": "1919-03-31T16:00:00.000Z",
+        "local": "31/03/1919, 12:00:00.000",
+        "offsetMinutes": -240,
+        "flags": []
+      },
+      "endpoints": {
+        "start": "1919-03-31T05:00:00.000Z",
+        "end": "1919-04-01T03:59:59.999Z",
+        "startLocal": "31/03/1919, 01:00:00.000",
+        "endLocal": "31/03/1919, 23:59:59.999"
+      },
+      "witness": {
+        "utc": "1919-03-31T04:30:00.000Z",
+        "local": "31/03/1919, 00:30:00.000",
+        "member": true,
+        "moonLongitude": 359.7145003582242,
+        "sign": "pisces",
+        "previous": {
+          "utc": "1919-03-31T04:29:59.999Z",
+          "local": "30/03/1919, 23:29:59.999",
+          "member": false
+        }
+      },
+      "before": {
+        "candidates": [
+          "aries"
+        ],
+        "uncertain": false,
+        "moonContext": {
+          "body": "Moon",
+          "status": "established",
+          "longitude": 6.908715565947205,
+          "sign": "aries",
+          "house": null,
+          "covered": true,
+          "dignities": [],
+          "conditionalSigns": []
+        },
+        "approach": {
+          "rising": null,
+          "mercury": {
+            "body": "Mercury",
+            "role": "How to say it",
+            "sign": "aries",
+            "reading": "Say the main thing first. Clear, active language will land better than caveats stacked before the point."
+          },
+          "moon": {
+            "body": "Moon",
+            "role": "What builds trust",
+            "sign": "aries",
+            "reading": "Let feelings move instead of pinning them down immediately. A little space for action makes honesty easier."
+          },
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "sign": "aries",
+            "reading": "Do not turn a fast flare-up into a permanent verdict. Address the issue directly, then let the temperature fall."
+          },
+          "moonAmbiguous": false,
+          "limitations": [
+            "A birth time is needed to know how you first come across."
+          ]
+        },
+        "communication": {
+          "mercury": "You think out loud and fast — the first draft arrives already spoken. Your best ideas come mid-sentence; your apologies, occasionally, come right after.",
+          "mercurySign": "aries",
+          "mercuryAddendum": "Mercury was retrograde when you were born — the tradition reads this as thinking that runs inward before it runs outward: you draft internally, and your second telling of an idea is always better than your first.",
+          "aspects": [
+            {
+              "target": "Saturn",
+              "type": "trine",
+              "orb": 0.0443980157799615,
+              "text": "You speak with a builder's economy — measured, reliable, quoted back at you years later."
+            },
+            {
+              "target": "Mars",
+              "type": "conjunction",
+              "orb": 2.8011300929230742,
+              "text": "Your words carry natural torque — direct, energizing, built for the honest version. People know where they stand with you."
+            }
+          ],
+          "moon": "Feelings arrive as action impulses — anger before sadness, movement before words. You process by doing; hard conversations land better after a run.",
+          "moonSign": "aries",
+          "mars": "Conflict arrives fast and leaves fast — you flare, say it, and genuinely forget it by dinner. The people who love you learn the storm is weather, not climate.",
+          "marsSign": "aries"
+        },
+        "signature": {
+          "kind": "aspect",
+          "eyebrow": "Standout in your chart",
+          "title": "Moon trine Neptune",
+          "summary": "Your Moon runs downhill into your Neptune — your emotional life and your imagination help each other so smoothly the gift is easy to miss.",
+          "detail": "0.3° orb",
+          "signSlugs": [
+            "aries",
+            "leo"
+          ],
+          "bodies": [
+            "Moon",
+            "Neptune"
+          ]
+        },
+        "bigThree": [
+          {
+            "kind": "sun",
+            "lon": 9.88676877155234,
+            "slug": "aries",
+            "sign": "Aries",
+            "degree": 9.88676877155234
+          },
+          {
+            "kind": "moon",
+            "lon": 6.908715565947205,
+            "slug": "aries",
+            "sign": "Aries",
+            "degree": 6.908715565947205
+          }
+        ],
+        "signatureCard": {
+          "title": "My chart signature",
+          "kicker": "Standout in my chart",
+          "signature": {
+            "kind": "aspect",
+            "eyebrow": "Standout in your chart",
+            "title": "Moon trine Neptune",
+            "summary": "Your Moon runs downhill into your Neptune — your emotional life and your imagination help each other so smoothly the gift is easy to miss.",
+            "detail": "0.3° orb",
+            "signSlugs": [
+              "aries",
+              "leo"
+            ],
+            "bodies": [
+              "Moon",
+              "Neptune"
+            ]
+          },
+          "bigThree": [
+            {
+              "kind": "sun",
+              "lon": 9.88676877155234,
+              "slug": "aries",
+              "sign": "Aries",
+              "degree": 9.88676877155234
+            },
+            {
+              "kind": "moon",
+              "lon": 6.908715565947205,
+              "slug": "aries",
+              "sign": "Aries",
+              "degree": 6.908715565947205
+            }
+          ],
+          "notes": [
+            "12:00 reference · Birth time unknown"
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "communicationCard": {
+          "title": "How I communicate",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How you phrase things",
+              "slug": "aries",
+              "sign": "Aries",
+              "reading": "You think out loud and fast — the first draft arrives already spoken."
+            },
+            {
+              "body": "Moon",
+              "role": "What helps you feel heard",
+              "slug": "aries",
+              "sign": "Aries",
+              "reading": "Feelings arrive as action impulses — anger before sadness, movement before words."
+            },
+            {
+              "body": "Mars",
+              "role": "How you handle friction",
+              "slug": "aries",
+              "sign": "Aries",
+              "reading": "Conflict arrives fast and leaves fast — you flare, say it, and genuinely forget it by dinner."
+            }
+          ],
+          "aspect": "Mercury trine Saturn · You speak with a builder's economy — measured, reliable, quoted back at you years later.",
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "approachCard": {
+          "title": "How to approach me",
+          "kicker": "FIRST CONTACT · TRUST · FRICTION",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How to say it",
+              "slug": "aries",
+              "sign": "Aries",
+              "reading": "Say the main thing first."
+            },
+            {
+              "body": "Moon",
+              "role": "What builds trust",
+              "slug": "aries",
+              "sign": "Aries",
+              "reading": "Let feelings move instead of pinning them down immediately."
+            }
+          ],
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "slug": "aries",
+            "sign": "Aries",
+            "reading": "Do not turn a fast flare-up into a permanent verdict."
+          },
+          "notes": [
+            "Birth time would add my Rising sign."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        }
+      },
+      "policy": {
+        "candidates": [],
+        "uncertain": true,
+        "moonContext": {
+          "body": "Moon",
+          "status": "unresolved",
+          "longitude": 6.908715565947205,
+          "sign": null,
+          "house": null,
+          "covered": true,
+          "dignities": [],
+          "conditionalSigns": []
+        },
+        "approach": {
+          "rising": null,
+          "mercury": {
+            "body": "Mercury",
+            "role": "How to say it",
+            "sign": "aries",
+            "reading": "Say the main thing first. Clear, active language will land better than caveats stacked before the point."
+          },
+          "moon": null,
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "sign": "aries",
+            "reading": "Do not turn a fast flare-up into a permanent verdict. Address the issue directly, then let the temperature fall."
+          },
+          "moonAmbiguous": true,
+          "limitations": [
+            "A birth time is needed to know how you first come across.",
+            "The Moon may change signs on this birth date, so exact birth time could change the trust advice."
+          ]
+        },
+        "communication": {
+          "mercury": "You think out loud and fast — the first draft arrives already spoken. Your best ideas come mid-sentence; your apologies, occasionally, come right after.",
+          "mercurySign": "aries",
+          "mercuryAddendum": "Mercury was retrograde when you were born — the tradition reads this as thinking that runs inward before it runs outward: you draft internally, and your second telling of an idea is always better than your first.",
+          "aspects": [
+            {
+              "target": "Saturn",
+              "type": "trine",
+              "orb": 0.0443980157799615,
+              "text": "You speak with a builder's economy — measured, reliable, quoted back at you years later."
+            },
+            {
+              "target": "Mars",
+              "type": "conjunction",
+              "orb": 2.8011300929230742,
+              "text": "Your words carry natural torque — direct, energizing, built for the honest version. People know where they stand with you."
+            }
+          ],
+          "moon": "Needs a birth time · A birth time is needed to settle the Moon reading.",
+          "moonSign": null,
+          "mars": "Conflict arrives fast and leaves fast — you flare, say it, and genuinely forget it by dinner. The people who love you learn the storm is weather, not climate.",
+          "marsSign": "aries"
+        },
+        "signature": {
+          "kind": "aspect",
+          "eyebrow": "Standout in your chart",
+          "title": "Mercury trine Saturn",
+          "summary": "Your Mercury runs downhill into your Saturn — patient thinking can turn a complicated idea into a clear structure. Use an outline or a careful question, while leaving space for evidence that changes the plan.",
+          "detail": "0.0° orb",
+          "signSlugs": [
+            "aries",
+            "leo"
+          ],
+          "bodies": [
+            "Mercury",
+            "Saturn"
+          ]
+        },
+        "bigThree": [
+          {
+            "kind": "sun",
+            "lon": 9.88676877155234,
+            "slug": "aries",
+            "sign": "Aries",
+            "degree": 9.88676877155234
+          },
+          {
+            "kind": "moon",
+            "lon": 6.908715565947205,
+            "slug": "",
+            "sign": "Needs a birth time",
+            "degree": 6.908715565947205,
+            "uncertain": true
+          }
+        ],
+        "signatureCard": {
+          "title": "My chart signature",
+          "kicker": "Standout in my chart",
+          "signature": {
+            "kind": "aspect",
+            "eyebrow": "Standout in your chart",
+            "title": "Mercury trine Saturn",
+            "summary": "Your Mercury runs downhill into your Saturn — patient thinking can turn a complicated idea into a clear structure. Use an outline or a careful question, while leaving space for evidence that changes the plan.",
+            "detail": "0.0° orb",
+            "signSlugs": [
+              "aries",
+              "leo"
+            ],
+            "bodies": [
+              "Mercury",
+              "Saturn"
+            ]
+          },
+          "bigThree": [
+            {
+              "kind": "sun",
+              "lon": 9.88676877155234,
+              "slug": "aries",
+              "sign": "Aries",
+              "degree": 9.88676877155234
+            },
+            {
+              "kind": "moon",
+              "lon": 6.908715565947205,
+              "slug": "",
+              "sign": "Needs a birth time",
+              "degree": 6.908715565947205,
+              "uncertain": true
+            }
+          ],
+          "notes": [
+            "12:00 reference · Birth time unknown",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "communicationCard": {
+          "title": "How I communicate",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How you phrase things",
+              "slug": "aries",
+              "sign": "Aries",
+              "reading": "You think out loud and fast — the first draft arrives already spoken."
+            },
+            {
+              "body": "Moon",
+              "role": "What helps you feel heard",
+              "slug": "",
+              "sign": "Needs a birth time",
+              "reading": "Needs a birth time"
+            },
+            {
+              "body": "Mars",
+              "role": "How you handle friction",
+              "slug": "aries",
+              "sign": "Aries",
+              "reading": "Conflict arrives fast and leaves fast — you flare, say it, and genuinely forget it by dinner."
+            }
+          ],
+          "aspect": "Mercury trine Saturn · You speak with a builder's economy — measured, reliable, quoted back at you years later.",
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "approachCard": {
+          "title": "How to approach me",
+          "kicker": "FIRST CONTACT · TRUST · FRICTION",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How to say it",
+              "slug": "aries",
+              "sign": "Aries",
+              "reading": "Say the main thing first."
+            },
+            {
+              "body": "Moon",
+              "role": "What builds trust",
+              "slug": "",
+              "sign": "Needs a birth time",
+              "reading": "Needs a birth time"
+            }
+          ],
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "slug": "aries",
+            "sign": "Aries",
+            "reading": "Do not turn a fast flare-up into a permanent verdict."
+          },
+          "notes": [
+            "Birth time would add my Rising sign.",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        }
+      },
+      "unchanged": {
+        "numericalJsonSha256": "1d613f538eef285984e48e11b2b6f2453c2988e1ae8b0a0a1bf9aacb2ad871be",
+        "receiptSha256": "18572f3a52c233ab85c437f54e1669fad68f0bcca1dc596356d6c106b5a4220d",
+        "positionsTokenSha256": "04755025ca6a88712d056f45b8e5fadcdd03f88716560496335e1e396909710d",
+        "birthTokenSha256": "512f61e40a4e5b33358803af8839259738bb9b31fb8370b5f24f2155237cd8d4",
+        "savedProjectionSha256": "2a3faa79733b3b96397b0b8257351070b4b7a3eaa485873e5c0cf320c8471439"
+      },
+      "currentRegistrySun": {
+        "endpointSlug": "aries",
+        "referenceSlug": "aries"
+      },
+      "policyRegistrySun": null
+    },
+    {
+      "input": {
+        "name": "Juneau",
+        "date": "1867-10-18",
+        "zone": "America/Juneau",
+        "lat": 58.3019,
+        "lon": -134.4197,
+        "witness": "1867-10-19T00:31:13.000Z",
+        "previous": "1867-10-19T00:31:12.999Z",
+        "sign": "cancer",
+        "candidate": "gemini"
+      },
+      "confidenceBranches": {
+        "baseline": {
+          "nextMoonAmbiguous": false,
+          "nextRegistryRecordSlug": "libra",
+          "events": [
+            {
+              "kind": "endpoints",
+              "args": [
+                "1867-10-18",
+                "America/Juneau"
+              ]
+            },
+            {
+              "kind": "computeBodies",
+              "utc": "1867-10-17T08:57:41.000Z"
+            },
+            {
+              "kind": "computeBodies",
+              "utc": "1867-10-18T08:57:40.999Z"
+            }
+          ]
+        },
+        "candidate": {
+          "nextMoonAmbiguous": true,
+          "nextRegistryRecordSlug": null,
+          "events": []
+        }
+      },
+      "markup": {
+        "inspector": {
+          "file": "Juneau-inspector.html",
+          "sha256": "9b183504a0f19b7a6f28c636d124a4715d7e5dd6b2b63f31ba9c5066645a4f35",
+          "bytes": 1452
+        },
+        "shareDialog": {
+          "file": "Juneau-shareDialog.html",
+          "sha256": "7a58cfec4a6a2a83a50e18856353cbfdffcf13b5c828f8a7f4cbc5195663053e",
+          "bytes": 1141
+        },
+        "readingPath": {
+          "file": "Juneau-readingPath.html",
+          "sha256": "829a85a3c8e2fcaefa82eb5a0dfc310afd20cd3147f8878cf9922f545a8f3fa1",
+          "bytes": 19111
+        },
+        "positions": {
+          "file": "Juneau-positions.html",
+          "sha256": "178ae5b5be520a381d5f56eacd6f7dd1e2f8c7873c8f09b4165642118429b1e5",
+          "bytes": 30559
+        }
+      },
+      "baselineMarkup": {
+        "inspector": {
+          "file": "Juneau-baseline-inspector.html",
+          "sha256": "d15eb166dc0dceadb7249f1781a3db071f82d41c469e0b8b312995ee7d89bb64",
+          "bytes": 3119
+        },
+        "shareDialog": {
+          "file": "Juneau-baseline-shareDialog.html",
+          "sha256": "760d189e12180f0ead532807ac23a3c33f4a767e97f455e9511202553fa91311",
+          "bytes": 1230
+        },
+        "readingPath": {
+          "file": "Juneau-baseline-readingPath.html",
+          "sha256": "255710aaecf67c9fd61f6d8063740b4305141b0feea03732826cc03097118fb7",
+          "bytes": 21094
+        },
+        "positions": {
+          "file": "Juneau-baseline-positions.html",
+          "sha256": "178ae5b5be520a381d5f56eacd6f7dd1e2f8c7873c8f09b4165642118429b1e5",
+          "bytes": 30559
+        }
+      },
+      "reference": {
+        "utc": "1867-10-17T20:57:41.000Z",
+        "local": "18/10/1867, 12:00:00.000",
+        "offsetMinutes": 902.3166666666667,
+        "flags": [
+          "lmt"
+        ]
+      },
+      "endpoints": {
+        "start": "1867-10-17T08:57:41.000Z",
+        "end": "1867-10-18T08:57:40.999Z",
+        "startLocal": "18/10/1867, 00:00:00.000",
+        "endLocal": "18/10/1867, 23:59:59.999"
+      },
+      "witness": {
+        "utc": "1867-10-19T00:31:13.000Z",
+        "local": "18/10/1867, 15:33:32.000",
+        "member": true,
+        "moonLongitude": 97.12696569323725,
+        "sign": "cancer",
+        "previous": {
+          "utc": "1867-10-19T00:31:12.999Z",
+          "local": "19/10/1867, 15:33:31.999",
+          "member": false
+        }
+      },
+      "before": {
+        "candidates": [
+          "gemini"
+        ],
+        "uncertain": false,
+        "moonContext": {
+          "body": "Moon",
+          "status": "established",
+          "longitude": 80.692820323055,
+          "sign": "gemini",
+          "house": null,
+          "covered": true,
+          "dignities": [],
+          "conditionalSigns": []
+        },
+        "approach": {
+          "rising": null,
+          "mercury": {
+            "body": "Mercury",
+            "role": "How to say it",
+            "sign": "scorpio",
+            "reading": "Say what you actually mean and leave out the performance. They will notice the missing layer before the polished one."
+          },
+          "moon": {
+            "body": "Moon",
+            "role": "What builds trust",
+            "sign": "gemini",
+            "reading": "Let them talk the feeling into focus. Curiosity will help more than demanding one final emotional answer."
+          },
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "sign": "scorpio",
+            "reading": "Do not test trust, threaten exposure, or play for leverage. Clean honesty is the only useful route through."
+          },
+          "moonAmbiguous": false,
+          "limitations": [
+            "A birth time is needed to know how you first come across."
+          ]
+        },
+        "communication": {
+          "mercury": "You say less than you know, always. Conversations with you have a floor most people never see, and when you do open it, the other person understands it's a vault door, not small talk.",
+          "mercurySign": "scorpio",
+          "mercuryAddendum": null,
+          "aspects": [
+            {
+              "target": "Mars",
+              "type": "conjunction",
+              "orb": 0.8269535708449212,
+              "text": "Your words carry natural torque — direct, energizing, built for the honest version. People know where they stand with you."
+            },
+            {
+              "target": "Pluto",
+              "type": "opposition",
+              "orb": 1.3033351007537703,
+              "text": "You can't do shallow — every real conversation tilts toward the root system. Powerful; ration it in company that came for the weather."
+            },
+            {
+              "target": "Uranus",
+              "type": "trine",
+              "orb": 1.3082127701102308,
+              "text": "Your mind takes the exit nobody saw — quick, lateral, allergic to the obvious. Meetings need you at minute five, not minute fifty."
+            }
+          ],
+          "moon": "You metabolize feelings by naming them — talking, texting, journaling them into shape. Restlessness is usually a signal you need new input, not a new life.",
+          "moonSign": "gemini",
+          "mars": "You run cold, not hot — anger becomes strategy, patience, and a perfect memory. Mercy to yourself: not every slight deserves the full institution you're capable of building around it.",
+          "marsSign": "scorpio"
+        },
+        "signature": {
+          "kind": "aspect",
+          "eyebrow": "Standout in your chart",
+          "title": "Mercury trine Uranus",
+          "summary": "Your Mercury runs downhill into your Uranus — your way of thinking and your independence help each other so smoothly the gift is easy to miss.",
+          "detail": "1.3° orb",
+          "signSlugs": [
+            "scorpio",
+            "cancer"
+          ],
+          "bodies": [
+            "Mercury",
+            "Uranus"
+          ]
+        },
+        "bigThree": [
+          {
+            "kind": "sun",
+            "lon": 204.02090576486964,
+            "slug": "libra",
+            "sign": "Libra",
+            "degree": 24.020905764869667
+          },
+          {
+            "kind": "moon",
+            "lon": 80.692820323055,
+            "slug": "gemini",
+            "sign": "Gemini",
+            "degree": 20.692820323055003
+          }
+        ],
+        "signatureCard": {
+          "title": "My chart signature",
+          "kicker": "Standout in my chart",
+          "signature": {
+            "kind": "aspect",
+            "eyebrow": "Standout in your chart",
+            "title": "Mercury trine Uranus",
+            "summary": "Your Mercury runs downhill into your Uranus — your way of thinking and your independence help each other so smoothly the gift is easy to miss.",
+            "detail": "1.3° orb",
+            "signSlugs": [
+              "scorpio",
+              "cancer"
+            ],
+            "bodies": [
+              "Mercury",
+              "Uranus"
+            ]
+          },
+          "bigThree": [
+            {
+              "kind": "sun",
+              "lon": 204.02090576486964,
+              "slug": "libra",
+              "sign": "Libra",
+              "degree": 24.020905764869667
+            },
+            {
+              "kind": "moon",
+              "lon": 80.692820323055,
+              "slug": "gemini",
+              "sign": "Gemini",
+              "degree": 20.692820323055003
+            }
+          ],
+          "notes": [
+            "12:00 reference · Birth time unknown"
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "communicationCard": {
+          "title": "How I communicate",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How you phrase things",
+              "slug": "scorpio",
+              "sign": "Scorpio",
+              "reading": "You say less than you know, always."
+            },
+            {
+              "body": "Moon",
+              "role": "What helps you feel heard",
+              "slug": "gemini",
+              "sign": "Gemini",
+              "reading": "You metabolize feelings by naming them — talking, texting, journaling them into shape."
+            },
+            {
+              "body": "Mars",
+              "role": "How you handle friction",
+              "slug": "scorpio",
+              "sign": "Scorpio",
+              "reading": "You run cold, not hot — anger becomes strategy, patience, and a perfect memory."
+            }
+          ],
+          "aspect": "Mercury conjunction Mars · Your words carry natural torque — direct, energizing, built for the honest version.",
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "approachCard": {
+          "title": "How to approach me",
+          "kicker": "FIRST CONTACT · TRUST · FRICTION",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How to say it",
+              "slug": "scorpio",
+              "sign": "Scorpio",
+              "reading": "Say what you actually mean and leave out the performance."
+            },
+            {
+              "body": "Moon",
+              "role": "What builds trust",
+              "slug": "gemini",
+              "sign": "Gemini",
+              "reading": "Let them talk the feeling into focus."
+            }
+          ],
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "slug": "scorpio",
+            "sign": "Scorpio",
+            "reading": "Do not test trust, threaten exposure, or play for leverage."
+          },
+          "notes": [
+            "Birth time would add my Rising sign."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        }
+      },
+      "policy": {
+        "candidates": [],
+        "uncertain": true,
+        "moonContext": {
+          "body": "Moon",
+          "status": "unresolved",
+          "longitude": 80.692820323055,
+          "sign": null,
+          "house": null,
+          "covered": true,
+          "dignities": [],
+          "conditionalSigns": []
+        },
+        "approach": {
+          "rising": null,
+          "mercury": {
+            "body": "Mercury",
+            "role": "How to say it",
+            "sign": "scorpio",
+            "reading": "Say what you actually mean and leave out the performance. They will notice the missing layer before the polished one."
+          },
+          "moon": null,
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "sign": "scorpio",
+            "reading": "Do not test trust, threaten exposure, or play for leverage. Clean honesty is the only useful route through."
+          },
+          "moonAmbiguous": true,
+          "limitations": [
+            "A birth time is needed to know how you first come across.",
+            "The Moon may change signs on this birth date, so exact birth time could change the trust advice."
+          ]
+        },
+        "communication": {
+          "mercury": "You say less than you know, always. Conversations with you have a floor most people never see, and when you do open it, the other person understands it's a vault door, not small talk.",
+          "mercurySign": "scorpio",
+          "mercuryAddendum": null,
+          "aspects": [
+            {
+              "target": "Mars",
+              "type": "conjunction",
+              "orb": 0.8269535708449212,
+              "text": "Your words carry natural torque — direct, energizing, built for the honest version. People know where they stand with you."
+            },
+            {
+              "target": "Pluto",
+              "type": "opposition",
+              "orb": 1.3033351007537703,
+              "text": "You can't do shallow — every real conversation tilts toward the root system. Powerful; ration it in company that came for the weather."
+            },
+            {
+              "target": "Uranus",
+              "type": "trine",
+              "orb": 1.3082127701102308,
+              "text": "Your mind takes the exit nobody saw — quick, lateral, allergic to the obvious. Meetings need you at minute five, not minute fifty."
+            }
+          ],
+          "moon": "Needs a birth time · A birth time is needed to settle the Moon reading.",
+          "moonSign": null,
+          "mars": "You run cold, not hot — anger becomes strategy, patience, and a perfect memory. Mercy to yourself: not every slight deserves the full institution you're capable of building around it.",
+          "marsSign": "scorpio"
+        },
+        "signature": {
+          "kind": "aspect",
+          "eyebrow": "Standout in your chart",
+          "title": "Mercury trine Uranus",
+          "summary": "Your Mercury runs downhill into your Uranus — your way of thinking and your independence help each other so smoothly the gift is easy to miss.",
+          "detail": "1.3° orb",
+          "signSlugs": [
+            "scorpio",
+            "cancer"
+          ],
+          "bodies": [
+            "Mercury",
+            "Uranus"
+          ]
+        },
+        "bigThree": [
+          {
+            "kind": "sun",
+            "lon": 204.02090576486964,
+            "slug": "libra",
+            "sign": "Libra",
+            "degree": 24.020905764869667
+          },
+          {
+            "kind": "moon",
+            "lon": 80.692820323055,
+            "slug": "",
+            "sign": "Needs a birth time",
+            "degree": 20.692820323055003,
+            "uncertain": true
+          }
+        ],
+        "signatureCard": {
+          "title": "My chart signature",
+          "kicker": "Standout in my chart",
+          "signature": {
+            "kind": "aspect",
+            "eyebrow": "Standout in your chart",
+            "title": "Mercury trine Uranus",
+            "summary": "Your Mercury runs downhill into your Uranus — your way of thinking and your independence help each other so smoothly the gift is easy to miss.",
+            "detail": "1.3° orb",
+            "signSlugs": [
+              "scorpio",
+              "cancer"
+            ],
+            "bodies": [
+              "Mercury",
+              "Uranus"
+            ]
+          },
+          "bigThree": [
+            {
+              "kind": "sun",
+              "lon": 204.02090576486964,
+              "slug": "libra",
+              "sign": "Libra",
+              "degree": 24.020905764869667
+            },
+            {
+              "kind": "moon",
+              "lon": 80.692820323055,
+              "slug": "",
+              "sign": "Needs a birth time",
+              "degree": 20.692820323055003,
+              "uncertain": true
+            }
+          ],
+          "notes": [
+            "12:00 reference · Birth time unknown",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "communicationCard": {
+          "title": "How I communicate",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How you phrase things",
+              "slug": "scorpio",
+              "sign": "Scorpio",
+              "reading": "You say less than you know, always."
+            },
+            {
+              "body": "Moon",
+              "role": "What helps you feel heard",
+              "slug": "",
+              "sign": "Needs a birth time",
+              "reading": "Needs a birth time"
+            },
+            {
+              "body": "Mars",
+              "role": "How you handle friction",
+              "slug": "scorpio",
+              "sign": "Scorpio",
+              "reading": "You run cold, not hot — anger becomes strategy, patience, and a perfect memory."
+            }
+          ],
+          "aspect": "Mercury conjunction Mars · Your words carry natural torque — direct, energizing, built for the honest version.",
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "approachCard": {
+          "title": "How to approach me",
+          "kicker": "FIRST CONTACT · TRUST · FRICTION",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How to say it",
+              "slug": "scorpio",
+              "sign": "Scorpio",
+              "reading": "Say what you actually mean and leave out the performance."
+            },
+            {
+              "body": "Moon",
+              "role": "What builds trust",
+              "slug": "",
+              "sign": "Needs a birth time",
+              "reading": "Needs a birth time"
+            }
+          ],
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "slug": "scorpio",
+            "sign": "Scorpio",
+            "reading": "Do not test trust, threaten exposure, or play for leverage."
+          },
+          "notes": [
+            "Birth time would add my Rising sign.",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        }
+      },
+      "unchanged": {
+        "numericalJsonSha256": "1cedd1ac699e8925e63d6fd573e7a34dcf5e457913e867262ae3498145cb1c30",
+        "receiptSha256": "28730ca66294500d0f78e822cdbb69339aa2f2d043d7be5d9c58d00ff09719fb",
+        "positionsTokenSha256": "1f6ea6eb09739ace4bf5a355c8d9027f6444778876500a9af241af000e8698fd",
+        "birthTokenSha256": "bf182cd2fd37fa476ecfae14fd0061fe1164f8db857f0d32858b420b2c1c69e9",
+        "savedProjectionSha256": "b6d8929d1abe6ac0f94dc2f005b8f8d99c83b2c8980d0d87f1aea354f0ad2350"
+      },
+      "currentRegistrySun": {
+        "endpointSlug": "libra",
+        "referenceSlug": "libra"
+      },
+      "policyRegistrySun": null
+    },
+    {
+      "input": {
+        "name": "Bangkok ordinary",
+        "date": "2000-01-01",
+        "zone": "Asia/Bangkok",
+        "lat": 13.7563,
+        "lon": 100.5018
+      },
+      "confidenceBranches": {
+        "baseline": {
+          "nextMoonAmbiguous": false,
+          "nextRegistryRecordSlug": "capricorn",
+          "events": [
+            {
+              "kind": "endpoints",
+              "args": [
+                "2000-01-01",
+                "Asia/Bangkok"
+              ]
+            },
+            {
+              "kind": "computeBodies",
+              "utc": "1999-12-31T17:00:00.000Z"
+            },
+            {
+              "kind": "computeBodies",
+              "utc": "2000-01-01T16:59:59.999Z"
+            }
+          ]
+        },
+        "candidate": {
+          "nextMoonAmbiguous": true,
+          "nextRegistryRecordSlug": null,
+          "events": []
+        }
+      },
+      "markup": {
+        "inspector": {
+          "file": "Bangkok-ordinary-inspector.html",
+          "sha256": "510de6ada3660042bce28fd6269d185193d3ce558780880671eeb78e7b43af3d",
+          "bytes": 1452
+        },
+        "shareDialog": {
+          "file": "Bangkok-ordinary-shareDialog.html",
+          "sha256": "7a58cfec4a6a2a83a50e18856353cbfdffcf13b5c828f8a7f4cbc5195663053e",
+          "bytes": 1141
+        },
+        "readingPath": {
+          "file": "Bangkok-ordinary-readingPath.html",
+          "sha256": "626ac9f967624bfeca324e2dc3e2776c429ba02b9675c38ce956d8a645e9e6fc",
+          "bytes": 19165
+        },
+        "positions": {
+          "file": "Bangkok-ordinary-positions.html",
+          "sha256": "c779cebc94b18d22e520850361dd76d0f0b4d6f76a5f7b4bc6f97e5fffed634d",
+          "bytes": 30013
+        }
+      },
+      "baselineMarkup": {
+        "inspector": {
+          "file": "Bangkok-ordinary-baseline-inspector.html",
+          "sha256": "929b880deefc77db5aabdd8ee204acd55f04615db8b9167381fdddae6096bb96",
+          "bytes": 4821
+        },
+        "shareDialog": {
+          "file": "Bangkok-ordinary-baseline-shareDialog.html",
+          "sha256": "52e9df70ef794a2c827f313262db1e014c01e2d66f29e738f5b75ce88c8202f2",
+          "bytes": 1231
+        },
+        "readingPath": {
+          "file": "Bangkok-ordinary-baseline-readingPath.html",
+          "sha256": "7f7623b5f3a2c3239dd810561dd6ff65619761dd992745dece79faff5126a8ee",
+          "bytes": 21156
+        },
+        "positions": {
+          "file": "Bangkok-ordinary-baseline-positions.html",
+          "sha256": "c779cebc94b18d22e520850361dd76d0f0b4d6f76a5f7b4bc6f97e5fffed634d",
+          "bytes": 30013
+        }
+      },
+      "reference": {
+        "utc": "2000-01-01T05:00:00.000Z",
+        "local": "01/01/2000, 12:00:00.000",
+        "offsetMinutes": 420,
+        "flags": []
+      },
+      "endpoints": {
+        "start": "1999-12-31T17:00:00.000Z",
+        "end": "2000-01-01T16:59:59.999Z",
+        "startLocal": "01/01/2000, 00:00:00.000",
+        "endLocal": "01/01/2000, 23:59:59.999"
+      },
+      "witness": null,
+      "before": {
+        "candidates": [
+          "scorpio"
+        ],
+        "uncertain": false,
+        "moonContext": {
+          "body": "Moon",
+          "status": "established",
+          "longitude": 219.8110932300615,
+          "sign": "scorpio",
+          "house": null,
+          "covered": true,
+          "dignities": [
+            "fall"
+          ],
+          "conditionalSigns": []
+        },
+        "approach": {
+          "rising": null,
+          "mercury": {
+            "body": "Mercury",
+            "role": "How to say it",
+            "sign": "capricorn",
+            "reading": "Lead with the conclusion, the reason, and the next step. Structure is a form of respect here."
+          },
+          "moon": {
+            "body": "Moon",
+            "role": "What builds trust",
+            "sign": "scorpio",
+            "reading": "Treat vulnerability as confidential information. Depth is welcome; casual intrusion is not."
+          },
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "sign": "aquarius",
+            "reading": "Do not mistake calm analysis for lack of feeling. Name the human impact before debating the framework."
+          },
+          "moonAmbiguous": false,
+          "limitations": [
+            "A birth time is needed to know how you first come across."
+          ]
+        },
+        "communication": {
+          "mercury": "You speak in conclusions — brief, structured, already three steps into the plan. Small talk feels like overhead, but your dry aside at minute forty is usually the best line in the meeting.",
+          "mercurySign": "capricorn",
+          "mercuryAddendum": null,
+          "aspects": [
+            {
+              "target": "Mars",
+              "type": "sextile",
+              "orb": 3.6975614530265943,
+              "text": "Your words carry natural torque — direct, energizing, built for the honest version. People know where they stand with you."
+            },
+            {
+              "target": "Jupiter",
+              "type": "trine",
+              "orb": 6.192765614667223,
+              "text": "You make ideas bigger and rooms more optimistic just by talking — a genuine gift for teaching and framing."
+            }
+          ],
+          "moon": "You feel everything at full depth and show almost none of it on purpose. Intimacy for you is letting one person watch the water level change.",
+          "moonSign": "scorpio",
+          "mars": "You go cool and reasonable precisely when things get hot — infuriatingly calm, genuinely fair. Just remember the other person may need their feelings acknowledged before your excellent framework.",
+          "marsSign": "aquarius"
+        },
+        "signature": {
+          "kind": "aspect",
+          "eyebrow": "Standout in your chart",
+          "title": "Sun sextile Moon",
+          "summary": "Your Sun has an open line to your Moon — checking what you need can help you choose a direction. Make that check part of a decision, instead of waiting for discomfort to interrupt it.",
+          "detail": "0.3° orb",
+          "signSlugs": [
+            "capricorn",
+            "scorpio"
+          ],
+          "bodies": [
+            "Sun",
+            "Moon"
+          ]
+        },
+        "bigThree": [
+          {
+            "kind": "sun",
+            "lon": 280.07140906793404,
+            "slug": "capricorn",
+            "sign": "Capricorn",
+            "degree": 10.071409067934042
+          },
+          {
+            "kind": "moon",
+            "lon": 219.8110932300615,
+            "slug": "scorpio",
+            "sign": "Scorpio",
+            "degree": 9.811093230061488
+          }
+        ],
+        "signatureCard": {
+          "title": "My chart signature",
+          "kicker": "Standout in my chart",
+          "signature": {
+            "kind": "aspect",
+            "eyebrow": "Standout in your chart",
+            "title": "Sun sextile Moon",
+            "summary": "Your Sun has an open line to your Moon — checking what you need can help you choose a direction. Make that check part of a decision, instead of waiting for discomfort to interrupt it.",
+            "detail": "0.3° orb",
+            "signSlugs": [
+              "capricorn",
+              "scorpio"
+            ],
+            "bodies": [
+              "Sun",
+              "Moon"
+            ]
+          },
+          "bigThree": [
+            {
+              "kind": "sun",
+              "lon": 280.07140906793404,
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "degree": 10.071409067934042
+            },
+            {
+              "kind": "moon",
+              "lon": 219.8110932300615,
+              "slug": "scorpio",
+              "sign": "Scorpio",
+              "degree": 9.811093230061488
+            }
+          ],
+          "notes": [
+            "12:00 reference · Birth time unknown"
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "communicationCard": {
+          "title": "How I communicate",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How you phrase things",
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "reading": "You speak in conclusions — brief, structured, already three steps into the plan."
+            },
+            {
+              "body": "Moon",
+              "role": "What helps you feel heard",
+              "slug": "scorpio",
+              "sign": "Scorpio",
+              "reading": "You feel everything at full depth and show almost none of it on purpose."
+            },
+            {
+              "body": "Mars",
+              "role": "How you handle friction",
+              "slug": "aquarius",
+              "sign": "Aquarius",
+              "reading": "You go cool and reasonable precisely when things get hot — infuriatingly calm, genuinely fair."
+            }
+          ],
+          "aspect": "Mercury sextile Mars · Your words carry natural torque — direct, energizing, built for the honest version.",
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "approachCard": {
+          "title": "How to approach me",
+          "kicker": "FIRST CONTACT · TRUST · FRICTION",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How to say it",
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "reading": "Lead with the conclusion, the reason, and the next step."
+            },
+            {
+              "body": "Moon",
+              "role": "What builds trust",
+              "slug": "scorpio",
+              "sign": "Scorpio",
+              "reading": "Treat vulnerability as confidential information."
+            }
+          ],
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "slug": "aquarius",
+            "sign": "Aquarius",
+            "reading": "Do not mistake calm analysis for lack of feeling."
+          },
+          "notes": [
+            "Birth time would add my Rising sign."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        }
+      },
+      "policy": {
+        "candidates": [],
+        "uncertain": true,
+        "moonContext": {
+          "body": "Moon",
+          "status": "unresolved",
+          "longitude": 219.8110932300615,
+          "sign": null,
+          "house": null,
+          "covered": true,
+          "dignities": [],
+          "conditionalSigns": []
+        },
+        "approach": {
+          "rising": null,
+          "mercury": {
+            "body": "Mercury",
+            "role": "How to say it",
+            "sign": "capricorn",
+            "reading": "Lead with the conclusion, the reason, and the next step. Structure is a form of respect here."
+          },
+          "moon": null,
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "sign": "aquarius",
+            "reading": "Do not mistake calm analysis for lack of feeling. Name the human impact before debating the framework."
+          },
+          "moonAmbiguous": true,
+          "limitations": [
+            "A birth time is needed to know how you first come across.",
+            "The Moon may change signs on this birth date, so exact birth time could change the trust advice."
+          ]
+        },
+        "communication": {
+          "mercury": "You speak in conclusions — brief, structured, already three steps into the plan. Small talk feels like overhead, but your dry aside at minute forty is usually the best line in the meeting.",
+          "mercurySign": "capricorn",
+          "mercuryAddendum": null,
+          "aspects": [
+            {
+              "target": "Mars",
+              "type": "sextile",
+              "orb": 3.6975614530265943,
+              "text": "Your words carry natural torque — direct, energizing, built for the honest version. People know where they stand with you."
+            },
+            {
+              "target": "Jupiter",
+              "type": "trine",
+              "orb": 6.192765614667223,
+              "text": "You make ideas bigger and rooms more optimistic just by talking — a genuine gift for teaching and framing."
+            }
+          ],
+          "moon": "Needs a birth time · A birth time is needed to settle the Moon reading.",
+          "moonSign": null,
+          "mars": "You go cool and reasonable precisely when things get hot — infuriatingly calm, genuinely fair. Just remember the other person may need their feelings acknowledged before your excellent framework.",
+          "marsSign": "aquarius"
+        },
+        "signature": {
+          "kind": "aspect",
+          "eyebrow": "Standout in your chart",
+          "title": "Sun trine Saturn",
+          "summary": "Your Sun runs downhill into your Saturn — your sense of self and your standards help each other so smoothly the gift is easy to miss.",
+          "detail": "0.3° orb",
+          "signSlugs": [
+            "capricorn",
+            "taurus"
+          ],
+          "bodies": [
+            "Sun",
+            "Saturn"
+          ]
+        },
+        "bigThree": [
+          {
+            "kind": "sun",
+            "lon": 280.07140906793404,
+            "slug": "capricorn",
+            "sign": "Capricorn",
+            "degree": 10.071409067934042
+          },
+          {
+            "kind": "moon",
+            "lon": 219.8110932300615,
+            "slug": "",
+            "sign": "Needs a birth time",
+            "degree": 9.811093230061488,
+            "uncertain": true
+          }
+        ],
+        "signatureCard": {
+          "title": "My chart signature",
+          "kicker": "Standout in my chart",
+          "signature": {
+            "kind": "aspect",
+            "eyebrow": "Standout in your chart",
+            "title": "Sun trine Saturn",
+            "summary": "Your Sun runs downhill into your Saturn — your sense of self and your standards help each other so smoothly the gift is easy to miss.",
+            "detail": "0.3° orb",
+            "signSlugs": [
+              "capricorn",
+              "taurus"
+            ],
+            "bodies": [
+              "Sun",
+              "Saturn"
+            ]
+          },
+          "bigThree": [
+            {
+              "kind": "sun",
+              "lon": 280.07140906793404,
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "degree": 10.071409067934042
+            },
+            {
+              "kind": "moon",
+              "lon": 219.8110932300615,
+              "slug": "",
+              "sign": "Needs a birth time",
+              "degree": 9.811093230061488,
+              "uncertain": true
+            }
+          ],
+          "notes": [
+            "12:00 reference · Birth time unknown",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "communicationCard": {
+          "title": "How I communicate",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How you phrase things",
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "reading": "You speak in conclusions — brief, structured, already three steps into the plan."
+            },
+            {
+              "body": "Moon",
+              "role": "What helps you feel heard",
+              "slug": "",
+              "sign": "Needs a birth time",
+              "reading": "Needs a birth time"
+            },
+            {
+              "body": "Mars",
+              "role": "How you handle friction",
+              "slug": "aquarius",
+              "sign": "Aquarius",
+              "reading": "You go cool and reasonable precisely when things get hot — infuriatingly calm, genuinely fair."
+            }
+          ],
+          "aspect": "Mercury sextile Mars · Your words carry natural torque — direct, energizing, built for the honest version.",
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "approachCard": {
+          "title": "How to approach me",
+          "kicker": "FIRST CONTACT · TRUST · FRICTION",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How to say it",
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "reading": "Lead with the conclusion, the reason, and the next step."
+            },
+            {
+              "body": "Moon",
+              "role": "What builds trust",
+              "slug": "",
+              "sign": "Needs a birth time",
+              "reading": "Needs a birth time"
+            }
+          ],
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "slug": "aquarius",
+            "sign": "Aquarius",
+            "reading": "Do not mistake calm analysis for lack of feeling."
+          },
+          "notes": [
+            "Birth time would add my Rising sign.",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        }
+      },
+      "unchanged": {
+        "numericalJsonSha256": "bdd21586ff6e9bfbc7a98a771348862513c0703c7393686829d813ed2a789299",
+        "receiptSha256": "00db0e5f4e2a99dc38f749b1a46c30743ccee10f0ac369343a09a5a0657df046",
+        "positionsTokenSha256": "bb83ffd4b597204a2e91940d1bc51e93bba8ba3044037b3130a5072587455384",
+        "birthTokenSha256": "4404b9c060f106145fc3feff678191d445a938c76f48614daf246587582cd2e0",
+        "savedProjectionSha256": "ef89fcb99be6b8a93e916729c2241b53a51e5e9432f431a798ed2c6683db5739"
+      },
+      "currentRegistrySun": {
+        "endpointSlug": "capricorn",
+        "referenceSlug": "capricorn"
+      },
+      "policyRegistrySun": null
+    },
+    {
+      "input": {
+        "name": "London two candidates",
+        "date": "1990-01-01",
+        "zone": "Europe/London",
+        "lat": 51.5074,
+        "lon": -0.1278
+      },
+      "confidenceBranches": {
+        "baseline": {
+          "nextMoonAmbiguous": true,
+          "nextRegistryRecordSlug": "capricorn",
+          "events": [
+            {
+              "kind": "endpoints",
+              "args": [
+                "1990-01-01",
+                "Europe/London"
+              ]
+            },
+            {
+              "kind": "computeBodies",
+              "utc": "1990-01-01T00:00:00.000Z"
+            },
+            {
+              "kind": "computeBodies",
+              "utc": "1990-01-01T23:59:59.999Z"
+            }
+          ]
+        },
+        "candidate": {
+          "nextMoonAmbiguous": true,
+          "nextRegistryRecordSlug": null,
+          "events": []
+        }
+      },
+      "markup": {
+        "inspector": {
+          "file": "London-two-candidates-inspector.html",
+          "sha256": "eca98bd365c4a5acb18ac15c83fbb1e1e3d68a3a48bc7f7d6bdc865c481b4294",
+          "bytes": 1451
+        },
+        "shareDialog": {
+          "file": "London-two-candidates-shareDialog.html",
+          "sha256": "7a58cfec4a6a2a83a50e18856353cbfdffcf13b5c828f8a7f4cbc5195663053e",
+          "bytes": 1141
+        },
+        "readingPath": {
+          "file": "London-two-candidates-readingPath.html",
+          "sha256": "ffbacbedff2ea17105b0c3d6dcc94736471fcfa8dc55137c223456a0f39b0cab",
+          "bytes": 19169
+        },
+        "positions": {
+          "file": "London-two-candidates-positions.html",
+          "sha256": "0891898a7f25c0d421ff83672b323d220444ad78d1882c00753b264ae5001864",
+          "bytes": 30263
+        }
+      },
+      "baselineMarkup": {
+        "inspector": {
+          "file": "London-two-candidates-baseline-inspector.html",
+          "sha256": "68afe006bb8c1e9394472da251e564f9558b2d42b023cc4cb5b3962d4b64b0af",
+          "bytes": 2042
+        },
+        "shareDialog": {
+          "file": "London-two-candidates-baseline-shareDialog.html",
+          "sha256": "79cb05745e9aab130abf05b29c1f00ab378985ca097f40e2292783bbed063cfb",
+          "bytes": 1140
+        },
+        "readingPath": {
+          "file": "London-two-candidates-baseline-readingPath.html",
+          "sha256": "623c69c98f77eac88166d4a1440de17e39a71132619151d766d47c3350725e46",
+          "bytes": 19387
+        },
+        "positions": {
+          "file": "London-two-candidates-baseline-positions.html",
+          "sha256": "0891898a7f25c0d421ff83672b323d220444ad78d1882c00753b264ae5001864",
+          "bytes": 30263
+        }
+      },
+      "reference": {
+        "utc": "1990-01-01T12:00:00.000Z",
+        "local": "01/01/1990, 12:00:00.000",
+        "offsetMinutes": 0,
+        "flags": []
+      },
+      "endpoints": {
+        "start": "1990-01-01T00:00:00.000Z",
+        "end": "1990-01-01T23:59:59.999Z",
+        "startLocal": "01/01/1990, 00:00:00.000",
+        "endLocal": "01/01/1990, 23:59:59.999"
+      },
+      "witness": null,
+      "before": {
+        "candidates": [
+          "aquarius",
+          "pisces"
+        ],
+        "uncertain": true,
+        "moonContext": {
+          "body": "Moon",
+          "status": "unresolved",
+          "longitude": 333.2675900418851,
+          "sign": null,
+          "house": null,
+          "covered": true,
+          "dignities": [],
+          "conditionalSigns": [
+            "aquarius",
+            "pisces"
+          ]
+        },
+        "approach": {
+          "rising": null,
+          "mercury": {
+            "body": "Mercury",
+            "role": "How to say it",
+            "sign": "capricorn",
+            "reading": "Lead with the conclusion, the reason, and the next step. Structure is a form of respect here."
+          },
+          "moon": null,
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "sign": "sagittarius",
+            "reading": "Do not match bluntness with a grudge. Say what landed badly while the moment is still small enough to repair."
+          },
+          "moonAmbiguous": true,
+          "limitations": [
+            "A birth time is needed to know how you first come across.",
+            "The Moon may change signs on this birth date, so exact birth time could change the trust advice."
+          ]
+        },
+        "communication": {
+          "mercury": "You speak in conclusions — brief, structured, already three steps into the plan. Small talk feels like overhead, but your dry aside at minute forty is usually the best line in the meeting.",
+          "mercurySign": "capricorn",
+          "mercuryAddendum": "Mercury was retrograde when you were born — the tradition reads this as thinking that runs inward before it runs outward: you draft internally, and your second telling of an idea is always better than your first.",
+          "aspects": [],
+          "moon": "Aquarius / Pisces · A birth time is needed to settle the Moon reading.",
+          "moonSign": null,
+          "mars": "You fight honest and loud, and you're over it before the other person has finished being shocked. The bluntness heals fast for you; check that it does for them.",
+          "marsSign": "sagittarius"
+        },
+        "signature": {
+          "kind": "dignity",
+          "eyebrow": "Standout in your chart",
+          "title": "Jupiter in Cancer",
+          "summary": "Perspective, growth, and generosity have a strong channel here. Tradition calls it exalted: an honored-guest placement working with unusual support.",
+          "detail": "exaltation",
+          "signSlugs": [
+            "cancer"
+          ],
+          "bodies": [
+            "Jupiter"
+          ]
+        },
+        "bigThree": [
+          {
+            "kind": "sun",
+            "lon": 280.8142667363597,
+            "slug": "capricorn",
+            "sign": "Capricorn",
+            "degree": 10.814266736359741
+          },
+          {
+            "kind": "moon",
+            "lon": 333.2675900418851,
+            "slug": "",
+            "sign": "Aquarius / Pisces",
+            "degree": 3.2675900418851143,
+            "uncertain": true
+          }
+        ],
+        "signatureCard": {
+          "title": "My chart signature",
+          "kicker": "Standout in my chart",
+          "signature": {
+            "kind": "dignity",
+            "eyebrow": "Standout in your chart",
+            "title": "Jupiter in Cancer",
+            "summary": "Perspective, growth, and generosity have a strong channel here. Tradition calls it exalted: an honored-guest placement working with unusual support.",
+            "detail": "exaltation",
+            "signSlugs": [
+              "cancer"
+            ],
+            "bodies": [
+              "Jupiter"
+            ]
+          },
+          "bigThree": [
+            {
+              "kind": "sun",
+              "lon": 280.8142667363597,
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "degree": 10.814266736359741
+            },
+            {
+              "kind": "moon",
+              "lon": 333.2675900418851,
+              "slug": "",
+              "sign": "Aquarius / Pisces",
+              "degree": 3.2675900418851143,
+              "uncertain": true
+            }
+          ],
+          "notes": [
+            "12:00 reference · Birth time unknown",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "communicationCard": {
+          "title": "How I communicate",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How you phrase things",
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "reading": "You speak in conclusions — brief, structured, already three steps into the plan."
+            },
+            {
+              "body": "Moon",
+              "role": "What helps you feel heard",
+              "slug": "",
+              "sign": "Aquarius / Pisces",
+              "reading": "Needs a birth time"
+            },
+            {
+              "body": "Mars",
+              "role": "How you handle friction",
+              "slug": "sagittarius",
+              "sign": "Sagittarius",
+              "reading": "You fight honest and loud, and you're over it before the other person has finished being shocked."
+            }
+          ],
+          "aspect": null,
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "approachCard": {
+          "title": "How to approach me",
+          "kicker": "FIRST CONTACT · TRUST · FRICTION",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How to say it",
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "reading": "Lead with the conclusion, the reason, and the next step."
+            },
+            {
+              "body": "Moon",
+              "role": "What builds trust",
+              "slug": "",
+              "sign": "Aquarius / Pisces",
+              "reading": "Needs a birth time"
+            }
+          ],
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "slug": "sagittarius",
+            "sign": "Sagittarius",
+            "reading": "Do not match bluntness with a grudge."
+          },
+          "notes": [
+            "Birth time would add my Rising sign.",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        }
+      },
+      "policy": {
+        "candidates": [],
+        "uncertain": true,
+        "moonContext": {
+          "body": "Moon",
+          "status": "unresolved",
+          "longitude": 333.2675900418851,
+          "sign": null,
+          "house": null,
+          "covered": true,
+          "dignities": [],
+          "conditionalSigns": []
+        },
+        "approach": {
+          "rising": null,
+          "mercury": {
+            "body": "Mercury",
+            "role": "How to say it",
+            "sign": "capricorn",
+            "reading": "Lead with the conclusion, the reason, and the next step. Structure is a form of respect here."
+          },
+          "moon": null,
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "sign": "sagittarius",
+            "reading": "Do not match bluntness with a grudge. Say what landed badly while the moment is still small enough to repair."
+          },
+          "moonAmbiguous": true,
+          "limitations": [
+            "A birth time is needed to know how you first come across.",
+            "The Moon may change signs on this birth date, so exact birth time could change the trust advice."
+          ]
+        },
+        "communication": {
+          "mercury": "You speak in conclusions — brief, structured, already three steps into the plan. Small talk feels like overhead, but your dry aside at minute forty is usually the best line in the meeting.",
+          "mercurySign": "capricorn",
+          "mercuryAddendum": "Mercury was retrograde when you were born — the tradition reads this as thinking that runs inward before it runs outward: you draft internally, and your second telling of an idea is always better than your first.",
+          "aspects": [],
+          "moon": "Needs a birth time · A birth time is needed to settle the Moon reading.",
+          "moonSign": null,
+          "mars": "You fight honest and loud, and you're over it before the other person has finished being shocked. The bluntness heals fast for you; check that it does for them.",
+          "marsSign": "sagittarius"
+        },
+        "signature": {
+          "kind": "dignity",
+          "eyebrow": "Standout in your chart",
+          "title": "Jupiter in Cancer",
+          "summary": "Perspective, growth, and generosity have a strong channel here. Tradition calls it exalted: an honored-guest placement working with unusual support.",
+          "detail": "exaltation",
+          "signSlugs": [
+            "cancer"
+          ],
+          "bodies": [
+            "Jupiter"
+          ]
+        },
+        "bigThree": [
+          {
+            "kind": "sun",
+            "lon": 280.8142667363597,
+            "slug": "capricorn",
+            "sign": "Capricorn",
+            "degree": 10.814266736359741
+          },
+          {
+            "kind": "moon",
+            "lon": 333.2675900418851,
+            "slug": "",
+            "sign": "Needs a birth time",
+            "degree": 3.2675900418851143,
+            "uncertain": true
+          }
+        ],
+        "signatureCard": {
+          "title": "My chart signature",
+          "kicker": "Standout in my chart",
+          "signature": {
+            "kind": "dignity",
+            "eyebrow": "Standout in your chart",
+            "title": "Jupiter in Cancer",
+            "summary": "Perspective, growth, and generosity have a strong channel here. Tradition calls it exalted: an honored-guest placement working with unusual support.",
+            "detail": "exaltation",
+            "signSlugs": [
+              "cancer"
+            ],
+            "bodies": [
+              "Jupiter"
+            ]
+          },
+          "bigThree": [
+            {
+              "kind": "sun",
+              "lon": 280.8142667363597,
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "degree": 10.814266736359741
+            },
+            {
+              "kind": "moon",
+              "lon": 333.2675900418851,
+              "slug": "",
+              "sign": "Needs a birth time",
+              "degree": 3.2675900418851143,
+              "uncertain": true
+            }
+          ],
+          "notes": [
+            "12:00 reference · Birth time unknown",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "communicationCard": {
+          "title": "How I communicate",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How you phrase things",
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "reading": "You speak in conclusions — brief, structured, already three steps into the plan."
+            },
+            {
+              "body": "Moon",
+              "role": "What helps you feel heard",
+              "slug": "",
+              "sign": "Needs a birth time",
+              "reading": "Needs a birth time"
+            },
+            {
+              "body": "Mars",
+              "role": "How you handle friction",
+              "slug": "sagittarius",
+              "sign": "Sagittarius",
+              "reading": "You fight honest and loud, and you're over it before the other person has finished being shocked."
+            }
+          ],
+          "aspect": null,
+          "receipt": "Engine 0.1.1-rc.6"
+        },
+        "approachCard": {
+          "title": "How to approach me",
+          "kicker": "FIRST CONTACT · TRUST · FRICTION",
+          "rows": [
+            {
+              "body": "Mercury",
+              "role": "How to say it",
+              "slug": "capricorn",
+              "sign": "Capricorn",
+              "reading": "Lead with the conclusion, the reason, and the next step."
+            },
+            {
+              "body": "Moon",
+              "role": "What builds trust",
+              "slug": "",
+              "sign": "Needs a birth time",
+              "reading": "Needs a birth time"
+            }
+          ],
+          "avoid": {
+            "body": "Mars",
+            "role": "What to avoid under pressure",
+            "slug": "sagittarius",
+            "sign": "Sagittarius",
+            "reading": "Do not match bluntness with a grudge."
+          },
+          "notes": [
+            "Birth time would add my Rising sign.",
+            "My Moon may change signs without an exact birth time."
+          ],
+          "receipt": "Engine 0.1.1-rc.6"
+        }
+      },
+      "unchanged": {
+        "numericalJsonSha256": "8bb4b368aedadcc4ab2b1f4743746b6bbad06b0429db4391dccbef25a2eea6e8",
+        "receiptSha256": "4377019636a79eaf827e1731704f87eee778003cec3fff88239d3c251202993b",
+        "positionsTokenSha256": "cbb2344133143f38a20b0ac3753eedc013ac5f6845cc22c4eedbe0f5b55bbecb",
+        "birthTokenSha256": "95e16f9071be63f37ba479e0e56a72febbc4565b9d83749b3dce416367570aad",
+        "savedProjectionSha256": "c9be23c657f40bd83c762c0988e8c70ffe43ecc3c8308392996b8e11736d5995"
+      },
+      "currentRegistrySun": {
+        "endpointSlug": "capricorn",
+        "referenceSlug": "capricorn"
+      },
+      "policyRegistrySun": null
+    }
+  ],
+  "known": [
+    {
+      "input": {
+        "name": "Toronto",
+        "date": "1919-03-31",
+        "zone": "America/Toronto",
+        "lat": 43.6532,
+        "lon": -79.3832,
+        "witness": "1919-03-31T04:30:00.000Z",
+        "previous": "1919-03-31T04:29:59.999Z",
+        "sign": "pisces",
+        "candidate": "aries"
+      },
+      "candidates": [
+        "aries"
+      ],
+      "moonStatus": "established",
+      "moonAdvicePresent": true,
+      "numericalSha256": "b7bdb34b23fb5e2b82b102578844c7cc5b46cdbbec82fb9dcfded57033d89dae",
+      "receiptSha256": "cabffaa24488c359afc5bcfa78c74ba370de06cdce6c8034b571418cf7875551"
+    },
+    {
+      "input": {
+        "name": "Juneau",
+        "date": "1867-10-18",
+        "zone": "America/Juneau",
+        "lat": 58.3019,
+        "lon": -134.4197,
+        "witness": "1867-10-19T00:31:13.000Z",
+        "previous": "1867-10-19T00:31:12.999Z",
+        "sign": "cancer",
+        "candidate": "gemini"
+      },
+      "candidates": [
+        "gemini"
+      ],
+      "moonStatus": "established",
+      "moonAdvicePresent": true,
+      "numericalSha256": "9cfcfac5aa4b7061e573d4c039f19da2fe61f695552fc0b18e35c85d992a261e",
+      "receiptSha256": "aa6c1a76776a7c7ff74bf57763ef5ebf1915c5f76f633a5ed3df23c1dd4d6c8b"
+    }
+  ],
+  "skipped": {
+    "date": "2011-12-30",
+    "zone": "Pacific/Apia",
+    "reference": "2011-12-30T22:00:00.000Z",
+    "member": false
+  }
+}

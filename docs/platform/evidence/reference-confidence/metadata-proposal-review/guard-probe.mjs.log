@@ -1,0 +1,32 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import assert from 'node:assert/strict';
+import { resolveOneTimeAllowance, oneTimeAllowancePath, protectedPathLabels, selectComparisonBase } from './unchanged-scope-guard.mjs';
+const out=dirname(fileURLToPath(import.meta.url));
+const base='f803d2543ad81343b22d49326b8b46d0e2ea03a0';
+const allowance=JSON.parse(readFileSync(join(out,'after',oneTimeAllowancePath),'utf8'));
+const changed=[oneTimeAllowancePath,'.github/workflows/site-check.yml',...allowance.protectedPaths].sort();
+const checks=[];
+const pass=(name,fn)=>{checks.push({name,actual:fn(),passed:true})};
+const reject=(name,args,pattern)=>{let error;try{resolveOneTimeAllowance(args)}catch(e){error=e}assert(error instanceof Error);assert.match(error.message,pattern);checks.push({name,error:error.message,passed:true})};
+pass('Exact base resolves to actual immutable Git commit',()=>{
+ const selected=selectComparisonBase({requested:base,explicit:true,verify:ref=>execFileSync('git',['rev-parse','--verify',ref+'^{commit}'],{cwd:'/Users/chiburashka/.codex/worktrees/4806/site'})});assert.equal(selected,base);return selected;
+});
+pass('Exactly the declared complete eight protected paths are authorized',()=>{
+ assert.deepEqual(changed.filter(p=>protectedPathLabels(p).length).sort(),allowance.protectedPaths);
+ const actual=[...resolveOneTimeAllowance({allowance,baseCommit:base,changed})];assert.deepEqual(actual,allowance.protectedPaths);return actual;
+});
+reject('Old comparison base rejected',{allowance,baseCommit:'3845a04bcea822da3c30a18848ef3d8d133b7b66',changed},/different base/);
+reject('Missing protected changed path rejected',{allowance,baseCommit:base,changed:changed.filter(p=>p!=='src/lib/i18n/ui/ru.ts')},/exactly match/);
+reject('Extra locale protected path rejected',{allowance,baseCommit:base,changed:[...changed,'src/lib/i18n/core.ts']},/exactly match/);
+reject('Extra SDK protected path rejected',{allowance,baseCommit:base,changed:[...changed,'src/pages/sdk/extra.astro']},/exactly match/);
+reject('Metadata alone is not the declared candidate scope',{allowance,baseCommit:base,changed:[oneTimeAllowancePath,'.github/workflows/site-check.yml']},/exactly match/);
+reject('Duplicate allowance path rejected',{allowance:{...allowance,protectedPaths:[...allowance.protectedPaths,allowance.protectedPaths[0]]},baseCommit:base,changed},/unique and sorted/);
+reject('Old allowance base rejected',{allowance:JSON.parse(readFileSync(join(out,'before',oneTimeAllowancePath),'utf8')),baseCommit:base,changed},/different base/);
+pass('Unchanged allowance grants no protected-path authorization',()=>{
+ const allowed=resolveOneTimeAllowance({allowance,baseCommit:base,changed:changed.filter(p=>p!==oneTimeAllowancePath)});assert.equal(allowed.size,0);return {authorized:0,remainingProtectedChanges:8};
+});
+const result={scope:'Ten direct controls of the actual unchanged guard exports with the declared proposal scope; not an actual frozen product diff or CLI/native acceptance',checks,passed:checks.length,actualDriverInspected:false};
+writeFileSync(join(out,'guard-result.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));

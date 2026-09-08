@@ -190,3 +190,39 @@ The [fresh #434 preview](evidence/post-chart-clear/preview/REVIEW.md) passes nin
 actual groups at3845a04b and verifies every actual PR path/blob. Its absent capture
 markup means active downstream/auth behavior still relies on the separate
 qualified fixtures. Human numerical/legal signoff and publication remain absent.
+
+The delivered #434 correction at3845a04b now passes all14 exact-source CI jobs
+and nine refreshed preview groups. C-014 is delivered independently in #435 at
+f803d254, with all314 actual paths/blobs verified and ten actual preview groups
+passing; its latest recorded CI has13 successful jobs and the main build pending.
+The separate normal-page evidence audit reconciles the original harness failures
+and corrected acceptance without claiming another browser execution.
+
+C-015 author implementation is now isolated abovef803d254. Root accepts the
+[preparatory policy](evidence/reference-confidence/README.md), not yet a frozen
+implementation: withhold unsupported whole-date Moon confidence and the endpoint
+Sun Registry link while retaining numerical/receipt values. Independent reviewers
+divide actual counterexamples/consumer propagation from numerical/receipt/save
+preservation. No false Sun example, complete date theorem, Moon-tool fix or human
+practitioner/legal signoff is claimed. Actual immutable source review and root
+integration acceptance remain required.
+
+C-015's [main preservation review](evidence/reference-confidence/preservation-review/REVIEW.md)
+now accepts19 native controls and exact numerical/envelope/download/save parity.
+Its [metadata compatibility](evidence/reference-confidence/metadata-review/REVIEW.md)
+separately accepts the frozen driver and exact-base eight-path allowance. Root
+local gates pass5040tests/418files,build/check,20confidence/35date/17chart cases,
+sharing,12 localized page groups and18 unchanged captures. Original two English
+marker-selector failures are retained; only the harness was corrected. The
+frozen consumer/counterexample review is still pending at this checkpoint and
+is not implied by either accepted scope. C-014 meanwhile completes all14 hosted
+CI jobs. No human review, publication or production authority is conferred.
+
+The subsequent [consumer acceptance](evidence/reference-confidence/consumer-review/REVIEW.md)
+closes that pending scope: four unknown/two known controls execute the exact
+frozen confidence span on Node22/24;32 actual consumer-render artifacts match
+across runtimes;24 source/artifact and eight signature/context checks pass.
+Six catalogs each retain420 keys and change only the new unverified notice.
+Original setup warnings and finite/source-versus-browser limits remain explicit.
+Root accepts the exact candidate for isolated draft delivery; no publication,
+production, human numerical/legal signoff or external adoption is implied.

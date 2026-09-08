@@ -1,0 +1,34 @@
+from pathlib import Path
+import subprocess,json,hashlib,datetime
+OUT=Path(__file__).parent
+ROOT=Path('/Users/chiburashka/.codex/worktrees/4806/site')
+FROZEN=Path('/private/tmp/zodiacs-platform-local-date-reference-evidence')
+C7='c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3'
+HEAD='3845a04bcea822da3c30a18848ef3d8d133b7b66'
+paths=['src/islands/ChartCalculator.tsx','src/islands/MoonPhaseTool.tsx','src/islands/BirthFields.tsx']
+context=['src/lib/profile/post-chart-context.ts','src/islands/PostChartDailyBrief.tsx','src/components/EmailCaptureEnhancement.astro']
+def sha(b):return hashlib.sha256(b).hexdigest()
+def git(*args):return subprocess.check_output(['git',*args],cwd=ROOT)
+def save(name,b):
+ p=OUT/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+freeze=json.loads((FROZEN/'source-freeze.json').read_text())
+save('inputs/c014-source-freeze.json',(FROZEN/'source-freeze.json').read_bytes())
+save('inputs/normal-chart-harness-correction.json',Path('/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-harness-correction.json').read_bytes())
+records=[]
+for label,ref in [('c7',C7),('head3845',HEAD),('root',None)]:
+ for name in paths+context:
+  data=(ROOT/name).read_bytes() if ref is None else git('show',ref+':'+name)
+  save('source/'+label+'/'+name,data)
+  records.append({'version':label,'path':name,'sha256':sha(data),'bytes':len(data)})
+for name in paths[:2]:
+ row=next(r for r in freeze['files'] if r['path']==name)
+ data=(FROZEN/'frozen-source'/name).read_bytes()
+ assert sha(data)==row['sha256'] and data==(ROOT/name).read_bytes()
+ save('source/frozen/'+name,data)
+ records.append({'version':'frozen','path':name,'sha256':sha(data),'bytes':len(data)})
+for name in paths:
+ assert git('show',C7+':'+name)==git('show',HEAD+':'+name)
+save('c012-island-field-diff.patch',git('diff',C7+'...'+HEAD,'--',*paths))
+save('c014-island-diff.patch',git('diff',HEAD,'--',*paths[:2]))
+save('source-identity.json',(json.dumps({'rootHeadAtCapture':git('rev-parse','HEAD').decode().strip(),'c7':C7,'base':HEAD,'capturedUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'records':records,'rootChartAndMoonExactlyMatchC014Freeze':True,'c012ChangesNeitherIslandNorBirthFields':True},indent=2)+'\n').encode())
+print(json.dumps({'files':len(records),'rootHead':git('rev-parse','HEAD').decode().strip(),'rootChartAndMoonMatchC014Freeze':True,'c012IslandAndFieldsDiffBytes':len(git('diff',C7+'...'+HEAD,'--',*paths))}))

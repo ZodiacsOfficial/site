@@ -2349,3 +2349,179 @@ No server-side revocation or production network claim follows. Source manifest i
 `9f90f684ec8a3492a7352cee5d6c0232fa6e5da3c8c8c1033281691d351f87d7`.
 Current Site Check34217870622 has thirteen successful jobs with Build & Check
 still running; the earlier c7 post-chart CI failure remains retained separately.
+
+## Delivered C-014, completed C-012 CI and next confidence slice — 2026-09-08
+
+The preceding in-progress CI statement is superseded by exact3845a04b Site Check
+34217870622 completing successfully with all14 jobs. The [final snapshot](evidence/post-chart-clear/ci-final/ci.json)
+has manifest `30f51fe4919db38626be625d49c8d1911e98893bc6c28677dd0239a33869fc6e`.
+The six release refresh records have manifest
+`9d1a8e064dcfa492770040425ed183cd01120ef47beff82e2dfd3d6a93c0b75c`.
+The original c7b9eb4 failure and exact3845a04b nine-group preview remain distinct.
+
+Draft #435 is delivered atf803d2543ad81343b22d49326b8b46d0e2ea03a0 above
+3845a04b. Root and independent review verify all314 actual paths/blobs, including
+16 source/test/metadata paths and298 documentation paths. Six release refresh
+records use manifest `52a4ef21f721df069185f9ebf7ef1d3fdeb3edaa5bcf924bb963d5771058225e`.
+Site Check34220407271 has13 successful jobs with Build & Check running in the
+retained [in-progress snapshot](evidence/local-date-reference/ci-in-progress/ci.json),
+manifest `fbf5b9f3f9af0eb4d130542e165e465ac2ee0320f54c9b525cd514968f196314`.
+
+The [exact-source READY preview](evidence/local-date-reference/preview/REVIEW.md)
+is dpl_HAJ4JzQd5wyNRPicr2YX6cLDqi7u before/after. Ten actual browser groups pass:
+eight English/Russian Chart/Moon ×1280/390 real-city Apia refusal/recovery groups,
+plus no-city UTC Moon and public positions; two nested English known-time gap
+controls preserve point behavior. Four downloaded receipts identify rc.6 and the
+valid Dec31 unknown-time reference. Eighteen screenshots,71 remote JavaScript
+modules and two real city payloads are retained. No numerical-call count is
+claimed. Existing Moon phase/date-wide copy is outside acceptance, with unchanged
+source proof. A driver declaration syntax failure predating browser work remains.
+
+The observer records819 request events and782 complete200 bodies,70 data-free
+clear events, zero page errors/API/non-GET requests, eight expected sanitized
+refusal diagnostics and ten blocked Plausible requests. Access bootstrap is
+separately unobserved. Exact private URL/query scan of187 raw files plus94
+decompressed members finds zero matches before local access deletion; no server
+revocation claim follows. Root verifies101 records under manifest
+`3827ab7fa098f606464ecdd338bbd442d0b2320aacadfbdc02b8bd52abb2dfd3`,
+including all71 remote and23 source ordinary members, without AppleDouble files.
+Source manifest: `967aa76a23f4410c44aa795b33d72251b46a1a8660351c14fd67cf8c8b49156d`.
+
+The separate [normal-page audit](evidence/local-date-reference/normal-page-audit/REVIEW.md)
+reconciles36 executed/24 accepted cases,72 screenshots,131 unique served files
+with108 common byte-identical files,18 recorded source identities and18 release
+captures. It does not claim a second browser run. Root verifies78 records under
+manifest `0dce7662febeb4a75955924d19ddd181901cc20f13218073225ac99aafc045aa`.
+
+Root selects C-015's conservative unknown-time confidence policy from the
+[actual caller preparation](evidence/reference-confidence/preparation/REVIEW.md.log).
+Toronto and Juneau member witnesses contradict current singleton Moon candidate
+claims. The admitted reference numerics are preserved in policy controls while
+empty candidates remove established Moon context and Moon-specific advice. No
+false Sun sign is demonstrated. Root verifies nine records and all74 ordinary
+archive members under manifest
+`2327dd8a2f3d1fde364e95493077a5683c0bd5b5acc3798dc24b535b41298c00`.
+Actual extracted caller execution is not actual DOM or independent astronomy
+oracle evidence. The [scope record](evidence/reference-confidence/README.md)
+keeps Moon phase/reference labels and downstream reference-Sun semantics open.
+Author implementation and independent preparation proceed separately; root
+product still matches deliveredf803d254 at this checkpoint. Nothing is published,
+production-deployed, externally adopted or human-reviewed by these records.
+
+The [independent C-015 preparation](evidence/reference-confidence/independent-preparation/REVIEW.md)
+separately executes actual member/longitude/consumer modules atf803d254. Three
+unknown-time controls, two known-time positives and skipped Apia establish the
+finite policy consequences, with exact numerical JSON/receipt/token/in-memory
+saved-projection preservation. It does not render the component or write storage.
+Toronto's direct primitive differs in the final floating-point digits from the
+caller-body figure; the raw results and separate paths are retained without a new
+tolerance or cross-path bit-equality assertion. Root verifies nine records and97
+ordinary compressed members under manifest
+`6931df177a16619b141b831ac3535cd22401a1632ca456290a17398eca6a77d6`;
+source manifest is`8c8ad6a933a5774494286c54341fecccf6f1cfaffdb49e4a3d18a4b0f161a309`.
+
+## C-015 frozen implementation and root local acceptance — 2026-09-08
+
+[Author Freeze2](evidence/reference-confidence/author-freeze2/REVIEW.md.log)
+contains16 source/test files overf803d254. Identity
+`54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c`
+and patch`b13527901ee962d462b0ddd2bdbc16f82763ffa8ad7486d797358b46f76fd0a4`
+are verified on root. Product scope is Chart confidence, six one-key catalog
+additions and endpoint-helper comments; eight tests/drivers retain the changed
+confidence and unchanged numerical/ownership contracts. Author93focused controls
+pass on each Node22/24,20native,35date,17ownership,sharing,build/check and strict
+types pass. The final author suite has5039pass and one stale capture-fingerprint
+failure. Original path/setup/selector/count/comparator failures are retained.
+The same-byte eight-file dependency copy resolves the two scratch module errors
+reproduced on baseline; all67 previously blocked numerical controls then execute.
+
+Root copy manifest`1f14d99624f3e94a6e104fab03b51bd5d434f2376cafddf95bafa8034985958e`
+contains nine records and individually verifies all148 ordinary content-addressed
+archive members and303 losslessly mapped original records. Source delivery
+manifest: `8850dc1120eac72d8ac953bbbda4bc87bc0f3675c7a88572b7d435a2396b1c99`.
+Early native driver identity fields read after subsequent edits are explicitly
+superseded by retained execution snapshot mappings; the final driver is unchanged
+during its accepted run. No original failure is relabeled a pass.
+
+[Independent preservation](evidence/reference-confidence/preservation-review/REVIEW.md)
+accepts19 actual component/native controls,15 exact numerical comparisons and12
+immutable envelope comparisons. Native Blob receipt and stable fields of actual
+local saves match baseline. A captured save writes the original chart once after
+an edit while old UI stays cleared; a profile-boundary revoke before loading
+suppresses primary work. Forty-two functions, two run spans and all other Chart
+bytes reconstruct exactly after the named confidence delta; executable endpoint
+helper AST is unchanged. Its fixture graph removes only that helper and adds no
+input. These controlled cases are not actual backend or production-page evidence.
+Root manifest`cdbb5cb2dcf721f6522ce1343f35b60aeb8396dbaf9b2b90dfdedd381daa4ed5`
+contains13 records and285 individually verified ordinary members, from source
+manifest`7074f314f7dc0bde290926233d1a603c7ba2083260d13e36a18b72cae88be6ef`.
+Child consumer/counterexample acceptance remains separate and pending here.
+
+The [metadata proposal](evidence/reference-confidence/metadata-proposal-review/REVIEW.md)
+and [frozen compatibility supplement](evidence/reference-confidence/metadata-review/REVIEW.md)
+accept precisely the four-line CI step and exact-base eight-path allowance.
+Ten direct guard controls include old-base and missing/extra-path rejection;
+the actual unchanged CLI passes18changed/8protected in the independent checkout.
+Node22 parses the frozen driver; existing setup/browser/artifact/permission/pin
+wiring remains unchanged. Runtime failures produce their result record; early
+setup failures may leave only partial artifacts and job logs. Root manifests
+are`57b990fa4590a1aa480056d1075d5a7e5c10c979d6ed68a2b09b878cd6510c5f`
+(21records) and`9d47126aa388f49a31dbb5511b02173a7835e44685dbfad40bc5358d1e7eb21f`
+(18records). Accepted patch`408d373d7221f7b8caf796a0e67e6ee7f458fcab0ca5ceac628b3a71dbfbb2a4`
+is applied and root exact-base scope passes. No broad protected-scope exemption.
+
+[Root local acceptance](evidence/reference-confidence/root-integration/README.md)
+passes build/check (1045files,zero errors/warnings,11hints),5040tests/418files,
+20native confidence,35date,17chart ownership and actual sharing. All18 fresh
+approved captures are byte-identical tof803d254. Source receipt
+`50d93d27c1409e48300103ba6608a24b7e5dd630debc5c8a66826420a6a73b26`
+closes the stale fingerprint; no root dependency change or exception is needed.
+The default native run omits the optional baseline directory; baseline equality
+claims remain attached to their separate author/independent executions.
+
+Twelve actual localized chart-page groups pass from ten initial plus two affected
+English reruns. The original broad marker count also included the unchanged
+English ReadingPath; scoping only the hero count fixes the harness. No product
+source changes. Each accepted group covers unknown-time notice/withheld link,
+real-city Apia refusal/recovery and known-time positive; all109 distinct served
+build files match archived bytes. Root inspects the Russian phone recovery image.
+No saved profile, non-GET, unhandled/unexpected console error or overflow is
+observed; one expected sanitized refusal diagnostic per case remains. Original
+fourteen executed cases and failed screenshots are preserved. Root manifest
+`bfd3a7ec0e212060b5a7ac25e22d19552625a165f7a7b9f18ea97a2cf0feaa34`
+contains20 records and248 ordinary objects preserving265 original records.
+
+The [C-014 final CI snapshot](evidence/local-date-reference/ci-final/ci.json)
+supersedes its pending statement: all14 jobs in34220407271 pass at exactf803d254.
+Manifest:`40dcdafdbea98e52c7763804ee3ec84783990797fa30f0737c1a98e17fee11f7`.
+The existing #435 description is updated without a source push, merge or deploy.
+
+[Release-start refresh](evidence/reference-confidence/release-start/manifest.json),
+five records under`254ceccdeeb2ee21147138fb30c8615f159c8fbbcffb07fbac0f392a784f2710`,
+finds site main3d769698d387a7fbdbb5d57935b75cb7431d58ee and READY production
+dpl_ABQQ4PctrxuPN6R9eyTDFuMf6YRg at that Registry-archive commit. Root remains on
+the reviewed stack rather than overwriting those concurrent records. SDK main
+remainsb49e0f14; SDK#5 stays draft atcced0116 with explicit no-merge/no-publish hold.
+Astrofolio#416 remains draftb17d6804 with36actual paths, inspected and isolated;
+its shared integration patches remain unapplied. The Vercel durable projection
+keeps release identity fields and omits unnecessary creator/account metadata.
+No C-015 draft, preview, hosted CI, publication, deployment or adoption yet follows.
+
+The subsequent [frozen consumer review](evidence/reference-confidence/consumer-review/REVIEW.md)
+accepts its separate scope. Its exact AST-bounded confidence span passes four
+unknown-time and two known-time controls on Node22/24, with32 distinct actual
+Inspector/share-dialog/ReadingPath/positions HTML artifacts identical across
+runtimes. Twenty-four source/artifact checks and eight signature/context checks
+pass, with all six420-key catalogs checked for the one added unverified sentence.
+This advances from an in-memory policy model to the actual frozen branch and
+actual server-rendered consumers. The body/projection comparisons do not claim
+persistence, full component DOM or a full-date/ephemeris oracle. Baseline positive
+Moon readings make the removal checks meaningful. Qualified scratch compilation
+warnings are retained separately from root's successful full build/check.
+
+Root verifies all197 source records with inert code copies; the199-record root
+manifest is`46495f35edd85a782576d73b73dc971be890f3b5ce35f577089da755c799e7be`,
+source manifest`a1cd83f207c7490037a3078038a0b21191b548e18648edd01433bdd667b88d1e`.
+This completes the consumer review left pending in the earlier sealed reports.
+Exact C-015 source is now accepted for isolated draft delivery, with hosted,
+human-review, publication, deployment and adoption states still separate.
