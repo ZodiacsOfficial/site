@@ -1,0 +1,118 @@
+
+ RUN  v2.1.9 /private/tmp/zodiacs-platform-sdk
+
+ ❯ packages/engine/src/geo.test.ts (16 tests | 9 failed) 45ms
+   × timezone resolution > preserves the Gregorian year and ordinary-time flags for 0000-02-29 in UTC 5ms
+     → Local date is not a calendar date.
+   × timezone resolution > preserves the Gregorian year and ordinary-time flags for 0001-01-01 in UTC 0ms
+     → Local date is not a calendar date.
+   × timezone resolution > preserves the Gregorian year and ordinary-time flags for 0099-12-31 in UTC 1ms
+     → Local date is not a calendar date.
+   × timezone resolution > preserves the Gregorian year and ordinary-time flags for 0100-01-01 in UTC 33ms
+     → expected [ 'dst-gap' ] to deeply equal []
+   × timezone resolution > preserves the Gregorian year and ordinary-time flags for 0999-12-31 in UTC 1ms
+     → expected [ 'dst-gap' ] to deeply equal []
+   × timezone resolution > keeps year boundaries ordinary for 0000-01-01 in Etc/GMT-14 0ms
+     → Local date is not a calendar date.
+   × timezone resolution > keeps year boundaries ordinary for 0099-12-31 in Etc/GMT+12 0ms
+     → Local date is not a calendar date.
+   × timezone resolution > keeps year boundaries ordinary for 0100-01-01 in Etc/GMT-14 1ms
+     → expected [ 'dst-gap' ] to deeply equal []
+   × timezone resolution > retains local noon and unknown-time settings for an early-year birth 0ms
+     → Local date is not a calendar date.
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/engine/src/geo.test.ts > timezone resolution > preserves the Gregorian year and ordinary-time flags for 0000-02-29 in UTC
+ FAIL  packages/engine/src/geo.test.ts > timezone resolution > preserves the Gregorian year and ordinary-time flags for 0001-01-01 in UTC
+ FAIL  packages/engine/src/geo.test.ts > timezone resolution > preserves the Gregorian year and ordinary-time flags for 0099-12-31 in UTC
+RangeError: Local date is not a calendar date.
+ ❯ wallMilliseconds packages/engine/src/geo/timezone.ts:94:11
+     92|     check.getUTCDate() !== day
+     93|   ) {
+     94|     throw new RangeError("Local date is not a calendar date.");
+       |           ^
+     95|   }
+     96|   return milliseconds;
+ ❯ Module.resolveLocalToUtc packages/engine/src/geo/timezone.ts:108:29
+ ❯ packages/engine/src/geo.test.ts:9:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  packages/engine/src/geo.test.ts > timezone resolution > preserves the Gregorian year and ordinary-time flags for 0100-01-01 in UTC
+ FAIL  packages/engine/src/geo.test.ts > timezone resolution > preserves the Gregorian year and ordinary-time flags for 0999-12-31 in UTC
+AssertionError: expected [ 'dst-gap' ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "dst-gap",
++ ]
+
+ ❯ packages/engine/src/geo.test.ts:12:32
+     10|       expect(resolution.utc.toISOString()).toBe(`${date}T00:00:00.000Z…
+     11|       expect(resolution.offsetMinutes).toBe(0);
+     12|       expect(resolution.flags).toEqual([]);
+       |                                ^
+     13|     }
+     14|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  packages/engine/src/geo.test.ts > timezone resolution > keeps year boundaries ordinary for 0000-01-01 in Etc/GMT-14
+ FAIL  packages/engine/src/geo.test.ts > timezone resolution > keeps year boundaries ordinary for 0099-12-31 in Etc/GMT+12
+RangeError: Local date is not a calendar date.
+ ❯ wallMilliseconds packages/engine/src/geo/timezone.ts:94:11
+     92|     check.getUTCDate() !== day
+     93|   ) {
+     94|     throw new RangeError("Local date is not a calendar date.");
+       |           ^
+     95|   }
+     96|   return milliseconds;
+ ❯ Module.resolveLocalToUtc packages/engine/src/geo/timezone.ts:108:29
+ ❯ packages/engine/src/geo.test.ts:21:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  packages/engine/src/geo.test.ts > timezone resolution > keeps year boundaries ordinary for 0100-01-01 in Etc/GMT-14
+AssertionError: expected [ 'dst-gap' ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "dst-gap",
++ ]
+
+ ❯ packages/engine/src/geo.test.ts:24:30
+     22|     expect(resolution.utc.toISOString()).toBe(expected);
+     23|     expect(resolution.offsetMinutes).toBe(offset);
+     24|     expect(resolution.flags).toEqual([]);
+       |                              ^
+     25|   });
+     26|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  packages/engine/src/geo.test.ts > timezone resolution > retains local noon and unknown-time settings for an early-year birth
+RangeError: Local date is not a calendar date.
+ ❯ wallMilliseconds packages/engine/src/geo/timezone.ts:94:11
+     92|     check.getUTCDate() !== day
+     93|   ) {
+     94|     throw new RangeError("Local date is not a calendar date.");
+       |           ^
+     95|   }
+     96|   return milliseconds;
+ ❯ resolveLocalToUtc packages/engine/src/geo/timezone.ts:108:29
+ ❯ Module.resolveBirth packages/engine/src/geo/timezone.ts:167:22
+ ❯ packages/engine/src/geo.test.ts:72:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ Test Files  1 failed (1)
+      Tests  9 failed | 7 passed (16)
+   Start at  01:02:44
+   Duration  406ms (transform 47ms, setup 0ms, collect 45ms, tests 45ms, environment 0ms, prepare 46ms)

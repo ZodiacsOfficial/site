@@ -1,0 +1,7413 @@
+{
+  "purpose": "Frozen synthetic browser migration inputs from archived 0.1.0; not an independent numerical reference.",
+  "artifact": "vendor/zodiacs-engine-0.1.0.tgz",
+  "artifactSHA256": "8da3e0f2eb3818fe2c5833e05331be61da9b605ffa118a8462182821412e7cbe",
+  "generator": "tests/fixtures/generate-legacy-polar-browser.mjs",
+  "ephemeris": {
+    "name": "astronomy-engine",
+    "version": "2.1.19",
+    "esmSHA256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7"
+  },
+  "input": {
+    "date": "2001-12-21",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "houseSystem": "placidus",
+    "timeKnown": true,
+    "stepMinutes": 15
+  },
+  "cases": [
+    {
+      "minutes": 0,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T00:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.17862200076576,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 338.8463379267055,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.19390307864626,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.3189280795687,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.82770560166307,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.13495476146045,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.09472403324037,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.979765647617,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0835397870984,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6319085868959,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14454398133762,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1445439813376,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 185.38203495694418,
+          "mc": 104.04931602810495
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 15,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T00:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.1892304873266,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 338.970029719645,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.21045370488605,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.3320384047082,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.83532914959613,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.1336073684837,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.09394216629323,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9801829477776,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0838676170528,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6323008350946,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14451454030979,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14451454030973,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 186.69628784038096,
+          "mc": 107.54752795528117
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 30,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T00:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.199838980025,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 339.09371667576283,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.2270044610671,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.3451487262135,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.84295271125944,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.13225985471644,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.09316038683232,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.98060031468617,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0841954814854,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63269306874676,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14448488659662,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1444848865966,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 188.0023807878199,
+          "mc": 111.06855294336299
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 45,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T00:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.2104474788469,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 339.2173988785512,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.2435553468019,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.35825904408114,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.85057628662406,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.13091222027663,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.0923786949113,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.98101774833657,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0845233803924,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63308528784736,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14445539181509,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1444553918151,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 189.29862146896005,
+          "mc": 114.61638635972889
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 60,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T01:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.22105598378005,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 339.34107641157334,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.26010636170264,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.3713693583085,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.8581998756616,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.12956446528227,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.09159709058389,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9814352487227,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.08485131376983,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63347749239148,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14442599534937,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14442599534937,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 190.58327229585612,
+          "mc": 118.1947272030227
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 75,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T01:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.23166449481056,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 339.4647493584764,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.27665750537926,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.3844796688919,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.8658234783432,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.12821658985138,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.09081557390402,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9818528158376,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.08517928161353,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6338696823742,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14439652396482,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1443965239648,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 191.8545406442691,
+          "mc": 121.80691605867491
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 90,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T01:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.24227301192525,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 339.5884178029718,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.29320877744146,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.3975899758282,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.87344709464,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.12686859410212,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.09003414492543,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9822704496758,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.08550728392004,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63426185779065,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14436741364557,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14436741364557,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 193.1105679446574,
+          "mc": 125.45586903423384
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 105,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T01:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.252881535111,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 339.712081828852,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.30976017749754,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.4107002791144,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.88107072452385,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.12552047815245,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08925280370192,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9826881502307,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0858353206853,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63465401863596,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14433818884925,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14433818884925,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 194.34941742596988,
+          "mc": 129.1440086117317
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 120,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T02:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.2634900643551,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 339.8357415199821,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.3263117051548,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.4238105787478,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.88869436796585,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.12417224212066,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08847155028735,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9831059174965,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0861633919056,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6350461649053,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14430894673023,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14430894673023,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 195.5690602689799,
+          "mc": 132.8731930043058
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 135,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T02:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.27409859964393,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 339.95939696030166,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.3428633600197,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.43692087472476,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.8963180249376,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.12282388612476,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08769038473554,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9835237514665,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.08649149757696,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63543829659386,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14427979628738,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1442797962874,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 196.7673598947525,
+          "mc": 136.64464632130517
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 150,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T02:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.2847071409649,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 340.08304823381786,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.3594151416967,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.45003116704265,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.9039416954103,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.12147541028287,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08690930710043,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.983941652135,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.08681963769567,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63583041369685,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14425087082219,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14425087082213,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 197.942054076,
+          "mc": 140.4588925823407
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 165,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T02:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.2953156883051,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 340.2066954246184,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.37596704979,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.46314145569863,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.911565379356,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.12012681471327,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08612831743574,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9843596194959,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.08714781225797,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6362225162095,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14422195041072,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1442219504107,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 199.09073451370332,
+          "mc": 144.3156973089508
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 180,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T03:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.30592424165144,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 340.33033861685885,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.3925190839026,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.4762517406897,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.9191890767456,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.11877809953415,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08534741579535,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9847776535429,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.08747602126004,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63661460412703,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14419311313799,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14419311313804,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 200.2108234685686,
+          "mc": 148.21402097721852
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 195,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T03:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.31653280099164,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 340.4539778947636,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.40907124363554,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.4893620220131,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.92681278755106,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.11742926486392,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08456660223317,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.98519575426997,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0878042646983,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6370066774448,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14416437261843,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14416437261843,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 201.29954697461102,
+          "mc": 152.1519889276018
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 210,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T03:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.3271413663126,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 340.57761334263637,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.42562352859056,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.50247229966624,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.934436511744,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.11608031082045,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08378587680312,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.985613921671,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0881325425691,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.637398736158,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14413561704077,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1441356170408,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 202.35390408967726,
+          "mc": 156.12688229017908
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 225,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T03:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.3377499376018,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 340.70124504484374,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.4421759383657,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.51558257364616,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.94206024929633,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.11473123752239,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08300523955893,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.98603215574025,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0884608548684,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63779078026204,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14410710082586,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14410710082586,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 203.37063155555362,
+          "mc": 160.13515400290112
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 240,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T04:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.34835851484644,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 340.82487308582813,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.45872847256067,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.5286928439502,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.94968400017916,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.11338204508803,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08222469055465,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9864504564715,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0887892015929,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63818280975227,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1440786155714,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1440786155714,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 204.3461631475747,
+          "mc": 164.1724730156634
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 255,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T04:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.3589670980348,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 340.9484975500975,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.4752811307721,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.5418031105761,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.95730776436466,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.11203273363549,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08144422984412,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9868688238589,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0891175827388,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63857482462402,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14405018265575,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14405018265575,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 205.2765828917973,
+          "mc": 168.23379828576572
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 270,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T04:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.3695756871533,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 341.0721185222344,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.49183391259646,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.5549133735203,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.96493154182434,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.11068330328334,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.08066385748123,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9872872578961,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0894459983025,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63896682487268,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14402177368589,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14402177368584,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 206.15757122108351,
+          "mc": 172.31348226350792
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 285,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T04:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.38018428219027,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 341.1957360868844,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.5083868176279,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.5680236327812,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.9725553325302,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.10933375414982,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07988357351985,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9877057585777,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.08977444828037,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63935881049372,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14399370307001,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14399370307,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 206.98434303555555,
+          "mc": 176.40540139897985
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 300,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T05:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.3907928831331,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 341.3193503287682,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.52493984546163,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.5811338883559,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.9801791364539,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.10798408635333,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07910337801405,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.98812432589756,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0901029326688,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.63975078148255,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14396557454654,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14396557454654,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 207.75157654000753,
+          "mc": 180.50310900507856
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 315,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T05:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.4014014899695,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 341.4429613326729,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.5414929956894,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.5942441402418,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.9878029535674,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.1066343000125,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07832327101755,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9885429598495,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09043145146444,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6401427378346,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14393738913594,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.143937389136,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 208.45333167237493,
+          "mc": 184.60000386289246
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 330,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T05:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.41201010268765,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 341.5665691834498,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.55804626790325,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.607354388437,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 338.99542678384245,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.10528439524558,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07754325258446,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.98896166042795,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0907600046635,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6405346795454,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1439095554955,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1439095554955,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 209.08295694635498,
+          "mc": 188.6895065154432
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 345,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T05:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.4226187212747,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 341.69017396602385,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.5745996616942,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.62046463293876,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.00305062725096,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.10393437217118,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07676332276856,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9893804276272,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0910885922626,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6409266066104,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14388162123595,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.143881621236,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 209.63298366259164,
+          "mc": 192.7652344721623
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 360,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T06:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.43322734571905,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 341.8137757653776,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.5911531766509,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.6335748737444,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.0106744837652,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.10258423090778,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.0759834816239,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.98979926144085,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0914172142583,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64131851902516,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14385395866441,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1438539586644,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 210.09500678343088,
+          "mc": 196.82116765075526
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 375,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T06:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.4438359760086,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 341.9373746665699,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.60770681236215,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.6466851108525,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.01829835335684,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.10123397157383,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07520372920447,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99021816186377,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09174587064695,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64171041678526,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14382640524173,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1438264052417,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 210.45955244924565,
+          "mc": 200.85179629610596
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 390,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T06:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.45444461213134,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 342.0609707547238,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.6242605684149,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.65979534426003,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.02592223599817,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.09988359428786,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07442406556407,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9906371288894,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0920745614252,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6421022998862,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14379879535511,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1437987953551,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 210.71593334413632,
+          "mc": 204.85224520231662
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 405,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T06:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.4650532540749,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 342.1845641150244,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.6408144443953,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.67290557396524,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.033546131661,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0985330991686,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.0736444907568,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99105616251256,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09240328658956,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64249416832362,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14377136821884,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14377136821884,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 210.8520952013024,
+          "mc": 208.81837010103604
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 420,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T07:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.4756619018284,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 342.30815483272113,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.6573684398883,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.68601579996545,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.0411700403172,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.09718248633453,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07286500483656,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9914752627269,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09273204613663,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6428860220931,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14374412767279,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1437441276728,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 210.85446111905333,
+          "mc": 212.74682429172864
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 435,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T07:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.48627055537906,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 342.4317429931359,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.67392255447794,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.6991260222592,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.0487939619395,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.09583175590421,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07208560785739,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9918944295274,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0930608400631,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6432778611903,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14371693653044,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1437169365304,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 210.70778566814136,
+          "mc": 216.63509571154614
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 450,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T07:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.496879214716,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 342.55532868164573,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.6904767877465,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.71223624084394,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.0564178964996,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.09448090799646,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07130629987319,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9923136629077,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0933896683655,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64366968561092,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14368974835514,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1436897483552,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 210.3950388593265,
+          "mc": 220.48151645992877
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 465,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T07:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.5074878798265,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 342.6789119836981,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.70703113927544,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.72534645571784,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.06404184396973,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.09312994272983,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.07052708093795,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99273296286253,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09371853104034,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6440614953505,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1436627743114,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14366277431145,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 209.89735196390825,
+          "mc": 224.28524816022352
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 480,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T08:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.5180965507001,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 342.80249298480567,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.7235856086459,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.7384566668787,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.0716658043225,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.09177886022292,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06974795110574,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.993152329386,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09404742808454,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64445329040484,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14363597788014,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1436359778802,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 209.19407407318607,
+          "mc": 228.04624739823305
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 495,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T08:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.52870522732434,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 342.92607177053355,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.7401401954369,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.75156687432496,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.07928977752977,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.09042766059451,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06896891043044,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9935717624722,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0943763594946,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64484507076963,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1436091425407,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14360914254075,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 208.26301095336063,
+          "mc": 231.7652158441064
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 510,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T08:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.5393139096881,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 343.04964842652,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.7566948992258,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.76467707805443,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.0869137635636,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.08907634396343,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06818995896612,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9939912621157,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0947053252673,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6452368364406,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14358246379538,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1435824637954,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 207.0809457636112,
+          "mc": 235.4435396052579
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 525,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T08:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.5499225977802,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 343.17322303846595,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.773249719591,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.77778727806526,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.09453776239695,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.08772491044823,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06741109676682,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99441082831095,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0950343253994,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6456285874135,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1435560177789,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1435560177789,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 205.62457109356154,
+          "mc": 239.0832219747228
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 540,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T09:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.56053129158886,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 343.29679569212317,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.7898046561073,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.7908974743557,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.1021617740016,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.08637336016773,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06663232388644,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99483046105223,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0953633598875,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64602032368418,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14352968573542,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1435296857354,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 203.87198411230202,
+          "mc": 242.6868131443143
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 555,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T09:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.57113999110265,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 343.42036647331656,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.8063597083499,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.8040076669239,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.10978579835006,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.08502169324078,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06585364037909,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99525016033385,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0956924287283,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64641204524835,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14350329139938,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1435032913994,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 201.80489218851562,
+          "mc": 246.25733974364
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 570,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T09:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.5817486963107,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 343.5439354679288,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.82291487589254,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.8171178557682,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.11740983541495,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.08366990978618,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06507504629877,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99566992615036,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0960215319188,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64680375210185,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14347722537093,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14347722537093,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 199.41161340199483,
+          "mc": 249.7982363284154
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 585,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T09:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.5923574072016,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 343.66750276189543,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.83947015830734,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.8302280408866,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.1250338851683,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.08231800992274,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06429654169949,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.996089758496,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0963506694556,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64719544424054,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14345119959012,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1434511995901,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 196.6907943539323,
+          "mc": 253.31328023924988
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 600,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T10:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.6029661237641,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 343.79106844122316,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.8560255551658,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.8433382222777,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.1326579475832,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.08096599376927,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06351812663519,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99650965736555,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0966798413356,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64758712166025,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14342530838155,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14342530838155,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 193.65547654772948,
+          "mc": 256.80653062140493
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 615,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T10:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.6135748459874,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 343.9146325919751,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.8725810660385,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.85644839993995,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.1402820226316,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.07961386144461,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06273980116003,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99692962275316,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0970090475556,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64797878435687,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14339954190422,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1433995419043,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 190.3367454229537,
+          "mc": 260.28227185761943
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 630,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T10:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.6241835738603,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 344.0381953002659,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.88913669049407,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.8695585738719,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.14790611028593,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.07826161306775,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06196156532803,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99734965465336,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0973382881124,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6483704323263,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14337393533413,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1433739353341,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 186.785823698943,
+          "mc": 263.74496122936364
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 645,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T10:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.63479230737164,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 344.16175665227865,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.90569242810034,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.8826687440717,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.1555302105192,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0769092487576,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06118341919307,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.9977697530609,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.097667563003,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64876206556443,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14334834700412,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1433483470041,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 183.07337592469253,
+          "mc": 267.19918028039694
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 660,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T11:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.6454010465111,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 344.28531673425357,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.9222482784246,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.8957789105376,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.16315432330407,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.07555676863302,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.06040536280943,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99818991797,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09799687222403,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64915368406724,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14332310910845,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14332310910845,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 179.28524195679768,
+          "mc": 270.64958910182895
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 675,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T11:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.656009791267,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 344.40887563248293,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.93880424103213,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.9088890732686,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.1707784486123,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.07420417281298,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05962739623101,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99861014937534,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09832621577254,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64954528783065,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14329782369953,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1432978236995,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 175.51485480424856,
+          "mc": 274.10088258276727
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 690,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T11:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.66661854162925,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 344.5324334333202,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.9553603154875,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.9219992322637,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.1784025864173,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.07285146141658,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05884951951191,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99903044727114,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09865559364545,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.64993687685063,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14327272897111,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14327272897117,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 171.853838973444,
+          "mc": 277.5577475625115
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 705,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T11:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.6772272975871,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 344.65599022317974,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.97191650135414,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.9351093875207,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.1860267366917,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.07149863456249,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05807173270608,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99945081165254,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0989850058397,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6503284511232,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14324777710885,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14324777710885,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 168.38305154583634,
+          "mc": 281.024819772245
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 720,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T12:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.6878360591291,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 344.7795460885243,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 278.98847279819427,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.9482195390384,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.1936508994082,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.07014569237003,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.0572940358677,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 321.99987124251373,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.09931445235213,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65072001064436,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14322293887403,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14322293887403,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 165.16613687407664,
+          "mc": 284.5066394660048
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 735,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T12:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.6984448262453,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 344.90310111587826,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.00502920556823,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.96132968681576,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.2012750745392,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.06879263495796,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05651642905076,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0002917398496,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0996439331797,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6511115554101,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14319826926669,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1431982692667,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 162.24664123434138,
+          "mc": 288.00760471013984
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 750,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T12:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.7090535989253,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 345.02665539182067,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.02158572303733,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.97443983085185,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.20889926205757,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.06743946244558,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05573891230927,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00071230365427,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.0999734483196,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6515030854165,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14317372826139,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14317372826144,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 159.64849776031838,
+          "mc": 291.53192143218513
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 765,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T12:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.719662377158,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 345.15020900298464,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.03814235015915,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 263.9875499711448,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.2165234619361,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0660861749518,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05496148569745,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0011329339227,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1003029977686,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65189460065966,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14314933113519,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1431493311352,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 157.37885480587647,
+          "mc": 295.08354953523514
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 780,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T13:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.7302711609332,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 345.27376203606036,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.0546990864917,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.0006601076935,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.22414767414807,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.06473277259573,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05418414926919,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0015536306494,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10063258152377,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6522861011356,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14312503384895,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14312503384895,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 155.43199868210615,
+          "mc": 298.6661446694576
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 795,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T13:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.74087995024087,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 345.397314577795,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.07125593159134,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.0137702404976,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.2317718986659,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0633792554965,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05340690307867,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0019743938295,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1009621995821,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6526775868404,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14310099610839,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1431009961084,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 153.79335586650905,
+          "mc": 302.2829956282801
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 810,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T13:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.7514887450701,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 345.5208667149785,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.0878128850138,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.026880369555,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.23939613546213,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.06202562377314,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05262974717988,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0023952234568,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1012918519408,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6530690577703,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14307702712506,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14307702712506,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 152.44296536833065,
+          "mc": 305.9369578131336
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 825,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T13:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.7620975454108,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 345.6444185344683,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.1043699463125,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.03999049486504,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.2470203845102,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0606718775449,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.051852681627,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.002816119527,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10162153859676,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65346051392135,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14305328399189,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1430532839919,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 151.3581776538623,
+          "mc": 309.6303837845518
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 840,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T14:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.77270635125296,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 345.76797012316456,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.12092711504107,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.05310061642706,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.2546446457831,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.05931801693083,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05107570647402,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.003237082034,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10195125954715,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65385195528967,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14302962999307,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14302962999307,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 150.51557769500891,
+          "mc": 313.36505257772995
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 855,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T14:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.7833151625863,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 345.8915215680245,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.1374843907505,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.0662107342395,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.26226891925353,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.05796404205023,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.05029882177496,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0036581109729,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10228101478896,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6542433818715,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1430060710278,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1430060710278,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 149.89224963935612,
+          "mc": 317.14210018331414
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 870,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T14:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.79392397940046,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 346.01507295606154,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.1540417729921,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.0793208483018,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.2698932048946,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.05660995302213,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04952202758403,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00407920633813,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1026108043192,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.654634793663,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14298272833639,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1429827283364,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 149.46653700975372,
+          "mc": 320.9619543285962
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 885,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T14:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.80453280168575,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 346.1386243743307,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.1705992613155,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.0924309586131,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.2775175026792,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0552557499658,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04874532395519,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00450036812475,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1029406281353,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6550261906604,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1429595763517,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1429595763517,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 149.2184436631278,
+          "mc": 324.8242773701934
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 900,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T15:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.815141629432,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 346.2621759099454,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.1871568552683,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.10554106517236,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.2851418125806,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.05390143300053,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.0479687109426,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0049215963278,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10327048623424,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65541757285985,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14293648602018,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1429364860202,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 149.12979391565608,
+          "mc": 328.72792163862516
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 915,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T15:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.8257504626293,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 346.38572765007007,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.2037145543984,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.1186511679788,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.29276613457176,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.05254700224555,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04719218860026,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00534289094117,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1036003786131,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6558089402577,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14291366718624,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14291366718624,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 149.18424035270516,
+          "mc": 332.67090184840606
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 930,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T15:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.8363593012678,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 346.50927968191854,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.22027235825146,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.1317612670317,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.30039046862555,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.05119245781998,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.0464157569823,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00576425196044,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10393030526916,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65620029285014,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14289087633705,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1428908763371,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 149.36718164967766,
+          "mc": 336.6503890957685
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 945,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T15:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.84696814533754,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 346.63283209275573,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.2368302663722,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.1448713623301,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.30801481471553,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.04983779984326,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04563941614276,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00618567937994,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10426026619956,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65659163063344,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14286825754084,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14286825754084,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 149.66563227896205,
+          "mc": 340.662730421839
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 960,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T16:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.8575769948292,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 346.75638496989063,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.25338827830444,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.15798145387356,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.3156391728149,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.04848302843459,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04486316613577,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0066071731949,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1045902614014,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6569829536039,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14284596900859,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1428459690086,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 150.06807108210035,
+          "mc": 344.7034968669893
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 975,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T16:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.8681858497325,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 346.87993840068884,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.26994639359106,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.17109154166167,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.32326354289603,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.04712814371322,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04408700701538,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00702873340003,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10492029087203,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6573742617578,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14282370753676,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14282370753676,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 150.56428534077406,
+          "mc": 348.7675613932329
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 990,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T16:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.87879471003805,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 347.00349247255986,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.2865046117728,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.18420162569305,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.3308879249329,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0457731457987,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04331093883576,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00745035998983,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1052503546087,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65776555509152,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14280158602702,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14280158602696,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 151.14522005243134,
+          "mc": 352.8492060997164
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1005,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T16:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.88940357573625,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 347.12704727296295,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.30306293238993,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.19731170596754,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.3385123188989,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.04441803481018,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04253496165086,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00787205295956,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10558045260836,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6581568336013,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14277965671607,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14277965671613,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 151.8028376205558,
+          "mc": 356.9422559706469
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1020,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T17:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.9000124468174,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 347.2506028894088,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.3196213549818,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.21042178248473,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.34613672476667,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0430628108669,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04175907551485,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00829381230403,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10591058486864,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65854809728364,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14275795742748,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1427579574274,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 152.52999034074628,
+          "mc": 1.0402342151936068
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1035,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T17:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.9106213232723,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 347.374159409449,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.33617987908565,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.223531855244,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.35376114250977,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.04170747408853,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04098328048173,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.008715638018,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1062407513866,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6589393461348,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14273633414996,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14273633414996,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 153.32030634641796,
+          "mc": 5.136532362473645
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1050,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T17:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.9212302050912,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 347.497716920685,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.35273850423835,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.2366419242446,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.3613855721017,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.04035202459426,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.04020757660561,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00913753009655,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10657095215953,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65933058015116,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14271486624432,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1427148662443,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 154.16808868361454,
+          "mc": 9.224586918603507
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1065,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T17:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.9318390922651,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 347.6212755107633,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.36929722997604,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.24975198948664,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.36901001351583,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.03899646250352,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03943196394061,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.00955948853453,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10690118718475,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.65972179932916,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14269367824465,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14269367824465,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 155.06822664978472,
+          "mc": 13.29805377375061
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1080,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T18:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.9424479847843,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 347.7448352673782,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.385856055832,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.2628620509695,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.3766344667252,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.03764078793574,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.0386564425408,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0099815133266,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10723145645954,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6601130036652,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14267263531514,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1426726353152,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 156.01611828259877,
+          "mc": 17.350971761159542
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1095,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T18:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.95305688263943,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 347.86839627827044,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.4024149813395,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.2759721086924,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.3842589317032,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.03628500101047,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03788101246022,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0104036044681,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10756175998137,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6605041931557,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14265169354604,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.142651693546,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 157.00760280766247,
+          "mc": 21.377907781582053
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1110,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T18:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.9636657858217,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 347.9919586312269,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.4189740060313,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.2890821626554,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.3918834084237,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0349291018469,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03710567375305,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0108257619539,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10789209774737,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66089536779714,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1426309635458,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1426309635458,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 158.03890187531113,
+          "mc": 25.374077566101448
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1125,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T18:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.97427469432193,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 348.11552241407253,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.4355331294366,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.3021922128582,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.3995078968599,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.03357309056469,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03633042647323,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.01124798577865,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.10822246975505,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66128652758596,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14261040637467,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1426104063746,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 159.10656849157613,
+          "mc": 29.335438226388362
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1140,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T19:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.98488360813064,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 348.2390877146829,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.4520923510866,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.3153022593004,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.40713239698505,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.03221696728326,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03555527067488,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0116702759378,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1085528760015,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6616776725186,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1425900374727,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1425900374727,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 160.20744264792097,
+          "mc": 33.25875095670682
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1155,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T19:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 269.9954925272391,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 348.36265462097685,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.46865167050873,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.328412301982,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.4147569087732,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.03086073212205,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03478020641211,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0120926324259,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1088833164844,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6620688025916,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1425698284886,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1425698284886,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 161.3386127613934,
+          "mc": 37.14161434471646
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1170,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T19:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.0061014516382,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 348.4862232209134,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.4852110872305,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.34152234090243,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.42238143219726,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.02950438520065,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03400523373898,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.01251505523834,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.109213791201,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66245991780144,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14254978274835,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14254978274835,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 162.4973821426804,
+          "mc": 40.98247051306396
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1185,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T19:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.0167103813189,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 348.6097936024969,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.50177060077726,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.3546323760623,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.4300059672313,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.02814792663861,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03323035270955,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0129375443697,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1095443001487,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66285101814464,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14252988517217,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14252988517217,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 163.68123980806195,
+          "mc": 44.780587615888805
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1200,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T20:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.02731931627244,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 348.7333658537784,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.5183302106749,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.367742407461,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.4376305138489,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.02679135655524,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03245556337794,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0133600998152,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1098748433248,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66324210361773,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14251032389285,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1425103238928,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 164.88783503985974,
+          "mc": 48.5360230051088
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1215,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T20:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.03792825649,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 348.8569400628369,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.5348899164462,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.3808524350981,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.4452550720232,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0254346750703,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03168086579814,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.01378272157035,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.110205420727,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66363317421724,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14249083186161,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14249083186155,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 166.11495517889693,
+          "mc": 52.24957168738763
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1230,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T20:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.04853720196263,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 348.980516317808,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.55144971761416,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.3939624589741,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.4528796417279,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.02407788230335,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03090626002421,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0142054096295,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.11053603235257,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66402422993974,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14247149082854,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1424714908285,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 167.3605062008428,
+          "mc": 55.92270458546403
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1245,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T20:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.0591461526819,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 349.1040947068627,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.5680096136996,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.407072479089,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.46050422293723,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0227209783738,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.03013174611033,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0146281639878,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.11086667819893,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66441527078183,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14245232935156,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1424523293515,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 168.62249568669222,
+          "mc": 59.55750069997964
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1260,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T21:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.0697551086389,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 349.2276753182093,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.5845696042222,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.42018249544253,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.46812881562425,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.02136396340137,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02935732411044,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.01505098464094,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.11119735826355,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66480629674007,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14243347441686,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14243347441686,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 169.89901784796757,
+          "mc": 63.15657665271635
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1275,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T21:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.0803640698248,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 349.35125824010174,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.6011296887014,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.4332925080352,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.47575341976307,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0200068375056,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02858299407865,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.01547387158337,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1115280725439,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.665197307811,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14241467626391,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1424146762639,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 171.18824030945325,
+          "mc": 66.72301637583234
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1290,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T21:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.09097303623184,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 349.4748435608326,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.61768986665504,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.44640251686667,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.48337803532735,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.01864960080604,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02780875606902,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0158968248104,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.11185882103746,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6655883039914,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1423961074259,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14239610742584,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 172.48839238723895,
+          "mc": 70.2603029753966
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1305,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T21:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.1015820078505,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 349.598431368731,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.6342501375989,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.45951252193714,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.4910026622905,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.01729225342251,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02703461013556,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0163198443172,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1121896037419,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6659792852777,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14237776958856,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1423777695886,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 173.7977546295947,
+          "mc": 73.77225410299872
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1320,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T22:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.112190984673,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 349.722021752169,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.6508105010486,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.47262252324697,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.4986273006267,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.01593479547455,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02626055633232,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0167429300986,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1125204206544,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66637025166668,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1423595118847,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1423595118847,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 175.11464941239046,
+          "mc": 77.26296154993366
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1335,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T22:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.12279996669065,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 349.8456147995531,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.6673709565179,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.48573252079615,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.5062519503097,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.0145772270817,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02548659471347,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.01716608215014,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.11285127177257,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66676120315492,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.1423415952649,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14234159526495,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 176.4374324000603,
+          "mc": 80.73673525300529
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1350,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T22:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.133408953895,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 349.96921059932856,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.68393150352006,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.4988425145852,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.5138766113128,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.01321954836374,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02471272533285,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0175893004667,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1131821570941,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6671521397391,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14232373112793,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14232373112793,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 177.7644846992473,
+          "mc": 84.19805147722047
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1365,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T22:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.1440179462779,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 350.092809239982,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.7004921415663,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.5119525046145,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.52150128361086,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.01186175944031,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02393894824468,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0180125850434,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.11351307661647,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6675430614159,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14230611898284,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1423061189828,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 179.09420554458677,
+          "mc": 87.65150461121874
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1380,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T23:00:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.15462694383143,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 350.21641081003213,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.71705287016727,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.5250624908839,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.52912596717715,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.01050386043102,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.0231652635029,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.01843593587535,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1138440303372,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.667933968182,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14228866743679,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.1422886674368,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 180.4250053649648,
+          "mc": 91.10176176736206
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1395,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T23:15:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.16523594654694,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 350.3400153980381,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.733613688832,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.53817247339396,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.536750661985,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.00914585145574,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02239167116159,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.0188593529582,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1141750182538,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66832486003412,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14227149174747,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14227149174747,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 181.7552990855008,
+          "mc": 94.55351921270233
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1410,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T23:30:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.17584495441645,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 350.4636230925893,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.7501745970686,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.55128245214536,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.54437536800947,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.00778773263403,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02161817127472,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.01928283628644,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.11450604036384,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.66871573696892,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14225443313046,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14225443313046,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 183.08349952449956,
+          "mc": 98.01145955725883
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    },
+    {
+      "minutes": 1425,
+      "summary": {
+        "engineVersion": "0.1.0",
+        "utcISO": "2001-12-21T23:45:00.000Z",
+        "houseSystem": "whole",
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 270.1864539674317,
+            "retrograde": false
+          },
+          {
+            "body": "Moon",
+            "lon": 350.5872339823186,
+            "retrograde": false
+          },
+          {
+            "body": "Mercury",
+            "lon": 279.76673559438393,
+            "retrograde": false
+          },
+          {
+            "body": "Venus",
+            "lon": 264.56439242713816,
+            "retrograde": false
+          },
+          {
+            "body": "Mars",
+            "lon": 339.55200008522394,
+            "retrograde": false
+          },
+          {
+            "body": "Jupiter",
+            "lon": 102.00642950408565,
+            "retrograde": true
+          },
+          {
+            "body": "Saturn",
+            "lon": 70.02084476389638,
+            "retrograde": true
+          },
+          {
+            "body": "Uranus",
+            "lon": 322.01970638585584,
+            "retrograde": false
+          },
+          {
+            "body": "Neptune",
+            "lon": 307.1148370966649,
+            "retrograde": false
+          },
+          {
+            "body": "Pluto",
+            "lon": 255.6691065989832,
+            "retrograde": false
+          },
+          {
+            "body": "North Node",
+            "lon": 87.14223762491895,
+            "retrograde": true
+          },
+          {
+            "body": "South Node",
+            "lon": 267.14223762491895,
+            "retrograde": true
+          }
+        ],
+        "angles": {
+          "asc": 184.4080107458219,
+          "mc": 101.48020858570612
+        },
+        "flags": [
+          "polar-fallback"
+        ]
+      }
+    }
+  ]
+}

@@ -350,7 +350,7 @@ export function buildToday(
     eventsCoverage: daily.eventsCoverage,
     events: daily.events.map((event) => ({ ...event, label: eventLabel(event) })),
     about: {
-      snapshot: 'Positions are computed once per day at 12:00 UTC (snapshotAt); the file is republished at the 00:00 UTC publication boundary.',
+      snapshot: 'Positions are computed for 12:00 UTC of the edition date (snapshotAt). Daily publication is scheduled from 00:00 UTC; delivery can be delayed. Check date before treating this as the current edition; generatedAt is the file build time.',
       ...CONVENTIONS,
       retrogradeWindows: 'retrogrades lists the windows active at the snapshot. from/to are the retrograde and direct station instants unless clippedStart/clippedEnd is true, in which case the scan boundary truncated the window and the real station lies outside coverage.',
       events: 'events are the exact instants of aspects, ingresses, stations, and lunations falling on this UTC date; eventsCoverage says whether the month\'s event data was complete.',
@@ -693,7 +693,7 @@ export function buildIndex(
     updates: 'when the underlying yearly data is refreshed',
     schema: schemaUrl(schema),
   }));
-  const daily = 'daily at the 00:00 UTC publication boundary';
+  const daily = 'daily, scheduled from 00:00 UTC; delivery can be delayed, so check the payload edition date';
   const endpoints: IndexEntry[] = [
     { path: '/api/v1/sky/today.json', description: "Today's positions, moon phase, active retrogrades, next lunations, and exact sky events, with a plain-language summary", updates: daily, schema: schemaUrl('today') },
     { path: '/api/v1/sky/upcoming.json', description: `The next ${UPCOMING_WINDOW_DAYS} days of lunations, ingresses, stations, eclipses, and exact aspects, plus the next occurrence of each kind`, updates: daily, schema: schemaUrl('upcoming') },

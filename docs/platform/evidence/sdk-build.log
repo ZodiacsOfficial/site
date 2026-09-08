@@ -1,0 +1,165 @@
+
+> zodiacs-sdk-workspace@ build /private/tmp/zodiacs-platform-sdk
+> corepack pnpm --filter @zodiacs/engine build && corepack pnpm --filter @zodiacs/widgets build && corepack pnpm --filter @zodiacs/sdk build && corepack pnpm --filter zodiacs-base-app-example build && corepack pnpm --filter zodiacs-sdk-nextjs-example build
+
+
+> @zodiacs/engine@0.1.1-rc.0 build /private/tmp/zodiacs-platform-sdk/packages/engine
+> tsup src/index.ts src/geo.ts src/internal.ts src/internal-math.ts --format esm --dts --clean --splitting --tsconfig tsconfig.build.json
+
+CLI Building entry: src/geo.ts, src/index.ts, src/internal-math.ts, src/internal.ts
+CLI Using tsconfig: tsconfig.build.json
+CLI tsup v8.5.1
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/internal.js       215.00 B
+ESM dist/geo.js            8.64 KB
+ESM dist/chunk-FI56DZ5C.js 4.50 KB
+ESM dist/internal-math.js  553.00 B
+ESM dist/index.js          11.90 KB
+ESM dist/chunk-JNHSLZ74.js 8.63 KB
+ESM ⚡️ Build success in 43ms
+DTS Build start
+DTS ⚡️ Build success in 1093ms
+DTS dist/internal.d.ts               502.00 B
+DTS dist/geo.d.ts                    2.03 KB
+DTS dist/index.d.ts                  3.54 KB
+DTS dist/internal-math.d.ts          595.00 B
+DTS dist/types-CoBWD-wa.d.ts         4.55 KB
+DTS dist/internal-math-DpGeJ6Ny.d.ts 5.50 KB
+
+> @zodiacs/widgets@0.1.0 build /private/tmp/zodiacs-platform-sdk/packages/widgets
+> tsup src/index.ts --format esm --dts --clean --tsconfig tsconfig.build.json
+
+CLI Building entry: src/index.ts
+CLI Using tsconfig: tsconfig.build.json
+CLI tsup v8.5.1
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/index.js 5.11 KB
+ESM ⚡️ Build success in 12ms
+DTS Build start
+DTS ⚡️ Build success in 429ms
+DTS dist/index.d.ts 3.23 KB
+
+> @zodiacs/sdk@1.0.1 build /private/tmp/zodiacs-platform-sdk/packages/sdk
+> tsup src/index.ts src/core.ts src/market.ts src/registry.ts src/base.ts src/solana.ts src/identity.ts src/react.ts src/ui.ts src/testing.ts src/assets.ts --format esm --dts --clean --tsconfig tsconfig.build.json --external react --external react/jsx-runtime --external viem
+
+CLI Building entry: src/assets.ts, src/base.ts, src/core.ts, src/identity.ts, src/index.ts, src/market.ts, src/react.ts, src/registry.ts, src/solana.ts, src/testing.ts, src/ui.ts
+CLI Using tsconfig: tsconfig.build.json
+CLI tsup v8.5.1
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/solana.js         982.00 B
+ESM dist/base.js           699.00 B
+ESM dist/identity.js       1.31 KB
+ESM dist/testing.js        9.15 KB
+ESM dist/react.js          1.14 KB
+ESM dist/ui.js             17.17 KB
+ESM dist/market.js         8.67 KB
+ESM dist/core.js           6.51 KB
+ESM dist/index.js          6.51 KB
+ESM dist/chunk-EUVBYB2J.js 10.01 KB
+ESM dist/chunk-MKSOIAQJ.js 10.98 KB
+ESM dist/chunk-FDACS4HF.js 22.91 KB
+ESM dist/chunk-7HMQU4CK.js 2.13 KB
+ESM dist/chunk-B3IR6HZ4.js 14.14 KB
+ESM dist/chunk-EY5ZPYKH.js 18.99 KB
+ESM dist/chunk-ROY7M27V.js 9.19 KB
+ESM dist/assets.js         4.79 KB
+ESM dist/registry.js       3.24 KB
+ESM dist/chunk-P7VARAEK.js 3.86 KB
+ESM dist/chunk-OQRNN4ZK.js 13.51 KB
+ESM ⚡️ Build success in 27ms
+DTS Build start
+DTS ⚡️ Build success in 2681ms
+DTS dist/base.d.ts                       709.00 B
+DTS dist/assets.d.ts                     6.38 KB
+DTS dist/testing.d.ts                    2.88 KB
+DTS dist/react.d.ts                      5.25 KB
+DTS dist/ui.d.ts                         6.45 KB
+DTS dist/market.d.ts                     3.09 KB
+DTS dist/identity.d.ts                   1.59 KB
+DTS dist/solana.d.ts                     2.31 KB
+DTS dist/core.d.ts                       12.21 KB
+DTS dist/registry.d.ts                   2.38 KB
+DTS dist/index.d.ts                      5.53 KB
+DTS dist/official-registry-DaxQ8uKE.d.ts 3.12 KB
+DTS dist/base-DCwbiCq3.d.ts              1.97 KB
+DTS dist/identity-CHINNYtE.d.ts          4.69 KB
+DTS dist/verification-DuaE0jgZ.d.ts      2.47 KB
+DTS dist/types-BP3P1yrY.d.ts             15.66 KB
+DTS dist/registry-Ddg-N52-.d.ts          12.35 KB
+
+> zodiacs-base-app-example@ build /private/tmp/zodiacs-platform-sdk/examples/base-app
+> next build
+
+   ▲ Next.js 15.5.18
+
+   Creating an optimized production build ...
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/4) ...
+   Generating static pages (1/4)
+   Generating static pages (2/4)
+   Generating static pages (3/4)
+ ✓ Generating static pages (4/4)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    77.8 kB         206 kB
+└ ○ /_not-found                            995 B         103 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/06d30c3b-2c450577f1012079.js  54.2 kB
+  ├ chunks/672-52d8903999947964.js       45.7 kB
+  └ other shared chunks (total)          1.99 kB
+
+
+○  (Static)  prerendered as static content
+
+
+> zodiacs-sdk-nextjs-example@ build /private/tmp/zodiacs-platform-sdk/examples/nextjs
+> next build
+
+   ▲ Next.js 15.5.18
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 3.4s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/4) ...
+   Generating static pages (1/4)
+   Generating static pages (2/4)
+   Generating static pages (3/4)
+ ✓ Generating static pages (4/4)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    10.2 kB         112 kB
+└ ○ /_not-found                            991 B         103 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/06d30c3b-2c450577f1012079.js  54.2 kB
+  ├ chunks/672-52d8903999947964.js       45.7 kB
+  └ other shared chunks (total)          1.88 kB
+
+
+○  (Static)  prerendered as static content
+
+ ⚠ Compiled with warnings in 17.4s
+
+../../node_modules/.pnpm/ox@0.14.25_typescript@5.9.3_zod@4.4.3/node_modules/ox/_esm/tempo/internal/virtualMasterPool.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+../../node_modules/.pnpm/ox@0.14.25_typescript@5.9.3_zod@4.4.3/node_modules/ox/_esm/tempo/internal/virtualMasterPool.js
+../../node_modules/.pnpm/ox@0.14.25_typescript@5.9.3_zod@4.4.3/node_modules/ox/_esm/tempo/VirtualMaster.js
+../../node_modules/.pnpm/ox@0.14.25_typescript@5.9.3_zod@4.4.3/node_modules/ox/_esm/tempo/index.js
+../../node_modules/.pnpm/viem@2.51.3_bufferutil@4.1.0_typescript@5.9.3_utf-8-validate@5.0.10_zod@4.4.3/node_modules/viem/_esm/tempo/chainConfig.js
+../../node_modules/.pnpm/viem@2.51.3_bufferutil@4.1.0_typescript@5.9.3_utf-8-validate@5.0.10_zod@4.4.3/node_modules/viem/_esm/chains/definitions/tempoLocalnet.js
+../../node_modules/.pnpm/viem@2.51.3_bufferutil@4.1.0_typescript@5.9.3_utf-8-validate@5.0.10_zod@4.4.3/node_modules/viem/_esm/chains/index.js
+../../node_modules/.pnpm/wagmi@2.19.5_@tanstack+query-core@5.101.0_@tanstack+react-query@5.101.0_react@18.3.1__@types+_xqenb7dqp2mmbkrtnn6eyfd3ni/node_modules/wagmi/dist/esm/exports/chains.js
+./app/read-only-base-profile.tsx

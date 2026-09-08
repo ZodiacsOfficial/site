@@ -1,0 +1,15 @@
+
+> zodiacs-org@1.0.0 test:phase1:evidence
+> vitest run scripts/phase1-acceptance-evidence.test.mjs
+
+
+ RUN  v3.2.6 /Users/chiburashka/.codex/worktrees/4806/site
+
+ ✓ scripts/phase1-acceptance-evidence.test.mjs (5 tests) 1033ms
+   ✓ Phase 1 durable acceptance evidence > invalidates stale evidence when a transitive render source or bundled font changes  521ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  02:26:00
+   Duration  1.50s (transform 32ms, setup 0ms, collect 33ms, tests 1.03s, environment 0ms, prepare 103ms)
+
