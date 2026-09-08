@@ -1931,3 +1931,310 @@ is verified and copied as 67 inert records, root manifest
 No frozen ChartCalculator source is integrated or approved by this checkpoint.
 
 The separate [Moon preview evidence audit](evidence/moon-result-ownership/preview-audit/REVIEW.md) verifies all 28 supplied records, all 12 cases and the actual draft’s 328 paths/blob identities. Its original manifest is `a5cd3261e40ebf5510cfcf7a2216567fb71a97a7bb4b417992355dc585a09124`. GitHub’s large-diff endpoint returned 406; complete paginated files resolved that retrieval limit. This is independent evidence validation, not a second browser execution.
+
+
+### Support draft delivery and corrected ChartCalculator integration — 2026-09-08
+
+Draft #431 exact `abcf1a44e52040db79a369b49bc9b55d78099b22` has all183 actual
+paths/blob identities verified. READY preview `dpl_7TVmbdjnFTVjT1rZrVj5a8Kyj26C`
+passes13 actual groups. [Root release records](evidence/runtime-claims/release/manifest.json)
+seal24 records under manifest `d546b3d2e73fc2847da6aa666610fca0384613e65a7d0f0ae968effe5536e40b`.
+[Independent audit](evidence/runtime-claims/preview-audit/REVIEW.md.log) seals7
+payloads and30 verified compressed members under manifest
+`0355784ed636d3f6f3bae741d791d16914dcca122f85d3b9e543604687c629de`.
+Its fresh100+83 GitHub file pages, current provider and immutable evidence carrier
+match. The observer records478 browser GET requests and12 blocked existing
+Plausible attempts; authentication bootstrap and the separate sky APIRequestContext
+are outside that count. The failed literal-marker scan matched historical public
+scanner source, not a secret; the diagnostic and passing credential-like scan
+are retained without claiming an exact-secret comparison after deletion.
+
+Moon #430 now completes all14 jobs in exact-source Site Check34204547574,
+including its new native driver. Support #431 Site Check34206194928 has13 successful
+jobs and Build & Check in progress. Original run records are retained with the
+chart integration below; draft descriptions were updated through body files.
+
+ChartCalculator exact corrected patch
+`32b7413f9fcce17b192fa9f3fe28847d6b6ec7bfccc39b4437fee60df44a8e9f`
+is integrated above #431. Component SHA-256:
+`fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0`.
+[Author Freeze1](evidence/chart-result-ownership/author-freeze1/REPORT.md.log)
+manifest `265615d918b92c5eb322a452b2174a09ffa857b3736662baacbf466cba006490`
+retains6 payloads/130 verified compressed members; its original incomplete
+three-case-driver byte-copy limitation remains explicit.
+[Corrected author Freeze2](evidence/chart-result-ownership/author-freeze2/REPORT.md.log)
+manifest `9f4b0f69175713dfc6dd56e8380e9dc047205a6bf73bdb6124acc8d49626e77d`
+retains5 payloads/46 verified compressed members,134 focused tests and17 actual
+production-page groups. The intermediate close-generation error and six actual
+before-fix assertions are retained, with ordinary-save positive controls.
+
+[Independent corrected source review](evidence/chart-result-ownership/review-freeze2/REVIEW-FREEZE2.md)
+source manifest `47c6e0f6e319a077c24fec78bdd532e872e0d33396cbe4ec9cfc0e5bb5c4c112`
+has31 records; root’s32 inert copies use manifest
+`6ec3a019aeaf4f20c3185e9e6197f095d05d390f4d674c195f078f5036c509af`.
+All22 component groups and five unmodified production-build groups pass; the
+exact author driver additionally passes17 cases with checkout/output paths
+containing spaces. All62 module references and the parsed numerical block match
+the original; this does not certify existing whole-date coverage.
+[Independent saved-state review](evidence/chart-result-ownership/profile-save-review-freeze2/REVIEW.md)
+source manifest `d6cf0faaf014b5f283c7e0e574e0314ea9d0128512c1803526e0369e4d2d0d72`
+has66 records; root’s67 inert copies use manifest
+`ce73d307eff0f32b39957468fe2a7dcdfb13f3f0928b7ef0af4600acf8805012`.
+Its exact callback/actual store/native storage/RAF controls pass18/18 versus6/18
+original. Every committed case writes once; denied/prompt-only cases write zero.
+These are not relabeled full-component render tests or an ordinary auth bypass.
+
+Root’s separate four-line workflow integration has SHA-256
+`74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5`.
+The [wiring review](evidence/chart-result-ownership/ci-wiring-review/REVIEW.md)
+source manifest `e7a1c6b22fd09cc404aad16d5735414cdf4dc5e2602a4fff22059b3404f2619a`
+is copied under7-record root manifest
+`12f29d693850a09b951ee8c2ed7e90bcbccf74e5d0a314996438f9b6b0604784`.
+The new17-case driver uses existing Node22/pinned Chromium, a5-minute limit and
+the existing artifact tree; permissions, secrets, pins and other gates stay the
+same. No hosted Linux success is inferred from its source review.
+
+[Root local acceptance](evidence/chart-result-ownership/integration/manifest.json)
+seals22 public records and196 verified compressed raw members under manifest
+`c861408ca630b13fd4aac9f878ddd90c9317122be513db85f7ac55d823006943`.
+The full build/check/4,965tests/415files pass; check covers1,042files with zero
+errors/warnings and11hints. Root17 native groups,12 existing sharing cases and
+the Russian26-route+404 drive at360/1280 pass. All18 fresh Phase1 captures equal
+#431; fingerprint `eceb9de9c5b4fb30bca028951777fd2700350f1a234fe01ee656de41ab0f11ac`.
+Engine closure remains23.3KB under25KB; every existing bundle budget passes.
+
+The original and both candidate chart visual runs retain the same three macOS
+baseline-height failures. Mobile and ordinary desktop equal the pre-change
+images exactly. Reduced motion has53,116 raw differing pixels,52,649 with only
+one channel level of difference. The existing threshold scores one pixel,
+ratio7.30840290932903e-8, below the unchanged0.001budget, with identical1440×9502
+dimensions. A fresh candidate repeat is byte-identical to the first candidate.
+The extra exact-byte assertion failure, original images, full pixel diagnostic,
+existing-threshold score and diagnostic crops are retained. No cause, all-three
+byte identity, normal visual-gate pass, new mask or altered baseline is claimed.
+The driver-generated tracked sharing image was preserved in evidence then restored
+to its original committed bytes; no captured output was silently discarded.
+
+
+The [delivery baseline refresh](evidence/chart-result-ownership/release-baseline/manifest.json)
+records site main79410401, unchanged SDKmainb49e0f14, actual36 Astrofolio #416
+paths atb17d6804 and SDK #5’s explicit do-not-merge/do-not-publish status atcced0116
+with no submitted reviews. Two scheduled main commits since75d036ae change18
+Registry-only paths; root leaves them untouched and does not claim latest-main
+integration. READY productiondpl_gBmYzHCpqwMCCH36DAToDMjRQ21g is source79410401,
+from scheduled upstream publication, not this platform candidate. No publication
+or production tool was invoked by root.
+
+## Unknown-time local-date reference preparation — 2026-09-08
+
+Root chooses Decision C-014's validated local-date witness over requiring native
+Temporal for every ordinary unknown-time calculation. The [main preparation](evidence/local-date-reference/preparation/REVIEW.md)
+is retained under the 41-record root manifest
+`6537d342374ccc8836c37399759d4806b4ef6b818a5f4272a69bf418d0e6fc46`.
+It executes 12 date controls and 28 additional calendar/seconds/identifier/input
+controls on each Node 22/24. Modeled orchestration counters are not relabeled
+instrumented native natal calls. The private formatter's undefined-zone fallback
+is a proposed-helper pitfall; the existing public resolver already validates it.
+
+The [independent real-date controls](evidence/local-date-reference/real-date-controls/REVIEW.md)
+have 23 root records, manifest
+`2540bcd86d35516a43ad5a13adc53a41828c7d1a7e231a98d0dd1c18973d49fe`.
+All 17 Node/native cases retain their actual runtime capability distinction:
+Node 22 has no native interval provider and returns unresolved, while Chrome
+identifies four empty dates (Apia, Kwajalein, Kiritimati and Guam). Five positive
+noon witnesses preserve endpoint defects in Toronto, St Johns and Juneau.
+Repeated Apia's 48 hours and Kwajalein's 47 hours are not mislabeled as newly
+demonstrated endpoint defects. No nonempty/wrong-noon real case was found in
+these 17 controls; that finite result is not an impossibility proof.
+
+The [synthetic addendum](evidence/local-date-reference/synthetic-refusal/README.md)
+has nine root records, manifest
+`5273b3fbefdd08b3da4ed5fe7ecff6dc34d69535c25196f0ea3faaa03d0c7778`.
+An explicitly complete UTC+00 to UTC+15 model yields nine hours of Jan 1 while
+the unchanged resolver selects Jan 2 03:00. Actual copied resolver and interval
+code execute that model; this is not a claimed IANA-zone event. Refusal of that
+nonempty date is an accepted conservative limitation, not proof of emptiness.
+
+[Author Freeze 1](evidence/local-date-reference/author-freeze1/AUTHOR.md.log)
+is sealed against source `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`, with
+12-file patch `41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e`
+and source manifest `328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2`.
+Root verified all seven payloads and 135 compressed members under delivery
+manifest `eacb17c424d3dc5ad8150a207d5f4a82e49cd927ef2ff1b32bec52c43e4d423a`.
+Author 234 scoped tests pass on each Node 22/24, strict types pass, and actual
+Chrome passes 35 new caller groups plus the existing 20 Moon ownership groups.
+All eight original skipped-date caller results, ten same-browser positive
+comparisons and original setup/selector/type failures remain available. The
+fixture is an instrumented actual-component/native-engine execution, not a
+production graph or approved-design gate. Independent review and root integration
+are pending; the separate downstream daily-panel clear-signal finding is open.
+
+## Chart preview delivery and CI follow-up — 2026-09-08
+
+Draft #434 at `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3` has 199 actual
+changed paths and blob identities matching its exact base. READY deployment
+`dpl_2Z94CZozTG7aXCNiEEbCLz2GR27t` retains that source before and after all
+nine [actual remote browser groups](evidence/chart-result-ownership/preview/REVIEW.md).
+The four EN/RU desktop/mobile flows produce four downloaded receipts and eight
+native natal calls; a labeled post-calculation serialization fault/recovery uses
+three; delayed replacement uses one; delayed edit and positions controls use
+zero. All twelve calls are measured against function Et in the actual served
+chart-adapter chunk, SHA256
+`20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95`.
+No local product source or replacement response was injected into the preview.
+
+Root reverified the independent reviewer's 78-record delivery manifest
+`d08cdb14f146eb23cd6470764073b39627464cee0cbc4a4c4d8b4d6e4d62ab7b`.
+The 80-record inert root copy has manifest
+`67eb3b2c8a9a3b82a676f479314a070fe057ce355a5b177e930d8acfb1dfe9ea`.
+There are 1,023 observed request events, 905 captured same-origin response bodies,
+nine blocked Plausible GETs and no observed API/non-GET/uncaught page errors.
+Uncaptured responses are not asserted successful. Protected-preview bootstrap
+is outside that observer; the original raw-file exact-secret scan and cleanup
+are distinct from the later compressed-content audit. Original pre-browser ESM
+setup and provider-scope failures are retained without attributing them to product
+behavior. These nine checks are not all seventeen local race controls.
+
+The original archive has 140 logical members: 69 served JavaScript payloads,
+70 AppleDouble metadata files and one directory. All payload lengths/hashes
+match; root additionally hashes all regular members. The [independent supplement](evidence/chart-result-ownership/preview-archive-audit/REVIEW.md)
+finds only identical 11-byte com.apple.provenance attributes in those metadata
+containers. Its 6-record source manifest is
+`4028b3b6e3d369bfd152befe15ab59345d85557a33632f67bd34ffe3cfe6aeb1`;
+the 7-record inert root copy is
+`69c6603021bf81922c6e3060bba5b370fa3d3ec3650b983f3a2349a5cdb0ceaf`.
+All decompressed members, PAX values and tar bytes pass the recorded structural/
+credential-pattern scan. This is explicitly not a fresh exact-secret comparison:
+the original values had been deleted. All 79 original delivery files remain
+byte-identical. The root's initial active-extension and metadata-count copy
+assertions stopped before copying; their corrected mapping/classification is
+recorded without modifying source bytes or concealing extra archive members.
+
+[Release records](evidence/chart-result-ownership/release/manifest.json) contain
+eight payloads, manifest
+`099b7a8a64feaafadc97b55c47845632622241220dfac98630c11d4db688240c`.
+Support #431's exact-source CI 34206194928 now passes all 14 jobs. Chart #434's
+34209606308 snapshot has twelve successful jobs, Build & Check in progress and
+one failed post-chart job. Its 1/291 failure expects the displayed-result context
+to persist after editing; the remaining visible daily panel also exposes its
+cached context. Root requires a separately reviewed clear-signal/listener fix
+with actual request/UI regression checks. The original job log is retained.
+An initial whole-run log request was unavailable until run completion; reading
+the completed job directly resolved that retrieval limitation.
+
+The [completed CI snapshot](evidence/chart-result-ownership/ci-final/ci.json)
+subsequently confirms thirteen successful jobs, including Build & Check and its
+new birth-chart ownership step. The post-chart job is the sole failure in run
+34209606308. Overall CI remains failed until the separate correction is delivered
+and the affected gates pass against its exact source.
+
+## Independent local-date reference acceptance — 2026-09-08
+
+The [independent frozen review](evidence/local-date-reference/independent-review/REVIEW.md)
+accepts C-014 without a blocking source defect. Source manifest
+`8841255c2f15e2fb71dfa4e9cd7083d99116b930bb804a9667d5b7f9a76dc3cc`
+contains 50 records; root's 52 inert records use manifest
+`d99a3d37c11f006f4a144762a21b73b728565ffc9a8c293df74c06e37e41fe0e`.
+All 276 compressed ordinary files were individually verified; there are no
+unlisted AppleDouble files. Actual input bytes/identities, transformations,
+baseline results and original virtual-entry/disabled-input harness failures remain.
+
+The main reviewer accepts 26 caller controls: 25 passed initially and the one
+affected recovery case passed after correcting only the test's disabled-input
+interaction. Baseline passes 13 of those 26; nine valid numerical outputs match
+exactly. Eight actual skipped-date submissions enter resolution/membership only,
+with no submitted numerical/receipt/endpoint work. This qualification excludes
+the Moon page's independent current-time banner and prior module loading.
+Existing five time functions, 93 module-specifier occurrences and numerical/
+caption blocks are unchanged. The fixture is not a production graph or page gate.
+
+The helper reviewer independently passes 92 controls on each Node 22, Node 24
+and native Chrome, including internal-slot hostile-object and true cross-realm
+checks, calendar/era/second/millisecond boundaries and the nonempty synthetic
+refusal. Its source manifest is
+`7a5cf412191f3c405cc47b02075d3b486b5584ea611d8245994eb30c171fca31`.
+Native import performs no observed Intl/fetch/storage/Temporal work and the
+blank test context records no requests/page errors. These finite checks establish
+the selected-instant contract; broader date/astronomical claims remain open.
+
+The review's appended corrigendum corrects earlier preparation prose that grouped
+both Node runtimes under one ICU/tzdb identity. Original raw records already say
+Node 22.23.2 uses ICU 78.2/tzdb 2026a and Node 24.19.0 uses ICU 78.3/tzdb 2026b.
+No result/source/counter is changed; the original preparation stays sealed.
+This is a SHA-256 copy manifest, not a cryptographic signature or human signoff.
+
+## Downstream context correction intake — 2026-09-08
+
+The [six-file author freeze](evidence/post-chart-clear/author-freeze1/source-freeze.json.log)
+is `e64eb26e34b1b5442a1a1e12f851b77a8a17d7d820a0e5a9b2b611c583cdd242`,
+patch `391af1a908fece28f57dfffe16ce435d1dce9ead828b9bcc77a505d1b6c0609b`,
+based on c7b9eb4. Root verifies all frozen file bytes and clean applicability
+without source application. Three-record intake manifest:
+`b4c671f9de725b15f3ed637e38431ae8879714428f167f7642ff4e4d175f2620`.
+It changes the clear signal, daily controller, email enhancement and scoped tests;
+calculator/date, backend, auth protocol, SQL and provider code remain unchanged.
+Author 52 focused tests, strict types, check (1,043 files; zero errors/warnings,
+11 hints) and 17 native groups pass. The fixture build succeeds but its full-page
+browser gate times out at a paused panel. That diagnostic is still open; neither
+full-page acceptance nor root integration is claimed by the immutable freeze.
+
+Root's [normal-build controls](evidence/post-chart-clear/normal-build-baseline/manifest.json)
+retain ten records, manifest
+`380376da2ad0111556edcea90b7e7d9de353b4a6dcb9c05eee28221dab9de822`.
+Four initial capture-presence assertions fail because that feature-off build has
+no such markup. The correctly scoped EN/RU desktop/mobile controls pass four
+absence/chart-edit/recovery cases against unchanged c7b9eb4. Exact drivers, raw
+served hashes/requests and screenshots remain. They cannot establish active
+capture or managed daily-brief correctness. All non-GET/external traffic is
+blocked; synthetic data and owned temporary browser contexts are used.
+
+## Corrected downstream source accepted and integrated — 2026-09-08
+
+Freeze 2 is `fc22bd7c2c6d3efa44022f49f42427545a35915afd49ee66fee6b4d7b6a09cbc`,
+patch `7202443237f2bebf826a9a0ef24da3fd8062b4cd2aff2b4edfed02f3a51fc5d8`.
+Root applies and individually verifies all six files plus separately reviewed CI
+patch `f9ce2b49d843e6d6c65b5bd49155554f63aa82b146b48313e13d90ad6a5cadf4`.
+The workflow result is `286ca48156fb294f2af629fdf973d921565c5601142396a4d31fe5f1d95633a9`.
+
+The [author report](evidence/post-chart-clear/author/AUTHOR.md.log) records
+52 focused tests, 21 native groups, 294 full-page assertions and six repeated
+paused-state controls. Root manifest `bd02cd017cd05ca20625a86fb4e71cdbe34f61986318078cc301d61b5b8b5c61`
+contains eight inert records; all 355 ordinary compressed members are verified.
+The original failed full-page compiled output was not retained in full before
+rebuild; source and requested URLs are retained, and final fixture bytes are
+separate. No exact original served-byte claim is made.
+
+The [independent report](evidence/post-chart-clear/review-freeze2/REVIEW.md)
+accepts 25 native controller criteria. Byte-identical email source retains its
+separate 20/20 result by parity without a redundant execution. Root manifest
+`8d9933ae0c7fce5cc23dfb581839c69a4d357914140b040a403ef0fe1fac4638`
+contains 71 inert records with 51 individually verified ordinary archive members.
+The original rejected freeze remains independently inspectable. The current
+signed-out/null and unresolved/undefined cache meanings have positive controls;
+no auth provider, client, account format or submitted-write boundary changes.
+
+Root's integrated fixture build and full page gate pass 294/294. Normal-build,
+full suite and refreshed remote source/CI/preview acceptance are pending; neither
+source review nor fixture success is a release or production claim.
+
+
+[Root C-012 integration](evidence/post-chart-clear/root-integration/README.md)
+passes the normal build, check (1,043files, zero errors/warnings,11hints),
+4,969tests/416files,21native groups,294full-page assertions,17existing chart
+ownership groups, four correctly scoped normal feature-off controls and exact
+#434 base scope. All18 fresh captures are byte-identical to c7b9eb4. Current
+render-source receipt is `e85d852a325e93e76a4a5d46249908da0f134819ccd030c13482b7c6457c6c18`.
+Root manifest `39a9042e61a61ebe56cadf09e47d228f249d17bcce4bd9392091cff03e4d5102`
+contains17records and58individually verified ordinary archive members. The fixture
+gate ran first; normal build/captures followed, so the final local build has no
+fixture feature activation. No numerical/SDK/API/account authority change.
+
+The read-only [pre-integration refresh](evidence/post-chart-clear/release-start/manifest.json)
+retains five public records, manifest
+`f695fac63528f81dcaf670b61f9b4d978579b17587c7665ebca772b06319a3fd`.
+Site main remains79410401 and SDKmainb49e0f14; actual READYproduction is
+dpl_gBmYzHCpqwMCCH36DAToDMjRQ21g at79410401, while this stack has integrated
+main only throughd4d5717d. SDK#5 remains open draft with the explicit do-not-merge/
+publish hold and no reviews. Actual Astrofolio#416 remains draft atb17d6804 with
+36paths; no integration or communication with that separate user session occurs.
+Registry-only later-main updates remain untouched and required at eventual merge.

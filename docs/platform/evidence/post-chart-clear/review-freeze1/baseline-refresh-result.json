@@ -1,0 +1,113 @@
+{
+  "variant": "baseline",
+  "browser": "152.0.7977.83",
+  "groups": 1,
+  "passed": 1,
+  "results": [
+    {
+      "name": "profile sync while the replacement authoritative session is pending preserves authenticated result",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [],
+        "active": "",
+        "buttonDisabled": false
+      }
+    }
+  ],
+  "scope": "Real Preact controller/context/helper/profile access/client; native fetch to fulfilled owned endpoint. Synthetic auth/Supabase boundary, structural DOM and declared import delay gates. No backend/public page claim."
+}

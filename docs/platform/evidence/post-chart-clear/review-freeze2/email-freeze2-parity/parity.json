@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb",
+      "sameAsReviewedFreeze1": true
+    },
+    {
+      "path": "src/islands/PostChartDailyBrief.tsx",
+      "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158",
+      "sameAsReviewedFreeze1": false
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.test.ts",
+      "sha256": "1d8476ed9ced6990adf339e85b44d2a70e0813033065eb82647ab1dab72e2b7e",
+      "sameAsReviewedFreeze1": true
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.ts",
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a",
+      "sameAsReviewedFreeze1": true
+    },
+    {
+      "path": "tests/post-chart-context-clear-drive.mjs",
+      "sha256": "3e98393b5ce53e0f15d9ccc6a49fd6da199186da7076e35f9a22938daec9ccfe",
+      "sameAsReviewedFreeze1": false
+    },
+    {
+      "path": "tests/post-chart-daily-drive.mjs",
+      "sha256": "36bc9d6fa176f38d35c521bd71364c153e1605e6a28842533a77ce4c81848654",
+      "sameAsReviewedFreeze1": true
+    }
+  ]
+}

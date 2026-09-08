@@ -1,0 +1,194 @@
+[
+  {
+    "path": "execution/build.log",
+    "bytes": 198,
+    "sha256": "0673cadb2ad651a17dd0c0423da9d837d17d9bd2da5bbf813791810ccd1b3496",
+    "sourcePath": "execution/build.log"
+  },
+  {
+    "path": "execution/build.mjs.log",
+    "bytes": 3036,
+    "sha256": "75ce071dc05b98b0dca1104bb961404a19ef61a80f3d8f4d0452b3576a5a1ce3",
+    "sourcePath": "execution/build.mjs.log"
+  },
+  {
+    "path": "execution/candidate-build-identity.json",
+    "bytes": 56687,
+    "sha256": "a8e7327e3a4b32608ecd85f46ec0b898ee1c69b578db97b364625fe7c5eb7051",
+    "sourcePath": "execution/candidate-build-identity.json"
+  },
+  {
+    "path": "execution/candidate-instrumented.tsx.log",
+    "bytes": 122569,
+    "sha256": "e5223fdeb1d7d0343a4c57e42f67c7116e35568a8b085ace9732d464409c8509",
+    "sourcePath": "execution/candidate-instrumented.tsx.log"
+  },
+  {
+    "path": "execution/drive.mjs.log",
+    "bytes": 13041,
+    "sha256": "a8d2fad0512c1cf6c0bddf0a030610b187c528db73111e1d5152c3cb114214e9",
+    "sourcePath": "execution/drive.mjs.log"
+  },
+  {
+    "path": "execution/fixture-entry.tsx.log",
+    "bytes": 4318,
+    "sha256": "1c5ca7bb094d7e6615df2a1fb2a191ff669b4c5ff4751357b076a1119705df86",
+    "sourcePath": "execution/fixture-entry.tsx.log"
+  },
+  {
+    "path": "execution/full-component.diff",
+    "bytes": 26293,
+    "sha256": "c30ce7849105b3fd93f0afce5df23916cd1e7e02fa3b92bbdc85797be71f254e",
+    "sourcePath": "execution/full-component.diff"
+  },
+  {
+    "path": "execution/native-result.json",
+    "bytes": 96564,
+    "sha256": "21f0e2f284737880e88551c93faa3144462f6dea7d9d708308f3797731d89837",
+    "sourcePath": "execution/native-result.json"
+  },
+  {
+    "path": "execution/native.log",
+    "bytes": 1707,
+    "sha256": "26dd5ed14538c9f60016b47886b45bee1666099cfaef08f6fff7e266d15b361a",
+    "sourcePath": "execution/native.log"
+  },
+  {
+    "path": "execution/numeric-parity.json",
+    "bytes": 335,
+    "sha256": "d3956186176a21425960af55a72ae994f8bb02e709e5a255824108497738ac10",
+    "sourcePath": "execution/numeric-parity.json"
+  },
+  {
+    "path": "execution/numeric-parity.log",
+    "bytes": 322,
+    "sha256": "f341f63b624a532ecbdbcfa5a63ed1f02941a9a5327597a44f911ca6198a0876",
+    "sourcePath": "execution/numeric-parity.log"
+  },
+  {
+    "path": "execution/numeric-parity.mjs.log",
+    "bytes": 1780,
+    "sha256": "d11a208374cf700e7d86d8757d7d6d55acbf5782a34905970537f5d5f5748ea4",
+    "sourcePath": "execution/numeric-parity.mjs.log"
+  },
+  {
+    "path": "execution/portable-driver.log",
+    "bytes": 1185,
+    "sha256": "24afd537e24636b11fba4ff01b593fa454681bab8dd19139da6d6121a3befe30",
+    "sourcePath": "execution/portable-driver.log"
+  },
+  {
+    "path": "execution/source-review.json",
+    "bytes": 7637,
+    "sha256": "f61e451091171b7d43034b0e0992af15a30390ddb9ff3ee9535197c75088ff3d",
+    "sourcePath": "execution/source-review.json"
+  },
+  {
+    "path": "execution/source-review.log",
+    "bytes": 97,
+    "sha256": "5361370a454af098a0f168117f89f313d014cf7770aa9374ff598a8dd429fcee",
+    "sourcePath": "execution/source-review.log"
+  },
+  {
+    "path": "execution/source-review.mjs.log",
+    "bytes": 3785,
+    "sha256": "3afea3e86b40de5fad20793211ed0294330b44f51f56118d81c0af968d9c4b96",
+    "sourcePath": "execution/source-review.mjs.log"
+  },
+  {
+    "path": "execution/static-drive.mjs.log",
+    "bytes": 6687,
+    "sha256": "c27f415b245ac46dff39219f4a17c1fb2342a8eca8e537a5773d66a3af8d7fd3",
+    "sourcePath": "execution/static-drive.mjs.log"
+  },
+  {
+    "path": "execution/static-result.json",
+    "bytes": 86883,
+    "sha256": "f794443cc03bb628d3e483281f284053cc0a55a225865e864b9fa6b0142acc02",
+    "sourcePath": "execution/static-result.json"
+  },
+  {
+    "path": "execution/static.log",
+    "bytes": 268,
+    "sha256": "72d806caeac3fd17faa9b75910d2842eda14a3b5555f8ab95ba6f8ed7b3ee70d",
+    "sourcePath": "execution/static.log"
+  },
+  {
+    "path": "execution/unchanged-numerical-block.ts.log",
+    "bytes": 1775,
+    "sha256": "095c181031ef2ab158bfb5f254427fbc013bac67432adb7d3f60466fc029ce98",
+    "sourcePath": "execution/unchanged-numerical-block.ts.log"
+  },
+  {
+    "path": "freeze.json",
+    "bytes": 1436,
+    "sha256": "7b1d82dad1cd1a30336995424d11683f637a45d9ac81f5447bce4894e9ba3a21",
+    "sourcePath": "freeze.json"
+  },
+  {
+    "path": "frozen-source/src/islands/ChartCalculator.locale.test.ts.log",
+    "bytes": 9306,
+    "sha256": "c688e9e0591a0ecc710f8080123759d0f1fa930ace6c62327d38be7e845d3e0b",
+    "sourcePath": "frozen-source/src/islands/ChartCalculator.locale.test.ts"
+  },
+  {
+    "path": "frozen-source/src/islands/ChartCalculator.ownership.test.ts.log",
+    "bytes": 20598,
+    "sha256": "647d86904a9af9c3d9822b2abd609774d703033431e233ec548db1ecde8980a9",
+    "sourcePath": "frozen-source/src/islands/ChartCalculator.ownership.test.ts"
+  },
+  {
+    "path": "frozen-source/src/islands/ChartCalculator.tsx.log",
+    "bytes": 120491,
+    "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+    "sourcePath": "frozen-source/src/islands/ChartCalculator.tsx"
+  },
+  {
+    "path": "frozen-source/tests/chart-ownership-drive.mjs.log",
+    "bytes": 21741,
+    "sha256": "46dee6bd1e49d610745666e1b3bc7c9105bedef83f5d866552ade2d22ce884a7",
+    "sourcePath": "frozen-source/tests/chart-ownership-drive.mjs"
+  },
+  {
+    "path": "native-candidate-bundle.tgz",
+    "bytes": 477404,
+    "sha256": "181b6d7c1f3449f9766108636decb44a79a41e0ac52eeb6eba396f53b6da80fa",
+    "sourcePath": "native-candidate-bundle.tgz"
+  },
+  {
+    "path": "patch.diff",
+    "bytes": 71210,
+    "sha256": "32b7413f9fcce17b192fa9f3fe28847d6b6ec7bfccc39b4437fee60df44a8e9f",
+    "sourcePath": "patch.diff"
+  },
+  {
+    "path": "portable/native-coverage.json",
+    "bytes": 618862,
+    "sha256": "9766e2966f213c94d23fb6c118441505ef9b2be196c158dfa76f2b1d5be43c58",
+    "sourcePath": "portable/native-coverage.json"
+  },
+  {
+    "path": "portable/result.json",
+    "bytes": 247422,
+    "sha256": "48ad165bedf23c7a0f97381f94798c6bd8f656a88750312915442620e498c88f",
+    "sourcePath": "portable/result.json"
+  },
+  {
+    "path": "REVIEW-FREEZE2.md",
+    "bytes": 5505,
+    "sha256": "ec6a546a3122adefe92e71d44f04e6d17d1b181ad974c9f7bc26c81579498813",
+    "sourcePath": "REVIEW-FREEZE2.md"
+  },
+  {
+    "path": "SUMMARY.json",
+    "bytes": 2696,
+    "sha256": "defe931386c599576ab953c32f29f486cec231f9f4434e6c4b9adef010b504c5",
+    "sourcePath": "SUMMARY.json"
+  },
+  {
+    "path": "source-manifest.json",
+    "sourcePath": "manifest.json",
+    "bytes": 5126,
+    "sha256": "47c6e0f6e319a077c24fec78bdd532e872e0d33396cbe4ec9cfc0e5bb5c4c112"
+  }
+]

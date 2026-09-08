@@ -1,0 +1,42 @@
+{
+  "base": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "precedingSource": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "records": [
+    {
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "bytes": 10545,
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+    },
+    {
+      "path": "src/islands/PostChartDailyBrief.tsx",
+      "bytes": 14534,
+      "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158"
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.test.ts",
+      "bytes": 1993,
+      "sha256": "1d8476ed9ced6990adf339e85b44d2a70e0813033065eb82647ab1dab72e2b7e"
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "tests/post-chart-context-clear-drive.mjs",
+      "bytes": 23894,
+      "sha256": "3e98393b5ce53e0f15d9ccc6a49fd6da199186da7076e35f9a22938daec9ccfe"
+    },
+    {
+      "path": "tests/post-chart-daily-drive.mjs",
+      "bytes": 44367,
+      "sha256": "36bc9d6fa176f38d35c521bd71364c153e1605e6a28842533a77ce4c81848654"
+    },
+    {
+      "path": ".github/workflows/site-check.yml",
+      "bytes": 15911,
+      "sha256": "286ca48156fb294f2af629fdf973d921565c5601142396a4d31fe5f1d95633a9"
+    }
+  ],
+  "state": "Uncommitted integrated source, source freeze plus separately reviewed CI insertion"
+}

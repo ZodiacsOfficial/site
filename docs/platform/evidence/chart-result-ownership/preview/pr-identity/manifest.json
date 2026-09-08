@@ -1,0 +1,123 @@
+{
+  "scope": "Read-only paginated remote PR434 identity versus exact local head/base and reviewed Freeze2",
+  "head": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "base": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "records": [
+    {
+      "path": "COMMANDS.md",
+      "bytes": 1016,
+      "sha256": "a8e57e69052241c4b52c9e5e20fbe34f09edfc90bd18bbd3c07ec5e3b59ec171"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 2649,
+      "sha256": "9f9e1e3da7068525eb8294377f9abd385d7592eb8690d7827579cc91f2783963"
+    },
+    {
+      "path": "browser-helper.mjs",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a"
+    },
+    {
+      "path": "files-pages-raw.json",
+      "bytes": 1868442,
+      "sha256": "b7ada9822470398b73c1659a3446d80381ad0021194f4bedabf64267e3f302d2"
+    },
+    {
+      "path": "files-pages-raw.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final-metadata-check.json",
+      "bytes": 273,
+      "sha256": "406c2b9c0efbf4e89967ac8a5fd488677ed3fa9977269904e558ce880867ddea"
+    },
+    {
+      "path": "identity-result.json",
+      "bytes": 73531,
+      "sha256": "0d128c2097d74edaadf43742ba1aade391dc7ca78501bd6efb57a6402f1a01e9"
+    },
+    {
+      "path": "initial-network-error.log",
+      "bytes": 138,
+      "sha256": "f3d7f0a9f91cbdc678967eecacef4017deef9323b64ca1d41fc0395b37dc4fc7"
+    },
+    {
+      "path": "local-name-status.raw",
+      "bytes": 17704,
+      "sha256": "79f57566658113dc76cd744744d4c518bda72758f30fa35d64e3c9548e4f70c0"
+    },
+    {
+      "path": "pr-final-raw.json",
+      "bytes": 19282,
+      "sha256": "f09eb14d918dcfd8d3f4ae271f0d790f569e8b9550e2e82092bca863418ade19"
+    },
+    {
+      "path": "pr-final-raw.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "pr-raw.json",
+      "bytes": 19282,
+      "sha256": "f09eb14d918dcfd8d3f4ae271f0d790f569e8b9550e2e82092bca863418ade19"
+    },
+    {
+      "path": "pr-raw.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reviewed-freeze2.json",
+      "bytes": 1436,
+      "sha256": "7b1d82dad1cd1a30336995424d11683f637a45d9ac81f5447bce4894e9ba3a21"
+    },
+    {
+      "path": "source/src/islands/ChartCalculator.locale.test.ts",
+      "bytes": 9306,
+      "sha256": "c688e9e0591a0ecc710f8080123759d0f1fa930ace6c62327d38be7e845d3e0b"
+    },
+    {
+      "path": "source/src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20598,
+      "sha256": "647d86904a9af9c3d9822b2abd609774d703033431e233ec548db1ecde8980a9"
+    },
+    {
+      "path": "source/src/islands/ChartCalculator.tsx",
+      "bytes": 120491,
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+    },
+    {
+      "path": "source/tests/chart-ownership-drive.mjs",
+      "bytes": 21741,
+      "sha256": "46dee6bd1e49d610745666e1b3bc7c9105bedef83f5d866552ade2d22ce884a7"
+    },
+    {
+      "path": "verify.log",
+      "bytes": 1874,
+      "sha256": "f6d8a686e603faa060d4a53219cc92c6fea12b796a6b29abd4cdfc790fc3a59e"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 4750,
+      "sha256": "e2bf982103ea94f9ab63c1a8e3516312ed1fb7f4718a66be83479f47fa6c8194"
+    },
+    {
+      "path": "workflow-base.yml",
+      "bytes": 15549,
+      "sha256": "f7eced0d399caded9cff242c556f54084abea450aecd9df55122b966f40bfaaf"
+    },
+    {
+      "path": "workflow-head.yml",
+      "bytes": 15717,
+      "sha256": "74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5"
+    },
+    {
+      "path": "workflow.patch",
+      "bytes": 594,
+      "sha256": "a083e7330b343f65d51ad6ba20b5375dbe9ed27494cf466b7c1f124f7de5f078"
+    }
+  ],
+  "totalBytes": 2217677
+}

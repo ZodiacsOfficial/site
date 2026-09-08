@@ -1,0 +1,3 @@
+c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3:src/components/EmailCaptureEnhancement.astro:131:    form.addEventListener('reset', () => {
+c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3:src/layouts/Base.astro:313:    <script is:inline>window.zodiacsAnalytics = window.zodiacsAnalytics || Object.freeze({ track: function () {} });</script>
+c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3:src/layouts/Base.astro:348:            window.zodiacsAnalytics = Object.freeze({

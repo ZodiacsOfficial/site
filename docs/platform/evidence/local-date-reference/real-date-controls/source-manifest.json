@@ -1,0 +1,116 @@
+{
+  "records": [
+    {
+      "path": "COMMANDS.md",
+      "bytes": 798,
+      "sha256": "b2f0fca24b26ecb6cc7fc49fe3b3adc90c4968759b5c7dd6355aa546c812d304"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 4019,
+      "sha256": "54d424759400e3524b9c074efa07df112966763038be2e56cb9f225f2577c288"
+    },
+    {
+      "path": "SUMMARY.json",
+      "bytes": 4065,
+      "sha256": "7e3b626f8d36a1f741ebf90c15683810fc9b2c911755fa03fd97c3015b67ba2e"
+    },
+    {
+      "path": "build-identity.json",
+      "bytes": 2517,
+      "sha256": "3b8b5cab72aee43d5e130a21874e3dd974a808e7c0852feb20c840f0d70d345d"
+    },
+    {
+      "path": "endpoint-extracted.ts",
+      "bytes": 554,
+      "sha256": "4e008273b4a861fc0bcbb5db144de51b5a0118bce889013197808b02406356c3"
+    },
+    {
+      "path": "finite-probe.mjs",
+      "bytes": 4460,
+      "sha256": "df139e89efdac2d64bf122ea0a772233ab4b513c1066d4b9e248eb03bf08ca33"
+    },
+    {
+      "path": "fixtures.json",
+      "bytes": 1589,
+      "sha256": "b55122bf1ab7dd219dac955e94be1c25490a8b0aa3f61f1845f4bc8c012fb9f8"
+    },
+    {
+      "path": "native-result.json",
+      "bytes": 30434,
+      "sha256": "0eac4a1be4ce032d54c8f5a3df2f87aa3cdac93c18133e668465b2f5a5f8f3bf"
+    },
+    {
+      "path": "node-result.json",
+      "bytes": 19838,
+      "sha256": "6cdd4357ace9af4343c29610c46e327f12dce4372ff646f779f6b9f9cb4ab187"
+    },
+    {
+      "path": "prior-evidence/SUMMARY.json",
+      "bytes": 2028,
+      "sha256": "35f939b0fa789e8acebe464dcb428e0b8a5013eb24f727d9e25318fe8064de50"
+    },
+    {
+      "path": "prior-evidence/native-result.json",
+      "bytes": 9994,
+      "sha256": "d716c9cb4a7c21952981c6a6d5fedf52b3a5e8e1e631a4878d3bef5a87729c4f"
+    },
+    {
+      "path": "prior-evidence/source-freeze1-identity.json",
+      "bytes": 900,
+      "sha256": "358aa231e7a2118303ef4b3f3e6f9feec7a966d85049bffd21e3dac5d5951b0a"
+    },
+    {
+      "path": "run.log",
+      "bytes": 1772,
+      "sha256": "7491d76be3404cca4792096588e0c81e8b9edf1a63a832e3b8c61f098fea7462"
+    },
+    {
+      "path": "run.mjs",
+      "bytes": 3330,
+      "sha256": "a98cdd93bd653d27d3faab555a7a0149fdcb34c234b38286e72a2166b24419f1"
+    },
+    {
+      "path": "source/src/lib/chart-date-certainty.ts",
+      "bytes": 1810,
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96"
+    },
+    {
+      "path": "source/src/lib/time/civil-date.ts",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "path": "source/src/lib/time/local-date-intervals.ts",
+      "bytes": 9341,
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+    },
+    {
+      "path": "source/src/lib/time/localToUtc.ts",
+      "bytes": 6897,
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+    },
+    {
+      "path": "source/src/lib/time/technical-locales.ts",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "path": "source-identity.json",
+      "bytes": 932,
+      "sha256": "ca8b615754ed1489441aa463c486a3ef4ff3434f58e61d09c536da6c0cd7705a"
+    },
+    {
+      "path": "subject.js",
+      "bytes": 17582,
+      "sha256": "2ee0b8370c3a64ae68d83ec6c9551fcc602e13a1d3c287dd7d59109cb979c413"
+    },
+    {
+      "path": "subject.mjs",
+      "bytes": 15853,
+      "sha256": "1a9f28c07d352cc135fe7b824966cd7142daa224649efbdce025873b3cbddf4f"
+    }
+  ],
+  "totalBytes": 140360,
+  "scope": "17 fixed real-zone/date controls; read-only representative admission preparation"
+}

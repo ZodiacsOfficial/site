@@ -1,0 +1,8 @@
+{
+  "sourcePath": "preparation/EmailCaptureEnhancement.base.astro",
+  "sourceSha256": "c3ea10e5495a769700808f80d2ef6b2fe131fe573d37f10ba0680b403fbe3f0b",
+  "scriptSha256": "fb6ee26dcb8124bb9bc77617a78d82715ed38c706ee545e602941ff5a2999403",
+  "outputSha256": "4fbd17d533bbfc7806f29275be5f8c501ed2b4948aaf42e14f040d5f375ac0dc",
+  "method": "Transpile full actual Astro script to JS without changing program statements; no AST callback substitutions.",
+  "warnings": []
+}

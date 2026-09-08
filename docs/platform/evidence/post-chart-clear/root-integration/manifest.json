@@ -1,0 +1,87 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 1741,
+    "sha256": "5911658191a02cae5d450d1e52373c067f6f00cc9c709e560737302ace104807"
+  },
+  {
+    "path": "build.log",
+    "bytes": 282742,
+    "sha256": "242d1272bf0e2d56410ba863d4691c38d0721219ee7d0268c78f4ce486589c9c"
+  },
+  {
+    "path": "capture-comparison.json",
+    "bytes": 5176,
+    "sha256": "925145e2904bca4969afaa49498ef733cfcd253f31b4096917cd8f28ae20cc18"
+  },
+  {
+    "path": "chart-ownership.log",
+    "bytes": 1162,
+    "sha256": "0914c81e565c229b53a455a7281213b8339eb62d3d4290205945698cbef92fdb"
+  },
+  {
+    "path": "check.log",
+    "bytes": 4438,
+    "sha256": "e3771febc67966785d74b2bf289ffaabd43899b7e12b5116c27aa399da2dd041"
+  },
+  {
+    "path": "feature-off.log",
+    "bytes": 192,
+    "sha256": "cac87941b44e45e363cc88a884286d9dd19b79621d401271d58762dc70ca3ed6"
+  },
+  {
+    "path": "full-post-chart.log",
+    "bytes": 171,
+    "sha256": "83ee84918429db4eb97f94dd735a27ce203f991d58aada3164190a43416f71bb"
+  },
+  {
+    "path": "native.log",
+    "bytes": 1241,
+    "sha256": "c85a4e4dad80550e1312f3b7900d57297c4fbcb9b1b1a326d4962ecb51b54b6d"
+  },
+  {
+    "path": "normal-build-drive.mjs.log",
+    "bytes": 6201,
+    "sha256": "2a1d467d6111bf923d2f5e0fc2342ee24ae7238a093a4a46039cc2a98a173db3"
+  },
+  {
+    "path": "normal-build-receipt.json",
+    "bytes": 710,
+    "sha256": "34e1a35aa4fbd1f37afd43d05ebfa38fd4a99f40359cae28334ed4ec7c0af3ac"
+  },
+  {
+    "path": "phase1-manifest.json",
+    "bytes": 12353,
+    "sha256": "96c79d074d7718cbea0fe1e6e81cf79812b47398ad0216fa90935433832aa1b3"
+  },
+  {
+    "path": "phase1.log",
+    "bytes": 1513,
+    "sha256": "17c8a58aceced0bc21599e416dfa29326ca272f53c758d2d1faf8fc9f7c7c9a8"
+  },
+  {
+    "path": "raw-members.json",
+    "bytes": 10082,
+    "sha256": "660f4c12f586f779a8c48f9b4c24e9d2d28a6678e1387f43319512bdae6eff63"
+  },
+  {
+    "path": "raw.tar.gz",
+    "bytes": 2364433,
+    "sha256": "1c50dec30e74f11fa3664a5ede219ff1cab7492d64028bf8558c5ca06d9a228e"
+  },
+  {
+    "path": "scope.log",
+    "bytes": 76,
+    "sha256": "d59424b21779966f60b5e3e91744a607c659d2c27d0ac8cc5e658a542d59b733"
+  },
+  {
+    "path": "source-identity.json",
+    "bytes": 1450,
+    "sha256": "00c402c82f0099a7d6ea750cfb936b797410c9485c69e7b567aea6d94ae52024"
+  },
+  {
+    "path": "test.log",
+    "bytes": 35802,
+    "sha256": "28510edecb2730c55bd21abb33e070d9c613cecb1ccaf6e2fd6e6eb5bb267c22"
+  }
+]

@@ -12,29 +12,98 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Current implementation — support evidence and birth-chart ownership
+## Current implementation — unknown-time local-date reference
 
-Root is on `codex/platform-runtime-claims`, based on Moon source
-`4227bb0758d4b34cbd761a3cddd273cbea6c2c1b`. The independently reviewed one-file
-support correction is implemented and tested: current candidate evidence replaces
-stale Node 20/22 assertions, and the public-download record is accurately called a
-consumer check. Build, 4,938 tests / 414 files, check (1,041 files; zero errors/
-warnings, 11 hints), exact-base scope and 13 actual Chrome developer/chart/API
-groups pass. The covered Phase 1 fingerprint remains unchanged; its existing 18
-Moon captures are validated, not represented as newly captured. Two fresh developer
-screenshots are retained. [Source and evidence](evidence/runtime-claims/root-source-identity.json).
-Draft delivery and hosted checks are the next release steps.
+The prepared `codex/platform-local-date-reference` branch starts from delivered
+chart source `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`. Root has temporarily
+returned to `codex/platform-chart-result-ownership` to integrate the CI-discovered
+downstream correction before resuming that date branch. Decision C-014 requires
+the chosen unknown-time reference to belong to the requested local date before
+numerical, receipt or endpoint work. It applies to the birth chart and selected-
+city Moon lookup. Failure asks the user to check the date and place; it does not
+claim that the date is empty. Known-time gap handling and no-city UTC Moon remain
+unchanged. No native Temporal requirement or alternate reference is introduced.
 
-ChartCalculator Freeze 1 is not accepted for integration. Independent review
-reproduced three remaining paths: a delayed public positions import restores an
-obsolete profile-derived mine reference; controls retry steals focus after a newer
-result; a save-close frame survives mine-only revocation. The first also reproduces
-in the unmodified production build; the other two have the specifically scoped
-native component/callback evidence described in the [review](evidence/chart-result-ownership/review-freeze1/REVIEW-FREEZE1.md).
-This is stale reference/focus behavior, not an established authentication bypass.
-A corrected four-file freeze is being prepared in isolated scratch. Committed
-saves must remain persisted once, public positions and independent primary charts
-must remain usable, and numerical/coverage policy remains unchanged.
+[Preparation](evidence/local-date-reference/preparation/REVIEW.md),
+[real-date controls](evidence/local-date-reference/real-date-controls/REVIEW.md)
+and the [synthetic nonempty-date refusal](evidence/local-date-reference/synthetic-refusal/README.md)
+are byte-verified and retained. The 12-file author freeze is implemented in its
+isolated scratch and passes [independent review](evidence/local-date-reference/independent-review/REVIEW.md):
+26 accepted caller controls, nine exact output comparisons and 92 helper controls
+on each Node 22/24 and native Chrome. It is not integrated here.
+The separate C-012 downstream-context finding below also requires correction.
+
+## Delivered candidate — birth-chart result ownership
+
+Draft [#434](https://github.com/ZodiacsOfficial/site/pull/434) is delivered at
+`c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`, above support source
+`abcf1a44e52040db79a369b49bc9b55d78099b22`. All 199 actual paths and blob
+identities match the exact head/base comparison. The corrected four-file
+ChartCalculator freeze and separately reviewed four-line CI step are integrated.
+The first freeze was rejected for three demonstrated races; those originals remain
+retained. The corrected patch prevents obsolete calculations, shares, contexts,
+profile-derived secondary references and focus callbacks from overriding current
+input. Public positions and independent primary charts remain usable; requested
+committed saves remain written once. Date membership/certainty and richer storage
+activation remain separate.
+
+Author 134 focused tests and 17 browser cases pass. Independent review passes
+22 component cases, 18 native save/profile cases, five actual production-build
+cases and the exact 17-case driver from paths containing spaces. Root build,
+check (1,042 files; zero errors/warnings, 11 hints), 4,965 tests / 415 files,
+17 native cases, existing 12 sharing cases, Russian public-route checks and
+exact-base scope pass. All 18 Phase 1 captures are byte-identical to #431.
+The three previously recorded macOS baseline-height failures persist before and
+after. Two initial chart outputs are byte-identical; the reduced-motion comparison
+has one scored pixel at the unchanged threshold, within the existing budget.
+A fresh repeat reproduces that candidate exactly. Original failures, raw pixels,
+measured difference and limits are retained, with no baseline/mask/tolerance change.
+[Exact root identities and acceptance](evidence/chart-result-ownership/root-source-identity.json).
+The exact-source READY preview `dpl_2Z94CZozTG7aXCNiEEbCLz2GR27t` passes nine
+actual remote groups: EN/RU desktop/mobile, receipts, edit/recovery, a labeled
+serialization fault, delayed loaders/replacement and positions-only import.
+Native call counts come from the actual served chunk; this is not a remote
+rerun of every local race. Protected-preview bootstrap is separately qualified.
+The [preview report](evidence/chart-result-ownership/preview/REVIEW.md) and
+[supplemental compressed-metadata audit](evidence/chart-result-ownership/preview-archive-audit/REVIEW.md)
+are byte-verified and durable. The latter is a structural/pattern scan of all
+decompressed content; deleted preview secrets were unavailable for a fresh exact
+comparison. Original archive bytes and all metadata remain inspectable.
+
+Site Check 34209606308 at c7b9eb4 is complete with thirteen successful jobs
+and one failed post-chart job (1/291 assertions). The obsolete context-retention
+assertion also exposed an actual cached-panel ownership defect. The first six-file
+downstream correction was rejected after its full-page run and independent review
+reproduced a session-cache race; the original failure remains retained.
+
+Corrected Freeze 2 now distinguishes unread session state from observed sign-out.
+Its exact six files and separately reviewed four-line CI step are integrated
+locally on this branch. Author checks pass 52 focused tests, 21 native cases,
+294 full-page assertions and six paused-state diagnostic repeats. Independent
+review passes 25 controller criteria; the byte-identical email enhancement retains
+20 previously executed passing controls with exact-source parity. Root's integrated
+fixture build and full-page gate pass 294/294. Normal build/check (1,043 files;
+zero errors/warnings), 4,969 tests / 416 files, 21 native cases, 17 existing chart
+cases, four feature-off edit/recovery cases and exact-base scope pass. All 18
+fresh approved-page captures are byte-identical to c7b9eb4. The follow-up is
+prepared for isolated draft delivery; fresh remote CI/preview remain pending.
+[Correction evidence and retained limits](evidence/post-chart-clear/README.md).
+No full CI acceptance, release-ready state or production deployment is claimed.
+
+## Delivered candidate — current runtime support evidence
+
+Draft [#431](https://github.com/ZodiacsOfficial/site/pull/431), exact source
+`abcf1a44e52040db79a369b49bc9b55d78099b22`, changes two strings in one support
+page above #430. All 183 actual paths/blob identities match the local diff.
+Build/check/4,938 tests, 13 local Chrome groups and the unchanged covered capture
+fingerprint pass. READY preview `dpl_7TVmbdjnFTVjT1rZrVj5a8Kyj26C` passes all
+13 developer/chart/API groups; the [separate evidence audit](evidence/runtime-claims/preview-audit/REVIEW.md.log)
+verifies recorded execution and current-carrier links without claiming another
+browser run. Authentication bootstrap and the separate APIRequestContext request
+are outside the browser observer. The original literal-marker scan failure and
+passing credential-like scan are retained; temporary access was removed.
+Site Check 34206194928 passes all 14 jobs at that exact source.
+No publication, production deployment or external adoption is claimed.
 
 ## Delivered candidate — Moon result ownership
 
@@ -51,8 +120,8 @@ originals and diagnosis remain retained without new masks or tolerances.
 Exact-source READY preview `dpl_J3sNfFzjSA6Q8RjRLW9fXLnZJ9kH` passes all 12
 locale/width page groups, including clearing/recovery and no saved profile.
 [Preview report](evidence/moon-result-ownership/preview/REVIEW.md.log) retains the
-observed requests, source identity and cleanup limits. Site Check 34204547574 is
-in progress; skipped Browser Evidence is not a pass. No publication, production
+observed requests, source identity and cleanup limits. Site Check 34204547574 passes all 14 jobs, including the new Moon ownership
+step; skipped Browser Evidence is not a pass. No publication, production
 deployment or external adoption is claimed. The [caller counterexamples](evidence/interval-caller-compatibility/)
 for empty/missing dates and whole-date Sun/Moon certainty remain open.
 
@@ -249,17 +318,19 @@ pre-existing failure relative to rc.5, not a passing baseline gate. Draft [#422]
 ## Refreshed release truth
 
 - The candidate integrated main `d4d5717d132a28cd6d7cda3007e3b898bb74669f`.
-  A later read finds main `75d036ae365a4c469e234046b0592a80f0dbc311`: 18
-  automatic Registry-only refreshes, with no daily/calculation source change.
-  Those paths remain unchanged on this candidate since their common ancestor;
-  future main integration must preserve the latest upstream bytes. Its September 8 daily
-  edition and Registry snapshot are preserved in the candidate. All 21 content
-  files match upstream bytes; only the manifest's engine/generator identifiers
-  are regenerated through the existing builder. The one-time scope allowance
-  names the twelve already-main Registry sign pages and exact stacked base.
-- Production is READY `dpl_3y3YkRfSkdXYQSH3NwQaMidDFC9R`, alias `zodiacs.org`,
-  source `75d036ae`. This read-only refresh observes the scheduled main release;
+  The latest read finds main `79410401ce839b8a87a94a4d9c6da34ba312faa6`.
+  Since the preceding `75d036ae` snapshot, two scheduled commits advance main
+  with 18 Registry-only changed paths. The candidate leaves these paths at
+  their existing ancestor bytes; eventual main integration must retain current
+  upstream data. This draft does not claim latest-main integration.
+- Actual READY production is `dpl_gBmYzHCpqwMCCH36DAToDMjRQ21g`, source
+  `79410401ce839b8a87a94a4d9c6da34ba312faa6`, at the canonical production
+  project. This read-only refresh observes scheduled upstream publication;
   production does **not** contain this platform candidate.
+- Astrofolio draft #416 remains open at `b17d6804960b6b30bb48208aff0f783b03768152`.
+  Its actual 36 paths remain the isolated verification view/adapter/tests and
+  trust records; proposed shared integration patches are documentation only.
+  No Astrofolio integration or approval is performed here.
 - SDK main remains `b49e0f14f9f17bc84db39486f2c4bb075e0ae3ff`. SDK draft #5
   remains open at `cced011659d48877b8b73b8a85796815234cf741`, no submitted
   reviews, explicit **do not merge / do not publish** hold. That hold remains.
@@ -292,14 +363,15 @@ Finite numerical/model-assisted review is not human expert certification.
 
 ## Next dependency-ordered work
 
-Deliver the completed one-file support correction above #430, then inspect and
-independently review ChartCalculator's corrected exact four-file freeze before
-root integration. Preserve the original failing Freeze 1 evidence. Complete
-root source/build/test/browser acceptance and a separately reviewed scoped CI
-step before delivering the birth-chart correction. Civil-date activation remains
-separate: empty, unresolved and disconnected dates need coherent admission,
-representative instant and whole-date certainty semantics across result/share/
-context surfaces. This is authorized engineering work, not an owner-only hold.
+Deliver the locally accepted birth-chart correction and complete exact-source
+hosted checks. The next bounded active-date candidate must prevent calculating a
+reference for a different civil date while remaining honest about empty versus
+unresolved dates. A proposed representative-date witness is under read-only review:
+it preserves ordinary non-Temporal operation, but failure cannot prove that the
+date is empty. Full interval admission, representative choice and whole-date
+Sun/Moon certainty remain separate contracts. This is authorized engineering
+work, not an owner-only hold. Preserve all original counterexamples and the
+currently untouched known-time gap policy and positions-only semantics.
 
 The richer saved-receipt store in #426 stays inactive until owner/access lifecycle,
 discovery, export/delete and failure behavior are integrated and reviewed. The

@@ -14,19 +14,22 @@ reviewable release to resolution of the unrelated engine publication hold.
 | Order | Acceptance | State / next requirement |
 | --- | --- | --- |
 | 1 | A01 baseline | Complete for this checkpoint: fresh heads/production/capabilities/holds/collisions and focused baselines recorded. Refresh again before integration. |
-| 2 | A02 shared correctness | Implemented/tested: polar selection upstream, Placidus convergence, strict dates/settings/timezone handling, bounded return searches and exact-root regression. Site consumes exact rc.1; 4,410 site tests and browser acceptance passed. |
+| 2 | A02 shared correctness | Successive fixes are delivered through SDK #11 / site #428, exact engine rc.6. Source/packed/site precision and flags agree under the retained runtime/convention evidence. Site #428 passes 4,859 tests, exact preview and all14 CI jobs. Wider ranges and known date-coverage defects remain separate. |
 | 3 | A03 external use | Candidate passed clean ESM/type/example install, notices, content/export and optional-dependency checks. Unpublished artifact path is explicit. Public registry release remains held. |
-| 4 | A04 numerical scope | Finite independent node/polar evidence and original policies pass on Node 22/24. Broader reviewed support/range contract, full versioned receipts and practitioner review remain open; do not extrapolate accuracy. |
-| 5 | A05 release truth | SDK draft PR #6 and companion site draft PR #415 pushed; review previews READY and remote developer browser passed. Scope allowance passes CI. Bundle/legacy-fixture corrections pass 4,447 tests, normal/flags-on build, check and affected browser gates. Exact-head CI 34156030961 passed all 14 jobs; READY preview passed 59 remote Today checks. No merge/npm publication/production deployment/adoption claimed. Explicit PR #5 hold remains. |
+| 4 | A04 numerical scope | Finite independent time/node/polar/reference evidence is version-linked through rc.6 on Node22/24 and Chrome. Civil-date interval prerequisite #429 is inactive and passes all14 CI jobs. Broader support/range, whole-date certainty and human practitioner review remain open; do not extrapolate accuracy. |
+| 5 | A05 release truth | Drafts through site #434 and SDK #11 are delivered with immutable source/artifact identities. #428/#429/#430/#431 pass all14 CI jobs and exact-source previews. #434 passes nine exact-preview groups but its post-chart CI failure exposes an obsolete assertion and a downstream cached-context correction; the independently accepted six-file correction is locally integrated and passes the 294-assertion root fixture gate; refreshed full CI acceptance remains open. No merge/npm publication/production/adoption claimed; SDK #5 explicit hold remains. |
 | 6 | B03 public data | Implemented: standalone example rejects HTTP/malformed/stale editions; docs match snapshot/build/cache semantics. 39 targeted tests, live example and build/check/browser passed. Headers unchanged; no current stale incident. Combined suite passed: 4,431 tests / 404 files. Final desktop/mobile keyboard-scroller browser regression passed. |
-| 7 | B01/B02 discovery/integrations | B01 implemented and local build/check/desktop/mobile/CSS-zoom checks passed. B02 public starter rc.2 passes 24 fresh-consumer tests, 185 browser checks and the literal rendered setup. Final site suite 4,493/407 passed. Draft PR #417 at 8343f173 is pushed and its exact READY preview passed the three developer-page browser journeys. All 14 jobs passed in exact-head CI 34159295138. Internal timing is not external adoption. |
+| 7 | B01/B02 discovery/integrations | Developer discovery is delivered in #417; standalone public starter rc.3 with export/import/redaction is delivered in #419. Its public setup,39 fresh-consumer checks,231 Chrome assertions and40 zoom checks pass, with exact preview and all14 CI jobs. #431 corrects the current engine-support evidence wording. Internal walkthroughs are not external adoption. |
 | 8 | B04 presentation | Approved homepage/fonts/footer preserved; 18 acceptance captures and desktop/mobile chart/share checks passed. Additional rc.2 publisher widget acceptance passes 74 Chrome checks, native 200%/400% zoom, keyboard scrolling, reduced motion, real offline/privacy and style isolation. No new source defect found; finite Chromium coverage only, not all-browser or assistive-technology certification. Repeat affected checks when the next starter changes. |
-| 9 | A04/C02 contract/receipts | Civil correction delivered in site #418: 4,624 tests, exact READY preview and all 14 CI jobs pass. Additive natal codec delivered in SDK #8/engine rc.3: 429 tests, two clean consumers, finite adversarial review and actual browser isolation pass. Standalone export/import/redaction delivered in site draft #419/ starter rc.3: 113 archive tests, 39 fresh-consumer checks, 231 Chrome assertions, literal public setup and 4,699 site tests pass. Exact READY preview and 40 native zoom checks pass; all 14 jobs pass in exact-source CI 34167746529. Site rc.1/account v1 are unchanged. Requested/actual account save/rerun/sync compatibility and reviewed range/degenerate-angle policy remain open; one-field normalization was disproved by synthetic round trip. |
+| 9 | A04/C02 contract/receipts | Portable same-calculation receipts are delivered in #425 and explicit local downloads in #427; both pass all14 CI jobs and exact previews. Rich immutable records #426 remain inactive pending lifecycle integration. Chart ownership #434 preserves committed writes; downstream result-driven surfaces require clear-signal propagation. C-014's unknown-time local-date reference safeguard passes independent review and awaits root integration after the chart follow-up. Known endpoint/certainty defects and range/degenerate-angle review remain open. |
 | 10 | C01 hosted beta | Blocked on reviewed contract and explicit privacy/cost limits. No new service is a prerequisite for A/B. Existing infrastructure only; no unapproved spend or commercial terms. |
 | 11 | D01/D02 diagnostics/agents | Depends on safe portable receipts. Seed competing/ambiguous causes and honest abstention; verify an actual supported client before claiming interoperability. |
 | 12 | E01–E03 reference/adoption | Prepare small source-backed review/contribution/partner materials after stable integration paths. Human review, outreach, paying pilots and retained external use require actual authority/evidence. |
 
 ## Bounded follow-ups found during review
+
+The following records retain their original version/run context. Current state is
+in the table above and STATUS.md; earlier rc.1 pin statements are historical.
 
 - GeoNames rejected transport/HTTP/JSON-parsing caches are corrected in SDK
   draft #7, separate engine rc.2: 305 tests, required gates and two clean
@@ -162,3 +165,12 @@ The one-file support evidence correction passes root build/check/4,938 tests and
 needs three independently reproduced reference/focus corrections; retain its
 failed evidence and require an exact corrected freeze and independent rerun.
 Do not activate date intervals or richer saved records in either bounded fix.
+
+
+Corrected ChartCalculator Freeze2 is integrated above #431 with its reviewed
+CI step. Complete root gates pass, including4,965tests,17 native cases,sharing,
+Russian checks and18 unchanged captures. Preserve the initial stricter PNG
+assertion and its measured one-pixel scored difference; original macOS dimension
+failures persist and no tolerance changes. Deliver the separate draft and verify
+its exact hosted source. Read-only skipped-date preparation may continue while
+CI runs; no active coverage policy is included in the ownership correction.

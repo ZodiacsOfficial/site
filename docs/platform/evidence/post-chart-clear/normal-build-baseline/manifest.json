@@ -1,0 +1,52 @@
+[
+  {
+    "path": "baseline/original-capture-assumption-drive.mjs.log",
+    "bytes": 6115,
+    "sha256": "888d5215ea0be091eacac9f36431dc71ccd4857204dba35aaa0e12757ab8592e"
+  },
+  {
+    "path": "baseline/result.json",
+    "bytes": 82640,
+    "sha256": "4926d21a1c5456af707ad5a6a60dfdec15ceabee3e20dc5d298b9e005b469c8f"
+  },
+  {
+    "path": "feature-off-baseline/en-1280-edited.png",
+    "bytes": 149843,
+    "sha256": "4a70e7163d4d598276d3874ddf0eb78f9dc7746803052ddd9e9878b22dc0f60f"
+  },
+  {
+    "path": "feature-off-baseline/en-390-edited.png",
+    "bytes": 93469,
+    "sha256": "07f8adb650ca33f3067e9dbf9daf0469bc0c9c0f530996598323fea1aeb3c408"
+  },
+  {
+    "path": "feature-off-baseline/result.json",
+    "bytes": 104082,
+    "sha256": "c1dd22070d83e9a7cafcd4164e8e26d7195856b6b4bf068611a37b70aab29574"
+  },
+  {
+    "path": "feature-off-baseline/ru-1280-edited.png",
+    "bytes": 151546,
+    "sha256": "32e184f60bbe1bc8dd312152f357a82f80086800efbf0c2125dd1ce5bd5901b5"
+  },
+  {
+    "path": "feature-off-baseline/ru-390-edited.png",
+    "bytes": 98162,
+    "sha256": "b5cbe2df166a5edfe2400ffcda3dda01d7aee6003f5fe16c0d5ee1111801add0"
+  },
+  {
+    "path": "feature-off-baseline.log",
+    "bytes": 192,
+    "sha256": "cac87941b44e45e363cc88a884286d9dd19b79621d401271d58762dc70ca3ed6"
+  },
+  {
+    "path": "feature-off-drive.mjs.log",
+    "bytes": 6201,
+    "sha256": "2a1d467d6111bf923d2f5e0fc2342ee24ae7238a093a4a46039cc2a98a173db3"
+  },
+  {
+    "path": "initial-presence-assumption.log",
+    "bytes": 1010,
+    "sha256": "7ac45008617ffdc0a98886394a8601fcb20700aeed39e4f7e45d07f8851a98f0"
+  }
+]

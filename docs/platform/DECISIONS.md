@@ -520,3 +520,77 @@ anonymous primary remains valid. Cache completion is separate from focus intent.
 An obsolete callback must not focus or clear a newer dialog's return target.
 A save already committed remains committed; suppression of its stale UI is not
 rollback or cancellation. Freeze 1 is explicitly correction-requested.
+
+
+C-012 corrected integration uses one captured result owner across computation,
+signature/share/context work and ancillary result actions. Input edits clear
+derived state while retaining typed fields. Optional saved-mine provenance and
+save UI additionally require their captured access generation; replacement save
+prompts also advance a prompt generation. Cache completion is allowed to remain
+useful, but old focus intent is discarded at both completion and frame time.
+Do not advance prompt generation on ordinary close: that would incorrectly
+suppress the legitimate completed-save install hint. The write call itself is
+unchanged; the independent native storage observer proves exactly one write
+for committed cases and zero for denied/prompt-only cases in its finite controls.
+
+Root accepts the measured before/after chart rendering under the repository’s
+existing threshold0.1 and maximum difference ratio0.001, without changing either.
+Two cases are byte-identical; one has one scored pixel in1440×9502 pixels
+(ratio7.30840290932903e-8) and unchanged dimensions. A same-source repeat matches
+the candidate exactly. The original stricter exact-byte assertion and the three
+pre-existing baseline-height failures remain recorded. The cause of this minor
+raster difference is not established; no all-three-byte-identity claim is made.
+
+## C-014 — Require a local-date witness for an unknown-time reference
+
+Before calculating an unknown-time birth chart, or an unknown-time Moon lookup
+with a selected city, verify that the chosen reference instant formats to the
+requested local Gregorian date under the host's timezone data. Reuse the existing
+era-aware formatter with canonical date, finite genuine Date and explicit-zone
+validation. Never fall back to the machine zone or leak formatter/input details.
+Known-time resolution, no-city UTC Moon and positions-only imports keep their
+existing contracts. A successful witness does not establish complete date
+coverage or Sun/Moon certainty.
+
+Choose conservative refusal when the existing resolver's reference is outside
+the date, or membership cannot be established. Use the dedicated localized
+message: “We couldn’t establish a calculation time within this local date. Check
+the date and place.” Preserve fields, clear prior output/actions/context and
+offer the existing focused error/retry behavior. Do not call the numerical,
+receipt or endpoint path after refusal. Module loading may precede the check.
+
+This is deliberately weaker than proving the date empty. The retained complete
+synthetic UTC+00 to UTC+15 transition yields a nonempty nine-hour local date but
+the unchanged resolver chooses a reference outside it. Refusal is accepted for
+that case; substituting another instant needs a separately reviewed contract.
+Four actual skipped dates demonstrate the current wrong-date output. Ordinary,
+repeated and disconnected positive witnesses retain their old output and known
+endpoint limitations. The finite real-zone search found no nonempty wrong-noon
+case; it is not a theorem that none exist.
+
+The alternative of requiring native Temporal interval capability would disable
+ordinary calculations in supported runtimes without that feature. Keep the
+interval prerequisite inactive and add no polyfill, provider, dependency or
+sampling-based completeness claim. Broader date coverage and astronomical
+certainty remain a separate dependency after this safeguard.
+
+C-012 downstream follow-up: deleting the global chart context is insufficient
+when the daily-brief controller caches its own context and the email enhancement
+retains personalized presentation. Emit a synchronous data-free clear signal.
+Invalidate cached context/session/generation and hide only result-revealed capture
+surfaces. Preserve typed email/sign fields and unrelated capture surfaces. Fence
+late preference results, submit/reset presentation and frame-time focus against
+replacement or clearing. Already-submitted subscription/resend operations still
+complete once; no cancellation, retry, deletion or provider-state change is
+introduced. Keep existing successful-operation analytics without adding data.
+
+The first downstream freeze's full-page run exposes an unread/known-null cache
+confusion. A profile-synced refresh can overtake the initial session lookup and
+supply cleared null as authoritative signed-out state. Independent review
+reproduces it against the unchanged base. Correct the state model: an unread
+cache is distinct from an observed signed-out session. Prefer explicit undefined
+for unread state and null for a confirmed absent session over re-reading every
+null, preserving a current explicit signed-out callback across a later profile
+refresh. Keep the same backend/client and submitted-operation boundaries. Add
+the precise interleaving and known-null positive controls; do not increase a
+timeout or weaken the expected daily-brief state to hide the regression.

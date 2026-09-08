@@ -1,0 +1,27 @@
+{
+  "base": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "sourceSha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+  "cases": [
+    {
+      "path": "birth-chart-kahlo-mobile.actual.png",
+      "beforeSha256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "afterSha256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "byteIdentical": true
+    },
+    {
+      "path": "birth-chart-kahlo-desktop.actual.png",
+      "beforeSha256": "b55f7ba96d2c253a34b644e0096967619ce01e29a5eb55edc4d5ea08071a4d40",
+      "afterSha256": "b55f7ba96d2c253a34b644e0096967619ce01e29a5eb55edc4d5ea08071a4d40",
+      "byteIdentical": true
+    },
+    {
+      "path": "birth-chart-kahlo-desktop-reduced-motion.actual.png",
+      "beforeSha256": "852cdbe9b993e7fe9fd07ef9941feb59165ff274ec0a2cebb9b5f746fe2c4db8",
+      "afterSha256": "6485a2f54de2f8c14acf300ca36008c4d55631bdf7c8bb1a35ae221120094553",
+      "byteIdentical": false
+    }
+  ],
+  "allByteIdentical": false,
+  "existingVisualGateFailures": 3,
+  "gateQualification": "Both before and after fail the three recorded macOS baseline height assertions. Before/after equality is a separate regression comparison; no tolerance or baseline change."
+}

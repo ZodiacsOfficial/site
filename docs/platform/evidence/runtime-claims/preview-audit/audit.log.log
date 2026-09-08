@@ -1,0 +1,56 @@
+{
+  "verdict": "no blocker found in bounded read-only audit",
+  "reviewMode": "fresh paginated public GitHub metadata and immutable Git source checks; review of retained browser execution, not another browser run",
+  "source": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "base": "4227bb0758d4b34cbd761a3cddd273cbea6c2c1b",
+  "supportSourceSha256": "7598fca770c5f5e9c26f92603ee37e48c4cc3d087d744ee1ac3783b068a49cea",
+  "pr": 431,
+  "actualPagination": [
+    100,
+    83
+  ],
+  "paths": 183,
+  "allPathNamesAndGitBlobsMatch": true,
+  "productPaths": [
+    "src/pages/developers/support/index.astro"
+  ],
+  "recordedPreviewGroups": 13,
+  "pageGroups": 12,
+  "separateApiGroup": 1,
+  "currentCarrierUrl": "https://github.com/ZodiacsOfficial/site/blob/68412f16140f9986b11767d271eda6e14b6aba48/docs/platform/evidence/site-engine-rc6/public-candidate-consumer.log",
+  "consumerVersion": "0.1.1-rc.6",
+  "consumerRuntimeVersions": [
+    "v22.23.2",
+    "v24.19.0"
+  ],
+  "recordedPreviewNode": "v22.23.2",
+  "recordedPreviewBrowser": "152.0.7977.83",
+  "scopedObservedRequests": 478,
+  "nonGET": 0,
+  "blockedPlausibleLoaderAttempts": 12,
+  "screenshots": [
+    {
+      "path": "preview/support-1280.png",
+      "width": 1280,
+      "height": 5239,
+      "bytes": 882101,
+      "sha256": "793caa54dfd43931dd54da6f8a30f9f44023a330c12b96ec17ba7264f4dd510a"
+    },
+    {
+      "path": "preview/entry-320.png",
+      "width": 320,
+      "height": 10876,
+      "bytes": 881849,
+      "sha256": "80374159b7763c67ab7c883e3d896e9a6743162f88942cf5cde86f1959e62dc0"
+    }
+  ],
+  "credentialLikePatternMatches": 0,
+  "qualifications": [
+    "No fresh browser run or numerical oracle in this audit.",
+    "Current carrier linked href is asserted in driver; this audit does not claim a new HTTP download of that report.",
+    "Driver request observer covers its twelve scoped pages. Authentication bootstrap and the separate APIRequestContext sky check are outside that browser observer; the sky request is explicitly GET in the driver.",
+    "Temporary-access deletion is retained root evidence; no credential read or renewed exact-secret scan was attempted after deletion.",
+    "Two fresh developer screenshots are retained; existing Phase1 captures are explicitly reused, not claimed as new."
+  ],
+  "reviewedRecordsUnchanged": true
+}

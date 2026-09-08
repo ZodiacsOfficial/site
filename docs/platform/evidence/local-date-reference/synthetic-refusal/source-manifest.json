@@ -1,0 +1,47 @@
+{
+  "scope": "One explicit synthetic complete-provider counterexample; not a real-zone claim",
+  "original17ControlManifestUnchanged": "25dee2490e18f27cf5f85049e5cefd26577e127a9db7b985d7f60dd523d2ebe9",
+  "records": [
+    {
+      "path": "README.md",
+      "bytes": 1654,
+      "sha256": "a640d2ca4de6d2853759a69bbcdd352c191a6e8dc1491d3043c89dde9eda5d1a"
+    },
+    {
+      "path": "observed-build-identity.json",
+      "bytes": 2517,
+      "sha256": "3b8b5cab72aee43d5e130a21874e3dd974a808e7c0852feb20c840f0d70d345d"
+    },
+    {
+      "path": "observed-source-identity.json",
+      "bytes": 932,
+      "sha256": "ca8b615754ed1489441aa463c486a3ef4ff3434f58e61d09c536da6c0cd7705a"
+    },
+    {
+      "path": "probe.log",
+      "bytes": 130,
+      "sha256": "447ce60680e2a7c0ed90909d90c85038aeebb7072e1b6693d286163e361afba3"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 3489,
+      "sha256": "5deba7cb33c017ccc6dea5fad72f112dde7c711e25b00b39c00c0244cf1a1995"
+    },
+    {
+      "path": "result.json",
+      "bytes": 1690,
+      "sha256": "b2028e5802f43dab508e82d27f27853fe4bca591c3f1346536ea42451b4324d5"
+    },
+    {
+      "path": "seal-note.txt",
+      "bytes": 267,
+      "sha256": "39d57bff81d56741008465421fe44384a1b0e65db159e8626bf0baac9a832fb3"
+    },
+    {
+      "path": "subject.mjs",
+      "bytes": 15853,
+      "sha256": "1a9f28c07d352cc135fe7b824966cd7142daa224649efbdce025873b3cbddf4f"
+    }
+  ],
+  "totalBytes": 26532
+}

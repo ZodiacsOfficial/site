@@ -1,0 +1,41 @@
+{
+  "at": "2026-09-08T09:14:39.256Z",
+  "rows": [
+    {
+      "id": "dpl_gBmYzHCpqwMCCH36DAToDMjRQ21g",
+      "url": "zodiacs-2xip7m0w9-zodiacsofficial.vercel.app",
+      "state": "READY",
+      "target": "production",
+      "sourceCommit": "79410401ce839b8a87a94a4d9c6da34ba312faa6",
+      "branch": "main",
+      "created": 1788858018316
+    },
+    {
+      "id": "dpl_EChqmYbLGtQGLAWpYiw6FGuCJuZ4",
+      "url": "zodiacs-kh8vd0hco-zodiacsofficial.vercel.app",
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "05fb09740e4151cafb9361479584c3d88b1ae4f1",
+      "branch": "publish/archive-registry-market-snapshot-2026-09-08-34207449537",
+      "created": 1788858005953
+    },
+    {
+      "id": "dpl_4tadCbE3GTvRTNtwQ7LMW7uhX3FG",
+      "url": "zodiacs-myori5d5x-zodiacsofficial.vercel.app",
+      "state": "READY",
+      "target": "production",
+      "sourceCommit": "2fd0b75fe3200841736d30b6d7a1ac4699a1eba2",
+      "branch": "main",
+      "created": 1788857919440
+    },
+    {
+      "id": "dpl_VkMe4iJA1p42eKqLHZ6yZLFiyT3t",
+      "url": "zodiacs-h4vhq8jg4-zodiacsofficial.vercel.app",
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "a9af4fcda4acd468ea8dc3a76373047b1b1d52ce",
+      "branch": "publish/daily-sky-2026-09-08-34207271310",
+      "created": 1788857908371
+    }
+  ]
+}

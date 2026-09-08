@@ -1,0 +1,522 @@
+diff --git a/src/components/EmailCaptureEnhancement.astro b/src/components/EmailCaptureEnhancement.astro
+index e7fb09f6..46457e00 100644
+--- a/src/components/EmailCaptureEnhancement.astro
++++ b/src/components/EmailCaptureEnhancement.astro
+@@ -2,6 +2,23 @@
+   type AnalyticsWindow = Window & {
+     zodiacsAnalytics?: { track?: (name: string, props: Record<string, string>) => void };
+   };
++  // These generations own presentation only. A submitted subscription still
++  // completes once; an obsolete response must not reset a replacement form.
++  const captureGenerations = new WeakMap<HTMLElement, number>();
++  const captureGeneration = (surface: HTMLElement | null) => surface
++    ? captureGenerations.get(surface) ?? 0
++    : 0;
++
++  function advanceCapture(surface: HTMLElement) {
++    captureGenerations.set(surface, captureGeneration(surface) + 1);
++    const button = surface.querySelector<HTMLButtonElement>('button[type="submit"]');
++    const status = surface.querySelector<HTMLElement>('[data-email-status]');
++    if (button) {
++      button.disabled = false;
++      button.textContent = button.dataset.label ?? button.textContent;
++    }
++    if (status) status.textContent = '';
++  }
+ 
+   function trackCaptureView(surface: HTMLElement) {
+     if (surface.dataset.viewTracked === 'true') return;
+@@ -81,10 +98,13 @@
+     surface.dataset.signChooserEnhanced = 'true';
+ 
+     change.addEventListener('click', () => {
++      const generation = captureGeneration(surface);
+       const selected = chooser.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+       const opening = chooser.hidden;
+       renderCaptureSign(surface, selected ?? undefined, !opening);
+-      if (opening) requestAnimationFrame(() => selected?.focus());
++      if (opening) requestAnimationFrame(() => {
++        if (generation === captureGeneration(surface) && surface.isConnected && !surface.hidden) selected?.focus();
++      });
+     });
+ 
+     chooser.addEventListener('change', (event) => {
+@@ -111,6 +131,7 @@
+     const mode = detail?.mode;
+     if (mode !== 'full') return;
+     document.querySelectorAll<HTMLElement>('[data-reveal-on-chart="true"]').forEach((surface) => {
++      advanceCapture(surface);
+       preselectCaptureSign(surface, detail?.sunSign);
+       const managed = surface.dataset.postChartManaged === 'true'
+         && document.documentElement.hasAttribute('data-daily-email-lifecycle');
+@@ -122,6 +143,12 @@
+   }
+ 
+   window.addEventListener('zodiacs:chart-computed', revealChartCapture);
++  window.addEventListener('zodiacs:chart-context-cleared', () => {
++    document.querySelectorAll<HTMLElement>('[data-reveal-on-chart="true"]').forEach((surface) => {
++      advanceCapture(surface);
++      surface.hidden = true;
++    });
++  });
+ 
+   captureSurfaces.forEach(setupSignChooser);
+ 
+@@ -129,9 +156,11 @@
+     if (form.dataset.enhanced === 'true') return;
+     form.dataset.enhanced = 'true';
+     form.addEventListener('reset', () => {
++      const surface = form.closest<HTMLElement>('[data-email-capture-shell]');
++      const generation = captureGeneration(surface);
+       queueMicrotask(() => {
+-        const surface = form.closest<HTMLElement>('[data-email-capture-shell]');
+-        if (!surface || surface.dataset.personalizedSign !== 'true') return;
++        if (!surface || !surface.isConnected || generation !== captureGeneration(surface)
++          || surface.dataset.personalizedSign !== 'true') return;
+         const selected = form.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+         renderCaptureSign(surface, selected ?? undefined, Boolean(selected?.value));
+       });
+@@ -144,6 +173,9 @@
+       const email = form.querySelector<HTMLInputElement>('input[name="email"]');
+       const selectedSign = form.querySelector<HTMLInputElement>('input[name="sign"]:checked');
+       const surface = form.closest<HTMLElement>('[data-email-capture-shell]');
++      const generation = captureGeneration(surface);
++      const requestIsCurrent = () => form.isConnected
++        && generation === captureGeneration(surface);
+       if (!email?.validity.valid) {
+         status.textContent = form.querySelector<HTMLElement>('[data-invalid-email-copy]')?.textContent ?? '';
+         email?.reportValidity();
+@@ -169,24 +201,28 @@
+           body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>),
+         });
+         if (!response.ok) throw new Error('subscription unavailable');
+-        status.textContent = form.querySelector<HTMLElement>('[data-success-copy]')?.textContent ?? '';
+-        if (surface?.dataset.dailyCapture === 'true' && selectedSign?.value) {
+-          const radios = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
+-          radios.forEach((input) => { input.defaultChecked = input === selectedSign; });
+-          surface.dataset.personalizedSign = 'true';
+-        }
+-        form.reset();
+-        if (surface?.dataset.dailyCapture === 'true' && selectedSign?.value) {
+-          renderCaptureSign(surface, selectedSign, true);
++        if (requestIsCurrent()) {
++          status.textContent = form.querySelector<HTMLElement>('[data-success-copy]')?.textContent ?? '';
++          if (surface?.dataset.dailyCapture === 'true' && selectedSign?.value) {
++            const radios = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
++            radios.forEach((input) => { input.defaultChecked = input === selectedSign; });
++            surface.dataset.personalizedSign = 'true';
++          }
++          form.reset();
++          if (surface?.dataset.dailyCapture === 'true' && selectedSign?.value) {
++            renderCaptureSign(surface, selectedSign, true);
++          }
+         }
+         const placement = form.dataset.placement ?? 'unknown';
+         (window as AnalyticsWindow)
+           .zodiacsAnalytics?.track?.('email_subscribed', { placement });
+       } catch {
+-        status.textContent = form.querySelector<HTMLElement>('[data-error-copy]')?.textContent ?? '';
++        if (requestIsCurrent()) status.textContent = form.querySelector<HTMLElement>('[data-error-copy]')?.textContent ?? '';
+       } finally {
+-        button.disabled = false;
+-        button.textContent = idle;
++        if (requestIsCurrent()) {
++          button.disabled = false;
++          button.textContent = idle;
++        }
+       }
+     });
+   });
+diff --git a/src/islands/PostChartDailyBrief.tsx b/src/islands/PostChartDailyBrief.tsx
+index 6139932e..cca826f3 100644
+--- a/src/islands/PostChartDailyBrief.tsx
++++ b/src/islands/PostChartDailyBrief.tsx
+@@ -91,6 +91,7 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
+         import('../lib/profile/daily-email-client'),
+         import('../lib/profile/store'),
+       ]);
++      if (!requestIsCurrent()) return;
+       const session = suppliedSession === undefined
+         ? await sync.getSyncSession()
+         : suppliedSession;
+@@ -146,17 +147,23 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
+     let active = true;
+     let unsubscribe = () => {};
+ 
+-    const onComputed = (event: Event) => {
+-      const detail = (event as CustomEvent<{ mode?: string }>).detail;
+-      if (detail?.mode !== 'full') return;
++    const onClear = () => {
+       generationRef.current += 1;
+       contextRef.current = null;
++      sessionRef.current = null;
+       setView({ kind: 'idle' });
++      setResendBusy(false);
+       setResendStatus('');
+     };
++    const onComputed = (event: Event) => {
++      const detail = (event as CustomEvent<{ mode?: string }>).detail;
++      if (detail?.mode !== 'full') return;
++      onClear();
++    };
+     const onContext = (event: Event) => {
+       const context = (event as CustomEvent<unknown>).detail;
+       if (!isPostChartContext(context)) return;
++      if (contextRef.current !== context) setResendBusy(false);
+       contextRef.current = context;
+       void resolveContext(context);
+     };
+@@ -166,12 +173,16 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
+     };
+     const onProfileAccess = () => {
+       const context = contextRef.current;
++      // The access hook advances its generation even for an allowed refresh.
++      // The replacement view must not inherit a prior request's busy state.
++      setResendBusy(false);
+       if (context && profileAccessAllowed()) {
+         void resolveContext(context, undefined, { preserveStable: true });
+       }
+     };
+ 
+     window.addEventListener('zodiacs:chart-computed', onComputed);
++    window.addEventListener('zodiacs:chart-context-cleared', onClear);
+     window.addEventListener('zodiacs:chart-context', onContext);
+     window.addEventListener('zodiacs:profile-synced', refresh);
+     window.addEventListener('zodiacs:profile-access', onProfileAccess);
+@@ -185,17 +196,26 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
+     void import('../lib/profile/sync').then((sync) => {
+       if (!active) return;
+       unsubscribe = sync.onSyncAuthChange((session) => {
+-        sessionRef.current = session;
+         const context = contextRef.current;
+-        if (context) void resolveContext(context, session, { preserveStable: true });
++        if (!context) {
++          sessionRef.current = null;
++          return;
++        }
++        if (sessionRef.current?.user.id !== session?.user.id
++          || sessionRef.current?.access_token !== session?.access_token) setResendBusy(false);
++        sessionRef.current = session;
++        void resolveContext(context, session, { preserveStable: true });
+       });
+     }).catch(() => {});
+ 
+     return () => {
+       active = false;
+       generationRef.current += 1;
++      contextRef.current = null;
++      sessionRef.current = null;
+       unsubscribe();
+       window.removeEventListener('zodiacs:chart-computed', onComputed);
++      window.removeEventListener('zodiacs:chart-context-cleared', onClear);
+       window.removeEventListener('zodiacs:chart-context', onContext);
+       window.removeEventListener('zodiacs:profile-synced', refresh);
+       window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+@@ -248,7 +268,9 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
+     const accessGeneration = profileAccessGeneration.current;
+     const requestIsCurrent = () => (
+       accessGeneration === profileAccessGeneration.current
+-      && contextRef.current?.contextId === startingContext.contextId
++      && contextRef.current === startingContext
++      && sessionRef.current?.user.id === startingSession.user.id
++      && sessionRef.current?.access_token === startingSession.access_token
+       && profileAccessAllowed()
+     );
+     let restoreFocus = false;
+@@ -263,19 +285,24 @@ export function PostChartDailyBrief({ idPrefix }: PostChartDailyBriefProps) {
+         preserveStable: true,
+         pendingStatus: COPY.pendingAgain,
+       });
+-      restoreFocus = contextRef.current?.contextId === startingContext.contextId;
++      restoreFocus = requestIsCurrent();
+     } catch {
+       if (!requestIsCurrent()) return;
+       await resolveContext(startingContext, startingSession, {
+         preserveStable: true,
+         pendingStatus: COPY.error,
+       });
+-      restoreFocus = contextRef.current?.contextId === startingContext.contextId;
++      restoreFocus = requestIsCurrent();
+     } finally {
+       if (!requestIsCurrent()) return;
+       setResendBusy(false);
+       if (restoreFocus) {
+-        requestAnimationFrame(() => resendButtonRef.current?.focus({ preventScroll: true }));
++        const generation = generationRef.current;
++        requestAnimationFrame(() => {
++          if (generation === generationRef.current && requestIsCurrent()) {
++            resendButtonRef.current?.focus({ preventScroll: true });
++          }
++        });
+       }
+     }
+   }
+diff --git a/src/lib/profile/post-chart-context.test.ts b/src/lib/profile/post-chart-context.test.ts
+new file mode 100644
+index 00000000..7081a9bf
+--- /dev/null
++++ b/src/lib/profile/post-chart-context.test.ts
+@@ -0,0 +1,46 @@
++import { afterEach, describe, expect, it, vi } from 'vitest';
++import { clearPostChartContext, currentPostChartContext, publishPostChartContext } from './post-chart-context';
++
++afterEach(() => vi.unstubAllGlobals());
++describe('post-chart context ownership signal', () => {
++  it('deletes context before a synchronous data-free clear notification', () => {
++    const target = new EventTarget();
++    vi.stubGlobal('window', target);
++    publishPostChartContext({ mode: 'full', contextId: 1, sunSign: 'cancer', chartId: null });
++    let calls = 0;
++    target.addEventListener('zodiacs:chart-context-cleared', event => {
++      calls += 1;
++      expect(currentPostChartContext()).toBeNull();
++      expect('detail' in event).toBe(false);
++      expect(event.type).toBe('zodiacs:chart-context-cleared');
++    });
++    clearPostChartContext();
++    expect(calls).toBe(1);
++  });
++
++  it('invalidates cached consumers even when the global context is already absent', () => {
++    const target = new EventTarget();
++    vi.stubGlobal('window', target);
++    const cleared = vi.fn();
++    target.addEventListener('zodiacs:chart-context-cleared', cleared);
++    clearPostChartContext(); clearPostChartContext();
++    expect(cleared).toHaveBeenCalledTimes(2);
++  });
++
++  it('preserves the explicit next published context and event', () => {
++    const target = new EventTarget();
++    vi.stubGlobal('window', target);
++    clearPostChartContext();
++    const context = { mode: 'full' as const, contextId: 1, sunSign: null, chartId: null };
++    const contexts: unknown[] = [];
++    target.addEventListener('zodiacs:chart-context', event => contexts.push((event as CustomEvent).detail));
++    publishPostChartContext(context);
++    expect(contexts).toEqual([context]); expect(currentPostChartContext()).toBe(context);
++  });
++
++  it('remains callable without a browser', () => {
++    vi.stubGlobal('window', undefined);
++    expect(() => clearPostChartContext()).not.toThrow();
++    expect(currentPostChartContext()).toBeNull();
++  });
++});
+diff --git a/src/lib/profile/post-chart-context.ts b/src/lib/profile/post-chart-context.ts
+index 9b4f7f01..51fdb4a4 100644
+--- a/src/lib/profile/post-chart-context.ts
++++ b/src/lib/profile/post-chart-context.ts
+@@ -24,6 +24,9 @@ export function isPostChartContext(value: unknown): value is PostChartContext {
+ export function clearPostChartContext(): void {
+   if (typeof window === 'undefined') return;
+   delete (window as PostChartWindow).zodiacsPostChartContext;
++  // Consumers also cache derived state. Invalidate it synchronously, without
++  // repeating any chart or profile data in the clear signal.
++  window.dispatchEvent(new Event('zodiacs:chart-context-cleared'));
+ }
+ 
+ export function publishPostChartContext(context: PostChartContext): void {
+diff --git a/tests/post-chart-context-clear-drive.mjs b/tests/post-chart-context-clear-drive.mjs
+new file mode 100644
+index 00000000..c98da6ff
+--- /dev/null
++++ b/tests/post-chart-context-clear-drive.mjs
+@@ -0,0 +1,132 @@
++/** Native ownership controls for the actual daily island, preference client,
++ * context publisher, and Astro enhancement script. Only auth/store fixtures and
++ * endpoint responses are controlled; no subscriber/provider is contacted.
++ */
++import assert from 'node:assert/strict';
++import { createHash } from 'node:crypto';
++import { readFile, writeFile, mkdir } from 'node:fs/promises';
++import { createServer } from 'node:http';
++import { resolve } from 'node:path';
++import { build } from 'esbuild';
++import { chromium } from 'playwright-core';
++import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
++
++const root=resolve(import.meta.dirname,'..');
++const out=resolve(process.env.OUT_DIR??resolve(root,'tests/visual/artifacts/post-chart-context-clear'));
++await mkdir(out,{recursive:true});
++const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
++const paths=['src/lib/profile/post-chart-context.ts','src/islands/PostChartDailyBrief.tsx','src/components/EmailCaptureEnhancement.astro'];
++const identity=await Promise.all(paths.map(async path=>({path,sha256:sha(await readFile(resolve(root,path)))})));
++const enhancement=(await readFile(resolve(root,paths[2]),'utf8')).match(/<script>([\s\S]*?)<\/script>/)?.[1];assert.ok(enhancement);
++const ID='10000000-0000-4000-8000-000000000001';
++const entry=`
++import {h,render} from 'preact';
++import {PostChartDailyBrief} from './src/islands/PostChartDailyBrief';
++import {clearPostChartContext,publishPostChartContext} from './src/lib/profile/post-chart-context';
++window.fixture={reads:[],analytics:[],clearEvents:[],session:{access_token:'synthetic-local-token',user:{id:'${ID}'}},sessionHold:null,auth:null,focusFrames:[],holdFocus:false,
++ holdSession(){let done;const promise=new Promise(resolve=>done=resolve);this.sessionHold={promise,done};},
++ releaseSession(){const old=this.sessionHold;this.sessionHold=null;old?.done(this.session);},
++ async getSession(){this.reads.push('session');return this.sessionHold?this.sessionHold.promise:this.session;},
++ ids(){this.reads.push('ids');return Promise.resolve({data:[{id:'${ID}'}],error:null});},
++ clear(){clearPostChartContext();},
++ publish(contextId=1,sunSign='cancer'){const context={mode:'full',sunSign,chartId:'${ID}',contextId};dispatchEvent(new CustomEvent('zodiacs:chart-computed',{detail:context}));publishPostChartContext(context);},
++ republish(){publishPostChartContext({mode:'full',sunSign:'cancer',chartId:'${ID}',contextId:1});},
++ refresh(){dispatchEvent(new Event('zodiacs:profile-synced'));dispatchEvent(new Event('zodiacs:profile-access'));this.auth?.(this.session);},
++ mount(){render(h(PostChartDailyBrief,{idPrefix:'managed'}),document.getElementById('controller'));},
++ unmount(){render(null,document.getElementById('controller'));},
++ releaseFocus(){this.holdFocus=false;for(const callback of this.focusFrames.splice(0))callback(performance.now());},
++};
++window.zodiacsAnalytics={track:(name,props)=>window.fixture.analytics.push({name,props})};
++addEventListener('zodiacs:chart-context-cleared',event=>window.fixture.clearEvents.push({type:event.type,detail:event.detail,globalAbsent:window.zodiacsPostChartContext===undefined}));
++const nativeFrame=requestAnimationFrame;
++window.requestAnimationFrame=callback=>window.fixture.holdFocus&&callback.toString().includes('focus')?(window.fixture.focusFrames.push(callback),-1):nativeFrame(callback);
++window.fixture.mount();
++${enhancement}
++`;
++const compilation=await build({absWorkingDir:root,stdin:{contents:entry,resolveDir:root,loader:'tsx'},bundle:true,write:false,outfile:resolve(out,'fixture.js'),platform:'browser',format:'iife',target:'es2022',jsx:'automatic',jsxImportSource:'preact',define:{'import.meta.env':'{}'},metafile:true,
++ plugins:[{name:'declared-auth-and-store-fixtures',setup(builder){
++  builder.onResolve({filter:/lib\/profile\/(?:sync|store)$/},args=>({path:args.path.endsWith('/sync')?'sync':'store',namespace:'owned'}));
++  builder.onResolve({filter:/supabase\/client$/},()=>({path:'client',namespace:'owned'}));
++  builder.onLoad({filter:/.*/,namespace:'owned'},({path})=>({contents:path==='sync'
++   ?'export const getSyncSession=()=>window.fixture.getSession();export function onSyncAuthChange(callback){window.fixture.auth=callback;return ()=>{window.fixture.auth=null;};}'
++   :path==='store'?'export const loadProfile=()=>({charts:[{id:"'+ID+'",name:"Synthetic saved chart"}]});'
++   :'export const getSupabaseClient=()=>({from:()=>({select:()=>({eq:()=>window.fixture.ids()})})});'}));
++ }}]});
++const bundle=compilation.outputFiles.find(file=>file.path.endsWith('.js')).contents;
++const inputs=await Promise.all(Object.keys(compilation.metafile.inputs).filter(path=>!path.startsWith('<')&&!path.startsWith('owned:')).map(async path=>{const data=await readFile(resolve(root,path));return {path,bytes:data.length,sha256:sha(data)};}));
++await writeFile(resolve(out,'fixture.js'),bundle);await writeFile(resolve(out,'entry.tsx.log'),entry);
++await writeFile(resolve(out,'build.json'),JSON.stringify({inputs,identity,bundleSha256:sha(bundle),metafile:compilation.metafile},null,2)+'\n');
++function capture(name,{managed=false,reveal=true}={}){return `<section data-email-capture-shell data-placement="${name}" ${reveal?'data-reveal-on-chart="true" hidden':''} ${managed?'data-post-chart-managed="true" data-daily-capture="true"':''} id="${name}">${managed?'<div id="controller"></div>':''}<div class="email-capture__copy"><h2 data-email-title data-default-title="Choose a brief" data-personal-title="For {sign}">Choose a brief</h2></div><form data-email-capture action="/api/email/subscribe" data-placement="${name}"><input type="email" name="email" required><button class="email-capture__submit" type="submit" data-label="Subscribe" data-busy-label="Working">Subscribe</button><div data-email-sign-summary data-summary-template="Using {sign}" hidden><span data-email-sign-summary-copy></span><button type="button" data-email-sign-change>Change sign</button></div><fieldset data-email-signs><legend>Sign</legend><label><input type="radio" name="sign" value="cancer" data-sign-name="Cancer">Cancer</label><label><input type="radio" name="sign" value="leo" data-sign-name="Leo">Leo</label></fieldset><p data-email-status></p><span hidden data-success-copy>Done</span><span hidden data-error-copy>Error</span><span hidden data-missing-sign-copy>Choose</span><span hidden data-invalid-email-copy>Invalid</span><p data-post-chart-device-note hidden>Local</p></form></section>`;}
++const html='<!doctype html><html data-daily-email-lifecycle><title>Post-chart context clear fixture</title><style>[hidden]{display:none!important}</style><input id="outside" value="unrelated">'+capture('managed',{managed:true})+capture('weekly')+capture('footer',{reveal:false})+'<script src="/fixture.js"></script></html>';
++const server=createServer((req,res)=>{if(req.url==='/fixture.js'){res.setHeader('Content-Type','text/javascript');res.end(bundle);}else{res.setHeader('Content-Type','text/html');res.end(req.url.includes('lifecycle=0')?html.replace('data-daily-email-lifecycle',''):html);}});
++const empty={enabled:false,pending:false,paused:false,requiresConfirmation:false,chartId:null,timezone:null,confirmedAt:null,maskedEmail:null};
++const pending={...empty,pending:true,chartId:ID,timezone:'UTC',maskedEmail:'s…@example.com'};
++let browser,origin;const contexts=[],results=[];
++async function frames(s){await s.page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(done,0)))));}
++async function setup(preference=empty,lifecycle=true){
++ const context=await browser.newContext({viewport:{width:1000,height:900}});contexts.push(context);context.setDefaultTimeout(5000);
++ const s={context,page:await context.newPage(),preference,requests:[],errors:[],gates:[]};s.page.on('pageerror',error=>s.errors.push(String(error)));
++ await context.route('**/*',async route=>{
++  const req=route.request(),url=new URL(req.url());
++  if(url.origin!==origin)return route.abort();
++  if(!url.pathname.startsWith('/api/'))return route.continue();
++  const record={method:req.method(),path:url.pathname,body:req.postData()};s.requests.push(record);
++  const gate=s.gates.find(value=>!value.used&&value.path===url.pathname&&value.method===req.method());
++  if(gate){gate.used=true;gate.started();await gate.wait;}
++  const body=url.pathname.endsWith('/subscribe')?{ok:true}:req.method()==='POST'?{ok:true,pending:true}:s.preference;
++  await route.fulfill({status:gate?.status??200,contentType:'application/json',body:JSON.stringify(body)}).catch(()=>{});
++ });
++ await s.page.goto(origin+(lifecycle?'':'?lifecycle=0'));await s.page.waitForFunction(()=>!!window.fixture);await frames(s);return s;
++}
++function gate(s,path,method,status=200){let started,release;const begun=new Promise(done=>started=done),wait=new Promise(done=>release=done);const value={path,method,status,started,release,wait,begun,used:false};s.gates.push(value);return value;}
++async function publish(s,id=1,sign='cancer'){await s.page.evaluate(({id,sign})=>window.fixture.publish(id,sign),{id,sign});await s.page.locator('#managed[data-post-chart-state]').waitFor({state:'visible'});await frames(s);}
++async function observation(s){return s.page.evaluate(()=>({context:window.zodiacsPostChartContext??null,events:window.fixture.clearEvents,reads:window.fixture.reads,analytics:window.fixture.analytics,focus:document.activeElement?.id,managedHidden:document.querySelector('#managed').hidden,managedState:document.querySelector('#managed').dataset.postChartState??null,weeklyHidden:document.querySelector('#weekly').hidden,footerHidden:document.querySelector('#footer').hidden,weeklyEmail:document.querySelector('#weekly input[type=email]').value,weeklyStatus:document.querySelector('#weekly [data-email-status]').textContent,weeklySign:document.querySelector('#weekly input[name=sign]:checked')?.value??null,weeklyButton:document.querySelector('#weekly button[type=submit]').textContent}));}
++async function group(name,action,lifecycle=true){const s=await setup(name.includes('resend')?pending:empty,lifecycle);try{const detail=await action(s);assert.deepEqual(s.errors,[]);results.push({name,passed:true,detail,requests:s.requests,observation:await observation(s)});}catch(error){results.push({name,passed:false,error:String(error.stack??error),requests:s.requests,observation:await observation(s),pageErrors:s.errors});await s.page.screenshot({path:resolve(out,name+'.png'),fullPage:true}).catch(()=>{});}finally{for(const g of s.gates)g.release();await s.context.close();}console.log(JSON.stringify({name,passed:results.at(-1).passed}));}
++try{
++ await new Promise(done=>server.listen(0,'127.0.0.1',done));origin=`http://127.0.0.1:${server.address().port}`;
++ browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});
++ await group('clear-propagates-and-preserves-fields',async s=>{
++  await publish(s);await s.page.locator('#managed input[type=email]').fill('typed@example.com');await s.page.locator('#weekly input[type=email]').fill('weekly@example.com');
++  const before=s.requests.length;await s.page.evaluate(()=>window.fixture.clear());await frames(s);const cleared=await observation(s);
++  assert.equal(cleared.context,null);assert.equal(cleared.events.length,1);assert.equal(cleared.events[0].detail,undefined);assert.equal(cleared.events[0].globalAbsent,true);assert.equal(cleared.events[0].type,'zodiacs:chart-context-cleared');assert.equal(cleared.managedHidden,true);assert.equal(cleared.managedState,null);assert.equal(cleared.weeklyHidden,true);assert.equal(cleared.footerHidden,false);assert.equal(cleared.weeklyEmail,'weekly@example.com');assert.equal(cleared.weeklySign,'cancer');assert.equal(await s.page.locator('#managed input[type=email]').inputValue(),'typed@example.com');
++  await s.page.evaluate(()=>window.fixture.refresh());await frames(s);assert.equal(s.requests.length,before);assert.equal((await observation(s)).managedHidden,true);await publish(s,2,'leo');assert.equal((await observation(s)).weeklySign,'leo');return {cleared,recovered:true};
++ });
++ await group('clear-before-session-read',async s=>{await s.page.evaluate(()=>{window.fixture.publish();window.fixture.clear();});await frames(s);assert.deepEqual((await observation(s)).reads,[]);assert.equal(s.requests.length,0);return {noNewReads:true};});
++ await group('clear-during-session-read',async s=>{await s.page.evaluate(()=>{window.fixture.holdSession();window.fixture.publish();});await s.page.waitForFunction(()=>window.fixture.reads.includes('session'));await s.page.evaluate(()=>{window.fixture.clear();window.fixture.releaseSession();});await frames(s);assert.equal(s.requests.length,0);assert.equal((await observation(s)).managedHidden,true);return {noPreferenceRead:true};});
++ await group('clear-during-preference-read',async s=>{const held=gate(s,'/api/email/chart-preference','GET');await s.page.evaluate(()=>window.fixture.publish());await held.begun;await s.page.evaluate(()=>window.fixture.clear());held.release();await frames(s);await s.page.waitForTimeout(50);const value=await observation(s);assert.equal(value.managedHidden,true);assert.equal(value.managedState,null);assert.equal(s.requests.length,1);return {value};});
++ await group('submitted-resend-clears-without-retry',async s=>{
++  await publish(s);const held=gate(s,'/api/email/chart-preference','POST');await s.page.locator('#managed .post-chart-daily__actions button').click();await held.begun;await s.page.evaluate(()=>window.fixture.clear());held.release();await frames(s);await s.page.waitForTimeout(50);const value=await observation(s);assert.equal(value.managedHidden,true);assert.equal(value.managedState,null);assert.equal(s.requests.filter(r=>r.method==='POST').length,1);assert.equal(s.requests.filter(r=>r.method==='GET').length,1);assert.equal(s.requests.find(r=>r.method==='POST').body,'{"action":"resend"}');return value;
++ });
++ await group('resend-frame-cannot-focus-replacement',async s=>{
++  await publish(s);await s.page.evaluate(()=>{window.fixture.holdFocus=true;});await s.page.locator('#managed .post-chart-daily__actions button').click();await s.page.waitForFunction(()=>window.fixture.focusFrames.length>0);await s.page.evaluate(()=>window.fixture.clear());await publish(s,1,'leo');await s.page.locator('#outside').focus();await s.page.evaluate(()=>window.fixture.releaseFocus());assert.equal((await observation(s)).focus,'outside');assert.equal(s.requests.filter(r=>r.method==='POST').length,1);return {sameContextIdReplacement:true};
++ });
++ await group('current-resend-retains-success-busy-and-focus',async s=>{
++  await publish(s);const button=s.page.locator('#managed .post-chart-daily__actions button');await button.click();await s.page.locator('.post-chart-daily__status').filter({hasText:'Another confirmation'}).waitFor();await s.page.waitForFunction(()=>document.activeElement===document.querySelector('#managed .post-chart-daily__actions button'));assert.equal(await button.isEnabled(),true);assert.equal(s.requests.filter(r=>r.method==='POST').length,1);assert.equal(s.requests.filter(r=>r.method==='GET').length,2);return {currentCompletionOwnsItsRefresh:true};
++ });
++ for(const boundary of ['context-republish','session-replacement','profile-refresh','session-clone','allowed-access-refresh'])await group('resend-'+boundary,async s=>{
++  await publish(s);const held=gate(s,'/api/email/chart-preference','POST'),button=s.page.locator('#managed .post-chart-daily__actions button');await button.click();await held.begun;
++  await s.page.evaluate(boundary=>{
++   if(boundary==='context-republish')window.fixture.republish();
++   if(boundary==='profile-refresh')dispatchEvent(new Event('zodiacs:profile-synced'));
++   if(boundary==='allowed-access-refresh')dispatchEvent(new Event('zodiacs:profile-access'));
++   if(boundary==='session-replacement'||boundary==='session-clone'){window.fixture.session={...window.fixture.session,...(boundary==='session-replacement'?{access_token:'synthetic-replacement-token'}:{})};window.fixture.auth(window.fixture.session);}
++  },boundary);await s.page.locator('#managed[data-post-chart-state="pending"]').waitFor({state:'visible'});await frames(s);
++  const current=boundary==='profile-refresh'||boundary==='session-clone';assert.equal(await button.isEnabled(),!current);const reads=s.requests.filter(r=>r.method==='GET').length;await s.page.locator('#outside').focus();held.release();await frames(s);await s.page.waitForTimeout(50);
++  assert.equal(await button.isEnabled(),true);assert.equal(s.requests.filter(r=>r.method==='POST').length,1);
++  if(current){assert.equal(s.requests.filter(r=>r.method==='GET').length,reads+1);assert.ok((await s.page.locator('.post-chart-daily__status').innerText()).includes('Another confirmation'));}
++  else{assert.equal(s.requests.filter(r=>r.method==='GET').length,reads);assert.equal(await s.page.locator('.post-chart-daily__status').innerText(),'');assert.equal((await observation(s)).focus,'outside');}
++  return {boundary,current,submittedOnce:true};
++ });
++ for(const replacement of [false,true])await group('submitted-capture-'+(replacement?'replacement':'clear'),async s=>{
++  await publish(s);await s.page.locator('#weekly input[type=email]').fill('first@example.com');const held=gate(s,'/api/email/subscribe','POST');await s.page.locator('#weekly button[type=submit]').click();await held.begun;await s.page.evaluate(()=>window.fixture.clear());
++  if(replacement){await publish(s,2,'leo');await s.page.locator('#weekly input[type=email]').fill('replacement@example.com');}
++  held.release();await frames(s);await s.page.waitForTimeout(50);const value=await observation(s);assert.equal(value.weeklyHidden,!replacement);assert.equal(value.weeklyEmail,replacement?'replacement@example.com':'first@example.com');assert.equal(value.weeklyStatus,'');assert.equal(value.weeklySign,replacement?'leo':'cancer');assert.equal(value.weeklyButton,'Subscribe');assert.equal(s.requests.filter(r=>r.path.endsWith('/subscribe')).length,1);assert.equal(value.analytics.filter(row=>row.name==='email_subscribed').length,1);return value;
++ });
++ await group('unrelated-footer-request-completes',async s=>{await publish(s);await s.page.locator('#footer input[type=email]').fill('footer@example.com');const held=gate(s,'/api/email/subscribe','POST');await s.page.locator('#footer button[type=submit]').click();await held.begun;await s.page.evaluate(()=>window.fixture.clear());held.release();await s.page.locator('#footer [data-email-status]').filter({hasText:'Done'}).waitFor();assert.equal(await s.page.locator('#footer').isVisible(),true);assert.equal(await s.page.locator('#footer input[type=email]').inputValue(),'');assert.equal(s.requests.filter(r=>r.path.endsWith('/subscribe')).length,1);return {unrelatedCompletionPreserved:true};});
++ await group('sign-focus-frame-cannot-escape-clear',async s=>{await publish(s);await s.page.evaluate(()=>{window.fixture.holdFocus=true;});await s.page.locator('#weekly [data-email-sign-change]').click();await s.page.waitForFunction(()=>window.fixture.focusFrames.length>0);await s.page.evaluate(()=>window.fixture.clear());await publish(s,2,'leo');await s.page.locator('#weekly [data-email-sign-change]').click();await s.page.locator('#outside').focus();await s.page.evaluate(()=>window.fixture.focusFrames.shift()(performance.now()));assert.equal((await observation(s)).focus,'outside');await s.page.evaluate(()=>window.fixture.releaseFocus());assert.equal(await s.page.evaluate(()=>document.activeElement?.getAttribute('value')),'leo');return {obsoleteFocusSuppressed:true,currentFocusPreserved:true};});
++ await group('capture-markup-with-lifecycle-off',async s=>{await s.page.evaluate(()=>window.fixture.publish());await s.page.locator('#weekly').waitFor({state:'visible'});await s.page.locator('#weekly input[type=email]').fill('retained@example.com');await s.page.evaluate(()=>window.fixture.clear());const cleared=await observation(s);assert.equal(cleared.weeklyHidden,true);assert.equal(cleared.managedHidden,true);assert.equal(cleared.footerHidden,false);assert.equal(cleared.weeklyEmail,'retained@example.com');assert.equal(s.requests.length,0);await s.page.evaluate(()=>window.fixture.publish(2,'leo'));await s.page.locator('#weekly').waitFor({state:'visible'});assert.equal((await observation(s)).weeklySign,'leo');assert.equal(s.requests.length,0);return {markupPresent:true,lifecycleFlag:false,cleared};},false);
++}finally{
++ for(const context of contexts)await context.close().catch(()=>{});const version=browser?.version();await browser?.close();await new Promise(done=>server.close(done));
++ const report={node:process.version,browser:version,identity,finalIdentity:await Promise.all(paths.map(async path=>({path,sha256:sha(await readFile(resolve(root,path)))}))),driverSha256:sha(await readFile(new URL(import.meta.url))),results,passed:results.filter(r=>r.passed).length,failed:results.filter(r=>!r.passed).length,qualification:'Actual island, context module, preference fetch client and extracted Astro enhancement script; synthetic structural DOM and controlled auth/store/endpoint responses. No production layout or real authentication/provider claim.',cleanup:{browserClosed:true,contextsClosed:true,serverClosed:true}};
++ await writeFile(resolve(out,'result.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({passed:report.passed,failed:report.failed}));if(report.failed)process.exitCode=1;
++}
+diff --git a/tests/post-chart-daily-drive.mjs b/tests/post-chart-daily-drive.mjs
+index ac55aeb0..b9324448 100644
+--- a/tests/post-chart-daily-drive.mjs
++++ b/tests/post-chart-daily-drive.mjs
+@@ -174,6 +174,7 @@ async function preparePage(browser, baseURL, testCase, viewport) {
+   const unexpectedRequests = [];
+   let resendBody = null;
+   let resendAttempted = false;
++  let preferenceReads = 0;
+   page.on('console', (message) => {
+     if (message.type() === 'error') errors.push(`console: ${message.text()}`);
+   });
+@@ -243,6 +244,7 @@ async function preparePage(browser, baseURL, testCase, viewport) {
+       });
+       return;
+     }
++    preferenceReads += 1;
+     await route.fulfill({
+       status: 200,
+       contentType: 'application/json',
+@@ -270,6 +272,7 @@ async function preparePage(browser, baseURL, testCase, viewport) {
+     requestFailures,
+     unexpectedRequests,
+     getResendBody: () => resendBody,
++    getPreferenceReads: () => preferenceReads,
+     response,
+   };
+ }
+@@ -789,8 +792,8 @@ await withPreview({ port: 4426 }, async (baseURL) => {
+       await run.context.close();
+     }
+ 
+-    // A remote chart arriving after computation must rematch the immutable
+-    // result identity; editing the form afterward must not change that result.
++    // A remote chart arriving after computation rematches the current result.
++    // A subsequent input edit invalidates that result and all derived surfaces.
+     {
+       const run = await preparePage(browser, baseURL, {
+         ...cases[0],
+@@ -809,12 +812,23 @@ await withPreview({ port: 4426 }, async (baseURL) => {
+         '[data-post-chart-panel="synced-eligible"]',
+       ).isVisible());
+       const beforeEdit = await run.page.evaluate(() => JSON.stringify(window.zodiacsPostChartContext));
++      const email = matched.locator('input[type="email"]');
++      await email.fill('retained@example.com');
++      const readsBeforeEdit = run.getPreferenceReads();
+       await run.page.locator('#birth-date').fill('1908-07-06');
++      await run.page.evaluate(() => window.dispatchEvent(new Event('zodiacs:profile-synced')));
+       await run.page.waitForTimeout(150);
+       const afterEdit = await run.page.evaluate(() => JSON.stringify(window.zodiacsPostChartContext));
+-      check('editing form fields cannot rewrite displayed-result context', afterEdit === beforeEdit,
++      check('editing form fields clears the obsolete result context', beforeEdit !== undefined && afterEdit === undefined,
+         `${beforeEdit} -> ${afterEdit}`);
+-      check('editing form fields keeps the matched state stable', await matched.isVisible());
++      check('editing form fields hides the matched daily surface', !(await matched.isVisible()));
++      check('cleared context does not initiate another preference read', run.getPreferenceReads() === readsBeforeEdit);
++      check('cleared capture preserves typed email', await run.page.locator(
++        '[data-email-capture-shell][data-post-chart-managed="true"] input[type="email"]',
++      ).inputValue() === 'retained@example.com');
++      check('editing form fields clears result and derived actions', await run.page.locator(
++        '.calc__result, [data-calculation-receipt-export], [data-share-card], [data-save-chart]',
++      ).count() === 0);
+       await run.context.close();
+     }
+ 

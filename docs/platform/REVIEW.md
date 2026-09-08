@@ -123,3 +123,47 @@ jobs. ChartCalculator Freeze 1 is correction-requested: see its [actual review](
 and separate [save/profile findings](evidence/chart-result-ownership/profile-save-review-freeze1/REVIEW-FREEZE1.md).
 No publication, production, human numerical/legal signoff or external adoption
 is implied. SDK #5's hold and the separate Astrofolio integration boundary remain.
+
+
+Corrected ChartCalculator Freeze2 now completes the [independent source review](evidence/chart-result-ownership/review-freeze2/REVIEW-FREEZE2.md),
+[save/profile review](evidence/chart-result-ownership/profile-save-review-freeze2/REVIEW.md),
+separate CI wiring review and root local acceptance. All original Freeze1 findings
+remain inspectable. Existing numerical statements, module references, requested
+writes, styles/locales and public positions semantics are preserved; new guards
+control only obsolete result/reference/focus/UI completion. The initial exact-PNG
+comparison failure is retained and classified under the unchanged scored visual
+budget, with its one-pixel difference and baseline-height limits explicit.
+Hosted acceptance, human review, publication and production remain separate.
+
+Chart draft #434 subsequently passes nine actual exact-source preview groups,
+but CI 34209606308 fails the post-chart gate (one of 291 assertions). Its old
+context-retention expectation conflicts with C-012. Source inspection also finds
+an actual downstream cached-context defect: the optional daily panel remains
+visible after the calculator deletes the global context. Root requires explicit
+invalidation propagation and meaningful browser regression checks; updating only
+the assertion would conceal that remaining product behavior. This work is
+separate from the immutable C-014 author freeze now in independent review.
+
+C-014's [author implementation](evidence/local-date-reference/author-freeze1/AUTHOR.md.log)
+and [preparation](evidence/local-date-reference/) are byte-verified. The root
+decision explicitly permits conservative reference refusal for a nonempty date
+without calling it empty. Independent author/reviewer separation, canonical
+calendar and explicit-zone validation, numerical-call exclusion, localized
+recovery and preserved ownership behavior remain required before integration.
+
+
+The downstream C-012 Freeze1 is independently rejected for an actual unread/null
+session-cache regression. [Freeze2 review](evidence/post-chart-clear/review-freeze2/REVIEW.md)
+accepts25 independently written controller controls and exact-source reuse of the
+unchanged email enhancement's20 controls. Separate final-driver CI compatibility
+passes. Root applies the exact six files and four-line workflow insertion and
+passes normal build/check/4969tests,294full-page assertions,21native cases,
+17existing chart cases and four normal feature-off controls. All18 fresh approved
+captures are byte-identical. Original failures and same-chart late-email-edit
+limitations remain recorded. Refreshed remote source/CI/preview are separate.
+
+C-014 also completes its [independent caller and helper review](evidence/local-date-reference/independent-review/REVIEW.md):
+26caller criteria, nine exact numerical comparisons and92helper controls on each
+Node22/24/nativeChrome. Its12-file source remains separate and awaits root
+integration after the downstream correction. Neither review grants publication,
+production, whole-date astronomical completeness or human numerical/legal signoff.

@@ -1,0 +1,53 @@
+{"kind":"baseline","name":"chart-refuse-Apia","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"moon-refuse-Apia","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"chart-refuse-Kwajalein","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"moon-refuse-Kwajalein","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"chart-refuse-Kiritimati","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"moon-refuse-Kiritimati","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"chart-refuse-Guam","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"moon-refuse-Guam","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"chart-preserve-known-gap","passed":true}
+{"kind":"baseline","name":"chart-preserve-repeated","passed":true}
+{"kind":"baseline","name":"chart-preserve-interrupted","passed":true}
+{"kind":"baseline","name":"chart-preserve-signed-zone","passed":true}
+{"kind":"baseline","name":"moon-preserve-known-gap","passed":true}
+{"kind":"baseline","name":"moon-preserve-repeated","passed":true}
+{"kind":"baseline","name":"moon-preserve-interrupted","passed":true}
+{"kind":"baseline","name":"moon-preserve-signed-zone","passed":true}
+{"kind":"baseline","name":"moon-no-city-utc-skipped-local-label","passed":true}
+{"kind":"baseline","name":"chart-old-result-refusal-recovery","passed":false,"error":"locator.fill: Timeout 2500ms exceeded."}
+{"kind":"baseline","name":"moon-old-result-refusal-recovery","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"chart-pending-old-skip-replaced","passed":true}
+{"kind":"baseline","name":"moon-pending-old-skip-replaced","passed":true}
+{"kind":"baseline","name":"chart-membership-unresolved-clears","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"moon-membership-unresolved-clears","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"chart-russian-refusal","passed":false,"error":"AssertionError [ERR_ASSERTION]: Current reference refusal is visible"}
+{"kind":"baseline","name":"chart-public-positions","passed":true}
+{"kind":"baseline","name":"chart-profile-revoke-pending-reference","passed":true}
+{"kind":"candidate","name":"chart-refuse-Apia","passed":true}
+{"kind":"candidate","name":"moon-refuse-Apia","passed":true}
+{"kind":"candidate","name":"chart-refuse-Kwajalein","passed":true}
+{"kind":"candidate","name":"moon-refuse-Kwajalein","passed":true}
+{"kind":"candidate","name":"chart-refuse-Kiritimati","passed":true}
+{"kind":"candidate","name":"moon-refuse-Kiritimati","passed":true}
+{"kind":"candidate","name":"chart-refuse-Guam","passed":true}
+{"kind":"candidate","name":"moon-refuse-Guam","passed":true}
+{"kind":"candidate","name":"chart-preserve-known-gap","passed":true}
+{"kind":"candidate","name":"chart-preserve-repeated","passed":true}
+{"kind":"candidate","name":"chart-preserve-interrupted","passed":true}
+{"kind":"candidate","name":"chart-preserve-signed-zone","passed":true}
+{"kind":"candidate","name":"moon-preserve-known-gap","passed":true}
+{"kind":"candidate","name":"moon-preserve-repeated","passed":true}
+{"kind":"candidate","name":"moon-preserve-interrupted","passed":true}
+{"kind":"candidate","name":"moon-preserve-signed-zone","passed":true}
+{"kind":"candidate","name":"moon-no-city-utc-skipped-local-label","passed":true}
+{"kind":"candidate","name":"chart-old-result-refusal-recovery","passed":false,"error":"locator.fill: Timeout 2500ms exceeded."}
+{"kind":"candidate","name":"moon-old-result-refusal-recovery","passed":true}
+{"kind":"candidate","name":"chart-pending-old-skip-replaced","passed":true}
+{"kind":"candidate","name":"moon-pending-old-skip-replaced","passed":true}
+{"kind":"candidate","name":"chart-membership-unresolved-clears","passed":true}
+{"kind":"candidate","name":"moon-membership-unresolved-clears","passed":true}
+{"kind":"candidate","name":"chart-russian-refusal","passed":true}
+{"kind":"candidate","name":"chart-public-positions","passed":true}
+{"kind":"candidate","name":"chart-profile-revoke-pending-reference","passed":true}
+{"groups":26,"baselinePass":13,"candidatePass":25,"candidateFailures":["chart-old-result-refusal-recovery"],"parity":[{"name":"chart-preserve-known-gap","baseline":"764379d35eed19ca09a88ac7a9cfdcb961fee9de2f5ee838ab2377ef6adad18d","candidate":"764379d35eed19ca09a88ac7a9cfdcb961fee9de2f5ee838ab2377ef6adad18d","equal":true},{"name":"chart-preserve-repeated","baseline":"d321d5261516bb1a13fd9e2186a0fd59e14553dda850b4c91c9ac06045d9f135","candidate":"d321d5261516bb1a13fd9e2186a0fd59e14553dda850b4c91c9ac06045d9f135","equal":true},{"name":"chart-preserve-interrupted","baseline":"87be2656d179e810e2ce1c8643fa384bf78a33a615d66f6ebfb118f7c3be4f34","candidate":"87be2656d179e810e2ce1c8643fa384bf78a33a615d66f6ebfb118f7c3be4f34","equal":true},{"name":"chart-preserve-signed-zone","baseline":"61a9a31e5d62c66442f7c961348931e2462af631897072b6ec4127fdf39b1b38","candidate":"61a9a31e5d62c66442f7c961348931e2462af631897072b6ec4127fdf39b1b38","equal":true},{"name":"moon-preserve-known-gap","baseline":"677b577fb6495965096b0d6d459367f9622b99ff11fc8bf904bd3a4af67c512f","candidate":"677b577fb6495965096b0d6d459367f9622b99ff11fc8bf904bd3a4af67c512f","equal":true},{"name":"moon-preserve-repeated","baseline":"add41338e310e4c43530d4a858d203ac2c691ccfc3a4ffb3faf88eaf6fb44dc3","candidate":"add41338e310e4c43530d4a858d203ac2c691ccfc3a4ffb3faf88eaf6fb44dc3","equal":true},{"name":"moon-preserve-interrupted","baseline":"2cbedadb06f2b00b99f2bcc160b910b71e13dc01b55e7c8a918a55006326b108","candidate":"2cbedadb06f2b00b99f2bcc160b910b71e13dc01b55e7c8a918a55006326b108","equal":true},{"name":"moon-preserve-signed-zone","baseline":"f64245820d27d92756406de13249841e67dc0c4ac8986d2f92d03828f90299f1","candidate":"f64245820d27d92756406de13249841e67dc0c4ac8986d2f92d03828f90299f1","equal":true},{"name":"moon-no-city-utc-skipped-local-label","baseline":"23baaa2c2ed4508fe31eb029895f98edf9c000b7f91b53d58e90693b526dcc0e","candidate":"23baaa2c2ed4508fe31eb029895f98edf9c000b7f91b53d58e90693b526dcc0e","equal":true}]}

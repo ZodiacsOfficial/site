@@ -1,0 +1,57 @@
+# C-014 author delivery: admit an unknown-time reference only on its requested local date
+
+Implemented and author-tested in an isolated checkout of `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`. The two calculators now refuse an unknown-time representative when its actual Gregorian local date differs from the requested date, or when that membership cannot be determined. Refusal occurs before natal/receipt, Moon/Sun, and endpoint work. The existing result-owned error path clears derived output and keeps the typed inputs for correction. This is a bounded implementation awaiting independent review and integration, not a release, publication, deployment or complete-date correctness certification.
+
+## Exact delivery
+
+`source-freeze.json` identifies all twelve files and their byte hashes. Its SHA256 is `328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2`. `implementation.patch` SHA256 is `41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e`. The exact files are also available under `frozen-source/`.
+
+- `src/lib/time/localToUtc.ts`: one exported, validated `localDateContainsUtc(date, utc, timeZone)` helper, reusing the existing private Gregorian/Latin/era-aware formatter.
+- `src/islands/ChartCalculator.tsx` and `src/islands/MoonPhaseTool.tsx`: one unknown-time guard immediately after the reference is resolved, and one per-run fixed sentinel mapped to the dedicated existing error UI. Known-time and no-city UTC Moon behavior are unchanged.
+- `src/lib/i18n/ui/{en,es,fr,it,pt,ru}.ts`: one accurately translated `localDateReferenceError` key per catalog. English is exactly: “We couldn’t establish a calculation time within this local date. Check the date and place.”
+- `src/lib/time/localDateContainsUtc.test.ts`: 55 focused calendar, validation, formatter-failure and nonempty-date counterexample controls.
+- `tests/local-date-reference-drive.mjs`: 35 native caller groups, portable repository Chromium selection, and explicit source/bundle/probe identities. `OUT_DIR` selects output; the optional `REFERENCE_BASELINE_DIR` enables original-caller controls.
+- `src/islands/ChartCalculator.ownership.test.ts`: one admitted-helper stub added to the existing 27-control ownership harness. Its existing behavioral controls remain intact.
+
+`scope-proof.json` mechanically removes the exact added helper/guard/error mapping and recovers the original helper module and both callers byte for byte. Removing each new catalog key recovers the original catalog byte for byte. The existing resolver, offset and era policy, numerical blocks, settings, flags, ownership fences, receipt pre-calculation fallback and positions-only path were not rewritten. No inactive date-interval import appears among the 212 actual fixture build inputs. This IIFE fixture deliberately bundles its subjects; it does not establish the production lazy-module graph or visual design. Root owns normal production build/capture gates, exact-base locale allowance, CI wiring, durable plan records and release handling.
+
+## Boundary choices and limits
+
+The requested date must be a real canonical Gregorian `0000–9999` date. UTC must have a finite actual Date internal slot: strings, date-like objects and invalid Dates are rejected, while cross-realm Dates work and a caller's `getTime` override is not invoked. The timezone must be an explicit primitive nonempty string admitted by this host's Intl implementation. Missing or unsupported zones do not use the machine timezone. The helper returns true only for matching era-correct astronomical local dates; otherwise valid mismatching dates return false. Invalid inputs and unavailable formatting throw one sanitized RangeError with no input data or cause. Caller guards map either refusal or helper failure to the same dedicated message without exposing the private cause.
+
+The function reads the Date slot once, then uses the existing formatter and host timezone data. It is not a security boundary against replacement of JavaScript intrinsics or arbitrary falsification of Intl results. No new global hooks, state/effects, account authorization, persistence or network operation were added. The component checklist was applied to the two Preact callers; existing per-run revision checks and error focus remain the governing lifecycle.
+
+**False does not prove an empty date. True does not establish exact noon, full-date coverage or complete Sun/Moon candidates.** The retained synthetic complete transition model changes UTC+00 to UTC+15 at `2000-01-01T00:00Z`: the existing resolver chooses Jan 2 03:00 for requested Jan 1 noon, so the new helper refuses it, although an independently callable complete-transition provider proves nine hours of Jan 1 exist. This is deliberately conservative. The interval primitive is used only in that focused test, never activated in product code.
+
+The existing endpoint/certainty defects remain explicit: Toronto `1919-03-31`, St_Johns `2009-10-31` and `2009-11-01`, Juneau `1867-10-18/19`, and the interpretation of repeated dates longer than 24 hours require separate work. The real skipped-date classification in prior preparation depends on provider/runtime data; this product guard does not enumerate transitions or classify dates as empty. Explicit known-time Apia gap shifting remains supported by the current policy. Same-date shifted representatives remain admitted, without any stronger caption or provenance claim.
+
+## Executed validation
+
+Commands ran in `/private/tmp/zodiacs-platform-local-date-reference`; `commands.md` retains exact invocations and raw output names.
+
+| Check | Actual result |
+| --- | --- |
+| Seven focused test files, Node 22.23.2 | 234/234 passed |
+| Same seven files, Node 24.19.0 | 234/234 passed |
+| Strict project TypeScript after generating this checkout's Astro types | Passed, empty `types-final.log` |
+| Native actual callers and rc.6 modules, Chrome 152.0.7977.83 | 35/35 groups passed |
+| Existing native Moon ownership driver against the frozen source | 20/20 groups passed |
+| Source stability and scope removal proof | Passed; twelve exact frozen files |
+| `git diff --check` | Passed |
+
+The final browser fixture executes the actual Preact islands, actual selected-city form controls, current resolver, actual public receipt boundary and rc.6 ephemeris. Its declared controls are an async engine-loader promise, synthetic city search, recorded call counters and one explicit private formatter fault. Exact instrumented source, all 212 input hashes, bundles, output values, screenshots, request records and cleanup are retained. The original-caller variant uses byte-exact base ChartCalculator/MoonPhaseTool sources; shared numerical/resolver code is unchanged apart from the new unused helper, as proved by the scope record. This is actual browser execution, not an independent reviewer or a numerical oracle.
+
+Eight native groups execute the original and corrected callers for four real skipped dates: Apia `2011-12-30`, Kwajalein `1993-08-21`, Kiritimati `1994-12-31`, and Guam `1844-12-31`. The original callers actually return a result. Corrected unknown-time calls record only `resolve` and `contains`, with `12:00` requested; no endpoint or receipt-boundary entry and no public/legacy natal or Moon/Sun calls follow. Each corrected case begins with a successful result, proves result/context/export/share/save UI is removed, checks the focused alert and preserved date, then succeeds on a corrected date.
+
+Ten native positive groups compare exact numerical output values against the original callers in the same Chrome: ordinary date, repeated Apia, repeated Kwajalein, same-date Lord Howe gap day and explicit known-time skipped Apia, for both tools. Known-time cases do not enter the helper. Separate controls preserve no-city UTC Moon, all six localized messages, a formatter failure on unchanged fields after prior success followed by retry, pending edit/replacement/unmount, positions-only import without date or numerical calls, and pending profile-origin revocation followed by anonymous recovery. The profile fixture uses a controlled application access-policy reader and synthetic stored bytes; those bytes remain unchanged. It does not claim real authentication or erasure.
+
+The final fixture recorded 1,123 GET requests and closed all owned browser contexts and its loopback server. External requests were blocked by the fixture; actual request records are retained. Image/font/page assets are not a production installation, and screenshots document the native form/result state rather than approved-design acceptance. The unchanged existing Moon fixture independently exercises its original twenty author acceptance groups and also closes its context/server. No credentials, production service, SDK publication or root checkout/dist mutation was required.
+
+## Original failures and harness corrections retained
+
+- The first strict check found an implicit return type in the new invalid-Date test fixture plus missing generated Astro content types. The test annotation was corrected. Generating local Astro types removed the unrelated missing-generated-type diagnostics; the final full project type check passes. `types-initial.log` is unmodified.
+- The first Astro sync invocation used an obsolete CLI path and failed before running. `astro-sync.log` is retained; the installed `bin/astro.mjs` invocation succeeds in `astro-sync-corrected.log`.
+- The initial 27-group native driver had an incorrect receipt DOM selector. The author found it while inspecting the real component. That run is retained as preliminary evidence, not relied on for receipt absence. The corrected driver asserts the real receipt selector is present in positive controls, adds a direct endpoint-entry counter, and passes 34 groups. The sealed 35-group driver additionally retains all eight actual original skipped-date results and the profile-revocation control. All three driver versions, output bundles, original logs and raw results are preserved.
+- Initial read/setup invocation mistakes are retained in `initial-inspection-errors.log`; additional failed read paths are noted in `commands.md`. No product runtime defect was observed in the final candidate controls.
+
+Prior preparation and its separate actual native/date-model counterexamples remain at `/private/tmp/zodiacs-platform-skipped-date-preparation`. Its reviewed recommendation and linked manifest identities are copied as read-only supporting records. This report distinguishes those prior executions from the author's new implementation and native controls. Independent review by the real reviewer agents was requested after sealing; no author result is presented as their signoff.
