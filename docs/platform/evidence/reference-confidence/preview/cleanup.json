@@ -1,0 +1,10 @@
+{
+  "temporaryAccessDirectoryRemoved": true,
+  "scannedRawFiles": 261,
+  "scannedDecompressedRegularArchiveMembers": 96,
+  "exactPrivateUrlAndNontrivialQueryValueMatches": 0,
+  "matchedFiles": [],
+  "browserContextsClosed": true,
+  "authBootstrapObserved": false,
+  "qualification": "Exact generated private URL plus nontrivial query values and encoded forms scanned while still available, including decompressed archive members. Owned access files deleted after scan. Browser bootstrap was a separate disposable unobserved context; no claim of zero bootstrap network or server-side token revocation."
+}

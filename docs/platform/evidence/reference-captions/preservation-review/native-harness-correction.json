@@ -1,0 +1,8 @@
+{
+  "sourceChanged": false,
+  "initialFailure": "Reviewer expected literal UTC in existing Russian universal-time caption.",
+  "baselineAndCandidateCaption": "Время читается как всемирное — добавьте место рождения, чтобы пересчитать ваши часы.",
+  "scope": "Replace only the guessed language assertion and add single-group rerun selection/count.",
+  "run1DriverSha256": "b1d5b31e390639f50b000892634d1ed509c87851400a614f8efd52b0179ac086",
+  "correctedDriverSha256": "b7798638e8f0761fa39b4d72866105e96d3839e689005047e47153ffb702d79b"
+}

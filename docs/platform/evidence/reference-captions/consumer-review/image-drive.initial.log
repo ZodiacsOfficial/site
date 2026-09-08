@@ -1,0 +1,20 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: Missing client UI catalog for en
+    at clientUi (http://127.0.0.1:59895/baseline.js:4704:13)
+    at clientUiMessage (http://127.0.0.1:59895/baseline.js:4709:21)
+    at t2 (http://127.0.0.1:59895/baseline.js:6919:80)
+    at moonLabel (http://127.0.0.1:59895/baseline.js:6938:132)
+    at http://127.0.0.1:59895/baseline.js:7222:45
+    at Array.map (<anonymous>)
+    at bigThreePlacements (http://127.0.0.1:59895/baseline.js:7219:17)
+    at drawBigThreeCard (http://127.0.0.1:59895/baseline.js:7270:24)
+    at prepareBigThreeCard (http://127.0.0.1:59895/baseline.js:7638:19)
+    at window.prepareImage (http://127.0.0.1:59895/baseline.js:7729:27)
+    at /private/tmp/zodiacs-platform-reference-caption-consumer-review/image-drive.mjs:56:27 {
+  log: []
+}
+
+Node.js v22.23.2

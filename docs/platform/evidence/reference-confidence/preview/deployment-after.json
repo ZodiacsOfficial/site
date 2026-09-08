@@ -1,0 +1,52 @@
+{
+  "id": "dpl_DCezqWrsukzWV3F7NotmTQCq4ENp",
+  "name": "zodiacs-org",
+  "url": "zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+  "type": "LAMBDAS",
+  "state": "READY",
+  "createdAt": 1788869758973,
+  "creator": {
+    "uid": "BcnvhMnmrQpRvxQmYbTC8rn1",
+    "username": "zodiacs-org"
+  },
+  "project": {
+    "id": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+    "name": "zodiacs-org",
+    "framework": null
+  },
+  "meta": {
+    "githubCommitAuthorName": "diasmal917",
+    "githubCommitAuthorEmail": "diasmal917@gmail.com",
+    "githubCommitMessage": "Withhold unverified Moon certainty for unknown birth times",
+    "githubCommitOrg": "ZodiacsOfficial",
+    "githubCommitRef": "codex/platform-reference-confidence",
+    "githubCommitRepo": "site",
+    "githubCommitSha": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+    "githubDeployment": "1",
+    "githubOrg": "ZodiacsOfficial",
+    "githubRepo": "site",
+    "githubRepoOwnerType": "Organization",
+    "githubCommitRepoId": "1251096896",
+    "githubRepoId": "1251096896",
+    "githubRepoVisibility": "public",
+    "githubHost": "github.com",
+    "githubCommitAuthorLogin": "diasmal917",
+    "githubCommitVerification": "unverified",
+    "repoPushedAt": "1788869754000",
+    "branchAlias": "zodiacs-org-git-codex-platform-reference-954233-zodiacsofficial.vercel.app",
+    "githubPrId": "437",
+    "lambdaRuntimeStats": "{\"nodejs\":12}"
+  },
+  "alias": [
+    "zodiacs-org-git-codex-platform-reference-954233-zodiacsofficial.vercel.app"
+  ],
+  "target": null,
+  "regions": [
+    "iad1"
+  ],
+  "buildingAt": 1788869760298,
+  "ready": 1788869912623,
+  "readyState": "READY",
+  "source": "git",
+  "aliasError": null
+}

@@ -1,0 +1,785 @@
+{
+  "name": "en-chart-1280",
+  "mode": "chart",
+  "width": 1280,
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "text": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+      "location": {
+        "url": "https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+        "line": 0,
+        "column": 0,
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "browserRequests": [
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/birth-chart/",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/instrument-sans-latin-wght-normal.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/eb-garamond-latin-400-normal.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/eb-garamond-latin-500-normal.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "blocked": true
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/AstroTerm.astro_astro_type_script_index_0_lang.DB1iYTmP.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/jetbrains-mono-latin-wght-normal.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/preload-helper.L5lOfJxi.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/ChartCalculator.Cj-rBB1B.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/client.DPkn9Lbl.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/context-help-client.BqVrBbz0.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/analytics.CH5T6e-b.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/explorer.ijMRUwvv.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/ChartActionDock.Cc8zzTbx.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/preact.module.Bjq9tLsx.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/hooks.module.C0_8FjiD.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/profile-access-reader.DoQqlSjt.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chunk-H7RJKCBO.BUIGSNBz.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/signs.BMXPKoMF.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/PlanetGlyph.BhITbtcc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/i18n.Cg_lCJuc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/CalculationReload.DXyGkRsn.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/astrology.BHib5efU.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share.BRlg0eGS.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chart-handoff.Dvz2AAcL.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/useProfileAccessGeneration.w2JLb1F6.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/useEngine.BV92cVg4.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/BirthFields.VmY_J4-2.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/localToUtc.CKDDLf-o.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/interpretations.BaZkYN67.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/AstroTerm.7K8SAipO.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/SignChip.Dx3tQVZl.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/AspectGlyph.DMIAGIQV.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/Wheel.RNRSqGob.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/dignities.D6lQGYrR.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/houses.5SlbILVS.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/technical-layout.DQIjXHHb.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/lite.DKWHZC5_.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/learning-input-identity.C-WLv51I.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/post-chart-context.cHI09JaB.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/favicon.svg",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/civil-date.CpOZUt7Z.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/technical-locales.DDKucXXd.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/site-footer.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/paths.DYbAuceH.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/PlaceSearch.D1WsU_jW.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/assistant-ui.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/assistant-ui.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/guide-avatar.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/full.AQ--_mi-.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chart-adapter.K-QfJlbI.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/search.BXcwbrsc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/data/cities/index.json",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/data/cities/t.json",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chart-signature.o0kdVHcC.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/natal.D7JKDSdx.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/synastry.rhUg9_9F.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/aspects.BNC-J2iD.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/compat.Bjc3uaB7.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/ChartActionDock.Bl4xOwIo.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/LearningPractice.CSqTNZrv.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chart-context-copy.UBOz97Jz.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/AspectPatternFeature.DeT1XR8E.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/use-learning-sources.DJlsz2nj.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/schema.DqKqbGHb.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/read-store.CIuzJaHq.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/calculator-receipt.Sj7p-7nE.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/PositionsShareSurface.jcTwHV77.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share-positions.D3o0ugj4.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share-card.6rw5NcG3.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share-card-brand.CJKZtcRK.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share-card-copy.D0c42nic.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/CalendarSubscribe.DXtj1Bbr.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/CommunicationRead.OjTpj_tl.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/ApproachRead.DkcphY4q.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/PwaInstallPrompt.BCohgdPv.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/a2hs.WonhOqdm.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.avif",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/gemini.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/cancer.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/libra.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/scorpio.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aquarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/pisces.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/store.B9KwR70B.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/deletions.DUQYISzq.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/aries.avif",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/gemini.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/cancer.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/libra.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/scorpio.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aquarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/pisces.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/eb-garamond-latin-400-italic.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "blocked": false
+    }
+  ],
+  "blocked": [
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    }
+  ],
+  "requestFailures": [
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+      "knownFooterTeardown": false
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "en-chart-1280-failure.png",
+      "bytes": 251644,
+      "sha256": "a3c9420bffabc05e382a2875cc8fbbe84155453e71e4a62d365598e37b63bc43"
+    }
+  ],
+  "passed": false,
+  "locale": "en",
+  "path": "/birth-chart/",
+  "historical": [],
+  "offlineCities": [
+    {
+      "name": "Toronto",
+      "admin": "Ontario",
+      "country": "Canada",
+      "lat": 43.71,
+      "lon": -79.4,
+      "zone": "America/Toronto",
+      "shard": "t.json",
+      "observedOption": "Toronto\nOntario, Canada"
+    }
+  ],
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n2 !== 1\n\n    at unknownConfidence (file:///private/tmp/zodiacs-platform-reference-confidence-preview-review/preview-drive.mjs:109:60)\n    at async file:///private/tmp/zodiacs-platform-reference-confidence-preview-review/preview-drive.mjs:118:130\n    at async test (file:///private/tmp/zodiacs-platform-reference-confidence-preview-review/preview-drive.mjs:88:83)\n    at async file:///private/tmp/zodiacs-platform-reference-confidence-preview-review/preview-drive.mjs:114:64",
+  "failureState": {
+    "date": "1919-03-31",
+    "time": "08:30",
+    "unknown": true,
+    "place": "Toronto · Ontario, Canada",
+    "result": true,
+    "resultText": "Birth chartWithout a birth time we use 12:00 local civil time as a reference and omit the rising sign, angles, and houses. The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment.SunAries9°53′ AriesYour core engine is ignition — you feel most yourself starting things, leading from the front, and finding out by doing. The lifelong lesson: endurance is also a way to win.Read Aries →MoonNeeds a birth timeNeeds a birth timeRisingNeeds a birth timeYour 2-minute readingWhat does your chart say about you — and what comes next?See your personality mix, where it plays out, one pattern you may recognize, and how astrology turns a birth chart into a forecast.Read my chart→Explore on my ownLeft and right arrow keys move between placements; Enter opens the details panel.AriesTaurusGeminiCancerLeoVirgoLibraScorpioSagittariusCapricornAquariusPiscesRxRxRxRxNatalSky nowProgressedSolar return conjunction sextile square trine oppositionChoose a chart partNo selectionSunMoonMercuryVenusMarsJupiterSaturnUranusNeptunePlutoNorth NodeAriesTaurusGeminiCancerLeoVirgoLibraScorpioSagittariusCapricornAquariusPiscesMercury trine SaturnMoon square JupiterMoon trine NeptuneMoon square PlutoJupiter conjunction PlutoMars trine SaturnSun square JupiterMercury conjunction MarsVenus sextile JupiterSun conjunction MoonSun trine NeptuneVenus square NeptuneUranus trine PlutoSun square PlutoSee it in three dimensionsTap any planet, sign, house, or aspect line to inspect it — or focus the wheel and use the arrow keys.Your chart signatureMercury trine Saturn0.0° orbSave my chart+Rendering…↗Aspect patternsOpen to inspect linked groups of three or four planets.Read your chart, one step at a time.Locate your big three, explore where your planets gather, then read the connections between them. Each highlight takes you back to the wheel.01Locate your big threeUse these three reference points to find your way around the wheel.SunAriesThe part of you that chooses a direction.Spotlight Sun↑Moon?Needs a birth timeA birth time is needed to settle your Moon sign.Spotlight Moon↑Rising?Birth time neededHow people first meet you02See where life happensWithout a birth time, signs still show which energies gather together.Birth time is unknown, so houses are not shown. This sign view still shows where your planets gather; add a birth time later to see the life areas they occupy.♈Aries♉Taurus♊Gemini♋Cancer♌Leo♍Virgo♎Libra♏Scorpio♐Sagittarius♑Capricorn♒Aquarius♓PiscesSee all placementsSunAriesSpotlight Sun↑MoonNeeds a birth time · Birth time neededSpotlight Moon↑MercuryAriesSpotlight Mercury↑VenusTaurusSpotlight Venus↑MarsAriesSpotlight Mars↑JupiterCancerSpotlight Jupiter↑SaturnLeoSpotlight Saturn↑UranusAquariusSpotlight Uranus↑NeptuneLeoSpotlight Neptune↑PlutoCancerSpotlight Pluto↑03Find your strongest push-pullsAspects are conversations between planets. The tightest ones tend to speak the loudest.Moon aspects need a birth time and are left out of this reading.MercurySaturnMercury trine SaturnYour Mercury runs downhill into your Saturn — patient thinking can turn a complicated idea into a clear structure. Use an outline or a careful question, while leaving space for evidence that changes the plan.Trine · 0.0° orbTrace this aspect↑SunJupiterSun square JupiterYour Sun grinds against your Jupiter — enthusiasm can stretch a promise beyond the time or energy available. Check the size of the commitment while there is still room to adjust it.Square · 2.8° orbTrace this aspect↑SunNeptuneSun trine NeptuneYour Sun runs downhill into your Neptune — imagination and empathy can become natural ways of expressing yourself. Give them a medium, and keep time for your own wishes alongside what you absorb from others.Trine · 3.3° orbTrace this aspect↑JupiterPlutoJupiter conjunction PlutoYour Jupiter is fused to your Pluto — your appetite for more and your intensity run as one instrument, hard to play separately.Conjunction · 2.5° orbTrace this aspect↑04Read your overall patternElements show your natural fuel. Modalities show how you start, sustain, and adapt.ElementsFire5Earth1Air1Water2Ways of movingCardinal5Fixed4Mutable0The Moon is left out of these totals until its sign is settled.Shape and classical rulersChart shapeReference positions only; birth time unknown. These facts have not been established across the whole birth day.No clear shapeLargest empty arc: 188.156°Occupied span: 171.844°Measurements rounded to: 0.001° · Margin around each threshold: 2°Ten planets, Sun through Pluto, use their original positions with equal weight. Nodes, houses, angles and displaced glyphs do not enter this measurement.ConventionBundle: occupied span ≤120°.Bowl: span 150°–180°; internal gaps ≤60°.Locomotive: span 225°–255°; internal gaps ≤60°.Bucket: one unique handle; nine planets span 120°–180°, internal gaps ≤60°, separating gaps ≥60°, handle within 30° of opposition to the arc midpoint.Seesaw: two groups of 3–7 planets, each spanning ≤90°; internal gaps ≤60°, separating gaps ≥60°, midpoints within 30° of opposition.Splash: every cyclic gap ≤60°.A clear result must meet exactly one tightened rule with no competing relaxed candidate. Each angular threshold has a 2° exclusion band; this is a product convention, not an error estimate.Moon · Show on chartSun · Show on chartMars · Show on chartMercury · Show on chartVenus · Show on chartPluto · Show on chartJupiter · Show on chartNeptune · Show on chartSaturn · Show on chartUranus · Show on chartConvention: zodiacs-chart-context-v1Create imageChart and house rulersReference positions only; birth time unknown. These facts have not been established across the whole birth day.Classical chart ruler: Unavailable from these chart factsChart and house rulers: Unavailable from these chart factsMissing time, place or valid cusps withholds the affected ruler facts. The chart ruler and final dispositor are different concepts.Convention: zodiacs-chart-context-v1Create imageDispositorsReference positions only; birth time unknown. These facts have not been established across the whole birth day.No single established final dispositorSun → Mars → MarsMoon · Incomplete chainMercury → Mars → MarsVenus → VenusMars → MarsJupiter → Moon · Incomplete chainSaturn → Sun → Mars → MarsOwn domicile: MarsOwn domicile: VenusEach arrow leads to the classical ruler of the preceding planet’s sign. Only the seven classical planets participate. An exaltation is not a domicile.Sun · Show on chartMars · Show on chartMars · Show on chartMoon · Show on chartMercury · Show on chartMars · Show on chartMars · Show on chartVenus · Show on chartVenus · Show on chartMars · Show on chartMars · Show on chartJupiter · Show on chartMoon · Show on chartSaturn · Show on chartSun · Show on chartMars · Show on chartMars · Show on chartConvention: zodiacs-chart-context-v1Create imageClassical dignitiesReference positions only; birth time unknown. These facts have not been established across the whole birth day.Sun · Aries: ExaltationMoon · Sign unresolved: Sign unresolvedMercury · Aries: None of these four labelsVenus · Taurus: DomicileMars · Aries: DomicileJupiter · Cancer: ExaltationSaturn · Leo: DetrimentNeptune · Leo: Not covered by the classical seven-planet tableNorth Node · Sagittarius: Not covered by the classical seven-planet tablePluto · Cancer: Not covered by the classical seven-planet tableSouth Node · Gemini: Not covered by the classical seven-planet tableUranus · Aquarius: Not covered by the classical seven-planet tableThese traditional labels describe a planet’s relationship to a sign. They do not measure a person’s worth, ability or future.Domicile: a sign the planet rules in the classical system.Exaltation: a traditional sign of special association with the planet.Detriment: the sign opposite a classical domicile.Fall: the sign opposite an exaltation. These four labels do not cover every traditional dignity.Sun · Show on chartAries · Show on chartMercury · Show on chartAries · Show on chartVenus · Show on chartTaurus · Show on chartMars · Show on chartAries · Show on chartJupiter · Show on chartCancer · Show on chartSaturn · Show on chartLeo · Show on chartNeptune · Show on chartLeo · Show on chartNorth Node · Show on chartSagittarius · Show on chartPluto · Show on chartCancer · Show on chartSouth Node · Show on chartGemini · Show on chartUranus · Show on chartAquarius · Show on chartConvention: zodiacs-chart-context-v1Create imageA guide for the people in your lifeHow to approach youPreparing your card…↗A practical guide to making a good first move, saying things so they land, building trust, and keeping pressure from becoming conflict.AriesHow to say itAriesWhat to avoid under pressureASCHow to open A birth time is needed to know how you first come across.MercuryHow to say itAriesSay the main thing first. Clear, active language will land better than caveats stacked before the point.MarsWhat to avoid under pressureAriesDo not turn a fast flare-up into a permanent verdict. Address the issue directly, then let the temperature fall.Needs a birth time · A birth time is needed to settle the Moon reading.Birth details stay off the image.Preparing your approach card.A personal patternHow you communicatePreparing your card…↗Three placements do most of the talking: Mercury is how you think and phrase things, the Moon is what you need a conversation to feel like, and Mars is how you handle friction.MercuryAriesMoonMarsAriesMercuryHow you phrase thingsAriesYou think out loud and fast — the first draft arrives already spoken. Your best ideas come mid-sentence; your apologies, occasionally, come right after.Mercury was retrograde when you were born — the tradition reads this as thinking that runs inward before it runs outward: you draft internally, and your second telling of an idea is always better than your first.trine Saturn0.0°You speak with a builder's economy — measured, reliable, quoted back at you years later.conjunction Mars2.8°Your words carry natural torque — direct, energizing, built for the honest version. People know where they stand with you.MoonWhat helps you feel heardNeeds a birth time · A birth time is needed to settle the Moon reading.MarsHow you handle frictionAriesConflict arrives fast and leaves fast — you flare, say it, and genuinely forget it by dinner. The people who love you learn the storm is weather, not climate.Birth details stay off the image.Preparing your communication card.More ways to use this chart+Share your chart · More ways to use this chart↗Download calculation receipt (.json)↓This file contains sensitive birth details and chart data. Keep it private.See exact chart data — 12 placements · 15 aspects1919-03-31 · 16:00:00 UTC · 43.71°, -79.40° · engine v0.1.1-rc.6BodyPositionSignMotion Sun9°53′Aries Moon6°54′Needs a birth time · Needs a birth time Mercury21°52′AriesRx Venus9°58′Taurus Mars19°04′Aries Jupiter7°05′Cancer Saturn21°49′LeoRx Uranus29°58′Aquarius Neptune6°36′LeoRx Pluto4°34′Cancer North Node5°17′SagittariusRx South Node5°17′GeminiRxAspects - 15 found Mercury  trine  Saturn · orb 0.0° · applying Moon  square  Jupiter · orb 0.2° · applying Moon  trine  Neptune · orb 0.3° · separating Moon  square  Pluto · orb 2.3° · separating Jupiter  conjunction  Pluto · orb 2.5° · separating Mars  trine  Saturn · orb 2.8° · applying Sun  square  Jupiter · orb 2.8° · separating Mercury  conjunction  Mars · orb 2.8° · applying Venus  sextile  Jupiter · orb 2.9° · separating Sun  conjunction  Moon · orb 3.0° · applying Sun  trine  Neptune · orb 3.3° · separating Venus  square  Neptune · orb 3.4° · separating Uranus  trine  Pluto · orb 4.6° · applying Sun  square  Pluto · orb 5.3° · separating Sun  conjunction  Mars · orb 9.2° · applying",
+    "moonUncertain": true,
+    "registry": null,
+    "error": null,
+    "busy": "false",
+    "actions": 5,
+    "context": {
+      "mode": "full",
+      "sunSign": "aries",
+      "chartId": null,
+      "contextId": 8
+    },
+    "focus": {
+      "tag": "H2",
+      "id": "",
+      "role": null,
+      "text": "Birth chart"
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "contextClosed": true
+}

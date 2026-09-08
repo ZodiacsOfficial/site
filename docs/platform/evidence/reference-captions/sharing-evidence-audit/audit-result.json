@@ -1,0 +1,108 @@
+{
+  "checks": [
+    {
+      "name": "Replacement occurs exactly once: True when displayed positions are a reference without a supplied birth time.",
+      "passed": true
+    },
+    {
+      "name": "Replacement occurs exactly once: 'Reference positions \u00b7 '",
+      "passed": true
+    },
+    {
+      "name": "Replacement occurs exactly once: ${details.date} \u00b7 Birth time unknown \u00b7 Reference positions",
+      "passed": true
+    },
+    {
+      "name": "Entire share module reconstructs exactly after only two text and one comment changes",
+      "passed": true
+    },
+    {
+      "name": "Root archived baseline and candidate source equal independently accepted paired source",
+      "passed": true
+    },
+    {
+      "name": "Prior C015 archived transcript zoomEvidence is null",
+      "passed": true
+    },
+    {
+      "name": "Prior C015 own delivered log matches C016 archived copy",
+      "passed": true
+    },
+    {
+      "name": "Current T17 transcript contains expected final full/partial/positions/native completion fields",
+      "passed": true
+    },
+    {
+      "name": "Prior/current success transcripts differ only elapsed duration and optional zoom capture",
+      "passed": true
+    },
+    {
+      "name": "Exact driver equals author immutable Freeze1",
+      "passed": true
+    },
+    {
+      "name": "Driver prints final transcript after final browser-error assertion",
+      "passed": true
+    },
+    {
+      "name": "Optional zoom is captured only when explicitly enabled",
+      "passed": true
+    },
+    {
+      "name": "PNG signature: sharing-33-percent-baseline.png",
+      "passed": true
+    },
+    {
+      "name": "PNG signature: sharing-33-percent.png",
+      "passed": true
+    },
+    {
+      "name": "PNG signature: sharing-image-diff.png",
+      "passed": true
+    },
+    {
+      "name": "Retained original/current comparison images same594x792 dimensions",
+      "passed": true
+    },
+    {
+      "name": "Current tracked sample is restored to the retained baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "Original/current PNG bytes differ",
+      "passed": true
+    }
+  ],
+  "images": [
+    {
+      "file": "sharing-33-percent-baseline.png",
+      "sha256": "dfbd85ebf67b822d8510b92dff2dc8ccd02671e26abf93da7afca2c1ba6e0fa7",
+      "bytes": 145280,
+      "dimensions": [
+        594,
+        792
+      ]
+    },
+    {
+      "file": "sharing-33-percent.png",
+      "sha256": "fdac569d1f89b4e844d3e7b4b21b57d9e8a4426f3ca3307321b9ecf32a841c38",
+      "bytes": 202543,
+      "dimensions": [
+        594,
+        792
+      ]
+    },
+    {
+      "file": "sharing-image-diff.png",
+      "sha256": "0fe9f3bfb3147283e43beb551908c38bd9e112bc264dd00f0ce766cf68da538b",
+      "bytes": 55220,
+      "dimensions": [
+        594,
+        792
+      ]
+    }
+  ],
+  "rootManifestSha256": "f2219750f04a88c1b69c05b1c59b0c4dd44a0cab30f43b07aebf33b94a451273",
+  "priorLogSha256": "76a234688c57358de502fd5a42a710a7cdf27cd707a91eb59a7c0305ae377119",
+  "historicalProvenance": "Root disposition records84a775d3b0bac6834971911867aef9f05bce4fe3 /2026-08-20T19:32:20+07:00 as last tracked change. Fresh independent Git commands did not return; attribution remains root-recorded, not independently reproduced."
+}

@@ -1,0 +1,105 @@
+{
+  "records": [
+    {
+      "path": "REVIEW.md",
+      "bytes": 5255,
+      "sha256": "fa454798786a1e77f9bad7881145e02c4baf83ec5943b655aea16a69bd3ee80a"
+    },
+    {
+      "path": "audit-final.log",
+      "bytes": 521,
+      "sha256": "3ce13ad75297ce7ef4eb43bbca76769edee6b4064798965c930f54cdb5374611"
+    },
+    {
+      "path": "audit-result.json",
+      "bytes": 18784,
+      "sha256": "11ff7d2d0a67d0cd8ed2185e617e7b668de5528981deb04512e40f0483c2d336"
+    },
+    {
+      "path": "audit.py.log",
+      "bytes": 8106,
+      "sha256": "e8c1399314be3e74d1d2346d5ecb78f30a81a2f6c3a6c3a9cff0d9ef4a978a01"
+    },
+    {
+      "path": "catalog-audit.log",
+      "bytes": 130,
+      "sha256": "38549f841697496e33a7e15ffbfdfc5db3d380401db0293defacf81e5f0a2f51"
+    },
+    {
+      "path": "catalog-audit.mjs.log",
+      "bytes": 1250,
+      "sha256": "87d56757a363c145f5596031806a407de5b57c417829b32b1f6862a62def18b0"
+    },
+    {
+      "path": "catalog-values.json",
+      "bytes": 4412,
+      "sha256": "ab3cffbfaa75f75dedcbd933bb3e68ff5ac8b24b593c81c407f48219cf06859e"
+    },
+    {
+      "path": "package-audit.json",
+      "bytes": 231,
+      "sha256": "750999a0cef8c254597f541bf9223f8cf08fe0f067738570c6038ab6992ce838"
+    },
+    {
+      "path": "root-COMMANDS.md",
+      "bytes": 3479,
+      "sha256": "0031ac0685bef863d498dbede35fd55b94d1781886ffd9d8ebe8cd808308046f"
+    },
+    {
+      "path": "root-README.md",
+      "bytes": 5434,
+      "sha256": "78bc5721c5216bd74d919301650ebdfe0b5d8010534aba1306601d5b5352ffcd"
+    },
+    {
+      "path": "root-acceptance-summary.json",
+      "bytes": 1240,
+      "sha256": "6e223d5d0e49ff9156e7dc2e5e97e53f53325b4ede87475f6a86ee9792818a77"
+    },
+    {
+      "path": "root-final-source-manifest.json",
+      "bytes": 8424,
+      "sha256": "5e32126465b3ee095c04367a65a0ad499e7b9d1148a1ff01b49d75f1e9370a4a"
+    },
+    {
+      "path": "root-manifest.json",
+      "bytes": 2354,
+      "sha256": "f2219750f04a88c1b69c05b1c59b0c4dd44a0cab30f43b07aebf33b94a451273"
+    },
+    {
+      "path": "root-normal-pages.log",
+      "bytes": 1004,
+      "sha256": "ab5e7891a871e3e9235d419623c9bc91030322577d4a4b27310e2272c0441a9f"
+    },
+    {
+      "path": "root-normal-pages.mjs.log",
+      "bytes": 12025,
+      "sha256": "38ccd21b56f853f6cccef7a7a5e0adeaebf2115c1a162b4b6e3e6844051833d9"
+    },
+    {
+      "path": "root-normal-pages.preflight1.mjs.log",
+      "bytes": 12027,
+      "sha256": "78a1ac66fc9449e67028478b00c478325e0125b73e4266998df518b358076b0d"
+    },
+    {
+      "path": "root-raw-members.json",
+      "bytes": 96172,
+      "sha256": "cfc7df0d1bbc5c8ab6b592631cd3eac38e718a1b8498fbfa18e069efe21c3d0c"
+    },
+    {
+      "path": "root-sharing-image-disposition.json",
+      "bytes": 956,
+      "sha256": "04ffd854bf9bf5ab8016d82098372b9844b2e90378a8265ee085d6db4f2f60e5"
+    },
+    {
+      "path": "root-source-manifest.json",
+      "bytes": 7708,
+      "sha256": "348c58a7edab4bd9055a604733657f6477efea10f48e782a96eb28886c79251d"
+    },
+    {
+      "path": "seal.py.log",
+      "bytes": 1784,
+      "sha256": "7bada0c8620a84f5301fcbb4c5af507c27a8c118a37db2cd502f4261e14acdba"
+    }
+  ],
+  "qualification": "Independent read-only evidence audit. Original root package/archives remain unchanged. Exact root package manifest and raw member mapping bind all original observed outputs. No browser rerun."
+}

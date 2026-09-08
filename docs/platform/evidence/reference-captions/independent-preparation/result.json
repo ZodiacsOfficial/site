@@ -1,0 +1,318 @@
+{
+  "runtime": {
+    "node": "v22.23.2",
+    "icu": "78.2",
+    "tz": "2026a"
+  },
+  "qualification": "Actual UTC engine calls, public codec/model/local HTML response, share-caption helpers and actual consumer SSR. Arbitrary non-noon reference instants are valid library/codec inputs; this does not claim the current Chart UI selects these clocks. No network request is issued by constructing Request and calling the local handler. No OG image rasterization, browser UI, date-wide proof, or author Khartoum probe is performed. Public positions receiver does not use Inspector; Inspector check covers its clockless scene contract separately.",
+  "rows": [
+    {
+      "timeKnown": false,
+      "input": {
+        "utc": "2000-01-15T06:17:00.000Z",
+        "latitude": 0,
+        "longitude": 0,
+        "timezoneForProvenance": "UTC"
+      },
+      "token": "2.eyJiIjpbMjk0LjM5NywzMy4yNTcsMjkzLjg5NCwyNTguMjkzLDMzOC42MzIsMjYuMTI2LDQwLjI5OCwzMTUuNTM1LDMwMy43MDEsMjUxLjkxMSwxMjMuNzM4LDMwMy43MzhdLCJoIjoidyIsInYiOiIwLjEuMS1yYy42In0",
+      "decodedKeys": [
+        "angles",
+        "bodies",
+        "engineVersion",
+        "houseSystem"
+      ],
+      "decodedHasClock": false,
+      "model": {
+        "placements": [
+          {
+            "label": "Sun",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "24 deg 24 min"
+          },
+          {
+            "label": "Moon",
+            "sign": "Taurus",
+            "hue": "#B9D4BE",
+            "degree": "3 deg 15 min"
+          }
+        ],
+        "settings": "12:00 reference / No houses / Tropical"
+      },
+      "notes": [
+        "12:00 reference · Birth time unknown",
+        "My Moon may change signs without an exact birth time."
+      ],
+      "settings": "12:00 reference · Apparent geocentric · Tropical of date · No houses · True Node",
+      "hidden": [
+        "Birth details hidden"
+      ],
+      "visible": [
+        "2000-01-15 · Birth time unknown · 12:00 local reference",
+        "0.0000°N · 0.0000°E · UTC",
+        "Reference UTC · 2000-01-15 06:17 UTC"
+      ],
+      "sceneKeys": [
+        "anchor",
+        "angles",
+        "aspects",
+        "bodies",
+        "engineVersion",
+        "flags",
+        "houseSystem",
+        "houses",
+        "moonSignCandidates",
+        "signs"
+      ],
+      "artifacts": {
+        "html": {
+          "file": "reference-0617-html.html",
+          "sha256": "a3fcbc633de68e68d20a51a59b2e216e61fea38cdb5bfcc74c2805e9e3791883",
+          "bytes": 1920
+        },
+        "inspector": {
+          "file": "reference-0617-inspector.html",
+          "sha256": "c9490a0dbb38375d0b8aa575f63e214b63285d77ecc8175f9167ca2b2ab3c4c7",
+          "bytes": 1451
+        },
+        "receiver": {
+          "file": "reference-0617-receiver.html",
+          "sha256": "71ee173b4c821d1eb853e695e71511ccbb18326f31b4a49985220aecca70e26c",
+          "bytes": 30390
+        }
+      }
+    },
+    {
+      "timeKnown": false,
+      "input": {
+        "utc": "2000-01-15T18:43:00.000Z",
+        "latitude": 0,
+        "longitude": 0,
+        "timezoneForProvenance": "UTC"
+      },
+      "token": "2.eyJiIjpbMjk0LjkyNCw0MC40OTUsMjk0Ljc1LDI1OC45MjUsMzM5LjAzMywyNi4xNyw0MC4zMDEsMzE1LjU2NCwzMDMuNzIsMjUxLjkyNiwxMjMuNzM0LDMwMy43MzRdLCJoIjoidyIsInYiOiIwLjEuMS1yYy42In0",
+      "decodedKeys": [
+        "angles",
+        "bodies",
+        "engineVersion",
+        "houseSystem"
+      ],
+      "decodedHasClock": false,
+      "model": {
+        "placements": [
+          {
+            "label": "Sun",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "24 deg 55 min"
+          },
+          {
+            "label": "Moon",
+            "sign": "Taurus",
+            "hue": "#B9D4BE",
+            "degree": "10 deg 30 min"
+          }
+        ],
+        "settings": "12:00 reference / No houses / Tropical"
+      },
+      "notes": [
+        "12:00 reference · Birth time unknown",
+        "My Moon may change signs without an exact birth time."
+      ],
+      "settings": "12:00 reference · Apparent geocentric · Tropical of date · No houses · True Node",
+      "hidden": [
+        "Birth details hidden"
+      ],
+      "visible": [
+        "2000-01-15 · Birth time unknown · 12:00 local reference",
+        "0.0000°N · 0.0000°E · UTC",
+        "Reference UTC · 2000-01-15 18:43 UTC"
+      ],
+      "sceneKeys": [
+        "anchor",
+        "angles",
+        "aspects",
+        "bodies",
+        "engineVersion",
+        "flags",
+        "houseSystem",
+        "houses",
+        "moonSignCandidates",
+        "signs"
+      ],
+      "artifacts": {
+        "html": {
+          "file": "reference-1843-html.html",
+          "sha256": "ac77b8f9e050752745262c66d0b038d954eba06298f1af14f1fb841795016bb3",
+          "bytes": 1900
+        },
+        "inspector": {
+          "file": "reference-1843-inspector.html",
+          "sha256": "5921cce0542dc28fdc5ff9ad421b17ac65782b5ec7fd4194c26a74975c9b41ac",
+          "bytes": 1452
+        },
+        "receiver": {
+          "file": "reference-1843-receiver.html",
+          "sha256": "fac0afe35c5f4b85abce9231ac489490cdf2f69af2d7d7c6a3874da0c94de801",
+          "bytes": 30538
+        }
+      }
+    },
+    {
+      "timeKnown": true,
+      "input": {
+        "utc": "2000-01-15T06:17:00.000Z",
+        "latitude": 0,
+        "longitude": 0,
+        "timezoneForProvenance": "UTC"
+      },
+      "token": "2.eyJiIjpbMjk0LjM5NywzMy4yNTcsMjkzLjg5NCwyNTguMjkzLDMzOC42MzIsMjYuMTI2LDQwLjI5OCwzMTUuNTM1LDMwMy43MDEsMjUxLjkxMSwxMjMuNzM4LDMwMy43MzhdLCJoIjoidyIsInYiOiIwLjEuMS1yYy42IiwiYSI6WzI5Ni4yNjMsMjEwLjM3OF19",
+      "decodedKeys": [
+        "angles",
+        "bodies",
+        "engineVersion",
+        "houseSystem"
+      ],
+      "decodedHasClock": false,
+      "model": {
+        "placements": [
+          {
+            "label": "Sun",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "24 deg 24 min"
+          },
+          {
+            "label": "Moon",
+            "sign": "Taurus",
+            "hue": "#B9D4BE",
+            "degree": "3 deg 15 min"
+          },
+          {
+            "label": "Rising",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "26 deg 16 min"
+          }
+        ],
+        "settings": "Whole sign / Tropical"
+      },
+      "notes": [],
+      "settings": "Apparent geocentric · Tropical of date · Whole sign houses · True Node",
+      "hidden": [
+        "Birth details hidden"
+      ],
+      "visible": [
+        "2000-01-15 · 06:17 local",
+        "0.0000°N · 0.0000°E · UTC",
+        "Resolved UTC · 2000-01-15 06:17 UTC"
+      ],
+      "sceneKeys": [
+        "anchor",
+        "angles",
+        "aspects",
+        "bodies",
+        "engineVersion",
+        "flags",
+        "houseSystem",
+        "houses",
+        "signs"
+      ],
+      "artifacts": {
+        "html": {
+          "file": "known-0617-html.html",
+          "sha256": "e4cc76fd44609e989b39d790c13fa4ff831e7665b9f72ccadbfc998d690b10bf",
+          "bytes": 2057
+        },
+        "inspector": {
+          "file": "known-0617-inspector.html",
+          "sha256": "2c7df7f85f1c6b579987734d8a2f5f598bcac737cf7461b32959148216b222f5",
+          "bytes": 4273
+        },
+        "receiver": {
+          "file": "known-0617-receiver.html",
+          "sha256": "b0a028ebf268f5e9eaafc7db4f24968d83df67d830a6b621c4f16ef7f03ea02c",
+          "bytes": 36046
+        }
+      }
+    },
+    {
+      "timeKnown": true,
+      "input": {
+        "utc": "2000-01-15T18:43:00.000Z",
+        "latitude": 0,
+        "longitude": 0,
+        "timezoneForProvenance": "UTC"
+      },
+      "token": "2.eyJiIjpbMjk0LjkyNCw0MC40OTUsMjk0Ljc1LDI1OC45MjUsMzM5LjAzMywyNi4xNyw0MC4zMDEsMzE1LjU2NCwzMDMuNzIsMjUxLjkyNiwxMjMuNzM0LDMwMy43MzRdLCJoIjoidyIsInYiOiIwLjEuMS1yYy42IiwiYSI6WzEyMi45OTEsMzcuNjRdfQ",
+      "decodedKeys": [
+        "angles",
+        "bodies",
+        "engineVersion",
+        "houseSystem"
+      ],
+      "decodedHasClock": false,
+      "model": {
+        "placements": [
+          {
+            "label": "Sun",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "24 deg 55 min"
+          },
+          {
+            "label": "Moon",
+            "sign": "Taurus",
+            "hue": "#B9D4BE",
+            "degree": "10 deg 30 min"
+          },
+          {
+            "label": "Rising",
+            "sign": "Leo",
+            "hue": "#E0A9B4",
+            "degree": "2 deg 59 min"
+          }
+        ],
+        "settings": "Whole sign / Tropical"
+      },
+      "notes": [],
+      "settings": "Apparent geocentric · Tropical of date · Whole sign houses · True Node",
+      "hidden": [
+        "Birth details hidden"
+      ],
+      "visible": [
+        "2000-01-15 · 18:43 local",
+        "0.0000°N · 0.0000°E · UTC",
+        "Resolved UTC · 2000-01-15 18:43 UTC"
+      ],
+      "sceneKeys": [
+        "anchor",
+        "angles",
+        "aspects",
+        "bodies",
+        "engineVersion",
+        "flags",
+        "houseSystem",
+        "houses",
+        "signs"
+      ],
+      "artifacts": {
+        "html": {
+          "file": "known-1843-html.html",
+          "sha256": "d15262f13253884eaae4be199069954157c015add9395d5ea55fd8adbeda78c9",
+          "bytes": 2027
+        },
+        "inspector": {
+          "file": "known-1843-inspector.html",
+          "sha256": "4c29783e74a9be8ef56cc35ca30b9523735c96988271edc64b41e840df074195",
+          "bytes": 5011
+        },
+        "receiver": {
+          "file": "known-1843-receiver.html",
+          "sha256": "e5a8d0d760836f448d52981d1efbda816fc3a9a520d52f9397b740706684335b",
+          "bytes": 36090
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+from pathlib import Path
+import subprocess,json,hashlib
+root=Path(__file__).resolve().parent;p=root/'pr-identity';p.mkdir(exist_ok=True)
+source=Path('/private/tmp/zodiacs-platform-reference-confidence-release')
+for name in ['pr-files.json','pr.json','pr-verification.json']:(p/name).write_bytes((source/name).read_bytes())
+raw=(p/'pr-files.json').read_bytes();assert hashlib.sha256(raw).hexdigest()=='627824e590dca19da0ca32ab3cac50aff94eb7a551abfc77735eb7de1d94d8d8'
+pages=json.loads(raw);assert len(pages)==6 and [len(p) for p in pages]==[100,100,100,100,100,34];files=[row for page in pages for row in page];pr=json.loads((p/'pr.json').read_text());repo='/Users/chiburashka/.codex/worktrees/4806/site';head='9d180c9f1a2f66893ccd6d73fcda106cb3894674';base='f803d2543ad81343b22d49326b8b46d0e2ea03a0'
+print(json.dumps({'prKeys':list(pr),'fileRows':len(files)}))
+assert pr['headRefOid']==head and pr['baseRefOid']==base and pr['isDraft'] and pr['state']=='OPEN'
+actual=subprocess.check_output(['git','-C',repo,'diff','--name-status','--no-renames',base,head]).decode().splitlines();mapping={r.split('\t',1)[1]:r.split('\t',1)[0] for r in actual}
+assert sorted(mapping)==sorted(r['filename'] for r in files)
+rows=[]
+for r in files:
+ path=r['filename'];status={'A':'added','M':'modified','D':'removed'}[mapping[path]];assert r['status']==status
+ if status=='removed':ref=base
+ else:ref=head
+ b=subprocess.check_output(['git','-C',repo,'show',ref+':'+path]);blob=hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest();assert blob==r['sha']
+ rows.append(dict(path=path,status=status,gitBlob=blob,bytes=len(b),sha256=hashlib.sha256(b).hexdigest()))
+nonDocs=[r['path'] for r in rows if not r['path'].startswith('docs/')];assert len(rows)==534 and len(nonDocs)==18
+f=json.loads((root/'freeze2-identity.json').read_text());assert set(nonDocs)==set(f['files'])|{'.github/workflows/site-check.yml','.github/phase1-scope-allowance.json'}
+result=dict(base=base,head=head,pullRequest=pr['url'],title=pr['title'],paths=len(rows),nonDocumentationPaths=nonDocs,documentationPaths=len(rows)-len(nonDocs),allStatusesAndComputedBlobIdentitiesMatch=True,records=rows,qualification='Independent recomputation against immutable Git contents using the integrator\'s preserved actual paginated GitHub API response. No duplicate remote request or independent pagination transport claim. Preview source snapshot separately matches all 16 frozen product files.')
+(p/'audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='records'}))

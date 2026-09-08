@@ -1,0 +1,44 @@
+{
+  "en": {
+    "moonPhaseAtBirth": "Moon phase at birth",
+    "referenceLocalCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+    "utcTimeCaption": "The time is read as universal time — add a birthplace to convert your local clock.",
+    "referenceUtcCaption": "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment.",
+    "moonPhaseAtReference": "Moon phase at reference time"
+  },
+  "es": {
+    "moonPhaseAtBirth": "Fase lunar al nacer",
+    "referenceLocalCaption": "Resultado de referencia para esta fecha local. El signo y la fase de la Luna pueden ser distintos en otros momentos del día. Añade una hora de nacimiento para calcular un momento concreto.",
+    "utcTimeCaption": "La hora se lee como tiempo universal — agrega un lugar para convertir tu hora local.",
+    "referenceUtcCaption": "Resultado de referencia para esta fecha UTC. El signo y la fase de la Luna pueden ser distintos en otros momentos del día. Añade una hora y un lugar para calcular un momento local.",
+    "moonPhaseAtReference": "Fase lunar en el momento de referencia"
+  },
+  "fr": {
+    "moonPhaseAtBirth": "Phase de la Lune à la naissance",
+    "referenceLocalCaption": "Résultat de référence pour cette date locale. Le signe et la phase de la Lune peuvent être différents à d’autres moments de la journée. Ajoute une heure de naissance pour calculer un instant précis.",
+    "utcTimeCaption": "L’heure est lue en temps universel — ajoute un lieu de naissance pour convertir ton heure locale.",
+    "referenceUtcCaption": "Résultat de référence pour cette date UTC. Le signe et la phase de la Lune peuvent être différents à d’autres moments de la journée. Ajoute une heure et un lieu pour calculer un instant local.",
+    "moonPhaseAtReference": "Phase lunaire à l’instant de référence"
+  },
+  "it": {
+    "moonPhaseAtBirth": "Fase lunare alla nascita",
+    "referenceLocalCaption": "Risultato di riferimento per questa data locale. Il segno e la fase della Luna possono essere diversi in altri momenti della giornata. Aggiungi un’ora di nascita per calcolare un momento specifico.",
+    "utcTimeCaption": "L’ora è letta come tempo universale — aggiungi il luogo di nascita per convertire l’ora locale.",
+    "referenceUtcCaption": "Risultato di riferimento per questa data UTC. Il segno e la fase della Luna possono essere diversi in altri momenti della giornata. Aggiungi un’ora e un luogo per calcolare un momento locale.",
+    "moonPhaseAtReference": "Fase lunare al momento di riferimento"
+  },
+  "pt": {
+    "moonPhaseAtBirth": "Fase da Lua no nascimento",
+    "referenceLocalCaption": "Resultado de referência para esta data local. O signo e a fase da Lua podem ser diferentes em outros momentos do dia. Adicione uma hora de nascimento para calcular um momento específico.",
+    "utcTimeCaption": "A hora é interpretada como horário universal — adicione um local de nascimento para converter seu horário local.",
+    "referenceUtcCaption": "Resultado de referência para esta data UTC. O signo e a fase da Lua podem ser diferentes em outros momentos do dia. Adicione uma hora e um local para calcular um momento local.",
+    "moonPhaseAtReference": "Fase da Lua no momento de referência"
+  },
+  "ru": {
+    "moonPhaseAtBirth": "Фаза Луны при рождении",
+    "referenceLocalCaption": "Опорный результат для этой местной даты. В другие моменты дня знак и фаза Луны могут отличаться. Добавьте время рождения для расчёта на конкретный момент.",
+    "utcTimeCaption": "Время читается как всемирное — добавьте место рождения, чтобы пересчитать ваши часы.",
+    "referenceUtcCaption": "Опорный результат для этой даты по UTC. В другие моменты дня знак и фаза Луны могут отличаться. Добавьте время и место для расчёта на местный момент.",
+    "moonPhaseAtReference": "Фаза Луны на опорный момент"
+  }
+}

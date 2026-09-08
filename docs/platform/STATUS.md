@@ -12,14 +12,55 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Current implementation — unknown-time chart confidence
+## Current work — reference-caption follow-up
+
+Root's `codex/platform-reference-captions` branch starts from delivered C-015
+source`9d180c9f1a2f66893ccd6d73fcda106cb3894674`. Author and independent
+preparation are verified; Decision C-016 selects the23-source current-result
+scope. Root verifies and applies exact Freeze1:23 product/copy files and10 scoped
+tests, with the generated additions manifest refreshed through its unchanged
+generator. Normal build/check and all5,091 tests in420 files pass; all24 actual
+six-language page groups pass and18 fresh approved captures are byte-identical
+to9d180c9f. Root native caption/date/Moon-ownership gates pass34/35/20 groups.
+Final sharing and independent numerical/caller, consumer/image/copy/privacy and
+separate metadata reviews now pass. The exact-base guard covers13 protected paths;
+136 affected metadata/workflow/generator tests pass after integration. The candidate
+is locally verified and ready for isolated draft delivery; hosted/human release
+gates remain separate. Shared captions remain truthful for
+clockless positions imports as well as local references shifted by a timezone
+gap; Moon phase and sign must not be asserted invariant across a date from samples.
+[Scope/options and exact evidence](evidence/reference-captions/README.md) retain
+Khartoum's actual13:00 reference and valid clockless/non-noon positions controls.
+Numerical/receipt/wire changes are excluded. Root owns the generated translation
+manifest, shared metadata and integration. [Frozen author evidence](evidence/reference-captions/author-freeze1/REVIEW.md.log)
+retains initial failures and distinguishes its affected tests from root's complete
+fresh-build acceptance. Freeze identity:c055e55985284904cb82e39fa1eca53a035aa337a3a49a752240fcd5c7d21644.
+
+The independent normal-page and sharing evidence audits also accept the recorded
+gates. Their explicit corrigendum separates the old/new sharing-image mismatch
+from the old sample's provenance: its cause is not established. Original sealed
+evidence remains unchanged. Delivery proceeds in a fresh isolated temporary clone
+at exact9d180c9f because the shared checkout's dataless Git object index stalls
+read-only object access. Verified final files are transferred without touching
+shared Git metadata or concurrent work. The local branch at831bc9e remains intact;
+the draft carrier will have the same accepted source bytes and exact C015 parent.
+
+## Delivered candidate — unknown-time chart confidence
 
 Root's `codex/platform-reference-confidence` branch starts at delivered C-014
 source `f803d2543ad81343b22d49326b8b46d0e2ea03a0`. Root has verified and applied
 the exact 16-file C-015 Freeze2 candidate for local acceptance. Independent
 consumer and preservation reviews accept the exact source, and root local gates
-pass. This candidate is ready for isolated draft delivery, with hosted and human
-review gates still separate. Two executed historical counterexamples show that endpoint
+pass. Draft [#437](https://github.com/ZodiacsOfficial/site/pull/437) is delivered at
+`9d180c9f1a2f66893ccd6d73fcda106cb3894674`, abovef803d254. All534 actual PR paths,
+statuses and blob identities match:18 non-documentation and516 documentation
+paths. Site Check34225181572 completes successfully with all14 jobs passing.
+The exact-source READY preview passes eight distinct groups across two
+executions, with16 native receipt downloads verified. The first two English
+selector failures and four unavailable image bodies remain explicit; all observed
+JS/city payloads are retained. [Preview review](evidence/reference-confidence/preview/REVIEW.md)
+and its separate evidence audit accept this bounded scope.
+Hosted and human review gates remain separate. Two historical counterexamples show that endpoint
 samples can miss actual Moon signs within the selected date. The accepted policy
 preserves the admitted reference chart, numerical values and portable receipt,
 withholds verified unknown-time Moon candidates, and conservatively disables the
@@ -476,3 +517,5 @@ Void design, persona, Registry identities, native apps and immutable artifacts
 remain protected. The preceding session's temporary files were lost; surviving
 raw records are durable, and unarchived carried results are explicitly qualified.
 No background execution after this session is implied.
+
+[Isolated delivery proof](evidence/reference-captions/delivery-carrier/README.md).

@@ -1,0 +1,14 @@
+{
+  "records": [
+    {
+      "path": "README.md",
+      "bytes": 282,
+      "sha256": "56aa9d4831556c87662a24119878b83243fe75150e2897938a61c7b8cb36ef69"
+    },
+    {
+      "path": "ci.json",
+      "bytes": 28763,
+      "sha256": "503fd3f70b5dddb8ce9c12f88c20f12d5fe6cb29a41e6543246aa81ac0f8689f"
+    }
+  ]
+}

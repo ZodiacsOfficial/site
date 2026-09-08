@@ -1,0 +1,745 @@
+{
+  "sourcePackageManifestSha256": "f2219750f04a88c1b69c05b1c59b0c4dd44a0cab30f43b07aebf33b94a451273",
+  "checks": [
+    {
+      "name": "24 unique complete locale/mode/width groups",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Single actual passing execution and per-group records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "46 before/after exact source records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes .github/phase1-scope-allowance.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes .github/workflows/site-check.yml",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes i18n-additions.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes package-lock.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes package.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes scripts/build-i18n-additions.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes scripts/phase1-scope-guard.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/islands/BirthFields.tsx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/islands/ChartCalculator.registry-bridge.test.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/islands/ChartCalculator.tsx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/islands/MoonPhaseTool.reference.test.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/islands/MoonPhaseTool.tsx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/islands/PlaceSearch.tsx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/islands/explorer/lens/copy.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/islands/explorer/tour/copy.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/engine/full.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/engine/lite.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/geo/search.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/i18n/ui/client.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/i18n/ui/en.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/i18n/ui/es.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/i18n/ui/fr.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/i18n/ui/it.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/i18n/ui/pt.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/i18n/ui/ru.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/i18n/ui/server.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/moon-certainty.test.tsx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/reference-captions.test.tsx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/share-card-copy.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/share-card.test.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/share-card.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/share-positions.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/lib/time/localToUtc.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/pages/es/moon-phase/index.astro",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/pages/fr/moon-phase/index.astro",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/pages/it/moon-phase/index.astro",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/pages/moon-phase/index.astro",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/pages/pt/moon-phase/index.astro",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/pages/ru/moon-phase/index.astro",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/server/chart-preview-model.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/server/chart-preview.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/strings/additions.fr.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/strings/additions.it.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes src/strings/additions.pt.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes tests/api/og-chart.test.ts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes tests/local-date-reference-drive.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes tests/moon-result-ownership-drive.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes tests/reference-caption-drive.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes tests/t17-positions-share.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes tests/visual/browser.mjs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final source bytes vendor/zodiacs-engine-0.1.1-rc.6.tgz",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "All46 measured sources preserved in final51",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final root33 match independently accepted immutable author freeze",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Executed driver exact hash and one preflight method fix",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No actual original-method driver execution claimed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "en-tool-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "en-tool-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "en-tool-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "en-tool-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "en-moon-mode-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "en-moon-mode-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "en-moon-mode-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "en-moon-mode-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "es-tool-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "es-tool-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "es-tool-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "es-tool-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "es-moon-mode-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "es-moon-mode-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "es-moon-mode-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "es-moon-mode-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fr-tool-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fr-tool-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fr-tool-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fr-tool-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fr-moon-mode-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fr-moon-mode-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fr-moon-mode-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fr-moon-mode-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "it-tool-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "it-tool-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "it-tool-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "it-tool-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "it-moon-mode-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "it-moon-mode-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "it-moon-mode-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "it-moon-mode-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pt-tool-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pt-tool-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pt-tool-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pt-tool-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pt-moon-mode-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pt-moon-mode-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pt-moon-mode-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pt-moon-mode-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ru-tool-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ru-tool-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ru-tool-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ru-tool-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ru-moon-mode-1280 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ru-moon-mode-1280 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ru-moon-mode-390 observed clean state domain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ru-moon-mode-390 page/console errors absent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "48 exact screenshot records and PNG dimensions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "104 distinct served bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Unique actual served Khartoum choice",
+      "passed": true,
+      "detail": {
+        "name": "Khartoum",
+        "zone": "Africa/Khartoum",
+        "chip": "Khartoum · Khartoum, Sudan"
+      }
+    },
+    {
+      "name": "1586 actual observed local GET requests",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Browser and server request multisets agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Any request failures explicitly classified",
+      "passed": true,
+      "detail": {
+        "recordedFailures": 0
+      }
+    },
+    {
+      "name": "Native result focus observations are headings",
+      "passed": true,
+      "detail": {
+        "H2": 84
+      }
+    },
+    {
+      "name": "Owned cleanup recorded",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "flowGroups": [
+    {
+      "group": "en-tool-1280",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "en-tool-390",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "en-moon-mode-1280",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "en-moon-mode-390",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "es-tool-1280",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "es-tool-390",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "es-moon-mode-1280",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "es-moon-mode-390",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "fr-tool-1280",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "fr-tool-390",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "fr-moon-mode-1280",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "fr-moon-mode-390",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "it-tool-1280",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "it-tool-390",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "it-moon-mode-1280",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "it-moon-mode-390",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "pt-tool-1280",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "pt-tool-390",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "pt-moon-mode-1280",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "pt-moon-mode-390",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "ru-tool-1280",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "ru-tool-390",
+      "localReferenceMatchesKnown1300Display": true,
+      "knownUTCNoticeVisible": true,
+      "knownLocalCaptionEmpty": true,
+      "clockAndPlaceEditsClear": true
+    },
+    {
+      "group": "ru-moon-mode-1280",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    },
+    {
+      "group": "ru-moon-mode-390",
+      "unknownReferenceLabelAndKnownBirthLabel": true,
+      "phaseDisplaySuffixExact": true
+    }
+  ],
+  "normalGroupCount": 24,
+  "screenshotsVerified": 48,
+  "servedFilesVerified": 104,
+  "sourceBeforeAfter": 46,
+  "finalSourcesVerified": 51,
+  "browserAndServerRequests": 1586,
+  "resultFocusObservations": {
+    "H2": 84
+  },
+  "preflightCorrectionOnly": true,
+  "method": "Read and independently reconcile sealed driver/results/source/catalog literals/raw PNG hashes and served bytes; no browser rerun or numerical recomputation.",
+  "limits": [
+    "Observed display equality at Khartoum is not a numerical oracle or whole-date proof.",
+    "Focus is read from recorded snapshots, not an independent accessibility test.",
+    "Configured blocking and observed zero attempted external/API/nonGET requests apply to these fresh anonymous measured flows only."
+  ]
+}

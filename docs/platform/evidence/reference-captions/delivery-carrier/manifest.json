@@ -1,0 +1,39 @@
+{
+  "records": [
+    {
+      "path": "README.md",
+      "bytes": 1882,
+      "sha256": "9d43bb3d89ea0c98ae3174de9d1e335b78bb4e8fc0cda3960e1f5f14d72b214c"
+    },
+    {
+      "path": "delivery-clone.log",
+      "bytes": 75,
+      "sha256": "00e02b17db8822f1ef9759f49ef5dd922d7e90b5e29f0c3f2c9047d2dd4a8d7a"
+    },
+    {
+      "path": "delivery-copy-records.json.gz",
+      "bytes": 656434,
+      "sha256": "1f64f3b2fb079241b83fe706e477f268dc4a67b88759c5401c362524fab1c25a"
+    },
+    {
+      "path": "delivery-scope-initial.json",
+      "bytes": 101083,
+      "sha256": "b5527acde5de6cde1183d14612d64f3a9be730e4a72e219224fdf7879a2ae85f"
+    },
+    {
+      "path": "delivery-whitespace.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-read-cancellation.json",
+      "bytes": 611,
+      "sha256": "e4a5e209bc98b2cf1275475980ae91e70ee3106be0c899707cf1c7e7d3f31ea3"
+    },
+    {
+      "path": "git-read-diagnostic.json",
+      "bytes": 552,
+      "sha256": "4d272bc6e3e5a233bee7b6a3ff185a442fe058944ad3ca26ec7c954097a79c23"
+    }
+  ]
+}

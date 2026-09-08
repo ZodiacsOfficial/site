@@ -1,0 +1,11 @@
+{
+  "source": "src/lib/share-card.ts",
+  "baselineCommit": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "baselineSha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+  "candidateSha256": "d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c",
+  "entireModuleReconstructedFromOnlyThreeFrozenNoTimeTextCommentChanges": true,
+  "priorC015RunZoomEvidence": null,
+  "priorC015RunLogSha256": "76a234688c57358de502fd5a42a710a7cdf27cd707a91eb59a7c0305ae377119",
+  "trackedSampleLastChange": "84a775d3b0bac6834971911867aef9f05bce4fe3 2026-08-20T19:32:20+07:00 Activate the private chart sharing loop",
+  "qualification": "The trackedAug20 sample is not a fresh9d18 normal-build baseline. Candidate actual download succeeds. No exact normal-image comparison claim; paired known-time PNG equality belongs to separate author native baseline/candidate execution. Generated tracked sample was archived then restored to exact9d18."
+}

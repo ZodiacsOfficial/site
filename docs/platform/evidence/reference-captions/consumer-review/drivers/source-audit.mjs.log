@@ -1,0 +1,54 @@
+import ts from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/typescript/lib/typescript.js';
+import {readFileSync,writeFileSync,readdirSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+const root=new URL('./',import.meta.url).pathname;
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const read=(v,p)=>readFileSync(root+v+'/'+p,'utf8');
+const checks=[],copy=[];
+function check(name,fn){fn();checks.push({name,passed:true});}
+function propertyMask(s,keys){
+ const f=ts.createSourceFile('source.ts',s,ts.ScriptTarget.Latest,true); const found=[];
+ function visit(n){if(ts.isPropertyAssignment(n)&&keys.includes(n.name.text)){let parent=n.parent;let locale;while(parent){if(ts.isPropertyAssignment(parent)&&['en','es','fr','it','pt','ru'].includes(parent.name.text)){locale=parent.name.text;break;}if(ts.isVariableDeclaration(parent)&&parent.name.getText(f)==='SHARE_CARD_EN'){locale='en';break;}parent=parent.parent;}found.push({key:n.name.text,locale,start:n.getStart(f),end:n.end,text:n.getText(f),value:n.initializer.text,line:f.getLineAndCharacterOfPosition(n.getStart(f)).line+1});}ts.forEachChild(n,visit);} visit(f);
+ let masked=s;for(const p of [...found].reverse())masked=masked.slice(0,p.start)+'__ALLOWED_COPY__'+masked.slice(p.end);
+ return {masked,found};
+}
+function props(path,beforeKeys,afterKeys,count){
+ const a=propertyMask(read('baseline',path),beforeKeys),b=propertyMask(read('candidate',path),afterKeys);
+ check('Only approved copy properties: '+path,()=>{assert.equal(a.found.length,count);assert.equal(b.found.length,count);assert.equal(a.masked,b.masked)});
+ copy.push({path,baseline:a.found,candidate:b.found});return b.found;
+}
+function replacements(path,changes){let s=read('candidate',path);check('Exact literal-only source reconstruction: '+path,()=>{for(const [old,newer]of changes){assert.equal(s.split(newer).length-1,1);s=s.replace(newer,old)}assert.equal(s,read('baseline',path))});}
+replacements('src/server/chart-preview-model.ts', [['12:00 reference / No houses / Tropical','Reference positions / No houses / Tropical']]);
+replacements('src/server/chart-preview.ts',[['Sun and 12:00 reference Moon positions — birth details not included.','Reference Sun and Moon positions — birth details not included.']]);
+replacements('src/lib/share-card.ts',[
+ ["True when displayed positions use the calculator's 12:00 no-time reference.",'True when displayed positions are a reference without a supplied birth time.'],
+ ["'12:00 reference · '","'Reference positions · '"],
+ ['${details.date} · Birth time unknown · 12:00 local reference','${details.date} · Birth time unknown · Reference positions']]);
+const locales=['en','es','fr','it','pt','ru'];
+const beforeKeys=['chartTimeHelp','noTimeNotice','placeHelpMoon','middayLocalCaption','middayUtcCaption','moonChangedNotice'];
+const afterKeys=['chartTimeHelp','noTimeNotice','placeHelpMoon','referenceLocalCaption','referenceUtcCaption','moonPhaseAtReference'];
+for(const l of locales)props('src/lib/i18n/ui/'+l+'.ts',beforeKeys,afterKeys,6);
+const share=props('src/lib/share-card-copy.ts',['referenceTimeNote'],['referenceTimeNote'],6);
+props('src/islands/explorer/lens/copy.ts',['noTimeNote'],['noTimeNote'],6);
+props('src/islands/explorer/tour/copy.ts',['no-housesBody1'],['no-housesBody1'],6);
+for(const l of ['fr','it','pt']){
+ const canonical=props('src/strings/additions.'+l+'.mjs',['shareCard.referenceTimeNote'],['shareCard.referenceTimeNote'],1);
+ check('Canonical counterpart exact '+l,()=>assert.equal(canonical[0].value,share.find(p=>p.locale===l).value));
+}
+for(const l of locales){
+ const path='src/pages/'+(l==='en'?'':l+'/')+'moon-phase/index.astro';
+ let a=read('baseline',path),b=read('candidate',path);
+ function faq(s){const end=s.indexOf('---',3),front=s.slice(3,end),f=ts.createSourceFile('front.ts',front,ts.ScriptTarget.Latest,true);let arr;function visit(n){if(ts.isVariableDeclaration(n)&&n.name.getText(f)==='faq')arr=n.initializer;ts.forEachChild(n,visit)}visit(f);assert(ts.isArrayLiteralExpression(arr));const second=arr.elements[1];assert(ts.isObjectLiteralExpression(second));const p=second.properties.find(p=>p.name?.text==='a');assert(p&&ts.isStringLiteral(p.initializer));return {start:3+p.initializer.getStart(f),end:3+p.initializer.end,value:p.initializer.text,line:f.getLineAndCharacterOfPosition(p.initializer.getStart(f)).line+2};}
+ const old=faq(a),newer=faq(b);copy.push({path,baseline:[old],candidate:[newer]});
+ a=a.slice(0,old.start)+'__FAQ_ANSWER__'+a.slice(old.end);b=b.slice(0,newer.start)+'__FAQ_ANSWER__'+b.slice(newer.end);
+ if(l==='en')b=b.replace('        The Moon runs its full cycle in about 29.5 days, but its phase can\n        change within a date. Without a birth time, the result describes a\n        reference moment. Astrologers treat','        The Moon runs its full cycle in about 29.5 days, so a birth date pins\n        the phase precisely even when the time is long lost. Astrologers treat');
+ check('Only second FAQ answer'+(l==='en'?' and scoped paragraph':'')+': '+path,()=>assert.equal(a,b));
+}
+const retired=[];function walk(dir){for(const d of readdirSync(dir,{withFileTypes:true})){const p=dir+'/'+d.name;if(d.isDirectory())walk(p);else if(/\.(tsx?|astro|mjs)$/.test(d.name)&&!d.name.includes('.test.')){const text=readFileSync(p,'utf8');for(const key of ['middayLocalCaption','middayUtcCaption','moonChangedNotice'])if(text.includes(key))retired.push({path:p,key});}}}walk(root+'candidate/src');
+check('Retired UI keys have zero runtime source references',()=>assert.deepEqual(retired,[]));
+const identity=JSON.parse(readFileSync(root+'freeze1-identity.json'));
+const frozen=Object.entries(identity.files).map(([path,id])=>{const b=readFileSync(root+'candidate/'+path);assert.equal(sha(b),id.sha256);assert.equal(b.length,id.bytes);return {path,...id};});
+check('All 33 frozen files still exact after consumer execution',()=>assert.equal(frozen.length,33));
+writeFileSync(root+'source-audit-result.json',JSON.stringify({checks,copy,frozen,retired},null,2)+'\n');
+console.log(JSON.stringify({passed:checks.length,copyFiles:copy.length,frozen:frozen.length}));
