@@ -12,10 +12,31 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Current implementation — birth-chart result ownership
+## Current implementation — unknown-time local-date reference
 
-Root is on `codex/platform-chart-result-ownership`, above support source
-`abcf1a44e52040db79a369b49bc9b55d78099b22`. The exact corrected four-file
+The prepared `codex/platform-local-date-reference` branch starts from delivered
+chart source `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`. Root has temporarily
+returned to `codex/platform-chart-result-ownership` to integrate the CI-discovered
+downstream correction before resuming that date branch. Decision C-014 requires
+the chosen unknown-time reference to belong to the requested local date before
+numerical, receipt or endpoint work. It applies to the birth chart and selected-
+city Moon lookup. Failure asks the user to check the date and place; it does not
+claim that the date is empty. Known-time gap handling and no-city UTC Moon remain
+unchanged. No native Temporal requirement or alternate reference is introduced.
+
+[Preparation](evidence/local-date-reference/preparation/REVIEW.md),
+[real-date controls](evidence/local-date-reference/real-date-controls/REVIEW.md)
+and the [synthetic nonempty-date refusal](evidence/local-date-reference/synthetic-refusal/README.md)
+are byte-verified and retained. The 12-file author freeze is implemented in its
+isolated scratch and undergoing independent review; it is not integrated here.
+The separate C-012 downstream-context finding below also requires correction.
+
+## Delivered candidate — birth-chart result ownership
+
+Draft [#434](https://github.com/ZodiacsOfficial/site/pull/434) is delivered at
+`c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`, above support source
+`abcf1a44e52040db79a369b49bc9b55d78099b22`. All 199 actual paths and blob
+identities match the exact head/base comparison. The corrected four-file
 ChartCalculator freeze and separately reviewed four-line CI step are integrated.
 The first freeze was rejected for three demonstrated races; those originals remain
 retained. The corrected patch prevents obsolete calculations, shares, contexts,
@@ -36,7 +57,20 @@ has one scored pixel at the unchanged threshold, within the existing budget.
 A fresh repeat reproduces that candidate exactly. Original failures, raw pixels,
 measured difference and limits are retained, with no baseline/mask/tolerance change.
 [Exact root identities and acceptance](evidence/chart-result-ownership/root-source-identity.json).
-Draft delivery and hosted verification are next; no production claim.
+The exact-source READY preview `dpl_2Z94CZozTG7aXCNiEEbCLz2GR27t` passes nine
+actual remote groups: EN/RU desktop/mobile, receipts, edit/recovery, a labeled
+serialization fault, delayed loaders/replacement and positions-only import.
+Native call counts come from the actual served chunk; this is not a remote
+rerun of every local race. Protected-preview bootstrap is separately qualified.
+The sealed preview evidence is being checked for durable archival.
+
+Site Check 34209606308 has twelve successful jobs, Build & Check in progress,
+and a failed post-chart job (1/291 assertions). The failing legacy assertion
+expects the old context to survive an edit. Inspection also finds that the
+optional daily panel caches that cleared context and remains visible. A bounded
+clear-signal/listener correction and stronger browser assertions are being
+prepared separately; this candidate is not yet fully CI-accepted or release-ready.
+No production claim.
 
 ## Delivered candidate — current runtime support evidence
 
@@ -50,7 +84,7 @@ verifies recorded execution and current-carrier links without claiming another
 browser run. Authentication bootstrap and the separate APIRequestContext request
 are outside the browser observer. The original literal-marker scan failure and
 passing credential-like scan are retained; temporary access was removed.
-Site Check 34206194928 has 13 successful jobs and its Build & Check job in progress.
+Site Check 34206194928 passes all 14 jobs at that exact source.
 No publication, production deployment or external adoption is claimed.
 
 ## Delivered candidate — Moon result ownership

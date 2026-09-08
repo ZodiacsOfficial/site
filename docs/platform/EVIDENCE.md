@@ -2024,3 +2024,47 @@ Registry-only paths; root leaves them untouched and does not claim latest-main
 integration. READY productiondpl_gBmYzHCpqwMCCH36DAToDMjRQ21g is source79410401,
 from scheduled upstream publication, not this platform candidate. No publication
 or production tool was invoked by root.
+
+## Unknown-time local-date reference preparation — 2026-09-08
+
+Root chooses Decision C-014's validated local-date witness over requiring native
+Temporal for every ordinary unknown-time calculation. The [main preparation](evidence/local-date-reference/preparation/REVIEW.md)
+is retained under the 41-record root manifest
+`6537d342374ccc8836c37399759d4806b4ef6b818a5f4272a69bf418d0e6fc46`.
+It executes 12 date controls and 28 additional calendar/seconds/identifier/input
+controls on each Node 22/24. Modeled orchestration counters are not relabeled
+instrumented native natal calls. The private formatter's undefined-zone fallback
+is a proposed-helper pitfall; the existing public resolver already validates it.
+
+The [independent real-date controls](evidence/local-date-reference/real-date-controls/REVIEW.md)
+have 23 root records, manifest
+`2540bcd86d35516a43ad5a13adc53a41828c7d1a7e231a98d0dd1c18973d49fe`.
+All 17 Node/native cases retain their actual runtime capability distinction:
+Node 22 has no native interval provider and returns unresolved, while Chrome
+identifies four empty dates (Apia, Kwajalein, Kiritimati and Guam). Five positive
+noon witnesses preserve endpoint defects in Toronto, St Johns and Juneau.
+Repeated Apia's 48 hours and Kwajalein's 47 hours are not mislabeled as newly
+demonstrated endpoint defects. No nonempty/wrong-noon real case was found in
+these 17 controls; that finite result is not an impossibility proof.
+
+The [synthetic addendum](evidence/local-date-reference/synthetic-refusal/README.md)
+has nine root records, manifest
+`5273b3fbefdd08b3da4ed5fe7ecff6dc34d69535c25196f0ea3faaa03d0c7778`.
+An explicitly complete UTC+00 to UTC+15 model yields nine hours of Jan 1 while
+the unchanged resolver selects Jan 2 03:00. Actual copied resolver and interval
+code execute that model; this is not a claimed IANA-zone event. Refusal of that
+nonempty date is an accepted conservative limitation, not proof of emptiness.
+
+[Author Freeze 1](evidence/local-date-reference/author-freeze1/AUTHOR.md.log)
+is sealed against source `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`, with
+12-file patch `41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e`
+and source manifest `328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2`.
+Root verified all seven payloads and 135 compressed members under delivery
+manifest `eacb17c424d3dc5ad8150a207d5f4a82e49cd927ef2ff1b32bec52c43e4d423a`.
+Author 234 scoped tests pass on each Node 22/24, strict types pass, and actual
+Chrome passes 35 new caller groups plus the existing 20 Moon ownership groups.
+All eight original skipped-date caller results, ten same-browser positive
+comparisons and original setup/selector/type failures remain available. The
+fixture is an instrumented actual-component/native-engine execution, not a
+production graph or approved-design gate. Independent review and root integration
+are pending; the separate downstream daily-panel clear-signal finding is open.

@@ -1,0 +1,484 @@
+{
+  "at": "2026-09-08T09:04:02.155Z",
+  "node": "v22.23.2",
+  "icu": "78.2",
+  "tz": "2026a",
+  "nativeTemporalAvailable": false,
+  "method": "Actual current resolver/private Gregorian wall formatter, interval API, chart adapter and receipt module. Candidate guard exists only in this probe as a reference-date predicate before numerical calls; no product source implementation or rendered caller claim.",
+  "rows": [
+    {
+      "date": "2011-12-30",
+      "zone": "Pacific/Apia",
+      "reference": "local-noon",
+      "resolvedUtc": "2011-12-30T22:00:00.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "offsetMinutes": 840,
+      "witness": {
+        "status": "different-date",
+        "actualDate": "2011-12-31"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "2011-12-30T22:00:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 0,
+        "moonReferenceCalls": 0,
+        "receiptCreated": false,
+        "outputParity": null
+      },
+      "legacyEndpoints": {
+        "start": "2011-12-30T10:00:00.000Z",
+        "end": "2011-12-30T09:59:59.999Z",
+        "durationMs": 0
+      }
+    },
+    {
+      "date": "1993-08-21",
+      "zone": "Pacific/Kwajalein",
+      "reference": "local-noon",
+      "resolvedUtc": "1993-08-22T00:00:00.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "offsetMinutes": 720,
+      "witness": {
+        "status": "different-date",
+        "actualDate": "1993-08-22"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "1993-08-22T00:00:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 0,
+        "moonReferenceCalls": 0,
+        "receiptCreated": false,
+        "outputParity": null
+      },
+      "legacyEndpoints": {
+        "start": "1993-08-21T12:00:00.000Z",
+        "end": "1993-08-21T11:59:59.999Z",
+        "durationMs": 0
+      }
+    },
+    {
+      "date": "1892-07-04",
+      "zone": "Pacific/Apia",
+      "reference": "local-noon",
+      "resolvedUtc": "1892-07-03T23:26:56.000Z",
+      "flags": [
+        "dst-fold",
+        "lmt"
+      ],
+      "offsetMinutes": 753.0666666666667,
+      "witness": {
+        "status": "witness",
+        "actualDate": "1892-07-04"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "1892-07-03T23:26:56.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": true,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "1892-07-03T11:26:56.000Z",
+        "end": "1892-07-05T11:26:55.999Z",
+        "durationMs": 172800000
+      }
+    },
+    {
+      "date": "2009-10-31",
+      "zone": "America/St_Johns",
+      "reference": "local-noon",
+      "resolvedUtc": "2009-10-31T14:30:00.000Z",
+      "flags": [],
+      "offsetMinutes": -150,
+      "witness": {
+        "status": "witness",
+        "actualDate": "2009-10-31"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "2009-10-31T14:30:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": true,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "2009-10-31T02:30:00.000Z",
+        "end": "2009-11-01T02:29:59.999Z",
+        "durationMs": 86400000
+      }
+    },
+    {
+      "date": "1919-03-31",
+      "zone": "America/Toronto",
+      "reference": "local-noon",
+      "resolvedUtc": "1919-03-31T16:00:00.000Z",
+      "flags": [],
+      "offsetMinutes": -240,
+      "witness": {
+        "status": "witness",
+        "actualDate": "1919-03-31"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "1919-03-31T16:00:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": true,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "1919-03-31T05:00:00.000Z",
+        "end": "1919-04-01T03:59:59.999Z",
+        "durationMs": 82800000
+      }
+    },
+    {
+      "date": "2026-03-08",
+      "zone": "America/New_York",
+      "reference": "local-noon",
+      "resolvedUtc": "2026-03-08T16:00:00.000Z",
+      "flags": [],
+      "offsetMinutes": -240,
+      "witness": {
+        "status": "witness",
+        "actualDate": "2026-03-08"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "2026-03-08T16:00:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": true,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "2026-03-08T05:00:00.000Z",
+        "end": "2026-03-09T03:59:59.999Z",
+        "durationMs": 82800000
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "zone": "America/New_York",
+      "reference": "local-noon",
+      "resolvedUtc": "2026-11-01T17:00:00.000Z",
+      "flags": [],
+      "offsetMinutes": -300,
+      "witness": {
+        "status": "witness",
+        "actualDate": "2026-11-01"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "2026-11-01T17:00:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": true,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "2026-11-01T04:00:00.000Z",
+        "end": "2026-11-02T04:59:59.999Z",
+        "durationMs": 90000000
+      }
+    },
+    {
+      "date": "1986-01-01",
+      "zone": "Asia/Kathmandu",
+      "reference": "local-noon",
+      "resolvedUtc": "1986-01-01T06:15:00.000Z",
+      "flags": [],
+      "offsetMinutes": 345,
+      "witness": {
+        "status": "witness",
+        "actualDate": "1986-01-01"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "1986-01-01T06:15:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": true,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "1985-12-31T18:30:00.000Z",
+        "end": "1986-01-01T18:14:59.999Z",
+        "durationMs": 85500000
+      }
+    },
+    {
+      "date": "1914-01-01",
+      "zone": "America/Manaus",
+      "reference": "local-noon",
+      "resolvedUtc": "1914-01-01T16:00:00.000Z",
+      "flags": [],
+      "offsetMinutes": -240,
+      "witness": {
+        "status": "witness",
+        "actualDate": "1914-01-01"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "1914-01-01T16:00:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": true,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "1914-01-01T04:00:04.000Z",
+        "end": "1914-01-02T03:59:59.999Z",
+        "durationMs": 86396000
+      }
+    },
+    {
+      "date": "1990-01-04",
+      "zone": "Asia/Bangkok",
+      "reference": "local-noon",
+      "resolvedUtc": "1990-01-04T05:00:00.000Z",
+      "flags": [],
+      "offsetMinutes": 420,
+      "witness": {
+        "status": "witness",
+        "actualDate": "1990-01-04"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "1990-01-04T05:00:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": true,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "1990-01-03T17:00:00.000Z",
+        "end": "1990-01-04T16:59:59.999Z",
+        "durationMs": 86400000
+      }
+    },
+    {
+      "date": "1990-01-04",
+      "zone": "UTC",
+      "reference": "local-noon",
+      "resolvedUtc": "1990-01-04T12:00:00.000Z",
+      "flags": [],
+      "offsetMinutes": 0,
+      "witness": {
+        "status": "witness",
+        "actualDate": "1990-01-04"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": true,
+        "utc": "1990-01-04T12:00:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": true,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "1990-01-04T00:00:00.000Z",
+        "end": "1990-01-04T23:59:59.999Z",
+        "durationMs": 86400000
+      }
+    },
+    {
+      "date": "1990-01-04",
+      "zone": "+05:30",
+      "reference": "local-noon",
+      "resolvedUtc": "1990-01-04T06:30:00.000Z",
+      "flags": [],
+      "offsetMinutes": 330,
+      "witness": {
+        "status": "witness",
+        "actualDate": "1990-01-04"
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "baseline": {
+        "chartComputed": true,
+        "receiptCreated": false,
+        "utc": "1990-01-04T06:30:00.000Z"
+      },
+      "candidate": {
+        "chartCalls": 1,
+        "moonReferenceCalls": 2,
+        "receiptCreated": false,
+        "outputParity": true
+      },
+      "legacyEndpoints": {
+        "start": "1990-01-03T18:30:00.000Z",
+        "end": "1990-01-04T18:29:59.999Z",
+        "durationMs": 86400000
+      }
+    }
+  ],
+  "edgeYears": [
+    {
+      "date": "0000-02-29",
+      "utc": "0000-02-29T12:00:00.000Z",
+      "result": {
+        "status": "witness",
+        "actualDate": "0000-02-29"
+      },
+      "numericsExecuted": false
+    },
+    {
+      "date": "0099-12-31",
+      "utc": "0099-12-31T12:00:00.000Z",
+      "result": {
+        "status": "witness",
+        "actualDate": "0099-12-31"
+      },
+      "numericsExecuted": false
+    },
+    {
+      "date": "9999-12-31",
+      "utc": "9999-12-31T12:00:00.000Z",
+      "result": {
+        "status": "witness",
+        "actualDate": "9999-12-31"
+      },
+      "numericsExecuted": false
+    }
+  ],
+  "known": [
+    {
+      "date": "2011-12-30",
+      "time": "12:00",
+      "zone": "Pacific/Apia",
+      "utc": "2011-12-30T22:00:00.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "dateAtReference": {
+        "status": "different-date",
+        "actualDate": "2011-12-31"
+      },
+      "unknownOnlyGuardApplied": false
+    },
+    {
+      "date": "2026-03-08",
+      "time": "02:30",
+      "zone": "America/New_York",
+      "utc": "2026-03-08T07:30:00.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "dateAtReference": {
+        "status": "witness",
+        "actualDate": "2026-03-08"
+      },
+      "unknownOnlyGuardApplied": false
+    }
+  ],
+  "invalid": [
+    {
+      "date": "2026-02-30",
+      "zone": "UTC",
+      "resolverRejectedBeforeCandidate": true
+    },
+    {
+      "date": "1990-01-04",
+      "zone": "",
+      "resolverRejectedBeforeCandidate": true
+    },
+    {
+      "date": "1990-01-04",
+      "zone": "Invalid/Zone",
+      "resolverRejectedBeforeCandidate": true
+    }
+  ],
+  "limits": [
+    "witness proves at least one host-recognized instant belongs to the requested date, not the whole date or any body candidate completeness",
+    "different-date is failure of the chosen reference, not proof the requested date is empty",
+    "unresolved is formatter/provider inability, not empty",
+    "known-time resolver gap policy and positions-only imports remain separate",
+    "no date-only UTC calendar date is skipped; Moon no-city path retains UTC semantics"
+  ]
+}

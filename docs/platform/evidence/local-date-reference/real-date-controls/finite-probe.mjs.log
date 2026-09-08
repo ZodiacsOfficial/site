@@ -1,0 +1,32 @@
+export function finiteProbe(fixtures,api){
+ const iso=ms=>new Date(ms).toISOString();
+ const rows=[];
+ for(const input of fixtures){
+  const formatter=new Intl.DateTimeFormat('en-US',{timeZone:input.zone,calendar:'gregory',numberingSystem:'latn',era:'short',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',fractionalSecondDigits:3,hourCycle:'h23'});
+  function wall(ms){const parts=formatter.formatToParts(ms),p=t=>parts.find(x=>x.type===t)?.value;const y=p('era')==='BC'?1-Number(p('year')):Number(p('year'));return `${String(y).padStart(4,'0')}-${p('month')}-${p('day')}T${p('hour')}:${p('minute')}:${p('second')}.${p('fractionalSecond')}`}
+  const noon=api.resolveLocalToUtc(input.date,'12:00',input.zone),noonWall=wall(noon.utc.getTime());
+  const intervals=api.resolveLocalDateIntervals(input.date,input.zone);
+  const ends=api.localDateEndpointsUtc(input.date,input.zone);
+  const midnight=api.resolveLocalToUtc(input.date,'00:00',input.zone),lastMinute=api.resolveLocalToUtc(input.date,'23:59',input.zone);
+  const row={...input,noon:{utc:noon.utc.toISOString(),wall:noonWall,offsetMinutes:noon.offsetMinutes,flags:noon.flags,sameRequestedDate:noonWall.slice(0,10)===input.date},intervals,
+   existingEndpointHelper:{start:ends.start.toISOString(),endInclusive:ends.end.toISOString(),startWall:wall(ends.start.getTime()),endWall:wall(ends.end.getTime()),nominalMilliseconds:ends.end.getTime()+1-ends.start.getTime()},
+   independentClockProbes:{midnight:{utc:midnight.utc.toISOString(),wall:wall(midnight.utc.getTime()),flags:midnight.flags},lastMinute:{utc:lastMinute.utc.toISOString(),wall:wall(lastMinute.utc.getTime()),flags:lastMinute.flags}}};
+  if(intervals.status!=='unresolved'){
+   const ranges=intervals.intervals,start=ends.start.getTime(),end=ends.end.getTime()+1;
+   const member=t=>ranges.some(x=>t>=x.start&&t<x.endExclusive);
+   const overlap=ranges.reduce((sum,x)=>sum+Math.max(0,Math.min(end,x.endExclusive)-Math.max(start,x.start)),0);
+   const total=ranges.reduce((sum,x)=>sum+x.endExclusive-x.start,0);
+   const spanMember=t=>start<=t&&t<end;
+   const boundaries=[start,end,...ranges.flatMap(x=>[x.start,x.endExclusive])].sort((a,b)=>a-b);
+   const witnesses=boundaries.flatMap((x,i)=>[x,x-1,...(i+1<boundaries.length?[Math.floor((x+boundaries[i+1])/2)]:[])]);
+   const extra=witnesses.find(x=>spanMember(x)&&!member(x));
+   const missing=witnesses.find(x=>member(x)&&!spanMember(x));
+   const membershipPoints=[noon.utc.getTime(),...ranges.flatMap(x=>[x.start-1,x.start,x.endExclusive-1,x.endExclusive])];
+   for(const t of membershipPoints){if(member(t)!==(wall(t).slice(0,10)===input.date))throw Error('Native interval/Intl boundary mismatch '+JSON.stringify(input)+' '+iso(t))}
+   row.coverage={intervalCount:ranges.length,totalMilliseconds:total,noonInCompleteIntervals:member(noon.utc.getTime()),intervalsUtc:ranges.map(x=>({start:iso(x.start),endExclusive:iso(x.endExclusive)})),existingHelperExtraMilliseconds:Math.max(0,end-start)-overlap,existingHelperMissingMilliseconds:total-overlap,...(extra===undefined?{}:{extraWitness:{utc:iso(extra),wall:wall(extra)}}),...(missing===undefined?{}:{missingWitness:{utc:iso(missing),wall:wall(missing)}}),finiteIntlMembershipChecks:membershipPoints.length};
+  }
+  rows.push(row);
+ }
+ const summary={count:rows.length,noonDateMismatches:rows.filter(r=>!r.noon.sameRequestedDate).map(r=>({date:r.date,zone:r.zone,status:r.intervals.status,noonWall:r.noon.wall})),nonemptyNoonDateMismatches:rows.filter(r=>r.intervals.status==='existing'&&!r.noon.sameRequestedDate).map(r=>({date:r.date,zone:r.zone,noonWall:r.noon.wall})),sameDateNoonCoverageCounterexamples:rows.filter(r=>r.noon.sameRequestedDate&&r.coverage&&(r.coverage.existingHelperExtraMilliseconds>0||r.coverage.existingHelperMissingMilliseconds>0)).map(r=>({date:r.date,zone:r.zone,extraMilliseconds:r.coverage.existingHelperExtraMilliseconds,missingMilliseconds:r.coverage.existingHelperMissingMilliseconds,intervalCount:r.coverage.intervalCount})),unresolvedCount:rows.filter(r=>r.intervals.status==='unresolved').length};
+ return{rows,summary,forcedUnavailable:api.resolveLocalDateIntervals('2011-12-30','Pacific/Apia',null),qualification:'Exactly the listed17 real-zone/date inputs, host data only. A matching representative date does not certify complete civil-date coverage; unresolved is not empty. No known-time product-policy or public positions change is inferred.'};
+}

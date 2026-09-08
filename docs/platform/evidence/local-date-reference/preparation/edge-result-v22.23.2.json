@@ -1,0 +1,341 @@
+{
+  "at": "2026-09-08T09:10:47.263Z",
+  "node": "v22.23.2",
+  "icu": "78.2",
+  "tz": "2026a",
+  "method": "Actual copied resolver/parser/private era-aware wall formatter with explicit proposed wrapper model, no product changes or caller execution claim.",
+  "eras": [
+    {
+      "date": "0000-01-01",
+      "zone": "UTC",
+      "utc": "0000-01-01T00:00:00.000Z",
+      "result": {
+        "status": "witness",
+        "actualDate": "0000-01-01",
+        "wall": "0000-01-01T00:00:00.000"
+      },
+      "prior": {
+        "status": "different-date",
+        "actualDate": "-000001-12-31",
+        "wall": "-000001-12-31T23:59:59.999"
+      },
+      "astronomyExecuted": false
+    },
+    {
+      "date": "0000-02-29",
+      "zone": "UTC",
+      "utc": "0000-02-29T00:00:00.000Z",
+      "result": {
+        "status": "witness",
+        "actualDate": "0000-02-29",
+        "wall": "0000-02-29T00:00:00.000"
+      },
+      "prior": {
+        "status": "different-date",
+        "actualDate": "0000-02-28",
+        "wall": "0000-02-28T23:59:59.999"
+      },
+      "astronomyExecuted": false
+    },
+    {
+      "date": "0099-12-31",
+      "zone": "UTC",
+      "utc": "0099-12-31T00:00:00.000Z",
+      "result": {
+        "status": "witness",
+        "actualDate": "0099-12-31",
+        "wall": "0099-12-31T00:00:00.000"
+      },
+      "prior": {
+        "status": "different-date",
+        "actualDate": "0099-12-30",
+        "wall": "0099-12-30T23:59:59.999"
+      },
+      "astronomyExecuted": false
+    },
+    {
+      "date": "9999-12-31",
+      "zone": "UTC",
+      "utc": "9999-12-31T00:00:00.000Z",
+      "result": {
+        "status": "witness",
+        "actualDate": "9999-12-31",
+        "wall": "9999-12-31T00:00:00.000"
+      },
+      "prior": {
+        "status": "different-date",
+        "actualDate": "9999-12-30",
+        "wall": "9999-12-30T23:59:59.999"
+      },
+      "astronomyExecuted": false
+    },
+    {
+      "date": "0000-01-01",
+      "zone": "+23:59",
+      "utc": "-000001-12-31T00:01:00.000Z",
+      "result": {
+        "status": "witness",
+        "actualDate": "0000-01-01",
+        "wall": "0000-01-01T00:00:00.000"
+      },
+      "prior": {
+        "status": "different-date",
+        "actualDate": "-000001-12-31",
+        "wall": "-000001-12-31T23:59:59.999"
+      },
+      "astronomyExecuted": false
+    },
+    {
+      "date": "9999-12-31",
+      "zone": "-23:59",
+      "utc": "9999-12-31T23:59:00.000Z",
+      "result": {
+        "status": "witness",
+        "actualDate": "9999-12-31",
+        "wall": "9999-12-31T00:00:00.000"
+      },
+      "prior": {
+        "status": "different-date",
+        "actualDate": "9999-12-30",
+        "wall": "9999-12-30T23:59:59.999"
+      },
+      "astronomyExecuted": false
+    }
+  ],
+  "seconds": [
+    {
+      "date": "1900-01-01",
+      "zone": "America/Mexico_City",
+      "utc": "1900-01-01T06:36:36.000Z",
+      "offsetMinutes": -396.6,
+      "result": {
+        "status": "witness",
+        "actualDate": "1900-01-01",
+        "wall": "1900-01-01T00:00:00.000"
+      },
+      "before": {
+        "status": "different-date",
+        "actualDate": "1899-12-31",
+        "wall": "1899-12-31T23:59:59.999"
+      },
+      "roundedMinuteDate": "1899-12-31",
+      "roundingWouldRejectValidRepresentative": true
+    },
+    {
+      "date": "1900-01-01",
+      "zone": "America/Manaus",
+      "utc": "1900-01-01T04:00:04.000Z",
+      "offsetMinutes": -240.06666666666666,
+      "result": {
+        "status": "witness",
+        "actualDate": "1900-01-01",
+        "wall": "1900-01-01T00:00:00.000"
+      },
+      "before": {
+        "status": "different-date",
+        "actualDate": "1899-12-31",
+        "wall": "1899-12-31T23:59:59.999"
+      },
+      "roundedMinuteDate": "1900-01-01",
+      "roundingWouldRejectValidRepresentative": false
+    },
+    {
+      "date": "1900-01-01",
+      "zone": "America/Juneau",
+      "utc": "1900-01-01T08:57:41.000Z",
+      "offsetMinutes": -537.6833333333333,
+      "result": {
+        "status": "witness",
+        "actualDate": "1900-01-01",
+        "wall": "1900-01-01T00:00:00.000"
+      },
+      "before": {
+        "status": "different-date",
+        "actualDate": "1899-12-31",
+        "wall": "1899-12-31T23:59:59.999"
+      },
+      "roundedMinuteDate": "1899-12-31",
+      "roundingWouldRejectValidRepresentative": true
+    }
+  ],
+  "identifiers": [
+    {
+      "zone": "UTC",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "Etc/UTC",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "US/Eastern",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "America/New_York",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "Etc/GMT+5",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "+05:30",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "+0530",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "-00:00",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "+23:59",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "-23:59",
+      "resolver": "accepted",
+      "result": {
+        "status": "witness",
+        "actualDate": "1990-01-04",
+        "wall": "1990-01-04T12:00:00.000"
+      }
+    },
+    {
+      "zone": "+05:30:45",
+      "resolver": "rejected",
+      "result": {
+        "status": "unresolved",
+        "reason": "formatter-failed"
+      }
+    },
+    {
+      "zone": "+24:00",
+      "resolver": "rejected",
+      "result": {
+        "status": "unresolved",
+        "reason": "formatter-failed"
+      }
+    },
+    {
+      "zone": "UTC ",
+      "resolver": "rejected",
+      "result": {
+        "status": "unresolved",
+        "reason": "formatter-failed"
+      }
+    },
+    {
+      "zone": "Invalid/Zone",
+      "resolver": "rejected",
+      "result": {
+        "status": "unresolved",
+        "reason": "formatter-failed"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "date": "1990-01-04",
+      "utc": "Invalid Date",
+      "zone": "UTC",
+      "result": {
+        "status": "unresolved",
+        "reason": "invalid-input"
+      }
+    },
+    {
+      "date": "2026-02-30",
+      "utc": "2026-03-02T12:00:00.000Z",
+      "zone": "UTC",
+      "result": {
+        "status": "unresolved",
+        "reason": "invalid-input"
+      }
+    },
+    {
+      "date": "1990-01-04",
+      "utc": "1990-01-04T12:00:00.000Z",
+      "zone": "<undefined>",
+      "result": {
+        "status": "unresolved",
+        "reason": "invalid-input"
+      }
+    },
+    {
+      "date": "1990-01-04",
+      "utc": "1990-01-04T12:00:00.000Z",
+      "zone": "",
+      "result": {
+        "status": "unresolved",
+        "reason": "invalid-input"
+      }
+    },
+    {
+      "date": "1990-01-04",
+      "utc": "1990-01-04T12:00:00Z",
+      "zone": "UTC",
+      "result": {
+        "status": "unresolved",
+        "reason": "invalid-input"
+      }
+    }
+  ],
+  "rawMissingZone": {
+    "returned": "1990-01-04T19:00:00.000",
+    "machineZone": "Asia/Bangkok"
+  },
+  "limits": [
+    "Host-supported identifier behavior only; rejected identifiers are unresolved, never empty.",
+    "Boundary years are calendar-only checks; no astronomical accuracy or UI support claim.",
+    "The new callable boundary must enforce explicit zone and finite instant; private formatter alone does not."
+  ]
+}

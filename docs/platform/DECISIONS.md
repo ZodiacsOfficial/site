@@ -540,3 +540,46 @@ Two cases are byte-identical; one has one scored pixel in1440×9502 pixels
 the candidate exactly. The original stricter exact-byte assertion and the three
 pre-existing baseline-height failures remain recorded. The cause of this minor
 raster difference is not established; no all-three-byte-identity claim is made.
+
+## C-014 — Require a local-date witness for an unknown-time reference
+
+Before calculating an unknown-time birth chart, or an unknown-time Moon lookup
+with a selected city, verify that the chosen reference instant formats to the
+requested local Gregorian date under the host's timezone data. Reuse the existing
+era-aware formatter with canonical date, finite genuine Date and explicit-zone
+validation. Never fall back to the machine zone or leak formatter/input details.
+Known-time resolution, no-city UTC Moon and positions-only imports keep their
+existing contracts. A successful witness does not establish complete date
+coverage or Sun/Moon certainty.
+
+Choose conservative refusal when the existing resolver's reference is outside
+the date, or membership cannot be established. Use the dedicated localized
+message: “We couldn’t establish a calculation time within this local date. Check
+the date and place.” Preserve fields, clear prior output/actions/context and
+offer the existing focused error/retry behavior. Do not call the numerical,
+receipt or endpoint path after refusal. Module loading may precede the check.
+
+This is deliberately weaker than proving the date empty. The retained complete
+synthetic UTC+00 to UTC+15 transition yields a nonempty nine-hour local date but
+the unchanged resolver chooses a reference outside it. Refusal is accepted for
+that case; substituting another instant needs a separately reviewed contract.
+Four actual skipped dates demonstrate the current wrong-date output. Ordinary,
+repeated and disconnected positive witnesses retain their old output and known
+endpoint limitations. The finite real-zone search found no nonempty wrong-noon
+case; it is not a theorem that none exist.
+
+The alternative of requiring native Temporal interval capability would disable
+ordinary calculations in supported runtimes without that feature. Keep the
+interval prerequisite inactive and add no polyfill, provider, dependency or
+sampling-based completeness claim. Broader date coverage and astronomical
+certainty remain a separate dependency after this safeguard.
+
+C-012 downstream follow-up: deleting the global chart context is insufficient
+when the daily-brief controller caches its own context and the email enhancement
+retains personalized presentation. Emit a synchronous data-free clear signal.
+Invalidate cached context/session/generation and hide only result-revealed capture
+surfaces. Preserve typed email/sign fields and unrelated capture surfaces. Fence
+late preference results, submit/reset presentation and frame-time focus against
+replacement or clearing. Already-submitted subscription/resend operations still
+complete once; no cancellation, retry, deletion or provider-state change is
+introduced. Keep existing successful-operation analytics without adding data.

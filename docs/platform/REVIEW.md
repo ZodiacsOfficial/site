@@ -134,3 +134,19 @@ control only obsolete result/reference/focus/UI completion. The initial exact-PN
 comparison failure is retained and classified under the unchanged scored visual
 budget, with its one-pixel difference and baseline-height limits explicit.
 Hosted acceptance, human review, publication and production remain separate.
+
+Chart draft #434 subsequently passes nine actual exact-source preview groups,
+but CI 34209606308 fails the post-chart gate (one of 291 assertions). Its old
+context-retention expectation conflicts with C-012. Source inspection also finds
+an actual downstream cached-context defect: the optional daily panel remains
+visible after the calculator deletes the global context. Root requires explicit
+invalidation propagation and meaningful browser regression checks; updating only
+the assertion would conceal that remaining product behavior. This work is
+separate from the immutable C-014 author freeze now in independent review.
+
+C-014's [author implementation](evidence/local-date-reference/author-freeze1/AUTHOR.md.log)
+and [preparation](evidence/local-date-reference/) are byte-verified. The root
+decision explicitly permits conservative reference refusal for a nonempty date
+without calling it empty. Independent author/reviewer separation, canonical
+calendar and explicit-zone validation, numerical-call exclusion, localized
+recovery and preserved ownership behavior remain required before integration.
