@@ -1,0 +1,20 @@
+--- a/src/pages/developers/support/index.astro
++++ b/src/pages/developers/support/index.astro
+@@ -8,7 +8,7 @@
+ const description = 'Current Zodiacs developer support: local engine candidate, public sky data, hosted widgets, planned chart API, runtime checks, calculation limits, privacy, and licenses.';
+ const engineRows = [
+   ['Language and runtime', 'ESM JavaScript with TypeScript declarations. The manifest declares Node.js ≥18; there is no CommonJS export. Browser integrations need an ESM-aware bundler or equivalent dependency setup.'],
+-  ['Recorded runtime checks', 'Candidate tests passed on Node 20 and 22. Clean package installs, examples, and TypeScript 5.9.3 checks passed on Node 20 and 22. Selected independent numerical comparisons also passed on Node 24. These checks do not certify every browser or Node 18.'],
++  ['Recorded runtime checks', 'The linked reports record this candidate’s tested runtimes, package consumers and TypeScript declarations. They identify the exact artifact and validation scope; they do not certify every browser or all Node versions allowed by the manifest.'],
+   ['Zodiac and positions', 'Tropical ecliptic of date; apparent geocentric positions in degrees. Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, and true North/South Moon nodes. No sidereal mode or topocentric parallax.'],
+   ['Calculations', 'Positions, natal charts, transit snapshots, synastry, Moon phase, and Saturn-return seasons. The same public API supplies calculation metadata; interpretation is separate from astronomical accuracy.'],
+   ['Houses and unknown time', 'Whole-sign and Placidus houses. Known time and coordinates are required for angles/houses. timeKnown: false sets both to null and adds no-time. Placidus falls back to whole-sign above 66° absolute latitude or on nonconvergence, with polar-fallback. Exact geographic poles and degenerate horizon intersections are outside verified angle scope.'],
+@@ -93,7 +93,7 @@
+         records commands, runtimes, reference conventions, and limits. Read the{' '}
+         <a href={evidenceUrl(candidate.evidencePaths.node22)}>Node 22 comparison</a>,{' '}
+         <a href={evidenceUrl(candidate.evidencePaths.node24)}>Node 24 comparison</a>, and{' '}
+-        <a href={evidenceUrl(candidate.evidencePaths.publicConsumer)}>public-download install receipt</a>.
++        <a href={evidenceUrl(candidate.evidencePaths.publicConsumer)}>public-download consumer check</a>.
+         These are finite test results and internal reviews, not human practitioner
+         certification or evidence that astrological interpretation is scientifically validated.
+       </p>

@@ -1,0 +1,33 @@
+--- /private/tmp/zodiacs-platform-rc6-preview-review/original-receipt-drive.mjs	2026-09-08 14:38:53
++++ /private/tmp/zodiacs-platform-rc6-preview-review/receipt-drive.mjs	2026-09-08 14:38:53
+@@ -6,15 +6,20 @@
+ import assert from 'node:assert/strict';
+ import {parseNatalEnvelope} from '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/receipt.js';
+ const root=process.env.ZODIACS_RECEIPT_ROOT??'/Users/chiburashka/.codex/worktrees/4806/site';
+-const base='/private/tmp/zodiacs-platform-site-receipt-export-evidence';
+-const run='/private/tmp/zodiacs-platform-rc6-integration/browser-'+Date.now();await mkdir(run);
++const base='/private/tmp/zodiacs-platform-rc6-preview-review';
++assert.ok(process.env.ZODIACS_TEST_BASE_URL,'Remote preview URL required; local serving is not permitted in this verification.');
++const deployment=JSON.parse(await readFile(base+'/deployment-ready.json','utf8'));
++assert.equal(deployment.deployment.commit,'30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14');assert.equal(deployment.deployment.state,'READY');
++assert.equal(process.env.ZODIACS_TEST_BASE_URL,'https://'+deployment.deployment.url);
++const run='/private/tmp/zodiacs-platform-rc6-preview-review/browser-'+Date.now();await mkdir(run);
+ const require=createRequire(root+'/package.json');const {chromium}=require('playwright-core');
+ const identity=JSON.parse(await readFile(base+'/freeze2-identity.json','utf8'));
+ const interactionIdentity=JSON.parse(await readFile(base+'/interaction-freeze1-identity.json','utf8'));
+ identity.files={...identity.files,...interactionIdentity.files};
+ identity.interactionCorrection=interactionIdentity;
+-for(const file of ['source-freeze1-identity.json','receipt-companion-freeze1-identity.json','metadata-freeze1-identity.json']){const overlay=JSON.parse(await readFile('/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/'+file,'utf8'));Object.assign(identity.files,overlay.files);}
++for(const file of ['source-freeze1-identity.json','receipt-companion-freeze1-identity.json','metadata-freeze1-identity.json']){const overlay=JSON.parse(await readFile(base+'/'+file,'utf8'));Object.assign(identity.files,overlay.files);}
+ identity.adoption='rc.6; actual original freezes plus reviewed adoption/companion/metadata overlays';
++identity.sourceCommit='30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14';identity.deployment=deployment;
+ const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+ for(const [file,hash] of Object.entries(identity.files))assert.equal(sha(await readFile(root+'/'+file)),hash);
+ const requestLog=[],served=new Map(),results=[];const dist=resolve(root,'dist');
+@@ -93,5 +98,5 @@
+ }catch(error){results.push({name:'harness',status:'failed',error:error.stack});console.error(error);}finally{
+  for(const context of contexts)await context.close().catch(()=>{});if(browser)await browser.close();if(server.listening)await new Promise(resolve=>server.close(resolve));
+  const finalSource={};for(const [file,hash]of Object.entries(identity.files)){finalSource[file]=sha(await readFile(root+'/'+file));assert.equal(finalSource[file],hash);}
+- const report={startedAt,completedAt:new Date().toISOString(),node:process.version,browser:'Chrome152',identity,origin,run,harnessSha256:sha(await readFile('/private/tmp/zodiacs-platform-rc6-integration/receipt-drive.mjs')),staticFileHashesAvailable:!process.env.ZODIACS_TEST_BASE_URL,results,passed:results.filter(r=>r.status==='passed').length,failed:results.filter(r=>r.status==='failed').length,requestLog,served:Object.fromEntries(served),cleanup:{contextsClosed:true,browserClosed:true,serverClosed:true},finalSource};await writeFile(run+'/result.json',JSON.stringify(report,null,2)+'\n');await writeFile('/private/tmp/zodiacs-platform-rc6-integration/browser-latest.json',JSON.stringify({run,report:run+'/result.json'},null,2)+'\n');console.log(JSON.stringify({run,passed:report.passed,failed:report.failed},null,2));if(report.failed)process.exitCode=1;
++ const report={startedAt,completedAt:new Date().toISOString(),node:process.version,browser:'Chrome152',identity,origin,run,harnessSha256:sha(await readFile('/private/tmp/zodiacs-platform-rc6-preview-review/receipt-drive.mjs')),staticFileHashesAvailable:!process.env.ZODIACS_TEST_BASE_URL,results,passed:results.filter(r=>r.status==='passed').length,failed:results.filter(r=>r.status==='failed').length,requestLog,served:Object.fromEntries(served),cleanup:{contextsClosed:true,browserClosed:true,serverClosed:true},finalSource};await writeFile(run+'/result.json',JSON.stringify(report,null,2)+'\n');await writeFile('/private/tmp/zodiacs-platform-rc6-preview-review/browser-latest.json',JSON.stringify({run,report:run+'/result.json'},null,2)+'\n');console.log(JSON.stringify({run,passed:report.passed,failed:report.failed},null,2));if(report.failed)process.exitCode=1;
+ }

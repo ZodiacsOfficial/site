@@ -1,0 +1,166 @@
+async function runChart(input, focusAfterCompute, source = 'fresh') {
+    advanceInputRevision();
+    const receiptInputRevision = inputRevisionRef.current;
+    const signatureModule = mode === 'full' && showsEnglishInterpretation
+        ? import('../lib/chart-signature')
+        : null;
+    const accessGeneration = profileAccessGeneration.current;
+    const requiresProfileAccess = primaryProfileOriginRef.current;
+    const runId = runChartIdRef.current + 1;
+    runChartIdRef.current = runId;
+    const runIsCurrent = () => (runId === runChartIdRef.current
+        && (!requiresProfileAccess || (accessGeneration === profileAccessGeneration.current
+            && profileAccessAllowed())));
+    focusAfterComputeRef.current = focusAfterCompute;
+    setBusy(true);
+    setError('');
+    setSaved('idle');
+    setMatchedName(null);
+    setSavePromptOpen(false);
+    setA2hsHint(null);
+    setCard('busy');
+    setSignature(null);
+    shareRuntimeRef.current.primary = undefined;
+    resetLens();
+    setPositionsOnly(null);
+    setShareDialogOpen(false);
+    setMoonAmbiguous(false);
+    setRegistryRecordSlug(null);
+    setSubjectMode(input.subjectMode ?? 'self');
+    setMineHandoff(input.mine ?? null);
+    if (mode === 'full' && !chartActionDockModule)
+        requestChartControls();
+    try {
+        const engine = await loadEngine();
+        if (!runIsCurrent())
+            return;
+        let receiptModule = null;
+        if (mode === 'full') {
+            try {
+                receiptModule = await loadCalculatorReceipt();
+            }
+            catch {
+                // A failed optional code download may use the existing calculation.
+                // No natal calculation has run yet; calculation failures never retry.
+            }
+            if (!runIsCurrent())
+                return;
+        }
+        const effectiveTime = input.timeKnown ? input.time : '12:00';
+        const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
+        const calculationInput = {
+            utc: resolved.utc,
+            latitude: input.city.lat,
+            longitude: input.city.lon,
+            houseSystem: input.houseSystem,
+            timeKnown: input.timeKnown,
+            flags: resolved.flags,
+        };
+        const portable = receiptModule?.computeCalculatorReceipt(calculationInput, {
+            date: input.date,
+            time: effectiveTime,
+            timeZone: input.city.tz,
+            offsetMinutes: resolved.offsetMinutes,
+            reference: input.timeKnown ? 'supplied-instant' : 'local-noon',
+        });
+        const result = portable ? portable.chart : engine.computeChart(calculationInput);
+        if (!runIsCurrent())
+            return;
+        const computedSun = result.bodies.find((body) => body.body === 'Sun');
+        const computedSunSlug = computedSun ? signForLongitude(computedSun.lon).slug : null;
+        let nextMoonAmbiguous = false;
+        let nextRegistryRecordSlug = mode === 'full' && input.timeKnown ? computedSunSlug : null;
+        if (!input.timeKnown) {
+            // Compute the local civil date's endpoints once. Moon uncertainty
+            // reaches result/share notices; Sun uncertainty fails the singular
+            // Registry bridge closed instead of trusting the noon reference.
+            const endpoints = localDateEndpointsUtc(input.date, input.city.tz);
+            const startBodies = engine.computeBodies(endpoints.start);
+            const endBodies = engine.computeBodies(endpoints.end);
+            result.moonSignCandidates = moonCandidatesFromEndpoints(startBodies, endBodies);
+            nextMoonAmbiguous = moonIsUncertain(result);
+            const stableSunSlug = stableBodySignSlug('Sun', startBodies, endBodies);
+            nextRegistryRecordSlug = mode === 'full' && stableSunSlug === computedSunSlug
+                ? stableSunSlug
+                : null;
+        }
+        setChart(result);
+        if (portable && receiptInputRevision === inputRevisionRef.current) {
+            const captured = {
+                chart: result, envelopeJson: portable.envelopeJson, runId,
+                inputRevision: receiptInputRevision, accessGeneration, requiresProfileAccess,
+            };
+            receiptExportRef.current = captured;
+            setReceiptExport(captured);
+        }
+        if (signatureModule) {
+            void signatureModule.then(({ chartSignature }) => {
+                if (runIsCurrent())
+                    setSignature(chartSignature(result, locale));
+            }, () => { });
+        }
+        setMoonAmbiguous(nextMoonAmbiguous);
+        setRegistryRecordSlug(nextRegistryRecordSlug);
+        setComputedInput({ ...input, city: { ...input.city } });
+        void import('./PositionsShareSurface').then(async (surface) => {
+            if (!runIsCurrent())
+                return;
+            const prepared = await surface.preparePrimaryShareArtifact(result, mode, locale, nextMoonAmbiguous);
+            if (!runIsCurrent())
+                return;
+            shareRuntimeRef.current.primary = { artifact: prepared, share: surface.sharePrimaryArtifact };
+            setCard('idle');
+        }).catch((shareError) => {
+            console.error(shareError);
+            if (runIsCurrent())
+                setCard('error');
+        });
+        const contextId = chartContextIdRef.current + 1;
+        chartContextIdRef.current = contextId;
+        clearPostChartContext();
+        if (mode === 'full') {
+            void import('./CalendarSubscribe').then(setCalendarSurface, () => { });
+            if (showsEnglishInterpretation) {
+                void import('./CommunicationRead').then(setCommunicationSurface, () => { });
+                void import('./ApproachRead').then(setApproachSurface, () => { });
+            }
+        }
+        track('result_rendered', { mode });
+        track('chart_computed', { mode, source });
+        if (locale !== 'ru')
+            void import('./PwaInstallPrompt').then(setPwaInstallModule, () => { });
+        setPwaComputationCount((count) => count + 1);
+        window.dispatchEvent(new CustomEvent('zodiacs:chart-computed', {
+            detail: {
+                mode,
+                sunSign: computedSun ? signForLongitude(computedSun.lon).slug : undefined,
+                contextId,
+            },
+        }));
+        setShareInput({
+            date: input.date,
+            time: input.timeKnown ? input.time : null,
+            timeKnown: input.timeKnown,
+            lat: input.city.lat,
+            lon: input.city.lon,
+            tz: input.city.tz,
+            place: input.city.name || undefined,
+            houseSystem: input.houseSystem,
+            ...(input.name ? { name: input.name } : {}),
+        });
+        requestAnimationFrame(() => resultRef.current?.scrollIntoView({
+            behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+            block: 'start',
+        }));
+    }
+    catch (err) {
+        if (!runIsCurrent())
+            return;
+        setError(calculationError(err, locale, t(locale, 'chartError')));
+        console.error(err);
+    }
+    finally {
+        if (runId === runChartIdRef.current)
+            setBusy(false);
+    }
+}

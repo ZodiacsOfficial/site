@@ -1,0 +1,47 @@
+// source/src/lib/engine/lite.ts
+var DEG = Math.PI / 180;
+var norm = (d) => (d % 360 + 360) % 360;
+function daysSinceJ2000(date) {
+  return (date.getTime() - Date.UTC(2e3, 0, 1, 12)) / 864e5;
+}
+function sunLongitude(date) {
+  const n = daysSinceJ2000(date);
+  const L = 280.46 + 0.9856474 * n;
+  const g = (357.528 + 0.9856003 * n) * DEG;
+  return norm(L + 1.915 * Math.sin(g) + 0.02 * Math.sin(2 * g));
+}
+function moonLongitude(date) {
+  const n = daysSinceJ2000(date);
+  const Lp = 218.316 + 13.176396 * n;
+  const M = (134.963 + 13.064993 * n) * DEG;
+  const Ms = (357.528 + 0.9856003 * n) * DEG;
+  const D = (297.85 + 12.190749 * n) * DEG;
+  const F = (93.272 + 13.22935 * n) * DEG;
+  const lon = Lp + 6.289 * Math.sin(M) + 1.274 * Math.sin(2 * D - M) + 0.658 * Math.sin(2 * D) + 0.214 * Math.sin(2 * M) - 0.186 * Math.sin(Ms) - 0.114 * Math.sin(2 * F);
+  return norm(lon);
+}
+function moonPhaseAngle(date) {
+  return norm(moonLongitude(date) - sunLongitude(date));
+}
+function moonIllumination(date) {
+  return (1 - Math.cos(moonPhaseAngle(date) * DEG)) / 2;
+}
+function moonPhaseName(date) {
+  const a = moonPhaseAngle(date);
+  if (a < 22.5 || a >= 337.5) return "New Moon";
+  if (a < 67.5) return "Waxing Crescent";
+  if (a < 112.5) return "First Quarter";
+  if (a < 157.5) return "Waxing Gibbous";
+  if (a < 202.5) return "Full Moon";
+  if (a < 247.5) return "Waning Gibbous";
+  if (a < 292.5) return "Last Quarter";
+  return "Waning Crescent";
+}
+export {
+  daysSinceJ2000,
+  moonIllumination,
+  moonLongitude,
+  moonPhaseAngle,
+  moonPhaseName,
+  sunLongitude
+};
