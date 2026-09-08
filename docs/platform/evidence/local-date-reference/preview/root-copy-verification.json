@@ -1,0 +1,405 @@
+{
+  "sourceManifestSha256": "967aa76a23f4410c44aa795b33d72251b46a1a8660351c14fd67cf8c8b49156d",
+  "verifiedRecords": 99,
+  "verifiedOrdinaryRemoteModuleMembers": 71,
+  "verifiedOrdinarySourceMembers": 23,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "COMMANDS.md",
+      "path": "COMMANDS.md"
+    },
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "browser-run1/en-chart-1280-receipt.json",
+      "path": "browser-run1/en-chart-1280-receipt.json"
+    },
+    {
+      "sourcePath": "browser-run1/en-chart-1280-recovered.png",
+      "path": "browser-run1/en-chart-1280-recovered.png"
+    },
+    {
+      "sourcePath": "browser-run1/en-chart-1280-refused.png",
+      "path": "browser-run1/en-chart-1280-refused.png"
+    },
+    {
+      "sourcePath": "browser-run1/en-chart-1280.json",
+      "path": "browser-run1/en-chart-1280.json"
+    },
+    {
+      "sourcePath": "browser-run1/en-chart-390-receipt.json",
+      "path": "browser-run1/en-chart-390-receipt.json"
+    },
+    {
+      "sourcePath": "browser-run1/en-chart-390-recovered.png",
+      "path": "browser-run1/en-chart-390-recovered.png"
+    },
+    {
+      "sourcePath": "browser-run1/en-chart-390-refused.png",
+      "path": "browser-run1/en-chart-390-refused.png"
+    },
+    {
+      "sourcePath": "browser-run1/en-chart-390.json",
+      "path": "browser-run1/en-chart-390.json"
+    },
+    {
+      "sourcePath": "browser-run1/en-moon-1280-recovered.png",
+      "path": "browser-run1/en-moon-1280-recovered.png"
+    },
+    {
+      "sourcePath": "browser-run1/en-moon-1280-refused.png",
+      "path": "browser-run1/en-moon-1280-refused.png"
+    },
+    {
+      "sourcePath": "browser-run1/en-moon-1280.json",
+      "path": "browser-run1/en-moon-1280.json"
+    },
+    {
+      "sourcePath": "browser-run1/en-moon-390-recovered.png",
+      "path": "browser-run1/en-moon-390-recovered.png"
+    },
+    {
+      "sourcePath": "browser-run1/en-moon-390-refused.png",
+      "path": "browser-run1/en-moon-390-refused.png"
+    },
+    {
+      "sourcePath": "browser-run1/en-moon-390.json",
+      "path": "browser-run1/en-moon-390.json"
+    },
+    {
+      "sourcePath": "browser-run1/moon-no-city-utc.json",
+      "path": "browser-run1/moon-no-city-utc.json"
+    },
+    {
+      "sourcePath": "browser-run1/moon-no-city-utc.png",
+      "path": "browser-run1/moon-no-city-utc.png"
+    },
+    {
+      "sourcePath": "browser-run1/public-positions-only.json",
+      "path": "browser-run1/public-positions-only.json"
+    },
+    {
+      "sourcePath": "browser-run1/public-positions-only.png",
+      "path": "browser-run1/public-positions-only.png"
+    },
+    {
+      "sourcePath": "browser-run1/remote-data/a.json",
+      "path": "browser-run1/remote-data/a.json"
+    },
+    {
+      "sourcePath": "browser-run1/remote-data/index.json",
+      "path": "browser-run1/remote-data/index.json"
+    },
+    {
+      "sourcePath": "browser-run1/result.json",
+      "path": "browser-run1/result.json"
+    },
+    {
+      "sourcePath": "browser-run1/ru-chart-1280-receipt.json",
+      "path": "browser-run1/ru-chart-1280-receipt.json"
+    },
+    {
+      "sourcePath": "browser-run1/ru-chart-1280-recovered.png",
+      "path": "browser-run1/ru-chart-1280-recovered.png"
+    },
+    {
+      "sourcePath": "browser-run1/ru-chart-1280-refused.png",
+      "path": "browser-run1/ru-chart-1280-refused.png"
+    },
+    {
+      "sourcePath": "browser-run1/ru-chart-1280.json",
+      "path": "browser-run1/ru-chart-1280.json"
+    },
+    {
+      "sourcePath": "browser-run1/ru-chart-390-receipt.json",
+      "path": "browser-run1/ru-chart-390-receipt.json"
+    },
+    {
+      "sourcePath": "browser-run1/ru-chart-390-recovered.png",
+      "path": "browser-run1/ru-chart-390-recovered.png"
+    },
+    {
+      "sourcePath": "browser-run1/ru-chart-390-refused.png",
+      "path": "browser-run1/ru-chart-390-refused.png"
+    },
+    {
+      "sourcePath": "browser-run1/ru-chart-390.json",
+      "path": "browser-run1/ru-chart-390.json"
+    },
+    {
+      "sourcePath": "browser-run1/ru-moon-1280-recovered.png",
+      "path": "browser-run1/ru-moon-1280-recovered.png"
+    },
+    {
+      "sourcePath": "browser-run1/ru-moon-1280-refused.png",
+      "path": "browser-run1/ru-moon-1280-refused.png"
+    },
+    {
+      "sourcePath": "browser-run1/ru-moon-1280.json",
+      "path": "browser-run1/ru-moon-1280.json"
+    },
+    {
+      "sourcePath": "browser-run1/ru-moon-390-recovered.png",
+      "path": "browser-run1/ru-moon-390-recovered.png"
+    },
+    {
+      "sourcePath": "browser-run1/ru-moon-390-refused.png",
+      "path": "browser-run1/ru-moon-390-refused.png"
+    },
+    {
+      "sourcePath": "browser-run1/ru-moon-390.json",
+      "path": "browser-run1/ru-moon-390.json"
+    },
+    {
+      "sourcePath": "cleanup.json",
+      "path": "cleanup.json"
+    },
+    {
+      "sourcePath": "cleanup.log",
+      "path": "cleanup.log"
+    },
+    {
+      "sourcePath": "cleanup.py.log",
+      "path": "cleanup.py.log"
+    },
+    {
+      "sourcePath": "copy-mapping.json",
+      "path": "copy-mapping.json"
+    },
+    {
+      "sourcePath": "deployment-after.json",
+      "path": "deployment-after.json"
+    },
+    {
+      "sourcePath": "deployment-before.json",
+      "path": "deployment-before.json"
+    },
+    {
+      "sourcePath": "moon-baseline-copy-proof.json",
+      "path": "moon-baseline-copy-proof.json"
+    },
+    {
+      "sourcePath": "pr-identity/COMMANDS.md",
+      "path": "pr-identity/COMMANDS.md"
+    },
+    {
+      "sourcePath": "pr-identity/REVIEW.md",
+      "path": "pr-identity/REVIEW.md"
+    },
+    {
+      "sourcePath": "pr-identity/c014-source-freeze.json",
+      "path": "pr-identity/c014-source-freeze.json"
+    },
+    {
+      "sourcePath": "pr-identity/changed-file-identities.json",
+      "path": "pr-identity/changed-file-identities.json"
+    },
+    {
+      "sourcePath": "pr-identity/files-pages.json",
+      "path": "pr-identity/files-pages.json"
+    },
+    {
+      "sourcePath": "pr-identity/files-pages.stderr.log",
+      "path": "pr-identity/files-pages.stderr.log"
+    },
+    {
+      "sourcePath": "pr-identity/identity-result.json",
+      "path": "pr-identity/identity-result.json"
+    },
+    {
+      "sourcePath": "pr-identity/integration.patch.log",
+      "path": "pr-identity/integration.patch.log"
+    },
+    {
+      "sourcePath": "pr-identity/local-base.txt.log",
+      "path": "pr-identity/local-base.txt.log"
+    },
+    {
+      "sourcePath": "pr-identity/local-commit.txt.log",
+      "path": "pr-identity/local-commit.txt.log"
+    },
+    {
+      "sourcePath": "pr-identity/local-merge-base.txt.log",
+      "path": "pr-identity/local-merge-base.txt.log"
+    },
+    {
+      "sourcePath": "pr-identity/local-name-status.raw.log",
+      "path": "pr-identity/local-name-status.raw.log"
+    },
+    {
+      "sourcePath": "pr-identity/manifest.json",
+      "path": "pr-identity/manifest.json"
+    },
+    {
+      "sourcePath": "pr-identity/non-documentation.patch.log",
+      "path": "pr-identity/non-documentation.patch.log"
+    },
+    {
+      "sourcePath": "pr-identity/pr-after.json",
+      "path": "pr-identity/pr-after.json"
+    },
+    {
+      "sourcePath": "pr-identity/pr-after.stderr.log",
+      "path": "pr-identity/pr-after.stderr.log"
+    },
+    {
+      "sourcePath": "pr-identity/pr-before.json",
+      "path": "pr-identity/pr-before.json"
+    },
+    {
+      "sourcePath": "pr-identity/pr-before.stderr.log",
+      "path": "pr-identity/pr-before.stderr.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/.github/phase1-scope-allowance.json",
+      "path": "pr-identity/source/.github/phase1-scope-allowance.json"
+    },
+    {
+      "sourcePath": "pr-identity/source/.github/workflows/site-check.yml.log",
+      "path": "pr-identity/source/.github/workflows/site-check.yml.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/islands/ChartCalculator.ownership.test.ts.log",
+      "path": "pr-identity/source/src/islands/ChartCalculator.ownership.test.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/islands/ChartCalculator.tsx.log",
+      "path": "pr-identity/source/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/islands/MoonPhaseTool.tsx.log",
+      "path": "pr-identity/source/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/i18n/index.test.ts.log",
+      "path": "pr-identity/source/src/lib/i18n/index.test.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/i18n/ui/en.ts.log",
+      "path": "pr-identity/source/src/lib/i18n/ui/en.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/i18n/ui/es.ts.log",
+      "path": "pr-identity/source/src/lib/i18n/ui/es.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/i18n/ui/fr.ts.log",
+      "path": "pr-identity/source/src/lib/i18n/ui/fr.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/i18n/ui/it.ts.log",
+      "path": "pr-identity/source/src/lib/i18n/ui/it.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/i18n/ui/pt.ts.log",
+      "path": "pr-identity/source/src/lib/i18n/ui/pt.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/i18n/ui/ru.test.ts.log",
+      "path": "pr-identity/source/src/lib/i18n/ui/ru.test.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/i18n/ui/ru.ts.log",
+      "path": "pr-identity/source/src/lib/i18n/ui/ru.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/time/localDateContainsUtc.test.ts.log",
+      "path": "pr-identity/source/src/lib/time/localDateContainsUtc.test.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/time/localToUtc.ts.log",
+      "path": "pr-identity/source/src/lib/time/localToUtc.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/tests/local-date-reference-drive.mjs.log",
+      "path": "pr-identity/source/tests/local-date-reference-drive.mjs.log"
+    },
+    {
+      "sourcePath": "pr-identity/supplement-identity.json",
+      "path": "pr-identity/supplement-identity.json"
+    },
+    {
+      "sourcePath": "pr-identity/verify-initial.log",
+      "path": "pr-identity/verify-initial.log"
+    },
+    {
+      "sourcePath": "pr-identity/verify-initial.py.log",
+      "path": "pr-identity/verify-initial.py.log"
+    },
+    {
+      "sourcePath": "pr-identity/verify.log",
+      "path": "pr-identity/verify.log"
+    },
+    {
+      "sourcePath": "pr-identity/verify.py.log",
+      "path": "pr-identity/verify.py.log"
+    },
+    {
+      "sourcePath": "pr-identity/workflow-base.yml.log",
+      "path": "pr-identity/workflow-base.yml.log"
+    },
+    {
+      "sourcePath": "pr-identity/workflow.patch.log",
+      "path": "pr-identity/workflow.patch.log"
+    },
+    {
+      "sourcePath": "preview-drive.initial.mjs.log",
+      "path": "preview-drive.initial.mjs.log"
+    },
+    {
+      "sourcePath": "preview-drive.mjs.log",
+      "path": "preview-drive.mjs.log"
+    },
+    {
+      "sourcePath": "preview-run1.log",
+      "path": "preview-run1.log"
+    },
+    {
+      "sourcePath": "prior-local-driver.mjs.log",
+      "path": "prior-local-driver.mjs.log"
+    },
+    {
+      "sourcePath": "remote-modules-manifest.json",
+      "path": "remote-modules-manifest.json"
+    },
+    {
+      "sourcePath": "remote-modules.tar.gz",
+      "path": "remote-modules.tar.gz"
+    },
+    {
+      "sourcePath": "source-snapshot-manifest.json",
+      "path": "source-snapshot-manifest.json"
+    },
+    {
+      "sourcePath": "source-snapshot.json",
+      "path": "source-snapshot.json"
+    },
+    {
+      "sourcePath": "source-snapshot.tar.gz",
+      "path": "source-snapshot.tar.gz"
+    },
+    {
+      "sourcePath": "syntax-initial.log",
+      "path": "syntax-initial.log"
+    },
+    {
+      "sourcePath": "syntax.log",
+      "path": "syntax.log"
+    },
+    {
+      "sourcePath": "verified-results.json",
+      "path": "verified-results.json"
+    },
+    {
+      "sourcePath": "verify.log",
+      "path": "verify.log"
+    },
+    {
+      "sourcePath": "verify.py.log",
+      "path": "verify.py.log"
+    }
+  ]
+}

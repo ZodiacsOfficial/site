@@ -610,3 +610,38 @@ its error on edit. Do not change product behavior merely to satisfy an invented
 shared expectation. Preserve the original failed harness run and verify the
 corrected chart-only recovery explicitly. No additional numerical, publication
 or account authority is implied by these integration corrections.
+
+## C-015 — Withhold unsupported whole-date chart confidence
+
+Keep C-014's admitted unknown-time reference calculation and its numerical and
+portable receipt bytes. Set the chart's verified Moon candidate list to the
+existing empty/unverified state; do not infer completeness from endpoint samples.
+Use a dedicated notice that the Moon sign across the date is unverified. Do not
+reuse “changed signs / both neighbors” wording, which asserts an unproved event.
+Preserve known-time calculations, ordinary actions, ownership fences and the
+existing unverified-Moon consumer contract without a new schema or provider.
+
+Actual member instants contradict the current singleton claims for Toronto
+1919-03-31 (Pisces omitted) and Juneau1867-10-18 (Cancer omitted). Point membership
+and reference positions are not disproved. Caption-only changes are insufficient:
+the singleton currently becomes established context and Moon-specific advice.
+An explicitly incomplete observed-sign model would require a wider migration.
+Choose the smaller conservative policy, even for ordinary dates where the old
+samples happen to agree. Denser samples, a date blacklist or corrected midnight
+pair would not establish full coverage.
+
+Also withhold the singular unknown-time Sun Registry bridge derived from those
+endpoints. No false Sun sign is demonstrated; this is a conservative confidence
+gate, not a numerical error claim. Change only the caller gate, leaving canonical
+Registry data, ownership SDK and known-time linking intact. Correct misleading
+completeness comments on the unused endpoint helper without changing its algorithm.
+
+C-015 does not fix downstream reference-Sun context/saved callbacks, the literal
+12:00 reference caption when resolution shifts, Chart's Moon-mode phase-at-birth
+wording, MoonPhaseTool or its six tool-page date-alone claims. Those need a
+coordinated next reference-label slice. Public positions may retain explicitly
+labeled reference positions. Distinguish intentionally changed confidence from
+unchanged numerical/envelope/token values in actual caller and consumer checks.
+Root alone integrates shared catalogs, scope metadata, CI and canonical records;
+independent reviewers must inspect the actual immutable candidate. No human
+numerical/legal signoff, publication authority or Astrofolio integration follows.

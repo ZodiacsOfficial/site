@@ -1,0 +1,32 @@
+[
+  {
+    "path": "ci-current.json",
+    "bytes": 27973,
+    "sha256": "6b66d9f82c9df5f76c8948115c118e6b67253859a33aa2aa617454c91b802a18"
+  },
+  {
+    "path": "ci-final-check.json",
+    "bytes": 28108,
+    "sha256": "0b0008cdf2b89d479a6701ee12c62fbb9992763139dc4026e1d1c6361c50b7bd"
+  },
+  {
+    "path": "diff-verification.json",
+    "bytes": 786,
+    "sha256": "5732e89b2c3fd1bdae86b1294237673f2b373eb4015d635463363b42fcd837e4"
+  },
+  {
+    "path": "files.pages.json",
+    "bytes": 5977562,
+    "sha256": "850aa97e3c01376ddc5ae90a3f5ef5b84dec32ce79afabe519df16391afaf575"
+  },
+  {
+    "path": "pr.json",
+    "bytes": 8673,
+    "sha256": "2b685519dcd44a2885648b862accc1e6e0a35704027daaca0c509e0a435bbb3a"
+  },
+  {
+    "path": "runs.json",
+    "bytes": 660,
+    "sha256": "a46de4845f34f2ce603ff1ff05f8590228a80d46c41dda198007156241911dc0"
+  }
+]

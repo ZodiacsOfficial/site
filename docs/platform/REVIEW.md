@@ -190,3 +190,19 @@ The [fresh #434 preview](evidence/post-chart-clear/preview/REVIEW.md) passes nin
 actual groups at3845a04b and verifies every actual PR path/blob. Its absent capture
 markup means active downstream/auth behavior still relies on the separate
 qualified fixtures. Human numerical/legal signoff and publication remain absent.
+
+The delivered #434 correction at3845a04b now passes all14 exact-source CI jobs
+and nine refreshed preview groups. C-014 is delivered independently in #435 at
+f803d254, with all314 actual paths/blobs verified and ten actual preview groups
+passing; its latest recorded CI has13 successful jobs and the main build pending.
+The separate normal-page evidence audit reconciles the original harness failures
+and corrected acceptance without claiming another browser execution.
+
+C-015 author implementation is now isolated abovef803d254. Root accepts the
+[preparatory policy](evidence/reference-confidence/README.md), not yet a frozen
+implementation: withhold unsupported whole-date Moon confidence and the endpoint
+Sun Registry link while retaining numerical/receipt values. Independent reviewers
+divide actual counterexamples/consumer propagation from numerical/receipt/save
+preservation. No false Sun example, complete date theorem, Moon-tool fix or human
+practitioner/legal signoff is claimed. Actual immutable source review and root
+integration acceptance remain required.

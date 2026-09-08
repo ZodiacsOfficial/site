@@ -1,0 +1,35 @@
+{
+  "base": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+  "source": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+  "qualification": "Existing Moon date/phase certainty notice and sampled-endpoint candidate behavior are not certified by C014. These source slices and EN/RU notice lines are unchanged. Actual displayed result strings retained in raw browser groups.",
+  "proof": [
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "start": "      const caption =",
+      "end": "    } catch (err)",
+      "bytes": 423,
+      "sha256": "f3cdcb1b02adc9a4d450033f3cef615cead08d140f48366981e49ce28ec78f67",
+      "unchanged": true
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "start": "      {result && (",
+      "end": "EOF",
+      "bytes": 1860,
+      "sha256": "04cbb81fcd1dcfcc13e3a6ab2752ad118354ca1a838122293bb352f0c248fb70",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "line": "    moonChangedNotice: \"The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.\",",
+      "sha256": "8ca90f3e0726ffb288f44c661749ea35f3049d2a00899f191b41c4d1c1509c9e",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "line": "  moonChangedNotice: 'В этот день Луна сменила знак, и без времени нельзя сказать, по какую сторону границы вы родились. Фаза не страдает — она движется слишком медленно, чтобы часы имели значение.',",
+      "sha256": "bcedab5c3ff7e8e1766d43ad60e6145c6ad4110185f52f46b971234ee15fb106",
+      "unchanged": true
+    }
+  ]
+}

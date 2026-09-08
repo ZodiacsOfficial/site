@@ -1,0 +1,63 @@
+from pathlib import Path
+import json, hashlib, tarfile
+
+root=Path(__file__).parent
+sha=lambda b:hashlib.sha256(b).hexdigest()
+r=json.loads((root/'browser-run1/result.json').read_text())
+assert r['sourceCommit']=='f803d2543ad81343b22d49326b8b46d0e2ea03a0'
+assert r['outcome']=='passed' and len(r['checks'])==10 and all(c['passed'] for c in r['checks'])
+assert r['driverSha256']==sha((root/'preview-drive.mjs').read_bytes())
+for c in r['checks']:
+    assert json.loads((root/'browser-run1'/(c['name']+'.json')).read_text())==c
+    assert c['contextClosed'] and not c['pageErrors'] and c['final']['noSavedProfile']
+    assert all(x['method']=='GET' for x in c['browserRequests'])
+    assert not any(x['path'].startswith('/api/') for x in c['browserRequests'])
+    assert len(c['blocked'])==1 and c['blocked'][0]['origin']=='https://plausible.io'
+    assert c['blocked'][0]['path']=='/js/pa-HwF2IBb5Sw8eboNPSOgHv.js'
+    assert len(c['requestFailures'])==1 and c['requestFailures'][0]['path']==c['blocked'][0]['path']
+    assert c['expectedRefusalDiagnostics']==(1 if 'refused' in c else 0)
+    assert len(c['consoleErrors'])==(2 if 'refused' in c else 1)
+    assert all(e=={'type':'Event','detail':'undefined','contextAbsent':True} for e in c['events']['cleared'])
+    for x in c['screenshots']:
+        b=(root/'browser-run1'/x['path']).read_bytes()
+        assert len(b)==x['bytes'] and sha(b)==x['sha256']
+    if 'refused' in c:
+        for stage in ['edited','refused','beforeRetry']:
+            v=c[stage]
+            assert not v['result'] and v['actions']==0 and v['context'] is None and v['noSavedProfile'] and not v['overflow']
+        assert c['refused']['date']=='2011-12-30' and c['refused']['focus']['role']=='alert'
+        assert c['recovered']['date']=='2011-12-31' and c['recovered']['result'] and c['recovered']['error'] is None
+    if 'receipt' in c:
+        b=(root/'browser-run1'/(c['name']+'-receipt.json')).read_bytes()
+        assert sha(b)==c['receipt']['sha256']
+        receipt=json.loads(b)['receipt']
+        assert receipt['engine']['version']=='0.1.1-rc.6' and receipt['timeKnown'] is False
+        assert receipt['localResolution']['time']=='12:00' and receipt['localResolution']['timeZone']=='Pacific/Apia'
+        assert receipt['localResolution']['date']=='2011-12-31' and receipt['houses']['absenceReason']=='unknown-time'
+for group,folder in [('modules','remote-modules'),('data','remote-data')]:
+    for p,x in r[group].items():
+        b=(root/'browser-run1'/folder/Path(p).name).read_bytes()
+        assert len(b)==x['bytes'] and sha(b)==x['sha256']
+assert len(r['modules'])==71 and len(r['data'])==2
+assert all(x['status']==200 and not x.get('bodyUnavailable') for x in r['responses'])
+for name in ['remote-modules','source-snapshot']:
+    m=json.loads((root/(name+'-manifest.json')).read_text())
+    assert sha((root/m['archive']).read_bytes())==m['sha256']
+    with tarfile.open(root/m['archive']) as t:
+        members=t.getmembers()
+        assert len(members)==len(m['members']) and all(x.isfile() and not x.pax_headers for x in members)
+        for actual,expected in zip(members,m['members']):
+            assert actual.name==expected['path'] and sha(t.extractfile(actual).read())==expected['sha256']
+for when in ['before','after']:
+    d=json.loads((root/('deployment-'+when+'.json')).read_text())['deployment']
+    assert d['state']=='READY' and d['id']=='dpl_HAJ4JzQd5wyNRPicr2YX6cLDqi7u'
+    assert d['meta']['githubCommitSha']==r['sourceCommit'] and d['meta']['githubPrId']=='435'
+    assert d['target'] is None and d['source']=='git'
+p=root/'pr-identity';m=json.loads((p/'manifest.json').read_text())
+assert sha((p/'manifest.json').read_bytes())=='0ea75a00191dd49eb5e5dbded57362f820758c8e840e64e1732a832799998ac6'
+for x in m['records']:
+    b=(p/x['path']).read_bytes();assert len(b)==x['bytes'] and sha(b)==x['sha256']
+cleanup=json.loads((root/'cleanup.json').read_text())
+assert cleanup['temporaryAccessDirectoryRemoved'] and cleanup['exactPrivateUrlAndNontrivialQueryValueMatches']==0
+assert not Path('/private/tmp/zodiacs-platform-local-date-preview-auth').exists()
+print(json.dumps({'groups':10,'passed':10,'modules':71,'archivesRegularMembers':94,'prIdentityRecords':len(m['records']),'verification':'passed'}))

@@ -1,0 +1,15 @@
+{
+  "node": "v22.23.2",
+  "icu": "78.2",
+  "tzdb": "2026a",
+  "chrome": "152.0.7977.83",
+  "dateControls": 9,
+  "phaseControls": 4,
+  "knownControls": 3,
+  "nodeTemporalAvailable": false,
+  "chromeTemporalDisabledPassed": true,
+  "chromeRunsExactlyEqualExceptAvailability": true,
+  "requests": 4,
+  "pageErrors": 0,
+  "sourceFilesRehashed": 50
+}

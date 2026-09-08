@@ -1,0 +1,9 @@
+{
+  "head": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+  "consumedInputsRehashed": 66,
+  "allUnchanged": true,
+  "enginePackageVersion": "0.1.1-rc.6",
+  "enginePackageJsonSha256": "b9318c0a5afca031f3a823c6f5001337949ab15b9fbc63f7caa0ea10df02fddc",
+  "committedEngineArchiveSha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+  "bundleSha256": "21ff187c4395d9308443882b351795513eacdea854c4e3883c7a6392fc6318fb"
+}

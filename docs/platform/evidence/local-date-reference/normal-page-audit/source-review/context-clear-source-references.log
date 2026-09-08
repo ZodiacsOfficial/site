@@ -1,0 +1,7 @@
+src/islands/PostChartDailyBrief.tsx:186:    window.addEventListener('zodiacs:chart-context-cleared', onClear);
+src/islands/PostChartDailyBrief.tsx:219:      window.removeEventListener('zodiacs:chart-context-cleared', onClear);
+src/components/EmailCaptureEnhancement.astro:146:  window.addEventListener('zodiacs:chart-context-cleared', () => {
+src/lib/profile/post-chart-context.ts:29:  window.dispatchEvent(new Event('zodiacs:chart-context-cleared'));
+src/lib/profile/post-chart-context.test.ts:11:    target.addEventListener('zodiacs:chart-context-cleared', event => {
+src/lib/profile/post-chart-context.test.ts:15:      expect(event.type).toBe('zodiacs:chart-context-cleared');
+src/lib/profile/post-chart-context.test.ts:25:    target.addEventListener('zodiacs:chart-context-cleared', cleared);

@@ -2349,3 +2349,73 @@ No server-side revocation or production network claim follows. Source manifest i
 `9f90f684ec8a3492a7352cee5d6c0232fa6e5da3c8c8c1033281691d351f87d7`.
 Current Site Check34217870622 has thirteen successful jobs with Build & Check
 still running; the earlier c7 post-chart CI failure remains retained separately.
+
+## Delivered C-014, completed C-012 CI and next confidence slice — 2026-09-08
+
+The preceding in-progress CI statement is superseded by exact3845a04b Site Check
+34217870622 completing successfully with all14 jobs. The [final snapshot](evidence/post-chart-clear/ci-final/ci.json)
+has manifest `30f51fe4919db38626be625d49c8d1911e98893bc6c28677dd0239a33869fc6e`.
+The six release refresh records have manifest
+`9d1a8e064dcfa492770040425ed183cd01120ef47beff82e2dfd3d6a93c0b75c`.
+The original c7b9eb4 failure and exact3845a04b nine-group preview remain distinct.
+
+Draft #435 is delivered atf803d2543ad81343b22d49326b8b46d0e2ea03a0 above
+3845a04b. Root and independent review verify all314 actual paths/blobs, including
+16 source/test/metadata paths and298 documentation paths. Six release refresh
+records use manifest `52a4ef21f721df069185f9ebf7ef1d3fdeb3edaa5bcf924bb963d5771058225e`.
+Site Check34220407271 has13 successful jobs with Build & Check running in the
+retained [in-progress snapshot](evidence/local-date-reference/ci-in-progress/ci.json),
+manifest `fbf5b9f3f9af0eb4d130542e165e465ac2ee0320f54c9b525cd514968f196314`.
+
+The [exact-source READY preview](evidence/local-date-reference/preview/REVIEW.md)
+is dpl_HAJ4JzQd5wyNRPicr2YX6cLDqi7u before/after. Ten actual browser groups pass:
+eight English/Russian Chart/Moon ×1280/390 real-city Apia refusal/recovery groups,
+plus no-city UTC Moon and public positions; two nested English known-time gap
+controls preserve point behavior. Four downloaded receipts identify rc.6 and the
+valid Dec31 unknown-time reference. Eighteen screenshots,71 remote JavaScript
+modules and two real city payloads are retained. No numerical-call count is
+claimed. Existing Moon phase/date-wide copy is outside acceptance, with unchanged
+source proof. A driver declaration syntax failure predating browser work remains.
+
+The observer records819 request events and782 complete200 bodies,70 data-free
+clear events, zero page errors/API/non-GET requests, eight expected sanitized
+refusal diagnostics and ten blocked Plausible requests. Access bootstrap is
+separately unobserved. Exact private URL/query scan of187 raw files plus94
+decompressed members finds zero matches before local access deletion; no server
+revocation claim follows. Root verifies101 records under manifest
+`3827ab7fa098f606464ecdd338bbd442d0b2320aacadfbdc02b8bd52abb2dfd3`,
+including all71 remote and23 source ordinary members, without AppleDouble files.
+Source manifest: `967aa76a23f4410c44aa795b33d72251b46a1a8660351c14fd67cf8c8b49156d`.
+
+The separate [normal-page audit](evidence/local-date-reference/normal-page-audit/REVIEW.md)
+reconciles36 executed/24 accepted cases,72 screenshots,131 unique served files
+with108 common byte-identical files,18 recorded source identities and18 release
+captures. It does not claim a second browser run. Root verifies78 records under
+manifest `0dce7662febeb4a75955924d19ddd181901cc20f13218073225ac99aafc045aa`.
+
+Root selects C-015's conservative unknown-time confidence policy from the
+[actual caller preparation](evidence/reference-confidence/preparation/REVIEW.md.log).
+Toronto and Juneau member witnesses contradict current singleton Moon candidate
+claims. The admitted reference numerics are preserved in policy controls while
+empty candidates remove established Moon context and Moon-specific advice. No
+false Sun sign is demonstrated. Root verifies nine records and all74 ordinary
+archive members under manifest
+`2327dd8a2f3d1fde364e95493077a5683c0bd5b5acc3798dc24b535b41298c00`.
+Actual extracted caller execution is not actual DOM or independent astronomy
+oracle evidence. The [scope record](evidence/reference-confidence/README.md)
+keeps Moon phase/reference labels and downstream reference-Sun semantics open.
+Author implementation and independent preparation proceed separately; root
+product still matches deliveredf803d254 at this checkpoint. Nothing is published,
+production-deployed, externally adopted or human-reviewed by these records.
+
+The [independent C-015 preparation](evidence/reference-confidence/independent-preparation/REVIEW.md)
+separately executes actual member/longitude/consumer modules atf803d254. Three
+unknown-time controls, two known-time positives and skipped Apia establish the
+finite policy consequences, with exact numerical JSON/receipt/token/in-memory
+saved-projection preservation. It does not render the component or write storage.
+Toronto's direct primitive differs in the final floating-point digits from the
+caller-body figure; the raw results and separate paths are retained without a new
+tolerance or cross-path bit-equality assertion. Root verifies nine records and97
+ordinary compressed members under manifest
+`6931df177a16619b141b831ac3535cd22401a1632ca456290a17398eca6a77d6`;
+source manifest is`8c8ad6a933a5774494286c54341fecccf6f1cfaffdb49e4a3d18a4b0f161a309`.
