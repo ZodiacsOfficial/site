@@ -594,3 +594,19 @@ null, preserving a current explicit signed-out callback across a later profile
 refresh. Keep the same backend/client and submitted-operation boundaries. Add
 the precise interleaving and known-null positive controls; do not increase a
 timeout or weaken the expected daily-brief state to hide the regression.
+
+
+C-014 root integration retains the original 12-file implementation. The full
+suite exposes two stale exact catalog-count tests, so update only their 418→419
+constants and matching title. Preserve every key-parity/interpolation assertion.
+The exact-base allowance therefore names the six catalogs plus precisely those
+two test files, with independent supplemental acceptance; the earlier six-path
+review alone does not authorize this extension. The CI step and guard itself
+remain unchanged from their separate reviews.
+
+The actual-page harness must follow existing error behavior: Chart keeps its
+prior error visible while fields are edited, then clears it on retry; Moon clears
+its error on edit. Do not change product behavior merely to satisfy an invented
+shared expectation. Preserve the original failed harness run and verify the
+corrected chart-only recovery explicitly. No additional numerical, publication
+or account authority is implied by these integration corrections.

@@ -167,3 +167,26 @@ C-014 also completes its [independent caller and helper review](evidence/local-d
 Node22/24/nativeChrome. Its12-file source remains separate and awaits root
 integration after the downstream correction. Neither review grants publication,
 production, whole-date astronomical completeness or human numerical/legal signoff.
+
+
+C-014 root integration completes build/check/5,024 tests, 35 native date controls,
+20 Moon and 17 chart ownership controls, and 18 fresh byte-identical captures.
+Actual localized page acceptance comprises 12 initial Moon and 12 corrected
+chart-only cases. The original chart failures were an unsupported harness
+expectation that an error disappears on edit; unchanged Chart source keeps it
+until retry. The affected rerun asserts the retained error and input focus, then
+successful error-free recovery, without changing product source.
+
+The [catalog-count supplement](evidence/local-date-reference/catalog-count-review/REVIEW.md)
+separately accepts precisely two 418→419 constants and a matching test title,
+plus the two named test paths in the exact-base allowance. It reproduces both
+original count failures and passes all 26 affected tests. Key parity and
+interpolation assertions remain unchanged; the previous six-path review was not
+used as approval of eight. Original 12-file source remains byte-identical.
+
+The combined signed-in actual-page review and its [main audit](evidence/local-date-reference/combined-page-audit/REVIEW.md)
+verify refusal/recovery with explicit startup-versus-flow mutation accounting.
+The [fresh #434 preview](evidence/post-chart-clear/preview/REVIEW.md) passes nine
+actual groups at3845a04b and verifies every actual PR path/blob. Its absent capture
+markup means active downstream/auth behavior still relies on the separate
+qualified fixtures. Human numerical/legal signoff and publication remain absent.

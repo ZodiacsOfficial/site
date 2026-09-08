@@ -1,0 +1,400 @@
+{
+  "acceptedGroups": 24,
+  "moonGroupsFromInitialRun": 12,
+  "chartGroupsFromCorrectedAffectedRun": 12,
+  "initialChartAssertionFailuresRetained": 12,
+  "productSourceUnchangedAcrossRuns": true,
+  "unexpectedConsoleErrors": 0,
+  "expectedSanitizedRefusalConsoleErrors": 24,
+  "uncaughtPageErrors": 0,
+  "refusalHorizontalOverflow": 0,
+  "mutationAttempts": 0,
+  "blockedExternalRequests": 0,
+  "note": "Each case retains all requested and served-file hashes. This finite normal feature-off run is not the signed-in fixture, remote preview or numerical call-count evidence. Twelve original Chart failures concern the harness pre-submit error-clear assertion; source code retains error until retry.",
+  "groups": [
+    {
+      "name": "en-moon-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": true
+    },
+    {
+      "name": "en-moon-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "es-moon-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "es-moon-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "fr-moon-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "fr-moon-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "it-moon-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "it-moon-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "pt-moon-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "pt-moon-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "ru-moon-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "ru-moon-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at X (http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:63645/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:63645/_astro/MoonPhaseTool.DGpJwGUo.js",
+            "line": 0,
+            "column": 2593,
+            "lineNumber": 0,
+            "columnNumber": 2593
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "en-chart-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": true
+    },
+    {
+      "name": "en-chart-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "es-chart-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "es-chart-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "fr-chart-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "fr-chart-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "it-chart-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "it-chart-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "pt-chart-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "pt-chart-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "ru-chart-1280",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    },
+    {
+      "name": "ru-chart-390",
+      "consoleErrors": [
+        {
+          "text": "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:24633)\n    at ci (http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:64025/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+          "location": {
+            "url": "http://127.0.0.1:64025/_astro/ChartCalculator.CJSrWeaL.js",
+            "line": 1,
+            "column": 27847,
+            "lineNumber": 1,
+            "columnNumber": 27847
+          }
+        }
+      ],
+      "knownTimeControl": false
+    }
+  ]
+}

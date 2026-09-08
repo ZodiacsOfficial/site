@@ -14,31 +14,49 @@ reviewable verification release is separate from the SDK publication hold.
 
 ## Current implementation — unknown-time local-date reference
 
-The prepared `codex/platform-local-date-reference` branch starts from delivered
-chart source `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`. Root has temporarily
-returned to `codex/platform-chart-result-ownership` to integrate the CI-discovered
-downstream correction before resuming that date branch. Decision C-014 requires
-the chosen unknown-time reference to belong to the requested local date before
-numerical, receipt or endpoint work. It applies to the birth chart and selected-
-city Moon lookup. Failure asks the user to check the date and place; it does not
-claim that the date is empty. Known-time gap handling and no-city UTC Moon remain
-unchanged. No native Temporal requirement or alternate reference is introduced.
+The isolated `codex/platform-local-date-reference` branch now starts from delivered
+chart/context source `3845a04bcea822da3c30a18848ef3d8d133b7b66`. The exact
+independently accepted 12-file C-014 freeze is integrated. It requires the chosen
+unknown-time reference to belong to the requested local date before numerical,
+receipt or endpoint work in the birth chart and selected-city Moon lookup.
+Failure asks the user to check the date and place, preserving fields and focused
+retry. It does not claim that the date is empty or establish whole-date certainty.
+Known-time gap handling and no-city UTC Moon remain unchanged. No Temporal
+requirement, dependency or alternate reference is introduced.
 
 [Preparation](evidence/local-date-reference/preparation/REVIEW.md),
-[real-date controls](evidence/local-date-reference/real-date-controls/REVIEW.md)
-and the [synthetic nonempty-date refusal](evidence/local-date-reference/synthetic-refusal/README.md)
-are byte-verified and retained. The 12-file author freeze is implemented in its
-isolated scratch and passes [independent review](evidence/local-date-reference/independent-review/REVIEW.md):
-26 accepted caller controls, nine exact output comparisons and 92 helper controls
-on each Node 22/24 and native Chrome. It is not integrated here.
-The separate C-012 downstream-context finding below also requires correction.
+[real-date controls](evidence/local-date-reference/real-date-controls/REVIEW.md),
+[synthetic nonempty-date refusal](evidence/local-date-reference/synthetic-refusal/README.md)
+and [independent review](evidence/local-date-reference/independent-review/REVIEW.md)
+are byte-verified. The reviewer accepts 26 caller controls, nine exact output
+comparisons and 92 helper controls on each Node22/24/nativeChrome. Root's normal
+build, check (1,044 files; zero errors/warnings, 11 hints), all 5,024 tests in
+417 files, 35 native date cases, 20 existing Moon cases, 17 existing chart cases
+and exact-base scope pass. All 18 fresh approved captures are byte-identical to
+3845a04b. Actual normal pages pass 24 localized chart/Moon groups, from 12 Moon
+cases in the first run and 12 affected chart cases after correcting a harness
+assumption about error clearing. Original failures remain retained. Two existing
+catalog tests now expect 419 keys; their count/title-only change and the exact
+base allowance's eight paths have separate independent review. The original
+12-file implementation stays unchanged. This source is prepared for isolated
+draft delivery; remote CI/preview and publication gates remain separate.
+
+The [combined actual-page control](evidence/local-date-reference/combined-page/REVIEW.md)
+passes a seeded signed-in chart/pending panel → real Apia unknown skipped date →
+focused refusal with obsolete result/actions/context/panel cleared → valid date
+recovery. Profile bytes remain unchanged, with no writes or extra preference read
+during refusal. One existing legacy startup sync POST was attempted and locally
+blocked; the measured flow attempts zero additional mutations. This is explicit
+synthetic account/response evidence, not backend enforcement or production proof.
 
 ## Delivered candidate — birth-chart result ownership
 
-Draft [#434](https://github.com/ZodiacsOfficial/site/pull/434) is delivered at
-`c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`, above support source
-`abcf1a44e52040db79a369b49bc9b55d78099b22`. All 199 actual paths and blob
-identities match the exact head/base comparison. The corrected four-file
+Draft [#434](https://github.com/ZodiacsOfficial/site/pull/434) is now delivered at
+`3845a04bcea822da3c30a18848ef3d8d133b7b66`, above support source
+`abcf1a44e52040db79a369b49bc9b55d78099b22`. All 623 actual paths and blob
+identities match the exact head/base comparison. The product scope is four files
+plus six tests/drivers and two four-line CI steps; other paths are durable records.
+The preceding c7b9eb4 evidence below remains version-specific. The corrected four-file
 ChartCalculator freeze and separately reviewed four-line CI step are integrated.
 The first freeze was rejected for three demonstrated races; those originals remain
 retained. The corrected patch prevents obsolete calculations, shares, contexts,
@@ -86,7 +104,13 @@ fixture build and full-page gate pass 294/294. Normal build/check (1,043 files;
 zero errors/warnings), 4,969 tests / 416 files, 21 native cases, 17 existing chart
 cases, four feature-off edit/recovery cases and exact-base scope pass. All 18
 fresh approved-page captures are byte-identical to c7b9eb4. The follow-up is
-prepared for isolated draft delivery; fresh remote CI/preview remain pending.
+pushed at3845a04b; exact Site Check34217870622 has thirteen successful jobs with Build & Check
+still running at the latest read. The refreshed READY preview
+`dpl_9PyqUeR6weQFUdYnAREXYEQjUAMZ` passes nine new actual remote groups.
+[Current-source preview evidence](evidence/post-chart-clear/preview/REVIEW.md)
+verifies all 623 paths, native data-free clear signals and temporary-access cleanup.
+It has no chart-linked capture markup; active panel/account proof remains the
+separate exact-source fixtures. The older preview is not substituted for this head.
 [Correction evidence and retained limits](evidence/post-chart-clear/README.md).
 No full CI acceptance, release-ready state or production deployment is claimed.
 

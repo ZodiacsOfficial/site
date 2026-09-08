@@ -2238,3 +2238,114 @@ main only throughd4d5717d. SDK#5 remains open draft with the explicit do-not-mer
 publish hold and no reviews. Actual Astrofolio#416 remains draft atb17d6804 with
 36paths; no integration or communication with that separate user session occurs.
 Registry-only later-main updates remain untouched and required at eventual merge.
+
+## C-014 root integration and combined actual-page supplement — 2026-09-08
+
+Root fast-forwards the isolated date branch to delivered chart/context source
+`3845a04bcea822da3c30a18848ef3d8d133b7b66` and applies the exact accepted12-file
+patch `41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e`.
+All12 hashes match and all six C-012 source/test files remain unchanged. The normal
+build,35native date groups,20existing Moon groups and18fresh approved captures
+pass. Captures match3845a04b byte-for-byte. Root suite/check/actual localized pages
+and exact-base metadata/release checks remain separate pending steps.
+
+The independent [combined actual-page report](evidence/local-date-reference/combined-page/REVIEW.md)
+retains the actual fixture-enabled Astro page with both accepted source freezes.
+Root manifest `e87fc9d76faabaf151aa7afcde79aa753de01177db8302aeee18a0209a6fa2ea`
+contains71inert records, from source manifest
+`83cde38f600bc15dee184718b95d27461cc62eeea6787240d2795e9a58904397`.
+All76ordinary compressed browser artifact members are individually verified;
+complete generated-site manifest is retained separately, not all7137artifacts.
+All11187assembled source records remain unchanged after build/native checks.
+Root visually inspects the retained English refusal screenshot.
+
+Actual native selection uses the offline city index/shard for Apia. Initial
+seeded saved Mexico chart/pending panel becomes cleared output/actions/context/
+panel on edit; skipped2011-12-30 submits only a focused dedicated error; changing
+to2011-12-31 recovers Capricorn/current context and the correctly derived
+unsaved-chart device-only panel. Preference reads are1→1→2, original profile bytes
+unchanged, no profile writes during the measured flow. One natural legacy startup
+sync POST is attempted and locally blocked; zero later mutation attempts and zero
+external issued/completed writes. Root explicitly rejects delaying auth to create
+a false page-lifetime POST0 result. Original recovery-state assertion failure,
+optional manual-event diagnostic and setup error remain retained. Two expected
+console diagnostics (blocked418, sanitized refusal) are enumerated, with zero
+unhandled errors/unexpected endpoints. Synthetic account/response boundaries do
+not establish provider authorization, delivery or production behavior.
+
+The separate metadata proposal is retained under
+[metadata-proposal](evidence/local-date-reference/metadata-proposal/REVIEW.md.log):
+20root records, manifest`6f2b4ab2c689e11551966a6ee92d2ba8509daa06d6cdcae15429104645cddf68`.
+Its four-line driver step and exactly six catalog paths pass14author controls.
+The marker must become actual3845a04b before root application; unchanged guard
+logic checks exact paths/base, while semantic copy approval comes from the source
+review. Independent review and final exact-base execution are separate.
+
+## Final local-date root acceptance — 2026-09-08
+
+The [root report](evidence/local-date-reference/root-integration/README.md)
+records the exact accepted 12-file implementation plus four separately reviewed
+count-test/metadata files. Final manifest
+`a26434ea8fcaa586ce4256f8efe5310a304b724bc20859567e6b4bf160d90132`
+contains 19 records and 210 individually verified ordinary compressed members.
+Build/check (1,044 files, zero errors/warnings, 11 hints), 5,024 tests / 417 files,
+35 native date cases, 20 Moon and 17 chart ownership cases, and exact-base scope
+pass. All 18 fresh approved captures are byte-identical to 3845a04b. Final source
+receipt: `e664d1d35eeae647eff10cc775f058d16e179bea4f0006313a91f3f0d4a3b3b7`.
+
+The first full suite retained two failures for the existing 418-key expectations.
+The new localized error makes 419. The independent [supplement](evidence/local-date-reference/catalog-count-review/REVIEW.md)
+reproduces 24 passed / 2 failed affected tests, then passes 26/26 with only two
+constants and the corresponding title changed. Parity/interpolation assertions
+remain exact. Root's 50-record copy manifest is
+`a57e79c5ff4495a2172c2f1166cdeb698104a767a24239b57a38e00770206b59`.
+Supplement patch `50330a5cc5865f44872f607795b1135bf5c98a0a1ffd06113ccf6cfcebff5922`
+and allowance `2f26d0a3b85e651e1b248733adae5a818c213885c227af08b98a699acc440797`
+retain exact base3845a04b and add only those two test paths to the six catalogs.
+The original six-path review stays intact; its 40-record root manifest is
+`404b681b019127884629c05efd94b04150f6e95005892e8eeef372fb373c4915`.
+Its accepted workflow remains `5574577652bc6002884647804e6b99fa45c05840accbb3ce442620f5d32732a0`.
+The extra paths have new independent acceptance rather than inferred approval.
+
+Actual normal-build page acceptance covers six locales × chart/Moon × two widths.
+Twelve Moon groups pass initially; twelve Chart groups initially stop at a guessed
+error-on-edit assertion. Byte-identical existing Chart clear/invalidation handlers
+retain the old error until submission. The corrected chart-only driver asserts
+retained error/current input focus, no old output/actions/context, then successful
+retry with error removed. All twelve pass. The final 24 accepted groups come
+from those two explicit executions; no single 24/24 run is invented. Accepted
+cases show zero overflow, saved profiles, mutation attempts, unexpected console
+errors or unhandled errors, with exactly one sanitized refusal diagnostic each.
+Real offline Apia selection and two known-time controls remain. Root visually
+inspects the Russian chart and French Moon mobile refusal images. Numerical call
+counts and signed-in behavior are not inferred from this normal feature-off run.
+
+The combined-page main audit independently rehashes all 69 delivered payloads,
+76 browser artifact members and 11,187 assembled inputs, reads actual interception
+and four checkpoints, and inspects the refusal image without repeating the child
+browser. Root copy manifest `a135f450493b7747257e8b1df45ccbbbbf598f729eb047aa8aa53085f7d4a474`
+contains four records. One locally blocked startup sync attempt and one
+byte-identical startup profile replacement remain explicit; measured flow has
+zero further writes/attempts and zero external writes. Profile bytes never change.
+
+## Refreshed chart/context preview — 2026-09-08
+
+[New preview acceptance](evidence/post-chart-clear/preview/REVIEW.md) is for
+exact3845a04b, READY dpl_9PyqUeR6weQFUdYnAREXYEQjUAMZ before/after, target null.
+All nine actual browser groups and independent 623-path/blob verification pass.
+Root manifest `74f7b6119427429887ca05217d7be5d3e9d050b486c1245f245dd96be5ef2e07`
+contains 75 records; all 69 served-JavaScript and 16 source-snapshot ordinary
+archive members are individually verified. No AppleDouble metadata is present.
+Actual served adapter coverage observes 12 natal calls and 43 data-free native
+clear events. The preview renders no chart-linked capture shells; that behavior
+is covered by the separately qualified exact-source fixtures, not by this run.
+
+The observer records 993 request events, 874 response records and 871 fully
+captured 200 responses; three bodies are unavailable. Nine Plausible GETs are
+blocked; no API/non-GET request is observed in the test contexts. Access bootstrap
+is separate and unobserved. Temporary access is deleted after an exact private
+URL/query-value scan of 155 raw files plus 69 decompressed members finds no matches.
+No server-side revocation or production network claim follows. Source manifest is
+`9f90f684ec8a3492a7352cee5d6c0232fa6e5da3c8c8c1033281691d351f87d7`.
+Current Site Check34217870622 has thirteen successful jobs with Build & Check
+still running; the earlier c7 post-chart CI failure remains retained separately.

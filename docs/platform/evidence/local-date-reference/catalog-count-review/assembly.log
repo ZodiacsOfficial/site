@@ -1,0 +1,2 @@
+Physically copied existing installed dependencies; no network install. Clone uses read-only local Git object alternates; checked out files and frozen overlays are independent regular files.
+{"base": "3845a04bcea822da3c30a18848ef3d8d133b7b66", "frozenFiles": 16, "dependencyMethod": "physical copy from existing owned fixture", "rootOrAuthorFilesWritten": false}
