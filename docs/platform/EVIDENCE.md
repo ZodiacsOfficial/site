@@ -1068,3 +1068,89 @@ SDK candidate. They do not change this tested runtime, archive or metadata.
 The exact READY preview already tested uses the same `83bd8aad` delivery source.
 The conditionally skipped Browser Evidence workflow is not counted as a passing
 browser run. No merge or production deployment is implied by all-green CI.
+
+
+## Stage A public flags and civil settings — SDK rc.5
+
+Delivered [SDK draft #10](https://github.com/ZodiacsOfficial/sdk/pull/10), stacked
+on #9, from `codex/platform-input-flags`. Source
+`97f5e8d01828f4b85ffa845825dee9acff4695e4`; archive carrier
+`333369256af683c560603dd1e6411dd7a07adb1f`; final acceptance evidence
+`785e3ea154c28e890ecc97ce2284ee3e9f48a4a7`. The
+[anonymous immutable artifact](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/333369256af683c560603dd1e6411dd7a07adb1f/artifacts/zodiacs-engine-0.1.1-rc.5.tgz)
+was verified at 23:49:36 UTC: 23 files, 36,065 packed / 121,212 unpacked bytes,
+SHA-256 `1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`, integrity
+`sha512-XUmtZ+mOwMJxElr6hbhQ59cPatvsPa8/XrLfihZfdsQnMZgptlTZSV6YBRVr+Nqps0No64HUpYLXNhUoeCVzNA==`.
+
+Correct typed no-time/polar-fallback echoes previously duplicated result flags
+and failed receipt creation. Malformed/private/contradictory flags could enter
+result metadata, and civil/public settings were not consistently captured after
+validation. The original-source final regression suite reproduced 61 failures
+with 5 valid controls. The implemented compatibility policy preserves the five
+public values, bounds raw arrays at 64 data entries, deduplicates valid claims,
+checks derived assertions, and records canonical semantic metadata once.
+Public/civil settings are captured once; invalid civil settings reject before
+Intl. Supplied Charts receive flag consistency checks and optional shallow
+normalization, retaining canonical identity and numerical references.
+
+Root executed all required SDK gates; build/typecheck ran sequentially. **562
+workspace tests / 31 files pass on Node 20.20.2 and 22.23.2**. Two actual fresh
+packed consumers pass TypeScript 5.9.3, exports/notices, optional isolation,
+existing GeoNames/receipt examples and the new flags/settings/identity controls.
+Isolated audit is zero. Installed rc.4→rc.5 matches **480** synthetic numerical
+cases excluding only engineVersion; **480** extra duplicate/result echo cases
+and receipt replay pass with ephemeris 2.1.19 on both.
+
+An independent tool-backed reviewer passed 14 frozen-source adversarial controls,
+including Saturn costs: ordinary inputs add zero natal calculations, explicit
+raw polar assertions add one to verify actual fallback, and supplied Charts add
+none. Actual Chrome 152 passes **26 aggregate packed-browser acceptance checks**,
+including 14 API groups. All 23 installed archive members match. Optional geo/
+receipt graphs exclude ephemeris/ownership; root excludes optional code. Four
+static GET resources load, then all API cases run offline with zero observed
+fetch/storage attempts, cookies or browser/console/CSP errors. Privacy observers
+are proven with negative controls. Valid civil cases intentionally use Intl.
+Owned browser/server resources are closed.
+
+[Exact source, commands, raw logs, controls, graphs, captures and limits](https://github.com/ZodiacsOfficial/sdk/blob/785e3ea154c28e890ecc97ce2284ee3e9f48a4a7/docs/platform/EVIDENCE.md#public-flags-and-civil-settings-candidate).
+Original harness errors are retained: baseline Intl spy corrected before the
+final red suite; first real pack failed inherited npm cache EPERM before an
+archive existed and succeeded with isolated configs/cache; first browser session
+name exceeded macOS's socket limit and was shortened before candidate execution.
+No source or test tolerance was changed to hide those environment/harness errors.
+
+Time flags remain historical claims; precomputed numerical values are not
+authenticated. Same-realm executable getters/proxies are not sandboxed. Finite
+parity is not an astronomical accuracy guarantee. Dependency lock, receipt schema, numerical formulas, older archives and
+ownership behavior are unchanged by the new wrapper validation. The site retains engine rc.1 and starter
+rc.3 retains engine rc.3 at this checkpoint. A new site pin is being prepared
+separately; no account storage/wire migration is active.
+
+Remote refresh at 23:41 UTC still shows site main `7f953e3f`, SDK main `b49e0f14`,
+SDK #5 draft at `cced0116`, zero submitted reviews, explicit merge/publication
+hold, engine/widgets npm 404, ownership 1.0.1 and unchanged READY production
+`dpl_BrntzbFYa2gzetKWgeq91GFeaM6W`. No merge, npm publication, production release,
+external adoption, outreach, spending, access change or destructive action.
+
+## C02 local request loss and old-writer counterexamples
+
+An independent synthetic in-memory probe at site `921cd0d1` imports the actual
+engine/profile store/read/handoff and account wire/fingerprint functions. Its
+save projection mirrors and checks the current calculator source mapping; it
+does not claim to drive the calculator UI. **Two expected assertions fail**:
+polar requested Placidus saves/reruns as Whole, and a subsequent explicit Whole
+request updates the same record instead of retaining two distinct requests.
+**Three controls pass**, proving old writers hide/overwrite a same-key version
+bump, discard additive metadata on ordinary re-save, and produce identical v1
+wire bytes/fingerprints for the different requests. Zero account/network calls,
+real browser storage writes or shared source edits occurred.
+
+[Probe command and exact qualification](evidence/c02-next/README.md.log),
+[observations/source hashes](evidence/c02-next/observations.json.log),
+[executed synthetic probe](evidence/c02-next/probe.test.ts.log),
+[versioning comparison](evidence/c02-next/DESIGN.md.log).
+Decision C-006 chooses a version-owned source with explicit legacy/downgrade
+behavior. First integrate the existing SDK receipt capability through a tested
+site artifact adoption; do not duplicate its schema or infer missing legacy
+intent. Active storage/access/export/delete/sync wiring remains engineering work,
+with future server capability/CAS/idempotent-replay handling separately reviewed.

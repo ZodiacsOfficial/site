@@ -27,16 +27,23 @@ and candidate preparation do not replace review, release or external adoption.
   draft #9/rc.4: 496 tests, required gates, two clean consumers, 96 chart parity
   cases and 20 actual Chrome checks pass. Valid mixed-generation dataset
   mismatch remains undetectable in v1 and is explicitly documented. The site retains immutable rc.1; standalone starter rc.3 contains SDK rc.3.
-- Active bounded follow-up: preserve correct typed derived-flag echoes while
-  rejecting malformed/private/contradictory public input flags; current derived
-  echoes duplicate result flags and conflict with receipt validation. No new
-  implementation or delivery is claimed yet.
-- Core entry validates dates/settings, but arbitrary caller-supplied Chart body,
-  aspect and flag arrays and low-level helper arguments do not form a complete
-  hostile-input schema. `geo.resolveBirth` settings need aligned validation.
+- Public flags/civil settings correction is implemented in separate SDK rc.5:
+  562 tests on Node 20/22, all required workspace gates, two fresh packed
+  consumers and 480 numerical parity plus 480 echo controls pass. Frozen
+  public archive is verified; 26 packed Chrome checks pass and SDK draft #10
+  is delivered.
+  The next site prerequisite is a separately tested adoption of that artifact.
+- Core entry and `geo.resolveBirth` settings now align in SDK rc.5. Its public
+  flags are bounded and checked; supplied Chart numerical values and low-level
+  helper arguments still do not form a complete hostile-input schema.
 - Return search bounds sample count, not elapsed time or completeness: coarse
   sampling can miss crossings, interior tangencies are omitted, and endpoint
   direction uses one-sided evidence. No broad event-completeness claim.
+- Refreshed local C02 probes show polar save/rerun request loss and distinct
+  requests collapsing into one record. Same-key v2 or optional v1 metadata is
+  overwritten by old writers. [Decision and reproduced limits](evidence/c02-next/DESIGN.md.log)
+  require version-owned storage and explicit downgrade handling; no new storage
+  or account protocol is activated yet.
 - Historical resolution depends on host ICU/IANA data. Test representable dates
   separately from astronomical accuracy; geographic poles and degenerate
   horizon/ecliptic intersections need scoped behavior before wider claims.

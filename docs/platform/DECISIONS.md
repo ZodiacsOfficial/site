@@ -255,3 +255,61 @@ fails explicitly instead of inheriting an unrelated version claim. Validation
 precedes output writes so a failed build preserves previous valid output.
 These checks support a verified install; they do not authenticate arbitrary
 locally modified dependencies or imported provenance claims.
+
+## A-007 — Preserve typed flag compatibility through checked assertions
+
+Implemented, independently reviewed and delivered in SDK draft #10/rc.5;
+packed consumer and browser acceptance pass. The public type accepts five
+ChartFlag values. A correctly typed `no-time` or `polar-fallback` echo can be
+duplicated by computation and then rejected by the receipt codec. Arbitrary
+untyped strings and malformed iterables are also accepted too far into the API.
+
+Narrowing the type to time-resolution flags would break correct typed callers.
+Blindly dropping derived flags would hide contradictory claims. Keep the five
+input values, validate derived echoes against the actual computation, and
+represent each fact once in canonical input/result metadata. Canonical input is
+a semantic representation; it does not promise to retain the raw submitted
+flag array. Time-resolution flags remain caller assertions when local context
+is unavailable; UTC alone cannot prove historical DST or LMT provenance.
+
+For supplied Charts, check flag consistency against supplied time/house metadata
+and preserve numerical arrays. This is not authentication or an ephemeris rerun.
+Retain identity for already-canonical Charts and avoid mutating caller objects.
+An explicit raw polar-fallback assertion on the Saturn-return path requires one
+natal calculation to establish actual fallback; a latitude threshold alone
+cannot establish iterative convergence. Ordinary Saturn inputs keep their
+date-only path. Tests must establish those call counts and compatibility limits.
+
+Snapshot scalar settings once, validate bounded data arrays without coercion or
+custom array iteration, and reject contradictions explicitly. The shared helper
+must keep the optional geo module independent of astronomy and ownership code.
+Do not change the site's private internal engine entry or its existing pin.
+
+
+## C-006 — Keep richer saved records outside old writers' namespace
+
+The refreshed synthetic local probe confirms request loss before account sync:
+polar Placidus is saved and rerun as Whole, and a subsequent explicit Whole
+request updates that same record instead of retaining distinct intent. Existing
+v1 wire bytes cannot distinguish those requests. An added field inside the v1
+key is dropped by old full-record saves; changing its outer version causes old
+readers to see an empty profile and then overwrite it. The reproduced cases and
+[two-option comparison](evidence/c02-next/DESIGN.md.log) reject both as
+an authoritative richer store.
+
+Use the existing natal envelope semantics for newly recorded calculations,
+with a separate version-owned saved namespace and an explicit legacy branch.
+Do not infer original requested houses from legacy output or invent a complete
+receipt from its abbreviated summary. A v1 view may be a disposable projection,
+never the authoritative replay input. Distinct recorded requests must not be
+automatically deduplicated through the actual fallback system. Richer records
+must refuse silent downgrade to the current account wire format.
+
+Before implementing active storage, integrate the verified SDK optional receipt
+capability through a separate site artifact upgrade. Avoid copying a second
+receipt validator or building inactive injection scaffolding around a module the
+site cannot import yet. Subsequent storage work must include access, archive,
+export, deletion, account switch, storage failure and legacy sync boundaries.
+Future remote capability/CAS/idempotent-replay handling is a separate reviewed
+contract. No new namespace, migration, account request or server change is
+activated by this decision.
