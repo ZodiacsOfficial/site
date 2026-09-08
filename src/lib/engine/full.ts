@@ -12,28 +12,8 @@ import {
   longitudeSpeed as engineLongitudeSpeed,
 } from '@zodiacs/engine/internal';
 
-import type {
-  Aspect,
-  BodyName,
-  BodyPosition,
-  Chart,
-  ChartFlag,
-  ChartInput,
-} from './types';
-
-const adaptBody = (position: {
-  body: BodyName;
-  lon: number;
-  lat: number;
-  speed: number;
-  retrograde: boolean;
-}): BodyPosition => ({
-  body: position.body,
-  lon: position.lon,
-  lat: position.lat,
-  speed: position.speed,
-  retrograde: position.retrograde,
-});
+import { adaptBody, adaptChart } from './chart-adapter';
+import type { BodyName, BodyPosition, Chart, ChartInput } from './types';
 
 /** Scanner-oriented single-body primitive; intentionally not a public SDK API. */
 export function bodyLongitude(name: BodyName, date: Date): number {
@@ -50,14 +30,5 @@ export function computeBodies(date: Date): BodyPosition[] {
 }
 
 export function computeChart(input: ChartInput): Chart {
-  const chart = engineComputeChart(input);
-  return {
-    input,
-    bodies: chart.bodies.map(adaptBody),
-    angles: chart.angles,
-    houses: chart.houses,
-    aspects: chart.aspects as Aspect[],
-    flags: [...chart.flags] as ChartFlag[],
-    engineVersion: chart.engineVersion,
-  };
+  return adaptChart(engineComputeChart(input), input);
 }

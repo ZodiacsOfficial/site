@@ -1,0 +1,239 @@
+const checks = [];
+const assert = (condition, message) => { if (!condition) throw new Error(message); };
+const canonical = (value) => JSON.stringify(value, (_key, item) => item && typeof item === 'object' && !Array.isArray(item)
+  ? Object.fromEntries(Object.entries(item).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)) : item);
+const equal = (actual, expected, message) => assert(canonical(actual) === canonical(expected), message);
+const frozen = (value) => value === null || typeof value !== 'object' || (Object.isFrozen(value) && Object.values(value).every(frozen));
+const noDate = (value) => !(value instanceof Date) && (value === null || typeof value !== 'object' || Object.values(value).every(noDate));
+const base = { utc: '2001-12-21T08:30:00-00:00', latitude: 78.2232, longitude: 15.6267, houseSystem: 'placidus', timeKnown: true };
+const events = [];
+const restorers = [];
+const intlEntries = [];
+const localeShortcuts = [];
+let phase = 'harness';
+const observe = (name) => { events.push({ phase, name }); throw new Error('Synthetic acceptance observer blocked a side effect.'); };
+function patchMethod(object, key, name) {
+  const descriptor = Object.getOwnPropertyDescriptor(object, key);
+  assert(descriptor && typeof descriptor.value === 'function', `Missing observable ${name}`);
+  Object.defineProperty(object, key, { ...descriptor, value: function () { return observe(name); } });
+  restorers.push(() => Object.defineProperty(object, key, descriptor));
+}
+function patchGlobal(key) {
+  const descriptor = Object.getOwnPropertyDescriptor(window, key);
+  assert(descriptor && typeof window[key] === 'function', `Missing observable ${key}`);
+  const original = window[key];
+  Object.defineProperty(window, key, { ...descriptor, value: new Proxy(original, {
+    apply() { return observe(key); }, construct() { return observe(key); },
+  }) });
+  restorers.push(() => Object.defineProperty(window, key, descriptor));
+}
+function patchAccess(object, key, name, throwOnGet = false) {
+  const descriptor = Object.getOwnPropertyDescriptor(object, key);
+  assert(descriptor && descriptor.get && descriptor.configurable, `Missing observable ${name}`);
+  Object.defineProperty(object, key, { ...descriptor,
+    get() { events.push({ phase, name: `${name}.get` }); if (throwOnGet) throw new Error('Synthetic observer blocked access.'); return descriptor.get.call(this); },
+    ...(descriptor.set ? { set() { return observe(`${name}.set`); } } : {}),
+  });
+  restorers.push(() => Object.defineProperty(object, key, descriptor));
+}
+window.installObservers = () => {
+  const storageBefore = { local: localStorage.length, session: sessionStorage.length, cookie: document.cookie };
+  for (const key of ['fetch', 'XMLHttpRequest', 'WebSocket', 'EventSource', 'Worker', 'SharedWorker']) patchGlobal(key);
+  patchMethod(Navigator.prototype, 'sendBeacon', 'sendBeacon');
+  for (const key of ['getItem', 'setItem', 'removeItem', 'clear', 'key']) patchMethod(Storage.prototype, key, `Storage.${key}`);
+  for (const key of ['localStorage', 'sessionStorage', 'indexedDB', 'caches']) patchAccess(window, key, key);
+  for (const key of ['open', 'deleteDatabase', 'databases']) patchMethod(IDBFactory.prototype, key, `indexedDB.${key}`);
+  for (const key of ['open', 'match', 'delete', 'has', 'keys']) patchMethod(CacheStorage.prototype, key, `caches.${key}`);
+  patchAccess(Document.prototype, 'cookie', 'cookie', true);
+  for (const key of Object.getOwnPropertyNames(Intl)) {
+    const descriptor = Object.getOwnPropertyDescriptor(Intl, key);
+    if (typeof descriptor.value !== 'function') continue;
+    intlEntries.push(key);
+    Object.defineProperty(Intl, key, { ...descriptor, value: new Proxy(descriptor.value, {
+      apply() { return observe(`Intl.${key}`); }, construct() { return observe(`Intl.${key}`); },
+    }) });
+    restorers.push(() => Object.defineProperty(Intl, key, descriptor));
+  }
+  for (const [object, key, name, action] of [
+    [Date.prototype, 'toLocaleString', 'Date.toLocaleString', () => new Date(0).toLocaleString()],
+    [Date.prototype, 'toLocaleDateString', 'Date.toLocaleDateString', () => new Date(0).toLocaleDateString()],
+    [Date.prototype, 'toLocaleTimeString', 'Date.toLocaleTimeString', () => new Date(0).toLocaleTimeString()],
+    [Number.prototype, 'toLocaleString', 'Number.toLocaleString', () => (1).toLocaleString()],
+    [BigInt.prototype, 'toLocaleString', 'BigInt.toLocaleString', () => (1n).toLocaleString()],
+    [String.prototype, 'localeCompare', 'String.localeCompare', () => 'a'.localeCompare('b')],
+  ]) {
+    patchMethod(object, key, name);
+    localeShortcuts.push({ name, action });
+  }
+  return storageBefore;
+};
+window.negativeControls = () => {
+  phase = 'negative-control';
+  const controls = {
+    fetch: () => fetch('/synthetic-observer'),
+    XMLHttpRequest: () => new XMLHttpRequest(),
+    WebSocket: () => new WebSocket('ws://127.0.0.1/synthetic-observer'),
+    EventSource: () => new EventSource('/synthetic-observer'),
+    Worker: () => new Worker('/synthetic-observer'),
+    SharedWorker: () => new SharedWorker('/synthetic-observer'),
+    sendBeacon: () => navigator.sendBeacon('/synthetic-observer', 'synthetic'),
+    'localStorage.get': () => localStorage.getItem('synthetic'),
+    'sessionStorage.get': () => sessionStorage.getItem('synthetic'),
+    'Storage.setItem': () => localStorage.setItem('synthetic', 'synthetic'),
+    'Storage.removeItem': () => localStorage.removeItem('synthetic'),
+    'Storage.clear': () => localStorage.clear(),
+    'Storage.key': () => localStorage.key(0),
+    'indexedDB.open': () => indexedDB.open('synthetic'),
+    'indexedDB.deleteDatabase': () => indexedDB.deleteDatabase('synthetic'),
+    'indexedDB.databases': () => indexedDB.databases(),
+    'caches.open': () => caches.open('synthetic'),
+    'caches.match': () => caches.match('/synthetic'),
+    'caches.delete': () => caches.delete('synthetic'),
+    'caches.has': () => caches.has('synthetic'),
+    'caches.keys': () => caches.keys(),
+    'cookie.get': () => document.cookie,
+    'cookie.set': () => { document.cookie = 'synthetic=synthetic'; },
+  };
+  for (const key of intlEntries) controls[`Intl.${key}`] = () => Intl[key]();
+  for (const { name, action } of localeShortcuts) controls[name] = action;
+  const results = [];
+  for (const [name, action] of Object.entries(controls)) {
+    const before = events.length;
+    let blocked = false;
+    try { action(); } catch { blocked = true; }
+    assert(blocked && events.slice(before).some((event) => event.name === name), `Observer negative control failed: ${name}`);
+    results.push({ name, blocked, observed: events.slice(before) });
+  }
+  phase = 'harness';
+  return results;
+};
+window.runSingle = () => {
+  phase = 'calculation';
+  try {
+    const result = window.portableAPI.computePortableChart(base, { sourceInstant: base.utc });
+    window.singleResult = result;
+    return { bodies: result.chart.bodies.length, nativeReceiptBodies: result.envelope.result.bodies.length,
+      houses: result.envelope.receipt.houses, engine: result.envelope.receipt.engine,
+      instant: result.inputSnapshot.utc };
+  } finally { phase = 'harness'; }
+};
+window.runCases = () => {
+  const { computePortableChart, serializeNatalEnvelope, parseNatalEnvelope, natalReplayInput } = window.portableAPI;
+  const run = (name, action) => {
+    phase = 'calculation';
+    try { const detail = action(); checks.push({ name, passed: true, ...(detail ? { detail } : {}) }); }
+    catch (error) { checks.push({ name, passed: false, error: String(error) }); }
+    finally { phase = 'harness'; }
+  };
+  run('complete receipt and compact chart retain the same full precision result', () => {
+    const { chart, envelope } = window.singleResult;
+    equal(envelope.receipt.engine, { name: '@zodiacs/engine', version: '0.1.1-rc.5' }, 'Exact engine candidate');
+    assert(envelope.result.bodies.length === 12 && chart.bodies.length === 12, 'Twelve full bodies');
+    assert(envelope.result.bodies.every((body) => typeof body.sign === 'string' && Number.isFinite(body.degree)), 'Native sign and degree retained');
+    assert(chart.bodies.every((body) => !('sign' in body) && !('degree' in body)), 'Compact projection unchanged');
+    equal(chart.bodies, envelope.result.bodies.map(({ body, lon, lat, speed, retrograde }) => ({ body, lon, lat, speed, retrograde })), 'Body values identical');
+    for (const field of ['angles', 'houses', 'aspects']) equal(chart[field], envelope.result[field], `${field} full precision`);
+    assert(chart.bodies.every((body) => ['lon', 'lat', 'speed'].every((key) => Number.isFinite(body[key]))), 'Finite numeric outputs');
+    return { bodies: chart.bodies.length, aspects: chart.aspects.length, engineVersion: chart.engineVersion };
+  });
+  run('polar Placidus request survives actual Whole fallback', () => {
+    const result = window.singleResult;
+    equal(result.envelope.receipt.houses, { requested: 'placidus', actual: 'whole', absenceReason: null }, 'Requested versus actual');
+    equal(result.chart.flags, ['polar-fallback'], 'One derived fallback flag');
+    assert(result.inputSnapshot.houseSystem === 'placidus' && result.chart.input.houseSystem === 'placidus', 'Replay request retained');
+  });
+  run('unknown time keeps 08:30 and the explicit source ISO spelling', () => {
+    const result = computePortableChart({ ...base, timeKnown: false }, { sourceInstant: base.utc });
+    assert(result.envelope.receipt.instant === '2001-12-21T08:30:00.000Z' && result.envelope.receipt.sourceInstant === base.utc, 'Instant/source spelling preserved');
+    assert(result.envelope.receipt.reference === 'supplied-instant', 'No noon inference');
+    equal(result.envelope.receipt.houses, { requested: 'placidus', actual: null, absenceReason: 'unknown-time' }, 'No unknown-time houses');
+    assert(result.chart.angles === null && result.chart.houses === null, 'No unknown-time angles');
+    equal(result.chart.flags, ['no-time'], 'One no-time result');
+    equal(result.inputSnapshot, natalReplayInput(result.envelope), 'Snapshot equals codec replay');
+  });
+  run('codec serializes and parses the frozen receipt without recalculation', () => {
+    const result = window.singleResult;
+    const encoded = serializeNatalEnvelope(result.envelope);
+    const parsed = parseNatalEnvelope(encoded);
+    assert(parsed.ok, 'Parser succeeded');
+    equal(parsed.envelope, result.envelope, 'Full precision round trip');
+    equal(natalReplayInput(parsed.envelope), result.inputSnapshot, 'Replay uses original request');
+    return { encodedBytes: new TextEncoder().encode(encoded).length };
+  });
+  run('receipt and snapshot detach every mutable chart and input/context branch', () => {
+    const date = new Date('2001-12-21T08:30:00Z');
+    const input = { ...base, utc: date, flags: ['dst-fold'] };
+    const context = { sourceInstant: base.utc, provenance: { runtime: { name: 'synthetic-runtime' } }, extensions: { value: ['synthetic'] } };
+    const result = computePortableChart(input, context);
+    const originalReceipt = serializeNatalEnvelope(result.envelope), originalSnapshot = canonical(result.inputSnapshot);
+    assert(frozen(result.envelope) && frozen(result.inputSnapshot) && noDate(result.inputSnapshot), 'Frozen JSON, no mutable Date');
+    assert(!Object.isFrozen(result.chart) && !Object.isFrozen(date) && !Object.isFrozen(context.extensions), 'Caller and presentation remain mutable');
+    date.setUTCFullYear(2020); input.latitude = 0; input.flags.push('lmt');
+    context.provenance.runtime.name = 'changed'; context.extensions.value.push('changed');
+    result.chart.input.utc.setUTCFullYear(1999); result.chart.input.flags.push('lmt'); result.chart.input.latitude = -33;
+    result.chart.bodies[0].lon = 1; result.chart.angles.asc = 2; result.chart.houses.cusps[0] = 3;
+    result.chart.aspects[0].orb = 4; result.chart.flags.push('lmt');
+    assert(serializeNatalEnvelope(result.envelope) === originalReceipt && canonical(result.inputSnapshot) === originalSnapshot, 'Mutations cannot change captured data');
+    assert(!Reflect.set(result.envelope.result.bodies[0], 'lon', 42) && !Reflect.set(result.inputSnapshot.flags, '0', 'lmt'), 'Deep writes rejected');
+  });
+  run('errors expose one fixed message/code without reading hostile private failures', () => {
+    let privateReads = 0;
+    const hostile = new Proxy({}, { get() { privateReads++; throw new Error('private diagnostic'); }, ownKeys() { privateReads++; return []; } });
+    const input = Object.defineProperty({}, 'utc', { get() { throw hostile; } });
+    let error;
+    try { computePortableChart(input); } catch (caught) { error = caught; }
+    assert(error && error.name === 'PortableChartError' && error.message === 'Unable to prepare a portable chart.' && error.code === 'calculation_failed', 'Fixed boundary error');
+    assert(!('cause' in error) && privateReads === 0 && !JSON.stringify(error).includes('private'), 'No raw error inspection or retention');
+  });
+  run('context accessors and revoked proxies fail without private diagnostics', () => {
+    let reads = 0;
+    const accessor = Object.defineProperty({}, 'sourceInstant', { enumerable: true, get() { reads++; throw new Error('private context'); } });
+    const revoked = Proxy.revocable({}, {}); revoked.revoke();
+    for (const context of [accessor, revoked.proxy, { extensions: { private: 'x'.repeat(65537) } }]) {
+      let error; try { computePortableChart(base, context); } catch (caught) { error = caught; }
+      assert(error?.message === 'Unable to prepare a portable chart.' && !('cause' in error), 'Fixed context error');
+    }
+    assert(reads === 0, 'Accessor never invoked');
+  });
+  run('canonical request reads raw input getters once', () => {
+    const values = { ...base, timeKnown: false, flags: ['dst-fold', 'no-time'] }, counts = {}, input = {};
+    for (const [key, value] of Object.entries(values)) Object.defineProperty(input, key, { get() {
+      counts[key] = (counts[key] ?? 0) + 1; if (counts[key] !== 1) throw new Error('second input read'); return value;
+    } });
+    const result = computePortableChart(input);
+    assert(Object.values(counts).every((count) => count === 1) && Object.keys(counts).length === 6, 'Exactly six single reads');
+    equal(result.inputSnapshot.flags, ['dst-fold'], 'Canonical input flags');
+    return { counts };
+  });
+  run('explicit context is captured after calculation and then detached', () => {
+    const context = { extensions: { marker: 'before' } }, input = { ...base };
+    Object.defineProperty(input, 'utc', { get() { context.extensions.marker = 'at capture'; return base.utc; } });
+    const result = computePortableChart(input, context); context.extensions.marker = 'after';
+    assert(result.envelope.extensions.marker === 'at capture', 'Documented post-calculation capture');
+  });
+  run('explicit local resolution is preserved without current Intl reconstruction', () => {
+    const context = { localResolution: { date: '2001-12-21', time: '08:30', timeZone: 'Etc/UTC', offsetMinutes: 0,
+      gapShiftMinutes: 0, policy: { fold: 'earlier', gap: 'shift-forward' } } };
+    equal(computePortableChart(base, context).envelope.receipt.localResolution, context.localResolution, 'Explicit local context preserved');
+  });
+  run('missing location and unknown-time noon retain separate absence semantics', () => {
+    const missing = computePortableChart({ utc: base.utc, houseSystem: 'placidus' });
+    equal(missing.envelope.receipt.houses, { requested: 'placidus', actual: null, absenceReason: 'missing-location' }, 'Missing place distinct');
+    const noon = computePortableChart({ utc: '2001-12-21T12:00:00Z', timeKnown: false });
+    assert(noon.envelope.receipt.reference === 'supplied-instant' && noon.envelope.receipt.sourceInstant === null && noon.envelope.receipt.localResolution === null && noon.envelope.receipt.provenance === null, 'No invented metadata');
+  });
+  run('historical year 0099 remains year 0099 in browser UTC handling', () => {
+    const result = computePortableChart({ utc: '0099-12-21T08:30:00Z', timeKnown: false });
+    assert(result.inputSnapshot.utc === '0099-12-21T08:30:00.000Z', 'No 1900 year adjustment');
+  });
+  const result = { checks, summary: { passed: checks.filter((check) => check.passed).length, failed: checks.filter((check) => !check.passed).length },
+    observations: events, candidateObservations: events.filter((event) => event.phase === 'calculation'), offline: !navigator.onLine };
+  document.querySelector('#status').textContent = `${result.summary.passed}/${checks.length} browser cases passed`;
+  document.querySelector('#results').textContent = checks.map((check) => `${check.passed ? 'PASS' : 'FAIL'} — ${check.name}`).join('\n');
+  return result;
+};
+window.restoreObservers = () => {
+  for (const restore of restorers.reverse()) restore();
+  return { local: localStorage.length, session: sessionStorage.length, cookie: document.cookie };
+};
+window.casesReady = true;

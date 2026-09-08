@@ -342,3 +342,29 @@ sign pages. The one-time allowance names exactly those pages and the exact base;
 the evidence records byte equality to main. The scope guard implementation and
 future freeze are unchanged. A later retarget must refresh the allowance and
 comparison evidence against its actual base before integration.
+
+## C-007 — Retain the complete native calculation before projection
+
+The site's existing body summary deliberately omits fields required by the SDK
+receipt codec. Reconstructing a full receipt from that summary would invent
+missing facts; running a second calculation would duplicate work and could
+observe mutated caller inputs. Use one public `natalChart` result for both the
+SDK envelope and the site's existing compact projection.
+
+Share only the pure projection with `full.ts`. Keep the optional public/receipt
+module outside the existing eager math and UI graphs, preserving synchronous
+legacy input identity and numerical references. No account/storage wire change
+or legacy migration is implied by the new callable boundary.
+
+Derive the canonical replay input from validated receipt fields rather than
+rereading raw getters. Freeze detached JSON recursively and represent its instant
+as an ISO string: freezing a Date cannot prevent its setters. The presentation
+chart retains the current mutable contract, detached from the receipt/snapshot.
+Source spelling, timezone resolution and provenance require explicit context;
+do not infer them from a resolved instant or label unknown time as noon.
+
+SDK context validation happens after calculation and rejects context accessors.
+This is deliberately not a claim of an atomic entry-time snapshot across
+same-realm executable getters, nor authentication of provenance. Avoid a second
+context validator merely to suggest such a guarantee. Errors expose one fixed
+message/code, without inspecting or retaining raw exceptions or private input.

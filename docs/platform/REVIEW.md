@@ -22,10 +22,19 @@ separates source, artifacts, previews, production and adoption.
   [#419](https://github.com/ZodiacsOfficial/site/pull/419) contain the shared
   candidate, developer entry/examples, civil-input correction and standalone
   receipt integration. Each has recorded local, CI and preview evidence.
+  Site [#422](https://github.com/ZodiacsOfficial/site/pull/422) adopts the verified
+  rc.5 archive, separates provenance identities, labels the archived API reference
+  and fixes a demonstrated developer-note overflow at native 400% zoom. Its exact
+  READY preview and local acceptance pass; the remaining CI job is still active.
 - Latest frozen SDK artifact is engine rc.5, source `97f5e8d0`, distribution
   `33336925`, SHA-256 `1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`.
-  The site application remains on engine rc.1. Standalone starter rc.3 contains
-  engine rc.3. Their full identities and commands are in [EVIDENCE](EVIDENCE.md).
+  The site draft application now contains engine rc.5. Standalone starter rc.3
+  contains engine rc.3; generated TypeDoc remains an explicitly archived rc.1
+  reference. Their full identities and commands are in [EVIDENCE](EVIDENCE.md).
+  The following optional portable-calculation boundary is locally implemented
+  and tested, including actual browser acceptance. It preserves
+  complete receipts before compact projection, and activates no saved storage
+  or account migration.
 
 ## Findings requiring disposition
 
