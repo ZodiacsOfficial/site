@@ -737,3 +737,420 @@ but changing that single field discards the requested setting through rerun/sync
 Its two original synthetic JSON records are preserved; no account operation or
 migration was performed. C02 is partially implemented, not a completed portable
 receipt contract. Review PR/CI/preview delivery follows these local gates.
+
+### C02 review delivery and remote boundary proof
+
+[Draft site #418](https://github.com/ZodiacsOfficial/site/pull/418) is stacked
+on #417 at exact source `a4284d8d6289ed6abfe30d2da883ad07edcfc7bd`.
+The unchanged scope guard passes all 42 paths against its exact base, with
+protected scope untouched. Preview `dpl_8SPSZP4ETeK4qdzpYiSsW7r9QrKD` is READY,
+source a4284d8d, at https://zodiacs-c03uosfvw-zodiacsofficial.vercel.app .
+At 21:08 UTC actual Chrome passed all twelve imported-share journeys at
+1280/390, including invalid input rejection, valid known/unknown calculations,
+no overflow/page errors and no saved-profile writes.
+[Remote receipt](evidence/c02-preview-share-boundary-browser.json),
+[rejected mobile import](evidence/c02-preview-share-rejected-390.png).
+Temporary access file and browser wrapper were removed; no bearer URL/cookie
+is saved in repository evidence. Exact-head Site Check [34161649806](https://github.com/ZodiacsOfficial/site/actions/runs/34161649806) passed all 14 jobs, including visual, Lighthouse and widget gates.
+[Final result](evidence/c02-ci-success.json).
+
+### A02/A03 separate GeoNames recovery candidate
+
+A rejected optional GeoNames index/shard request previously prevented a later
+explicit call from retrying. Eight expected baseline failures cover rejected
+transport, HTTP 503, JSON parsing and caller-bound injected aborts. Matching
+rejected cache entries are now evicted while retaining shared pending work,
+successful/unrelated entries and the original rejection reason. No automatic
+retry loop, timer, new cancellation API or live GeoNames request was added.
+
+[SDK draft #7](https://github.com/ZodiacsOfficial/sdk/pull/7) is stacked on #6.
+Source commit `0da0941e23035df3be95e5aa40f4f270222b57dd`; artifact/evidence
+commit `abefc7c347ed22708a6743713d58c843d7166d8e`. This separate engine
+`0.1.1-rc.2` archive has **18 files / 21,946 packed bytes / 72,108 unpacked
+bytes**, SHA-256 `b5c0c63bddc8c1ccfc717551bdd57b1bfe7c439568851780575c8586456e0826`.
+[Immutable archive](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/abefc7c347ed22708a6743713d58c843d7166d8e/artifacts/zodiacs-engine-0.1.1-rc.2.tgz)
+was anonymously downloaded with matching bytes/digest at 21:15 UTC:
+[receipt](evidence/geo-public-artifact.json). Site and public starter retain rc.1;
+no existing package version's bytes were changed.
+
+All required SDK lint/typecheck/format/checksum/test/build/export/pack/contents/
+neutrality and TypeDoc gates passed. Full suite **305 tests / 27 files** on
+Node 20.20.2 and 22.23.2. Clean isolated Node 20/22 consumers installed the exact
+archive, compiled public TypeScript 5.9.3 imports, and passed examples, notices,
+optional-dependency isolation and retry through the packed geo export. Isolated
+consumer audit: zero advisories. A second real reviewer passed eleven additional
+strict-unhandled-rejection probes, including immediate concurrent retry waves,
+non-Error reasons and stale-eviction protection. Ninety-six synthetic public
+chart combinations exactly match rc.1 mathematical output after excluding
+engineVersion. This is parity, not independent astronomical accuracy evidence.
+
+[Durable SDK commands/logs/receipts](https://github.com/ZodiacsOfficial/sdk/blob/abefc7c347ed22708a6743713d58c843d7166d8e/docs/platform/EVIDENCE.md)
+include actual failures and finite review limits. SDK CI currently triggers only
+for main-targeting PRs, so no passing CI run is claimed for stacked #7. The
+known auxiliary SDK preview failure and broader app dependency findings remain
+separate. Structurally invalid but parseable GeoNames JSON remains cached in
+both versions; a deliberate validation/cache-policy follow-up is still needed.
+SDK #5's explicit release hold remains. No npm publication, main merge,
+production operation, external review, outreach, spending or adoption occurred.
+
+### A04/C02 additive natal codec delivery
+
+[SDK draft #8](https://github.com/ZodiacsOfficial/sdk/pull/8) delivers engine
+`0.1.1-rc.3` separately from the site's rc.1 pin. Runtime source:
+`aaade67d0d49e8b10d1bc5c59cf345d6106dc270`; frozen artifact/evidence commit:
+`2000377b1b537c1b08c873889059acc8edacc4fe`; final browser/delivery checkpoint:
+`b0d7f02549187a9c4a0ca5baa97cf3342fc60707`. The optional `/receipt` entry
+preserves full natal results, requested and actual houses, explicit absent-house
+reasons, original ISO spelling when captured, unknown-time references and
+optional local-resolution assertions without consulting current timezone data.
+
+The Zodiacs draft validates a 64 KiB/depth 12/4,096-value envelope, rejects
+duplicate decoded JSON keys and unsupported versions/features, and emits fixed
+errors/redacted diagnostics without birth details, arbitrary metadata or stable
+hashes. Captured provenance remains an unauthenticated claim. It does not migrate
+account sync v1 or infer legacy intent. [Draft and two synthetic fixtures](https://github.com/ZodiacsOfficial/sdk/blob/2000377b1b537c1b08c873889059acc8edacc4fe/docs/platform/receipt-draft-v1.md).
+
+**429 tests / 29 files** pass on Node 20/22, with all required SDK gates and
+TypeDoc. Two actual clean packed consumers pass public TypeScript 5.9.3 imports,
+core examples, package isolation, GeoNames retry, receipt replay and privacy.
+The isolated consumer has zero reported advisories; broader SDK app findings
+remain. Ninety-six synthetic chart cases match rc.1 exactly after excluding
+engineVersion; replay normalizes absent optional input.flags to an empty list.
+No numerical rounding or broader accuracy claim is involved.
+
+Separate tool-backed review and final integrator reruns cover 60 codec controls,
+21,500 JSON differential cases and three corrected counterexamples. Actual
+Chrome 152 passes 23 offline codec assertions with Intl/storage blocked, no
+network/capability attempts, no cookies and only lightweight receipt chunks.
+This browser probe recreates synthetic Chart values without ephemeris execution.
+[All SDK logs, source hashes, corrections and limits](https://github.com/ZodiacsOfficial/sdk/blob/b0d7f02549187a9c4a0ca5baa97cf3342fc60707/docs/platform/EVIDENCE.md).
+
+The [immutable rc.3 archive](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/2000377b1b537c1b08c873889059acc8edacc4fe/artifacts/zodiacs-engine-0.1.1-rc.3.tgz)
+was anonymously downloaded at 22:05 UTC, **32,079 bytes / 22 files**, SHA-256
+`aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17`.
+[Download receipt](evidence/receipt-public-artifact.json). No successful stacked
+SDK CI is claimed: its workflow targets main PRs only. The explicit #5 hold,
+required human/external review and release/publication authority remain.
+No merge, npm publish, production operation, account migration, outreach,
+spending or external adoption occurred. The active subsequent slice integrates
+this candidate into a new standalone natal starter; acceptance is pending.
+
+### B04 publisher widget accessibility and privacy completion
+
+The existing immutable starter rc.2 was tested in actual isolated Chrome
+152.0.7977.83; all 20 archive files match source. **74 browser matrix assertions**,
+three focused native-zoom/scroll cases and four privacy controls pass. Native
+200%/400% Chrome zoom is independently confirmed by CSS viewport/DPR, rather
+than CSS zoom. Keyboard reaches attribution and fallback, Page Down exposes
+remaining iframe content, and no horizontal overflow occurs. Reduced-motion
+documents have no active animation; conflicting host CSS does not penetrate
+the frame. Real offline failure leaves a reachable fallback and honestly reports
+only that the widget was requested, without promising offline navigation.
+
+No request occurs before activation, no submitted birth data is involved, and
+post-activation requests contain no synthetic parent query/fragment. Referrer
+exposes only origin; parent/frame storage and cookies are empty. The observed
+hosted dark document returned HTTP 200 with SHA-256
+`809285f1b6bb071465a6d2f5c56dc896e41aa495ad9e5a863cba3fa5b0bc8169` and the then-current
+2026-09-07 UTC date. It has its own existing deployment, not a new widget release.
+
+[Independent review and exact scope](evidence/b04/REVIEW.md),
+[results](evidence/b04/summary.json),
+[native 400% dark keyboard focus](evidence/b04/nativeZoom4-dark-attribution-viewport.png),
+[native 400% light scrolled content](evidence/b04/nativeZoom4-light-pagedown-viewport.png).
+The integrator visually inspected both captures. Earlier clipped full-page
+screenshots were harness artifacts and excluded; raw viewport captures are the
+accepted evidence. Browser/server cleanup is recorded. No source defect was
+reproduced and no immutable archive was rewritten. This finite Chromium corpus
+is not all-browser or assistive-technology certification. A changed starter will
+receive affected functional/browser checks again.
+
+
+## Standalone natal receipt source — September 7, 22:38 UTC
+
+The next starter is `0.1.0-rc.3`, containing the immutable SDK engine
+`0.1.1-rc.3` from distribution commit `2000377b1b537c1b08c873889059acc8edacc4fe`
+and runtime source `aaade67d0d49e8b10d1bc5c59cf345d6106dc270`. The site application's
+rc.1 pin, account records and existing starter archives remain unchanged.
+
+The natal example exports actual local JSON files, imports bounded strict UTF-8
+files as unverified stored results, retains exact unknown-time references and
+full numeric precision, and emits an allowlisted redacted diagnostic. Imported
+records never refill the birth form or trigger recalculation. Generation guards
+prevent older asynchronous reads replacing a newer calculation, selection,
+cancellation or import. Imported extensions survive export but are not rendered;
+errors do not include filenames or file content. Explicit full exports contain
+birth details; redaction is not described as anonymity.
+
+- All **39 Node checks** pass with the actual loopback server. The initial
+  restricted invocation had one `listen EPERM` failure; it is retained separately
+  from the successful authorized local-server run.
+- All **231 actual Chrome assertions** pass in the final pre-pack source run:
+  ordinary natal/transit flows, 320/1280 receipt controls, actual downloaded
+  bytes, 08:30 unknown-time import/re-export, mixed-version unverified claims,
+  malformed/oversized files, overlap races, revoked Blob URLs, offline operation,
+  no automatic storage/URL disclosure, and widget branding/fallback keyboard use.
+  The two raw receipt-control viewport captures were visually inspected.
+- The first browser run reported **222/223** checks, missing mobile dark widget
+  focus. The original cause did not recur in focused comparisons; it is not
+  labeled a proven product or timing defect. The harness now waits a bounded
+  interval for exact iframe/credit focus after the first Tab, then for fallback
+  focus after the second Tab, and records focus samples. It does not press extra
+  Tabs or programmatically focus the credit. Initial evidence is preserved.
+- **113 synthetic archive-fixture tests** pass for the decoupled verifier. The
+  authoritative candidate belongs to the starter; exact archive/source bytes,
+  provenance, repository paths, dependency lock, public exports, notices and
+  tar/path limits remain checked. This is not yet a real rc.3 archive check.
+- Independent build review caught a rejected nested ephemeris bundle being
+  written before provenance validation. Build now uses `write: false`, checks
+  the actual bundled module path against the locked installation, then writes.
+  All six good/bad controls pass; all eight pre-existing output files remain
+  byte-identical on rejection. Receipt ephemeris facts identify actual locked
+  version 2.1.19, separately from the engine's dependency range.
+
+[Evidence inputs and original hashes](evidence/starter-receipt/checkpoint-inputs.json),
+[39 tests](evidence/starter-receipt/tests-local-final.log),
+[final source browser](evidence/starter-receipt/browser-final-source.json),
+[initial browser](evidence/starter-receipt/browser-prepack-initial.json),
+[build correction review](evidence/starter-receipt/build-review-final.md),
+[all-output preservation](evidence/starter-receipt/build-rejection-output-stability.json).
+All chart data is synthetic. These are finite local/source checks, not fresh
+archive acceptance, external developer adoption, human expert review, npm
+publication or production deployment.
+
+Fresh repository reads at this checkpoint still show site main `7f953e3f` and
+SDK main `b49e0f14`. SDK #5 remains OPEN/draft at `cced0116`, zero submitted
+reviews and an explicit merge/publication hold.
+
+
+## Immutable receipt starter and draft #419 — September 7, 22:47 UTC
+
+Runtime/source commit **`7da2bdb3a5bc6d65921997ba1cb79609f330c765`** was
+frozen before packing. Distribution commit
+**`dd5d83cdf2a2a5d7096175f01ce985b47824a376`** contains the new archive;
+**`83bd8aad212e846815eebb07bd3b59fa1c28e1c1`** points setup metadata to it.
+Site [draft #419](https://github.com/ZodiacsOfficial/site/pull/419) is stacked
+on delivered #418. No existing artifact was replaced.
+
+`zodiacs-platform-starter-0.1.0-rc.3.tgz` has **21 files, 56,135 packed bytes,
+113,407 unpacked bytes**, SHA-256
+`facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a`.
+The [immutable anonymous download](https://raw.githubusercontent.com/ZodiacsOfficial/site/dd5d83cdf2a2a5d7096175f01ce985b47824a376/public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz)
+was fetched at 22:41:50 UTC and matches local bytes exactly. This supersedes
+`publicDownloadVerified: false` in the earlier pack-time identity record.
+[Pack inventory](evidence/starter-receipt/pack-rc3.json),
+[source identity](evidence/starter-receipt/artifact-rc3.json),
+[public verification](evidence/starter-receipt/public-artifact.json).
+
+| Gate | Exact result |
+| --- | --- |
+| Archive verifier | Offline CLI and **113/113 tests** pass on the real rc.3 archive, including adversarial synthetic mutations of these bytes. |
+| Fresh consumer | Isolated Node 22.23.2/npm 11.17.0 install, all **39 tests** and build pass; npm reports zero vulnerabilities. 3.127 seconds is internal automated timing only. |
+| Packed browser | All **231 assertions** pass in actual Chrome against that fresh consumer and the exact archive hash. No fatal errors. |
+| Developer pages | Actual Chrome passes all three journeys at 1280/390, keyboard focus, responsive sizing and explicitly labeled CSS zoom. Root inspected the mobile example capture; Cosmic Void styling remains intact. |
+| Literal public setup | Download/checksum/install/test/build and all three own-server pages pass; **39 tests**. Existing-directory, simulated HTTP failure and deliberate expected-hash mismatch stop before tar/npm. Success took 2.2 seconds internally. Owned process group is closed. |
+| Full site | **4,699 tests / 408 files** pass. Build, bundle budgets and check pass; **0 errors, 0 warnings, 11 hints**. Assistant context regenerated with no resulting source drift. |
+| Preservation | Scope guard against #418 passes; protected scope untouched. Phase 1 build fingerprint remains `3998a3896d8408b2dc0b73d29c85f0822cd294c228be679c83bc08e400282cf1`. Site engine/ownership pins and account storage are unchanged. |
+
+[All source-to-evidence paths and hashes](evidence/starter-receipt/archive-checkpoint-inputs.json),
+[packed browser receipt](evidence/starter-receipt/browser-archive.json),
+[literal setup receipt](evidence/starter-receipt/onboarding/onboarding.json),
+[site tests](evidence/starter-receipt/starter-rc3-site-tests.log),
+[site build](evidence/starter-receipt/starter-rc3-site-build.log),
+[site check](evidence/starter-receipt/starter-rc3-site-check.log).
+
+The widget focus investigation's fixed corpus did not reproduce the original
+failure. Its strict positive control passes; an intentionally untabbable credit
+correctly fails even when fallback focus succeeds. This validates the stronger
+assertion without establishing a cause for the historical failure.
+[Review](evidence/starter-receipt/focus/REVIEW.md),
+[positive/negative control](evidence/starter-receipt/focus/strict-focus-control.json).
+
+Production was read again and remains READY `dpl_BrntzbFYa2gzetKWgeq91GFeaM6W`,
+`zodiacs.org`, source `7f953e3fca0e7d5009e5602a1dad69edff0f54cc`. These gates
+do not represent npm publication, production release, human expert approval or
+external adoption. Remote CI/preview and native-zoom checks are recorded next.
+
+
+### Exact review preview and native zoom — 2026-09-07 22:53 UTC
+
+Automatic preview **`dpl_9VqGRZZm9sXhvHe86ZjfUaaCCKQt`** is explicitly READY
+for delivery source `83bd8aad212e846815eebb07bd3b59fa1c28e1c1`:
+[open review preview](https://zodiacs-8ok1gtu0v-zodiacsofficial.vercel.app/developers/examples/).
+Actual Chrome passes all three developer-page journeys at desktop/mobile widths
+and CSS zoom. The preview's rendered setup is byte-identical to the literal
+public setup already executed. Root inspected the actual desktop preview capture.
+Temporary access was held in memory; the private access file was removed after
+the browser closed. No access URL, cookie or browser profile is archived.
+[Deployment identity](evidence/starter-receipt/preview-deployment.json),
+[browser receipt](evidence/starter-receipt/preview-browser.json),
+[setup equality](evidence/starter-receipt/preview-setup-equality.json).
+
+A separate actual Chrome native-zoom run passes **40 checks** on the exact
+21-file installed archive at 200% and 400%. Native settings readback, CSS viewport
+and DPR establish zoom; CSS zoom remains 1. Keyboard actions reach and activate
+the new export, file chooser, import and diagnostic controls, with visible focus
+and no horizontal overflow. PageDown reaches the diagnostic's end; reduced-motion
+preference is active. Root inspected raw 400% file-focus and final-reading
+captures. The file chooser was triggered by keyboard and supplied synthetic
+bytes by Playwright; this is not a manual OS-dialog test.
+
+Both earlier harness stops are preserved: strict floating-point equality against
+Chrome's 3.9999999999999996 readback, and sampling native PageDown before scroll
+settled. The accepted probe uses a narrow numeric tolerance plus exact viewport/
+DPR controls and 400 ms scroll settling. No product edit or extra matrix run
+followed the passing result. The report records fractional layout tolerance,
+exact raw captures, source/archive hashes and owned-browser/server cleanup.
+[40-check receipt](evidence/starter-receipt/zoom/result.json),
+[method and limits](evidence/starter-receipt/zoom/REVIEW.md),
+[original input mapping](evidence/starter-receipt/zoom/normalization.json).
+
+CI run **34167746529** targets `83bd8aad`: 13 jobs currently pass and Build &
+Check remains running. A passing whole-run result is not claimed at this
+checkpoint. Browser Evidence is conditionally skipped, distinct from the actual
+local and remote browser checks recorded above.
+
+
+## GeoNames schema/cache candidate delivery — September 7, 23:13 UTC
+
+The next independent A02/A03 correction is delivered in SDK
+[draft #9](https://github.com/ZodiacsOfficial/sdk/pull/9), stacked on #8. Source
+`d190d97c981c7cacc6eb4ab6a49bdb8451ca3459` validates compact v1 JSON before cache
+fulfillment and returns metadata array snapshots. Malformed successful responses
+can be retried explicitly, while valid/in-flight caches and original transport
+errors are preserved. The root/ownership code and site's engine rc.1 and starter
+engine rc.3 pins remain unchanged.
+
+Separate engine **0.1.1-rc.4**, **22 files / 33,669 packed / 112,949 unpacked
+bytes**, SHA-256
+`0146fdff7abb6b937cf4d66b4cdaf0c80ecf238ea71f1f4f9fb27eae687a0d20`, is distributed
+at `9ad6a73984e69b897a6422429fab1970a7c89450`. The
+[immutable public artifact](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/9ad6a73984e69b897a6422429fab1970a7c89450/artifacts/zodiacs-engine-0.1.1-rc.4.tgz)
+was anonymously verified at 23:08 UTC.
+
+All **496 workspace tests / 30 files** pass on Node 20/22. Required build,
+typecheck/lint, format, checksum, neutrality, TypeDoc, exports/contents/dry-pack
+gates pass. Two clean packed consumers pass public TypeScript, ordinary engine/
+receipt behavior and new HTTP-200 recovery/mutation controls; isolated audit is
+zero. The 96 exact chart comparisons match rc.3 apart from version. All 33,934
+checked-in rows validate, with baseline results/metadata/request order retained
+in 27 sampled queries. Nine independent strict-unhandled-rejection probes and
+20 actual Chrome packed-consumer controls pass.
+
+[Complete SDK evidence at its browser checkpoint](https://github.com/ZodiacsOfficial/sdk/blob/ef846c82dd284559f1574f69ee901a221a7a722a/docs/platform/EVIDENCE.md#geonames-schema-and-cache-integrity-candidate)
+retains pre-fix failures, exact hashes, commands, model review and harness
+corrections. All browser responses are synthetic. Fixed GET resource paths omit
+full query/birth data but reveal the normalized initial through shard selection.
+Validation cannot authenticate geographic facts or detect in-range table indices
+from another dataset generation; a concrete mismatch is tested/documented.
+No host-dependent timezone rejection, automatic retry, eager requests, new
+response-size budget or custom-fetch sandbox is claimed.
+
+Fresh 23:08 UTC reads retain site main `7f953e3f`, SDK main `b49e0f14` and SDK
+#5's OPEN/draft/zero-review merge-publication hold at `cced0116`. Npm engine/
+widgets return 404; optional ownership remains 1.0.1. No merge, npm publication,
+production operation, external outreach or adoption occurred. Stacked SDK CI
+does not trigger; passing local evidence is not called CI success.
+
+
+### Receipt starter exact-source CI complete — 2026-09-07 23:21 UTC
+
+Site Check run [34167746529](https://github.com/ZodiacsOfficial/site/actions/runs/34167746529)
+completed successfully for delivery source
+**`83bd8aad212e846815eebb07bd3b59fa1c28e1c1`**: **all 14 jobs pass**. This
+supersedes the running-job snapshots above. The long Build & Check job completed
+its existing source, numerical, fresh-consumer, cross-page, visual, performance
+and widget acceptance steps; it was not cancelled to push evidence updates.
+[Exact source/job outcomes](evidence/starter-receipt/ci-final.json).
+
+Subsequent site commits only record verification and the separately delivered
+SDK candidate. They do not change this tested runtime, archive or metadata.
+The exact READY preview already tested uses the same `83bd8aad` delivery source.
+The conditionally skipped Browser Evidence workflow is not counted as a passing
+browser run. No merge or production deployment is implied by all-green CI.
+
+
+## Stage A public flags and civil settings — SDK rc.5
+
+Delivered [SDK draft #10](https://github.com/ZodiacsOfficial/sdk/pull/10), stacked
+on #9, from `codex/platform-input-flags`. Source
+`97f5e8d01828f4b85ffa845825dee9acff4695e4`; archive carrier
+`333369256af683c560603dd1e6411dd7a07adb1f`; final acceptance evidence
+`785e3ea154c28e890ecc97ce2284ee3e9f48a4a7`. The
+[anonymous immutable artifact](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/333369256af683c560603dd1e6411dd7a07adb1f/artifacts/zodiacs-engine-0.1.1-rc.5.tgz)
+was verified at 23:49:36 UTC: 23 files, 36,065 packed / 121,212 unpacked bytes,
+SHA-256 `1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`, integrity
+`sha512-XUmtZ+mOwMJxElr6hbhQ59cPatvsPa8/XrLfihZfdsQnMZgptlTZSV6YBRVr+Nqps0No64HUpYLXNhUoeCVzNA==`.
+
+Correct typed no-time/polar-fallback echoes previously duplicated result flags
+and failed receipt creation. Malformed/private/contradictory flags could enter
+result metadata, and civil/public settings were not consistently captured after
+validation. The original-source final regression suite reproduced 61 failures
+with 5 valid controls. The implemented compatibility policy preserves the five
+public values, bounds raw arrays at 64 data entries, deduplicates valid claims,
+checks derived assertions, and records canonical semantic metadata once.
+Public/civil settings are captured once; invalid civil settings reject before
+Intl. Supplied Charts receive flag consistency checks and optional shallow
+normalization, retaining canonical identity and numerical references.
+
+Root executed all required SDK gates; build/typecheck ran sequentially. **562
+workspace tests / 31 files pass on Node 20.20.2 and 22.23.2**. Two actual fresh
+packed consumers pass TypeScript 5.9.3, exports/notices, optional isolation,
+existing GeoNames/receipt examples and the new flags/settings/identity controls.
+Isolated audit is zero. Installed rc.4→rc.5 matches **480** synthetic numerical
+cases excluding only engineVersion; **480** extra duplicate/result echo cases
+and receipt replay pass with ephemeris 2.1.19 on both.
+
+An independent tool-backed reviewer passed 14 frozen-source adversarial controls,
+including Saturn costs: ordinary inputs add zero natal calculations, explicit
+raw polar assertions add one to verify actual fallback, and supplied Charts add
+none. Actual Chrome 152 passes **26 aggregate packed-browser acceptance checks**,
+including 14 API groups. All 23 installed archive members match. Optional geo/
+receipt graphs exclude ephemeris/ownership; root excludes optional code. Four
+static GET resources load, then all API cases run offline with zero observed
+fetch/storage attempts, cookies or browser/console/CSP errors. Privacy observers
+are proven with negative controls. Valid civil cases intentionally use Intl.
+Owned browser/server resources are closed.
+
+[Exact source, commands, raw logs, controls, graphs, captures and limits](https://github.com/ZodiacsOfficial/sdk/blob/785e3ea154c28e890ecc97ce2284ee3e9f48a4a7/docs/platform/EVIDENCE.md#public-flags-and-civil-settings-candidate).
+Original harness errors are retained: baseline Intl spy corrected before the
+final red suite; first real pack failed inherited npm cache EPERM before an
+archive existed and succeeded with isolated configs/cache; first browser session
+name exceeded macOS's socket limit and was shortened before candidate execution.
+No source or test tolerance was changed to hide those environment/harness errors.
+
+Time flags remain historical claims; precomputed numerical values are not
+authenticated. Same-realm executable getters/proxies are not sandboxed. Finite
+parity is not an astronomical accuracy guarantee. Dependency lock, receipt schema, numerical formulas, older archives and
+ownership behavior are unchanged by the new wrapper validation. The site retains engine rc.1 and starter
+rc.3 retains engine rc.3 at this checkpoint. A new site pin is being prepared
+separately; no account storage/wire migration is active.
+
+Remote refresh at 23:41 UTC still shows site main `7f953e3f`, SDK main `b49e0f14`,
+SDK #5 draft at `cced0116`, zero submitted reviews, explicit merge/publication
+hold, engine/widgets npm 404, ownership 1.0.1 and unchanged READY production
+`dpl_BrntzbFYa2gzetKWgeq91GFeaM6W`. No merge, npm publication, production release,
+external adoption, outreach, spending, access change or destructive action.
+
+## C02 local request loss and old-writer counterexamples
+
+An independent synthetic in-memory probe at site `921cd0d1` imports the actual
+engine/profile store/read/handoff and account wire/fingerprint functions. Its
+save projection mirrors and checks the current calculator source mapping; it
+does not claim to drive the calculator UI. **Two expected assertions fail**:
+polar requested Placidus saves/reruns as Whole, and a subsequent explicit Whole
+request updates the same record instead of retaining two distinct requests.
+**Three controls pass**, proving old writers hide/overwrite a same-key version
+bump, discard additive metadata on ordinary re-save, and produce identical v1
+wire bytes/fingerprints for the different requests. Zero account/network calls,
+real browser storage writes or shared source edits occurred.
+
+[Probe command and exact qualification](evidence/c02-next/README.md.log),
+[observations/source hashes](evidence/c02-next/observations.json.log),
+[executed synthetic probe](evidence/c02-next/probe.test.ts.log),
+[versioning comparison](evidence/c02-next/DESIGN.md.log).
+Decision C-006 chooses a version-owned source with explicit legacy/downgrade
+behavior. First integrate the existing SDK receipt capability through a tested
+site artifact adoption; do not duplicate its schema or infer missing legacy
+intent. Active storage/access/export/delete/sync wiring remains engineering work,
+with future server capability/CAS/idempotent-replay handling separately reviewed.

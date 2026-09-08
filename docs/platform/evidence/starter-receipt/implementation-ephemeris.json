@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "runtime": "v22.23.2",
+  "command": "node --test tests/calculate.check.mjs tests/receipt.check.mjs",
+  "tests": {
+    "passed": 36,
+    "failed": 0
+  },
+  "files": [
+    {
+      "file": "examples/platform/src/calculate.mjs",
+      "sha256": "38ebdc01cf24d4d78c99daa7246d7969116fb3196c23de23df6d6c0c16df8cb8"
+    },
+    {
+      "file": "examples/platform/tests/receipt.check.mjs",
+      "sha256": "1ff0d46b35b891b9cf23f3bbd009f89b3ed4d37270cfddb1686ce6233e5e6dfa"
+    }
+  ],
+  "capturedEphemeris": {
+    "name": "astronomy-engine",
+    "version": "2.1.19"
+  },
+  "scope": "Fresh receipt provenance only. Imported claims and runtime/UA/tzdb behavior unchanged.",
+  "summary": "1..36\n# tests 36\n# suites 0\n# pass 36\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 150.289792\n"
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "result": "passed",
+  "mode": "offline",
+  "starter": {
+    "schemaVersion": 1,
+    "name": "zodiacs-platform-starter",
+    "version": "0.1.0-rc.3",
+    "file": "zodiacs-platform-starter-0.1.0-rc.3.tgz",
+    "sha256": "facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a",
+    "artifactCommit": "dd5d83cdf2a2a5d7096175f01ce985b47824a376"
+  },
+  "engine": {
+    "name": "@zodiacs/engine",
+    "version": "0.1.1-rc.3",
+    "sha256": "aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17",
+    "ephemeris": {
+      "name": "astronomy-engine",
+      "version": "2.1.19"
+    }
+  },
+  "filesVerified": 21,
+  "runtime": {
+    "node": "v22.23.2",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "consumer": null,
+  "elapsedSeconds": 0.011
+}

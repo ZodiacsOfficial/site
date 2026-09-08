@@ -1,0 +1,42 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-c02-next-review
+
+ × probe.test.ts > RED: a new polar Placidus save must rerun the original requested system 25ms
+   → expected 'whole' to be 'placidus' // Object.is equality
+ × probe.test.ts > RED: different explicit requests must not merge just because polar actual houses match 3ms
+   → expected 'updated' to be 'saved' // Object.is equality
+ ✓ probe.test.ts > proves a same-key version2 profile is hidden then overwritten by the current writer 2ms
+ ✓ probe.test.ts > proves optional metadata in v1 is lost by a normal old-client full-record re-save 1ms
+ ✓ probe.test.ts > confirms fallback and explicit-whole v1 writes remain byte/fingerprint indistinguishable 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  probe.test.ts > RED: a new polar Placidus save must rerun the original requested system
+AssertionError: expected 'whole' to be 'placidus' // Object.is equality
+
+Expected: "placidus"
+Received: "whole"
+
+ ❯ probe.test.ts:50:30
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  probe.test.ts > RED: different explicit requests must not merge just because polar actual houses match
+AssertionError: expected 'updated' to be 'saved' // Object.is equality
+
+Expected: "saved"
+Received: "updated"
+
+ ❯ probe.test.ts:57:18
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 3 passed (5)
+   Start at  06:43:49
+   Duration  294ms (transform 105ms, setup 0ms, collect 134ms, tests 37ms, environment 0ms, prepare 40ms)
+
+JSON report written to /private/tmp/zodiacs-platform-c02-next-review/result.json

@@ -1,6 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import candidate from '../../../data/platform-engine-candidate.json';
+import candidate from '../../../../examples/platform/candidate.json';
 import starter from '../../../../public/examples/platform-starter.json';
 
 const repository = 'https://github.com/ZodiacsOfficial/site';
@@ -36,7 +36,7 @@ const description = 'Run three Zodiacs examples from a verified candidate archiv
     <h1 class="display">Start with a working result.</h1>
     <div class="prose">
       <p>One small JavaScript project contains a local natal calculator, a personalized transit snapshot, and a publisher sky iframe. No framework, account, API key, wallet, or private environment is required.</p>
-      <p>Starter <code>{starter.version}</code> includes <code>{candidate.name}@{candidate.version}</code>, an <strong>{candidate.releaseLabel.toLowerCase()}</strong>. Review and npm publication gates remain open. The hosted iframe uses its own deployment.</p>
+      <p>Starter <code>{starter.version}</code> includes <code>{candidate.package}@{candidate.version}</code>. <strong>{candidate.status}.</strong> This standalone project's engine pin is separate from the site's application; the hosted iframe uses its own deployment.</p>
       <p><a href="/developers/support/">Check supported inputs, runtimes, and numerical limits</a> before adapting the examples.</p>
     </div>
 
@@ -47,7 +47,7 @@ const description = 'Run three Zodiacs examples from a verified candidate archiv
     </div>
     <pre tabindex="0" role="region" aria-label="Starter setup commands"><code>{setup}</code></pre>
     <div class="prose">
-      <p>Open <code>http://127.0.0.1:4178/</code>. The test step should report 24 passing tests. Stop the local server with Ctrl+C. If port 4178 is occupied, run <code>cd zodiacs-starter/package</code>, then <code>node scripts/server.mjs 4179</code> and use its printed address. This server is a local demo, with no request logging or chart endpoint.</p>
+      <p>Open <code>http://127.0.0.1:4178/</code>. The test step must finish with no failing tests. Stop the local server with Ctrl+C. If port 4178 is occupied, run <code>cd zodiacs-starter/package</code>, then <code>node scripts/server.mjs 4179</code> and use its printed address. This server is a local demo, with no request logging or chart endpoint.</p>
       <p>The archive includes its <a href={readmeUrl}>full README, source, and failure cases</a>, locked dependencies, candidate identity, and dependency notices. It uses the public engine entry point and no workspace-only imports.</p>
     </div>
 
@@ -57,6 +57,8 @@ const description = 'Run three Zodiacs examples from a verified candidate archiv
       <p><strong>Success:</strong> 12 bodies, an ascendant near 23.871984° Aries, and whole-sign houses with <code>polar-fallback</code>. Requested and actual house systems are both visible.</p>
       <p><strong>Try a failure:</strong> enter <code>2001-02-29T09:00:00Z</code>. The impossible date must show an error and clear the previous result.</p>
       <p>Unknown time uses 12:00 UTC on the entered date, carries <code>no-time</code>, and omits angles and houses. It does not infer local noon. Resolve actual birthplace timezone rules before supplying a known instant.</p>
+      <p>The natal example also exports and imports one <strong>draft natal receipt</strong> locally. A full export includes birth details. Imported records display their stored result as unverified claims; they do not refill the form, recalculate, upload data, or change a supplied reference time. Re-export retains the requested and actual house systems and the original receipt assumptions.</p>
+      <p>Use the redacted diagnostic for a smaller report that omits dates, coordinates, positions, imported metadata, and stable hashes. Redaction does not guarantee anonymity. Unsupported versions, required features, duplicate JSON keys, and oversized files produce a safe error.</p>
     </div>
 
     <h2 id="transits">2. Inspect a personalized transit snapshot</h2>
@@ -66,8 +68,8 @@ const description = 'Run three Zodiacs examples from a verified candidate archiv
       <p><strong>Try a failure:</strong> remove the transit instant’s <code>Z</code> without adding an offset. An unresolved local time must be rejected. These are snapshot aspects, not exact-pass times or natal ASC/MC contacts.</p>
     </div>
     <aside class="prose privacy-note" aria-label="Local calculation privacy check">
-      <p><strong>Verify privacy on both calculator pages:</strong> load the page, watch the Network panel, disconnect network access, change an input, and calculate again. The loaded tab still works with no calculation request. The example writes no persistent storage and puts no birth input in a URL. Refresh/navigation need the server; browser history restoration and extensions are outside the app’s control.</p>
-      <p>Adapt <code>src/calculate.mjs</code> and <code>src/app.mjs</code> for your interface. The visible provenance is example metadata; a complete portable receipt contract remains under review.</p>
+      <p><strong>Verify privacy on both calculator pages:</strong> load the page, watch the Network panel, disconnect network access, change an input, and calculate again. The loaded tab still works with no calculation request. The example writes no automatic browser/account storage and puts no birth input in a URL; an explicitly exported file remains on your device. Refresh/navigation need the server; browser history restoration and extensions are outside the app’s control.</p>
+      <p>Adapt <code>src/calculate.mjs</code> and <code>src/app.mjs</code> for your interface. Natal portability uses the optional public <code>@zodiacs/engine/receipt</code> entry. This is a Zodiacs draft under review; transit metadata is not a portable transit envelope. Imported version labels and hashes do not authenticate results or guarantee identical recalculation.</p>
     </aside>
 
     <h2 id="widget">3. Embed a publisher sky widget</h2>

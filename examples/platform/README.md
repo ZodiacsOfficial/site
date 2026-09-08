@@ -3,10 +3,11 @@
 Three runnable plain-JavaScript examples: a browser-local natal chart, a
 personalized transit snapshot, and a publisher sky iframe. No framework,
 account, API key, private environment variable, wallet, telemetry, or database
-is needed. The two calculators import only the public `@zodiacs/engine` root.
+is needed. The calculators use the public `@zodiacs/engine` root; natal portability uses its
+optional public `/receipt` entry.
 
-This is a **private example-project archive**, version `0.1.0-rc.2`. Its bundled
-engine is the **unpublished npm release candidate `0.1.1-rc.1`**. Downloading or
+This is a **private example-project archive**, version `0.1.0-rc.3`. Its bundled
+engine is the **unpublished npm release candidate `0.1.1-rc.3`**. Downloading or
 running this project does not publish either package or close the engine's
 numerical review and operator publication gates. This is not evidence of
 external developer adoption.
@@ -16,7 +17,7 @@ external developer adoption.
 Use Node.js **22** and npm (tested with Node 22.23.2). In an empty directory:
 
 ```sh
-tar -xzf /path/to/zodiacs-platform-starter-0.1.0-rc.2.tgz
+tar -xzf /path/to/zodiacs-platform-starter-0.1.0-rc.3.tgz
 cd package
 npm ci --ignore-scripts --no-audit --no-fund
 npm test
@@ -50,8 +51,8 @@ After the setup above, open **http://127.0.0.1:4178/natal.html** and select
 09:00 UTC, latitude 78.2232°, longitude 15.6267°, requested Placidus houses.
 
 Expected result: 12 bodies; ASC approximately **23.871984°** (Aries);
-`requestedHouseSystem: "placidus"`, `actualHouseSystem: "whole"`, and
-`flags: ["polar-fallback"]`. The engine falls back above 66° absolute latitude.
+`houses.requested: "placidus"`, `houses.actual: "whole"`, and
+`resultFlags: ["polar-fallback"]` in the draft receipt. The engine falls back above 66° absolute latitude.
 Changing to Whole sign shows the requested and actual whole-sign system.
 
 Expected failure: set the instant to `2001-02-29T09:00:00Z` and calculate.
@@ -69,7 +70,8 @@ Privacy check: load the page fully, inspect the browser Network panel, disable
 network access, change an input, and calculate again. The computation still
 works in the loaded tab. Inputs stay in memory: no fetch, storage, form
 submission, URL parameter, analytics, or account is used. The application writes
-no persistent storage; native browser form/history restoration, extensions, and
+no automatic browser/account storage; an explicitly exported file remains on your
+device. Native browser form/history restoration, extensions, and
 developer tools remain outside its control. Navigation and refresh need the local
 server; this is not an installed offline application.
 
@@ -77,6 +79,35 @@ Next step: adapt `src/calculate.mjs` and the text-only rendering in
 `src/app.mjs` to your own UI. Resolve real local birth times, daylight-saving
 gaps/folds, and historical timezone rules before passing an instant. The
 example deliberately does not load the optional `/geo` entry or a place index.
+
+### Local draft receipt export and import
+
+The natal page can export one full draft envelope, import it locally, and show a
+redacted diagnostic. Full exports include the birth instant and coordinates;
+store or share the downloaded file deliberately. The browser does not upload it.
+
+An imported receipt displays its stored result as unverified claims. It does not
+fill the birth form, execute extensions, follow imported links, recalculate, or
+change stored profiles. In particular, an unknown-time 08:30 reference remains
+08:30 on re-export; the new-calculation form's UTC-noon convention is separate.
+Requested Placidus and actual whole-sign fallback remain distinct. Imported
+version labels and artifact hashes do not authenticate an imported result.
+
+The parser rejects files over 64 KiB before reading them, malformed or invalid
+UTF-8 JSON, duplicate decoded keys, unknown versions or required features, and
+inconsistent results. Errors omit payload text. Selecting another file or making
+a new calculation supersedes an earlier pending import. Extensions survive in the
+bounded re-export but are never rendered or executed.
+
+The diagnostic excludes birth dates/instants, coordinates, offsets/zones,
+numerical results, arbitrary metadata, claimed versions, and stable hashes.
+Redacted does not mean anonymous. Generic download filenames contain no birth
+data. No new account, storage, telemetry, or network operation is used.
+
+This is a Zodiacs draft for natal charts, not an industry standard or an account
+sync migration. See the [draft reference and synthetic fixtures](https://github.com/ZodiacsOfficial/sdk/blob/2000377b1b537c1b08c873889059acc8edacc4fe/docs/platform/receipt-draft-v1.md).
+The source repository also preserves the older immutable starter and the site's
+separate engine rc.1 pin. Only this standalone starter moves to engine rc.3.
 
 ## 2. Personalized transit snapshot
 
@@ -105,8 +136,8 @@ in the loaded browser tab; the publisher iframe is not present on this page.
 
 Next step: consume `positions` and `aspects` from `calculate(input, 'transits')`.
 Keep the snapshot instant visible, preserve unknown-time qualification, and
-do not describe snapshot aspects as exact-pass times. Complete, durable
-calculation receipts remain future work; these fields are example metadata.
+do not describe snapshot aspects as exact-pass times. Portable transit
+envelopes remain future work; these fields are example metadata.
 
 ## 3. Publisher sky iframe
 
@@ -148,18 +179,22 @@ title, responsive sizing, sandbox, referrer policy, and a usable fallback link.
 ## Candidate identity and limits
 
 The exact public artifact is
-[the candidate tarball at site commit 40d3f964](https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz).
+[the candidate tarball at SDK artifact commit 2000377b](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/2000377b1b537c1b08c873889059acc8edacc4fe/artifacts/zodiacs-engine-0.1.1-rc.3.tgz).
 Its SHA-256 is:
 
 ```text
-f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17
+aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17
 ```
 
-`candidate.json` distinguishes the site artifact-host commit from engine SDK
-source commit `03bf77990f3014b9125eed4976d7a41200aac80d`. Builds verify the
+`candidate.json` distinguishes the SDK artifact-host commit from engine SDK
+source commit `aaade67d0d49e8b10d1bc5c59cf345d6106dc270`. Builds verify the
 tarball hash and calculations check the installed engine version. Retain the
 lockfile and vendor artifact; a matching version string alone cannot prove
 that locally modified dependencies still match the reviewed bytes.
+Fresh natal receipts also capture the resolved Astronomy Engine version. Build
+checks it against both the shrinkwrap and the installed dependency manifest;
+the engine's dependency range alone does not identify the resolved version.
+These captured facts do not authenticate an imported receipt.
 
 Conventions: proleptic Gregorian dates, tropical ecliptic of date, apparent
 geocentric positions, true lunar nodes, longitude degrees in `[0, 360)`.

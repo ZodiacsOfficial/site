@@ -4,7 +4,7 @@
 <body data-example="natal">
 <nav aria-label="Examples"><a href="/natal.html">Local natal chart</a><a href="/transits.html">Personalized transit snapshot</a><a href="/widget.html">Publisher sky widget</a></nav>
 <h1>Calculate a natal chart locally</h1>
-<p>This example uses synthetic inputs and the unpublished <strong>0.1.1-rc.1</strong> candidate. It needs no account and sends no birth input to a server. Calculations run in this tab.</p>
+<p>This example uses synthetic inputs and an unpublished engine candidate. The exact engine version and artifact claims appear in each locally calculated receipt. It needs no account and sends no birth input to a server. Calculations run in this tab.</p>
 <p class="note">Enter a resolved instant with <code>Z</code> or an explicit offset. This example does not infer a timezone or resolve historical daylight-saving gaps and folds. At an unknown birth time, noon UTC is an approximation; the Moon may differ substantially.</p>
 <fieldset><legend>Synthetic birth input</legend>
 <label>Birth time <select id="timeKnown"><option value="known">Known — resolved instant</option><option value="unknown">Unknown — noon UTC approximation</option></select></label>
@@ -17,8 +17,18 @@
 </fieldset>
 <noscript>JavaScript is required for local calculation. No input is submitted.</noscript>
 <p id="status" role="status">Ready with a synthetic polar case. Expect whole-sign fallback and an Aries ascendant.</p><p id="error" role="alert"></p>
-<h2>Calculation provenance</h2><pre id="receipt">No calculation yet.</pre>
+<fieldset><legend>Local draft JSON export and import</legend>
+<p id="exportPrivacy">A full export includes the birth instant, coordinates, calculation result, and any retained optional data. Export only when you intend to save those details in a local file. Imported files remain unverified claims; this Zodiacs draft is not an industry standard.</p>
+<button id="exportEnvelope" type="button" disabled aria-describedby="exportPrivacy">Export full JSON</button>
+<label for="importFile">Choose one local JSON file (maximum 64 KiB)</label><input id="importFile" type="file" accept="application/json,.json" aria-describedby="importPrivacy">
+<button id="importEnvelope" type="button" disabled>Import locally</button>
+<p id="importPrivacy">Import displays the stored receipt and result without changing the birth form or recalculating. Optional extensions are preserved for re-export and are not displayed. No file is uploaded or added to an account.</p>
+<button id="showDiagnostic" type="button" disabled aria-describedby="diagnosticPrivacy">Show redacted diagnostic</button>
+<p id="diagnosticPrivacy">The diagnostic omits dates, coordinates, results, and arbitrary imported data. It is redacted, not anonymous; remaining time-known, house, and flag categories can still disclose context.</p>
+<pre id="diagnostic" aria-label="Redacted diagnostic"></pre>
+</fieldset>
+<h2>Draft calculation receipt</h2><pre id="receipt">No calculation yet.</pre>
 <h2>Result</h2><pre id="result">No calculation yet.</pre>
-<p>Offline demonstration: load this page completely, disconnect the network, change an input, and calculate again. Navigation and refresh still need the local server; there is no service worker or persistent storage.</p>
+<p>Offline demonstration: load this page completely, disconnect the network, then calculate, export, or import locally. Navigation and refresh still need the local server. The app writes no account or browser storage; an explicitly exported file remains on your device. Browser history restoration and extensions are outside the app's control.</p>
 <p>Accepted dates are not a promise of accuracy across that range. Numerical review and publication gates remain open. <a href="/THIRD_PARTY_NOTICES.txt">Dependency notices</a>.</p>
 </body></html>

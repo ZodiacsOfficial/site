@@ -1,4 +1,5 @@
 import { ENGINE_VERSION, natalChart, transits } from '@zodiacs/engine';
+import { createNatalEnvelope, NATAL_ENVELOPE_LIMITS, parseNatalEnvelope } from '@zodiacs/engine/receipt';
 import candidate from '../candidate.json' with { type: 'json' };
 
 const INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,3})?)?(?:Z|[+-]\d{2}:\d{2})$/;
@@ -69,5 +70,29 @@ export function calculate(raw, mode = 'natal') {
   };
   return transit
     ? { receipt, positions: transit.positions, aspects: transit.aspects }
-    : { receipt, bodies: natal.bodies, angles: natal.angles, houses: natal.houses, aspects: natal.aspects };
+    : { receipt, bodies: natal.bodies, angles: natal.angles, houses: natal.houses, aspects: natal.aspects,
+      envelope: createNatalEnvelope(natal, {
+        reference: timeKnown ? 'supplied-instant' : 'utc-noon',
+        sourceInstant: timeKnown ? raw.birthInstant : null,
+        provenance: {
+          source: { repository: candidate.sourceRepository, commit: candidate.sourceCommit },
+          artifact: { sha256: candidate.sha256, packageVersion: candidate.version,
+            distributionRepository: candidate.artifactRepository, distributionCommit: candidate.artifactCommit },
+          ephemeris: { name: candidate.ephemeris.name, version: candidate.ephemeris.version },
+        },
+      }) };
+}
+
+/** Read a user-selected local file only after its byte size is bounded. */
+export async function importNatalFile(file) {
+  try {
+    if (!file || !Number.isSafeInteger(file.size) || file.size < 1) return { ok: false, code: 'invalid_file' };
+    if (file.size > NATAL_ENVELOPE_LIMITS.bytes) return { ok: false, code: 'size_limit' };
+    const bytes = await file.arrayBuffer();
+    if (!(bytes instanceof ArrayBuffer)) return { ok: false, code: 'invalid_file' };
+    if (bytes.byteLength > NATAL_ENVELOPE_LIMITS.bytes) return { ok: false, code: 'size_limit' };
+    return parseNatalEnvelope(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+  } catch {
+    return { ok: false, code: 'invalid_file' };
+  }
 }

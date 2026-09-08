@@ -1,0 +1,42 @@
+[
+  {
+    "source": "/private/tmp/zodiacs-platform-c02-next-review/DESIGN.md",
+    "stored": "docs/platform/evidence/c02-next/DESIGN.md.log",
+    "sha256": "f983ea495dee10d675aaae2c9a7c682008eb6a7604b401c72e468b6417803094"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-c02-next-review/README.md",
+    "stored": "docs/platform/evidence/c02-next/README.md.log",
+    "sha256": "e776ba2b748459ec707e4884f69aee78e2d3a4291df5f6a9fbfd4003537d88f1"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-c02-next-review/probe.test.ts",
+    "stored": "docs/platform/evidence/c02-next/probe.test.ts.log",
+    "sha256": "78f74df73c10d0b0490743e579a8af951328f842782d6178d4378a852e320313"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-c02-next-review/vitest.config.mjs",
+    "stored": "docs/platform/evidence/c02-next/vitest.config.mjs.log",
+    "sha256": "dd9523b1e6dd74d993e883084ab1b8df5b51086be37b34995a6bcae84da44c99"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-c02-next-review/probe.log",
+    "stored": "docs/platform/evidence/c02-next/probe.log",
+    "sha256": "5381b8a1d5fe87cde5b2b2a9f80ee2ff089ed1f1573349794aa4a639a11b4dd4"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-c02-next-review/result.json",
+    "stored": "docs/platform/evidence/c02-next/result.json.log",
+    "sha256": "899de7cb4cd2c763fe13e26fdca56c8921664543d0cdb4b413da8e5d7b8f71ae"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-c02-next-review/observations.json",
+    "stored": "docs/platform/evidence/c02-next/observations.json.log",
+    "sha256": "c97597a9e5520e5ce637f363d99eecb18d65d297c21cd8b23bfc740aa1bd4e56"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-c02-next-review/identity.json",
+    "stored": "docs/platform/evidence/c02-next/identity.json.log",
+    "sha256": "c9b0242b743735624a7d9681fd5e2b232b5362c3b91e51dbdcbb309d2a127869"
+  }
+]

@@ -1,0 +1,4595 @@
+{
+  "observedAt": "2026-09-07T22:34:41.354Z",
+  "browser": "152.0.7977.83",
+  "scope": "Same direct launch executable/args and exact driveWidget function from current root driver. Only focus samples are retained without extra DOM reads. Fixed eight comparisons, no retry-until-green.",
+  "outcomes": [
+    {
+      "label": "rc3-390-0",
+      "version": "rc3",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "label": "rc3-390-1",
+      "version": "rc3",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "label": "rc3-390-2",
+      "version": "rc3",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "label": "rc3-390-3",
+      "version": "rc3",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "label": "rc2-390-4",
+      "version": "rc2",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "label": "rc2-390-5",
+      "version": "rc2",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "label": "rc3-1280-6",
+      "version": "rc3",
+      "width": 1280,
+      "pass": true
+    },
+    {
+      "label": "rc2-1280-7",
+      "version": "rc2",
+      "width": 1280,
+      "pass": true
+    }
+  ],
+  "results": [
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:08.665Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 599.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:09.447Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 508.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-0",
+      "name": "widget-390: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:57372/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:13.242Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 599.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:13.992Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 508.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-1",
+      "name": "widget-390: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:57372/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:17.811Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 599.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:18.560Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 508.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-2",
+      "name": "widget-390: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:57372/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:22.262Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 599.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:22.994Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 508.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-390-3",
+      "name": "widget-390: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:57372/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:57371/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:26.830Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 599.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:27.580Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 508.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-4",
+      "name": "widget-390: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:57371/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57371/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57371/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57371/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:57371/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:31.323Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 599.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:32.088Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 508.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-390-5",
+      "name": "widget-390: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:57371/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57371/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57371/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57371/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:35.912Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 176,
+        "y": 595.75,
+        "width": 480,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:36.647Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 176,
+        "y": 372.75,
+        "width": 480,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc3-1280-6",
+      "name": "widget-1280: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:57372/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57372/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:57371/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:40.440Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 176,
+        "y": 595.75,
+        "width": 480,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:41.172Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 176,
+        "y": 372.75,
+        "width": 480,
+        "height": 300
+      }
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "case": "rc2-1280-7",
+      "name": "widget-1280: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:57371/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57371/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57371/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:57371/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    }
+  ],
+  "widgetRuns": [
+    {
+      "width": 390,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:08.665Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:09.447Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ],
+      "focusObservations": [
+        {
+          "theme": "dark",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "dark",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        },
+        {
+          "theme": "light",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "light",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:13.242Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:13.992Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ],
+      "focusObservations": [
+        {
+          "theme": "dark",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "dark",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        },
+        {
+          "theme": "light",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "light",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:17.811Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:18.560Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ],
+      "focusObservations": [
+        {
+          "theme": "dark",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "dark",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        },
+        {
+          "theme": "light",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "light",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:22.262Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:22.994Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ],
+      "focusObservations": [
+        {
+          "theme": "dark",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "dark",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        },
+        {
+          "theme": "light",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "light",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:57371/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:26.830Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:27.580Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ],
+      "focusObservations": [
+        {
+          "theme": "dark",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "dark",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        },
+        {
+          "theme": "light",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "light",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:57371/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:31.323Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:32.088Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ],
+      "focusObservations": [
+        {
+          "theme": "dark",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "dark",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        },
+        {
+          "theme": "light",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "light",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:57372/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57372/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:35.912Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:36.647Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ],
+      "focusObservations": [
+        {
+          "theme": "dark",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "dark",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        },
+        {
+          "theme": "light",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "light",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:57371/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:57371/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:40.440Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T22:34:41.172Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ],
+      "focusObservations": [
+        {
+          "theme": "dark",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "dark",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        },
+        {
+          "theme": "light",
+          "index": 0,
+          "focus": {
+            "tag": "IFRAME",
+            "href": null
+          },
+          "child": true
+        },
+        {
+          "theme": "light",
+          "index": 1,
+          "focus": {
+            "tag": "A",
+            "href": "https://zodiacs.org/today/"
+          },
+          "child": null
+        }
+      ]
+    }
+  ]
+}

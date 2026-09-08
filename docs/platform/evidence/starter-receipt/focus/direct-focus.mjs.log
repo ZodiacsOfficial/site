@@ -1,0 +1,125 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {findChromium, STABLE_CHROMIUM_ARGS} from '/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/browser.mjs';
+const require=createRequire('/Users/chiburashka/.codex/worktrees/4806/site/package.json');const {chromium}=require('playwright-core');
+const outDir='/private/tmp/zodiacs-platform-widget-focus';
+const results=[],widgetRuns=[],contexts=new Set();let currentLabel='';
+const check=(name,value,detail=null)=>{results.push({case:currentLabel,name,ok:Boolean(value),detail});assert.ok(value,name);};
+const capture=(page,name)=>page.screenshot({path:join(outDir,currentLabel+'-'+name+'.png'),fullPage:true,animations:'disabled'});
+const noOverflow=(page)=>page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1&&[...document.querySelectorAll('input, select, button')].every(node=>{const rect=node.getBoundingClientRect();return rect.left>=0&&rect.right<=innerWidth+1;}));
+const tick=(page)=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+
+function observe(context) {
+  const requests = [];
+  const failures = [];
+  const errors = [];
+  context.on('request', (request) => requests.push({ url: request.url(), method: request.method(), type: request.resourceType(), hasBody: request.postData() !== null }));
+  context.on('requestfailed', (request) => failures.push({ url: request.url(), failure: request.failure()?.errorText }));
+  context.on('page', (page) => {
+    page.on('pageerror', (error) => errors.push({ type: 'pageerror', message: error.message }));
+    page.on('console', (message) => {
+      if (message.type() === 'error') errors.push({ type: 'console', message: message.text(), url: message.location().url });
+    });
+  });
+  return { requests, failures, errors };
+}
+
+async function driveWidget(browser, baseURL, width) {
+  const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
+  contexts.add(context);
+  const observed = observe(context);
+  const page = await context.newPage();
+  const run = { width, ...observed, variants: [], focusObservations: [] };
+  await context.tracing.start({screenshots:false,snapshots:false,sources:false});
+  widgetRuns.push(run);
+  try {
+    await page.goto(`${baseURL}/widget.html`, { waitUntil: 'networkidle' });
+    check(`widget-${width}: no external request or frame before selection`, observed.requests.every((r) => new URL(r.url).origin === baseURL)
+      && await page.locator('iframe').count() === 0, observed.requests);
+    for (const [theme, accent] of [['dark', '#7B6DA8'], ['light', '#123456']]) {
+      await page.locator('#theme').selectOption(theme);
+      await page.locator('#accent').fill(accent);
+      const responsePromise = page.waitForResponse((response) => response.url().startsWith('https://zodiacs.org/embed/sky/?') && response.request().resourceType() === 'document');
+      await page.locator('#load-widget').click();
+      const element = page.locator('iframe');
+      await element.scrollIntoViewIfNeeded();
+      const response = await responsePromise;
+      const frame = await (await element.elementHandle()).contentFrame();
+      await frame.waitForLoadState('networkidle');
+      const attribution = frame.getByRole('link', { name: /Powered by Zodiacs.org/ });
+      await attribution.waitFor({ state: 'visible', timeout: 25_000 });
+      await attribution.scrollIntoViewIfNeeded();
+      const state = await frame.evaluate(() => {
+        const link = [...document.querySelectorAll('a')].find((a) => a.textContent.includes('Powered by Zodiacs.org'));
+        const luminance = (color) => {
+          const [r, g, b] = color.match(/[\d.]+/g).slice(0, 3).map((channel) => {
+            const value = Number(channel) / 255;
+            return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+          });
+          return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        };
+        const a = luminance(getComputedStyle(link).color);
+        const b = luminance(getComputedStyle(document.body).backgroundColor);
+        const accent = getComputedStyle(document.documentElement).getPropertyValue('--w-accent').trim();
+        return { text: document.body.innerText, theme: document.documentElement.dataset.theme,
+          accent, validAccent: CSS.supports('color', accent), contrast: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05),
+          overflow: document.documentElement.scrollWidth > innerWidth + 1 };
+      });
+      const displayedDate = state.text.match(/\b\d{4}-\d{2}-\d{2}\b/)?.[0] ?? null;
+      const observedAt = new Date().toISOString();
+      const variant = { theme, accent, status: response.status(), url: frame.url(), displayedDate,
+        observedAt, currentUTCDate: observedAt.slice(0, 10), isCurrentUTCDate: displayedDate === observedAt.slice(0, 10), effectiveAccent: state.accent, contrast: state.contrast };
+      run.variants.push(variant);
+      const url = new URL(await element.getAttribute('src'));
+      check(`widget-${width}-${theme}: live canonical frame and constrained settings`, response.status() === 200 && url.origin === 'https://zodiacs.org'
+        && url.pathname === '/embed/sky/' && url.searchParams.get('theme') === theme && url.searchParams.get('accent') === accent
+        && url.searchParams.size === 2 && state.theme === theme && state.validAccent && state.contrast >= 4.5,
+      { variant, actualTheme: state.theme, validAccent: state.validAccent });
+      check(`widget-${width}-${theme}: official sandbox and referrer policy`, await element.getAttribute('sandbox') === 'allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox'
+        && await element.getAttribute('referrerpolicy') === 'strict-origin-when-cross-origin');
+      check(`widget-${width}-${theme}: displayed date and intact reachable attribution`, Boolean(displayedDate)
+        && new URL(await attribution.getAttribute('href')).origin === 'https://zodiacs.org'
+        && await attribution.getAttribute('target') === '_blank' && (await attribution.getAttribute('rel')).includes('noopener'));
+      check(`widget-${width}-${theme}: parent and frame have no horizontal overflow`, await noOverflow(page) && !state.overflow);
+      const rect = await element.boundingBox();
+      check(`widget-${width}-${theme}: frame fits responsive bounds`, rect.width <= 480 && rect.x >= 0 && rect.x + rect.width <= width + 1 && rect.height === 300, rect);
+      await capture(page, `widget-${width}-${theme}`);
+      await page.locator('#load-widget').focus();
+      let reachedFrame = false;
+      let reachedFallback = false;
+      for (let index = 0; index < 6; index += 1) {
+        await page.keyboard.press('Tab');
+        const focus = await page.evaluate(() => ({ tag: document.activeElement.tagName, href: document.activeElement.href ?? null }));
+        let child = null;
+        if (focus.tag === 'IFRAME') { child = await attribution.evaluate((a) => a === document.activeElement); reachedFrame ||= child; }
+        run.focusObservations.push({ theme, index, focus, child });
+        if (focus.href === 'https://zodiacs.org/today/') { reachedFallback = true; break; }
+      }
+      check(`widget-${width}-${theme}: Tab reaches inside-frame branding and fallback`, reachedFrame && reachedFallback);
+    }
+    const beforeInvalid = observed.requests.length;
+    const previousSrc = await page.locator('iframe').getAttribute('src');
+    await page.locator('#accent').fill('red');
+    await page.locator('#load-widget').click();
+    await tick(page);
+    check(`widget-${width}: invalid accent requests no new frame`, Boolean((await page.locator('#error').textContent()).trim())
+      && observed.requests.length === beforeInvalid && await page.locator('iframe').getAttribute('src') === previousSrc);
+    check(`widget-${width}: no unexpected page/console/request failures`, observed.errors.length === 0 && observed.failures.length === 0, observed);
+  } catch (error) {
+    await capture(page, `widget-${width}-failure`).catch(() => {});
+    throw error;
+  } finally { await context.tracing.stop({path: join(outDir, currentLabel + '-direct-trace.zip')}).catch(() => {}); await context.close(); contexts.delete(context); }
+}
+
+const browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});
+const cases=[['rc3',390],['rc3',390],['rc3',390],['rc3',390],['rc2',390],['rc2',390],['rc3',1280],['rc2',1280]];
+const outcomes=[];
+try{for(const [i,[version,width]] of cases.entries()){
+ currentLabel=version+'-'+width+'-'+i;
+ const outcome={label:currentLabel,version,width};outcomes.push(outcome);
+ try{await driveWidget(browser,'http://127.0.0.1:'+(version==='rc3'?57372:57371),width);outcome.pass=true;}catch(error){outcome.pass=false;outcome.error=error.message;}
+ console.log(JSON.stringify({outcome,focus:widgetRuns.at(-1).focusObservations}));
+ await writeFile(join(outDir,'direct-focus.json'),JSON.stringify({observedAt:new Date().toISOString(),browser:browser.version(),scope:'Same direct launch executable/args and exact driveWidget function from current root driver. Only focus samples are retained without extra DOM reads. Fixed eight comparisons, no retry-until-green.',outcomes,results,widgetRuns},null,2)+'\n');
+}}finally{await browser.close();}

@@ -9,7 +9,7 @@ const input = { birthInstant: '2001-12-21T09:00:00Z', birthDate: '2001-12-21', t
 
 test('real candidate returns coherent polar fallback and provenance', () => {
   const result = calculate(input);
-  assert.equal(ENGINE_VERSION, '0.1.1-rc.1');
+  assert.equal(ENGINE_VERSION, '0.1.1-rc.3');
   assert.equal(result.bodies.length, 12);
   assert.ok(Math.abs(result.angles.asc - 23.871984112302016) < 1e-10);
   assert.equal(result.receipt.requestedHouseSystem, 'placidus');
@@ -18,7 +18,7 @@ test('real candidate returns coherent polar fallback and provenance', () => {
   assert.deepEqual(result.receipt.flags, ['polar-fallback']);
   assert.equal(result.receipt.engine.artifactSHA256, candidate.sha256);
   assert.equal(result.receipt.engine.version, ENGINE_VERSION);
-  assert.equal(result.receipt.engine.artifactCommit, '40d3f9647a31afc20db007b7cd5269eb4ef73b6a');
+  assert.equal(result.receipt.engine.artifactCommit, '2000377b1b537c1b08c873889059acc8edacc4fe');
   assert.notEqual(result.receipt.engine.sourceCommit, result.receipt.engine.artifactCommit);
   for (const body of result.bodies) assert.ok(Number.isFinite(body.lon) && body.lon >= 0 && body.lon < 360);
 });

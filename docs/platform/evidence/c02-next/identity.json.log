@@ -1,0 +1,26 @@
+{
+  "siteHeadObservedBeforeProbe": "921cd0d16cd0c4a82692d311c3af326b0045531d",
+  "engine": {
+    "name": "@zodiacs/engine",
+    "version": "0.1.1-rc.1"
+  },
+  "hashes": [
+    {
+      "file": "src/lib/engine/full.ts",
+      "sha256": "172ccbe20a898c4e4ca156da956ab64ef36bb26c6177e6df29f9e7838683a888"
+    },
+    {
+      "file": "src/lib/engine/types.ts",
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54"
+    },
+    {
+      "file": "node_modules/@zodiacs/engine/package.json",
+      "sha256": "8debf9021ccc4162b06e58509f749017ee0f24ea6ff9bfaa75f38b270d82a7ac"
+    },
+    {
+      "file": "node_modules/@zodiacs/engine/dist/index.js",
+      "sha256": "2730e2d5b105db83f271c219397fcd6664234fae7ce9707aa6e0ec873dc029c3"
+    }
+  ],
+  "scope": "Read-only calculation entry identity supplement; the red probe executed the current site computation and active persistence adapters, not a candidate SDK checkout."
+}

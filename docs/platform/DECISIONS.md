@@ -190,3 +190,126 @@ explicit compatibility handling. Preserve the synthetic defect and
 counterexample in evidence; leave this adapter unchanged until that coherent
 change is tested. This is an unresolved C02 requirement, not an owner-only
 permission blocker or a reason to halt other authorized work.
+
+## A-008 — Evict rejected requests and keep each candidate immutable
+
+The optional GeoNames client must allow a later explicit retry after transport,
+HTTP or JSON-parsing rejection. Evict only the matching failed promise and
+rethrow the same reason. Successful and in-flight requests remain shared;
+there is no automatic retry loop or implied per-caller cancellation.
+Structurally invalid but fulfilled JSON requires a separate schema/cache policy;
+clearing caches after arbitrary consumer errors can discard healthy data.
+
+Create engine rc.2 for this change and verify its actual packed public exports.
+Keep site/starter rc.1 fixed until a separately reviewed integration. Candidate
+version, artifact digest and source provenance distinguish the change without
+pretending a mathematical correction or npm publication occurred. The owner-only
+release hold does not prevent this isolated reliability correction and review.
+
+## C-003 — Start portable receipts as an additive, bounded local codec
+
+First implement a one-natal-chart draft envelope at an optional engine subpath,
+reusing the existing public Chart vocabulary. Keep calculation execution,
+account sync v1 and stored profiles unchanged. A complete request/result envelope
+can preserve requested versus actual houses and full precision without forcing
+an unsafe change through old clients' one-field wire format.
+
+Capture only known provenance at the calculation boundary; unknown time does not
+establish a noon convention, and a supplied artifact hash does not authenticate
+an import. The receipt must distinguish actual absent houses from a requested
+setting, validate fixed flag codes and consistency, and preserve data-only
+extensions under explicit size/depth/node limits. Unknown required features or
+schema versions must fail explicitly. Redacted diagnostics are rebuilt from
+fixed fields and omit imported metadata, dates, coordinates, results, arbitrary
+strings and stable hashes. They are not described as anonymous.
+
+This first codec is an additive Zodiacs draft, not an industry standard, complete
+C02 acceptance or a replacement for account downgrade/migration handling. The
+site stays on its verified rc.1 artifact while the separate candidate is built
+and tested. Required release review and explicit SDK #5 hold still apply.
+
+## C-004 — Connect receipts through the standalone example first
+
+Engine rc.3 is a separately verified optional-codec candidate. Let the standalone
+starter identify its own engine artifact/source instead of silently changing the
+site application's verified rc.1 pin. Keep strict source/archive/hash/provenance
+checks when decoupling the starter verifier; preserve existing immutable archives.
+
+Import a receipt as an untrusted stored result. Do not refill the existing birth
+form or recalculate automatically: that form's intentional UTC-noon convention
+for new unknown-time calculations would destroy an imported 08:30 reference.
+Retain the complete bounded envelope for re-export, display text safely, and
+exclude extensions/provenance strings from redacted diagnostics. Guard async file
+selection races and oversize files before reading. Full export includes private
+birth inputs; no account migration, network upload or persistent identifier is
+needed for this local integration.
+
+
+## C-005 — Validate resolved build provenance before writing output
+
+A dependency range does not identify the ephemeris that performed a calculation.
+The standalone candidate records its resolved version, and build verifies the
+lock, installed manifest and actual esbuild module input agree. This candidate
+allows one flat Astronomy Engine installation; different nested resolution
+fails explicitly instead of inheriting an unrelated version claim. Validation
+precedes output writes so a failed build preserves previous valid output.
+These checks support a verified install; they do not authenticate arbitrary
+locally modified dependencies or imported provenance claims.
+
+## A-007 — Preserve typed flag compatibility through checked assertions
+
+Implemented, independently reviewed and delivered in SDK draft #10/rc.5;
+packed consumer and browser acceptance pass. The public type accepts five
+ChartFlag values. A correctly typed `no-time` or `polar-fallback` echo can be
+duplicated by computation and then rejected by the receipt codec. Arbitrary
+untyped strings and malformed iterables are also accepted too far into the API.
+
+Narrowing the type to time-resolution flags would break correct typed callers.
+Blindly dropping derived flags would hide contradictory claims. Keep the five
+input values, validate derived echoes against the actual computation, and
+represent each fact once in canonical input/result metadata. Canonical input is
+a semantic representation; it does not promise to retain the raw submitted
+flag array. Time-resolution flags remain caller assertions when local context
+is unavailable; UTC alone cannot prove historical DST or LMT provenance.
+
+For supplied Charts, check flag consistency against supplied time/house metadata
+and preserve numerical arrays. This is not authentication or an ephemeris rerun.
+Retain identity for already-canonical Charts and avoid mutating caller objects.
+An explicit raw polar-fallback assertion on the Saturn-return path requires one
+natal calculation to establish actual fallback; a latitude threshold alone
+cannot establish iterative convergence. Ordinary Saturn inputs keep their
+date-only path. Tests must establish those call counts and compatibility limits.
+
+Snapshot scalar settings once, validate bounded data arrays without coercion or
+custom array iteration, and reject contradictions explicitly. The shared helper
+must keep the optional geo module independent of astronomy and ownership code.
+Do not change the site's private internal engine entry or its existing pin.
+
+
+## C-006 — Keep richer saved records outside old writers' namespace
+
+The refreshed synthetic local probe confirms request loss before account sync:
+polar Placidus is saved and rerun as Whole, and a subsequent explicit Whole
+request updates that same record instead of retaining distinct intent. Existing
+v1 wire bytes cannot distinguish those requests. An added field inside the v1
+key is dropped by old full-record saves; changing its outer version causes old
+readers to see an empty profile and then overwrite it. The reproduced cases and
+[two-option comparison](evidence/c02-next/DESIGN.md.log) reject both as
+an authoritative richer store.
+
+Use the existing natal envelope semantics for newly recorded calculations,
+with a separate version-owned saved namespace and an explicit legacy branch.
+Do not infer original requested houses from legacy output or invent a complete
+receipt from its abbreviated summary. A v1 view may be a disposable projection,
+never the authoritative replay input. Distinct recorded requests must not be
+automatically deduplicated through the actual fallback system. Richer records
+must refuse silent downgrade to the current account wire format.
+
+Before implementing active storage, integrate the verified SDK optional receipt
+capability through a separate site artifact upgrade. Avoid copying a second
+receipt validator or building inactive injection scaffolding around a module the
+site cannot import yet. Subsequent storage work must include access, archive,
+export, deletion, account switch, storage failure and legacy sync boundaries.
+Future remote capability/CAS/idempotent-replay handling is a separate reviewed
+contract. No new namespace, migration, account request or server change is
+activated by this decision.

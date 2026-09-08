@@ -1,0 +1,41 @@
+import {createRequire} from 'node:module';import fs from 'node:fs/promises';
+const require=createRequire('/Users/chiburashka/.codex/worktrees/4806/site/package.json');const {chromium}=require('playwright-core');
+const browser=await chromium.connectOverCDP('ws://127.0.0.1:57403/devtools/browser/33f66a2d-f9a7-4c6b-adf9-9bb7cfdaa766');
+const directory='/private/tmp/zodiacs-platform-widget-focus';const runs=[];
+const plan=[...Array.from({length:6},(_,i)=>['rc3',390,'immediate',i]),...Array.from({length:6},(_,i)=>['rc2',390,'immediate',i]),['rc3',1280,'immediate',0],['rc2',1280,'immediate',0],['rc3',390,'settled',0],['rc2',390,'settled',0]];
+for(const [version,width,method,index] of plan){
+ const label=`${version}-${width}-${method}-${index}`;const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});const run={label,version,width,method,index};runs.push(run);
+ try{
+  await context.tracing.start({screenshots:true,snapshots:true,sources:false});
+  await context.addInitScript(()=>{window.__focusTrace=[];for(const type of ['focus','blur','focusin','focusout','keydown','keyup'])addEventListener(type,event=>{window.__focusTrace.push({time:performance.timeOrigin+performance.now(),type,key:event.key??null,target:event.target?.tagName??'window',id:event.target?.id??null,href:event.target?.href??null,active:document.activeElement?.tagName,activeId:document.activeElement?.id,activeHref:document.activeElement?.href??null,hasFocus:document.hasFocus()});},true);});
+  const page=await context.newPage();const base=`http://127.0.0.1:${version==='rc3'?57372:57371}`;
+  await page.goto(`${base}/widget.html`,{waitUntil:'networkidle'});await page.locator('#theme').selectOption('dark');await page.locator('#accent').fill('#7B6DA8');const response=page.waitForResponse(r=>r.url().startsWith('https://zodiacs.org/embed/sky/?')&&r.request().resourceType()==='document');await page.locator('#load-widget').click();const element=page.locator('iframe');await element.scrollIntoViewIfNeeded();await response;const frame=await(await element.elementHandle()).contentFrame();await frame.waitForLoadState('networkidle');const attribution=frame.getByRole('link',{name:/Powered by Zodiacs.org/});await attribution.waitFor({state:'visible'});await attribution.scrollIntoViewIfNeeded();
+  await page.screenshot({path:`${directory}/${label}-before.png`,fullPage:true,animations:'disabled'});
+  await page.locator('#load-widget').focus();
+  const started=Date.now();run.steps=[];run.reachedFrame=false;run.reachedFallback=false;
+  if(method==='immediate'){
+   for(let key=0;key<6;key++){
+    await page.keyboard.press('Tab');
+    const focus=await page.evaluate(()=>({time:performance.timeOrigin+performance.now(),tag:document.activeElement.tagName,href:document.activeElement.href??null,id:document.activeElement.id,hasFocus:document.hasFocus()}));
+    const child=focus.tag==='IFRAME'?await attribution.evaluate(a=>({time:performance.timeOrigin+performance.now(),focused:a===document.activeElement,hasFocus:document.hasFocus(),active:document.activeElement?.tagName})):null;
+    if(child?.focused)run.reachedFrame=true;if(focus.href==='https://zodiacs.org/today/')run.reachedFallback=true;
+    run.steps.push({key,focus,child});if(run.reachedFallback)break;
+   }
+  }else{
+   await page.keyboard.press('Tab');
+   run.immediateParent=await page.evaluate(()=>({tag:document.activeElement.tagName,id:document.activeElement.id,href:document.activeElement.href??null}));
+   await frame.waitForFunction(()=>document.hasFocus()&&[...document.querySelectorAll('a')].some(a=>a.textContent.includes('Powered by Zodiacs.org')&&a===document.activeElement),{timeout:2500});
+   await page.waitForFunction(()=>document.activeElement.tagName==='IFRAME',undefined,{timeout:2500});
+   run.reachedFrame=true;run.frameReachedAt=Date.now()-started;
+   await page.screenshot({path:`${directory}/${label}-attribution.png`,fullPage:true});
+   await page.keyboard.press('Tab');await page.waitForFunction(()=>document.activeElement.href==='https://zodiacs.org/today/',undefined,{timeout:2500});run.reachedFallback=true;
+  }
+  // Observe settled state and the event history without issuing any more keys.
+  await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
+  run.parentTrace=await page.evaluate(()=>window.__focusTrace);run.childTrace=await frame.evaluate(()=>window.__focusTrace);run.finalParent=await page.evaluate(()=>({tag:document.activeElement.tagName,id:document.activeElement.id,href:document.activeElement.href??null}));run.finalChild=await frame.evaluate(()=>({tag:document.activeElement.tagName,href:document.activeElement.href??null,hasFocus:document.hasFocus()}));
+  run.assertion=run.reachedFrame&&run.reachedFallback;
+  if(!run.assertion)await page.screenshot({path:`${directory}/${label}-failed.png`,fullPage:true});
+ }catch(error){run.error=error.message;run.assertion=false;}
+ finally{await context.tracing.stop({path:`${directory}/${label}-trace.zip`}).catch(()=>{});await context.close();await fs.writeFile(`${directory}/focus-trace.json`,JSON.stringify({observedAt:new Date().toISOString(),browser:browser.version(),plan:'Fixed 16 cases chosen before execution; six immediate mobile contexts per unchanged widget version, desktop controls, then strict settled-focus controls. No retry-until-green.',runs},null,2)+'\n');console.log(JSON.stringify({label,pass:run.assertion,steps:run.steps,error:run.error}));}
+}
+await browser.close();

@@ -125,7 +125,7 @@ function localPage(url) {
 function testCounts(output) {
   const count = (name) => Number([...output.matchAll(new RegExp(`^# ${name} (\\d+)\\r?$`, 'gm'))].at(-1)?.[1]);
   const result = { tests: count('tests'), pass: count('pass'), fail: count('fail') };
-  requireValue(result.tests === 24 && result.pass === 24 && result.fail === 0, 'Literal npm test did not report the documented 24 passing checks');
+  requireValue(result.tests === 39 && result.pass === 39 && result.fail === 0, 'Literal npm test did not report all 39 starter candidate checks passing');
   return result;
 }
 
@@ -145,9 +145,9 @@ async function successCase({ setup, projectDirectory, workRoot, output, verified
     requireValue(sha256(downloaded) === verified.metadata.sha256, 'Downloaded starter differs from the verified public artifact');
     const manifest = JSON.parse(readFileSync(join(project, 'package.json'), 'utf8'));
     const installedEngine = JSON.parse(readFileSync(join(project, 'node_modules/@zodiacs/engine/package.json'), 'utf8'));
-    const engineHash = sha256(readFileSync(join(project, verified.candidate.artifactPath)));
+    const engineHash = sha256(readFileSync(join(project, verified.enginePath)));
     requireValue(manifest.name === verified.metadata.name && manifest.version === verified.metadata.version && manifest.private === true, 'Installed starter manifest identity mismatch');
-    requireValue(installedEngine.name === verified.candidate.name && installedEngine.version === verified.candidate.version
+    requireValue(installedEngine.name === verified.candidate.package && installedEngine.version === verified.candidate.version
       && engineHash === verified.candidate.sha256, 'Installed engine version or artifact hash mismatch');
     const pages = await Promise.all(['natal.html', 'transits.html', 'widget.html'].map(async (path) => {
       const url = new URL(path, address).href;
