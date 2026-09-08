@@ -1,0 +1,22 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+const author='/private/tmp/zodiacs-platform-local-date-intervals',evidence='/private/tmp/zodiacs-platform-local-date-intervals-evidence';
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const identity=JSON.parse(fs.readFileSync(evidence+'/source-freeze1-identity.json'));
+assert.equal(sha(fs.readFileSync(evidence+'/source-freeze1.patch')),identity.patchSha256);
+for(const name of ['source-freeze1-identity.json','source-freeze1.patch'])fs.copyFileSync(evidence+'/'+name,name);
+const records=[];
+for(const entry of identity.files){const bytes=fs.readFileSync(author+'/'+entry.path);assert.equal(sha(bytes),entry.sha256);fs.mkdirSync(path.dirname('source/'+entry.path),{recursive:true});fs.writeFileSync('source/'+entry.path,bytes);records.push({...entry,role:'exact frozen authored source'});}
+for(const file of ['src/lib/time/localToUtc.ts','src/lib/time/civil-date.ts','src/lib/time/technical-locales.ts']){
+ const bytes=execFileSync('git',['show',identity.base+':'+file],{cwd:'/private/tmp/zodiacs-platform-site-seconds-receipt-companion'});assert.deepEqual(bytes,fs.readFileSync(author+'/'+file));fs.writeFileSync('source/'+file,bytes);records.push({path:file,sha256:sha(bytes),role:'unchanged base dependency'});
+}
+const dependencies={esbuild:'/private/tmp/zodiacs-platform-sdk-seconds-independent-review/node_modules/esbuild','@esbuild/darwin-arm64':'/private/tmp/zodiacs-platform-sdk-seconds-independent-review/node_modules/@esbuild/darwin-arm64','playwright-core':'/private/tmp/zodiacs-platform-sdk-seconds-independent-review/node_modules/playwright-core',typescript:'/private/tmp/zodiacs-platform-rc6-public-consumer-review/node_modules/typescript'};
+const hashes=[];
+function walk(dir,prefix){for(const file of fs.readdirSync(dir)){const full=path.join(dir,file);if(fs.statSync(full).isDirectory())walk(full,prefix);else hashes.push({path:path.relative(prefix,full),sha256:sha(fs.readFileSync(full))});}}
+for(const[name,from]of Object.entries(dependencies)){fs.cpSync(from,'node_modules/'+name,{recursive:true,dereference:true});walk('node_modules/'+name,'.');}
+fs.writeFileSync('package.json','{"private":true,"type":"module"}\n');
+fs.writeFileSync('setup-identity.json',JSON.stringify({author,base:identity.base,source:records,dependencySources:dependencies,dependencies:hashes,method:'Frozen files and unchanged git base dependencies physically copied; no source/workspace mutations, downloads or lifecycle scripts.'},null,2)+'\n');
+console.log(JSON.stringify({frozenFiles:identity.files.length,sourceFiles:records.length,dependencyFiles:hashes.length,patchSha256:identity.patchSha256}));

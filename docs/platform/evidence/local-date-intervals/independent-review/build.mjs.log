@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {build} from 'esbuild';
+const records=[];
+for(const format of ['esm','iife']){
+ const result=await build({entryPoints:['source/src/lib/time/local-date-intervals.ts'],outfile:format==='esm'?'subject.mjs':'subject.js',format,globalName:format==='iife'?'intervalSubject':undefined,bundle:true,platform:'browser',target:'es2022',metafile:true});
+ const inputs=Object.keys(result.metafile.inputs).map(file=>{assert.ok(path.resolve(file).startsWith(process.cwd()+'/source/'));return{file,sha256:createHash('sha256').update(fs.readFileSync(file)).digest('hex')};});records.push({format,inputs});
+}
+fs.writeFileSync('build-inputs.json',JSON.stringify(records,null,2)+'\n');console.log(JSON.stringify(records));

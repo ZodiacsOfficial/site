@@ -95,3 +95,13 @@ numerical tolerance or product source changed to dismiss it. These finite checks
 do not resolve required human numerical/legal review, SDK #5's explicit hold,
 unknown-time date coverage or production release authority. The unrelated
 Astrofolio verification draft is excluded from this source and release decision.
+
+
+C-011's inactive three-file date interval primitive completes separate author,
+independent and root local acceptance. The [independent report](evidence/local-date-intervals/independent-review/REVIEW.md.log)
+uses its own critical-point oracle and native controls; it expressly retains
+trusted-provider and host-history limits. Root verified source hashes and the
+integrated rc.6 offset-reader path. Activation still needs coherent unsupported-
+runtime, empty/complex-date, astronomical certainty and stale-result semantics;
+these are not implied by passing interval tests. SDK #5 and human release gates
+remain separate, and Astrofolio sources remain excluded.

@@ -1,0 +1,5 @@
+# Native contract checked independently
+
+The TC39 Temporal specification was read through the web tool on 2026-09-08. Its next-transition operation identifies the first later offset change, uses the new offset at that instant, and requires stable results within the surrounding agent. The offset operation bounds offsets strictly inside one day. These are semantic obligations of a conforming host, supporting this adapter's trusted provider contract; inspecting method names does not prove that an arbitrary replacement implementation conforms. Sources: [next transition](https://tc39.es/proposal-temporal/#sec-temporal-getnamedtimezonenexttransition), [offset bound](https://tc39.es/proposal-temporal/#sec-temporal-getoffsetnanosecondsfor).
+
+Review inference: a custom provider, mocked host, or defective runtime may violate those obligations. The implementation's finite offset checks detect observed disagreement, not every omitted pair. The independent executable counterexample for that documented limit is retained in the algebra results.

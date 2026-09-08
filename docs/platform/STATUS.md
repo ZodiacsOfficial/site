@@ -12,7 +12,26 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Current integration — exact rc.6 site precision adoption
+## Current integration — inactive local-date interval prerequisite
+
+The isolated branch `codex/platform-local-date-intervals` starts from #428 source
+`30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`. The exact three-file freeze adds
+immutable half-open date-membership intervals, explicit empty/unresolved results
+and an optional native Temporal transition adapter. It is not imported by any
+active calculator or account surface and adds no dependency or polyfill.
+
+The trusted provider must enumerate complete offset transitions; finite validation
+cannot prove arbitrary provider honesty. Missing capability, observed host
+mismatch and transition exhaustion return unresolved without partial results.
+Author 79 tests/native controls and independent Node 22/24 schedule-oracle/native
+Chrome review pass. Root source inspection, the normal build, 4,938 tests / 414 files, check
+(1,041 files; zero errors/warnings, 11 hints), focused 79 tests and strict types
+pass. All 18 fresh captures are byte-identical to #428. Actual Chrome passes
+22 native date fixtures, 100 boundary membership checks and four signed offsets,
+with zero observed import work/storage/network APIs. Exact-base scope passes. Runtime compatibility, whole-date Sun/Moon policy and activation
+remain separate work. Evidence: [local-date-intervals](evidence/local-date-intervals/).
+
+## Delivered candidate — exact rc.6 site precision adoption
 
 The isolated branch `codex/platform-engine-rc6` starts from #427 source
 `804c70309d2508e67e8462df526b5f9e71a112e9`. Real evidence carrier
@@ -22,8 +41,10 @@ adoption, two-file receipt companion and three coordinated metadata files are
 integrated; all 23 installed package files match the immutable rc.6 archive.
 The standard daily builder changed only the engine/generator manifest identities.
 
-The source is implemented and locally tested; draft delivery, hosted CI and the
-exact-source preview are pending. Root acceptance passes the normal build, 4,859 tests / 413 files, check across
+Draft [#428](https://github.com/ZodiacsOfficial/site/pull/428) is delivered at
+`30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`. All 349 actual draft paths match
+the local diff. Exact-source Site Check 34200151600 and preview validation are
+in progress; no production deployment is claimed. Root acceptance passes the normal build, 4,859 tests / 413 files, check across
 1,039 files (zero errors/warnings, 11 hints), and 18 captures byte-identical to
 #427. The full engine remains five static chunks, 23.3 KB / 25 KB. Actual browser acceptance passes 27 receipt groups (including all 16 corrected
 historical downloads), 13 developer/API checks and 12 existing share cases.
