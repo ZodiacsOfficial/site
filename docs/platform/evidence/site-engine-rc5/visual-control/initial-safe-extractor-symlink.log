@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/zodiacs-platform-rc1-visual-control/setup-control.py", line 7, in <module>
+    assert m.isfile() or m.isdir(), (m.name,m.type)
+AssertionError: ('.claude/skills/high-end-visual-design', b'2')

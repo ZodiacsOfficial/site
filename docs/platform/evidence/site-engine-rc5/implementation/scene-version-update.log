@@ -1,0 +1,11 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-engine-rc5
+
+ ✓ src/lib/scene/scene.test.ts (15 tests) 33ms
+
+  Snapshots  1 updated 
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Start at  07:01:19
+   Duration  589ms (transform 139ms, setup 0ms, collect 183ms, tests 33ms, environment 0ms, prepare 45ms)
+

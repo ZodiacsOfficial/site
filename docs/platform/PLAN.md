@@ -32,7 +32,7 @@ and candidate preparation do not replace review, release or external adoption.
   consumers and 480 numerical parity plus 480 echo controls pass. Frozen
   public archive is verified; 26 packed Chrome checks pass and SDK draft #10
   is delivered.
-  The next site prerequisite is a separately tested adoption of that artifact.
+  The site adoption is now implemented on `codex/platform-engine-rc5`: 4,717 tests, build/check/scope, current captures and affected browser checks pass. The preceding rc.1 control reproduces all 15 macOS baseline failures, with zero scored candidate/control drift at the unchanged threshold. Draft #422 is delivered; the exact READY preview passes 13 checks. CI has 13 jobs passing and Build & Check active. The following optional calculation-to-receipt boundary has an isolated four-file implementation with 80 focused tests and 11 independent probe groups, awaiting separate integration.
 - Core entry and `geo.resolveBirth` settings now align in SDK rc.5. Its public
   flags are bounded and checked; supplied Chart numerical values and low-level
   helper arguments still do not form a complete hostile-input schema.

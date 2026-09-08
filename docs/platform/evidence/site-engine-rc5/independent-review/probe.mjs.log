@@ -1,0 +1,130 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { build } from 'esbuild';
+import { createHash } from 'node:crypto';
+import { assertEngineCandidate } from './snapshot/scripts/platform-engine-candidate.mjs';
+const root=path.dirname(new URL(import.meta.url).pathname);
+const result={startedAt:new Date().toISOString(),runtime:{node:process.version,icu:process.versions.icu,tz:process.versions.tz},checks:[],observations:[]};
+const check=(name,fn)=>{fn();result.checks.push(name)};
+const digest=b=>createHash('sha256').update(b).digest('hex');
+const json=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
+const load=p=>import(pathToFileURL(path.join(root,p)));
+const versions=['0.1.1-rc.1','0.1.1-rc.5'];
+const modules={}; const graphs={};
+for(const version of versions){
+ const base=path.join(root,version);
+ const pkg=json(`${version}/node_modules/@zodiacs/engine/package.json`);
+ modules[version]={public:await load(`${version}/node_modules/@zodiacs/engine/dist/index.js`),internal:await load(`${version}/node_modules/@zodiacs/engine/dist/internal.js`),math:await load(`${version}/node_modules/@zodiacs/engine/dist/internal-math.js`)};
+ for(const entry of ['full','houses','aspects','types']){
+  const outfile=path.join(base,`site-${entry}.mjs`);
+  const bundled=await build({entryPoints:[path.join(root,`snapshot/src/lib/engine/${entry}.ts`)],outfile,bundle:true,platform:'node',format:'esm',write:true,metafile:true,logLevel:'silent',plugins:[{name:'frozen-package-only',setup(b){b.onResolve({filter:/^@zodiacs\/engine/},args=>({path:path.join(base,'node_modules/@zodiacs/engine',pkg.exports[args.path==='@zodiacs/engine'?'.':'.'+args.path.slice('@zodiacs/engine'.length)].import)}))}}]});
+  modules[version][entry]=await import(pathToFileURL(outfile));
+  graphs[`${version}/site-${entry}`]=Object.keys(bundled.metafile.inputs);
+ }
+ for(const entry of Object.keys(pkg.exports)){
+  const code=`export * from ${JSON.stringify(path.join(base,'node_modules/@zodiacs/engine',pkg.exports[entry].import))}`;
+  const bundled=await build({stdin:{contents:code,sourcefile:'entry.js',resolveDir:root},bundle:true,platform:'browser',format:'esm',write:false,metafile:true,logLevel:'silent'});
+  graphs[`${version}/package-${entry}`]=Object.keys(bundled.metafile.inputs);
+ }
+}
+const [old,newer]=versions.map(v=>modules[v]);
+for(const entry of ['public','internal','math','full','houses','aspects','types']){
+ check(`exports/${entry}`,()=>{
+  assert.deepEqual(Object.keys(newer[entry]),Object.keys(old[entry]));
+  for(const name of Object.keys(old[entry])){
+   if(name==='ENGINE_VERSION')continue;
+   const a=old[entry][name],b=newer[entry][name];
+   assert.equal(typeof a,typeof b,`${entry}/${name}`);
+   if(typeof a==='function') assert.equal(a.length,b.length,`${entry}/${name}/arity`);
+   else assert.deepEqual(a,b,`${entry}/${name}/constant`);
+  }
+ });
+}
+for(const [name,inputs] of Object.entries(graphs)){
+ const contains=n=>inputs.some(p=>p.includes(n));
+ check(`graph/${name}`,()=>{
+  assert.equal(contains('@zodiacs/sdk'),false,'ownership SDK must stay separate');
+  assert.equal(contains('/geo.js'),name.endsWith('package-./geo'));
+  assert.equal(contains('/receipt.js'),name.endsWith('package-./receipt'));
+  const heavy=name.endsWith('/site-full')||name.endsWith('package-.')||name.endsWith('package-./internal');
+  assert.equal(contains('/astronomy-engine/'),heavy,'unexpected ephemeris dependency');
+  if(!heavy) assert.equal(contains('/dist/index.js'),false,'unexpected public engine core');
+ });
+}
+const dates=['0004-02-29T08:30:00.000Z','0099-12-31T23:59:59.999Z','1600-03-01T00:00:00.000Z','1900-01-01T00:00:00.000Z','2000-01-01T12:00:00.000Z','2024-02-29T08:30:00.000Z','2026-09-08T00:00:00.000Z','2199-12-31T23:59:00.000Z'];
+const places=[[0,0],[51.5074,-0.1278],[-33.8688,151.2093],[66,25],[66.00001,-25],[78.2232,15.6267],[-78.2232,-15.6267],[89.9999,179.9999]];
+const stripVersion=chart=>{const {engineVersion,...rest}=chart;return rest;};
+const charts=[];
+for(const instant of dates)for(const [latitude,longitude]of places)for(const houseSystem of ['whole','placidus']){
+ const input={utc:new Date(instant),latitude,longitude,houseSystem,timeKnown:true};
+ check(`chart/${instant}/${latitude}/${houseSystem}`,()=>{
+  const a=old.full.computeChart(input),b=newer.full.computeChart(input);
+  assert.equal(a.engineVersion,versions[0]);assert.equal(b.engineVersion,versions[1]);
+  assert.equal(a.input,input);assert.equal(b.input,input);
+  assert.deepEqual(stripVersion(a),stripVersion(b));
+  assert.ok(b.bodies.every(body=>!Object.hasOwn(body,'sign')&&!Object.hasOwn(body,'degree')));
+  charts.push({input:{...input,utc:instant},oldSHA256:digest(JSON.stringify(stripVersion(a))),newSHA256:digest(JSON.stringify(stripVersion(b))),actual:b.houses?.system??null,flags:b.flags});
+ });
+}
+for(const input of [
+ {utc:new Date('2001-12-21T08:30:00Z'),latitude:78.2232,longitude:15.6267,houseSystem:'placidus',timeKnown:false},
+ {utc:new Date('2001-12-21T08:30:00Z'),houseSystem:'placidus',timeKnown:true},
+ {utc:new Date('1900-01-01T00:00:00Z'),latitude:51.5,longitude:0,houseSystem:'whole',timeKnown:true,flags:['lmt']},
+ {utc:new Date('2024-10-27T01:30:00Z'),latitude:51.5,longitude:0,houseSystem:'placidus',timeKnown:true,flags:['dst-fold']},
+ {utc:new Date('2024-03-31T01:30:00Z'),latitude:51.5,longitude:0,houseSystem:'placidus',timeKnown:true,flags:['dst-gap']},
+])check(`chart/special/${result.checks.length}`,()=>assert.deepEqual(stripVersion(old.full.computeChart(input)),stripVersion(newer.full.computeChart(input))));
+const bodies=['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Uranus','Neptune','Pluto','North Node','South Node'];
+for(const instant of dates){
+ const utc=new Date(instant);
+ check(`bodies-aspects/${instant}`,()=>{
+  const a=old.full.computeBodies(utc),b=newer.full.computeBodies(utc);assert.deepEqual(a,b);
+  assert.deepEqual(old.aspects.findAspects(a),newer.aspects.findAspects(b));
+  for(const body of bodies){assert.equal(old.full.bodyLongitude(body,utc),newer.full.bodyLongitude(body,utc));assert.equal(old.full.longitudeSpeed(body,utc),newer.full.longitudeSpeed(body,utc));}
+ });
+}
+for(const latitude of [-89.9999,-78,-66.00001,-66,0,66,66.00001,78,89.9999])for(const gastHours of [0,6,12,18]){
+ const input={gastHours,latitude,longitude:45,obliquity:23.439};
+ check(`houses/${latitude}/${gastHours}`,()=>{
+  const a=old.houses.computeAngles(input),b=newer.houses.computeAngles(input);assert.deepEqual(a,b);
+  for(const system of ['whole','placidus'])assert.deepEqual(old.houses.computeHouses(system,input,a),newer.houses.computeHouses(system,input,b));
+ });
+}
+const candidate=json('snapshot/src/data/platform-engine-candidate.json');
+check('metadata/valid-original',()=>assert.equal(assertEngineCandidate(candidate),candidate));
+const mutations=[];
+for(const key of Object.keys(candidate)){
+ mutations.push([`missing/${key}`,v=>{delete v[key]}]);
+ mutations.push([`null/${key}`,v=>{v[key]=null}]);
+}
+for(const key of ['artifactCommit','sourceCommit','evidenceCommit'])for(const value of ['main','a'.repeat(39),'a'.repeat(40)+'\n','A'.repeat(40),['a'.repeat(40)]])mutations.push([`${key}/${JSON.stringify(value)}`,v=>{v[key]=value}]);
+for(const value of ['0.1.1','00.1.1-rc.5','0.1.1-rc.05','0.1.1-rc.5\r','0.1.1-rc.5\n','0.1.1-rc.5/path','0.1.1-rc.5?x'])mutations.push([`version/${value}`,v=>{v.version=value}]);
+for(const key of ['artifactUrl','artifactRepository','sourceRepository','evidenceRepository'])for(const suffix of ['?secret=synthetic','#fragment','/','\n'])mutations.push([`${key}/suffix/${JSON.stringify(suffix)}`,v=>{v[key]+=suffix}]);
+for(const value of ['docs/platform/../secret.json','docs/platform/%2e%2e/secret.json','docs/platform/a.json\n','/docs/platform/a.json','docs/platform/a.json?x','docs/platform/a\\b.json','docs/platform/a.json/other','docs/platform/a.js'])mutations.push([`evidence/path/${JSON.stringify(value)}`,v=>{v.evidencePaths.node22=value}]);
+mutations.push(['extra-key',v=>{v.otherIdentity=true}],['extra-evidence',v=>{v.evidencePaths.extra='docs/platform/a.log'}],['path-mismatch',v=>{v.artifactRepositoryPath='vendor/zodiacs-engine-0.1.1-rc.5.tgz'}],['identity-mismatch',v=>{v.artifactCommit='b'.repeat(40)}],['hash-uppercase',v=>{v.sha256=v.sha256.toUpperCase()}]);
+for(const [name,mutate] of mutations)check(`metadata/reject/${name}`,()=>{const value=structuredClone(candidate);mutate(value);assert.throws(()=>assertEngineCandidate(value),{message:'Invalid engine candidate metadata'});});
+check('metadata/owned-site-carrier-supported',()=>{const value=structuredClone(candidate);value.artifactRepository='https://github.com/ZodiacsOfficial/site';value.artifactRepositoryPath=value.artifactPath;value.artifactUrl=`https://raw.githubusercontent.com/ZodiacsOfficial/site/${value.artifactCommit}/${value.artifactRepositoryPath}`;assert.equal(assertEngineCandidate(value),value)});
+const receipt=await load('0.1.1-rc.5/node_modules/@zodiacs/engine/dist/receipt.js');
+for(const timeKnown of [true,false])check(`public-receipt/${timeKnown}`,()=>{
+ const sourceInstant='2001-12-21T08:30:00-00:00';
+ const chart=newer.public.natalChart({utc:sourceInstant,latitude:78.2232,longitude:15.6267,houseSystem:'placidus',timeKnown});
+ const envelope=receipt.createNatalEnvelope(chart,{sourceInstant});
+ assert.equal(envelope.receipt.sourceInstant,sourceInstant);assert.equal(envelope.receipt.instant,'2001-12-21T08:30:00.000Z');assert.deepEqual(envelope.receipt.houses,{requested:'placidus',actual:timeKnown?'whole':null,absenceReason:timeKnown?null:'unknown-time'});
+ assert.deepEqual(receipt.parseNatalEnvelope(receipt.serializeNatalEnvelope(envelope)),{ok:true,envelope});
+ const replay=newer.public.natalChart(receipt.natalReplayInput(envelope));
+ // The receipt contract emits an explicit empty time-flag list where the original omitted it.
+ assert.deepEqual(replay,{...chart,input:{...chart.input,flags:[]}});
+});
+check('compact-site-chart-is-not-full-receipt-input',()=>{
+ const chart=newer.full.computeChart({utc:new Date('2000-01-01T12:00:00Z'),latitude:0,longitude:0,houseSystem:'whole',timeKnown:true});
+ assert.throws(()=>receipt.createNatalEnvelope(chart));
+});
+result.observations.push('Compact site body records intentionally omit full public Chart sign/degree metadata; they cannot be fed directly into the draft receipt constructor. This adoption does not integrate receipt storage.');
+result.observations.push('Internal site adapter behavior remains unchanged; stricter public input validation in rc.5 does not automatically harden the site-only internal boundary.');
+result.observations.push('Finite compatibility comparisons do not authenticate historical timezone claims or prove numerical accuracy across the JavaScript Date range.');
+result.completedAt=new Date().toISOString();result.passed=result.checks.length;
+fs.writeFileSync(path.join(root,'graphs.json'),JSON.stringify(graphs,null,2)+'\n');
+fs.writeFileSync(path.join(root,'charts.json'),JSON.stringify(charts,null,2)+'\n');
+fs.writeFileSync(path.join(root,'result.json'),JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify({passed:result.passed,charts:charts.length,specialCharts:5,scannerComparisons:dates.length*bodies.length*2,houseConfigurations:9*4*2,hostileMetadata:mutations.length,runtime:result.runtime}));

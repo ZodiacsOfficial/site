@@ -7,13 +7,14 @@ import { withPreview } from './visual/preview-server.mjs';
 
 const source = await readFile(new URL('../src/lib/sky-api/examples/today.mjs', import.meta.url), 'utf8');
 const starter = JSON.parse(await readFile(new URL('../public/examples/platform-starter.json', import.meta.url), 'utf8'));
+const engine = JSON.parse(await readFile(new URL('../src/data/platform-engine-candidate.json', import.meta.url), 'utf8'));
 const output = resolve(process.env.PLATFORM_BROWSER_EVIDENCE ?? 'tests/visual/artifacts/platform');
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ executablePath: await findChromium(), headless: true, args: STABLE_CHROMIUM_ARGS });
 const checks = [];
 try {
   await withPreview({ port: 4335 }, async (baseURL) => {
-    for (const width of [1280, 390]) {
+    for (const width of [1280, 390, 320]) {
       const context = await browser.newContext({ viewport: { width, height: 900 }, colorScheme: 'dark', reducedMotion: 'reduce' });
       const page = await context.newPage();
       const errors = [];
@@ -35,7 +36,7 @@ try {
       await page.getByRole('link', { name: 'chart calculation stays on the device', exact: true }).focus();
       await page.keyboard.press('Tab');
       assert.equal(await code.evaluate((element) => element === document.activeElement), true, 'Tab must reach the code scroller');
-      if (width === 390) {
+      if (width <= 390) {
         await page.keyboard.press('ArrowRight');
         await page.waitForFunction(() => document.querySelector('.dev-code').scrollLeft > 0);
       }
@@ -57,10 +58,14 @@ try {
       await page.waitForURL('**/developers/support/');
       await page.waitForLoadState('networkidle');
       const matrix = page.getByRole('region', { name: 'Local engine support matrix', exact: true });
-      assert.equal(await matrix.locator('tbody tr').count(), 10);
+      assert.equal(await matrix.locator('tbody tr').count(), 11);
+      assert.equal(await matrix.locator('caption').textContent(), `Local engine ${engine.version}`);
+      assert.ok((await matrix.getByRole('row', { name: /Portable natal records/ }).textContent()).includes('does not authenticate imported claims'));
+      assert.equal(await page.getByRole('link', { name: 'current candidate API guide', exact: true }).getAttribute('href'), `${engine.sourceRepository}/blob/${engine.sourceCommit}/${engine.sourcePackagePath}/README.md`);
+      assert.equal(await page.getByRole('link', { name: 'archived rc.1 API reference', exact: true }).getAttribute('href'), '/sdk/engine/');
       assert.equal(await page.locator('footer.zfooter').count(), 1);
       assert.equal(await page.locator('#hosted').textContent(), 'Personalized hosted computation · planned');
-      await page.getByRole('link', { name: 'candidate changelog', exact: true }).focus();
+      await page.getByRole('link', { name: 'archived rc.1 API reference', exact: true }).focus();
       await page.keyboard.press('Tab');
       assert.equal(await matrix.evaluate((element) => element === document.activeElement), true);
       assert.equal(await matrix.evaluate((element) => {
@@ -100,7 +105,7 @@ try {
       await page.getByRole('link', { name: `Download starter ${starter.version} (.tgz)`, exact: true }).focus();
       await page.keyboard.press('Tab');
       assert.equal(await setup.evaluate((element) => element === document.activeElement && element.matches(':focus-visible')), true);
-      if (width === 390) {
+      if (width <= 390) {
         await page.keyboard.press('ArrowRight');
         await page.waitForFunction(() => document.querySelector('pre').scrollLeft > 0);
       }

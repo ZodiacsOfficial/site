@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { relative, resolve, sep } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { build } from 'esbuild';
 
 import { ENGINE_VERSION as packageEngineVersion, natalChart } from '@zodiacs/engine';
 import { computeBodies as packageComputeBodies } from '@zodiacs/engine/internal';
@@ -9,7 +10,7 @@ import { computeBodies as packageComputeBodies } from '@zodiacs/engine/internal'
 import { computeBodies, computeChart } from './full';
 import { ENGINE_VERSION } from './types';
 
-const artifactPath = resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.1.tgz');
+const artifactPath = resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.5.tgz');
 const docsPath = resolve(process.cwd(), 'public/sdk/engine');
 
 function walk(directory: string): string[] {
@@ -51,7 +52,7 @@ describe('vendored @zodiacs/engine integration', () => {
   it('matches both recorded checksums in the repository', () => {
     const artifact = readFileSync(artifactPath);
     const checksum = readFileSync(
-      resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.1.sha256'),
+      resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.5.sha256'),
       'utf8',
     ).trim().split(/\s+/u)[0];
     const lock = JSON.parse(
@@ -72,7 +73,7 @@ describe('vendored @zodiacs/engine integration', () => {
     const siteBodies = computeBodies(date);
 
     expect(ENGINE_VERSION).toBe(packageEngineVersion);
-    expect(ENGINE_VERSION).toBe('0.1.1-rc.1');
+    expect(ENGINE_VERSION).toBe('0.1.1-rc.5');
     expect(siteBodies).toEqual(
       packageBodies.map(({ body, lon, lat, speed, retrograde }) => ({
         body,
@@ -83,6 +84,48 @@ describe('vendored @zodiacs/engine integration', () => {
       })),
     );
     expect(siteBodies.some((body) => 'sign' in body || 'degree' in body)).toBe(false);
+  });
+
+  it('makes the optional draft receipt available without changing replay intent or unknown time', async () => {
+    const { createNatalEnvelope, parseNatalEnvelope, serializeNatalEnvelope, natalReplayInput, redactNatalEnvelope } =
+      await import('@zodiacs/engine/receipt');
+    for (const timeKnown of [true, false]) {
+      const sourceInstant = '2001-12-21T08:30:00-00:00';
+      const chart = natalChart({ utc: sourceInstant, latitude: 78.2232, longitude: 15.6267,
+        houseSystem: 'placidus', timeKnown });
+      const envelope = createNatalEnvelope(chart, { sourceInstant });
+      const parsed = parseNatalEnvelope(serializeNatalEnvelope(envelope));
+      expect(parsed).toEqual({ ok: true, envelope });
+      expect(envelope.receipt).toMatchObject({ instant: '2001-12-21T08:30:00.000Z',
+        sourceInstant, timeKnown, reference: 'supplied-instant',
+        houses: { requested: 'placidus', actual: timeKnown ? 'whole' : null } });
+      const replay = natalReplayInput(envelope);
+      expect(replay.houseSystem).toBe('placidus');
+      expect(replay.flags).toEqual([]);
+      expect(natalChart(replay)).toEqual({ ...chart, input: { ...chart.input, flags: [] } });
+      expect(redactNatalEnvelope(envelope)).toEqual({
+        schema: 'zodiacs.natal-diagnostic.draft-v1', status: 'redacted-not-anonymous',
+        timeKnown, houses: envelope.receipt.houses, inputFlags: [],
+        resultFlags: [timeKnown ? 'polar-fallback' : 'no-time'],
+      });
+    }
+  });
+
+  it('keeps receipt and geo optional and the eager site math graph free of the ephemeris', async () => {
+    for (const entry of ['@zodiacs/engine', '@zodiacs/engine/internal', '@zodiacs/engine/receipt',
+      './src/lib/engine/types.ts', './src/lib/engine/houses.ts', './src/lib/engine/aspects.ts']) {
+      const bundled = await build({ stdin: { contents: `export * from ${JSON.stringify(entry)}`,
+        resolveDir: process.cwd(), sourcefile: 'engine-isolation-entry.js' }, bundle: true,
+      platform: 'browser', format: 'esm', write: false, metafile: true, logLevel: 'silent' });
+      const paths = Object.keys(bundled.metafile!.inputs);
+      expect(paths.some((path) => path.includes('@zodiacs/sdk'))).toBe(false);
+      expect(paths.some((path) => path.endsWith('/geo.js'))).toBe(false);
+      const receipt = entry === '@zodiacs/engine/receipt';
+      expect(paths.some((path) => path.endsWith('/receipt.js'))).toBe(receipt);
+      const calculates = entry === '@zodiacs/engine' || entry === '@zodiacs/engine/internal';
+      expect(paths.some((path) => path.includes('/astronomy-engine/'))).toBe(calculates);
+      if (!calculates) expect(paths.some((path) => path.endsWith('@zodiacs/engine/dist/index.js'))).toBe(false);
+    }
   });
 
   it('publishes every TypeDoc page with its absolute canonical and icon rail', () => {

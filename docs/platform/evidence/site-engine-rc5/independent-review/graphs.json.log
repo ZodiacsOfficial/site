@@ -1,0 +1,108 @@
+{
+  "0.1.1-rc.1/site-full": [
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-ATHPYVIF.js",
+    "0.1.1-rc.1/node_modules/astronomy-engine/esm/astronomy.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-SC5B3XOM.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/internal.js",
+    "snapshot/src/lib/engine/full.ts"
+  ],
+  "0.1.1-rc.1/site-houses": [
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-ATHPYVIF.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/internal-math.js",
+    "snapshot/src/lib/engine/houses.ts"
+  ],
+  "0.1.1-rc.1/site-aspects": [
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-ATHPYVIF.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/internal-math.js",
+    "snapshot/src/lib/engine/aspects.ts"
+  ],
+  "0.1.1-rc.1/site-types": [
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-ATHPYVIF.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/internal-math.js",
+    "snapshot/src/lib/engine/types.ts"
+  ],
+  "0.1.1-rc.1/package-.": [
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-ATHPYVIF.js",
+    "0.1.1-rc.1/node_modules/astronomy-engine/esm/astronomy.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-SC5B3XOM.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/index.js",
+    "entry.js"
+  ],
+  "0.1.1-rc.1/package-./geo": [
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/geo.js",
+    "entry.js"
+  ],
+  "0.1.1-rc.1/package-./internal": [
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-ATHPYVIF.js",
+    "0.1.1-rc.1/node_modules/astronomy-engine/esm/astronomy.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-SC5B3XOM.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/internal.js",
+    "entry.js"
+  ],
+  "0.1.1-rc.1/package-./internal/math": [
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/chunk-ATHPYVIF.js",
+    "0.1.1-rc.1/node_modules/@zodiacs/engine/dist/internal-math.js",
+    "entry.js"
+  ],
+  "0.1.1-rc.5/site-full": [
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+    "0.1.1-rc.5/node_modules/astronomy-engine/esm/astronomy.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/internal.js",
+    "snapshot/src/lib/engine/full.ts"
+  ],
+  "0.1.1-rc.5/site-houses": [
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/internal-math.js",
+    "snapshot/src/lib/engine/houses.ts"
+  ],
+  "0.1.1-rc.5/site-aspects": [
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/internal-math.js",
+    "snapshot/src/lib/engine/aspects.ts"
+  ],
+  "0.1.1-rc.5/site-types": [
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/internal-math.js",
+    "snapshot/src/lib/engine/types.ts"
+  ],
+  "0.1.1-rc.5/package-.": [
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+    "0.1.1-rc.5/node_modules/astronomy-engine/esm/astronomy.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/index.js",
+    "entry.js"
+  ],
+  "0.1.1-rc.5/package-./geo": [
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/geo.js",
+    "entry.js"
+  ],
+  "0.1.1-rc.5/package-./internal": [
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+    "0.1.1-rc.5/node_modules/astronomy-engine/esm/astronomy.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/internal.js",
+    "entry.js"
+  ],
+  "0.1.1-rc.5/package-./internal/math": [
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/internal-math.js",
+    "entry.js"
+  ],
+  "0.1.1-rc.5/package-./receipt": [
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+    "0.1.1-rc.5/node_modules/@zodiacs/engine/dist/receipt.js",
+    "entry.js"
+  ]
+}

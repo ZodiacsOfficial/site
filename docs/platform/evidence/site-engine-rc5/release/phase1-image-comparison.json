@@ -1,0 +1,243 @@
+{
+  "timestamp": "2026-09-08T04:03:26.293Z",
+  "base": "ba65375a34cee6a85f94b53ba45861f1b81f34ef",
+  "oldDate": "2026-09-07",
+  "currentDate": "2026-09-08",
+  "scope": "Comparison only; no baseline tolerances or images altered by this operation. Current images were recaptured by the original acceptance driver after the legitimate edition/engine provenance change.",
+  "rows": [
+    {
+      "file": "today-360.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 360,
+        "height": 6460
+      },
+      "after": {
+        "width": 360,
+        "height": 6460
+      },
+      "differingPixels": 45911
+    },
+    {
+      "file": "today-1280.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 1280,
+        "height": 4157
+      },
+      "after": {
+        "width": 1280,
+        "height": 4157
+      },
+      "differingPixels": 16929
+    },
+    {
+      "file": "horoscopes-hub-360.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 360,
+        "height": 5759
+      },
+      "after": {
+        "width": 360,
+        "height": 5759
+      },
+      "differingPixels": 39297
+    },
+    {
+      "file": "horoscopes-hub-1280.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 1280,
+        "height": 2882
+      },
+      "after": {
+        "width": 1280,
+        "height": 2882
+      },
+      "differingPixels": 48004
+    },
+    {
+      "file": "daily-360.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 360,
+        "height": 4353
+      },
+      "after": {
+        "width": 360,
+        "height": 4380
+      },
+      "differingPixels": null
+    },
+    {
+      "file": "daily-1280.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 1280,
+        "height": 3585
+      },
+      "after": {
+        "width": 1280,
+        "height": 3585
+      },
+      "differingPixels": 12656
+    },
+    {
+      "file": "tomorrow-360.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 360,
+        "height": 4301
+      },
+      "after": {
+        "width": 360,
+        "height": 4301
+      },
+      "differingPixels": 2602
+    },
+    {
+      "file": "tomorrow-1280.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 1280,
+        "height": 3491
+      },
+      "after": {
+        "width": 1280,
+        "height": 3491
+      },
+      "differingPixels": 2019
+    },
+    {
+      "file": "weekly-360.png",
+      "byteIdentical": true,
+      "before": {
+        "width": 360,
+        "height": 5022
+      },
+      "after": {
+        "width": 360,
+        "height": 5022
+      },
+      "differingPixels": 0
+    },
+    {
+      "file": "weekly-1280.png",
+      "byteIdentical": true,
+      "before": {
+        "width": 1280,
+        "height": 3863
+      },
+      "after": {
+        "width": 1280,
+        "height": 3863
+      },
+      "differingPixels": 0
+    },
+    {
+      "file": "monthly-360.png",
+      "byteIdentical": true,
+      "before": {
+        "width": 360,
+        "height": 5034
+      },
+      "after": {
+        "width": 360,
+        "height": 5034
+      },
+      "differingPixels": 0
+    },
+    {
+      "file": "monthly-1280.png",
+      "byteIdentical": true,
+      "before": {
+        "width": 1280,
+        "height": 3724
+      },
+      "after": {
+        "width": 1280,
+        "height": 3724
+      },
+      "differingPixels": 0
+    },
+    {
+      "file": "love-360.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 360,
+        "height": 4010
+      },
+      "after": {
+        "width": 360,
+        "height": 4010
+      },
+      "differingPixels": 8387
+    },
+    {
+      "file": "love-1280.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 1280,
+        "height": 3245
+      },
+      "after": {
+        "width": 1280,
+        "height": 3245
+      },
+      "differingPixels": 8693
+    },
+    {
+      "file": "career-360.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 360,
+        "height": 3966
+      },
+      "after": {
+        "width": 360,
+        "height": 3966
+      },
+      "differingPixels": 1151
+    },
+    {
+      "file": "career-1280.png",
+      "byteIdentical": false,
+      "before": {
+        "width": 1280,
+        "height": 3291
+      },
+      "after": {
+        "width": 1280,
+        "height": 3291
+      },
+      "differingPixels": 1782
+    },
+    {
+      "file": "yearly-360.png",
+      "byteIdentical": true,
+      "before": {
+        "width": 360,
+        "height": 12554
+      },
+      "after": {
+        "width": 360,
+        "height": 12554
+      },
+      "differingPixels": 0
+    },
+    {
+      "file": "yearly-1280.png",
+      "byteIdentical": true,
+      "before": {
+        "width": 1280,
+        "height": 7784
+      },
+      "after": {
+        "width": 1280,
+        "height": 7784
+      },
+      "differingPixels": 0
+    }
+  ]
+}

@@ -313,3 +313,32 @@ export, deletion, account switch, storage failure and legacy sync boundaries.
 Future remote capability/CAS/idempotent-replay handling is a separate reviewed
 contract. No new namespace, migration, account request or server change is
 activated by this decision.
+
+## A-008 — Adopt rc.5 with separate immutable provenance identities
+
+The site now intentionally pins the verified SDK rc.5 archive instead of
+rebuilding it locally or waiting for a held npm publication. Source commit,
+artifact carrier/repository path, and numerical/consumer evidence commit are
+distinct identifiers. A strict candidate schema and archive-member comparison
+enforce their documented structure and installed bytes. These checks do not
+authenticate arbitrary imported receipt provenance.
+
+Keep the standalone starter and old archives immutable. The generated TypeDoc
+remains an explicitly archived rc.1 reference; current integration instructions
+link to the actual rc.5 public README and draft receipt specification. Rebuilding
+an entire reference tree is unnecessary for this bounded adoption and would
+expand its protected scope.
+
+The September 8 edition advanced on main during acceptance. Merge its actual
+daily and paired Registry snapshot into this candidate, preserve all upstream
+content bytes, and regenerate only the active engine/generator provenance with
+the existing daily builder. Never advance a stale edition's date or change the
+freshness clock. Fresh Phase 1 captures must match the new package/lock fingerprint
+and current edition. Their fixed rendering clock is the existing capture policy,
+not an override of production freshness checks.
+
+The stacked comparison with draft #419 includes twelve already-main Registry
+sign pages. The one-time allowance names exactly those pages and the exact base;
+the evidence records byte equality to main. The scope guard implementation and
+future freeze are unchanged. A later retarget must refresh the allowance and
+comparison evidence against its actual base before integration.
