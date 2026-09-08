@@ -1,0 +1,88 @@
+/** Native controls only; no mocked request/transaction success events. */
+export const DB = 'zodiacs-saved-natal-v1';
+export function insist(condition, message) { if (!condition) throw new Error(message); }
+export const timeout = (promise, label, milliseconds = 5000) => Promise.race([
+  promise,
+  new Promise((_, reject) => setTimeout(() => reject(new Error(label)), milliseconds)),
+]);
+export function openRaw(version = 1, upgrade) {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB, version);
+    request.onupgradeneeded = () => upgrade?.(request.result, request.transaction);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+    request.onblocked = () => reject(new Error('unexpected-raw-open-blocked'));
+  });
+}
+export function nativeRead(database, ownerKey, id) {
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction('records', 'readonly');
+    const req = id === undefined ? tx.objectStore('records').index('ownerKey').getAll(ownerKey)
+      : tx.objectStore('records').get([ownerKey, id]);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+export function nativePut(database, value) {
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction('records', 'readwrite');
+    tx.objectStore('records').put(value);
+    tx.oncomplete = () => resolve();
+    tx.onabort = () => reject(tx.error);
+    tx.onerror = () => {};
+  });
+}
+export function deleteRaw() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.deleteDatabase(DB);
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+    // Leave a truly blocked native request pending so timeout exposes a leak.
+  });
+}
+export function interceptAddSuccess(action) {
+  const original = IDBObjectStore.prototype.add;
+  let invoked = 0;
+  IDBObjectStore.prototype.add = function (...args) {
+    const request = original.apply(this, args);
+    if (this.transaction.db.name === DB && this.name === 'records') {
+      request.addEventListener('success', () => { invoked++; action(this.transaction); }, { once: true });
+    }
+    return request;
+  };
+  return { restore: () => { IDBObjectStore.prototype.add = original; }, count: () => invoked };
+}
+export function interceptWriteComplete(action) {
+  const original = IDBDatabase.prototype.transaction;
+  let invoked = 0;
+  IDBDatabase.prototype.transaction = function (...args) {
+    const transaction = original.apply(this, args);
+    if (this.name === DB && transaction.mode === 'readwrite') {
+      transaction.addEventListener('complete', () => { invoked++; action(transaction); }, { once: true });
+    }
+    return transaction;
+  };
+  return { restore: () => { IDBDatabase.prototype.transaction = original; }, count: () => invoked };
+}
+export async function queueBehindBlockedDelete() {
+  const held = await openRaw();
+  let resolveBlocked, resolveDeleted, rejectDeleted;
+  const blocked = new Promise(resolve => { resolveBlocked = resolve; });
+  const deleted = new Promise((resolve, reject) => { resolveDeleted = resolve; rejectDeleted = reject; });
+  const request = indexedDB.deleteDatabase(DB);
+  request.onblocked = () => resolveBlocked();
+  request.onsuccess = () => resolveDeleted();
+  request.onerror = () => rejectDeleted(request.error);
+  await timeout(blocked, 'native-delete-did-not-block');
+  return { release: () => held.close(), deleted };
+}
+export function interceptOpenSuccess(action) {
+  const original = IDBFactory.prototype.open;
+  let invoked = 0;
+  IDBFactory.prototype.open = function (...args) {
+    const request = original.apply(this, args);
+    if (args[0] === DB) request.addEventListener('success', () => { invoked++; action(request.result); }, { once: true });
+    return request;
+  };
+  return { restore: () => { IDBFactory.prototype.open = original; }, count: () => invoked };
+}

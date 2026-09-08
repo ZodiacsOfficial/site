@@ -1,0 +1,49 @@
+# Author implementation choices
+
+Base: site dcc4e437a99f812666cd19dc85e6d781dbb3bedc, isolated checkout.
+Read reviewer DESIGN.md and actual existing Living Chart/native-IDB counterexample
+before authoring. These choices narrow the optional primitive; no active app
+lifecycle, account policy or v1 behavior is changed.
+
+- Immutable outer record: schema, ownerKey, generated UUID, createdAt, optional
+  bounded label, and SDK envelopeJson. No revision, updatedAt, rename, supplied
+  create ID, overwrite, deduplication, wrapper import or legacy projection.
+- Bound authority is explicit ownerKey plus a safe nonnegative epoch and a
+  required reader of the current owner/epoch. This is caller application policy,
+  not authentication. The handle never discovers or creates ownership.
+- Separate IndexedDB zodiacs-saved-natal-v1/version1; records has compound
+  [ownerKey,id] key and ownerKey index. Validate existing layout without upgrades
+  or repair. Unsupported physical versions/layouts are preserved.
+- Create snapshots the existing SDK envelope before awaiting IDB. The SDK is the
+  only inner envelope validator. Label preserves supplied text, bounded to 120
+  Unicode code points and 512 UTF-8 bytes; empty/whitespace-only/control text is
+  invalid. It is local metadata and never included in envelope export.
+- Record cap40 and insertion are one readwrite transaction. Reads request at
+  most41 values; corruption/future records are errors, not empty success. Immutable
+  deletion by explicit owner/id is idempotent and can remove an unsupported record
+  at that exact known key; clear is explicit owner erasure without parsing content.
+- Track native transactions. Revoke invalidates generation and calls abort before
+  closing handles. Resolve reads and writes only after transaction completion,
+  and check authority/generation before, inside and after asynchronous boundaries.
+- Clear consumes the handle: abort/invalidate previous operations, run an
+  authorized owner-scoped transaction, then remain revoked even on failure.
+  Retry requires a new explicit handle. Other handles/tabs are separately
+  serialized by IDB but not globally revoked by this primitive.
+- Fixed result unions separate missing, denied/stale, invalid/corrupt/unsupported,
+  full/collision, quota, blocked, abort and unavailable storage. A stale write
+  after native commit reports mayHaveCommitted; no automatic retry or success
+  notification. Returned records are frozen immutable strings/scalars.
+
+- Native IndexedDB open requests cannot be cancelled. Keep a separate logical
+  cancellation callback: revoke rejects waiting callers immediately, aborts an
+  active upgrade transaction when possible, and closes any late successful
+  connection using settled/generation guards. An external blocked delete must
+  not keep the caller waiting after its authority has been revoked.
+- Terminal clear cleanup invokes revoke after its final authority check, so a
+  connection opened solely for clear cannot remain cached on a consumed handle.
+
+Rejected options: reusing/upgrading Living Chart storage would change its version
+contract; aggregate localStorage would inherit the demonstrated lost-save race;
+caller IDs/overwrites/metadata CAS would add conflict semantics without a needed
+mutable record; automatic semantic dedup would conflate distinct calculations;
+legacy receipt reconstruction would invent evidence. None is part of this slice.

@@ -1,0 +1,76 @@
+import {createServer} from 'node:http';
+import {readFile,writeFile,mkdir,stat,readdir} from 'node:fs/promises';
+import {resolve,extname,sep} from 'node:path';
+import {createRequire} from 'node:module';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+import {parseNatalEnvelope} from './freeze2-accepted-compatibility-subject.mjs';
+const root='/private/tmp/zodiacs-platform-site-receipt-export';
+const base='/private/tmp/zodiacs-platform-site-receipt-export-evidence';
+const run=base+'/browser-'+Date.now();await mkdir(run);
+const require=createRequire(root+'/package.json');const {chromium}=require('playwright-core');
+const identity=JSON.parse(await readFile(base+'/freeze2-identity.json','utf8'));
+const interactionIdentity=JSON.parse(await readFile(base+'/interaction-freeze1-identity.json','utf8'));
+identity.files={...identity.files,...interactionIdentity.files};
+identity.interactionCorrection=interactionIdentity;
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+for(const [file,hash] of Object.entries(identity.files))assert.equal(sha(await readFile(root+'/'+file)),hash);
+const requestLog=[],served=new Map(),results=[];const dist=resolve(root,'dist');
+const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.woff2':'font/woff2','.ico':'image/x-icon','.jpg':'image/jpeg','.mp4':'video/mp4','.webm':'video/webm','.xml':'application/xml'};
+const server=createServer(async(req,res)=>{try{
+ const pathname=decodeURIComponent(new URL(req.url,'http://127.0.0.1').pathname);let file=resolve(dist,'.'+pathname);if(!file.startsWith(dist+sep)&&file!==dist)throw Error('path');
+ if((await stat(file)).isDirectory())file=resolve(file,'index.html');
+ const bytes=await readFile(file);requestLog.push({method:req.method,path:pathname,status:200});served.set(file.slice(dist.length+1),{bytes:bytes.length,sha256:sha(bytes)});res.writeHead(200,{'Content-Type':types[extname(file)]??'application/octet-stream','Cache-Control':'no-store'});res.end(bytes);
+ }catch{requestLog.push({method:req.method,path:req.url,status:404});res.writeHead(404);res.end('Not found');}});
+await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin='http://127.0.0.1:'+server.address().port;
+let browser;const contexts=[];const startedAt=new Date().toISOString();
+const share=wire=>'1.'+Buffer.from(JSON.stringify(wire)).toString('base64url');
+const link=(wire,locale='en')=>origin+(locale==='en'?'':'/'+locale)+'/birth-chart/#c='+share(wire);
+const ordinary={d:'1990-06-15',t:'14:30',z:'America/New_York',la:40.71,lo:-74,h:'placidus',n:'Synthetic private label',p:'Synthetic birthplace'};
+const observer=()=>{
+ window.__receiptChecks={calculations:0,created:[],revoked:[],downloads:0,failAllocation:false};
+ addEventListener('zodiacs:chart-computed',()=>window.__receiptChecks.calculations++);
+ const create=URL.createObjectURL.bind(URL),revoke=URL.revokeObjectURL.bind(URL);
+ URL.createObjectURL=function(blob){if(blob.type.startsWith('application/json')){if(window.__receiptChecks.failAllocation)throw Error('Synthetic private allocation error');const url=create(blob);window.__receiptChecks.created.push(url);return url;}return create(blob);};
+ URL.revokeObjectURL=function(url){if(window.__receiptChecks.created.includes(url))window.__receiptChecks.revoked.push(url);return revoke(url);};
+};
+async function pageFor(name,viewport={width:1280,height:900}){
+ const context=await browser.newContext({viewport,acceptDownloads:true,reducedMotion:'reduce'});contexts.push(context);
+ const external=[],errors=[],consoleErrors=[];
+ await context.route('**/*',route=>{const u=route.request().url();if(u.startsWith(origin+'/')||u.startsWith('data:')||u.startsWith('blob:'))return route.continue();external.push(u);return route.abort();});
+ await context.addInitScript(observer);const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text());});let downloads=0;page.on('download',()=>downloads++);
+ return {page,context,external,errors,consoleErrors,get downloads(){return downloads;},name};
+}
+async function ready(s,url){await s.page.goto(url,{waitUntil:'networkidle'});await s.page.locator('astro-island[component-url*="ChartCalculator"]:not([ssr])').waitFor();assert.equal(await s.page.locator('vite-error-overlay').count(),0);}
+async function rendered(s){await s.page.locator('.calc__result').waitFor({timeout:20000});await s.page.waitForFunction(()=>document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false');}
+async function more(s){const summary=s.page.locator('[data-chart-more] > summary');await summary.scrollIntoViewIfNeeded();if(!(await s.page.locator('[data-chart-more]').getAttribute('open'))){await summary.focus();await s.page.keyboard.press('Enter');}await s.page.locator('[data-calculation-receipt-export]').waitFor({state:'visible'});}
+async function state(s){return s.page.evaluate(()=>({calculations:window.__receiptChecks.calculations,created:[...window.__receiptChecks.created],revoked:[...window.__receiptChecks.revoked],storage:Object.fromEntries(Object.entries(localStorage))}));}
+async function download(s,name){const before=await state(s);const requestsBefore=requestLog.length;const control=s.page.locator('[data-download-calculation-receipt]');assert.equal(await control.isEnabled(),true);const pending=s.page.waitForEvent('download');await control.focus();await s.page.keyboard.press('Enter');const file=await pending;assert.equal(file.suggestedFilename(),'zodiacs-calculation-receipt.json');const path=run+'/'+name+'.json';await file.saveAs(path);const bytes=await readFile(path);const parsed=parseNatalEnvelope(bytes.toString());assert.equal(parsed.ok,true);await s.page.waitForFunction(()=>window.__receiptChecks.created.every(url=>window.__receiptChecks.revoked.includes(url)));const after=await state(s);assert.equal(after.calculations,before.calculations);assert.deepEqual(after.storage,before.storage);assert.equal(after.created.length,before.created.length+1);assert.equal(after.revoked.length,before.revoked.length+1);const newRequests=requestLog.slice(requestsBefore);assert.equal(newRequests.some(r=>r.method!=='GET'),false);return{envelope:parsed.envelope,sha256:sha(bytes),bytes:bytes.length,before,after,requests:newRequests};}
+async function close(s){await s.context.close();}
+try{
+ browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--disable-background-networking']});
+ const s=await pageFor('fresh-desktop');await ready(s,origin+'/birth-chart/');assert.equal(requestLog.some(r=>r.path.includes('calculator-receipt')),false);
+ const controls=await s.page.evaluate(()=>{const url=URL.createObjectURL(new Blob(['{}'],{type:'application/json'}));URL.revokeObjectURL(url);dispatchEvent(new Event('zodiacs:chart-computed'));const observed={created:window.__receiptChecks.created.length,revoked:window.__receiptChecks.revoked.length,calculations:window.__receiptChecks.calculations};window.__receiptChecks.created=[];window.__receiptChecks.revoked=[];window.__receiptChecks.calculations=0;return observed;});assert.deepEqual(controls,{created:1,revoked:1,calculations:1});
+ await s.page.locator('#birth-date').fill('2001-12-21');await s.page.locator('#birth-time').fill('08:30');await s.page.locator('#place').fill('Longyearbyen');await s.page.locator('#place-list [role=option]').first().click();await s.page.locator('#house-system').selectOption('placidus');
+ await s.page.locator('.calc__submit').click();await rendered(s);await s.page.locator('.calc__wheel').screenshot({path:run+'/desktop-wheel.png'});assert.ok(await s.page.locator('[data-share-card]').count());assert.ok(await s.page.locator('[data-save-chart]').count());await more(s);
+ const first=await download(s,'fresh-polar');assert.equal(first.envelope.receipt.houses.requested,'placidus');assert.equal(first.envelope.receipt.houses.actual,'whole');assert.equal(first.envelope.receipt.sourceInstant,null);assert.equal(first.envelope.receipt.provenance,null);assert.equal(first.envelope.receipt.localResolution.time,'08:30');await s.page.locator('[data-chart-more]').screenshot({path:run+'/desktop-actions.png'});
+ const n=s.downloads;await s.page.evaluate(()=>{const button=document.querySelector('[data-download-calculation-receipt]'),date=document.querySelector('#birth-date');date.value='2002-12-21';date.dispatchEvent(new Event('input',{bubbles:true}));button.click();});await s.page.waitForTimeout(120);assert.equal(s.downloads,n);assert.equal(await s.page.locator('[data-download-calculation-receipt]').isDisabled(),true);
+ await s.page.locator('.calc__submit').click();await rendered(s);const second=await download(s,'recalculated-polar');assert.notEqual(second.envelope.receipt.instant,first.envelope.receipt.instant);
+ const previousCount=(await state(s)).calculations;await s.page.evaluate(()=>{window.__receiptChecks.failAllocation=true;});await s.page.locator('[data-download-calculation-receipt]').click();await s.page.getByRole('alert').filter({hasText:'The file could not be downloaded. Please try again.'}).waitFor();assert.equal((await state(s)).calculations,previousCount);assert.equal(s.downloads,n+1);await s.page.evaluate(()=>{window.__receiptChecks.failAllocation=false;});const retry=await download(s,'download-retry');assert.equal(retry.sha256,second.sha256);
+ await s.page.locator('.field__toggle input[type=checkbox]').check();await s.page.locator('.calc__submit').click();await rendered(s);const unknown=await download(s,'unknown-local-noon');assert.equal(unknown.envelope.receipt.reference,'local-noon');assert.equal(unknown.envelope.receipt.localResolution.time,'12:00');assert.equal(unknown.envelope.receipt.houses.actual,null);assert.equal(unknown.envelope.result.angles,null);
+ assert.deepEqual(s.errors,[]);results.push({name:s.name,status:'passed',first,second,retry,unknown,observerNegativeControls:controls,staleDomClickSuppressed:true,allocationFailureGeneric:true,errors:s.errors,consoleErrors:s.consoleErrors,external:s.external});await close(s);
+ const localeLabels={en:'Download calculation receipt (.json)',es:'Descargar el registro del cálculo (.json)',pt:'Baixar o registro do cálculo (.json)',fr:'Télécharger le relevé du calcul (.json)',it:'Scarica il resoconto del calcolo (.json)',ru:'Скачать запись расчёта (.json)'};
+ for(const locale of Object.keys(localeLabels)){
+  const s=await pageFor('locale-'+locale,{width:360,height:780});await ready(s,link(ordinary,locale));await rendered(s);await more(s);assert.equal((await s.page.locator('[data-download-calculation-receipt] > span').first().innerText()).trim(),localeLabels[locale]);
+  const file=await download(s,'locale-'+locale);assert.equal(file.envelope.receipt.instant,'1990-06-15T18:30:00.000Z');assert.equal(JSON.stringify(file.envelope).includes('Synthetic private label'),false);assert.equal(JSON.stringify(file.envelope).includes('Synthetic birthplace'),false);
+  await s.page.locator('[data-chart-more]').screenshot({path:run+'/mobile-actions-'+locale+'.png'});const width=await s.page.evaluate(()=>({viewport:innerWidth,document:document.documentElement.scrollWidth}));assert.ok(width.document<=width.viewport+1);assert.deepEqual(s.errors,[]);results.push({name:s.name,status:'passed',file,width,errors:s.errors,consoleErrors:s.consoleErrors,external:s.external});await close(s);
+ }
+ for(const [name,wire] of [['fixed-offset',{...ordinary,z:'+01:00'}],['historical-seconds',{...ordinary,d:'1914-01-01',t:'00:00',z:'America/Manaus'}],['known-north-pole',{...ordinary,z:'UTC',la:90}],['known-south-pole',{...ordinary,z:'UTC',la:-90}]]){
+  const s=await pageFor(name);await ready(s,link(wire));await rendered(s);await more(s);assert.equal(await s.page.locator('[data-download-calculation-receipt]').isDisabled(),true);assert.equal(await s.page.locator('#calculation-receipt-privacy').innerText(),'A calculation receipt is not available for this chart.');assert.equal(s.downloads,0);assert.equal((await state(s)).created.length,0);assert.equal((await state(s)).calculations,1);assert.deepEqual(s.errors,[]);results.push({name,status:'passed',state:await state(s),errors:s.errors,consoleErrors:s.consoleErrors,external:s.external});await close(s);
+ }
+ const p=await pageFor('positions-only');const wire={b:Array.from({length:12},(_,i)=>i*29),h:'w',v:'0.1.1-rc.5'};await ready(p,origin+'/birth-chart/#p=2.'+Buffer.from(JSON.stringify(wire)).toString('base64url'));await p.page.waitForTimeout(300);assert.equal(await p.page.locator('[data-calculation-receipt-export]').count(),0);assert.equal((await state(p)).created.length,0);assert.deepEqual(p.errors,[]);results.push({name:p.name,status:'passed',errors:p.errors,consoleErrors:p.consoleErrors,external:p.external});await close(p);
+}catch(error){results.push({name:'harness',status:'failed',error:error.stack});console.error(error);}finally{
+ for(const context of contexts)await context.close().catch(()=>{});if(browser)await browser.close();await new Promise(resolve=>server.close(resolve));
+ const finalSource={};for(const [file,hash]of Object.entries(identity.files)){finalSource[file]=sha(await readFile(root+'/'+file));assert.equal(finalSource[file],hash);}
+ const report={startedAt,completedAt:new Date().toISOString(),node:process.version,browser:'Chrome152',identity,origin,run,harnessSha256:sha(await readFile(base+'/browser-combined-drive.mjs')),results,passed:results.filter(r=>r.status==='passed').length,failed:results.filter(r=>r.status==='failed').length,requestLog,served:Object.fromEntries(served),cleanup:{contextsClosed:true,browserClosed:true,serverClosed:true},finalSource};await writeFile(run+'/result.json',JSON.stringify(report,null,2)+'\n');await writeFile(base+'/browser-combined-latest.json',JSON.stringify({run,report:run+'/result.json'},null,2)+'\n');console.log(JSON.stringify({run,passed:report.passed,failed:report.failed},null,2));if(report.failed)process.exitCode=1;
+}

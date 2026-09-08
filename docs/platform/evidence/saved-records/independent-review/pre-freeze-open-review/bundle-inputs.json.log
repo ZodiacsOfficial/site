@@ -1,0 +1,20 @@
+{
+  "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js": {
+    "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08"
+  },
+  "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js": {
+    "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+  },
+  "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/receipt.js": {
+    "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea"
+  },
+  "pre-freeze-open-review/src/lib/account-v2/storage-identity.ts": {
+    "sha256": "fac153299e09bf775443e2ed71be9e81ad8de6ad911a87c85ac4fc42707675ab"
+  },
+  "pre-freeze-open-review/src/lib/profile/saved-record.ts": {
+    "sha256": "3b7400fccc4d6f4e62e54e1e1525b81a4d93b54ce6602beb165d43e7b2d3af33"
+  },
+  "pre-freeze-open-review/src/lib/profile/saved-record-store.ts": {
+    "sha256": "ffd47ff6f699a1e6cdb0fcf872df3290d91febb6ffbf3affa19b93c916a53964"
+  }
+}

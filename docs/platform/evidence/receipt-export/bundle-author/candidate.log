@@ -1,0 +1,22 @@
+route gzip sizes (initial transitive local JS):
+  /                  31.5 KB /   42 KB  (30 chunks)
+  /birth-chart/      60.2 KB /   70 KB  (38 chunks)
+  /big-three/        28.2 KB /   30 KB  (20 chunks)
+  /transits/         27.8 KB /   30 KB  (24 chunks)
+  /solar-return/     23.7 KB /   30 KB  (18 chunks)
+  /lunar-return/     23.6 KB /   30 KB  (18 chunks)
+  /numerology/       17.3 KB /   30 KB  (7 chunks)
+  /numerology/life-path/7/   17.3 KB /   30 KB  (7 chunks)
+  /void-of-course-moon/    0.0 KB /    5 KB  (0 chunks)
+  /today/            21.1 KB / 21.5 KB  (15 chunks)
+  /compatibility/    34.9 KB / 35.5 KB  (24 chunks)
+  /aries/             0.0 KB /    0 KB  (0 chunks)
+  /almanac/           0.0 KB /    0 KB  (0 chunks)
+  /almanac/sky-2026-08/    0.0 KB /    0 KB  (0 chunks)
+  /almanac/reading-a-childs-chart/    0.0 KB /    0 KB  (0 chunks)
+  /registry/collection/    0.0 KB /   48 KB  (0 chunks)
+chunk gates:
+  chunk-max          50.1 KB /   60 KB  (/_astro/client.D6U9smGw.js)
+  engine-chunk       23.3 KB /   25 KB  (/_astro/full.DXD_oWB0.js; 5 static chunks)
+engine isolation: package boundary clear; homepage markers clear
+report-bundles: budgets pass

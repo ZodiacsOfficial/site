@@ -1,0 +1,47 @@
+{
+  "purpose": "Early draft counterexample; not acceptance",
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "at": "2026-09-08T05:08:44.328Z",
+  "identity": {
+    "purpose": "Snapshot of moving draft for early liveness counterexample only; NOT frozen-patch acceptance",
+    "capturedAt": "2026-09-08T05:07:36.278456+00:00",
+    "source": "/private/tmp/zodiacs-platform-saved-record",
+    "files": {
+      "src/lib/profile/saved-record.ts": {
+        "sha256": "3b7400fccc4d6f4e62e54e1e1525b81a4d93b54ce6602beb165d43e7b2d3af33",
+        "bytes": 4832
+      },
+      "src/lib/profile/saved-record-store.ts": {
+        "sha256": "ffd47ff6f699a1e6cdb0fcf872df3290d91febb6ffbf3affa19b93c916a53964",
+        "bytes": 17727
+      },
+      "src/lib/engine/portable.ts": {
+        "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+        "bytes": 3084
+      },
+      "src/lib/engine/chart-adapter.ts": {
+        "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+        "bytes": 788
+      },
+      "src/lib/engine/types.ts": {
+        "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+        "bytes": 2164
+      },
+      "src/lib/account-v2/storage-identity.ts": {
+        "sha256": "fac153299e09bf775443e2ed71be9e81ad8de6ad911a87c85ac4fc42707675ab",
+        "bytes": 883
+      }
+    }
+  },
+  "result": {
+    "settledBeforeRelease": false,
+    "waitMilliseconds": 1000,
+    "outcome": {
+      "ok": false,
+      "code": "stale",
+      "mayHaveCommitted": false
+    },
+    "lateConnectionCleanup": "success"
+  }
+}

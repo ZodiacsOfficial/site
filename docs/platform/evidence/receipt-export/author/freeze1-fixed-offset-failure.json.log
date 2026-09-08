@@ -1,0 +1,87 @@
+{
+  "freeze": {
+    "freeze": 1,
+    "timestamp": "2026-09-08T05:30:47.515744+00:00",
+    "baseCommit": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+    "sourceCheckout": "/private/tmp/zodiacs-platform-site-receipt-export",
+    "files": {
+      "src/islands/ChartCalculator.actions.test.ts": "b0e1f0cb62ed6c652dc902a4ee039ca60f8c6bd85b7c0048fc4b94bbdd9d0d64",
+      "src/islands/ChartCalculator.tsx": "235f142739e31864b6ee9f6e33eb97683f5538305453766c109d31b60fc88edf",
+      "src/lib/engine/calculator-receipt.test.ts": "47dfdb5f08e8b9ba51d893bececf28931bb16f7554171d87a0c8afdcb2a6b115",
+      "src/lib/engine/calculator-receipt.ts": "888b5d03e34ba055f3cf90f282461f508d17441bf57871fe796aac1a79799abc",
+      "src/lib/i18n/index.test.ts": "dfbdc57004389437baab89fc13dae2045fa2a440a088126d17b9c716cc9f3980",
+      "src/lib/i18n/ui/en.ts": "48f06bfaf327f4e23f0b6ada17b6b8edd3877fa5e13b193bf244038f82377678",
+      "src/lib/i18n/ui/es.ts": "ee44c867cf8d3c28dbbfecac7e9fd00c2cd7764353fe2ecacd2d90b6ceae3836",
+      "src/lib/i18n/ui/fr.ts": "ffc43b98576991a85056d8a5bbe90c8247f0741484f1daa2ee168f465f2af5d3",
+      "src/lib/i18n/ui/it.ts": "1e1039fb3c7a495428b4222938e4c3946cced9e03e46311166ea3c0089517a8c",
+      "src/lib/i18n/ui/pt.ts": "96024ea9f65e706485031d338b9437c764808bf477513e96ebeab11c09bedb36",
+      "src/lib/i18n/ui/ru.test.ts": "964ee1d635307094ee29f4236031f7724c02abb538fe7f9911dc8e263e8abe1e",
+      "src/lib/i18n/ui/ru.ts": "274e88e5b25edd07b4d0686b956594b0dac317ec5e7ade623802c96c9852d35e",
+      "src/lib/receipt-download.test.ts": "a3f039e77b4a234f7ab6dc46afa9819f7dd1c5de10a97a330654fb727b973ac6",
+      "src/lib/receipt-download.ts": "6b11d3c850a5669eae98684cac629a150d3645854f657df4c5fc5f95cee33d6d"
+    },
+    "patchSha256": "6a8485c097d95d0be9db196467d95c7e4e06264f76dfb66bc697af7ffbb34e30",
+    "focusedTestCount": 96,
+    "astroCheck": {
+      "errors": 0,
+      "warnings": 0,
+      "hints": 11
+    },
+    "extremeCompatibilityCases": 2136,
+    "browserStatus": "pending",
+    "rootEdited": false
+  },
+  "node": "v22.23.2",
+  "results": [
+    {
+      "zone": "+01:00",
+      "legacySucceeded": true,
+      "utc": "1990-06-15T13:30:00.000Z",
+      "portable": {
+        "name": "PortableChartError",
+        "code": "calculation_failed",
+        "message": "Unable to prepare a portable chart."
+      }
+    },
+    {
+      "zone": "+0100",
+      "legacySucceeded": true,
+      "utc": "1990-06-15T13:30:00.000Z",
+      "portable": {
+        "name": "PortableChartError",
+        "code": "calculation_failed",
+        "message": "Unable to prepare a portable chart."
+      }
+    },
+    {
+      "zone": "-02:30",
+      "legacySucceeded": true,
+      "utc": "1990-06-15T17:00:00.000Z",
+      "portable": {
+        "name": "PortableChartError",
+        "code": "calculation_failed",
+        "message": "Unable to prepare a portable chart."
+      }
+    },
+    {
+      "zone": "+23:59",
+      "legacySucceeded": true,
+      "utc": "1990-06-14T14:31:00.000Z",
+      "portable": {
+        "name": "PortableChartError",
+        "code": "calculation_failed",
+        "message": "Unable to prepare a portable chart."
+      }
+    },
+    {
+      "zone": "-00:00",
+      "legacySucceeded": true,
+      "utc": "1990-06-15T14:30:00.000Z",
+      "portable": {
+        "name": "PortableChartError",
+        "code": "calculation_failed",
+        "message": "Unable to prepare a portable chart."
+      }
+    }
+  ]
+}

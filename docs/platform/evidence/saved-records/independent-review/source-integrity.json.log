@@ -1,0 +1,152 @@
+{
+  "at": "2026-09-08T05:12:37.863923+00:00",
+  "archiveSha256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
+  "archiveMembers": {
+    "LICENSE": {
+      "sha256": "9a8ab25f278db9d59a00ee82d1a82d63ee4891a9c417c53b4e2b9942aaab10df",
+      "archiveExact": true
+    },
+    "NOTICE": {
+      "sha256": "06a8e2e2bae6d6113e738f8c4ee3869f698fbf39756a26ce842d549dde423450",
+      "archiveExact": true
+    },
+    "dist/chunk-4YKOFVM6.js": {
+      "sha256": "5d795078c6cfc19404f933c87c3748946706ab30631d6b4b4b695a227dc8b803",
+      "archiveExact": true
+    },
+    "dist/chunk-CPALRSPC.js": {
+      "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08",
+      "archiveExact": true
+    },
+    "dist/chunk-INI453VG.js": {
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d",
+      "archiveExact": true
+    },
+    "dist/chunk-K5MRTCWE.js": {
+      "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d",
+      "archiveExact": true
+    },
+    "dist/chunk-PD4H342X.js": {
+      "sha256": "5852fc08c1f56052de23dc2f018b3bcd6e75b080c18c9d9b5a793a2be49bf4c0",
+      "archiveExact": true
+    },
+    "dist/geo.js": {
+      "sha256": "9d45088e73e9dadf8083c3673d12e5e8affedd17d1796a6fb0f3b0ec6ae679f5",
+      "archiveExact": true
+    },
+    "dist/index.js": {
+      "sha256": "46306e0005fc4dd86eaa62a062f8e54957bceb0e672a6f073f920434d2b2ef3b",
+      "archiveExact": true
+    },
+    "dist/internal-math.js": {
+      "sha256": "8c058be3014be9d5443a87cd09413ecec21af89fe599ebe9ed4e58a8cda9870a",
+      "archiveExact": true
+    },
+    "dist/internal.js": {
+      "sha256": "5a913b0ebbe34440e13f65d5ecddd7c2f5454746eb8d1861ff5bc1ec8ae88c52",
+      "archiveExact": true
+    },
+    "dist/receipt.js": {
+      "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea",
+      "archiveExact": true
+    },
+    "package.json": {
+      "sha256": "84206969fb8c9c78c1abee1cfb4ebeda6b862c77bff0e5f7effc2ebc47826387",
+      "archiveExact": true
+    },
+    "CHANGELOG.md": {
+      "sha256": "8dded1aea3cc4318a0a07f2777892584709a7543a3d33f2b773fb92d132c93fe",
+      "archiveExact": true
+    },
+    "LICENSING.md": {
+      "sha256": "8a2010524ad7ebf388dabe0bda5ed2ed8753b8bb112f284f0c23826546410096",
+      "archiveExact": true
+    },
+    "README.md": {
+      "sha256": "4bb5149b88c323e4730687e92c17ab55c2742f8fe2ac2bc218408cffdb559e1c",
+      "archiveExact": true
+    },
+    "dist/geo.d.ts": {
+      "sha256": "0454dda71c0559da5a0f792ed592d07f610132a601e67c8ed37eddf2d22b774d",
+      "archiveExact": true
+    },
+    "dist/index.d.ts": {
+      "sha256": "3c4063793f944f3cb0b1e07338c4c24becb6480aacede5cf3199bd18186403fa",
+      "archiveExact": true
+    },
+    "dist/internal-math-2qAGGDMX.d.ts": {
+      "sha256": "2eb16b632345cade067e9a415b4d5d96252af3dbb247b8c24fecfe2840dc64a0",
+      "archiveExact": true
+    },
+    "dist/internal-math.d.ts": {
+      "sha256": "0a648b1bba45a089192ef6804dfb640ba45e07f307807a64f48e3b3c99c0248c",
+      "archiveExact": true
+    },
+    "dist/internal.d.ts": {
+      "sha256": "68eacb2ef7bc5be384d027cba266256baa440460c94539f36edbde95f9b1649e",
+      "archiveExact": true
+    },
+    "dist/receipt.d.ts": {
+      "sha256": "7ca8a71659c70c1fb15a98506bd63d0e77f32f7018c914d4ba0ace1ec7ad7d54",
+      "archiveExact": true
+    },
+    "dist/types-CHoIZzek.d.ts": {
+      "sha256": "08b23ad16ae93803ed08f9b9dda797e8c46fa3d14dac3bae5debd3f984288a85",
+      "archiveExact": true
+    }
+  },
+  "frozenSourceStillMatchesAuthor": {
+    "src/lib/profile/saved-record.ts": true,
+    "src/lib/profile/saved-record-store.ts": true,
+    "src/lib/profile/saved-record.test.ts": true,
+    "src/lib/profile/saved-record-store.test.ts": true
+  },
+  "supportFilesStillMatchRoot": {
+    "src/lib/engine/portable.ts": true,
+    "src/lib/engine/chart-adapter.ts": true,
+    "src/lib/engine/types.ts": true,
+    "src/lib/account-v2/storage-identity.ts": true,
+    "package.json": true,
+    "package-lock.json": true
+  },
+  "protectedSource": {
+    "src/lib/profile/store.ts": {
+      "rootSha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3",
+      "sameAsAuthorBase": true
+    },
+    "src/lib/profile/read-store.ts": {
+      "rootSha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485",
+      "sameAsAuthorBase": true
+    },
+    "src/lib/profile/schema.ts": {
+      "rootSha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789",
+      "sameAsAuthorBase": true
+    },
+    "src/lib/account-v2/profile-boundary.ts": {
+      "rootSha256": "6c1354634879049a7f03aebfb70183cc3daf62d38a0199cf2578ebbc55cf1829",
+      "sameAsAuthorBase": true
+    },
+    "src/lib/account-v2/auth-epoch.ts": {
+      "rootSha256": "a0c848ec383be9023e17a13bd22a781b61778fcc0d3812b6ee9d3495d81e3ae8",
+      "sameAsAuthorBase": true
+    },
+    "src/lib/living-chart/store.ts": {
+      "rootSha256": "47d7d834bff25a8d1b288a33bba72b5116bbf8c66fb54234c70573115b86c676",
+      "sameAsAuthorBase": true
+    },
+    "src/lib/living-chart/owner.ts": {
+      "rootSha256": "d22af6676482d11d0c30ad5ac71ecc0b4fdc98cfba9f4e57b8f8b5b1d25e619a",
+      "sameAsAuthorBase": true
+    },
+    "src/islands/AccountProfileAccessBootstrap.tsx": {
+      "rootSha256": "f8d1512644736523e143390acfc5f8e55a9fb1a05d57dcd6e000711a4ded3cbd",
+      "sameAsAuthorBase": true
+    },
+    "src/islands/AccountSyncV2Panel.tsx": {
+      "rootSha256": "d1a9b4ee88a64fb99bded2f698f518d20b6586a839c68fbdffb9dba93cafc392",
+      "sameAsAuthorBase": true
+    }
+  },
+  "rootHead": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+  "qualifiedScope": "No activation or lifecycle edits in the four-file patch; source hash verification, not a new full-suite run."
+}

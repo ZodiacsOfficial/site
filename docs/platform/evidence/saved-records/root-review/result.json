@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-09-08T04:59:29.605Z",
+  "node": "v22.23.2",
+  "sourceSha256": "4538cb6400bdb6059e257cd8c8680f77cdbd9d8e1fe4b1f277c8170748c16074",
+  "bundleSha256": "a14af198f42382dd26487e31fb7d8c250497331a77ed8861a0350471bce4779c",
+  "expectedDraftCounterexamplesReproduced": true,
+  "rejectedStaticConcern": "Trailing LF is already rejected. Initial harness wrongly expected acceptance and its failed assertion is preserved.",
+  "cases": {
+    "unlabeledCreation": {
+      "created": true,
+      "ownKeys": [
+        "schema",
+        "ownerKey",
+        "id",
+        "createdAt",
+        "envelopeJson"
+      ],
+      "reread": false
+    },
+    "labelledControl": {
+      "reread": true
+    },
+    "idTrailingNewlineAccepted": false,
+    "ownerTrailingNewlineAccepted": false,
+    "futureVersion10": {
+      "ok": false,
+      "code": "corrupt-record"
+    },
+    "futureVersion2Control": {
+      "ok": false,
+      "code": "unsupported-record"
+    }
+  },
+  "scope": "Unfrozen author draft, captured before known fixes. Actual pinned engine/receipt functions execute. These results are not acceptance of the final candidate."
+}
