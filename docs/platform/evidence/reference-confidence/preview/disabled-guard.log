@@ -1,0 +1,11 @@
+file:///private/tmp/zodiacs-platform-reference-confidence-preview-review/preview-drive.mjs:5
+if(process.env.ZODIACS_EXECUTE_PREVIEW!=='1')throw Error('Preview execution is disabled; exact READY target and explicit execution flag required.');
+                                                   ^
+
+Error: Preview execution is disabled; exact READY target and explicit execution flag required.
+    at file:///private/tmp/zodiacs-platform-reference-confidence-preview-review/preview-drive.mjs:5:52
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.23.2

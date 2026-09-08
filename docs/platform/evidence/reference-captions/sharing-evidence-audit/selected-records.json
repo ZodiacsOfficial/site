@@ -1,0 +1,62 @@
+[
+  {
+    "path": "final-source/tests/t17-positions-share.mjs",
+    "bytes": 66990,
+    "sha256": "bebee112dd7155005999653344006f9a9a29ce170ebd858d5b45f2e644cc0b31",
+    "archiveMember": "objects/bebee112dd7155005999653344006f9a9a29ce170ebd858d5b45f2e644cc0b31.log"
+  },
+  {
+    "path": "prior-c015-sharing.log",
+    "bytes": 2801,
+    "sha256": "76a234688c57358de502fd5a42a710a7cdf27cd707a91eb59a7c0305ae377119",
+    "archiveMember": "objects/76a234688c57358de502fd5a42a710a7cdf27cd707a91eb59a7c0305ae377119.log"
+  },
+  {
+    "path": "sharing-33-percent-baseline.png",
+    "bytes": 145280,
+    "sha256": "dfbd85ebf67b822d8510b92dff2dc8ccd02671e26abf93da7afca2c1ba6e0fa7",
+    "archiveMember": "objects/dfbd85ebf67b822d8510b92dff2dc8ccd02671e26abf93da7afca2c1ba6e0fa7.log"
+  },
+  {
+    "path": "sharing-33-percent.png",
+    "bytes": 202543,
+    "sha256": "fdac569d1f89b4e844d3e7b4b21b57d9e8a4426f3ca3307321b9ecf32a841c38",
+    "archiveMember": "objects/fdac569d1f89b4e844d3e7b4b21b57d9e8a4426f3ca3307321b9ecf32a841c38.log"
+  },
+  {
+    "path": "sharing-baseline-source.ts.log",
+    "bytes": 55757,
+    "sha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+    "archiveMember": "objects/db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649.log"
+  },
+  {
+    "path": "sharing-candidate-source.ts.log",
+    "bytes": 55760,
+    "sha256": "d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c",
+    "archiveMember": "objects/d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c.log"
+  },
+  {
+    "path": "sharing-image-comparison.json",
+    "bytes": 710,
+    "sha256": "46f91348f9f783f59fd823f92f8b5a6e02a79d2f11ee0007cde24c59f1be2a28",
+    "archiveMember": "objects/46f91348f9f783f59fd823f92f8b5a6e02a79d2f11ee0007cde24c59f1be2a28.log"
+  },
+  {
+    "path": "sharing-image-diff.png",
+    "bytes": 55220,
+    "sha256": "0fe9f3bfb3147283e43beb551908c38bd9e112bc264dd00f0ce766cf68da538b",
+    "archiveMember": "objects/0fe9f3bfb3147283e43beb551908c38bd9e112bc264dd00f0ce766cf68da538b.log"
+  },
+  {
+    "path": "sharing-image-disposition.json",
+    "bytes": 956,
+    "sha256": "04ffd854bf9bf5ab8016d82098372b9844b2e90378a8265ee085d6db4f2f60e5",
+    "archiveMember": "objects/04ffd854bf9bf5ab8016d82098372b9844b2e90378a8265ee085d6db4f2f60e5.log"
+  },
+  {
+    "path": "sharing.log",
+    "bytes": 2902,
+    "sha256": "72cfe0df9abee186bf6c54affb04b64213e0c8b3f00f471f6c1277a111c6ac1c",
+    "archiveMember": "objects/72cfe0df9abee186bf6c54affb04b64213e0c8b3f00f471f6c1277a111c6ac1c.log"
+  }
+]

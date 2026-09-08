@@ -1,0 +1,27 @@
+{
+  "rows": [],
+  "errors": [],
+  "requests": [
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:59895/baseline",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:59895/styles.css",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:59895/baseline.js",
+      "method": "GET",
+      "allowed": true
+    }
+  ],
+  "assetIdentities": {},
+  "driverSha256": "b8d537be1f13051f6a15ee379e787465630e33ad1d082777f542f7bcf2431b97",
+  "qualification": "Actual original/candidate renderer and download functions from isolated frozen source. Direct UTC engine input is a finite consumer fixture, not full ChartCalculator interaction. Source is not instrumented; DOM and canvas are native, fonts/assets are served locally from immutable copied files. No external request or source mutation. PNG visual inspection and source/helper proofs are separate."
+}

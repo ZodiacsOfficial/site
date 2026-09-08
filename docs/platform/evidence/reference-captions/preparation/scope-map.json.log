@@ -1,0 +1,170 @@
+{
+  "status": "Preparation only; no proposed changes applied",
+  "productSourceCount": 23,
+  "productSources": [
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "proposedChange": "Preserve primary reference computation; remove private endpoint alternate-sign inference; show captured qualification visibly.",
+      "baselineBytes": 12032,
+      "baselineSha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "proposedChange": "Only distinguish unknown-time Moon phase reference label from known-time phase-at-birth label.",
+      "baselineBytes": 120334,
+      "baselineSha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "proposedChange": "Generic clock-free reference copy and truthful visible Moon captions; dedicated phase-reference key with root-approved key retirement/count policy.",
+      "baselineBytes": 22131,
+      "baselineSha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "proposedChange": "Generic clock-free reference copy and truthful visible Moon captions; dedicated phase-reference key with root-approved key retirement/count policy.",
+      "baselineBytes": 24192,
+      "baselineSha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "proposedChange": "Generic clock-free reference copy and truthful visible Moon captions; dedicated phase-reference key with root-approved key retirement/count policy.",
+      "baselineBytes": 27888,
+      "baselineSha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "proposedChange": "Generic clock-free reference copy and truthful visible Moon captions; dedicated phase-reference key with root-approved key retirement/count policy.",
+      "baselineBytes": 26712,
+      "baselineSha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "proposedChange": "Generic clock-free reference copy and truthful visible Moon captions; dedicated phase-reference key with root-approved key retirement/count policy.",
+      "baselineBytes": 25812,
+      "baselineSha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "proposedChange": "Generic clock-free reference copy and truthful visible Moon captions; dedicated phase-reference key with root-approved key retirement/count policy.",
+      "baselineBytes": 38609,
+      "baselineSha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613"
+    },
+    {
+      "path": "src/pages/moon-phase/index.astro",
+      "proposedChange": "Correct date-alone phase FAQ answer used by HTML/JSON-LD, plus additional English paragraph.",
+      "baselineBytes": 6909,
+      "baselineSha256": "d404f048535fa836ccfe3d43f485641d9130bc4ed829b5eb60752a0cefeb5c15"
+    },
+    {
+      "path": "src/pages/es/moon-phase/index.astro",
+      "proposedChange": "Correct date-alone phase FAQ answer used by HTML/JSON-LD, plus additional English paragraph.",
+      "baselineBytes": 3541,
+      "baselineSha256": "1bb3445c6b1fbd31665dd7a8569b3b5e2dbf0acf1bd62cdd135c147e3d8a7dc1"
+    },
+    {
+      "path": "src/pages/fr/moon-phase/index.astro",
+      "proposedChange": "Correct date-alone phase FAQ answer used by HTML/JSON-LD, plus additional English paragraph.",
+      "baselineBytes": 3757,
+      "baselineSha256": "c81c8781a50826a83e158ce145aac104db488b179f34a0f127da7614cd494fc1"
+    },
+    {
+      "path": "src/pages/it/moon-phase/index.astro",
+      "proposedChange": "Correct date-alone phase FAQ answer used by HTML/JSON-LD, plus additional English paragraph.",
+      "baselineBytes": 3599,
+      "baselineSha256": "1674015e2c539800914731c8d33ec00b8d597d5aa593842b9b0f8ff399f53c0b"
+    },
+    {
+      "path": "src/pages/pt/moon-phase/index.astro",
+      "proposedChange": "Correct date-alone phase FAQ answer used by HTML/JSON-LD, plus additional English paragraph.",
+      "baselineBytes": 3462,
+      "baselineSha256": "24377faef56714b38675606d0754f7330615134db476e60c14fa5b247478dc79"
+    },
+    {
+      "path": "src/pages/ru/moon-phase/index.astro",
+      "proposedChange": "Correct date-alone phase FAQ answer used by HTML/JSON-LD, plus additional English paragraph.",
+      "baselineBytes": 3929,
+      "baselineSha256": "b195a5ee7f1fef52e6bd283d59274ad716316cbfe50c93e1c318aba3dcf9b3ac"
+    },
+    {
+      "path": "src/lib/share-card-copy.ts",
+      "proposedChange": "Six referenceTimeNote translations only.",
+      "baselineBytes": 11193,
+      "baselineSha256": "3a8fceab7b04a796cf4cbedb9c91302e4f0627d83a3043f7ae6366508d633fd9"
+    },
+    {
+      "path": "src/lib/share-card.ts",
+      "proposedChange": "Settings/provenance reference strings and inaccurate option comment only.",
+      "baselineBytes": 55757,
+      "baselineSha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649"
+    },
+    {
+      "path": "src/server/chart-preview-model.ts",
+      "proposedChange": "No-angle model/settings and OG description prose only; requires explicit root scope admission, unchanged API/headers/schema.",
+      "baselineBytes": 2052,
+      "baselineSha256": "e91ca74f4ac207da843370dc9ea844077b0a8897ace59a9f023fedec3345fa02"
+    },
+    {
+      "path": "src/server/chart-preview.ts",
+      "proposedChange": "No-angle model/settings and OG description prose only; requires explicit root scope admission, unchanged API/headers/schema.",
+      "baselineBytes": 9903,
+      "baselineSha256": "14a71f31b00e3f7ff68283bc527eb1dad62947ed11bb559c1bf12d2d3494ca4e"
+    },
+    {
+      "path": "src/islands/explorer/tour/copy.ts",
+      "proposedChange": "Six no-time notes each: generic reference positions without invented clock or unsupported all-other-sign certainty.",
+      "baselineBytes": 56276,
+      "baselineSha256": "71a6efba4267056a5e181a5b4a89b7887fcca0007524e0e354c630f9ba07c7c2"
+    },
+    {
+      "path": "src/islands/explorer/lens/copy.ts",
+      "proposedChange": "Six no-time notes each: generic reference positions without invented clock or unsupported all-other-sign certainty.",
+      "baselineBytes": 13893,
+      "baselineSha256": "ae7a2118641bf95d5c2bee2f6584788603c0d673726213df12bf998c868ffab6"
+    },
+    {
+      "path": "src/strings/additions.pt.mjs",
+      "proposedChange": "Exactly shareCard.referenceTimeNote counterpart required by byte-identical existing translation contract.",
+      "baselineBytes": 47868,
+      "baselineSha256": "9257f0e6f39af61fb3bfb10dd30c913b624966ec225e1f47256b5e38022bdbfc"
+    },
+    {
+      "path": "src/strings/additions.fr.mjs",
+      "proposedChange": "Exactly shareCard.referenceTimeNote counterpart required by byte-identical existing translation contract.",
+      "baselineBytes": 49889,
+      "baselineSha256": "bbfc07e127b3f5af9154a3a92c2a1c44fde3be72f76cd2f183b1bc5d0c6cbdaa"
+    },
+    {
+      "path": "src/strings/additions.it.mjs",
+      "proposedChange": "Exactly shareCard.referenceTimeNote counterpart required by byte-identical existing translation contract.",
+      "baselineBytes": 48084,
+      "baselineSha256": "93ef9c70c4c7124d59e6ec23012e0d0efcaff5e9c4a3018580d136785bcd69d4"
+    }
+  ],
+  "existingAcceptanceSources": [
+    "tests/moon-result-ownership-drive.mjs",
+    "tests/local-date-reference-drive.mjs",
+    "tests/t17-positions-share.mjs",
+    "src/lib/share-card.test.ts",
+    "src/lib/share-card-copy.test.ts",
+    "src/lib/moon-certainty.test.tsx",
+    "src/islands/explorer/Inspector.test.tsx",
+    "tests/api/og-chart.test.ts",
+    "scripts/build-i18n-additions.mjs",
+    "scripts/build-i18n-additions.test.mjs",
+    "src/lib/i18n/index.test.ts",
+    "src/lib/i18n/ui/ru.test.ts"
+  ],
+  "integratorOwnedMetadata": [
+    "i18n-additions.md",
+    "exact-base locale/protected-path allowance",
+    "CI wiring/capture carrier as needed"
+  ],
+  "excludedContracts": [
+    "SDK receipt schema/reference convention",
+    "positions wire",
+    "server route/query/header/model shape",
+    "canonical Registry/Astrofolio",
+    "root guides/global styles"
+  ]
+}

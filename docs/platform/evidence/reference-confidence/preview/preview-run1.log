@@ -1,0 +1,9 @@
+{"name":"en-chart-1280","passed":false,"failure":"AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:"}
+{"name":"en-chart-390","passed":false,"failure":"AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:"}
+{"name":"ru-chart-1280","passed":true}
+{"name":"ru-chart-390","passed":true}
+{"name":"en-positions-1280","passed":true}
+{"name":"en-positions-390","passed":true}
+{"name":"ru-positions-1280","passed":true}
+{"name":"ru-positions-390","passed":true}
+{"groups":8,"passed":6,"outcome":"failed"}

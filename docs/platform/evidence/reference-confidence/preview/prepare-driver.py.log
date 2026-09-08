@@ -1,0 +1,55 @@
+from pathlib import Path
+r=Path(__file__).resolve().parent
+old=Path('/private/tmp/zodiacs-platform-local-date-preview-review/preview-drive.mjs').read_text()
+(r/'prior-c014-driver.mjs.log').write_text(old)
+s=old
+s=s.replace("import {chromium} from 'playwright-core';\nimport {parseNatalEnvelope} from '@zodiacs/engine/receipt';\nimport {findChromium,STABLE_CHROMIUM_ARGS,isSiteFooterIconTeardownAbort} from './source/tests/visual/browser.mjs';", "if(process.env.ZODIACS_EXECUTE_PREVIEW!=='1')throw Error('Preview execution is disabled; exact READY target and explicit execution flag required.');\nconst {chromium}=await import('playwright-core');\nconst {parseNatalEnvelope}=await import('@zodiacs/engine/receipt');\nconst {findChromium,STABLE_CHROMIUM_ARGS,isSiteFooterIconTeardownAbort}=await import('./source/tests/visual/browser.mjs');")
+s=s.replace("const origin='https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app';\nconst commit='f803d2543ad81343b22d49326b8b46d0e2ea03a0';", "const origin='https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app';\nconst commit='9d180c9f1a2f66893ccd6d73fcda106cb3894674';\nconst provider=JSON.parse(fs.readFileSync('deployment-before.json','utf8'));\nassert.equal(provider.id,'dpl_DCezqWrsukzWV3F7NotmTQCq4ENp');assert.equal(provider.readyState??provider.state,'READY');assert.equal(provider.target,null);\nassert.equal(provider.meta.githubCommitSha,commit);assert.equal(provider.meta.githubPrId,'437');assert.equal('https://'+provider.url,origin);")
+s=s.replace("for(const row of sourceSnapshot.records)","assert.equal(sourceSnapshot.commit,commit);assert.equal(sourceSnapshot.frozenProductFilesMatched,16);\nfor(const row of sourceSnapshot.records)")
+s=s.replace("sourceCommit:commit,sourceSnapshot,origin,", "sourceCommit:commit,sourceSnapshot,origin,providerId:provider.id,")
+s=s.replace("Unknown-time Moon certainty/banner is captured as unchanged baseline, not certified.","The visible unknown-time Moon admission is unverified; the receipt preserves a single reference. No whole-date numerical oracle, false-Sun example, endpoint call-count or controlled ownership-race claim. No MoonPhaseTool coverage.")
+s=s.replace("const chip='Apia · Tuamasaga, Samoa';", "const unverified={en:'The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment.',ru:'Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента.'};\nconst needsTime={en:'Needs a birth time',ru:'Нужно время рождения'};")
+s=s.replace("data-chart-more]';", "data-chart-more],[data-registry-bridge]';",1)
+s=s.replace("resultText:document.querySelector('.calc__result')?.textContent?.trim()??null,", "resultText:document.querySelector('.calc__result')?.textContent?.trim()??null,\n moonUncertain:!!document.querySelector('[data-moon-uncertain]'),\n registry:document.querySelector('[data-registry-bridge]')?{sign:document.querySelector('[data-registry-bridge]').getAttribute('data-registry-bridge-sign'),href:document.querySelector('[data-registry-bridge] a')?.getAttribute('href')}:null,")
+s=s.replace("if(!out)throw Error('OUT_DIR required');", "if(!out)throw Error('OUT_DIR required');")
+s=s.replace("const unexpected=row.requestFailures", "assert.equal(row.browserRequests.filter(r=>r.method!=='GET'||r.path.startsWith('/api/')).length,0);\n const unexpected=row.requestFailures")
+a=s.index('async function verifyRemoteCity()');b=s.index('try{\n browser=',a)
+s=s[:a]+'''async function chooseCity(s,name,zone){
+ const place=s.page.locator('#place');if(await place.getAttribute('readonly')!==null)await s.page.locator('.place__clear').first().click();
+ await s.page.locator('#place').fill(name);await s.page.getByRole('option').filter({has:s.page.locator('.place__name',{hasText:new RegExp('^'+name+'$')})}).first().waitFor();
+ await Promise.allSettled(pending);const shard=name[0].toLowerCase()+'.json';
+ const index=JSON.parse(fs.readFileSync(out+'/remote-data/index.json')),rows=JSON.parse(fs.readFileSync(out+'/remote-data/'+shard));
+ const matches=rows.filter(r=>r[0]===name&&index.tz[r[6]]===zone);assert.equal(matches.length,1,'Unique actual city/zone row');
+ const a=matches[0],city={name:a[0],admin:index.admin1[a[2]],country:index.countries[a[3]],lat:a[4]/100,lon:a[5]/100,zone:index.tz[a[6]],shard};
+ const meta=[city.admin,city.country].filter(Boolean).join(', '),chip=[city.name,meta].filter(Boolean).join(' · ');
+ const option=s.page.getByRole('option').filter({has:s.page.locator('.place__name',{hasText:new RegExp('^'+name+'$')})}).filter({has:s.page.locator('.place__meta',{hasText:meta})});assert.equal(await option.count(),1);city.observedOption=await option.innerText();await option.click();
+ assert.equal(await s.page.locator('#place').inputValue(),chip);assert.equal(await s.page.locator('#place').getAttribute('readonly'),'');s.row.offlineCities??=[];s.row.offlineCities.push(city);return city;
+}
+async function downloadReceipt(s,label,date,zone,timeKnown){
+ const details=s.page.locator('[data-chart-more]');if(await details.getAttribute('open')===null){await details.locator(':scope > summary').focus();await s.page.keyboard.press('Enter');}
+ const button=s.page.locator('[data-download-calculation-receipt]');assert.equal(await button.isEnabled(),true);const downloadPromise=s.page.waitForEvent('download');await button.focus();await s.page.keyboard.press('Enter');const download=await downloadPromise;assert.equal(download.suggestedFilename(),'zodiacs-calculation-receipt.json');
+ const file=s.row.name+'-'+label+'-receipt.json';await download.saveAs(out+'/'+file);const bytes=fs.readFileSync(out+'/'+file),parsed=parseNatalEnvelope(bytes.toString());assert.equal(parsed.ok,true);
+ const receipt=parsed.envelope.receipt;assert.equal(receipt.engine.version,'0.1.1-rc.6');assert.equal(receipt.timeKnown,timeKnown);assert.equal(receipt.localResolution.date,date);assert.equal(receipt.localResolution.timeZone,zone);assert.equal(receipt.localResolution.time,timeKnown?'08:30':'12:00');assert.equal(receipt.reference,timeKnown?'supplied-instant':'local-noon');if(!timeKnown){assert.equal(receipt.houses.absenceReason,'unknown-time');assert.equal(parsed.envelope.result.angles,null);}
+ s.row.receipts??=[];s.row.receipts.push({file,sha256:hash(bytes),bytes:bytes.length,receipt,moon:parsed.envelope.result.bodies.find(b=>b.body==='Moon')});return parsed.envelope;
+}
+async function unknownConfidence(s,locale){
+ const card=s.page.locator('[data-moon-uncertain]');assert.equal(await card.count(),1);assert.equal(await card.isVisible(),true);assert.equal(await card.locator('a,.three-card__deg').count(),0);
+ assert.ok((await card.innerText()).includes(needsTime[locale]));assert.ok((await s.page.locator('.calc__result').innerText()).includes(unverified[locale]));assert.equal(await s.page.locator('[data-registry-bridge]').count(),0);
+}
+''' +s[b:]
+a=s.index(" for(const locale of ['en','ru'])");b=s.index('\n report.outcome=',a)
+s=s[:a]+''' for(const locale of ['en','ru'])for(const width of [1280,390])await test(`${locale}-chart-${width}`,'chart',width,async s=>{
+  const {page,row}=s;row.locale=locale;await openPage(s,locale,'chart');const date=page.locator('#birth-date'),time=page.locator('#birth-time'),unknown=page.locator('.field__toggle input[type=checkbox]');
+  await time.fill('08:30');await unknown.check();row.historical=[];
+  for(const c of [{name:'Toronto',zone:'America/Toronto',date:'1919-03-31'},{name:'Juneau',zone:'America/Juneau',date:'1867-10-18'}]){
+   await date.fill(c.date);await chooseCity(s,c.name,c.zone);await cleared(page,'chart');const value=await success(page,'chart');await unknownConfidence(s,locale);const envelope=await downloadReceipt(s,c.name.toLowerCase(),c.date,c.zone,false);row.historical.push({input:c,state:value,referenceInstant:envelope.receipt.instant});row.screenshots.push(await capture(page,row.name+'-'+c.name.toLowerCase()));
+  }
+  await date.fill('1990-06-15');await unknown.uncheck();await time.fill('08:30');await chooseCity(s,'Toronto','America/Toronto');await cleared(page,'chart');row.known=await success(page,'chart');assert.equal(row.known.unknown,false);assert.equal(await page.locator('[data-moon-uncertain]').count(),0);assert.equal(await page.locator('[data-registry-bridge]').count(),1);assert.equal(row.known.registry.sign,'gemini');assert.ok(row.known.registry.href.endsWith('/registry/gemini/'));await downloadReceipt(s,'known','1990-06-15','America/Toronto',true);row.screenshots.push(await capture(page,row.name+'-known'));
+  await date.fill('2011-12-30');await unknown.check();await chooseCity(s,'Apia','Pacific/Apia');row.edited=await cleared(page,'chart');const computedBefore=await page.evaluate(()=>window.__datePreviewEvents.computed.length);await page.locator('.calc__submit').click();const error=page.locator('.calc__form .calc__error[role=alert]');await error.waitFor();await page.waitForFunction(()=>document.activeElement===document.querySelector('.calc__form .calc__error[role=alert]')&&document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false');row.refused=await cleared(page,'chart');assert.equal(row.refused.error,expected[locale]);assert.equal(row.refused.date,'2011-12-30');assert.equal(row.refused.focus.role,'alert');assert.equal(row.refused.overflow,false);assert.equal(await page.evaluate(()=>window.__datePreviewEvents.computed.length),computedBefore);row.screenshots.push(await capture(page,row.name+'-refused'));
+  await date.fill('2011-12-31');await settle(page);row.beforeRetry=await cleared(page,'chart');assert.equal(row.beforeRetry.error,expected[locale]);assert.equal(row.beforeRetry.focus.id,'birth-date');row.recovered=await success(page,'chart');await unknownConfidence(s,locale);await downloadReceipt(s,'recovered','2011-12-31','Pacific/Apia',false);row.screenshots.push(await capture(page,row.name+'-recovered'));
+ });
+ for(const locale of ['en','ru'])for(const width of [1280,390])await test(`${locale}-positions-${width}`,'chart',width,async s=>{
+  const token='2.'+Buffer.from(JSON.stringify({b:Array.from({length:12},(_,i)=>i*27),h:'w',v:'0.1.1-rc.6'})).toString('base64url');await openPage(s,locale,'chart',origin+(locale==='en'?'':'/'+locale)+'/birth-chart/#p='+token);await s.page.locator('[data-positions-only]').waitFor();assert.equal(await s.page.locator('[data-calculation-receipt-export],[data-registry-bridge]').count(),0);assert.equal(await s.page.evaluate(()=>window.__datePreviewEvents.computed.length),0);assert.ok(!s.row.browserRequests.some(r=>/\\/(?:calculator-receipt|chart-adapter|full)\\./.test(r.path)));s.row.positionsOnly=true;s.row.screenshots.push(await capture(s.page,s.row.name));
+ });''' +s[b:]
+s=s.replace("report.checks.length===10", "report.checks.length===8")
+(r/'preview-drive.mjs').write_text(s)

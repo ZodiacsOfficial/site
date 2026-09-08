@@ -1,0 +1,24 @@
+from pathlib import Path
+import json,urllib.parse,tarfile,hashlib,shutil
+root=Path.cwd();private=Path('/private/tmp/zodiacs-platform-reference-confidence-preview-auth');auth=json.loads((private/'access.json').read_text());url=auth['url'];parsed=urllib.parse.urlsplit(url);values=[url]+[v for _,v in urllib.parse.parse_qsl(parsed.query) if len(v)>8];needles=set()
+for x in values:
+ for v in (x,urllib.parse.quote(x,safe=''),json.dumps(x)[1:-1]):needles.add(v.encode())
+files=[]
+def visit(p):
+ for q in p.iterdir():
+  if q.is_symlink():continue
+  if q.is_dir():visit(q)
+  elif q.is_file():files.append(q)
+visit(root);hits=[];archiveCount=0
+for p in files:
+ b=p.read_bytes()
+ if any(n in b for n in needles):hits.append(str(p.relative_to(root)))
+ if p.name.endswith('.tar.gz'):
+  with tarfile.open(p) as t:
+   for m in t:
+    if m.isfile():
+     archiveCount+=1;b=t.extractfile(m).read()
+     if any(n in b for n in needles):hits.append(str(p.relative_to(root))+'::'+m.name)
+shutil.rmtree(private)
+r={'temporaryAccessDirectoryRemoved':not private.exists(),'scannedRawFiles':len(files),'scannedDecompressedRegularArchiveMembers':archiveCount,'exactPrivateUrlAndNontrivialQueryValueMatches':len(hits),'matchedFiles':hits,'browserContextsClosed':True,'authBootstrapObserved':False,'qualification':'Exact generated private URL plus nontrivial query values and encoded forms scanned while still available, including decompressed archive members. Owned access files deleted after scan. Browser bootstrap was a separate disposable unobserved context; no claim of zero bootstrap network or server-side token revocation.'}
+(root/'cleanup.json').write_text(json.dumps(r,indent=2)+'\n');assert not hits and not private.exists();print(json.dumps(r))

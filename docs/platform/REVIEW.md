@@ -226,3 +226,56 @@ Six catalogs each retain420 keys and change only the new unverified notice.
 Original setup warnings and finite/source-versus-browser limits remain explicit.
 Root accepts the exact candidate for isolated draft delivery; no publication,
 production, human numerical/legal signoff or external adoption is implied.
+
+C-015 is now delivered in draft#437 at9d180c9f. Root verifies every actual534
+PR status/blob against the local head/base. Hosted Site Check34225181572 and
+exact-preview acceptance remain pending. Independent C-016 caption preparation
+starts from the delivered candidate without changing that release's source.
+
+The later [exact C-015 preview review](evidence/reference-confidence/preview/REVIEW.md)
+and separate captured-evidence audit accept eight distinct groups across two
+executions at9d180c9f. Sixteen actual receipts and every observed JS/city body
+are verified. Original two English selector failures, four unavailable image
+bodies and unobserved access bootstrap remain qualified. Root independently
+verifies the seal and28 exact Git blobs; it does not claim a second browser run.
+Hosted CI still has13 successful jobs and its build job running. C-016 source
+review proceeds independently; publication and human review remain separate.
+
+C-015's later final CI snapshot now completes all14 jobs at9d180c9f; its draft
+description records completed CI/preview without a new source push.
+
+C-016's [independent preservation review](evidence/reference-captions/preservation-review/REVIEW.md)
+accepts24 exact lookup pairs on Node22/24,15 distinct native groups across the
+initial14/15 and correctedRussian1/1 executions,18 paired native display/chart
+comparisons and48 source checks. The incorrect Latin-UTC assertion and original
+ESM fixture setup failures remain. Full known/unknown Chart and envelope JSON
+remain unchanged; no full-date proof or human practitioner signoff is claimed.
+
+The [consumer review](evidence/reference-captions/consumer-review/REVIEW.md)
+separately accepts four non-noon/supplied-time controls per source,five invalid
+request controls,23 output comparisons,26 source/copy checks and eight actual
+PNG downloads. All six420-key catalogs retain only the scoped changes. Its fresh
+known-time image pair matches byte-for-byte; it does not use the older tracked
+sharing sample. Header/privacy/wire contracts remain unchanged. Semantic locale
+review is distinct from human native-speaker certification.
+
+[Metadata review](evidence/reference-captions/metadata-review/REVIEW.md) reproduces
+the one-line generated manifest through the unchanged generator and accepts23
+guard/workflow controls. Root applies the exact patch, passes the actual13-path
+scope guard and136 affected metadata tests. [Root acceptance](evidence/reference-captions/root-integration/README.md)
+passes build/check/5091tests,24 actual page groups,34/35/20 native gates,sharing
+and18 unchanged approved captures. The earlier tracked sharing image is explicitly
+stale: priorC015 did not regenerate it. Original evidence-assembly errors and
+preflight harness correction remain; no product bytes changed after these gates.
+Root accepts the candidate for separate draft delivery, not publication or
+production. Hosted and required human review gates remain open.
+
+Subsequent [normal-page](evidence/reference-captions/normal-page-audit/REVIEW.md)
+and [sharing](evidence/reference-captions/sharing-evidence-audit/REVIEW.md) evidence
+audits accept114 and18 recorded assertions respectively. They supply no new
+browser execution. The canonical qualification now explicitly treats the
+old/new sharing-image mismatch and stale provenance as separate facts, with no
+established cause. The sealed original remains unchanged. Independent Git-history
+reproduction did not complete; that date remains attributed to root's prior read.
+Root retains draft-delivery acceptance while transferring identical source to
+a healthy isolated clone because shared dataless Git objects stall reads.

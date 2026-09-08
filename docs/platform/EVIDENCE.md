@@ -2525,3 +2525,206 @@ source manifest`a1cd83f207c7490037a3078038a0b21191b548e18648edd01433bdd667b88d1e
 This completes the consumer review left pending in the earlier sealed reports.
 Exact C-015 source is now accepted for isolated draft delivery, with hosted,
 human-review, publication, deployment and adoption states still separate.
+
+## C-015 draft delivery — 2026-09-08
+
+Draft[#437](https://github.com/ZodiacsOfficial/site/pull/437) delivers
+`9d180c9f1a2f66893ccd6d73fcda106cb3894674` above exactf803d254. Root verifies the
+paginated actual534-file response against local status and Git blob identities:
+all match,18 non-documentation paths and516 documentation paths. The response
+SHA is`627824e590dca19da0ca32ab3cac50aff94eb7a551abfc77735eb7de1d94d8d8`.
+[Release records](evidence/reference-confidence/release/pr-verification.json)
+preserve the actual metadata, body, pagination and current run identification.
+Site Check34225181572 is in progress; exact-preview work proceeds independently.
+Root opens the separate reference-caption branch from this delivered source so
+the candidate remains immutable while C-016 preparation continues. No merge,
+production deployment, npm publication or external adoption is performed.
+
+## C-016 preparation and implementation decision — 2026-09-08
+
+[Author preparation](evidence/reference-captions/preparation/REVIEW.md.log) runs
+ten actual extracted Moon-caller controls and four three-point phase-date controls
+on Node22/Chrome152; the same browser outputs match with Temporal unavailable.
+Four native caption fixtures establish hidden or absent qualifications. Khartoum
+2000-01-15 resolves the requested12:00 to actual13:00 local while passing C-014;
+the existing phase/position remains calculable. Three date controls change lite
+phase category during the day. An additional same-instant lite/full category
+boundary is retained as an existing separate algorithm issue, not silently fixed.
+Actual share helpers, local OG HTML and clockless Inspector also assert noon.
+One initial CSS bundle-path failure and its correction remain retained.
+
+Root verifies nine records under manifest
+`dc474a6626f077118e67b7fce5cbf4000ce594c7c3ef3700bfce426ed075dd90`,
+including126 ordinary objects preserving127 original records. Source manifest:
+`00412e89d5edf1a302f899e9ddee255116149939557433edd2ab17d9dc0c70a9`.
+The [scope map](evidence/reference-captions/preparation/scope-map.json.log) is
+explicitly selected in Decision C-016:23 product/copy sources plus necessary
+tests, with root-owned generation/metadata and exact frozen review. Server scope
+is exactly two existing output strings, without route/schema/header/privacy
+changes. Three canonical translation counterpart keys have specific scope;
+the earlier C-015 allowance does not authorize them by implication.
+
+[Independent boundary preparation](evidence/reference-captions/independent-preparation/REVIEW.md)
+uses exact9d180c9f and four helper/SSR controls. Valid no-angle tokens from06:17
+and18:43 UTC contain no clock but produce12:00 OG captions. Supplied-time and
+hidden-detail controls pass; clockless Inspector is distinct from the actual
+public receiver, which already says positions only and does not open Inspector.
+The local HTML handler is invoked directly, not over the network; no PNG raster
+or complete component-browser claim. Original fixture build/setup failures are
+retained, followed by a warning-free final build and passing controls.
+Root verifies118 inert records under manifest
+`64bae37ba4cf95c7f0980e15514a8b2c36b5913f638ad0143bb66c08a5a646fd`,
+source manifest`eebd3b26ffd427767ce98ced83edcf6eeae86e027c4a5ef838f21d588c7eff52`.
+Author implementation proceeds separately; no C-016 source is applied on root
+or accepted yet. No new provenance field, numerical tolerance, provider, account,
+SDK, canonical Registry/Astrofolio or publication change is authorized here.
+
+## C-015 exact preview acceptance — 2026-09-08
+
+The [independent preview review](evidence/reference-confidence/preview/REVIEW.md)
+accepts exact9d180c9f at READY `dpl_DCezqWrsukzWV3F7NotmTQCq4ENp`,
+`https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app`, unchanged before/after.
+Eight distinct EN/RU chart/positions groups at1280/390 pass across two executions:
+six initially, then two affected English groups with the hero-only selector.
+The original broad selector also counted unchanged ReadingPath markup; all
+original failures and the complete three-part harness correction remain.
+Actual offline Toronto/Juneau controls withhold unsupported certainty, a known
+Toronto control preserves Registry/receipt behavior, and Apia refusal/recovery
+clears and restores the current result. Sixteen native downloads parse as rc.6
+receipts and match byte-for-byte across locales/widths for each of four inputs.
+
+All68 distinct deployed JS payloads, four actual city payloads and28 selected
+exact-source blobs are retained. Four status200 image bodies were unavailable
+at context teardown; this is not complete HTTP-body capture. Twenty-six native
+screenshots include original failures. The separate read-only evidence audit
+reconciles all groups, source/driver identities,144 run-specific JS/city files
+and16 receipts; it does not claim another browser execution. Main reviewer’s
+exact private-value scan covers261raw files and96decompressed members with zero
+matches, followed by local access removal. Bootstrap traffic remains unobserved;
+no independent secret re-scan, server revocation or production activity is claimed.
+
+Root verifies all144 source payloads and96 ordinary archive members, including
+28 blobs against exact Git9d180c9f. The146-record root manifest is
+`be74bdc516a0ef7dd7c51a2348f1762d16a15969ac6b3becd971a9ce1598ed5e`;
+source manifest`dd97557038ccd0796cf0d3ca89a2996c80d960ad5b9916dcf5590801bc88c387`.
+The child audit’s40-record seal is`7eec0908161dc6fe5397c99075fd55b578859c532025c2edcfe6c2cb1e15e8ae`.
+Site Check34225181572 still has13 successful jobs and the build job running at
+the subsequent read. Preview acceptance does not complete CI or human review,
+merge, npm publication, production deployment or external adoption.
+
+## C-016 frozen implementation and local integration — 2026-09-08
+
+Root verifies and applies the exact33-file [author Freeze1](evidence/reference-captions/author-freeze1/REVIEW.md.log),
+23 approved product/copy files and10 scoped tests. Identity:
+`c055e55985284904cb82e39fa1eca53a035aa337a3a49a752240fcd5c7d21644`;
+patch:`0371de7d739a8526f342e49c3fdb623fa646d8d405a91db4f7623cba5b835b36`.
+All root starting files match exact9d180c9f before application; all frozen bytes
+match afterward. Root's unchanged additions generator changes exactly one
+English default line. The separate allowance/CI proposal is still unapplied.
+
+The author seal retains142 focused controls on each Node22/24,227 expanded
+affected controls,34 native caption/image groups,35 historical caller groups,
+20 Moon-ownership groups and successful strict/Astro checks. Its full-suite
+attempt is explicitly incomplete: absent dist, generated manifest/capture
+currency, an obsolete comment anchor and external-symlink package loading were
+not falsely presented as success. The test-only alias/anchor corrections and
+incorrect optional historical-baseline invocation remain retained. Matching
+before-C014 catalogs and byte-identical package-path isolation resolve those
+scoped controls without changing product/dependency bytes.
+
+Root verifies seven source payloads and154 ordinary archive members preserving
+172 original paths. Its nine-record manifest is
+`642988c2385726533517c3a72a215ab6bbcb83dab1ebeb2d6782160c6c2006be`;
+source seal:`0948ba4c7cbf34559acca885976e83ae3ad69eab16d96acf317176c161ca8326`.
+Root's fresh build/check passes (1,047 files; zero errors/warnings,11 hints),
+followed by all5,091 tests in420 files. All18 fresh approved captures remain
+byte-identical. Actual normal-build pages pass24 groups across six locales,
+two widths and both Moon-tool and Chart Moon-mode routes. The historical
+Khartoum reference, supplied/local and supplied/UTC captions, label transitions
+and edit clearing pass; root visually inspects English desktop/Russian phone.
+The root's own native caption/date/Moon-ownership gates pass34/35/20 groups;
+optional baseline comparison was omitted here and remains separately attributed.
+Final sharing and independent/metadata acceptance continue; no draft delivery,
+human review, publication, production or adoption follows from this checkpoint.
+
+## C-016 completed local and independent acceptance — 2026-09-08
+
+[Root local acceptance](evidence/reference-captions/root-integration/README.md)
+is sealed under`f2219750f04a88c1b69c05b1c59b0c4dd44a0cab30f43b07aebf33b94a451273`:
+14 records and321 ordinary objects preserve340 original evidence paths. All33
+frozen sources stay exact; generated manifest plus two metadata files are the
+only root source additions. Build/check/5091tests,24 actual six-language page
+groups,34caption/35date/20Moon native groups,sharing and18 byte-identical approved
+captures pass. All104 served files rehash. Root inspects two screenshots and
+retains48 actual-page images. Native optional baselines are not supplied here;
+paired baseline correctness belongs to the separately attributed executions.
+
+The actual sharing flow passes. Its deliberately regenerated33% sheet differs
+from an older trackedAug20 sample, whose preceding C015 run recorded
+`zoomEvidence:null`; it is not a fresh9d18 baseline. Both files, the prior log,
+diagnostic comparison and exact three-change module reconstruction are retained.
+Root restores only this owned generated output to9d18. A preflight method-field
+bug was corrected before the first normal-page execution, and an archival
+manifest-path mistake was corrected after its retained failure. No product
+assertion or numerical tolerance is changed.
+
+[Main preservation review](evidence/reference-captions/preservation-review/REVIEW.md)
+passes24 actual lookup pairs (12 perNode22/24),15 distinct native groups across
+initial14/15 plus correctedRU1/1,18 paired native comparisons and48 source checks.
+The full known/unknown Chart/envelope strings remain exact without stripping
+fields; endpoint/alternate metadata removal is separated from primary values.
+Root verifies12 payloads and368 ordinary archive members; its14-record manifest
+is`b89dd28a65e3aba6e9c1a5a6735a8121acb597cf09a7567fc3de632aecda30c2`,
+source`81e2baa15e9abca55dea69ea41e4604485c872f0f24d7b38f6dc1ccbe7cfecdb`.
+
+[Independent consumer review](evidence/reference-captions/consumer-review/REVIEW.md)
+passes26 scoped source/copy and23 output comparisons, all six420-key catalogs,
+four actual non-noon/supplied controls per source, five unchanged invalid-domain
+responses and eight native PNG downloads. Its fresh supplied-time opt-in sheet
+pair is byte-identical; numeric JSON, tokens and headers are unchanged. Actual
+clockless Inspector is kept distinct from the positions-only public receiver.
+The missing-catalog fixture and locale-order audit failures remain qualified.
+Root verifies all271 source payloads; its273-record manifest is
+`36834fae7a591a067e22f9b6e22be58bb61664742c8f86d9f028587fd106d7cf`,
+source`6ac061cfde7b0755cb752f303910f516681b673369ac544996f383236acd2334`.
+Root's initial copy attempt mistook the numeric count for the file list and
+failed before copying; the actual schema was inspected and all bytes verified.
+
+[Separate metadata/generator acceptance](evidence/reference-captions/metadata-review/REVIEW.md)
+passes23 controls and independently regenerates the exact one-line output.
+Root27-record manifest:`3ab151872658928ab6b90972ea063485feebac328140b21d7d457a3419ec7a0f`;
+source`1517480331f5da4715d52b46fce3e3ca41c3d25b81920ad1f81a08be5164d499`.
+After applying the accepted two-file patch, actual scope CLI passes13 protected
+paths at exact9d18 and136 affected metadata tests pass. Root accepts this bounded
+candidate for separate draft delivery; exact hosted evidence and human gates
+remain distinct. Read-only phase-category preparation may continue separately.
+
+The [C-015 final CI snapshot](evidence/reference-confidence/ci-final/ci.json)
+now records all14 jobs in34225181572 successful at exact9d180c9f. Manifest:
+`e8c53017ab54493ce712ccd27eb58794ae33eff641465b7843dcb7c66bb5993a`.
+Its existing draft description is updated with completed CI/preview; no source
+push, merge, npm publication or production promotion is performed.
+
+## C-016 evidence audit and isolated delivery — 2026-09-08
+
+[Normal-page evidence audit](evidence/reference-captions/normal-page-audit/REVIEW.md)
+accepts114 recorded assertions and rehashes all14 root payloads,340 original
+records/321 ordinary archive objects,104 served files and33 frozen sources.
+Root verifies its20 unchanged payloads; the22-record root manifest is
+`a24dc52e5d65046b6b457615f2fdf6a06206f883167e082fd2a76d33fb392510`.
+[Sharing supplement](evidence/reference-captions/sharing-evidence-audit/REVIEW.md)
+accepts18 scoped assertions, including the prior actual null zoom capture,
+restored image bytes and exact three-change rendering-module reconstruction.
+Its22-record root manifest is
+`0578a82a20e364a32612206b0104150bfc632ddeb72cc6e3b48a30b7379d8891`.
+No new browser execution is claimed by either audit. Their corrigendum supersedes
+only the causal wording in the sealed root README: old/new images differ, and the
+old sample is not a fresh baseline; the cause of that difference is unproven.
+The August history is root-recorded, since independent Git reads stalled.
+
+Shared read-only Git operations now stall on a locally dataless packed-object
+index. A bounded cat-file probe times out, while config and rev-parse work. Root
+stops only its identified read-only checks and clones exact remote9d180c9f into
+an isolated temporary delivery checkout. No shared Git repair, metadata deletion,
+concurrent process termination or source rollback is performed. Source-equivalent
+delivery must match all accepted hashes and actual changed paths.

@@ -1,0 +1,54 @@
+from pathlib import Path
+import json,hashlib,subprocess,shutil,difflib
+r=Path(__file__).resolve().parent.parent;d=Path(__file__).resolve().parent
+base='9d180c9f1a2f66893ccd6d73fcda106cb3894674';git='/Users/chiburashka/.codex/worktrees/4806/site'
+def sha(b):return hashlib.sha256(b).hexdigest()
+def read(p):return json.loads((r/p).read_text())
+def cp(p):
+ t=d/'captured'/p;t.parent.mkdir(parents=True,exist_ok=True);t.write_bytes((r/p).read_bytes())
+selected=['preview-drive.run1.mjs.log','preview-drive.mjs','harness-correction.json','ReadingPath.exact.tsx.log','deployment-before.json','deployment-after.json','source-snapshot.json','freeze2-identity.json','browser-run1/result.json','browser-run2/result.json','cleanup.json','verify.initial.log','verify.initial.py.log','verify.log','verify.py','verified-results.json']
+for p in selected:cp(p)
+a,b=read('browser-run1/result.json'),read('browser-run2/result.json');checks=[]
+def check(name,test):
+ assert test,name;checks.append({'name':name,'passed':True})
+before,after=read('deployment-before.json'),read('deployment-after.json')
+for provider in [before,after]:
+ check('provider exact immutable READY preview identity',provider['id']=='dpl_DCezqWrsukzWV3F7NotmTQCq4ENp' and provider['meta']['githubCommitSha']==base and provider['meta']['githubPrId']=='437' and provider.get('readyState',provider.get('state'))=='READY' and provider['target'] is None)
+for run in [a,b]:check('run records exact source/deployment/browser identity',run['sourceCommit']==base and run['providerId']==before['id'] and run['origin']=='https://'+before['url'] and run['browser']==a['browser'] and run['sourceSnapshot']==read('source-snapshot.json'))
+old=(r/'preview-drive.run1.mjs.log').read_text();new=(r/'preview-drive.mjs').read_text()
+check('driver identities match each native run',sha(old.encode())==a['driverSha256'] and sha(new.encode())==b['driverSha256'])
+expected=old.replace("async function test(name,mode,width,run){const s=", "async function test(name,mode,width,run){if(process.env.REVIEW_CASE_PREFIX&&!name.startsWith(process.env.REVIEW_CASE_PREFIX))return;const s=").replace("const card=s.page.locator('[data-moon-uncertain]');", "const card=s.page.locator('.calc__three [data-moon-uncertain]');").replace("report.checks.length===8&&", "report.checks.length===(process.env.REVIEW_CASE_PREFIX?2:8)&&")
+check('complete driver correction equals only selector scope + bounded rerun selection/count',new==expected)
+(d/'driver.diff').write_text(''.join(difflib.unified_diff(old.splitlines(True),new.splitlines(True),fromfile='initial',tofile='corrected')))
+reading=(r/'ReadingPath.exact.tsx.log').read_bytes();raw=subprocess.run(['git','show',base+':src/islands/explorer/ReadingPath.tsx'],cwd=git,capture_output=True);check('ReadingPath exact source contains independent uncertainty marker',raw.returncode==0 and raw.stdout==reading and b'reading-path__big-tile--missing" data-moon-uncertain' in reading)
+snapshot=read('source-snapshot.json');frozen=read('freeze2-identity.json')['files'];source=[]
+for row in snapshot['records']:
+ p=row['path'];raw=subprocess.run(['git','show',base+':'+p],cwd=git,capture_output=True);assert raw.returncode==0
+ data=(r/'source'/p).read_bytes();assert raw.stdout==data and sha(data)==row['sha256'];blob=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest();assert blob==row['gitBlob'];source.append({'path':p,'sha256':row['sha256'],'gitBlob':blob})
+ for expectedPath,identity in frozen.items():
+  if p==expectedPath:assert sha(data)==identity['sha256']
+check('28 source blobs match exact Git objects; all 16 frozen files present',len(source)==28 and set(frozen)<=set(x['path'] for x in source))
+check('initial outcome remains six accepted of eight; corrected outcome is two of two',a['outcome']=='failed' and len(a['checks'])==8 and sum(x['passed'] for x in a['checks'])==6 and b['outcome']=='passed' and len(b['checks'])==2 and all(x['passed'] for x in b['checks']))
+failed=[x for x in a['checks'] if not x['passed']];check('two initial failures are exactly English hero-marker 2-vs-1 assertions',set(x['name'] for x in failed)=={'en-chart-1280','en-chart-390'} and all('2 !== 1' in x['failure'] and 'unknownConfidence' in x['failure'] for x in failed))
+accepted=[('browser-run1',x) for x in a['checks'] if x['passed']]+[('browser-run2',x) for x in b['checks'] if x['passed']]
+names=[x['name'] for _,x in accepted];expectedNames={f'{locale}-{mode}-{width}' for locale in ['en','ru'] for mode in ['chart','positions'] for width in [1280,390]};check('eight distinct accepted groups cover EN/RU x chart/positions x two widths',len(names)==8 and set(names)==expectedNames)
+missing=[x for run in [a,b] for x in run['responses'] if x.get('bodyUnavailable')]
+check('exactly four unavailable 200 image bodies; zero missing JS/city bodies',len(missing)==4 and all(x['status']==200 and x['path'] in ['/assets/app-icons/v3/icon-512.png','/assets/guide-avatar.webp'] for x in missing))
+payloads=[]
+for runname,run in [('browser-run1',a),('browser-run2',b)]:
+ for key,folder in [('modules','remote-modules'),('data','remote-data')]:
+  values=run[key];assert len(set(Path(p).name for p in values))==len(values)
+  files=set(p.name for p in (r/runname/folder).iterdir() if p.is_file());assert files==set(Path(p).name for p in values)
+  for p,row in values.items():
+   file=f'{runname}/{folder}/{Path(p).name}';data=(r/file).read_bytes();assert len(data)==row['bytes'] and sha(data)==row['sha256'];payloads.append({'capturedPath':file,**row})
+check('all 68 JavaScript and four city bodies rehash and match across both runs',len(a['modules'])==68 and len(a['data'])==4 and a['modules']==b['modules'] and a['data']==b['data'])
+requests=[x for run in [a,b] for x in run['requests']];check('all 1150 observed request events are GET and none target API',len(requests)==1150 and all(x['method']=='GET' and not x['path'].startswith('/api/') for x in requests))
+blocked=[x for run in [a,b] for c in run['checks'] for x in c['blocked']];check('exactly ten blocked observed requests are configured analytics GETs',len(blocked)==10 and all(x['method']=='GET' and x['origin']=='https://plausible.io' and x['reason']=='external' for x in blocked))
+receipts=[];receiptHashes={}
+for runname,c in accepted:
+ assert c['contextClosed'] and c['final']['noSavedProfile'] and not c['pageErrors']
+ for receipt in c.get('receipts',[]):
+  file=runname+'/'+receipt['file'];data=(r/file).read_bytes();assert sha(data)==receipt['sha256'] and len(data)==receipt['bytes'];cp(file);raw=json.loads(data);assert raw['receipt']==receipt['receipt'];label=receipt['file'].split('-')[-2];receiptHashes.setdefault(label,set()).add(sha(data));receipts.append({'capturedPath':'captured/'+file,'label':label,'sha256':sha(data),'receipt':receipt['receipt'],'case':c['name']})
+check('16 actual downloaded receipt files match recorded bytes and four input classes agree across locales/widths',len(receipts)==16 and set(receiptHashes)=={'toronto','juneau','known','recovered'} and all(len(v)==1 for v in receiptHashes.values()))
+result={'checks':checks,'passed':len(checks),'acceptedNames':names,'initialFailedNames':[x['name'] for x in failed],'source':source,'payloads':payloads,'unavailableImageBodies':missing,'receipts':receipts,'sourceCommit':base,'providerId':before['id'],'browser':a['browser'],'requestEvents':len(requests),'blockedRequests':blocked,'qualification':'Read-only independent audit of captured native executions. No browser rerun or private authorization material was read. Parent cleanup exact-secret scan is retained as attributed evidence, not independently repeated.'}
+(d/'audit-result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':len(checks),'groups':len(names),'receiptFiles':len(receipts),'payloadFilesRehashed':len(payloads)}))

@@ -1,0 +1,621 @@
+{
+  "rows": [
+    {
+      "variant": "baseline",
+      "input": {
+        "name": "reference-card",
+        "known": false,
+        "sheet": false,
+        "hidden": true
+      },
+      "data": {
+        "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":false,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445573,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124553,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.03082287123743299,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":null,\"houses\":null,\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[\"no-time\"],\"engineVersion\":\"0.1.1-rc.6\",\"moonSignCandidates\":[]}",
+        "filename": "zodiacs-big-three.png",
+        "type": "image/png",
+        "bytes": 130959,
+        "notes": [
+          "12:00 reference · Birth time unknown",
+          "My Moon may change signs without an exact birth time."
+        ],
+        "provenance": [
+          "Birth details hidden"
+        ],
+        "settings": "12:00 reference · Apparent geocentric · Tropical of date · No houses · True Node",
+        "fontStatus": "loaded"
+      },
+      "image": {
+        "file": "baseline-reference-card.png",
+        "sha256": "f24f2c6758ef515b0279467cac56e545a93883a533fbf8f6f6939835fc5bf1d2",
+        "bytes": 130959,
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "variant": "baseline",
+      "input": {
+        "name": "reference-sheet-hidden",
+        "known": false,
+        "sheet": true,
+        "hidden": true
+      },
+      "data": {
+        "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":false,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445573,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124553,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.03082287123743299,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":null,\"houses\":null,\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[\"no-time\"],\"engineVersion\":\"0.1.1-rc.6\",\"moonSignCandidates\":[]}",
+        "filename": "zodiacs-chart-sheet.png",
+        "type": "image/png",
+        "bytes": 628844,
+        "notes": [
+          "12:00 reference · Birth time unknown",
+          "My Moon may change signs without an exact birth time."
+        ],
+        "provenance": [
+          "Birth details hidden"
+        ],
+        "settings": "12:00 reference · Apparent geocentric · Tropical of date · No houses · True Node",
+        "fontStatus": "loaded"
+      },
+      "image": {
+        "file": "baseline-reference-sheet-hidden.png",
+        "sha256": "3e00b35fef7e6891dbfb439d027ae67d86ca2933697e9fe4d55772e28d10d861",
+        "bytes": 628844,
+        "width": 1800,
+        "height": 2400
+      }
+    },
+    {
+      "variant": "baseline",
+      "input": {
+        "name": "reference-sheet-optin",
+        "known": false,
+        "sheet": true,
+        "hidden": false
+      },
+      "data": {
+        "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":false,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445573,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124553,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.03082287123743299,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":null,\"houses\":null,\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[\"no-time\"],\"engineVersion\":\"0.1.1-rc.6\",\"moonSignCandidates\":[]}",
+        "filename": "zodiacs-chart-sheet.png",
+        "type": "image/png",
+        "bytes": 653487,
+        "notes": [
+          "12:00 reference · Birth time unknown",
+          "My Moon may change signs without an exact birth time."
+        ],
+        "provenance": [
+          "2000-01-15 · Birth time unknown · 12:00 local reference",
+          "Fixture privacy marker",
+          "0.0000°N · 0.0000°E · UTC",
+          "Reference UTC · 2000-01-15 06:17 UTC"
+        ],
+        "settings": "12:00 reference · Apparent geocentric · Tropical of date · No houses · True Node",
+        "fontStatus": "loaded"
+      },
+      "image": {
+        "file": "baseline-reference-sheet-optin.png",
+        "sha256": "1fda0a98f4fa49fc61eda21c2492f18c2a4af4238526c28dd29ea7c90763e519",
+        "bytes": 653487,
+        "width": 1800,
+        "height": 2400
+      }
+    },
+    {
+      "variant": "baseline",
+      "input": {
+        "name": "known-sheet-optin",
+        "known": true,
+        "sheet": true,
+        "hidden": false
+      },
+      "data": {
+        "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":true,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445573,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124553,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.03082287123743299,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":{\"asc\":296.26281244485284,\"mc\":210.3776063087584,\"dsc\":116.26281244485284,\"ic\":30.377606308758402},\"houses\":{\"system\":\"whole\",\"cusps\":[270,300,330,0,30,60,90,120,150,180,210,240]},\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[],\"engineVersion\":\"0.1.1-rc.6\"}",
+        "filename": "zodiacs-chart-sheet.png",
+        "type": "image/png",
+        "bytes": 713264,
+        "notes": [],
+        "provenance": [
+          "2000-01-15 · 06:17 local",
+          "Fixture privacy marker",
+          "0.0000°N · 0.0000°E · UTC",
+          "Resolved UTC · 2000-01-15 06:17 UTC"
+        ],
+        "settings": "Apparent geocentric · Tropical of date · Whole sign houses · True Node",
+        "fontStatus": "loaded"
+      },
+      "image": {
+        "file": "baseline-known-sheet-optin.png",
+        "sha256": "1cfea198c81a7261b0038f738148084315c3399d15c8299d61fb54b7a30a0704",
+        "bytes": 713264,
+        "width": 1800,
+        "height": 2400
+      }
+    },
+    {
+      "variant": "candidate",
+      "input": {
+        "name": "reference-card",
+        "known": false,
+        "sheet": false,
+        "hidden": true
+      },
+      "data": {
+        "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":false,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445573,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124553,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.03082287123743299,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":null,\"houses\":null,\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[\"no-time\"],\"engineVersion\":\"0.1.1-rc.6\",\"moonSignCandidates\":[]}",
+        "filename": "zodiacs-big-three.png",
+        "type": "image/png",
+        "bytes": 131170,
+        "notes": [
+          "Reference positions · Birth time unknown",
+          "My Moon may change signs without an exact birth time."
+        ],
+        "provenance": [
+          "Birth details hidden"
+        ],
+        "settings": "Reference positions · Apparent geocentric · Tropical of date · No houses · True Node",
+        "fontStatus": "loaded"
+      },
+      "image": {
+        "file": "candidate-reference-card.png",
+        "sha256": "4b05217d5be90b0b3270725caec9ebbb037aa77567d3c3b51eeac51e76213d43",
+        "bytes": 131170,
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "variant": "candidate",
+      "input": {
+        "name": "reference-sheet-hidden",
+        "known": false,
+        "sheet": true,
+        "hidden": true
+      },
+      "data": {
+        "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":false,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445573,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124553,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.03082287123743299,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":null,\"houses\":null,\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[\"no-time\"],\"engineVersion\":\"0.1.1-rc.6\",\"moonSignCandidates\":[]}",
+        "filename": "zodiacs-chart-sheet.png",
+        "type": "image/png",
+        "bytes": 628760,
+        "notes": [
+          "Reference positions · Birth time unknown",
+          "My Moon may change signs without an exact birth time."
+        ],
+        "provenance": [
+          "Birth details hidden"
+        ],
+        "settings": "Reference positions · Apparent geocentric · Tropical of date · No houses · True Node",
+        "fontStatus": "loaded"
+      },
+      "image": {
+        "file": "candidate-reference-sheet-hidden.png",
+        "sha256": "640fcaf8f75626601477bdfbd5759052bf5a79d7488200538cf89b5de3e056aa",
+        "bytes": 628760,
+        "width": 1800,
+        "height": 2400
+      }
+    },
+    {
+      "variant": "candidate",
+      "input": {
+        "name": "reference-sheet-optin",
+        "known": false,
+        "sheet": true,
+        "hidden": false
+      },
+      "data": {
+        "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":false,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445573,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124553,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.03082287123743299,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":null,\"houses\":null,\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[\"no-time\"],\"engineVersion\":\"0.1.1-rc.6\",\"moonSignCandidates\":[]}",
+        "filename": "zodiacs-chart-sheet.png",
+        "type": "image/png",
+        "bytes": 652847,
+        "notes": [
+          "Reference positions · Birth time unknown",
+          "My Moon may change signs without an exact birth time."
+        ],
+        "provenance": [
+          "2000-01-15 · Birth time unknown · Reference positions",
+          "Fixture privacy marker",
+          "0.0000°N · 0.0000°E · UTC",
+          "Reference UTC · 2000-01-15 06:17 UTC"
+        ],
+        "settings": "Reference positions · Apparent geocentric · Tropical of date · No houses · True Node",
+        "fontStatus": "loaded"
+      },
+      "image": {
+        "file": "candidate-reference-sheet-optin.png",
+        "sha256": "f20379aa3ddcdf9bdd65ddda458c8292f80682bec55d6b56991a7dbe0f922361",
+        "bytes": 652847,
+        "width": 1800,
+        "height": 2400
+      }
+    },
+    {
+      "variant": "candidate",
+      "input": {
+        "name": "known-sheet-optin",
+        "known": true,
+        "sheet": true,
+        "hidden": false
+      },
+      "data": {
+        "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":true,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445573,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124553,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.03082287123743299,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":{\"asc\":296.26281244485284,\"mc\":210.3776063087584,\"dsc\":116.26281244485284,\"ic\":30.377606308758402},\"houses\":{\"system\":\"whole\",\"cusps\":[270,300,330,0,30,60,90,120,150,180,210,240]},\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[],\"engineVersion\":\"0.1.1-rc.6\"}",
+        "filename": "zodiacs-chart-sheet.png",
+        "type": "image/png",
+        "bytes": 713264,
+        "notes": [],
+        "provenance": [
+          "2000-01-15 · 06:17 local",
+          "Fixture privacy marker",
+          "0.0000°N · 0.0000°E · UTC",
+          "Resolved UTC · 2000-01-15 06:17 UTC"
+        ],
+        "settings": "Apparent geocentric · Tropical of date · Whole sign houses · True Node",
+        "fontStatus": "loaded"
+      },
+      "image": {
+        "file": "candidate-known-sheet-optin.png",
+        "sha256": "1cfea198c81a7261b0038f738148084315c3399d15c8299d61fb54b7a30a0704",
+        "bytes": 713264,
+        "width": 1800,
+        "height": 2400
+      }
+    }
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/baseline",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/styles.css",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/baseline.js",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/fonts/eb-garamond-latin-500-normal.woff2",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/fonts/jetbrains-mono-latin-wght-normal.woff2",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/capricorn.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/fonts/eb-garamond-latin-400-italic.woff2",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/fonts/eb-garamond-latin-400-normal.woff2",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/app-icons/v3/icon-512.png",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/aries.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/taurus.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/gemini.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/cancer.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/leo.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/virgo.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/libra.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/scorpio.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/sagittarius.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/capricorn.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/aquarius.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/pisces.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/app-icons/v3/icon-512.png",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/app-icons/v3/icon-512.png",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "baseline",
+      "url": "http://127.0.0.1:60101/assets/app-icons/v3/icon-512.png",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/candidate",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/styles.css",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/candidate.js",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/fonts/eb-garamond-latin-500-normal.woff2",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/fonts/jetbrains-mono-latin-wght-normal.woff2",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/capricorn.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/fonts/eb-garamond-latin-400-italic.woff2",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/fonts/eb-garamond-latin-400-normal.woff2",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/app-icons/v3/icon-512.png",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/aries.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/taurus.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/gemini.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/cancer.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/leo.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/virgo.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/libra.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/scorpio.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/sagittarius.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/capricorn.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/aquarius.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/zodiac-icons/128/pisces.webp",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/app-icons/v3/icon-512.png",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/app-icons/v3/icon-512.png",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "variant": "candidate",
+      "url": "http://127.0.0.1:60101/assets/app-icons/v3/icon-512.png",
+      "method": "GET",
+      "allowed": true
+    }
+  ],
+  "assetIdentities": {
+    "/fonts/eb-garamond-latin-500-normal.woff2": {
+      "bytes": 23012,
+      "sha256": "d2bb3f624516d0233ef8a03bd7b2be47489c36809a02e83ac1bc859e85f4874a"
+    },
+    "/fonts/jetbrains-mono-latin-wght-normal.woff2": {
+      "bytes": 40404,
+      "sha256": "18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e"
+    },
+    "/assets/zodiac-icons/128/capricorn.webp": {
+      "bytes": 4682,
+      "sha256": "45dc11a1350c54d758bbdeb13882b2bbc45cba8237fb986ff8764a480797d469"
+    },
+    "/fonts/eb-garamond-latin-400-italic.woff2": {
+      "bytes": 22172,
+      "sha256": "1bd1b20fd55986b334ba42dbcb0d9bed7e2d08fd7a713000e8041bfafa37e8ec"
+    },
+    "/fonts/eb-garamond-latin-400-normal.woff2": {
+      "bytes": 21704,
+      "sha256": "b63448e2680a0dbde70ebb2f3de78f6c515122835491f938e8a8595b46f29210"
+    },
+    "/assets/app-icons/v3/icon-512.png": {
+      "bytes": 47117,
+      "sha256": "01405f4da95d384d77e19d2986abbbe1ae9081650055d03cc46698b8d53c8896"
+    },
+    "/assets/zodiac-icons/128/aries.webp": {
+      "bytes": 4672,
+      "sha256": "7550c5b7545f81f2c0783576c8f71562cb1e0e47e4c83ea2297016bf9febf7d9"
+    },
+    "/assets/zodiac-icons/128/gemini.webp": {
+      "bytes": 4014,
+      "sha256": "e34ba92a8abad763ecd8cb008381bce6c6454ff906eaf405a0d27b735b57a7ce"
+    },
+    "/assets/zodiac-icons/128/taurus.webp": {
+      "bytes": 4584,
+      "sha256": "f15447014c88e0270f9ac8d4ad5431dce41ef9f89f572e3e48997fa55c1ede8d"
+    },
+    "/assets/zodiac-icons/128/cancer.webp": {
+      "bytes": 5004,
+      "sha256": "3cb7255d053d136a066c67a42f0dedd60827052574ff9c13cec90c3328d48725"
+    },
+    "/assets/zodiac-icons/128/libra.webp": {
+      "bytes": 4128,
+      "sha256": "fd6df007626eb45a6e4ead08db3e387b13201eb02c8bc3fa112511126020b871"
+    },
+    "/assets/zodiac-icons/128/leo.webp": {
+      "bytes": 4694,
+      "sha256": "55e216907703a27ea4e959a2f14c324187d06693daa1e02acf7611db003d10a9"
+    },
+    "/assets/zodiac-icons/128/sagittarius.webp": {
+      "bytes": 4638,
+      "sha256": "8254a32a439fa0ad37b2ca66284d9985c1c5b985e69d75897c6672be744b21cc"
+    },
+    "/assets/zodiac-icons/128/virgo.webp": {
+      "bytes": 4676,
+      "sha256": "66dfd434cd47e0ff6116b904e37b28326be2125b9d2a51bcbb71d44952de1134"
+    },
+    "/assets/zodiac-icons/128/scorpio.webp": {
+      "bytes": 4342,
+      "sha256": "792ba54ebeaea084f0e218113ced6a39fbb4b3d83d94caf0358a3abaa3f4b130"
+    },
+    "/assets/zodiac-icons/128/aquarius.webp": {
+      "bytes": 4458,
+      "sha256": "3437d5fc940c83830a0240d0a1b9870e94b14c17720967688aa5cf20530a7122"
+    },
+    "/assets/zodiac-icons/128/pisces.webp": {
+      "bytes": 4284,
+      "sha256": "552fddb24708be2a37b37b741c53fc1e7f34b8023e3ca9838b4aadccede2b8c3"
+    }
+  },
+  "driverSha256": "6bc0fde306924d9e0cead5a1fbece4e3dde6308a14ed8934a771985e31b3337f",
+  "qualification": "Actual original/candidate renderer and download functions from isolated frozen source. Direct UTC engine input is a finite consumer fixture, not full ChartCalculator interaction. Source is not instrumented; DOM and canvas are native, fonts/assets are served locally from immutable copied files. No external request or source mutation. PNG visual inspection and source/helper proofs are separate."
+}

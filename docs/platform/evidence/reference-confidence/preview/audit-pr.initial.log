@@ -1,0 +1,7 @@
+{"prKeys": ["baseRefName", "baseRefOid", "headRefName", "headRefOid", "isDraft", "number", "state", "title", "url"], "fileRows": 6}
+Traceback (most recent call last):
+  File "/private/tmp/zodiacs-platform-reference-confidence-preview-review/audit-pr.py", line 11, in <module>
+    assert sorted(mapping)==sorted(r['filename'] for r in files)
+  File "/private/tmp/zodiacs-platform-reference-confidence-preview-review/audit-pr.py", line 11, in <genexpr>
+    assert sorted(mapping)==sorted(r['filename'] for r in files)
+TypeError: list indices must be integers or slices, not str

@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {parseNatalEnvelope} from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/receipt.js';
+const root=new URL('./',import.meta.url).pathname;
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const records=JSON.parse(readFileSync(root+'audit-result.json','utf8')).receipts;
+const rows=[];
+for(const record of records){
+ const bytes=readFileSync(root+record.capturedPath);assert.equal(sha(bytes),record.sha256);
+ const parsed=parseNatalEnvelope(bytes.toString());assert.equal(parsed.ok,true);
+ const {receipt,result}=parsed.envelope;assert.deepEqual(receipt,record.receipt);assert.equal(receipt.engine.version,'0.1.1-rc.6');assert.equal(receipt.localResolution.gapShiftMinutes,0);
+ const known=record.label==='known';assert.equal(receipt.timeKnown,known);assert.equal(receipt.reference,known?'supplied-instant':'local-noon');assert.equal(receipt.localResolution.time,known?'08:30':'12:00');
+ const wall=new Date(Date.parse(receipt.instant)+Math.round(receipt.localResolution.offsetMinutes*60000)).toISOString();assert.equal(wall.slice(0,16),receipt.localResolution.date+'T'+receipt.localResolution.time);
+ assert(!('moonSignCandidates' in result));
+ if(!known){assert.equal(result.angles,null);assert.equal(receipt.houses.absenceReason,'unknown-time');assert(receipt.resultFlags.includes('no-time'));}else{assert(result.angles);assert(!receipt.resultFlags.includes('no-time'));}
+ rows.push({file:record.capturedPath,sha256:record.sha256,reference:receipt.reference,timeKnown:known,requestedDate:receipt.localResolution.date,requestedClock:receipt.localResolution.time,timeZone:receipt.localResolution.timeZone,referenceInstant:receipt.instant,offsetMinutes:receipt.localResolution.offsetMinutes,gapShiftMinutes:receipt.localResolution.gapShiftMinutes,computedWallFromReceiptOffset:wall,referenceMoon:result.bodies.find(b=>b.body==='Moon')});
+}
+const pkgPath='/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/package.json';const pkg=readFileSync(pkgPath);
+writeFileSync(root+'receipt-audit-result.json',JSON.stringify({runtime:process.version,parserPackage:{path:pkgPath,sha256:sha(pkg),version:JSON.parse(pkg).version},passed:rows.length,rows,qualification:'Independent parse and arithmetic consistency checks of captured native downloads. No astronomical recomputation or native browser rerun. Requested local-noon is a single-reference convention, not Moon-candidate completeness; all these captured cases happen to have zero gap shift.'},null,2)+'\n');
+console.log(JSON.stringify({passed:rows.length}));

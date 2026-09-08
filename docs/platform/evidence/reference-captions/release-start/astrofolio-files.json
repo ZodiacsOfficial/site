@@ -1,0 +1,298 @@
+{
+  "actualPaths": 36,
+  "responsePageSizes": [
+    36
+  ],
+  "sourceResponseSha256": "1ab6634b681a1e6b23fb29056658ded514949eef400c5a3934192b4c511aaa8a",
+  "files": [
+    {
+      "filename": "docs/astrofolio-trust/EVIDENCE-GAPS.md",
+      "status": "added",
+      "sha": "3804ff1dc79990f8a77a4014952ef8e2059cda69",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": "docs/astrofolio-trust/STATUS.md",
+      "status": "added",
+      "sha": "105cb22da8f62caef9092c16c825f57a50ff8da0",
+      "additions": 168,
+      "deletions": 0,
+      "changes": 168
+    },
+    {
+      "filename": "docs/astrofolio-trust/evaluation-fixtures.json",
+      "status": "added",
+      "sha": "1a4c9ccc7cde13a7a8ee36a0e8208aef2b9af226",
+      "additions": 442,
+      "deletions": 0,
+      "changes": 442
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/browser-initial-findings.json",
+      "status": "added",
+      "sha": "f87dcf5c67431960ab8641ab2e80692689a939d4",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/browser-preview-results-layout-1280.json",
+      "status": "added",
+      "sha": "4d4087b22583f623405167b7ef900e2bff8193c0",
+      "additions": 27,
+      "deletions": 0,
+      "changes": 27
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/browser-results-real-service-worker-offline-never-reuses-match.json",
+      "status": "added",
+      "sha": "4fe58b012766e9f35c300827f4c5a9021bbe8e68",
+      "additions": 23,
+      "deletions": 0,
+      "changes": 23
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/browser-results.json",
+      "status": "added",
+      "sha": "503e2a5dc3afbb2e5d4d92cc82f6586799903c09",
+      "additions": 121,
+      "deletions": 0,
+      "changes": 121
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/build-node22.log",
+      "status": "added",
+      "sha": "d16507ccbb75aa283d3e29e72190be9ecc5f9b2e",
+      "additions": 4526,
+      "deletions": 0,
+      "changes": 4526
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/check-node22.log",
+      "status": "added",
+      "sha": "156f32abd7e632118b4994ad560830a9dacc08c3",
+      "additions": 77,
+      "deletions": 0,
+      "changes": 77
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/ci-scope-excerpt.log",
+      "status": "added",
+      "sha": "ebc997672d0bd1b8a527aec37fbc97978ef6482b",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/first-test-timeouts.log",
+      "status": "added",
+      "sha": "a07e3eed6e32e96b79d67a86dbbb3e7f8e6aaae5",
+      "additions": 586,
+      "deletions": 0,
+      "changes": 586
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/focused-node22.log",
+      "status": "added",
+      "sha": "e86aecb4c77c1201885ae28873baa952682cd5b4",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/log-integrity.json",
+      "status": "added",
+      "sha": "be426630b2d73aa807bac4f5164d41c41ca6c33e",
+      "additions": 42,
+      "deletions": 0,
+      "changes": 42
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/scope-guard.log",
+      "status": "added",
+      "sha": "d991eb36a4b7b11278db93d69c160f29d0cd5298",
+      "additions": 2,
+      "deletions": 0,
+      "changes": 2
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/source-grounded-evaluation.json",
+      "status": "added",
+      "sha": "f952656c4d8d67438e014dc8cd8f25766f9c80eb",
+      "additions": 376,
+      "deletions": 0,
+      "changes": 376
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/tests-node22.log",
+      "status": "added",
+      "sha": "f3cba2dd015f585e18c6604d56da10e452a7423c",
+      "additions": 490,
+      "deletions": 0,
+      "changes": 490
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/upstream-overlap.json",
+      "status": "added",
+      "sha": "2d69b164a522e4eccb985dc1bbc56ae91d475ac3",
+      "additions": 29,
+      "deletions": 0,
+      "changes": 29
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/verification-1280-hero.png",
+      "status": "added",
+      "sha": "467c21f1c3d039c14545afdd9680bb53a1ce5883",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/verification-1280.png",
+      "status": "added",
+      "sha": "7a7d8a43f1be15baf93dc3dad6a54bbcf1bb7811",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/verification-320-hero.png",
+      "status": "added",
+      "sha": "f3bf3b8a7e4a1593553e1baa2be7bb310f515439",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/verification-320.png",
+      "status": "added",
+      "sha": "03c53b60380d84ca88c6fd2d2d44f4feab62f4be",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/verification-390-hero.png",
+      "status": "added",
+      "sha": "4892a7294bea0261586ebd18906f96e713391acb",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/verification-390.png",
+      "status": "added",
+      "sha": "eaa986b8c885493e4c06887390bd39c19fe2e750",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "docs/astrofolio-trust/evidence/verification-records-390.png",
+      "status": "added",
+      "sha": "27c751bbafb79c7e0d89fc68086101d181fb138b",
+      "additions": 0,
+      "deletions": 0,
+      "changes": 0
+    },
+    {
+      "filename": "docs/astrofolio-trust/integration/README.md",
+      "status": "added",
+      "sha": "70b00e57e5fed70d4cceca0dc32681b781ea685c",
+      "additions": 37,
+      "deletions": 0,
+      "changes": 37
+    },
+    {
+      "filename": "docs/astrofolio-trust/integration/phase1-allowance.patch",
+      "status": "added",
+      "sha": "e233f275b29d1328bad4004e9ec84f1654af4b3c",
+      "additions": 25,
+      "deletions": 0,
+      "changes": 25
+    },
+    {
+      "filename": "docs/astrofolio-trust/integration/registry-context-link.patch",
+      "status": "added",
+      "sha": "5199d50ae376bfbd2c2d03508c617277ae847b6d",
+      "additions": 10,
+      "deletions": 0,
+      "changes": 10
+    },
+    {
+      "filename": "src/pages/registry/verify/index.astro",
+      "status": "added",
+      "sha": "25420ec6b2c2a195cd3adf32c3bee3b721fa86d4",
+      "additions": 119,
+      "deletions": 0,
+      "changes": 119
+    },
+    {
+      "filename": "src/registry/astrofolio-verification/checker.ts",
+      "status": "added",
+      "sha": "0eef4410f0091a5e7986db14ea6f0f84593a7cf2",
+      "additions": 217,
+      "deletions": 0,
+      "changes": 217
+    },
+    {
+      "filename": "src/registry/astrofolio-verification/client.ts",
+      "status": "added",
+      "sha": "c8e0faacf1e6070e01424de96b2d8aa8d393515e",
+      "additions": 85,
+      "deletions": 0,
+      "changes": 85
+    },
+    {
+      "filename": "src/registry/astrofolio-verification/evidence.ts",
+      "status": "added",
+      "sha": "a006380173e77aefcd5d9b4a5d24f04cbb77938d",
+      "additions": 273,
+      "deletions": 0,
+      "changes": 273
+    },
+    {
+      "filename": "src/registry/astrofolio-verification/page.css",
+      "status": "added",
+      "sha": "c744674dc50a022f1f3a1c7b89265893ec40a8c0",
+      "additions": 14,
+      "deletions": 0,
+      "changes": 14
+    },
+    {
+      "filename": "tests/astrofolio-verification/browser.mjs",
+      "status": "added",
+      "sha": "da7500a49b8d4c0c5d3265ad8c14e43f349edd79",
+      "additions": 398,
+      "deletions": 0,
+      "changes": 398
+    },
+    {
+      "filename": "tests/astrofolio-verification/checker.test.ts",
+      "status": "added",
+      "sha": "b3a60b1216b1dfe58284d5a5fb341c8cb3bd5f9f",
+      "additions": 193,
+      "deletions": 0,
+      "changes": 193
+    },
+    {
+      "filename": "tests/astrofolio-verification/evidence.test.ts",
+      "status": "added",
+      "sha": "6eb10aed4a795465f84db6a625118db59da895e1",
+      "additions": 172,
+      "deletions": 0,
+      "changes": 172
+    },
+    {
+      "filename": "tests/astrofolio-verification/rendered.test.ts",
+      "status": "added",
+      "sha": "c6ac3b468de9833db55923e7d21b96a309c504c5",
+      "additions": 69,
+      "deletions": 0,
+      "changes": 69
+    }
+  ],
+  "qualification": "Actual unchanged b17d6804 draft36 paths inspected; no integration or source edit. Shared integration patches remain unapplied."
+}

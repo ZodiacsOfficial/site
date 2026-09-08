@@ -1,0 +1,291 @@
+{
+  "checks": [
+    {
+      "name": "Entire ChartCalculator equals baseline plus one label expression and comment",
+      "passed": true,
+      "baseline": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475",
+      "candidate": "a34917a06e1ba706055853f1234a86dc3060b6acf247a8101b6445331a350420"
+    },
+    {
+      "name": "Entire MoonPhaseTool equals endpoint/alternate removal and captured-caption movement/key changes only",
+      "passed": true,
+      "baseline": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f",
+      "candidate": "0bcedc894c958dcb0f4d8de3f3a8303acc4c39916d6de7cd66488778a871e966"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx russianNameTemplate",
+      "passed": true,
+      "sha256": "a8e42fa36d6a1c89e9551f54e7e15f35052e849fa5805b8c582e37a16aaa786a"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx sceneHas",
+      "passed": true,
+      "sha256": "dc62d59844d8183bccc7eef209e1ebd0f33347833765ad5f69099afb2be8c7b9"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx HouseSystemReceipt",
+      "passed": true,
+      "sha256": "16b5957291d83b5725d1f079bbea6853ea896004600474ba9c1d319ef4557874"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx clearReceiptExport",
+      "passed": true,
+      "sha256": "1298299c58ad6d4bd91a1f0ff2dadaf664a83020b1f41d8a60a5e72b538e8e42"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx advanceInputRevision",
+      "passed": true,
+      "sha256": "59eb543d3e95683d0c130b2f8726d2ff6a7182287803cdbf5a692e846d87d13c"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx resultIsCurrent",
+      "passed": true,
+      "sha256": "d598fc0edfc8039e0fab3284007f585f812996054c0e704f5678fead9ec4c441"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx currentResultOwner",
+      "passed": true,
+      "sha256": "6f3266e248b2418d31cbeb2cf99e7e059bd8db2830d1a479fa0c67cff2874e64"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx clearResult",
+      "passed": true,
+      "sha256": "976a42a0233c8ae81bc7c6c5b864b1fd4dae74856af13213ee9b8486a41b8de8"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx invalidateProfileHandoff",
+      "passed": true,
+      "sha256": "43ecfecc91f8ea89c10bd19f9db1643190b3c57d80b93a4d4fe54f19d2bd70b5"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx track",
+      "passed": true,
+      "sha256": "229b4d919fa9efa75d3bff66da922f402acea3b8a86c1fc7f2d651cf878be649"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx loadPushOptIn",
+      "passed": true,
+      "sha256": "50fc832606bab5ea93919ad6f745895acf41e49693bc2b5b0f2b3e563d6033b9"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx keepWheelAboveTour",
+      "passed": true,
+      "sha256": "27a97e428a88106ef98125cedbe4c8dc500faea0e25493869e00af39cf42141c"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx persistFirstReading",
+      "passed": true,
+      "sha256": "5bb746c7ddbb26646055272ab04e47b2ac860c982ae0ed9c9893167e36c4da19"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx startTour",
+      "passed": true,
+      "sha256": "a6a8a63b8c1a0505a5b1426d6afc0572e2bbec2dcf6b6eec94afa20a9253d4a5"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx exitTour",
+      "passed": true,
+      "sha256": "e26cadf1d1df4a9bc375ead9bf82b7f5b898cb7b11b518443aa6516100076f89"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx startFirstReading",
+      "passed": true,
+      "sha256": "3a5b1ab8d32b4a913183cc1d32a19792caac999475863502655806cf3f4ff402"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx dismissFirstReading",
+      "passed": true,
+      "sha256": "d0dcd6b6d4d57af302815d3cda0eb48e607370122af344d7bcaa807294834a6b"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx completeFirstReading",
+      "passed": true,
+      "sha256": "84eddc22f91867fc7bfabf92b8d93e25b167e92c8d0815ba1b8885d72c4e3d6b"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx resetLens",
+      "passed": true,
+      "sha256": "ddfcbc137154bb331c04aec1344cf1c998c3eff5a0e0a98553e4fa9f4a6c51e4"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx selectLens",
+      "passed": true,
+      "sha256": "fc732734ca7c5668ddbc06d3a772ebfe63952942c767e293be8fdbe336a39751"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx toggleDepth",
+      "passed": true,
+      "sha256": "4eef23050a3041642c6a1f0e2beedb57af036d4d8b6dc0ca225511048719535e"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx describeSelection",
+      "passed": true,
+      "sha256": "38d48be9904e1cd33c4f720f28ad045828472ce74f46a7e88829658802946a00"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx openDetailForSelection",
+      "passed": true,
+      "sha256": "d60b06a6187b63300e319a3aa77e1ae58e0898d8239cd68fc57a1d8718f8eae4"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx cancelSpotlightArrival",
+      "passed": true,
+      "sha256": "621e6fcbf21d8abeea512a0d9d931e897c729f935818283e2b6ef75c80d6ebdc"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx applySelect",
+      "passed": true,
+      "sha256": "56a7e7972d9c633bb9514e7a6af4603cd89137015c35d5afeedf564d3c495f90"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx showOnChartFromReading",
+      "passed": true,
+      "sha256": "2ea94f005ae6bafc7197b4d840ebdfbb2dac6feaf97af28fe38b51f7a6676f0f"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx onDetailToggle",
+      "passed": true,
+      "sha256": "a7624e09cb474822c28db8489fb20f605c7c9344d3807ad0bca13fd50448a549"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx onWheelKeyDown",
+      "passed": true,
+      "sha256": "0a26d0ec58b312ce118758bcf81ee102e2c317a31a522f5f2bd3c590e030d2a4"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx runChart",
+      "passed": true,
+      "sha256": "199dfca7ea30cd358b7b872c18d7c319af043bf396ff25e880b71224187b252b"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx exportReceipt",
+      "passed": true,
+      "sha256": "6f0a5ad03a55720093cf929bff6b2b6cedda2b6e36aa9db2ca4c21116c2b1f88"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx compute",
+      "passed": true,
+      "sha256": "7b8fe0bd4f895fd394095e4549630ebe17a3585a129737645628ca0ca7fd6012"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx requestChartControls",
+      "passed": true,
+      "sha256": "5d57ef5d206172bf2eb8f469e89f008b108e11b64659e0272117079ede7840f9"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx openShareOptions",
+      "passed": true,
+      "sha256": "16d31f1985db6167171311add0322c9affeceaf91171605e21c6ac3b1de1d88c"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx shareChartFromAction",
+      "passed": true,
+      "sha256": "0a8919f6b5c03a027bd499f3c88dd97b765f4ac6fcc05e2754994f7759493d39"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx closeShareDialog",
+      "passed": true,
+      "sha256": "9fdffeda6aac9dc7c8c4b9aaae9d96b7b0e53290d81962c928a5f5742cb4eb02"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx chartIdentity",
+      "passed": true,
+      "sha256": "20d36ce773750c3f1b648850742af5bcc227ad3c449503b0c2c010c8fd1b741d"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx isConnectedSaveControl",
+      "passed": true,
+      "sha256": "933699a559723260675c05553ca7804c61e1b9220c60b7455330cc887955446b"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx saveFocusFallback",
+      "passed": true,
+      "sha256": "256f9b90aee93c9570500f666057dde59eb03c1cea5aa68005cea3e77a16f905"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx closeSavePrompt",
+      "passed": true,
+      "sha256": "a5af39f400d624da0a52be4440710ed90b0d6ad187f3312a77deac8d542278c0"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx openSavePrompt",
+      "passed": true,
+      "sha256": "58cba703e2aadd19fa6985c3f5397a54cefe0ff3dca13943bb65edf1add420e7"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx commitSave",
+      "passed": true,
+      "sha256": "2d3f0569e7148e48dc3d36cb27584e60aa16e1848943fc89f9c86e64949a485c"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx submitSaveName",
+      "passed": true,
+      "sha256": "14a3beb8a07b732285e180bf26d34d70f191980921177745d54ff708fbea250b"
+    },
+    {
+      "name": "Unchanged exact function src/islands/ChartCalculator.tsx renderSavePrompt",
+      "passed": true,
+      "sha256": "64ae32cb22694b191a8e494ad53f88ca761841b8be1e32d4fb39efc4b6ffd908"
+    },
+    {
+      "name": "Unchanged exact function src/islands/MoonPhaseTool.tsx PhaseDisc",
+      "passed": true,
+      "sha256": "9363a00d74b9d943461943417c7ed390e2a4abc876ab2ff95fe1e9bd559ebb1e"
+    },
+    {
+      "name": "Unchanged exact function src/islands/MoonPhaseTool.tsx moonIlluminationFromAngle",
+      "passed": true,
+      "sha256": "c3c84fc457099bb427ccac28a06cdcb56e6932cb44e13915563cc233ef1ed058"
+    },
+    {
+      "name": "Unchanged exact function src/islands/MoonPhaseTool.tsx invalidateLookup",
+      "passed": true,
+      "sha256": "a2c6901c706e313438f0fc118ebd5d0b0fd97837898713575feec31ae32eb1de"
+    }
+  ],
+  "filesVerified": 33,
+  "componentReconstruction": true,
+  "buildInputs": [
+    {
+      "kind": "baseline",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "source/src/lib/i18n/ui/ru.ts",
+        "source/src/lib/i18n/ui/en.ts",
+        "source/src/lib/i18n/ui/es.ts",
+        "source/src/lib/i18n/ui/pt.ts",
+        "source/src/lib/i18n/ui/fr.ts",
+        "source/src/lib/i18n/ui/it.ts",
+        "source/src/lib/share-card-copy.ts",
+        "source/src/lib/share-card.ts",
+        "source/src/islands/explorer/tour/copy.ts",
+        "source/src/islands/explorer/lens/copy.ts",
+        "source/src/islands/ChartCalculator.tsx",
+        "source/src/islands/MoonPhaseTool.tsx"
+      ],
+      "unchanged": 200
+    },
+    {
+      "kind": "baseline",
+      "added": [
+        "candidate-lookup.ts",
+        "candidate-numerical-entry.ts"
+      ],
+      "removed": [
+        "baseline-lookup.ts",
+        "baseline-numerical-entry.ts"
+      ],
+      "changed": [
+        "source/src/lib/i18n/ui/ru.ts",
+        "source/src/lib/i18n/ui/en.ts",
+        "source/src/lib/i18n/ui/es.ts",
+        "source/src/lib/i18n/ui/pt.ts",
+        "source/src/lib/i18n/ui/fr.ts",
+        "source/src/lib/i18n/ui/it.ts"
+      ],
+      "unchanged": 22
+    }
+  ],
+  "qualification": "Exact entire-component reconstruction and unchanged named-function text checks; no ownership/numerical source mutation beyond explicit endpoint removal/caption presentation. Other product/copy consumers receive separate independent review."
+}
