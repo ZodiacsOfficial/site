@@ -1569,3 +1569,48 @@ Astrofolio #416 draft head `b17d6804960b6b30bb48208aff0f783b03768152` with only
 its assigned isolated paths and unapplied documentation proposals, and SDK #5's
 explicit hold at `cced011659d48877b8b73b8a85796815234cf741`. No Astrofolio integration
 or shared-source expansion occurs. Production still serves that main release.
+
+
+Draft [site #427](https://github.com/ZodiacsOfficial/site/pull/427) is delivered
+at source `804c70309d2508e67e8462df526b5f9e71a112e9`, base #425 `c761a49c`.
+The actual paginated 621-file list matches the local diff exactly, including
+19 implementation/test/scope paths. The initial summary API returned only the
+first 100 evidence files; the full paginated record is retained in
+[release](evidence/receipt-export/release/). Site Check run 34195946291 is in
+progress. Preview `dpl_CdGmdz6nP8HhCm4TX8WQ7epja2JH` is building from that exact
+source. Neither pending state is a passing hosted acceptance result.
+
+
+The exact-source #427 [READY preview](https://zodiacs-c3afqubvj-zodiacsofficial.vercel.app)
+now passes all 12 receipt groups, including six localized keyboard downloads,
+fresh polar fallback, repeated calculation, stale retained click, fixed private
+allocation failure/retry, explicit unknown local noon, fixed-offset/history/pole
+unavailability and positions-only isolation. Downloaded files pass the actual
+rc.5 codec. Observed storage and calculation counts do not change on download;
+Blob URLs are revoked. [Preview records](evidence/receipt-export/preview/) retain
+synthetic files, screenshots, exact driver/results and source deployment identity.
+Remote served-file hashes are explicitly unavailable; the provider's commit
+identity is recorded rather than inferred from local build bytes. Contexts closed
+and temporary preview credentials were deleted. Hosted CI has 13 passing jobs;
+Build & Check remains in progress. No production/account/publication action.
+
+
+Preview privacy qualification: the hosted site's existing Plausible loader was
+requested and blocked by the isolated test harness in each of the 12 contexts;
+there were no other recorded external requests or page errors, and no observed
+non-GET requests. This is not a claim that the entire hosted site makes zero
+external requests or that existing analytics ran in the test. Receipt download
+itself adds no analytics or remote endpoint; local and independent observer
+checks, with their scope and negative controls, remain the privacy evidence.
+
+
+The separate [date-coverage review](evidence/local-date-endpoints/review/REVIEW.md.log)
+is preserved as 71 byte-verified records; manifest SHA-256
+`f3a9c0b7a4fc73d4f32ed0bd3af2754e79f38e241306b4f266aae1f08d146cb8`.
+Seventeen actual controls each on Node 22 and Chrome find nine helper mismatches.
+Native Chrome Temporal transition enumeration agrees with all 17 interval sets;
+this shares host timezone data and is not independent historical evidence.
+Two synthetic hidden-transition schedules disprove unconditional completeness
+and empty-date claims for hourly Intl sampling. This evidence led to an inactive,
+separately authored complete-provider API prerequisite, not a change to #427 or
+an activation of unreviewed unknown-time behavior.

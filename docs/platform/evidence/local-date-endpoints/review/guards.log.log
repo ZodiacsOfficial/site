@@ -1,0 +1,54 @@
+{
+  "at": "2026-09-08T06:48:07.313Z",
+  "node": "v22.23.2",
+  "rows": [
+    {
+      "date": "2001-02-29",
+      "zone": "UTC",
+      "rejected": true,
+      "error": "RangeError: resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time."
+    },
+    {
+      "date": "0000-02-30",
+      "zone": "UTC",
+      "rejected": true,
+      "error": "RangeError: resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time."
+    },
+    {
+      "date": "1990-6-15",
+      "zone": "UTC",
+      "rejected": true,
+      "error": "RangeError: resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time."
+    },
+    {
+      "date": "1990-06-15\n",
+      "zone": "UTC",
+      "rejected": true,
+      "error": "RangeError: resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time."
+    },
+    {
+      "date": "1990-06-15",
+      "zone": "",
+      "rejected": true,
+      "error": "RangeError: An explicit supported timezone is required."
+    },
+    {
+      "date": "1990-06-15",
+      "zone": "Synthetic/Invalid",
+      "rejected": true,
+      "error": "RangeError: An explicit supported timezone is required."
+    },
+    {
+      "date": null,
+      "zone": "UTC",
+      "rejected": true,
+      "error": "RangeError: resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time."
+    },
+    {
+      "date": "1990-06-15",
+      "zone": null,
+      "rejected": true,
+      "error": "RangeError: An explicit supported timezone is required."
+    }
+  ]
+}

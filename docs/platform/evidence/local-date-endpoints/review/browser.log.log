@@ -1,0 +1,321 @@
+{
+  "browser": "152.0.7977.83",
+  "nativeTemporal": "object",
+  "rows": 17,
+  "mismatches": 9,
+  "failedChecks": [],
+  "temporal": [
+    {
+      "date": "2000-01-01",
+      "zone": "Asia/Tokyo",
+      "nativeSegments": [
+        {
+          "start": "1999-12-31T15:00:00.000Z",
+          "endExclusive": "2000-01-01T15:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "1999-12-31T15:00:00Z",
+      "actualDate": "2000-01-01",
+      "nextStart": "2000-01-01T15:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "1951-09-08T15:00:00Z"
+    },
+    {
+      "date": "2024-03-10",
+      "zone": "America/New_York",
+      "nativeSegments": [
+        {
+          "start": "2024-03-10T05:00:00.000Z",
+          "endExclusive": "2024-03-11T04:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2024-03-10T05:00:00Z",
+      "actualDate": "2024-03-10",
+      "nextStart": "2024-03-11T04:00:00Z",
+      "hoursInDay": 23,
+      "previousTransition": "2023-11-05T06:00:00Z",
+      "nextTransition": "2024-03-10T07:00:00Z"
+    },
+    {
+      "date": "2024-11-03",
+      "zone": "America/New_York",
+      "nativeSegments": [
+        {
+          "start": "2024-11-03T04:00:00.000Z",
+          "endExclusive": "2024-11-04T05:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2024-11-03T04:00:00Z",
+      "actualDate": "2024-11-03",
+      "nextStart": "2024-11-04T05:00:00Z",
+      "hoursInDay": 25,
+      "previousTransition": "2024-03-10T07:00:00Z",
+      "nextTransition": "2024-11-03T06:00:00Z"
+    },
+    {
+      "date": "1919-03-30",
+      "zone": "America/Toronto",
+      "nativeSegments": [
+        {
+          "start": "1919-03-30T05:00:00.000Z",
+          "endExclusive": "1919-03-31T04:30:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1919-03-30T05:00:00Z",
+      "actualDate": "1919-03-30",
+      "nextStart": "1919-03-31T04:30:00Z",
+      "hoursInDay": 23.5,
+      "previousTransition": "1918-10-27T06:00:00Z",
+      "nextTransition": "1919-03-31T04:30:00Z"
+    },
+    {
+      "date": "1919-03-31",
+      "zone": "America/Toronto",
+      "nativeSegments": [
+        {
+          "start": "1919-03-31T04:30:00.000Z",
+          "endExclusive": "1919-04-01T04:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1919-03-31T04:30:00Z",
+      "actualDate": "1919-03-31",
+      "nextStart": "1919-04-01T04:00:00Z",
+      "hoursInDay": 23.5,
+      "previousTransition": "1918-10-27T06:00:00Z",
+      "nextTransition": "1919-10-26T04:00:00Z"
+    },
+    {
+      "date": "2011-12-29",
+      "zone": "Pacific/Apia",
+      "nativeSegments": [
+        {
+          "start": "2011-12-29T10:00:00.000Z",
+          "endExclusive": "2011-12-30T10:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2011-12-29T10:00:00Z",
+      "actualDate": "2011-12-29",
+      "nextStart": "2011-12-30T10:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "2011-09-24T14:00:00Z",
+      "nextTransition": "2011-12-30T10:00:00Z"
+    },
+    {
+      "date": "2011-12-30",
+      "zone": "Pacific/Apia",
+      "nativeSegments": [],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2011-12-30T10:00:00Z",
+      "actualDate": "2011-12-31",
+      "nextStart": "2011-12-30T10:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "2011-09-24T14:00:00Z",
+      "nextTransition": "2012-03-31T14:00:00Z"
+    },
+    {
+      "date": "2011-12-31",
+      "zone": "Pacific/Apia",
+      "nativeSegments": [
+        {
+          "start": "2011-12-30T10:00:00.000Z",
+          "endExclusive": "2011-12-31T10:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2011-12-30T10:00:00Z",
+      "actualDate": "2011-12-31",
+      "nextStart": "2011-12-31T10:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "2011-09-24T14:00:00Z",
+      "nextTransition": "2012-03-31T14:00:00Z"
+    },
+    {
+      "date": "2009-10-31",
+      "zone": "America/St_Johns",
+      "nativeSegments": [
+        {
+          "start": "2009-10-31T02:30:00.000Z",
+          "endExclusive": "2009-11-01T02:30:00.000Z"
+        },
+        {
+          "start": "2009-11-01T02:31:00.000Z",
+          "endExclusive": "2009-11-01T03:30:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2009-10-31T02:30:00Z",
+      "actualDate": "2009-10-31",
+      "nextStart": "2009-11-01T02:30:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "2009-03-08T03:31:00Z",
+      "nextTransition": "2009-11-01T02:31:00Z"
+    },
+    {
+      "date": "2009-11-01",
+      "zone": "America/St_Johns",
+      "nativeSegments": [
+        {
+          "start": "2009-11-01T02:30:00.000Z",
+          "endExclusive": "2009-11-01T02:31:00.000Z"
+        },
+        {
+          "start": "2009-11-01T03:30:00.000Z",
+          "endExclusive": "2009-11-02T03:30:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2009-11-01T02:30:00Z",
+      "actualDate": "2009-11-01",
+      "nextStart": "2009-11-02T03:30:00Z",
+      "hoursInDay": 25,
+      "previousTransition": "2009-03-08T03:31:00Z",
+      "nextTransition": "2009-11-01T02:31:00Z"
+    },
+    {
+      "date": "1988-10-29",
+      "zone": "America/Goose_Bay",
+      "nativeSegments": [
+        {
+          "start": "1988-10-29T02:00:00.000Z",
+          "endExclusive": "1988-10-30T02:00:00.000Z"
+        },
+        {
+          "start": "1988-10-30T02:01:00.000Z",
+          "endExclusive": "1988-10-30T04:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1988-10-29T02:00:00Z",
+      "actualDate": "1988-10-29",
+      "nextStart": "1988-10-30T02:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "1988-04-03T04:01:00Z",
+      "nextTransition": "1988-10-30T02:01:00Z"
+    },
+    {
+      "date": "1988-10-30",
+      "zone": "America/Goose_Bay",
+      "nativeSegments": [
+        {
+          "start": "1988-10-30T02:00:00.000Z",
+          "endExclusive": "1988-10-30T02:01:00.000Z"
+        },
+        {
+          "start": "1988-10-30T04:00:00.000Z",
+          "endExclusive": "1988-10-31T04:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1988-10-30T02:00:00Z",
+      "actualDate": "1988-10-30",
+      "nextStart": "1988-10-31T04:00:00Z",
+      "hoursInDay": 26,
+      "previousTransition": "1988-04-03T04:01:00Z",
+      "nextTransition": "1988-10-30T02:01:00Z"
+    },
+    {
+      "date": "1892-07-04",
+      "zone": "Pacific/Apia",
+      "nativeSegments": [
+        {
+          "start": "1892-07-03T11:26:56.000Z",
+          "endExclusive": "1892-07-05T11:26:56.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1892-07-03T11:26:56Z",
+      "actualDate": "1892-07-04",
+      "nextStart": "1892-07-05T11:26:56Z",
+      "hoursInDay": 48,
+      "nextTransition": "1892-07-04T11:26:56Z"
+    },
+    {
+      "date": "0000-01-01",
+      "zone": "UTC",
+      "nativeSegments": [
+        {
+          "start": "0000-01-01T00:00:00.000Z",
+          "endExclusive": "0000-01-02T00:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "0000-01-01T00:00:00Z",
+      "actualDate": "0000-01-01",
+      "nextStart": "0000-01-02T00:00:00Z",
+      "hoursInDay": 24
+    },
+    {
+      "date": "0000-02-29",
+      "zone": "UTC",
+      "nativeSegments": [
+        {
+          "start": "0000-02-29T00:00:00.000Z",
+          "endExclusive": "0000-03-01T00:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "0000-02-29T00:00:00Z",
+      "actualDate": "0000-02-29",
+      "nextStart": "0000-03-01T00:00:00Z",
+      "hoursInDay": 24
+    },
+    {
+      "date": "0099-12-31",
+      "zone": "UTC",
+      "nativeSegments": [
+        {
+          "start": "0099-12-31T00:00:00.000Z",
+          "endExclusive": "0100-01-01T00:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "0099-12-31T00:00:00Z",
+      "actualDate": "0099-12-31",
+      "nextStart": "0100-01-01T00:00:00Z",
+      "hoursInDay": 24
+    },
+    {
+      "date": "9999-12-31",
+      "zone": "UTC",
+      "nativeSegments": [
+        {
+          "start": "9999-12-31T00:00:00.000Z",
+          "endExclusive": "+010000-01-01T00:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "9999-12-31T00:00:00Z",
+      "actualDate": "9999-12-31",
+      "nextStart": "+010000-01-01T00:00:00Z",
+      "hoursInDay": 24
+    }
+  ],
+  "errors": [],
+  "cleanup": {
+    "browserClosed": true,
+    "serverClosed": true
+  }
+}

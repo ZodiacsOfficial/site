@@ -1,0 +1,18 @@
+import fs from 'node:fs';import path from 'node:path';import{createHash}from'node:crypto';import{execFileSync,spawnSync}from'node:child_process';
+const work=path.dirname(new URL(import.meta.url).pathname),roots={site:'/Users/chiburashka/.codex/worktrees/4806/site',sdk:'/private/tmp/zodiacs-platform-sdk-seconds'},sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const files={site:[
+ 'src/lib/chart-date-certainty.ts','src/lib/chart-date-certainty.test.ts','src/lib/moon-certainty.ts','src/lib/moon-certainty.test.tsx',
+ 'src/islands/ChartCalculator.tsx','src/islands/ChartCalculator.registry-bridge.test.ts','src/islands/MoonPhaseTool.tsx','src/lib/engine/types.ts',
+ 'src/lib/i18n/ui/en.ts','src/lib/share.ts','src/lib/profile/schema.ts','src/lib/scene/build.ts',
+ 'src/lib/communication.ts','src/lib/approach.ts','src/lib/chart-signature.ts','src/lib/share-card.ts',
+ 'src/lib/daily.ts','src/lib/daily-publication.ts','src/pages/feeds/daily-sky.xml.ts','scripts/daily-feed-dates.test.ts','scripts/build-sky.mjs','scripts/build-sky-api.mjs',
+ ],sdk:['packages/engine/src/geo.ts','packages/engine/src/geo/timezone.ts','packages/engine/src/types.ts','packages/engine/src/receipt.ts','packages/engine/src/geo.test.ts','packages/engine/package.json']};
+const repositories={};
+for(const[kind,root]of Object.entries(roots)){
+ const head=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),status=execFileSync('git',['status','--short'],{cwd:root,encoding:'utf8'});
+ const rows=[];for(const file of files[kind]){const bytes=fs.readFileSync(path.join(root,file)),target=path.join(work,'source',kind,file);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,bytes);rows.push({file,sha256:sha(bytes),bytes:bytes.length});}
+ const args=['-n','localDateEndpointsUtc|LocalDateEndpoints|chart-date-certainty',...(kind==='site'?['src','scripts']:['packages/engine/src','packages/sdk/src'])];
+ const search=spawnSync('rg',args,{cwd:root,encoding:'utf8'});fs.writeFileSync(path.join(work,`${kind}-caller-search.log`),search.stdout+search.stderr);
+ repositories[kind]={root,head,status,files:rows,callerSearch:{args,status:search.status}};
+}
+const out={at:new Date().toISOString(),purpose:'Read-only current caller/source inventory; site working tree includes concurrent export/hydration work and is not a frozen new patch.',repositories};fs.writeFileSync(path.join(work,'identity.json'),JSON.stringify(out,null,2)+'\n');console.log(JSON.stringify(Object.fromEntries(Object.entries(repositories).map(([kind,r])=>[kind,{head:r.head,files:r.files.length,callerSearchStatus:r.callerSearch.status}]))));

@@ -1,0 +1,87 @@
+{
+  "at": "2026-09-08T06:42:19.809Z",
+  "node": "v22.23.2",
+  "qualification": "Synthetic piecewise-constant offset functions, not actual IANA discoveries. Demonstrates the completeness assumption that a bounded equal-endpoint sample cannot verify; all offsets remain within fourteen hours.",
+  "rows": [
+    {
+      "name": "ordinary",
+      "initial": 0,
+      "transitions": [],
+      "discovered": [],
+      "exact": [
+        {
+          "start": 0,
+          "endExclusive": 86400000
+        }
+      ],
+      "sampled": [
+        {
+          "start": 0,
+          "endExclusive": 86400000
+        }
+      ],
+      "matches": true
+    },
+    {
+      "name": "hidden earlier date segment",
+      "initial": 0,
+      "transitions": [
+        [
+          -3540000,
+          3600000
+        ],
+        [
+          -3480000,
+          0
+        ]
+      ],
+      "discovered": [],
+      "exact": [
+        {
+          "start": -3540000,
+          "endExclusive": -3480000
+        },
+        {
+          "start": 0,
+          "endExclusive": 86400000
+        }
+      ],
+      "sampled": [
+        {
+          "start": 0,
+          "endExclusive": 86400000
+        }
+      ],
+      "matches": false
+    },
+    {
+      "name": "hidden existing minute in otherwise skipped date",
+      "initial": -36000000,
+      "transitions": [
+        [
+          36000000,
+          50400000
+        ],
+        [
+          36060000,
+          -36000000
+        ],
+        [
+          36120000,
+          50400000
+        ]
+      ],
+      "discovered": [
+        36000000
+      ],
+      "exact": [
+        {
+          "start": 36060000,
+          "endExclusive": 36120000
+        }
+      ],
+      "sampled": [],
+      "matches": false
+    }
+  ]
+}

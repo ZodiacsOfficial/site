@@ -1,0 +1,202 @@
+{
+  "at": "2026-09-08T06:39:48.464Z",
+  "allMatch": true,
+  "files": [
+    {
+      "repository": "site",
+      "file": "src/lib/chart-date-certainty.ts",
+      "readHash": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+      "currentHash": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/chart-date-certainty.test.ts",
+      "readHash": "7590c81f6bb500781b08188aedb697ced862ea111abd315737cb032abbdfc0ee",
+      "currentHash": "7590c81f6bb500781b08188aedb697ced862ea111abd315737cb032abbdfc0ee",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/moon-certainty.ts",
+      "readHash": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994",
+      "currentHash": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/moon-certainty.test.tsx",
+      "readHash": "e509607fc389f8175b9113cd8354eb43a66781a870c0cbb411ab58e02e8e3880",
+      "currentHash": "e509607fc389f8175b9113cd8354eb43a66781a870c0cbb411ab58e02e8e3880",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/islands/ChartCalculator.tsx",
+      "readHash": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+      "currentHash": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/islands/ChartCalculator.registry-bridge.test.ts",
+      "readHash": "bfa21bc246699afd63ad6cc85035aff173754f638a30029579a2ebd78e2734e0",
+      "currentHash": "bfa21bc246699afd63ad6cc85035aff173754f638a30029579a2ebd78e2734e0",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/islands/MoonPhaseTool.tsx",
+      "readHash": "37ecef482f628f7ffa189c82584a249367e7d3876e713a776b3e23941925c6c8",
+      "currentHash": "37ecef482f628f7ffa189c82584a249367e7d3876e713a776b3e23941925c6c8",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/engine/types.ts",
+      "readHash": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "currentHash": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/i18n/ui/en.ts",
+      "readHash": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890",
+      "currentHash": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/share.ts",
+      "readHash": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436",
+      "currentHash": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/profile/schema.ts",
+      "readHash": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789",
+      "currentHash": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/scene/build.ts",
+      "readHash": "4bb4a00bb68ec02b01e34ef44662c61665132a8ec7a74cb49684a19a25a56b54",
+      "currentHash": "4bb4a00bb68ec02b01e34ef44662c61665132a8ec7a74cb49684a19a25a56b54",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/communication.ts",
+      "readHash": "d6aa9a7a56139ebe96e1250a405ed12fa32db8113380eb02cef3ca6175752f64",
+      "currentHash": "d6aa9a7a56139ebe96e1250a405ed12fa32db8113380eb02cef3ca6175752f64",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/approach.ts",
+      "readHash": "9ac2cb9d6ab26d350a96e0b2b8d4dcbc97ebd4b521cbe445502399ad9da05e22",
+      "currentHash": "9ac2cb9d6ab26d350a96e0b2b8d4dcbc97ebd4b521cbe445502399ad9da05e22",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/chart-signature.ts",
+      "readHash": "0e0a9c7bb95e130dba02a92582a753e4bdd34ae60ee25cb2e7d41073a027941c",
+      "currentHash": "0e0a9c7bb95e130dba02a92582a753e4bdd34ae60ee25cb2e7d41073a027941c",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/share-card.ts",
+      "readHash": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+      "currentHash": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/daily.ts",
+      "readHash": "e3ee76fa21f2226254a6d86e31bcb955cf421d7182d8d2da3fe48c617280dced",
+      "currentHash": "e3ee76fa21f2226254a6d86e31bcb955cf421d7182d8d2da3fe48c617280dced",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/lib/daily-publication.ts",
+      "readHash": "2bfe704934ec53d45b015fb9cc4184bb11821b8ea34388aa6b765eb56b1266c4",
+      "currentHash": "2bfe704934ec53d45b015fb9cc4184bb11821b8ea34388aa6b765eb56b1266c4",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "src/pages/feeds/daily-sky.xml.ts",
+      "readHash": "d1f59ee78d01bca306ff13a151cd343c8a07a59c6f00f2b12784d42fb29349f1",
+      "currentHash": "d1f59ee78d01bca306ff13a151cd343c8a07a59c6f00f2b12784d42fb29349f1",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "scripts/daily-feed-dates.test.ts",
+      "readHash": "f0c1023af71b5f5b9cef0c1c96c354b3d81cc18b29745da44a89df6135eb48f7",
+      "currentHash": "f0c1023af71b5f5b9cef0c1c96c354b3d81cc18b29745da44a89df6135eb48f7",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "scripts/build-sky.mjs",
+      "readHash": "b1548b8d736b17a7646ab33aaf62bddb76320d299485c1b6b0a2d77cbc794ffd",
+      "currentHash": "b1548b8d736b17a7646ab33aaf62bddb76320d299485c1b6b0a2d77cbc794ffd",
+      "matches": true
+    },
+    {
+      "repository": "site",
+      "file": "scripts/build-sky-api.mjs",
+      "readHash": "e8bc8a02eecf7316409de8bdfa47bd2281e8eba1aa89e4730027a9c52bae4544",
+      "currentHash": "e8bc8a02eecf7316409de8bdfa47bd2281e8eba1aa89e4730027a9c52bae4544",
+      "matches": true
+    },
+    {
+      "repository": "sdk",
+      "file": "packages/engine/src/geo.ts",
+      "readHash": "bb8e3e0497b2180b6c20954807d56206fe90d208760d730125493eef22464687",
+      "currentHash": "bb8e3e0497b2180b6c20954807d56206fe90d208760d730125493eef22464687",
+      "matches": true
+    },
+    {
+      "repository": "sdk",
+      "file": "packages/engine/src/geo/timezone.ts",
+      "readHash": "11f7370996a00fff9e1315be4c2fcdbe4641b1b41482e760e3a436995ec04494",
+      "currentHash": "11f7370996a00fff9e1315be4c2fcdbe4641b1b41482e760e3a436995ec04494",
+      "matches": true
+    },
+    {
+      "repository": "sdk",
+      "file": "packages/engine/src/types.ts",
+      "readHash": "b56e35fb04903af94fbd0bbb98e4e8d99c298646ef68ddcefca12672d7397a3e",
+      "currentHash": "b56e35fb04903af94fbd0bbb98e4e8d99c298646ef68ddcefca12672d7397a3e",
+      "matches": true
+    },
+    {
+      "repository": "sdk",
+      "file": "packages/engine/src/receipt.ts",
+      "readHash": "6a2513769934da7b72ab2e07c66df2d48e49fe2d8a8b54b737c2424d301778d8",
+      "currentHash": "6a2513769934da7b72ab2e07c66df2d48e49fe2d8a8b54b737c2424d301778d8",
+      "matches": true
+    },
+    {
+      "repository": "sdk",
+      "file": "packages/engine/src/geo.test.ts",
+      "readHash": "68f03a699351526509f9262a6976cc53cd5482447a1219e90eed052c77e8bbce",
+      "currentHash": "68f03a699351526509f9262a6976cc53cd5482447a1219e90eed052c77e8bbce",
+      "matches": true
+    },
+    {
+      "repository": "sdk",
+      "file": "packages/engine/package.json",
+      "readHash": "b9318c0a5afca031f3a823c6f5001337949ab15b9fbc63f7caa0ea10df02fddc",
+      "currentHash": "b9318c0a5afca031f3a823c6f5001337949ab15b9fbc63f7caa0ea10df02fddc",
+      "matches": true
+    }
+  ]
+}

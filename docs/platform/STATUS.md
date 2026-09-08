@@ -12,9 +12,23 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Integrated candidate — local calculation receipt download
+## Current integration — exact rc.6 site precision adoption
 
-Branch `codex/platform-receipt-export` starts independently from #425's
+The next isolated branch `codex/platform-engine-rc6` starts from #427 source
+`804c70309d2508e67e8462df526b5f9e71a112e9`. Its evidence carrier contains actual
+Node 22/24 artifact/site parity and independent public-consumer/declaration
+checks. Site runtime code is still rc.5 at this evidence-only checkpoint.
+The frozen eight-file adoption and separate two-file #427 receipt companion
+will be integrated after the real evidence commit exists. Three coordinated
+metadata/provenance files will then reference that immutable carrier.
+The independent source review remains in progress. No placeholder is a real
+release or evidence identity. Existing date-endpoint semantics are unchanged.
+
+## Delivered candidate — local calculation receipt download
+
+Draft [#427](https://github.com/ZodiacsOfficial/site/pull/427), source
+`804c70309d2508e67e8462df526b5f9e71a112e9`, is delivered on
+`codex/platform-receipt-export`, independently based on #425's
 `c761a49c55d125bca48ff38d81b0a9ff6fd5adcf`. It adds an explicit JSON download in
 the existing full-chart More actions disclosure, with sensitive-file wording in
 all six locales. The immutable bytes come from the same calculation, and input,
@@ -39,7 +53,12 @@ warnings, 11 hints), all 18 captures byte-identical to #425, exact-base scope,
 and the existing Russian browser drive. The three existing macOS chart baseline
 dimension failures recur; all three output hashes match #425 acceptance and all
 score zero against the preceding rc.5 control at the unchanged threshold. No
-baseline was updated. Draft delivery, exact-source CI and preview are next.
+baseline was updated. All 621 actual draft paths match the local diff: 19 implementation/test/scope
+paths plus the capture manifest and durable evidence. Exact-source Site Check
+run 34195946291 has 13 passing jobs and its final Build & Check in progress.
+Exact-source preview `dpl_CdGmdz6nP8HhCm4TX8WQ7epja2JH` is READY and passes all
+12 real receipt-download groups in six locales. Temporary preview access was
+removed after isolated contexts closed. No production release is claimed.
 
 Byte-verified raw evidence and original failures are retained under
 [receipt-export](evidence/receipt-export/). #426 remains separately delivered;
