@@ -15,9 +15,11 @@ reviewable verification release is separate from the SDK publication hold.
 ## Current implementation — unknown-time chart confidence
 
 Root's `codex/platform-reference-confidence` branch starts at delivered C-014
-source `f803d2543ad81343b22d49326b8b46d0e2ea03a0`. C-015 implementation is
-underway in an isolated author checkout; root product files still match that
-delivered source. Two executed historical counterexamples show that endpoint
+source `f803d2543ad81343b22d49326b8b46d0e2ea03a0`. Root has verified and applied
+the exact 16-file C-015 Freeze2 candidate for local acceptance. Independent
+consumer and preservation reviews accept the exact source, and root local gates
+pass. This candidate is ready for isolated draft delivery, with hosted and human
+review gates still separate. Two executed historical counterexamples show that endpoint
 samples can miss actual Moon signs within the selected date. The accepted policy
 preserves the admitted reference chart, numerical values and portable receipt,
 withholds verified unknown-time Moon candidates, and conservatively disables the
@@ -30,6 +32,33 @@ position has been demonstrated. Reference Sun in downstream context, exact-noon
 captions, Chart's Moon-mode phase wording and MoonPhaseTool's date-wide claims
 remain explicit follow-ups. No engine/provider/schema or canonical Registry
 change is part of this slice. Human review and publication holds remain separate.
+
+Freeze identity: `54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c`;
+patch: `b13527901ee962d462b0ddd2bdbc16f82763ffa8ad7486d797358b46f76fd0a4`.
+Author passes 93 focused controls on each Node22/24, 20 native groups, the existing
+35 date and17 chart groups, sharing, build/check and strict types. A provisional
+test comparator was corrected to compare each legacy/portable path's own exact
+serialization order; product bytes did not change. Two linked-package scratch
+suite failures reproduce on baseline and pass67 affected controls after copying
+the existing package byte-for-byte. The candidate's stale capture fingerprint
+requires fresh root captures; it is not accepted as a baseline exception.
+
+Root now passes normal build/check (1,045 files; zero errors/warnings,11 hints),
+all5,040 tests in418 files,20 native confidence groups,35 date cases,17 chart
+ownership cases and actual sharing. All18 fresh approved captures are
+byte-identical tof803d254; the new source receipt resolves the stale fingerprint.
+Twelve actual localized page groups pass across two executions: ten initially,
+then two English groups after scoping the hero-card assertion to its container.
+The original selector also counted the existing English reading-path marker;
+original failures and source proof remain. Product source is unchanged.
+Each accepted group includes unknown-time notice/withheld link, skipped-date
+refusal/recovery and known-time positive controls. The separately reviewed
+two-file CI/scope patch is applied; root exact-base guard passes. Independent
+preservation passes19 native controls with15 numerical/12 envelope comparisons;
+consumer review passes four unknown/two known controls on Node22/24,32 identical
+consumer-render artifacts,24 source/artifact and eight signature/context checks.
+All six420-key catalogs receive scoped semantic review. No human language or
+practitioner certification is implied. [Review records](evidence/reference-confidence/README.md).
 
 ## Delivered candidate — unknown-time local-date reference
 
@@ -63,9 +92,9 @@ is delivered at `f803d2543ad81343b22d49326b8b46d0e2ea03a0`, above #434's
 16 source/test/metadata paths. Its exact-source READY preview passes ten actual
 remote groups, including real Apia refusal/recovery in English and Russian at
 both widths, known-time controls, local receipts and public positions. Existing
-Moon phase copy is explicitly outside that acceptance. Site Check 34220407271
-has thirteen successful jobs with Build & Check running at the latest recorded
-read. [Preview evidence](evidence/local-date-reference/preview/REVIEW.md) and the
+Moon phase copy is explicitly outside that acceptance. Site Check34220407271
+is complete with all14 jobs successful at that exact source.
+[Preview evidence](evidence/local-date-reference/preview/REVIEW.md) and the
 [normal-page audit](evidence/local-date-reference/normal-page-audit/REVIEW.md)
 retain source, request and credential-cleanup limits. Publication is not implied.
 

@@ -1,0 +1,24 @@
+[
+  {
+    "path": "src/islands/ChartCalculator.tsx",
+    "baseSha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263",
+    "candidateSha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475",
+    "baseMarkerLines": [
+      "                  <div class=\"three-card shell\" key={kind} data-moon-uncertain>"
+    ],
+    "candidateMarkerLines": [
+      "                  <div class=\"three-card shell\" key={kind} data-moon-uncertain>"
+    ]
+  },
+  {
+    "path": "src/islands/explorer/ReadingPath.tsx",
+    "baseSha256": "ff8f28366bba3c617b91b34c47c3357f29d8272c232a3d70bc8668feab200559",
+    "candidateSha256": "ff8f28366bba3c617b91b34c47c3357f29d8272c232a3d70bc8668feab200559",
+    "baseMarkerLines": [
+      "      <li class=\"reading-path__big-tile reading-path__big-tile--missing\" data-moon-uncertain>"
+    ],
+    "candidateMarkerLines": [
+      "      <li class=\"reading-path__big-tile reading-path__big-tile--missing\" data-moon-uncertain>"
+    ]
+  }
+]

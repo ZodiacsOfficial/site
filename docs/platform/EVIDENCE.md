@@ -2419,3 +2419,109 @@ tolerance or cross-path bit-equality assertion. Root verifies nine records and97
 ordinary compressed members under manifest
 `6931df177a16619b141b831ac3535cd22401a1632ca456290a17398eca6a77d6`;
 source manifest is`8c8ad6a933a5774494286c54341fecccf6f1cfaffdb49e4a3d18a4b0f161a309`.
+
+## C-015 frozen implementation and root local acceptance — 2026-09-08
+
+[Author Freeze2](evidence/reference-confidence/author-freeze2/REVIEW.md.log)
+contains16 source/test files overf803d254. Identity
+`54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c`
+and patch`b13527901ee962d462b0ddd2bdbc16f82763ffa8ad7486d797358b46f76fd0a4`
+are verified on root. Product scope is Chart confidence, six one-key catalog
+additions and endpoint-helper comments; eight tests/drivers retain the changed
+confidence and unchanged numerical/ownership contracts. Author93focused controls
+pass on each Node22/24,20native,35date,17ownership,sharing,build/check and strict
+types pass. The final author suite has5039pass and one stale capture-fingerprint
+failure. Original path/setup/selector/count/comparator failures are retained.
+The same-byte eight-file dependency copy resolves the two scratch module errors
+reproduced on baseline; all67 previously blocked numerical controls then execute.
+
+Root copy manifest`1f14d99624f3e94a6e104fab03b51bd5d434f2376cafddf95bafa8034985958e`
+contains nine records and individually verifies all148 ordinary content-addressed
+archive members and303 losslessly mapped original records. Source delivery
+manifest: `8850dc1120eac72d8ac953bbbda4bc87bc0f3675c7a88572b7d435a2396b1c99`.
+Early native driver identity fields read after subsequent edits are explicitly
+superseded by retained execution snapshot mappings; the final driver is unchanged
+during its accepted run. No original failure is relabeled a pass.
+
+[Independent preservation](evidence/reference-confidence/preservation-review/REVIEW.md)
+accepts19 actual component/native controls,15 exact numerical comparisons and12
+immutable envelope comparisons. Native Blob receipt and stable fields of actual
+local saves match baseline. A captured save writes the original chart once after
+an edit while old UI stays cleared; a profile-boundary revoke before loading
+suppresses primary work. Forty-two functions, two run spans and all other Chart
+bytes reconstruct exactly after the named confidence delta; executable endpoint
+helper AST is unchanged. Its fixture graph removes only that helper and adds no
+input. These controlled cases are not actual backend or production-page evidence.
+Root manifest`cdbb5cb2dcf721f6522ce1343f35b60aeb8396dbaf9b2b90dfdedd381daa4ed5`
+contains13 records and285 individually verified ordinary members, from source
+manifest`7074f314f7dc0bde290926233d1a603c7ba2083260d13e36a18b72cae88be6ef`.
+Child consumer/counterexample acceptance remains separate and pending here.
+
+The [metadata proposal](evidence/reference-confidence/metadata-proposal-review/REVIEW.md)
+and [frozen compatibility supplement](evidence/reference-confidence/metadata-review/REVIEW.md)
+accept precisely the four-line CI step and exact-base eight-path allowance.
+Ten direct guard controls include old-base and missing/extra-path rejection;
+the actual unchanged CLI passes18changed/8protected in the independent checkout.
+Node22 parses the frozen driver; existing setup/browser/artifact/permission/pin
+wiring remains unchanged. Runtime failures produce their result record; early
+setup failures may leave only partial artifacts and job logs. Root manifests
+are`57b990fa4590a1aa480056d1075d5a7e5c10c979d6ed68a2b09b878cd6510c5f`
+(21records) and`9d47126aa388f49a31dbb5511b02173a7835e44685dbfad40bc5358d1e7eb21f`
+(18records). Accepted patch`408d373d7221f7b8caf796a0e67e6ee7f458fcab0ca5ceac628b3a71dbfbb2a4`
+is applied and root exact-base scope passes. No broad protected-scope exemption.
+
+[Root local acceptance](evidence/reference-confidence/root-integration/README.md)
+passes build/check (1045files,zero errors/warnings,11hints),5040tests/418files,
+20native confidence,35date,17chart ownership and actual sharing. All18 fresh
+approved captures are byte-identical tof803d254. Source receipt
+`50d93d27c1409e48300103ba6608a24b7e5dd630debc5c8a66826420a6a73b26`
+closes the stale fingerprint; no root dependency change or exception is needed.
+The default native run omits the optional baseline directory; baseline equality
+claims remain attached to their separate author/independent executions.
+
+Twelve actual localized chart-page groups pass from ten initial plus two affected
+English reruns. The original broad marker count also included the unchanged
+English ReadingPath; scoping only the hero count fixes the harness. No product
+source changes. Each accepted group covers unknown-time notice/withheld link,
+real-city Apia refusal/recovery and known-time positive; all109 distinct served
+build files match archived bytes. Root inspects the Russian phone recovery image.
+No saved profile, non-GET, unhandled/unexpected console error or overflow is
+observed; one expected sanitized refusal diagnostic per case remains. Original
+fourteen executed cases and failed screenshots are preserved. Root manifest
+`bfd3a7ec0e212060b5a7ac25e22d19552625a165f7a7b9f18ea97a2cf0feaa34`
+contains20 records and248 ordinary objects preserving265 original records.
+
+The [C-014 final CI snapshot](evidence/local-date-reference/ci-final/ci.json)
+supersedes its pending statement: all14 jobs in34220407271 pass at exactf803d254.
+Manifest:`40dcdafdbea98e52c7763804ee3ec84783990797fa30f0737c1a98e17fee11f7`.
+The existing #435 description is updated without a source push, merge or deploy.
+
+[Release-start refresh](evidence/reference-confidence/release-start/manifest.json),
+five records under`254ceccdeeb2ee21147138fb30c8615f159c8fbbcffb07fbac0f392a784f2710`,
+finds site main3d769698d387a7fbdbb5d57935b75cb7431d58ee and READY production
+dpl_ABQQ4PctrxuPN6R9eyTDFuMf6YRg at that Registry-archive commit. Root remains on
+the reviewed stack rather than overwriting those concurrent records. SDK main
+remainsb49e0f14; SDK#5 stays draft atcced0116 with explicit no-merge/no-publish hold.
+Astrofolio#416 remains draftb17d6804 with36actual paths, inspected and isolated;
+its shared integration patches remain unapplied. The Vercel durable projection
+keeps release identity fields and omits unnecessary creator/account metadata.
+No C-015 draft, preview, hosted CI, publication, deployment or adoption yet follows.
+
+The subsequent [frozen consumer review](evidence/reference-confidence/consumer-review/REVIEW.md)
+accepts its separate scope. Its exact AST-bounded confidence span passes four
+unknown-time and two known-time controls on Node22/24, with32 distinct actual
+Inspector/share-dialog/ReadingPath/positions HTML artifacts identical across
+runtimes. Twenty-four source/artifact checks and eight signature/context checks
+pass, with all six420-key catalogs checked for the one added unverified sentence.
+This advances from an in-memory policy model to the actual frozen branch and
+actual server-rendered consumers. The body/projection comparisons do not claim
+persistence, full component DOM or a full-date/ephemeris oracle. Baseline positive
+Moon readings make the removal checks meaningful. Qualified scratch compilation
+warnings are retained separately from root's successful full build/check.
+
+Root verifies all197 source records with inert code copies; the199-record root
+manifest is`46495f35edd85a782576d73b73dc971be890f3b5ce35f577089da755c799e7be`,
+source manifest`a1cd83f207c7490037a3078038a0b21191b548e18648edd01433bdd667b88d1e`.
+This completes the consumer review left pending in the earlier sealed reports.
+Exact C-015 source is now accepted for isolated draft delivery, with hosted,
+human-review, publication, deployment and adoption states still separate.

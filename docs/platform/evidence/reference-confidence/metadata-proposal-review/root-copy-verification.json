@@ -1,0 +1,84 @@
+{
+  "sourceManifestSha256": "080428efe9a44799ae76219a84fb138a6f21bf42260022da22cf0b4a52910e88",
+  "verifiedRecords": 19,
+  "verifiedOrdinaryMembers": null,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "after/.github/phase1-scope-allowance.json",
+      "path": "after/.github/phase1-scope-allowance.json"
+    },
+    {
+      "sourcePath": "after/.github/workflows/site-check.yml",
+      "path": "after/.github/workflows/site-check.yml"
+    },
+    {
+      "sourcePath": "apply-fixture/.github/phase1-scope-allowance.json",
+      "path": "apply-fixture/.github/phase1-scope-allowance.json"
+    },
+    {
+      "sourcePath": "apply-fixture/.github/workflows/site-check.yml",
+      "path": "apply-fixture/.github/workflows/site-check.yml"
+    },
+    {
+      "sourcePath": "before/.github/phase1-scope-allowance.json",
+      "path": "before/.github/phase1-scope-allowance.json"
+    },
+    {
+      "sourcePath": "before/.github/workflows/site-check.yml",
+      "path": "before/.github/workflows/site-check.yml"
+    },
+    {
+      "sourcePath": "browser-helper.mjs",
+      "path": "browser-helper.mjs.log"
+    },
+    {
+      "sourcePath": "guard-probe.log",
+      "path": "guard-probe.log"
+    },
+    {
+      "sourcePath": "guard-probe.mjs",
+      "path": "guard-probe.mjs.log"
+    },
+    {
+      "sourcePath": "guard-result.json",
+      "path": "guard-result.json"
+    },
+    {
+      "sourcePath": "integration.patch",
+      "path": "integration.patch"
+    },
+    {
+      "sourcePath": "patch-apply.log",
+      "path": "patch-apply.log"
+    },
+    {
+      "sourcePath": "patch-check.log",
+      "path": "patch-check.log"
+    },
+    {
+      "sourcePath": "review.py",
+      "path": "review.py.log"
+    },
+    {
+      "sourcePath": "source-identity.json",
+      "path": "source-identity.json"
+    },
+    {
+      "sourcePath": "source-review-result.json",
+      "path": "source-review-result.json"
+    },
+    {
+      "sourcePath": "source-review.log",
+      "path": "source-review.log"
+    },
+    {
+      "sourcePath": "unchanged-scope-guard.mjs",
+      "path": "unchanged-scope-guard.mjs.log"
+    }
+  ]
+}

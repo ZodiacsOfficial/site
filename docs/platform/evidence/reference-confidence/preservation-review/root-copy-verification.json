@@ -1,0 +1,52 @@
+{
+  "sourceManifestSha256": "7074f314f7dc0bde290926233d1a603c7ba2083260d13e36a18b72cae88be6ef",
+  "verifiedRecords": 11,
+  "verifiedOrdinaryMembers": 285,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "BASELINE.md",
+      "path": "BASELINE.md"
+    },
+    {
+      "sourcePath": "COMMANDS.md",
+      "path": "COMMANDS.md"
+    },
+    {
+      "sourcePath": "PREPARATION.md",
+      "path": "PREPARATION.md"
+    },
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "base-source.json",
+      "path": "base-source.json"
+    },
+    {
+      "sourcePath": "final-verification.json",
+      "path": "final-verification.json"
+    },
+    {
+      "sourcePath": "freeze.json",
+      "path": "freeze.json"
+    },
+    {
+      "sourcePath": "parity.json",
+      "path": "parity.json"
+    },
+    {
+      "sourcePath": "raw-evidence.tar.gz",
+      "path": "raw-evidence.tar.gz"
+    },
+    {
+      "sourcePath": "raw-manifest.json",
+      "path": "raw-manifest.json"
+    },
+    {
+      "sourcePath": "source-review.json",
+      "path": "source-review.json"
+    }
+  ]
+}

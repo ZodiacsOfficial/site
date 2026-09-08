@@ -206,3 +206,23 @@ divide actual counterexamples/consumer propagation from numerical/receipt/save
 preservation. No false Sun example, complete date theorem, Moon-tool fix or human
 practitioner/legal signoff is claimed. Actual immutable source review and root
 integration acceptance remain required.
+
+C-015's [main preservation review](evidence/reference-confidence/preservation-review/REVIEW.md)
+now accepts19 native controls and exact numerical/envelope/download/save parity.
+Its [metadata compatibility](evidence/reference-confidence/metadata-review/REVIEW.md)
+separately accepts the frozen driver and exact-base eight-path allowance. Root
+local gates pass5040tests/418files,build/check,20confidence/35date/17chart cases,
+sharing,12 localized page groups and18 unchanged captures. Original two English
+marker-selector failures are retained; only the harness was corrected. The
+frozen consumer/counterexample review is still pending at this checkpoint and
+is not implied by either accepted scope. C-014 meanwhile completes all14 hosted
+CI jobs. No human review, publication or production authority is conferred.
+
+The subsequent [consumer acceptance](evidence/reference-confidence/consumer-review/REVIEW.md)
+closes that pending scope: four unknown/two known controls execute the exact
+frozen confidence span on Node22/24;32 actual consumer-render artifacts match
+across runtimes;24 source/artifact and eight signature/context checks pass.
+Six catalogs each retain420 keys and change only the new unverified notice.
+Original setup warnings and finite/source-versus-browser limits remain explicit.
+Root accepts the exact candidate for isolated draft delivery; no publication,
+production, human numerical/legal signoff or external adoption is implied.

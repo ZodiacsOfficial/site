@@ -1,0 +1,188 @@
+{
+  "originalRun": {
+    "executed": 12,
+    "passed": 10,
+    "failed": 2
+  },
+  "affectedEnglishRerun": {
+    "executed": 2,
+    "passed": 2,
+    "failed": 0
+  },
+  "acceptedGroups": 12,
+  "knownTimePositiveGroups": 12,
+  "sourceChangedForCorrection": false,
+  "correction": "Limit the uncertainty hero-card count to .calc__three; retain the separate English reading-path marker.",
+  "accepted": [
+    {
+      "name": "es-chart-1280",
+      "unknownNotice": [
+        "Sin hora de nacimiento usamos las 12:00 del tiempo civil local como referencia y omitimos ascendente, ángulos y casas. No se han verificado los posibles signos de la Luna a lo largo de esta fecha de nacimiento. Añade una hora de nacimiento para obtener un resultado de ese momento."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "es-chart-390",
+      "unknownNotice": [
+        "Sin hora de nacimiento usamos las 12:00 del tiempo civil local como referencia y omitimos ascendente, ángulos y casas. No se han verificado los posibles signos de la Luna a lo largo de esta fecha de nacimiento. Añade una hora de nacimiento para obtener un resultado de ese momento."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "fr-chart-1280",
+      "unknownNotice": [
+        "Sans heure de naissance, nous utilisons 12 h en heure civile locale comme référence et omettons l’ascendant, les angles et les maisons. Les signes possibles de la Lune au cours de cette date de naissance ne sont pas vérifiés. Ajoute une heure de naissance pour obtenir un résultat à ce moment précis."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "fr-chart-390",
+      "unknownNotice": [
+        "Sans heure de naissance, nous utilisons 12 h en heure civile locale comme référence et omettons l’ascendant, les angles et les maisons. Les signes possibles de la Lune au cours de cette date de naissance ne sont pas vérifiés. Ajoute une heure de naissance pour obtenir un résultat à ce moment précis."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "it-chart-1280",
+      "unknownNotice": [
+        "Senza un’ora di nascita usiamo le 12:00 dell’ora civile locale come riferimento e omettiamo ascendente, angoli e case. I possibili segni della Luna nell’arco di questa data di nascita non sono verificati. Aggiungi un’ora di nascita per ottenere un risultato relativo a quel momento."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "it-chart-390",
+      "unknownNotice": [
+        "Senza un’ora di nascita usiamo le 12:00 dell’ora civile locale come riferimento e omettiamo ascendente, angoli e case. I possibili segni della Luna nell’arco di questa data di nascita non sono verificati. Aggiungi un’ora di nascita per ottenere un risultato relativo a quel momento."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "pt-chart-1280",
+      "unknownNotice": [
+        "Sem a hora de nascimento, usamos 12:00 no horário civil local como referência e omitimos ascendente, ângulos e casas. Os possíveis signos da Lua ao longo desta data de nascimento não foram verificados. Adicione uma hora de nascimento para obter um resultado daquele momento."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "pt-chart-390",
+      "unknownNotice": [
+        "Sem a hora de nascimento, usamos 12:00 no horário civil local como referência e omitimos ascendente, ângulos e casas. Os possíveis signos da Lua ao longo desta data de nascimento não foram verificados. Adicione uma hora de nascimento para obter um resultado daquele momento."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "ru-chart-1280",
+      "unknownNotice": [
+        "Без времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома. Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "ru-chart-390",
+      "unknownNotice": [
+        "Без времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома. Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 121,
+      "blocked": []
+    },
+    {
+      "name": "en-chart-1280",
+      "unknownNotice": [
+        "Without a birth time we use 12:00 local civil time as a reference and omit the rising sign, angles, and houses. The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 147,
+      "blocked": []
+    },
+    {
+      "name": "en-chart-390",
+      "unknownNotice": [
+        "Without a birth time we use 12:00 local civil time as a reference and omit the rising sign, angles, and houses. The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment."
+      ],
+      "unknownRegistry": 0,
+      "knownRegistry": 1,
+      "refusalFocused": true,
+      "noSavedProfile": true,
+      "expectedRefusalDiagnostics": 1,
+      "pageErrors": 0,
+      "requests": 146,
+      "blocked": []
+    }
+  ],
+  "verifiedDistinctServedFiles": 109,
+  "qualification": "Actual normal feature-off pages; no numerical call counting, real account/backend claims, Moon-tool acceptance or independent astronomical oracle."
+}

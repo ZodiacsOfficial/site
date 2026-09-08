@@ -1,0 +1,47 @@
+[
+  {
+    "path": "COMMANDS.md.log",
+    "bytes": 4888,
+    "sha256": "c30eb260e8d751007778ab56fbe649140e2484c6d2eedc57206330ff03877fd9"
+  },
+  {
+    "path": "REVIEW.md.log",
+    "bytes": 8396,
+    "sha256": "1ecf50bff54d4913ac31570ffc7b75f8aa30831dd63030f015fe1d8ca309793b"
+  },
+  {
+    "path": "freeze2-identity.json.log",
+    "bytes": 2832,
+    "sha256": "54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c"
+  },
+  {
+    "path": "freeze2.patch.log",
+    "bytes": 56603,
+    "sha256": "b13527901ee962d462b0ddd2bdbc16f82763ffa8ad7486d797358b46f76fd0a4"
+  },
+  {
+    "path": "native-summary.json.log",
+    "bytes": 3518,
+    "sha256": "2b8d46a35ec629972cdff96e5703715d3cfc4d2516c095e6eeb685f3dcd28a88"
+  },
+  {
+    "path": "raw-evidence.tar.gz",
+    "bytes": 14417788,
+    "sha256": "95aae09e9178a1e9d11835307165e9c8415c65eb9741fd6771296b13203d3269"
+  },
+  {
+    "path": "raw-members.json",
+    "bytes": 86798,
+    "sha256": "26828e16ddb7b03c69dfbd033dc7178734aa193158b773fde37d10c6236d65fb"
+  },
+  {
+    "path": "root-copy-verification.json",
+    "bytes": 221,
+    "sha256": "61170a761d9528f15dfa6425d6013c27868ebac93a126ce108ef2c9424bce141"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 1358,
+    "sha256": "8850dc1120eac72d8ac953bbbda4bc87bc0f3675c7a88572b7d435a2396b1c99"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "name": "@zodiacs/engine",
+    "version": "0.1.1-rc.6",
+    "sha256": "b9318c0a5afca031f3a823c6f5001337949ab15b9fbc63f7caa0ea10df02fddc"
+  },
+  {
+    "name": "astronomy-engine",
+    "version": "2.1.19",
+    "sha256": "d035702763839ae11f41600cf4b8210005672658dcb19cea4a09591078af4931"
+  },
+  {
+    "name": "preact",
+    "version": "10.29.4",
+    "sha256": "254cbdc1abf6212ff98140436bb55c387f108e8d4c8a16ede433882a5e43c6ff"
+  },
+  {
+    "name": "preact-render-to-string",
+    "version": "6.7.0",
+    "sha256": "45e2865eeb384e38fb6b7a0563b8c744a9af2a7076240db62c5a0030929ba75f"
+  },
+  {
+    "name": "esbuild",
+    "version": "0.28.1",
+    "sha256": "d55d1d19fcc5b6079e4a71dd4111340c79c682bc36835ac7058a0c364c7db58a"
+  },
+  {
+    "name": "typescript",
+    "version": "5.9.3",
+    "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+  }
+]

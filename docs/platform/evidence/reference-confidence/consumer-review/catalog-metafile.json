@@ -1,0 +1,150 @@
+{
+  "inputs": {
+    "site/src/lib/i18n/ui/growth.ts": {
+      "bytes": 4309,
+      "imports": [],
+      "format": "esm"
+    },
+    "site/src/lib/i18n/ui/en.ts": {
+      "bytes": 22131,
+      "imports": [
+        {
+          "path": "site/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "site/src/lib/i18n/ui/es.ts": {
+      "bytes": 24192,
+      "imports": [
+        {
+          "path": "site/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "site/src/lib/i18n/ui/fr.ts": {
+      "bytes": 27888,
+      "imports": [
+        {
+          "path": "site/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "site/src/lib/i18n/ui/it.ts": {
+      "bytes": 26712,
+      "imports": [
+        {
+          "path": "site/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "site/src/lib/i18n/ui/pt.ts": {
+      "bytes": 25812,
+      "imports": [
+        {
+          "path": "site/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "site/src/lib/i18n/ui/ru.ts": {
+      "bytes": 38609,
+      "imports": [],
+      "format": "esm"
+    },
+    "catalog-probe.ts": {
+      "bytes": 645,
+      "imports": [
+        {
+          "path": "site/src/lib/i18n/ui/en.ts",
+          "kind": "import-statement",
+          "original": "./site/src/lib/i18n/ui/en"
+        },
+        {
+          "path": "site/src/lib/i18n/ui/es.ts",
+          "kind": "import-statement",
+          "original": "./site/src/lib/i18n/ui/es"
+        },
+        {
+          "path": "site/src/lib/i18n/ui/fr.ts",
+          "kind": "import-statement",
+          "original": "./site/src/lib/i18n/ui/fr"
+        },
+        {
+          "path": "site/src/lib/i18n/ui/it.ts",
+          "kind": "import-statement",
+          "original": "./site/src/lib/i18n/ui/it"
+        },
+        {
+          "path": "site/src/lib/i18n/ui/pt.ts",
+          "kind": "import-statement",
+          "original": "./site/src/lib/i18n/ui/pt"
+        },
+        {
+          "path": "site/src/lib/i18n/ui/ru.ts",
+          "kind": "import-statement",
+          "original": "./site/src/lib/i18n/ui/ru"
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "catalog-probe.cjs": {
+      "imports": [
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "catalog-probe.ts",
+      "inputs": {
+        "site/src/lib/i18n/ui/growth.ts": {
+          "bytesInOutput": 4281
+        },
+        "site/src/lib/i18n/ui/en.ts": {
+          "bytesInOutput": 21533
+        },
+        "site/src/lib/i18n/ui/es.ts": {
+          "bytesInOutput": 23991
+        },
+        "site/src/lib/i18n/ui/fr.ts": {
+          "bytesInOutput": 29513
+        },
+        "site/src/lib/i18n/ui/it.ts": {
+          "bytesInOutput": 26875
+        },
+        "site/src/lib/i18n/ui/pt.ts": {
+          "bytesInOutput": 26667
+        },
+        "site/src/lib/i18n/ui/ru.ts": {
+          "bytesInOutput": 88154
+        },
+        "catalog-probe.ts": {
+          "bytesInOutput": 534
+        }
+      },
+      "bytes": 222952
+    }
+  }
+}

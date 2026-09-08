@@ -1,0 +1,72 @@
+{
+  "sourceManifestSha256": "1b39d3b1f7db85966344c3938df1d82e26a2647dfc432d7cba764dbee6424b59",
+  "verifiedRecords": 16,
+  "verifiedOrdinaryMembers": null,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "actual-changed-paths.json",
+      "path": "actual-changed-paths.json"
+    },
+    {
+      "sourcePath": "actual-scope-cli.log",
+      "path": "actual-scope-cli.log"
+    },
+    {
+      "sourcePath": "assembled-identity.json",
+      "path": "assembled-identity.json"
+    },
+    {
+      "sourcePath": "driver-syntax-check.json",
+      "path": "driver-syntax-check.json"
+    },
+    {
+      "sourcePath": "freeze2-identity.json",
+      "path": "freeze2-identity.json"
+    },
+    {
+      "sourcePath": "metadata-identity.json",
+      "path": "metadata-identity.json"
+    },
+    {
+      "sourcePath": "metadata.patch",
+      "path": "metadata.patch"
+    },
+    {
+      "sourcePath": "source/.github/phase1-scope-allowance.json",
+      "path": "source/.github/phase1-scope-allowance.json"
+    },
+    {
+      "sourcePath": "source/.github/workflows/site-check.yml",
+      "path": "source/.github/workflows/site-check.yml"
+    },
+    {
+      "sourcePath": "source/package-lock.json",
+      "path": "source/package-lock.json"
+    },
+    {
+      "sourcePath": "source/package.json",
+      "path": "source/package.json"
+    },
+    {
+      "sourcePath": "source/scripts/phase1-scope-guard.mjs",
+      "path": "source/scripts/phase1-scope-guard.mjs.log"
+    },
+    {
+      "sourcePath": "source/tests/chart-reference-confidence-drive.mjs",
+      "path": "source/tests/chart-reference-confidence-drive.mjs.log"
+    },
+    {
+      "sourcePath": "source/tests/visual/browser.mjs",
+      "path": "source/tests/visual/browser.mjs.log"
+    },
+    {
+      "sourcePath": "source-identities.json",
+      "path": "source-identities.json"
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "comparedGroups": 17,
+  "actualNumericalByteComparisons": 15,
+  "actualEnvelopeByteComparisons": 12,
+  "savedContracts": 2,
+  "nativeBlobBytesEqual": true,
+  "rows": [
+    {
+      "name": "new-york-unknown",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "new-york-known",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": null,
+      "candidateCandidates": null
+    },
+    {
+      "name": "bangkok-leap-unknown",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "sagittarius",
+        "capricorn"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "paris-historical-seconds",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "capricorn"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "manaus-historical-unknown",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "apia-long-reference",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "libra",
+        "scorpio"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "north-pole-unknown",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "north-pole-known-legacy",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": false,
+      "portableEnvelopePresent": false,
+      "priorCandidates": null,
+      "candidateCandidates": null
+    },
+    {
+      "name": "signed-offset-legacy",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": false,
+      "portableEnvelopePresent": false,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "moon-mode-unknown",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": false,
+      "portableEnvelopePresent": false,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "actual-local-save-false",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidateCandidates": [],
+      "savedBirthSummaryReferenceSunEqual": true
+    },
+    {
+      "name": "actual-local-save-true",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": null,
+      "candidateCandidates": null,
+      "savedBirthSummaryReferenceSunEqual": true
+    },
+    {
+      "name": "receipt-native-download",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "capricorn"
+      ],
+      "candidateCandidates": [],
+      "nativeBlobDownloadEqual": true
+    },
+    {
+      "name": "replacement-during-receipt-loader",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces",
+        "aries"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "known-to-unknown-registry-clears",
+      "beforeAndNumericalBytesEqual": true,
+      "portableEnvelopeBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidateCandidates": []
+    },
+    {
+      "name": "skipped-refusal-stays-before-primary"
+    },
+    {
+      "name": "public-positions-no-confidence-run"
+    }
+  ]
+}
