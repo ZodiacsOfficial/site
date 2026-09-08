@@ -1,0 +1,662 @@
+diff --git a/src/islands/ChartCalculator.actions.test.ts b/src/islands/ChartCalculator.actions.test.ts
+index da760d8c..aa617990 100644
+--- a/src/islands/ChartCalculator.actions.test.ts
++++ b/src/islands/ChartCalculator.actions.test.ts
+@@ -19,6 +19,17 @@ const wheelActionCopy = {
+ };
+ 
+ describe('Chart result action contract', () => {
++  it.each(CATALOG_LOCALES)('offers localized sensitive-file wording for %s', (locale) => {
++    expect(UI[locale].chartReceiptDownload).toContain('.json');
++    expect(UI[locale].chartReceiptPrivacy.length).toBeGreaterThan(30);
++    expect(UI[locale].chartReceiptError.length).toBeGreaterThan(20);
++    expect(UI[locale].chartReceiptUnavailable.length).toBeGreaterThan(20);
++    if (locale !== 'en') {
++      expect(UI[locale].chartReceiptPrivacy).not.toBe(UI.en.chartReceiptPrivacy);
++      expect(UI[locale].chartReceiptError).not.toBe(UI.en.chartReceiptError);
++    }
++  });
++
+   it('keeps the exact 3D trigger copy in the per-page catalog rather than an eager locale table', async () => {
+     const calculator = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
+     expect(calculator).not.toContain('DEPTH_TOGGLE');
+diff --git a/src/islands/ChartCalculator.tsx b/src/islands/ChartCalculator.tsx
+index 89297587..28c52af5 100644
+--- a/src/islands/ChartCalculator.tsx
++++ b/src/islands/ChartCalculator.tsx
+@@ -18,6 +18,7 @@ import Wheel from '../lib/wheel/Wheel';
+ import LayerChips from './explorer/LayerChips';
+ import { moonCandidates, moonCandidatesFromEndpoints, moonIsUncertain, moonLabel } from '../lib/moon-certainty';
+ import { createModuleLoader } from '../lib/module-load';
++import { downloadCalculationReceipt } from '../lib/receipt-download';
+ import type { ReadingScrollBehavior } from './explorer/ReadingPath';
+ import {
+   EMPTY_FIRST_READING,
+@@ -102,6 +103,15 @@ type ShareSurfaceModule = typeof import('./PositionsShareSurface');
+ type ShareDialogModule = typeof import('./ChartShareDialog');
+ type ChartActionDockModule = typeof import('./ChartActionDock');
+ const loadChartControls = createModuleLoader(() => import('./ChartActionDock'));
++const loadCalculatorReceipt = createModuleLoader(() => import('../lib/engine/calculator-receipt'));
++interface ChartReceiptExport {
++  chart: Chart;
++  envelopeJson: string;
++  runId: number;
++  inputRevision: number;
++  accessGeneration: number;
++  requiresProfileAccess: boolean;
++}
+ type PreparedPrimaryShare = Awaited<ReturnType<ShareSurfaceModule['preparePrimaryShareArtifact']>>;
+ type PrimaryShareHandle = {
+   artifact: PreparedPrimaryShare;
+@@ -330,6 +340,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   const [city, setCity] = useState<City | null>(null);
+   const [houseSystem, setHouseSystem] = useState<HouseSystem>('whole');
+   const [chart, setChart] = useState<Chart | null>(null);
++  const [receiptExport, setReceiptExport] = useState<ChartReceiptExport | null>(null);
++  const receiptExportRef = useRef<ChartReceiptExport | null>(null);
++  const [receiptDownloadError, setReceiptDownloadError] = useState(false);
+   const [signature, setSignature] = useState<ChartSignature | null>(null);
+   const [moonAmbiguous, setMoonAmbiguous] = useState(false);
+   const [registryRecordSlug, setRegistryRecordSlug] = useState<string | null>(null);
+@@ -376,7 +389,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   const chartContextIdRef = useRef(0);
+   const inputRevisionRef = useRef(0);
+   const [inputRevision, setInputRevision] = useState(0);
++  function clearReceiptExport(): void {
++    receiptExportRef.current = null;
++    setReceiptExport(null);
++    setReceiptDownloadError(false);
++  }
+   function advanceInputRevision(): void {
++    clearReceiptExport();
+     inputRevisionRef.current += 1;
+     setInputRevision(inputRevisionRef.current);
+   }
+@@ -385,6 +404,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   const primaryProfileChartIdRef = useRef<string | null>(null);
+   const mineProfileOriginRef = useRef(false);
+   const runChartIdRef = useRef(0);
++  useEffect(() => () => {
++    runChartIdRef.current += 1;
++    receiptExportRef.current = null;
++  }, []);
+   const profileHandoffIdRef = useRef(0);
+   const shareRuntimeRef = useRef<ShareRuntime>({});
+   const profileAccessGeneration = useProfileAccessGeneration(() => {
+@@ -997,6 +1020,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+             return;
+           }
+           setChart(null);
++          clearReceiptExport();
+           setSignature(null);
+           setRegistryRecordSlug(null);
+           setShareInput(null);
+@@ -1066,6 +1090,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     source: ChartComputedSource = 'fresh',
+   ) {
+     advanceInputRevision();
++    const receiptInputRevision = inputRevisionRef.current;
+     const signatureModule = mode === 'full' && showsEnglishInterpretation
+       ? import('../lib/chart-signature')
+       : null;
+@@ -1101,16 +1126,34 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     try {
+       const engine = await loadEngine();
+       if (!runIsCurrent()) return;
++      let receiptModule: Awaited<ReturnType<typeof loadCalculatorReceipt>> | null = null;
++      if (mode === 'full') {
++        try {
++          receiptModule = await loadCalculatorReceipt();
++        } catch {
++          // A failed optional code download may use the existing calculation.
++          // No natal calculation has run yet; calculation failures never retry.
++        }
++        if (!runIsCurrent()) return;
++      }
+       const effectiveTime = input.timeKnown ? input.time : '12:00';
+       const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
+-      const result = engine.computeChart({
++      const calculationInput = {
+         utc: resolved.utc,
+         latitude: input.city.lat,
+         longitude: input.city.lon,
+         houseSystem: input.houseSystem,
+         timeKnown: input.timeKnown,
+         flags: resolved.flags,
++      };
++      const portable = receiptModule?.computeCalculatorReceipt(calculationInput, {
++        date: input.date,
++        time: effectiveTime,
++        timeZone: input.city.tz,
++        offsetMinutes: resolved.offsetMinutes,
++        reference: input.timeKnown ? 'supplied-instant' : 'local-noon',
+       });
++      const result = portable ? portable.chart : engine.computeChart(calculationInput);
+       if (!runIsCurrent()) return;
+       const computedSun = result.bodies.find((body) => body.body === 'Sun');
+       const computedSunSlug = computedSun ? signForLongitude(computedSun.lon).slug : null;
+@@ -1131,6 +1174,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           : null;
+       }
+       setChart(result);
++      if (portable && receiptInputRevision === inputRevisionRef.current) {
++        const captured: ChartReceiptExport = {
++          chart: result, envelopeJson: portable.envelopeJson, runId,
++          inputRevision: receiptInputRevision, accessGeneration, requiresProfileAccess,
++        };
++        receiptExportRef.current = captured;
++        setReceiptExport(captured);
++      }
+       if (signatureModule) {
+         void signatureModule.then(({ chartSignature }) => {
+           if (runIsCurrent()) setSignature(chartSignature(result, locale));
+@@ -1195,6 +1246,22 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     }
+   }
+ 
++  function exportReceipt(): void {
++    const captured = receiptExportRef.current;
++    if (!captured || captured !== receiptExport || captured.chart !== chart
++      || captured.runId !== runChartIdRef.current
++      || captured.inputRevision !== inputRevisionRef.current
++      || (captured.requiresProfileAccess && (
++        captured.accessGeneration !== profileAccessGeneration.current || !profileAccessAllowed()
++      ))) return;
++    setReceiptDownloadError(false);
++    try {
++      downloadCalculationReceipt(captured.envelopeJson);
++    } catch {
++      setReceiptDownloadError(true);
++    }
++  }
++
+   function compute(e: Event) {
+     e.preventDefault();
+     if (busy) return;
+@@ -2330,6 +2397,22 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+                   <span>{t(locale, 'shareChart')} · {t(locale, 'chartActionsMore')}</span>
+                   <span class="orb">↗</span>
+                 </button>
++                <div class="calc__more-copy" data-calculation-receipt-export>
++                    <button
++                      class="btn btn--glass"
++                      type="button"
++                      onClick={exportReceipt}
++                      disabled={!receiptExport || receiptExport.chart !== chart}
++                      aria-describedby="calculation-receipt-privacy"
++                      data-download-calculation-receipt
++                    >
++                      <span>{t(locale, 'chartReceiptDownload')}</span>
++                      <span class="orb" aria-hidden="true">↓</span>
++                    </button>
++                    <p class="field__help" id="calculation-receipt-privacy">{t(locale,
++                      receiptExport && receiptExport.chart === chart ? 'chartReceiptPrivacy' : 'chartReceiptUnavailable')}</p>
++                    {receiptDownloadError && <p class="calc__error" role="alert">{t(locale, 'chartReceiptError')}</p>}
++                </div>
+                 {card === 'saved' && (
+                   <p class="sr-only" role="status">{t(locale, 'chartCardSaved')}</p>
+                 )}
+diff --git a/src/lib/engine/calculator-receipt.test.ts b/src/lib/engine/calculator-receipt.test.ts
+new file mode 100644
+index 00000000..49f9efd6
+--- /dev/null
++++ b/src/lib/engine/calculator-receipt.test.ts
+@@ -0,0 +1,193 @@
++import { build } from 'esbuild';
++import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
++import { natalChart } from '@zodiacs/engine';
++import { natalReplayInput, parseNatalEnvelope } from '@zodiacs/engine/receipt';
++import { resolveLocalToUtc } from '../time/localToUtc';
++import { decodeChartLink, encodeChartLink } from '../share';
++import { computeChart } from './full';
++import { computeCalculatorReceipt, type CalculatorWallTime } from './calculator-receipt';
++
++vi.mock('@zodiacs/engine', async (importOriginal) => {
++  const actual = await importOriginal<typeof import('@zodiacs/engine')>();
++  return { ...actual, natalChart: vi.fn(actual.natalChart) };
++});
++
++beforeEach(() => vi.clearAllMocks());
++afterEach(() => vi.unstubAllGlobals());
++
++function calculate(date: string, time: string, timeZone: string, timeKnown = true) {
++  const resolved = resolveLocalToUtc(date, time, timeZone);
++  const input = {
++    utc: resolved.utc, latitude: 78.2232, longitude: 15.6267,
++    houseSystem: 'placidus' as const, timeKnown, flags: resolved.flags,
++  };
++  const captured = computeCalculatorReceipt(input, {
++    date, time, timeZone, offsetMinutes: resolved.offsetMinutes,
++    reference: timeKnown ? 'supplied-instant' : 'local-noon',
++  });
++  expect(captured).not.toBeNull();
++  if (!captured) throw new Error('Expected supported synthetic zone.');
++  const parsed = parseNatalEnvelope(captured.envelopeJson);
++  expect(parsed.ok).toBe(true);
++  if (!parsed.ok) throw new Error('Expected valid synthetic receipt.');
++  return { captured, input, envelope: parsed.envelope };
++}
++
++describe('calculator capture from actual civil resolution', () => {
++  it.each([-90, 90])('preserves known-time exact-pole %s charts without entering portable calculation', (latitude) => {
++    const input = { utc: new Date('2001-12-21T08:30:00Z'), latitude, longitude: 0,
++      timeKnown: true, houseSystem: 'placidus' as const };
++    expect(computeCalculatorReceipt(input, { date: '2001-12-21', time: '08:30',
++      timeZone: 'UTC', offsetMinutes: 0, reference: 'supplied-instant' })).toBeNull();
++    expect(natalChart).not.toHaveBeenCalled();
++    expect(computeChart(input).bodies).toHaveLength(12);
++  });
++
++  it.each([-90, 90])('retains an unknown-time receipt at exact pole %s with no invented angles', (latitude) => {
++    const captured = computeCalculatorReceipt({ utc: '2001-12-21T12:00:00Z', latitude,
++      longitude: 0, timeKnown: false, houseSystem: 'placidus' }, {
++      date: '2001-12-21', time: '12:00', timeZone: 'UTC', offsetMinutes: 0, reference: 'local-noon',
++    });
++    expect(natalChart).toHaveBeenCalledTimes(1);
++    expect(captured?.chart.angles).toBeNull();
++    const parsed = parseNatalEnvelope(captured!.envelopeJson);
++    expect(parsed.ok && parsed.envelope.receipt.houses.actual).toBeNull();
++  });
++
++  it.each([-89.99, 89.99])('still captures the supported near-pole %s chart', (latitude) => {
++    const captured = computeCalculatorReceipt({ utc: '2001-12-21T08:30:00Z', latitude,
++      longitude: 0, timeKnown: true, houseSystem: 'placidus' }, {
++      date: '2001-12-21', time: '08:30', timeZone: 'UTC', offsetMinutes: 0, reference: 'supplied-instant',
++    });
++    expect(natalChart).toHaveBeenCalledTimes(1);
++    expect(captured?.chart.houses?.system).toBe('whole');
++  });
++  it('keeps configuration getter failures private before calculation', () => {
++    const local = Object.defineProperty({}, 'timeZone', { get() { throw new Error('Synthetic private detail.'); } });
++    expect(() => computeCalculatorReceipt({ utc: '2001-12-21T08:30:00Z' }, local as CalculatorWallTime))
++      .toThrow('Unable to prepare a portable chart.');
++    expect(natalChart).not.toHaveBeenCalled();
++  });
++  it.each([
++    ["America/Caracas", "1890-01-01", "1890-01-01T04:27:44.000Z", -267.6666666666667, ["lmt"]],
++    ["America/Dawson_Creek", "1884-01-01", "1884-01-01T08:00:56.000Z", -480, []],
++    ["America/Goose_Bay", "1935-03-30", "1935-03-30T03:30:52.000Z", -210, []],
++    ["America/Manaus", "1914-01-01", "1914-01-01T04:00:04.000Z", -240, []],
++    ["America/Paramaribo", "1935-01-01", "1935-01-01T03:40:52.000Z", -220.6, ["lmt"]],
++    ["America/Port-au-Prince", "1890-01-01", "1890-01-01T04:49:20.000Z", -289, []],
++    ["America/Punta_Arenas", "1890-01-01", "1890-01-01T04:43:40.000Z", -282.75, ["lmt"]],
++    ["America/St_Johns", "1935-03-30", "1935-03-30T03:30:52.000Z", -210, []],
++    ["America/Whitehorse", "1900-08-20", "1900-08-20T09:00:12.000Z", -540, []],
++    ["Asia/Colombo", "1880-01-01", "1879-12-31T18:40:36.000Z", 319.53333333333336, ["lmt"]],
++    ["Asia/Tbilisi", "1924-05-02", "1924-05-01T21:00:49.000Z", 180, []],
++    ["Brazil/West", "1914-01-01", "1914-01-01T04:00:04.000Z", -240, []],
++    ["Canada/Newfoundland", "1935-03-30", "1935-03-30T03:30:52.000Z", -210, []],
++    ["Canada/Yukon", "1900-08-20", "1900-08-20T09:00:12.000Z", -540, []],
++    ["Pacific/Norfolk", "1901-01-01", "1900-12-31T12:48:08.000Z", 672, []],
++    ["Pacific/Tongatapu", "1945-09-10", "1945-09-09T11:40:48.000Z", 740, []],
++  ] as const)('preserves the historical %s %s chart when minute-level flags miss a seconds shift', (zone, date, instant, offsetMinutes, flags) => {
++    const resolved = resolveLocalToUtc(date, '00:00', zone);
++    expect(resolved.utc.toISOString()).toBe(instant);
++    expect(resolved.flags).toEqual(flags);
++    const input = { utc: resolved.utc, latitude: 40, longitude: 10,
++      houseSystem: 'whole' as const, timeKnown: true, flags: resolved.flags };
++    const captured = computeCalculatorReceipt(input, { date, time: '00:00', timeZone: zone,
++      offsetMinutes, reference: 'supplied-instant' });
++    expect(captured).toBeNull();
++    expect(natalChart).not.toHaveBeenCalled();
++    const result = computeChart(input);
++    expect(result.input.utc.toISOString()).toBe(instant);
++    expect(result.input.flags).toEqual(flags);
++  });
++
++  it.each([
++    { utc: '2024-01-01T11:59:59Z', flags: [] },
++    { utc: '2024-01-01T12:00:00Z', flags: ['dst-gap'] },
++  ] as const)('does not calculate or rewrite an inconsistent resolution $utc', (input) => {
++    expect(computeCalculatorReceipt({ ...input, flags: [...input.flags] }, {
++      date: '2024-01-01', time: '12:00', timeZone: 'UTC', offsetMinutes: 0,
++      reference: 'supplied-instant',
++    })).toBeNull();
++    expect(natalChart).not.toHaveBeenCalled();
++  });
++
++  it.each(['+01:00', '+0100', '-02:30', '+23:59', '-00:00'])('preserves imported fixed-offset %s charts before any portable calculation', (timeZone) => {
++    const decoded = decodeChartLink(encodeChartLink({ date: '1990-06-15', time: '14:30',
++      timeKnown: true, lat: 40.71, lon: -74, tz: timeZone, houseSystem: 'whole' }));
++    expect(decoded).not.toBeNull();
++    const resolved = resolveLocalToUtc(decoded!.date, decoded!.time!, decoded!.tz);
++    const input = { utc: resolved.utc, latitude: decoded!.lat, longitude: decoded!.lon,
++      houseSystem: decoded!.houseSystem, timeKnown: decoded!.timeKnown, flags: resolved.flags };
++    const portable = computeCalculatorReceipt(input, { date: decoded!.date, time: decoded!.time!,
++      timeZone: decoded!.tz, offsetMinutes: resolved.offsetMinutes, reference: 'supplied-instant' });
++    expect(portable).toBeNull();
++    expect(natalChart).not.toHaveBeenCalled();
++    const legacy = computeChart(input);
++    expect(legacy.input.utc.toISOString()).toBe(resolved.utc.toISOString());
++    expect(legacy.bodies).toHaveLength(12);
++  });
++  it.each([
++    ['2024-01-15', '08:30', 'America/New_York', true, '2024-01-15T13:30:00.000Z', -300, 0, []],
++    ['2024-03-10', '02:30', 'America/New_York', true, '2024-03-10T07:30:00.000Z', -240, 60, ['dst-gap']],
++    ['2024-11-03', '01:30', 'America/New_York', true, '2024-11-03T05:30:00.000Z', -240, 0, ['dst-fold']],
++    ['2024-10-06', '02:15', 'Australia/Lord_Howe', true, '2024-10-05T15:45:00.000Z', 660, 30, ['dst-gap']],
++    ['2011-12-30', '12:00', 'Pacific/Apia', false, '2011-12-30T22:00:00.000Z', 840, 1440, ['dst-gap']],
++    ['1907-07-06', '08:30', 'America/Mexico_City', true, '1907-07-06T15:06:36.000Z', -396.6, 0, ['lmt']],
++    ['0099-01-15', '08:30', 'UTC', true, '0099-01-15T08:30:00.000Z', 0, 0, []],
++  ] as const)('captures %s %s in %s without a second natal call', (date, time, zone, known, instant, offset, shift, flags) => {
++    const { captured, input, envelope } = calculate(date, time, zone, known);
++    expect(natalChart).toHaveBeenCalledTimes(1);
++    expect(captured.chart).toEqual(computeChart(input));
++    expect(envelope.receipt).toMatchObject({
++      instant, sourceInstant: null, provenance: null, timeKnown: known,
++      reference: known ? 'supplied-instant' : 'local-noon',
++      inputFlags: flags,
++      localResolution: { date, time, timeZone: zone, offsetMinutes: offset, gapShiftMinutes: shift,
++        policy: { fold: 'earlier', gap: 'shift-forward' } },
++      houses: { requested: 'placidus', actual: known ? 'whole' : null },
++    });
++    expect(natalReplayInput(envelope).utc).toBe(instant);
++  });
++
++  it('keeps serialized data detached from subsequent presentation and Date mutations', () => {
++    const { captured, input, envelope } = calculate('2001-12-21', '08:30', 'UTC');
++    const bytes = captured.envelopeJson;
++    input.utc.setUTCFullYear(1990);
++    captured.chart.input.utc.setUTCFullYear(2030);
++    captured.chart.bodies[0].lon = 0;
++    captured.chart.flags.push('lmt');
++    expect(captured.envelopeJson).toBe(bytes);
++    expect(parseNatalEnvelope(bytes)).toEqual({ ok: true, envelope });
++    expect(natalChart).toHaveBeenCalledTimes(1);
++  });
++
++  it('uses the captured resolution without any additional Intl, network or storage access', () => {
++    const resolved = resolveLocalToUtc('2024-10-06', '02:15', 'Australia/Lord_Howe');
++    const denied = () => { throw new Error('Unexpected side effect.'); };
++    vi.stubGlobal('Intl', new Proxy({}, { get: denied }));
++    vi.stubGlobal('fetch', denied);
++    vi.stubGlobal('localStorage', new Proxy({}, { get: denied }));
++    vi.stubGlobal('indexedDB', new Proxy({}, { get: denied }));
++    expect(() => computeCalculatorReceipt({
++      utc: resolved.utc, latitude: 40, longitude: 10, flags: resolved.flags,
++    }, { date: '2024-10-06', time: '02:15', timeZone: 'Australia/Lord_Howe',
++      offsetMinutes: resolved.offsetMinutes, reference: 'supplied-instant' })).not.toThrow();
++    expect(natalChart).toHaveBeenCalledTimes(1);
++  });
++
++  it('rejects inconsistent context with a fixed private error and never retries calculation', () => {
++    expect(() => computeCalculatorReceipt({ utc: '2024-01-15T08:30:00Z' }, {
++      date: '2024-01-15', time: '08:30', timeZone: 'UTC',
++      offsetMinutes: 0, reference: 'local-noon',
++    })).toThrow('Unable to prepare a portable chart.');
++    expect(natalChart).toHaveBeenCalledTimes(1);
++  });
++
++  it('keeps the receipt capture outside full and the download helper graphs', async () => {
++    for (const entry of ['src/lib/engine/full.ts', 'src/lib/receipt-download.ts']) {
++      const result = await build({ entryPoints: [entry], bundle: true, write: false, metafile: true,
++        format: 'esm', platform: 'browser', logLevel: 'silent' });
++      expect(Object.keys(result.metafile!.inputs).some((path) => /calculator-receipt|engine\/portable|engine\/dist\/receipt/.test(path))).toBe(false);
++    }
++  });
++});
+diff --git a/src/lib/engine/calculator-receipt.ts b/src/lib/engine/calculator-receipt.ts
+new file mode 100644
+index 00000000..bc5febff
+--- /dev/null
++++ b/src/lib/engine/calculator-receipt.ts
+@@ -0,0 +1,54 @@
++/** Lazy, calculator-only receipt capture. Never reconstructs a legacy summary. */
++import type { BirthInput } from '@zodiacs/engine';
++import { serializeNatalEnvelope, type NatalReference } from '@zodiacs/engine/receipt';
++import { parseCivilDate, parseCivilTime } from '../time/civil-date';
++import { computePortableChart, PortableChartError } from './portable';
++
++export interface CalculatorWallTime {
++  date: string;
++  time: string;
++  timeZone: string;
++  offsetMinutes: number;
++  /** The calculator explicitly selects local noon only for unknown time. */
++  reference: Extract<NatalReference, 'supplied-instant' | 'local-noon'>;
++}
++
++/** Capture the actual resolved wall-time assertions without consulting Intl again. */
++export function computeCalculatorReceipt(input: BirthInput, local: CalculatorWallTime) {
++  try {
++    // After successful host resolution, a signed fixed-offset zone is supported
++    // by the old calculator but cannot be represented by this draft receipt.
++    // Let the caller select its existing chart path before any natal calculation.
++    if (/^[+-]/.test(local.timeZone)) return null;
++    // Exact-pole angles are outside the delivered receipt's declared coverage.
++    // Unknown time has no angles/houses and remains eligible for a receipt.
++    if (input.timeKnown !== false && input.latitude !== undefined && Math.abs(input.latitude) === 90) return null;
++    const date = parseCivilDate(local.date);
++    const time = parseCivilTime(local.time);
++    if (!date || !time) throw new PortableChartError();
++    const wall = new Date(0);
++    wall.setUTCFullYear(date.year, date.month - 1, date.day);
++    wall.setUTCHours(time.hour, time.minute, 0, 0);
++    const instant = new Date(input.utc).getTime();
++    const gapShiftMinutes = (instant + local.offsetMinutes * 60_000 - wall.getTime()) / 60_000;
++    // The existing minute-resolution resolver can miss a historical shift of
++    // only seconds. Preserve its chart without certifying inconsistent context.
++    // Do not round the shift away, invent a flag, or calculate a second time.
++    if (gapShiftMinutes < 0 || (input.flags?.includes('dst-gap') ?? false) !== (gapShiftMinutes > 0)) return null;
++    const { chart, envelope } = computePortableChart(input, {
++      reference: local.reference,
++      localResolution: {
++        date: local.date,
++        time: local.time,
++        timeZone: local.timeZone,
++        offsetMinutes: local.offsetMinutes,
++        gapShiftMinutes,
++        policy: { fold: 'earlier', gap: 'shift-forward' },
++      },
++    });
++    // Strings remain immutable even while the presentation chart is augmented.
++    return { chart, envelopeJson: serializeNatalEnvelope(envelope) };
++  } catch {
++    throw new PortableChartError();
++  }
++}
+diff --git a/src/lib/i18n/index.test.ts b/src/lib/i18n/index.test.ts
+index 9d07fbdd..f0a17191 100644
+--- a/src/lib/i18n/index.test.ts
++++ b/src/lib/i18n/index.test.ts
+@@ -29,9 +29,9 @@ import {
+ import { SIGN_SLUGS } from '../signs';
+ 
+ describe('i18n helpers', () => {
+-  it('keeps every localized UI catalog aligned with all 414 English keys', () => {
++  it('keeps every localized UI catalog aligned with all 418 English keys', () => {
+     const englishKeys = Object.keys(UI.en).sort();
+-    expect(englishKeys).toHaveLength(414);
++    expect(englishKeys).toHaveLength(418);
+     for (const locale of CATALOG_LOCALES) {
+       expect(Object.keys(UI[locale]).sort()).toEqual(englishKeys);
+     }
+diff --git a/src/lib/i18n/ui/en.ts b/src/lib/i18n/ui/en.ts
+index fe80d790..206f9894 100644
+--- a/src/lib/i18n/ui/en.ts
++++ b/src/lib/i18n/ui/en.ts
+@@ -265,6 +265,10 @@ const en = {
+     firstReadingFullTour: 'See how the chart works — advanced tour',
+     firstReadingReplay: 'Replay my chart story',
+     chartActionsMore: 'More ways to use this chart',
++    chartReceiptDownload: "Download calculation receipt (.json)",
++    chartReceiptPrivacy: "This file contains sensitive birth details and chart data. Keep it private.",
++    chartReceiptError: "The file could not be downloaded. Please try again.",
++    chartReceiptUnavailable: "A calculation receipt is not available for this chart.",
+     seeTodaySky: "See today's sky",
+     contextHelpCue: 'Dotted terms can be tapped for a plain-English explanation.',
+     editorialHow: 'editorial standards',
+diff --git a/src/lib/i18n/ui/es.ts b/src/lib/i18n/ui/es.ts
+index bbdcee28..af3949ea 100644
+--- a/src/lib/i18n/ui/es.ts
++++ b/src/lib/i18n/ui/es.ts
+@@ -265,6 +265,10 @@ const es = {
+     firstReadingFullTour: 'Ver cómo funciona la carta — recorrido avanzado',
+     firstReadingReplay: 'Volver a leer la historia de mi carta',
+     chartActionsMore: 'Más formas de usar esta carta',
++    chartReceiptDownload: "Descargar el registro del cálculo (.json)",
++    chartReceiptPrivacy: "Este archivo contiene datos de nacimiento sensibles y datos de la carta. Mantenlo privado.",
++    chartReceiptError: "No se pudo descargar el archivo. Inténtalo de nuevo.",
++    chartReceiptUnavailable: "No hay un registro del cálculo disponible para esta carta.",
+     seeTodaySky: 'Ver el cielo de hoy',
+     contextHelpCue: 'Toca los términos subrayados con puntos para ver una explicación sencilla.',
+     editorialHow: 'normas editoriales',
+diff --git a/src/lib/i18n/ui/fr.ts b/src/lib/i18n/ui/fr.ts
+index afbc917e..1400f936 100644
+--- a/src/lib/i18n/ui/fr.ts
++++ b/src/lib/i18n/ui/fr.ts
+@@ -265,6 +265,10 @@ const fr = {
+     firstReadingFullTour: 'Voir comment fonctionne le thème — visite avancée',
+     firstReadingReplay: 'Revoir l’histoire de mon thème',
+   chartActionsMore: 'Plus de façons d’utiliser ce thème',
++  chartReceiptDownload: "Télécharger le relevé du calcul (.json)",
++  chartReceiptPrivacy: "Ce fichier contient des données de naissance sensibles et les données du thème. Gardez-le privé.",
++  chartReceiptError: "Le fichier n’a pas pu être téléchargé. Veuillez réessayer.",
++  chartReceiptUnavailable: "Aucun relevé de calcul n’est disponible pour ce thème.",
+   seeTodaySky: 'Voir le ciel d’aujourd’hui',
+   contextHelpCue: 'Touche les termes soulignés en pointillés pour obtenir une explication simple.',
+   editorialHow: 'normes éditoriales',
+diff --git a/src/lib/i18n/ui/it.ts b/src/lib/i18n/ui/it.ts
+index 02a514e7..134f8d27 100644
+--- a/src/lib/i18n/ui/it.ts
++++ b/src/lib/i18n/ui/it.ts
+@@ -307,6 +307,10 @@ const it = {
+   firstReadingFullTour: "Scopri come funziona il tema — tour avanzato",
+   firstReadingReplay: "Rivedi la storia del mio tema",
+   chartActionsMore: "Altri modi per usare questo tema",
++  chartReceiptDownload: "Scarica il resoconto del calcolo (.json)",
++  chartReceiptPrivacy: "Questo file contiene dati di nascita sensibili e dati del tema. Conservalo in privato.",
++  chartReceiptError: "Non è stato possibile scaricare il file. Riprova.",
++  chartReceiptUnavailable: "Non è disponibile un resoconto del calcolo per questo tema.",
+   seeTodaySky: "Vedi il cielo di oggi",
+   contextHelpCue: "Tocca i termini sottolineati con puntini per una spiegazione semplice.",
+   editorialHow: "standard editoriali",
+diff --git a/src/lib/i18n/ui/pt.ts b/src/lib/i18n/ui/pt.ts
+index 9d7f33c3..5f90419c 100644
+--- a/src/lib/i18n/ui/pt.ts
++++ b/src/lib/i18n/ui/pt.ts
+@@ -265,6 +265,10 @@ const pt = {
+     firstReadingFullTour: 'Ver como o mapa funciona — passeio avançado',
+     firstReadingReplay: 'Rever a história do meu mapa',
+   chartActionsMore: 'Mais formas de usar este mapa',
++  chartReceiptDownload: "Baixar o registro do cálculo (.json)",
++  chartReceiptPrivacy: "Este arquivo contém dados de nascimento sensíveis e dados do mapa. Mantenha-o privado.",
++  chartReceiptError: "Não foi possível baixar o arquivo. Tente novamente.",
++  chartReceiptUnavailable: "Não há um registro do cálculo disponível para este mapa.",
+   seeTodaySky: 'Ver o céu de hoje',
+   contextHelpCue: 'Toque nos termos sublinhados com pontos para ver uma explicação simples.',
+   editorialHow: 'princípios editoriais',
+diff --git a/src/lib/i18n/ui/ru.test.ts b/src/lib/i18n/ui/ru.test.ts
+index ecfa4567..5ca33378 100644
+--- a/src/lib/i18n/ui/ru.test.ts
++++ b/src/lib/i18n/ui/ru.test.ts
+@@ -39,7 +39,7 @@ afterEach(() => {
+ describe('Russian staged catalog', () => {
+   it('covers every UI key and preserves every interpolation token', () => {
+     const englishKeys = Object.keys(en).sort() as UiKey[];
+-    expect(englishKeys).toHaveLength(414);
++    expect(englishKeys).toHaveLength(418);
+     expect(Object.keys(ru).sort()).toEqual(englishKeys);
+     for (const key of englishKeys) {
+       expect(placeholders(ru[key]), `ru.${key}`).toEqual(placeholders(en[key]));
+diff --git a/src/lib/i18n/ui/ru.ts b/src/lib/i18n/ui/ru.ts
+index e10958a1..e83663ee 100644
+--- a/src/lib/i18n/ui/ru.ts
++++ b/src/lib/i18n/ui/ru.ts
+@@ -318,6 +318,10 @@ const ru = {
+   firstReadingFullTour: 'Как устроена карта — расширенная экскурсия',
+   firstReadingReplay: 'Проиграть историю карты заново',
+   chartActionsMore: 'Ещё способы использовать эту карту',
++  chartReceiptDownload: "Скачать запись расчёта (.json)",
++  chartReceiptPrivacy: "Файл содержит личные данные о рождении и данные карты. Храните его в безопасном месте.",
++  chartReceiptError: "Не удалось скачать файл. Попробуйте ещё раз.",
++  chartReceiptUnavailable: "Запись расчёта для этой карты недоступна.",
+   seeTodaySky: 'Небо сегодня',
+   contextHelpCue: 'Термины с точечным подчёркиванием открывают пояснение простым языком.',
+   editorialHow: 'редакционные стандарты',
+diff --git a/src/lib/receipt-download.test.ts b/src/lib/receipt-download.test.ts
+new file mode 100644
+index 00000000..a1ae0352
+--- /dev/null
++++ b/src/lib/receipt-download.test.ts
+@@ -0,0 +1,54 @@
++import { afterEach, describe, expect, it, vi } from 'vitest';
++import { downloadCalculationReceipt } from './receipt-download';
++
++afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
++
++function browser() {
++  vi.useFakeTimers();
++  const operations: string[] = [];
++  const anchor = { href: '', download: '', hidden: false,
++    click: vi.fn(() => operations.push('click')),
++    remove: vi.fn(() => operations.push('remove')) };
++  const createObjectURL = vi.fn((_blob: Blob) => 'blob:synthetic-owned-receipt');
++  const revokeObjectURL = vi.fn(() => operations.push('revoke'));
++  const append = vi.fn(() => operations.push('append'));
++  vi.stubGlobal('URL', { createObjectURL, revokeObjectURL });
++  vi.stubGlobal('document', { createElement: vi.fn(() => anchor), body: { append } });
++  return { anchor, append, operations, createObjectURL, revokeObjectURL };
++}
++
++describe('intentional local receipt download', () => {
++  it('uses exact bytes and a generic filename within the synchronous click, then cleans up', async () => {
++    const state = browser();
++    const json = '{"synthetic":"private"}\n';
++    downloadCalculationReceipt(json);
++    expect(state.operations).toEqual(['append', 'click', 'remove']);
++    expect(state.anchor).toMatchObject({ href: 'blob:synthetic-owned-receipt',
++      download: 'zodiacs-calculation-receipt.json', hidden: true });
++    expect(state.createObjectURL).toHaveBeenCalledTimes(1);
++    const blob = state.createObjectURL.mock.calls[0][0] as unknown as Blob;
++    expect(blob.type).toBe('application/json;charset=utf-8');
++    expect(await blob.text()).toBe(json);
++    vi.runAllTimers();
++    expect(state.operations).toEqual(['append', 'click', 'remove', 'revoke']);
++    expect(state.revokeObjectURL).toHaveBeenCalledWith('blob:synthetic-owned-receipt');
++  });
++
++  it.each(['append', 'click', 'remove'] as const)('cleans the object URL even if %s fails', (step) => {
++    const state = browser();
++    const failing = step === 'append' ? state.append : state.anchor[step];
++    failing.mockImplementation(() => { throw new Error('Synthetic failure.'); });
++    expect(() => downloadCalculationReceipt('{}')).toThrow('Synthetic failure.');
++    expect(state.anchor.remove).toHaveBeenCalledTimes(1);
++    vi.runAllTimers();
++    expect(state.revokeObjectURL).toHaveBeenCalledTimes(1);
++  });
++
++  it('does not create a link or schedule cleanup for a URL that was never allocated', () => {
++    const state = browser();
++    state.createObjectURL.mockImplementation(() => { throw new Error('Synthetic allocation failure.'); });
++    expect(() => downloadCalculationReceipt('{}')).toThrow('Synthetic allocation failure.');
++    expect(state.append).not.toHaveBeenCalled();
++    expect(vi.getTimerCount()).toBe(0);
++  });
++});
+diff --git a/src/lib/receipt-download.ts b/src/lib/receipt-download.ts
+new file mode 100644
+index 00000000..01fe4c82
+--- /dev/null
++++ b/src/lib/receipt-download.ts
+@@ -0,0 +1,20 @@
++/** Call synchronously from an intentional click. No calculation, storage or network. */
++export function downloadCalculationReceipt(envelopeJson: string): void {
++  const url = URL.createObjectURL(new Blob([envelopeJson], { type: 'application/json;charset=utf-8' }));
++  let link: HTMLAnchorElement | undefined;
++  try {
++    link = document.createElement('a');
++    link.href = url;
++    link.download = 'zodiacs-calculation-receipt.json';
++    link.hidden = true;
++    document.body.append(link);
++    link.click();
++  } finally {
++    try {
++      link?.remove();
++    } finally {
++      // Let the browser consume the click before releasing the temporary URL.
++      setTimeout(() => URL.revokeObjectURL(url), 0);
++    }
++  }
++}

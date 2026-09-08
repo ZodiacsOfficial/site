@@ -1,0 +1,63 @@
+12:36:32 [content] Syncing content
+12:36:32 [content] Synced content
+12:36:32 [types] Generated 552ms
+12:36:32 [check] Getting diagnostics for Astro files in /private/tmp/zodiacs-platform-site-receipt-export...
+[96msrc/exchange/chart-model.mjs[0m:[93m89[0m:[93m42[0m - [93mwarning[0m[90m ts(6133): [0m'timeframe' is declared but its value is never read.
+
+[7m89[0m export function timeTickIndices(candles, timeframe, maxLabels = 6) {
+[7m  [0m [93m                                         ~~~~~~~~~[0m
+
+[96msrc/exchange/chart.mjs[0m:[93m24[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'INK' is declared but its value is never read.
+
+[7m24[0m const INK = '#EEF1F7';
+[7m  [0m [93m      ~~~[0m
+
+[96msrc/exchange/terminal.mjs[0m:[93m105[0m:[93m10[0m - [93mwarning[0m[90m ts(80006): [0mThis may be converted to an async function.
+
+[7m105[0m function fetchWithin(url, deadline) {
+[7m   [0m [93m         ~~~~~~~~~~~[0m
+
+[96msrc/islands/LunarReturnCalculator.test.tsx[0m:[93m59[0m:[93m8[0m - [93mwarning[0m[90m ts(6133): [0m'CalculationReload' is declared but its value is never read.
+
+[7m59[0m import CalculationReload, { calculationLoadMessage } from './CalculationReload';
+[7m  [0m [93m       ~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/lib/people.ts[0m:[93m17[0m:[93m35[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; normalize?: boolean | undefined; hostname?: RegExp | undefined; protocol?: RegExp | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m17[0m const httpsUrlSchema = z.string().url().refine((value) => value.startsWith('https://'));
+[7m  [0m [93m                                  ~~~[0m
+[96msrc/lib/people.ts[0m:[93m16[0m:[93m37[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; precision?: number | null | undefined; local?: boolean | undefined; offset?: boolean | undefined; error?: string | $ZodErrorMap<$ZodIssueInvalidStringFormat> | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m16[0m const isoInstantSchema = z.string().datetime({ offset: true });
+[7m  [0m [93m                                    ~~~~~~~~[0m
+
+[96msrc/pages/astrofolio/how-to-buy/index.astro[0m:[93m434[0m:[93m31[0m - [93mwarning[0m[90m ts(6387): [0mThe signature '(commandId: string, showUI?: boolean | undefined, value?: string | undefined): boolean' of 'document.execCommand' is deprecated.
+
+[7m434[0m       const copied = document.execCommand('copy');
+[7m   [0m [93m                              ~~~~~~~~~~~[0m
+
+[96msrc/pages/bio/index.astro[0m:[93m163[0m:[93m31[0m - [93mwarning[0m[90m ts(6387): [0mThe signature '(commandId: string, showUI?: boolean | undefined, value?: string | undefined): boolean' of 'document.execCommand' is deprecated.
+
+[7m163[0m         var copied = document.execCommand('copy');
+[7m   [0m [93m                              ~~~~~~~~~~~[0m
+
+[96msrc/pages/widgets/index.astro[0m:[93m171[0m:[93m20[0m - [93mwarning[0m[90m ts(6387): [0mThe signature '(commandId: string, showUI?: boolean | undefined, value?: string | undefined): boolean' of 'document.execCommand' is deprecated.
+
+[7m171[0m           document.execCommand('copy');
+[7m   [0m [93m                   ~~~~~~~~~~~[0m
+
+[96msrc/registry/selected-token-chart.mjs[0m:[93m320[0m:[93m3[0m - [93mwarning[0m[90m ts(6133): [0m'last' is declared but its value is never read.
+
+[7m320[0m   last,
+[7m   [0m [93m  ~~~~[0m
+
+[96msrc/shelf/card.mjs[0m:[93m27[0m:[93m10[0m - [93mwarning[0m[90m ts(80006): [0mThis may be converted to an async function.
+
+[7m27[0m function fetchWithin(url, ms, init) {
+[7m  [0m [93m         ~~~~~~~~~~~[0m
+
+Result (1038 files): 
+- 0 errors
+- 0 warnings
+- 11 hints
+

@@ -12,6 +12,70 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
+## Integrated candidate — local calculation receipt download
+
+Branch `codex/platform-receipt-export` starts independently from #425's
+`c761a49c55d125bca48ff38d81b0a9ff6fd5adcf`. It adds an explicit JSON download in
+the existing full-chart More actions disclosure, with sensitive-file wording in
+all six locales. The immutable bytes come from the same calculation, and input,
+run and profile-access changes invalidate them. Unsupported receipt cases keep
+the existing chart with an unavailable notice. No saved-store/account activation.
+
+The 14 receipt files and two separately reviewed interaction replay files match
+their frozen identities. The interaction fix preserves actual pre-hydration edits
+while allowing untouched fields to receive shared-chart initialization. The two
+bundle-gate files measure the full static engine closure under the unchanged
+25 KB limit and distinguish actual module loads from inert receipt metadata.
+Eight locale catalog/test paths have an exact-base, one-time scope allowance.
+
+Author acceptance passes 126 focused tests, 16 native control cases, 12 chart
+receipt groups and the existing full Russian browser drive. Independent review
+passes 31 full-site groups plus two native select controls. Root's bundle review
+passes 26 subprocess fixtures; independent review passes 23 expected outcomes,
+including two explicitly unsupported computed/aliased data-flow controls. These
+are bounded regression checks, not a JavaScript security sandbox. Root integration passes build, 4,816 tests / 412 files, check (zero errors and
+warnings, 11 hints), all 18 captures byte-identical to #425, exact-base scope,
+16 native interaction controls, 12 receipt-download groups, 12 chart-share cases
+and the existing Russian browser drive. The three existing macOS chart baseline
+dimension failures recur; all three output hashes match #425 acceptance and all
+score zero against the preceding rc.5 control at the unchanged threshold. No
+baseline was updated. Draft delivery, exact-source CI and preview are next.
+
+Byte-verified raw evidence and original failures are retained under
+[receipt-export](evidence/receipt-export/). #426 remains separately delivered;
+its records are retained here for the shared program ledger, without including
+its four saved-store source files. SDK #11's rc.6 precision correction is delivered
+separately; site adoption and civil-date endpoint policy work remain distinct.
+
+## Delivered candidate — immutable saved receipts
+
+Draft [#426](https://github.com/ZodiacsOfficial/site/pull/426) is delivered at
+`a0bf55176dd4df4d27763bfeb2cf97e36abe4d15` on `codex/platform-saved-records`, based on delivered #425
+documentation head `c761a49c55d125bca48ff38d81b0a9ff6fd5adcf` (runtime source
+`dcc4e437`). The four-file frozen patch for Decision C-008's optional immutable
+profile store is integrated: patch SHA-256
+`5d61510dec09e42ad2196c173da5a88f206a85af5809a27562b1daf0cc2f83a5`.
+It passes 74 focused tests (49 new and 25 existing), strict project-environment
+TypeScript and 22 independent actual-Chrome cases. Root acceptance passes all 4,787 tests / 411 files, build, check (zero errors/
+warnings, 11 hints), exact-base scope and 18 fresh captures, byte-identical to
+the base. The first full run correctly rejected the preceding source fingerprint;
+that failure is retained, and the original build/capture refresh plus full rerun
+pass without changing the guard or baseline policy. Native transaction and
+owner/lifecycle counterexamples are durable under
+[saved-record-design](evidence/saved-record-design/). No active UI/account
+storage is changed by this checkpoint. All 14 exact-source CI jobs pass in run 34190846700.
+The exact-source READY preview `dpl_bhx76pgozg4Djw3mbBayzay7VrxS` passes 13
+browser/API checks. The C02 consumer receipt-export slice is
+being verified separately above #425; it has no saved-store dependency.
+Its review found historical seconds-sized time-resolution and Russian hydration
+replay defects; the latter has a bounded fix passing independent acceptance. SDK draft #11
+delivers the former as engine rc.6 (source `fb57af7a`, carrier `51129a19`),
+579 tests on Node 22/24, required gates, two fresh consumers and independent native
+review. Its public review archive matches SHA-256
+`09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e`.
+The site still pins rc.5; its corresponding adoption and distinct civil-date
+endpoint correction remain next numerical work. No npm or production release.
+
 ## Delivered candidate — optional portable calculation
 
 Draft [#425](https://github.com/ZodiacsOfficial/site/pull/425) is delivered at
@@ -124,12 +188,11 @@ Visual classification and exact-source preview acceptance are complete for #422.
 Its exact-source CI also passes all 14 jobs. Continue the separate next C02 slice.
 The C02 prerequisite is now integrated on its separate branch (current work
 above). Local build/test/check/scope, chart-share regression and actual browser
-privacy acceptance pass. Draft #425 is delivered; exact-source CI run 34187725308
-is in progress. Its exact-source preview `dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z`
-is READY and passes 13 browser/API checks. The next bounded implementation is
-an explicitly callable immutable saved-receipt store in a separate database,
-with transactional capacity checks and owner/epoch revocation. It remains
-unwired to the active save/account path until lifecycle integration is verified.
+privacy acceptance pass. Draft #425 is delivered; all 14 jobs pass in exact-source CI run 34187725308. Its exact-source preview `dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z`
+is READY and passes 13 browser/API checks. The optional saved-receipt store is delivered separately in draft #426.
+The next slice adds explicit local receipt download to the full chart result,
+with truthful captured time context and stale-input/access guards. Rich saving
+remains unwired until lifecycle integration is verified.
 
 Decision C-006 requires a version-owned authoritative saved namespace; legacy
 v1 writers lose requested houses and overwrite richer metadata. Do not infer

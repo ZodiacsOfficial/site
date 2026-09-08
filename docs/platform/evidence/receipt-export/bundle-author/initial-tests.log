@@ -1,0 +1,110 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-receipt-bundle-gate
+
+ ❯ scripts/report-bundles.test.mjs (13 tests | 3 failed) 2449ms
+   ✓ actual bundle gate > accepts a factored static engine closure and an inert provenance name 198ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: import "astronomy-engine"; 181ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: export * from "astronomy-engine"; 190ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: import /* comment */ ("astronomy-engine"); 190ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: import (`astronomy-engine`); 188ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: require /* comment */ ("astronomy-engine"); 182ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: import "astronomy-engine/astronomy.browser.js"; 189ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: import { createRequire } from "node:module"; 186ms
+   ✓ actual bundle gate > does not parse comments or data strings as vendor imports 181ms
+   × actual bundle gate > rejects the engine when imported eagerly through a shared chunk 187ms
+     → expected +0 to be 1 // Object.is equality
+   × actual bundle gate > rejects a missing dependency rather than measuring a partial closure 185ms
+     → expected 'route gzip sizes (initial transitive …' to contain 'references missing local chunk'
+   ✓ actual bundle gate > requires both ephemeris fingerprints in the full static closure 182ms
+   × actual bundle gate > enforces the unchanged engine limit across multiple individually small chunks 186ms
+     → expected 'route gzip sizes (initial transitive …' to contain 'limit 25 KB'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/report-bundles.test.mjs > actual bundle gate > rejects the engine when imported eagerly through a shared chunk
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ scripts/report-bundles.test.mjs:73:25
+     71|   it('rejects the engine when imported eagerly through a shared chunk'…
+     72|     const result = check({ 'dist/_astro/client.fixture.js': 'import ".…
+     73|     expect(result.code).toBe(1);
+       |                         ^
+     74|     expect(result.output).toContain('homepage engine isolation');
+     75|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  scripts/report-bundles.test.mjs > actual bundle gate > rejects a missing dependency rather than measuring a partial closure
+AssertionError: expected 'route gzip sizes (initial transitive …' to contain 'references missing local chunk'
+
+- Expected
++ Received
+
+- references missing local chunk
++ route gzip sizes (initial transitive local JS):
++   /                   0.0 KB /   42 KB  (1 chunks)
++   /birth-chart/       0.0 KB /   70 KB  (0 chunks)
++   /aries/             0.0 KB /    0 KB  (0 chunks)
++   /registry/collection/    0.0 KB /   48 KB  (0 chunks)
++ chunk gates:
++   chunk-max           0.1 KB /   60 KB  (/_astro/engine-core.fixture.js)
++   engine-chunk        0.0 KB /   25 KB  (/_astro/full.fixture.js; 1 static chunks)
++ engine isolation: package boundary clear; homepage markers clear
++
++ report-bundles: 1 failures
++   - engine marker fingerprint missing from static closure of /_astro/full.fixture.js
++
+
+ ❯ scripts/report-bundles.test.mjs:80:27
+     78|     const result = check({ 'dist/_astro/full.fixture.js': 'import "./m…
+     79|     expect(result.code).toBe(1);
+     80|     expect(result.output).toContain('references missing local chunk');
+       |                           ^
+     81|   });
+     82| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  scripts/report-bundles.test.mjs > actual bundle gate > enforces the unchanged engine limit across multiple individually small chunks
+AssertionError: expected 'route gzip sizes (initial transitive …' to contain 'limit 25 KB'
+
+- Expected
++ Received
+
+- limit 25 KB
++ route gzip sizes (initial transitive local JS):
++   /                   0.0 KB /   42 KB  (1 chunks)
++   /birth-chart/       0.0 KB /   70 KB  (0 chunks)
++   /aries/             0.0 KB /    0 KB  (0 chunks)
++   /registry/collection/    0.0 KB /   48 KB  (0 chunks)
++ chunk gates:
++   chunk-max          15.6 KB /   60 KB  (/_astro/extra-a.fixture.js)
++   engine-chunk        0.1 KB /   25 KB  (/_astro/full.fixture.js; 1 static chunks)
++ engine isolation: package boundary clear; homepage markers clear
++
++ report-bundles: 1 failures
++   - engine marker fingerprint missing from static closure of /_astro/full.fixture.js
++
+
+ ❯ scripts/report-bundles.test.mjs:102:27
+    100|     expect(result.code).toBe(1);
+    101|     expect(result.output).toContain('static closure');
+    102|     expect(result.output).toContain('limit 25 KB');
+       |                           ^
+    103|     expect(result.output).not.toContain('chunk-max:');
+    104|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 10 passed (13)
+   Start at  12:55:46
+   Duration  2.68s (transform 17ms, setup 0ms, collect 11ms, tests 2.45s, environment 0ms, prepare 36ms)
+

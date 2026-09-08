@@ -1,0 +1,182 @@
+import { DB, insist, timeout, openRaw, nativeRead, nativePut, deleteRaw,
+  interceptAddSuccess, interceptWriteComplete, interceptOpenSuccess, queueBehindBlockedDelete } from './native-hooks.mjs';
+import { SavedNatalStore, computePortableChart } from './subject.js';
+const A = 'account:10000000-0000-4000-8000-000000000001';
+const B = 'account:20000000-0000-4000-8000-000000000002';
+const ID = '30000000-0000-4000-8000-000000000003';
+const envelope = () => computePortableChart({ utc: '2001-12-21T08:30:00-00:00', latitude: 78.2232,
+  longitude: 15.6267, houseSystem: 'placidus', timeKnown: false },
+{ sourceInstant: '2001-12-21T08:30:00-00:00' }).envelope;
+const bound = (ownerKey = A, extra = {}) => new SavedNatalStore({ ownerKey, epoch: 1,
+  readAuthority: () => ({ ownerKey, epoch: 1 }), ...extra });
+const expectFailure = (result, codes) => {
+  insist(result?.ok === false && codes.includes(result.code), `Expected ${codes}, got ${JSON.stringify(result)}`);
+  insist(!Object.hasOwn(result, 'value'), 'Failure exposed value');
+};
+export const nativeCases = {
+  async 'no-label-roundtrip'() {
+    const s = bound(); const created = await s.create(envelope()); insist(created.ok, 'No-label create failed');
+    const read = await s.get(created.value.id); insist(read.ok && read.value !== null, 'No-label get failed');
+    const exported = await s.exportEnvelope(created.value.id); insist(exported.ok, 'No-label export failed');
+    insist(JSON.parse(exported.value).receipt.houses.actual === null, 'Unknown-time result changed');
+    insist(!exported.value.includes(A) && !exported.value.includes(created.value.id), 'Export leaked local identity');
+    const missing = await s.get(ID); insist(missing.ok && missing.value === null, 'Missing not explicit');
+    s.revoke(); return { created: true, read: true, exported: true, missing: true };
+  },
+  async 'authority-reentrant-revoke'() {
+    let s; let calls = 0;
+    s = bound(A, { readAuthority: () => { calls++; s.revoke(); return { ownerKey: A, epoch: 1 }; } });
+    const result = await s.create(envelope()); expectFailure(result, ['stale', 'access-denied']);
+    insist(result.mayHaveCommitted === false, 'Pre-open failure claims a commit');
+    insist(window.subjectOpenCount === 0, 'Revoked authority still opened database');
+    return { result, calls, openCount: window.subjectOpenCount };
+  },
+  async 'authority-getter-revoke'() {
+    let s; s = bound(A, { readAuthority: () => ({ get ownerKey() { s.revoke(); return A; }, epoch: 1 }) });
+    const result = await s.list(); expectFailure(result, ['stale', 'access-denied']);
+    insist(window.subjectOpenCount === 0, 'Getter-revoked authority still opened database'); return { result, openCount: window.subjectOpenCount };
+  },
+  async 'epoch-ABA'() {
+    let authority = { ownerKey: A, epoch: 1 }; const s = bound(A, { readAuthority: () => authority });
+    authority = { ownerKey: B, epoch: 2 }; authority = { ownerKey: A, epoch: 3 };
+    const result = await s.list(); expectFailure(result, ['stale', 'access-denied']); s.revoke(); return { result };
+  },
+  async 'revoke-before-native-commit'() {
+    const s = bound(); const warm = await s.list(); insist(warm.ok, 'Warm open failed');
+    const hook = interceptAddSuccess(() => s.revoke()); let result;
+    try { result = await s.create(envelope()); } finally { hook.restore(); }
+    expectFailure(result, ['stale', 'aborted']); insist(result.mayHaveCommitted === false, 'Aborted write claims possible commit');
+    insist(hook.count() === 1, 'Native add success not observed');
+    const raw = await openRaw(); const rows = await nativeRead(raw, A); raw.close(); insist(rows.length === 0, 'Aborted record remained');
+    return { result, rows: rows.length };
+  },
+  async 'stale-after-native-commit'() {
+    const s = bound(); insist((await s.list()).ok, 'Warm open failed');
+    const hook = interceptWriteComplete(() => s.revoke()); let result;
+    try { result = await s.create(envelope()); } finally { hook.restore(); }
+    expectFailure(result, ['stale']); insist(result.mayHaveCommitted === true, 'Committed stale write denied possible commit');
+    insist(hook.count() === 1, 'Native commit not observed');
+    const raw = await openRaw(); const rows = await nativeRead(raw, A); raw.close(); insist(rows.length === 1, 'Expected actual committed row');
+    return { result, committedRows: rows.length };
+  },
+  async 'late-native-open-success-after-revoke'() {
+    const seed = await openRaw(1, database => { const store = database.createObjectStore('records', { keyPath: ['ownerKey', 'id'] }); store.createIndex('ownerKey', 'ownerKey'); }); seed.close();
+    const s = bound(); const hook = interceptOpenSuccess(() => s.revoke()); let result;
+    try { result = await s.list(); } finally { hook.restore(); }
+    expectFailure(result, ['stale', 'access-denied']); insist(hook.count() === 1, 'Native late success not observed');
+    await timeout(deleteRaw(), 'late-success-retained-a-connection'); return { result, lateSuccessClosed: true };
+  },
+  async 'future-database-version'() {
+    const seed = await openRaw(2, database => database.createObjectStore('future')); seed.close();
+    const s = bound(); const result = await s.list(); expectFailure(result, ['unsupported-storage']); s.revoke(); return { result };
+  },
+  async 'wrong-native-index-schema'() {
+    const seed = await openRaw(1, database => { const store = database.createObjectStore('records', { keyPath: ['ownerKey', 'id'] }); store.createIndex('ownerKey', 'id'); }); seed.close();
+    const s = bound(); const result = await s.list(); expectFailure(result, ['unsupported-storage']); s.revoke(); return { result };
+  },
+  async 'queued-open-revocation'() {
+    const queue = await queueBehindBlockedDelete(); const s = bound(); const pending = s.list();
+    await new Promise(r => setTimeout(r, 30)); s.revoke();
+    const settledWhileBlocked = await Promise.race([pending.then(result => ({ settled: true, result })),
+      new Promise(resolve => setTimeout(() => resolve({ settled: false }), 1000))]);
+    queue.release(); await timeout(queue.deleted, 'blocked-delete-did-not-complete');
+    const result = await timeout(pending, 'revoked-open-did-not-settle'); expectFailure(result, ['stale', 'access-denied']);
+    await timeout(deleteRaw(), 'late-open-leaked-a-connection');
+    insist(settledWhileBlocked.settled, 'Revoked operation remained pending while unrelated native delete was blocked');
+    return { result, settledWhileBlocked, lateConnectionClosed: true };
+  },
+  async 'native-abort-rolls-back'() {
+    const s = bound(); insist((await s.list()).ok, 'Warm open failed');
+    const hook = interceptAddSuccess(tx => tx.abort()); let result;
+    try { result = await s.create(envelope()); } finally { hook.restore(); }
+    expectFailure(result, ['aborted', 'storage-unavailable']); insist(result.mayHaveCommitted === false, 'Native abort claimed commit');
+    const rows = await s.list(); insist(rows.ok && rows.value.length === 0, 'Native rollback left rows'); s.revoke(); return { result };
+  },
+  async 'native-cap-two-connections'() {
+    const a = bound(), b = bound(); const sample = envelope();
+    for (let i = 0; i < 39; i++) insist((await a.create(sample)).ok, `Fixture create ${i} failed`);
+    const outcomes = await Promise.all([a.create(sample), b.create(sample)]);
+    insist(outcomes.filter(r => r.ok).length === 1, 'Cap race lost successful create');
+    insist(outcomes.filter(r => !r.ok && r.code === 'full').length === 1, 'Cap race exceeded bound');
+    const rows = await a.list(); insist(rows.ok && rows.value.length === 40, 'Cap count wrong'); a.revoke(); b.revoke();
+    return { outcomes: outcomes.map(r => r.ok ? 'saved' : r.code), count: rows.value.length };
+  },
+  async 'owner-isolation-same-id'() {
+    const a = bound(A, { randomUUID: () => ID }), b = bound(B, { randomUUID: () => ID });
+    insist((await a.create(envelope(), 'Synthetic A')).ok, 'A create failed');
+    insist((await b.create(envelope(), 'Synthetic B')).ok, 'B create failed');
+    insist((await a.get(ID)).value.label === 'Synthetic A', 'A read B'); insist((await b.get(ID)).value.label === 'Synthetic B', 'B read A');
+    insist((await a.delete(ID)).ok, 'A deletion failed'); insist((await b.get(ID)).value.label === 'Synthetic B', 'A delete touched B');
+    a.revoke(); b.revoke(); return { sameIdPartitioned: true };
+  },
+  async 'corrupt-future-rows'() {
+    const s = bound(); const created = await s.create(envelope(), 'Synthetic fixture'); insist(created.ok, 'Fixture failed');
+    const raw = await openRaw(); const observations = [];
+    for (const [name, row, expected] of [
+      ['future-v2', { ...created.value, schema: 'zodiacs.saved-natal.v2' }, 'unsupported-record'],
+      ['future-v10', { ...created.value, schema: 'zodiacs.saved-natal.v10' }, 'unsupported-record'],
+      ['bad-envelope', { ...created.value, envelopeJson: '{bad' }, 'corrupt-record'],
+      ['future-inner-version', { ...created.value, envelopeJson: JSON.stringify({ ...JSON.parse(created.value.envelopeJson), schema: 'zodiacs.natal-envelope.draft-v2' }) }, 'unsupported-record'],
+      ['future-required-feature', { ...created.value, envelopeJson: JSON.stringify({ ...JSON.parse(created.value.envelopeJson), requiredFeatures: ['future-feature'] }) }, 'unsupported-record'],
+    ]) { await nativePut(raw, row); const result = await s.list(); expectFailure(result, [expected]); observations.push({ name, result }); }
+    raw.close(); s.revoke(); return { observations };
+  },
+  async 'over-cap-corruption-and-explicit-clear'() {
+    const s = bound(); const fixture = await s.create(envelope()); insist(fixture.ok, 'Fixture failed');
+    const raw = await openRaw();
+    for (let i = 0; i < 40; i++) await nativePut(raw, { ...fixture.value, id: crypto.randomUUID() });
+    raw.close(); const read = await s.list(); expectFailure(read, ['corrupt-record']);
+    const create = await s.create(envelope()); expectFailure(create, ['corrupt-record']);
+    insist((await s.clearOwner()).ok, 'Corrupt owned records could not be explicitly cleared');
+    const verify = await openRaw(); const rows = await nativeRead(verify, A); verify.close();
+    insist(rows.length === 0, 'Owner clear left over-cap rows'); return { read, create, remaining: rows.length };
+  },
+  async 'two-permitted-concurrent-creates'() {
+    const a = bound(), b = bound(); const sample = envelope();
+    const outcomes = await Promise.all([a.create(sample), b.create(sample)]);
+    insist(outcomes.every(r => r.ok), 'Permitted concurrent creates failed');
+    const rows = await a.list(); insist(rows.ok && rows.value.length === 2, 'Acknowledged distinct create was lost');
+    a.revoke(); b.revoke(); return { created: outcomes.length, retained: rows.value.length };
+  },
+  async 'failed-clear-consumes-handle'() {
+    const seed = await openRaw(2, database => database.createObjectStore('future')); seed.close();
+    const s = bound(); const result = await s.clearOwner(); expectFailure(result, ['unsupported-storage']);
+    const later = await s.list(); expectFailure(later, ['access-denied', 'stale']);
+    await timeout(deleteRaw(), 'failed-clear-leaked-a-connection'); return { result, later, closed: true };
+  },
+  async 'noncanonical-identifiers'() {
+    const observations = [];
+    for (const suffix of ['\n', '\r', '\r\n']) {
+      const owner = A + suffix; const s = bound(owner); const result = await s.create(envelope()); expectFailure(result, ['invalid-input', 'access-denied']); s.revoke(); observations.push({ field: 'owner', suffix, result });
+      const t = bound(A, { randomUUID: () => ID + suffix }); const other = await t.create(envelope()); expectFailure(other, ['invalid-input']); t.revoke(); observations.push({ field: 'id', suffix, result: other });
+    }
+    return { observations };
+  },
+  async 'consumptive-clear-closes-handle'() {
+    const s = bound(); insist((await s.create(envelope())).ok, 'Fixture failed');
+    const result = await s.clearOwner(); insist(result.ok, 'Clear failed');
+    expectFailure(await s.list(), ['stale', 'access-denied']);
+    await timeout(deleteRaw(), 'consumed-clear-handle-retained-connection');
+    return { cleared: true, consumed: true, closed: true };
+  },
+  async 'clear-other-handle-limit'() {
+    const a = bound(), b = bound(); insist((await a.create(envelope())).ok, 'Fixture failed');
+    insist((await a.clearOwner()).ok, 'Clear failed'); const later = await b.create(envelope()); insist(later.ok, 'Other handle unexpectedly revoked');
+    const rows = await b.list(); insist(rows.ok && rows.value.length === 1, 'Other handle result missing'); b.revoke();
+    return { declaredLimit: 'clear consumes only its own handle; no durable account erasure claimed', laterCreateSucceeded: true };
+  },
+};
+window.runNativeCase = async name => {
+  const started = performance.now();
+  try { return { name, status: 'passed', detail: await nativeCases[name](), milliseconds: performance.now() - started }; }
+  catch (error) { return { name, status: 'failed', error: String(error), stack: error?.stack, milliseconds: performance.now() - started }; }
+};
+window.nativeCaseNames = Object.keys(nativeCases);
+window.quotaWarmup = async () => {
+  window.quotaSubject = bound(); const result = await window.quotaSubject.list(); insist(result.ok, 'Quota warmup failed'); return result;
+};
+window.quotaAttempt = async () => {
+  const result = await window.quotaSubject.create(envelope());
+  const raw = await openRaw(); const rows = await nativeRead(raw, A); raw.close(); window.quotaSubject.revoke();
+  return { result, recordsAfterAttempt: rows.length };
+};

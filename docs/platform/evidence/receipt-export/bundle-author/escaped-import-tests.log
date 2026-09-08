@@ -1,0 +1,10 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-receipt-bundle-gate
+
+ ✓ scripts/report-bundles.test.mjs (20 tests) 3809ms
+
+ Test Files  1 passed (1)
+      Tests  20 passed (20)
+   Start at  13:06:41
+   Duration  4.01s (transform 16ms, setup 0ms, collect 11ms, tests 3.81s, environment 0ms, prepare 36ms)
+

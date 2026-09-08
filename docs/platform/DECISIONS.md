@@ -401,3 +401,33 @@ account switching/retention, access leases, archive/export and durable deletion/
 retry generations through the existing app coordination. Keep old v1 bytes,
 writers and remote wire behavior unchanged. Synthetic persistence acceptance
 does not authorize migration or deletion of real user records.
+
+## C-009 — Export the captured calculation and preserve deliberate input
+
+A local download uses the exact immutable SDK JSON captured with the displayed
+full chart. It never recalculates on click or reconstructs missing fields from a
+positions-only summary. Input, run and profile-access fences apply both when
+capturing and when clicking. Optional module loading may fall back before any
+natal calculation; a calculation or serialization failure never retries through
+the legacy path. Signed fixed-offset zones, inconsistent resolver context and
+known exact poles preserve established chart behavior with explicit receipt
+unavailability until their separate contracts support truthful export.
+
+The file includes sensitive birth details and chart data. Say so in all six
+locales, use a generic filename, release the local Blob URL and claim initiation
+only. This activates neither account sync nor the optional saved-record store.
+
+Russian shared-chart review reproduced the custom interaction directive replaying
+untouched SSR blanks over initialized birth details. Keep the receipt fence and
+correct replay: preserve explicit edits (including a return to blank/default) and
+eventless native edits, while untouched fields accept component initialization.
+Native reset semantics on a detached control determine defaults; selected values,
+not old option indexes, survive hydration reordering. Existing lazy activation,
+queued submit, takeover, retries and eagerHash:false behavior remain unchanged.
+
+Receipt factoring moves ephemeris code into a shared static dependency. Count the
+entire full-entry closure once under the existing 25 KB limit; do not raise any
+budget or require all markers in the entry shim. Inspect actual decoded literal
+module-loading syntax so inert provenance strings are permitted while concrete
+vendor imports, escapes, transparent parentheses and CDN targets are rejected.
+This is a bounded regression checker, not arbitrary JavaScript data-flow proof.

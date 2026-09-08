@@ -1,0 +1,9 @@
+import {writeFile} from 'node:fs/promises';
+import {computeChart,computeCalculatorReceipt,resolveLocalToUtc} from './compatibility-subject.mjs';
+const zone='America/Manaus',date='1914-01-01',time='00:00';
+const resolved=resolveLocalToUtc(date,time,zone);
+const input={utc:resolved.utc,latitude:-3.1,longitude:-60.02,houseSystem:'whole',timeKnown:true,flags:resolved.flags};
+const legacy=computeChart(input);let portable;
+try {computeCalculatorReceipt(input,{date,time,timeZone:zone,offsetMinutes:resolved.offsetMinutes,reference:'supplied-instant'});portable='success';}catch(error){portable={name:error.name,code:error.code,message:error.message};}
+const result={freeze:1,node:process.version,zone,date,time,legacySucceeded:Boolean(legacy),utc:legacy.input.utc.toISOString(),offsetMinutes:resolved.offsetMinutes,flags:resolved.flags,portable};
+await writeFile(new URL('./freeze1-subminute-failure.json',import.meta.url),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));

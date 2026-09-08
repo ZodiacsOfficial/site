@@ -1,0 +1,19 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-receipt-bundle-gate
+
+ ✓ scripts/report-bundles.test.mjs (13 tests) 4165ms
+   ✓ actual bundle gate > accepts a factored static engine closure and an inert provenance name  409ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: import "astronomy-engine";  321ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: import /* comment */ ("astronomy-engine");  337ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: require /* comment */ ("astronomy-engine");  309ms
+   ✓ actual bundle gate > still rejects actual server/vendor loading: import "astronomy-engine/astronomy.browser.js";  301ms
+   ✓ actual bundle gate > rejects the engine when imported eagerly through a shared chunk  302ms
+   ✓ actual bundle gate > rejects a missing dependency rather than measuring a partial closure  331ms
+   ✓ actual bundle gate > requires both ephemeris fingerprints in the full static closure  379ms
+   ✓ actual bundle gate > enforces the unchanged engine limit across multiple individually small chunks  332ms
+
+ Test Files  1 passed (1)
+      Tests  13 passed (13)
+   Start at  12:59:13
+   Duration  4.77s (transform 30ms, setup 0ms, collect 26ms, tests 4.17s, environment 0ms, prepare 86ms)
+

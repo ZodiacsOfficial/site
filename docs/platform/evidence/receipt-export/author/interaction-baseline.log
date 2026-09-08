@@ -1,0 +1,283 @@
+{
+  "sourceSha256": "55ffd2d3a608e2f996b1186bd4488a1f30f24430e4392085abbcb4327e587b06",
+  "bundleSha256": "c515bee86321fe4aff9770d45f93d575989ab6e766060da73ad23f6e0e4c6bff",
+  "bundleBytes": 6954,
+  "browser": "152.0.7977.83",
+  "requests": [
+    "/",
+    "/subject.js"
+  ],
+  "errors": [],
+  "checks": [
+    {
+      "name": "untouched controls admit shared initialization",
+      "pass": false,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "whole",
+          "checked": null,
+          "selected": [
+            true,
+            false
+          ]
+        }
+      ],
+      "expected": [
+        {
+          "value": "1990-06-15",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "14:30",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "placidus",
+          "checked": null,
+          "selected": [
+            false,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "name": "explicit reset to blank survives first recapture",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "eventless late autofill survives hydration",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "autofilled",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "autofilled",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "autofill present at directive start survives",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "autofilled",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "autofilled",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "newer edit during commit wins",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "latest",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "latest",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "replaced controls retain edit by id",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "edited",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "edited",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "textarea eventless edit survives",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "edited",
+          "checked": null,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "edited",
+          "checked": null,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "checked reset remains explicit",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "yes",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "yes",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "untouched selected defaults admit initialization",
+      "pass": false,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "B",
+          "checked": null,
+          "selected": [
+            false,
+            true,
+            false
+          ]
+        }
+      ],
+      "expected": [
+        {
+          "value": "C",
+          "checked": null,
+          "selected": [
+            false,
+            false,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "name": "multiple select restores every selected option",
+      "pass": false,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "B",
+          "checked": null,
+          "selected": [
+            false,
+            true,
+            false
+          ]
+        }
+      ],
+      "expected": [
+        {
+          "value": "B",
+          "checked": null,
+          "selected": [
+            false,
+            true,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "name": "load retry preserves edit and replays one queued submit",
+      "pass": true,
+      "loads": 2,
+      "submits": 1,
+      "submittedValue": "edited",
+      "submitter": "Go"
+    },
+    {
+      "name": "hydrate retry preserves edit and replays one queued submit",
+      "pass": true,
+      "loads": 2,
+      "submits": 1,
+      "submittedValue": "edited",
+      "submitter": "Go"
+    }
+  ],
+  "cleanup": {
+    "browser": true,
+    "server": true
+  }
+}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Interaction replay failures
+
+3 !== 0
+
+    at file:///private/tmp/zodiacs-platform-site-receipt-export/tests/interaction-replay-drive.mjs:149:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 3,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.2

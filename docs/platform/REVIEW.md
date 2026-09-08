@@ -32,10 +32,20 @@ separates source, artifacts, previews, production and adoption.
   contains engine rc.3; generated TypeDoc remains an explicitly archived rc.1
   reference. Their full identities and commands are in [EVIDENCE](EVIDENCE.md).
   Site [#425](https://github.com/ZodiacsOfficial/site/pull/425) adds the optional
-  portable-calculation boundary, locally implemented
-  and tested, including actual browser acceptance. It preserves
+  portable-calculation boundary, with all 14 exact-source CI jobs and its READY
+  preview accepted alongside local and actual browser acceptance. It preserves
   complete receipts before compact projection, and activates no saved storage
   or account migration.
+- Site [#426](https://github.com/ZodiacsOfficial/site/pull/426) adds four files for
+  immutable owner-scoped receipt records in a dedicated IndexedDB database.
+  Local acceptance passes 4,787 tests, build/check/scope and 18 byte-identical
+  captures; 74 focused tests and 22 independently executed native Chrome cases
+  cover concurrency, real rollback, revocation, corruption and bounded quota.
+  All14 exact-source CI jobs and13 READY-preview checks pass.
+  [Frozen review](evidence/saved-records/independent-review/REVIEW.md.log)
+  limits this to an explicitly invoked primitive. A clear consumes its own
+  handle; another handle may create afterward. Account handoff, verified access,
+  export and durable deletion remain prerequisites before active saving.
 
 ## Findings requiring disposition
 
@@ -65,3 +75,11 @@ records; preserve both archive versions. A production rollback is a separately
 verified deployment operation, and an npm correction requires a new authorized
 package version or other permitted registry action. No rollback, publication,
 deployment or account migration is executed by this packet.
+
+
+Receipt export integration passes root release gates with the documented existing
+macOS baseline failures reproduced without scored drift, separately from
+#426. The reviewed 14-file feature, two-file interaction correction and two-file
+bundle correction retain their exact identities; [independent evidence](evidence/receipt-export/independent-review/REVIEW.md.log)
+records actual failures and passing controls. Publication/production and SDK #5
+holds remain unchanged. The Astrofolio draft remains outside this integration.

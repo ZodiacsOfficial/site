@@ -1,0 +1,31 @@
+# Independent Freeze 2 review — blocked on hydration replay
+
+Reviewed candidate: receipt export patch SHA256 `d6639f7bd46ed9adce30c1d1f374394356350593234dacdcc82baa20086fa425`, based on `c761a49c55d125bca48ff38d81b0a9ff6fd5adcf`. Fourteen frozen files are copied and hashed in `freeze2-source/` and `freeze2-identity.json`. This review did not modify product source, accounts, saved data, remote repositories, or production. Browser data is synthetic.
+
+Freeze 2 is not accepted as a complete consumer feature. Actual Russian full shared input yields a chart but no receipt because existing interaction hydration replay restores untouched blank date/time controls and dispatches edit events after the shared calculation begins. The revision guard correctly discards that now-stale receipt. Author and reviewer independently reproduce the behavior. The author separately traced replayControls through native logpoints. Our `ru-diagnostic-observation.json` records one calculator, one computed event, empty date/time controls, a correct prior result, and native disabled=true. Do not weaken the receipt guard to repair this failure.
+
+## Executed independent browser evidence
+
+27 acceptance groups passed across the original, targeted, post-natal, and native zoom runners. Actual static build pages execute in owned Chrome 152 contexts, with pinned Node 22.23.2, served-file hashes, requests, page errors, synthetic storage observations, actual downloaded files, and Chrome precise coverage for exact public/native natal function identities.
+
+- Eight truthful receipt fixtures cover ordinary known time, one-hour gap and fold, 30-minute gap, whole skipped date at unknown local noon, historical LMT, requested Placidus actual whole-house polar fallback, and ordinary unknown local noon. Files parse through the pinned receipt codec; no invented source instant, name or place label.
+- Three bounded preservation controls retain one existing legacy calculation and show receipt unavailable before public natal execution: signed offset, a four-second historical resolver mismatch, and known exact geographic pole.
+- Stale retained DOM click after an edit cannot download; a subsequent successful run exports different bytes for its own inputs.
+- Positions-only import presents its existing reduced surface without the receipt helper or any natal computation.
+- English, Spanish, Portuguese, French and Italian keyboard downloads work at 390 CSS pixels without horizontal overflow. Russian is the unresolved blocker above.
+- Full, moon, and rising idle/focus routes do not fetch the receipt helper.
+- A real delayed helper request plus an input edit cannot publish a receipt for the old input revision.
+- A real failed optional helper request preserves the chart using exactly one native legacy call and no public natal call.
+- A synthetic owner profile handoff exercises the actual read guard and profile-access event. Revoking its controlled canRead policy while the helper request is pending clears the profile-derived input/result and performs zero natal calls. This is lifecycle-boundary verification, not authentication or deployed account-policy certification.
+- A controlled JSON.stringify fault limited to the actual natal-envelope schema after an earlier success causes the next requested run to fail after exactly one native/public natal call. There is no fallback recalculation, stale download, or raw exception exposure. This is explicit fault injection, not natural storage exhaustion or device failure.
+- Actual Chrome default zoom set to approximately four (not CSS zoom or page-scale emulation): 320 CSS pixel viewport, DPR4, document/body CSS zoom1, scrollWidth320, focused receipt button fully visible, valid keyboard download. Original zoom1 restored, owned context closed, screenshot visually inspected.
+
+## Harness errors retained honestly
+
+The first positions-only assertion incorrectly expected no `.calc__result`, although the existing reduced surface deliberately uses that class. The corrected case asserts `[data-positions-only]`, absence of the download button/helper, and zero native/public natal calls. Initial result/log/screenshot are retained and are not a product defect.
+
+The first native zoom harness used exact floating-point equality against four; Chrome returned `3.9999999999999996`. That assertion failed before page navigation and restored the zoom setting. The rerun allows only a 1e-12 representation tolerance and verifies actual 320 CSS px/DPR4 metrics. Both harness versions/results are preserved.
+
+## Limits and next acceptance
+
+Finite native Chromium verification does not certify all browsers, all IANA history, astronomical accuracy, account lifecycle activation, SDK publication, deployment, or external adoption. Existing historical resolver inconsistencies and exact-pole receipt coverage remain explicit limitations; root owns the separate SDK seconds correction. The author owns the newly coordinated hydration replay correction. Review its frozen source and native cases before claiming receipt export ready. Root owns final integration, full checks, bundle policy and delivery records.

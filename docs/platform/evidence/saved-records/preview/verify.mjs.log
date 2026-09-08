@@ -1,0 +1,49 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { chromium } from '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/playwright-core/index.mjs';
+import { findChromium, STABLE_CHROMIUM_ARGS } from '/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/browser.mjs';
+const root='/Users/chiburashka/.codex/worktrees/4806/site';
+const base='https://zodiacs-9wi4nsxk8-zodiacsofficial.vercel.app';
+const out=root+'/docs/platform/evidence/saved-records/preview';
+const candidate=JSON.parse(await readFile(root+'/src/data/platform-engine-candidate.json','utf8'));
+const checks=[];let browser;
+await mkdir(out,{recursive:true});
+try{
+ browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});
+ let cookies=[];
+ if(process.env.ZODIACS_PREVIEW_AUTH_FILE){
+  const auth=JSON.parse(await readFile(process.env.ZODIACS_PREVIEW_AUTH_FILE,'utf8'));
+  const context=await browser.newContext();const page=await context.newPage();
+  try{await page.goto(auth.url,{waitUntil:'networkidle',timeout:60000});cookies=await context.cookies();}catch{throw new Error('Preview authentication did not complete.');}finally{await context.close();}
+ }
+ for(const width of [1280,390,320]){
+  const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce',timezoneId:'UTC'});if(cookies.length)await context.addCookies(cookies);
+  try{
+   const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.name));
+   for(const path of ['/developers/','/developers/support/','/developers/examples/']){
+    const response=await page.goto(base+path,{waitUntil:'networkidle',timeout:60000});assert.equal(response.status(),200);
+    assert.equal(await page.locator('footer.zfooter').count(),1);
+    const layout=await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches}));assert.equal(layout.width,layout.scrollWidth);assert.equal(layout.reduced,true);
+    if(path.endsWith('/support/')){
+     assert.equal(await page.locator('caption').first().textContent(),`Local engine ${candidate.version}`);
+     assert.equal(await page.getByRole('link',{name:`Download engine ${candidate.version} (.tgz)`,exact:true}).getAttribute('href'),candidate.artifactUrl);
+     assert.equal(await page.getByRole('link',{name:'archived rc.1 API reference',exact:true}).getAttribute('href'),'/sdk/engine/');
+     await page.getByRole('link',{name:'archived rc.1 API reference',exact:true}).focus();await page.keyboard.press('Tab');
+     assert.equal(await page.getByRole('region',{name:'Local engine support matrix',exact:true}).evaluate(e=>e===document.activeElement&&e.matches(':focus-visible')),true);
+    }
+    if(path==='/developers/'&&width===320)await page.screenshot({path:out+'/entry-320.png',fullPage:true});
+    if(path==='/developers/support/'&&width===1280)await page.screenshot({path:out+'/support-1280.png',fullPage:true});
+    checks.push({width,path,status:response.status(),layout});
+   }
+   const wire={d:'2000-02-29',t:'08:30',z:'UTC',la:13.7563,lo:100.5018,n:'Synthetic',p:'Synthetic place'};
+   const response=await page.goto(base+'/birth-chart/#c=1.'+Buffer.from(JSON.stringify(wire)).toString('base64url'),{waitUntil:'networkidle',timeout:60000});assert.equal(response.status(),200);
+   await page.locator('.calc__result').waitFor({state:'visible',timeout:45000});assert.ok((await page.locator('.calc__result').textContent()).includes(candidate.version));
+   assert.equal(await page.evaluate(()=>localStorage.getItem('zodiacs.profile.v1')),null);
+   checks.push({width,path:'/birth-chart/',syntheticResultVersion:candidate.version,noSavedProfile:true});assert.deepEqual(errors,[]);
+  }finally{await context.close();}
+ }
+ const context=await browser.newContext();if(cookies.length)await context.addCookies(cookies);
+ try{const response=await context.request.get(base+'/api/v1/sky/today.json');assert.equal(response.status(),200);const sky=await response.json();assert.equal(sky.date,'2026-09-08');checks.push({path:'/api/v1/sky/today.json',status:response.status(),date:sky.date});}finally{await context.close();}
+ await writeFile(out+'/result.json',JSON.stringify({result:'passed',capturedAt:new Date().toISOString(),node:process.version,browser:browser.version(),deployment:'dpl_bhx76pgozg4Djw3mbBayzay7VrxS',source:'a0bf55176dd4df4d27763bfeb2cf97e36abe4d15',base,checks,scope:'Authenticated exact-source preview using synthetic inputs; temporary auth values are not recorded. No production or account operations.'},null,2)+'\n');
+ console.log(JSON.stringify({result:'passed',checks:checks.length}));
+}finally{if(browser)await browser.close();}

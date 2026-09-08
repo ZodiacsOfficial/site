@@ -1,0 +1,31 @@
+import fs from 'node:fs';import path from 'node:path';import{createHash}from'node:crypto';
+process.env.REVIEW_HELPER_ONLY='1';const{run}=await import('./probe.mjs');
+const work=path.dirname(new URL(import.meta.url).pathname);
+const loaderCases=[
+ ['parenthesized-dynamic-literal','import(("astronomy-engine"));','reject'],
+ ['parenthesized-require-literal','require(("astronomy-engine"));','reject'],
+ ['parenthesized-require-callee','(require)("astronomy-engine");','reject'],
+ ['versioned-cdn-static','import "https://esm.sh/astronomy-engine@2.1.19";','decision-external-vendor'],
+ ['cdn-dynamic','import("https://esm.sh/astronomy-engine");','decision-external-vendor'],
+ ['comment-static','import /* explanatory comment */ "astronomy-engine";','reject'],
+ ['inert-template','export const metadata=`astronomy-engine`;','pass'],
+ ['inert-import-string','export const notes=`import("astronomy-engine");`;','pass'],
+ ['aliased-dynamic','const dependency="astronomy-engine";import(dependency);','declared-data-flow-limit'],
+ ['computed-dynamic','import("astronomy-"+"engine");','declared-data-flow-limit'],
+ ];
+const results=[];
+for(const[name,code,expected]of loaderCases){const changes={'dist/_astro/receipt.fixture.js':code};const result=run(name,changes);const old=run(name,{
+ ...changes,'dist/_astro/full.fixture.js':'export const engine=["Value is not boolean:","Light-travel time solver did not converge"];',
+},'baseline');results.push({...result,expected,source:code,baselineStatus:old.status});}
+const closureCases=[
+ ['comment-local-side-effect',{'dist/_astro/client.fixture.js':'import /* comment */ "./engine-core.fixture.js";'},'reject-home'],
+ ['escaped-local-reference',{'dist/_astro/client.fixture.js':String.raw`import "./engine-\u0063ore.fixture.js";`},'reject-home'],
+ ['reexport-home',{'dist/_astro/client.fixture.js':'export /* comment */ * from "./engine-core.fixture.js";'},'reject-home'],
+ ['cycle-shared',{'dist/_astro/full.fixture.js':'import "./a.fixture.js"; import "./engine-core.fixture.js";','dist/_astro/a.fixture.js':'import "./full.fixture.js"; export const x=1;'},'pass'],
+ ['whitespace-source-sideeffect',{'src/islands/Unexpected.ts':'import "astronomy-engine";'},'existing-source-regex-limit'],
+ ['comment-source-named',{'src/islands/Unexpected.ts':'import /* detail */ { x } from "astronomy-engine";'},'reject-source'],
+ ];
+for(const[name,changes,expected]of closureCases)results.push({...run(name,changes),expected});
+const entropy=seed=>Array.from({length:900},(_,index)=>createHash('sha256').update(`${seed}:${index}`).digest('base64')).join('');
+results.push({...run('reexport-two-over-budget',{'dist/_astro/full.fixture.js':'export { engine } from "./engine-core.fixture.js";export * from "./large-a.fixture.js";export * from "./large-b.fixture.js";','dist/_astro/large-a.fixture.js':`export const a=${JSON.stringify(entropy('a'))};`,'dist/_astro/large-b.fixture.js':`export const b=${JSON.stringify(entropy('b'))};`}),expected:'reject-engine-closure-budget'});
+fs.writeFileSync(path.join(work,'adversarial-results.json'),JSON.stringify({at:new Date().toISOString(),node:process.version,results},null,2)+'\n');console.log(JSON.stringify(results.map(({name,status,expected,baselineStatus})=>({name,status,expected,baselineStatus})),null,2));
