@@ -1,0 +1,21 @@
+import { ENGINE_VERSION, natalChart, type BirthInput, type Chart } from '@zodiacs/engine';
+import { resolveBirth, resolveLocalToUtc, offsetAt, type LocalBirthInput, type LocalTimeResolution } from '@zodiacs/engine/geo';
+import { createNatalEnvelope, parseNatalEnvelope, serializeNatalEnvelope, natalReplayInput, redactNatalEnvelope, type NatalEnvelope, type NatalEnvelopeContext, type NatalDiagnostic } from '@zodiacs/engine/receipt';
+const version: string=ENGINE_VERSION;
+const local: LocalBirthInput={date:'1914-01-01',time:'00:00',timeZone:'America/Manaus',latitude:-3.1,longitude:-60.02,timeKnown:true,houseSystem:'placidus'};
+const input: BirthInput=resolveBirth(local);
+const resolved: LocalTimeResolution=resolveLocalToUtc(local.date,local.time!,local.timeZone);
+const offset: number=offsetAt(local.timeZone,resolved.utc.getTime());
+const context: NatalEnvelopeContext={reference:'supplied-instant',localResolution:{date:local.date,time:local.time!,timeZone:local.timeZone,offsetMinutes:offset,gapShiftMinutes:4/60,policy:{fold:'earlier',gap:'shift-forward'}}};
+const chart: Chart=natalChart(input);
+const envelope: NatalEnvelope=createNatalEnvelope(chart,context);
+const parsed=parseNatalEnvelope(serializeNatalEnvelope(envelope));
+if(parsed.ok){const replay:BirthInput=natalReplayInput(parsed.envelope);const replayed:Chart=natalChart(replay);const diagnostic:NatalDiagnostic=redactNatalEnvelope(parsed.envelope);void[replayed,diagnostic];}else{const code:string=parsed.code;void code;}
+const unknown: BirthInput=resolveBirth({date:'1914-01-01',timeZone:'America/Manaus',timeKnown:false});
+const polar: Chart=natalChart(resolveBirth({date:'2024-01-01',time:'12:00',timeZone:'Arctic/Longyearbyen',latitude:89,longitude:15.63,houseSystem:'placidus',timeKnown:true}));
+// Public declarations must reject unsupported policies and invalid house systems.
+// @ts-expect-error Unsupported fold policy is deliberately rejected by the published declarations.
+const invalidPolicy: NatalEnvelopeContext={localResolution:{date:'1914-01-01',time:'00:00',timeZone:'America/Manaus',offsetMinutes:-240,gapShiftMinutes:4/60,policy:{fold:'later',gap:'shift-forward'}}};
+// @ts-expect-error Unsupported house system is deliberately rejected by the published declarations.
+const invalidHouse: LocalBirthInput={date:'2024-01-01',timeZone:'UTC',houseSystem:'invalid'};
+void[version,unknown,polar,invalidPolicy,invalidHouse];

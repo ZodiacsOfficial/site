@@ -1,0 +1,40 @@
+{
+  "baseSource": "804c70309d2508e67e8462df526b5f9e71a112e9",
+  "originalGate": "same three pre-existing macOS height failures",
+  "baselinesUpdated": false,
+  "newMasks": 0,
+  "pixelmatchThreshold": 0.1,
+  "maxDiffRatio": 0.001,
+  "cases": [
+    {
+      "name": "birth-chart-kahlo-desktop",
+      "width": 1440,
+      "height": 9502,
+      "currentSha256": "b55f7ba96d2c253a34b644e0096967619ce01e29a5eb55edc4d5ea08071a4d40",
+      "baseSha256": "b55f7ba96d2c253a34b644e0096967619ce01e29a5eb55edc4d5ea08071a4d40",
+      "byteIdentical": true,
+      "scoredDifferentPixels": 0,
+      "scoredDiffRatio": 0
+    },
+    {
+      "name": "birth-chart-kahlo-mobile",
+      "width": 390,
+      "height": 14011,
+      "currentSha256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "baseSha256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "byteIdentical": true,
+      "scoredDifferentPixels": 0,
+      "scoredDiffRatio": 0
+    },
+    {
+      "name": "birth-chart-kahlo-desktop-reduced-motion",
+      "width": 1440,
+      "height": 9502,
+      "currentSha256": "6485a2f54de2f8c14acf300ca36008c4d55631bdf7c8bb1a35ae221120094553",
+      "baseSha256": "6485a2f54de2f8c14acf300ca36008c4d55631bdf7c8bb1a35ae221120094553",
+      "byteIdentical": true,
+      "scoredDifferentPixels": 0,
+      "scoredDiffRatio": 0
+    }
+  ]
+}

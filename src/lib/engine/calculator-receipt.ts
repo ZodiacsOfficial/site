@@ -31,8 +31,8 @@ export function computeCalculatorReceipt(input: BirthInput, local: CalculatorWal
     wall.setUTCHours(time.hour, time.minute, 0, 0);
     const instant = new Date(input.utc).getTime();
     const gapShiftMinutes = (instant + local.offsetMinutes * 60_000 - wall.getTime()) / 60_000;
-    // The existing minute-resolution resolver can miss a historical shift of
-    // only seconds. Preserve its chart without certifying inconsistent context.
+    // Caller flags and captured wall-time context can disagree, including
+    // older minute-resolution results. Preserve the chart without certifying them.
     // Do not round the shift away, invent a flag, or calculate a second time.
     if (gapShiftMinutes < 0 || (input.flags?.includes('dst-gap') ?? false) !== (gapShiftMinutes > 0)) return null;
     const { chart, envelope } = computePortableChart(input, {

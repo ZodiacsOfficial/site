@@ -87,3 +87,26 @@ macOS baseline failures are retained with no scored change. Evidence is byte-ver
 separate until owner/account lifecycle integration is complete. Next numerical
 slice adopts exact rc.6 plus matching site seconds resolution; first-existing
 local-date endpoints require a separate contract and caller migration.
+
+
+The endpoint follow-up has 17 Node and 17 native Chrome controls, with nine
+existing mismatches in each runtime. Civil dates may be empty or disconnected
+in UTC; even two standard start-of-day calls lose repeated-date segments.
+[Independent architecture evidence](evidence/local-date-endpoints/review/REVIEW.md.log)
+rejects claiming complete coverage from denser Intl sampling. The next bounded
+prerequisite is an inactive interval-set/empty/unresolved API backed by an explicit
+complete-transition provider and a feature-detected native Temporal adapter.
+No existing unknown-time consumer will be changed until runtime compatibility,
+complex-date Sun/Moon policy and accurate unavailable/stale-result behavior pass
+separate review. Node 22's missing native Temporal is a recorded compatibility
+constraint, not an excuse to fabricate complete coverage from hourly samples.
+
+
+2026-09-08 rc.6 checkpoint: integrate and deliver the frozen site precision
+adoption above #427; local build/check/4,859 tests, 27 receipt browser groups,
+13 developer/API cases, 12 share cases and 18 unchanged captures pass. The
+cross-runtime receipt assertion was diagnosed by controlled Math replay; it
+requires no product correction or tolerance change. Hosted candidate checks
+remain pending. The next independent slice is the inactive three-file local-date
+interval primitive, whose author and independent review are complete. Keep its
+activation and unsupported-runtime/complex-date caller policy separate.

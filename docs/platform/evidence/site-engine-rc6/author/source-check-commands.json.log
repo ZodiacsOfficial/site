@@ -1,0 +1,72 @@
+[
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/time/localToUtc-precision.test.ts"
+    ],
+    "log": "precision-baseline.log",
+    "exitCode": 1,
+    "outcome": "23/27 fail against old resolver with actual rc6 package",
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/time/localToUtc-precision.test.ts",
+      "src/lib/time/localToUtc.test.ts",
+      "src/lib/engine/package-integration.test.ts",
+      "src/lib/engine/portable.test.ts",
+      "src/lib/engine/engine.test.ts",
+      "src/lib/chart-date-certainty.test.ts",
+      "src/lib/scene/scene.test.ts"
+    ],
+    "log": "precision-focused.log",
+    "exitCode": 1,
+    "outcome": "130 tests pass; engine suite fails Vite dependency symlink resolution",
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/time/localToUtc-precision.test.ts",
+      "src/lib/time/localToUtc.test.ts",
+      "src/lib/engine/package-integration.test.ts",
+      "src/lib/engine/portable.test.ts",
+      "src/lib/engine/engine.test.ts",
+      "src/lib/chart-date-certainty.test.ts",
+      "src/lib/scene/scene.test.ts"
+    ],
+    "log": "precision-focused-corrected.log",
+    "exitCode": 0,
+    "outcome": "183 tests pass after unchanged dependency locally copied",
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "--target",
+      "ES2022",
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler",
+      "--strict",
+      "--skipLibCheck",
+      "--types",
+      "node,astro/client",
+      "src/lib/time/localToUtc.ts",
+      "src/lib/time/localToUtc-precision.test.ts"
+    ],
+    "log": "precision-types.log",
+    "exitCode": 0,
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption"
+  }
+]

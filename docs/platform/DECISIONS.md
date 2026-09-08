@@ -431,3 +431,25 @@ budget or require all markers in the entry shim. Inspect actual decoded literal
 module-loading syntax so inert provenance strings are permitted while concrete
 vendor imports, escapes, transparent parentheses and CDN targets are rejected.
 This is a bounded regression checker, not arbitrary JavaScript data-flow proof.
+
+
+## C-010 — Adopt historical precision together with truthful receipt context
+
+The site adopts exact engine rc.6 and the matching local resolver correction in
+one separate slice. Match seconds and milliseconds against the requested minute;
+convert fractional-minute offsets to integer milliseconds without losing IANA
+seconds. Preserve the existing earlier-fold/forward-gap and offset-sampling
+policies. This corrects missed seconds-sized gaps and adjacent false folds; it
+is not complete transition discovery or first-existing-date coverage.
+
+Keep the receipt boundary unchanged at runtime. Existing deliberately inconsistent
+legacy flags must still be refused before calculation; corrected current flags
+can now produce a receipt from the same calculation. Update the version pin,
+checksum, scene version field and current developer/source metadata, retaining
+all prior artifacts and evidence. Generate manifest identities with the existing
+builder. Separate SDK source, immutable archive carrier and real site evidence
+carrier; never publish a placeholder commit or relabel old-version reports.
+
+No account format, unknown-time reference, ownership capability or published
+schema is expanded. Precise date membership remains a separate prerequisite with
+empty/disconnected/unresolved outcomes and explicit provider guarantees.

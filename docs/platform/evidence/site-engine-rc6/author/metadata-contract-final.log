@@ -1,0 +1,10 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-seconds-adoption
+
+ ✓ scripts/platform-candidate-docs.test.mjs (22 tests) 145ms
+
+ Test Files  1 passed (1)
+      Tests  22 passed (22)
+   Start at  14:03:32
+   Duration  448ms (transform 30ms, setup 0ms, collect 40ms, tests 145ms, environment 0ms, prepare 77ms)
+

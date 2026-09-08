@@ -1,0 +1,59 @@
+{
+  "helperExecutableCodeIdentical": true,
+  "helperTransformedSha256": "b6f7c6010d7065529285e211aa81af61ad5de066c8dbd23ec20851dee2e303e3",
+  "unmodifiedBaseDependencies": [
+    {
+      "file": "src/lib/engine/portable.ts",
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "unchangedFromBase": true
+    },
+    {
+      "file": "src/lib/engine/chart-adapter.ts",
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "unchangedFromBase": true
+    },
+    {
+      "file": "src/lib/engine/full.ts",
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+      "unchangedFromBase": true
+    },
+    {
+      "file": "src/lib/engine/types.ts",
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "unchangedFromBase": true
+    }
+  ],
+  "inputs": [
+    {
+      "file": "candidate/src/lib/time/civil-date.ts",
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "file": "counted-public.mjs",
+      "sha256": "72157529b0deebb978aa72cbe4ca1e431447b5026a76ab4d7014608256fe6aa1"
+    },
+    {
+      "file": "candidate/src/lib/engine/chart-adapter.ts",
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9"
+    },
+    {
+      "file": "candidate/src/lib/engine/portable.ts",
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f"
+    },
+    {
+      "file": "candidate/src/lib/engine/calculator-receipt.ts",
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d"
+    },
+    {
+      "file": "candidate/src/lib/engine/full.ts",
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79"
+    },
+    {
+      "file": "helper-entry.ts",
+      "sha256": "a97c41e6a11787c7b128a39bdbef234dbc8e64c7ab7dcad3cbb90d7af6767746"
+    }
+  ],
+  "instrumentation": "Only public natalChart import passes through a transparent count wrapper that delegates exactly once to the physically extracted public archive; no product source mutation or natal stub.",
+  "externalPackagePath": "/private/tmp/zodiacs-platform-site-seconds-independent-review/node_modules/@zodiacs/engine",
+  "bundleSha256": "96f64e7a57aa7d8fe6e80d17d11eabb95dbbb7c670f14eca1b983f027fe189a4"
+}

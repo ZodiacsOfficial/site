@@ -1,29 +1,38 @@
 # Vendored @zodiacs/engine artifact
 
-`zodiacs-engine-0.1.1-rc.5.tgz` is the exact npm pack artifact consumed by this
+`zodiacs-engine-0.1.1-rc.6.tgz` is the exact npm pack artifact consumed by this
 site. The standalone starter keeps its separate engine `0.1.1-rc.3` pin and
 immutable project archive. The optional ownership SDK remains separate.
 
-- Package: `@zodiacs/engine@0.1.1-rc.5` (unpublished candidate)
+- Package: `@zodiacs/engine@0.1.1-rc.6` (unpublished candidate)
 - Source repository: `https://github.com/ZodiacsOfficial/sdk`
 - Source package: `packages/engine`
-- Source commit: `97f5e8d01828f4b85ffa845825dee9acff4695e4`
-- Artifact carrier commit: `333369256af683c560603dd1e6411dd7a07adb1f`
-- Artifact SHA-256: `1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`
-- [Immutable anonymous download](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/333369256af683c560603dd1e6411dd7a07adb1f/artifacts/zodiacs-engine-0.1.1-rc.5.tgz)
-- Archive: 23 files, 36,065 packed bytes, 121,212 unpacked bytes.
+- Source commit: `fb57af7a2cd7c30983cc8fb655183d5a11f9cf30`
+- Artifact carrier commit: `51129a197cd3f2a2a8c966fb797ea4da1e147b3d`
+- Artifact SHA-256: `09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e`
+- [Immutable anonymous download](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/51129a197cd3f2a2a8c966fb797ea4da1e147b3d/artifacts/zodiacs-engine-0.1.1-rc.6.tgz)
+- Archive: 23 files, 36,591 packed bytes, 122,552 unpacked bytes.
 
 The public SDK archive was downloaded without credentials and checked against
 the recorded SHA-256. Its source identity and artifact carrier identify separate
-commits. The candidate adds the optional draft natal-envelope codec and
-GeoNames/input validation fixes while retaining the site-only internal adapter
-boundaries. The site does not yet connect the receipt codec to account or
+commits. The candidate corrects second-precise historical wall-time matching and
+floating-point offset conversion noise while retaining the optional draft
+natal-envelope codec and site-only internal adapter boundaries. The site does not yet connect the receipt codec to account or
 saved-chart storage. An imported receipt remains an untrusted claim.
 
-New checks of this artifact are recorded in [the rc.5 adoption evidence](../docs/platform/evidence/site-engine-rc5/README.md).
+New checks of this artifact are recorded in [the rc.6 adoption evidence](../docs/platform/evidence/site-engine-rc6/README.md).
 Earlier evidence and immutable artifacts retain their original identities.
 The site pin is not evidence of npm publication, production deployment,
 required human review, or external adoption.
+
+## Previous rc.5 site candidate
+
+`zodiacs-engine-0.1.1-rc.5.tgz` and its checksum remain unchanged. Source commit:
+`97f5e8d01828f4b85ffa845825dee9acff4695e4`; immutable artifact carrier:
+`333369256af683c560603dd1e6411dd7a07adb1f`; SHA-256:
+`1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`.
+Its original [rc.5 evidence](../docs/platform/evidence/site-engine-rc5/README.md)
+retains the earlier package identity and does not certify rc.6.
 
 ## Previous site candidate
 

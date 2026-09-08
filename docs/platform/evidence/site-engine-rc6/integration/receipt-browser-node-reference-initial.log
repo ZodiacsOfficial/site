@@ -1,0 +1,87 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  {
+    receipt: {
+      conventions: {
+        angles: 'gast-and-mean-obliquity',
+        aspects: 'major-aspects;sun-moon-eight-planets;no-nodes',
+...
+          b: 'Mars',
++         orb: 0.915803519045653,
+-         orb: 0.9158035190457099,
+          type: 'sextile'
+        },
+        {
+          a: 'Saturn',
+          applying: true,
+...
+          b: 'Saturn',
++         orb: 4.444716662514679,
+-         orb: 4.444716662514736,
+          type: 'trine'
+        },
+        {
+          a: 'Sun',
+          applying: false,
+...
+          lat: 0.05954163783240044,
++         lon: 269.17737708162826,
+-         lon: 269.1773770816282,
+          retrograde: false,
+          sign: 'sagittarius',
+          speed: 1.2569498757269457
+        },
+        {
+...
+          sign: 'scorpio',
++         speed: 0.5627572174576017
+-         speed: 0.5627572174575448
+        },
+        {
+          body: 'Jupiter',
+          degree: 17.871991408141525,
+          lat: -0.19031473909164634,
+...
+          body: 'North Node',
++         degree: 3.0330749182963928,
+-         degree: 3.0330749194927193,
+          lat: 0,
++         lon: 93.03307491829639,
+-         lon: 93.03307491949272,
+          retrograde: false,
+          sign: 'cancer',
++         speed: 0.013379856744563767
+-         speed: 0.0133798590219385
+        },
+        {
+          body: 'South Node',
++         degree: 3.0330749182963928,
+-         degree: 3.0330749194927193,
+          lat: 0,
++         lon: 273.0330749182964,
+-         lon: 273.0330749194927,
+          retrograde: false,
+          sign: 'capricorn',
++         speed: 0.013379856744563767
+-         speed: 0.0133798590219385
+        }
+      ],
+      houses: {
+        cusps: [
+          199.6215270897413,
+
+    at file:///private/tmp/zodiacs-platform-rc6-integration/receipt-drive.mjs:88:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Object],
+  expected: [Object],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+{
+  "run": "/private/tmp/zodiacs-platform-rc6-integration/browser-1788851392756",
+  "passed": 10,
+  "failed": 1
+}
