@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "historical": 16,
+  "leafDifferences": 110,
+  "maxLongitude": {
+    "zone": "America/Port-au-Prince",
+    "path": "$.bodies.10.lon",
+    "chrome": 93.03329536345802,
+    "node": 93.03329536743905,
+    "delta": -3.981028839916689e-9,
+    "absolute": 3.981028839916689e-9
+  },
+  "maxSpeed": {
+    "zone": "Asia/Colombo",
+    "path": "$.bodies.10.speed",
+    "chrome": 0.009394974967108283,
+    "node": 0.00939499334924676,
+    "delta": -1.8382138478045817e-8,
+    "absolute": 1.8382138478045817e-8
+  },
+  "firstDifference": {
+    "index": 17,
+    "node": [
+      "cos",
+      [
+        -81.09991224236799
+      ],
+      0.8356414579161423
+    ],
+    "chrome": [
+      "cos",
+      [
+        -81.09991224236799
+      ],
+      0.8356414579161422
+    ]
+  }
+}

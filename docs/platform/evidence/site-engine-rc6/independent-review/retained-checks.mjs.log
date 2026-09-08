@@ -1,0 +1,88 @@
+function invariant(condition, message) { if (!condition) throw new Error(message); }
+function canonical(value) { if (Array.isArray(value)) return value.map(canonical); if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])); return value; }
+function same(a, b, message) { invariant(JSON.stringify(canonical(a)) === JSON.stringify(canonical(b)), message); }
+const simple = r => ({ instant: r.utc.toISOString(), offsetMinutes: r.offsetMinutes, flags: r.flags });
+function wallMs(date, time) { const [y,m,d]=date.split('-').map(Number),[h,min]=time.split(':').map(Number);const out=new Date(0);out.setUTCFullYear(y,m-1,d);out.setUTCHours(h,min,0,0);return out.getTime(); }
+const formatters=new Map();
+function fullWall(zone, ms) {
+ if(!formatters.has(zone))formatters.set(zone,new Intl.DateTimeFormat('en-US',{timeZone:zone,calendar:'gregory',numberingSystem:'latn',era:'short',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',fractionalSecondDigits:3,hourCycle:'h23'}));
+ const parts=formatters.get(zone).formatToParts(ms),p=type=>parts.find(part=>part.type===type)?.value;
+ invariant(p('era')==='AD'||p('era')==='BC','Unrecognized Gregorian era');const year=p('era')==='BC'?1-Number(p('year')):Number(p('year'));
+ const date=new Date(0);date.setUTCFullYear(year,Number(p('month'))-1,Number(p('day')));date.setUTCHours(Number(p('hour')),Number(p('minute')),Number(p('second')),Number(p('fractionalSecond')));
+ return{milliseconds:date.getTime(),second:Number(p('second')),millisecond:Number(p('fractionalSecond')),parts};
+}
+export function transitionChecks(baseline,candidate,retained) {
+ const results=[];
+ for(const row of retained){
+  const old=baseline.resolveLocalToUtc(row.date,row.time,row.zone),fresh=candidate.resolveLocalToUtc(row.date,row.time,row.zone);
+  same(simple(old),row.site,'Baseline differs from retained executed control');
+  same(simple(fresh),{instant:row.exactModel.instant,offsetMinutes:row.exactModel.offsetMinutes,flags:row.exactModel.flags},'Patch differs from independently predicted control');
+  invariant(old.utc.getTime()===fresh.utc.getTime(),'Unexpected instant change');invariant(old.offsetMinutes===fresh.offsetMinutes,'Unexpected offset change');
+  const actualWall=fullWall(row.zone,fresh.utc.getTime()),typed=wallMs(row.date,row.time),shiftMs=actualWall.milliseconds-typed;
+  invariant(Number.isSafeInteger(fresh.utc.getTime()),'Nonintegral instant');
+  invariant(actualWall.milliseconds-fresh.utc.getTime()===Math.round(fresh.offsetMinutes*60000),'Actual Intl offset mismatch');
+  invariant(fresh.flags.includes('dst-gap')===(shiftMs>0),'Gap flag disagrees with independently formatted actual wall shift');invariant(shiftMs>=0,'Negative forward shift');
+  if(!fresh.flags.includes('dst-gap')){invariant(actualWall.milliseconds===typed,'Exact-time candidate does not reproduce civil timestamp');invariant(actualWall.second===0&&actualWall.millisecond===0,'Exact-time candidate shortened seconds or milliseconds');}
+  invariant(fresh.flags.includes('lmt')===(Math.abs(fresh.offsetMinutes%1)>1e-9),'LMT flag mismatch');
+  results.push({date:row.date,time:row.time,zone:row.zone,baseline:simple(old),candidate:simple(fresh),shiftMilliseconds:shiftMs,flagsCorrected:JSON.stringify(old.flags)!==JSON.stringify(fresh.flags),secondsPostcondition:true,millisecondsPostcondition:true});
+ }
+ // Prove the true four-second fold has two full-wall matches and retains earlier choice.
+ const denver='America/Denver',first=Date.parse('1883-11-18T18:59:56.000Z'),second=Date.parse('1883-11-18T19:00:00.000Z'),typed=wallMs('1883-11-18','12:00');
+ invariant(fullWall(denver,first).milliseconds===typed&&fullWall(denver,second).milliseconds===typed,'True Denver fold lost an exact candidate');
+ same(simple(candidate.resolveLocalToUtc('1883-11-18','12:00',denver)),{instant:'1883-11-18T18:59:56.000Z',offsetMinutes:-(6*60+59+56/60),flags:['dst-fold','lmt']},'True Denver fold did not select earlier instant');
+ return{count:results.length,corrected:results.filter(x=>x.flagsCorrected).length,instantsChanged:0,fullWallPostconditions:results.length,trueDenverFold:{first:new Date(first).toISOString(),second:new Date(second).toISOString(),millisecondsApart:4000,bothExact:true,earlierSelected:true},results};
+}
+export function settingsChecks(baseline,candidate) {
+ const base={date:'1914-01-01',timeZone:'America/Manaus'};
+ const valid=[
+  {name:'omitted-time-default-noon',input:base,known:false,instant:'1914-01-01T16:00:00.000Z'},
+  {name:'supplied-time-infers-known',input:{...base,time:'00:01'},known:true,instant:'1914-01-01T04:01:00.000Z'},
+  {name:'false-without-time-noon',input:{...base,timeKnown:false},known:false,instant:'1914-01-01T16:00:00.000Z'},
+  {name:'false-with-explicit-time-preserves-existing-contract',input:{...base,timeKnown:false,time:'08:30'},known:false,instant:'1914-01-01T12:30:00.000Z'},
+  {name:'true-with-explicit-time',input:{...base,timeKnown:true,time:'00:00',houseSystem:'placidus',latitude:-3.1,longitude:-60.02},known:true,instant:'1914-01-01T04:00:04.000Z'},
+  {name:'year-zero-noon',input:{date:'0000-02-29',timeZone:'UTC',timeKnown:false},known:false,instant:'0000-02-29T12:00:00.000Z'},
+ ];
+ const results=valid.map(row=>{const old=baseline.resolveBirth(row.input),fresh=candidate.resolveBirth(row.input);invariant(fresh.timeKnown===row.known&&fresh.utc.toISOString()===row.instant,'Time-known setting changed');invariant(old.timeKnown===fresh.timeKnown&&old.utc.getTime()===fresh.utc.getTime(),'Baseline time-known setting differs');same({latitude:fresh.latitude,longitude:fresh.longitude,houseSystem:fresh.houseSystem},{latitude:old.latitude,longitude:old.longitude,houseSystem:old.houseSystem},'Birth setting changed');return{name:row.name,timeKnown:fresh.timeKnown,instant:fresh.utc.toISOString(),flags:fresh.flags};});
+ const malformed=[
+  {name:'missing-known-time',input:{...base,timeKnown:true}},
+  ...['false',0,null,{}].map(value=>({name:`malformed-timeKnown-${String(value)}`,input:{...base,timeKnown:value}})),
+  {name:'invalid-house',input:{...base,houseSystem:'invalid'}}, {name:'unpaired-coordinate',input:{...base,latitude:0}},
+  {name:'latitude-infinity',input:{...base,latitude:Infinity,longitude:0}}, {name:'longitude-outside-range',input:{...base,latitude:0,longitude:181}},
+  {name:'impossible-date',input:{...base,date:'2001-02-29'}}, {name:'date-suffix',input:{...base,date:'2001-01-01\n'}},
+  {name:'invalid-time-even-when-unknown',input:{...base,timeKnown:false,time:'24:00'}}, {name:'time-suffix',input:{...base,time:'08:30\n'}},
+  {name:'missing-zone',input:{date:'2001-01-01'}}, {name:'invalid-zone',input:{...base,timeZone:'Synthetic/Invalid'}},
+  {name:'null-input',input:null},{name:'array-input',input:[]},
+ ];
+ const rejected=malformed.map(row=>{let oldError,freshError;try{baseline.resolveBirth(row.input)}catch(error){oldError=error}try{candidate.resolveBirth(row.input)}catch(error){freshError=error}invariant(oldError instanceof RangeError&&freshError instanceof RangeError,'Malformed settings must reject before chart');invariant(oldError.message===freshError.message,'Existing guard diagnostic changed');return{name:row.name,baselineRejected:true,candidateRejected:true,guardUnchanged:true};});
+ return{validCount:results.length,rejectedCount:rejected.length,valid:results,rejected};
+}
+export function receiptChecks(baseline,candidate) {
+ const fixtures=[
+  ['manaus-gap','1914-01-01','00:00','America/Manaus',true,-3.1,-60.02],
+  ['caracas-LMT-gap','1890-01-01','00:00','America/Caracas',true,10.48,-66.9],
+  ['dawson-gap','1884-01-01','00:00','America/Dawson_Creek',true,55.76,-120.24],
+  ['denver-true-fold','1883-11-18','12:00','America/Denver',true,39.74,-104.99],
+  ['mexico-LMT','1907-07-06','08:30','America/Mexico_City',true,19.43,-99.13],
+  ['manaus-unknown-noon','1914-01-01','12:00','America/Manaus',false,-3.1,-60.02],
+  ['apia-skipped-noon','2011-12-30','12:00','Pacific/Apia',false,-13.83,-171.75],
+ ];
+ return fixtures.map(([name,date,time,timeZone,timeKnown,latitude,longitude])=>{
+  const old=baseline.resolveLocalToUtc(date,time,timeZone),fresh=candidate.resolveLocalToUtc(date,time,timeZone);
+  const input={utc:fresh.utc,latitude,longitude,houseSystem:'placidus',timeKnown,flags:fresh.flags};
+  const oldInput={...input,utc:old.utc,flags:old.flags};
+  const shift=(fullWall(timeZone,fresh.utc.getTime()).milliseconds-wallMs(date,time))/60000;
+  const context={reference:timeKnown?'supplied-instant':'local-noon',localResolution:{date,time,timeZone,offsetMinutes:fresh.offsetMinutes,gapShiftMinutes:shift,policy:{fold:'earlier',gap:'shift-forward'}}};
+  const chart=candidate.natalChart(input),oldChart=baseline.natalChart(oldInput);
+  const numbers=value=>({bodies:value.bodies,angles:value.angles,houses:value.houses,aspects:value.aspects});same(numbers(chart),numbers(oldChart),'Core numerical results changed');
+  const envelope=candidate.createNatalEnvelope(chart,context),wire=candidate.serializeNatalEnvelope(envelope),parsed=candidate.parseNatalEnvelope(wire);invariant(parsed.ok,'Candidate receipt failed roundtrip');same(parsed.envelope,envelope,'Receipt roundtrip changed values');
+  const replay=candidate.natalReplayInput(parsed.envelope);same(numbers(candidate.natalChart(replay)),numbers(chart),'Receipt replay changed numerical result');
+  invariant(new Date(replay.utc).getTime()===fresh.utc.getTime(),'Replay instant changed');invariant(envelope.receipt.sourceInstant===null,'Invented source instant');
+  same(envelope.receipt.localResolution,context.localResolution,'Context changed');same(envelope.receipt.inputFlags,fresh.flags,'Receipt flags differ from resolver');
+  invariant(chart.engineVersion==='0.1.1-rc.6'&&oldChart.engineVersion==='0.1.1-rc.5','Version identity missing');
+  if(!timeKnown)invariant(envelope.receipt.houses.actual===null&&envelope.receipt.houses.absenceReason==='unknown-time','Unknown time acquired houses');
+  let baselineContextSucceeded=true;try{baseline.createNatalEnvelope(oldChart,context)}catch{baselineContextSucceeded=false;}
+  invariant(baselineContextSucceeded!==['manaus-gap','caracas-LMT-gap','dawson-gap'].includes(name),'Baseline regression control unexpected');
+  const oldEnvelope=baseline.createNatalEnvelope(oldChart);invariant(envelope.schema===oldEnvelope.schema&&envelope.receipt.schema===oldEnvelope.receipt.schema,'Receipt schema changed');
+  return{name,instant:fresh.utc.toISOString(),timeKnown,flags:fresh.flags,gapShiftMinutes:shift,baselineContextSucceeded,candidateContextSucceeded:true,codecRoundtrip:true,replayNumericsEqual:true,baselineNumericsEqual:true,sourceInstant:null,houseAbsence:envelope.receipt.houses.absenceReason,wireBytes:new TextEncoder().encode(wire).length};
+ });
+}

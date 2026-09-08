@@ -1,0 +1,173 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
+
+// candidate/src/lib/engine/calculator-receipt.ts
+import { serializeNatalEnvelope } from "@zodiacs/engine/receipt";
+
+// candidate/src/lib/time/civil-date.ts
+function parseCivilDate(value) {
+  if (typeof value !== "string" || value.length !== 10) return null;
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (month < 1 || month > 12 || day < 1) return null;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const days = month === 2 ? leap ? 29 : 28 : [4, 6, 9, 11].includes(month) ? 30 : 31;
+  return day <= days ? { year, month, day } : null;
+}
+function parseCivilTime(value) {
+  if (typeof value !== "string" || value.length !== 5) return null;
+  const match = /^(\d{2}):(\d{2})$/.exec(value);
+  if (!match) return null;
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  return hour <= 23 && minute <= 59 ? { hour, minute } : null;
+}
+
+// counted-public.mjs
+var counted_public_exports = {};
+__export(counted_public_exports, {
+  count: () => count,
+  natalChart: () => natalChart,
+  reset: () => reset
+});
+__reExport(counted_public_exports, engine_star);
+import * as engine_star from "@zodiacs/engine";
+import { natalChart as actual } from "@zodiacs/engine";
+var calls = 0;
+var natalChart = (input) => {
+  calls++;
+  return actual(input);
+};
+var count = () => calls;
+var reset = () => {
+  calls = 0;
+};
+
+// candidate/src/lib/engine/portable.ts
+import {
+  createNatalEnvelope
+} from "@zodiacs/engine/receipt";
+
+// candidate/src/lib/engine/chart-adapter.ts
+var adaptBody = (position) => ({
+  body: position.body,
+  lon: position.lon,
+  lat: position.lat,
+  speed: position.speed,
+  retrograde: position.retrograde
+});
+function adaptChart(chart, input) {
+  return {
+    input,
+    bodies: chart.bodies.map(adaptBody),
+    angles: chart.angles,
+    houses: chart.houses,
+    aspects: chart.aspects,
+    flags: [...chart.flags],
+    engineVersion: chart.engineVersion
+  };
+}
+
+// candidate/src/lib/engine/portable.ts
+var PortableChartError = class extends Error {
+  code = "calculation_failed";
+  constructor() {
+    super("Unable to prepare a portable chart.");
+    this.name = "PortableChartError";
+  }
+};
+function freezeJson(value) {
+  if (value !== null && typeof value === "object") {
+    for (const child of Object.values(value)) freezeJson(child);
+    Object.freeze(value);
+  }
+  return value;
+}
+function computePortableChart(input, context) {
+  try {
+    const nativeChart = natalChart(input);
+    const envelope = createNatalEnvelope(nativeChart, context);
+    const { receipt } = envelope;
+    const inputSnapshot = freezeJson({
+      utc: receipt.instant,
+      houseSystem: receipt.houses.requested,
+      timeKnown: receipt.timeKnown,
+      flags: [...receipt.inputFlags],
+      ...receipt.coordinates === null ? {} : { ...receipt.coordinates }
+    });
+    const chart = adaptChart(nativeChart, {
+      ...inputSnapshot,
+      utc: new Date(inputSnapshot.utc),
+      flags: [...inputSnapshot.flags]
+    });
+    return { chart, envelope: freezeJson(envelope), inputSnapshot };
+  } catch {
+    throw new PortableChartError();
+  }
+}
+
+// candidate/src/lib/engine/calculator-receipt.ts
+function computeCalculatorReceipt(input, local) {
+  try {
+    if (/^[+-]/.test(local.timeZone)) return null;
+    if (input.timeKnown !== false && input.latitude !== void 0 && Math.abs(input.latitude) === 90) return null;
+    const date = parseCivilDate(local.date);
+    const time = parseCivilTime(local.time);
+    if (!date || !time) throw new PortableChartError();
+    const wall = /* @__PURE__ */ new Date(0);
+    wall.setUTCFullYear(date.year, date.month - 1, date.day);
+    wall.setUTCHours(time.hour, time.minute, 0, 0);
+    const instant = new Date(input.utc).getTime();
+    const gapShiftMinutes = (instant + local.offsetMinutes * 6e4 - wall.getTime()) / 6e4;
+    if (gapShiftMinutes < 0 || (input.flags?.includes("dst-gap") ?? false) !== gapShiftMinutes > 0) return null;
+    const { chart, envelope } = computePortableChart(input, {
+      reference: local.reference,
+      localResolution: {
+        date: local.date,
+        time: local.time,
+        timeZone: local.timeZone,
+        offsetMinutes: local.offsetMinutes,
+        gapShiftMinutes,
+        policy: { fold: "earlier", gap: "shift-forward" }
+      }
+    });
+    return { chart, envelopeJson: serializeNatalEnvelope(envelope) };
+  } catch {
+    throw new PortableChartError();
+  }
+}
+
+// candidate/src/lib/engine/full.ts
+import {
+  bodyLongitude as engineBodyLongitude,
+  computeBodies as engineComputeBodies,
+  computeChart as engineComputeChart,
+  longitudeSpeed as engineLongitudeSpeed
+} from "@zodiacs/engine/internal";
+function computeChart(input) {
+  return adaptChart(engineComputeChart(input), input);
+}
+export {
+  computeCalculatorReceipt,
+  computeChart,
+  count,
+  reset
+};

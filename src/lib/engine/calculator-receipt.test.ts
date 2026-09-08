@@ -33,6 +33,25 @@ function calculate(date: string, time: string, timeZone: string, timeKnown = tru
   return { captured, input, envelope: parsed.envelope };
 }
 
+const historicalGaps = [
+  ["America/Caracas", "1890-01-01", "1890-01-01T04:27:44.000Z", -267.6666666666667, ["lmt"], 0.06666666666666667],
+  ["America/Dawson_Creek", "1884-01-01", "1884-01-01T08:00:56.000Z", -480, [], 0.9333333333333333],
+  ["America/Goose_Bay", "1935-03-30", "1935-03-30T03:30:52.000Z", -210, [], 0.8666666666666667],
+  ["America/Manaus", "1914-01-01", "1914-01-01T04:00:04.000Z", -240, [], 0.06666666666666667],
+  ["America/Paramaribo", "1935-01-01", "1935-01-01T03:40:52.000Z", -220.6, ["lmt"], 0.26666666666666666],
+  ["America/Port-au-Prince", "1890-01-01", "1890-01-01T04:49:20.000Z", -289, [], 0.3333333333333333],
+  ["America/Punta_Arenas", "1890-01-01", "1890-01-01T04:43:40.000Z", -282.75, ["lmt"], 0.9166666666666666],
+  ["America/St_Johns", "1935-03-30", "1935-03-30T03:30:52.000Z", -210, [], 0.8666666666666667],
+  ["America/Whitehorse", "1900-08-20", "1900-08-20T09:00:12.000Z", -540, [], 0.2],
+  ["Asia/Colombo", "1880-01-01", "1879-12-31T18:40:36.000Z", 319.53333333333336, ["lmt"], 0.13333333333333333],
+  ["Asia/Tbilisi", "1924-05-02", "1924-05-01T21:00:49.000Z", 180, [], 0.8166666666666667],
+  ["Brazil/West", "1914-01-01", "1914-01-01T04:00:04.000Z", -240, [], 0.06666666666666667],
+  ["Canada/Newfoundland", "1935-03-30", "1935-03-30T03:30:52.000Z", -210, [], 0.8666666666666667],
+  ["Canada/Yukon", "1900-08-20", "1900-08-20T09:00:12.000Z", -540, [], 0.2],
+  ["Pacific/Norfolk", "1901-01-01", "1900-12-31T12:48:08.000Z", 672, [], 0.13333333333333333],
+  ["Pacific/Tongatapu", "1945-09-10", "1945-09-09T11:40:48.000Z", 740, [], 0.8],
+] as const;
+
 describe('calculator capture from actual civil resolution', () => {
   it.each([-90, 90])('preserves known-time exact-pole %s charts without entering portable calculation', (latitude) => {
     const input = { utc: new Date('2001-12-21T08:30:00Z'), latitude, longitude: 0,
@@ -68,29 +87,9 @@ describe('calculator capture from actual civil resolution', () => {
       .toThrow('Unable to prepare a portable chart.');
     expect(natalChart).not.toHaveBeenCalled();
   });
-  it.each([
-    ["America/Caracas", "1890-01-01", "1890-01-01T04:27:44.000Z", -267.6666666666667, ["lmt"]],
-    ["America/Dawson_Creek", "1884-01-01", "1884-01-01T08:00:56.000Z", -480, []],
-    ["America/Goose_Bay", "1935-03-30", "1935-03-30T03:30:52.000Z", -210, []],
-    ["America/Manaus", "1914-01-01", "1914-01-01T04:00:04.000Z", -240, []],
-    ["America/Paramaribo", "1935-01-01", "1935-01-01T03:40:52.000Z", -220.6, ["lmt"]],
-    ["America/Port-au-Prince", "1890-01-01", "1890-01-01T04:49:20.000Z", -289, []],
-    ["America/Punta_Arenas", "1890-01-01", "1890-01-01T04:43:40.000Z", -282.75, ["lmt"]],
-    ["America/St_Johns", "1935-03-30", "1935-03-30T03:30:52.000Z", -210, []],
-    ["America/Whitehorse", "1900-08-20", "1900-08-20T09:00:12.000Z", -540, []],
-    ["Asia/Colombo", "1880-01-01", "1879-12-31T18:40:36.000Z", 319.53333333333336, ["lmt"]],
-    ["Asia/Tbilisi", "1924-05-02", "1924-05-01T21:00:49.000Z", 180, []],
-    ["Brazil/West", "1914-01-01", "1914-01-01T04:00:04.000Z", -240, []],
-    ["Canada/Newfoundland", "1935-03-30", "1935-03-30T03:30:52.000Z", -210, []],
-    ["Canada/Yukon", "1900-08-20", "1900-08-20T09:00:12.000Z", -540, []],
-    ["Pacific/Norfolk", "1901-01-01", "1900-12-31T12:48:08.000Z", 672, []],
-    ["Pacific/Tongatapu", "1945-09-10", "1945-09-09T11:40:48.000Z", 740, []],
-  ] as const)('preserves the historical %s %s chart when minute-level flags miss a seconds shift', (zone, date, instant, offsetMinutes, flags) => {
-    const resolved = resolveLocalToUtc(date, '00:00', zone);
-    expect(resolved.utc.toISOString()).toBe(instant);
-    expect(resolved.flags).toEqual(flags);
-    const input = { utc: resolved.utc, latitude: 40, longitude: 10,
-      houseSystem: 'whole' as const, timeKnown: true, flags: resolved.flags };
+  it.each(historicalGaps)('refuses deliberately inconsistent legacy flags for %s %s before any natal call', (zone, date, instant, offsetMinutes, flags) => {
+    const input = { utc: new Date(instant), latitude: 40, longitude: 10,
+      houseSystem: 'whole' as const, timeKnown: true, flags: [...flags] };
     const captured = computeCalculatorReceipt(input, { date, time: '00:00', timeZone: zone,
       offsetMinutes, reference: 'supplied-instant' });
     expect(captured).toBeNull();
@@ -98,6 +97,23 @@ describe('calculator capture from actual civil resolution', () => {
     const result = computeChart(input);
     expect(result.input.utc.toISOString()).toBe(instant);
     expect(result.input.flags).toEqual(flags);
+  });
+
+  it.each(historicalGaps)('captures corrected seconds context for %s %s from one natal call', (zone, date, instant, offsetMinutes, legacyFlags, gapShiftMinutes) => {
+    const resolved = resolveLocalToUtc(date, '00:00', zone);
+    expect(resolved.utc.toISOString()).toBe(instant);
+    expect(resolved.flags).toEqual(['dst-gap', ...legacyFlags]);
+    const { captured, input, envelope } = calculate(date, '00:00', zone);
+    expect(natalChart).toHaveBeenCalledTimes(1);
+    expect(captured.chart).toEqual(computeChart(input));
+    expect(envelope.receipt).toMatchObject({
+      instant, inputFlags: ['dst-gap', ...legacyFlags],
+      reference: 'supplied-instant', sourceInstant: null, provenance: null,
+      localResolution: { date, time: '00:00', timeZone: zone, offsetMinutes, gapShiftMinutes,
+        policy: { fold: 'earlier', gap: 'shift-forward' } },
+      houses: { requested: 'placidus', actual: 'whole' },
+    });
+    expect(natalReplayInput(envelope).utc).toBe(instant);
   });
 
   it.each([

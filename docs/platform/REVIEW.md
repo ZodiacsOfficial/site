@@ -83,3 +83,15 @@ macOS baseline failures reproduced without scored drift, separately from
 bundle correction retain their exact identities; [independent evidence](evidence/receipt-export/independent-review/REVIEW.md.log)
 records actual failures and passing controls. Publication/production and SDK #5
 holds remain unchanged. The Astrofolio draft remains outside this integration.
+
+
+The rc.6 site adoption retains frozen source identities and completes the root
+local acceptance described in [the ledger](EVIDENCE.md#rc6-root-acceptance-and-runtime-math-diagnosis--2026-09-08).
+Independent review covers 385 valid time cases and 41 actual helper controls on
+each of Node 22 and 24. Root separately reviewed the three coordinated metadata
+files and verified their real carrier links. The additional runtime discrepancy
+has a controlled causal Math explanation with original failures retained; no
+numerical tolerance or product source changed to dismiss it. These finite checks
+do not resolve required human numerical/legal review, SDK #5's explicit hold,
+unknown-time date coverage or production release authority. The unrelated
+Astrofolio verification draft is excluded from this source and release decision.

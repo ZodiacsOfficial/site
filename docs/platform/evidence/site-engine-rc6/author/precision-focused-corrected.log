@@ -1,0 +1,16 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-seconds-adoption
+
+ ✓ src/lib/time/localToUtc.test.ts (53 tests) 28ms
+ ✓ src/lib/time/localToUtc-precision.test.ts (27 tests) 102ms
+ ✓ src/lib/chart-date-certainty.test.ts (8 tests) 64ms
+ ✓ src/lib/scene/scene.test.ts (15 tests) 49ms
+ ✓ src/lib/engine/portable.test.ts (21 tests) 141ms
+ ✓ src/lib/engine/package-integration.test.ts (6 tests) 190ms
+ ✓ src/lib/engine/engine.test.ts (53 tests) 80ms
+
+ Test Files  7 passed (7)
+      Tests  183 passed (183)
+   Start at  13:41:22
+   Duration  776ms (transform 796ms, setup 0ms, collect 1.57s, tests 653ms, environment 1ms, prepare 758ms)
+

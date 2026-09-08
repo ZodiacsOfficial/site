@@ -1,0 +1,20 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+const sha=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const setup=JSON.parse(fs.readFileSync('setup-identity.json')),results=['22','24'].map(v=>JSON.parse(fs.readFileSync(`node${v}-result.json`)));
+assert.equal(sha('anonymous-engine-rc6.tgz'),setup.archive.sha256);
+for(const [file,hash]of Object.entries(setup.archiveFiles))assert.equal(sha(path.join('node_modules/@zodiacs/engine',file)),hash);
+for(const [name,dependency]of Object.entries(setup.dependencies))for(const[file,hash]of Object.entries(dependency.files))assert.equal(sha(path.join('node_modules',name,file)),hash);
+for(const version of ['22','24']){
+ const paths=fs.readFileSync(`types-node${version}.log`,'utf8').trim().split('\n');
+ assert.ok(paths.some(p=>p.endsWith('/@zodiacs/engine/dist/index.d.ts')));assert.ok(paths.some(p=>p.endsWith('/@zodiacs/engine/dist/geo.d.ts')));assert.ok(paths.some(p=>p.endsWith('/@zodiacs/engine/dist/receipt.d.ts')));
+ assert.ok(paths.every(p=>p.startsWith(process.cwd()+'/')),'TypeScript consumed files outside independent scratch');
+}
+assert.deepEqual(results[0].results,results[1].results);assert.ok(results.every(r=>r.passed&&r.examples===5));
+const log={version:'0.1.1-rc.6',sha256:setup.archive.sha256,publicExamples:'passed',types:'passed',archiveFiles:23,astronomyEngine:'2.1.19',typescript:'5.9.3',runtimes:results.map(({node,icu,tzdb,examples})=>({node,icu,tzdb,examples})),publicImports:results[0].publicImports,publicExampleCases:results[0].results,archiveDeclarationCheck:{strict:true,exactOptionalPropertyTypes:true,skipLibCheck:false,negativeTypes:2,allResolvedFilesInsideScratch:true},installation:setup.extraction,attribution:'Independent automated consumer using an already anonymously downloaded archive; no new download, source rebuild, publication, or human review.',initialHarnessError:'An initial test expected a nonexistent high-latitude-fallback flag. Published declarations specify polar-fallback; corrected the harness and retained its original source/error. No product change.'};
+fs.writeFileSync('public-candidate-consumer.log','Independent public archive consumer verification completed using public exports and published declarations.\n'+JSON.stringify(log,null,2)+'\n');
+fs.writeFileSync('commands.log',`Actual commands, working directory ${process.cwd()}. Every final command exited 0. Initial Node 22 harness failure is retained separately.\npython3 /private/tmp/zodiacs-platform-rc6-public-consumer-review/setup.py > /private/tmp/zodiacs-platform-rc6-public-consumer-review/setup.log 2>&1\n/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node public-consumer.mjs node22-result.json > node22.log 2>&1\n/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node public-consumer.mjs node24-result.json > node24.log 2>&1\n/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/typescript/bin/tsc -p tsconfig.json --pretty false --listFiles > types-node22.log 2>&1\n/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node node_modules/typescript/bin/tsc -p tsconfig.json --pretty false --listFiles > types-node24.log 2>&1\n/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node finalize.mjs\n`);
+const records=fs.readdirSync('.').filter(f=>fs.statSync(f).isFile()&&f!=='manifest.json'&&f!=='finalize.log').sort().map(p=>({path:p,bytes:fs.statSync(p).size,sha256:sha(p)}));
+fs.writeFileSync('manifest.json',JSON.stringify({records},null,2)+'\n');console.log(JSON.stringify({manifestSha256:sha('manifest.json'),recordCount:records.length,consumerLogSha256:sha('public-candidate-consumer.log'),publicExamples:'passed',types:'passed'}));

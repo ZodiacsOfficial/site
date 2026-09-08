@@ -1614,3 +1614,84 @@ Two synthetic hidden-transition schedules disprove unconditional completeness
 and empty-date claims for hourly Intl sampling. This evidence led to an inactive,
 separately authored complete-provider API prerequisite, not a change to #427 or
 an activation of unreviewed unknown-time behavior.
+
+
+## 2026-09-08 — rc.6 site integration underway
+
+Real evidence-only commit `68412f16140f9986b11767d271eda6e14b6aba48` precedes
+the runtime adoption and carries the four actual metadata evidence records.
+Source8 patch `bb8cfee75e5602da24067f44bdd8e49d295f9025f7ceab4dc8db701305b3dc93`,
+#427 receipt companion2 `95f0a05ed8faa02797785c5ead8d42fee3d12e4d3e708b4ad5857b952f70d1cb`,
+and coordinated metadata3 `3b361b824a20e94a623a9327ad5fd74afe8ba9e2f334dfbb35eae9b6e5d1ae36`
+match their frozen file hashes. Offline installation changed one package; npm
+also rewrote unrelated lock metadata. The initial identity check caught it,
+the unwanted lock diff was retained, and the exact reviewed lock bytes restored.
+Every one of the 23 installed package files then matched the actual archive.
+
+[Author evidence](evidence/site-engine-rc6/author/AUTHOR-REVIEW.md.log) has 80
+byte-verified inert records; manifest SHA-256
+`c0e147382d479a9f97c6a99f1f2b57290b11b630edabc29ec80d512d241aa63a`.
+Both Node versions and Chrome execute 16 corrected historical receipts, nine
+civil controls and 96 same-input rc.5/rc.6 numerical comparisons. Native Chrome
+also exercises 13 observer controls before zero observed network/storage/cookie
+calls. The independent fresh public consumer/declaration record is separately
+attributed. [Independent source review](evidence/site-engine-rc6/independent-review/REVIEW.md)
+has 36 byte-verified records, manifest SHA-256
+`6cc5528ada16af1120c65843a639ec9690067b2c29100c578d23c3857590d48e`.
+Each Node version passes 278 retained controls (140 corrected flags and zero
+instant changes), 65 additional transitions, 42 boundaries and 19 malformed
+inputs. All 385 valid cases match the anonymous actual archive. Forty-one actual
+helper controls pass; compiled companion behavior is identical to #427.
+
+Root integration now passes build, 4,859 tests / 413 files, check with zero
+errors/warnings and 11 hints, and 18 captures byte-identical to #427. The unchanged
+engine budget admits its five-chunk 23.3 KB closure. Root browser acceptance is
+pending: an additional deep equality assertion comparing a Chrome receipt to a
+Node reference found small derived numerical differences. The raw result is
+retained and same-browser/prior-version controls are being investigated before
+classification. No original numerical or visual threshold has been loosened.
+
+
+Receipt draft #427 exact-source [Site Check 34195946291](https://github.com/ZodiacsOfficial/site/actions/runs/34195946291)
+now completes successfully with all 14 jobs passing. The final job includes
+original visual/performance and existing feature gates. Its exact source remains
+`804c70309d2508e67e8462df526b5f9e71a112e9`; the READY preview previously passed
+12 real download groups. [Final CI record](evidence/receipt-export/release/ci-34195946291-final.json)
+is retained separately from the earlier progress snapshots. No merge, npm or
+production release is implied by this passing draft acceptance.
+
+
+### rc.6 root acceptance and runtime-math diagnosis — 2026-09-08
+
+The exact 13 frozen source files and two standard generated manifests are pinned
+in [root-source-identity.json](evidence/site-engine-rc6/root-source-identity.json).
+The [root integration manifest](evidence/site-engine-rc6/integration/manifest.json)
+SHA-256 `e1ba3dc88b747bf65ba36c6cae2e35cfb1ef660897d55e12d9526fffa3c37d38`
+seals 84 original records: build/check/all 4,859 tests, 27 actual browser receipt
+groups (all 16 historical fixtures), 13 developer/API checks, 12 existing share
+cases, and 18 captures byte-identical to #427. Fingerprint:
+`4e9f7975ed00c8d9e6b407824fde1088f34b08c5449ab0bafaa574bc5b2f09ff`.
+All three affected chart outputs are also byte-identical to #427 despite the
+same existing macOS baseline height failures. No baseline or threshold changed.
+
+The initial extra cross-runtime deep-equality assertion failed and is preserved.
+[The controlled diagnosis](evidence/site-engine-rc6/runtime-math/REVIEW.md.log)
+proves the root Caracas receipt equals the earlier actual Chrome receipt exactly.
+All 16 historical charts retain exact rc.5/rc.6 numerical parity in each runtime.
+For Caracas, replaying only Node's cosine/sine/atan2 results in Chrome reproduces
+the entire Node chart; all 270,141 Math operation names/arguments and other native
+results agree. The first isolated same-input cosine result differs by one final
+binary step. ECMAScript permits implementation-approximated transcendental
+results; primary sources are linked in the report. This is an author diagnostic,
+not a new independent astronomical oracle. Cross-runtime bit equality and a
+universal numerical bound are not claimed, and no tolerance was introduced.
+
+The runtime manifest SHA-256 is
+`2afc64d1aa2fb5b86d54936aba278c234467bb9d7f29ffdf41cff53ca3734948`:
+11 byte-verified delivered records, including the compressed exact raw traces
+and retained harness failures with 63 individually hashed uncompressed members.
+All 23 installed package files match the immutable rc.6 archive. The unwanted
+npm lockfile metadata rewrite was retained and replaced with the exact frozen
+reviewed lock bytes; no unrelated dependency change was accepted. Hosted CI,
+preview validation, publication, production deployment and external adoption
+are distinct and are not established by these local results.

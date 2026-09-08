@@ -1,0 +1,115 @@
+diff --git a/public/llms-full.txt b/public/llms-full.txt
+index d2899694..2c618a2d 100644
+--- a/public/llms-full.txt
++++ b/public/llms-full.txt
+@@ -170,11 +170,11 @@ Check the consumed payload before calling it current: `date` is the UTC edition
+ 
+ ### Astrology engine
+ 
+-`@zodiacs/engine` candidate version 0.1.1-rc.5 is the pure-TypeScript calculation sibling. It is browser-first, Node-compatible, ESM-only, synchronous, side-effect-free, and tree-shakeable. The core entry makes no network request. It computes apparent geocentric tropical positions, natal charts, transits, synastry, lunar phase, and Saturn-return seasons. Whole-sign and Placidus houses are supported; Placidus falls back to whole sign above 66° absolute latitude and returns the `polar-fallback` flag.
++`@zodiacs/engine` candidate version 0.1.1-rc.6 is the pure-TypeScript calculation sibling. It is browser-first, Node-compatible, ESM-only, synchronous, side-effect-free, and tree-shakeable. The core entry makes no network request. It computes apparent geocentric tropical positions, natal charts, transits, synastry, lunar phase, and Saturn-return seasons. Whole-sign and Placidus houses are supported; Placidus falls back to whole sign above 66° absolute latitude and returns the `polar-fallback` flag.
+ 
+-Current candidate API guide: https://github.com/ZodiacsOfficial/sdk/blob/97f5e8d01828f4b85ffa845825dee9acff4695e4/packages/engine/README.md
++Current candidate API guide: https://github.com/ZodiacsOfficial/sdk/blob/fb57af7a2cd7c30983cc8fb655183d5a11f9cf30/packages/engine/README.md
+ 
+-Optional `@zodiacs/engine/receipt` validates a Zodiacs-owned draft natal envelope from a fresh full public Chart. It preserves requested versus actual houses, unknown-time reference instants and supplied provenance; it does not authenticate claims or recalculate positions. The site saved-chart/account format is unchanged, and the standalone starter retains its separately pinned engine rc.3. Draft specification: https://github.com/ZodiacsOfficial/sdk/blob/97f5e8d01828f4b85ffa845825dee9acff4695e4/docs/platform/receipt-draft-v1.md
++Optional `@zodiacs/engine/receipt` validates a Zodiacs-owned draft natal envelope from a fresh full public Chart. It preserves requested versus actual houses, unknown-time reference instants and supplied provenance; it does not authenticate claims or recalculate positions. The site saved-chart/account format is unchanged, and the standalone starter retains its separately pinned engine rc.3. Draft specification: https://github.com/ZodiacsOfficial/sdk/blob/fb57af7a2cd7c30983cc8fb655183d5a11f9cf30/docs/platform/receipt-draft-v1.md
+ 
+ Archived rc.1 typed API reference (earlier candidate): https://zodiacs.org/sdk/engine/
+ 
+diff --git a/src/data/platform-engine-candidate.json b/src/data/platform-engine-candidate.json
+index bc13683e..dca8f37c 100644
+--- a/src/data/platform-engine-candidate.json
++++ b/src/data/platform-engine-candidate.json
+@@ -1,24 +1,24 @@
+ {
+   "schemaVersion": 1,
+   "name": "@zodiacs/engine",
+-  "version": "0.1.1-rc.5",
++  "version": "0.1.1-rc.6",
+   "releaseStatus": "unpublished-candidate",
+   "releaseLabel": "Unpublished candidate",
+-  "artifactPath": "vendor/zodiacs-engine-0.1.1-rc.5.tgz",
+-  "artifactUrl": "https://raw.githubusercontent.com/ZodiacsOfficial/sdk/333369256af683c560603dd1e6411dd7a07adb1f/artifacts/zodiacs-engine-0.1.1-rc.5.tgz",
+-  "sha256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
++  "artifactPath": "vendor/zodiacs-engine-0.1.1-rc.6.tgz",
++  "artifactUrl": "https://raw.githubusercontent.com/ZodiacsOfficial/sdk/51129a197cd3f2a2a8c966fb797ea4da1e147b3d/artifacts/zodiacs-engine-0.1.1-rc.6.tgz",
++  "sha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+   "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+-  "sourceCommit": "97f5e8d01828f4b85ffa845825dee9acff4695e4",
++  "sourceCommit": "fb57af7a2cd7c30983cc8fb655183d5a11f9cf30",
+   "sourcePackagePath": "packages/engine",
+   "evidenceRepository": "https://github.com/ZodiacsOfficial/site",
+-  "evidenceCommit": "d63773a3be2b4d40ff28a1075b9aaa9cb6c10793",
++  "evidenceCommit": "0000000000000000000000000000000000000000",
+   "evidencePaths": {
+-    "ledger": "docs/platform/evidence/site-engine-rc5/README.md",
+-    "node22": "docs/platform/evidence/site-engine-rc5/independent-node-polar-node22.json",
+-    "node24": "docs/platform/evidence/site-engine-rc5/independent-node-polar-node24.json",
+-    "publicConsumer": "docs/platform/evidence/site-engine-rc5/public-candidate-consumer.log"
++    "ledger": "docs/platform/evidence/site-engine-rc6/README.md",
++    "node22": "docs/platform/evidence/site-engine-rc6/node22-parity.json",
++    "node24": "docs/platform/evidence/site-engine-rc6/node24-parity.json",
++    "publicConsumer": "docs/platform/evidence/site-engine-rc6/public-candidate-consumer.log"
+   },
+   "artifactRepository": "https://github.com/ZodiacsOfficial/sdk",
+-  "artifactCommit": "333369256af683c560603dd1e6411dd7a07adb1f",
+-  "artifactRepositoryPath": "artifacts/zodiacs-engine-0.1.1-rc.5.tgz"
++  "artifactCommit": "51129a197cd3f2a2a8c966fb797ea4da1e147b3d",
++  "artifactRepositoryPath": "artifacts/zodiacs-engine-0.1.1-rc.6.tgz"
+ }
+diff --git a/vendor/README.md b/vendor/README.md
+index 934d61b6..53cf78b7 100644
+--- a/vendor/README.md
++++ b/vendor/README.md
+@@ -1,30 +1,39 @@
+ # Vendored @zodiacs/engine artifact
+ 
+-`zodiacs-engine-0.1.1-rc.5.tgz` is the exact npm pack artifact consumed by this
++`zodiacs-engine-0.1.1-rc.6.tgz` is the exact npm pack artifact consumed by this
+ site. The standalone starter keeps its separate engine `0.1.1-rc.3` pin and
+ immutable project archive. The optional ownership SDK remains separate.
+ 
+-- Package: `@zodiacs/engine@0.1.1-rc.5` (unpublished candidate)
++- Package: `@zodiacs/engine@0.1.1-rc.6` (unpublished candidate)
+ - Source repository: `https://github.com/ZodiacsOfficial/sdk`
+ - Source package: `packages/engine`
+-- Source commit: `97f5e8d01828f4b85ffa845825dee9acff4695e4`
+-- Artifact carrier commit: `333369256af683c560603dd1e6411dd7a07adb1f`
+-- Artifact SHA-256: `1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`
+-- [Immutable anonymous download](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/333369256af683c560603dd1e6411dd7a07adb1f/artifacts/zodiacs-engine-0.1.1-rc.5.tgz)
+-- Archive: 23 files, 36,065 packed bytes, 121,212 unpacked bytes.
++- Source commit: `fb57af7a2cd7c30983cc8fb655183d5a11f9cf30`
++- Artifact carrier commit: `51129a197cd3f2a2a8c966fb797ea4da1e147b3d`
++- Artifact SHA-256: `09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e`
++- [Immutable anonymous download](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/51129a197cd3f2a2a8c966fb797ea4da1e147b3d/artifacts/zodiacs-engine-0.1.1-rc.6.tgz)
++- Archive: 23 files, 36,591 packed bytes, 122,552 unpacked bytes.
+ 
+ The public SDK archive was downloaded without credentials and checked against
+ the recorded SHA-256. Its source identity and artifact carrier identify separate
+-commits. The candidate adds the optional draft natal-envelope codec and
+-GeoNames/input validation fixes while retaining the site-only internal adapter
+-boundaries. The site does not yet connect the receipt codec to account or
++commits. The candidate corrects second-precise historical wall-time matching and
++floating-point offset conversion noise while retaining the optional draft
++natal-envelope codec and site-only internal adapter boundaries. The site does not yet connect the receipt codec to account or
+ saved-chart storage. An imported receipt remains an untrusted claim.
+ 
+-New checks of this artifact are recorded in [the rc.5 adoption evidence](../docs/platform/evidence/site-engine-rc5/README.md).
++New checks of this artifact are recorded in [the rc.6 adoption evidence](../docs/platform/evidence/site-engine-rc6/README.md).
+ Earlier evidence and immutable artifacts retain their original identities.
+ The site pin is not evidence of npm publication, production deployment,
+ required human review, or external adoption.
+ 
++## Previous rc.5 site candidate
++
++`zodiacs-engine-0.1.1-rc.5.tgz` and its checksum remain unchanged. Source commit:
++`97f5e8d01828f4b85ffa845825dee9acff4695e4`; immutable artifact carrier:
++`333369256af683c560603dd1e6411dd7a07adb1f`; SHA-256:
++`1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`.
++Its original [rc.5 evidence](../docs/platform/evidence/site-engine-rc5/README.md)
++retains the earlier package identity and does not certify rc.6.
++
+ ## Previous site candidate
+ 
+ `zodiacs-engine-0.1.1-rc.1.tgz` and its checksum remain unchanged. Source commit:

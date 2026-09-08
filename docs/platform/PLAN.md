@@ -100,3 +100,13 @@ No existing unknown-time consumer will be changed until runtime compatibility,
 complex-date Sun/Moon policy and accurate unavailable/stale-result behavior pass
 separate review. Node 22's missing native Temporal is a recorded compatibility
 constraint, not an excuse to fabricate complete coverage from hourly samples.
+
+
+2026-09-08 rc.6 checkpoint: integrate and deliver the frozen site precision
+adoption above #427; local build/check/4,859 tests, 27 receipt browser groups,
+13 developer/API cases, 12 share cases and 18 unchanged captures pass. The
+cross-runtime receipt assertion was diagnosed by controlled Math replay; it
+requires no product correction or tolerance change. Hosted candidate checks
+remain pending. The next independent slice is the inactive three-file local-date
+interval primitive, whose author and independent review are complete. Keep its
+activation and unsupported-runtime/complex-date caller policy separate.

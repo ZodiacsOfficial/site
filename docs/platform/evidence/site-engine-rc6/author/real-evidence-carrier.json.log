@@ -1,0 +1,12 @@
+{
+  "commit": "68412f16140f9986b11767d271eda6e14b6aba48",
+  "repository": "https://github.com/ZodiacsOfficial/site",
+  "verifiedLocalCommit": true,
+  "verifiedFiles": {
+    "docs/platform/evidence/site-engine-rc6/README.md": 3616,
+    "docs/platform/evidence/site-engine-rc6/node22-parity.json": 204107,
+    "docs/platform/evidence/site-engine-rc6/node24-parity.json": 204143,
+    "docs/platform/evidence/site-engine-rc6/public-candidate-consumer.log": 4201
+  },
+  "publication": "Root will push the real evidence commit with the adoption branch; no current anonymous-public-access claim by author"
+}

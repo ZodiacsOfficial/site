@@ -1,0 +1,37 @@
+{
+  "frozenSourceMatched": true,
+  "sourceBase": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+  "companionBase": "804c70309d2508e67e8462df526b5f9e71a112e9",
+  "provisionalMetadataExcluded": [
+    "vendor/README.md",
+    "src/data/platform-engine-candidate.json",
+    "public/llms-full.txt"
+  ],
+  "files": {
+    "baseline/src/lib/time/civil-date.ts": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+    "baseline/src/lib/time/localToUtc.ts": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64",
+    "baseline/src/lib/time/technical-locales.ts": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+    "candidate/package-lock.json": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3",
+    "candidate/package.json": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c",
+    "candidate/src/lib/engine/calculator-receipt.test.ts": "aeeb9ee59ed3093a7f2b375be4c53a5f60d1577e4ab2da10ef2930a338c10168",
+    "candidate/src/lib/engine/calculator-receipt.ts": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+    "candidate/src/lib/engine/package-integration.test.ts": "1c912cf6c73a5821255f2da6f1588a12ad1561145314742c4d369f575fd2363b",
+    "candidate/src/lib/scene/__snapshots__/scene.test.ts.snap": "f28c039c5092bd311da23af4f229c91b80f7875aee4eaed9968c1ef3a09470c1",
+    "candidate/src/lib/time/civil-date.ts": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+    "candidate/src/lib/time/localToUtc-precision.test.ts": "6fd56daa5dc6d7853622db478d20e7e90d8988ad2247ec1abc3e16637599f34f",
+    "candidate/src/lib/time/localToUtc.ts": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd",
+    "candidate/src/lib/time/technical-locales.ts": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+    "candidate/vendor/zodiacs-engine-0.1.1-rc.6.sha256": "3a861a7109205e914a8b8ee7efccd891b0b8c0d06df247cc3b41d7b32e188ada",
+    "candidate/vendor/zodiacs-engine-0.1.1-rc.6.tgz": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+    "node_modules/@esbuild/darwin-arm64/README.md": "ee16cb15a2211accccb38f378786bfe48bc5dcfae5db554352424cd710470efa",
+    "node_modules/@esbuild/darwin-arm64/bin/esbuild": "e2dc9a52440a2a34f09434a2f4843cb1e30f84e40dcf238976ec61ef8cd7f36a",
+    "node_modules/@esbuild/darwin-arm64/package.json": "4741fe8d75953474f275402d367368cf49c242b2bc04b85e25bad14bfd26eaad",
+    "node_modules/esbuild/LICENSE.md": "b40ec5baec7bb34fa5b1c09521fa3cd52d5fad7adafed74932a2010d3612a681",
+    "node_modules/esbuild/README.md": "6d481cd60ec3c679e5e395f547ab4221147f35642894f6b95a8df38fd25c87bd",
+    "node_modules/esbuild/bin/esbuild": "fe9a7b65a540d8df1a0f59941d52e7c1260c36fed9a2af3dd966f15381b6eb76",
+    "node_modules/esbuild/install.js": "612294e278914443bdcf81cb17f54afec34dbdd2ebd999a6ee187912320cc315",
+    "node_modules/esbuild/lib/main.d.ts": "161c8e0690c46021506e32fda85956d785b70f309ae97011fd27374c065cac9b",
+    "node_modules/esbuild/lib/main.js": "8331fe1d8b3a07381f33cc425fcfaa94776e263113653f80ec3ba433e9657e73",
+    "node_modules/esbuild/package.json": "d55d1d19fcc5b6079e4a71dd4111340c79c682bc36835ac7058a0c364c7db58a"
+  }
+}

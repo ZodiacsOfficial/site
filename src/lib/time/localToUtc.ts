@@ -46,7 +46,8 @@ function wallFormatter(tz: string): Intl.DateTimeFormat {
       timeZone: tz,
       calendar: 'gregory', numberingSystem: 'latn', era: 'short',
       year: 'numeric', month: '2-digit', day: '2-digit',
-      hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      fractionalSecondDigits: 3, hourCycle: 'h23',
     });
     wallFormatters.set(tz, f);
   }
@@ -80,7 +81,7 @@ function wallStringAt(tz: string, utcMs: number): string {
   const isoYear = year >= 0 && year <= 9999
     ? String(year).padStart(4, '0')
     : `${year < 0 ? '-' : '+'}${String(Math.abs(year)).padStart(6, '0')}`;
-  return `${isoYear}-${part('month')}-${part('day')}T${part('hour')}:${part('minute')}`;
+  return `${isoYear}-${part('month')}-${part('day')}T${part('hour')}:${part('minute')}:${part('second')}.${part('fractionalSecond')}`;
 }
 
 /**
@@ -114,7 +115,9 @@ export function resolveLocalToUtc(
   wallDate.setUTCFullYear(civilDate.year, civilDate.month - 1, civilDate.day);
   wallDate.setUTCHours(civilTime.hour, civilTime.minute, 0, 0);
   const wallMs = wallDate.getTime();
-  const wallStr = `${date}T${time}`;
+  // HH:MM denotes exactly zero seconds/milliseconds. Shortening a candidate
+  // to its minute hides historical gaps and creates false folds.
+  const wallStr = `${date}T${time}:00.000`;
 
   // Candidate offsets sampled around the wall instant.
   const sampled = [
@@ -126,7 +129,9 @@ export function resolveLocalToUtc(
 
   const matches: { utcMs: number; offset: number }[] = [];
   for (const off of candidates) {
-    const utcMs = wallMs - off * 60_000;
+    // IANA offsets have integral seconds. Remove floating-point conversion
+    // noise at millisecond precision without rounding away historical seconds.
+    const utcMs = wallMs - Math.round(off * 60_000);
     if (wallStringAt(tz, utcMs) === wallStr) {
       matches.push({ utcMs, offset: offsetAt(tz, utcMs) });
     }
@@ -146,7 +151,7 @@ export function resolveLocalToUtc(
     // Gap: this wall time never happened. Shift forward by the gap —
     // apply the offset that was valid just before the transition.
     const before = offsetAt(tz, wallMs - 36 * 3600_000);
-    const utcMs = wallMs - before * 60_000;
+    const utcMs = wallMs - Math.round(before * 60_000);
     chosen = { utcMs, offset: offsetAt(tz, utcMs) };
     flags.push('dst-gap');
   }
