@@ -105,3 +105,12 @@ integrated rc.6 offset-reader path. Activation still needs coherent unsupported-
 runtime, empty/complex-date, astronomical certainty and stale-result semantics;
 these are not implied by passing interval tests. SDK #5 and human release gates
 remain separate, and Astrofolio sources remain excluded.
+
+
+The Moon result-ownership freeze and the root-owned CI step complete independent
+source/native/wiring review and root local acceptance. See the [exact identities](evidence/moon-result-ownership/root-source-identity.json)
+and [original-image comparison](evidence/moon-result-ownership/integration/comparison.json).
+The one initial portrait-only raster variance is retained with three identical-
+source controls; it is not erased by an updated mask or tolerance. Hosted CI,
+actual preview and required release decisions are still separate. The previously
+reproduced date-coverage defects remain open and unchanged by this fix.

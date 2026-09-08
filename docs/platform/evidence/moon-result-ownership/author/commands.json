@@ -1,0 +1,71 @@
+{
+  "cwd": "/private/tmp/zodiacs-platform-moon-result-ownership",
+  "commands": [
+    {
+      "command": "OUT_DIR=/private/tmp/zodiacs-platform-moon-result-ownership-evidence/native-before /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/moon-result-ownership-drive.mjs",
+      "cwd": "/private/tmp/zodiacs-platform-moon-result-ownership",
+      "log": "native-before.log",
+      "exitCode": 1,
+      "classification": "fixture CSS output-path failure",
+      "permission": "Disposable native browser + owned loopback fixture approved; remote requests blocked"
+    },
+    {
+      "command": "OUT_DIR=/private/tmp/zodiacs-platform-moon-result-ownership-evidence/native-before-rerun /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/moon-result-ownership-drive.mjs",
+      "cwd": "/private/tmp/zodiacs-platform-moon-result-ownership",
+      "log": "native-before-rerun.log",
+      "exitCode": 1,
+      "classification": "fixture virtual-input hash failure",
+      "permission": "Disposable native browser + owned loopback fixture approved; remote requests blocked"
+    },
+    {
+      "command": "OUT_DIR=/private/tmp/zodiacs-platform-moon-result-ownership-evidence/native-before-executed /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/moon-result-ownership-drive.mjs",
+      "cwd": "/private/tmp/zodiacs-platform-moon-result-ownership",
+      "log": "native-before-executed.log",
+      "exitCode": 1,
+      "classification": "fixture missing UI catalog",
+      "permission": "Disposable native browser + owned loopback fixture approved; remote requests blocked"
+    },
+    {
+      "command": "OUT_DIR=/private/tmp/zodiacs-platform-moon-result-ownership-evidence/native-before-catalog /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/moon-result-ownership-drive.mjs",
+      "cwd": "/private/tmp/zodiacs-platform-moon-result-ownership",
+      "log": "native-before-catalog.log",
+      "exitCode": 1,
+      "classification": "partial fixture missing RU payload; real ownership failures also retained",
+      "permission": "Disposable native browser + owned loopback fixture approved; remote requests blocked"
+    },
+    {
+      "command": "OUT_DIR=/private/tmp/zodiacs-platform-moon-result-ownership-evidence/native-after /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/moon-result-ownership-drive.mjs",
+      "cwd": "/private/tmp/zodiacs-platform-moon-result-ownership",
+      "log": "native-after.log",
+      "exitCode": 1,
+      "classification": "19 corrected groups passed; missing RU fixture payload",
+      "permission": "Disposable native browser + owned loopback fixture approved; remote requests blocked"
+    },
+    {
+      "command": "MOON_SOURCE=/private/tmp/zodiacs-platform-moon-result-ownership-evidence/MoonPhaseTool-before.tsx OUT_DIR=/private/tmp/zodiacs-platform-moon-result-ownership-evidence/native-baseline-final /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/moon-result-ownership-drive.mjs",
+      "cwd": "/private/tmp/zodiacs-platform-moon-result-ownership",
+      "log": "native-baseline-final.log",
+      "exitCode": 1,
+      "classification": "completed fixture against original source: 18 ownership failures, 2 unchanged controls",
+      "permission": "Disposable native browser + owned loopback fixture approved; remote requests blocked"
+    },
+    {
+      "command": "OUT_DIR=/private/tmp/zodiacs-platform-moon-result-ownership-evidence/native-final /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/moon-result-ownership-drive.mjs",
+      "cwd": "/private/tmp/zodiacs-platform-moon-result-ownership",
+      "log": "native-final.log",
+      "exitCode": 0,
+      "classification": "completed fixture against corrected source: 20 groups passed",
+      "permission": "Disposable native browser + owned loopback fixture approved; remote requests blocked"
+    },
+    {
+      "command": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/typescript/bin/tsc --strict --noEmit --jsx react-jsx --jsxImportSource preact --target ES2022 --module ESNext --moduleResolution bundler --lib ES2022,DOM --types vite/client --skipLibCheck src/islands/MoonPhaseTool.tsx",
+      "log": "typecheck.log",
+      "exitCode": 0
+    },
+    {
+      "command": "git apply --reverse --check /private/tmp/zodiacs-platform-moon-result-ownership-evidence/source-freeze1.patch",
+      "log": "patch-check.log",
+      "exitCode": 0
+    }
+  ]
+}

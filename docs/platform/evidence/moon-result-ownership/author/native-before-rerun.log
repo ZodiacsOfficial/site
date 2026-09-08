@@ -1,0 +1,17 @@
+node:internal/fs/promises:639
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: ENOENT: no such file or directory, open '/private/tmp/zodiacs-platform-moon-result-ownership/<define:import.meta.env>'
+    at async open (node:internal/fs/promises:639:25)
+    at async readFile (node:internal/fs/promises:1252:14)
+    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:59:17
+    at async Promise.all (index 0)
+    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:58:16 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/private/tmp/zodiacs-platform-moon-result-ownership/<define:import.meta.env>'
+}
+
+Node.js v22.23.2

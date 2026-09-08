@@ -1,0 +1,5 @@
+{
+  "base": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "method": "git archive full tracked source; existing dependency node_modules symlink, no install",
+  "setupFailure": "First extraction used Python tarfile filter argument unsupported by local Python; no extraction occurred. Retried owned git archive with supported extractall."
+}

@@ -1800,3 +1800,72 @@ calculation without profile persistence and the dated sky API. This is hosted
 regression acceptance, not execution of the inactive interval API by the site.
 [Original driver, page diagnostics and screenshots](evidence/local-date-intervals/release/manifest.json)
 are sealed separately. Temporary access was deleted and all contexts closed.
+
+
+### Moon result ownership — exact reviewed source integration
+
+Root integrates the two-file freeze above #429 source
+`65418003c07efc0c435ce1010e3c9ec05b478eb4`, with shared evidence carrier
+`11e75bab0f92ea2e02ba38ea8385a7cebed6a64b`. Original author base remains
+`30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`; the island was unchanged between
+them. Frozen patch SHA-256:
+`ecdc149e2115ee234828f3848b40cab4f6ba2b15074763b28bf936f0abac6858`.
+
+[Author evidence](evidence/moon-result-ownership/author/AUTHOR.md) seals 28
+records under manifest
+`d4c61a6b445e02d05902fdffccd55ffc4591df5259e1929ec69d3d4a4b13bc9a`.
+The same complete rendered fixture gives 18 original ownership failures/two
+calculation passes and 20/20 corrected passes across six catalogs. Initial
+incomplete fixture failures are retained and distinguished from the final
+original-source regressions. Known/unknown calculation-control records match.
+
+[Independent review](evidence/moon-result-ownership/independent-review/REVIEW.md)
+seals 29 records under manifest
+`91e5923e26c2aa43d549a8999cafeee975619eec5a6afaf2b13c8da9990abfed`.
+Its separate actual Chrome driver passes all 13 corrected groups; the original
+passes only the prefetch control and fails 12 ownership groups. Eleven groups
+use the real module loader and two isolate out-of-order promises. Native controls
+cover rejection observation/cache retry, pending shared imports, partial and
+replaced place queries, selection/removal, cleared date/time, current failures,
+late success/rejection, unmount/remount and rapid pre-paint teardown. No observed
+page errors, unhandled rejections or network requests. AST/source comparison
+proves the calculation body unchanged after excluding the two ownership guards.
+
+Root verifies all delivered hashes before applying both exact source files.
+Before integration, 12 actual production-page controls captured successful result
+text and component pixels for six locales at 1,280 and 390 widths. Root's final
+normal build/check/full tests, native controls and post-integration page
+comparisons are in progress. These are not yet claimed complete by this record.
+The interval, endpoint, certainty, account, SDK and Astrofolio scopes remain
+unchanged; the separately recorded date-coverage counterexamples remain open.
+
+
+Moon root acceptance completes build, 4,938 tests / 414 files, check across
+1,041 files (zero errors/warnings, 11 hints), exact-base scope, 20 native ownership
+groups and 12 actual production-page cases with edits/recovery. Fingerprint:
+`3e60d4c18803a51346d35820ff31f256d1cf497bc665237b241e1c05213ab514`.
+All 18 Phase 1 captures are byte-identical to #429, and all 12 successful Moon
+result texts match the baseline. [Root originals and comparisons](evidence/moon-result-ownership/integration/manifest.json)
+preserve the full records and the initial exact-image comparison failure.
+
+Eleven initial component screenshots are byte-identical. The Italian390 image
+has 367 differing pixels, all within the unchanged 32px floating Guide portrait
+canvas at x318/y1234; the measured difference bounds are x319–348/y1235–1264.
+Three subsequent fresh renders of the exact same frozen Moon source all equal
+the original baseline image byte for byte. Guide bootstrap/CSS/portrait bytes
+also match the baseline. No stable Moon content/geometry drift was observed;
+no all-12-initial-byte-identity claim, product correction, new mask, baseline or
+tolerance is used. Both the initial variance and all repeat controls are retained.
+
+Root adds only four workflow lines to run the unchanged 20-group native driver
+inside the existing Build & Check job, bounded to three minutes. Existing Node,
+Chromium, permissions, action pins and artifact upload are unchanged. The
+[independent wiring review](evidence/moon-result-ownership/ci-wiring-review/REVIEW.md)
+passes for workflow SHA-256
+`f7eced0d399caded9cff242c556f54084abea450aecd9df55122b966f40bfaaf`;
+98 existing workflow-coupled tests also pass. Normal native failures preserve
+result JSON; early compilation failures or timeout can leave only job logs and
+partial artifacts. No successful Ubuntu/hosted run is claimed before execution.
+Root source identities distinguish the author two-file freeze from this third
+integration file. Publication, production, date-coverage and external-adoption
+claims remain separate.

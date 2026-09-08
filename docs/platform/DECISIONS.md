@@ -477,3 +477,27 @@ claim all-browser availability. Keep this additive primitive inactive until
 missing capability, empty/complex dates and stale/unavailable product behavior
 have a reviewed integration. Existing resolver and UI behavior remain unchanged
 by this prerequisite; its tests are finite, not historical-data certification.
+
+
+## C-012 — Tie a displayed result to its still-current input and run
+
+Input edits, replacement runs and teardown revoke older asynchronous work.
+Guard both success and failure after awaited module boundaries; an old completion
+must not publish a chart, error, focus move or idle state over a newer operation.
+Clear derived results on edits and new submissions while preserving typed fields.
+Current failure leaves an actionable alert and a usable retry, without retaining
+an unlabeled previous result as if it belonged to the failed request.
+
+For MoonPhaseTool this is one local revision counter, synchronous invalidation
+on date/time/place changes, and unmount revocation. Preserve the existing real
+module-loader cache/retry behavior and selected-place semantics; an unselected
+search query is not a confirmed timezone. The existing calculation body, labels,
+markup, date endpoint rules and astronomical certainty remain unchanged.
+
+ChartCalculator's separate boundary must also preserve run/profile authority,
+positions-only import isolation, the same-calculation receipt, and its existing
+pre-calculation optional import fallback. Derived signature/share/context work
+must obey result ownership. Preventing stale UI completion does not cancel an
+already committed persistence operation or authorize deletion/migration of data.
+Date membership and truthful whole-date Sun/Moon coverage require a separate
+reviewed product contract; these ownership corrections do not solve or conceal it.

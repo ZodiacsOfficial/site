@@ -1,0 +1,26 @@
+from pathlib import Path
+import json,hashlib,subprocess
+root=Path.cwd();out=Path('/private/tmp/zodiacs-platform-moon-integration');base='65418003c07efc0c435ce1010e3c9ec05b478eb4'
+a=json.loads((out/'baseline/result.json').read_text());b=json.loads((out/'candidate/result.json').read_text());repeat=json.loads((out/'italian-repeat/result.json').read_text());diagnostic=json.loads((out/'italian-pixel-diagnostic.json').read_text())
+assert a['outcome']==b['outcome']==repeat['outcome']=='passed';assert len(a['checks'])==len(b['checks'])==12
+rows=[]
+for before,after in zip(a['checks'],b['checks']):
+ assert (before['locale'],before['width'])==(after['locale'],after['width']);assert before['resultText']==after['resultText'] and after['editAndRecovery']
+ same=before['screenshotSha256']==after['screenshotSha256']
+ if not same:assert (after['locale'],after['width'])==('it',390)
+ rows.append({'locale':after['locale'],'width':after['width'],'resultTextIdentical':True,'initialScreenshotByteIdentical':same,'editAndRecoveryPassed':True})
+assert sum(r['initialScreenshotByteIdentical'] for r in rows)==11
+assert a['sourceSha']=='37ecef482f628f7ffa189c82584a249367e7d3876e713a776b3e23941925c6c8'
+assert b['sourceSha']==repeat['sourceSha']=='0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb'
+for r in repeat['checks']:
+ assert r['screenshotSha256']==a['checks'][7]['screenshotSha256'] and r['resultText']==a['checks'][7]['resultText']
+ overlay=r['overlay'];bounds=diagnostic['bounds'];assert overlay['left']<=bounds['x0']<=bounds['x1']<overlay['left']+overlay['width'] and overlay['top']<=bounds['y0']<=bounds['y1']<overlay['top']+overlay['height']
+unchanged=[]
+for path in ['src/lib/assistant/guide-bootstrap.ts','src/lib/assistant/guide-bootstrap.css','public/assets/guide-avatar.webp']:
+ content=Path(path).read_bytes();assert content==subprocess.check_output(['git','show',base+':'+path]);unchanged.append({'path':path,'sha256':hashlib.sha256(content).hexdigest(),'baseByteIdentical':True})
+captures=[]
+for p in sorted(Path('docs/acceptance/phase1/screenshots').glob('*.png')):
+ content=p.read_bytes();assert content==subprocess.check_output(['git','show',base+':'+str(p)]);captures.append({'path':str(p),'sha256':hashlib.sha256(content).hexdigest(),'baseByteIdentical':True})
+assert len(captures)==18
+result={'baseCommit':base,'moonCases':rows,'initialScreenshotComparison':'11/12 exact; Italian390 had367 differing pixels confined to existing32px Guide portrait canvas','sameFrozenCandidateRepeat':{'cases':3,'allByteIdenticalToOriginalBaseline':True,'initialVarianceRetained':True,'sourceSha256':b['sourceSha'],'diagnostic':diagnostic,'unchangedOverlaySources':unchanged},'acceptanceCaptures':captures,'noProductMaskBaselineOrToleranceChange':True,'conclusion':'All12successfulresulttexts and18acceptancecaptures exact. Initial portrait raster variance is not stable across identical-source renders; three repeats equal baseline. No Moon geometry/content drift observed. No all12initial-byte-identity claim.'}
+(out/'comparison.json').write_text(json.dumps(result,indent=2)+'\n');print('12 identical result texts,18 identical acceptance captures; initial portrait variance retained and bounded with3same-source controls')

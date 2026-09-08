@@ -19,8 +19,17 @@ Real isolated work is preparing two separately reviewable corrections: Moon look
 and ChartCalculator result ownership after input edits, delayed modules, new runs
 and calculation failure. Neither correction activates interval coverage or changes
 astronomical certainty, locale catalogs, account formats or Astrofolio sources.
-Their exact source freezes and independent reviews remain pending; no completion
-is claimed yet. [The read-only caller evidence](evidence/interval-caller-compatibility/)
+Moon Freeze1 is integrated exactly: two files, patch
+`ecdc149e2115ee234828f3848b40cab4f6ba2b15074763b28bf936f0abac6858`.
+Author 20 and independent 13 actual browser groups pass; root’s 12 baseline
+production-page controls pass. Root build/check/all 4,938 tests, 20 native ownership groups and 12 actual
+production-page edit/recovery cases pass. All 18 acceptance captures and 12
+successful result texts are identical to #429. Eleven initial component images
+are byte-identical; one has 367 changed pixels only in the existing Guide
+portrait. Three identical-source repeats match the baseline exactly; originals
+and diagnosis are retained. The unchanged native driver is now wired into the
+existing CI job, with separate wiring review and 98 coupled tests passing. The ChartCalculator freeze and final independent review
+remain pending; no completion of that correction is claimed yet. [The read-only caller evidence](evidence/interval-caller-compatibility/)
 retains concrete stale-result and empty/missing-date counterexamples. Date coverage
 and truthful whole-date Sun/Moon claims remain open after these ownership fixes.
 

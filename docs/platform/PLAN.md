@@ -145,3 +145,11 @@ Node minimum distinct from tested versions, and retain supported clean-consumer
 claims backed by separate actual SDK install evidence. Integrate this bounded
 follow-up separately after the Moon ownership slice; no source activation is
 claimed by its prepared patch.
+
+
+Moon ownership root acceptance is complete for three source/test/workflow files:
+its exact two-file author freeze plus a reviewed four-line CI step. Deliver this
+bounded draft above #429, then integrate the independently reviewed one-file
+runtime-evidence wording correction while ChartCalculator’s separate four-file
+freeze receives independent adversarial review. Preserve the recorded portrait
+variance and all passing controls; do not change the image gate or date policy.
