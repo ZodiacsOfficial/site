@@ -3,6 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import candidate from '../../../data/platform-engine-candidate.json';
 
 const sourceRoot = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/${candidate.sourcePackagePath}`;
+const receiptSpec = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/docs/platform/receipt-draft-v1.md`;
 const evidenceUrl = (path: string) => `${candidate.evidenceRepository}/blob/${candidate.evidenceCommit}/${path}`;
 const description = 'Current Zodiacs developer support: local engine candidate, public sky data, hosted widgets, planned chart API, runtime checks, calculation limits, privacy, and licenses.';
 const engineRows = [
@@ -12,6 +13,7 @@ const engineRows = [
   ['Calculations', 'Positions, natal charts, transit snapshots, synastry, Moon phase, and Saturn-return seasons. The same public API supplies calculation metadata; interpretation is separate from astronomical accuracy.'],
   ['Houses and unknown time', 'Whole-sign and Placidus houses. Known time and coordinates are required for angles/houses. timeKnown: false sets both to null and adds no-time. Placidus falls back to whole-sign above 66° absolute latitude or on nonconvergence, with polar-fallback. Exact geographic poles and degenerate horizon intersections are outside verified angle scope.'],
   ['Resolved instant input', 'A valid Date, finite epoch milliseconds, or validated ISO date/time. Date-times require Z or an explicit numeric offset; date-only YYYY-MM-DD means midnight UTC. Invalid ISO calendar dates, unresolved local date-times, leap seconds, and more than three fractional-second digits are rejected. A Date already normalized by its caller cannot reveal that earlier rollover. Outputs normalize to Date and do not preserve the original offset or local timezone.'],
+  ['Portable natal records', 'Optional @zodiacs/engine/receipt validates a Zodiacs draft envelope from a fresh full public Chart, preserving requested/actual houses and captured time provenance. Validation does not authenticate imported claims or recalculate positions. The site saved-chart/account format is unchanged; the standalone starter uses its separately pinned candidate.'],
   ['Local-time resolution', 'Optional @zodiacs/engine/geo accepts a local YYYY-MM-DD date, HH:mm time, and explicit IANA timezone. Folds select the earlier instant; gaps shift forward, with flags. Historical offsets depend on the host Intl/ICU data. No place records or timezone database are bundled.'],
   ['Date coverage and accuracy', 'Accepted date syntax and JavaScript Date range are not a numerical accuracy interval. Tests cover finite modern, historical, early-year, and polar cases; broader range and numerical scope review remain open. The mini-chart widget’s form limits are a separate UI contract.'],
   ['Computation and privacy', 'The synchronous core computes in the caller’s browser or Node.js process, with no network requests, account, or wallet. The optional GeoNames client fetches separately hosted index/shard assets; the data host can observe those requests. Your integration controls any storage or network transfer around the calculation.'],
@@ -59,10 +61,12 @@ const engineRows = [
       <p><a href="/developers/examples/">Run the starter project</a> for complete local natal, transit, and publisher widget examples.</p>
       <p>
         Use the public <code>@zodiacs/engine</code> and optional{' '}
-        <code>@zodiacs/engine/geo</code> entry points. The{' '}
+        <code>@zodiacs/engine/geo</code> and <code>@zodiacs/engine/receipt</code> entry points. The{' '}
         <code>/internal</code> entry points are site compatibility boundaries.
-        See the <a href="/sdk/engine/">API reference</a> and{' '}
-        <a href={`${sourceRoot}/CHANGELOG.md`}>candidate changelog</a>.
+        Use the <a href={`${sourceRoot}/README.md`}>current candidate API guide</a>,{' '}
+        <a href={receiptSpec}>draft receipt specification</a>, and{' '}
+        <a href={`${sourceRoot}/CHANGELOG.md`}>candidate changelog</a>. The{' '}
+        <a href="/sdk/engine/">archived rc.1 API reference</a> describes the earlier candidate.
       </p>
     </div>
 

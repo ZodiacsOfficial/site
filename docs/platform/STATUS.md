@@ -5,6 +5,33 @@ Checkpoint: 2026-09-07 UTC (2026-09-08 Asia/Bangkok). Activated owner mandate:
 are implemented and tested in draft PRs. The bounded C02 import/time
 correction and a separate SDK GeoNames retry candidate are delivered. The overall program is open.
 
+
+## Active site rc.5 integration — 2026-09-08 UTC
+
+Branch `codex/platform-engine-rc5` adopts the immutable SDK rc.5 artifact
+from `333369256af683c560603dd1e6411dd7a07adb1f`; artifact/evidence carrier
+`d63773a3be2b4d40ff28a1075b9aaa9cb6c10793` is local. The ten-file source
+slice and durable author logs are implemented; 247 focused checks passed
+in the preceding session. Full release gates remain pending.
+
+The preceding full test attempt reported 4,712 passed and five failures:
+old daily engine provenance, stale Phase 1 captures, and three five-second
+timeouts under parallel load. The unchanged event-horizon focused retry passed.
+Those temporary full-run logs did not survive the environment reset, so this
+is a carried checkpoint observation, not a newly available raw receipt. Durable
+implementation logs under `evidence/site-engine-rc5/implementation/` survive.
+No prior temporary reviewer or browser process remains running.
+
+Fresh reads on 2026-09-08: site main is now
+`d4d5717d132a28cd6d7cda3007e3b898bb74669f`, with the actual September 8
+daily edition and Registry snapshot. Production is READY
+`dpl_gqJJR8pNkD3jHFtTmChh55UNvyse`, alias `zodiacs.org`, that exact main
+commit. SDK main and draft #5 head/hold remain unchanged; no reviews submitted.
+Root is integrating upstream only into this isolated candidate, regenerating
+provenance and captures through existing tools, and rerunning affected gates.
+The historical delivery records below describe their recorded sources; they
+do not establish rc.5 site acceptance or current production adoption.
+
 ## Review deliveries
 
 | Scope | Exact review source | Evidence / state |
