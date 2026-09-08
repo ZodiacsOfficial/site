@@ -1,0 +1,15 @@
+diff --git a/.github/workflows/site-check.yml b/.github/workflows/site-check.yml
+index 773e4b27..4a571ef5 100644
+--- a/.github/workflows/site-check.yml
++++ b/.github/workflows/site-check.yml
+@@ -109,6 +109,10 @@ jobs:
+       - name: Imported calendar input boundaries
+         run: node tests/platform-share-boundary-drive.mjs
+ 
++      - name: Moon lookup result ownership
++        timeout-minutes: 3
++        run: OUT_DIR=tests/visual/artifacts/moon-result-ownership node tests/moon-result-ownership-drive.mjs
++
+       - name: Engine accuracy vectors
+         run: npm test
+ 

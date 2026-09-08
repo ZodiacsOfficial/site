@@ -1,0 +1,8 @@
+{
+  "browser": "152.0.7977.83",
+  "node": "v22.23.2",
+  "requests": [],
+  "results": [],
+  "outcome": "failed",
+  "error": "locator.innerText: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#mount')\u001b[22m\n\n    at /private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:66:148"
+}

@@ -1736,3 +1736,136 @@ absence, observed host mismatch and 33rd interior transition return unresolved,
 never partial intervals. Finite runtime tests do not certify all timezone history
 or whole-date Sun/Moon candidates. No caller activation, production release,
 publication or external adoption is claimed by this prerequisite.
+
+
+### Hosted rc.6 acceptance and inactive-interval delivery — 2026-09-08
+
+Draft #428 exact source `30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14` has READY
+preview `dpl_DCmR76jrfuTxvB4M4b5Xfw55iR11` at
+https://zodiacs-4qqy7ml63-zodiacsofficial.vercel.app .
+[Receipt preview evidence](evidence/site-engine-rc6/preview/REVIEW.md.log)
+seals 84 records under manifest
+`fdbe6aedd0793514ac0a638857d2922899dc0a4de2c50111231be5041a2a3ba2`:
+27 actual groups, 26 downloads, nine screenshots, zero page errors and non-GET
+requests. The existing Plausible loader was requested and blocked in all 27
+contexts; no other external requests were recorded. Bootstrap is outside this
+observer. This is not a whole-site zero-network claim. Provider identity is
+exact; remote served-file hashes are unavailable and are not substituted.
+
+[Root hosted evidence](evidence/site-engine-rc6/hosted-integration/manifest.json)
+seals 23 original records under manifest
+`844e3f224c59fb0239619cf59ed889a1b19b1ba2dd39a44cad222fb703d5d2ca`.
+The first developer preview drive failed a zero-footer assertion on an HTTP 200
+response; its original driver did not identify which iteration or preserve the
+page, so the cause is not established. A subsequent direct diagnostic captured
+correct /developers/ content. The unchanged 13 assertions pass on repeat, with
+per-page title/location/footer diagnostics added. No product fix, relaxed
+assertion or fabricated cause is claimed. All temporary access files were removed
+and scoped contexts closed. Site Check 34200151600 currently has 13 successful
+jobs and its remaining build/visual/performance job in progress.
+
+Draft #429 exact source `65418003c07efc0c435ce1010e3c9ec05b478eb4` delivers the
+inactive interval prerequisite with all 83 actual changed paths matching the
+local diff. Site Check 34201151004 is in progress; exact-source preview
+`dpl_GLVF1b21yYBFfMo8eWXfGAbMaxBr` is READY and 13 existing-surface browser/API regression
+checks pass, without claiming the inactive API is a hosted feature. Neither draft is merged, npm-published,
+deployed to production or externally adopted.
+
+### Caller counterexamples — ownership is separate from coverage
+
+[Chart review](evidence/interval-caller-compatibility/chart-review/REVIEW.md)
+retains 38 records under manifest
+`962ff4ac6291bf1156fa4345d7256d779d74621693b26a4a4d9c81eedb534d90`.
+[Independent Moon review](evidence/interval-caller-compatibility/moon-review/REVIEW.md)
+retains 22 records under manifest
+`6d98a848b6de211380a33f924f0e7c8d95c67f12779993ac5f165a2a3565a850`.
+Actual rc.6 calculations reproduce Toronto's omitted Pisces interval and a
+fabricated requested-date result for skipped Apia. Extracted current production
+closures reproduce delayed old-input commits and retained prior results after
+failure; these are source-level controls, not rendered-browser acceptance.
+
+The next bounded ownership fixes leave interval activation and candidate certainty
+unchanged. A future coverage release must distinguish empty from unresolved,
+validate its representative instant, and address missing native capability and
+coherent uncertainty across cards/context/shares. Finite interval membership does
+not prove astronomical event completeness. No unavailable case may be relabeled
+as an observed Moon sign change. Root owns these product integration decisions;
+publication and human review holds remain distinct.
+
+
+The #429 exact-source READY preview passes all 13 existing-surface checks on
+its first run: developer pages/support/examples at 1,280/390/320 pixels,
+keyboard table focus, current rc.6 metadata/artifact links, synthetic chart
+calculation without profile persistence and the dated sky API. This is hosted
+regression acceptance, not execution of the inactive interval API by the site.
+[Original driver, page diagnostics and screenshots](evidence/local-date-intervals/release/manifest.json)
+are sealed separately. Temporary access was deleted and all contexts closed.
+
+
+### Moon result ownership — exact reviewed source integration
+
+Root integrates the two-file freeze above #429 source
+`65418003c07efc0c435ce1010e3c9ec05b478eb4`, with shared evidence carrier
+`11e75bab0f92ea2e02ba38ea8385a7cebed6a64b`. Original author base remains
+`30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`; the island was unchanged between
+them. Frozen patch SHA-256:
+`ecdc149e2115ee234828f3848b40cab4f6ba2b15074763b28bf936f0abac6858`.
+
+[Author evidence](evidence/moon-result-ownership/author/AUTHOR.md) seals 28
+records under manifest
+`d4c61a6b445e02d05902fdffccd55ffc4591df5259e1929ec69d3d4a4b13bc9a`.
+The same complete rendered fixture gives 18 original ownership failures/two
+calculation passes and 20/20 corrected passes across six catalogs. Initial
+incomplete fixture failures are retained and distinguished from the final
+original-source regressions. Known/unknown calculation-control records match.
+
+[Independent review](evidence/moon-result-ownership/independent-review/REVIEW.md)
+seals 29 records under manifest
+`91e5923e26c2aa43d549a8999cafeee975619eec5a6afaf2b13c8da9990abfed`.
+Its separate actual Chrome driver passes all 13 corrected groups; the original
+passes only the prefetch control and fails 12 ownership groups. Eleven groups
+use the real module loader and two isolate out-of-order promises. Native controls
+cover rejection observation/cache retry, pending shared imports, partial and
+replaced place queries, selection/removal, cleared date/time, current failures,
+late success/rejection, unmount/remount and rapid pre-paint teardown. No observed
+page errors, unhandled rejections or network requests. AST/source comparison
+proves the calculation body unchanged after excluding the two ownership guards.
+
+Root verifies all delivered hashes before applying both exact source files.
+Before integration, 12 actual production-page controls captured successful result
+text and component pixels for six locales at 1,280 and 390 widths. Root's final
+normal build/check/full tests, native controls and post-integration page
+comparisons are in progress. These are not yet claimed complete by this record.
+The interval, endpoint, certainty, account, SDK and Astrofolio scopes remain
+unchanged; the separately recorded date-coverage counterexamples remain open.
+
+
+Moon root acceptance completes build, 4,938 tests / 414 files, check across
+1,041 files (zero errors/warnings, 11 hints), exact-base scope, 20 native ownership
+groups and 12 actual production-page cases with edits/recovery. Fingerprint:
+`3e60d4c18803a51346d35820ff31f256d1cf497bc665237b241e1c05213ab514`.
+All 18 Phase 1 captures are byte-identical to #429, and all 12 successful Moon
+result texts match the baseline. [Root originals and comparisons](evidence/moon-result-ownership/integration/manifest.json)
+preserve the full records and the initial exact-image comparison failure.
+
+Eleven initial component screenshots are byte-identical. The Italian390 image
+has 367 differing pixels, all within the unchanged 32px floating Guide portrait
+canvas at x318/y1234; the measured difference bounds are x319–348/y1235–1264.
+Three subsequent fresh renders of the exact same frozen Moon source all equal
+the original baseline image byte for byte. Guide bootstrap/CSS/portrait bytes
+also match the baseline. No stable Moon content/geometry drift was observed;
+no all-12-initial-byte-identity claim, product correction, new mask, baseline or
+tolerance is used. Both the initial variance and all repeat controls are retained.
+
+Root adds only four workflow lines to run the unchanged 20-group native driver
+inside the existing Build & Check job, bounded to three minutes. Existing Node,
+Chromium, permissions, action pins and artifact upload are unchanged. The
+[independent wiring review](evidence/moon-result-ownership/ci-wiring-review/REVIEW.md)
+passes for workflow SHA-256
+`f7eced0d399caded9cff242c556f54084abea450aecd9df55122b966f40bfaaf`;
+98 existing workflow-coupled tests also pass. Normal native failures preserve
+result JSON; early compilation failures or timeout can leave only job logs and
+partial artifacts. No successful Ubuntu/hosted run is claimed before execution.
+Root source identities distinguish the author two-file freeze from this third
+integration file. Publication, production, date-coverage and external-adoption
+claims remain separate.

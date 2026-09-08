@@ -1,0 +1,74 @@
+import {resolveLocalToUtc} from './source/src/lib/time/localToUtc';
+import {moonPhaseName} from './source/src/lib/engine/lite';
+import {signForLongitude} from './extracted-signs';
+export function captureLookup({date,time,city,loadEngine}:any,state:any){
+const locale='en';
+const focusAfterComputeRef={current:false};
+const setBusy=(value:any)=>{state.busy=value;state.events.push({kind:'busy',value});};
+const setError=(value:any)=>{state.error=value;state.events.push({kind:'error',value});};
+const setResult=(value:any)=>{state.result=value;state.events.push({kind:'result',value});};
+const t=(_locale:any,key:any)=>key;
+const calculationError=(_cause:any,_locale:any,fallback:any)=>fallback;
+const console={error:(value:any)=>{state.errors.push(String(value));}};
+async function lookup(e: Event) {
+    e.preventDefault();
+    if (!date) return;
+    focusAfterComputeRef.current = true;
+    setBusy(true);
+    setError('');
+    try {
+      const engine = await loadEngine();
+      const hasTime = time !== '';
+      let utc: Date;
+      let dayStart: Date;
+      let dayEnd: Date;
+      if (city) {
+        utc = resolveLocalToUtc(date, hasTime ? time : '12:00', city.tz).utc;
+        dayStart = resolveLocalToUtc(date, '00:00', city.tz).utc;
+        dayEnd = resolveLocalToUtc(date, '23:59', city.tz).utc;
+      } else {
+        utc = new Date(`${date}T${hasTime ? time : '12:00'}:00Z`);
+        dayStart = new Date(`${date}T00:00:00Z`);
+        dayEnd = new Date(`${date}T23:59:00Z`);
+      }
+      const lon = engine.bodyLongitude('Moon', utc);
+      const sunLon = engine.bodyLongitude('Sun', utc);
+      const angle = (((lon - sunLon) % 360) + 360) % 360;
+
+      let altLon: number | null = null;
+      if (!hasTime) {
+        const early = engine.bodyLongitude('Moon', dayStart);
+        const late = engine.bodyLongitude('Moon', dayEnd);
+        if (signForLongitude(early).slug !== signForLongitude(late).slug) {
+          altLon = signForLongitude(lon).slug === signForLongitude(early).slug ? late : early;
+        }
+      }
+
+      const caption = city && hasTime
+        ? ''
+        : city
+          ? t(locale, 'middayLocalCaption')
+          : hasTime
+            ? t(locale, 'utcTimeCaption')
+            : t(locale, 'middayUtcCaption');
+
+      setResult({
+        phase: moonPhaseName(utc),
+        angle,
+        illum: moonIlluminationFromAngle(angle),
+        lon,
+        altLon,
+        caption,
+      });
+    } catch (err) {
+      setError(calculationError(err, locale, t(locale, 'moonError')));
+      console.error(err);
+    } finally {
+      setBusy(false);
+    }
+  }
+function moonIlluminationFromAngle(angle: number): number {
+  return (1 - Math.cos((angle * Math.PI) / 180)) / 2;
+}
+return lookup;
+}

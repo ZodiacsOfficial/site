@@ -1,0 +1,100 @@
+{
+  "verdict": "No blocking finding in the exact two-text-change scope.",
+  "identity": {
+    "baseCommit": "65418003c07efc0c435ce1010e3c9ec05b478eb4",
+    "files": {
+      "src/pages/developers/support/index.astro": "7598fca770c5f5e9c26f92603ee37e48c4cc3d087d744ee1ac3783b068a49cea"
+    },
+    "patchSha256": "2a59e5e721a748178f96e5d653434c0515cc5795d7c37d82cd25338dbe83e581",
+    "scope": "Prepared scratch only: candidate-relative runtime claim and accurately named consumer evidence link. No root/source mutation."
+  },
+  "candidate": {
+    "schemaVersion": 1,
+    "name": "@zodiacs/engine",
+    "version": "0.1.1-rc.6",
+    "releaseStatus": "unpublished-candidate",
+    "releaseLabel": "Unpublished candidate",
+    "artifactPath": "vendor/zodiacs-engine-0.1.1-rc.6.tgz",
+    "artifactUrl": "https://raw.githubusercontent.com/ZodiacsOfficial/sdk/51129a197cd3f2a2a8c966fb797ea4da1e147b3d/artifacts/zodiacs-engine-0.1.1-rc.6.tgz",
+    "sha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+    "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+    "sourceCommit": "fb57af7a2cd7c30983cc8fb655183d5a11f9cf30",
+    "sourcePackagePath": "packages/engine",
+    "evidenceRepository": "https://github.com/ZodiacsOfficial/site",
+    "evidenceCommit": "68412f16140f9986b11767d271eda6e14b6aba48",
+    "evidencePaths": {
+      "ledger": "docs/platform/evidence/site-engine-rc6/README.md",
+      "node22": "docs/platform/evidence/site-engine-rc6/node22-parity.json",
+      "node24": "docs/platform/evidence/site-engine-rc6/node24-parity.json",
+      "publicConsumer": "docs/platform/evidence/site-engine-rc6/public-candidate-consumer.log"
+    },
+    "artifactRepository": "https://github.com/ZodiacsOfficial/sdk",
+    "artifactCommit": "51129a197cd3f2a2a8c966fb797ea4da1e147b3d",
+    "artifactRepositoryPath": "artifacts/zodiacs-engine-0.1.1-rc.6.tgz"
+  },
+  "carrierVerification": [
+    {
+      "name": "ledger",
+      "path": "docs/platform/evidence/site-engine-rc6/README.md",
+      "commit": "68412f16140f9986b11767d271eda6e14b6aba48",
+      "sha256": "adc6509aeb00e240d5a3cd94dc6f44f4b3c79beb79590af9b2eb20089fa302e2",
+      "currentFileMatches": true
+    },
+    {
+      "name": "node22",
+      "path": "docs/platform/evidence/site-engine-rc6/node22-parity.json",
+      "commit": "68412f16140f9986b11767d271eda6e14b6aba48",
+      "sha256": "aeeb580ed6bb78fabca768b419f08b7a0df612058fe48a57d669f3e59a178b50",
+      "currentFileMatches": true
+    },
+    {
+      "name": "node24",
+      "path": "docs/platform/evidence/site-engine-rc6/node24-parity.json",
+      "commit": "68412f16140f9986b11767d271eda6e14b6aba48",
+      "sha256": "ef6df2b71c895f8c669f8abc9547380c9813ffb54da8479d4d41e3acfa4968fc",
+      "currentFileMatches": true
+    },
+    {
+      "name": "publicConsumer",
+      "path": "docs/platform/evidence/site-engine-rc6/public-candidate-consumer.log",
+      "commit": "68412f16140f9986b11767d271eda6e14b6aba48",
+      "sha256": "05c4eed6f9e10d7ddfb4ea0de43ab9530e24ded58ade1711f4cd844a7b272c9e",
+      "currentFileMatches": true
+    }
+  ],
+  "package": {
+    "version": "0.1.1-rc.6",
+    "engines": {
+      "node": ">=18"
+    },
+    "type": "module",
+    "exports": [
+      ".",
+      "./geo",
+      "./internal",
+      "./internal/math",
+      "./receipt"
+    ]
+  },
+  "separateSdkInstallEvidence": [
+    {
+      "path": "/private/tmp/zodiacs-platform-sdk-seconds/docs/platform/evidence/time-seconds/implementation/consumer-node22.log.log",
+      "sha256": "fa89ea9c16b9b78662bcf1e2b0c7f3131072c79f68959fd3ec4a53c17e480cfe",
+      "runtime": "v22.23.2",
+      "artifactSha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+      "types": "passed",
+      "examples": "passed",
+      "methodSource": "packages/engine/scripts/verify-packed-consumer.mjs uses actual npm install --ignore-scripts --no-audit --no-fund of tarball and TypeScript 5.9.3"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-sdk-seconds/docs/platform/evidence/time-seconds/implementation/consumer-node24.log.log",
+      "sha256": "0d89831b44cda27e491b888399dbe027f345f1452dea92eb11118fced400fce0",
+      "runtime": "v24.19.0",
+      "artifactSha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+      "types": "passed",
+      "examples": "passed",
+      "methodSource": "packages/engine/scripts/verify-packed-consumer.mjs uses actual npm install --ignore-scripts --no-audit --no-fund of tarball and TypeScript 5.9.3"
+    }
+  ],
+  "limits": "Read-only local immutable git/carrier and archive evidence comparison; no new remote availability check, install, test, browser execution or source mutation."
+}

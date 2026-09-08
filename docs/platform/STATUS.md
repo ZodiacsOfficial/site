@@ -12,8 +12,34 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
-## Current integration — inactive local-date interval prerequisite
+## Current implementation — result ownership corrections
 
+Root remains on `codex/platform-moon-result-ownership`, based on delivered #429.
+Real isolated work is preparing two separately reviewable corrections: Moon lookup
+and ChartCalculator result ownership after input edits, delayed modules, new runs
+and calculation failure. Neither correction activates interval coverage or changes
+astronomical certainty, locale catalogs, account formats or Astrofolio sources.
+Moon Freeze1 is integrated exactly: two files, patch
+`ecdc149e2115ee234828f3848b40cab4f6ba2b15074763b28bf936f0abac6858`.
+Author 20 and independent 13 actual browser groups pass; root’s 12 baseline
+production-page controls pass. Root build/check/all 4,938 tests, 20 native ownership groups and 12 actual
+production-page edit/recovery cases pass. All 18 acceptance captures and 12
+successful result texts are identical to #429. Eleven initial component images
+are byte-identical; one has 367 changed pixels only in the existing Guide
+portrait. Three identical-source repeats match the baseline exactly; originals
+and diagnosis are retained. The unchanged native driver is now wired into the
+existing CI job, with separate wiring review and 98 coupled tests passing. The ChartCalculator freeze and final independent review
+remain pending; no completion of that correction is claimed yet. [The read-only caller evidence](evidence/interval-caller-compatibility/)
+retains concrete stale-result and empty/missing-date counterexamples. Date coverage
+and truthful whole-date Sun/Moon claims remain open after these ownership fixes.
+
+## Delivered candidate — inactive local-date interval prerequisite
+
+Draft [#429](https://github.com/ZodiacsOfficial/site/pull/429), source
+`65418003c07efc0c435ce1010e3c9ec05b478eb4`, is delivered with all 83 actual
+changed paths verified. Exact-source Site Check 34201151004 is in progress. The READY preview
+`dpl_GLVF1b21yYBFfMo8eWXfGAbMaxBr` passes 13 existing-surface browser/API
+checks; the interval API remains inactive.
 The isolated branch `codex/platform-local-date-intervals` starts from #428 source
 `30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`. The exact three-file freeze adds
 immutable half-open date-membership intervals, explicit empty/unresolved results
@@ -43,8 +69,10 @@ The standard daily builder changed only the engine/generator manifest identities
 
 Draft [#428](https://github.com/ZodiacsOfficial/site/pull/428) is delivered at
 `30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`. All 349 actual draft paths match
-the local diff. Exact-source Site Check 34200151600 and preview validation are
-in progress; no production deployment is claimed. Root acceptance passes the normal build, 4,859 tests / 413 files, check across
+the local diff. Exact-source Site Check 34200151600 has 13 completed successful jobs and the
+remaining build/visual/performance job in progress. The exact-source READY
+preview passes 27 receipt groups and 13 developer/API checks; no production
+deployment is claimed. Root acceptance passes the normal build, 4,859 tests / 413 files, check across
 1,039 files (zero errors/warnings, 11 hints), and 18 captures byte-identical to
 #427. The full engine remains five static chunks, 23.3 KB / 25 KB. Actual browser acceptance passes 27 receipt groups (including all 16 corrected
 historical downloads), 13 developer/API checks and 12 existing share cases.
@@ -60,8 +88,7 @@ helper controls on both Node 22 and 24. The companion changes helper comments
 only, retaining old inconsistent-context rejections and adding corrected-context
 positives. Metadata uses the real carrier; no placeholder is a release identity.
 Date-endpoint semantics, saved/account formats, archived artifacts and production
-are unchanged. The separate inactive date-interval prerequisite has completed author and independent
-review; its three-file freeze awaits separate root integration.
+are unchanged. The separate inactive date-interval prerequisite is delivered as #429 above.
 
 ## Delivered candidate — local calculation receipt download
 

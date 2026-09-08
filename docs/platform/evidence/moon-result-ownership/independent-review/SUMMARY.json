@@ -1,0 +1,31 @@
+{
+  "reviewer": "Independent agent /root/adoption_review/time_context_edges",
+  "verdict": "No unresolved defect found in the frozen Moon result-ownership scope.",
+  "base": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "patchSha256": "ecdc149e2115ee234828f3848b40cab4f6ba2b15074763b28bf936f0abac6858",
+  "islandSha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb",
+  "sourceHashesStillMatch": true,
+  "native": {
+    "browser": "152.0.7977.83",
+    "node": "v22.23.2",
+    "candidatePassed": 13,
+    "baselinePassed": 1,
+    "baselineFailed": 12,
+    "requests": 0,
+    "realModuleLoaderCases": 11,
+    "controlledRawLoaderOrderingCases": 2,
+    "rapidUnmountPassed": true
+  },
+  "unchangedCalculationTryBodySha256": "f6b8e97dae5f10451a17ae90232a0a55a7238f5d03d6406d51fd26e40ec1451b",
+  "scope": "Input/result ownership only. Date interval activation, endpoints, certainty, phase policy, locales, styles, SDK/API and account/Registry behavior unchanged.",
+  "limitations": [
+    "Finite native tests on Chrome 152; not all-browser certification.",
+    "Actual Preact islands and real module-load wrapper run; import settlement and synthetic geo responses are controlled, and current calculation failure is deliberately injected. Actual longitude calculations otherwise use the copied rc.6 archive.",
+    "The existing Toronto/Apia endpoint and whole-date uncertainty defects remain separately tracked, not fixed by this patch."
+  ],
+  "reviewFixtureErrors": [
+    "Initial build identity collection attempted to read esbuild virtual define input; corrected metadata filter, no product change.",
+    "Initial browser fixture omitted its mount element, so no test group executed; added owned fixture mount element and retained original error/source."
+  ],
+  "remaining": "Root integration/release gates and any publication decisions."
+}

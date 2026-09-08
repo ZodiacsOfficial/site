@@ -126,3 +126,30 @@ draft while #428 hosted checks proceed. The read-only caller review reproduced
 stale Moon results and date-coverage defects; a separate Moon result-ownership
 correction is authorized and being prepared in scratch. It must leave coverage,
 astronomical certainty, locale catalogs and interval activation unchanged.
+
+
+Draft #429 is delivered at 65418003c07efc0c435ce1010e3c9ec05b478eb4; its CI
+and preview checks proceed separately from #428's ongoing hosted build job.
+Both original #428 preview failure and passing unchanged repeat are retained.
+Root now integrates neither active date coverage nor stale author code: Moon
+and ChartCalculator ownership fixes are being authored in separate scratch
+checkouts, then require frozen source, independent review and normal acceptance.
+
+
+A separate one-file developer support wording correction is prepared and
+independently reviewed under `evidence/runtime-claims/`. The static row retained
+Node 20/current-install assertions from earlier candidates after the caption
+advanced to rc.6. Point that row to candidate-specific immutable runtime reports
+and name the linked public-download consumer check accurately. Keep the declared
+Node minimum distinct from tested versions, and retain supported clean-consumer
+claims backed by separate actual SDK install evidence. Integrate this bounded
+follow-up separately after the Moon ownership slice; no source activation is
+claimed by its prepared patch.
+
+
+Moon ownership root acceptance is complete for three source/test/workflow files:
+its exact two-file author freeze plus a reviewed four-line CI step. Deliver this
+bounded draft above #429, then integrate the independently reviewed one-file
+runtime-evidence wording correction while ChartCalculator’s separate four-file
+freeze receives independent adversarial review. Preserve the recorded portrait
+variance and all passing controls; do not change the image gate or date policy.

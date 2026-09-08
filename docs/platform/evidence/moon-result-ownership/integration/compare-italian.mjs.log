@@ -1,0 +1,7 @@
+import { readFile, writeFile } from 'node:fs/promises';
+import { PNG } from '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/pngjs/lib/png.js';
+const root='/private/tmp/zodiacs-platform-moon-integration';
+const a=PNG.sync.read(await readFile(root+'/baseline/it-390.png'));const b=PNG.sync.read(await readFile(root+'/candidate/it-390.png'));
+const r={before:{width:a.width,height:a.height},after:{width:b.width,height:b.height},differingPixels:0,bounds:null,examples:[]};
+if(a.width===b.width&&a.height===b.height){let x0=a.width,y0=a.height,x1=-1,y1=-1;for(let y=0;y<a.height;y++)for(let x=0;x<a.width;x++){const o=(y*a.width+x)*4;if(a.data.subarray(o,o+4).equals(b.data.subarray(o,o+4)))continue;r.differingPixels++;x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y);if(r.examples.length<8)r.examples.push({x,y,before:[...a.data.subarray(o,o+4)],after:[...b.data.subarray(o,o+4)]});}r.bounds={x0,x1,y0,y1};}
+await writeFile(root+'/italian-pixel-diagnostic.json',JSON.stringify(r,null,2)+'\n');console.log(JSON.stringify(r));

@@ -1,0 +1,8 @@
+{
+  "baseCommit": "65418003c07efc0c435ce1010e3c9ec05b478eb4",
+  "files": {
+    "src/pages/developers/support/index.astro": "7598fca770c5f5e9c26f92603ee37e48c4cc3d087d744ee1ac3783b068a49cea"
+  },
+  "patchSha256": "2a59e5e721a748178f96e5d653434c0515cc5795d7c37d82cd25338dbe83e581",
+  "scope": "Prepared scratch only: candidate-relative runtime claim and accurately named consumer evidence link. No root/source mutation."
+}
