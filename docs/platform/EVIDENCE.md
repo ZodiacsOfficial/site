@@ -1931,3 +1931,96 @@ is verified and copied as 67 inert records, root manifest
 No frozen ChartCalculator source is integrated or approved by this checkpoint.
 
 The separate [Moon preview evidence audit](evidence/moon-result-ownership/preview-audit/REVIEW.md) verifies all 28 supplied records, all 12 cases and the actual draft’s 328 paths/blob identities. Its original manifest is `a5cd3261e40ebf5510cfcf7a2216567fb71a97a7bb4b417992355dc585a09124`. GitHub’s large-diff endpoint returned 406; complete paginated files resolved that retrieval limit. This is independent evidence validation, not a second browser execution.
+
+
+### Support draft delivery and corrected ChartCalculator integration — 2026-09-08
+
+Draft #431 exact `abcf1a44e52040db79a369b49bc9b55d78099b22` has all183 actual
+paths/blob identities verified. READY preview `dpl_7TVmbdjnFTVjT1rZrVj5a8Kyj26C`
+passes13 actual groups. [Root release records](evidence/runtime-claims/release/manifest.json)
+seal24 records under manifest `d546b3d2e73fc2847da6aa666610fca0384613e65a7d0f0ae968effe5536e40b`.
+[Independent audit](evidence/runtime-claims/preview-audit/REVIEW.md.log) seals7
+payloads and30 verified compressed members under manifest
+`0355784ed636d3f6f3bae741d791d16914dcca122f85d3b9e543604687c629de`.
+Its fresh100+83 GitHub file pages, current provider and immutable evidence carrier
+match. The observer records478 browser GET requests and12 blocked existing
+Plausible attempts; authentication bootstrap and the separate sky APIRequestContext
+are outside that count. The failed literal-marker scan matched historical public
+scanner source, not a secret; the diagnostic and passing credential-like scan
+are retained without claiming an exact-secret comparison after deletion.
+
+Moon #430 now completes all14 jobs in exact-source Site Check34204547574,
+including its new native driver. Support #431 Site Check34206194928 has13 successful
+jobs and Build & Check in progress. Original run records are retained with the
+chart integration below; draft descriptions were updated through body files.
+
+ChartCalculator exact corrected patch
+`32b7413f9fcce17b192fa9f3fe28847d6b6ec7bfccc39b4437fee60df44a8e9f`
+is integrated above #431. Component SHA-256:
+`fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0`.
+[Author Freeze1](evidence/chart-result-ownership/author-freeze1/REPORT.md.log)
+manifest `265615d918b92c5eb322a452b2174a09ffa857b3736662baacbf466cba006490`
+retains6 payloads/130 verified compressed members; its original incomplete
+three-case-driver byte-copy limitation remains explicit.
+[Corrected author Freeze2](evidence/chart-result-ownership/author-freeze2/REPORT.md.log)
+manifest `9f4b0f69175713dfc6dd56e8380e9dc047205a6bf73bdb6124acc8d49626e77d`
+retains5 payloads/46 verified compressed members,134 focused tests and17 actual
+production-page groups. The intermediate close-generation error and six actual
+before-fix assertions are retained, with ordinary-save positive controls.
+
+[Independent corrected source review](evidence/chart-result-ownership/review-freeze2/REVIEW-FREEZE2.md)
+source manifest `47c6e0f6e319a077c24fec78bdd532e872e0d33396cbe4ec9cfc0e5bb5c4c112`
+has31 records; root’s32 inert copies use manifest
+`6ec3a019aeaf4f20c3185e9e6197f095d05d390f4d674c195f078f5036c509af`.
+All22 component groups and five unmodified production-build groups pass; the
+exact author driver additionally passes17 cases with checkout/output paths
+containing spaces. All62 module references and the parsed numerical block match
+the original; this does not certify existing whole-date coverage.
+[Independent saved-state review](evidence/chart-result-ownership/profile-save-review-freeze2/REVIEW.md)
+source manifest `d6cf0faaf014b5f283c7e0e574e0314ea9d0128512c1803526e0369e4d2d0d72`
+has66 records; root’s67 inert copies use manifest
+`ce73d307eff0f32b39957468fe2a7dcdfb13f3f0928b7ef0af4600acf8805012`.
+Its exact callback/actual store/native storage/RAF controls pass18/18 versus6/18
+original. Every committed case writes once; denied/prompt-only cases write zero.
+These are not relabeled full-component render tests or an ordinary auth bypass.
+
+Root’s separate four-line workflow integration has SHA-256
+`74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5`.
+The [wiring review](evidence/chart-result-ownership/ci-wiring-review/REVIEW.md)
+source manifest `e7a1c6b22fd09cc404aad16d5735414cdf4dc5e2602a4fff22059b3404f2619a`
+is copied under7-record root manifest
+`12f29d693850a09b951ee8c2ed7e90bcbccf74e5d0a314996438f9b6b0604784`.
+The new17-case driver uses existing Node22/pinned Chromium, a5-minute limit and
+the existing artifact tree; permissions, secrets, pins and other gates stay the
+same. No hosted Linux success is inferred from its source review.
+
+[Root local acceptance](evidence/chart-result-ownership/integration/manifest.json)
+seals22 public records and196 verified compressed raw members under manifest
+`c861408ca630b13fd4aac9f878ddd90c9317122be513db85f7ac55d823006943`.
+The full build/check/4,965tests/415files pass; check covers1,042files with zero
+errors/warnings and11hints. Root17 native groups,12 existing sharing cases and
+the Russian26-route+404 drive at360/1280 pass. All18 fresh Phase1 captures equal
+#431; fingerprint `eceb9de9c5b4fb30bca028951777fd2700350f1a234fe01ee656de41ab0f11ac`.
+Engine closure remains23.3KB under25KB; every existing bundle budget passes.
+
+The original and both candidate chart visual runs retain the same three macOS
+baseline-height failures. Mobile and ordinary desktop equal the pre-change
+images exactly. Reduced motion has53,116 raw differing pixels,52,649 with only
+one channel level of difference. The existing threshold scores one pixel,
+ratio7.30840290932903e-8, below the unchanged0.001budget, with identical1440×9502
+dimensions. A fresh candidate repeat is byte-identical to the first candidate.
+The extra exact-byte assertion failure, original images, full pixel diagnostic,
+existing-threshold score and diagnostic crops are retained. No cause, all-three
+byte identity, normal visual-gate pass, new mask or altered baseline is claimed.
+The driver-generated tracked sharing image was preserved in evidence then restored
+to its original committed bytes; no captured output was silently discarded.
+
+
+The [delivery baseline refresh](evidence/chart-result-ownership/release-baseline/manifest.json)
+records site main79410401, unchanged SDKmainb49e0f14, actual36 Astrofolio #416
+paths atb17d6804 and SDK #5’s explicit do-not-merge/do-not-publish status atcced0116
+with no submitted reviews. Two scheduled main commits since75d036ae change18
+Registry-only paths; root leaves them untouched and does not claim latest-main
+integration. READY productiondpl_gBmYzHCpqwMCCH36DAToDMjRQ21g is source79410401,
+from scheduled upstream publication, not this platform candidate. No publication
+or production tool was invoked by root.

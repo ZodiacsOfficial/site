@@ -1,0 +1,30 @@
+[
+  {
+    "path": "node_modules/typescript/package.json",
+    "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+  },
+  {
+    "path": "node_modules/typescript/lib/typescript.js",
+    "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+  },
+  {
+    "path": "node_modules/esbuild/package.json",
+    "sha256": "d55d1d19fcc5b6079e4a71dd4111340c79c682bc36835ac7058a0c364c7db58a"
+  },
+  {
+    "path": "node_modules/esbuild/lib/main.js",
+    "sha256": "8331fe1d8b3a07381f33cc425fcfaa94776e263113653f80ec3ba433e9657e73"
+  },
+  {
+    "path": "node_modules/@esbuild/darwin-arm64/bin/esbuild",
+    "sha256": "e2dc9a52440a2a34f09434a2f4843cb1e30f84e40dcf238976ec61ef8cd7f36a"
+  },
+  {
+    "path": "node_modules/playwright-core/package.json",
+    "sha256": "759e376f995bf39edd4810d699b99469bab1d7428b6fbc78d41912f367df7ba9"
+  },
+  {
+    "path": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "sha256": "18e387c90ab8a8400183e8bdd396376e1e875b91b4c874b894dcade7b35bf572"
+  }
+]

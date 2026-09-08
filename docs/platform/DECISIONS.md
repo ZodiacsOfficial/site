@@ -520,3 +520,23 @@ anonymous primary remains valid. Cache completion is separate from focus intent.
 An obsolete callback must not focus or clear a newer dialog's return target.
 A save already committed remains committed; suppression of its stale UI is not
 rollback or cancellation. Freeze 1 is explicitly correction-requested.
+
+
+C-012 corrected integration uses one captured result owner across computation,
+signature/share/context work and ancillary result actions. Input edits clear
+derived state while retaining typed fields. Optional saved-mine provenance and
+save UI additionally require their captured access generation; replacement save
+prompts also advance a prompt generation. Cache completion is allowed to remain
+useful, but old focus intent is discarded at both completion and frame time.
+Do not advance prompt generation on ordinary close: that would incorrectly
+suppress the legitimate completed-save install hint. The write call itself is
+unchanged; the independent native storage observer proves exactly one write
+for committed cases and zero for denied/prompt-only cases in its finite controls.
+
+Root accepts the measured before/after chart rendering under the repository’s
+existing threshold0.1 and maximum difference ratio0.001, without changing either.
+Two cases are byte-identical; one has one scored pixel in1440×9502 pixels
+(ratio7.30840290932903e-8) and unchanged dimensions. A same-source repeat matches
+the candidate exactly. The original stricter exact-byte assertion and the three
+pre-existing baseline-height failures remain recorded. The cause of this minor
+raster difference is not established; no all-three-byte-identity claim is made.

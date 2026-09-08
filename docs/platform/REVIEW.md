@@ -123,3 +123,14 @@ jobs. ChartCalculator Freeze 1 is correction-requested: see its [actual review](
 and separate [save/profile findings](evidence/chart-result-ownership/profile-save-review-freeze1/REVIEW-FREEZE1.md).
 No publication, production, human numerical/legal signoff or external adoption
 is implied. SDK #5's hold and the separate Astrofolio integration boundary remain.
+
+
+Corrected ChartCalculator Freeze2 now completes the [independent source review](evidence/chart-result-ownership/review-freeze2/REVIEW-FREEZE2.md),
+[save/profile review](evidence/chart-result-ownership/profile-save-review-freeze2/REVIEW.md),
+separate CI wiring review and root local acceptance. All original Freeze1 findings
+remain inspectable. Existing numerical statements, module references, requested
+writes, styles/locales and public positions semantics are preserved; new guards
+control only obsolete result/reference/focus/UI completion. The initial exact-PNG
+comparison failure is retained and classified under the unchanged scored visual
+budget, with its one-pixel difference and baseline-height limits explicit.
+Hosted acceptance, human review, publication and production remain separate.

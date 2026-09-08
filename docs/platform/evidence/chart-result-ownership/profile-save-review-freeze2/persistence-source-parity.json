@@ -1,0 +1,16 @@
+{
+  "exactSaveChartCallByteIdentical": true,
+  "existingPushModuleLoaderUnchanged": true,
+  "records": {
+    "original": {
+      "saveChartCallSha256": "f748909241176c0242d7c7670f324520439f4979fe5f2e1d0a6611a4be44f03b",
+      "saveChartCall": "saveChart({\n        id: crypto.randomUUID(),\n        name: explicitName ?? autoName,\n        relationship: subjectMode === 'self' ? 'self' : 'other',\n        createdAt: now,\n        updatedAt: now,\n        birth: identity.birth,\n        summary: {\n          engineVersion: ENGINE_VERSION,\n          utcISO: chart.input.utc.toISOString(),\n          houseSystem: chart.houses?.system ?? computedInput.houseSystem,\n          bodies: chart.bodies.map((b) => ({ body: b.body, lon: b.lon, retrograde: b.retrograde })),\n          angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,\n          flags: chart.flags,\n        },\n      }, explicitName ? { explicitName } : undefined)",
+      "loadPushOptInSha256": "50fc832606bab5ea93919ad6f745895acf41e49693bc2b5b0f2b3e563d6033b9"
+    },
+    "candidate": {
+      "saveChartCallSha256": "f748909241176c0242d7c7670f324520439f4979fe5f2e1d0a6611a4be44f03b",
+      "saveChartCall": "saveChart({\n        id: crypto.randomUUID(),\n        name: explicitName ?? autoName,\n        relationship: subjectMode === 'self' ? 'self' : 'other',\n        createdAt: now,\n        updatedAt: now,\n        birth: identity.birth,\n        summary: {\n          engineVersion: ENGINE_VERSION,\n          utcISO: chart.input.utc.toISOString(),\n          houseSystem: chart.houses?.system ?? computedInput.houseSystem,\n          bodies: chart.bodies.map((b) => ({ body: b.body, lon: b.lon, retrograde: b.retrograde })),\n          angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,\n          flags: chart.flags,\n        },\n      }, explicitName ? { explicitName } : undefined)",
+      "loadPushOptInSha256": "50fc832606bab5ea93919ad6f745895acf41e49693bc2b5b0f2b3e563d6033b9"
+    }
+  }
+}

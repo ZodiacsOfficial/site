@@ -1,0 +1,27 @@
+[
+  {
+    "path": "REPORT.md.log",
+    "bytes": 8644,
+    "sha256": "b775aeacccf5d092f450fdd7310480d6a27680deadb91de30b79e1108ef16cf1"
+  },
+  {
+    "path": "freeze.json.log",
+    "bytes": 1436,
+    "sha256": "7b1d82dad1cd1a30336995424d11683f637a45d9ac81f5447bce4894e9ba3a21"
+  },
+  {
+    "path": "patch.diff.log",
+    "bytes": 71210,
+    "sha256": "32b7413f9fcce17b192fa9f3fe28847d6b6ec7bfccc39b4437fee60df44a8e9f"
+  },
+  {
+    "path": "raw-evidence.tar.gz",
+    "bytes": 1407714,
+    "sha256": "f3f3b545ff6f0ccbebc2734dca9ec05afc5e037e9db2dd11091c32f89d8a8e0c"
+  },
+  {
+    "path": "raw-members.json",
+    "bytes": 8257,
+    "sha256": "0cf342f8e0485702ba2fa1406ff7f774323232f832e376112b127d9cedd648a0"
+  }
+]
