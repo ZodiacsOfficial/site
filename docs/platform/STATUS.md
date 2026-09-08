@@ -25,20 +25,28 @@ Completed local acceptance: **4,717 tests / 408 files**, production build,
 check (zero errors/warnings, 11 hints), exact protected-scope guard, 18 actual
 current-edition captures, developer desktop/mobile journeys, 12 chart-share
 cases, and 30 native 200%/400% zoom checks. The final regular developer matrix
-adds 320px. Independent review passes 291 bounded checks on each Node 22/24,
+passes at 1280/390/320px. Independent review passes 291 bounded checks on each Node 22/24,
 including installed-package parity, metadata attacks and preservation controls.
 No numerical tolerance or approved visual baseline was changed.
 
 The macOS whole-site visual suite reports **15 baseline mismatches** on existing
-home/chart/sign/event routes. A separate preceding-candidate control is in
-progress to distinguish pre-existing failures from this adoption. This check
-is not recorded as passed. Draft delivery/CI/preview verification are pending.
+home/chart/sign/event routes. A separate preceding rc.1 candidate reproduces all fifteen failures and
+dimensions. Thirteen candidate/control PNGs are byte-identical; all fifteen
+score zero differences at the unchanged perceptual threshold. This establishes
+pre-existing failure relative to rc.5, not a passing baseline gate. Draft [#422](https://github.com/ZodiacsOfficial/site/pull/422) is delivered at
+`8ee0e0183a3c4437af902858b1d76678d3e961a3`; CI run 34186236252 and
+Build & Check is still running (13 jobs pass). The exact-source preview
+`dpl_BsA6EAM83MD2vyAHiSAsVNzTwPm9` is READY and passes 13 browser/API checks.
 [Current raw evidence](evidence/site-engine-rc5/release/),
 [independent review](evidence/site-engine-rc5/independent-review/REVIEW.md.log).
 
 ## Refreshed release truth
 
-- Site main is `d4d5717d132a28cd6d7cda3007e3b898bb74669f`. Its September 8 daily
+- The candidate integrated main `d4d5717d132a28cd6d7cda3007e3b898bb74669f`.
+  A later read finds main `75d036ae365a4c469e234046b0592a80f0dbc311`: 18
+  automatic Registry-only refreshes, with no daily/calculation source change.
+  Those paths remain unchanged on this candidate since their common ancestor;
+  future main integration must preserve the latest upstream bytes. Its September 8 daily
   edition and Registry snapshot are preserved in the candidate. All 21 content
   files match upstream bytes; only the manifest's engine/generator identifiers
   are regenerated through the existing builder. The one-time scope allowance
@@ -77,7 +85,8 @@ Finite numerical/model-assisted review is not human expert certification.
 
 ## Next dependency-ordered work
 
-Finish the rc.5 site draft's visual classification, CI and exact-source preview.
+Visual classification and exact-source preview acceptance are complete for #422.
+Finish its remaining CI gate while integrating the separate next C02 slice.
 The next independent C02 prerequisite is implemented in an isolated checkout:
 one fresh native calculation produces a complete receipt plus the existing
 compact chart and immutable canonical replay input. Its four-file patch passes

@@ -1213,3 +1213,56 @@ in progress. No baseline update or blanket release-ready claim is made. CI and
 preview verification remain pending. Production/source/package states were
 refreshed through read-only operations in
 [release-refresh.json](evidence/site-engine-rc5/release/release-refresh.json).
+
+
+### Independent classification of macOS visual failures
+
+The control starts from exact delivered #419 `ba65375a`, installs rc.1 from its
+unchanged archive with separately copied dependencies, inherits the same 22-file
+September 8 upstream update, and regenerates its own rc.1 manifest. Its full
+build passes. The original visual suite reproduces **all 15 failures**, with
+exactly the same dimensions as the rc.5 candidate. **13 PNG pairs are byte-identical**;
+all **15 pairs score zero differing pixels at the unchanged pixelmatch 0.1
+perceptual threshold**. The original 0.1% maximum-difference gate was retained.
+The two home desktop pairs have raw channel differences, mostly 1/255 and at
+most 20; no cause is invented. Four corresponding images and raw distributions
+are included, alongside hashes/results for every case.
+
+[Control source, commands and qualification](evidence/site-engine-rc5/visual-control/REVIEW.md.log),
+[copy manifest](evidence/site-engine-rc5/visual-control/manifest.json).
+No baseline is replaced or represented as passing. This finite comparison shows
+no new scored drift on those routes; it does not approve new baselines or certify
+unexamined routes. The actual developer-note overflow is separately corrected
+and passes 320px and native 400% acceptance.
+
+Draft [#422](https://github.com/ZodiacsOfficial/site/pull/422) is delivered at
+`8ee0e0183a3c4437af902858b1d76678d3e961a3`. CI run 34186236252 is active;
+13 jobs currently pass and Build & Check is still running. Exact-source preview
+verification is active. All four newly public site evidence URLs were downloaded
+without credentials and matched the immutable carrier bytes; see
+[public evidence verification](evidence/site-engine-rc5/release/public-evidence-verification.json).
+
+
+### Exact-source #422 preview acceptance
+
+Vercel deployment `dpl_BsA6EAM83MD2vyAHiSAsVNzTwPm9` is **READY** for exact
+runtime source `8ee0e0183a3c4437af902858b1d76678d3e961a3` at
+https://zodiacs-kanwjkp9y-zodiacsofficial.vercel.app. Actual Chrome 152 passes
+**13 checks**: all three developer routes at 1280/390/320, support keyboard
+focus/current artifact/version/archived links, synthetic birth-chart results
+identifying rc.5 with no saved profile, and the September 8 shared-sky endpoint.
+[Deployment receipt](evidence/site-engine-rc5/preview/deployment.json),
+[browser result](evidence/site-engine-rc5/preview/result.json).
+
+The initial unauthenticated browser received Vercel's login page and failed
+its site-footer expectation. It is retained as an access failure, not product
+acceptance. Temporary Vercel access was used in an isolated browser; auth URLs
+and cookie values are excluded from evidence, the browser closed, and the
+mode-600 credential file was deleted. No production/account operation occurred.
+
+A later read at 04:20 UTC finds site main `75d036ae`: the scheduled updater
+refreshed 18 Registry files after #422 was pushed. No daily/calculation code
+changed; this candidate leaves all 18 paths unchanged relative to common
+ancestor `d4d5717d`, so they must retain the newer main version on integration.
+This is a separate upstream evolution, not a candidate deployment or permission
+to overwrite Registry records. The next slice stays on the reviewed stack.

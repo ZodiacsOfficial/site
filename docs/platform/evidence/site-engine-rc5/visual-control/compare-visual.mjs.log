@@ -1,0 +1,20 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
+const root=path.dirname(new URL(import.meta.url).pathname);const require=createRequire(path.join(root,'site/package.json'));
+const {PNG}=require('pngjs');const pixelmatch=(await import(path.join(root,'site/node_modules/pixelmatch/index.js'))).default;
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const oldDir=path.join(root,'site/tests/visual/artifacts/visual');const newDir=path.join(root,'current-candidate-visual');
+const readPng=p=>PNG.sync.read(fs.readFileSync(p));
+const images=fs.readdirSync(newDir).filter(p=>p.endsWith('.png')&&!p.endsWith('.diff.png'));
+const records=[];
+for(const file of images){
+ const aPath=path.join(oldDir,file);const bPath=path.join(newDir,file);if(!fs.existsSync(aPath))continue;
+ const a=readPng(aPath),b=readPng(bPath);const record={file,controlSHA256:sha(fs.readFileSync(aPath)),candidateSHA256:sha(fs.readFileSync(bPath)),controlDimensions:[a.width,a.height],candidateDimensions:[b.width,b.height],dimensionsEqual:a.width===b.width&&a.height===b.height};
+ if(record.dimensionsEqual){const diff=new PNG({width:a.width,height:a.height});const count=pixelmatch(a.data,b.data,diff.data,a.width,a.height,{threshold:0.1});record.diffPixels=count;record.diffRatio=count/(a.width*a.height);record.withinOriginalBudget=record.diffRatio<=0.001;let rawPixelDifferences=0;for(let i=0;i<a.data.length;i+=4){if(a.data[i]!==b.data[i]||a.data[i+1]!==b.data[i+1]||a.data[i+2]!==b.data[i+2]||a.data[i+3]!==b.data[i+3])rawPixelDifferences++;}record.rawPixelDifferences=rawPixelDifferences;record.decodedPixelsIdentical=rawPixelDifferences===0;
+ if(count>0){fs.mkdirSync(path.join(root,'comparison-diffs'),{recursive:true});fs.writeFileSync(path.join(root,'comparison-diffs',file),PNG.sync.write(diff));let minX=a.width,minY=a.height,maxX=-1,maxY=-1;for(let y=0;y<a.height;y++)for(let x=0;x<a.width;x++){let i=(y*a.width+x)*4;if(diff.data[i]===255&&diff.data[i+1]===0&&diff.data[i+2]===0){minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y)}}record.diffBoundingBox={minX,minY,maxX,maxY};}
+ }
+ records.push(record);
+}
+const result={checkedAt:new Date().toISOString(),method:'Original pixelmatch threshold 0.1 and maxDiffRatio 0.001, no masks added or baseline updates.',records};fs.writeFileSync(path.join(root,'candidate-vs-control.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));

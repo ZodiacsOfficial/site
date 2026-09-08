@@ -1,0 +1,10 @@
+from pathlib import Path
+import os,subprocess,json,datetime,time,hashlib
+out=Path(__file__).resolve().parent;site=out/'site';env=os.environ.copy();env['PATH']='/private/tmp/zodiacs-platform-runtime/node_modules/node/bin:/private/tmp/zodiacs-platform-runtime/node_modules/.bin:'+env['PATH'];env['NPM_CONFIG_USERCONFIG']='/private/tmp/zodiacs-platform-input-flags-user.npmrc';env['NPM_CONFIG_GLOBALCONFIG']='/private/tmp/zodiacs-platform-input-flags-global.npmrc';env['NPM_CONFIG_CACHE']=str(out/'npm-cache');env.pop('ZODIACS_TEST_BASE_URL',None);env.pop('UPDATE_VISUAL_BASELINES',None);env.pop('VISUAL_ROUTES',None)
+checks=[]
+for name,args in [('daily-provenance',['npm','run','editorial:daily:build']),('build',['npm','run','build']),('visual',['npm','run','test:visual'])]:
+ start=time.monotonic()
+ with (out/(name+'.log')).open('wb') as log:p=subprocess.run(args,cwd=site,env=env,stdout=log,stderr=subprocess.STDOUT)
+ record={'command':args,'cwd':str(site),'startedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'name':name,'exitCode':p.returncode,'seconds':round(time.monotonic()-start,3)};checks.append(record);(out/'run.json').write_text(json.dumps(checks,indent=2)+'\n');print(json.dumps(record),flush=True)
+ if p.returncode!=0:break
+manifest=site/'src/data/daily-publication-manifest.json';(out/'regenerated-daily-publication-manifest.json').write_bytes(manifest.read_bytes())

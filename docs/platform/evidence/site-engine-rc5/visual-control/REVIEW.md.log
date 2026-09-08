@@ -1,0 +1,108 @@
+# macOS visual baseline control for the rc.5 site candidate
+
+Result: the 15 global macOS visual failures predate rc.5 adoption. The preceding
+candidate with rc.1 reproduces all 15 original-baseline failures, including the
+large home and birth-chart height mismatches. Direct candidate-versus-control
+comparison finds zero scored pixels in all 15 cases using the unchanged
+pixelmatch threshold of 0.1. Thirteen PNG files are also byte-identical.
+
+The two desktop home images contain raw channel differences below the original
+comparison's effective tolerance; they are not described as byte-identical or
+as having identical raw pixels. Raw deltas and both pairs are retained. No
+baseline, pixel tolerance, route, capture behavior or mask was changed.
+
+## Exact control source
+
+An isolated full source archive of preceding site candidate
+`ba65375a34cee6a85f94b53ba45861f1b81f34ef` was extracted under
+`/private/tmp/zodiacs-platform-rc1-visual-control/site`. It received precisely the
+22 dated upstream files changed between main
+`7f953e3fca0e7d5009e5602a1dad69edff0f54cc` and
+`d4d5717d132a28cd6d7cda3007e3b898bb74669f` so the real September 8 freshness gates
+could run without a fake clock or stale edition. The existing daily publication
+builder regenerated its provenance using rc.1 and the preceding lockfile.
+
+After the full build, source inspection found exactly those 22 changed tracked
+paths: 21 equal the upstream bytes, and the daily publication manifest is the
+sole regenerated exception. All 15 committed Darwin baselines remain unchanged.
+`identity.json` and `source-control-delta.json` contain full source, upstream,
+archive and baseline hashes. The control does not include rc.5 adoption source,
+metadata changes, or subsequent developer-page wrapping changes.
+
+Dependencies were physically copied into the scratch directory rather than
+symlinked to the root site. Its copied `@zodiacs/engine` directory was removed
+and replaced with all packed bytes of the committed rc.1 archive:
+`f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17`.
+Both sides use Astronomy Engine 2.1.19. This was not a new package installation,
+SDK source rebuild or claim about registry publication.
+
+## Executed commands and results
+
+`run-control.py` ran these existing commands sequentially with Node 22.23.2:
+
+1. `npm run editorial:daily:build`: passed, 1.302 seconds. Twelve signs for
+   September 8, 58 traceable facts, deterministic template.
+2. `npm run build`: passed, 43.926 seconds. All prebuild/postbuild gates passed;
+   4,217 pages built. The original Phase 1 source fingerprint remains
+   `3998a3896d8408b2dc0b73d29c85f0822cd294c228be679c83bc08e400282cf1`.
+3. `npm run test:visual`: failed, all 15 cases, 57.607 seconds. Actual Chrome
+   152.0.7977.83 ran through the existing preview owner/cleanup harness against
+   the original Darwin baselines. This remains a failed baseline gate.
+
+The runner's raw `startedAt` field was recorded on command completion; treat it
+as an end timestamp. Durations are monotonic elapsed seconds. The raw log and
+recorder are retained rather than silently relabeled.
+
+The control and current candidate have exactly matching received dimensions:
+
+| Route | Desktop and reduced-motion height | Mobile height | Original baseline heights |
+| --- | ---: | ---: | --- |
+| Home | 6493 | 8122 | 8156 / 9349 |
+| Kahlo birth chart | 9502 | 14011 | 8809 / 13360 |
+| Aries | 6856 | 10202 | 6860 / 10208 |
+| Events hub | 16743 | 20953 | 16747 / 20959 |
+| Full Moon event | 4785 | 6888 | 4730 / 6821 |
+
+Desktop width is 1440 and mobile width is 390. These are actual full-page PNG
+dimensions, not inferred DOM estimates. `visual.log` and
+`current-candidate-visual.log` retain each original failure.
+
+## Direct screenshot comparison
+
+`compare-visual.mjs` independently compares the control's actual screenshots
+with the current candidate's original failed-run screenshots, frozen before a
+later root run could replace them. It uses pixelmatch's original threshold 0.1
+and the original maximum ratio 0.001, with no additional masks.
+
+All 15 dimension pairs agree, and all 15 have zero scored pixel differences.
+Thirteen PNG SHA-256 pairs are equal. The two exceptions are home desktop and
+home desktop reduced motion, with respectively 248,570 and 252,012 pixels whose
+raw RGBA bytes differ; the original perceptual gate scores zero in each case.
+`raw-home-delta.json` records channel-delta distributions and affected bounds.
+No unverified cause is assigned to these low-level rendering differences.
+
+`candidate-vs-control.json` contains hashes, dimensions, scored and raw pixel
+counts for all 15 cases. The two nonidentical before/after pairs are included
+as four binary evidence images. The other 13 candidate/control pairs are not
+duplicated in durable delivery; their complete hashes remain in that receipt,
+and all original screenshots remain in scratch.
+
+This establishes absence of a newly introduced difference on these 15 routes
+under the existing visual comparison. It does not approve replacement
+baselines, explain which earlier change invalidated them, validate the new
+320-pixel developer layout, or certify every route, browser or font renderer.
+
+## Retained setup failures
+
+The host Python 3.9 does not support `tarfile.extractall(filter=...)`. The initial
+setup stopped before copying dependencies or extracting the source. An
+incorrectly launched dependent command then failed with missing package files;
+its raw npm output and recorder receipt are under `initial-incomplete-setup`.
+A subsequent safety check rejected the archive's legitimate in-tree skill
+symlinks; `initial-safe-extractor-symlink.log` records it. The corrected extractor
+checks all member paths and ensures each symlink resolves inside the scratch
+source before extraction. These are control-harness setup failures, not site
+build or visual results. Successful setup is recorded in `setup-control.log`.
+
+No root source, user account, browser session, baseline, remote branch,
+publication or production deployment was modified by this review.
