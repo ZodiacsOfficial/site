@@ -32,10 +32,20 @@ separates source, artifacts, previews, production and adoption.
   contains engine rc.3; generated TypeDoc remains an explicitly archived rc.1
   reference. Their full identities and commands are in [EVIDENCE](EVIDENCE.md).
   Site [#425](https://github.com/ZodiacsOfficial/site/pull/425) adds the optional
-  portable-calculation boundary, locally implemented
-  and tested, including actual browser acceptance. It preserves
+  portable-calculation boundary, with all 14 exact-source CI jobs and its READY
+  preview accepted alongside local and actual browser acceptance. It preserves
   complete receipts before compact projection, and activates no saved storage
   or account migration.
+- Site [#426](https://github.com/ZodiacsOfficial/site/pull/426) adds four files for
+  immutable owner-scoped receipt records in a dedicated IndexedDB database.
+  Local acceptance passes 4,787 tests, build/check/scope and 18 byte-identical
+  captures; 74 focused tests and 22 independently executed native Chrome cases
+  cover concurrency, real rollback, revocation, corruption and bounded quota.
+  All14 exact-source CI jobs and13 READY-preview checks pass.
+  [Frozen review](evidence/saved-records/independent-review/REVIEW.md.log)
+  limits this to an explicitly invoked primitive. A clear consumes its own
+  handle; another handle may create afterward. Account handoff, verified access,
+  export and durable deletion remain prerequisites before active saving.
 
 ## Findings requiring disposition
 

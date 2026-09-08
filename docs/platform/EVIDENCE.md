@@ -1385,3 +1385,128 @@ performance gates on the hosted runner. This does not relabel the separately
 recorded local macOS baseline failures as passed, or transfer source CI to later
 documentation-only heads without qualification.
 [Final job/step receipt](evidence/site-engine-rc5/release/ci-34186236252-final.json).
+
+### Saved-record draft review, before integration
+
+Root captured the unfrozen first record implementation at SHA-256
+`4538cb6400bdb6059e257cd8c8680f77cdbd9d8e1fe4b1f277c8170748c16074` and executed
+it with the real installed engine/receipt functions. Unlabeled creation succeeds
+but reread fails because the parser counts one too many required keys; labelled
+control succeeds. A future `v10` record is misclassified as corrupt while `v2`
+is recognized as unsupported. Both findings were sent to the author for fixes
+and regression tests before source integration.
+
+Root's static suspicion about a trailing newline in IDs was **disproved**: the
+existing JavaScript expressions reject it without multiline mode. The initial
+probe wrongly expected acceptance, failed that assertion, and is preserved as
+a harness/reviewer mistake. The corrected probe records both negative controls;
+there is no claimed pre-existing UUID vulnerability.
+[Actual draft probe](evidence/saved-records/root-review/result.json),
+[raw evidence manifest](evidence/saved-records/root-review/manifest.json).
+This early review is not final saved-store acceptance or active lifecycle coverage.
+
+
+### Completed portable-calculation CI
+
+All 14 jobs pass in exact-source [CI run 34187725308](https://github.com/ZodiacsOfficial/site/actions/runs/34187725308)
+at `dcc4e437a99f812666cd19dc85e6d781dbb3bedc`, alongside its previously verified
+READY preview. [Final job receipt](evidence/portable-calculation/release/ci-34187725308-final.json).
+Later documentation heads are distinct from this tested runtime source.
+
+### Frozen saved-record store acceptance
+
+Root integrates the exact four-file patch
+`5d61510dec09e42ad2196c173da5a88f206a85af5809a27562b1daf0cc2f83a5`
+onto `c761a49c55d125bca48ff38d81b0a9ff6fd5adcf`. The optional profile store
+uses its own owner-indexed IndexedDB database, immutable validated SDK receipt
+strings, fresh UUIDs and a 40-record limit enforced with insertion in one
+transaction. It exports the stored envelope without local record/owner metadata.
+There is no eager database open, v1 write, legacy projection, UI/account
+activation, remote sync or shared-file/Astrofolio change.
+
+It passes **74 focused tests** (49 new / 25 existing), strict TypeScript and
+**22 independent actual Chrome cases**. Native review proves transaction abort
+before commit, honest `mayHaveCommitted: true` after a real commit, prompt
+revoked-open settlement while another deletion stays blocked, late connection
+cleanup, native concurrent capacity, owner partition, future/corrupt rows and
+controlled quota rollback. The quota override is limited to one disposable
+origin and verified restored; no disk filling or user data is involved.
+
+[Author evidence](evidence/saved-records/implementation/EVIDENCE.md.log),
+[27-file manifest](evidence/saved-records/implementation/copy-manifest.json), SHA-256
+`1b7e7cee56516cd13510b6cfa5b3134643cfced1abae716fb14ce07b64761ef2`.
+[Independent review](evidence/saved-records/independent-review/REVIEW.md.log),
+[45-file manifest](evidence/saved-records/independent-review/manifest.json), SHA-256
+`8d6e5fdb5fffb5907b434fc3057f9a486f632a3b577836b89a7f5defc4a9c4ec`.
+Initial parser failures, type-invocation omission, logical-open hang and the
+disproved newline suspicion remain preserved and correctly attributed.
+
+Root full acceptance: **4,787 tests / 411 files**, production build, check of
+1,038 files (zero errors/warnings, 11 hints), exact-base protected-scope guard,
+and 18 fresh captures. All PNGs are byte-identical to the base. Fingerprint
+`8adaac8fafb4b52174722e0da00854ae23c5eaa1ef9132de377fccc85eb5d435`.
+The first full run was ordered before the required capture refresh and correctly
+failed one stale-fingerprint assertion (4,786 other tests passed). Root preserved
+it, ran the original build/capture driver, and repeated the full suite to a clean
+pass. No assertion, capture policy, tolerance or baseline was changed.
+[Commands and exits](evidence/saved-records/release/gates.json),
+[exact capture equality](evidence/saved-records/release/capture-parity.json).
+
+A clear consumes only its own handle; another handle may create afterward.
+Application authority callbacks are not authentication. Asynchronous inventory,
+verified owner/access leases, guest/retained scopes, account handoff/export and
+durable deletion/retry must be integrated before active saving. The explicit
+local receipt-export UI is a separate next prerequisite, independent of this
+store's implementation. This entry does not claim draft delivery, CI or preview
+for the saved store, account lifecycle completion, publication or adoption.
+
+
+### Saved-record draft delivery
+
+Draft [#426](https://github.com/ZodiacsOfficial/site/pull/426), source `a0bf55176dd4df4d27763bfeb2cf97e36abe4d15`,
+is pushed on `codex/platform-saved-records`, stacked on #425 at `c761a49c`.
+The actual created draft and changed-file list are verified in
+[the PR receipt](evidence/saved-records/release/draft-pr.json). Exact-source
+CI run 34190846700 and automatic preview are running; neither is yet claimed
+passed in this entry. No active saving, production, publication or merge occurred.
+
+
+### Saved-record CI and exact preview accepted
+
+All14 jobs pass in [exact-source CI34190846700](https://github.com/ZodiacsOfficial/site/actions/runs/34190846700)
+at `a0bf55176dd4df4d27763bfeb2cf97e36abe4d15`.
+[Final receipt](evidence/saved-records/release/ci-34190846700-final.json).
+READY preview `dpl_bhx76pgozg4Djw3mbBayzay7VrxS`,
+https://zodiacs-9wi4nsxk8-zodiacsofficial.vercel.app, matches that exact source and
+passes13 actual browser/API checks across developer routes at1280/390/320px,
+keyboard matrix navigation, synthetic chart/version/no-save and September8 sky.
+[Deployment](evidence/saved-records/preview/deployment.json),
+[results](evidence/saved-records/preview/result.json),
+[driver](evidence/saved-records/preview/verify.mjs.log).
+The metadata-only first write failed on JSON null in a Python literal and was
+corrected with json.loads; no product or browser acceptance changed. Temporary
+preview access was isolated, browser closed and auth file removed.
+
+### Historical time correction delivered in the SDK
+
+Separate [SDK draft #11](https://github.com/ZodiacsOfficial/sdk/pull/11) delivers
+engine rc.6, source `fb57af7a2cd7c30983cc8fb655183d5a11f9cf30`, carrier
+`51129a197cd3f2a2a8c966fb797ea4da1e147b3d`, evidence head `ac27761e`.
+Actual SDK/site baseline minute-only matching missed historical seconds-sized
+gaps and reported false folds nearby. The SDK correction keeps Gregorian
+formatting and matches seconds/milliseconds, retaining historical offset seconds,
+strict guards and existing sampled-offset policies. Root579 tests on Node22/24
+and required workspace gates pass; two fresh consumers use the exact23-file
+archive, SHA-256 `09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e`.
+Anonymous public archive bytes match. Independent copied-source review passes
+278 Node/37 actual Chrome cases,140/15 expected flag corrections, zero tested
+instant/offset/numerical changes and seven receipt/replay controls per runtime.
+[SDK raw evidence and limitations](https://github.com/ZodiacsOfficial/sdk/blob/ac27761e6dea138842e6ef5c2c69129ead7af636/docs/platform/EVIDENCE.md#historical-local-time-precision-candidate).
+The site remains on rc.5; artifact availability is not npm publication, site
+adoption, deployment or human expert review. Existing SDK#5 hold remains.
+
+The independent search separately reproduced incorrect local-date endpoints:
+Toronto1919-03-31 starts30minutes too late, Apia2011-12-30 is empty, and the
+library's year0000 rollover remaps to1900. These are distinct next engineering
+requirements, not fixed by precise birth-time matching. Evidence and the
+bounded follow-up plan are retained with the SDK review packet.

@@ -39,7 +39,7 @@ reviewable release to resolution of the unrelated engine publication hold.
   consumers and 480 numerical parity plus 480 echo controls pass. Frozen
   public archive is verified; 26 packed Chrome checks pass and SDK draft #10
   is delivered.
-  The site adoption is now implemented on `codex/platform-engine-rc5`: 4,717 tests, build/check/scope, current captures and affected browser checks pass. The preceding rc.1 control reproduces all 15 macOS baseline failures, with zero scored candidate/control drift at the unchanged threshold. Draft #422 is delivered; the exact READY preview passes 13 checks. All 14 jobs pass in exact-source CI 34186236252. The following optional calculation-to-receipt boundary is integrated on `codex/platform-portable-calculation`: 4,738 tests / 409 files, build/check/scope, 12 chart-share cases and actual Chrome acceptance (12 groups, 42 observer controls) pass; 18 fresh captures are byte-identical. Draft #425 is delivered at `dcc4e437`; exact-source CI 34187725308 is in progress and the exact READY preview passes 13 browser/API checks. It activates no saved storage or account migration.
+  The site adoption is now implemented on `codex/platform-engine-rc5`: 4,717 tests, build/check/scope, current captures and affected browser checks pass. The preceding rc.1 control reproduces all 15 macOS baseline failures, with zero scored candidate/control drift at the unchanged threshold. Draft #422 is delivered; the exact READY preview passes 13 checks. All 14 jobs pass in exact-source CI 34186236252. The following optional calculation-to-receipt boundary is integrated on `codex/platform-portable-calculation`: 4,738 tests / 409 files, build/check/scope, 12 chart-share cases and actual Chrome acceptance (12 groups, 42 observer controls) pass; 18 fresh captures are byte-identical. Draft #425 is delivered at `dcc4e437`; all 14 jobs pass in exact-source CI 34187725308 and the exact READY preview passes 13 browser/API checks. It activates no saved storage or account migration.
 - Core entry and `geo.resolveBirth` settings now align in SDK rc.5. Its public
   flags are bounded and checked; supplied Chart numerical values and low-level
   helper arguments still do not form a complete hostile-input schema.
@@ -54,8 +54,25 @@ reviewable release to resolution of the unrelated engine publication hold.
 - Historical resolution depends on host ICU/IANA data. Test representable dates
   separately from astronomical accuracy; geographic poles and degenerate
   horizon/ecliptic intersections need scoped behavior before wider claims.
+- C-008's optional immutable saved-record store is integrated on
+  `codex/platform-saved-records` above #425's `c761a49c` documentation head;
+  draft #426 is delivered at `a0bf5517`, all14 exact-source CI jobs pass and
+  its READY preview passes13 browser/API checks.
+  Freeze 1 passes 74 focused tests, strict TypeScript and 22 independent native
+  Chrome cases. Root acceptance passes 4,787 tests / 411 files, build/check/scope and 18 unchanged captures. It opens no database on import,
+  writes no v1 profile and activates no UI/account lifecycle. The following
+  integration still requires richer-record discovery, verified owner/epoch
+  coordination, guest/retained scopes, archive/export and durable clear retries.
 
 Gate A engineering evidence permits a review candidate and independent Stage B
 preparation. Required human/external review and publication authority remain
 separate gates. For rollback, revert the site pin and adapter changes together;
 never replace bytes of an existing candidate or published version.
+
+- Follow-up A04/C02: SDK draft #11 delivers rc.6 seconds-precision time matching
+  above #10. Root579 Node22/24 tests, required workspace gates, two fresh
+  consumers, independent278 Node/37 Chrome cases and public archive verification
+  pass. Adopt its source/artifact pairing on the site separately after the
+  current explicit receipt-export slice. Distinct date-endpoint findings require
+  first-existing-instant and skipped-date policies; do not reuse birth-time gap
+  shifting as proof of civil-date boundaries.

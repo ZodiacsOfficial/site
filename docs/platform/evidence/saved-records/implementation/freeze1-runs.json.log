@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-09-08T05:08:01.549533+00:00",
+  "results": [
+    {
+      "command": [
+        "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "src/lib/profile/saved-record.test.ts",
+        "src/lib/profile/saved-record-store.test.ts",
+        "src/lib/engine/portable.test.ts",
+        "src/lib/account-v2/chart-wire.test.ts"
+      ],
+      "log": "freeze1-focused-tests.log",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "ESNext",
+        "--moduleResolution",
+        "Bundler",
+        "--strict",
+        "--skipLibCheck",
+        "--types",
+        "node,astro/client",
+        "src/lib/profile/saved-record.ts",
+        "src/lib/profile/saved-record-store.ts",
+        "src/lib/profile/saved-record.test.ts",
+        "src/lib/profile/saved-record-store.test.ts"
+      ],
+      "log": "freeze1-typecheck.log",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "log": "freeze1-diff-check.log",
+      "exitCode": 0
+    }
+  ]
+}
