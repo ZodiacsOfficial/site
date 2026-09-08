@@ -17,13 +17,17 @@ known-time gap policy, no-city UTC Moon and wider certainty limits remain separa
   ownership groups. Original setup, selector and type failures are retained.
 
 All copied records and 135 compressed author members were byte-verified by root.
-The author freeze is in isolated scratch. `independent-review/REVIEW.md` accepts
+The exact author freeze is now integrated on the isolated root date branch. `independent-review/REVIEW.md` accepts
 26 caller controls and 92 helper cases on each Node 22/24 and native Chrome,
 with original harness failures and nine exact output comparisons retained.
-Root integration is pending. No publication, production, date-completeness or astronomical
-certification is implied. The separately discovered downstream daily-panel
-invalidation defect is being corrected under C-012; this freeze does not claim
-that the panel has been fixed.
+Root local acceptance passes; `root-integration/` retains the final source map,
+5,024 tests, build/check, 35 native/20 Moon/17 chart cases, 24 actual localized page
+cases and 18 byte-identical captures. Original count and harness failures remain.
+`catalog-count-review/` separately reviews the two count tests and eight-path
+allowance. C-012 is delivered in the preceding chart/context draft;
+`combined-page/` and `combined-page-audit/` verify the actual signed-in composition
+with explicit startup write-attempt accounting. No publication, production,
+date-completeness or astronomical certification is implied.
 
 The independent review also corrects one earlier preparation paragraph: Node 22
 uses ICU 78.2/tzdb 2026a, while Node 24 uses ICU 78.3/tzdb 2026b. The original raw

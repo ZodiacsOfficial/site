@@ -1,0 +1,92 @@
+[
+  {
+    "label": "baseline-tests",
+    "startedUtc": "2026-09-08T11:08:57.321480+00:00",
+    "cwd": "/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site",
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/i18n/index.test.ts",
+      "src/lib/i18n/ui/ru.test.ts",
+      "--reporter=json",
+      "--outputFile=/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/baseline-results.json"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "log": "baseline-tests.log"
+  },
+  {
+    "label": "candidate-tests",
+    "startedUtc": "2026-09-08T11:08:58.720256+00:00",
+    "cwd": "/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site",
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/i18n/index.test.ts",
+      "src/lib/i18n/ui/ru.test.ts",
+      "--reporter=json",
+      "--outputFile=/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/candidate-results.json"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "log": "candidate-tests.log"
+  },
+  {
+    "label": "scope-eight-paths",
+    "startedUtc": "2026-09-08T11:08:59.213994+00:00",
+    "cwd": "/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site",
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "scripts/phase1-scope-guard.mjs",
+      "--base",
+      "3845a04bcea822da3c30a18848ef3d8d133b7b66"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "log": "scope-eight-paths.log"
+  },
+  {
+    "label": "scope-prior-six-rejected",
+    "startedUtc": "2026-09-08T11:08:59.730589+00:00",
+    "cwd": "/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site",
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "scripts/phase1-scope-guard.mjs",
+      "--base",
+      "3845a04bcea822da3c30a18848ef3d8d133b7b66"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "log": "scope-prior-six-rejected.log"
+  },
+  {
+    "label": "scope-wrong-base-rejected",
+    "startedUtc": "2026-09-08T11:09:00.058687+00:00",
+    "cwd": "/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site",
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "scripts/phase1-scope-guard.mjs",
+      "--base",
+      "abcf1a44e52040db79a369b49bc9b55d78099b22"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "log": "scope-wrong-base-rejected.log"
+  },
+  {
+    "label": "scope-final-eight-paths",
+    "startedUtc": "2026-09-08T11:09:00.408321+00:00",
+    "cwd": "/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site",
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "scripts/phase1-scope-guard.mjs",
+      "--base",
+      "3845a04bcea822da3c30a18848ef3d8d133b7b66"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "log": "scope-final-eight-paths.log"
+  }
+]

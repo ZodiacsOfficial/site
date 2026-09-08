@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/zodiacs-platform-date-downstream-combined-review/assemble.py", line 17, in <module>
+    archive.extractall(site,filter='data')
+TypeError: extractall() got an unexpected keyword argument 'filter'

@@ -1,0 +1,80 @@
+{
+  "sourceManifestSha256": "fad14ed213ce43396bc626b5b2b2b6aa3a3b8884891aca4fa985bc948ede7603",
+  "recordsVerified": 18,
+  "ordinaryArchiveMembersVerified": 0,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "REVIEW.md.log",
+      "path": "REVIEW.md.log"
+    },
+    {
+      "sourcePath": "source-identities.json.log",
+      "path": "source-identities.json.log"
+    },
+    {
+      "sourcePath": "workflow.patch.log",
+      "path": "workflow.patch.log"
+    },
+    {
+      "sourcePath": "allowance-template.patch.log",
+      "path": "allowance-template.patch.log"
+    },
+    {
+      "sourcePath": "phase1-scope-allowance.template.json.log",
+      "path": "phase1-scope-allowance.template.json.log"
+    },
+    {
+      "sourcePath": "workflow-before.yml.log",
+      "path": "workflow-before.yml.log"
+    },
+    {
+      "sourcePath": "site-check.proposed.yml.log",
+      "path": "site-check.proposed.yml.log"
+    },
+    {
+      "sourcePath": "allowance-before.json.log",
+      "path": "allowance-before.json.log"
+    },
+    {
+      "sourcePath": "current-comparison-allowance.json.log",
+      "path": "current-comparison-allowance.json.log"
+    },
+    {
+      "sourcePath": "result.json.log",
+      "path": "result.json.log"
+    },
+    {
+      "sourcePath": "verify.log.log",
+      "path": "verify.log.log"
+    },
+    {
+      "sourcePath": "scope-current-comparison.log.log",
+      "path": "scope-current-comparison.log.log"
+    },
+    {
+      "sourcePath": "apply-check.log.log",
+      "path": "apply-check.log.log"
+    },
+    {
+      "sourcePath": "apply.log.log",
+      "path": "apply.log.log"
+    },
+    {
+      "sourcePath": "prepare.py.log",
+      "path": "prepare.py.log"
+    },
+    {
+      "sourcePath": "verify.mjs.log",
+      "path": "verify.mjs.log"
+    },
+    {
+      "sourcePath": "clone.log",
+      "path": "clone.log"
+    },
+    {
+      "sourcePath": "unchanged-phase1-scope-guard.mjs.log",
+      "path": "unchanged-phase1-scope-guard.mjs.log"
+    }
+  ]
+}
