@@ -4,6 +4,13 @@ Acceptance IDs follow the owner mandate. Historical consumer phases remain in
 [the site plan](../../PLAN.md). This ledger concerns the platform; local evidence
 and candidate preparation do not replace review, release or external adoption.
 
+Concurrent owner-assigned Astrofolio Verification & Provenance work is outside
+this implementation lane. Preserve its isolated view, local evidence adapter,
+scoped tests and `docs/astrofolio-trust/`. Root remains shared-file integrator;
+inspect the actual draft/files before integration and coordinate any expansion
+into shared or canonical sources. Do not duplicate it or tie its independently
+reviewable release to resolution of the unrelated engine publication hold.
+
 | Order | Acceptance | State / next requirement |
 | --- | --- | --- |
 | 1 | A01 baseline | Complete for this checkpoint: fresh heads/production/capabilities/holds/collisions and focused baselines recorded. Refresh again before integration. |
@@ -32,7 +39,7 @@ and candidate preparation do not replace review, release or external adoption.
   consumers and 480 numerical parity plus 480 echo controls pass. Frozen
   public archive is verified; 26 packed Chrome checks pass and SDK draft #10
   is delivered.
-  The site adoption is now implemented on `codex/platform-engine-rc5`: 4,717 tests, build/check/scope, current captures and affected browser checks pass. The preceding rc.1 control reproduces all 15 macOS baseline failures, with zero scored candidate/control drift at the unchanged threshold. Draft #422 is delivered; the exact READY preview passes 13 checks. CI has 13 jobs passing and Build & Check active. The following optional calculation-to-receipt boundary has an isolated four-file implementation with 80 focused tests and 11 independent probe groups, awaiting separate integration.
+  The site adoption is now implemented on `codex/platform-engine-rc5`: 4,717 tests, build/check/scope, current captures and affected browser checks pass. The preceding rc.1 control reproduces all 15 macOS baseline failures, with zero scored candidate/control drift at the unchanged threshold. Draft #422 is delivered; the exact READY preview passes 13 checks. All 14 jobs pass in exact-source CI 34186236252. The following optional calculation-to-receipt boundary is integrated on `codex/platform-portable-calculation`: 4,738 tests / 409 files, build/check/scope, 12 chart-share cases and actual Chrome acceptance (12 groups, 42 observer controls) pass; 18 fresh captures are byte-identical. Draft #425 is delivered at `dcc4e437`; exact-source CI 34187725308 is in progress and the exact READY preview passes 13 browser/API checks. It activates no saved storage or account migration.
 - Core entry and `geo.resolveBirth` settings now align in SDK rc.5. Its public
   flags are bounded and checked; supplied Chart numerical values and low-level
   helper arguments still do not form a complete hostile-input schema.

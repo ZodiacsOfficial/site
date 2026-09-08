@@ -3,9 +3,44 @@
 Checkpoint: 2026-09-08 UTC. Owner mandate: `ZODIACS-PLATFORM-MASTER-BRIEF.md`
 v1.0. The program is open. Root is the accountable integrator.
 
-## Current implementation
+Owner coordination, 2026-09-08: a separate session owns only the isolated
+Astrofolio Verification & Provenance view, its local evidence adapter, scoped
+tests and `docs/astrofolio-trust/`. This platform session continues independently
+and remains the primary shared-file integrator. Inspect its actual draft PR and
+changed paths before any integration; do not assume direct session communication.
+Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
+Registry and disclosure changes require specific coordination. Its independently
+reviewable verification release is separate from the SDK publication hold.
 
-Active branch: `codex/platform-engine-rc5`, stacked on site draft #419 at
+## Delivered candidate — optional portable calculation
+
+Draft [#425](https://github.com/ZodiacsOfficial/site/pull/425) is delivered at
+`dcc4e437a99f812666cd19dc85e6d781dbb3bedc` on
+`codex/platform-portable-calculation`, based on delivered #422
+evidence checkpoint `6ab85278bea708337e20947966a54a5072ad0627`. The reviewed
+four-file patch is integrated: `computePortableChart` calculates once, creates
+the complete SDK draft receipt, and projects the existing compact chart. The
+canonical ISO replay input and receipt are detached/frozen; `full.ts` retains
+its synchronous input identity and numerical references through a shared pure
+mapper. This optional entry is not wired to UI, storage or account sync.
+
+Root acceptance passes 4,738 tests / 409 files, production build, check (zero
+errors/warnings, 11 hints), scope protection and 12 chart-share cases. All 18
+fresh acceptance captures are byte-identical to the preceding candidate. The
+three affected chart visual cases reproduce existing baseline failures; two
+candidate/control images are byte-identical and all three score zero differences
+at the unchanged threshold. The isolated author and independent reviewer passed
+80 focused tests and 11 runtime probe groups. Actual Chrome 152 acceptance passes
+12 browser groups and 42 observer negative controls, with one actual calculation
+and receipt creation and zero observed runtime network/storage/cookie/Intl calls.
+The exact patch and raw evidence survive
+under [portable-calculation](evidence/portable-calculation/). The next integration
+must preserve recorded request intent in version-owned storage with explicit
+legacy handling; this prerequisite does not complete active saving or C02.
+
+## Delivered rc.5 adoption
+
+Delivered branch: `codex/platform-engine-rc5`, stacked on site draft #419 at
 `ba65375a34cee6a85f94b53ba45861f1b81f34ef`. The site now pins verified engine
 **0.1.1-rc.5**, SHA-256
 `1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`.
@@ -34,8 +69,7 @@ home/chart/sign/event routes. A separate preceding rc.1 candidate reproduces all
 dimensions. Thirteen candidate/control PNGs are byte-identical; all fifteen
 score zero differences at the unchanged perceptual threshold. This establishes
 pre-existing failure relative to rc.5, not a passing baseline gate. Draft [#422](https://github.com/ZodiacsOfficial/site/pull/422) is delivered at
-`8ee0e0183a3c4437af902858b1d76678d3e961a3`; CI run 34186236252 and
-Build & Check is still running (13 jobs pass). The exact-source preview
+`8ee0e0183a3c4437af902858b1d76678d3e961a3`; All 14 jobs pass in exact-source CI run 34186236252. The exact-source preview
 `dpl_BsA6EAM83MD2vyAHiSAsVNzTwPm9` is READY and passes 13 browser/API checks.
 [Current raw evidence](evidence/site-engine-rc5/release/),
 [independent review](evidence/site-engine-rc5/independent-review/REVIEW.md.log).
@@ -51,8 +85,9 @@ Build & Check is still running (13 jobs pass). The exact-source preview
   files match upstream bytes; only the manifest's engine/generator identifiers
   are regenerated through the existing builder. The one-time scope allowance
   names the twelve already-main Registry sign pages and exact stacked base.
-- Production is READY `dpl_gqJJR8pNkD3jHFtTmChh55UNvyse`, alias `zodiacs.org`,
-  source `d4d5717d`. Production does **not** contain this platform candidate.
+- Production is READY `dpl_3y3YkRfSkdXYQSH3NwQaMidDFC9R`, alias `zodiacs.org`,
+  source `75d036ae`. This read-only refresh observes the scheduled main release;
+  production does **not** contain this platform candidate.
 - SDK main remains `b49e0f14f9f17bc84db39486f2c4bb075e0ae3ff`. SDK draft #5
   remains open at `cced011659d48877b8b73b8a85796815234cf741`, no submitted
   reviews, explicit **do not merge / do not publish** hold. That hold remains.
@@ -86,12 +121,15 @@ Finite numerical/model-assisted review is not human expert certification.
 ## Next dependency-ordered work
 
 Visual classification and exact-source preview acceptance are complete for #422.
-Finish its remaining CI gate while integrating the separate next C02 slice.
-The next independent C02 prerequisite is implemented in an isolated checkout:
-one fresh native calculation produces a complete receipt plus the existing
-compact chart and immutable canonical replay input. Its four-file patch passes
-80 focused tests and 11 independent runtime probe groups. It is **not integrated**
-yet and must receive its own bounded branch and site gates after this adoption.
+Its exact-source CI also passes all 14 jobs. Continue the separate next C02 slice.
+The C02 prerequisite is now integrated on its separate branch (current work
+above). Local build/test/check/scope, chart-share regression and actual browser
+privacy acceptance pass. Draft #425 is delivered; exact-source CI run 34187725308
+is in progress. Its exact-source preview `dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z`
+is READY and passes 13 browser/API checks. The next bounded implementation is
+an explicitly callable immutable saved-receipt store in a separate database,
+with transactional capacity checks and owner/epoch revocation. It remains
+unwired to the active save/account path until lifecycle integration is verified.
 
 Decision C-006 requires a version-owned authoritative saved namespace; legacy
 v1 writers lose requested houses and overwrite richer metadata. Do not infer

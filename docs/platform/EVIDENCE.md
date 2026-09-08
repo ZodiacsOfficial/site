@@ -1266,3 +1266,122 @@ changed; this candidate leaves all 18 paths unchanged relative to common
 ancestor `d4d5717d`, so they must retain the newer main version on integration.
 This is a separate upstream evolution, not a candidate deployment or permission
 to overwrite Registry records. The next slice stays on the reviewed stack.
+
+
+## C02 optional portable calculation boundary
+
+Owner coordination refresh: separate Astrofolio draft
+[#416](https://github.com/ZodiacsOfficial/site/pull/416) is at `b17d6804960b6b30bb48208aff0f783b03768152`.
+Its actual changed paths are confined to the isolated view, local verification
+modules, scoped tests and `docs/astrofolio-trust/`. Shared-file proposals are
+stored as unapplied patches in that documentation directory. This is a path
+inspection, not a content approval or integration. Root keeps the platform and
+shared-file role; no direct communication with the other session is assumed.
+[Exact draft/path checkpoint](evidence/coordination/astrofolio-20260908.json).
+Its verification release remains reviewable independently of the SDK hold.
+
+Branch `codex/platform-portable-calculation` starts at delivered #422 evidence
+head `6ab85278bea708337e20947966a54a5072ad0627`. The exact four-file source
+patch SHA-256 is `69a5fa55efbf961bb2760bffec4edfdc16ee6df575a84045961fe4e9ee5bbb45`.
+`computePortableChart` executes public `natalChart` once, supplies that complete
+Chart to the existing SDK codec, and uses the shared pure mapper for the legacy
+compact shape. Full.ts preserves original input identity and angle/house/aspect
+references. The optional module is outside existing eager math/UI/account graphs.
+
+The validated receipt supplies canonical requested settings and an ISO-string
+instant, so replay input does not lose Placidus intent on Whole fallback or an
+explicit unknown-time 08:30 instant. Receipt/snapshot JSON is recursively frozen
+and detached from mutable chart/Date/flag/context branches. Explicit source/time
+context is validated after calculation; it is not an atomic entry-time snapshot
+across executable caller getters or authenticated historical provenance. Errors
+have fixed message/code without inspecting or retaining private raw exceptions.
+No active store, export UI, account protocol, migration or hosted route is added.
+
+[Author source and exact commands](evidence/portable-calculation/implementation/README.md.log),
+[independent review](evidence/portable-calculation/independent-review/REVIEW.md.log),
+[raw copy manifest](evidence/portable-calculation/copy-manifest.json).
+Author: 80 focused checks and strict TypeScript pass. Independent bundled Node
+review: 11 actual probe groups pass, no fake engine/receipt results. Root repeats
+80 focused checks on the actual installed package. Earlier scratch dependency
+symlink resolution failure and the byte-identical local dependency copy are
+retained; no implementation or tolerance was changed to hide that failure.
+
+Root full suite: **4,738 tests / 409 files pass** on Node 22.23.2. Full production
+build passes, including budgets and engine isolation. Regenerating daily evidence
+produces no changed data/provenance bytes. The original acceptance driver refreshes
+the source fingerprint to `fae58360fb1dcb1c320061c0705580637359fbc3ac5ab9fc44677dd750a7c7e7`;
+all 18 captured PNGs are byte-identical to base `6ab85278`.
+[Release commands/results](evidence/portable-calculation/release/gates.json),
+[exact capture equality](evidence/portable-calculation/release/capture-parity.json).
+Root check passes with zero errors/warnings and 11 hints; exact stacked scope
+protection and all 12 chart-share browser cases pass. The affected three chart
+visual cases reproduce their pre-existing dimension failures. Two images are
+byte-identical to rc.5 source `8ee0e018`; all three have zero scored differences
+at original threshold 0.1. The ordinary desktop pair has 53,050 raw differing
+pixels (maximum channel delta 24), with both images retained. No new masks,
+tolerances or baseline replacement were used.
+[Chart comparison](evidence/portable-calculation/release/chart-visual-parity.json),
+[original failing gate](evidence/portable-calculation/release/visual.log).
+Actual Chrome 152 acceptance passes **12 browser groups and 42 observer negative
+controls**. Native precise coverage measures exactly one `computePortableChart`,
+public `natalChart`, internal `computeChart` and `createNatalEnvelope` call for
+the measured calculation, without replacing their implementations. All 23
+installed package members match rc.5; the real 11-module bundle excludes geo
+and ownership code. Three static local GETs load the harness, then all cases
+run offline with zero observed runtime network/storage/cookie/Intl activity
+and no page/console errors. Empty storage/cookies and owned cleanup are verified.
+These are synthetic isolated-module cases, not active save/account acceptance.
+
+[Browser scope and exact source identities](evidence/portable-calculation/browser/README.md.log),
+[30-file raw copy manifest](evidence/portable-calculation/browser/copy-manifest.json),
+manifest SHA-256 `8bdcc73e9544c58727bb2e1a884e89fe25b673e95b36894e6b18408b6e2de464`.
+The first successful narrower-observer run, final strengthened run and
+post-interruption cleanup verification are retained. The tested four source
+files still match the independent frozen patch. Draft [#425](https://github.com/ZodiacsOfficial/site/pull/425)
+is delivered at `dcc4e437a99f812666cd19dc85e6d781dbb3bedc`. Its exact-source
+CI run 34187725308 is in progress. Exact-source Vercel preview
+`dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z` is **READY** at
+https://zodiacs-qi1su4rwh-zodiacsofficial.vercel.app and passes **13 browser/API
+checks**: developer paths at 1280/390/320, keyboard/current artifact/archived
+reference checks, synthetic chart output on rc.5 without saving a profile, and
+the actual September 8 sky endpoint. The changed compact adapter executes in
+those actual chart journeys; the optional receipt module's actual browser
+acceptance is the separate synthetic offline harness above.
+[Preview receipt](evidence/portable-calculation/preview/deployment.json),
+[actual results](evidence/portable-calculation/preview/result.json).
+Temporary protected-preview access was isolated; cookies/auth values were not
+archived, the browser closed and its credential file was deleted. Publication,
+production deployment and external adoption are not claimed.
+
+## C02 saved-record dependency and implementation direction
+
+The refreshed independent investigation runs **nine Node controls and four
+native Chrome controls** against twelve unchanged boundary-source files. It
+reproduces an allowed old-writer interleaving where both saves report success
+but one chart is lost; an invented global key escapes actual account handoff,
+isolation and deletion. Native IndexedDB demonstrates atomic transaction/cap
+behavior, the incompatibility of upgrading the existing Living Chart database
+for old version-1 readers, and that closing a database inside an active
+transaction still allows that transaction to commit.
+
+[Exact contract and activation dependencies](evidence/saved-record-design/DESIGN.md.log),
+[reproductions and native evidence](evidence/saved-record-design/EVIDENCE.md.log),
+[34-record manifest](evidence/saved-record-design/manifest.json), SHA-256
+`63f1401aa3a940208f8caf89ab5d1321f5e5bd45495abc8e8d504343c82096ee`.
+These are synthetic counterexamples and a bounded architecture decision, not
+implemented account lifecycle coverage. A separate author is implementing
+Decision C-008's optional immutable profile store on source `dcc4e437`, without
+UI/account activation or changing existing databases. The next review must
+exercise actual transaction aborts, capacity, corruption, owner/epoch changes
+and stale completion behavior before integration.
+
+
+### Completed rc.5 adoption CI
+
+Exact-source run [34186236252](https://github.com/ZodiacsOfficial/site/actions/runs/34186236252)
+completed successfully: **all 14 jobs pass** at runtime source
+`8ee0e0183a3c4437af902858b1d76678d3e961a3`, including the full build/browser/visual/
+performance gates on the hosted runner. This does not relabel the separately
+recorded local macOS baseline failures as passed, or transfer source CI to later
+documentation-only heads without qualification.
+[Final job/step receipt](evidence/site-engine-rc5/release/ci-34186236252-final.json).

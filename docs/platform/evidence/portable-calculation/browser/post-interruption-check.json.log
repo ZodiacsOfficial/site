@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-09-08T04:34:43.221338+00:00",
+  "status": "passed",
+  "sourceHashesStillMatch": true,
+  "ownedProcessesStillRunning": [],
+  "finalReportStatus": "passed",
+  "profileAbsent": true,
+  "earlierInspectionAttempt": "Sandbox blocked ps with PermissionError before process inspection. Read-only escalated inspection succeeded; no browser rerun or product change."
+}

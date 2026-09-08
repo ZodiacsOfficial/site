@@ -1,0 +1,77 @@
+{
+  "timestamp": "2026-09-08T04:05:57.518Z",
+  "checkout": "/private/tmp/zodiacs-platform-portable-calculation",
+  "runtime": {
+    "node": "v22.23.2",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "icu": "78.2",
+    "tzdb": "2026a"
+  },
+  "summary": {
+    "passed": 11,
+    "failed": 0
+  },
+  "cases": [
+    {
+      "name": "historical year 0099 preserves the supplied year",
+      "passed": true,
+      "detail": {
+        "instant": "0099-12-21T08:30:00.000Z"
+      }
+    },
+    {
+      "name": "two calculations retain isolated receipt and snapshot state",
+      "passed": true
+    },
+    {
+      "name": "revoked context proxy produces only the fixed boundary error",
+      "passed": true
+    },
+    {
+      "name": "canonical snapshot has no Date and is recursively frozen",
+      "passed": true
+    },
+    {
+      "name": "context timing is explicitly after calculation, not atomic entry capture",
+      "passed": true,
+      "detail": {
+        "boundary": "Caller input getters can mutate context before its post-calculation snapshot."
+      }
+    },
+    {
+      "name": "each raw birth property is read once before canonical projection",
+      "passed": true,
+      "detail": {
+        "counts": {
+          "houseSystem": 1,
+          "timeKnown": 1,
+          "latitude": 1,
+          "longitude": 1,
+          "flags": 1,
+          "utc": 1
+        }
+      }
+    },
+    {
+      "name": "context accessor is rejected without invocation",
+      "passed": true
+    },
+    {
+      "name": "frozen receipt detaches every mutable chart branch and caller context",
+      "passed": true
+    },
+    {
+      "name": "polar and unknown-time receipts preserve request, actual outcome and source spelling",
+      "passed": true
+    },
+    {
+      "name": "shared full adapter preserves original input identity and numerical reference semantics",
+      "passed": true
+    },
+    {
+      "name": "unknown-time noon and known-time missing location do not fabricate context",
+      "passed": true
+    }
+  ]
+}

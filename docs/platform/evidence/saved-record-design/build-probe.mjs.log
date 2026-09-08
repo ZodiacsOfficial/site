@@ -1,0 +1,5 @@
+import {build} from 'esbuild';import fs from 'node:fs';import path from 'node:path';
+const root=path.dirname(new URL(import.meta.url).pathname);
+const exports=`export * from './snapshot/src/lib/profile/store.ts';export * from './snapshot/src/lib/profile/schema.ts';export * from './snapshot/src/lib/account-v2/profile-boundary.ts';export * from './snapshot/src/lib/account-v2/local-state.ts';export * from './snapshot/src/lib/account-v2/profile-access-reader.ts';export * from './snapshot/src/lib/account-v2/auth-epoch.ts';export * from './snapshot/src/lib/engine/portable.ts';`;
+const result=await build({stdin:{contents:exports,resolveDir:root,sourcefile:'probe-entry.ts',loader:'ts'},bundle:true,platform:'node',format:'esm',outfile:path.join(root,'current-boundaries.mjs'),define:{'import.meta.env':'{}'},metafile:true,logLevel:'silent',nodePaths:['/Users/chiburashka/.codex/worktrees/4806/site/node_modules']});
+fs.writeFileSync(path.join(root,'bundle-inputs.json'),JSON.stringify(Object.keys(result.metafile.inputs),null,2)+'\n');
