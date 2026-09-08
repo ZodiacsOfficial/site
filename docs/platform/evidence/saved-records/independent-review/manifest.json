@@ -1,0 +1,278 @@
+{
+  "createdAt": "2026-09-08T05:14:36.508633+00:00",
+  "patchSha256": "5d61510dec09e42ad2196c173da5a88f206a85af5809a27562b1daf0cc2f83a5",
+  "records": [
+    {
+      "originalPath": "COMMANDS.md",
+      "path": "COMMANDS.md.log",
+      "sha256": "7917855229cb98ac6ebbd710d3e831f3a929b979b79f7ff098869828297fb851",
+      "bytes": 2289
+    },
+    {
+      "originalPath": "REVIEW.md",
+      "path": "REVIEW.md.log",
+      "sha256": "049886c2f02e0eb0e5a10e21cfc26ce46cd23c953ee19284d3feebacee702070",
+      "bytes": 7646
+    },
+    {
+      "originalPath": "freeze.json",
+      "path": "freeze.json.log",
+      "sha256": "5d129a145c2b8e455b97d7c1b9ffc420c6b3404fbe04599d9fa753080be70012",
+      "bytes": 4514
+    },
+    {
+      "originalPath": "frozen-source/package-lock.json",
+      "path": "frozen-source/package-lock.json.log",
+      "sha256": "e54056616ffb38803e73f542848b026acacd250addd769570759dc91d51d7069",
+      "bytes": 436565
+    },
+    {
+      "originalPath": "frozen-source/package.json",
+      "path": "frozen-source/package.json.log",
+      "sha256": "4a8117977ede5eca16ce1117d725b4e6cb04ad937ff9efda7ab15c1f14980a23",
+      "bytes": 11388
+    },
+    {
+      "originalPath": "frozen-source/src/lib/account-v2/storage-identity.ts",
+      "path": "frozen-source/src/lib/account-v2/storage-identity.ts.log",
+      "sha256": "fac153299e09bf775443e2ed71be9e81ad8de6ad911a87c85ac4fc42707675ab",
+      "bytes": 883
+    },
+    {
+      "originalPath": "frozen-source/src/lib/engine/chart-adapter.ts",
+      "path": "frozen-source/src/lib/engine/chart-adapter.ts.log",
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "bytes": 788
+    },
+    {
+      "originalPath": "frozen-source/src/lib/engine/portable.ts",
+      "path": "frozen-source/src/lib/engine/portable.ts.log",
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "bytes": 3084
+    },
+    {
+      "originalPath": "frozen-source/src/lib/engine/types.ts",
+      "path": "frozen-source/src/lib/engine/types.ts.log",
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "bytes": 2164
+    },
+    {
+      "originalPath": "frozen-source/src/lib/profile/saved-record-store.test.ts",
+      "path": "frozen-source/src/lib/profile/saved-record-store.test.ts.log",
+      "sha256": "af0a4f168b683a634300911cd2778fbad69d542d7c1dbda62aa05325af022c92",
+      "bytes": 23016
+    },
+    {
+      "originalPath": "frozen-source/src/lib/profile/saved-record-store.ts",
+      "path": "frozen-source/src/lib/profile/saved-record-store.ts.log",
+      "sha256": "f691ee57e20ba25b8cd164a96b8fac60f3641a4680164a2dcf15484d9935e7a2",
+      "bytes": 18376
+    },
+    {
+      "originalPath": "frozen-source/src/lib/profile/saved-record.test.ts",
+      "path": "frozen-source/src/lib/profile/saved-record.test.ts.log",
+      "sha256": "6a64ad4e3d2769d67c2a03784f1afc1238793728b11f4f93a21b3a51366fdb95",
+      "bytes": 4953
+    },
+    {
+      "originalPath": "frozen-source/src/lib/profile/saved-record.ts",
+      "path": "frozen-source/src/lib/profile/saved-record.ts.log",
+      "sha256": "3b7400fccc4d6f4e62e54e1e1525b81a4d93b54ce6602beb165d43e7b2d3af33",
+      "bytes": 4832
+    },
+    {
+      "originalPath": "native/PLAN.md",
+      "path": "native/PLAN.md.log",
+      "sha256": "8f1d257c05b93918ec410b33ea0d5bdda9bd52b4e61402f241227fc42bf02a9e",
+      "bytes": 4131
+    },
+    {
+      "originalPath": "native/browser-cases.mjs",
+      "path": "native/browser-cases.mjs.log",
+      "sha256": "e94cf56030b780b566fe69186fec0a04d9c55d39fd3168e9bc3e0ee74872f0e4",
+      "bytes": 13620
+    },
+    {
+      "originalPath": "native/build-freeze1-complete.log",
+      "path": "native/build-freeze1-complete.log.log",
+      "sha256": "99ad06e6dca6bb0d4a981d3d6b09bf1f9bc6730363bed173bc9c51018c8a1fd4",
+      "bytes": 97
+    },
+    {
+      "originalPath": "native/build-freeze1.log",
+      "path": "native/build-freeze1.log.log",
+      "sha256": "5dcbb94e6c435d3ca2114f6d299f776e3ebe069de957de237a85d31cf90c8540",
+      "bytes": 1692
+    },
+    {
+      "originalPath": "native/build.mjs",
+      "path": "native/build.mjs.log",
+      "sha256": "612cfb6024f03e3a2d31c24b8e1eab09d56f94cb8f2fe6c386128d45e097064f",
+      "bytes": 887
+    },
+    {
+      "originalPath": "native/bundle-inputs.json",
+      "path": "native/bundle-inputs.json.log",
+      "sha256": "fe114b3a4899d5d9c11a870f6013d2642b6179abfc4dc66d98f5dc9eb100099d",
+      "bytes": 2066
+    },
+    {
+      "originalPath": "native/driver.mjs",
+      "path": "native/driver.mjs.log",
+      "sha256": "2cf8761f575674a5f517c23974d5db95953298f2a6b82a5d15aac6ee23b48f14",
+      "bytes": 4949
+    },
+    {
+      "originalPath": "native/entry.ts",
+      "path": "native/entry.ts.log",
+      "sha256": "ba078c97d421dd9587fb1e12fe44698596d21fdd486cfaa1e70f140f596abff2",
+      "bytes": 168
+    },
+    {
+      "originalPath": "native/identifier-negative-control.log",
+      "path": "native/identifier-negative-control.log.log",
+      "sha256": "827c2dba75a453f5e59b61e7551ff6504090d21fe9bc2629c080961dfcff1a8b",
+      "bytes": 51
+    },
+    {
+      "originalPath": "native/native-hooks.mjs",
+      "path": "native/native-hooks.mjs.log",
+      "sha256": "ba73a1628fe384dda19520a659a457c107a10765b75696d549b901f3c766f866",
+      "bytes": 3963
+    },
+    {
+      "originalPath": "native/quota-cleanup-driver.mjs",
+      "path": "native/quota-cleanup-driver.mjs.log",
+      "sha256": "20454692ebd1c5f165f9fea0de70c08a2e7356fde4575c69472971a67f9269b8",
+      "bytes": 5446
+    },
+    {
+      "originalPath": "native/quota-cleanup-freeze1.log",
+      "path": "native/quota-cleanup-freeze1.log.log",
+      "sha256": "3db273424712848785cd8818fc78644bac7d786b779ac5820daffbb18b6a35d4",
+      "bytes": 1071
+    },
+    {
+      "originalPath": "native/quota-cleanup-result-1788844305849.json",
+      "path": "native/quota-cleanup-result-1788844305849.json.log",
+      "sha256": "746bf7921426d0295d04a80091d6ecc777482a3c782446792111d6adfd10ada7",
+      "bytes": 7297
+    },
+    {
+      "originalPath": "native/result-1788844220579.json",
+      "path": "native/result-1788844220579.json.log",
+      "sha256": "0590bb39f0577f2385d7ebd484ff03180d5eb4b74fc68127ab4f7de5610b15d5",
+      "bytes": 15842
+    },
+    {
+      "originalPath": "native/run-freeze1.log",
+      "path": "native/run-freeze1.log.log",
+      "sha256": "8866e990c38bdb623820c85e20250e1ddf6a7eadcfc4fdf73486ba7eae65f0bc",
+      "bytes": 6134
+    },
+    {
+      "originalPath": "native/subject.js",
+      "path": "native/subject.js.log",
+      "sha256": "a8e89d71bb205c493a22d33e575849122831b6d02dc20dbd058848805ee4be57",
+      "bytes": 143325
+    },
+    {
+      "originalPath": "pre-freeze-open-review/build.log",
+      "path": "pre-freeze-open-review/build.log.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "originalPath": "pre-freeze-open-review/build.mjs",
+      "path": "pre-freeze-open-review/build.mjs.log",
+      "sha256": "1ef106b5210b76f83932974d6a0ce88b5f0aa462ff1a2ad722efae08f77f0983",
+      "bytes": 804
+    },
+    {
+      "originalPath": "pre-freeze-open-review/bundle-inputs.json",
+      "path": "pre-freeze-open-review/bundle-inputs.json.log",
+      "sha256": "809a5a5ee33e2600ca6bc5039c3d035ca78d5dfded01f6234cd809626d52ae5f",
+      "bytes": 1050
+    },
+    {
+      "originalPath": "pre-freeze-open-review/identity.json",
+      "path": "pre-freeze-open-review/identity.json.log",
+      "sha256": "fd8590ed2f98d688d9a53813696afeb3eeec60bf90642fddfc5b3aadcd7b8379",
+      "bytes": 1150
+    },
+    {
+      "originalPath": "pre-freeze-open-review/probe.log",
+      "path": "pre-freeze-open-review/probe.log.log",
+      "sha256": "5899ca3bee22aca0824c26e58dd2db6764dd38288e796c88dc29f2c3ec787d4b",
+      "bytes": 1596
+    },
+    {
+      "originalPath": "pre-freeze-open-review/probe.mjs",
+      "path": "pre-freeze-open-review/probe.mjs.log",
+      "sha256": "20d82bb866d2870d0179ef63bda3e39201bbab1e0ed94fbf74ea61572b293bb4",
+      "bytes": 2758
+    },
+    {
+      "originalPath": "pre-freeze-open-review/result.json",
+      "path": "pre-freeze-open-review/result.json.log",
+      "sha256": "5899ca3bee22aca0824c26e58dd2db6764dd38288e796c88dc29f2c3ec787d4b",
+      "bytes": 1596
+    },
+    {
+      "originalPath": "pre-freeze-open-review/src/lib/account-v2/storage-identity.ts",
+      "path": "pre-freeze-open-review/src/lib/account-v2/storage-identity.ts.log",
+      "sha256": "fac153299e09bf775443e2ed71be9e81ad8de6ad911a87c85ac4fc42707675ab",
+      "bytes": 883
+    },
+    {
+      "originalPath": "pre-freeze-open-review/src/lib/engine/chart-adapter.ts",
+      "path": "pre-freeze-open-review/src/lib/engine/chart-adapter.ts.log",
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "bytes": 788
+    },
+    {
+      "originalPath": "pre-freeze-open-review/src/lib/engine/portable.ts",
+      "path": "pre-freeze-open-review/src/lib/engine/portable.ts.log",
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "bytes": 3084
+    },
+    {
+      "originalPath": "pre-freeze-open-review/src/lib/engine/types.ts",
+      "path": "pre-freeze-open-review/src/lib/engine/types.ts.log",
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "bytes": 2164
+    },
+    {
+      "originalPath": "pre-freeze-open-review/src/lib/profile/saved-record-store.ts",
+      "path": "pre-freeze-open-review/src/lib/profile/saved-record-store.ts.log",
+      "sha256": "ffd47ff6f699a1e6cdb0fcf872df3290d91febb6ffbf3affa19b93c916a53964",
+      "bytes": 17727
+    },
+    {
+      "originalPath": "pre-freeze-open-review/src/lib/profile/saved-record.ts",
+      "path": "pre-freeze-open-review/src/lib/profile/saved-record.ts.log",
+      "sha256": "3b7400fccc4d6f4e62e54e1e1525b81a4d93b54ce6602beb165d43e7b2d3af33",
+      "bytes": 4832
+    },
+    {
+      "originalPath": "pre-freeze-open-review/subject.js",
+      "path": "pre-freeze-open-review/subject.js.log",
+      "sha256": "e4abb497cf4f3724fa5e03a18c5ff443756560b8ffee40641979b52624c4922e",
+      "bytes": 44054
+    },
+    {
+      "originalPath": "source-integrity.json",
+      "path": "source-integrity.json.log",
+      "sha256": "0a60f4328fdfe719beb97c981b59da6f942a99cd2bb3ad22e7d01a88d69bd006",
+      "bytes": 5729
+    },
+    {
+      "originalPath": "source.patch",
+      "path": "source.patch.log",
+      "sha256": "5d61510dec09e42ad2196c173da5a88f206a85af5809a27562b1daf0cc2f83a5",
+      "bytes": 53043
+    }
+  ],
+  "fileCount": 45,
+  "notes": "All payloads have a .log suffix for inert repository evidence. Hashes cover exact original bytes; dependency snapshots are fully hashed in freeze.json and bundle-inputs.json, and generated bundles are retained."
+}

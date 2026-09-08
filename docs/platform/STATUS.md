@@ -12,6 +12,23 @@ Engine/SDK/API/developer pages/root AI guides/global navigation/styles/canonical
 Registry and disclosure changes require specific coordination. Its independently
 reviewable verification release is separate from the SDK publication hold.
 
+## Current work — immutable saved receipts
+
+Integration branch: `codex/platform-saved-records`, based on delivered #425
+documentation head `c761a49c55d125bca48ff38d81b0a9ff6fd5adcf` (runtime source
+`dcc4e437`). The four-file frozen patch for Decision C-008's optional immutable
+profile store is integrated: patch SHA-256
+`5d61510dec09e42ad2196c173da5a88f206a85af5809a27562b1daf0cc2f83a5`.
+It passes 74 focused tests (49 new and 25 existing), strict project-environment
+TypeScript and 22 independent actual-Chrome cases. Root acceptance passes all 4,787 tests / 411 files, build, check (zero errors/
+warnings, 11 hints), exact-base scope and 18 fresh captures, byte-identical to
+the base. The first full run correctly rejected the preceding source fingerprint;
+that failure is retained, and the original build/capture refresh plus full rerun
+pass without changing the guard or baseline policy. Native transaction and
+owner/lifecycle counterexamples are durable under
+[saved-record-design](evidence/saved-record-design/). No active UI/account
+storage is changed by this checkpoint.
+
 ## Delivered candidate — optional portable calculation
 
 Draft [#425](https://github.com/ZodiacsOfficial/site/pull/425) is delivered at
@@ -124,8 +141,7 @@ Visual classification and exact-source preview acceptance are complete for #422.
 Its exact-source CI also passes all 14 jobs. Continue the separate next C02 slice.
 The C02 prerequisite is now integrated on its separate branch (current work
 above). Local build/test/check/scope, chart-share regression and actual browser
-privacy acceptance pass. Draft #425 is delivered; exact-source CI run 34187725308
-is in progress. Its exact-source preview `dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z`
+privacy acceptance pass. Draft #425 is delivered; all 14 jobs pass in exact-source CI run 34187725308. Its exact-source preview `dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z`
 is READY and passes 13 browser/API checks. The next bounded implementation is
 an explicitly callable immutable saved-receipt store in a separate database,
 with transactional capacity checks and owner/epoch revocation. It remains

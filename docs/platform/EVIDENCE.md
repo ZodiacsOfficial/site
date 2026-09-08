@@ -1385,3 +1385,77 @@ performance gates on the hosted runner. This does not relabel the separately
 recorded local macOS baseline failures as passed, or transfer source CI to later
 documentation-only heads without qualification.
 [Final job/step receipt](evidence/site-engine-rc5/release/ci-34186236252-final.json).
+
+### Saved-record draft review, before integration
+
+Root captured the unfrozen first record implementation at SHA-256
+`4538cb6400bdb6059e257cd8c8680f77cdbd9d8e1fe4b1f277c8170748c16074` and executed
+it with the real installed engine/receipt functions. Unlabeled creation succeeds
+but reread fails because the parser counts one too many required keys; labelled
+control succeeds. A future `v10` record is misclassified as corrupt while `v2`
+is recognized as unsupported. Both findings were sent to the author for fixes
+and regression tests before source integration.
+
+Root's static suspicion about a trailing newline in IDs was **disproved**: the
+existing JavaScript expressions reject it without multiline mode. The initial
+probe wrongly expected acceptance, failed that assertion, and is preserved as
+a harness/reviewer mistake. The corrected probe records both negative controls;
+there is no claimed pre-existing UUID vulnerability.
+[Actual draft probe](evidence/saved-records/root-review/result.json),
+[raw evidence manifest](evidence/saved-records/root-review/manifest.json).
+This early review is not final saved-store acceptance or active lifecycle coverage.
+
+
+### Completed portable-calculation CI
+
+All 14 jobs pass in exact-source [CI run 34187725308](https://github.com/ZodiacsOfficial/site/actions/runs/34187725308)
+at `dcc4e437a99f812666cd19dc85e6d781dbb3bedc`, alongside its previously verified
+READY preview. [Final job receipt](evidence/portable-calculation/release/ci-34187725308-final.json).
+Later documentation heads are distinct from this tested runtime source.
+
+### Frozen saved-record store acceptance
+
+Root integrates the exact four-file patch
+`5d61510dec09e42ad2196c173da5a88f206a85af5809a27562b1daf0cc2f83a5`
+onto `c761a49c55d125bca48ff38d81b0a9ff6fd5adcf`. The optional profile store
+uses its own owner-indexed IndexedDB database, immutable validated SDK receipt
+strings, fresh UUIDs and a 40-record limit enforced with insertion in one
+transaction. It exports the stored envelope without local record/owner metadata.
+There is no eager database open, v1 write, legacy projection, UI/account
+activation, remote sync or shared-file/Astrofolio change.
+
+It passes **74 focused tests** (49 new / 25 existing), strict TypeScript and
+**22 independent actual Chrome cases**. Native review proves transaction abort
+before commit, honest `mayHaveCommitted: true` after a real commit, prompt
+revoked-open settlement while another deletion stays blocked, late connection
+cleanup, native concurrent capacity, owner partition, future/corrupt rows and
+controlled quota rollback. The quota override is limited to one disposable
+origin and verified restored; no disk filling or user data is involved.
+
+[Author evidence](evidence/saved-records/implementation/EVIDENCE.md.log),
+[27-file manifest](evidence/saved-records/implementation/copy-manifest.json), SHA-256
+`1b7e7cee56516cd13510b6cfa5b3134643cfced1abae716fb14ce07b64761ef2`.
+[Independent review](evidence/saved-records/independent-review/REVIEW.md.log),
+[45-file manifest](evidence/saved-records/independent-review/manifest.json), SHA-256
+`8d6e5fdb5fffb5907b434fc3057f9a486f632a3b577836b89a7f5defc4a9c4ec`.
+Initial parser failures, type-invocation omission, logical-open hang and the
+disproved newline suspicion remain preserved and correctly attributed.
+
+Root full acceptance: **4,787 tests / 411 files**, production build, check of
+1,038 files (zero errors/warnings, 11 hints), exact-base protected-scope guard,
+and 18 fresh captures. All PNGs are byte-identical to the base. Fingerprint
+`8adaac8fafb4b52174722e0da00854ae23c5eaa1ef9132de377fccc85eb5d435`.
+The first full run was ordered before the required capture refresh and correctly
+failed one stale-fingerprint assertion (4,786 other tests passed). Root preserved
+it, ran the original build/capture driver, and repeated the full suite to a clean
+pass. No assertion, capture policy, tolerance or baseline was changed.
+[Commands and exits](evidence/saved-records/release/gates.json),
+[exact capture equality](evidence/saved-records/release/capture-parity.json).
+
+A clear consumes only its own handle; another handle may create afterward.
+Application authority callbacks are not authentication. Asynchronous inventory,
+verified owner/access leases, guest/retained scopes, account handoff/export and
+durable deletion/retry must be integrated before active saving. The explicit
+local receipt-export UI is a separate next prerequisite, independent of this
+store's implementation. This entry does not claim draft delivery, CI or preview
+for the saved store, account lifecycle completion, publication or adoption.

@@ -1,0 +1,14 @@
+{
+  "recordedAt": "2026-09-08T05:12:33.157411+00:00",
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--fileParallelism=false"
+  ],
+  "exitCode": 1,
+  "testsPassed": 4786,
+  "testsFailed": 1,
+  "cause": "Acceptance evidence fingerprint still describes preceding source; root ran full tests before rebuilding and refreshing captures for four new source files. Original guard correctly rejects stale evidence.",
+  "next": "Run original build and capture driver, then rerun full tests without changing assertion, clock or baseline policy."
+}

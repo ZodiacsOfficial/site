@@ -1,0 +1,14 @@
+import fs from 'node:fs';import path from 'node:path';import http from 'node:http';import {createRequire} from 'node:module';
+const base=path.dirname(new URL(import.meta.url).pathname);const {chromium}=createRequire('/Users/chiburashka/.codex/worktrees/4806/site/package.json')('playwright-core');
+const server=http.createServer((req,res)=>{res.setHeader('Content-Type',req.url==='/subject.js'?'text/javascript':'text/html');res.end(req.url==='/subject.js'?fs.readFileSync(path.join(base,'subject.js')):'<!doctype html><title>Disposable early draft review</title>')});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
+try{browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--disable-background-networking']});const context=await browser.newContext();const page=await context.newPage();await page.goto(`http://127.0.0.1:${server.address().port}`);
+const result=await page.evaluate(async()=>{
+const {SavedNatalStore}=await import('/subject.js');const name='zodiacs-saved-natal-v1';const ownerKey='account:10000000-0000-4000-8000-000000000001';
+const held=await new Promise((resolve,reject)=>{const r=indexedDB.open(name,1);r.onupgradeneeded=()=>{const s=r.result.createObjectStore('records',{keyPath:['ownerKey','id']});s.createIndex('ownerKey','ownerKey')};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});
+let releaseBlocked;const blocked=new Promise(r=>releaseBlocked=r);const deletion=indexedDB.deleteDatabase(name);deletion.onblocked=()=>releaseBlocked();const deleted=new Promise((r,j)=>{deletion.onsuccess=r;deletion.onerror=j});await blocked;
+const subject=new SavedNatalStore({ownerKey,epoch:1,readAuthority:()=>({ownerKey,epoch:1})});let settled=false;const pending=subject.list().then(r=>{settled=true;return r});await new Promise(r=>setTimeout(r,30));subject.revoke();await new Promise(r=>setTimeout(r,1000));const settledBeforeRelease=settled;
+held.close();await deleted;const outcome=await pending;const rawDelete=await new Promise(resolve=>{const r=indexedDB.deleteDatabase(name);r.onsuccess=()=>resolve('success');r.onblocked=()=>resolve('blocked');r.onerror=()=>resolve('error')});
+return{settledBeforeRelease,waitMilliseconds:1000,outcome,lateConnectionCleanup:rawDelete};});
+const record={purpose:'Early draft counterexample; not acceptance',node:process.version,browser:await browser.version(),at:new Date().toISOString(),identity:JSON.parse(fs.readFileSync(path.join(base,'identity.json'),'utf8')),result};fs.writeFileSync(path.join(base,'result.json'),JSON.stringify(record,null,2)+'\n');console.log(JSON.stringify(record,null,2));await context.close();}
+finally{await browser?.close();await new Promise(r=>server.close(r))}
