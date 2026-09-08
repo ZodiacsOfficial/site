@@ -110,3 +110,19 @@ requires no product correction or tolerance change. Hosted candidate checks
 remain pending. The next independent slice is the inactive three-file local-date
 interval primitive, whose author and independent review are complete. Keep its
 activation and unsupported-runtime/complex-date caller policy separate.
+
+
+C-011's three-file interval prerequisite is now integrated on its own branch
+above delivered #428. Complete root build/capture/full-suite/native verification
+and deliver the isolated draft. In parallel, inspect ChartCalculator and
+MoonPhaseTool compatibility and stale-result counterexamples in read-only
+scratch before choosing an activation slice. Do not let the SDK publication
+hold block these authorized engineering prerequisites.
+
+
+The inactive interval root acceptance is complete: build/check/4,938 tests,
+18 unchanged captures and native boundary controls pass. Deliver its isolated
+draft while #428 hosted checks proceed. The read-only caller review reproduced
+stale Moon results and date-coverage defects; a separate Moon result-ownership
+correction is authorized and being prepared in scratch. It must leave coverage,
+astronomical certainty, locale catalogs and interval activation unchanged.

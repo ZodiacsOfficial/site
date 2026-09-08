@@ -1,0 +1,13 @@
+{
+  "cwd": "/private/tmp/zodiacs-platform-local-date-intervals",
+  "node": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+  "commands": [
+    { "command": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /Users/chiburashka/.codex/worktrees/4806/site/node_modules/vitest/vitest.mjs run --config /private/tmp/zodiacs-platform-local-date-intervals-evidence/vitest.config.mjs", "log": "unit-initial.log", "exitCode": 0 },
+    { "command": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /Users/chiburashka/.codex/worktrees/4806/site/node_modules/typescript/bin/tsc --strict --noEmit --target ES2022 --module ESNext --moduleResolution bundler --lib ES2022,DOM --skipLibCheck src/lib/time/local-date-intervals.ts src/lib/time/local-date-intervals.test.ts", "log": "typecheck-initial.log", "exitCode": 2, "finding": "Test-only malformed-provider cast TS2352; fixed before final rerun." },
+    { "command": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /Users/chiburashka/.codex/worktrees/4806/site/node_modules/vitest/vitest.mjs run --config /private/tmp/zodiacs-platform-local-date-intervals-evidence/vitest.config.mjs", "log": "unit-final.log", "exitCode": 0 },
+    { "command": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /Users/chiburashka/.codex/worktrees/4806/site/node_modules/typescript/bin/tsc --strict --noEmit --target ES2022 --module ESNext --moduleResolution bundler --lib ES2022,DOM --skipLibCheck src/lib/time/local-date-intervals.ts src/lib/time/local-date-intervals.test.ts", "log": "typecheck-final.log", "exitCode": 0 },
+    { "command": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node --check tests/local-date-intervals-drive.mjs", "exitCode": 0, "output": "" },
+    { "command": "OUT_DIR=/private/tmp/zodiacs-platform-local-date-intervals-evidence/native-freeze1 /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/local-date-intervals-drive.mjs", "log": "native-freeze1.log", "exitCode": 0, "permission": "Approved disposable Chrome and loopback fixture; remote routes blocked." },
+    { "command": "git apply --reverse --check /private/tmp/zodiacs-platform-local-date-intervals-evidence/source-freeze1.patch", "log": "patch-check.log", "exitCode": 0 }
+  ]
+}

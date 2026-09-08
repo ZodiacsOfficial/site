@@ -1695,3 +1695,44 @@ npm lockfile metadata rewrite was retained and replaced with the exact frozen
 reviewed lock bytes; no unrelated dependency change was accepted. Hosted CI,
 preview validation, publication, production deployment and external adoption
 are distinct and are not established by these local results.
+
+
+### Inactive local-date interval prerequisite — root acceptance 2026-09-08
+
+The three new files match author Freeze 1 patch SHA-256
+`9854a47e9a2d60845cf023f4b12eb16f7defe8b4ca81083f1f6a4ec6d4667e78`.
+Root integrates above #428 source `30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`;
+[root identities](evidence/local-date-intervals/root-source-identity.json)
+retain the original #427 author base. No active source imports the new API;
+existing resolver, calculator, account, locale, SDK and Registry bytes remain
+unchanged. The acceptance manifest is refreshed through the established driver.
+
+[Author records](evidence/local-date-intervals/author/AUTHOR.md.log) seal 22
+original files under manifest
+`4e596e14248a9c6f48c59536ce1f1e7b3c1fd826c7ef2b3bb19be8ec1634f895`.
+[Independent review](evidence/local-date-intervals/independent-review/REVIEW.md.log)
+seals 30 records under manifest
+`f04478c508027ed8fe5d6ac1cb8d8fa842087de155cf7f4c26d01a065768a014`.
+Each Node 22/24 run passed 1,500 independent critical-point oracle schedules,
+including 1,059 disconnected and 19 empty sets; 20 edge/bound, six cap and five
+no-partial-result failure controls also pass. Native Chrome passed 16 explicit
+dates, six signed offsets and 4,699 finite Intl membership checks. The deliberately
+omitted transition-pair control demonstrates the documented nonconforming-provider
+limit. Primary Temporal transition/offset obligations are linked in that report.
+
+[Root integration records](evidence/local-date-intervals/integration/manifest.json)
+retain normal build, all 4,938 tests / 414 files, check (1,041 files; zero errors/
+warnings, 11 hints), focused 79 tests, strict types, exact-base scope, and 18
+captures byte-identical to #428. Fingerprint:
+`8153201effc180606aec028b782bb7c65f4c01a9b7c4ae7f5f806c3ac9071240`.
+The actual native Chrome driver passes 22 fixtures, 100 first/last/adjacent
+membership checks and four signed offsets against the integrated rc.6 offset
+reader. Import instrumentation records no Temporal/Intl/storage/network work;
+execution records zero observed storage/network APIs and only the two owned
+fixture requests. Browser and loopback server close after the run.
+
+Provider completeness is conditional on its trusted contract. Native capability
+absence, observed host mismatch and 33rd interior transition return unresolved,
+never partial intervals. Finite runtime tests do not certify all timezone history
+or whole-date Sun/Moon candidates. No caller activation, production release,
+publication or external adoption is claimed by this prerequisite.

@@ -453,3 +453,27 @@ carrier; never publish a placeholder commit or relabel old-version reports.
 No account format, unknown-time reference, ownership capability or published
 schema is expanded. Precise date membership remains a separate prerequisite with
 empty/disconnected/unresolved outcomes and explicit provider guarantees.
+
+
+## C-011 — Represent local dates as exact interval sets before caller activation
+
+A Gregorian local date is a membership set, which can be empty, disconnected or
+longer than 24 hours. Use immutable half-open epoch-millisecond intervals and an
+explicit unresolved outcome. Never collapse a disconnected date into a hull or
+turn an empty date into a shifted representative instant. Keep astronomical
+whole-date candidate completeness separate from civil-date membership.
+
+For nominal midnight w and one day D, strict offset bounds (-D, D) place every
+member in [w-D, w+2D). Partition that window using complete transitions and
+intersect each constant-offset segment with [w-offset, w+D-offset). Merge only
+touching intervals. Validate integer bounds, advancing transitions, observed
+offset agreement and a maximum of 32 interior changes. Fail without partial
+intervals on provider failure or exhaustion. The provider's completeness marker
+is a trusted contract, not proof that arbitrary code discloses every transition.
+
+The native Temporal adapter is optional and detected on call, with existing Intl
+identifier semantics and observed offset agreement. Do not load a polyfill or
+claim all-browser availability. Keep this additive primitive inactive until
+missing capability, empty/complex dates and stale/unavailable product behavior
+have a reviewed integration. Existing resolver and UI behavior remain unchanged
+by this prerequisite; its tests are finite, not historical-data certification.
