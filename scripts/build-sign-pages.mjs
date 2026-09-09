@@ -195,13 +195,27 @@ function ownershipModel(slug, solana, base) {
   };
 }
 
+// Every canonical sign stays in the standings. A sign with no indexed market
+// cap keeps a null value (rendered as an em dash, never as $0) and sorts after
+// the priced ones; the rank itself is only published when coverage is
+// complete. The client-side rebuild below mirrors this exactly.
 function marketStandings(snapshot) {
   const canonical = new Set(SIGN_ORDER);
+  const seen = new Set();
+  const marketCap = (asset) => {
+    if (asset?.marketCapUsd === null || asset?.marketCapUsd === undefined || asset?.marketCapUsd === '') return null;
+    const number = Number(asset.marketCapUsd);
+    return Number.isFinite(number) && number >= 0 ? number : null;
+  };
   return (snapshot?.assets ?? [])
-    .filter((asset) => canonical.has(asset?.sign) && Number.isFinite(Number(asset.marketCapUsd)))
-    .map((asset) => ({ ...asset, marketCapUsd: Number(asset.marketCapUsd) }))
+    .filter((asset) => {
+      if (!canonical.has(asset?.sign) || seen.has(asset.sign)) return false;
+      seen.add(asset.sign);
+      return true;
+    })
+    .map((asset) => ({ ...asset, marketCapUsd: marketCap(asset) }))
     .sort((a, b) => (
-      b.marketCapUsd - a.marketCapUsd
+      (b.marketCapUsd ?? -1) - (a.marketCapUsd ?? -1)
       || SIGN_ORDER.indexOf(a.sign) - SIGN_ORDER.indexOf(b.sign)
     ));
 }
@@ -424,6 +438,7 @@ function jsonLd(m) {
 }
 
 function compactUsd(value) {
+  if (value === null || value === undefined || value === '') return '—';
   const number = Number(value);
   if (!Number.isFinite(number)) return '—';
   const absolute = Math.abs(number);
@@ -434,6 +449,7 @@ function compactUsd(value) {
 }
 
 function wholeUsd(value) {
+  if (value === null || value === undefined || value === '') return '—';
   const number = Number(value);
   if (!Number.isFinite(number)) return '—';
   return `$${Math.round(number).toLocaleString('en-US')}`;
@@ -1711,15 +1727,18 @@ ${guideLoaderSource('en')}
       return assets.find(function (asset) { return asset && asset.sign === SIGN; }) || null;
     }
     function marketCapStandings(snapshot) {
+      // Mirrors marketStandings() in the generator: every canonical sign stays
+      // listed, an unpriced sign keeps a null market cap and sorts last.
       var seen = new Set();
       return (snapshot.assets || []).filter(function (candidate) {
         if (!candidate || SIGN_ORDER.indexOf(candidate.sign) < 0 || seen.has(candidate.sign)) return false;
-        var value = finiteNumber(candidate.marketCapUsd);
-        if (value === null || value < 0) return false;
         seen.add(candidate.sign);
         return true;
-      }).slice().sort(function (a, b) {
-        return finiteNumber(b.marketCapUsd) - finiteNumber(a.marketCapUsd)
+      }).map(function (asset) {
+        var value = finiteNumber(asset.marketCapUsd);
+        return Object.assign({}, asset, { marketCapUsd: value === null || value < 0 ? null : value });
+      }).sort(function (a, b) {
+        return (b.marketCapUsd === null ? -1 : b.marketCapUsd) - (a.marketCapUsd === null ? -1 : a.marketCapUsd)
           || SIGN_ORDER.indexOf(a.sign) - SIGN_ORDER.indexOf(b.sign);
       });
     }

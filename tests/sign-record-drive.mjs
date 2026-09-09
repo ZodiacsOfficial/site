@@ -5,12 +5,29 @@
  * honest archive-chart checks that used to be interleaved with the retired
  * combined Terminal selector drive.
  */
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+
+// build-sign-pages.mjs publishes a market rank only when the latest archived
+// snapshot covers all twelve signs and is fresh; otherwise the standings show
+// dashes and say why. Read the committed archive so the drive expects the
+// rendering the builder promises for it instead of assuming full coverage.
+const marketHistory = JSON.parse(await readFile(resolve(root, 'public/assets/data/registry-market-history.v1.json'), 'utf8'));
+const latestSnapshot = marketHistory.snapshots?.at(-1) ?? null;
+const coverage = latestSnapshot?.coverage ?? {};
+const readAt = Date.parse(latestSnapshot?.source?.readAt ?? '');
+const snapshotAge = Date.now() - readAt;
+const rankAvailable = [coverage.canonicalAssetCount, coverage.assetsWithIndexedPools, coverage.assetsWithMarketCap]
+  .every((count) => Number(count) === 12)
+  && Number.isFinite(readAt) && snapshotAge >= -5 * 60 * 1000 && snapshotAge <= 48 * 60 * 60 * 1000;
+const rankUnavailableNote = 'A rank is not shown because some numbers are missing or out of date.';
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 
@@ -107,7 +124,11 @@ await withPreview({ port: 4396 }, async (baseURL) => {
             && state.detailHeadings.includes(`${record.current} in the sky`)
             && state.detailHeadings.includes(`The story of ${record.current}`)
             && state.standingsLabel === 'Market standings'
-            && /^\d+(st|nd|rd|th) of 12 by total market value$/.test(state.standingsTitle)
+            && (rankAvailable
+              ? /^\d+(st|nd|rd|th) of 12 by total market value$/.test(state.standingsTitle)
+                && !state.standingsSummary.includes(rankUnavailableNote)
+              : state.standingsTitle === 'Market rank unavailable'
+                && state.standingsSummary.includes(rankUnavailableNote))
             && /This rank only compares total market value\. It does not show how many people support each sign\./.test(state.standingsSummary)
             && !/buy|purchase|swap/i.test(state.standingsSummary)
             && state.standingsRows === 12
