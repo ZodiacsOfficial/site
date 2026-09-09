@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "registry-market-snapshot-null-pairs-2026-09-09",
-  "baseCommit": "af193c5fd6d035a0d5ddc3022456bc5655b0fa8d",
+  "id": "registry-research-frozen-items-and-standings-2026-09-09",
+  "baseCommit": "92abc939778b676edf4f7f720b2139089bdb483e",
   "protectedPaths": [
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",
@@ -15,8 +15,8 @@
     "public/registry/scorpio/index.html",
     "public/registry/taurus/index.html",
     "public/registry/virgo/index.html",
-    "scripts/registry-market-snapshot-lib.mjs",
-    "scripts/registry-market-snapshot.test.mjs",
+    "scripts/build-sign-pages.mjs",
+    "scripts/registry-research-lib.mjs",
     "scripts/registry-research.test.mjs"
   ]
 }

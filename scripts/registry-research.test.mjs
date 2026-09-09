@@ -199,6 +199,35 @@ describe('Registry Research deterministic publication', () => {
     expect(pilot.feed.items).toEqual([]);
   });
 
+  it('freezes automatically published items so a later same-day observation cannot rewrite them', async () => {
+    const inputs = withPilotEndedBefore(await committedInputs());
+    const first = buildRegistryResearchLedger(inputs);
+    const firstBrief = first.items.find((item) => item.kind === 'daily-market-brief');
+    expect(firstBrief).toBeDefined();
+    expect(publishRegistryResearch({ ledger: first, approvalManifest: inputs.approvalManifest }).publication.items
+      .some((item) => item.id === firstBrief.id)).toBe(true);
+
+    // A second observation the same day: a later read with different numbers.
+    const later = deepClone(inputs);
+    const snapshot = later.marketHistory.snapshots.at(-1);
+    snapshot.source.readAt = new Date(Date.parse(snapshot.source.readAt) + (60 * 60 * 1000)).toISOString();
+    for (const asset of snapshot.assets) {
+      if (Number.isFinite(asset.priceUsd)) asset.priceUsd *= 1.5;
+      if (Number.isFinite(asset.marketCapUsd)) asset.marketCapUsd *= 1.5;
+    }
+    const second = buildRegistryResearchLedger({ ...later, existingLedger: first });
+    expect(second.generatedAt).toBe(snapshot.source.readAt);
+    expect(second.items.find((item) => item.id === firstBrief.id)).toEqual(firstBrief);
+    expect(() => publishRegistryResearch({ ledger: second, approvalManifest: later.approvalManifest })).not.toThrow();
+
+    // The same second observation during the pilot, with nothing approved,
+    // still regenerates the unpublished draft.
+    const pilotFirst = buildRegistryResearchLedger(withPilotCovering(inputs));
+    const pilotBrief = pilotFirst.items.find((item) => item.kind === 'daily-market-brief');
+    const pilotSecond = buildRegistryResearchLedger({ ...withPilotCovering(later), existingLedger: pilotFirst });
+    expect(pilotSecond.items.find((item) => item.id === pilotBrief.id).artifactHash).not.toBe(pilotBrief.artifactHash);
+  });
+
   it('reveals an approved event at its exact time without mutating the immutable item payload', async () => {
     const fixture = withFixtureEvent(await committedInputs());
     const inputs = fixture.inputs;

@@ -1152,8 +1152,8 @@
           <li class="is-current" aria-current="true"><a href="/registry/cancer/" style="--sign:#B6D4E4"><span class="standings__rank">—</span><picture><source srcset="/assets/zodiac-icons/48/cancer.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/cancer.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Cancer</strong><span>$79,895</span></a></li>
           <li><a href="/registry/scorpio/" style="--sign:#B9DCE8"><span class="standings__rank">—</span><picture><source srcset="/assets/zodiac-icons/48/scorpio.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/scorpio.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Scorpio</strong><span>$79,884</span></a></li>
           <li><a href="/registry/aries/" style="--sign:#DE8E79"><span class="standings__rank">—</span><picture><source srcset="/assets/zodiac-icons/48/aries.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/aries.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Aries</strong><span>$77,791</span></a></li>
-          <li><a href="/registry/libra/" style="--sign:#D3A9DE"><span class="standings__rank">—</span><picture><source srcset="/assets/zodiac-icons/48/libra.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/libra.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Libra</strong><span>$0</span></a></li>
-          <li><a href="/registry/pisces/" style="--sign:#A9D4C4"><span class="standings__rank">—</span><picture><source srcset="/assets/zodiac-icons/48/pisces.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/pisces.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Pisces</strong><span>$0</span></a></li>
+          <li><a href="/registry/libra/" style="--sign:#D3A9DE"><span class="standings__rank">—</span><picture><source srcset="/assets/zodiac-icons/48/libra.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/libra.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Libra</strong><span>—</span></a></li>
+          <li><a href="/registry/pisces/" style="--sign:#A9D4C4"><span class="standings__rank">—</span><picture><source srcset="/assets/zodiac-icons/48/pisces.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/pisces.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Pisces</strong><span>—</span></a></li>
           </ol>
         </details>
         <p class="standings__time" data-standings-time>Updated Sep 9, 2026, 12:55 AM UTC</p>
@@ -1736,15 +1736,18 @@
       return assets.find(function (asset) { return asset && asset.sign === SIGN; }) || null;
     }
     function marketCapStandings(snapshot) {
+      // Mirrors marketStandings() in the generator: every canonical sign stays
+      // listed, an unpriced sign keeps a null market cap and sorts last.
       var seen = new Set();
       return (snapshot.assets || []).filter(function (candidate) {
         if (!candidate || SIGN_ORDER.indexOf(candidate.sign) < 0 || seen.has(candidate.sign)) return false;
-        var value = finiteNumber(candidate.marketCapUsd);
-        if (value === null || value < 0) return false;
         seen.add(candidate.sign);
         return true;
-      }).slice().sort(function (a, b) {
-        return finiteNumber(b.marketCapUsd) - finiteNumber(a.marketCapUsd)
+      }).map(function (asset) {
+        var value = finiteNumber(asset.marketCapUsd);
+        return Object.assign({}, asset, { marketCapUsd: value === null || value < 0 ? null : value });
+      }).sort(function (a, b) {
+        return (b.marketCapUsd === null ? -1 : b.marketCapUsd) - (a.marketCapUsd === null ? -1 : a.marketCapUsd)
           || SIGN_ORDER.indexOf(a.sign) - SIGN_ORDER.indexOf(b.sign);
       });
     }
