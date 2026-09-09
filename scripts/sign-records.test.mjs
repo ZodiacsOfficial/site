@@ -195,7 +195,28 @@ describe('Zodiac token records', () => {
       expect(visible).toContain('<details class="standings__all"><summary>See all 12 market standings</summary>');
       expect(standings.match(/<li\b/gu)).toHaveLength(12);
       expect(standings.match(/\/assets\/zodiac-icons\/48\/[a-z-]+\.webp/gu)).toHaveLength(12);
-      expect(visible).toMatch(/\d+(?:st|nd|rd|th) of 12 by total market value/u);
+      // The rank line is published only when the committed snapshot covers
+      // every sign and is fresh (build-sign-pages.mjs marketRankStatus).
+      // With a partial DexScreener day (2026-09-09 indexed 10 of 12 pools)
+      // the page shows dashes and says why instead of a rank.
+      const marketHistory = JSON.parse(await read('public/assets/data/registry-market-history.v1.json'));
+      const latestSnapshot = marketHistory.snapshots.at(-1);
+      const coverage = latestSnapshot?.coverage ?? {};
+      const snapshotReadAt = Date.parse(latestSnapshot?.source?.readAt ?? '');
+      const snapshotAge = Date.now() - snapshotReadAt;
+      const rankAvailable = [coverage.canonicalAssetCount, coverage.assetsWithIndexedPools, coverage.assetsWithMarketCap]
+        .every((count) => Number(count) === 12)
+        && Number.isFinite(snapshotReadAt)
+        && snapshotAge >= -5 * 60 * 1000
+        && snapshotAge <= 48 * 60 * 60 * 1000;
+      if (rankAvailable) {
+        expect(visible).toMatch(/\d+(?:st|nd|rd|th) of 12 by total market value/u);
+        expect(visible).not.toContain('A rank is not shown because some numbers are missing or out of date.');
+      } else {
+        expect(visible).not.toMatch(/\d+(?:st|nd|rd|th) of 12 by total market value/u);
+        expect(visible).toContain('A rank is not shown because some numbers are missing or out of date.');
+        expect(standings.match(/<span class="standings__rank">—<\/span>/gu)).toHaveLength(12);
+      }
       expect(visible).toContain('This rank only compares total market value. It does not show how many people support each sign.');
       expect(visible).not.toContain('leads this snapshot');
       expect(visible).not.toContain('one place above');
