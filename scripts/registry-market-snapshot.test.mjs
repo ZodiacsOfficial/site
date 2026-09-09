@@ -175,4 +175,52 @@ describe('Registry market snapshot archive', () => {
       'HTTP 503',
     );
   });
+
+  it('records an explicit DexScreener "no pairs" answer as zero indexed pools instead of failing', async () => {
+    // Seen 2026-09-09: the batch endpoint returned nothing for two mints and the
+    // pinned pair lookup answered { schemaVersion, pairs: null, pair: null }.
+    const tokenPayload = [pair({ pairAddress: 'aries-pin', liquidity: 500, volume: 10, marketCap: 8_000 })];
+    const fetchImpl = vi.fn(async (url) => ({
+      ok: true,
+      status: 200,
+      json: async () => (url.includes('/tokens/v1/')
+        ? tokenPayload
+        : { schemaVersion: '1.0.0', pairs: null, pair: null }),
+    }));
+    const fetched = await fetchDexScreenerPairs({
+      assets: ASSETS,
+      fetchImpl,
+      timeoutMs: 100,
+      pairIdsBySign: PAIR_IDS,
+    });
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+    expect(fetchImpl.mock.calls[1][0]).toBe('https://api.dexscreener.com/latest/dex/pairs/solana/taurus-pin');
+    expect(fetched.pairs).toHaveLength(1);
+
+    const snapshot = buildRegistryMarketSnapshot({
+      assets: ASSETS,
+      pairs: fetched.pairs,
+      sourceUrl: fetched.url,
+      readAt: '2026-09-09T00:50:00.000Z',
+      pairIdsBySign: PAIR_IDS,
+    });
+    expect(snapshot.coverage).toMatchObject({ canonicalAssetCount: 2, assetsWithIndexedPools: 1 });
+    expect(snapshot.assets.find(({ sign }) => sign === 'taurus')).toMatchObject({
+      indexedPoolCount: 0,
+      priceUsd: null,
+      marketCapUsd: null,
+      deepestPool: null,
+    });
+  });
+
+  it('still refuses a DexScreener payload that carries no pair field at all', async () => {
+    const fetchImpl = vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({ schemaVersion: '1.0.0' }),
+    }));
+    await expect(
+      fetchDexScreenerPairs({ assets: ASSETS, fetchImpl, timeoutMs: 100, pairIdsBySign: PAIR_IDS }),
+    ).rejects.toThrow('did not contain a pair array');
+  });
 });

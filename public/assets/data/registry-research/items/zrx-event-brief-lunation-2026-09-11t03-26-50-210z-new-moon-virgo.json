@@ -1,0 +1,98 @@
+{
+  "schema": "zodiacs.registry-research-item.v1",
+  "sourceType": "zodiacs-research",
+  "publisher": "Zodiacs.org Research System",
+  "byline": "Zodiacs.org Research System",
+  "method": {
+    "id": "zodiacs.registry-research-method.v1",
+    "version": 1,
+    "generator": "zodiacs.registry-research.deterministic.v1",
+    "deterministicTemplatesOnly": true,
+    "modelAuthoredProse": false,
+    "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+    "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+    "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+    "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+  },
+  "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+  "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+  "revisions": [],
+  "id": "zrx-event-brief-lunation-2026-09-11t03-26-50-210z-new-moon-virgo",
+  "slug": "event-brief-lunation-2026-09-11t03-26-50-210z-new-moon-virgo",
+  "kind": "event-brief",
+  "templateId": "event-brief.v1",
+  "issuedAt": "2026-09-09T12:00:00.000Z",
+  "visibleAt": "2026-09-11T03:26:50.210Z",
+  "eventAt": "2026-09-11T03:26:50.210Z",
+  "title": "New Moon in Virgo · event brief",
+  "summary": "New Moon in Virgo becomes exact at 2026-09-11T03:26:50.210Z. Its symbolic reading and later market observations remain separate.",
+  "url": "/terminal/research/event-brief-lunation-2026-09-11t03-26-50-210z-new-moon-virgo/",
+  "signs": [
+    "virgo"
+  ],
+  "topics": [
+    "calendar",
+    "astrology",
+    "lunation"
+  ],
+  "symbolicScore": {
+    "sign": "virgo",
+    "attention": 20.3,
+    "tone": 7.4,
+    "eventIntensity": 7.4,
+    "calculation": "22 attention / 8 tone / 8 event intensity × 0.9234 horizon multiplier",
+    "marketFieldsUsed": false
+  },
+  "sections": {
+    "skyFact": {
+      "heading": "Sky fact",
+      "body": "New Moon in Virgo is exact at 2026-09-11T03:26:50.210Z, according to the committed transit catalog.",
+      "evidence": [
+        "src/data/transits-2026-09.json"
+      ]
+    },
+    "traditionalReading": {
+      "heading": "Traditional reading",
+      "body": "A new Moon is scored as symbolic renewal for Virgo; that is an astrology convention, not evidence of higher returns. The score calculation is 22 attention / 8 tone / 8 event intensity × 0.9234 horizon multiplier.",
+      "evidence": [
+        "src/data/transits-2026-09.json"
+      ]
+    },
+    "marketObservation": {
+      "heading": "Market observation",
+      "body": "No market outcome is attached to this precomputed event brief. A separately timestamped follow-up may be appended after an eligible archive observation.",
+      "evidence": []
+    }
+  },
+  "market": {
+    "available": false,
+    "snapshotId": null,
+    "observedAt": null
+  },
+  "evidence": {
+    "transitSource": "src/data/transits-2026-09.json",
+    "eventKey": "lunation:2026-09-11T03:26:50.210Z:new-moon-virgo",
+    "groupedEvents": null,
+    "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-09-09",
+    "marketSnapshotId": null,
+    "coverage": {
+      "overall": "complete",
+      "events": "complete",
+      "occupancies": "complete",
+      "expectedTransitMonths": [
+        "2026-09"
+      ],
+      "missingTransitMonths": [],
+      "missingOccupancyPlanets": []
+    }
+  },
+  "artifactHash": "593b950edfd68542b40aaa963c2a522c1495bf62ca6cf3f398c941a81a0f0b00",
+  "publishedAt": "2026-09-09T12:00:00.000Z",
+  "publication": {
+    "mode": "post-pilot-deterministic-allowlist",
+    "publishedAt": "2026-09-09T12:00:00.000Z",
+    "reviewer": null,
+    "artifactSha256": "593b950edfd68542b40aaa963c2a522c1495bf62ca6cf3f398c941a81a0f0b00"
+  },
+  "status": "approved"
+}
