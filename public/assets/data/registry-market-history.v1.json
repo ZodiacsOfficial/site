@@ -8654,7 +8654,7 @@
       "source": {
         "provider": "DexScreener",
         "url": "https://api.dexscreener.com/tokens/v1/solana/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv,EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp,ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc,CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ,8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm,Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso,7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe,J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1,8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3,3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2,C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt,3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
-        "readAt": "2026-09-09T09:04:58.577Z"
+        "readAt": "2026-09-09T11:57:51.709Z"
       },
       "coverage": {
         "canonicalAssetCount": 12,
@@ -8663,13 +8663,13 @@
         "assetsWithFdv": 11
       },
       "totals": {
-        "marketCapUsd": 999123,
+        "marketCapUsd": 999135,
         "marketCapAssetCount": 11,
-        "fdvUsd": 999123,
+        "fdvUsd": 999134,
         "fdvAssetCount": 11,
-        "liquidityUsd": 188303.76,
+        "liquidityUsd": 188298.16,
         "liquidityReportedPoolCount": 11,
-        "volume24hUsd": 1146.15,
+        "volume24hUsd": 972.67,
         "volume24hReportedPoolCount": 11,
         "indexedPoolCount": 11
       },
@@ -8680,12 +8680,12 @@
           "symbol": "ARIES",
           "mint": "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
           "priceUsd": 0.00007991,
-          "change24hPct": 3.95,
+          "change24hPct": 2.6,
           "marketCapUsd": 79895,
           "fdvUsd": 79895,
           "liquidityUsd": 15571.42,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 159.11,
+          "volume24hUsd": 61.17,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -8716,20 +8716,20 @@
           "displayName": "Gemini",
           "symbol": "GEMINI",
           "mint": "ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc",
-          "priceUsd": 0.0001516,
-          "change24hPct": -0.94,
-          "marketCapUsd": 151646,
-          "fdvUsd": 151646,
-          "liquidityUsd": 23059.17,
+          "priceUsd": 0.000151,
+          "change24hPct": 0.03,
+          "marketCapUsd": 151065,
+          "fdvUsd": 151065,
+          "liquidityUsd": 22938.58,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 120.79,
+          "volume24hUsd": 106.9,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/hxhdkrb1upswfumozmvzpvelzbpwhdyn6phu9cbfium9",
-            "liquidityUsd": 23059.17
+            "liquidityUsd": 22938.58
           }
         },
         {
@@ -8738,12 +8738,12 @@
           "symbol": "CANCER",
           "mint": "CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ",
           "priceUsd": 0.00007989,
-          "change24hPct": 1.27,
+          "change24hPct": 0.07,
           "marketCapUsd": 79895,
           "fdvUsd": 79895,
           "liquidityUsd": 16506.72,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 64.06,
+          "volume24hUsd": 56.51,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -8759,12 +8759,12 @@
           "symbol": "LEO",
           "mint": "8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm",
           "priceUsd": 0.00008552,
-          "change24hPct": -1.21,
+          "change24hPct": -2.16,
           "marketCapUsd": 85521,
           "fdvUsd": 85521,
           "liquidityUsd": 16541.92,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 153.23,
+          "volume24hUsd": 145.69,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -8821,20 +8821,20 @@
           "displayName": "Scorpio",
           "symbol": "SCORPIO",
           "mint": "J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1",
-          "priceUsd": 0.00007988,
-          "change24hPct": null,
-          "marketCapUsd": 79884,
-          "fdvUsd": 79884,
-          "liquidityUsd": 15644.76,
+          "priceUsd": 0.00008047,
+          "change24hPct": 0.74,
+          "marketCapUsd": 80477,
+          "fdvUsd": 80476,
+          "liquidityUsd": 15759.75,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 1.99,
+          "volume24hUsd": 42.79,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "3d2KYuMgj2yotNC6SKX4HNoeSWp4n8zqZSQ9kFH81Yta",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/3d2kyumgj2yotnc6skx4hnoeswp4n8zqzsq9kfh81yta",
-            "liquidityUsd": 15644.76
+            "liquidityUsd": 15759.75
           }
         },
         {
@@ -8843,12 +8843,12 @@
           "symbol": "SAGITTARIUS",
           "mint": "8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3",
           "priceUsd": 0.00008041,
-          "change24hPct": -0.31,
+          "change24hPct": 1.1,
           "marketCapUsd": 80380,
           "fdvUsd": 80380,
           "liquidityUsd": 15868.63,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 405.05,
+          "volume24hUsd": 371.52,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -8864,12 +8864,12 @@
           "symbol": "CAPRICORN",
           "mint": "3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2",
           "priceUsd": 0.00008532,
-          "change24hPct": 1.19,
+          "change24hPct": 0.78,
           "marketCapUsd": 85329,
           "fdvUsd": 85329,
           "liquidityUsd": 15821.44,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 166.85,
+          "volume24hUsd": 113.02,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
