@@ -677,16 +677,21 @@ export function buildRegistryResearchLedger({
   existingItems.forEach((item) => validateRegistryResearchItem(item));
   const approvals = approvalByItem(approvalManifest);
   const generationWindowStart = `${daily.date}T00:00:00.000Z`;
+  // A published item is frozen. During the pilot that means an exact-hash
+  // approval; after it, any item the deterministic allowlist publishes on
+  // sight. Its immutable copy is already on disk, so a later observation the
+  // same day (a backstop snapshot, a re-run) refreshes the archive, the
+  // outlook, and the ledger's generatedAt, but never regenerates the item.
+  const frozen = (item) => approvals.get(item.id)?.artifactSha256 === item.artifactHash
+    || eligibleForAutomaticPublication(item, approvalManifest);
   const retainedItems = existingItems.filter((item) => {
-    const approved = approvals.get(item.id)?.artifactSha256 === item.artifactHash;
     const regeneratingFutureEvent = item.kind === 'event-brief' && item.visibleAt >= generationWindowStart;
-    return approved || !regeneratingFutureEvent;
+    return frozen(item) || !regeneratingFutureEvent;
   });
   const byId = new Map(retainedItems.map((item) => [item.id, item]));
   for (const candidate of generatedItems({ daily, outlook, transitMonths, marketHistory, existingItems })) {
     const existing = byId.get(candidate.id);
-    const approval = approvals.get(candidate.id);
-    if (existing && approval?.artifactSha256 === existing.artifactHash) continue;
+    if (existing && frozen(existing)) continue;
     byId.set(candidate.id, candidate);
   }
   const items = [...byId.values()].sort((left, right) => left.visibleAt.localeCompare(right.visibleAt) || left.id.localeCompare(right.id));

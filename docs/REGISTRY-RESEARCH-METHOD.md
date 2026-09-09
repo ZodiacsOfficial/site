@@ -18,7 +18,7 @@ The standard disclosure is mandatory: “Symbolic research—not investment advi
 
 During the 30-day pilot, a draft is public only when `approval-manifest.json` names its item ID, exact artifact SHA-256, reviewer, and review instant. Any content change changes the hash and invalidates the approval. Approved item data is append-only under `public/assets/data/registry-research/items/`; the builder refuses to rewrite an existing immutable item.
 
-After the pilot, only explicitly allowlisted deterministic template IDs can publish automatically. Free-form model output remains disallowed. Corrections and 24-hour/7-day observations are new append-only items referencing the original; they do not rewrite the original thesis.
+After the pilot, only explicitly allowlisted deterministic template IDs can publish automatically. Free-form model output remains disallowed. A published item is frozen: a later market observation the same day refreshes the archive, the outlook, and the ledger's `generatedAt`, but never regenerates an item that already has an immutable copy. Corrections and 24-hour/7-day observations are new append-only items referencing the original; they do not rewrite the original thesis.
 
 ## Public contracts
 
