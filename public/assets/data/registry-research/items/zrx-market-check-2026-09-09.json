@@ -1,0 +1,113 @@
+{
+  "schema": "zodiacs.registry-research-item.v1",
+  "sourceType": "zodiacs-research",
+  "publisher": "Zodiacs.org Research System",
+  "byline": "Zodiacs.org Research System",
+  "method": {
+    "id": "zodiacs.registry-research-method.v1",
+    "version": 1,
+    "generator": "zodiacs.registry-research.deterministic.v1",
+    "deterministicTemplatesOnly": true,
+    "modelAuthoredProse": false,
+    "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+    "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+    "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+    "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+  },
+  "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+  "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+  "revisions": [],
+  "id": "zrx-market-check-2026-09-09",
+  "slug": "market-check-2026-09-09",
+  "kind": "market-check",
+  "templateId": "market-check.v1",
+  "issuedAt": "2026-09-09T00:55:17.235Z",
+  "visibleAt": "2026-09-09T00:55:17.235Z",
+  "title": "Virgo market check · 2026-09-09",
+  "summary": "Virgo price, market cap, liquidity, volume, and collection medians at one archived observation.",
+  "url": "/terminal/research/market-check-2026-09-09/",
+  "signs": [
+    "virgo"
+  ],
+  "topics": [
+    "markets",
+    "market-check"
+  ],
+  "symbolicScore": {
+    "sign": "virgo",
+    "attention": 14,
+    "tone": 0,
+    "eventIntensity": 0,
+    "calculation": "9 disclosed Sun occupancy-attention points",
+    "marketFieldsUsed": false
+  },
+  "sections": {
+    "skyFact": {
+      "heading": "Sky fact",
+      "body": "Virgo is the highest-ranked attention entry in the separately published 2026-09-09 daily outlook.",
+      "evidence": [
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "traditionalReading": {
+      "heading": "Traditional reading",
+      "body": "A modest sky emphasis for this sign, without a strong directional tone. Signal: steady. The symbolic score was fixed before this market comparison.",
+      "evidence": [
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "marketObservation": {
+      "heading": "Market observation",
+      "body": "At 2026-09-09T00:55:17.235Z, Virgo was indexed at $0.00008424, with -0.94% over 24 hours, $84.25K market cap, $84.25K FDV, $15.46K indexed liquidity, $33.41 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Virgo market cap was 1.022× the collection median and indexed liquidity was 0.981× the collection median.",
+      "evidence": [
+        "public/assets/data/registry-market-history.v1.json"
+      ]
+    }
+  },
+  "market": {
+    "available": true,
+    "snapshotId": "registry-market:2026-09-09:2026-09-09T00:55:17.235Z",
+    "observedAt": "2026-09-09T00:55:17.235Z",
+    "provider": "DexScreener",
+    "sign": "virgo",
+    "priceUsd": 0.00008424,
+    "change24hPct": -0.94,
+    "marketCapUsd": 84248,
+    "fdvUsd": 84248,
+    "liquidityUsd": 15462.92,
+    "volume24hUsd": 33.41,
+    "indexedPoolCount": 1,
+    "deepestPoolUrl": "https://dexscreener.com/solana/5wcvjf8fzpkhazqtszddbdfl6p2blbageigxpevnrcrh",
+    "collectionMedian": {
+      "marketCapUsd": 82431.5,
+      "liquidityUsd": 15764.15
+    },
+    "vsCollectionMedian": {
+      "marketCap": 1.022,
+      "liquidity": 0.981
+    }
+  },
+  "evidence": {
+    "outlookEdition": "public/assets/registry-outlook.json#daily:2026-09-09",
+    "marketSnapshotId": "registry-market:2026-09-09:2026-09-09T00:55:17.235Z",
+    "coverage": {
+      "overall": "complete",
+      "events": "complete",
+      "occupancies": "complete",
+      "expectedTransitMonths": [
+        "2026-09"
+      ],
+      "missingTransitMonths": [],
+      "missingOccupancyPlanets": []
+    }
+  },
+  "artifactHash": "d1b018426f430dbe4a7529461af210d1866419db80900a325200e900db87fb2e",
+  "publishedAt": "2026-09-09T00:55:17.235Z",
+  "publication": {
+    "mode": "post-pilot-deterministic-allowlist",
+    "publishedAt": "2026-09-09T00:55:17.235Z",
+    "reviewer": null,
+    "artifactSha256": "d1b018426f430dbe4a7529461af210d1866419db80900a325200e900db87fb2e"
+  },
+  "status": "approved"
+}

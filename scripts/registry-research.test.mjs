@@ -48,6 +48,25 @@ function withFixtureEvent(inputs) {
   return { inputs: cloned, at };
 }
 
+// Pilot-window fixtures. The approval manifest's pilot has a fixed calendar
+// window (2026-08-10 to 2026-09-08); the publication rule under test is a
+// function of whether an item's day falls inside it, so the tests set the
+// window explicitly relative to the committed edition rather than trusting
+// the date the suite happens to run on.
+function withPilotCovering(inputs) {
+  const cloned = deepClone(inputs);
+  cloned.approvalManifest.pilot.endsOn = '2099-12-31';
+  return cloned;
+}
+
+function withPilotEndedBefore(inputs) {
+  const cloned = deepClone(inputs);
+  const dayBefore = new Date(Date.parse(`${inputs.daily.date}T00:00:00.000Z`) - DAY_MS).toISOString().slice(0, 10);
+  cloned.approvalManifest.pilot.startsOn = '2026-08-10';
+  cloned.approvalManifest.pilot.endsOn = dayBefore < '2026-08-10' ? '2026-08-10' : dayBefore;
+  return cloned;
+}
+
 function approvalFor(item, overrides = {}) {
   return {
     itemId: item.id,
@@ -119,7 +138,10 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('keeps pilot drafts out of public feeds until their exact artifact hashes are reviewed', async () => {
-    const inputs = await committedInputs();
+    // The committed manifest's pilot ended on 2026-09-08. Pin the pilot over
+    // the committed edition so this rule is tested on every calendar day
+    // instead of only during the pilot window itself.
+    const inputs = withPilotCovering(await committedInputs());
     const ledger = buildRegistryResearchLedger(inputs);
     const draftOnly = publishRegistryResearch({ ledger, approvalManifest: inputs.approvalManifest });
     expect(draftOnly.feed.items).toEqual([]);
@@ -144,6 +166,37 @@ describe('Registry Research deterministic publication', () => {
       reviewer: 'Registry editorial reviewer',
       artifactSha256: item.artifactHash,
     });
+  });
+
+  it('publishes only allowlisted deterministic templates once the pilot has ended', async () => {
+    const inputs = withPilotEndedBefore(await committedInputs());
+    const ledger = buildRegistryResearchLedger(inputs);
+    const { allowlist, published } = (() => {
+      const result = publishRegistryResearch({ ledger, approvalManifest: inputs.approvalManifest });
+      return { allowlist: inputs.approvalManifest.postPilot.automaticTemplateIds, published: result };
+    })();
+    const draftsById = new Map(ledger.items.map((item) => [item.id, item]));
+
+    expect(published.feed.items.length).toBeGreaterThan(0);
+    for (const item of published.publication.items) {
+      const draft = draftsById.get(item.id);
+      expect(draft).toBeDefined();
+      expect(allowlist).toContain(draft.templateId);
+      expect(item.publication).toMatchObject({
+        mode: 'post-pilot-deterministic-allowlist',
+        reviewer: null,
+        artifactSha256: draft.artifactHash,
+      });
+      expect(item.publication.publishedAt).toBe(draft.issuedAt);
+    }
+    const unlisted = ledger.items.filter((item) => !allowlist.includes(item.templateId)).map((item) => item.id);
+    for (const id of unlisted) {
+      expect(published.publication.items.some((item) => item.id === id)).toBe(false);
+    }
+
+    // A pilot-era manifest over the same edition publishes nothing without approvals.
+    const pilot = publishRegistryResearch({ ledger, approvalManifest: withPilotCovering(inputs).approvalManifest });
+    expect(pilot.feed.items).toEqual([]);
   });
 
   it('reveals an approved event at its exact time without mutating the immutable item payload', async () => {

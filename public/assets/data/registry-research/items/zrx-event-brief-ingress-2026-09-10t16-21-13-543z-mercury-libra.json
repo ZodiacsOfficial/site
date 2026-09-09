@@ -1,0 +1,98 @@
+{
+  "schema": "zodiacs.registry-research-item.v1",
+  "sourceType": "zodiacs-research",
+  "publisher": "Zodiacs.org Research System",
+  "byline": "Zodiacs.org Research System",
+  "method": {
+    "id": "zodiacs.registry-research-method.v1",
+    "version": 1,
+    "generator": "zodiacs.registry-research.deterministic.v1",
+    "deterministicTemplatesOnly": true,
+    "modelAuthoredProse": false,
+    "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+    "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+    "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+    "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+  },
+  "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+  "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+  "revisions": [],
+  "id": "zrx-event-brief-ingress-2026-09-10t16-21-13-543z-mercury-libra",
+  "slug": "event-brief-ingress-2026-09-10t16-21-13-543z-mercury-libra",
+  "kind": "event-brief",
+  "templateId": "event-brief.v1",
+  "issuedAt": "2026-09-09T12:00:00.000Z",
+  "visibleAt": "2026-09-10T16:21:13.543Z",
+  "eventAt": "2026-09-10T16:21:13.543Z",
+  "title": "Mercury enters Libra · event brief",
+  "summary": "Mercury enters Libra becomes exact at 2026-09-10T16:21:13.543Z. Its symbolic reading and later market observations remain separate.",
+  "url": "/terminal/research/event-brief-ingress-2026-09-10t16-21-13-543z-mercury-libra/",
+  "signs": [
+    "libra"
+  ],
+  "topics": [
+    "calendar",
+    "astrology",
+    "ingress"
+  ],
+  "symbolicScore": {
+    "sign": "libra",
+    "attention": 11.7,
+    "tone": 0,
+    "eventIntensity": 1.9,
+    "calculation": "12.5 attention / 0 tone / 2 event intensity × 0.9399 horizon multiplier",
+    "marketFieldsUsed": false
+  },
+  "sections": {
+    "skyFact": {
+      "heading": "Sky fact",
+      "body": "Mercury enters Libra is exact at 2026-09-10T16:21:13.543Z, according to the committed transit catalog.",
+      "evidence": [
+        "src/data/transits-2026-09.json"
+      ]
+    },
+    "traditionalReading": {
+      "heading": "Traditional reading",
+      "body": "The ingress adds attention to Libra. Ingresses are intentionally neutral on price direction. The score calculation is 12.5 attention / 0 tone / 2 event intensity × 0.9399 horizon multiplier.",
+      "evidence": [
+        "src/data/transits-2026-09.json"
+      ]
+    },
+    "marketObservation": {
+      "heading": "Market observation",
+      "body": "No market outcome is attached to this precomputed event brief. A separately timestamped follow-up may be appended after an eligible archive observation.",
+      "evidence": []
+    }
+  },
+  "market": {
+    "available": false,
+    "snapshotId": null,
+    "observedAt": null
+  },
+  "evidence": {
+    "transitSource": "src/data/transits-2026-09.json",
+    "eventKey": "ingress:2026-09-10T16:21:13.543Z:Mercury-libra",
+    "groupedEvents": null,
+    "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-09-09",
+    "marketSnapshotId": null,
+    "coverage": {
+      "overall": "complete",
+      "events": "complete",
+      "occupancies": "complete",
+      "expectedTransitMonths": [
+        "2026-09"
+      ],
+      "missingTransitMonths": [],
+      "missingOccupancyPlanets": []
+    }
+  },
+  "artifactHash": "9d9274421fb125cf007a63b30a168711c907b5465551cf17e0672259350b42ee",
+  "publishedAt": "2026-09-09T12:00:00.000Z",
+  "publication": {
+    "mode": "post-pilot-deterministic-allowlist",
+    "publishedAt": "2026-09-09T12:00:00.000Z",
+    "reviewer": null,
+    "artifactSha256": "9d9274421fb125cf007a63b30a168711c907b5465551cf17e0672259350b42ee"
+  },
+  "status": "approved"
+}

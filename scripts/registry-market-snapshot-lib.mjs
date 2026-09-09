@@ -178,9 +178,22 @@ async function fetchPairRows({ url, fetchImpl, timeoutMs }) {
     throw new Error(`DexScreener request failed with HTTP ${response?.status ?? 'unknown'}`);
   }
   const payload = await response.json();
-  const pairs = Array.isArray(payload) ? payload : payload?.pairs;
-  if (!Array.isArray(pairs)) throw new Error('DexScreener response did not contain a pair array');
-  return pairs;
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.pairs)) return payload.pairs;
+  // DexScreener answers a lookup that matches nothing it indexes with an
+  // explicit null ({ schemaVersion, pairs: null, pair: null }) rather than an
+  // empty list. That is a valid observation — the asset has no indexed pool
+  // today and the snapshot records zero indexed pools for it — not a
+  // malformed payload. Anything else is still refused.
+  if (
+    payload
+    && typeof payload === 'object'
+    && typeof payload.schemaVersion === 'string'
+    && payload.pairs === null
+  ) {
+    return [];
+  }
+  throw new Error('DexScreener response did not contain a pair array');
 }
 
 export async function fetchDexScreenerPairs({

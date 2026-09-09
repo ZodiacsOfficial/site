@@ -1,0 +1,109 @@
+{
+  "schema": "zodiacs.registry-research-item.v1",
+  "sourceType": "zodiacs-research",
+  "publisher": "Zodiacs.org Research System",
+  "byline": "Zodiacs.org Research System",
+  "method": {
+    "id": "zodiacs.registry-research-method.v1",
+    "version": 1,
+    "generator": "zodiacs.registry-research.deterministic.v1",
+    "deterministicTemplatesOnly": true,
+    "modelAuthoredProse": false,
+    "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+    "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+    "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+    "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+  },
+  "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+  "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+  "revisions": [],
+  "id": "zrx-daily-market-brief-2026-09-09",
+  "slug": "daily-market-brief-2026-09-09",
+  "kind": "daily-market-brief",
+  "templateId": "daily-market-brief.v1",
+  "issuedAt": "2026-09-09T12:00:00.000Z",
+  "visibleAt": "2026-09-09T12:00:00.000Z",
+  "title": "Sun in Virgo · daily market brief",
+  "summary": "Sun in Virgo leads the disclosed symbolic index; Virgo market measures are recorded separately.",
+  "url": "/terminal/research/daily-market-brief-2026-09-09/",
+  "signs": [
+    "virgo"
+  ],
+  "topics": [
+    "markets",
+    "daily-sky",
+    "occupancy"
+  ],
+  "symbolicScore": {
+    "sign": "virgo",
+    "attention": 14,
+    "tone": 0,
+    "eventIntensity": 0,
+    "calculation": "9 disclosed Sun occupancy-attention points",
+    "marketFieldsUsed": false
+  },
+  "sections": {
+    "skyFact": {
+      "heading": "Sky fact",
+      "body": "Sun in Virgo is the highest-weighted named factor for Virgo in the 2026-09-09 UTC edition. The disclosed score is attention 14/100, tone 0, and symbolic event intensity 0/100.",
+      "evidence": [
+        "src/data/ingresses.json",
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "traditionalReading": {
+      "heading": "Traditional reading",
+      "body": "A modest sky emphasis for this sign, without a strong directional tone. Signal: steady. This is a traditional symbolic reading, not a price direction or probability.",
+      "evidence": [
+        "src/data/ingresses.json",
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "marketObservation": {
+      "heading": "Market observation",
+      "body": "At 2026-09-09T00:55:17.235Z, Virgo was indexed at $0.00008424, with -0.94% over 24 hours, $84.25K market cap, $84.25K FDV, $15.46K indexed liquidity, $33.41 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
+      "evidence": [
+        "public/assets/data/registry-market-history.v1.json"
+      ]
+    }
+  },
+  "market": {
+    "available": true,
+    "snapshotId": "registry-market:2026-09-09:2026-09-09T00:55:17.235Z",
+    "observedAt": "2026-09-09T00:55:17.235Z",
+    "provider": "DexScreener",
+    "sign": "virgo",
+    "priceUsd": 0.00008424,
+    "change24hPct": -0.94,
+    "marketCapUsd": 84248,
+    "fdvUsd": 84248,
+    "liquidityUsd": 15462.92,
+    "volume24hUsd": 33.41,
+    "indexedPoolCount": 1,
+    "deepestPoolUrl": "https://dexscreener.com/solana/5wcvjf8fzpkhazqtszddbdfl6p2blbageigxpevnrcrh"
+  },
+  "evidence": {
+    "dailyFacts": "src/data/daily.json#2026-09-09",
+    "outlookEdition": "public/assets/registry-outlook.json#daily:2026-09-09",
+    "marketSnapshotId": "registry-market:2026-09-09:2026-09-09T00:55:17.235Z",
+    "coverage": {
+      "overall": "complete",
+      "events": "complete",
+      "occupancies": "complete",
+      "expectedTransitMonths": [
+        "2026-09"
+      ],
+      "missingTransitMonths": [],
+      "missingOccupancyPlanets": []
+    }
+  },
+  "artifactHash": "b7ee4b657281accd5acca2a588384227720bccdb478486d23660c23aeef23dd9",
+  "publishedAt": "2026-09-09T12:00:00.000Z",
+  "publication": {
+    "mode": "post-pilot-deterministic-allowlist",
+    "publishedAt": "2026-09-09T12:00:00.000Z",
+    "reviewer": null,
+    "artifactSha256": "b7ee4b657281accd5acca2a588384227720bccdb478486d23660c23aeef23dd9"
+  },
+  "status": "approved"
+}
