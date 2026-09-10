@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-10T09:13:32.241Z",
+  "generatedAt": "2026-09-10T11:52:51.562Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
@@ -202,6 +202,26 @@
         "station"
       ],
       "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-03-observation-168h",
+      "slug": "market-check-2026-09-03-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-10T11:52:51.562Z",
+      "visibleAt": "2026-09-10T11:52:51.562Z",
+      "title": "Virgo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (168.13 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-03-observation-168h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
     },
     {
       "id": "zrx-event-brief-ingress-2026-09-10t08-12-43-517z-venus-scorpio",

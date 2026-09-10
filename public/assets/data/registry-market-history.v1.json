@@ -8928,7 +8928,7 @@
       "source": {
         "provider": "DexScreener",
         "url": "https://api.dexscreener.com/tokens/v1/solana/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv,EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp,ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc,CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ,8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm,Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso,7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe,J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1,8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3,3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2,C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt,3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
-        "readAt": "2026-09-10T09:13:32.241Z"
+        "readAt": "2026-09-10T11:52:51.562Z"
       },
       "coverage": {
         "canonicalAssetCount": 12,
@@ -8937,13 +8937,13 @@
         "assetsWithFdv": 12
       },
       "totals": {
-        "marketCapUsd": 1032804,
+        "marketCapUsd": 1021519,
         "marketCapAssetCount": 12,
-        "fdvUsd": 1032803,
+        "fdvUsd": 1021517,
         "fdvAssetCount": 12,
-        "liquidityUsd": 196765.94,
+        "liquidityUsd": 195452.75,
         "liquidityReportedPoolCount": 12,
-        "volume24hUsd": 3058.58,
+        "volume24hUsd": 4663.2,
         "volume24hReportedPoolCount": 12,
         "indexedPoolCount": 12
       },
@@ -8953,20 +8953,20 @@
           "displayName": "Aries",
           "symbol": "ARIES",
           "mint": "GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv",
-          "priceUsd": 0.00007647,
-          "change24hPct": -3.13,
-          "marketCapUsd": 76458,
-          "fdvUsd": 76457,
-          "liquidityUsd": 14975.66,
+          "priceUsd": 0.0000753,
+          "change24hPct": -4.62,
+          "marketCapUsd": 75282,
+          "fdvUsd": 75281,
+          "liquidityUsd": 14872.73,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 153.69,
+          "volume24hUsd": 240.96,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "HRn98YLGigP475eS1GaQYRMbqk1V4dkV6tdKyLhVh2iS",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/hrn98ylgigp475es1gaqyrmbqk1v4dkv6tdkylhvh2is",
-            "liquidityUsd": 14975.66
+            "liquidityUsd": 14872.73
           }
         },
         {
@@ -8974,20 +8974,20 @@
           "displayName": "Taurus",
           "symbol": "TAURUS",
           "mint": "EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp",
-          "priceUsd": 0.00007856,
-          "change24hPct": -1.57,
-          "marketCapUsd": 78562,
-          "fdvUsd": 78562,
-          "liquidityUsd": 14619.4,
+          "priceUsd": 0.00007828,
+          "change24hPct": -1.92,
+          "marketCapUsd": 78284,
+          "fdvUsd": 78284,
+          "liquidityUsd": 14600.07,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 48.74,
+          "volume24hUsd": 99.5,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "2GNtxia4fLW3URj5MLqVfgoKrAgDpphtAVazK41eTPfu",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/2gntxia4flw3urj5mlqvfgokragdpphtavazk41etpfu",
-            "liquidityUsd": 14619.4
+            "liquidityUsd": 14600.07
           }
         },
         {
@@ -8995,20 +8995,20 @@
           "displayName": "Gemini",
           "symbol": "GEMINI",
           "mint": "ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc",
-          "priceUsd": 0.000142,
-          "change24hPct": -5.97,
-          "marketCapUsd": 142048,
-          "fdvUsd": 142048,
-          "liquidityUsd": 22065.51,
+          "priceUsd": 0.0001414,
+          "change24hPct": 3.88,
+          "marketCapUsd": 141452,
+          "fdvUsd": 141451,
+          "liquidityUsd": 21976.86,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 962.63,
+          "volume24hUsd": 948.55,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/hxhdkrb1upswfumozmvzpvelzbpwhdyn6phu9cbfium9",
-            "liquidityUsd": 22065.51
+            "liquidityUsd": 21976.86
           }
         },
         {
@@ -9016,20 +9016,20 @@
           "displayName": "Cancer",
           "symbol": "CANCER",
           "mint": "CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ",
-          "priceUsd": 0.00007874,
-          "change24hPct": -0.89,
-          "marketCapUsd": 78746,
-          "fdvUsd": 78746,
-          "liquidityUsd": 16204.54,
+          "priceUsd": 0.0000764,
+          "change24hPct": -3.84,
+          "marketCapUsd": 76406,
+          "fdvUsd": 76406,
+          "liquidityUsd": 15969.94,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 327.1,
+          "volume24hUsd": 695.03,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "DaTEcH6da4i1evZU37F9ibQirYXhLKZpKDzDno346nSW",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/datech6da4i1evzu37f9ibqiryxhlkzpkdzdno346nsw",
-            "liquidityUsd": 16204.54
+            "liquidityUsd": 15969.94
           }
         },
         {
@@ -9058,20 +9058,20 @@
           "displayName": "Virgo",
           "symbol": "VIRGO",
           "mint": "Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso",
-          "priceUsd": 0.00008135,
-          "change24hPct": -1.72,
-          "marketCapUsd": 81353,
-          "fdvUsd": 81353,
-          "liquidityUsd": 15124.52,
+          "priceUsd": 0.0000793,
+          "change24hPct": -4.2,
+          "marketCapUsd": 79302,
+          "fdvUsd": 79302,
+          "liquidityUsd": 14848.74,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 88.34,
+          "volume24hUsd": 141.38,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "5WcVjf8fzPkHaZqTSZDdbDFL6p2bLbAgEigxpevNrcRh",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/5wcvjf8fzpkhazqtszddbdfl6p2blbageigxpevnrcrh",
-            "liquidityUsd": 15124.52
+            "liquidityUsd": 14848.74
           }
         },
         {
@@ -9100,20 +9100,20 @@
           "displayName": "Scorpio",
           "symbol": "SCORPIO",
           "mint": "J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1",
-          "priceUsd": 0.00007635,
-          "change24hPct": -5.36,
-          "marketCapUsd": 76351,
-          "fdvUsd": 76351,
-          "liquidityUsd": 15205.83,
+          "priceUsd": 0.00007561,
+          "change24hPct": -4.99,
+          "marketCapUsd": 75620,
+          "fdvUsd": 75620,
+          "liquidityUsd": 15083.24,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 343.35,
+          "volume24hUsd": 397.08,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "3d2KYuMgj2yotNC6SKX4HNoeSWp4n8zqZSQ9kFH81Yta",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/3d2kyumgj2yotnc6skx4hnoeswp4n8zqzsq9kfh81yta",
-            "liquidityUsd": 15205.83
+            "liquidityUsd": 15083.24
           }
         },
         {
@@ -9121,20 +9121,20 @@
           "displayName": "Sagittarius",
           "symbol": "SAGITTARIUS",
           "mint": "8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3",
-          "priceUsd": 0.0000759,
-          "change24hPct": -5.81,
-          "marketCapUsd": 75874,
-          "fdvUsd": 75874,
-          "liquidityUsd": 15276.67,
+          "priceUsd": 0.00007318,
+          "change24hPct": -9.19,
+          "marketCapUsd": 73154,
+          "fdvUsd": 73154,
+          "liquidityUsd": 15009.3,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 197.8,
+          "volume24hUsd": 1134.63,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "7mP6WeVYBNt3eao5szsMPmuHughHjNRx26TcrgJXZRky",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/7mp6wevybnt3eao5szsmpmuhughhjnrx26tcrgjxzrky",
-            "liquidityUsd": 15276.67
+            "liquidityUsd": 15009.3
           }
         },
         {
@@ -9163,20 +9163,20 @@
           "displayName": "Aquarius",
           "symbol": "AQUARIUS",
           "mint": "C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt",
-          "priceUsd": 0.00008287,
-          "change24hPct": -2.14,
-          "marketCapUsd": 82878,
-          "fdvUsd": 82878,
-          "liquidityUsd": 15815.13,
+          "priceUsd": 0.00008148,
+          "change24hPct": -3.78,
+          "marketCapUsd": 81489,
+          "fdvUsd": 81489,
+          "liquidityUsd": 15623.7,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 7.67,
+          "volume24hUsd": 71.93,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "BygCEAhCNyWC8Co9yPa4K84NGkgkgMWdib2FG5hhuiUv",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/bygceahcnywc8co9ypa4k84ngkgkgmwdib2fg5hhuiuv",
-            "liquidityUsd": 15815.13
+            "liquidityUsd": 15623.7
           }
         },
         {
@@ -9184,20 +9184,20 @@
           "displayName": "Pisces",
           "symbol": "PISCES",
           "mint": "3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
-          "priceUsd": 0.00008004,
+          "priceUsd": 0.00008003,
           "change24hPct": -8.99,
-          "marketCapUsd": 80042,
-          "fdvUsd": 80042,
-          "liquidityUsd": 14653.6,
+          "marketCapUsd": 80038,
+          "fdvUsd": 80038,
+          "liquidityUsd": 14643.09,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 785.78,
+          "volume24hUsd": 790.66,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
             "pairAddress": "Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko",
             "dexId": "raydium",
             "url": "https://dexscreener.com/solana/fzz8qrsv8spkstthocwyare8zo6rd4wv2ee4jtcuidko",
-            "liquidityUsd": 14653.6
+            "liquidityUsd": 14643.09
           }
         }
       ]
