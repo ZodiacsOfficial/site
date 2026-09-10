@@ -1,12 +1,12 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-09T11:57:51.709Z",
+  "generatedAt": "2026-09-10T04:21:05.531Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-10T00:00:00.000Z",
-    "endsBefore": "2026-09-17T00:00:00.000Z"
+    "startsAt": "2026-08-11T00:00:00.000Z",
+    "endsBefore": "2026-09-18T00:00:00.000Z"
   },
   "items": [
     {
@@ -183,6 +183,27 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-10",
+      "slug": "daily-market-brief-2026-09-10",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-10T12:00:00.000Z",
+      "visibleAt": "2026-09-10T12:00:00.000Z",
+      "title": "Uranus stations retrograde in Gemini · daily market brief",
+      "summary": "Uranus stations retrograde in Gemini leads the disclosed symbolic index; Gemini market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-10/",
+      "signs": [
+        "gemini"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "station"
+      ],
+      "status": "scheduled"
+    },
+    {
       "id": "zrx-event-brief-ingress-2026-09-10t08-12-43-517z-venus-scorpio",
       "slug": "event-brief-ingress-2026-09-10t08-12-43-517z-venus-scorpio",
       "kind": "event-brief",
@@ -204,6 +225,46 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-market-check-2026-09-09-observation-24h",
+      "slug": "market-check-2026-09-09-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-10T04:21:05.531Z",
+      "visibleAt": "2026-09-10T04:21:05.531Z",
+      "title": "Virgo 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (27.43 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-09-observation-24h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-10",
+      "slug": "market-check-2026-09-10",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-10T04:21:05.531Z",
+      "visibleAt": "2026-09-10T04:21:05.531Z",
+      "title": "Gemini market check · 2026-09-10",
+      "summary": "Gemini price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-10/",
+      "signs": [
+        "gemini"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-daily-market-brief-2026-09-09",
       "slug": "daily-market-brief-2026-09-09",
       "kind": "daily-market-brief",
@@ -222,7 +283,7 @@
         "daily-sky",
         "occupancy"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-02-observation-168h",
