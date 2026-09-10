@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-publication.v1",
-  "generatedAt": "2026-09-10T04:32:16.343Z",
+  "generatedAt": "2026-09-10T09:02:27.516Z",
   "publisher": "Zodiacs.org Research System",
   "method": {
     "id": "zodiacs.registry-research-method.v1",
@@ -936,7 +936,7 @@
       "sourceType": "zodiacs-research",
       "publisher": "Zodiacs.org Research System",
       "byline": "Zodiacs.org Research System",
-      "status": "scheduled",
+      "status": "published",
       "method": {
         "id": "zodiacs.registry-research-method.v1",
         "version": 1,
