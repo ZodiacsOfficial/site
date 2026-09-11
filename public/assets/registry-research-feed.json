@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-11T04:20:29.214Z",
+  "generatedAt": "2026-09-11T04:21:32.916Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
@@ -161,6 +161,26 @@
         "lunation"
       ],
       "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-10-observation-24h",
+      "slug": "market-check-2026-09-10-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-11T04:21:32.916Z",
+      "visibleAt": "2026-09-11T04:21:32.916Z",
+      "title": "Gemini 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (24.01 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-10-observation-24h/",
+      "signs": [
+        "gemini"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
     },
     {
       "id": "zrx-event-brief-lunation-2026-09-11t03-26-50-210z-new-moon-virgo",
