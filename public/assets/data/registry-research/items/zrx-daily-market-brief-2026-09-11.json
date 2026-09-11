@@ -1,0 +1,109 @@
+{
+  "schema": "zodiacs.registry-research-item.v1",
+  "sourceType": "zodiacs-research",
+  "publisher": "Zodiacs.org Research System",
+  "byline": "Zodiacs.org Research System",
+  "method": {
+    "id": "zodiacs.registry-research-method.v1",
+    "version": 1,
+    "generator": "zodiacs.registry-research.deterministic.v1",
+    "deterministicTemplatesOnly": true,
+    "modelAuthoredProse": false,
+    "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+    "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+    "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+    "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+  },
+  "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+  "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+  "revisions": [],
+  "id": "zrx-daily-market-brief-2026-09-11",
+  "slug": "daily-market-brief-2026-09-11",
+  "kind": "daily-market-brief",
+  "templateId": "daily-market-brief.v1",
+  "issuedAt": "2026-09-11T12:00:00.000Z",
+  "visibleAt": "2026-09-11T12:00:00.000Z",
+  "title": "New Moon in Virgo · daily market brief",
+  "summary": "New Moon in Virgo leads the disclosed symbolic index; Virgo market measures are recorded separately.",
+  "url": "/terminal/research/daily-market-brief-2026-09-11/",
+  "signs": [
+    "virgo"
+  ],
+  "topics": [
+    "markets",
+    "daily-sky",
+    "lunation"
+  ],
+  "symbolicScore": {
+    "sign": "virgo",
+    "attention": 30,
+    "tone": 8,
+    "eventIntensity": 8,
+    "calculation": "22 attention / 8 tone / 8 event intensity × 0.9641 horizon multiplier",
+    "marketFieldsUsed": false
+  },
+  "sections": {
+    "skyFact": {
+      "heading": "Sky fact",
+      "body": "New Moon in Virgo is the highest-weighted named factor for Virgo in the 2026-09-11 UTC edition. The disclosed score is attention 30/100, tone 8, and symbolic event intensity 8/100.",
+      "evidence": [
+        "src/data/transits-2026-09.json",
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "traditionalReading": {
+      "heading": "Traditional reading",
+      "body": "Elevated symbolic attention for this sign, without a strong directional tone. Signal: active. This is a traditional symbolic reading, not a price direction or probability.",
+      "evidence": [
+        "src/data/transits-2026-09.json",
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "marketObservation": {
+      "heading": "Market observation",
+      "body": "At 2026-09-11T00:13:21.970Z, Virgo was indexed at $0.00008024, with +0.97% over 24 hours, $80.25K market cap, $80.25K FDV, $14.79K indexed liquidity, $292.15 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
+      "evidence": [
+        "public/assets/data/registry-market-history.v1.json"
+      ]
+    }
+  },
+  "market": {
+    "available": true,
+    "snapshotId": "registry-market:2026-09-11:2026-09-11T00:13:21.970Z",
+    "observedAt": "2026-09-11T00:13:21.970Z",
+    "provider": "DexScreener",
+    "sign": "virgo",
+    "priceUsd": 0.00008024,
+    "change24hPct": 0.97,
+    "marketCapUsd": 80245,
+    "fdvUsd": 80245,
+    "liquidityUsd": 14788.51,
+    "volume24hUsd": 292.15,
+    "indexedPoolCount": 1,
+    "deepestPoolUrl": "https://dexscreener.com/solana/5wcvjf8fzpkhazqtszddbdfl6p2blbageigxpevnrcrh"
+  },
+  "evidence": {
+    "dailyFacts": "src/data/daily.json#2026-09-11",
+    "outlookEdition": "public/assets/registry-outlook.json#daily:2026-09-11",
+    "marketSnapshotId": "registry-market:2026-09-11:2026-09-11T00:13:21.970Z",
+    "coverage": {
+      "overall": "complete",
+      "events": "complete",
+      "occupancies": "complete",
+      "expectedTransitMonths": [
+        "2026-09"
+      ],
+      "missingTransitMonths": [],
+      "missingOccupancyPlanets": []
+    }
+  },
+  "artifactHash": "24acb5ae48c05c1c8e6d6c2a115fe2ca8a965b307ada09cc41cf95a60f6ba7a0",
+  "publishedAt": "2026-09-11T12:00:00.000Z",
+  "publication": {
+    "mode": "post-pilot-deterministic-allowlist",
+    "publishedAt": "2026-09-11T12:00:00.000Z",
+    "reviewer": null,
+    "artifactSha256": "24acb5ae48c05c1c8e6d6c2a115fe2ca8a965b307ada09cc41cf95a60f6ba7a0"
+  },
+  "status": "approved"
+}
