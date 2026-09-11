@@ -37,6 +37,16 @@ function fixtureDay(date: string, dayIndex: number): Daily {
     moon.degree = 3.25 + dayIndex / 10;
     moon.lon = SIGN_SLUGS.indexOf(sign) * 30 + moon.degree;
   }
+  // Venus is pinned too, so the anchor day (index 6, Moon in Libra) always
+  // exercises the shared-sign love reading instead of depending on where the
+  // live edition's Venus happens to be on the day the suite runs.
+  const venus = daily.bodies.find((body) => body.body === 'Venus');
+  if (venus) {
+    venus.sign = 'libra';
+    venus.degree = 12.5;
+    venus.lon = SIGN_SLUGS.indexOf('libra') * 30 + venus.degree;
+    venus.retrograde = false;
+  }
   return daily;
 }
 

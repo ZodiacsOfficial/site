@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import dailyData from '../../data/daily.json';
 import { useProfile } from '../../lib/hooks/useProfile';
 import { explicitSelfChart } from '../../lib/profile/read-store';
 import { SIGNS, signForLongitude } from '../../lib/signs';
@@ -20,12 +19,15 @@ type LivingMomentCaptureModule = typeof import('../living-chart/LivingMomentCapt
 type LivingSelfChartChooserModule = typeof import('../living-chart/LivingSelfChartChooser');
 type ForecastSnapshotFactory = typeof import('../../lib/living-chart/forecast-snapshot')['createLivingForecastSnapshot'];
 
-interface DailyData {
-  date: string;
-  bodies: Array<{ body: string; lon: number; retrograde: boolean }>;
+// The edition date and the day's planetary positions arrive as island props.
+// Importing daily.json here would bundle the whole edition (every sign's copy
+// and receipts) into the /today/ client chunk and make its size track the
+// day's text, which is what tripped the route budget in report-bundles.
+interface DailyBody {
+  body: string;
+  lon: number;
+  retrograde: boolean;
 }
-
-const daily = dailyData as DailyData;
 
 function dateLabel(day: string): string {
   return new Intl.DateTimeFormat('en', {
@@ -35,8 +37,6 @@ function dateLabel(day: string): string {
     timeZone: 'UTC',
   }).format(new Date(`${day}T12:00:00.000Z`));
 }
-
-const editionLabel = dateLabel(daily.date);
 
 function LivingReflection({
   prompt,
@@ -71,6 +71,8 @@ function LivingSelfChartPlaceholder() {
 const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
 
 interface Props {
+  editionDate: string;
+  bodies: DailyBody[];
   sunSignReadings: Record<string, { text: string; receipt: string }>;
   livingChartEnabled?: boolean;
   livingChartSyncEnabled?: boolean;
@@ -78,12 +80,15 @@ interface Props {
 }
 
 export default function TodayBrief({
+  editionDate,
+  bodies,
   sunSignReadings,
   livingChartEnabled = false,
   livingChartSyncEnabled = false,
   generatorVersion,
 }: Props) {
   const { profile, ready } = useProfile();
+  const editionLabel = useMemo(() => dateLabel(editionDate), [editionDate]);
   const [streak, setStreak] = useState<number | null>(null);
   const [pushModule, setPushModule] = useState<PushOptInModule | null>(null);
   const [transitsModule, setTransitsModule] = useState<TransitsModule | null>(null);
@@ -147,13 +152,13 @@ export default function TodayBrief({
     try {
       const natal = natalPointsForChart(chart);
       return {
-        contacts: selectTodayContacts(natal, daily.bodies, transitsModule.TRANSIT_ORB, 3),
-        nearest: nearestTodayContact(natal, daily.bodies),
+        contacts: selectTodayContacts(natal, bodies, transitsModule.TRANSIT_ORB, 3),
+        nearest: nearestTodayContact(natal, bodies),
       };
     } catch {
       return null;
     }
-  }, [chart, transitsModule]);
+  }, [bodies, chart, transitsModule]);
   const hasSavedChartHint = typeof document !== 'undefined'
     && document.documentElement.hasAttribute('data-today-saved-chart');
   const comparisonUnavailable = (needsTransits && transitsFailed)
@@ -187,9 +192,9 @@ export default function TodayBrief({
   const streakDisplay = streak !== null && streak > 999 ? '999+' : (streak ?? 1);
   const editionSunSignLines = useMemo(
     () => Object.fromEntries(Object.entries(sunSignReadings).map(([sign, reading]) => (
-      [sign, datedEditionText(reading.text, daily.date)]
+      [sign, datedEditionText(reading.text, editionDate)]
     ))),
-    [sunSignReadings],
+    [editionDate, sunSignReadings],
   );
   const snapshotCapturedAt = useMemo(
     () => new Date().toISOString(),
@@ -205,7 +210,7 @@ export default function TodayBrief({
           receipt: transitsModule.contactReceipt(contact),
         }))
       : [{
-          id: `quiet:${daily.date}`,
+          id: `quiet:${editionDate}`,
           text: `The ${editionLabel} edition looks quieter against your chart. There is less pressure to act on anything immediately.`,
           receipt: reading.nearest
             ? `Nearest checked contact · ${transitsModule.contactReceipt(reading.nearest)}`
@@ -214,20 +219,20 @@ export default function TodayBrief({
     if (!active && chartSunSign && lines.length < 3) {
       const baseline = sunSignReadings[chartSunSign.slug];
       if (baseline) lines.push({
-        id: `sun-sign:${chartSunSign.slug}:${daily.date}`,
-        text: datedEditionText(baseline.text, daily.date),
+        id: `sun-sign:${chartSunSign.slug}:${editionDate}`,
+        text: datedEditionText(baseline.text, editionDate),
         receipt: baseline.receipt,
       });
     }
     return snapshotFactory({
-      editionDate: daily.date,
+      editionDate,
       chartId: chart.id,
       source: active ? 'personalized' : 'quiet',
       generatorVersion,
       capturedAt: snapshotCapturedAt,
       lines,
     });
-  }, [captureModule, chart, chartSunSign, editionLabel, generatorVersion, livingChartEnabled, reading, snapshotCapturedAt, snapshotFactory, sunSignReadings, transitsModule]);
+  }, [captureModule, chart, chartSunSign, editionDate, editionLabel, generatorVersion, livingChartEnabled, reading, snapshotCapturedAt, snapshotFactory, sunSignReadings, transitsModule]);
   const reflectionPrompt = livingChartEnabled && personalized && captureModule
     ? captureModule.reflectionForContact(personalized.reading.contacts[0] ?? null)
     : null;
@@ -326,7 +331,7 @@ export default function TodayBrief({
               noChartConfirmed={ready && !chart}
               comparisonUnavailable={comparisonUnavailable}
               sunSignLines={editionSunSignLines}
-              editionDate={daily.date}
+              editionDate={editionDate}
             />
             {livingChartEnabled && !ready && <LivingSelfChartPlaceholder />}
             {livingChartEnabled && ready && !chart && profile.charts.length > 0 && (
