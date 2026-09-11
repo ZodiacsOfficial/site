@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-drafts.v1",
-  "generatedAt": "2026-09-11T09:01:23.777Z",
+  "generatedAt": "2026-09-11T11:51:17.359Z",
   "generator": "zodiacs.registry-research.deterministic.v1",
   "method": {
     "id": "zodiacs.registry-research-method.v1",
@@ -15152,6 +15152,108 @@
         "coverage": "first-qualifying-archive-observation"
       },
       "artifactHash": "068ece31657666d66821eb177b3018157a8212f6210aadab3a3a12cd7e14dd8c"
+    },
+    {
+      "schema": "zodiacs.registry-research-item.v1",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "byline": "Zodiacs.org Research System",
+      "status": "draft",
+      "method": {
+        "id": "zodiacs.registry-research-method.v1",
+        "version": 1,
+        "generator": "zodiacs.registry-research.deterministic.v1",
+        "deterministicTemplatesOnly": true,
+        "modelAuthoredProse": false,
+        "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+        "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+        "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+        "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+      },
+      "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+      "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+      "revisions": [
+        {
+          "kind": "append-only-follow-up",
+          "parentId": "zrx-market-check-2026-09-04"
+        }
+      ],
+      "id": "zrx-market-check-2026-09-04-observation-168h",
+      "slug": "market-check-2026-09-04-observation-168h",
+      "kind": "observation-update",
+      "templateId": "observation-update.v1",
+      "parentId": "zrx-market-check-2026-09-04",
+      "issuedAt": "2026-09-11T11:51:17.359Z",
+      "visibleAt": "2026-09-11T11:51:17.359Z",
+      "title": "Virgo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (168.07 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-04-observation-168h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "symbolicScore": {
+        "sign": "virgo",
+        "attention": 14,
+        "tone": 0,
+        "eventIntensity": 0,
+        "calculation": "9 disclosed Sun occupancy-attention points",
+        "marketFieldsUsed": false
+      },
+      "sections": {
+        "skyFact": {
+          "heading": "Sky fact",
+          "body": "The original zrx-market-check-2026-09-04 sky score and traditional reading remain unchanged.",
+          "evidence": [
+            "/assets/data/registry-research/items/zrx-market-check-2026-09-04.json"
+          ]
+        },
+        "traditionalReading": {
+          "heading": "Traditional reading",
+          "body": "This follow-up does not reinterpret the sky after observing the market.",
+          "evidence": [
+            "/assets/data/registry-research/items/zrx-market-check-2026-09-04.json"
+          ]
+        },
+        "marketObservation": {
+          "heading": "Market observation",
+          "body": "168.07 hours after the original market observation, indexed price change was -32.86% and indexed liquidity change was -19.51%. This temporal comparison does not establish causation.",
+          "evidence": [
+            "public/assets/data/registry-market-history.v1.json"
+          ]
+        }
+      },
+      "market": {
+        "available": true,
+        "snapshotId": "registry-market:2026-09-11:2026-09-11T11:51:17.359Z",
+        "observedAt": "2026-09-11T11:51:17.359Z",
+        "provider": "DexScreener",
+        "sign": "virgo",
+        "priceUsd": 0.00007016,
+        "change24hPct": -12.17,
+        "marketCapUsd": 70170,
+        "fdvUsd": 70170,
+        "liquidityUsd": 13861.09,
+        "volume24hUsd": 1150.36,
+        "indexedPoolCount": 1,
+        "deepestPoolUrl": "https://dexscreener.com/solana/5wcvjf8fzpkhazqtszddbdfl6p2blbageigxpevnrcrh",
+        "baselineSnapshotId": "registry-market:2026-09-04:2026-09-04T11:46:57.891Z",
+        "baselineObservedAt": "2026-09-04T11:46:57.891Z",
+        "requestedElapsedHours": 168,
+        "actualElapsedHours": 168.07,
+        "priceChangePct": -32.86,
+        "liquidityChangePct": -19.51
+      },
+      "evidence": {
+        "parentId": "zrx-market-check-2026-09-04",
+        "baselineSnapshotId": "registry-market:2026-09-04:2026-09-04T11:46:57.891Z",
+        "marketSnapshotId": "registry-market:2026-09-11:2026-09-11T11:51:17.359Z",
+        "coverage": "first-qualifying-archive-observation"
+      },
+      "artifactHash": "79393e4bd4d910899c7180422f9feed7d3ef19257c8350663c426105ad5fa781"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",

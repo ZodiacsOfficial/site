@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-11T09:01:23.777Z",
+  "generatedAt": "2026-09-11T11:51:17.359Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
@@ -161,6 +161,26 @@
         "lunation"
       ],
       "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-04-observation-168h",
+      "slug": "market-check-2026-09-04-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-11T11:51:17.359Z",
+      "visibleAt": "2026-09-11T11:51:17.359Z",
+      "title": "Virgo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (168.07 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-04-observation-168h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-10-observation-24h",
