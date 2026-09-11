@@ -88,7 +88,12 @@ function render() {
   harness.cursor = 0;
   harness.memoCursor = 0;
   harness.effectCursor = 0;
-  const view = TodayBrief({ sunSignReadings: readings, generatorVersion: 'fixture' });
+  const view = TodayBrief({
+    editionDate: '2026-09-11',
+    bodies: [{ body: 'Sun', lon: 168.5, retrograde: false }, { body: 'Moon', lon: 42, retrograde: false }],
+    sunSignReadings: readings,
+    generatorVersion: 'fixture',
+  });
   harness.pending.splice(0).forEach((effect) => effect());
   return view;
 }

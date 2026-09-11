@@ -128,6 +128,8 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
          hydration; personalization can wait until the first paint is idle. -->
     <TodayBrief
       client:idle
+      editionDate={daily.date}
+      bodies={daily.bodies}
       sunSignReadings={sunSignReadings}
       livingChartEnabled={livingChartEnabled}
       livingChartSyncEnabled={livingChartCloudSyncEnabled}
