@@ -1,12 +1,12 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-11T11:51:17.359Z",
+  "generatedAt": "2026-09-12T00:08:20.680Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-12T00:00:00.000Z",
-    "endsBefore": "2026-09-19T00:00:00.000Z"
+    "startsAt": "2026-08-13T00:00:00.000Z",
+    "endsBefore": "2026-09-20T00:00:00.000Z"
   },
   "items": [
     {
@@ -142,6 +142,48 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-12",
+      "slug": "daily-market-brief-2026-09-12",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T12:00:00.000Z",
+      "visibleAt": "2026-09-12T12:00:00.000Z",
+      "title": "Mercury opposition Neptune · daily market brief",
+      "summary": "Mercury opposition Neptune leads the disclosed symbolic index; Libra market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-12/",
+      "signs": [
+        "libra",
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-12",
+      "slug": "market-check-2026-09-12",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T00:08:20.680Z",
+      "visibleAt": "2026-09-12T00:08:20.680Z",
+      "title": "Libra market check · 2026-09-12",
+      "summary": "Libra price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-12/",
+      "signs": [
+        "libra"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-daily-market-brief-2026-09-11",
       "slug": "daily-market-brief-2026-09-11",
       "kind": "daily-market-brief",
@@ -160,7 +202,7 @@
         "daily-sky",
         "lunation"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-04-observation-168h",
