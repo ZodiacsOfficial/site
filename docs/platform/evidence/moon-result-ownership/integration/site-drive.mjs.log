@@ -1,0 +1,44 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { chromium } from '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/playwright-core/index.mjs';
+import { findChromium, STABLE_CHROMIUM_ARGS } from '/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/browser.mjs';
+import { withPreview } from '/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/preview-server.mjs';
+const root='/Users/chiburashka/.codex/worktrees/4806/site';
+const out=process.env.OUT_DIR;if(!out)throw Error('An evidence output directory is required');await mkdir(out,{recursive:true});
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const sourceSha=sha(await readFile(root+'/src/islands/MoonPhaseTool.tsx'));
+const report={at:new Date().toISOString(),node:process.version,sourceSha,scope:'Actual local production pages; six locales, synthetic UTC inputs. Race injection remains separate native acceptance.',checks:[],pageErrors:[],externalRequests:[],outcome:'failed'};
+let browser;
+try{
+ browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});report.browser=browser.version();
+ await withPreview({port:4341},async(base)=>{
+ for(const locale of ['en','es','fr','it','pt','ru'])for(const width of [1280,390]){
+  const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce',timezoneId:'UTC'});
+  try{
+   await context.route('**/*',async route=>{if(new URL(route.request().url()).origin!==base){report.externalRequests.push({locale,width,url:route.request().url()});await route.abort('blockedbyclient')}else await route.continue()});
+   await context.addInitScript(()=>{const NativeDate=Date;const instant=Date.parse('2026-07-10T12:00:00.000Z');globalThis.Date=class extends NativeDate{constructor(...args){super(...(args.length?args:[instant]))}static now(){return instant}}});
+   const page=await context.newPage();page.on('pageerror',e=>report.pageErrors.push({locale,width,error:String(e)}));
+   const path=(locale==='en'?'':'/'+locale)+'/moon-phase/';const response=await page.goto(base+path,{waitUntil:'networkidle'});assert.equal(response.status(),200);
+   await page.evaluate(async()=>{await Promise.all([...document.fonts].map(f=>f.load().catch(()=>{})));await document.fonts.ready});
+   assert.equal(await page.locator('footer.zfooter').count(),1);
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
+   await page.locator('#mp-date').fill('1990-01-04');await page.locator('#mp-time').fill('12:00');await page.locator('.calc__submit').click();
+   await page.locator('.calc__result').waitFor({state:'visible'});await page.waitForFunction(()=>document.querySelector('.calc__form').getAttribute('aria-busy')==='false');
+   await page.waitForFunction(()=>document.activeElement===document.querySelector('.calc__result h2'));
+   const resultText=await page.locator('.calc__result').innerText();
+   const screenshot=out+`/${locale}-${width}.png`;await page.locator('.calc.mp').screenshot({path:screenshot,animations:'disabled'});
+   const row={locale,width,path,resultText,screenshotSha256:sha(await readFile(screenshot)),noSavedProfile:await page.evaluate(()=>localStorage.getItem('zodiacs.profile.v1')===null)};assert.equal(row.noSavedProfile,true);
+   if(process.env.VERIFY_OWNERSHIP==='1'){
+    await page.locator('#mp-date').fill('1990-01-05');await page.waitForFunction(()=>!document.querySelector('.calc__result'));
+    assert.equal(await page.locator('.calc__form').getAttribute('aria-busy'),'false');assert.equal(await page.locator('#mp-date').inputValue(),'1990-01-05');
+    await page.locator('.calc__submit').click();await page.locator('.calc__result').waitFor();await page.waitForFunction(()=>document.activeElement===document.querySelector('.calc__result h2'));
+    await page.locator('#mp-time').fill('13:00');await page.waitForFunction(()=>!document.querySelector('.calc__result'));
+    await page.locator('.calc__submit').click();await page.locator('.calc__result').waitFor();row.editAndRecovery=true;
+   }
+   report.checks.push(row);console.log(JSON.stringify({locale,width,passed:true,ownership:row.editAndRecovery??false}));
+  }finally{await context.close()}
+ }
+ });
+ assert.deepEqual(report.pageErrors,[]);assert.equal(sha(await readFile(root+'/src/islands/MoonPhaseTool.tsx')),sourceSha);report.outcome='passed';
+} catch(error){report.failure=String(error.stack??error);process.exitCode=1}finally{if(browser)await browser.close();report.cleanup='Owned browser contexts and preview server closed';await writeFile(out+'/result.json',JSON.stringify(report,null,2)+'\n')}

@@ -1,0 +1,61 @@
+PASS  Today geometry stays free of proactive Guide popovers
+PASS  saved-chart hydration has exactly zero CLS · 0 · 791.359375px reading
+PASS  saved chart renders a real brief
+PASS  saved chart replaces the Sun-sign baseline
+PASS  brief makes no backend requests · 0 requests
+PASS  rendered brief remains available offline
+PASS  failed Today island keeps a useful Aries Sun-sign baseline in the reserved shell · {"aborts":2,"profilePresent":true,"savedChart":"","chartSign":"aries","fallback":true,"aries":true,"label":true,"link":true}
+PASS  failed Today island fallback has exactly zero CLS · 0
+PASS  failed transit chunk keeps the compact Sun-sign baseline in the reserved shell
+PASS  failed transit chunk explains the fallback without a broken page
+PASS  failed transit chunk has exactly zero CLS · 0
+PASS  invalid local profile never traps Today behind the chart placeholder
+PASS  hint-passing malformed newer chart falls back to the valid saved chart without collapsing
+PASS  hint-passing malformed profile has exactly zero CLS at tall 360px · 0
+PASS  stored Sun-sign hydration has exactly zero CLS · {"cls":0,"shifts":[]}
+PASS  stored Sun sign preserves the SSR readings and restores only Leo visibly · {"totalReadings":12,"visibleReadings":["leo"],"selectedHref":"#today-sun-sign-leo"}
+PASS  empty Today hydration has exactly zero CLS · 0
+PASS  no-chart state is honest
+PASS  no-chart state renders all twelve sign notes
+PASS  sign picker uses all twelve pastel icon assets
+PASS  sign notes use all twelve pastel icon assets
+PASS  no-chart state links to the calculator
+PASS  verified edition markers match the manifest
+PASS  edition details are summarized without leading the page
+PASS  edition details are closed by default
+PASS  public provenance link remains available
+PASS  enhanced sign link narrows to one note
+PASS  selected sign keeps its pastel icon
+PASS  enhanced sign link keeps native hash navigation · #today-sun-sign-leo
+PASS  first visit and Sun-sign selection do not request transit or compatibility chunks · []
+PASS  same-window chart save requests transit copy on demand · ["/_astro/transits.BU3rf54A.js","/_astro/compat.Bjc3uaB7.js"]
+PASS  same-window chart save renders the current saved chart and replaces the Sun-sign notes
+PASS  no-JavaScript page renders all twelve sign notes
+PASS  no-JavaScript sign notes link to full horoscopes
+PASS  no-JavaScript page has no loading gate
+PASS  no-JavaScript page keeps native edition details
+PASS  no-JavaScript edition details start closed
+PASS  no-JavaScript edition summary stays visible
+PASS  no-JavaScript edition evidence opens on request
+PASS  edition note keeps a space before its date
+PASS  Today does not lead with AI-operations language
+PASS  412px Sun-sign baseline has no horizontal overflow · 412/412
+PASS  412px Sun-sign picker hydration has exactly zero CLS · {"cls":0,"page":412,"viewport":412,"cardHeights":[88,88,88,88,88,88,88,88,88,88,88,88],"iconSizes":[[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34]],"iconInsets":[10,10,10,10,10,10,10,10,10,10,10,10],"rowPitches":[96,96,96,96,96,96,96,96,96]}
+PASS  412px Sun-sign picker keeps fixed card and icon geometry · {"cls":0,"page":412,"viewport":412,"cardHeights":[88,88,88,88,88,88,88,88,88,88,88,88],"iconSizes":[[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34],[34,34]],"iconInsets":[10,10,10,10,10,10,10,10,10,10,10,10],"rowPitches":[96,96,96,96,96,96,96,96,96]}
+PASS  375px Sun-sign baseline has no horizontal overflow · 375/375
+PASS  reduced motion makes the streak instant · {"name":"none","duration":"0s"}
+PASS  375px layout has no horizontal overflow · 375/375
+PASS  360px returning active: hydration has exactly zero CLS · {"cls":0,"pageWidth":360,"viewportWidth":360,"readingHeight":1148.6875,"readingMinHeight":"0px","bodyBottomGap":0,"readingBottomGap":0,"chartNameTitle":"AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport","chartNameOverflow":"hidden","chartNameTextOverflow":"ellipsis","chartNameRight":310,"headingRight":310,"streakText":"365","streakLabel":"365 day streak","countRight":264.171875,"unitLeft":269.171875}
+PASS  360px returning active: resolved reading has no outer fallback reservation or dead tail · {"cls":0,"pageWidth":360,"viewportWidth":360,"readingHeight":1148.6875,"readingMinHeight":"0px","bodyBottomGap":0,"readingBottomGap":0,"chartNameTitle":"AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport","chartNameOverflow":"hidden","chartNameTextOverflow":"ellipsis","chartNameRight":310,"headingRight":310,"streakText":"365","streakLabel":"365 day streak","countRight":264.171875,"unitLeft":269.171875}
+PASS  360px returning active: long saved-chart name stays inside its heading · {"cls":0,"pageWidth":360,"viewportWidth":360,"readingHeight":1148.6875,"readingMinHeight":"0px","bodyBottomGap":0,"readingBottomGap":0,"chartNameTitle":"AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport","chartNameOverflow":"hidden","chartNameTextOverflow":"ellipsis","chartNameRight":310,"headingRight":310,"streakText":"365","streakLabel":"365 day streak","countRight":264.171875,"unitLeft":269.171875}
+PASS  360px returning active: page has no horizontal overflow · 360/360
+PASS  360px returning active: a 365-day streak has a collision-free digit lane · {"cls":0,"pageWidth":360,"viewportWidth":360,"readingHeight":1148.6875,"readingMinHeight":"0px","bodyBottomGap":0,"readingBottomGap":0,"chartNameTitle":"AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport","chartNameOverflow":"hidden","chartNameTextOverflow":"ellipsis","chartNameRight":310,"headingRight":310,"streakText":"365","streakLabel":"365 day streak","countRight":264.171875,"unitLeft":269.171875}
+PASS  360px returning active: expected contact state renders
+PASS  360px returning quiet: hydration has exactly zero CLS · {"cls":0,"pageWidth":360,"viewportWidth":360,"readingHeight":1148.6875,"readingMinHeight":"0px","bodyBottomGap":0,"readingBottomGap":0,"chartNameTitle":"AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport","chartNameOverflow":"hidden","chartNameTextOverflow":"ellipsis","chartNameRight":310,"headingRight":310,"streakText":"365","streakLabel":"365 day streak","countRight":264.171875,"unitLeft":269.171875}
+PASS  360px returning quiet: resolved reading has no outer fallback reservation or dead tail · {"cls":0,"pageWidth":360,"viewportWidth":360,"readingHeight":1148.6875,"readingMinHeight":"0px","bodyBottomGap":0,"readingBottomGap":0,"chartNameTitle":"AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport","chartNameOverflow":"hidden","chartNameTextOverflow":"ellipsis","chartNameRight":310,"headingRight":310,"streakText":"365","streakLabel":"365 day streak","countRight":264.171875,"unitLeft":269.171875}
+PASS  360px returning quiet: long saved-chart name stays inside its heading · {"cls":0,"pageWidth":360,"viewportWidth":360,"readingHeight":1148.6875,"readingMinHeight":"0px","bodyBottomGap":0,"readingBottomGap":0,"chartNameTitle":"AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport","chartNameOverflow":"hidden","chartNameTextOverflow":"ellipsis","chartNameRight":310,"headingRight":310,"streakText":"365","streakLabel":"365 day streak","countRight":264.171875,"unitLeft":269.171875}
+PASS  360px returning quiet: page has no horizontal overflow · 360/360
+PASS  360px returning quiet: a 365-day streak has a collision-free digit lane · {"cls":0,"pageWidth":360,"viewportWidth":360,"readingHeight":1148.6875,"readingMinHeight":"0px","bodyBottomGap":0,"readingBottomGap":0,"chartNameTitle":"AChartNameThatKeepsGoingWithoutAnyBreakOpportunityForTheEntireMobileViewport","chartNameOverflow":"hidden","chartNameTextOverflow":"ellipsis","chartNameRight":310,"headingRight":310,"streakText":"365","streakLabel":"365 day streak","countRight":264.171875,"unitLeft":269.171875}
+PASS  360px returning quiet: expected contact state renders
+
+ALL PASS

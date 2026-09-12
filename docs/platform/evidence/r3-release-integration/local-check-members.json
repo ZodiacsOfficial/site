@@ -1,0 +1,67 @@
+[
+  {
+    "path": "site-install.log",
+    "bytes": 724,
+    "sha256": "5fe5e588462385f9be0fe88f046d75f99da90dbb22cfbb036367409584577d37"
+  },
+  {
+    "path": "site-daily-manifest.log",
+    "bytes": 212,
+    "sha256": "f6a647f94a2b82845116aeae658b8e93da13e669351c0306a2caea95f50df7e8"
+  },
+  {
+    "path": "site-research-check.log",
+    "bytes": 219,
+    "sha256": "42ef1534df68f2677a5203dfd39be6d6ec80646772277dd171f2e911f4c6a8db"
+  },
+  {
+    "path": "site-research-tests.log",
+    "bytes": 377,
+    "sha256": "f87a439fbaa22c3fa1dfc3ebb1a0c72dfabfec10d89391bc0e50651bf9ab4c24"
+  },
+  {
+    "path": "site-audit-production.log",
+    "bytes": 24,
+    "sha256": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+  },
+  {
+    "path": "site-audit-full.log",
+    "bytes": 549,
+    "sha256": "fc6b35a9a1f3eae84102f1fb3ba050b3f9b7bac6420a297958efbe09323e89f8"
+  },
+  {
+    "path": "site-build.log",
+    "bytes": 285522,
+    "sha256": "6761cb6c29f8eccf56a92726a6752e89433b93357ff489ac61a907c9b2962139"
+  },
+  {
+    "path": "site-check.log",
+    "bytes": 4421,
+    "sha256": "62be40fb1d7217cd9d08bd0c4cc21104770c6b36e44e1b4ac96aaf22d2db29b3"
+  },
+  {
+    "path": "site-phase1-captures.log",
+    "bytes": 1513,
+    "sha256": "84a665c4b3d05f0a16fd8ff1cdacdd4e9d2514751bfa9fcf320ef2f656c1c03c"
+  },
+  {
+    "path": "site-tests.log",
+    "bytes": 41886,
+    "sha256": "6d4c857d4414b3f7bb8f319556d4e132d6863d07216749ab8781a636a5550a05"
+  },
+  {
+    "path": "site-timeout-recheck.log",
+    "bytes": 1064,
+    "sha256": "0975896adc95d5f5ffebf92dd34f8aae177aeb1be736440a23695c28af2ac4a2"
+  },
+  {
+    "path": "site-today-browser.log",
+    "bytes": 8160,
+    "sha256": "e4977723aafd228f4372d3e4ce9258f559a4c1e9e4a72850752b0cffd3772f2b"
+  },
+  {
+    "path": "site-diff-check.log",
+    "bytes": 54,
+    "sha256": "f4f0bb18888af15ad1b6e3bcec98689ac59d09501ea8aa13d2dc138fa0b80ad2"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "status": "prepared; awaits frozen source and exact built site",
+  "baseCommit": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+  "fullModeOnly": true,
+  "syntheticName": "Synthetic Receipt",
+  "syntheticPlaceLabel": "Synthetic Place",
+  "fixtures": [
+    {"name":"ordinary","date":"1990-06-15","time":"14:30","zone":"America/New_York","lat":40.7128,"lon":-74.006,"houses":"whole","instant":"1990-06-15T18:30:00.000Z","gap":0},
+    {"name":"gap-hour","date":"2024-03-10","time":"02:30","zone":"America/New_York","lat":40.7128,"lon":-74.006,"houses":"whole","instant":"2024-03-10T07:30:00.000Z","gap":60},
+    {"name":"fold-earlier","date":"2024-11-03","time":"01:30","zone":"America/New_York","lat":40.7128,"lon":-74.006,"houses":"whole","instant":"2024-11-03T05:30:00.000Z","gap":0},
+    {"name":"gap-half-hour","date":"2024-10-06","time":"02:15","zone":"Australia/Lord_Howe","lat":-31.55,"lon":159.0833,"houses":"whole","instant":"2024-10-05T15:45:00.000Z","gap":30},
+    {"name":"gap-whole-day-unknown","date":"2011-12-30","time":null,"zone":"Pacific/Apia","lat":-13.8333,"lon":-171.7667,"houses":"placidus","instant":"2011-12-30T22:00:00.000Z","gap":1440},
+    {"name":"LMT","date":"1907-07-06","time":"08:30","zone":"America/Mexico_City","lat":19.4326,"lon":-99.1332,"houses":"whole","instant":"1907-07-06T15:06:36.000Z","gap":0},
+    {"name":"polar-requested-placidus","date":"2001-12-21","time":"08:30","zone":"Arctic/Longyearbyen","lat":78.2232,"lon":15.6267,"houses":"placidus","instant":"2001-12-21T07:30:00.000Z","gap":0},
+    {"name":"unknown-local-noon","date":"2001-12-21","time":null,"zone":"Arctic/Longyearbyen","lat":78.2232,"lon":15.6267,"houses":"placidus","instant":"2001-12-21T11:00:00.000Z","gap":0}
+  ],
+  "graphCases": ["idle", "focus", "full-result", "moon-result", "rising-result", "positions-only"],
+  "staleCases": ["edit after success + retained stale DOM button", "edit while helper request delayed", "profile-origin revoke while helper delayed", "new run failure clears prior receipt", "new valid run replaces prior bytes"],
+  "privacyAssertions": ["no names or owner identifiers in JSON or filename", "no network body/URL contains synthetic birth fields", "no localStorage or IndexedDB saved record writes", "local Blob URL revoked after download initiation", "positions-only cannot create full receipt"],
+  "accessibility": ["six locale actions and privacy notes", "button keyboard Enter", "native details keyboard Space", "disabled unavailable button", "polite status", "fixed error", "320 and390 widths", "400% native zoom", "reduced motion"],
+  "nonClaims": ["not Safari or all-browser certification", "not broad historical/astronomical accuracy certification", "not account storage activation", "not final release/production adoption"]
+}

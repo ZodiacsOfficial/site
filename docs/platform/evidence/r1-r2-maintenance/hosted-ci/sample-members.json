@@ -1,0 +1,37 @@
+[
+  {
+    "path": "range-provenance.json",
+    "bytes": 4321,
+    "sha256": "5979a87af912abf01a2b3a5518eb971708dd429b17f9f45ac16791a94fa671d8"
+  },
+  {
+    "path": "ru-birth-chart-1.json",
+    "bytes": 473232,
+    "sha256": "00b790b9e8ec731aa87a894a42e507d598052545f3a9d94b0cdf96a076cde54e"
+  },
+  {
+    "path": "ru-birth-chart-2.json",
+    "bytes": 473866,
+    "sha256": "6af66bd711442af7e4542f387712c4df6e2496a7566a3edcef685e13f7df4861"
+  },
+  {
+    "path": "ru-birth-chart-3.json",
+    "bytes": 473840,
+    "sha256": "14a0349fc41cd87005f2118ca28233ccd2c9b67734f22aac1fef31063248c1fb"
+  },
+  {
+    "path": "today-1.json",
+    "bytes": 523495,
+    "sha256": "e962d0a7f1122b923620a10ef4fd0b3c9ce2f74ac0342fb7b9e867494826d545"
+  },
+  {
+    "path": "today-2.json",
+    "bytes": 524060,
+    "sha256": "51671d38ede11fa5b75809f8331ea2e6b8327034aa8fb1c000d24283049d4c22"
+  },
+  {
+    "path": "today-3.json",
+    "bytes": 524368,
+    "sha256": "f0580c15e5865a27e60baf025b69248a30c2252cc638bb437b089f9df0e6be19"
+  }
+]

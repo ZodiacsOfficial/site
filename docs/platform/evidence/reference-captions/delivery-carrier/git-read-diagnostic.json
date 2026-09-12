@@ -1,0 +1,25 @@
+[
+  {
+    "args": [
+      "git",
+      "cat-file",
+      "-t",
+      "HEAD"
+    ],
+    "timeoutSeconds": 10,
+    "stdout": "None",
+    "stderr": "None"
+  },
+  {
+    "args": [
+      "git",
+      "config",
+      "--get-regexp",
+      "^(core\\.(fsmonitor|hooksPath|preloadIndex)|extensions\\.|remote\\..*\\.promisor|remote\\..*\\.partialclonefilter)"
+    ],
+    "exit": 0,
+    "stdout": "remote.origin.promisor true\nremote.origin.partialclonefilter blob:none\nextensions.worktreeconfig true\n",
+    "stderr": "",
+    "seconds": 0.0145413750000003
+  }
+]

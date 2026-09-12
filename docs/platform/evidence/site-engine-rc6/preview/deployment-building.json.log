@@ -1,0 +1,19 @@
+{
+  "observedAt": "2026-09-08T07:38:48.820Z",
+  "tool": "vercel_list_deployments",
+  "teamId": "team_Ue0ac8HT1b3TAzaDDZBTFhQt",
+  "projectId": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+  "deployment": {
+    "id": "dpl_DCmR76jrfuTxvB4M4b5Xfw55iR11",
+    "name": "zodiacs-org",
+    "url": "zodiacs-4qqy7ml63-zodiacsofficial.vercel.app",
+    "state": "BUILDING",
+    "target": null,
+    "created": 1788852939536,
+    "commit": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+    "branch": "codex/platform-engine-rc6",
+    "repository": "ZodiacsOfficial/site",
+    "pr": "428",
+    "inspectorUrl": "https://vercel.com/zodiacsofficial/zodiacs-org/DCmR76jrfuTxvB4M4b5Xfw55iR11"
+  }
+}

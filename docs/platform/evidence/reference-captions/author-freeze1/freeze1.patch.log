@@ -1,0 +1,1263 @@
+diff --git a/src/islands/ChartCalculator.registry-bridge.test.ts b/src/islands/ChartCalculator.registry-bridge.test.ts
+index 2685b481..0964307d 100644
+--- a/src/islands/ChartCalculator.registry-bridge.test.ts
++++ b/src/islands/ChartCalculator.registry-bridge.test.ts
+@@ -20,7 +20,7 @@ describe('ChartCalculator Registry bridge contract', () => {
+     const source = await readFile(calculatorUrl, 'utf8');
+     const prompt = source.indexOf('{firstReadingPromptVisible && (');
+     const bridge = source.indexOf('data-registry-bridge-surface="birth_chart"');
+-    const explorer = source.indexOf('{/* Moon-mode extra: phase at birth */}');
++    const explorer = source.indexOf('{/* Moon-mode extra: phase at the calculated moment */}');
+ 
+     expect(prompt).toBeGreaterThan(-1);
+     expect(bridge).toBeGreaterThan(prompt);
+diff --git a/src/islands/ChartCalculator.tsx b/src/islands/ChartCalculator.tsx
+index 095c966b..d77f79b1 100644
+--- a/src/islands/ChartCalculator.tsx
++++ b/src/islands/ChartCalculator.tsx
+@@ -2052,9 +2052,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+             </aside>
+           )}
+ 
+-          {/* Moon-mode extra: phase at birth */}
++          {/* Moon-mode extra: phase at the calculated moment */}
+           {mode === 'moon' && (
+-            <p class="calc__phase mono">{t(locale, 'moonPhaseAtBirth')}: {moonPhaseLabel(locale, moonPhaseName(chart.input.utc))}</p>
++            <p class="calc__phase mono">{t(locale, chart.input.timeKnown ? 'moonPhaseAtBirth' : 'moonPhaseAtReference')}: {moonPhaseLabel(locale, moonPhaseName(chart.input.utc))}</p>
+           )}
+ 
+           {/* Rising-mode extra: chart ruler */}
+diff --git a/src/islands/MoonPhaseTool.tsx b/src/islands/MoonPhaseTool.tsx
+index 720b5797..4917c894 100644
+--- a/src/islands/MoonPhaseTool.tsx
++++ b/src/islands/MoonPhaseTool.tsx
+@@ -59,9 +59,7 @@ interface Lookup {
+   angle: number;
+   illum: number;
+   lon: number;
+-  /** Second sign when a date-only Moon crossed a boundary that day. */
+-  altLon: number | null;
+-  /** Honesty caption for the clock assumptions used, '' when exact. */
++  /** Captured reference or UTC-conversion caption; empty for a supplied local time. */
+   caption: string;
+ }
+ 
+@@ -111,8 +109,6 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+       if (!isCurrent()) return;
+       const hasTime = time !== '';
+       let utc: Date;
+-      let dayStart: Date;
+-      let dayEnd: Date;
+       if (city) {
+         utc = resolveLocalToUtc(date, hasTime ? time : '12:00', city.tz).utc;
+         if (!hasTime) {
+@@ -120,33 +116,20 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+             if (!localDateContainsUtc(date, utc, city.tz)) throw localDateReferenceFailure;
+           } catch { throw localDateReferenceFailure; }
+         }
+-        dayStart = resolveLocalToUtc(date, '00:00', city.tz).utc;
+-        dayEnd = resolveLocalToUtc(date, '23:59', city.tz).utc;
+       } else {
+         utc = new Date(`${date}T${hasTime ? time : '12:00'}:00Z`);
+-        dayStart = new Date(`${date}T00:00:00Z`);
+-        dayEnd = new Date(`${date}T23:59:00Z`);
+       }
+       const lon = engine.bodyLongitude('Moon', utc);
+       const sunLon = engine.bodyLongitude('Sun', utc);
+       const angle = (((lon - sunLon) % 360) + 360) % 360;
+ 
+-      let altLon: number | null = null;
+-      if (!hasTime) {
+-        const early = engine.bodyLongitude('Moon', dayStart);
+-        const late = engine.bodyLongitude('Moon', dayEnd);
+-        if (signForLongitude(early).slug !== signForLongitude(late).slug) {
+-          altLon = signForLongitude(lon).slug === signForLongitude(early).slug ? late : early;
+-        }
+-      }
+-
+       const caption = city && hasTime
+         ? ''
+         : city
+-          ? t(locale, 'middayLocalCaption')
++          ? t(locale, 'referenceLocalCaption')
+           : hasTime
+             ? t(locale, 'utcTimeCaption')
+-            : t(locale, 'middayUtcCaption');
++            : t(locale, 'referenceUtcCaption');
+ 
+       if (!isCurrent()) return;
+       setResult({
+@@ -154,7 +137,6 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+         angle,
+         illum: moonIlluminationFromAngle(angle),
+         lon,
+-        altLon,
+         caption,
+       });
+     } catch (err) {
+@@ -268,20 +250,16 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+                   {t(locale, 'moonIn')} {locale === 'ru'
+                     ? signPrepositional(signForLongitude(result.lon))
+                     : <SignChip lon={result.lon} locale={locale} />}
+-                  {result.altLon !== null && (
+-                    <> {t(locale, 'or')} <SignChip lon={result.altLon} locale={locale} /></>
+-                  )}
+                 </span>
+                 <EvidenceDisclosure label={t(locale, 'howWeCompute')}>
+                   <span class="mono mp__meta mp__meta--faint">{formatLongitude(result.lon, locale)}</span>
+-                  {result.caption !== '' && result.altLon === null && <p>{result.caption}</p>}
+                 </EvidenceDisclosure>
+               </div>
+             </div>
+           </div>
+-          {result.altLon !== null && (
++          {result.caption !== '' && (
+             <p class="notice" role="status">
+-              {t(locale, 'moonChangedNotice')}
++              {result.caption}
+             </p>
+           )}
+           <div class="calc__actions">
+diff --git a/src/islands/explorer/lens/copy.ts b/src/islands/explorer/lens/copy.ts
+index 49dc7497..d4a8e5f5 100644
+--- a/src/islands/explorer/lens/copy.ts
++++ b/src/islands/explorer/lens/copy.ts
+@@ -41,7 +41,7 @@ export const LENS_CHROME = {
+     transitsLink: 'Scrub this sky through time at /transits/.',
+     returnInstant: 'Return instant',
+     localTime: 'your time',
+-    noTimeNote: 'Computed from a noon chart. Planetary themes remain useful; houses and rising are withheld until you add a birth time.',
++    noTimeNote: "Reference positions are shown. Houses and rising are withheld without a birth time.",
+     noPlaceNote: 'Without a birthplace the return is shown planets-only, no houses.',
+     progressedAngles: 'Progressed houses need a convention we haven’t adopted, so only the planets progress here.',
+     trustLine: 'Every one of these skies is computed on this device.',
+@@ -59,7 +59,7 @@ export const LENS_CHROME = {
+     transitsLink: 'Recorre este cielo a través del tiempo en /transits/.',
+     returnInstant: 'Instante del retorno',
+     localTime: 'tu hora',
+-    noTimeNote: 'Calculado a partir de una carta de mediodía. Los temas planetarios siguen siendo útiles; las casas y el ascendente no se muestran hasta que añadas una hora de nacimiento.',
++    noTimeNote: "Se muestran posiciones de referencia. Sin hora de nacimiento, no se muestran las casas ni el ascendente.",
+     noPlaceNote: 'Sin lugar de nacimiento, el retorno se muestra solo con planetas, sin casas.',
+     progressedAngles: 'Las casas progresadas requieren una convención que no hemos adoptado; aquí solo progresan los planetas.',
+     trustLine: 'Cada uno de estos cielos se calcula en este dispositivo.',
+@@ -77,7 +77,7 @@ export const LENS_CHROME = {
+     transitsLink: 'Percorra este céu ao longo do tempo em /transits/.',
+     returnInstant: 'Instante do retorno',
+     localTime: 'seu horário',
+-    noTimeNote: 'Calculado com um mapa do meio-dia. Os temas planetários continuam úteis; as casas e o ascendente não são mostrados até você adicionar a hora de nascimento.',
++    noTimeNote: "São mostradas posições de referência. Sem a hora de nascimento, as casas e o ascendente não são mostrados.",
+     noPlaceNote: 'Sem o local de nascimento, o retorno mostra apenas os planetas, sem casas.',
+     progressedAngles: 'As casas progredidas exigem uma convenção que ainda não adotamos; aqui, apenas os planetas progridem.',
+     trustLine: 'Cada um destes céus é calculado neste dispositivo.',
+@@ -95,7 +95,7 @@ export const LENS_CHROME = {
+     transitsLink: 'Explore ce ciel au fil du temps sur /transits/.',
+     returnInstant: 'Instant de la révolution solaire',
+     localTime: 'ton heure',
+-    noTimeNote: 'Calculé à partir d’un thème de midi. Les thèmes planétaires restent utiles ; les maisons et l’ascendant ne sont pas affichés tant que tu n’as pas ajouté ton heure de naissance.',
++    noTimeNote: "Des positions de référence sont affichées. Sans heure de naissance, les maisons et l’ascendant sont omis.",
+     noPlaceNote: 'Sans lieu de naissance, la révolution solaire est présentée avec les seules planètes, sans maisons.',
+     progressedAngles: 'Les maisons progressées exigent une convention que nous n’avons pas adoptée ; seules les planètes progressent ici.',
+     trustLine: 'Chacun de ces ciels est calculé sur cet appareil.',
+@@ -113,7 +113,7 @@ export const LENS_CHROME = {
+     transitsLink: 'Scorri questo cielo nel tempo su /transits/.',
+     returnInstant: 'Istante della rivoluzione solare',
+     localTime: 'la tua ora',
+-    noTimeNote: 'Calcolato da un tema di mezzogiorno. I temi planetari restano utili; le case e l’ascendente non vengono mostrati finché non aggiungi l’ora di nascita.',
++    noTimeNote: "Sono mostrate posizioni di riferimento. Senza un’ora di nascita, le case e l’ascendente non vengono mostrati.",
+     noPlaceNote: 'Senza un luogo di nascita, la rivoluzione solare mostra solo i pianeti, senza case.',
+     progressedAngles: 'Le case progredite richiedono una convenzione che non abbiamo adottato, quindi qui progrediscono solo i pianeti.',
+     trustLine: 'Ognuno di questi cieli viene calcolato su questo dispositivo.',
+@@ -131,7 +131,7 @@ export const LENS_CHROME = {
+     transitsLink: 'Двигайте это небо во времени на /transits/.',
+     returnInstant: 'Момент возвращения',
+     localTime: 'ваше время',
+-    noTimeNote: 'Считано по полуденной карте. Планетные темы остаются полезными; дома и асцендент скрыты, пока вы не добавите время рождения.',
++    noTimeNote: "Показаны опорные положения. Без времени рождения дома и асцендент не показываются.",
+     noPlaceNote: 'Без места рождения солнечное возвращение показано только по планетам, без домов.',
+     progressedAngles: 'Для прогрессивных домов нужна договорённость, которую мы не приняли, поэтому здесь прогрессируют только планеты.',
+     trustLine: 'Каждое из этих положений неба рассчитано на вашем устройстве.',
+diff --git a/src/islands/explorer/tour/copy.ts b/src/islands/explorer/tour/copy.ts
+index 36a6247b..cad1c541 100644
+--- a/src/islands/explorer/tour/copy.ts
++++ b/src/islands/explorer/tour/copy.ts
+@@ -106,7 +106,7 @@ const TOUR_COPY = {
+     wholeBody1: "Everything back on. A chart isn't a list of traits — it's one sky with everything happening at once. The reading below walks it line by line.",
+     wholeBody2: 'Save it and your profile page computes its year ahead — still on this device. The share link carries the data in the link itself; it never touches a server.',
+     'no-housesTitle': 'Why this chart has no houses',
+-    'no-housesBody1': "Houses come from the exact minute of birth — the sky's rotation, not the calendar. Without a time we compute a noon chart: every planet's sign is right — except sometimes the Moon, which can change sign within a day — and there is no horizon to hang houses on.",
++    'no-housesBody1': "Houses depend on the birth time and the sky’s rotation. Without a birth time, we show reference positions; these do not establish every planet’s birth sign. Rising and houses are omitted.",
+     'no-housesBody2': 'If the time ever turns up (birth certificates usually have it), add it above — the wheel gains its rooms, and you gain a rising sign.',
+   },
+   es: {
+@@ -200,7 +200,7 @@ const TOUR_COPY = {
+     wholeBody1: 'Todo encendido otra vez. Una carta no es una lista de rasgos — es un solo cielo con todo a la vez. La lectura de abajo la recorre línea por línea.',
+     wholeBody2: 'Guárdala y tu página de perfil calcula sus próximos doce meses — siempre en este dispositivo. El enlace para compartir lleva los datos dentro del propio enlace; nunca pasa por un servidor.',
+     'no-housesTitle': 'Por qué esta carta no tiene casas',
+-    'no-housesBody1': 'Las casas salen del minuto exacto del nacimiento — la rotación del cielo, no el calendario. Sin hora calculamos una carta de mediodía: el signo de cada planeta es correcto — salvo a veces el de la Luna, que puede cambiar de signo dentro del día — pero no hay horizonte del que colgar las casas.',
++    'no-housesBody1': "Las casas dependen de la hora de nacimiento y de la rotación del cielo. Sin hora, mostramos posiciones de referencia; estas no establecen el signo natal de cada planeta. No se muestran el ascendente ni las casas.",
+     'no-housesBody2': 'Si la hora aparece algún día (el certificado de nacimiento suele tenerla), agrégala arriba — la rueda gana sus casas, y tú un ascendente.',
+   },
+   pt: {
+@@ -294,7 +294,7 @@ const TOUR_COPY = {
+     wholeBody1: 'Tudo aceso novamente. Um mapa não é uma lista de traços — é um único céu com tudo acontecendo ao mesmo tempo. A leitura abaixo o percorre linha por linha.',
+     wholeBody2: 'Salve-o e sua página de perfil calcula os próximos doze meses — sempre neste dispositivo. O link de compartilhamento leva os dados no próprio link; eles nunca passam por um servidor.',
+     'no-housesTitle': 'Por que este mapa não tem casas',
+-    'no-housesBody1': 'As casas vêm do minuto exato do nascimento — da rotação do céu, não do calendário. Sem um horário, calculamos um mapa do meio-dia: o signo de cada planeta está correto — com a possível exceção da Lua, que pode mudar de signo no mesmo dia — e não existe horizonte para sustentar as casas.',
++    'no-housesBody1': "As casas dependem da hora de nascimento e da rotação do céu. Sem a hora, mostramos posições de referência; elas não estabelecem o signo natal de cada planeta. O ascendente e as casas não são mostrados.",
+     'no-housesBody2': 'Se o horário aparecer algum dia (a certidão de nascimento costuma registrá-lo), adicione-o acima — a roda ganha suas casas, e você ganha um ascendente.',
+   },
+   fr: {
+@@ -388,7 +388,7 @@ const TOUR_COPY = {
+     wholeBody1: 'Tout est de nouveau visible. Un thème n’est pas une liste de traits — c’est un seul ciel où tout se produit en même temps. La lecture ci-dessous le parcourt ligne par ligne.',
+     wholeBody2: 'Enregistre-le et ta page de profil calcule son année à venir — toujours sur cet appareil. Le lien de partage contient les données dans le lien lui-même ; elles ne passent jamais par un serveur.',
+     'no-housesTitle': 'Pourquoi ce thème n’a pas de maisons',
+-    'no-housesBody1': 'Les maisons viennent de la minute exacte de naissance — de la rotation du ciel, pas du calendrier. Sans heure, nous calculons un thème pour midi : le signe de chaque planète est correct — sauf parfois celui de la Lune, qui peut changer de signe au cours de la journée — mais il n’y a aucun horizon auquel rattacher les maisons.',
++    'no-housesBody1': "Les maisons dépendent de l’heure de naissance et de la rotation du ciel. Sans heure, nous affichons des positions de référence ; elles ne déterminent pas le signe natal de chaque planète. L’ascendant et les maisons sont omis.",
+     'no-housesBody2': 'Si l’heure refait surface un jour — elle figure souvent sur l’acte de naissance — ajoute-la ci-dessus : la roue gagne ses maisons et toi, un ascendant.',
+   },
+   it: {
+@@ -482,7 +482,7 @@ const TOUR_COPY = {
+     wholeBody1: 'Tutto è di nuovo visibile. Un tema non è un elenco di tratti — è un solo cielo in cui tutto accade insieme. La lettura qui sotto lo percorre riga per riga.',
+     wholeBody2: 'Salvalo e la pagina del tuo profilo ne calcola i prossimi dodici mesi — sempre su questo dispositivo. Il link di condivisione contiene i dati nel link stesso; non passano mai da un server.',
+     'no-housesTitle': 'Perché questo tema non ha case',
+-    'no-housesBody1': 'Le case derivano dal minuto esatto della nascita — dalla rotazione del cielo, non dal calendario. Senza un’ora, calcoliamo un tema di mezzogiorno: il segno di ogni pianeta è corretto — tranne a volte quello della Luna, che può cambiare segno nell’arco della giornata — ma non c’è un orizzonte a cui ancorare le case.',
++    'no-housesBody1': "Le case dipendono dall’ora di nascita e dalla rotazione del cielo. Senza un’ora, mostriamo posizioni di riferimento; queste non stabiliscono il segno natale di ogni pianeta. L’ascendente e le case non vengono mostrati.",
+     'no-housesBody2': 'Se un giorno ritrovi l’ora — il certificato di nascita spesso la riporta — aggiungila qui sopra: la ruota si completa con le case e compare anche il tuo ascendente.',
+   },
+   ru: {
+@@ -576,7 +576,7 @@ const TOUR_COPY = {
+     wholeBody1: 'Все слои снова видны. Карта — не список качеств, а одно небо, где всё происходит одновременно. Чтение ниже проходит его строка за строкой.',
+     wholeBody2: 'Сохраните карту, и профиль рассчитает её год впереди — по-прежнему на этом устройстве. Ссылка несёт данные внутри себя и не касается сервера.',
+     'no-housesTitle': 'Почему в карте нет домов',
+-    'no-housesBody1': 'Дома зависят от точной минуты рождения — от вращения неба, а не календаря. Без времени мы считаем полуденную карту: знаки планет верны, кроме иногда Луны, которая может сменить знак за день, но горизонта для домов нет.',
++    'no-housesBody1': "Дома зависят от времени рождения и вращения неба. Без времени показываем опорные положения; они не устанавливают знак каждой планеты в момент рождения. Асцендент и дома не показываются.",
+     'no-housesBody2': 'Если время найдётся — оно часто есть в свидетельстве о рождении — добавьте его выше. У колеса появятся комнаты, а у вас — асцендент.',
+   },
+ } as const satisfies Record<Locale, Record<string, string>>;
+diff --git a/src/lib/i18n/ui/en.ts b/src/lib/i18n/ui/en.ts
+index 1362bdee..06ef9e5f 100644
+--- a/src/lib/i18n/ui/en.ts
++++ b/src/lib/i18n/ui/en.ts
+@@ -110,7 +110,7 @@ const en = {
+     compareError: 'Something went wrong comparing the charts. Please try again.',
+     noBirthTime: "I don't know it",
+     risingTimeHelp: 'Rising signs change every two hours — the clock matters here.',
+-    chartTimeHelp: "No birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.",
++    chartTimeHelp: "No birth time? You'll get reference positions without rising or houses; the Moon’s possible signs are unverified.",
+     chartSavedDevice: 'Saved · on this device',
+     saveThisChart: 'Save this chart',
+     chartSavedStatus: 'Chart saved on this device.',
+@@ -277,7 +277,7 @@ const en = {
+     dstFoldNotice: 'Clocks repeated that hour where you were born; we used the earlier pass. If you know it was the later one, your chart barely changes — the Moon moves about half a degree an hour.',
+     lmtNotice: 'Born before standardized time zones — we used local mean time for that era, the same convention professional software uses.',
+     polarNotice: "Placidus houses aren't defined that close to the pole, so this chart uses whole sign houses instead.",
+-    noTimeNotice: 'Without a birth time we use 12:00 local civil time as a reference and omit the rising sign, angles, and houses.',
++    noTimeNotice: "Without a birth time, we show reference positions and omit the rising sign, angles, and houses.",
+     moonUnverifiedNotice: "The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment.",
+     moonAmbiguousNotice: 'The Moon also changed signs that day — reading both neighbors is fair until you find the time.',
+     fromLinkNotice: 'Opened from a shared link — the birth details came in the link itself, and the chart was computed on your device just now.',
+@@ -295,11 +295,11 @@ const en = {
+     moonIn: 'Moon in',
+     findThatMoon: 'Find that moon',
+     dateHelp: 'A birthday, an anniversary, any date at all.',
+-    placeHelpMoon: 'Sharpens the clock conversion; the phase barely needs it.',
+-    middayLocalCaption: 'Read at midday local time — adding the clock time pins the degree exactly.',
++    placeHelpMoon: "Converts your local date and time to universal time.",
++    referenceLocalCaption: "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+     utcTimeCaption: 'The time is read as universal time — add a birthplace to convert your local clock.',
+-    middayUtcCaption: 'Read at midday universal time — a time and place pin the degree exactly.',
+-    moonChangedNotice: "The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.",
++    referenceUtcCaption: "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment.",
++    moonPhaseAtReference: "Moon phase at reference time",
+     birthChartForDate: 'Get the birth chart for this date',
+     natalSaturn: 'Your natal Saturn',
+     addBirthDetails: 'Add birth time and place (optional)',
+diff --git a/src/lib/i18n/ui/es.ts b/src/lib/i18n/ui/es.ts
+index ed5482aa..6d298503 100644
+--- a/src/lib/i18n/ui/es.ts
++++ b/src/lib/i18n/ui/es.ts
+@@ -110,7 +110,7 @@ const es = {
+     compareError: 'Algo salió mal al comparar las cartas. Inténtalo otra vez.',
+     noBirthTime: 'No la sé',
+     risingTimeHelp: 'El ascendente cambia cada dos horas — aquí la hora importa.',
+-    chartTimeHelp: '¿No sabes la hora? Verás una referencia al mediodía local sin ascendente ni casas; la Luna puede ser incierta.',
++    chartTimeHelp: "¿No sabes la hora? Verás posiciones de referencia sin ascendente ni casas; los posibles signos de la Luna no están verificados.",
+     chartSavedDevice: 'Guardada · en este dispositivo',
+     saveThisChart: 'Guardar esta carta',
+     chartSavedStatus: 'Carta guardada en este dispositivo.',
+@@ -277,7 +277,7 @@ const es = {
+     dstFoldNotice: 'Los relojes repitieron esa hora donde naciste; usamos la primera pasada. Si sabes que fue la segunda, tu carta casi no cambia — la Luna avanza cerca de medio grado por hora.',
+     lmtNotice: 'Naciste antes de las zonas horarias estandarizadas — usamos hora media local para esa época, la misma convención que usa el software profesional.',
+     polarNotice: 'Las casas Placidus no están definidas tan cerca del polo, así que esta carta usa signos completos.',
+-    noTimeNotice: 'Sin hora de nacimiento usamos las 12:00 del tiempo civil local como referencia y omitimos ascendente, ángulos y casas.',
++    noTimeNotice: "Sin hora de nacimiento, mostramos posiciones de referencia y omitimos el ascendente, los ángulos y las casas.",
+     moonUnverifiedNotice: "No se han verificado los posibles signos de la Luna a lo largo de esta fecha de nacimiento. Añade una hora de nacimiento para obtener un resultado de ese momento.",
+     moonAmbiguousNotice: 'La Luna también cambió de signo ese día — leer los dos signos vecinos es razonable hasta encontrar la hora.',
+     fromLinkNotice: 'Abierta desde un enlace compartido — los datos venían en el enlace y la carta se calculó ahora en tu dispositivo.',
+@@ -295,11 +295,11 @@ const es = {
+     moonIn: 'Luna en',
+     findThatMoon: 'Encontrar esa Luna',
+     dateHelp: 'Un cumpleaños, un aniversario, cualquier fecha.',
+-    placeHelpMoon: 'Afina la conversión de hora; la fase casi no lo necesita.',
+-    middayLocalCaption: 'Lectura al mediodía local — agregar la hora exacta fija el grado.',
++    placeHelpMoon: "Convierte tu fecha y hora locales al tiempo universal.",
++    referenceLocalCaption: "Resultado de referencia para esta fecha local. El signo y la fase de la Luna pueden ser distintos en otros momentos del día. Añade una hora de nacimiento para calcular un momento concreto.",
+     utcTimeCaption: 'La hora se lee como tiempo universal — agrega un lugar para convertir tu hora local.',
+-    middayUtcCaption: 'Lectura al mediodía universal — una hora y un lugar fijan el grado.',
+-    moonChangedNotice: 'La Luna cambió de signo ese día, y sin hora no podemos saber de qué lado naciste. La fase no cambia: se mueve demasiado lento para que unas horas importen.',
++    referenceUtcCaption: "Resultado de referencia para esta fecha UTC. El signo y la fase de la Luna pueden ser distintos en otros momentos del día. Añade una hora y un lugar para calcular un momento local.",
++    moonPhaseAtReference: "Fase lunar en el momento de referencia",
+     birthChartForDate: 'Obtener la carta natal de esta fecha',
+     natalSaturn: 'Tu Saturno natal',
+     addBirthDetails: 'Agregar hora y lugar de nacimiento (opcional)',
+diff --git a/src/lib/i18n/ui/fr.ts b/src/lib/i18n/ui/fr.ts
+index 26c6b7b4..b37be85a 100644
+--- a/src/lib/i18n/ui/fr.ts
++++ b/src/lib/i18n/ui/fr.ts
+@@ -110,7 +110,7 @@ const fr = {
+   compareError: 'Un problème est survenu pendant la comparaison des thèmes. Réessaie.',
+   noBirthTime: 'Je ne la connais pas',
+   risingTimeHelp: 'L’ascendant change toutes les deux heures — ici, l’heure compte.',
+-  chartTimeHelp: 'Tu ne connais pas l’heure ? Tu obtiendras une référence à midi local, sans ascendant ni maisons ; la Lune peut être incertaine.',
++  chartTimeHelp: "Tu ne connais pas l’heure ? Tu verras des positions de référence sans ascendant ni maisons ; les signes possibles de la Lune ne sont pas vérifiés.",
+   chartSavedDevice: 'Enregistré · sur cet appareil',
+   saveThisChart: 'Enregistrer ce thème',
+   chartSavedStatus: 'Thème enregistré sur cet appareil.',
+@@ -277,7 +277,7 @@ const fr = {
+   dstFoldNotice: 'À ton lieu de naissance, les horloges ont affiché deux fois cette heure ; nous avons retenu la première occurrence. Si tu sais qu’il s’agissait de la seconde, ton thème change à peine — la Lune avance d’environ un demi-degré par heure.',
+   lmtNotice: 'Ta naissance remonte à une époque antérieure à la normalisation des fuseaux horaires — nous avons utilisé l’heure moyenne locale de l’époque, comme le font les logiciels professionnels.',
+   polarNotice: 'Les maisons de Placidus ne sont pas définies aussi près du pôle ; ce thème utilise donc les maisons en signes entiers.',
+-  noTimeNotice: 'Sans heure de naissance, nous utilisons 12 h en heure civile locale comme référence et omettons l’ascendant, les angles et les maisons.',
++  noTimeNotice: "Sans heure de naissance, nous affichons des positions de référence et omettons l’ascendant, les angles et les maisons.",
+   moonUnverifiedNotice: "Les signes possibles de la Lune au cours de cette date de naissance ne sont pas vérifiés. Ajoute une heure de naissance pour obtenir un résultat à ce moment précis.",
+   moonAmbiguousNotice: 'La Lune a également changé de signe ce jour-là — il est raisonnable de lire les deux signes voisins tant que tu n’as pas retrouvé l’heure.',
+   fromLinkNotice: 'Ce thème vient d’un lien partagé — les données de naissance étaient contenues dans le lien, et le calcul vient de se faire sur ton appareil.',
+@@ -295,11 +295,11 @@ const fr = {
+   moonIn: 'Lune en',
+   findThatMoon: 'Retrouver la Lune de cette date',
+   dateHelp: 'Un anniversaire, une date marquante, n’importe quelle date.',
+-  placeHelpMoon: 'Précise la conversion de l’heure ; la phase en dépend à peine.',
+-  middayLocalCaption: 'Lecture à midi, heure locale — ajoute l’heure exacte pour déterminer précisément le degré.',
++  placeHelpMoon: "Convertit ta date et ton heure locales en temps universel.",
++  referenceLocalCaption: "Résultat de référence pour cette date locale. Le signe et la phase de la Lune peuvent être différents à d’autres moments de la journée. Ajoute une heure de naissance pour calculer un instant précis.",
+   utcTimeCaption: 'L’heure est lue en temps universel — ajoute un lieu de naissance pour convertir ton heure locale.',
+-  middayUtcCaption: 'Lecture à midi en temps universel — l’heure et le lieu déterminent précisément le degré.',
+-  moonChangedNotice: 'La Lune a changé de signe ce jour-là et, sans l’heure, nous ne pouvons pas savoir de quel côté de la limite elle se trouvait à ta naissance. La phase reste la même — elle évolue trop lentement pour que quelques heures comptent.',
++  referenceUtcCaption: "Résultat de référence pour cette date UTC. Le signe et la phase de la Lune peuvent être différents à d’autres moments de la journée. Ajoute une heure et un lieu pour calculer un instant local.",
++  moonPhaseAtReference: "Phase lunaire à l’instant de référence",
+   birthChartForDate: 'Calculer le thème astral de cette date',
+   natalSaturn: 'Ton Saturne natal',
+   addBirthDetails: 'Ajouter l’heure et le lieu de naissance (facultatif)',
+diff --git a/src/lib/i18n/ui/it.ts b/src/lib/i18n/ui/it.ts
+index 6a7e8e17..beae50c0 100644
+--- a/src/lib/i18n/ui/it.ts
++++ b/src/lib/i18n/ui/it.ts
+@@ -119,8 +119,7 @@ const it = {
+     "Si è verificato un problema durante il confronto dei temi. Riprova.",
+   noBirthTime: "Non la conosco",
+   risingTimeHelp: "L’ascendente cambia ogni due ore — qui l’orario conta.",
+-  chartTimeHelp:
+-    "Non conosci l’ora di nascita? Vedrai un riferimento al mezzogiorno locale, senza ascendente né case; la Luna può essere incerta.",
++  chartTimeHelp: "Non conosci l’ora? Vedrai posizioni di riferimento senza ascendente né case; i possibili segni della Luna non sono verificati.",
+   chartSavedDevice: "Salvato · su questo dispositivo",
+   saveThisChart: "Salva questo tema",
+   chartSavedStatus: "Tema salvato su questo dispositivo.",
+@@ -323,8 +322,7 @@ const it = {
+     "La tua nascita precede la standardizzazione dei fusi orari — abbiamo usato il tempo medio locale dell’epoca, la stessa convenzione dei software professionali.",
+   polarNotice:
+     "Le case Placidus non sono definite così vicino al polo, quindi questo tema usa invece le case a segno intero.",
+-  noTimeNotice:
+-    "Senza un’ora di nascita usiamo le 12:00 dell’ora civile locale come riferimento e omettiamo ascendente, angoli e case.",
++  noTimeNotice: "Senza l’ora di nascita, mostriamo posizioni di riferimento e omettiamo ascendente, angoli e case.",
+   moonUnverifiedNotice: "I possibili segni della Luna nell’arco di questa data di nascita non sono verificati. Aggiungi un’ora di nascita per ottenere un risultato relativo a quel momento.",
+   moonAmbiguousNotice:
+     "Anche la Luna ha cambiato segno quel giorno — finché non trovi l’ora, è corretto leggere entrambi i segni vicini.",
+@@ -344,16 +342,12 @@ const it = {
+   moonIn: "Luna in",
+   findThatMoon: "Trova quella Luna",
+   dateHelp: "Un compleanno, un anniversario, una data qualsiasi.",
+-  placeHelpMoon:
+-    "Rende più precisa la conversione dell’ora; per la fase cambia pochissimo.",
+-  middayLocalCaption:
+-    "Lettura a mezzogiorno locale — aggiungi l’ora per fissare esattamente il grado.",
++  placeHelpMoon: "Converte la data e l’ora locali in tempo universale.",
++  referenceLocalCaption: "Risultato di riferimento per questa data locale. Il segno e la fase della Luna possono essere diversi in altri momenti della giornata. Aggiungi un’ora di nascita per calcolare un momento specifico.",
+   utcTimeCaption:
+     "L’ora è letta come tempo universale — aggiungi il luogo di nascita per convertire l’ora locale.",
+-  middayUtcCaption:
+-    "Lettura a mezzogiorno nel tempo universale — ora e luogo fissano il grado con precisione.",
+-  moonChangedNotice:
+-    "Quel giorno la Luna ha cambiato segno e, senza un’ora, non possiamo dire da quale lato del confine si trovasse alla tua nascita. La fase non cambia — si muove troppo lentamente perché poche ore facciano la differenza.",
++  referenceUtcCaption: "Risultato di riferimento per questa data UTC. Il segno e la fase della Luna possono essere diversi in altri momenti della giornata. Aggiungi un’ora e un luogo per calcolare un momento locale.",
++  moonPhaseAtReference: "Fase lunare al momento di riferimento",
+   birthChartForDate: "Calcola il tema natale per questa data",
+   natalSaturn: "Il tuo Saturno natale",
+   addBirthDetails: "Aggiungi ora e luogo di nascita (facoltativo)",
+diff --git a/src/lib/i18n/ui/pt.ts b/src/lib/i18n/ui/pt.ts
+index 2054f2ee..7a6701cc 100644
+--- a/src/lib/i18n/ui/pt.ts
++++ b/src/lib/i18n/ui/pt.ts
+@@ -110,7 +110,7 @@ const pt = {
+   compareError: 'Algo deu errado ao comparar os mapas. Tente de novo.',
+   noBirthTime: 'Não sei',
+   risingTimeHelp: 'O ascendente muda a cada duas horas — aqui, o horário importa.',
+-  chartTimeHelp: 'Não sabe a hora? Você verá uma referência ao meio-dia local, sem ascendente nem casas; a Lua pode ser incerta.',
++  chartTimeHelp: "Não sabe a hora? Você verá posições de referência sem ascendente nem casas; os possíveis signos da Lua não estão verificados.",
+   chartSavedDevice: 'Salvo · neste dispositivo',
+   saveThisChart: 'Salvar este mapa',
+   chartSavedStatus: 'Mapa salvo neste dispositivo.',
+@@ -277,7 +277,7 @@ const pt = {
+   dstFoldNotice: 'Os relógios repetiram essa hora no seu local de nascimento; usamos a primeira ocorrência. Se você sabe que foi a segunda, seu mapa quase não muda — a Lua avança cerca de meio grau por hora.',
+   lmtNotice: 'Você nasceu antes da padronização dos fusos horários — usamos a hora média local daquela época, a mesma convenção dos programas profissionais.',
+   polarNotice: 'As casas de Placidus não são definidas tão perto do polo, então este mapa usa casas de signos inteiros.',
+-  noTimeNotice: 'Sem a hora de nascimento, usamos 12:00 no horário civil local como referência e omitimos ascendente, ângulos e casas.',
++  noTimeNotice: "Sem a hora de nascimento, mostramos posições de referência e omitimos ascendente, ângulos e casas.",
+   moonUnverifiedNotice: "Os possíveis signos da Lua ao longo desta data de nascimento não foram verificados. Adicione uma hora de nascimento para obter um resultado daquele momento.",
+   moonAmbiguousNotice: 'A Lua também mudou de signo nesse dia — é razoável ler os dois signos vizinhos até você descobrir a hora.',
+   fromLinkNotice: 'Aberto por um link compartilhado — os dados de nascimento vieram no próprio link, e o mapa acaba de ser calculado no seu dispositivo.',
+@@ -295,11 +295,11 @@ const pt = {
+   moonIn: 'Lua em',
+   findThatMoon: 'Encontrar essa Lua',
+   dateHelp: 'Um aniversário, uma data especial, qualquer data.',
+-  placeHelpMoon: 'Refina a conversão do horário; a fase quase não precisa disso.',
+-  middayLocalCaption: 'Leitura ao meio-dia local — adicionar a hora exata define o grau.',
++  placeHelpMoon: "Converte sua data e hora locais em horário universal.",
++  referenceLocalCaption: "Resultado de referência para esta data local. O signo e a fase da Lua podem ser diferentes em outros momentos do dia. Adicione uma hora de nascimento para calcular um momento específico.",
+   utcTimeCaption: 'A hora é interpretada como horário universal — adicione um local de nascimento para converter seu horário local.',
+-  middayUtcCaption: 'Leitura ao meio-dia no horário universal — uma hora e um local definem o grau exato.',
+-  moonChangedNotice: 'A Lua mudou de signo nesse dia e, sem a hora, não podemos saber em qual signo ela estava quando você nasceu. A fase não é afetada — ela se move devagar demais para que algumas horas façam diferença.',
++  referenceUtcCaption: "Resultado de referência para esta data UTC. O signo e a fase da Lua podem ser diferentes em outros momentos do dia. Adicione uma hora e um local para calcular um momento local.",
++  moonPhaseAtReference: "Fase da Lua no momento de referência",
+   birthChartForDate: 'Fazer o mapa astral desta data',
+   natalSaturn: 'Seu Saturno natal',
+   addBirthDetails: 'Adicionar hora e local de nascimento (opcional)',
+diff --git a/src/lib/i18n/ui/ru.ts b/src/lib/i18n/ui/ru.ts
+index d12b1c3c..c3f9fd09 100644
+--- a/src/lib/i18n/ui/ru.ts
++++ b/src/lib/i18n/ui/ru.ts
+@@ -163,7 +163,7 @@ const ru = {
+   compareError: 'Не получилось сравнить карты. Попробуйте ещё раз.',
+   noBirthTime: 'Не знаю время',
+   risingTimeHelp: 'Асцендент меняется каждые два часа — здесь важны именно часы.',
+-  chartTimeHelp: 'Нет времени рождения? Покажем ориентир на местный полдень без асцендента и домов; положение Луны может быть неопределённым.',
++  chartTimeHelp: "Нет времени рождения? Покажем опорные положения без асцендента и домов; возможные знаки Луны не проверены.",
+   chartSavedDevice: 'Сохранено · на этом устройстве',
+   saveThisChart: 'Сохранить эту карту',
+   chartSavedStatus: 'Карта сохранена на этом устройстве.',
+@@ -330,7 +330,7 @@ const ru = {
+   dstFoldNotice: 'В месте рождения этот час прошёл дважды; мы взяли первый проход. Если вы знаете, что был второй, карта почти не изменится — Луна проходит около полуградуса в час.',
+   lmtNotice: 'Рождение до введения часовых поясов — мы использовали местное среднее время той эпохи, ту же конвенцию, что и профессиональные программы.',
+   polarNotice: 'Так близко к полюсу дома Плацидуса не определены, поэтому карта использует дома целых знаков.',
+-  noTimeNotice: 'Без времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома.',
++  noTimeNotice: "Без времени рождения показываем опорные положения и не показываем асцендент, углы и дома.",
+   moonUnverifiedNotice: "Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента.",
+   moonAmbiguousNotice: 'В этот день Луна сменила знак — пока время не найдено, честно читать обоих соседей.',
+   fromLinkNotice: 'Открыто по ссылке — данные рождения пришли в самой ссылке, и карта только что рассчитана на вашем устройстве.',
+@@ -348,11 +348,11 @@ const ru = {
+   moonIn: 'Луна в:',
+   findThatMoon: 'Найти эту Луну',
+   dateHelp: 'День рождения, годовщина — любая дата.',
+-  placeHelpMoon: 'Уточняет пересчёт часов; фазе это почти не нужно.',
+-  middayLocalCaption: 'Считано на полдень местного времени — точное время суток закрепит градус.',
++  placeHelpMoon: "Переводит местные дату и время во всемирное время.",
++  referenceLocalCaption: "Опорный результат для этой местной даты. В другие моменты дня знак и фаза Луны могут отличаться. Добавьте время рождения для расчёта на конкретный момент.",
+   utcTimeCaption: 'Время читается как всемирное — добавьте место рождения, чтобы пересчитать ваши часы.',
+-  middayUtcCaption: 'Считано на полдень всемирного времени — время и место закрепят градус точно.',
+-  moonChangedNotice: 'В этот день Луна сменила знак, и без времени нельзя сказать, по какую сторону границы вы родились. Фаза не страдает — она движется слишком медленно, чтобы часы имели значение.',
++  referenceUtcCaption: "Опорный результат для этой даты по UTC. В другие моменты дня знак и фаза Луны могут отличаться. Добавьте время и место для расчёта на местный момент.",
++  moonPhaseAtReference: "Фаза Луны на опорный момент",
+   birthChartForDate: 'Построить натальную карту на эту дату',
+   natalSaturn: 'Ваш натальный Сатурн',
+   addBirthDetails: 'Добавить время и место рождения (необязательно)',
+diff --git a/src/lib/moon-certainty.test.tsx b/src/lib/moon-certainty.test.tsx
+index ca9f16fe..e2cf93d7 100644
+--- a/src/lib/moon-certainty.test.tsx
++++ b/src/lib/moon-certainty.test.tsx
+@@ -145,7 +145,8 @@ describe('local-day Moon uncertainty', () => {
+     const markup = render(h(Inspector, { scene, selection: { kind: 'aspect', a: 'Sun', b: 'Moon', type: 'sextile' }, onSelect: () => {}, locale: 'en' }));
+     expect(markup).toContain('Aquarius / Pisces');
+     expect(markup).not.toContain('How it works here');
+-    expect(markup).toContain('12:00');
++    expect(markup).toContain('reference positions');
++    expect(markup).not.toContain('12:00');
+   });
+ 
+   it('treats either sign as possible when selected in the inspector', () => {
+diff --git a/src/lib/share-card-copy.ts b/src/lib/share-card-copy.ts
+index b1fe28ec..a725db58 100644
+--- a/src/lib/share-card-copy.ts
++++ b/src/lib/share-card-copy.ts
+@@ -25,7 +25,7 @@ export const SHARE_CARD_EN = {
+   fullChartAction: 'Share the full chart',
+   signatureAction: 'Share my chart signature',
+   approachAction: 'Share how to approach me',
+-  referenceTimeNote: '12:00 reference · Birth time unknown',
++  referenceTimeNote: 'Reference positions · Birth time unknown',
+   approachBirthTimeNote: 'Birth time would add my Rising sign.',
+   approachMoonTimeNote: 'My Moon may change signs without an exact birth time.',
+   compatibilityAction: 'Share this compatibility',
+@@ -61,7 +61,7 @@ export const SHARE_CARD_COPY = {
+     fullChartAction: 'Compartir la carta completa',
+     signatureAction: 'Compartir la firma de mi carta',
+     approachAction: 'Compartir cómo acercarte a mí',
+-    referenceTimeNote: 'Referencia de las 12:00 · Hora de nacimiento desconocida',
++    referenceTimeNote: 'Posiciones de referencia · Hora de nacimiento desconocida',
+     approachBirthTimeNote: 'La hora de nacimiento añadiría mi Ascendente.',
+     approachMoonTimeNote: 'Mi Luna puede cambiar de signo sin una hora de nacimiento exacta.',
+     compatibilityAction: 'Compartir esta compatibilidad',
+@@ -94,7 +94,7 @@ export const SHARE_CARD_COPY = {
+     fullChartAction: 'Compartilhar o mapa completo',
+     signatureAction: 'Compartilhar a assinatura do meu mapa',
+     approachAction: 'Compartilhar como chegar até mim',
+-    referenceTimeNote: 'Referência das 12:00 · Hora de nascimento desconhecida',
++    referenceTimeNote: 'Posições de referência · Hora de nascimento desconhecida',
+     approachBirthTimeNote: 'A hora de nascimento acrescentaria meu Ascendente.',
+     approachMoonTimeNote: 'Minha Lua pode mudar de signo sem uma hora exata de nascimento.',
+     compatibilityAction: 'Compartilhar esta compatibilidade',
+@@ -127,7 +127,7 @@ export const SHARE_CARD_COPY = {
+     fullChartAction: 'Partager le thème complet',
+     signatureAction: 'Partager la signature de mon thème',
+     approachAction: 'Partager comment m’aborder',
+-    referenceTimeNote: 'Référence à 12 h 00 · Heure de naissance inconnue',
++    referenceTimeNote: 'Positions de référence · Heure de naissance inconnue',
+     approachBirthTimeNote: 'L’heure de naissance ajouterait mon Ascendant.',
+     approachMoonTimeNote: 'Ma Lune peut changer de signe sans heure de naissance précise.',
+     compatibilityAction: 'Partager cette compatibilité',
+@@ -160,7 +160,7 @@ export const SHARE_CARD_COPY = {
+     fullChartAction: 'Condividi il tema completo',
+     signatureAction: 'Condividi la firma del mio tema',
+     approachAction: 'Condividi come avvicinarti a me',
+-    referenceTimeNote: 'Riferimento alle 12:00 · Ora di nascita sconosciuta',
++    referenceTimeNote: 'Posizioni di riferimento · Ora di nascita sconosciuta',
+     approachBirthTimeNote: 'L’ora di nascita aggiungerebbe il mio Ascendente.',
+     approachMoonTimeNote: 'La mia Luna può cambiare segno senza un’ora di nascita precisa.',
+     compatibilityAction: 'Condividi questa compatibilità',
+@@ -193,7 +193,7 @@ export const SHARE_CARD_COPY = {
+     fullChartAction: 'Поделиться полной картой',
+     signatureAction: 'Поделиться характерным рисунком карты',
+     approachAction: 'Поделиться чтением «Как ко мне подойти»',
+-    referenceTimeNote: 'Расчёт на 12:00 · Время рождения неизвестно',
++    referenceTimeNote: 'Опорные положения · Время рождения неизвестно',
+     approachBirthTimeNote: 'Время рождения добавило бы мой асцендент.',
+     approachMoonTimeNote: 'Без точного времени рождения моя Луна может оказаться в соседнем знаке.',
+     compatibilityAction: 'Поделиться совместимостью',
+diff --git a/src/lib/share-card.test.ts b/src/lib/share-card.test.ts
+index df02c5b1..f3312d6e 100644
+--- a/src/lib/share-card.test.ts
++++ b/src/lib/share-card.test.ts
+@@ -167,7 +167,7 @@ describe('chart sheet formatting', () => {
+     expect(chartSheetSettings({ houses: null }))
+       .toBe('Apparent geocentric · Tropical of date · No houses · True Node');
+     expect(chartSheetSettings({ houses: null, input: { timeKnown: false } }))
+-      .toBe('12:00 reference · Apparent geocentric · Tropical of date · No houses · True Node');
++      .toBe('Reference positions · Apparent geocentric · Tropical of date · No houses · True Node');
+   });
+ 
+   it('states aspect scope, limits, exact orb, and motion', () => {
+@@ -229,9 +229,9 @@ describe('chart sheet formatting', () => {
+     expect(lines.join(' ')).not.toContain('Resolved UTC');
+   });
+ 
+-  it('states the noon reference and Moon uncertainty without implying an angle', () => {
++  it('states reference positions and Moon uncertainty without implying an angle', () => {
+     expect(shareCardTimeNotes('en', { referenceTime: true, moonAmbiguous: true })).toEqual([
+-      '12:00 reference · Birth time unknown',
++      'Reference positions · Birth time unknown',
+       'My Moon may change signs without an exact birth time.',
+     ]);
+   });
+@@ -355,7 +355,7 @@ describe('share-card content', () => {
+ 
+     expect(content.bigThree.map(({ kind }) => kind)).toEqual(['sun', 'moon']);
+     expect(content.notes).toEqual([
+-      '12:00 reference · Birth time unknown',
++      'Reference positions · Birth time unknown',
+       'My Moon may change signs without an exact birth time.',
+     ]);
+   });
+diff --git a/src/lib/share-card.ts b/src/lib/share-card.ts
+index 4302d042..083e892f 100644
+--- a/src/lib/share-card.ts
++++ b/src/lib/share-card.ts
+@@ -48,7 +48,7 @@ export interface ShareCardOptions {
+   locale?: Locale;
+   /** Forwarded to audience-facing Moon advice for no-time boundary days. */
+   moonAmbiguous?: boolean;
+-  /** True when displayed positions use the calculator's 12:00 no-time reference. */
++  /** True when displayed positions are a reference without a supplied birth time. */
+   referenceTime?: boolean;
+   /** Sheet-only: keep placements while replacing the birth receipt with settings. */
+   hideBirthDetails?: boolean;
+@@ -1022,7 +1022,7 @@ export function chartSheetSettings(
+   const houses = chart.houses
+     ? `${chart.houses.system === 'whole' ? 'Whole sign' : 'Placidus'} houses`
+     : 'No houses';
+-  const reference = chart.input?.timeKnown === false ? '12:00 reference · ' : '';
++  const reference = chart.input?.timeKnown === false ? 'Reference positions · ' : '';
+   return `${reference}Apparent geocentric · Tropical of date · ${houses} · True Node`;
+ }
+ 
+@@ -1080,7 +1080,7 @@ export function chartSheetProvenanceLines(
+   const coordinates = [latitude, longitude].filter(Boolean).join(' · ');
+   const timeLine = details.timeKnown
+     ? `${details.date} · ${details.time} local`
+-    : `${details.date} · Birth time unknown · 12:00 local reference`;
++    : `${details.date} · Birth time unknown · Reference positions`;
+   const utcLabel = details.timeKnown ? 'Resolved UTC' : 'Reference UTC';
+   return [
+     timeLine,
+diff --git a/src/pages/es/moon-phase/index.astro b/src/pages/es/moon-phase/index.astro
+index f9b783dd..0baf08e8 100644
+--- a/src/pages/es/moon-phase/index.astro
++++ b/src/pages/es/moon-phase/index.astro
+@@ -11,7 +11,7 @@ const faq = [
+   },
+   {
+     q: '¿Cuál era la fase lunar el día de mi cumpleaños?',
+-    a: 'Ingresa tu fecha de nacimiento en el buscador. La fase puede calcularse con precisión a partir de la fecha, porque la Luna tarda unos 29,5 días en completar su ciclo. La astrología interpreta la fase natal como una nota de temperamento: se dice que quienes nacen con Luna nueva inician cosas y quienes nacen con Luna llena viven de forma más pública.',
++    a: 'Ingresa tu fecha de nacimiento en el buscador. Sin hora, el resultado describe un momento de referencia; la fase puede cambiar dentro de la misma fecha. Añade una hora y un lugar para calcular la fase en tu momento local de nacimiento. La astrología interpreta la fase natal como una nota de temperamento: se dice que quienes nacen con Luna nueva inician cosas y quienes nacen con Luna llena viven de forma más pública.',
+   },
+   {
+     q: '¿Cada cuánto hay Luna llena?',
+diff --git a/src/pages/fr/moon-phase/index.astro b/src/pages/fr/moon-phase/index.astro
+index f2875a26..3c2382d8 100644
+--- a/src/pages/fr/moon-phase/index.astro
++++ b/src/pages/fr/moon-phase/index.astro
+@@ -11,7 +11,7 @@ const faq = [
+   },
+   {
+     q: 'Quelle était la phase lunaire le jour de mon anniversaire ?',
+-    a: 'Indique ta date de naissance dans l’outil. La phase peut être calculée avec précision à partir de la date, car la Lune met environ 29,5 jours à accomplir son cycle. L’astrologie interprète la phase natale comme une nuance du tempérament : on dit que les personnes nées à la nouvelle lune aiment lancer les choses, tandis que celles nées à la pleine lune vivent de façon plus visible.',
++    a: 'Indique ta date de naissance dans l’outil. Sans heure, le résultat décrit un instant de référence ; la phase peut changer au cours de cette date. Ajoute une heure et un lieu pour calculer la phase à ton instant local de naissance. L’astrologie interprète la phase natale comme une nuance du tempérament : on dit que les personnes nées à la nouvelle lune aiment lancer les choses, tandis que celles nées à la pleine lune vivent de façon plus visible.',
+   },
+   {
+     q: 'À quelle fréquence y a-t-il une pleine lune ?',
+diff --git a/src/pages/it/moon-phase/index.astro b/src/pages/it/moon-phase/index.astro
+index 57095876..dd210a6d 100644
+--- a/src/pages/it/moon-phase/index.astro
++++ b/src/pages/it/moon-phase/index.astro
+@@ -11,7 +11,7 @@ const faq = [
+   },
+   {
+     q: 'Qual era la fase lunare il giorno del mio compleanno?',
+-    a: 'Inserisci la tua data di nascita nello strumento. La fase può essere calcolata con precisione dalla data, perché la Luna impiega circa 29,5 giorni per completare il ciclo. L’astrologia interpreta la fase natale come una sfumatura del temperamento: si dice che chi nasce con la luna nuova dia inizio alle cose, mentre chi nasce con la luna piena viva in modo più visibile.',
++    a: 'Inserisci la tua data di nascita nello strumento. Senza un’ora, il risultato descrive un momento di riferimento; la fase può cambiare nel corso della stessa data. Aggiungi un’ora e un luogo per calcolare la fase nel momento locale della tua nascita. L’astrologia interpreta la fase natale come una sfumatura del temperamento: si dice che chi nasce con la luna nuova dia inizio alle cose, mentre chi nasce con la luna piena viva in modo più visibile.',
+   },
+   {
+     q: 'Ogni quanto c’è la luna piena?',
+diff --git a/src/pages/moon-phase/index.astro b/src/pages/moon-phase/index.astro
+index 654a2a4b..8310fb4c 100644
+--- a/src/pages/moon-phase/index.astro
++++ b/src/pages/moon-phase/index.astro
+@@ -29,7 +29,7 @@ const faq = [
+   },
+   {
+     q: 'What was the moon phase on my birthday?',
+-    a: 'Enter your birth date in the lookup above — the phase is exact from the date alone, since the Moon takes about 29.5 days to run through its cycle. Astrologers read a birth phase as a temperament note: new-moon people start things, full-moon people are said to live more publicly.',
++    a: 'Enter your birth date in the lookup above. Without a time, the result describes a reference moment; the phase can change within the date. Add a time and place to calculate the phase for your local birth moment. Astrologers read a birth phase as a temperament note: new-moon people start things, full-moon people are said to live more publicly.',
+   },
+   {
+     q: 'How often is there a full moon?',
+@@ -108,8 +108,9 @@ const jsonLd = [
+     <div class="prose">
+       <h2>Reading a birthday moon</h2>
+       <p>
+-        The Moon runs its full cycle in about 29.5 days, so a birth date pins
+-        the phase precisely even when the time is long lost. Astrologers treat
++        The Moon runs its full cycle in about 29.5 days, but its phase can
++        change within a date. Without a birth time, the result describes a
++        reference moment. Astrologers treat
+         the birth phase as a note on temperament — the new-moon start, the
+         first-quarter push, the full-moon glare, the balsamic wind-down — and
+         it pairs naturally with your <a href="/moon-sign/">moon sign</a>, which
+diff --git a/src/pages/pt/moon-phase/index.astro b/src/pages/pt/moon-phase/index.astro
+index dc8b155f..6de6d6e9 100644
+--- a/src/pages/pt/moon-phase/index.astro
++++ b/src/pages/pt/moon-phase/index.astro
+@@ -11,7 +11,7 @@ const faq = [
+   },
+   {
+     q: 'Qual era a fase da Lua no dia do meu aniversário?',
+-    a: 'Informe sua data de nascimento na busca. A fase pode ser calculada com precisão a partir da data porque a Lua leva cerca de 29,5 dias para completar seu ciclo. A astrologia interpreta a fase natal como uma nuance do temperamento: diz-se que pessoas nascidas na Lua nova iniciam coisas e que pessoas nascidas na Lua cheia vivem de forma mais pública.',
++    a: 'Informe sua data de nascimento na busca. Sem uma hora, o resultado descreve um momento de referência; a fase pode mudar dentro dessa data. Adicione uma hora e um local para calcular a fase no momento local do seu nascimento. A astrologia interpreta a fase natal como uma nuance do temperamento: diz-se que pessoas nascidas na Lua nova iniciam coisas e que pessoas nascidas na Lua cheia vivem de forma mais pública.',
+   },
+   {
+     q: 'Com que frequência acontece uma Lua cheia?',
+diff --git a/src/pages/ru/moon-phase/index.astro b/src/pages/ru/moon-phase/index.astro
+index 4c110135..561b4666 100644
+--- a/src/pages/ru/moon-phase/index.astro
++++ b/src/pages/ru/moon-phase/index.astro
+@@ -11,7 +11,7 @@ const faq = [
+   },
+   {
+     q: 'Какая фаза Луны была в день моего рождения?',
+-    a: 'Введите дату рождения. Фазу можно точно рассчитать по дате: полный цикл Луны занимает около 29,5 суток. В астрологии натальная фаза — одна из заметок о темпераменте, а не приговор.',
++    a: 'Введите дату рождения. Без времени результат описывает опорный момент; в пределах одной даты фаза может измениться. Добавьте время и место для расчёта фазы на местный момент рождения. В астрологии натальная фаза — одна из заметок о темпераменте, а не приговор.',
+   },
+   {
+     q: 'Как часто бывает полнолуние?',
+diff --git a/src/server/chart-preview-model.ts b/src/server/chart-preview-model.ts
+index 4c719f17..f65163db 100644
+--- a/src/server/chart-preview-model.ts
++++ b/src/server/chart-preview-model.ts
+@@ -52,6 +52,6 @@ export function previewModel(value: string): ChartPreviewModel | null {
+     placements,
+     settings: chart.angles
+       ? `${chart.houseSystem === 'whole' ? 'Whole sign' : 'Placidus'} / Tropical`
+-      : '12:00 reference / No houses / Tropical',
++      : 'Reference positions / No houses / Tropical',
+   };
+ }
+diff --git a/src/server/chart-preview.ts b/src/server/chart-preview.ts
+index d2fe7913..ab7827e7 100644
+--- a/src/server/chart-preview.ts
++++ b/src/server/chart-preview.ts
+@@ -124,7 +124,7 @@ export async function handleChartLinkRequest(request: Request): Promise<Response
+   const redirectScript = `location.replace(${JSON.stringify(receiver)})`;
+   const description = model.placements.some((placement) => placement.label === 'Rising')
+     ? 'Sun, Moon and Rising positions — birth details not included.'
+-    : 'Sun and 12:00 reference Moon positions — birth details not included.';
++    : 'Reference Sun and Moon positions — birth details not included.';
+   const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta property="og:title" content="A shared birth chart"><meta property="og:description" content="${description}"><meta property="og:type" content="website"><meta property="og:image" content="${escapedImage}"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${escapedImage}"><title>A shared birth chart</title></head><body><p><a href="${escapedReceiver}">Open the shared chart</a></p><script nonce="chart-preview">${redirectScript}</script><noscript><meta http-equiv="refresh" content="0;url=${escapedReceiver}"></noscript></body></html>`;
+   return new Response(html, {
+     status: 200,
+diff --git a/src/strings/additions.fr.mjs b/src/strings/additions.fr.mjs
+index 8423dd74..4caa6b79 100644
+--- a/src/strings/additions.fr.mjs
++++ b/src/strings/additions.fr.mjs
+@@ -287,7 +287,7 @@ export const FR_ADDITIONS = Object.freeze({
+   'compatibilityPrefill.title': 'Paire {a} et {b} chargée',
+   'shareCard.balanced': 'Équilibré',
+   'shareCard.approachAction': 'Partager comment m’aborder',
+-  'shareCard.referenceTimeNote': 'Référence à 12 h 00 · Heure de naissance inconnue',
++  'shareCard.referenceTimeNote': 'Positions de référence · Heure de naissance inconnue',
+   'shareCard.approachBirthTimeNote': 'L’heure de naissance ajouterait mon Ascendant.',
+   'shareCard.approachKicker': 'PREMIER CONTACT · CONFIANCE · TENSION',
+   'shareCard.approachMoonTimeNote': 'Ma Lune peut changer de signe sans heure de naissance précise.',
+diff --git a/src/strings/additions.it.mjs b/src/strings/additions.it.mjs
+index fbe2596f..9d87c14b 100644
+--- a/src/strings/additions.it.mjs
++++ b/src/strings/additions.it.mjs
+@@ -293,7 +293,7 @@ export const IT_ADDITIONS = Object.freeze({
+   'compatibilityPrefill.title': 'Abbinamento {a} e {b} caricato',
+   'shareCard.balanced': 'Equilibrato',
+   'shareCard.approachAction': 'Condividi come avvicinarti a me',
+-  'shareCard.referenceTimeNote': 'Riferimento alle 12:00 · Ora di nascita sconosciuta',
++  'shareCard.referenceTimeNote': 'Posizioni di riferimento · Ora di nascita sconosciuta',
+   'shareCard.approachBirthTimeNote': 'L’ora di nascita aggiungerebbe il mio Ascendente.',
+   'shareCard.approachKicker': 'PRIMO CONTATTO · FIDUCIA · ATTRITO',
+   'shareCard.approachMoonTimeNote': 'La mia Luna può cambiare segno senza un’ora di nascita precisa.',
+diff --git a/src/strings/additions.pt.mjs b/src/strings/additions.pt.mjs
+index c5c074a5..2ffd1f4f 100644
+--- a/src/strings/additions.pt.mjs
++++ b/src/strings/additions.pt.mjs
+@@ -293,7 +293,7 @@ export const PT_ADDITIONS = Object.freeze({
+   'compatibilityPrefill.title': 'Combinação de {a} e {b} carregada',
+   'shareCard.balanced': 'Equilibrado',
+   'shareCard.approachAction': 'Compartilhar como chegar até mim',
+-  'shareCard.referenceTimeNote': 'Referência das 12:00 · Hora de nascimento desconhecida',
++  'shareCard.referenceTimeNote': 'Posições de referência · Hora de nascimento desconhecida',
+   'shareCard.approachBirthTimeNote': 'A hora de nascimento acrescentaria meu Ascendente.',
+   'shareCard.approachKicker': 'PRIMEIRO CONTATO · CONFIANÇA · ATRITO',
+   'shareCard.approachMoonTimeNote': 'Minha Lua pode mudar de signo sem uma hora exata de nascimento.',
+diff --git a/tests/api/og-chart.test.ts b/tests/api/og-chart.test.ts
+index 6b57560b..f6fd6a10 100644
+--- a/tests/api/og-chart.test.ts
++++ b/tests/api/og-chart.test.ts
+@@ -77,16 +77,17 @@ describe('chart preview functions', () => {
+     expect(JSON.stringify(model)).not.toMatch(/\b(?:birth|date|time|place|coordinates?)\b/i);
+   });
+ 
+-  it('labels an angle-free token as a noon reference without claiming Rising or houses', async () => {
++  it('labels an angle-free token as reference positions without a clock claim without claiming Rising or houses', async () => {
+     const model = previewModel(noAnglesToken);
+     expect(model?.placements.map(({ label }) => label)).toEqual(['Sun', 'Moon']);
+-    expect(model?.settings).toBe('12:00 reference / No houses / Tropical');
++    expect(model?.settings).toBe('Reference positions / No houses / Tropical');
+ 
+     const response = await linkHandler(new Request(
+       `https://zodiacs.org/api/og/chart?p=${encodeURIComponent(noAnglesToken)}`,
+     ));
+     const html = await response.text();
+-    expect(html).toContain('Sun and 12:00 reference Moon positions');
++    expect(html).toContain('Reference Sun and Moon positions');
++    expect(html).not.toMatch(/12:00|noon|midday/i);
+     expect(html).not.toContain('Sun, Moon and Rising positions');
+   });
+ 
+diff --git a/tests/local-date-reference-drive.mjs b/tests/local-date-reference-drive.mjs
+index 9f0e6cea..991b0b7f 100644
+--- a/tests/local-date-reference-drive.mjs
++++ b/tests/local-date-reference-drive.mjs
+@@ -16,6 +16,8 @@ const baseline = process.env.REFERENCE_BASELINE_DIR;
+ await mkdir(out, { recursive: true });
+ const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+ const sourcePaths = ['src/lib/time/localToUtc.ts', 'src/islands/ChartCalculator.tsx', 'src/islands/MoonPhaseTool.tsx', ...['en','es','fr','it','pt','ru'].map(locale=>`src/lib/i18n/ui/${locale}.ts`)];
++// The optional before-C014 baseline includes its own caller catalog keys.
++const baselineSourcePaths = sourcePaths.filter(path => path !== 'src/lib/time/localToUtc.ts');
+ const identity = await Promise.all(sourcePaths.map(async path=>({path,sha256:hash(await readFile(resolve(root,path)))})));
+ const entry = `
+ import { h, render } from 'preact';
+@@ -50,9 +52,9 @@ for (const variant of baseline ? ['baseline', 'candidate'] : ['candidate']) {
+   builder.onResolve({filter:/lib\/hooks\/useEngine$/},()=>({path:'loader',namespace:'reference'}));
+   builder.onResolve({filter:/lib\/geo\/search$/},()=>({path:'places',namespace:'reference'}));
+   builder.onLoad({filter:/.*/,namespace:'reference'},({path})=>({contents:path==='loader'?'export function useEngine(){return ()=>window.referenceLoadEngine();}':'export const preloadIndex=async()=>{};export const searchCities=async q=>q? [window.fixture.city].filter(Boolean):[];'}));
+-  builder.onLoad({filter:/\/(?:ChartCalculator|MoonPhaseTool)\.tsx$/},async({path})=>{
++  builder.onLoad({filter:/\/(?:islands\/(?:ChartCalculator|MoonPhaseTool)\.tsx|lib\/i18n\/ui\/(?:en|es|fr|it|pt|ru)\.ts)$/},async({path})=>{
+    const relative=path.slice(root.length+1),selected=variant==='baseline'?resolve(baseline,relative):path;
+-   return {contents:await readFile(selected,'utf8'),loader:'tsx',resolveDir:dirname(path)};
++   return {contents:await readFile(selected,'utf8'),loader:path.endsWith('.tsx')?'tsx':'ts',resolveDir:dirname(path)};
+   });
+   builder.onLoad({filter:/\/lib\/(?:chart-date-certainty|time\/localToUtc|engine\/(?:portable|calculator-receipt))\.ts$/},async({path})=>{
+    let text=await readFile(path,'utf8');const originalSha256=hash(text);
+@@ -74,7 +76,7 @@ for (const variant of baseline ? ['baseline', 'candidate'] : ['candidate']) {
+  const script=result.outputFiles.find(file=>file.path.endsWith('.js')).contents;
+  const css=result.outputFiles.find(file=>file.path.endsWith('.css'))?.contents??new Uint8Array();
+  const inputs=await Promise.all(Object.keys(result.metafile.inputs).filter(path=>!path.startsWith('<')&&!path.startsWith('reference:')).map(async path=>{
+-  const override=variant==='baseline'&&['src/islands/ChartCalculator.tsx','src/islands/MoonPhaseTool.tsx'].includes(path)?resolve(baseline,path):resolve(root,path);
++  const override=variant==='baseline'&&baselineSourcePaths.includes(path)?resolve(baseline,path):resolve(root,path);
+   const bytes=await readFile(override);return {path,bytes:bytes.length,sha256:hash(bytes),...(override!==resolve(root,path)?{sourceOverride:override}:{})};
+  }));
+  bundles.set(variant,{script,css});await writeFile(resolve(out,variant+'.js'),script);await writeFile(resolve(out,variant+'.css'),css);
+@@ -142,13 +144,16 @@ try{
+    const s=await setup(mode,variant);try{await fill(s,date,zone,known);await submit(s);const value=await data(s);assert.equal(value.result,true);assert.deepEqual(s.errors,[]);observations[variant]=value;}finally{await s.context.close();}
+   }
+   if(observations.baseline){
+-   // Chart's reference calculation is unchanged; the former two endpoint
+-   // samples are no longer used to assert date-wide Moon/Sun certainty.
+-   const {endpoints:oldSamples,...oldReference}=observations.baseline.outputs;
+-   const {endpoints:newSamples,...newReference}=observations.candidate.outputs;
++   // Reference calculations are unchanged. Former endpoint confidence samples
++   // are intentionally omitted; compare every primary output exactly.
++   const {endpoints:oldSamples,bodies:oldBodies,...oldReference}=observations.baseline.outputs;
++   const {endpoints:newSamples,bodies:newBodies,...newReference}=observations.candidate.outputs;
+    assert.deepEqual(newReference,oldReference);
+-   if(mode==='moon')assert.deepEqual(newSamples,oldSamples);
+-   else assert.equal(newSamples,undefined);
++   assert.equal(newSamples,undefined);
++   if(mode==='moon') {
++    assert.equal(newBodies.length,2);
++    assert.deepEqual(newBodies,oldBodies.slice(0,2));
++   } else assert.deepEqual(newBodies,oldBodies);
+   }
+   if(mode==='chart'){
+    assert.equal(observations.candidate.events.filter(row=>row.kind==='publicNatal').length,1);
+diff --git a/tests/moon-result-ownership-drive.mjs b/tests/moon-result-ownership-drive.mjs
+index 21bf569f..867dd98f 100644
+--- a/tests/moon-result-ownership-drive.mjs
++++ b/tests/moon-result-ownership-drive.mjs
+@@ -182,11 +182,11 @@ try {
+   await group('Unknown UTC and local-date engine inputs remain unchanged', async (page) => {
+     await fill(page, ''); await success(page);
+     const utcCalls = await page.evaluate(() => window.fixture.calls.splice(0));
+-    assert.deepEqual(utcCalls.map(({ utc }) => utc), ['1990-01-04T12:00:00.000Z', '1990-01-04T12:00:00.000Z', '1990-01-04T00:00:00.000Z', '1990-01-04T23:59:00.000Z']);
++    assert.deepEqual(utcCalls.map(({ utc }) => utc), ['1990-01-04T12:00:00.000Z', '1990-01-04T12:00:00.000Z']);
+     await chooseCity(page); await success(page);
+     const localCalls = await page.evaluate(() => window.fixture.calls.splice(0));
+-    assert.deepEqual(localCalls.map(({ utc }) => utc), ['1990-01-04T05:00:00.000Z', '1990-01-04T05:00:00.000Z', '1990-01-03T17:00:00.000Z', '1990-01-04T16:59:00.000Z']);
+-    return { utcCalls, localCalls, qualification: 'No date-interval or sign-candidate correction is included.' };
++    assert.deepEqual(localCalls.map(({ utc }) => utc), ['1990-01-04T05:00:00.000Z', '1990-01-04T05:00:00.000Z']);
++    return { utcCalls, localCalls, qualification: 'Primary reference inputs are unchanged; endpoint confidence samples are omitted.' };
+   });
+   for (const locale of ['es', 'fr', 'it', 'pt', 'ru']) await group(`Existing ${locale} result text and edit ownership`, async (page) => {
+     await page.goto(`${origin}/?locale=${locale}`); await page.locator('#mp-date').waitFor(); await settle(page);
+diff --git a/tests/t17-positions-share.mjs b/tests/t17-positions-share.mjs
+index 6fab1048..51b734f4 100644
+--- a/tests/t17-positions-share.mjs
++++ b/tests/t17-positions-share.mjs
+@@ -1032,7 +1032,7 @@ try {
+       const unknownMoonCardText = await unknownMoon.evaluate(() => (
+         globalThis.__t17CanvasText.map((entry) => entry.value).join(' | ')
+       ));
+-      assert.equal(unknownMoonCardText.includes('12:00 reference · Birth time unknown'), true,
++      assert.equal(unknownMoonCardText.includes('Reference positions · Birth time unknown'), true,
+         'a no-time Moon image must identify its noon reference');
+       assert.equal(unknownMoonCardText.includes('My Moon may change signs without an exact birth time.'), true,
+         'a no-time Moon image must retain its existing possibility warning');
+diff --git a/src/islands/MoonPhaseTool.reference.test.ts b/src/islands/MoonPhaseTool.reference.test.ts
+new file mode 100644
+index 00000000..57b20736
+--- /dev/null
++++ b/src/islands/MoonPhaseTool.reference.test.ts
+@@ -0,0 +1,119 @@
++import { readFileSync } from 'node:fs';
++import ts from 'typescript';
++import { describe, expect, it } from 'vitest';
++import * as engine from '../lib/engine/full';
++import { moonPhaseName } from '../lib/engine/lite';
++import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
++import { signForLongitude } from '../lib/signs';
++import { t, type CatalogLocale } from '../lib/i18n';
++
++// Execute the exact caller with controlled state and loader boundaries. The
++// separate native driver covers Preact rendering, visibility and ownership.
++const source = readFileSync(new URL('./MoonPhaseTool.tsx', import.meta.url), 'utf8');
++const ast = ts.createSourceFile('MoonPhaseTool.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
++const functions = new Map<string, string>();
++function visit(node: ts.Node) {
++  if (ts.isFunctionDeclaration(node) && ['lookup', 'moonIlluminationFromAngle'].includes(node.name?.text ?? '')) {
++    functions.set(node.name!.text, node.getText(ast));
++  }
++  ts.forEachChild(node, visit);
++}
++visit(ast);
++if (functions.size !== 2) throw new Error('Moon lookup functions not found');
++const execute = new Function('context', `with(context){${ts.transpile([...functions.values()].join('\n'), {
++  target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext,
++})};return lookup({preventDefault(){}});}`);
++type Result = { phase: ReturnType<typeof moonPhaseName>; angle: number; illum: number; lon: number; caption: string };
++type Input = { date: string; time: string; zone: string | null; locale?: CatalogLocale };
++async function capture({ date, time, zone, locale = 'en' }: Input) {
++  const calls: Array<{ body: string; utc: string; value: number }> = [];
++  const resolutions: string[][] = [];
++  const state: { result: Result | null; error: string; busy: boolean } = { result: null, error: '', busy: false };
++  await execute({ date, time, city: zone ? { tz: zone } : null, locale, t, moonPhaseName,
++    lookupRevisionRef: { current: 0 }, focusAfterComputeRef: { current: false },
++    setBusy: (value: boolean) => { state.busy = value; },
++    setError: (value: string) => { state.error = value; },
++    setResult: (value: Result | null) => { state.result = value; },
++    loadEngine: async () => ({ ...engine, bodyLongitude: (...args: Parameters<typeof engine.bodyLongitude>) => {
++      const value = engine.bodyLongitude(...args); calls.push({ body: args[0], utc: args[1].toISOString(), value }); return value;
++    } }),
++    resolveLocalToUtc: (...args: Parameters<typeof resolveLocalToUtc>) => { resolutions.push(args); return resolveLocalToUtc(...args); },
++    localDateContainsUtc, calculationError: (_error: unknown, _locale: string, fallback: string) => fallback,
++    console: { error() {} },
++  });
++  return { ...state, calls, resolutions };
++}
++const controls: Array<[string, Input]> = [
++  ['UTC singleton', { date: '1990-01-04', time: '', zone: null }],
++  ['local former two signs', { date: '1990-01-01', time: '', zone: 'Europe/London' }],
++  ['Toronto omitted member', { date: '1919-03-31', time: '', zone: 'America/Toronto' }],
++  ['Juneau returned member', { date: '1867-10-18', time: '', zone: 'America/Juneau' }],
++  ['same-date noon gap', { date: '2000-01-15', time: '', zone: 'Africa/Khartoum' }],
++  ['known local gap', { date: '2000-01-15', time: '12:00', zone: 'Africa/Khartoum' }],
++  ['known UTC', { date: '2000-01-15', time: '08:30', zone: null }],
++  ['known skipped date', { date: '2011-12-30', time: '08:30', zone: 'Pacific/Apia' }],
++];
++
++describe('Moon phase reference result', () => {
++  it.each(controls)('%s preserves every primary value and omits endpoint confidence work', async (_name, input) => {
++    const actual = await capture(input);
++    const utc = input.zone ? resolveLocalToUtc(input.date, input.time || '12:00', input.zone).utc
++      : new Date(`${input.date}T${input.time || '12:00'}:00Z`);
++    const lon = engine.bodyLongitude('Moon', utc), sun = engine.bodyLongitude('Sun', utc);
++    const angle = (((lon - sun) % 360) + 360) % 360;
++    expect(actual.error).toBe('');
++    expect(actual.busy).toBe(false);
++    const { caption, ...numerical } = actual.result!;
++    expect(JSON.stringify(numerical)).toBe(JSON.stringify({ phase: moonPhaseName(utc), angle,
++      illum: (1 - Math.cos((angle * Math.PI) / 180)) / 2, lon }));
++    expect(actual.calls).toEqual([{ body: 'Moon', utc: utc.toISOString(), value: lon }, { body: 'Sun', utc: utc.toISOString(), value: sun }]);
++    expect(actual.resolutions).toEqual(input.zone ? [[input.date, input.time || '12:00', input.zone]] : []);
++    expect(caption).toBe(input.time ? input.zone ? '' : t('en', 'utcTimeCaption')
++      : t('en', input.zone ? 'referenceLocalCaption' : 'referenceUtcCaption'));
++  });
++
++  it('retains the actual 13:00 local gap result without promising a noon clock', async () => {
++    const actual = await capture({ date: '2000-01-15', time: '', zone: 'Africa/Khartoum' });
++    expect(actual.calls[0].utc).toBe('2000-01-15T10:00:00.000Z');
++    expect(new Intl.DateTimeFormat('en-GB', { timeZone: 'Africa/Khartoum', hour: '2-digit', hourCycle: 'h23' })
++      .format(new Date(actual.calls[0].utc))).toBe('13');
++    expect(actual.result!.caption).not.toMatch(/12:00|noon|midday|exact/i);
++  });
++
++  it.each([
++    ['2011-12-30', 'Pacific/Apia'], ['1993-08-21', 'Pacific/Kwajalein'],
++    ['1994-12-31', 'Pacific/Kiritimati'], ['1844-12-31', 'Pacific/Guam'],
++  ])('keeps %s %s refusal before all numerical work', async (date, zone) => {
++    const actual = await capture({ date, time: '', zone });
++    expect(actual.result).toBeNull(); expect(actual.calls).toEqual([]);
++    expect(actual.error).toBe(t('en', 'localDateReferenceError'));
++  });
++
++  it.each(['en', 'es', 'fr', 'it', 'pt', 'ru'] as const)('%s captures the local and UTC reference qualification', async locale => {
++    for (const zone of [null, 'Europe/London']) {
++      const actual = await capture({ date: '1990-01-01', time: '', zone, locale });
++      expect(actual.result!.caption).toBe(t(locale, zone ? 'referenceLocalCaption' : 'referenceUtcCaption'));
++      expect(actual.result!.caption).not.toMatch(/12:00|12 h/);
++    }
++  });
++
++  it.each([
++    ['2024-01-09', ['Waning Crescent', 'Waning Crescent', 'New Moon']],
++    ['2024-01-16', ['Waxing Crescent', 'First Quarter', 'First Quarter']],
++    ['2024-04-07', ['Waning Crescent', 'New Moon', 'New Moon']],
++    ['2024-01-01', ['Waning Gibbous', 'Waning Gibbous', 'Waning Gibbous']],
++  ])('preserves the existing finite phase-category witness for %s', (date, phases) => {
++    expect(['00:00', '12:00', '23:59'].map(time => moonPhaseName(new Date(`${date}T${time}:00Z`)))).toEqual(phases);
++  });
++
++  it.each([
++    ['1919-03-31', 'America/Toronto', '1919-03-31T04:30:00Z', 'pisces', 'aries'],
++    ['1867-10-18', 'America/Juneau', '1867-10-19T00:31:13Z', 'cancer', 'gemini'],
++  ])('retains the omitted member of %s as a counterexample, not a complete range', async (date, zone, instant, sign, reference) => {
++    const actual = await capture({ date, time: '', zone });
++    expect(localDateContainsUtc(date, new Date(instant), zone)).toBe(true);
++    expect(signForLongitude(engine.bodyLongitude('Moon', new Date(instant))).slug).toBe(sign);
++    expect(signForLongitude(actual.result!.lon).slug).toBe(reference);
++    expect(actual.result).not.toHaveProperty('altLon');
++  });
++});
+diff --git a/src/lib/reference-captions.test.tsx b/src/lib/reference-captions.test.tsx
+new file mode 100644
+index 00000000..63f3969c
+--- /dev/null
++++ b/src/lib/reference-captions.test.tsx
+@@ -0,0 +1,85 @@
++import { readFileSync } from 'node:fs';
++import { h } from 'preact';
++import render from 'preact-render-to-string';
++import { describe, expect, it } from 'vitest';
++import Inspector from '../islands/explorer/Inspector';
++import { computeChart } from './engine/full';
++import { resolveLocalToUtc } from './time/localToUtc';
++import { chartSheetProvenanceLines, chartSheetSettings, shareCardTimeNotes } from './share-card';
++import { shareCardText } from './share-card-copy';
++import { buildSceneModel } from './scene/build';
++import { decodePositionsLink, encodePositionsLink } from './share-positions';
++import { t, type CatalogLocale } from './i18n';
++import { previewModel } from '../server/chart-preview-model';
++import en from './i18n/ui/en'; import es from './i18n/ui/es'; import fr from './i18n/ui/fr';
++import itUi from './i18n/ui/it'; import pt from './i18n/ui/pt'; import ru from './i18n/ui/ru';
++
++const catalogs = { en, es, fr, it: itUi, pt, ru };
++const locales = Object.keys(catalogs) as CatalogLocale[];
++const r = resolveLocalToUtc('2000-01-15', '12:00', 'Africa/Khartoum');
++const chart = computeChart({ utc: r.utc, latitude: 15.5, longitude: 32.5, houseSystem: 'whole', timeKnown: false, flags: r.flags });
++const details = { date: '2000-01-15', time: '12:00', timeKnown: false, city: '', country: '', timezone: 'Africa/Khartoum' };
++
++describe('reference caption output contracts', () => {
++  it('keeps the real gap-adjusted UTC and privacy choice while making no noon claim', () => {
++    expect(chart.input.utc.toISOString()).toBe('2000-01-15T10:00:00.000Z');
++    expect(chartSheetProvenanceLines(chart, details)).toEqual(['Birth details hidden']);
++    expect(chartSheetProvenanceLines(chart, details, false)).toEqual([
++      '2000-01-15 · Birth time unknown · Reference positions',
++      '15.5000°N · 32.5000°E · Africa/Khartoum',
++      'Reference UTC · 2000-01-15 10:00 UTC',
++      'DST gap adjusted forward',
++    ]);
++    expect(chartSheetSettings(chart)).toBe('Reference positions · Apparent geocentric · Tropical of date · No houses · True Node');
++  });
++
++  it.each([
++    ['en', 'Reference positions · Birth time unknown'],
++    ['es', 'Posiciones de referencia · Hora de nacimiento desconocida'],
++    ['fr', 'Positions de référence · Heure de naissance inconnue'],
++    ['it', 'Posizioni di riferimento · Ora di nascita sconosciuta'],
++    ['pt', 'Posições de referência · Hora de nascimento desconhecida'],
++    ['ru', 'Опорные положения · Время рождения неизвестно'],
++  ] as const)('%s keeps the exact generic export note with no invented clock', (locale, note) => {
++    expect(shareCardTimeNotes(locale, { referenceTime: true })).toEqual([note]);
++    expect(shareCardText(locale, 'referenceTimeNote')).toBe(note);
++    expect(shareCardTimeNotes(locale, { referenceTime: false })).toEqual([]);
++  });
++
++  it.each(locales)('%s preserves 420 keys with complete one-for-one caption retirement', locale => {
++    const catalog = catalogs[locale];
++    expect(Object.keys(catalog)).toHaveLength(420);
++    for (const key of ['middayLocalCaption', 'middayUtcCaption', 'moonChangedNotice']) expect(catalog).not.toHaveProperty(key);
++    for (const key of ['referenceLocalCaption', 'referenceUtcCaption', 'moonPhaseAtReference']) expect(catalog).toHaveProperty(key);
++    expect(t(locale, 'moonPhaseAtReference')).not.toBe(t(locale, 'moonPhaseAtBirth'));
++  });
++
++  it.each(locales)('%s describes a clockless Inspector scene without a clock or zone assertion', locale => {
++    const scene = buildSceneModel({ ...chart, moonSignCandidates: [] });
++    expect(scene).not.toHaveProperty('input'); expect(scene).not.toHaveProperty('utc'); expect(scene).not.toHaveProperty('zone');
++    const markup = render(h(Inspector, { scene, selection: { kind: 'body', body: 'Moon' }, onSelect() {}, locale }));
++    expect(markup).toContain(t(locale, 'noTimeNotice'));
++    expect(markup).not.toMatch(/12:00|12 h|civil time|гражданского/);
++  });
++
++  it('keeps a non-noon public token clockless and its reference placements unchanged', () => {
++    const token = encodePositionsLink({ bodies: chart.bodies, angles: chart.angles, houseSystem: 'whole', engineVersion: chart.engineVersion })!;
++    const decoded = decodePositionsLink(token)!;
++    expect(Object.keys(decoded)).toEqual(['bodies', 'angles', 'houseSystem', 'engineVersion']);
++    expect(decoded.angles).toBeNull();
++    const model = previewModel(token)!;
++    expect(model.settings).toBe('Reference positions / No houses / Tropical');
++    expect(model.placements).toEqual([
++      { label: 'Sun', sign: 'Capricorn', hue: '#C0DEA8', degree: '24 deg 33 min' },
++      { label: 'Moon', sign: 'Taurus', hue: '#B9D4BE', degree: '5 deg 25 min' },
++    ]);
++  });
++
++  it.each(['', 'es/', 'fr/', 'it/', 'pt/', 'ru/'])('%s Moon FAQ supplies the same source to visible and structured content', prefix => {
++    const page = readFileSync(new URL(`../pages/${prefix}moon-phase/index.astro`, import.meta.url), 'utf8');
++    expect(page).toContain('faq.map');
++    expect(page).toContain('text: a');
++    expect(page).toMatch(/<p>\{a\}<\/p>|items=\{faq\}/);
++    expect(page).not.toMatch(/phase is exact from the date alone|phase précisément|fase puede calcularse con precisión a partir de la fecha|fase può essere calcolata con precisione dalla data|fase pode ser calculada com precisão a partir da data|Фазу можно точно рассчитать по дате/);
++  });
++});
+diff --git a/tests/reference-caption-drive.mjs b/tests/reference-caption-drive.mjs
+new file mode 100644
+index 00000000..5adac876
+--- /dev/null
++++ b/tests/reference-caption-drive.mjs
+@@ -0,0 +1,165 @@
++/** Actual Preact reference-caption checks with real numerical and image modules.
++ * Optional REFERENCE_BASELINE_DIR supplies an immutable prior source copy for
++ * same-browser byte comparisons. No complete-date or numerical-oracle claim.
++ */
++import assert from 'node:assert/strict';
++import { readFile, writeFile, mkdir } from 'node:fs/promises';
++import { createHash } from 'node:crypto';
++import { createServer } from 'node:http';
++import { resolve, dirname, extname } from 'node:path';
++import { build } from 'esbuild';
++import { chromium } from 'playwright-core';
++import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
++
++const root = resolve(import.meta.dirname, '..');
++const out = resolve(process.env.OUT_DIR ?? resolve(root, 'tests/visual/artifacts/reference-caption'));
++const baseline = process.env.REFERENCE_BASELINE_DIR;
++await mkdir(out, { recursive: true });
++const hash = bytes => createHash('sha256').update(bytes).digest('hex');
++const sourcePaths = ['src/islands/MoonPhaseTool.tsx', 'src/islands/ChartCalculator.tsx',
++  ...['en','es','fr','it','pt','ru'].map(locale=>`src/lib/i18n/ui/${locale}.ts`),
++  ...['','es/','fr/','it/','pt/','ru/'].map(locale=>`src/pages/${locale}moon-phase/index.astro`),
++  'src/lib/share-card-copy.ts', 'src/lib/share-card.ts', 'src/server/chart-preview-model.ts', 'src/server/chart-preview.ts',
++  'src/islands/explorer/tour/copy.ts', 'src/islands/explorer/lens/copy.ts',
++  ...['pt','fr','it'].map(locale=>`src/strings/additions.${locale}.mjs`)];
++const identity = await Promise.all(sourcePaths.map(async path=>({path,sha256:hash(await readFile(resolve(root,path)))})));
++const entry = `
++import { h, render } from 'preact';
++import MoonPhaseTool from './src/islands/MoonPhaseTool';
++import ChartCalculator from './src/islands/ChartCalculator';
++import * as actual from './src/lib/engine/full';
++import { moonPhaseName } from './src/lib/engine/lite';
++import { resolveLocalToUtc } from './src/lib/time/localToUtc';
++import { prepareChartCard, downloadPreparedChartCard, chartSheetSettings, chartSheetProvenanceLines, shareCardTimeNotes } from './src/lib/share-card';
++import { encodePositionsLink } from './src/lib/share-positions';
++import { previewModel } from './src/server/chart-preview-model';
++import en from './src/lib/i18n/ui/en';import es from './src/lib/i18n/ui/es';import fr from './src/lib/i18n/ui/fr';import it from './src/lib/i18n/ui/it';import pt from './src/lib/i18n/ui/pt';import ru from './src/lib/i18n/ui/ru';
++import { RUSSIAN_RUNTIME } from './src/lib/i18n/ru-runtime/server';
++const catalogs={en,es,fr,it,pt,ru};let pending=null,prepared=null;
++window.captionOutputs={calls:[],lookup:null,chart:null};
++const engine={...actual,bodyLongitude(body,utc){const value=actual.bodyLongitude(body,utc);window.captionOutputs.calls.push({body,utc:utc.toISOString(),value});return value;},
++ computeChart(input){const result=actual.computeChart(input);window.captionOutputs.chart=JSON.stringify(result);return result;}};
++window.captionLoadEngine=()=>pending?pending.promise:Promise.resolve(engine);
++window.fixture={city:null,canvasText:[],
++ reset(){window.captionOutputs={calls:[],lookup:null,chart:null};},
++ hold(){let done;const promise=new Promise(resolve=>done=resolve);pending={promise,done};},
++ release(){const old=pending;pending=null;old?.done(engine);},
++ phase(instant){return moonPhaseName(new Date(instant));},
++ mount(mode,locale){window.__ZDX_UI__={locale,messages:catalogs[locale]};window.__ZDX_RU__={locale:'ru',data:RUSSIAN_RUNTIME};render(h(mode==='chart'?ChartCalculator:MoonPhaseTool,mode==='chart'?{mode:'moon',locale}:{locale}),document.getElementById('mount'));},
++ unmount(){render(null,document.getElementById('mount'));},
++ async prepareImage(locale,known=false,variant='full'){
++  const r=resolveLocalToUtc('2000-01-15',known?'08:30':'12:00','Africa/Khartoum');
++  const chart=actual.computeChart({utc:r.utc,latitude:15.5,longitude:32.5,houseSystem:'whole',timeKnown:known,flags:r.flags});
++  if(!known)chart.moonSignCandidates=[];
++  const details={date:'2000-01-15',time:known?'08:30':'12:00',timeKnown:known,city:'',country:'',timezone:'Africa/Khartoum'};
++  const token=encodePositionsLink({bodies:chart.bodies,angles:chart.angles,houseSystem:'whole',engineVersion:chart.engineVersion});
++  window.fixture.canvasText=[];prepared=await prepareChartCard(chart,{locale,variant,referenceTime:!known,moonAmbiguous:!known,hideBirthDetails:false,birthDetails:details});
++  const snapshot={chart:JSON.stringify(chart),token,preview:previewModel(token),settings:chartSheetSettings(chart),provenance:chartSheetProvenanceLines(chart,details,false),notes:shareCardTimeNotes(locale,{referenceTime:!known}),canvasText:[...window.fixture.canvasText],filename:prepared.filename};
++  document.getElementById('image-download').disabled=false;return snapshot;
++ }};
++const originalFill=CanvasRenderingContext2D.prototype.fillText;
++CanvasRenderingContext2D.prototype.fillText=function(text,...args){window.fixture.canvasText.push(String(text));return originalFill.call(this,text,...args);};
++document.getElementById('image-download').onclick=()=>{downloadPreparedChartCard(prepared);};
++const params=new URL(location.href).searchParams;window.fixture.mount(params.get('mode')??'moon',params.get('locale')??'en');
++`;
++await writeFile(resolve(out, 'fixture-entry.tsx.log'), entry);
++const bundles = new Map();
++for (const variant of baseline ? ['baseline', 'candidate'] : ['candidate']) {
++  const instrumentation = [];
++  const result = await build({absWorkingDir:root,stdin:{contents:entry,resolveDir:root},outfile:resolve(out,variant+'.js'),bundle:true,write:false,platform:'browser',format:'iife',target:'es2022',jsx:'automatic',jsxImportSource:'preact',define:{'import.meta.env':'{}'},metafile:true,
++    plugins:[{name:'declared-caption-fixture',setup(builder){
++      builder.onResolve({filter:/lib\/hooks\/useEngine$/},()=>({path:'loader',namespace:'caption'}));
++      builder.onResolve({filter:/lib\/geo\/search$/},()=>({path:'places',namespace:'caption'}));
++      builder.onLoad({filter:/.*/,namespace:'caption'},({path})=>({contents:path==='loader'?'export function useEngine(){return ()=>window.captionLoadEngine();}':'export const preloadIndex=async()=>{};export const searchCities=async q=>q?[window.fixture.city].filter(Boolean):[];'}));
++      builder.onLoad({filter:/\.(?:ts|tsx|mjs)$/},async({path})=>{
++        const relative=path.slice(root.length+1);if(!sourcePaths.includes(relative))return null;
++        const selected=variant==='baseline'?resolve(baseline,relative):path;
++        let source=await readFile(selected,'utf8');const originalSha256=hash(source);
++        if(relative==='src/islands/MoonPhaseTool.tsx'){
++          const marker='const [result, setResult] = useState<Lookup | null>(null);';assert.equal(source.split(marker).length,2);
++          source=source.replace(marker,'const [result, setResultState] = useState<Lookup | null>(null);\n  const setResult=(value:Lookup|null)=>{window.captionOutputs.lookup=value?JSON.stringify(value):null;setResultState(value);};');
++        }
++        instrumentation.push({path:relative,sourceOverride:selected,originalSha256,instrumentedSha256:hash(source)});
++        return {contents:source,loader:extname(path)==='.tsx'?'tsx':'ts',resolveDir:dirname(path)};
++      });
++    }}]});
++  const script=result.outputFiles.find(file=>file.path.endsWith('.js')).contents;
++  const css=result.outputFiles.find(file=>file.path.endsWith('.css'))?.contents??new Uint8Array();
++  const inputs=await Promise.all(Object.keys(result.metafile.inputs).filter(path=>!path.startsWith('<')&&!path.startsWith('caption:')).map(async path=>{
++    const selected=variant==='baseline'&&sourcePaths.includes(path)?resolve(baseline,path):resolve(root,path);
++    const bytes=await readFile(selected);return {path,source:selected,bytes:bytes.length,sha256:hash(bytes)};
++  }));
++  bundles.set(variant,{script,css});await writeFile(resolve(out,variant+'.js'),script);await writeFile(resolve(out,variant+'.css'),css);
++  await writeFile(resolve(out,variant+'-build.json'),JSON.stringify({bundleSha256:hash(script),cssSha256:hash(css),inputs,instrumentation,metafile:result.metafile},null,2)+'\n');
++}
++const requests=[],contexts=[],results=[];let browser,origin;
++const server=createServer(async(req,res)=>{
++  const url=new URL(req.url,'http://local'),variant=url.pathname.includes('baseline')?'baseline':'candidate',bundle=bundles.get(variant);
++  if(url.pathname.startsWith('/assets/')||url.pathname.startsWith('/fonts/')){
++    const path=resolve(root,'public','.'+url.pathname);
++    if(!path.startsWith(resolve(root,'public')+'/')){res.statusCode=404;res.end();return;}
++    try{const b=await readFile(path);res.setHeader('Content-Type',({'.png':'image/png','.avif':'image/avif','.svg':'image/svg+xml','.woff2':'font/woff2'})[extname(path)]??'application/octet-stream');res.end(b);}catch{res.statusCode=404;res.end();}return;
++  }
++  if(url.pathname.endsWith('.js')){res.setHeader('Content-Type','text/javascript');res.end(bundle.script);}
++  else if(url.pathname.endsWith('.css')){res.setHeader('Content-Type','text/css');res.end(bundle.css);}
++  else{res.setHeader('Content-Type','text/html');res.end(`<!doctype html><title>Reference caption fixture</title><link rel="stylesheet" href="/${variant}.css"><div id="mount"></div><button id="image-download" disabled>Download fixture image</button><script src="/${variant}.js"></script>`);}
++});
++async function setup(mode='moon',variant='candidate',locale='en'){
++  const context=await browser.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce',timezoneId:'UTC',acceptDownloads:true});contexts.push(context);
++  await context.route('**/*',route=>{const req=route.request(),allowed=req.url().startsWith(origin+'/')&&req.method()==='GET';requests.push({variant,mode,url:req.url(),method:req.method(),allowed});return allowed?route.continue():route.abort();});
++  const page=await context.newPage(),errors=[];page.on('pageerror',error=>errors.push(String(error)));
++  await page.goto(origin+'/'+variant+'?mode='+mode+'&locale='+locale);await page.locator(mode==='chart'?'#birth-date':'#mp-date').waitFor();
++  return {page,context,mode,variant,locale,errors};
++}
++async function fill(s,date,time='',zone=null){
++  const {page,mode}=s;await page.locator(mode==='chart'?'#birth-date':'#mp-date').fill(date);
++  if(mode==='chart')await page.locator('.calc__form input[type=checkbox]').setChecked(time==='');
++  if(time||mode==='moon')await page.locator(mode==='chart'?'#birth-time':'#mp-time').fill(time);
++  if(await page.locator('.place__clear').count())await page.locator('.place__clear').click();
++  if(zone){await page.evaluate(zone=>window.fixture.city={name:'Synthetic place',admin1:'',country:'',tz:zone,lat:15.5,lon:32.5,pop:0},zone);await page.locator(mode==='chart'?'#place':'#mp-place').fill('Synthetic');await page.locator('[role=listbox] [role=option]').first().click();}
++}
++async function submit(s){await s.page.locator('.calc__submit').click();await s.page.waitForFunction(()=>document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false');await s.page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));}
++async function data(s){return s.page.evaluate(()=>({outputs:window.captionOutputs,result:!!document.querySelector('.calc__result'),text:document.querySelector('.calc__result')?.innerText??'',notice:document.querySelector('.calc__result>.notice')?.textContent??'',phase:document.querySelector('.calc__phase')?.textContent??'',error:document.querySelector('.calc__error')?.textContent??'',profile:localStorage.getItem('zodiacs.profile.v1')}));}
++async function group(name,fn){try{results.push({name,passed:true,evidence:await fn()});}catch(error){results.push({name,passed:false,error:String(error.stack??error)});}}
++try{
++  await new Promise(done=>server.listen(0,'127.0.0.1',done));origin='http://127.0.0.1:'+server.address().port;
++  browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});
++  const cases=[['UTC singleton','1990-01-04','',null],['UTC phase crossing','2024-01-09','',null],['local former pair','1990-01-01','','Europe/London'],['Toronto','1919-03-31','','America/Toronto'],['Juneau','1867-10-18','','America/Juneau'],['13:00 gap reference','2000-01-15','','Africa/Khartoum'],['known gap','2000-01-15','12:00','Africa/Khartoum'],['known UTC','2000-01-15','08:30',null],['known skipped','2011-12-30','08:30','Pacific/Apia'],['repeated date','1892-07-04','','Pacific/Apia']];
++  for(const [name,date,time,zone]of cases)await group('Primary preservation: '+name,async()=>{
++    const observed={};for(const variant of bundles.keys()){
++      const s=await setup('moon',variant);try{await fill(s,date,time,zone);await submit(s);const value=await data(s);assert.equal(value.result,true);assert.equal(value.profile,null);assert.deepEqual(s.errors,[]);observed[variant]=value;}finally{await s.context.close();}
++    }
++    const value=observed.candidate,lookup=JSON.parse(value.outputs.lookup);
++    assert.equal(value.outputs.calls.length,2);assert.deepEqual(value.outputs.calls.map(row=>row.body),['Moon','Sun']);assert.equal('altLon'in lookup,false);
++    if(!time||!zone){assert.ok(value.notice.length>0);assert.ok(value.text.includes(value.notice));assert.equal(value.notice,lookup.caption);}
++    else assert.equal(value.notice,'');
++    if(observed.baseline){const old=JSON.parse(observed.baseline.outputs.lookup),{caption:oldCaption,altLon:oldAlternate,...oldPoint}=old,{caption,...point}=lookup;assert.equal(JSON.stringify(point),JSON.stringify(oldPoint));assert.deepEqual(value.outputs.calls,observed.baseline.outputs.calls.slice(0,2));}
++    return observed;
++  });
++  for(const locale of ['en','es','fr','it','pt','ru'])await group('Visible localized qualification '+locale,async()=>{
++    const s=await setup('moon','candidate',locale);try{const observed=[];for(const [time,zone,key]of [['',null,'referenceUtcCaption'],['','Africa/Khartoum','referenceLocalCaption'],['08:30',null,'utcTimeCaption']]){
++      await fill(s,'2000-01-15',time,zone);assert.equal((await data(s)).result,false);await submit(s);const value=await data(s),expected=await s.page.evaluate(key=>window.__ZDX_UI__.messages[key],key);assert.equal(value.notice,expected);assert.ok(value.text.includes(expected));assert.equal(await s.page.locator('.calc__result [data-evidence-disclosure] p').count(),0);assert.equal(await s.page.locator('.calc__result .mp__signline .sign-chip').count()<=1,true);observed.push(value);
++    }await s.page.screenshot({path:resolve(out,'caption-'+locale+'.png'),fullPage:true});assert.deepEqual(s.errors,[]);return observed;}finally{await s.context.close();}
++  });
++  for(const locale of ['en','es','fr','it','pt','ru'])await group('Chart Moon labels '+locale,async()=>{
++    const observed={};for(const variant of bundles.keys()){
++      const s=await setup('chart',variant,locale);try{const values=[];for(const time of ['','08:30']){await fill(s,'2000-01-15',time,'Africa/Khartoum');await submit(s);const value=await data(s);assert.equal(value.result,true);if(variant==='candidate'){const label=await s.page.evaluate(key=>window.__ZDX_UI__.messages[key],time?'moonPhaseAtBirth':'moonPhaseAtReference');assert.ok(value.phase.startsWith(label+':'));}values.push(value);}observed[variant]=values;assert.deepEqual(s.errors,[]);}finally{await s.context.close();}
++    }if(observed.baseline)for(let i=0;i<2;i++){assert.equal(observed.candidate[i].outputs.chart,observed.baseline[i].outputs.chart);if(i===1)assert.equal(observed.candidate[i].phase,observed.baseline[i].phase);}return observed;
++  });
++  for(const [date,zone]of [['2011-12-30','Pacific/Apia'],['1993-08-21','Pacific/Kwajalein'],['1994-12-31','Pacific/Kiritimati'],['1844-12-31','Pacific/Guam']])await group('Refusal and recovery '+zone,async()=>{
++    const s=await setup();try{await fill(s,'2000-01-02','',zone);await submit(s);assert.equal((await data(s)).result,true);await fill(s,date,'',zone);assert.equal((await data(s)).result,false);await s.page.evaluate(()=>window.fixture.reset());await submit(s);const refused=await data(s);assert.equal(refused.result,false);assert.deepEqual(refused.outputs.calls,[]);assert.equal(refused.error,await s.page.evaluate(()=>window.__ZDX_UI__.messages.localDateReferenceError));assert.equal(await s.page.evaluate(()=>document.activeElement?.getAttribute('role')),'alert');await fill(s,'2000-01-02','',zone);await submit(s);assert.equal((await data(s)).result,true);assert.deepEqual(s.errors,[]);return refused;}finally{await s.context.close();}
++  });
++  for(const [locale,known,variant]of [...['en','es','fr','it','pt','ru'].map(locale=>[locale,false,'full']),['en',false,'sheet'],['en',true,'full']])await group(`Native image ${locale} ${known?'known':'reference'} ${variant}`,async()=>{
++    const observed={};for(const sourceVariant of bundles.keys()){
++      const s=await setup('moon',sourceVariant,locale);try{const value=await s.page.evaluate(args=>window.fixture.prepareImage(...args),[locale,known,variant]);
++        const downloadPromise=s.page.waitForEvent('download');await s.page.locator('#image-download').click();const download=await downloadPromise;const destination=resolve(out,`${sourceVariant}-${locale}-${known?'known':'reference'}-${variant}.png`);await download.saveAs(destination);const bytes=await readFile(destination);assert.equal(bytes.subarray(0,8).toString('hex'),'89504e470d0a1a0a');assert.equal(download.suggestedFilename(),value.filename);assert.equal(value.filename.includes('2000'),false);observed[sourceVariant]={...value,imageBytes:bytes.length,imageSha256:hash(bytes)};
++        if(sourceVariant==='candidate'&&!known){assert.ok(value.canvasText.some(text=>text.includes(variant==='sheet'?'Reference positions':value.notes[0])));assert.ok(!value.canvasText.some(text=>text.includes('12:00')));}
++        assert.deepEqual(s.errors,[]);
++      }finally{await s.context.close();}
++    }if(observed.baseline){assert.equal(observed.candidate.chart,observed.baseline.chart);assert.equal(observed.candidate.token,observed.baseline.token);if(known)assert.equal(observed.candidate.imageSha256,observed.baseline.imageSha256);}return observed;
++  });
++}finally{
++  const browserVersion=browser?.version();for(const context of contexts)await context.close();await browser?.close();await new Promise(done=>server.close(done));
++  const report={node:process.version,browser:browserVersion,identity,finalIdentity:await Promise.all(sourcePaths.map(async path=>({path,sha256:hash(await readFile(resolve(root,path)))}))),driverSha256:hash(await readFile(new URL(import.meta.url))),baselineDirectory:baseline??null,results,requests,passed:results.filter(row=>row.passed).length,failed:results.filter(row=>!row.passed).length,qualification:'Actual frozen-source numerical modules and Preact/Canvas; declared loader/place/state observers. Same-browser baseline comparison when supplied. No complete-date coverage, full-site design or numerical-oracle claim.',cleanup:{browserClosed:true,contextsClosed:true,serverClosed:true}};
++  await writeFile(resolve(out,'result.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({passed:report.passed,failed:report.failed,browser:browserVersion}));if(report.failed)process.exitCode=1;
++}

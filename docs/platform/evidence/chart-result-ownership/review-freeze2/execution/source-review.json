@@ -1,0 +1,306 @@
+{
+  "at": "2026-09-08T08:52:35.163Z",
+  "freeze": {
+    "baseCommit": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+    "supersedes": "Freeze1 correction requested; original freeze/evidence unchanged",
+    "scratch": "/private/tmp/zodiacs-platform-chart-ownership",
+    "files": [
+      {
+        "path": "src/islands/ChartCalculator.tsx",
+        "bytes": 120491,
+        "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+      },
+      {
+        "path": "src/islands/ChartCalculator.locale.test.ts",
+        "bytes": 9306,
+        "sha256": "c688e9e0591a0ecc710f8080123759d0f1fa930ace6c62327d38be7e845d3e0b"
+      },
+      {
+        "path": "src/islands/ChartCalculator.ownership.test.ts",
+        "bytes": 20598,
+        "sha256": "647d86904a9af9c3d9822b2abd609774d703033431e233ec548db1ecde8980a9"
+      },
+      {
+        "path": "tests/chart-ownership-drive.mjs",
+        "bytes": 21741,
+        "sha256": "46dee6bd1e49d610745666e1b3bc7c9105bedef83f5d866552ade2d22ce884a7"
+      }
+    ],
+    "patchSha256": "32b7413f9fcce17b192fa9f3fe28847d6b6ec7bfccc39b4437fee60df44a8e9f",
+    "validation": {
+      "focusedTests": 134,
+      "ownershipExecutionControls": 27,
+      "strictTypeCheck": "passed",
+      "astroProductionCompilation": "passed",
+      "criticalStylesPostprocessing": "passed",
+      "browser": "/private/tmp/zodiacs-platform-chart-ownership-evidence/round2/browser-1788857124161/result.json",
+      "browserGroups": 17
+    },
+    "status": "author-frozen; independent rerun pending; not integrated or published"
+  },
+  "staticAndDynamicModuleReferencesUnchanged": true,
+  "moduleRefs": [
+    {
+      "kind": "declaration",
+      "path": "../components/AspectGlyph"
+    },
+    {
+      "kind": "declaration",
+      "path": "../components/PlanetGlyph"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/account-v2/profile-access-reader"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/analytics"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/chart-date-certainty"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/chart-handoff"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/engine/houses"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/engine/lite"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/engine/types"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/engine/types"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/engine/types"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/geo/search"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/hooks/useEngine"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/hooks/useProfileAccessGeneration"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/i18n"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/i18n/astrology"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/i18n/ru-runtime"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/interpretations"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/learning-input-identity"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/module-load"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/moon-certainty"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/profile/post-chart-context"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/receipt-download"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/registry-aura-entry.mjs"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/scene/build"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/scene/chapters"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/scene/emphasis"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/scene/types"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/share"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/share"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/share-positions"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/signs"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/time/localToUtc"
+    },
+    {
+      "kind": "declaration",
+      "path": "../lib/wheel/Wheel"
+    },
+    {
+      "kind": "declaration",
+      "path": "../styles/evidence-disclosure.css"
+    },
+    {
+      "kind": "declaration",
+      "path": "./AstroTerm"
+    },
+    {
+      "kind": "declaration",
+      "path": "./BirthFields"
+    },
+    {
+      "kind": "declaration",
+      "path": "./CalculationReload"
+    },
+    {
+      "kind": "declaration",
+      "path": "./explorer/LayerChips"
+    },
+    {
+      "kind": "declaration",
+      "path": "./explorer/ReadingPath"
+    },
+    {
+      "kind": "declaration",
+      "path": "./explorer/tour/progress"
+    },
+    {
+      "kind": "declaration",
+      "path": "./SignChip"
+    },
+    {
+      "kind": "declaration",
+      "path": "preact/hooks"
+    },
+    {
+      "kind": "dynamic",
+      "path": "../lib/a2hs"
+    },
+    {
+      "kind": "dynamic",
+      "path": "../lib/chart-signature"
+    },
+    {
+      "kind": "dynamic",
+      "path": "../lib/engine/calculator-receipt"
+    },
+    {
+      "kind": "dynamic",
+      "path": "../lib/profile/profile-chart-handoff"
+    },
+    {
+      "kind": "dynamic",
+      "path": "../lib/profile/store"
+    },
+    {
+      "kind": "dynamic",
+      "path": "../lib/profile/store"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./ApproachRead"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./CalendarSubscribe"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./chart3d/EclipticView"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./ChartActionDock"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./ChartShareDialog"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./CommunicationRead"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./explorer/lens/ChartLens"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./explorer/tour"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./PositionsShareSurface"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./PositionsShareSurface"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./PositionsShareSurface"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./PushOptIn"
+    },
+    {
+      "kind": "dynamic",
+      "path": "./PwaInstallPrompt"
+    }
+  ],
+  "portableDriver": {
+    "run": "/private/tmp/zodiacs-platform-chart-ownership-independent-review/native-freeze2/portable output/browser-1788857433709",
+    "passed": 17,
+    "failed": 0,
+    "rootAlias": "checkout with spaces",
+    "explicitBrowser": "CHROME_PATH points to actual Chrome152",
+    "output": "OUT_DIR path with spaces wins over conflicting legacy evidence path",
+    "legacyOutputAbsent": true,
+    "sourceSha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+    "driverSha256": "46dee6bd1e49d610745666e1b3bc7c9105bedef83f5d866552ade2d22ce884a7",
+    "qualification": "Independent execution of the author frozen driver to verify portability and exact-build behavior; not counted as independently designed cases or Linux/Windows runtime proof."
+  },
+  "reviewedFullFourFileDiff": true,
+  "sourceRiskQualification": "Complete source diff reviewed for ownership, imports and existing calculation preservation. No native Temporal/interval coverage activation, no storage schema/authority change. Conditional arbitrary canRead callback reentrancy is not certified as authentication enforcement."
+}

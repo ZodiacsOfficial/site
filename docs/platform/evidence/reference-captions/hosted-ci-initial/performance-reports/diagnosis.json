@@ -1,0 +1,178 @@
+{
+  "head": "9912e37bee3f20de691b6bed8165ff36189d1eca",
+  "run": 34232899292,
+  "failedJob": 102083212064,
+  "samples": [
+    {
+      "file": "ru-birth-chart-1.json",
+      "tbt": 203.5000000000001,
+      "benchmarkIndex": 3339,
+      "longTasks": [
+        {
+          "url": "Unattributable",
+          "duration": 231.0000000000001,
+          "startTime": 1017.16485
+        },
+        {
+          "url": "Unattributable",
+          "duration": 114,
+          "startTime": 903.16485
+        },
+        {
+          "url": "http://127.0.0.1:4328/ru/birth-chart/",
+          "duration": 54,
+          "startTime": 2108.6594000000005
+        }
+      ],
+      "scriptBootup": [
+        {
+          "url": "Unattributable",
+          "total": 498.3919999999984,
+          "scripting": 9.672,
+          "scriptParseCompile": 0
+        },
+        {
+          "url": "http://127.0.0.1:4328/ru/birth-chart/",
+          "total": 276.1479999999999,
+          "scripting": 76.932,
+          "scriptParseCompile": 13.319999999999995
+        }
+      ]
+    },
+    {
+      "file": "ru-birth-chart-2.json",
+      "tbt": 0,
+      "benchmarkIndex": 3263.5,
+      "longTasks": [],
+      "scriptBootup": [
+        {
+          "url": "http://127.0.0.1:4328/ru/birth-chart/",
+          "total": 248.04399999999995,
+          "scripting": 68.38400000000004,
+          "scriptParseCompile": 13.547999999999996
+        },
+        {
+          "url": "Unattributable",
+          "total": 159.83600000000047,
+          "scripting": 9.344,
+          "scriptParseCompile": 0
+        }
+      ]
+    },
+    {
+      "file": "ru-birth-chart-3.json",
+      "tbt": 0,
+      "benchmarkIndex": 3237.5,
+      "longTasks": [],
+      "scriptBootup": [
+        {
+          "url": "http://127.0.0.1:4328/ru/birth-chart/",
+          "total": 243.47199999999992,
+          "scripting": 61.967999999999954,
+          "scriptParseCompile": 12.791999999999996
+        },
+        {
+          "url": "Unattributable",
+          "total": 147.14799999999994,
+          "scripting": 8.851999999999999,
+          "scriptParseCompile": 0
+        }
+      ]
+    },
+    {
+      "file": "today-1.json",
+      "tbt": 6.5,
+      "benchmarkIndex": 3328,
+      "longTasks": [
+        {
+          "url": "Unattributable",
+          "duration": 67,
+          "startTime": 753.6766
+        },
+        {
+          "url": "http://127.0.0.1:4328/today/",
+          "duration": 63,
+          "startTime": 866.6766
+        }
+      ],
+      "scriptBootup": [
+        {
+          "url": "http://127.0.0.1:4328/today/",
+          "total": 302.76,
+          "scripting": 79.928,
+          "scriptParseCompile": 10.839999999999996
+        },
+        {
+          "url": "Unattributable",
+          "total": 281.2280000000019,
+          "scripting": 10.415999999999999,
+          "scriptParseCompile": 0
+        }
+      ]
+    },
+    {
+      "file": "today-2.json",
+      "tbt": 218.5,
+      "benchmarkIndex": 3260,
+      "longTasks": [
+        {
+          "url": "Unattributable",
+          "duration": 522,
+          "startTime": 754.94335
+        },
+        {
+          "url": "http://127.0.0.1:4328/today/",
+          "duration": 61,
+          "startTime": 1322.94335
+        }
+      ],
+      "scriptBootup": [
+        {
+          "url": "Unattributable",
+          "total": 686.5599999999997,
+          "scripting": 10.324,
+          "scriptParseCompile": 0
+        },
+        {
+          "url": "http://127.0.0.1:4328/today/",
+          "total": 287.552,
+          "scripting": 78.02400000000004,
+          "scriptParseCompile": 10.86
+        }
+      ]
+    },
+    {
+      "file": "today-3.json",
+      "tbt": 3,
+      "benchmarkIndex": 3226.5,
+      "longTasks": [
+        {
+          "url": "http://127.0.0.1:4328/today/",
+          "duration": 56,
+          "startTime": 798.4954
+        },
+        {
+          "url": "http://127.0.0.1:4328/today/",
+          "duration": 50,
+          "startTime": 1357.4862
+        }
+      ],
+      "scriptBootup": [
+        {
+          "url": "http://127.0.0.1:4328/today/",
+          "total": 278.6840000000001,
+          "scripting": 85.40400000000005,
+          "scriptParseCompile": 10.083999999999998
+        },
+        {
+          "url": "Unattributable",
+          "total": 202.14800000000082,
+          "scripting": 10.872,
+          "scriptParseCompile": 0
+        }
+      ]
+    }
+  ],
+  "decision": "One unchanged-source failed-job retry. Each route has two passing samples; excess time is dominated by isolated unattributed browser tasks while attributed script work is similar. This supports a transient hypothesis, not proof of OS/runner causation. No thresholds, source, or passing13jobs changed.",
+  "fullDownload": "Owned stalled/slow full artifact download stopped after six relevant members were fetched and CRC-verified by range."
+}

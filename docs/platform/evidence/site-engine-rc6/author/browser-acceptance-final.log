@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "browser": "152.0.7977.83",
+  "totals": {
+    "historical": 16,
+    "controls": 9,
+    "numerical": 96
+  },
+  "cleanup": {
+    "context": true,
+    "browser": true,
+    "server": true
+  }
+}

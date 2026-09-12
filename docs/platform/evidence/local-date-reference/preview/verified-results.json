@@ -1,0 +1,148 @@
+{
+  "outcome": "passed",
+  "groups": 10,
+  "localizedDateGroups": 8,
+  "nestedKnownTimeControls": 2,
+  "noCityUtcMoonControls": 1,
+  "publicPositionsControls": 1,
+  "receiptsVerified": 4,
+  "screenshotsVerified": 18,
+  "pageErrors": 0,
+  "expectedSanitizedRefusalDiagnostics": 8,
+  "blockedPlausibleGets": 10,
+  "unexpectedConsoleErrors": 0,
+  "observedNonGetRequests": 0,
+  "observedApiRequests": 0,
+  "requestsObserved": 819,
+  "remoteResponsesWith200AndBytes": 782,
+  "remoteJsModules": 71,
+  "remoteCityData": 2,
+  "clearEvents": 70,
+  "nativeCallCountClaim": false,
+  "sourceSnapshotFiles": 23,
+  "prIdentityRecordsVerified": 40,
+  "artifacts": [
+    {
+      "path": "browser-run1/en-chart-1280-refused.png",
+      "bytes": 168672,
+      "sha256": "549c8d9c1ded26232cecdfacf4054130b5e84ad8bec3df20f96d759e7efa2bd2"
+    },
+    {
+      "path": "browser-run1/en-chart-1280-recovered.png",
+      "bytes": 257693,
+      "sha256": "6b2be00393a3ae962011fae94f8cf3c917adc0b404b901c8adb22cd5fd3b281e"
+    },
+    {
+      "path": "browser-run1/en-chart-1280-receipt.json",
+      "bytes": 4092,
+      "sha256": "0b85b2e7482a3fe44c6c783a03a90b8236107ce8a9c0c711e95df497e255a1c0"
+    },
+    {
+      "path": "browser-run1/en-chart-390-refused.png",
+      "bytes": 132453,
+      "sha256": "6175b115995665a681cfaa201ba19a6bd96b3afefe2fd91d40ce1353d274c6e2"
+    },
+    {
+      "path": "browser-run1/en-chart-390-recovered.png",
+      "bytes": 133254,
+      "sha256": "23e2c128f35bf03ff26edcb8c933beb6fb77eef85149d6b5e30311792a6f36d1"
+    },
+    {
+      "path": "browser-run1/en-chart-390-receipt.json",
+      "bytes": 4092,
+      "sha256": "0b85b2e7482a3fe44c6c783a03a90b8236107ce8a9c0c711e95df497e255a1c0"
+    },
+    {
+      "path": "browser-run1/en-moon-1280-refused.png",
+      "bytes": 150303,
+      "sha256": "f7ea82587a523b8eaf3d2a55b6d41b8ee06b372ca23163ce3925ed032c89303b"
+    },
+    {
+      "path": "browser-run1/en-moon-1280-recovered.png",
+      "bytes": 182529,
+      "sha256": "c98113a196f6b6186acc6f35df783078c5cc5eec55e609b75fc8902ea2ea9eb1"
+    },
+    {
+      "path": "browser-run1/en-moon-390-refused.png",
+      "bytes": 106714,
+      "sha256": "5a851d3a07e354c48f5204b4f3923c5870470473a1bf52afcc2901660dd43407"
+    },
+    {
+      "path": "browser-run1/en-moon-390-recovered.png",
+      "bytes": 104615,
+      "sha256": "07104979392839f4fe04fba0d6c7c658b232ffc64fbd331392b3bb27c56112b1"
+    },
+    {
+      "path": "browser-run1/ru-chart-1280-refused.png",
+      "bytes": 172996,
+      "sha256": "8441ceb945fc686c9fa1478f671425f4626750d6753d31b449f3a2ded74e3b59"
+    },
+    {
+      "path": "browser-run1/ru-chart-1280-recovered.png",
+      "bytes": 254307,
+      "sha256": "1e0087096e661bcad5b78112588e3c724e089680a178492c8583dd4dab252978"
+    },
+    {
+      "path": "browser-run1/ru-chart-1280-receipt.json",
+      "bytes": 4092,
+      "sha256": "0b85b2e7482a3fe44c6c783a03a90b8236107ce8a9c0c711e95df497e255a1c0"
+    },
+    {
+      "path": "browser-run1/ru-chart-390-refused.png",
+      "bytes": 128472,
+      "sha256": "08cc3f83a1a746937968c24d9e4241c62d8594740604ecb84480caaaff5d7cfd"
+    },
+    {
+      "path": "browser-run1/ru-chart-390-recovered.png",
+      "bytes": 127207,
+      "sha256": "8ece8f9e27d4b9dd30f98d81a4e03dad6383577258d291a5af6539a5fd73697a"
+    },
+    {
+      "path": "browser-run1/ru-chart-390-receipt.json",
+      "bytes": 4092,
+      "sha256": "0b85b2e7482a3fe44c6c783a03a90b8236107ce8a9c0c711e95df497e255a1c0"
+    },
+    {
+      "path": "browser-run1/ru-moon-1280-refused.png",
+      "bytes": 122158,
+      "sha256": "bb1b3da0ce7fbc643705545ccd46f27e62d76dac961de4478ce0d8be17a82464"
+    },
+    {
+      "path": "browser-run1/ru-moon-1280-recovered.png",
+      "bytes": 189110,
+      "sha256": "5f5527bbec05c1a032178739b2472643748ec68998ef25b7fda6ed08978fcbab"
+    },
+    {
+      "path": "browser-run1/ru-moon-390-refused.png",
+      "bytes": 99377,
+      "sha256": "250d847d74108458f6a024c7736151e28beaca69a018c1bda4780732d62b2c1c"
+    },
+    {
+      "path": "browser-run1/ru-moon-390-recovered.png",
+      "bytes": 105888,
+      "sha256": "116d3772071cbd2624e90e58679f2efbfafa903e232ea262c4a27c108d14774c"
+    },
+    {
+      "path": "browser-run1/moon-no-city-utc.png",
+      "bytes": 95123,
+      "sha256": "3c86c139d7f2bc66eafda4abc0d27b952ced2ec6424e296cf366277e670ecd16"
+    },
+    {
+      "path": "browser-run1/public-positions-only.png",
+      "bytes": 125962,
+      "sha256": "35e83ee618f48d3db58051631f06d9d27faf1691039f173e2ede1e25fcd90a4d"
+    }
+  ],
+  "archives": [
+    {
+      "path": "remote-modules.tar.gz",
+      "sha256": "c8d5d7524134906cf4e82bbe3a252e0327ffc75da28514a1afcbe89f8e7019c8",
+      "regularMembers": 71
+    },
+    {
+      "path": "source-snapshot.tar.gz",
+      "sha256": "317e4201a073ee39606da1e1f0a445a8ff05f718a1ab06ecc7b8d1da306d7d7c",
+      "regularMembers": 23
+    }
+  ]
+}

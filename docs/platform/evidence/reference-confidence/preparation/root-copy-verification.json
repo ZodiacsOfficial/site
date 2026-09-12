@@ -1,0 +1,36 @@
+{
+  "sourceManifestSha256": "337ab7b9da8e0aa6c8a311a1857419af0d58948b3ef97f164db46eb12fb385ff",
+  "recordsVerified": 7,
+  "verifiedOrdinaryArchiveMembers": 74,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "COMMANDS.md.log",
+      "path": "COMMANDS.md.log"
+    },
+    {
+      "sourcePath": "REVIEW.md.log",
+      "path": "REVIEW.md.log"
+    },
+    {
+      "sourcePath": "archive-members.json",
+      "path": "archive-members.json"
+    },
+    {
+      "sourcePath": "final-source-check.json.log",
+      "path": "final-source-check.json.log"
+    },
+    {
+      "sourcePath": "identity.json.log",
+      "path": "identity.json.log"
+    },
+    {
+      "sourcePath": "raw-evidence.tar.gz",
+      "path": "raw-evidence.tar.gz"
+    },
+    {
+      "sourcePath": "summary.json.log",
+      "path": "summary.json.log"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# Exact-source rc.6 preview receipt acceptance
+
+All 27 existing receipt groups passed on the automatic Vercel preview for site commit `30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`. This is actual remote Chrome acceptance; no local dist was served and no product source or assertion was changed.
+
+- Preview: https://zodiacs-4qqy7ml63-zodiacsofficial.vercel.app
+- Deployment: `dpl_DCmR76jrfuTxvB4M4b5Xfw55iR11`
+- Repository/branch: ZodiacsOfficial/site, codex/platform-engine-rc6, PR #428.
+- Provider state before and after browser acceptance: READY, exact full source SHA, automatic Git preview (`target: null`).
+- Actual browser: Chrome 152.0.7977.83. Driver runtime: Node 22.23.2.
+
+The driver passed once, with zero receipt-browser failures. It retained 26 downloaded synthetic receipt JSON files and nine screenshots. Coverage includes initial lazy boundary, native observer negative controls, requested Placidus polar fallback, stale DOM click suppression after edits, recalculation, fixed generic allocation failure/retry, unknown local noon, six localized keyboard downloads, narrow fixed-offset/known exact-pole unavailable paths, and position-only import isolation. All 16 corrected historical cases pass exact whole-envelope comparisons against the preserved actual Chrome references, with correct instant/offset/seconds gap/flags and one observed calculation event per result. Receipt export does not increment the observed calculation count, change the observed localStorage state, or leave its Blob URL unreleased.
+
+The driver records 3,184 requests, zero page errors and zero observed non-GET requests in its 27 test contexts. Each of those contexts requested the site's existing Plausible loader once; the harness blocked it. There were no other recorded external requests in those contexts. This is not a claim that the whole hosted site makes zero external requests or that analytics ran in the test. The temporary authentication bootstrap is outside the driver's scoped request observer. Receipt-local privacy evidence remains the earlier local/independent observer controls and these bounded observations.
+
+Source identity is established through the provider's exact commit record. Remote served-file hashes are explicitly unavailable; local build hashes are not substituted. The author exported 27 relevant source files and the historical Chrome reference report using git show of the full immutable commit into a new scratch snapshot. All 27 source hashes matched the original freeze/companion/metadata identities before and after browser execution. The snapshot only borrows existing runtime dependencies via a read-only symlink; no dependency install occurred.
+
+The original root driver SHA256 is `80644ed76bac8c33e0204ee3f5ffc2c1fab28c91fc1473a7f69dda4c2bdf6186`. The adapted driver SHA256 is `783b7ff6f0aae172cdeebb5a1d2d2a1e1ee82c69b6bc8ca2d4e3d4aa978cf841`. Its retained diff changes only evidence paths/source declarations and enforces remote URL plus exact READY source identity. All 27 receipt assertions and interactions remain unchanged.
+
+Credentials were created in a separate mode-0700 temporary directory, with the file mode 0600. The share URL and cookies were neither printed nor archived. Browser contexts/processes closed, the credential file and directory were deleted, and an exact secret/token scan found zero matches in the evidence. The driver created no listening local server. Before-browser inspection issues (missing local Vercel project file, corrected search path and connector URL recognition) are retained; none represented a product failure.
+
+Original driver, adapted driver/diff, source identities, full result/request records, screenshots, receipts, deployment observations, cleanup proof and command ledger are copied in delivery with per-file SHA256. This acceptance covers the receipt preview only. Root separately owns developer/API checks, CI, integration, publication and release decisions. No production deployment, SDK publication, account operation, outreach or Astrofolio change was performed. No external adoption is claimed.

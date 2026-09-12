@@ -1,0 +1,27 @@
+# Independent date-membership helper review — Freeze 1
+
+**Verdict: no blocking helper defect found in this bounded frozen-source review.** The 92 independently selected controls pass on Node 22.23.2, Node 24.19.0 and actual Chrome 152.0.7977.83. This accepts the helper's selected-instant membership contract; caller/UI integration remains the main reviewer's separate scope.
+
+## Exact subject and independence
+
+The twelve files were physically copied from the author's frozen-source directory and verified against source-freeze.json (SHA256 `328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2`). The patch is `41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e`, based on `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`. The reviewed helper is source/src/lib/time/localToUtc.ts:87–106, full-file SHA256 `c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb`.
+
+The harness was independently written here and invokes the actual copied helper and resolver. It does not run the author's unit or component driver. Three unchanged dependencies and the original resolver were obtained with read-only git show at the exact base. The inactive interval primitive is bundled separately for one explicit synthetic completeness proof; it is not a newly introduced product dependency. All source identities are recorded in source-freeze.json, base-dependency-identity.json, build-identity.json and final-identity.json. No root or author source was edited.
+
+## Controls and results
+
+- Domain rejection: 15 malformed dates, 11 non-Date/invalid-Date inputs and 16 invalid or omitted zones all produce the exact fixed RangeError with no cause or supplied sentinel. Proxies, including revoked Date proxies, fail without invoking their traps. Strings, boxed primitives, arrays and coercible objects are not normalized.
+- Six genuine Date controls cover an overridden getTime getter, hostile subclass methods, removed prototype, frozen object and true cross-realm Dates with and without an overridden getter. Date.prototype.getTime.call reads the genuine internal slot without calling these overrides or changing the instant. The foreign object is not an instance of the current realm's Date. Coercion/override counter remains zero in every runtime.
+- Twenty-five predetermined membership boundaries cover astronomical year 0000 and its leap day, years 0099/0100 and 9999, signed-offset crossings into adjacent out-of-contract years, Mexico City's 1907 second-precision midnight, Monrovia's 1972 short date, Toronto's omitted half-hour and the two parts of St John's interrupted 2009 date. Exact boundary milliseconds are tested. The minimum and maximum finite JavaScript Dates safely return false for the requested in-range dates.
+- Nine actual host-supported identifiers, including aliases, lowercase UTC and short/signed fixed offsets, are accepted according to native Intl. Missing/empty zones are rejected despite the browser's configured Pacific/Kiritimati default. Native browser locale is ar-SA; Gregorian/latn formatting keeps the technical interpretation stable. Host constructor and cached-formatter exceptions produce the same sanitized error.
+- Four real selected-noon refusals are retained for Apia, Kwajalein, Kiritimati and Guam. A separate total synthetic model moves from UTC+00 to UTC+15 at 2000-01-01T00:00Z: the actual resolver selects a noon which formats as January 2, while the requested January 1 has an explicitly proved nine-hour interval. The helper rejects that representative and accepts an actual member. This is a model counterexample to interpreting false as proof of an empty date; it is not an assertion that this synthetic zone exists.
+
+Raw node22-result.json, node24-result.json and native-result.json preserve all 92 controls, exact historical/synthetic inputs, resolutions and host identities. Chrome is an actual owned blank browser context with all page requests blocked, not a simulated Intl run. It records zero requests and page errors. Every run passed on its first completed execution; no failing test run was discarded.
+
+## Scope and architectural checks
+
+The TypeScript AST removal of only the new function plus its attached documentation restores the existing localToUtc.ts bytes exactly. Existing imports remain exactly `./technical-locales` and `./civil-date`; the sampled-offset resolver, formatter/era conversion, flags, policies and date parser are unchanged. The twelve-file freeze contains no package, SDK export, ownership SDK, astronomy-engine or active interval-provider dependency change.
+
+Node import instrumentation records zero Intl work. Native helper import records zero Intl construction, fetch, storage or Temporal access; subsequent checks also record no fetch, storage or Temporal access. The browser context is closed in finally. Dependency/runtime identities accompany the evidence rather than making an unqualified environment-independent claim.
+
+The added export is an internal site helper. Its boolean answers membership for one supplied instant under the host's timezone data. It does not establish empty-date status, whole-date or Moon candidate completeness, unique/noon existence, independent astronomical accuracy, tzdb completeness, or correctness against hostile replacement of JavaScript globals. Genuine invalid/unavailable formatting yields a sanitized exception rather than a selected-instant admission. No endpoint activation, publication or deployment is part of this review.

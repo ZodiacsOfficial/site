@@ -1,0 +1,47 @@
+# Independent receipt export review — frozen combined candidate accepted
+
+No unresolved blocker was found in the reviewed receipt export plus its necessary hydration replay correction. This is approval for the bounded source integration. Root remains accountable for integrated checks and delivery; publication, deployment and external adoption are not established by this review.
+
+## Exact subject
+
+Base: `c761a49c55d125bca48ff38d81b0a9ff6fd5adcf`.
+
+- Receipt Freeze 2: 14 files, patch SHA256 `d6639f7bd46ed9adce30c1d1f374394356350593234dacdcc82baa20086fa425`.
+- Interaction Freeze 1: two files, patch SHA256 `b44a9b79db41a48ededa2e172f44f11512e59b177c4ecb110ab5883e5ad28110`; directive source SHA256 `ea5784fcd35b661ea9584e510fb680a00955ba481b1abf16084d3848dfc74fc7`.
+- All 16 source hashes were independently checked again after final browser execution. The parser installation and author's browser dependency installation each match all 23 files in the vendored rc.5 archive exactly.
+- Final browser subject is the author's completed Astro 4,217-page static build plus the unchanged normal `inline-critical-styles.mjs` postbuild and static Guide asset builder. This reviewer served it read-only. `freeze-postbuild-build.json.log` records the postbuild script, representative page hashes and build identity. Every normal context runner records all served-file hashes.
+
+No product/root files were changed by this reviewer. Browser contexts and local servers were owned and closed. Data, profiles, labels and download files are synthetic. No saved-record activation, account migration, remote mutation, outreach or Astrofolio work occurred.
+
+## Final executed acceptance
+
+Pinned Node 22.23.2 and native Chrome 152.0.7977.83 executed **31 passing full-site groups, zero failures**, plus **two passing isolated native directive regressions**. The 31 counts executed groups, including repeated controls across separate runners; it is not a claim of 31 unique scenarios. `final-browser-summary.json.log` lists the exact four result files and hashes. No external HTTP requests occurred in the recorded ordinary browser contexts. No page errors, profile writes or new saved-natal database opens occurred in the accepted context runs; the profile-revocation case explicitly seeds synthetic v1 data before tracking the behavior under review.
+
+The 20-group main run verifies eight full receipt fixtures, three preservation fallbacks, a stale retained DOM click, replacement-run bytes, positions-only import, and six localized keyboard downloads. Receipt fixtures cover a normal known time, one-hour gap/fold, half-hour gap, skipped date at unknown local noon, fractional-minute LMT, requested Placidus with actual whole-house polar fallback, and ordinary unknown local noon. Actual files pass the pinned receipt codec with the requested/actual houses and time context preserved, sourceInstant null, generic filename, and no person/place label.
+
+Nine boundary groups verify full/moon/rising idle-and-focus graph isolation, positions-only isolation, input edits during the actual delayed helper request, optional module request failure, and actual profile-origin revoke while the helper is pending. The remaining two use the real Russian calculator module request as a gate: an explicit edit back to blank and an eventless native input assignment before hydration both survive initialization and correctly prevent receipt export for the stale shared input. The latter is a controlled native-value model of autofill, not a claim of testing an operating-system credential/autofill provider.
+
+Chrome precise coverage verifies actual public/native natal call counts against exact minified function identities and served hashes. Normal runs execute one each. Signed-offset, historical-seconds-mismatch and known-exact-pole fallbacks execute one legacy native call and no public natal call. Revoked pending profile work executes none.
+
+A separate controlled `JSON.stringify` fault limited to the actual natal-envelope schema verifies a failure after a previously successful chart. The next requested run executes exactly one public/native natal call, shows the safe fixed error, retains the existing result but disables its receipt, and does not recalculate through the legacy path. This is explicit fault injection.
+
+The final native 400% zoom run sets Chrome's actual default zoom to approximately four, verifies innerWidth320, DPR4, document/body CSS zoom1 and scrollWidth320, then completes a keyboard download of a valid file. The focused button is fully visible; both the Russian 390px capture and final 400% capture were visually inspected. Original zoom1 is restored and the owned persistent context is closed. This is native browser zoom, not CSS zoom or page-scale emulation.
+
+## Findings found before acceptance and their resolutions
+
+1. **Real Russian shared-input failure.** Receipt-only Freeze 2 calculated a chart but left its receipt disabled. Our direct DOM evidence showed one calculator, one computed event, correct result text, and blank birth controls. The author independently traced the existing interaction replay restoring untouched SSR defaults after shared-link initialization. The corrected directive marks real edits, captures eventless changes using native reset semantics on a detached clone, and replays only dirty controls. The input-revision fence remains intact. All six final localized downloads now work, including preserved Russian date/time values.
+2. **Draft select-reordering regression.** The first hydration correction stored selected option indexes. Our independent actual Chrome fixture reproduced explicit selection `b` becoming `a` after options were reordered, for retained and replaced controls. The source copy and two failures are preserved. The frozen correction preserves single-select values and multiple-select selected values, with duplicate-value counts. The same two independent native controls now preserve `b`.
+
+The rejected Freeze 2 result, diagnostic, draft hydration source/failure and corrected results remain distinguishable. The original standalone report is preserved as `FREEZE2-REVIEW.md.log`; its blocked status applies to that earlier subject, not the accepted combination.
+
+Two reviewer harness errors are also preserved. The first positions-only assertion wrongly assumed its intentional reduced surface lacked `.calc__result`; the corrected assertion checks `[data-positions-only]`, absent receipt/helper, and zero natal calls. The first zoom check expected exact floating-point four, while Chrome returned `3.9999999999999996`; it failed before page navigation. Only a 1e-12 representation tolerance was added, and native 320px/DPR4 measurements remain required. Neither is a product defect.
+
+## Scope and remaining qualifications
+
+The source keeps one calculation-to-receipt capture, immutable serialized download bytes, revision/run/access checks, fixed failure text, and dynamic helper isolation. Positions-only imports cannot invent a receipt. Existing save/share/profile behavior is preserved, and this slice does not activate the separately version-owned saved-record store.
+
+Signed host offset zones, inconsistent historical resolver gap context, and known exact-pole cases keep their established chart calculation with an explicit unavailable receipt. No invented zone, dropped context, rounded-away shift, post-natal retry, broadened SDK acceptance, or weakened stale guard is used. Unknown and near-pole positive controls remain eligible.
+
+The independently reproduced existing historical seconds/false-fold and local-date-endpoint concerns are numerical follow-ups, not fixed by this UI slice. Root owns the separately delivered SDK seconds correction and endpoint tracking. This finite Chromium review does not certify all browser engines, all IANA history, broad astronomical accuracy, deployed authentication, full account lifecycle erasure, or release publication. Author unit/strict/Astro and native fixture checks are attributable to the author's evidence; root owns the full integrated suite and bundle policy review.
+
+The delivery manifest maps each original evidence path to an inert `.log` copy and verifies every copied byte. Five diagnostic/final screenshots are retained as binary PNGs; other screenshot hashes and omission reasons are recorded to avoid redundant image copies.

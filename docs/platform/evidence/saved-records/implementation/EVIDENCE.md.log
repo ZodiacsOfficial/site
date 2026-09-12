@@ -1,0 +1,114 @@
+# Saved natal persistence author evidence — Freeze 1
+
+This is an optional callable primitive, implemented and focused-tested in an
+isolated checkout. It is not active in the product, not a completed account
+lifecycle, not a numerical accuracy certification, and not a publication or
+deployment. The integrator owns full site checks and delivery. No UI, account
+server/API, existing Living Chart database, v1 behavior, dependencies, service
+configuration, or separate Astrofolio work was changed by this author.
+
+## Exact source
+
+Base site commit: `dcc4e437a99f812666cd19dc85e6d781dbb3bedc`. Author checkout:
+`/private/tmp/zodiacs-platform-saved-record`. Four added profile-domain files
+are listed with SHA-256 in `freeze1-identity.json`; `freeze1-source.patch` applies
+on that source base. Patch SHA-256:
+`5d61510dec09e42ad2196c173da5a88f206a85af5809a27562b1daf0cc2f83a5`.
+No implementation edits followed that freeze. `identity.json` and `source.patch`
+are byte-identical convenience copies, not another revision. The identity's
+“pending independent review” field describes the time of freeze and is retained
+unchanged rather than rewritten retrospectively.
+
+The SDK is the actual existing `@zodiacs/engine` 0.1.1-rc.5 artifact, SHA-256
+`1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`.
+Its existing receipt codec is the sole inner-envelope validator. Frozen local
+metadata and the validated serialized receipt are immutable strings/scalars.
+Export returns only the exact stored SDK envelope string.
+
+## Final focused verification
+
+`freeze1-runs.json` records command argument arrays, log names, and zero exit
+statuses. Runtime: pinned Node 22.23.2; Vitest 3.2.6.
+
+- `freeze1-focused-tests.log`: 74 tests passed in four files: 17 record tests,
+  32 store tests, 21 existing portable-calculation tests, and four existing
+  v1 upload-preparation tests.
+- `freeze1-typecheck.log`: strict TypeScript with the existing Node and Astro
+  ambient types passed without source suppressions.
+- `freeze1-tracked-diff-check.log`: `git diff --check` passed after the four new
+  files were marked intent-to-add. Earlier untracked checks are retained but
+  are not used as evidence of whitespace review for those new files.
+
+Coverage includes exact unlabeled and labeled SDK export; requested Placidus
+versus actual fallback and explicit Whole Sign; unknown time at 08:30 with source
+spelling preserved; receipt snapshot before a storage wait; owner partition;
+40-record atomic capacity; fresh UUID collision without overwrite; immutable
+metadata; malformed/corrupt/future record distinctions; explicit delete and
+owner clear; reentrant authority, ABA epoch, precommit and postcommit revocation;
+quota, abort and version errors; failure privacy; and no eager activation.
+The actual exported legacy `selfChartPutWire` rejects this richer record
+structurally; no legacy helper or artificial downgrade path was changed.
+
+The test memory adapter is a deterministic contract model, not evidence of
+native browser locking. The independent reviewer separately reported 22 of 22
+actual Chrome 152 checks passing against Freeze 1 on 2026-09-08. Those include
+real IndexedDB transactions, prompt cancellation while a native deletion remains
+blocked, late connection cleanup, precommit abort with no row, postcommit stale
+with a committed row, concurrent capacity, future v10 rows, terminal clear, and
+a bounded browser quota control. Its report and raw results are a separate
+review package; no duplicate author browser run or invented independent signoff
+is claimed here.
+
+## Preserved failures and corrections
+
+1. `initial-record-tests.log` retains the first 17-test run: six failed and
+   eleven passed. Unlabeled rows were incorrectly rejected because the draft
+   counted six mandatory fields rather than five. Future schema rows with
+   changed layouts were also classified corrupt; a draft regular expression
+   omitted versions such as v10. Fix: exact five/six-field v1 shape and future
+   discriminator recognition before current-layout validation. Initial source
+   copies are retained under `initial-source/`.
+2. The suspected UUID/owner trailing-newline weakness was disproved by the
+   initial tests, which already passed LF, CR, CRLF, space, and line-separator
+   controls. It is not claimed as a fixed defect. The legacy UUID helper stayed
+   unchanged; this module explicitly requires canonical 36-character IDs.
+3. `initial-store-tests.log` retains the first 47-test pass.
+4. `initial-typecheck.log` retains a command-configuration failure in an existing
+   transitive `ImportMeta.env` reference. The focused invocation omitted Astro
+   ambient types. The corrected strict invocation includes `astro/client`; no
+   source type suppression or weakening was added.
+5. `focused-tests.log`, `focused-typecheck.log`, and `focused-runs.json` retain a
+   74-test pass before the delayed-open liveness regression was strengthened.
+6. `initial-late-open-stall.log` retains the strengthened delayed-open control:
+   one test timed out after five seconds, with 31 unrelated tests skipped. The
+   caller waited for a native open event after revoke.
+   `pre-open-cancellation-store.ts.log` captures that source. Fix: track and
+   reject the logical open promise immediately while leaving settled/generation
+   guards to abort upgrades and close native handles that arrive later. The
+   final regression now requires stale settlement before emitting late success.
+   The reviewer independently retained a real-Chrome early-draft reproduction
+   under its `pre-freeze-open-review` evidence; that is distinct from its final
+   Freeze 1 acceptance.
+
+## Remaining integration boundaries
+
+The caller supplies owner identity and an epoch plus a current-authority reader.
+This is an application access-policy boundary, not authentication, encryption,
+or an origin security sandbox. A handle cannot discover or create ownership.
+Records intentionally have no revision/updatedAt/rename/overwrite/import-ID
+path. Every create uses a fresh UUID, and no semantic deduplication is attempted.
+
+Clear invalidates only its handle and completes one owner-scoped transaction.
+Another same-owner handle or tab can create later; this is explicitly tested.
+A real account/full-device erase and no-resurrection guarantee need durable
+generations/tombstones and a coordinated active lifecycle. A stale result after
+commit exposes no record or success and says `mayHaveCommitted: true`; retry is
+never automatic. Failed clear consumes the handle, so retry needs fresh explicit
+authority. Unknown storage schemas are preserved. Reads and creates preserve
+corrupt/future records; explicit known-key delete or owner clear may erase them.
+
+Active use still needs asynchronous inventory/presence and ownership handoff,
+guest ownership, import and retention policy, account export and deletion,
+clear/retry coordination, and full-device cleanup. The current fixed-key and
+synchronous lifecycle paths must not be treated as complete support for this
+new database.

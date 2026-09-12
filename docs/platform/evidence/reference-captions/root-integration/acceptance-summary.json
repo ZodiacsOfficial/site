@@ -1,0 +1,34 @@
+{
+  "authorFreezeIdentitySha256": "c055e55985284904cb82e39fa1eca53a035aa337a3a49a752240fcd5c7d21644",
+  "authorFrozenFilesVerified": 33,
+  "rootMetadataFiles": 3,
+  "normalBuild": "passed",
+  "check": {
+    "files": 1047,
+    "errors": 0,
+    "warnings": 0,
+    "hints": 11
+  },
+  "fullSuite": {
+    "files": 420,
+    "tests": 5091,
+    "failed": 0
+  },
+  "postMetadataTests": 136,
+  "normalPageGroups": 24,
+  "approvedCapturesByteIdentical": 18,
+  "nativeCaptionGroups": 34,
+  "nativeDateGroups": 35,
+  "nativeMoonOwnershipGroups": 20,
+  "sharing": "passed",
+  "normalServedFilesVerified": 104,
+  "normalRequests": 1586,
+  "normalBrowserRequests": 1586,
+  "normalBlockedRequests": 0,
+  "normalPageErrors": 0,
+  "normalProfileAbsent": true,
+  "normalScreenshots": 48,
+  "finalSourceRecords": 51,
+  "scopeGuard": "PASS;13 protected paths under exact9d18 allowance",
+  "qualification": "Full suite covers frozen33 source plus generated manifest; CI/scope metadata subsequently passes independent review, actual CLI and136 affected tests. Native optional baselines omitted on root; exact baseline comparisons belong to author and independent review. Normal built-page output/layout checks are separate from instrumented component fixtures."
+}

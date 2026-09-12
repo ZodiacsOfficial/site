@@ -1,0 +1,36 @@
+{"name":"chart skipped Pacific/Apia","passed":true}
+{"name":"chart skipped Pacific/Kwajalein","passed":true}
+{"name":"chart skipped Pacific/Kiritimati","passed":true}
+{"name":"chart skipped Pacific/Guam","passed":true}
+{"name":"moon skipped Pacific/Apia","passed":true}
+{"name":"moon skipped Pacific/Kwajalein","passed":true}
+{"name":"moon skipped Pacific/Kiritimati","passed":true}
+{"name":"moon skipped Pacific/Guam","passed":true}
+{"name":"chart preserved ordinary","passed":true}
+{"name":"chart preserved repeated-Apia","passed":true}
+{"name":"chart preserved repeated-Kwajalein","passed":true}
+{"name":"chart preserved same-date-gap","passed":true}
+{"name":"chart preserved known-skipped","passed":true}
+{"name":"moon preserved ordinary","passed":true}
+{"name":"moon preserved repeated-Apia","passed":true}
+{"name":"moon preserved repeated-Kwajalein","passed":true}
+{"name":"moon preserved same-date-gap","passed":true}
+{"name":"moon preserved known-skipped","passed":true}
+{"name":"no-city UTC Moon remains independent","passed":true}
+{"name":"dedicated message en","passed":true}
+{"name":"dedicated message es","passed":true}
+{"name":"dedicated message fr","passed":true}
+{"name":"dedicated message it","passed":true}
+{"name":"dedicated message pt","passed":true}
+{"name":"dedicated message ru","passed":true}
+{"name":"chart formatter-failure before numerical work","passed":true}
+{"name":"moon formatter-failure before numerical work","passed":true}
+{"name":"chart delayed skipped reference edit","passed":true}
+{"name":"chart delayed skipped reference replacement","passed":true}
+{"name":"chart delayed skipped reference unmount","passed":true}
+{"name":"moon delayed skipped reference edit","passed":true}
+{"name":"moon delayed skipped reference replacement","passed":true}
+{"name":"moon delayed skipped reference unmount","passed":true}
+{"name":"positions-only imports perform no date or numerical work","passed":true}
+{"name":"profile revoke fences a pending unknown-time skipped reference","passed":true}
+{"passed":35,"failed":0}

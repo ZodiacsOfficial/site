@@ -1,0 +1,7 @@
+{
+  "sourceManifestSha256": "6ac061cfde7b0755cb752f303910f516681b673369ac544996f383236acd2334",
+  "verifiedRecords": 271,
+  "copiedPayloadsUnchanged": true,
+  "initialAssemblyFailure": "Before any copying, root mistook numeric records count for the payload list and got TypeError object of type int has no len(). Actual files array was then inspected and all271 payloads verified. No payload/source changed.",
+  "qualification": "Root rehashes copied evidence; native execution/source audit remain independently attributed."
+}

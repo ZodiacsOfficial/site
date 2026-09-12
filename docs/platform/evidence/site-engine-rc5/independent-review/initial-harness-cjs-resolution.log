@@ -1,0 +1,21 @@
+/private/tmp/zodiacs-platform-rc5-independent-review/node_modules/esbuild/lib/main.js:1748
+  let error = new Error(text);
+              ^
+
+Error: Build failed with 1 error:
+node_modules/esbuild/lib/main.js:1498:27: ERROR: [plugin: frozen-package-only] Package subpath './internal' is not defined by "exports" in /private/tmp/zodiacs-platform-rc5-independent-review/0.1.1-rc.1/node_modules/@zodiacs/engine/package.json
+    at failureErrorWithLog (/private/tmp/zodiacs-platform-rc5-independent-review/node_modules/esbuild/lib/main.js:1748:15)
+    at /private/tmp/zodiacs-platform-rc5-independent-review/node_modules/esbuild/lib/main.js:1207:25
+    at runOnEndCallbacks (/private/tmp/zodiacs-platform-rc5-independent-review/node_modules/esbuild/lib/main.js:1588:45)
+    at buildResponseToResult (/private/tmp/zodiacs-platform-rc5-independent-review/node_modules/esbuild/lib/main.js:1205:7)
+    at /private/tmp/zodiacs-platform-rc5-independent-review/node_modules/esbuild/lib/main.js:1232:16
+    at responseCallbacks.<computed> (/private/tmp/zodiacs-platform-rc5-independent-review/node_modules/esbuild/lib/main.js:884:9)
+    at handleIncomingPacket (/private/tmp/zodiacs-platform-rc5-independent-review/node_modules/esbuild/lib/main.js:939:12)
+    at Socket.readFromStdout (/private/tmp/zodiacs-platform-rc5-independent-review/node_modules/esbuild/lib/main.js:862:7)
+    at Socket.emit (node:events:509:20)
+    at addChunk (node:internal/streams/readable:568:12) {
+  errors: [Getter/Setter],
+  warnings: [Getter/Setter]
+}
+
+Node.js v26.4.0

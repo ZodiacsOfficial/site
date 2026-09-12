@@ -1,0 +1,232 @@
+[
+  {
+    "path": "freeze2/freeze.json",
+    "bytes": 1436,
+    "sha256": "7b1d82dad1cd1a30336995424d11683f637a45d9ac81f5447bce4894e9ba3a21"
+  },
+  {
+    "path": "freeze2/patch.diff",
+    "bytes": 71210,
+    "sha256": "32b7413f9fcce17b192fa9f3fe28847d6b6ec7bfccc39b4437fee60df44a8e9f"
+  },
+  {
+    "path": "freeze2/source/src/islands/ChartCalculator.locale.test.ts",
+    "bytes": 9306,
+    "sha256": "c688e9e0591a0ecc710f8080123759d0f1fa930ace6c62327d38be7e845d3e0b"
+  },
+  {
+    "path": "freeze2/source/src/islands/ChartCalculator.ownership.test.ts",
+    "bytes": 20598,
+    "sha256": "647d86904a9af9c3d9822b2abd609774d703033431e233ec548db1ecde8980a9"
+  },
+  {
+    "path": "freeze2/source/src/islands/ChartCalculator.tsx",
+    "bytes": 120491,
+    "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+  },
+  {
+    "path": "freeze2/source/tests/chart-ownership-drive.mjs",
+    "bytes": 21741,
+    "sha256": "46dee6bd1e49d610745666e1b3bc7c9105bedef83f5d866552ade2d22ce884a7"
+  },
+  {
+    "path": "round2/ChartCalculator.close-generation-draft.tsx",
+    "bytes": 120493,
+    "sha256": "1a57763c8cd95fb170d630269a7ee88531816e6ab91bb843d83a108c5d2a8340"
+  },
+  {
+    "path": "round2/REPORT.md",
+    "bytes": 8644,
+    "sha256": "b775aeacccf5d092f450fdd7310480d6a27680deadb91de30b79e1108ef16cf1"
+  },
+  {
+    "path": "round2/astro-build.log",
+    "bytes": 266055,
+    "sha256": "9bb0b211c9238f5483dd6d0e675c298739af798b2ad965e93d4b4a5fd870ccde"
+  },
+  {
+    "path": "round2/browser-1788857124161/ChartCalculator.source.tsx",
+    "bytes": 120491,
+    "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+  },
+  {
+    "path": "round2/browser-1788857124161/delayed-share-dialog-after-edit-native-coverage.json",
+    "bytes": 38130,
+    "sha256": "2fccc882548b3b0ce7328ec3a76bf1794cd721bb9a1d561f3f78ffb2fa114852"
+  },
+  {
+    "path": "round2/browser-1788857124161/delayed-share-surface-after-edit-native-coverage.json",
+    "bytes": 38130,
+    "sha256": "539ca5983288408748857770adc654098e5a07ae90fa9fb145259c7c8485bab7"
+  },
+  {
+    "path": "round2/browser-1788857124161/edit-after-success-clears-result-native-coverage.json",
+    "bytes": 38130,
+    "sha256": "2fccc882548b3b0ce7328ec3a76bf1794cd721bb9a1d561f3f78ffb2fa114852"
+  },
+  {
+    "path": "round2/browser-1788857124161/edit-during-engine-loader-native-coverage.json",
+    "bytes": 24794,
+    "sha256": "f67af251997cf7bfaf26f975eb0909474ef681b558064cac27f979c9bb7aada0"
+  },
+  {
+    "path": "round2/browser-1788857124161/edit-during-receipt-loader-native-coverage.json",
+    "bytes": 24794,
+    "sha256": "d845cc30ed8f2eede9a66c9057a3ec7b33ad1035862d08fa322cb07c73c04890"
+  },
+  {
+    "path": "round2/browser-1788857124161/failed-new-run-clears-result-and-recovers-native-coverage.json",
+    "bytes": 38400,
+    "sha256": "ee1bca053a444eface0e23fa9da21256f37890b945541b634627666eacfed91a"
+  },
+  {
+    "path": "round2/browser-1788857124161/new-run-while-old-loader-pending-native-coverage.json",
+    "bytes": 38244,
+    "sha256": "7a7ebadf2d37367307b8b72c4bb6aebd1ddfad7ca783993a69866f1200ac4f61"
+  },
+  {
+    "path": "round2/browser-1788857124161/optional-receipt-module-failure-native-coverage.json",
+    "bytes": 38130,
+    "sha256": "2fccc882548b3b0ce7328ec3a76bf1794cd721bb9a1d561f3f78ffb2fa114852"
+  },
+  {
+    "path": "round2/browser-1788857124161/positions-conflicting-loader-after-edit-native-coverage.json",
+    "bytes": 24794,
+    "sha256": "3eab167d3d08c8f508fc4e51bd2ff16cb127050df55fcda14bf1cf7d8fbab9c0"
+  },
+  {
+    "path": "round2/browser-1788857124161/positions-invalid-loader-after-edit-native-coverage.json",
+    "bytes": 24794,
+    "sha256": "3eab167d3d08c8f508fc4e51bd2ff16cb127050df55fcda14bf1cf7d8fbab9c0"
+  },
+  {
+    "path": "round2/browser-1788857124161/positions-only-initialization-native-coverage.json",
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  {
+    "path": "round2/browser-1788857124161/positions-only-loader-after-edit-native-coverage.json",
+    "bytes": 24794,
+    "sha256": "0d96e189da870b41d65f036ea38036e5e7d336c34d7969dc5d296bd70e21335d"
+  },
+  {
+    "path": "round2/browser-1788857124161/positions-profile-mine-revoke-native-coverage.json",
+    "bytes": 38362,
+    "sha256": "7daf316f88c1899e2d0a8bb22fa25864e752f905966ef1a461e278d10e761659"
+  },
+  {
+    "path": "round2/browser-1788857124161/positions-profile-mine-revoke-regrant-native-coverage.json",
+    "bytes": 38362,
+    "sha256": "7daf316f88c1899e2d0a8bb22fa25864e752f905966ef1a461e278d10e761659"
+  },
+  {
+    "path": "round2/browser-1788857124161/profile-revoke-completed-native-coverage.json",
+    "bytes": 38130,
+    "sha256": "1b52fe59c940b48a703ebc2fbe8078dbdf0cdc735a9d6233de39355ed753672b"
+  },
+  {
+    "path": "round2/browser-1788857124161/profile-revoke-pending-native-coverage.json",
+    "bytes": 24794,
+    "sha256": "8a07074688ffcde70d8717df09884c44689fa8c3616dd3461b45f503407ead73"
+  },
+  {
+    "path": "round2/browser-1788857124161/recovered-result.png",
+    "bytes": 1253394,
+    "sha256": "8c3973a1429465955def90ca1fe825804e8a31843b22322580e294609e592456"
+  },
+  {
+    "path": "round2/browser-1788857124161/result.json",
+    "bytes": 249898,
+    "sha256": "94c54c7b4790a34f5fdbe030853468c23b3656e3fdc04e2bbbdddbd29f58811b"
+  },
+  {
+    "path": "round2/browser-1788857124161/unmount-with-loader-pending-native-coverage.json",
+    "bytes": 24794,
+    "sha256": "d44052867c6c24ba23c9e4a42bebcd79ab769937d8aa0f4a161dd3dc34143cec"
+  },
+  {
+    "path": "round2/browser-latest.json",
+    "bytes": 99,
+    "sha256": "f45304668de0c149beb11069b0077f2fcf524025dbb92414310781e69ddf47e1"
+  },
+  {
+    "path": "round2/browser.log",
+    "bytes": 1151,
+    "sha256": "381a6e238185c016278d1c5b3715f9f2d3ab5a78eba92bc68181b6c7eb886694"
+  },
+  {
+    "path": "round2/critical-styles.log",
+    "bytes": 82,
+    "sha256": "1e049325743fc606211d5953977f6810057d1e3fa1e9230ed2708abb46890266"
+  },
+  {
+    "path": "round2/focused-suite-final.log",
+    "bytes": 632,
+    "sha256": "b728650bcc6b430d0e09d30984a2ecf1e0e5e4016172493df88db4727f2a1531"
+  },
+  {
+    "path": "round2/focused-suite.log",
+    "bytes": 634,
+    "sha256": "9e79fc15e0c3099e4def6e0e1f4b1d3135ce883ef997fc2540fcd5c40aeac406"
+  },
+  {
+    "path": "round2/independent-main-freeze1-review.md",
+    "bytes": 5942,
+    "sha256": "937d56b6efe83ea86ddc2fc162a1af01dc249f305cd75bdb18096f802d8aa2b3"
+  },
+  {
+    "path": "round2/independent-profile-save-freeze1-review.md",
+    "bytes": 4930,
+    "sha256": "753ea2d71c47917e59e2fe5b0e003204f92488e05d03652b863ce9cfb77fc63c"
+  },
+  {
+    "path": "round2/ownership-before-fix-corrected.log",
+    "bytes": 6937,
+    "sha256": "b11895af5eb0396ae0d9bd10e8611658ee001107e3ced60120af96df3880b6fe"
+  },
+  {
+    "path": "round2/ownership-before-fix-corrected.test.ts",
+    "bytes": 19740,
+    "sha256": "28ff21e6819ff3e911c31d8bd8768e9a5c4c949f55cc023cca315ba25195a735"
+  },
+  {
+    "path": "round2/ownership-before-fix-initial.test.ts",
+    "bytes": 19719,
+    "sha256": "1c1374893410345c9cc7024bb3723fc9ce5e5a2249668f0016ce8f07d8fdb13c"
+  },
+  {
+    "path": "round2/ownership-before-fix.log",
+    "bytes": 6715,
+    "sha256": "19ed51225af1cbab5ce0416c93b749938c6fe7363753462e2c83fc4dbf0142d5"
+  },
+  {
+    "path": "round2/reader-evaluation.md",
+    "bytes": 1607,
+    "sha256": "e0205324fd8d391cc87423ee49cdbb3028601d7468ac4dae1309e623c8dd657e"
+  },
+  {
+    "path": "round2/reader-sources/src/layouts/Base.astro",
+    "bytes": 25204,
+    "sha256": "72f3b70e484f9a5cf294ee69bd9a35389118b4e78444a42cf8285203eb8eda3e"
+  },
+  {
+    "path": "round2/reader-sources/src/lib/account-v2/profile-access-reader.ts",
+    "bytes": 1335,
+    "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+  },
+  {
+    "path": "round2/reader-sources/src/lib/hooks/useProfileAccessGeneration.ts",
+    "bytes": 851,
+    "sha256": "79abaaa6c12a606cf2c49bacf4c451e4abda3fc5374881dab7119377571416b9"
+  },
+  {
+    "path": "round2/typecheck.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "round2/unchanged-numerical-block.json",
+    "bytes": 376,
+    "sha256": "f5fc5b07246cd735f535ee9cc4032a6bd54b1b001789bafc044316235d37775a"
+  }
+]

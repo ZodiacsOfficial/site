@@ -1,0 +1,30 @@
+import json, hashlib
+from pathlib import Path
+r=Path(__file__).parent
+a=json.loads((r/'consumer-baseline-result.json').read_text())
+b=json.loads((r/'consumer-candidate-result.json').read_text())
+checks=[]
+def check(name,condition):
+ assert condition,name
+ checks.append({'name':name,'passed':True})
+check('Five privacy/error response status, headers and body controls byte-identical',a['privacyCases']==b['privacyCases'] and len(a['privacyCases'])==5)
+changes=[('12:00 reference / No houses / Tropical','Reference positions / No houses / Tropical'),('12:00 reference · Birth time unknown','Reference positions · Birth time unknown'),('12:00 reference · Apparent','Reference positions · Apparent'),('Birth time unknown · 12:00 local reference','Birth time unknown · Reference positions'),('Sun and 12:00 reference Moon positions — birth details not included.','Reference Sun and Moon positions — birth details not included.'),('Without a birth time we use 12:00 local civil time as a reference and omit the rising sign, angles, and houses.','Without a birth time, we show reference positions and omit the rising sign, angles, and houses.')]
+def transform(value):
+ if isinstance(value,str):
+  for old,new in changes:value=value.replace(old,new)
+  return value
+ if isinstance(value,list):return list(map(transform,value))
+ if isinstance(value,dict):return {k:transform(v) for k,v in value.items()}
+ return value
+for x,y in zip(a['rows'],b['rows']):
+ label=('supplied' if x['timeKnown'] else 'reference')+' '+x['input']['utc']
+ check(label+' full numerical JSON and public token unchanged',x['numerical']==y['numerical'] and x['token']==y['token'])
+ check(label+' full response/consumer values differ only by permitted text',transform({k:v for k,v in x.items() if k!='artifacts'})=={k:v for k,v in y.items() if k!='artifacts'})
+ for kind,info in x['artifacts'].items():
+  old=(r/'consumer-output-baseline'/info['file']).read_bytes(); new=(r/'consumer-output-candidate'/y['artifacts'][kind]['file']).read_bytes()
+  check(label+' '+kind+' artifact identities and only allowed text difference',hashlib.sha256(old).hexdigest()==info['sha256'] and hashlib.sha256(new).hexdigest()==y['artifacts'][kind]['sha256'] and transform(old.decode())==new.decode())
+img=json.loads((r/'native-images/result.json').read_text())
+check('Eight actual native image groups passed',len(img['rows'])==8 and img['errors']==[])
+check('Known-time downloaded PNG byte-identical',(r/'native-images/baseline-known-sheet-optin.png').read_bytes()==(r/'native-images/candidate-known-sheet-optin.png').read_bytes())
+(r/'reconcile-result.json').write_text(json.dumps({'checks':checks,'qualification':'Only own retained actual consumer and PNG evidence is reconciled. No generated production build, metadata manifest, full component ownership, remote deployment, or date-wide completeness claim.'},indent=2)+'\n')
+print(json.dumps({'passed':len(checks)}))

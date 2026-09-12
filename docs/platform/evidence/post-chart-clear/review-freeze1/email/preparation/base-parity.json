@@ -1,0 +1,17 @@
+{
+  "authorBase": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "files": [
+    {
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "sha256": "c3ea10e5495a769700808f80d2ef6b2fe131fe573d37f10ba0680b403fbe3f0b",
+      "bytes": 8891,
+      "c7AndObservedC300ByteIdentical": true
+    },
+    {
+      "path": "src/components/EmailCapture.astro",
+      "sha256": "5c55b0649765eb0ffeee07b5d4d2b7ee99c684c5ba89079aa99ce0af6103eae9",
+      "bytes": 13142,
+      "c7AndObservedC300ByteIdentical": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "state": "UNFROZEN; do not deliver as final candidate identity",
+  "baseCommit": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+  "files": [
+    "vendor/README.md",
+    "src/data/platform-engine-candidate.json",
+    "public/llms-full.txt"
+  ],
+  "evidenceCommit": "0000000000000000000000000000000000000000",
+  "note": "Root must substitute its real immutable site evidence carrier after files exist at that commit; all artifacts and source commits are actual verified identities."
+}

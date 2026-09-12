@@ -1,0 +1,4 @@
+function cancelSpotlightArrival() {
+    spotlightArrivalCleanupRef.current?.();
+    spotlightArrivalCleanupRef.current = null;
+  }

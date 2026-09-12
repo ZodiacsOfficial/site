@@ -1,0 +1,45 @@
+fatal: not a git repository (or any of the parent directories): .git
+node:internal/errors:983
+  const err = new Error(message);
+              ^
+
+Error: Command failed: git show 804c70309d2508e67e8462df526b5f9e71a112e9:src/lib/time/localToUtc.ts
+fatal: not a git repository (or any of the parent directories): .git
+
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at checkExecSyncError (node:child_process:916:11)
+    at execFileSync (node:child_process:952:15)
+    at file:///private/tmp/zodiacs-platform-local-date-intervals-independent-review/setup.mjs:14:14
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  status: 128,
+  signal: null,
+  output: [
+    null,
+    Buffer(0) [Uint8Array] [],
+    Buffer(69) [Uint8Array] [
+      102,  97, 116,  97, 108,  58,  32, 110, 111, 116,  32,
+       97,  32, 103, 105, 116,  32, 114, 101, 112, 111, 115,
+      105, 116, 111, 114, 121,  32,  40, 111, 114,  32,  97,
+      110, 121,  32, 111, 102,  32, 116, 104, 101,  32, 112,
+       97, 114, 101, 110, 116,  32, 100, 105, 114, 101,  99,
+      116, 111, 114, 105, 101, 115,  41,  58,  32,  46, 103,
+      105, 116,  10
+    ]
+  ],
+  pid: 71372,
+  stdout: Buffer(0) [Uint8Array] [],
+  stderr: Buffer(69) [Uint8Array] [
+    102,  97, 116,  97, 108,  58,  32, 110, 111, 116,  32,
+     97,  32, 103, 105, 116,  32, 114, 101, 112, 111, 115,
+    105, 116, 111, 114, 121,  32,  40, 111, 114,  32,  97,
+    110, 121,  32, 111, 102,  32, 116, 104, 101,  32, 112,
+     97, 114, 101, 110, 116,  32, 100, 105, 114, 101,  99,
+    116, 111, 114, 105, 101, 115,  41,  58,  32,  46, 103,
+    105, 116,  10
+  ]
+}
+
+Node.js v22.23.2

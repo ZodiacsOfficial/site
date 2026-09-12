@@ -1,0 +1,10 @@
+# Source-only command ledger
+
+1. Read the supplied `normal-chart-harness-correction.json`; read root HEAD and bounded handler/reset/error source ranges. Read-only `git diff c7b9eb4…3845a04b -- ChartCalculator MoonPhaseTool BirthFields` returned empty. A preparation search also named nonexistent `src/lib/chart-tour.ts`; `rg` reported that missing path. The actual `exitTour` is local to ChartCalculator and was then read directly. No source or program failure is implied.
+2. `python3 capture.py > capture.log 2>&1` — exit 0. Exact Git commands and file reads are in the retained capture script. It copied only source, identities and the supplied correction record into this independent scratch. Twenty version/file identities are retained.
+3. `/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node ast-review.mjs > ast-review.log 2>&1` — exit 0. TypeScript 5.9.3 was read from the prior owned fixture; no package installation or product execution. Eighteen complete AST excerpts plus two run-start sequences are compared.
+4. A bounded Python SHA-256 span lookup checked the supplied third snippet hash against prefixes beginning at its exact declared source start, ending within the next 2,000 characters. It found the exact 275-character function-plus-two-newlines span. `harness-third-snippet-span.json` retains it. Original parser result/log remain as `ast-result-initial.json` and `ast-review-initial.log`.
+5. The parser's accepted span definitions were extended to include that observed second trailing newline, then the same source-only parser ran again with exit 0. Final `ast-result.json` and `ast-review.log` reproduce all three supplied hashes. No product source changed.
+6. A bounded `rg` over current source files captured all literal context-clear signal references in `context-clear-source-references.log`. The relevant actual consumers are also included among the source captures.
+
+No browser, network, build, full suite or native test was run. This is an independent source check of the correction rationale, not a recount of parent runtime results.

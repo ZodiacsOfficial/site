@@ -1,0 +1,37 @@
+# C-012 downstream chart-context ownership — author evidence
+
+This bounded six-file change propagates cleared chart ownership to the existing daily-brief and result-revealed capture surfaces. It has not been published or deployed. Root remains the integrator; author controls are not independent signoff.
+
+## Scope and final behavior
+
+Base: `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`. Final source identities and exact patch are in `source-freeze2.json` and `implementation-freeze2.patch`; the original rejected Freeze1 remains intact.
+
+`clearPostChartContext` deletes the global context and synchronously dispatches a plain `zodiacs:chart-context-cleared` Event, carrying no detail. The daily island immediately invalidates cached context/session and pending ownership; its existing render effect hides the now-idle view. Preference reads cannot begin after a cleared generation. Old resend completion/status/busy/focus cannot attach to a replacement context, token, or access generation. Same-context-ID object replacement is distinguished from a same-state profile refresh. Current resend success, normal busy release, and focus remain tested.
+
+The session cache explicitly distinguishes `undefined` (unresolved for this context) from `null` (observed signed out). A profile-sync refresh while the current session lookup is pending obtains current session state; an authoritative null callback or resolved null remains null across ordinary profile refresh. Clear/revoke/teardown discard the cache. No auth provider/API behavior was changed.
+
+The existing email enhancement increments a per-surface presentation generation only for result-revealed captures. Clear hides those surfaces while retaining typed email and selected sign. Late submit/reset/finally and queued focus cannot mutate a later surface generation. Footer/standalone captures and same-chart late-edit reset behavior remain unchanged. An already-submitted POST or resend is allowed to finish exactly once. No cancellation, automatic retry, deletion or provider mutation was added. Existing successful-subscription analytics may still record its once-completed operation with the original fields.
+
+No calculator/date, layout/styles/locales, SDK, API/backend/auth/SQL, account format, global navigation, Registry, Astrofolio or shared docs were edited. Root owns CI wiring and release evidence.
+
+## Final executed author checks
+
+- 52 focused tests pass; strict project TypeScript passes.
+- Astro check: 1043 files, zero errors, zero warnings, 11 existing hints.
+- Actual Chrome 152 / Node 22: 21/21 scoped native groups using actual daily island, context publisher, daily preference fetch client and extracted Astro enhancement script. Auth/store responses, structural DOM and endpoint responses are explicitly synthetic; no subscriber/provider is contacted. Requests, source/import hashes, emitted bundle and cleanup are recorded in `native-freeze2`.
+- Existing fixture-enabled production page build and acceptance gate pass 294/294 checks without timeout relaxation. Existing preparePage interception is unchanged. This is the fixture build, not the normal feature-off production build or remote preview.
+- Exact paused-state diagnostic repeats pass all six combinations: three trials at widths 360 and 1280. This bounds the observed fix; it does not prove every possible scheduling interleave.
+- `git diff --check` passes. Frozen source bytes remain unchanged through checks.
+
+## Original failures and correction
+
+1. The baseline component/context/enhancement source is copied under `baseline-source`; `native-baseline` retains 8 failures and 2 positives out of 10 controls. The failures expose absent clear propagation and obsolete asynchronous UI work. The footer positive is meaningful. The original sign-focus control also passed because the old target was hidden; the refined control later reopens a replacement chooser and distinguishes obsolete/current focus. Do not count that old positive as a defect.
+2. The first full fixture gate built successfully but timed out waiting for paused state. The raw failure is `full-post-chart-gate.log`. The unchanged preparePage reproduction (`paused-diagnostic.mjs`) passed 4/6 trials and failed 2/6. Failure JSON/screenshots show a valid full-chart context, no page/request errors, a signed-in auth response, but an incorrect device-only surface and no preference read.
+3. The exact native session-race reproduction (`native-session-race-before`) fails 1/18, preserving 17 other positives. A profile-sync refresh overtook a pending lookup because the newly cleared null cache was mistaken for observed sign-out. This is a real introduced Freeze1 regression, independently reproduced; it is not a harness-only timeout. Freeze1 is rejected and retained.
+4. Two fixes were evaluated. Nullish reread (`cache ?? undefined`) repairs the race but also conflates an authoritative signed-out result with unresolved state. The final explicit three-state cache preserves both meanings. Freeze2 adds initial/after-clear overtaking, explicit Auth null and resolved anonymous null controls alongside ordinary signed-in/clone/resend positives. No assertion or timeout was weakened.
+
+Earlier tool invocation errors included a read using the wrong context-module path and an incorrect preview helper path; those were corrected to the actual repository paths. They are not product failures. Astro synchronisation was needed for the isolated checkout's generated types. Original command/result logs are retained. The first full build's source is frozen and its requested asset URLs are recorded; its complete compiled output was not archived before rebuild, so no claim is made that those original served asset bytes are retained.
+
+## Reproduction and limits
+
+See `COMMANDS.md` for executable commands and `source-freeze2.json` for exact bytes. The native fixture has independently controlled async boundaries; the full page gate uses actual built markup with intercepted fixture auth/preferences. These checks establish presentation ownership and once-submitted write counts, not authentication enforcement, cancellation of a committed write, provider delivery, production deployment or external adoption. The independent reviewers own their separate reports; their findings must remain attributed as such.

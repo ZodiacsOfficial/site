@@ -1,0 +1,16 @@
+
+> @zodiacs/engine@0.1.1-rc.1 consumer:smoke /private/tmp/zodiacs-platform-sdk/packages/engine
+> node scripts/verify-packed-consumer.mjs "/private/tmp/zodiacs-platform-evidence/zodiacs-engine-0.1.1-rc.1.tgz"
+
+{
+  "version": "0.1.1-rc.1",
+  "publicExamples": "passed",
+  "errors": "passed",
+  "optionalIsolation": "passed",
+  "artifact": "/private/tmp/zodiacs-platform-evidence/zodiacs-engine-0.1.1-rc.1.tgz",
+  "sha256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+  "runtime": "v22.23.2",
+  "typescript": "5.9.3",
+  "directory": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-engine-consumer-sum7e7",
+  "types": "passed"
+}

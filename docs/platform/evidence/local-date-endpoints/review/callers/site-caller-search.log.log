@@ -1,0 +1,14 @@
+src/islands/ChartCalculator.registry-bridge.test.ts:11:    expect(source).toContain('localDateEndpointsUtc(input.date, input.city.tz)');
+src/lib/moon-certainty.test.tsx:6:import { localDateEndpointsUtc } from './chart-date-certainty';
+src/lib/moon-certainty.test.tsx:24:  const endpoints = localDateEndpointsUtc(date, zone);
+src/islands/ChartCalculator.tsx:39:import { localDateEndpointsUtc, stableBodySignSlug } from '../lib/chart-date-certainty';
+src/islands/ChartCalculator.tsx:1166:        const endpoints = localDateEndpointsUtc(input.date, input.city.tz);
+src/lib/chart-date-certainty.ts:5:export interface LocalDateEndpoints {
+src/lib/chart-date-certainty.ts:21:export function localDateEndpointsUtc(date: string, timeZone: string): LocalDateEndpoints {
+src/lib/chart-date-certainty.test.ts:8:  localDateEndpointsUtc,
+src/lib/chart-date-certainty.test.ts:10:} from './chart-date-certainty';
+src/lib/chart-date-certainty.test.ts:16:describe('localDateEndpointsUtc', () => {
+src/lib/chart-date-certainty.test.ts:18:    const endpoints = localDateEndpointsUtc('2000-01-01', 'Asia/Tokyo');
+src/lib/chart-date-certainty.test.ts:24:    const endpoints = localDateEndpointsUtc('2024-03-10', 'America/New_York');
+src/lib/chart-date-certainty.test.ts:54:    const endpoints = localDateEndpointsUtc('2026-03-20', 'Asia/Bangkok');
+src/lib/chart-date-certainty.test.ts:63:    const endpoints = localDateEndpointsUtc('1990-01-04', 'Asia/Bangkok');

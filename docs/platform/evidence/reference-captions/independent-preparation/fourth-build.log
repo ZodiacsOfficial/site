@@ -1,0 +1,18 @@
+node:fs:560
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/private/tmp/zodiacs-platform-reference-caption-independent-preparation/<define:import.meta.env>'
+    at Object.openSync (node:fs:560:18)
+    at readFileSync (node:fs:444:35)
+    at file:///private/tmp/zodiacs-platform-reference-caption-independent-preparation/build.mjs:8:69
+    at Array.map (<anonymous>)
+    at file:///private/tmp/zodiacs-platform-reference-caption-independent-preparation/build.mjs:8:50
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/private/tmp/zodiacs-platform-reference-caption-independent-preparation/<define:import.meta.env>'
+}
+
+Node.js v22.23.2

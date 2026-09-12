@@ -1,0 +1,17 @@
+[
+  {
+    "path": "implementation.patch.log",
+    "bytes": 40054,
+    "sha256": "391af1a908fece28f57dfffe16ce435d1dce9ead828b9bcc77a505d1b6c0609b"
+  },
+  {
+    "path": "root-intake.json",
+    "bytes": 436,
+    "sha256": "21225658fbb639b50049778decab16a918629ebb21f724fdff4a30ad96592d0c"
+  },
+  {
+    "path": "source-freeze.json.log",
+    "bytes": 1835,
+    "sha256": "e64eb26e34b1b5442a1a1e12f851b77a8a17d7d820a0e5a9b2b611c583cdd242"
+  }
+]

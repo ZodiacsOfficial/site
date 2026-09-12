@@ -1,0 +1,24 @@
+{
+  "startedAt": "2026-09-07T20:04:22.199Z",
+  "completedAt": "2026-09-07T20:04:29.416Z",
+  "kind": "internal anonymous public-download walkthrough; isolated empty npm cache; not external adoption",
+  "url": "https://raw.githubusercontent.com/ZodiacsOfficial/site/80dff5f16ec17045bcb52110a8105a9ad3492a99/public/examples/zodiacs-platform-starter-0.1.0-rc.2.tgz",
+  "status": 200,
+  "credentials": "omitted",
+  "redirects": "rejected",
+  "bytes": 40481,
+  "sha256": "d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420",
+  "archivePath": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-public-starter-KKGLpW/zodiacs-platform-starter-0.1.0-rc.2.tgz",
+  "node": "v22.23.2",
+  "filesVerified": 20,
+  "consumer": {
+    "path": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-platform-consumer-hsEYCC/package",
+    "install": "passed",
+    "testsAndBuild": "passed",
+    "commands": [
+      "npm ci --ignore-scripts --no-fund",
+      "npm test"
+    ]
+  },
+  "elapsedSeconds": 7.21
+}

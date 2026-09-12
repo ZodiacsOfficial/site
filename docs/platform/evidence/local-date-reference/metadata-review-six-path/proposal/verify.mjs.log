@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {createRequire} from 'node:module';
+import {spawnSync} from 'node:child_process';
+import {resolveOneTimeAllowance,oneTimeAllowancePath,protectedPathLabels} from './site/scripts/phase1-scope-guard.mjs';
+const out=import.meta.dirname,root='/Users/chiburashka/.codex/worktrees/4806/site';
+const require=createRequire(root+'/package.json');const yaml=require('yaml');
+const read=async path=>readFile(out+'/'+path,'utf8');
+const allowance=JSON.parse(await read('current-comparison-allowance.json'));
+const template=JSON.parse(await read('phase1-scope-allowance.template.json'));
+const identity=JSON.parse(await read('source-identities.json'));
+const changed=[oneTimeAllowancePath,...identity.c014AppliedFilesUnchanged.map(row=>row.path),'.github/workflows/site-check.yml'];
+const checks=[];function check(name,fn){try{fn();checks.push({name,passed:true});}catch(error){checks.push({name,passed:false,error:String(error)});}}
+check('unchanged guard admits exactly six current-base catalogs',()=>assert.deepEqual([...resolveOneTimeAllowance({allowance,baseCommit:identity.observedRootHead,changed})],allowance.protectedPaths));
+check('placeholder template is rejected against current real base',()=>assert.throws(()=>resolveOneTimeAllowance({allowance:template,baseCommit:identity.observedRootHead,changed}),/different base/));
+check('wrong real comparison base rejected',()=>assert.throws(()=>resolveOneTimeAllowance({allowance,baseCommit:'c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3',changed}),/different base/));
+check('unchanged allowance provides no exemption',()=>assert.equal(resolveOneTimeAllowance({allowance,baseCommit:identity.observedRootHead,changed:changed.filter(path=>path!==oneTimeAllowancePath)}).size,0));
+check('extra protected file rejected',()=>assert.throws(()=>resolveOneTimeAllowance({allowance,baseCommit:identity.observedRootHead,changed:[...changed,'src/lib/i18n/ui/ru.test.ts']}),/exactly match/));
+check('missing catalog rejected',()=>assert.throws(()=>resolveOneTimeAllowance({allowance,baseCommit:identity.observedRootHead,changed:changed.filter(path=>path!==allowance.protectedPaths[0])}),/exactly match/));
+check('duplicate allowance path rejected',()=>assert.throws(()=>resolveOneTimeAllowance({allowance:{...allowance,protectedPaths:[...allowance.protectedPaths,allowance.protectedPaths.at(-1)]},baseCommit:identity.observedRootHead,changed}),/unique and sorted/));
+check('unsorted allowance rejected',()=>assert.throws(()=>resolveOneTimeAllowance({allowance:{...allowance,protectedPaths:[...allowance.protectedPaths].reverse()},baseCommit:identity.observedRootHead,changed}),/unique and sorted/));
+check('unprotected path cannot be allowed',()=>assert.throws(()=>resolveOneTimeAllowance({allowance:{...allowance,protectedPaths:['src/islands/ChartCalculator.tsx']},baseCommit:identity.observedRootHead,changed}),/unprotected/));
+check('six paths are catalogs only',()=>assert.ok(allowance.protectedPaths.every(path=>/^src\/lib\/i18n\/ui\/(en|es|fr|it|pt|ru)\.ts$/.test(path)&&protectedPathLabels(path).includes('locale catalogs'))));
+const before=yaml.parse(await read('workflow-before.yml')),after=yaml.parse(await read('site-check.proposed.yml'));
+check('workflow adds one bounded step without changing prior contract',()=>{
+ const steps=after.jobs['build-check'].steps;const added=steps.findIndex(step=>step.name==='Unknown-time local date reference');assert.ok(added>0);assert.deepEqual(steps[added],{name:'Unknown-time local date reference','timeout-minutes':5,run:'OUT_DIR=tests/visual/artifacts/local-date-reference node tests/local-date-reference-drive.mjs'});assert.equal(steps[added-1].name,'Chart-linked prompt result ownership');const restored=structuredClone(after);restored.jobs['build-check'].steps.splice(added,1);assert.deepEqual(restored,before);
+ assert.ok(steps.slice(0,added).some(step=>step.name==='Install pinned Chromium'));
+ assert.ok(steps.slice(0,added).some(step=>step.name==='Install'));
+ const upload=steps.find(step=>step.name==='Upload Phase 1 browser and performance evidence');assert.equal(upload.if,'always()');assert.ok(upload.with.path.includes('tests/visual/artifacts/'));
+});
+const driver=await read('site/tests/local-date-reference-drive.mjs');
+check('native driver syntax and default CI interface preserved',()=>{
+ const r=spawnSync(process.execPath,['--check','tests/local-date-reference-drive.mjs'],{cwd:out+'/site',encoding:'utf8'});assert.equal(r.status,0,r.stderr);assert.ok(driver.includes('process.env.OUT_DIR'));assert.ok(driver.includes('findChromium()'));assert.ok(driver.includes('STABLE_CHROMIUM_ARGS'));assert.ok(driver.includes("baseline ? ['baseline', 'candidate'] : ['candidate']"));
+});
+const command=['scripts/phase1-scope-guard.mjs','--base',identity.observedRootHead];const cli=spawnSync(process.execPath,command,{cwd:out+'/site',encoding:'utf8'});await writeFile(out+'/scope-current-comparison.log',cli.stdout+cli.stderr);
+check('actual unchanged CLI guard passes local combined current-base diff',()=>{assert.equal(cli.status,0,cli.stderr);assert.match(cli.stdout,/6 protected path\(s\) covered/);});
+const finalRoot=await readFile(root+'/.github/workflows/site-check.yml');check('root workflow was not changed by proposal',()=>assert.equal(createHash('sha256').update(finalRoot).digest('hex'),identity.workflowInputSha256));
+const result={node:process.version,checks,passed:checks.filter(row=>row.passed).length,failed:checks.filter(row=>!row.passed).length,cli:{command:[process.execPath,...command],cwd:out+'/site',exit:cli.status},qualification:'Metadata proposal checks only; no browser execution, build, remote CI or final-base scope claim. Final chart commit must replace the explicit template marker and guard must rerun.'};
+await writeFile(out+'/result.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({passed:result.passed,failed:result.failed}));if(result.failed)process.exitCode=1;

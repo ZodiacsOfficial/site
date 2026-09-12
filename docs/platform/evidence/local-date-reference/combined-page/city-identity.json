@@ -1,0 +1,24 @@
+{
+  "rawRow": [
+    "Apia",
+    0,
+    2662,
+    237,
+    -1383,
+    -17177,
+    350,
+    40407
+  ],
+  "decodedActualCity": {
+    "name": "Apia",
+    "admin1": "Tuamasaga",
+    "country": "Samoa",
+    "lat": -13.83,
+    "lon": -171.77,
+    "tz": "Pacific/Apia",
+    "pop": 40407
+  },
+  "indexSha256": "3efa920843be21788d47ed236109127a270025b1fc81aa2e3f6dae835c429dd6",
+  "shardSha256": "eb2d002d5051abb7c1273a65f144452e426115dfe55182f6c94c7df3ef2a81cc",
+  "selectedByNativeUI": "Apia\nTuamasaga, Samoa"
+}

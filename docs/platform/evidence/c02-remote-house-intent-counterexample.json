@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-07T20:36:32.210Z",
+  "classification": "Counterfactual local-only round-trip; no profile persistence or account request.",
+  "originalRemoteUnchanged": true,
+  "currentBehavior": {
+    "rerunHouseSystem": "placidus",
+    "flags": [
+      "polar-fallback"
+    ]
+  },
+  "oneLineNormalization": {
+    "rerunHouseSystem": "whole",
+    "nextWireHouseSystem": "whole",
+    "nextWireMarker": "w",
+    "nextRestoreFlags": [],
+    "priorPlacidusRecomputeRequestLost": true,
+    "priorFallbackAssumptionLost": true
+  },
+  "optionalLocalFieldAlone": {
+    "field": "summary.requestedHouseSystem",
+    "value": "placidus",
+    "preservedByExistingWire": false,
+    "preservedByExistingCanonicalPrivatePayload": false
+  },
+  "conclusion": "Do not apply the one-line normalization as a standalone C02 fix. A distinct requested/actual contract and explicit backward-compatible serialization policy are needed to preserve both through rerun and sync."
+}

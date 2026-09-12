@@ -1,0 +1,32 @@
+{
+  "at": "2026-09-08T09:37:41.259Z",
+  "checks": 9,
+  "passed": 9,
+  "actualRemoteNativeCalls": 12,
+  "sourceCommit": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "sourceFilesVerified": 11,
+  "providerBeforeAfter": "READY exact source",
+  "requestEvents": 1023,
+  "capturedResponseBodies": 905,
+  "responseStatusCounts": {
+    "200": 905
+  },
+  "externalBlocked": 9,
+  "nonGetRequestEvents": 0,
+  "apiRequestEvents": 0,
+  "uncaughtPageErrors": 0,
+  "remoteModules": 69,
+  "remoteNativeIdentity": {
+    "path": "/_astro/chart-adapter.K-QfJlbI.js",
+    "sha256": "20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95",
+    "function": "Et",
+    "mapping": "Parsed from actual remote response: one-argument function returning exact input plus bodies and engineVersion."
+  },
+  "child": {
+    "manifestSha256": "83c7eecfd7a9975f97b5b446d2b670264cef9f9bbdec9825de615030475e3398",
+    "records": 23,
+    "bytes": 2217677,
+    "allRehashed": true
+  },
+  "temporaryAuthDirectoryRemoved": true
+}

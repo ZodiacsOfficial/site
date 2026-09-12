@@ -1,0 +1,69 @@
+{
+  "scope": "Ten direct controls of the actual unchanged guard exports with the declared proposal scope; not an actual frozen product diff or CLI/native acceptance",
+  "checks": [
+    {
+      "name": "Exact base resolves to actual immutable Git commit",
+      "actual": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+      "passed": true
+    },
+    {
+      "name": "Exactly the declared complete eight protected paths are authorized",
+      "actual": [
+        "src/lib/i18n/index.test.ts",
+        "src/lib/i18n/ui/en.ts",
+        "src/lib/i18n/ui/es.ts",
+        "src/lib/i18n/ui/fr.ts",
+        "src/lib/i18n/ui/it.ts",
+        "src/lib/i18n/ui/pt.ts",
+        "src/lib/i18n/ui/ru.test.ts",
+        "src/lib/i18n/ui/ru.ts"
+      ],
+      "passed": true
+    },
+    {
+      "name": "Old comparison base rejected",
+      "error": "phase1-scope-guard: allowance platform-unknown-time-chart-confidence is pinned to a different base",
+      "passed": true
+    },
+    {
+      "name": "Missing protected changed path rejected",
+      "error": "phase1-scope-guard: allowance platform-unknown-time-chart-confidence does not exactly match the protected diff",
+      "passed": true
+    },
+    {
+      "name": "Extra locale protected path rejected",
+      "error": "phase1-scope-guard: allowance platform-unknown-time-chart-confidence does not exactly match the protected diff",
+      "passed": true
+    },
+    {
+      "name": "Extra SDK protected path rejected",
+      "error": "phase1-scope-guard: allowance platform-unknown-time-chart-confidence does not exactly match the protected diff",
+      "passed": true
+    },
+    {
+      "name": "Metadata alone is not the declared candidate scope",
+      "error": "phase1-scope-guard: allowance platform-unknown-time-chart-confidence does not exactly match the protected diff",
+      "passed": true
+    },
+    {
+      "name": "Duplicate allowance path rejected",
+      "error": "phase1-scope-guard: allowance platform-unknown-time-chart-confidence paths must be unique and sorted",
+      "passed": true
+    },
+    {
+      "name": "Old allowance base rejected",
+      "error": "phase1-scope-guard: allowance platform-unknown-time-local-date-reference is pinned to a different base",
+      "passed": true
+    },
+    {
+      "name": "Unchanged allowance grants no protected-path authorization",
+      "actual": {
+        "authorized": 0,
+        "remainingProtectedChanges": 8
+      },
+      "passed": true
+    }
+  ],
+  "passed": 10,
+  "actualDriverInspected": false
+}

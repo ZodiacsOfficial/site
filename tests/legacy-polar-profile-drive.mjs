@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
-import { legacyPolarFixture, installLegacyProfile, checkOriginalProfile, POLAR_REPAIR_VERSION } from './legacy-polar-fixture.mjs';
+import { ENGINE_VERSION } from '@zodiacs/engine';
+import { legacyPolarFixture, installLegacyProfile, checkOriginalProfile } from './legacy-polar-fixture.mjs';
 
 const TIMEOUT = 30_000;
 const BODY_ORDER = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', 'North Node', 'South Node'];
@@ -91,10 +92,10 @@ export async function driveLegacyPolarProfile({ browser, baseURL, check, outDir 
     const wrapper = unpack(new URLSearchParams(new URL(copied).hash.slice(1)).get('s'), 's1.');
     const [first, second] = wrapper.p.map((token) => unpack(token, '2.'));
     const expectedBodies = BODY_ORDER.map((body) => rounded(fixture.polar.summary.bodies.find((row) => row.body === body).lon));
-    check('legacy polar synastry share: all positions, angles, house system and repair receipt agree',
+    check('legacy polar synastry share: recomputed positions, angles, house system and current engine receipt agree',
       JSON.stringify(first.b) === JSON.stringify(expectedBodies)
       && JSON.stringify(first.a) === JSON.stringify([rounded(fixture.correctedAsc), rounded(fixture.legacy.angles.mc)])
-      && first.h === 'w' && first.v === POLAR_REPAIR_VERSION
+      && first.h === 'w' && first.v === ENGINE_VERSION
       && wrapper.l[0] === fixture.polar.name && wrapper.l[1] === fixture.positionsOnly.name);
     check('legacy polar synastry share: positions-only side retains its original angles and receipt',
       JSON.stringify(second.b) === JSON.stringify(expectedBodies)

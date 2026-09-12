@@ -1,0 +1,9 @@
+Actual commands, working directory /private/tmp/zodiacs-platform-local-date-intervals-independent-review:
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node setup.mjs > setup.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node build.mjs > build.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node algebra-review.mjs algebra-node22-result.json > algebra-node22.log 2>&1
+/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node algebra-review.mjs algebra-node24-result.json > algebra-node24.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/typescript/bin/tsc -p tsconfig.json --pretty false > types.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node native-review.mjs > native.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node finalize.mjs
+All final invocations exited 0. Native command was repeated after the initial sandbox launch failure with an approved require_escalated invocation, same source/command and isolated temporary browser profile. No owner-only action was requested.

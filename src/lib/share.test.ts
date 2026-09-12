@@ -94,6 +94,37 @@ describe('decodeChartLink rejects', () => {
     expect(decodeChartLink(encode({ ...BASE, d: 42 }))).toBeNull();
   });
 
+  it.each([
+    '1900-02-29', '2001-02-29', '2100-02-29', '2000-02-30',
+    '2001-04-31', '2001-06-31', '2001-09-31', '2001-11-31',
+  ])('rejects impossible calendar date %s in a syntactically valid v1 token', (d) => {
+    expect(decodeChartLink(encode({ ...BASE, d }))).toBeNull();
+  });
+
+  it.each(['1799-12-31', '2200-01-01', '0000-02-29', '9999-12-31'])('keeps %s outside the birth-share year window', (d) => {
+    expect(decodeChartLink(encode({ ...BASE, d }))).toBeNull();
+  });
+
+  it.each(['1800-01-01', '2000-02-29', '2199-12-31'])('keeps valid boundary/leap date %s compatible', (date) => {
+    const input: ShareChartInput = { ...FULL, date };
+    expect(decodeChartLink(encodeChartLink(input))).toEqual(input);
+  });
+
+  it('rejects date/time suffix whitespace rather than trimming a hostile token', () => {
+    for (const suffix of [' ', '\n', '\r\n']) {
+      expect(decodeChartLink(encode({ ...BASE, d: `${BASE.d}${suffix}` }))).toBeNull();
+      expect(decodeChartLink(encode({ ...BASE, t: `${BASE.t}${suffix}` }))).toBeNull();
+    }
+  });
+
+  it('retains unknown-time leap-day input and existing labels/house semantics', () => {
+    const input: ShareChartInput = {
+      ...FULL, date: '2000-02-29', time: null, timeKnown: false,
+      name: 'José', place: 'São Paulo', houseSystem: 'placidus',
+    };
+    expect(decodeChartLink(encodeChartLink(input))).toEqual(input);
+  });
+
   it('bad times', () => {
     expect(decodeChartLink(encode({ ...BASE, t: '24:00' }))).toBeNull();
     expect(decodeChartLink(encode({ ...BASE, t: '8:30' }))).toBeNull();

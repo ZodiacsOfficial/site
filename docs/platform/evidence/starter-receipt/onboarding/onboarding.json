@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "result": "passed",
+  "startedAt": "2026-09-07T22:43:08.427Z",
+  "classification": "Internal automated onboarding check; not unfamiliar-developer timing, human review, or external adoption.",
+  "setup": {
+    "source": "/private/tmp/zodiacs-platform-starter-rc3-developer-browser/starter-setup.sh",
+    "copy": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/rendered-setup.sh",
+    "sha256": "23ea7efc525a3dab44f7429b5318539585e9afa6b54994c306d43fff2586da03"
+  },
+  "runtime": {
+    "node": "v22.23.2",
+    "executable": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "isolation": "Fresh working directories, empty npm/curl configuration, empty npm cache, and a restricted child environment. No owner configuration or PATH binary was modified.",
+  "workRoot": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-onboarding-work-ecG87B",
+  "output": "/private/tmp/zodiacs-platform-starter-rc3-onboarding",
+  "success": {
+    "result": "passed",
+    "literalSetup": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-onboarding-work-ecG87B/success/setup.sh",
+    "log": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/success.log",
+    "consumer": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-onboarding-work-ecG87B/success/work/zodiacs-starter/package",
+    "address": "http://127.0.0.1:4178/",
+    "starter": {
+      "name": "zodiacs-platform-starter",
+      "version": "0.1.0-rc.3",
+      "sha256": "facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a",
+      "artifactCommit": "dd5d83cdf2a2a5d7096175f01ce985b47824a376"
+    },
+    "engine": {
+      "name": "@zodiacs/engine",
+      "version": "0.1.1-rc.3",
+      "sha256": "aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17"
+    },
+    "npm": "11.17.0",
+    "checks": {
+      "tests": 39,
+      "pass": 39,
+      "fail": 0
+    },
+    "pages": [
+      {
+        "url": "http://127.0.0.1:4178/natal.html",
+        "status": 200,
+        "sha256": "48a10034daade86a7b6bea16a0f50218295dace5a53e567a2dfe6648540141f7",
+        "matchesOwnBuild": true
+      },
+      {
+        "url": "http://127.0.0.1:4178/transits.html",
+        "status": 200,
+        "sha256": "67c4ef1233f3d6ac6bba140c7cc31d6f53cbac5bd20d01b9b58f5371fe685adc",
+        "matchesOwnBuild": true
+      },
+      {
+        "url": "http://127.0.0.1:4178/widget.html",
+        "status": 200,
+        "sha256": "12c3ec5de764dc4bf9edb2eb8cfdfde96e66e319347684d891a499fab1185b08",
+        "matchesOwnBuild": true
+      }
+    ],
+    "elapsedSeconds": 2.2,
+    "cleanup": {
+      "group": 45582,
+      "groupGone": true,
+      "closed": true,
+      "exitStatus": null,
+      "signal": "SIGTERM"
+    }
+  },
+  "adversarial": [
+    {
+      "result": "passed",
+      "scenario": "existing-directory",
+      "literalSetup": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-onboarding-work-ecG87B/existing-directory/setup.sh",
+      "log": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/existing-directory.log",
+      "exitStatus": 1,
+      "invoked": [],
+      "tarOrNpmInvoked": false,
+      "simulation": "The literal mkdir target already exists.",
+      "elapsedSeconds": 0.056,
+      "cleanup": {
+        "group": 45564,
+        "closed": true,
+        "exitStatus": 1,
+        "signal": null,
+        "cleanup": "Already exited; no signal sent."
+      }
+    },
+    {
+      "result": "passed",
+      "scenario": "http-failure",
+      "literalSetup": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-onboarding-work-ecG87B/http-failure/setup.sh",
+      "log": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/http-failure.log",
+      "exitStatus": 22,
+      "invoked": [
+        "curl"
+      ],
+      "tarOrNpmInvoked": false,
+      "simulation": "Contained curl shim exits 22, simulating an HTTP failure.",
+      "elapsedSeconds": 0.523,
+      "cleanup": {
+        "group": 45567,
+        "closed": true,
+        "exitStatus": 22,
+        "signal": null,
+        "cleanup": "Already exited; no signal sent."
+      }
+    },
+    {
+      "result": "passed",
+      "scenario": "hash-mismatch",
+      "literalSetup": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-onboarding-work-ecG87B/hash-mismatch/setup.sh",
+      "log": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/hash-mismatch.log",
+      "exitStatus": 1,
+      "invoked": [
+        "curl"
+      ],
+      "tarOrNpmInvoked": false,
+      "simulation": "Only the expected SHA-256 was replaced by zeros. A contained curl shim supplied the genuine artifact; actual Node performed the checksum check.",
+      "elapsedSeconds": 0.524,
+      "cleanup": {
+        "group": 45571,
+        "closed": true,
+        "exitStatus": 1,
+        "signal": null,
+        "cleanup": "Already exited; no signal sent."
+      }
+    }
+  ],
+  "finishedAt": "2026-09-07T22:43:11.790Z",
+  "elapsedSeconds": 3.363
+}

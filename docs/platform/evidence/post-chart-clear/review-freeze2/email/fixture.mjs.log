@@ -1,0 +1,41 @@
+export function fixture() {
+  const shell=(id,{daily=false,chart=false,sign=''}={})=>`<section id="${id}" data-email-capture-shell data-placement="${id}" ${chart?'data-reveal-on-chart="true" hidden':''} ${daily?'data-daily-capture="true"':''} ${sign?'data-personalized-sign="true"':''}>
+  <h2 data-email-title data-default-title="Default title" data-personal-title="For {sign}">${sign?'For '+sign:'Default title'}</h2>
+  <form data-email-capture data-placement="${id}" action="https://example.invalid/api/email/subscribe" method="post">
+  <input name="locale" value="en" type="hidden"><input name="website" value=""><input name="email" type="email" required>
+  <button type="submit" data-label="Subscribe" data-busy-label="Working">Subscribe</button>
+  <div data-email-sign-summary data-summary-template="Using {sign}" ${sign?'':'hidden'}><span data-email-sign-summary-copy>${sign?'Using '+sign:''}</span><button type="button" data-email-sign-change aria-expanded="false">Change</button></div>
+  <fieldset data-email-signs ${sign?'hidden':''}>${[...(daily?[]:['']),'aries','cancer','leo','virgo'].map(s=>`<label><input type="radio" name="sign" value="${s}" data-sign-name="${s}" ${s===sign?'checked':''}>${s||'none'}</label>`).join('')}</fieldset>
+  <p data-email-status role="status"></p><span hidden data-success-copy>Success</span><span hidden data-error-copy>Retry later</span><span hidden data-invalid-email-copy>Invalid email</span><span hidden data-missing-sign-copy>Choose sign</span>
+  </form></section>`;
+  return '<!doctype html><html lang="en"><body><button id="outside">Outside focus</button>'+shell('chart',{chart:true,daily:true})+shell('footer')+shell('horoscopes',{daily:true,sign:'virgo'})+'</body></html>';
+}
+
+// Test scheduling and transport are controlled, but every form, control,
+// event, validity check, FormData serialization and focus operation is native.
+export function installControls(clearEvent) {
+  const requests=[],analytics=[],frames=[];
+  Object.defineProperty(window,'IntersectionObserver',{configurable:true,value:undefined});
+  delete window.IntersectionObserver;
+  window.zodiacsAnalytics={track(name,props){analytics.push({name,props})}};
+  window.requestAnimationFrame=fn=>{frames.push(fn);return frames.length};
+  window.cancelAnimationFrame=id=>{frames[id-1]=null};
+  window.fetch=(url,options)=>new Promise((resolve,reject)=>requests.push({url,method:options.method,body:String(options.body),resolve,reject}));
+  const el=(id,q)=>document.querySelector('#'+id).querySelector(q);
+  const state=id=>{const root=document.querySelector('#'+id);return{hidden:root.hidden,email:el(id,'[name=email]').value,website:el(id,'[name=website]').value,checked:el(id,'[name=sign]:checked')?.value??null,defaultSigns:Array.from(root.querySelectorAll('[name=sign]')).filter(x=>x.defaultChecked).map(x=>x.value),title:el(id,'[data-email-title]').textContent,summary:el(id,'[data-email-sign-summary-copy]').textContent,summaryHidden:el(id,'[data-email-sign-summary]').hidden,chooserHidden:el(id,'[data-email-signs]').hidden,expanded:el(id,'[data-email-sign-change]').getAttribute('aria-expanded'),status:el(id,'[data-email-status]').textContent,disabled:el(id,'button[type=submit]').disabled,button:el(id,'button[type=submit]').textContent,personalized:root.dataset.personalizedSign??null}};
+  window.review={
+    el,state,requests,analytics,
+    computed(sign='cancer',mode='full'){window.dispatchEvent(new CustomEvent('zodiacs:chart-computed',{detail:{mode,sunSign:sign}}))},
+    clear(){window.dispatchEvent(new Event(clearEvent))},
+    fill(id='chart',email='first@example.invalid'){el(id,'[name=email]').value=email;el(id,'[name=website]').value='';},
+    submit(id='chart'){el(id,'form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}))},
+    resolve(index,ok=true){requests[index].resolve({ok})},reject(index){requests[index].reject(new Error('controlled transport rejection'))},
+    change(id='chart'){el(id,'[data-email-sign-change]').click()},
+    flushFrames(){const batch=frames.splice(0);batch.forEach(f=>f?.(performance.now()))},
+    flushNextFrame(){frames.shift()?.(performance.now())},
+    choose(id,sign){const r=el(id,`[name=sign][value="${sign}"]`);r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}))},
+    focusOutside(){document.querySelector('#outside').focus()},
+    active(){const a=document.activeElement;return{outside:a?.id==='outside',shell:a?.closest('[data-email-capture-shell]')?.id??null,name:a?.getAttribute('name'),value:a?.value??null}},
+    summary(){return {chart:state('chart'),footer:state('footer'),horoscopes:state('horoscopes'),requests:requests.map(({url,method,body})=>({url,method,body})),analytics,active:this.active()}}
+  };
+}

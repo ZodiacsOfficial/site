@@ -1,0 +1,309 @@
+{
+  "sourceManifestSha256": "9f90f684ec8a3492a7352cee5d6c0232fa6e5da3c8c8c1033281691d351f87d7",
+  "recordsVerified": 73,
+  "archives": [
+    {
+      "path": "remote-modules.tar.gz",
+      "verifiedOrdinaryMembers": 69
+    },
+    {
+      "path": "source-snapshot.tar.gz",
+      "verifiedOrdinaryMembers": 16
+    }
+  ],
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "cleanup.json",
+      "path": "cleanup.json"
+    },
+    {
+      "sourcePath": "cleanup.log",
+      "path": "cleanup.log"
+    },
+    {
+      "sourcePath": "cleanup.py.log",
+      "path": "cleanup.py.log"
+    },
+    {
+      "sourcePath": "deployment-after.json",
+      "path": "deployment-after.json"
+    },
+    {
+      "sourcePath": "deployment-before.json",
+      "path": "deployment-before.json"
+    },
+    {
+      "sourcePath": "edit-during-calculator-receipt-loader-native-coverage.json",
+      "path": "edit-during-calculator-receipt-loader-native-coverage.json"
+    },
+    {
+      "sourcePath": "edit-during-full-loader-native-coverage.json",
+      "path": "edit-during-full-loader-native-coverage.json"
+    },
+    {
+      "sourcePath": "failed-run-clears-and-recovers-alert.png",
+      "path": "failed-run-clears-and-recovers-alert.png"
+    },
+    {
+      "sourcePath": "failed-run-clears-and-recovers-native-coverage.json",
+      "path": "failed-run-clears-and-recovers-native-coverage.json"
+    },
+    {
+      "sourcePath": "new-run-during-receipt-loader-native-coverage.json",
+      "path": "new-run-during-receipt-loader-native-coverage.json"
+    },
+    {
+      "sourcePath": "ordinary-en-1280-actions.png",
+      "path": "ordinary-en-1280-actions.png"
+    },
+    {
+      "sourcePath": "ordinary-en-1280-native-coverage.json",
+      "path": "ordinary-en-1280-native-coverage.json"
+    },
+    {
+      "sourcePath": "ordinary-en-1280-receipt.json",
+      "path": "ordinary-en-1280-receipt.json"
+    },
+    {
+      "sourcePath": "ordinary-en-1280-result.png",
+      "path": "ordinary-en-1280-result.png"
+    },
+    {
+      "sourcePath": "ordinary-en-390-actions.png",
+      "path": "ordinary-en-390-actions.png"
+    },
+    {
+      "sourcePath": "ordinary-en-390-native-coverage.json",
+      "path": "ordinary-en-390-native-coverage.json"
+    },
+    {
+      "sourcePath": "ordinary-en-390-receipt.json",
+      "path": "ordinary-en-390-receipt.json"
+    },
+    {
+      "sourcePath": "ordinary-en-390-result.png",
+      "path": "ordinary-en-390-result.png"
+    },
+    {
+      "sourcePath": "ordinary-ru-1280-actions.png",
+      "path": "ordinary-ru-1280-actions.png"
+    },
+    {
+      "sourcePath": "ordinary-ru-1280-native-coverage.json",
+      "path": "ordinary-ru-1280-native-coverage.json"
+    },
+    {
+      "sourcePath": "ordinary-ru-1280-receipt.json",
+      "path": "ordinary-ru-1280-receipt.json"
+    },
+    {
+      "sourcePath": "ordinary-ru-1280-result.png",
+      "path": "ordinary-ru-1280-result.png"
+    },
+    {
+      "sourcePath": "ordinary-ru-390-actions.png",
+      "path": "ordinary-ru-390-actions.png"
+    },
+    {
+      "sourcePath": "ordinary-ru-390-native-coverage.json",
+      "path": "ordinary-ru-390-native-coverage.json"
+    },
+    {
+      "sourcePath": "ordinary-ru-390-receipt.json",
+      "path": "ordinary-ru-390-receipt.json"
+    },
+    {
+      "sourcePath": "ordinary-ru-390-result.png",
+      "path": "ordinary-ru-390-result.png"
+    },
+    {
+      "sourcePath": "positions-only-native-coverage.json",
+      "path": "positions-only-native-coverage.json"
+    },
+    {
+      "sourcePath": "pr-identity/COMMANDS.md",
+      "path": "pr-identity/COMMANDS.md"
+    },
+    {
+      "sourcePath": "pr-identity/REVIEW.md",
+      "path": "pr-identity/REVIEW.md"
+    },
+    {
+      "sourcePath": "pr-identity/changed-file-identities.json",
+      "path": "pr-identity/changed-file-identities.json"
+    },
+    {
+      "sourcePath": "pr-identity/chart-freeze2.json",
+      "path": "pr-identity/chart-freeze2.json"
+    },
+    {
+      "sourcePath": "pr-identity/downstream-freeze2.json",
+      "path": "pr-identity/downstream-freeze2.json"
+    },
+    {
+      "sourcePath": "pr-identity/files-pages-raw.json",
+      "path": "pr-identity/files-pages-raw.json"
+    },
+    {
+      "sourcePath": "pr-identity/files-pages-raw.stderr",
+      "path": "pr-identity/files-pages-raw.stderr"
+    },
+    {
+      "sourcePath": "pr-identity/identity-result.json",
+      "path": "pr-identity/identity-result.json"
+    },
+    {
+      "sourcePath": "pr-identity/local-base.txt",
+      "path": "pr-identity/local-base.txt"
+    },
+    {
+      "sourcePath": "pr-identity/local-commit.txt",
+      "path": "pr-identity/local-commit.txt"
+    },
+    {
+      "sourcePath": "pr-identity/local-merge-base.txt",
+      "path": "pr-identity/local-merge-base.txt"
+    },
+    {
+      "sourcePath": "pr-identity/local-name-status.raw",
+      "path": "pr-identity/local-name-status.raw"
+    },
+    {
+      "sourcePath": "pr-identity/manifest.json",
+      "path": "pr-identity/manifest.json"
+    },
+    {
+      "sourcePath": "pr-identity/non-documentation.patch",
+      "path": "pr-identity/non-documentation.patch"
+    },
+    {
+      "sourcePath": "pr-identity/pr-after-approved.json",
+      "path": "pr-identity/pr-after-approved.json"
+    },
+    {
+      "sourcePath": "pr-identity/pr-after-approved.stderr",
+      "path": "pr-identity/pr-after-approved.stderr"
+    },
+    {
+      "sourcePath": "pr-identity/pr-before-approved.json",
+      "path": "pr-identity/pr-before-approved.json"
+    },
+    {
+      "sourcePath": "pr-identity/pr-before-approved.stderr",
+      "path": "pr-identity/pr-before-approved.stderr"
+    },
+    {
+      "sourcePath": "pr-identity/pr-before-raw.json",
+      "path": "pr-identity/pr-before-raw.json"
+    },
+    {
+      "sourcePath": "pr-identity/pr-before-raw.stderr",
+      "path": "pr-identity/pr-before-raw.stderr"
+    },
+    {
+      "sourcePath": "pr-identity/source/.github/workflows/site-check.yml",
+      "path": "pr-identity/source/.github/workflows/site-check.yml"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/components/EmailCaptureEnhancement.astro",
+      "path": "pr-identity/source/src/components/EmailCaptureEnhancement.astro.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/islands/ChartCalculator.locale.test.ts",
+      "path": "pr-identity/source/src/islands/ChartCalculator.locale.test.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/islands/ChartCalculator.ownership.test.ts",
+      "path": "pr-identity/source/src/islands/ChartCalculator.ownership.test.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/islands/ChartCalculator.tsx",
+      "path": "pr-identity/source/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/islands/PostChartDailyBrief.tsx",
+      "path": "pr-identity/source/src/islands/PostChartDailyBrief.tsx.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/profile/post-chart-context.test.ts",
+      "path": "pr-identity/source/src/lib/profile/post-chart-context.test.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/src/lib/profile/post-chart-context.ts",
+      "path": "pr-identity/source/src/lib/profile/post-chart-context.ts.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/tests/chart-ownership-drive.mjs",
+      "path": "pr-identity/source/tests/chart-ownership-drive.mjs.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/tests/post-chart-context-clear-drive.mjs",
+      "path": "pr-identity/source/tests/post-chart-context-clear-drive.mjs.log"
+    },
+    {
+      "sourcePath": "pr-identity/source/tests/post-chart-daily-drive.mjs",
+      "path": "pr-identity/source/tests/post-chart-daily-drive.mjs.log"
+    },
+    {
+      "sourcePath": "pr-identity/verify.log",
+      "path": "pr-identity/verify.log"
+    },
+    {
+      "sourcePath": "pr-identity/verify.py",
+      "path": "pr-identity/verify.py.log"
+    },
+    {
+      "sourcePath": "pr-identity/workflow-base.yml",
+      "path": "pr-identity/workflow-base.yml"
+    },
+    {
+      "sourcePath": "pr-identity/workflow.patch",
+      "path": "pr-identity/workflow.patch"
+    },
+    {
+      "sourcePath": "preview-drive.mjs.log",
+      "path": "preview-drive.mjs.log"
+    },
+    {
+      "sourcePath": "preview-run1.log",
+      "path": "preview-run1.log"
+    },
+    {
+      "sourcePath": "remote-modules-manifest.json",
+      "path": "remote-modules-manifest.json"
+    },
+    {
+      "sourcePath": "remote-modules.tar.gz",
+      "path": "remote-modules.tar.gz"
+    },
+    {
+      "sourcePath": "result.json",
+      "path": "result.json"
+    },
+    {
+      "sourcePath": "snapshot.log",
+      "path": "snapshot.log"
+    },
+    {
+      "sourcePath": "snapshot.mjs.log",
+      "path": "snapshot.mjs.log"
+    },
+    {
+      "sourcePath": "source-snapshot.json",
+      "path": "source-snapshot.json"
+    },
+    {
+      "sourcePath": "source-snapshot.tar.gz",
+      "path": "source-snapshot.tar.gz"
+    },
+    {
+      "sourcePath": "verified-results.json",
+      "path": "verified-results.json"
+    }
+  ]
+}

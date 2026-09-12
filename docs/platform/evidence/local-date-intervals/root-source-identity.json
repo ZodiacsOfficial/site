@@ -1,0 +1,26 @@
+{
+  "base": "804c70309d2508e67e8462df526b5f9e71a112e9",
+  "at": "2026-09-08T07:16:21.477348+00:00",
+  "reviewStatus": "Author, independent and root local acceptance passed; hosted release checks pending",
+  "scope": "Three new files only; inactive API. Existing callers, resolver, SDK, accounts, UI, locales and metadata unchanged.",
+  "files": [
+    {
+      "path": "src/lib/time/local-date-intervals.ts",
+      "bytes": 9341,
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+    },
+    {
+      "path": "src/lib/time/local-date-intervals.test.ts",
+      "bytes": 14027,
+      "sha256": "f15c17acc7c338aadbdb77452be4edbf9c8473b8e8b22c98b665b377ccd769cc"
+    },
+    {
+      "path": "tests/local-date-intervals-drive.mjs",
+      "bytes": 11138,
+      "sha256": "fcdff2844a7912754b36cf9f4563762443b8e9060f5bc679f8014fd3fd40b32c"
+    }
+  ],
+  "patchSha256": "9854a47e9a2d60845cf023f4b12eb16f7defe8b4ca81083f1f6a4ec6d4667e78",
+  "rootBaseCommit": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "captureManifestSha256": "2e569b3d9f454f34a1f7bb817d4db4a67af00b727c6cb50291beab9af6d86bb8"
+}

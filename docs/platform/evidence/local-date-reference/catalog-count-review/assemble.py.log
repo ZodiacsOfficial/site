@@ -1,0 +1,37 @@
+from pathlib import Path
+import hashlib,json,shutil,subprocess,datetime
+OUT=Path(__file__).parent
+SITE=OUT/'site'
+ROOT=Path('/Users/chiburashka/.codex/worktrees/4806/site')
+BASE='3845a04bcea822da3c30a18848ef3d8d133b7b66'
+C014=Path('/private/tmp/zodiacs-platform-local-date-reference-evidence')
+SUP=Path('/private/tmp/zodiacs-platform-local-date-catalog-count-integration')
+def sha(b):return hashlib.sha256(b).hexdigest()
+def save(name,b):
+ p=OUT/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+def git(*args):return subprocess.check_output(['git',*args],cwd=SITE)
+f=C014/'source-freeze.json'; assert sha(f.read_bytes())=='328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2'
+save('inputs/c014-source-freeze.json',f.read_bytes());freeze=json.loads(f.read_text())
+s=SUP/'identity.json';supp=json.loads(s.read_text());save('inputs/supplement-identity.json',s.read_bytes())
+patch=(SUP/'integration.patch').read_bytes();assert sha(patch)=='50330a5cc5865f44872f607795b1135bf5c98a0a1ffd06113ccf6cfcebff5922';save('inputs/integration.patch',patch)
+prior=Path('/private/tmp/zodiacs-platform-local-date-reference-wiring-review/delivery')
+save('inputs/prior-wiring-manifest.json',(prior/'manifest.json').read_bytes())
+with (OUT/'assembly-git.log').open('w') as log:
+ subprocess.run(['git','clone','--shared','--no-checkout',str(ROOT),str(SITE)],check=True,stdout=log,stderr=log)
+ subprocess.run(['git','checkout','--detach',BASE],cwd=SITE,check=True,stdout=log,stderr=log)
+records=[]
+for source, items, label in [(C014/'frozen-source',freeze['files'],'c014'),(SUP/'source',supp['records'],'supplement')]:
+ for r in items:
+  name=r['path'];data=(source/name).read_bytes();assert sha(data)==r['sha256'] and len(data)==r['bytes']
+  dest=SITE/name;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(data)
+  save('frozen-source/'+name,data)
+  records.append({'path':name,'scope':label,'bytes':len(data),'sha256':sha(data)})
+assert len(records)==16 and len({r['path'] for r in records})==16
+save('inputs/base-index.test.ts',git('show',BASE+':src/lib/i18n/index.test.ts'))
+save('inputs/base-ru.test.ts',git('show',BASE+':src/lib/i18n/ui/ru.test.ts'))
+shutil.copytree(Path('/private/tmp/zodiacs-platform-date-downstream-combined-review/site/node_modules'),SITE/'node_modules',symlinks=True)
+print('Physically copied existing installed dependencies; no network install. Clone uses read-only local Git object alternates; checked out files and frozen overlays are independent regular files.',flush=True)
+save('assembly-identity.json',(json.dumps({'base':BASE,'records':records,'createdUtc':datetime.datetime.now(datetime.timezone.utc).isoformat()},indent=2)+'\n').encode())
+save('candidate-name-status.raw',git('diff','--name-status','-z','HEAD'))
+save('candidate-untracked.raw',git('ls-files','--others','--exclude-standard','-z'))
+print(json.dumps({'base':git('rev-parse','HEAD').decode().strip(),'frozenFiles':len(records),'dependencyMethod':'physical copy from existing owned fixture','rootOrAuthorFilesWritten':False}))

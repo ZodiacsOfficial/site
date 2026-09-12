@@ -1,0 +1,35 @@
+{"kind":"baseline","name":"control-known","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"control-unknown","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"pending-engine-date-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"pending-receipt-place-clear","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"signature-rejection-while-engine-pending","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"late-signature-after-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"late-share-preparation-after-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"late-context-match-after-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"old-share-completion-newer-result","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"old-dialog-intent-after-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"current-failure-clears-old-result","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"positions-only-control","passed":true}
+{"kind":"baseline","name":"pending-valid-positions-after-new-run","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"pending-invalid-positions-after-new-run","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"pending-conflicting-positions-after-new-run","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"stale-controls-retry-focus","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"baseline","name":"unmount-pending-receipt","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"control-known","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"control-unknown","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"pending-engine-date-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"pending-receipt-place-clear","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"signature-rejection-while-engine-pending","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"late-signature-after-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"late-share-preparation-after-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"late-context-match-after-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"old-share-completion-newer-result","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"old-dialog-intent-after-edit","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"current-failure-clears-old-result","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"positions-only-control","passed":true}
+{"kind":"candidate","name":"pending-valid-positions-after-new-run","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"pending-invalid-positions-after-new-run","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"pending-conflicting-positions-after-new-run","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"stale-controls-retry-focus","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"kind":"candidate","name":"unmount-pending-receipt","passed":false,"error":"locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:"}
+{"baselinePass":1,"candidatePass":1,"candidateFail":["control-known","control-unknown","pending-engine-date-edit","pending-receipt-place-clear","signature-rejection-while-engine-pending","late-signature-after-edit","late-share-preparation-after-edit","late-context-match-after-edit","old-share-completion-newer-result","old-dialog-intent-after-edit","current-failure-clears-old-result","pending-valid-positions-after-new-run","pending-invalid-positions-after-new-run","pending-conflicting-positions-after-new-run","stale-controls-retry-focus","unmount-pending-receipt"]}

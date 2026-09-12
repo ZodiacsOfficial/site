@@ -1,0 +1,91 @@
+{
+  "freezeSha256": "e64eb26e34b1b5442a1a1e12f851b77a8a17d7d820a0e5a9b2b611c583cdd242",
+  "patchSha256": "391af1a908fece28f57dfffe16ce435d1dce9ead828b9bcc77a505d1b6c0609b",
+  "verifiedFiles": [
+    {
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb",
+      "copiedAndOriginalFrozenMatch": true
+    },
+    {
+      "path": "src/islands/PostChartDailyBrief.tsx",
+      "sha256": "d2e58aab1d6a2cb9f34bc449a9e97c8db8d1791e0ddbed7da95348557ad7481e",
+      "copiedAndOriginalFrozenMatch": true
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.test.ts",
+      "sha256": "1d8476ed9ced6990adf339e85b44d2a70e0813033065eb82647ab1dab72e2b7e",
+      "copiedAndOriginalFrozenMatch": true
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.ts",
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a",
+      "copiedAndOriginalFrozenMatch": true
+    },
+    {
+      "path": "tests/post-chart-context-clear-drive.mjs",
+      "sha256": "f60a0858fe7afbffd813bc1f9d4fca91e5a1e983b48b60374426bc37b9f86364",
+      "copiedAndOriginalFrozenMatch": true
+    },
+    {
+      "path": "tests/post-chart-daily-drive.mjs",
+      "sha256": "36bc9d6fa176f38d35c521bd71364c153e1605e6a28842533a77ce4c81848654",
+      "copiedAndOriginalFrozenMatch": true
+    }
+  ],
+  "unchangedFetchCallSha256": "3c870f6c3636ae100fff171b2e7297bf5b7a0597e38f2089690358b9734ce99d",
+  "unchangedFetchCall": "await fetch(form.action, {\n          method: 'POST',\n          headers: { Accept: 'application/json' },\n          body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>),\n        });",
+  "tools": [
+    {
+      "name": "esbuild",
+      "version": "0.28.1",
+      "packageJsonSha256": "d55d1d19fcc5b6079e4a71dd4111340c79c682bc36835ac7058a0c364c7db58a"
+    },
+    {
+      "name": "@esbuild/darwin-arm64",
+      "version": "0.28.1",
+      "packageJsonSha256": "4741fe8d75953474f275402d367368cf49c242b2bc04b85e25bad14bfd26eaad"
+    },
+    {
+      "name": "playwright-core",
+      "version": "1.61.1",
+      "packageJsonSha256": "759e376f995bf39edd4810d699b99469bab1d7428b6fbc78d41912f367df7ba9"
+    }
+  ],
+  "runtimeFiles": [
+    {
+      "path": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "sha256": "18e387c90ab8a8400183e8bdd396376e1e875b91b4c874b894dcade7b35bf572"
+    },
+    {
+      "path": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      "sha256": "5f3d43277ede0c2804c099e71f712d033a3351216f49ac34d9482cab00ec9d0c"
+    }
+  ],
+  "independentDriverSha256": "e1ea99de0460ec8ac63ade53045d01d9af1696e5dc18bf95058f61cd3e8b63dc",
+  "independentFixtureSha256": "ac77d10a960b0c2ea894acd1dae9eda957f72ddf70cbbc7c289ad893ed5a0b03",
+  "results": [
+    {
+      "path": "baseline-native-result.json",
+      "sha256": "d015d62b80b3cf3abcceae9b8a4a3d1f730497b637721dd59283acd54a12882e",
+      "groups": 20,
+      "passed": 10,
+      "failed": 10,
+      "browser": "152.0.7977.83",
+      "node": "v22.23.2",
+      "pageErrors": 0,
+      "networkRequests": 0
+    },
+    {
+      "path": "candidate-native-result.json",
+      "sha256": "e233e2d86d66f0d7ef16e6e38dcabbcfeff84824313044b2ccb860360c2c62cb",
+      "groups": 20,
+      "passed": 20,
+      "failed": 0,
+      "browser": "152.0.7977.83",
+      "node": "v22.23.2",
+      "pageErrors": 0,
+      "networkRequests": 0
+    }
+  ]
+}

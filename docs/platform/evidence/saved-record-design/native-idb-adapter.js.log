@@ -1,0 +1,1177 @@
+// snapshot/src/lib/account-v2/profile-access-reader.ts
+function browserProfileAccessReader() {
+  if (typeof window === "undefined") return null;
+  try {
+    const reader = Reflect.get(window, "zodiacsProfileAccess");
+    if (!reader || typeof reader !== "object") return null;
+    return typeof Reflect.get(reader, "canRead") === "function" ? reader : null;
+  } catch {
+    return null;
+  }
+}
+function accountProfileAccessEnabled() {
+  if (typeof document === "undefined") return false;
+  try {
+    return document.documentElement.hasAttribute("data-account-sync-v2");
+  } catch {
+    return true;
+  }
+}
+function profileAccessAllowed(reader = browserProfileAccessReader(), enabled = accountProfileAccessEnabled()) {
+  if (!enabled) return true;
+  try {
+    return reader?.canRead() === true;
+  } catch {
+    return false;
+  }
+}
+
+// snapshot/src/lib/account-v2/storage-identity.ts
+var ACCOUNT_V2_STORAGE_PREFIX = "zodiacs.account-sync-v2.";
+var ACCOUNT_V2_LOCAL_OWNER_KEY = `${ACCOUNT_V2_STORAGE_PREFIX}local-owner.v1`;
+var ACCOUNT_V2_RETAINED_OWNER_KEY = `${ACCOUNT_V2_STORAGE_PREFIX}retained-owner.v1`;
+var ACCOUNT_V2_PROFILE_LEASE_REVOKE_KEY = `${ACCOUNT_V2_STORAGE_PREFIX}profile-lease-revoke.v1`;
+var ACCOUNT_V2_ID_PATTERN_SOURCE = "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$";
+var UUID = new RegExp(ACCOUNT_V2_ID_PATTERN_SOURCE, "u");
+function isAccountV2Id(value) {
+  return typeof value === "string" && UUID.test(value);
+}
+
+// snapshot/src/lib/account-v2/types.ts
+var ACCOUNT_SYNC_METADATA_VERSION = 1;
+
+// snapshot/src/lib/account-v2/local-state.ts
+var MAX_ACCOUNT_SYNC_METADATA_BYTES = 32 * 1024;
+var MAX_SMALL_RECORD_BYTES = 512;
+var MAX_SERVER_REVISION = Number.MAX_SAFE_INTEGER;
+function readLocalAccountOwner(storage) {
+  return readLocalOwner(storage);
+}
+function readLocalOwner(storage) {
+  let serialized;
+  try {
+    serialized = storage.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY);
+  } catch {
+    return { status: "unavailable" };
+  }
+  if (serialized === null) return { status: "missing" };
+  if (utf8Bytes(serialized) > MAX_SMALL_RECORD_BYTES) return { status: "invalid" };
+  const parsed = parseJson(serialized);
+  if (!isLocalOwnerRecord(parsed)) return { status: "invalid" };
+  return { status: "ready", accountId: parsed.accountId };
+}
+function isLocalOwnerRecord(value) {
+  return hasExactKeys(value, ["version", "accountId"]) && value.version === ACCOUNT_SYNC_METADATA_VERSION && isAccountV2Id(value.accountId);
+}
+function hasExactKeys(value, expected) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const actual = Object.keys(value).sort();
+  const wanted = [...expected].sort();
+  return actual.length === wanted.length && actual.every((key, index) => key === wanted[index]);
+}
+function parseJson(value) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+}
+function utf8Bytes(value) {
+  if (value.length > MAX_ACCOUNT_SYNC_METADATA_BYTES) return value.length;
+  return new TextEncoder().encode(value).byteLength;
+}
+
+// snapshot/src/lib/living-chart/owner.ts
+var LIVING_CHART_GUEST_VAULT_KEY = "zodiacs.living-chart.guest-vault.v1";
+function browserStorage() {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
+}
+function browserRandomUUID() {
+  return typeof globalThis.crypto?.randomUUID === "function" ? globalThis.crypto.randomUUID() : "";
+}
+function readGuestVault(storage) {
+  let raw;
+  try {
+    raw = storage.getItem(LIVING_CHART_GUEST_VAULT_KEY);
+  } catch {
+    return null;
+  }
+  if (raw === null) return "";
+  try {
+    const value = JSON.parse(raw);
+    if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+    const record = value;
+    return Object.keys(record).sort().join(",") === "vaultId,version" && record.version === 1 && isAccountV2Id(record.vaultId) ? record.vaultId.toLowerCase() : null;
+  } catch {
+    return null;
+  }
+}
+function readLivingChartGuestOwnerScope(storage = browserStorage()) {
+  if (!storage) return null;
+  const vaultId = readGuestVault(storage);
+  return vaultId ? { kind: "guest", vaultId } : null;
+}
+function livingChartOwnerKey(owner) {
+  if (owner.kind === "guest" && isAccountV2Id(owner.vaultId)) {
+    return `guest:${owner.vaultId.toLowerCase()}`;
+  }
+  if (owner.kind === "account" && isAccountV2Id(owner.accountId)) {
+    return `account:${owner.accountId.toLowerCase()}`;
+  }
+  return null;
+}
+function resolveLivingChartOwnerScope(options = {}) {
+  const allowed = options.accessAllowed ?? profileAccessAllowed;
+  if (!allowed()) return null;
+  const storage = options.storage === void 0 ? browserStorage() : options.storage;
+  if (!storage) return null;
+  if (options.accountId !== void 0) {
+    if (options.accountId !== null) {
+      return isAccountV2Id(options.accountId) ? { kind: "account", accountId: options.accountId.toLowerCase() } : null;
+    }
+  } else {
+    const localOwner = readLocalAccountOwner(storage);
+    if (localOwner.status === "ready") {
+      return { kind: "account", accountId: localOwner.accountId.toLowerCase() };
+    }
+    if (localOwner.status === "invalid" || localOwner.status === "unavailable") return null;
+  }
+  const existing = readGuestVault(storage);
+  if (existing === null) return null;
+  if (existing) return { kind: "guest", vaultId: existing };
+  const vaultId = (options.randomUUID ?? browserRandomUUID)();
+  if (!isAccountV2Id(vaultId) || !allowed()) return null;
+  const record = { version: 1, vaultId: vaultId.toLowerCase() };
+  const serialized = JSON.stringify(record);
+  try {
+    storage.setItem(LIVING_CHART_GUEST_VAULT_KEY, serialized);
+    if (!allowed() || storage.getItem(LIVING_CHART_GUEST_VAULT_KEY) !== serialized) return null;
+  } catch {
+    return null;
+  }
+  return { kind: "guest", vaultId: record.vaultId };
+}
+
+// snapshot/src/lib/living-chart/types.ts
+var LIVING_CHART_MOMENT_SCHEMA = "zodiacs.living-chart.moment.v1";
+var LIVING_CHART_FORECAST_SCHEMA = "zodiacs.living-chart.today-forecast.v1";
+var LIVING_CHART_EXPORT_SCHEMA = "zodiacs.living-chart.export.v1";
+
+// snapshot/src/lib/living-chart/forecast-snapshot.ts
+var MAX_LIVING_FORECAST_LINES = 3;
+var ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/u;
+var VERSION = /^[A-Za-z0-9][A-Za-z0-9._+-]{0,63}$/u;
+var DATE = /^(\d{4})-(\d{2})-(\d{2})$/u;
+var FORECAST_SOURCES = /* @__PURE__ */ new Set(["personalized", "sun_sign", "quiet"]);
+var SINGLE_LINE_CONTROL = /[\p{Cc}\p{Cf}]/u;
+function validDate(value) {
+  if (typeof value !== "string") return false;
+  const match = DATE.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+  return year >= 1800 && year <= 2199 && parsed.getUTCFullYear() === year && parsed.getUTCMonth() === month - 1 && parsed.getUTCDate() === day;
+}
+function canonicalInstant(value) {
+  if (typeof value !== "string" || value.length > 32) return null;
+  const parsed = new Date(value);
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString() === value ? value : null;
+}
+function boundedSingleLine(value, maximumCharacters, maximumBytes) {
+  if (typeof value !== "string" || value !== value.trim() || value.length < 1 || [...value].length > maximumCharacters || new TextEncoder().encode(value).byteLength > maximumBytes || SINGLE_LINE_CONTROL.test(value)) return null;
+  return value;
+}
+function parseLine(input) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) return null;
+  const row = input;
+  if (Object.keys(row).sort().join(",") !== "id,receipt,text") return null;
+  const id = boundedSingleLine(row.id, 128, 128);
+  const text = boundedSingleLine(row.text, 1200, 4800);
+  const receipt = boundedSingleLine(row.receipt, 800, 3200);
+  return id && ID.test(id) && text && receipt ? { id, text, receipt } : null;
+}
+function freezeSnapshot(snapshot) {
+  for (const line of snapshot.lines) Object.freeze(line);
+  Object.freeze(snapshot.lines);
+  return Object.freeze(snapshot);
+}
+function parseLivingForecastSnapshot(input) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) return null;
+  const value = input;
+  if (Object.keys(value).sort().join(",") !== [
+    "capturedAt",
+    "chartId",
+    "editionDate",
+    "generatorVersion",
+    "lines",
+    "schema",
+    "source"
+  ].sort().join(",")) return null;
+  if (value.schema !== LIVING_CHART_FORECAST_SCHEMA || !validDate(value.editionDate) || !isAccountV2Id(value.chartId) || typeof value.source !== "string" || !FORECAST_SOURCES.has(value.source) || !Array.isArray(value.lines) || value.lines.length < 1 || value.lines.length > MAX_LIVING_FORECAST_LINES) return null;
+  const generatorVersion = boundedSingleLine(value.generatorVersion, 64, 64);
+  const capturedAt = canonicalInstant(value.capturedAt);
+  const lines = value.lines.map(parseLine);
+  if (!generatorVersion || !VERSION.test(generatorVersion) || !capturedAt || lines.some((line) => line === null)) return null;
+  const parsedLines = lines;
+  if (new Set(parsedLines.map((line) => line.id)).size !== parsedLines.length) return null;
+  return freezeSnapshot({
+    schema: LIVING_CHART_FORECAST_SCHEMA,
+    editionDate: value.editionDate,
+    chartId: value.chartId.toLowerCase(),
+    source: value.source,
+    generatorVersion,
+    capturedAt,
+    lines: parsedLines
+  });
+}
+
+// snapshot/src/lib/living-chart/schema.ts
+var MAX_LIVING_MOMENT_NOTE_CHARACTERS = 500;
+var MAX_LIVING_MOMENT_NOTE_BYTES = 2e3;
+var MAX_ACTIVE_LIVING_MOMENTS = 250;
+var LIVING_MOMENT_CATEGORIES = [
+  "work",
+  "relationships",
+  "home",
+  "creativity",
+  "change",
+  "wellbeing",
+  "other"
+];
+var LIVING_MOMENT_TIME_PRECISIONS = [
+  "exact",
+  "approximate",
+  "date_only"
+];
+var LIVING_MOMENT_SYNC_STATES = [
+  "local",
+  "queued",
+  "synced",
+  "conflict",
+  "deleted"
+];
+var DATE2 = /^(\d{4})-(\d{2})-(\d{2})$/u;
+var IDENTIFIER = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/u;
+var FORMAT_CONTROL = /\p{Cf}/u;
+function isRecord(input) {
+  return Boolean(input) && typeof input === "object" && !Array.isArray(input);
+}
+function hasOnlyKeys(input, allowed) {
+  const set = new Set(allowed);
+  return Object.keys(input).every((key) => set.has(key));
+}
+function hasKeys(input, required) {
+  return required.every((key) => Object.prototype.hasOwnProperty.call(input, key));
+}
+function validCalendarDate(value) {
+  if (typeof value !== "string") return false;
+  const match = DATE2.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+  return year >= 1800 && year <= 2199 && parsed.getUTCFullYear() === year && parsed.getUTCMonth() === month - 1 && parsed.getUTCDate() === day;
+}
+function canonicalInstant2(value) {
+  if (typeof value !== "string" || value.length > 32) return null;
+  const parsed = new Date(value);
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString() === value ? value : null;
+}
+function canonicalOwner(value) {
+  if (!isRecord(value)) return null;
+  if (value.kind === "guest" && Object.keys(value).sort().join(",") === "kind,vaultId" && isAccountV2Id(value.vaultId)) {
+    return { kind: "guest", vaultId: value.vaultId.toLowerCase() };
+  }
+  if (value.kind === "account" && Object.keys(value).sort().join(",") === "accountId,kind" && isAccountV2Id(value.accountId)) {
+    return { kind: "account", accountId: value.accountId.toLowerCase() };
+  }
+  return null;
+}
+function validNoteCharacters(value) {
+  if (FORMAT_CONTROL.test(value)) return false;
+  for (let index = 0; index < value.length; index += 1) {
+    const code = value.charCodeAt(index);
+    if (code < 32 && code !== 9 && code !== 10 && code !== 13 || code >= 127 && code <= 159) {
+      return false;
+    }
+    if (code >= 55296 && code <= 56319) {
+      const next = value.charCodeAt(index + 1);
+      if (!(next >= 56320 && next <= 57343)) return false;
+      index += 1;
+    } else if (code >= 56320 && code <= 57343) {
+      return false;
+    }
+  }
+  return true;
+}
+function normalizeLivingMomentNote(value) {
+  if (value === void 0) return void 0;
+  if (typeof value !== "string") return null;
+  const normalized = value.replace(/\r\n?/gu, "\n").trim();
+  if (!normalized) return void 0;
+  return [...normalized].length <= MAX_LIVING_MOMENT_NOTE_CHARACTERS && new TextEncoder().encode(normalized).byteLength <= MAX_LIVING_MOMENT_NOTE_BYTES && validNoteCharacters(normalized) ? normalized : null;
+}
+function validOccurrence(value, precision) {
+  return precision === "date_only" ? validCalendarDate(value) : canonicalInstant2(value) !== null;
+}
+function positiveRevision(value, minimum) {
+  return Number.isSafeInteger(value) && value >= minimum;
+}
+function freezeMoment(moment) {
+  Object.freeze(moment.owner);
+  if (moment.conflictCopy) Object.freeze(moment.conflictCopy);
+  return Object.freeze(moment);
+}
+function parseConflictCopy(input, owner, id) {
+  if (!isRecord(input) || !hasOnlyKeys(input, [
+    "serverRevision",
+    "primaryChartId",
+    "occurredAt",
+    "timePrecision",
+    "category",
+    "note",
+    "forecast",
+    "reflectionQuestionId",
+    "createdAt",
+    "updatedAt"
+  ]) || !positiveRevision(input.serverRevision, 1)) return null;
+  const parsed = parseLivingMoment({
+    schema: LIVING_CHART_MOMENT_SCHEMA,
+    id,
+    owner,
+    primaryChartId: input.primaryChartId,
+    occurredAt: input.occurredAt,
+    timePrecision: input.timePrecision,
+    ...input.category === void 0 ? {} : { category: input.category },
+    ...input.note === void 0 ? {} : { note: input.note },
+    forecast: input.forecast,
+    reflectionQuestionId: input.reflectionQuestionId,
+    revision: 1,
+    baseRevision: 0,
+    syncState: "local",
+    createdAt: input.createdAt,
+    updatedAt: input.updatedAt,
+    deletedAt: null
+  });
+  if (!parsed) return null;
+  return {
+    serverRevision: input.serverRevision,
+    primaryChartId: parsed.primaryChartId,
+    occurredAt: parsed.occurredAt,
+    timePrecision: parsed.timePrecision,
+    ...parsed.category === void 0 ? {} : { category: parsed.category },
+    ...parsed.note === void 0 ? {} : { note: parsed.note },
+    forecast: parsed.forecast,
+    reflectionQuestionId: parsed.reflectionQuestionId,
+    createdAt: parsed.createdAt,
+    updatedAt: parsed.updatedAt
+  };
+}
+function parseLivingMoment(input) {
+  if (!isRecord(input) || !hasOnlyKeys(input, [
+    "schema",
+    "id",
+    "owner",
+    "primaryChartId",
+    "occurredAt",
+    "timePrecision",
+    "category",
+    "note",
+    "forecast",
+    "reflectionQuestionId",
+    "revision",
+    "baseRevision",
+    "syncState",
+    "createdAt",
+    "updatedAt",
+    "deletedAt",
+    "conflictCopy"
+  ]) || !hasKeys(input, [
+    "schema",
+    "id",
+    "owner",
+    "primaryChartId",
+    "occurredAt",
+    "timePrecision",
+    "forecast",
+    "reflectionQuestionId",
+    "revision",
+    "baseRevision",
+    "syncState",
+    "createdAt",
+    "updatedAt",
+    "deletedAt"
+  ])) return null;
+  if (input.schema !== LIVING_CHART_MOMENT_SCHEMA || !isAccountV2Id(input.id) || !isAccountV2Id(input.primaryChartId) || typeof input.timePrecision !== "string" || !LIVING_MOMENT_TIME_PRECISIONS.includes(input.timePrecision) || !validOccurrence(input.occurredAt, input.timePrecision) || input.category !== void 0 && (typeof input.category !== "string" || !LIVING_MOMENT_CATEGORIES.includes(input.category)) || typeof input.reflectionQuestionId !== "string" || !IDENTIFIER.test(input.reflectionQuestionId) || !positiveRevision(input.revision, 1) || !positiveRevision(input.baseRevision, 0) || typeof input.syncState !== "string" || !LIVING_MOMENT_SYNC_STATES.includes(input.syncState)) return null;
+  const owner = canonicalOwner(input.owner);
+  const forecast = parseLivingForecastSnapshot(input.forecast);
+  const note = normalizeLivingMomentNote(input.note);
+  const createdAt = canonicalInstant2(input.createdAt);
+  const updatedAt = canonicalInstant2(input.updatedAt);
+  const deletedAt = input.deletedAt === null ? null : canonicalInstant2(input.deletedAt);
+  const conflictCopy = input.conflictCopy === void 0 ? void 0 : parseConflictCopy(input.conflictCopy, owner, String(input.id));
+  if (!owner || !forecast || forecast.chartId !== input.primaryChartId.toLowerCase() || note === null || input.note !== void 0 && note !== input.note || note === void 0 && input.category === void 0 || !createdAt || !updatedAt || updatedAt < createdAt || deletedAt === void 0 || input.conflictCopy !== void 0 && conflictCopy === null || input.syncState !== "conflict" && conflictCopy !== void 0 || (input.syncState === "deleted" ? deletedAt === null : deletedAt !== null)) return null;
+  const moment = {
+    schema: LIVING_CHART_MOMENT_SCHEMA,
+    id: input.id.toLowerCase(),
+    owner,
+    primaryChartId: input.primaryChartId.toLowerCase(),
+    occurredAt: input.occurredAt,
+    timePrecision: input.timePrecision,
+    ...input.category === void 0 ? {} : { category: input.category },
+    ...note === void 0 ? {} : { note },
+    forecast,
+    reflectionQuestionId: input.reflectionQuestionId,
+    revision: input.revision,
+    baseRevision: input.baseRevision,
+    syncState: input.syncState,
+    createdAt,
+    updatedAt,
+    deletedAt: deletedAt ?? null,
+    ...conflictCopy ? { conflictCopy } : {}
+  };
+  return livingChartOwnerKey(moment.owner) ? freezeMoment(moment) : null;
+}
+function createLivingMomentRecord(owner, input, id, now) {
+  const note = normalizeLivingMomentNote(input.note);
+  if (note === null) return null;
+  return parseLivingMoment({
+    schema: LIVING_CHART_MOMENT_SCHEMA,
+    id,
+    owner,
+    primaryChartId: input.primaryChartId,
+    occurredAt: input.occurredAt,
+    timePrecision: input.timePrecision,
+    ...input.category === void 0 ? {} : { category: input.category },
+    ...note === void 0 ? {} : { note },
+    forecast: input.forecast,
+    reflectionQuestionId: input.reflectionQuestionId,
+    revision: 1,
+    baseRevision: 0,
+    syncState: "local",
+    createdAt: now,
+    updatedAt: now,
+    deletedAt: null
+  });
+}
+
+// snapshot/src/lib/living-chart/store.ts
+var LIVING_CHART_CHANGE_EVENT = "zodiacs:living-chart";
+var LIVING_CHART_DATABASE_NAME = "zodiacs-living-chart-v1";
+var LIVING_CHART_CHANGE_PULSE_KEY = "zodiacs.living-chart.change-pulse.v1";
+var DATABASE_VERSION = 1;
+var MOMENT_STORE = "moments";
+var OWNER_INDEX = "ownerKey";
+var authenticatedAccountOwnerId = null;
+var accountAuthorityMode = "inactive";
+function requestFailure() {
+  return new Error("living-chart-storage-unavailable");
+}
+var IndexedDbLivingChartAdapter = class {
+  database = null;
+  openGeneration = 0;
+  open() {
+    if (this.database) return this.database;
+    const generation = ++this.openGeneration;
+    let pending;
+    pending = new Promise((resolve, reject) => {
+      if (typeof indexedDB === "undefined") {
+        reject(requestFailure());
+        return;
+      }
+      const request = indexedDB.open(LIVING_CHART_DATABASE_NAME, DATABASE_VERSION);
+      request.onupgradeneeded = () => {
+        const database = request.result;
+        const store = database.objectStoreNames.contains(MOMENT_STORE) ? request.transaction.objectStore(MOMENT_STORE) : database.createObjectStore(MOMENT_STORE, { keyPath: "storageKey" });
+        if (!store.indexNames.contains(OWNER_INDEX)) {
+          store.createIndex(OWNER_INDEX, OWNER_INDEX, { unique: false });
+        }
+      };
+      request.onsuccess = () => {
+        const database = request.result;
+        if (this.database !== pending || this.openGeneration !== generation) {
+          database.close();
+          reject(requestFailure());
+          return;
+        }
+        database.onversionchange = () => {
+          database.close();
+          if (this.database === pending && this.openGeneration === generation) {
+            this.database = null;
+            this.openGeneration += 1;
+          }
+        };
+        resolve(database);
+      };
+      request.onerror = () => reject(request.error ?? requestFailure());
+      request.onblocked = () => reject(requestFailure());
+    });
+    this.database = pending;
+    void pending.catch(() => {
+      if (this.database === pending && this.openGeneration === generation) {
+        this.database = null;
+      }
+    });
+    return pending;
+  }
+  async readAll(ownerKey) {
+    const database = await this.open();
+    return new Promise((resolve, reject) => {
+      const transaction = database.transaction(MOMENT_STORE, "readonly");
+      const request = transaction.objectStore(MOMENT_STORE).index(OWNER_INDEX).getAll(ownerKey);
+      request.onsuccess = () => {
+        const rows = request.result;
+        resolve(rows.map((row) => row.value));
+      };
+      request.onerror = () => reject(request.error ?? requestFailure());
+      transaction.onabort = () => reject(transaction.error ?? requestFailure());
+    });
+  }
+  async mutate(ownerKey, operation) {
+    const database = await this.open();
+    return new Promise((resolve, reject) => {
+      const transaction = database.transaction(MOMENT_STORE, "readwrite");
+      const store = transaction.objectStore(MOMENT_STORE);
+      const request = store.index(OWNER_INDEX).getAll(ownerKey);
+      let mutation = null;
+      let settled = false;
+      const fail = (error) => {
+        if (settled) return;
+        settled = true;
+        reject(error instanceof Error ? error : requestFailure());
+      };
+      request.onsuccess = () => {
+        try {
+          const rows = request.result;
+          mutation = operation(rows.map((row) => row.value));
+          if (mutation.put && mutation.deleteId) throw requestFailure();
+          if (mutation.put) {
+            if (!isAccountV2Id(mutation.put.id)) throw requestFailure();
+            const momentId = mutation.put.id.toLowerCase();
+            store.put({
+              storageKey: `${ownerKey}:${momentId}`,
+              ownerKey,
+              momentId,
+              value: mutation.put.value
+            });
+          } else if (mutation.deleteId) {
+            if (!isAccountV2Id(mutation.deleteId)) throw requestFailure();
+            store.delete(`${ownerKey}:${mutation.deleteId.toLowerCase()}`);
+          }
+        } catch (error) {
+          transaction.abort();
+          fail(error);
+        }
+      };
+      request.onerror = () => fail(request.error ?? requestFailure());
+      transaction.onabort = () => fail(transaction.error ?? requestFailure());
+      transaction.onerror = () => fail(transaction.error ?? requestFailure());
+      transaction.oncomplete = () => {
+        if (settled) return;
+        if (!mutation) {
+          fail(requestFailure());
+          return;
+        }
+        settled = true;
+        resolve(mutation.result);
+      };
+    });
+  }
+  async clear(ownerKey) {
+    const database = await this.open();
+    return new Promise((resolve, reject) => {
+      const transaction = database.transaction(MOMENT_STORE, "readwrite");
+      const index = transaction.objectStore(MOMENT_STORE).index(OWNER_INDEX);
+      const request = index.openKeyCursor(IDBKeyRange.only(ownerKey));
+      request.onsuccess = () => {
+        const cursor = request.result;
+        if (!cursor) return;
+        transaction.objectStore(MOMENT_STORE).delete(cursor.primaryKey);
+        cursor.continue();
+      };
+      request.onerror = () => reject(request.error ?? requestFailure());
+      transaction.onabort = () => reject(transaction.error ?? requestFailure());
+      transaction.onerror = () => reject(transaction.error ?? requestFailure());
+      transaction.oncomplete = () => resolve();
+    });
+  }
+  async clearAll() {
+    const database = await this.open();
+    return new Promise((resolve, reject) => {
+      const transaction = database.transaction(MOMENT_STORE, "readwrite");
+      const request = transaction.objectStore(MOMENT_STORE).clear();
+      request.onerror = () => reject(request.error ?? requestFailure());
+      transaction.onabort = () => reject(transaction.error ?? requestFailure());
+      transaction.onerror = () => reject(transaction.error ?? requestFailure());
+      transaction.oncomplete = () => resolve();
+    });
+  }
+  close() {
+    const current = this.database;
+    this.database = null;
+    this.openGeneration += 1;
+    void current?.then((database) => database.close()).catch(() => {
+    });
+  }
+};
+function defaultRandomUUID() {
+  return typeof globalThis.crypto?.randomUUID === "function" ? globalThis.crypto.randomUUID() : "";
+}
+function dispatchLivingChartEvent(detail) {
+  if (typeof window === "undefined" || typeof window.dispatchEvent !== "function") return;
+  try {
+    if (typeof CustomEvent === "function") {
+      window.dispatchEvent(new CustomEvent(LIVING_CHART_CHANGE_EVENT, { detail }));
+      return;
+    }
+    const event = new Event(LIVING_CHART_CHANGE_EVENT);
+    Object.defineProperty(event, "detail", { value: detail });
+    window.dispatchEvent(event);
+  } catch {
+  }
+}
+function dispatchLivingChartChange(detail) {
+  if (detail.operation === "create" || detail.operation === "update" || detail.operation === "delete") {
+    const storage = browserLocalStorage();
+    const eventId = defaultRandomUUID();
+    if (storage && isAccountV2Id(eventId)) {
+      try {
+        storage.setItem(LIVING_CHART_CHANGE_PULSE_KEY, JSON.stringify({
+          version: 1,
+          eventId: eventId.toLowerCase()
+        }));
+      } catch {
+      }
+    }
+  }
+  dispatchLivingChartEvent(detail);
+}
+function sameOwner(left, right) {
+  return livingChartOwnerKey(left) !== null && livingChartOwnerKey(left) === livingChartOwnerKey(right);
+}
+function parseOwnerRecords(values, owner) {
+  const parsed = [];
+  for (const value of values) {
+    const moment = parseLivingMoment(value);
+    if (!moment || !sameOwner(moment.owner, owner)) return null;
+    parsed.push(moment);
+  }
+  return new Set(parsed.map((moment) => moment.id)).size === parsed.length ? parsed : null;
+}
+function conflictCopyFromRemote(moment, serverRevision) {
+  return {
+    serverRevision,
+    primaryChartId: moment.primaryChartId,
+    occurredAt: moment.occurredAt,
+    timePrecision: moment.timePrecision,
+    ...moment.category === void 0 ? {} : { category: moment.category },
+    ...moment.note === void 0 ? {} : { note: moment.note },
+    forecast: moment.forecast,
+    reflectionQuestionId: moment.reflectionQuestionId,
+    createdAt: moment.createdAt,
+    updatedAt: moment.updatedAt
+  };
+}
+var REDACTED_CHART_ID = "00000000-0000-4000-8000-000000000000";
+var REDACTED_INSTANT = "1970-01-01T00:00:00.000Z";
+function redactedTechnicalTombstone(current, revision, baseRevision, deletedAt) {
+  return parseLivingMoment({
+    schema: LIVING_CHART_MOMENT_SCHEMA,
+    id: current.id,
+    owner: current.owner,
+    primaryChartId: REDACTED_CHART_ID,
+    occurredAt: REDACTED_INSTANT,
+    timePrecision: "exact",
+    category: "other",
+    forecast: {
+      schema: LIVING_CHART_FORECAST_SCHEMA,
+      editionDate: "1970-01-01",
+      chartId: REDACTED_CHART_ID,
+      source: "quiet",
+      generatorVersion: "deleted",
+      capturedAt: REDACTED_INSTANT,
+      lines: [{ id: "deleted", text: "Deleted", receipt: "Deleted" }]
+    },
+    reflectionQuestionId: "deleted",
+    revision,
+    baseRevision,
+    syncState: "deleted",
+    createdAt: REDACTED_INSTANT,
+    updatedAt: deletedAt,
+    deletedAt
+  });
+}
+function hasOwn(input, key) {
+  return Object.prototype.hasOwnProperty.call(input, key);
+}
+var LivingChartStore = class {
+  adapter;
+  accessAllowed;
+  ownerAllowed;
+  now;
+  randomUUID;
+  dispatch;
+  constructor(options = {}) {
+    this.adapter = options.adapter ?? new IndexedDbLivingChartAdapter();
+    this.accessAllowed = options.accessAllowed ?? profileAccessAllowed;
+    this.ownerAllowed = options.ownerAllowed ?? ((owner) => {
+      const current = resolveLivingChartOwnerScope({ accessAllowed: this.accessAllowed });
+      if (owner.kind === "account") {
+        if (accountAuthorityMode === "verified") return owner.accountId === authenticatedAccountOwnerId;
+        if (accountAuthorityMode !== "inactive") return false;
+      }
+      if (owner.kind === "guest" && accountAuthorityMode !== "inactive") {
+        if (accountAuthorityMode === "verified") return false;
+        const guest = readLivingChartGuestOwnerScope();
+        return guest !== null && sameOwner(guest, owner);
+      }
+      return current !== null && sameOwner(current, owner);
+    });
+    this.now = options.now ?? (() => /* @__PURE__ */ new Date());
+    this.randomUUID = options.randomUUID ?? defaultRandomUUID;
+    this.dispatch = options.dispatch ?? dispatchLivingChartChange;
+  }
+  accessIsAllowed() {
+    try {
+      return this.accessAllowed();
+    } catch {
+      return false;
+    }
+  }
+  ownerAccessAllowed(owner) {
+    if (!this.accessIsAllowed()) return false;
+    try {
+      return this.ownerAllowed(owner);
+    } catch {
+      return false;
+    }
+  }
+  allowedOwner(owner) {
+    if (!this.ownerAccessAllowed(owner)) return null;
+    return livingChartOwnerKey(owner);
+  }
+  async readOwnerRecords(owner) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey) return null;
+    try {
+      const values = await this.adapter.readAll(ownerKey);
+      if (!this.ownerAccessAllowed(owner)) return null;
+      return parseOwnerRecords(values, owner);
+    } catch {
+      return null;
+    }
+  }
+  async list(owner, options = {}) {
+    const records = await this.readOwnerRecords(owner);
+    if (!records) return [];
+    return records.filter((moment) => options.includeDeleted === true || moment.syncState !== "deleted").sort((left, right) => right.occurredAt.localeCompare(left.occurredAt) || right.createdAt.localeCompare(left.createdAt) || right.id.localeCompare(left.id));
+  }
+  async get(owner, id) {
+    if (!isAccountV2Id(id)) return null;
+    const moments = await this.list(owner, { includeDeleted: true });
+    if (!this.ownerAccessAllowed(owner)) return null;
+    return moments.find((moment) => moment.id === id.toLowerCase()) ?? null;
+  }
+  async create(owner, input) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey) return null;
+    const id = input.id ?? this.randomUUID();
+    const timestamp = this.now().toISOString();
+    const candidate = createLivingMomentRecord(owner, input, id, timestamp);
+    if (!candidate) return null;
+    try {
+      const saved = await this.adapter.mutate(ownerKey, (values) => {
+        if (!this.ownerAccessAllowed(owner)) return { result: null };
+        const records = parseOwnerRecords(values, owner);
+        if (!records || records.some((moment) => moment.id === candidate.id) || records.filter((moment) => moment.syncState !== "deleted").length >= MAX_ACTIVE_LIVING_MOMENTS) {
+          return { result: null };
+        }
+        return { result: candidate, put: { id: candidate.id, value: candidate } };
+      });
+      if (!saved || !this.ownerAccessAllowed(owner)) return null;
+      this.dispatch({ operation: "create", owner: saved.owner, momentId: saved.id });
+      return saved;
+    } catch {
+      return null;
+    }
+  }
+  async update(owner, id, patch) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey || !isAccountV2Id(id) || !patch || typeof patch !== "object") return null;
+    const normalizedNote = hasOwn(patch, "note") ? normalizeLivingMomentNote(patch.note) : void 0;
+    if (normalizedNote === null) return null;
+    const timestamp = this.now().toISOString();
+    try {
+      const saved = await this.adapter.mutate(ownerKey, (values) => {
+        if (!this.ownerAccessAllowed(owner)) return { result: null };
+        const records = parseOwnerRecords(values, owner);
+        const current = records?.find((moment) => moment.id === id.toLowerCase());
+        if (!current || current.syncState === "deleted") return { result: null };
+        const raw = {
+          ...current,
+          primaryChartId: patch.primaryChartId ?? current.primaryChartId,
+          occurredAt: patch.occurredAt ?? current.occurredAt,
+          timePrecision: patch.timePrecision ?? current.timePrecision,
+          forecast: patch.forecast ?? current.forecast,
+          reflectionQuestionId: patch.reflectionQuestionId ?? current.reflectionQuestionId,
+          revision: current.revision + 1,
+          syncState: current.syncState === "synced" ? "queued" : current.syncState,
+          updatedAt: timestamp
+        };
+        if (hasOwn(patch, "category")) {
+          if (patch.category === void 0) delete raw.category;
+          else raw.category = patch.category;
+        }
+        if (hasOwn(patch, "note")) {
+          if (normalizedNote === void 0) delete raw.note;
+          else raw.note = normalizedNote;
+        }
+        const next = parseLivingMoment(raw);
+        return next ? { result: next, put: { id: next.id, value: next } } : { result: null };
+      });
+      if (!saved || !this.ownerAccessAllowed(owner)) return null;
+      this.dispatch({ operation: "update", owner: saved.owner, momentId: saved.id });
+      return saved;
+    } catch {
+      return null;
+    }
+  }
+  async softDelete(owner, id) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey || !isAccountV2Id(id)) return false;
+    const timestamp = this.now().toISOString();
+    try {
+      const result = await this.adapter.mutate(ownerKey, (values) => {
+        if (!this.ownerAccessAllowed(owner)) return { result: { ok: false, changed: false } };
+        const records = parseOwnerRecords(values, owner);
+        const current = records?.find((moment) => moment.id === id.toLowerCase());
+        if (!current) return { result: { ok: false, changed: false } };
+        if (current.syncState === "deleted") return { result: { ok: true, changed: false } };
+        if (owner.kind === "guest") {
+          return {
+            result: { ok: true, changed: true },
+            deleteId: current.id
+          };
+        }
+        const next = redactedTechnicalTombstone(
+          current,
+          current.revision + 1,
+          current.baseRevision,
+          timestamp
+        );
+        return next ? { result: { ok: true, changed: true }, put: { id: next.id, value: next } } : { result: { ok: false, changed: false } };
+      });
+      if (!result.ok || !this.ownerAccessAllowed(owner)) return false;
+      if (result.changed) this.dispatch({ operation: "delete", owner, momentId: id.toLowerCase() });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  /**
+   * Applies a server acknowledgement without losing an edit made while the
+   * request was in flight. A newer local edit remains queued against the
+   * newly confirmed server revision.
+   */
+  async acknowledgeSync(owner, id, expectedRevision, serverRevision) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey || !isAccountV2Id(id) || !Number.isSafeInteger(expectedRevision) || expectedRevision < 1 || !Number.isSafeInteger(serverRevision) || serverRevision < 1) return null;
+    try {
+      const saved = await this.adapter.mutate(ownerKey, (values) => {
+        if (!this.ownerAccessAllowed(owner)) return { result: null };
+        const records = parseOwnerRecords(values, owner);
+        const current = records?.find((moment) => moment.id === id.toLowerCase());
+        if (!current) return { result: null };
+        if (current.syncState === "deleted") {
+          return { result: current, deleteId: current.id };
+        }
+        const next = parseLivingMoment({
+          ...current,
+          baseRevision: serverRevision,
+          syncState: current.revision === expectedRevision ? "synced" : "queued"
+        });
+        return next ? { result: next, put: { id: next.id, value: next } } : { result: null };
+      });
+      if (!saved || !this.ownerAccessAllowed(owner)) return null;
+      this.dispatch({ operation: "sync", owner, momentId: saved.id });
+      return saved;
+    } catch {
+      return null;
+    }
+  }
+  /** Preserves the device copy and records the revision needed for an explicit retry. */
+  async markSyncConflict(owner, id, serverRevision) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey || !isAccountV2Id(id) || !Number.isSafeInteger(serverRevision) || serverRevision < 1) return null;
+    try {
+      const saved = await this.adapter.mutate(ownerKey, (values) => {
+        if (!this.ownerAccessAllowed(owner)) return { result: null };
+        const records = parseOwnerRecords(values, owner);
+        const current = records?.find((moment) => moment.id === id.toLowerCase());
+        if (!current) return { result: null };
+        const next = parseLivingMoment({
+          ...current,
+          baseRevision: serverRevision,
+          syncState: current.syncState === "deleted" ? "deleted" : "conflict"
+        });
+        return next ? { result: next, put: { id: next.id, value: next } } : { result: null };
+      });
+      if (!saved || !this.ownerAccessAllowed(owner)) return null;
+      this.dispatch({ operation: "sync", owner, momentId: saved.id });
+      return saved;
+    } catch {
+      return null;
+    }
+  }
+  /** Explicitly chooses the device copy after a conflict; it is never automatic. */
+  async retryConflict(owner, id, resolution) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey || !isAccountV2Id(id)) return null;
+    try {
+      const saved = await this.adapter.mutate(ownerKey, (values) => {
+        if (!this.ownerAccessAllowed(owner)) return { result: null };
+        const records = parseOwnerRecords(values, owner);
+        const current = records?.find((moment) => moment.id === id.toLowerCase());
+        if (!current || current.syncState !== "conflict" || !current.conflictCopy) return { result: null };
+        const raw = resolution === "device" ? { ...current, syncState: "queued" } : {
+          ...current,
+          primaryChartId: current.conflictCopy.primaryChartId,
+          occurredAt: current.conflictCopy.occurredAt,
+          timePrecision: current.conflictCopy.timePrecision,
+          category: current.conflictCopy.category,
+          note: current.conflictCopy.note,
+          forecast: current.conflictCopy.forecast,
+          reflectionQuestionId: current.conflictCopy.reflectionQuestionId,
+          baseRevision: current.conflictCopy.serverRevision,
+          syncState: "synced",
+          createdAt: current.conflictCopy.createdAt,
+          updatedAt: current.conflictCopy.updatedAt
+        };
+        delete raw.conflictCopy;
+        if (raw.category === void 0) delete raw.category;
+        if (raw.note === void 0) delete raw.note;
+        const next = parseLivingMoment(raw);
+        return next ? { result: next, put: { id: next.id, value: next } } : { result: null };
+      });
+      if (!saved || !this.ownerAccessAllowed(owner)) return null;
+      this.dispatch({ operation: "sync", owner, momentId: saved.id });
+      return saved;
+    } catch {
+      return null;
+    }
+  }
+  /**
+   * Merges a remote record into the local cache. Unsynced device work wins by
+   * becoming a visible conflict; remote data is never allowed to erase it.
+   */
+  async cacheRemote(owner, remote, serverRevision) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey || !sameOwner(remote.owner, owner) || !Number.isSafeInteger(serverRevision) || serverRevision < 1) return "failed";
+    try {
+      const result = await this.adapter.mutate(ownerKey, (values) => {
+        if (!this.ownerAccessAllowed(owner)) return { result: "failed" };
+        const records = parseOwnerRecords(values, owner);
+        if (!records) return { result: "failed" };
+        const current = records.find((moment) => moment.id === remote.id);
+        if (current && current.baseRevision >= serverRevision && !(current.syncState === "conflict" && !current.conflictCopy)) return { result: "unchanged" };
+        if (current && current.syncState !== "synced") {
+          const conflict = parseLivingMoment({
+            ...current,
+            baseRevision: serverRevision,
+            syncState: current.syncState === "deleted" ? "deleted" : "conflict",
+            ...current.syncState === "deleted" ? {} : { conflictCopy: conflictCopyFromRemote(remote, serverRevision) }
+          });
+          return conflict ? { result: "conflict", put: { id: conflict.id, value: conflict } } : { result: "failed" };
+        }
+        const canonical = parseLivingMoment({
+          ...remote,
+          owner,
+          baseRevision: serverRevision,
+          syncState: remote.syncState === "deleted" ? "deleted" : "synced"
+        });
+        return canonical ? { result: "applied", put: { id: canonical.id, value: canonical } } : { result: "failed" };
+      });
+      if (!this.ownerAccessAllowed(owner)) return "failed";
+      if (result === "applied" || result === "conflict") {
+        this.dispatch({ operation: "sync", owner, momentId: remote.id });
+      }
+      return result;
+    } catch {
+      return "failed";
+    }
+  }
+  async cacheRemoteDeletion(owner, id, serverRevision, deletedAt) {
+    const parsedDeletedAt = new Date(deletedAt);
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey || !isAccountV2Id(id) || !Number.isSafeInteger(serverRevision) || serverRevision < 1 || !Number.isFinite(parsedDeletedAt.getTime()) || parsedDeletedAt.toISOString() !== deletedAt) return "failed";
+    try {
+      const result = await this.adapter.mutate(ownerKey, (values) => {
+        if (!this.ownerAccessAllowed(owner)) return { result: "failed" };
+        const records = parseOwnerRecords(values, owner);
+        if (!records) return { result: "failed" };
+        const current = records.find((moment) => moment.id === id.toLowerCase());
+        if (!current || current.baseRevision > serverRevision) return { result: "unchanged" };
+        return {
+          result: "applied",
+          deleteId: current.id
+        };
+      });
+      if (!this.ownerAccessAllowed(owner)) return "failed";
+      if (result === "applied") {
+        this.dispatch({ operation: "sync", owner, momentId: id.toLowerCase() });
+      }
+      return result;
+    } catch {
+      return "failed";
+    }
+  }
+  /** Authoritative deletion-wins path for a stale put, including pruned tombstones. */
+  async acceptRemoteDeletion(owner, id, serverRevision) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey || !isAccountV2Id(id) || !Number.isSafeInteger(serverRevision) || serverRevision < 1) return false;
+    try {
+      const saved = await this.adapter.mutate(ownerKey, (values) => {
+        if (!this.ownerAccessAllowed(owner)) return { result: false };
+        const records = parseOwnerRecords(values, owner);
+        const current = records?.find((moment) => moment.id === id.toLowerCase());
+        if (!current) return { result: true };
+        return { result: true, deleteId: current.id };
+      });
+      if (!saved || !this.ownerAccessAllowed(owner)) return false;
+      this.dispatch({ operation: "sync", owner, momentId: id.toLowerCase() });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  async clearOwner(owner) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey) return false;
+    try {
+      await this.adapter.clear(ownerKey);
+      if (!this.ownerAccessAllowed(owner)) return false;
+      this.dispatch({ operation: "clear", owner, momentId: null });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  /** Keeps device copies after consent withdrawal while forgetting cloud revisions. */
+  async resetSyncState(owner) {
+    const ownerKey = this.allowedOwner(owner);
+    if (!ownerKey) return false;
+    try {
+      const records = await this.readOwnerRecords(owner);
+      if (!records) return false;
+      for (const current of records) {
+        if (current.syncState === "deleted") {
+          const removed = await this.adapter.mutate(ownerKey, () => ({
+            result: true,
+            deleteId: current.id
+          }));
+          if (!removed || !this.ownerAccessAllowed(owner)) return false;
+          continue;
+        }
+        const raw = {
+          ...current,
+          baseRevision: 0,
+          syncState: "local"
+        };
+        delete raw.conflictCopy;
+        const next = parseLivingMoment(raw);
+        if (!next) return false;
+        const saved = await this.adapter.mutate(ownerKey, () => ({
+          result: true,
+          put: { id: next.id, value: next }
+        }));
+        if (!saved || !this.ownerAccessAllowed(owner)) return false;
+      }
+      this.dispatch({ operation: "sync", owner, momentId: null });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  async clearAll() {
+    if (!this.accessIsAllowed()) return false;
+    try {
+      await this.adapter.clearAll();
+      if (!this.accessIsAllowed()) return false;
+      this.dispatch({ operation: "clear", owner: null, momentId: null });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  async export(owner, format) {
+    if (format !== "json" && format !== "markdown") return null;
+    const records = await this.readOwnerRecords(owner);
+    if (!records || !this.ownerAccessAllowed(owner)) return null;
+    const moments = records.filter((moment) => moment.syncState !== "deleted").sort((left, right) => right.occurredAt.localeCompare(left.occurredAt) || right.createdAt.localeCompare(left.createdAt) || right.id.localeCompare(left.id));
+    const exportedAt = this.now().toISOString();
+    if (format === "markdown") return markdownExport(exportedAt, moments);
+    const payload = {
+      schema: LIVING_CHART_EXPORT_SCHEMA,
+      exportedAt,
+      ownerKind: owner.kind,
+      moments: moments.map((moment) => {
+        const { owner: _owner, baseRevision: _base, syncState: _sync, deletedAt: _deleted, ...portable } = moment;
+        return portable;
+      })
+    };
+    return JSON.stringify(payload, null, 2);
+  }
+  close() {
+    this.adapter.close?.();
+  }
+};
+var defaultAdapter = new IndexedDbLivingChartAdapter();
+var defaultStore = new LivingChartStore({ adapter: defaultAdapter });
+function categoryLabel(category) {
+  if (!category) return "";
+  return category === "relationships" ? "Relationships" : category === "wellbeing" ? "Wellbeing" : `${category[0]?.toUpperCase() ?? ""}${category.slice(1)}`;
+}
+function markdownQuote(value) {
+  return value.split("\n").map((line) => `> ${line}`).join("\n");
+}
+function markdownExport(exportedAt, moments) {
+  const sections = moments.map((moment) => {
+    const metadata = [moment.timePrecision.replace("_", " "), categoryLabel(moment.category)].filter(Boolean).join(" \xB7 ");
+    const forecast = moment.forecast.lines.map((line) => `- ${line.text}
+  - Receipt: ${line.receipt}`).join("\n");
+    return [
+      `## ${moment.occurredAt}`,
+      metadata ? `_${metadata}_` : "",
+      moment.note ? markdownQuote(moment.note) : "",
+      "### Forecast saved with this moment",
+      forecast,
+      `Reflection prompt: ${moment.reflectionQuestionId}`
+    ].filter(Boolean).join("\n\n");
+  });
+  return [
+    "# Living Chart",
+    `Exported ${exportedAt}`,
+    ...sections,
+    ""
+  ].join("\n\n");
+}
+var MAX_CLEAR_REQUEST_BYTES = 8 * 1024;
+function browserLocalStorage() {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
+}
+export {
+  IndexedDbLivingChartAdapter
+};

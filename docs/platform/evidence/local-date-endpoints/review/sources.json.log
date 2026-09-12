@@ -1,0 +1,18 @@
+{
+  "retrievedAt": "2026-09-08T06:48:37.478273+00:00",
+  "sources": [
+    {
+      "url": "https://tc39.es/proposal-temporal/#sec-temporal-getnamedtimezonenexttransition",
+      "use": "Primary specification for enumeration of the next offset transition; do not substitute a date-order search."
+    },
+    {
+      "url": "https://tc39.es/proposal-temporal/#sec-temporal-getoffsetnanosecondsfor",
+      "use": "Primary specification places returned offsets strictly inside plus/minus24hours; the bounded-window algebra derives from that contract."
+    },
+    {
+      "url": "https://tc39.es/proposal-temporal/#sec-temporal-getstartofday",
+      "use": "Primary start-of-day operation is distinct from birth-time gap shifting. Our actual runtime counterexample shows that two starts still do not enumerate a disjoint civil date."
+    }
+  ],
+  "quotation": "No verbatim passages copied. Actual timezone findings and provider availability are from retained native probes, not documentation inference."
+}

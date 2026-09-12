@@ -1,0 +1,4615 @@
+{
+  "runtime": "v22.23.2",
+  "source": {
+    "original": {
+      "sourceSha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+      "callbacks": [
+        {
+          "name": "clearReceiptExport",
+          "startLine": 392,
+          "sha256": "1298299c58ad6d4bd91a1f0ff2dadaf664a83020b1f41d8a60a5e72b538e8e42"
+        },
+        {
+          "name": "advanceInputRevision",
+          "startLine": 397,
+          "sha256": "59eb543d3e95683d0c130b2f8726d2ff6a7182287803cdbf5a692e846d87d13c"
+        },
+        {
+          "name": "invalidateProfileHandoff",
+          "startLine": 466,
+          "sha256": "cb7861caa796b6a2d91c7a3873858d3e732f8d05edaf3e86e27692e2aa79d327"
+        },
+        {
+          "name": "chartIdentity",
+          "startLine": 1444,
+          "sha256": "a4e8dc70fa165b8b389ebc0e2b47a108fb69522ea5d80ed322185d95e97f966d"
+        },
+        {
+          "name": "isConnectedSaveControl",
+          "startLine": 1464,
+          "sha256": "933699a559723260675c05553ca7804c61e1b9220c60b7455330cc887955446b"
+        },
+        {
+          "name": "saveFocusFallback",
+          "startLine": 1470,
+          "sha256": "256f9b90aee93c9570500f666057dde59eb03c1cea5aa68005cea3e77a16f905"
+        },
+        {
+          "name": "closeSavePrompt",
+          "startLine": 1477,
+          "sha256": "0d20cbd7b91f8d73a50ec118d03271408c45ff58063d82ce74552de22e13c5a8"
+        },
+        {
+          "name": "commitSave",
+          "startLine": 1507,
+          "sha256": "410d25e1ca2b58a840ed2f9ed49b14c1e281322077eeb5e84f867373c5b9901b"
+        },
+        {
+          "name": "onRevoke",
+          "sha256": "7c59c3bfa86e0558165914d79133f49419b12bc1bda3728811ee8a709e13727b"
+        },
+        {
+          "name": "runIsCurrent",
+          "sha256": "62b5b1f2b1d350b4bba2a685e65000c323a26dcb234f60ffb203e647d2ab9720"
+        }
+      ]
+    },
+    "candidate": {
+      "sourceSha256": "6d954dd0994e019408e5c23cae7ffab9853939d774eb0d8e7df9ca4a51aa920b",
+      "callbacks": [
+        {
+          "name": "clearReceiptExport",
+          "startLine": 395,
+          "sha256": "1298299c58ad6d4bd91a1f0ff2dadaf664a83020b1f41d8a60a5e72b538e8e42"
+        },
+        {
+          "name": "advanceInputRevision",
+          "startLine": 400,
+          "sha256": "59eb543d3e95683d0c130b2f8726d2ff6a7182287803cdbf5a692e846d87d13c"
+        },
+        {
+          "name": "resultIsCurrent",
+          "startLine": 405,
+          "sha256": "d598fc0edfc8039e0fab3284007f585f812996054c0e704f5678fead9ec4c441"
+        },
+        {
+          "name": "currentResultOwner",
+          "startLine": 413,
+          "sha256": "6f3266e248b2418d31cbeb2cf99e7e059bd8db2830d1a479fa0c67cff2874e64"
+        },
+        {
+          "name": "clearResult",
+          "startLine": 417,
+          "sha256": "107c94806d4ff8ccf0984c2b9922b301a2c67f478d53342342dc9519d1603045"
+        },
+        {
+          "name": "invalidateProfileHandoff",
+          "startLine": 493,
+          "sha256": "43ecfecc91f8ea89c10bd19f9db1643190b3c57d80b93a4d4fe54f19d2bd70b5"
+        },
+        {
+          "name": "chartIdentity",
+          "startLine": 1499,
+          "sha256": "20d36ce773750c3f1b648850742af5bcc227ad3c449503b0c2c010c8fd1b741d"
+        },
+        {
+          "name": "isConnectedSaveControl",
+          "startLine": 1519,
+          "sha256": "933699a559723260675c05553ca7804c61e1b9220c60b7455330cc887955446b"
+        },
+        {
+          "name": "saveFocusFallback",
+          "startLine": 1525,
+          "sha256": "256f9b90aee93c9570500f666057dde59eb03c1cea5aa68005cea3e77a16f905"
+        },
+        {
+          "name": "closeSavePrompt",
+          "startLine": 1532,
+          "sha256": "b89b0d6092ff2ca59b20a76f42493c4566b26f11ec83a8fb8ea5e46c34fe5b4c"
+        },
+        {
+          "name": "commitSave",
+          "startLine": 1565,
+          "sha256": "2b0c54a66d9b5b5165ae26335818cde519ac835b8f8cb061526b86e126b8a8f3"
+        },
+        {
+          "name": "onRevoke",
+          "sha256": "1908f7101ea893ef3039d270623cf42694a5f739bcb4b8bf14b8093bf00d66d9"
+        },
+        {
+          "name": "runIsCurrent",
+          "sha256": "5c5483d7b4bf147d4ac7d024c6d03ee7be7891063f4047f7de88cd99a848afbd"
+        }
+      ]
+    }
+  },
+  "groups": [
+    {
+      "name": "original",
+      "groups": [
+        {
+          "label": "current-save-control",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "saved",
+              "matchedName": "Captured synthetic A",
+              "a2hsHint": {
+                "platform": "ios",
+                "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                "dismissLabel": "Dismiss home-screen hint"
+              },
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              }
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "saved",
+                "value": "saved"
+              },
+              {
+                "event": "chart_saved",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "event": "chart_name_set",
+                "props": {
+                  "via": "skip"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": "Captured synthetic A"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": {
+                  "platform": "ios",
+                  "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                  "dismissLabel": "Dismiss home-screen hint"
+                }
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 1,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": "369aed36-b854-40c9-981a-377639d901ff",
+              "contextId": 1
+            },
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "369aed36-b854-40c9-981a-377639d901ff",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:14.596Z",
+                  "updatedAt": "2026-09-08T08:29:14.596Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": "1",
+            "focus": "save"
+          }
+        },
+        {
+          "label": "requested-save-import-settles-after-edit",
+          "passed": false,
+          "error": "Error: obsolete completion suppressed\n    at fail (eval at evaluate (:303:30), <anonymous>:5:47)\n    at eval (eval at evaluate (:303:30), <anonymous>:32:361)\n    at async group (eval at evaluate (:303:30), <anonymous>:30:73)\n    at async eval (eval at evaluate (:303:30), <anonymous>:32:4)\n    at async <anonymous>:329:30",
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1991-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "saved",
+              "matchedName": "Captured synthetic A",
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "saved",
+                "value": "saved"
+              },
+              {
+                "event": "chart_saved",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "event": "chart_name_set",
+                "props": {
+                  "via": "skip"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": "Captured synthetic A"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 2,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": "749f22db-e15c-4be7-be3f-b07b6a8961d5",
+              "contextId": 1
+            },
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "749f22db-e15c-4be7-be3f-b07b6a8961d5",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:14.616Z",
+                  "updatedAt": "2026-09-08T08:29:14.616Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": null,
+            "focus": "save"
+          }
+        },
+        {
+          "label": "pending-save-profile-revoke",
+          "passed": false,
+          "error": "Error: old error is suppressed\n    at fail (eval at evaluate (:303:30), <anonymous>:5:47)\n    at eval (eval at evaluate (:303:30), <anonymous>:33:248)\n    at async group (eval at evaluate (:303:30), <anonymous>:30:73)\n    at async eval (eval at evaluate (:303:30), <anonymous>:33:4)\n    at async <anonymous>:329:30",
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "",
+              "time": "",
+              "timeKnown": true,
+              "city": null,
+              "saved": "error",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto",
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "houseSystem": "whole",
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "fromLink": false,
+              "linkName": null,
+              "subjectMode": "self",
+              "card": "idle",
+              "shareDialogOpen": false,
+              "moonAmbiguous": false,
+              "error": "",
+              "fieldErrors": {},
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false,
+              "firstReading": {}
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "date",
+                "value": ""
+              },
+              {
+                "setter": "time",
+                "value": ""
+              },
+              {
+                "setter": "timeKnown",
+                "value": true
+              },
+              {
+                "setter": "city",
+                "value": null
+              },
+              {
+                "setter": "houseSystem",
+                "value": "whole"
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "fromLink",
+                "value": false
+              },
+              {
+                "setter": "linkName",
+                "value": null
+              },
+              {
+                "setter": "subjectMode",
+                "value": "self"
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "error",
+                "value": ""
+              },
+              {
+                "setter": "fieldErrors",
+                "value": {}
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "firstReading",
+                "value": {}
+              },
+              {
+                "setter": "saved",
+                "value": "error"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "save"
+          }
+        },
+        {
+          "label": "pending-save-independent-primary-revoke-regrant",
+          "passed": false,
+          "error": "Error: old error suppressed\n    at fail (eval at evaluate (:303:30), <anonymous>:5:47)\n    at regrant (eval at evaluate (:303:30), <anonymous>:34:244)\n    at async group (eval at evaluate (:303:30), <anonymous>:30:73)\n    at async eval (eval at evaluate (:303:30), <anonymous>:34:326)\n    at async <anonymous>:329:30",
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "error",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto"
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "saved",
+                "value": "error"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              }
+            ],
+            "accessGeneration": 3,
+            "runId": 1,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "save"
+          }
+        },
+        {
+          "label": "actual-storage-commit-event-revokes-profile",
+          "passed": false,
+          "error": "Error: post-commit completion stays scrubbed\n    at fail (eval at evaluate (:303:30), <anonymous>:5:47)\n    at eval (eval at evaluate (:303:30), <anonymous>:35:405)\n    at async group (eval at evaluate (:303:30), <anonymous>:30:73)\n    at async eval (eval at evaluate (:303:30), <anonymous>:35:4)\n    at async <anonymous>:329:30",
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "",
+              "time": "",
+              "timeKnown": true,
+              "city": null,
+              "saved": "saved",
+              "matchedName": "Captured synthetic A",
+              "a2hsHint": {
+                "platform": "ios",
+                "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                "dismissLabel": "Dismiss home-screen hint"
+              },
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto",
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "houseSystem": "whole",
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "fromLink": false,
+              "linkName": null,
+              "subjectMode": "self",
+              "card": "idle",
+              "shareDialogOpen": false,
+              "moonAmbiguous": false,
+              "error": "",
+              "fieldErrors": {},
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false,
+              "firstReading": {}
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "date",
+                "value": ""
+              },
+              {
+                "setter": "time",
+                "value": ""
+              },
+              {
+                "setter": "timeKnown",
+                "value": true
+              },
+              {
+                "setter": "city",
+                "value": null
+              },
+              {
+                "setter": "houseSystem",
+                "value": "whole"
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "fromLink",
+                "value": false
+              },
+              {
+                "setter": "linkName",
+                "value": null
+              },
+              {
+                "setter": "subjectMode",
+                "value": "self"
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "error",
+                "value": ""
+              },
+              {
+                "setter": "fieldErrors",
+                "value": {}
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "firstReading",
+                "value": {}
+              },
+              {
+                "setter": "saved",
+                "value": "saved"
+              },
+              {
+                "event": "chart_saved",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "event": "chart_name_set",
+                "props": {
+                  "via": "skip"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": "Captured synthetic A"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": {
+                  "platform": "ios",
+                  "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                  "dismissLabel": "Dismiss home-screen hint"
+                }
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 2
+            },
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "208755ff-6203-4f2e-a1ba-2b2032c29d0d",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:14.716Z",
+                  "updatedAt": "2026-09-08T08:29:14.716Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": "1",
+            "focus": "save"
+          }
+        },
+        {
+          "label": "actual-storage-commit-event-edits-result",
+          "passed": false,
+          "error": "Error: old UI suppressed after reentrant edit\n    at fail (eval at evaluate (:303:30), <anonymous>:5:47)\n    at eval (eval at evaluate (:303:30), <anonymous>:36:370)\n    at async group (eval at evaluate (:303:30), <anonymous>:30:73)\n    at async eval (eval at evaluate (:303:30), <anonymous>:36:4)\n    at async <anonymous>:329:30",
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "saved",
+              "matchedName": "Captured synthetic A",
+              "a2hsHint": {
+                "platform": "ios",
+                "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                "dismissLabel": "Dismiss home-screen hint"
+              },
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "saved",
+                "value": "saved"
+              },
+              {
+                "event": "chart_saved",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "event": "chart_name_set",
+                "props": {
+                  "via": "skip"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": "Captured synthetic A"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": {
+                  "platform": "ios",
+                  "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                  "dismissLabel": "Dismiss home-screen hint"
+                }
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 2,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": "7e639515-d023-47a5-ad0f-c3d9644d22a0",
+              "contextId": 1
+            },
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "7e639515-d023-47a5-ad0f-c3d9644d22a0",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:14.749Z",
+                  "updatedAt": "2026-09-08T08:29:14.749Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": "1",
+            "focus": "save"
+          }
+        },
+        {
+          "label": "committed-save-delayed-A2HS-after-edit",
+          "passed": false,
+          "error": "Error: obsolete one-time hint not claimed\n    at fail (eval at evaluate (:303:30), <anonymous>:5:47)\n    at eval (eval at evaluate (:303:30), <anonymous>:37:444)\n    at async group (eval at evaluate (:303:30), <anonymous>:30:73)\n    at async eval (eval at evaluate (:303:30), <anonymous>:37:44)\n    at async <anonymous>:329:30",
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "saved",
+              "matchedName": "Captured synthetic A",
+              "a2hsHint": {
+                "platform": "ios",
+                "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                "dismissLabel": "Dismiss home-screen hint"
+              },
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "saved",
+                "value": "saved"
+              },
+              {
+                "event": "chart_saved",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "event": "chart_name_set",
+                "props": {
+                  "via": "skip"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": "Captured synthetic A"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": {
+                  "platform": "ios",
+                  "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                  "dismissLabel": "Dismiss home-screen hint"
+                }
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 2,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": "f3f07bbf-d935-423b-b0cf-bb912e14977c",
+              "contextId": 1
+            },
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "f3f07bbf-d935-423b-b0cf-bb912e14977c",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:14.783Z",
+                  "updatedAt": "2026-09-08T08:29:14.783Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": "1",
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "committed-save-delayed-A2HS-after-revoke",
+          "passed": false,
+          "error": "Error: obsolete one-time hint not claimed\n    at fail (eval at evaluate (:303:30), <anonymous>:5:47)\n    at eval (eval at evaluate (:303:30), <anonymous>:37:444)\n    at async group (eval at evaluate (:303:30), <anonymous>:30:73)\n    at async eval (eval at evaluate (:303:30), <anonymous>:37:44)\n    at async <anonymous>:329:30",
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "",
+              "time": "",
+              "timeKnown": true,
+              "city": null,
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": {
+                "platform": "ios",
+                "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                "dismissLabel": "Dismiss home-screen hint"
+              },
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto",
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "houseSystem": "whole",
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "fromLink": false,
+              "linkName": null,
+              "subjectMode": "self",
+              "card": "idle",
+              "shareDialogOpen": false,
+              "moonAmbiguous": false,
+              "error": "",
+              "fieldErrors": {},
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false,
+              "firstReading": {}
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "saved",
+                "value": "saved"
+              },
+              {
+                "event": "chart_saved",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "event": "chart_name_set",
+                "props": {
+                  "via": "skip"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": "Captured synthetic A"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "date",
+                "value": ""
+              },
+              {
+                "setter": "time",
+                "value": ""
+              },
+              {
+                "setter": "timeKnown",
+                "value": true
+              },
+              {
+                "setter": "city",
+                "value": null
+              },
+              {
+                "setter": "houseSystem",
+                "value": "whole"
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "fromLink",
+                "value": false
+              },
+              {
+                "setter": "linkName",
+                "value": null
+              },
+              {
+                "setter": "subjectMode",
+                "value": "self"
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "error",
+                "value": ""
+              },
+              {
+                "setter": "fieldErrors",
+                "value": {}
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "firstReading",
+                "value": {}
+              },
+              {
+                "setter": "a2hsHint",
+                "value": {
+                  "platform": "ios",
+                  "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                  "dismissLabel": "Dismiss home-screen hint"
+                }
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "04a0f52b-fba0-4eca-9d9c-e110f4bae114",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:14.850Z",
+                  "updatedAt": "2026-09-08T08:29:14.850Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": "1",
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "queued-close-frame-after-edit",
+          "passed": false,
+          "error": "Error: old close frame does not focus replacement\n    at fail (eval at evaluate (:303:30), <anonymous>:5:47)\n    at eval (eval at evaluate (:303:30), <anonymous>:38:211)\n    at async group (eval at evaluate (:303:30), <anonymous>:30:73)\n    at async eval (eval at evaluate (:303:30), <anonymous>:38:4)\n    at async <anonymous>:329:30",
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2
+            },
+            "events": [
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "busy",
+                "value": false
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 2,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "other"
+          }
+        },
+        {
+          "label": "primary-profile-revoke-scrubs-result-and-input",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "",
+              "time": "",
+              "timeKnown": true,
+              "city": null,
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto",
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "houseSystem": "whole",
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "fromLink": false,
+              "linkName": null,
+              "subjectMode": "self",
+              "card": "idle",
+              "shareDialogOpen": false,
+              "moonAmbiguous": false,
+              "error": "",
+              "fieldErrors": {},
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false,
+              "firstReading": {}
+            },
+            "events": [
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "date",
+                "value": ""
+              },
+              {
+                "setter": "time",
+                "value": ""
+              },
+              {
+                "setter": "timeKnown",
+                "value": true
+              },
+              {
+                "setter": "city",
+                "value": null
+              },
+              {
+                "setter": "houseSystem",
+                "value": "whole"
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "fromLink",
+                "value": false
+              },
+              {
+                "setter": "linkName",
+                "value": null
+              },
+              {
+                "setter": "subjectMode",
+                "value": "self"
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "error",
+                "value": ""
+              },
+              {
+                "setter": "fieldErrors",
+                "value": {}
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "firstReading",
+                "value": {}
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "mine-only-revoke-preserves-independent-primary",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto"
+            },
+            "events": [
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "mineHandoff",
+                "value": null
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 1,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "public-input-mine-revoke-control",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": {
+                "kind": "input",
+                "input": {
+                  "date": "1980-01-01"
+                }
+              },
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto"
+            },
+            "events": [
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 1,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "conditional-reentrant-reader-is-qualified",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": true,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              }
+            },
+            "events": [
+              {
+                "event": "synthetic-reader-qualified",
+                "admitted": true,
+                "calls": 1,
+                "ordinaryProviderBypassEstablished": false
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        }
+      ],
+      "actualReader": {
+        "beforeLease": false,
+        "matchingOwner": true,
+        "mismatchedOwner": false,
+        "afterRevoke": false
+      },
+      "qualification": "Native Chrome execution of exact extracted callbacks with unchanged actual store, native localStorage/sessionStorage/EventTarget/RAF and actual Base reader. No full ChartCalculator render or hook mount-timing claim. Captured synthetic records only; persisted saves not cancelled."
+    },
+    {
+      "name": "candidate",
+      "groups": [
+        {
+          "label": "current-save-control",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "saved",
+              "matchedName": "Captured synthetic A",
+              "a2hsHint": {
+                "platform": "ios",
+                "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                "dismissLabel": "Dismiss home-screen hint"
+              },
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              }
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "saved",
+                "value": "saved"
+              },
+              {
+                "event": "chart_saved",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "event": "chart_name_set",
+                "props": {
+                  "via": "skip"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": "Captured synthetic A"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": {
+                  "platform": "ios",
+                  "message": "To keep your saved charts close, tap Share → Add to Home Screen. Daily notifications on iPhone and iPad work only from the installed site.",
+                  "dismissLabel": "Dismiss home-screen hint"
+                }
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 1,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": "f5d80dd6-e9e2-4432-b4a8-69cc4eb676a7",
+              "contextId": 1
+            },
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "f5d80dd6-e9e2-4432-b4a8-69cc4eb676a7",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:15.101Z",
+                  "updatedAt": "2026-09-08T08:29:15.101Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": "1",
+            "focus": "save"
+          }
+        },
+        {
+          "label": "requested-save-import-settles-after-edit",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "1991-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "moonAmbiguous": false,
+              "card": "idle",
+              "shareDialogOpen": false,
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "busy",
+                "value": false
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": false,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": null,
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "fb543ff9-d3f5-4a72-bee6-4c68c0463224",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:15.122Z",
+                  "updatedAt": "2026-09-08T08:29:15.122Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "pending-save-profile-revoke",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "",
+              "time": "",
+              "timeKnown": true,
+              "city": null,
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto",
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "moonAmbiguous": false,
+              "card": "idle",
+              "shareDialogOpen": false,
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false,
+              "houseSystem": "whole",
+              "fromLink": false,
+              "linkName": null,
+              "subjectMode": "self",
+              "error": "",
+              "fieldErrors": {},
+              "firstReading": {}
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "date",
+                "value": ""
+              },
+              {
+                "setter": "time",
+                "value": ""
+              },
+              {
+                "setter": "timeKnown",
+                "value": true
+              },
+              {
+                "setter": "city",
+                "value": null
+              },
+              {
+                "setter": "houseSystem",
+                "value": "whole"
+              },
+              {
+                "setter": "fromLink",
+                "value": false
+              },
+              {
+                "setter": "linkName",
+                "value": null
+              },
+              {
+                "setter": "subjectMode",
+                "value": "self"
+              },
+              {
+                "setter": "error",
+                "value": ""
+              },
+              {
+                "setter": "fieldErrors",
+                "value": {}
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "firstReading",
+                "value": {}
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": false,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "pending-save-independent-primary-revoke-regrant",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto"
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              }
+            ],
+            "accessGeneration": 3,
+            "runId": 1,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "actual-storage-commit-event-revokes-profile",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "",
+              "time": "",
+              "timeKnown": true,
+              "city": null,
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto",
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "moonAmbiguous": false,
+              "card": "idle",
+              "shareDialogOpen": false,
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false,
+              "houseSystem": "whole",
+              "fromLink": false,
+              "linkName": null,
+              "subjectMode": "self",
+              "error": "",
+              "fieldErrors": {},
+              "firstReading": {}
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "date",
+                "value": ""
+              },
+              {
+                "setter": "time",
+                "value": ""
+              },
+              {
+                "setter": "timeKnown",
+                "value": true
+              },
+              {
+                "setter": "city",
+                "value": null
+              },
+              {
+                "setter": "houseSystem",
+                "value": "whole"
+              },
+              {
+                "setter": "fromLink",
+                "value": false
+              },
+              {
+                "setter": "linkName",
+                "value": null
+              },
+              {
+                "setter": "subjectMode",
+                "value": "self"
+              },
+              {
+                "setter": "error",
+                "value": ""
+              },
+              {
+                "setter": "fieldErrors",
+                "value": {}
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "firstReading",
+                "value": {}
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": false,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "0d7bdd6e-90a2-403b-8349-847f2ccbaaac",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:15.222Z",
+                  "updatedAt": "2026-09-08T08:29:15.222Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "actual-storage-commit-event-edits-result",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "moonAmbiguous": false,
+              "card": "idle",
+              "shareDialogOpen": false,
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "busy",
+                "value": false
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": false,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": null,
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "ccaed074-4451-424d-9fff-ea4b44dbdac1",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:15.254Z",
+                  "updatedAt": "2026-09-08T08:29:15.254Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "committed-save-delayed-A2HS-after-edit",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "moonAmbiguous": false,
+              "card": "idle",
+              "shareDialogOpen": false,
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "saved",
+                "value": "saved"
+              },
+              {
+                "event": "chart_saved",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "event": "chart_name_set",
+                "props": {
+                  "via": "skip"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": "Captured synthetic A"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "busy",
+                "value": false
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": false,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": null,
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "8aeeefdd-7a75-4adf-a5d2-d0db43740ee9",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:15.289Z",
+                  "updatedAt": "2026-09-08T08:29:15.289Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "committed-save-delayed-A2HS-after-revoke",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "",
+              "time": "",
+              "timeKnown": true,
+              "city": null,
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto",
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "moonAmbiguous": false,
+              "card": "idle",
+              "shareDialogOpen": false,
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false,
+              "houseSystem": "whole",
+              "fromLink": false,
+              "linkName": null,
+              "subjectMode": "self",
+              "error": "",
+              "fieldErrors": {},
+              "firstReading": {}
+            },
+            "events": [
+              {
+                "event": "chart_save",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "setter": "saved",
+                "value": "saved"
+              },
+              {
+                "event": "chart_saved",
+                "props": {
+                  "source": "free"
+                }
+              },
+              {
+                "event": "chart_name_set",
+                "props": {
+                  "via": "skip"
+                }
+              },
+              {
+                "setter": "matchedName",
+                "value": "Captured synthetic A"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "date",
+                "value": ""
+              },
+              {
+                "setter": "time",
+                "value": ""
+              },
+              {
+                "setter": "timeKnown",
+                "value": true
+              },
+              {
+                "setter": "city",
+                "value": null
+              },
+              {
+                "setter": "houseSystem",
+                "value": "whole"
+              },
+              {
+                "setter": "fromLink",
+                "value": false
+              },
+              {
+                "setter": "linkName",
+                "value": null
+              },
+              {
+                "setter": "subjectMode",
+                "value": "self"
+              },
+              {
+                "setter": "error",
+                "value": ""
+              },
+              {
+                "setter": "fieldErrors",
+                "value": {}
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "firstReading",
+                "value": {}
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": false,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": {
+              "version": 1,
+              "settings": {
+                "houseSystem": "whole"
+              },
+              "charts": [
+                {
+                  "id": "656ab30c-892c-4fc5-93c2-05d7be8bd287",
+                  "name": "Captured synthetic A",
+                  "relationship": "self",
+                  "createdAt": "2026-09-08T08:29:15.354Z",
+                  "updatedAt": "2026-09-08T08:29:15.354Z",
+                  "birth": {
+                    "date": "1990-01-01",
+                    "time": "12:00",
+                    "timeKnown": true,
+                    "place": {
+                      "name": "Synthetic UTC",
+                      "admin1": "",
+                      "country": "",
+                      "lat": 0,
+                      "lon": 0,
+                      "tz": "UTC"
+                    }
+                  },
+                  "summary": {
+                    "engineVersion": "0.1.1-rc.6",
+                    "utcISO": "1990-01-01T12:00:00.000Z",
+                    "houseSystem": "whole",
+                    "bodies": [
+                      {
+                        "body": "Sun",
+                        "lon": 280,
+                        "retrograde": false
+                      }
+                    ],
+                    "angles": null,
+                    "flags": []
+                  }
+                }
+              ]
+            },
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "queued-close-frame-after-edit",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "moonAmbiguous": false,
+              "card": "idle",
+              "shareDialogOpen": false,
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false
+            },
+            "events": [
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "busy",
+                "value": false
+              }
+            ],
+            "accessGeneration": 1,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": false,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "primary-profile-revoke-scrubs-result-and-input",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": null,
+              "date": "",
+              "time": "",
+              "timeKnown": true,
+              "city": null,
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": null,
+              "mineHandoff": null,
+              "shareInput": null,
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto",
+              "receiptExport": null,
+              "receiptDownloadError": false,
+              "inputRevision": 2,
+              "signature": null,
+              "registryRecordSlug": null,
+              "positionsOnly": null,
+              "moonAmbiguous": false,
+              "card": "idle",
+              "shareDialogOpen": false,
+              "selection": null,
+              "spotlight": null,
+              "announce": "",
+              "depthOpen": false,
+              "houseSystem": "whole",
+              "fromLink": false,
+              "linkName": null,
+              "subjectMode": "self",
+              "error": "",
+              "fieldErrors": {},
+              "firstReading": {}
+            },
+            "events": [
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "inputRevision",
+                "value": 2
+              },
+              {
+                "setter": "receiptExport",
+                "value": null
+              },
+              {
+                "setter": "receiptDownloadError",
+                "value": false
+              },
+              {
+                "setter": "chart",
+                "value": null
+              },
+              {
+                "setter": "computedInput",
+                "value": null
+              },
+              {
+                "setter": "shareInput",
+                "value": null
+              },
+              {
+                "setter": "signature",
+                "value": null
+              },
+              {
+                "setter": "registryRecordSlug",
+                "value": null
+              },
+              {
+                "setter": "positionsOnly",
+                "value": null
+              },
+              {
+                "setter": "moonAmbiguous",
+                "value": false
+              },
+              {
+                "setter": "card",
+                "value": "idle"
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "shareDialogOpen",
+                "value": false
+              },
+              {
+                "setter": "a2hsHint",
+                "value": null
+              },
+              {
+                "setter": "selection",
+                "value": null
+              },
+              {
+                "setter": "spotlight",
+                "value": null
+              },
+              {
+                "setter": "announce",
+                "value": ""
+              },
+              {
+                "setter": "depthOpen",
+                "value": false
+              },
+              {
+                "setter": "date",
+                "value": ""
+              },
+              {
+                "setter": "time",
+                "value": ""
+              },
+              {
+                "setter": "timeKnown",
+                "value": true
+              },
+              {
+                "setter": "city",
+                "value": null
+              },
+              {
+                "setter": "houseSystem",
+                "value": "whole"
+              },
+              {
+                "setter": "fromLink",
+                "value": false
+              },
+              {
+                "setter": "linkName",
+                "value": null
+              },
+              {
+                "setter": "subjectMode",
+                "value": "self"
+              },
+              {
+                "setter": "error",
+                "value": ""
+              },
+              {
+                "setter": "fieldErrors",
+                "value": {}
+              },
+              {
+                "setter": "busy",
+                "value": false
+              },
+              {
+                "setter": "firstReading",
+                "value": {}
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 2,
+            "resultOwnerPresent": false,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "mine-only-revoke-preserves-independent-primary",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto"
+            },
+            "events": [
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              },
+              {
+                "setter": "mineHandoff",
+                "value": null
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 1,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "public-input-mine-revoke-control",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": false,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": {
+                "kind": "input",
+                "input": {
+                  "date": "1980-01-01"
+                }
+              },
+              "shareInput": {
+                "date": "1990-01-01"
+              },
+              "saveDraft": "",
+              "saveInitial": "",
+              "saveSource": "auto"
+            },
+            "events": [
+              {
+                "setter": "matchedName",
+                "value": null
+              },
+              {
+                "setter": "saved",
+                "value": "idle"
+              },
+              {
+                "setter": "savePromptOpen",
+                "value": false
+              },
+              {
+                "setter": "saveDraft",
+                "value": ""
+              },
+              {
+                "setter": "saveInitial",
+                "value": ""
+              },
+              {
+                "setter": "saveSource",
+                "value": "auto"
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 1,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": false,
+            "mineOrigin": false,
+            "allowed": false,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        },
+        {
+          "label": "conditional-reentrant-reader-is-qualified",
+          "passed": true,
+          "evidence": {
+            "ui": {
+              "chart": {
+                "input": {
+                  "utc": "1990-01-01T12:00:00.000Z"
+                },
+                "houses": {
+                  "system": "whole"
+                },
+                "bodies": [
+                  {
+                    "body": "Sun",
+                    "lon": 280,
+                    "retrograde": false
+                  }
+                ],
+                "angles": null,
+                "flags": []
+              },
+              "date": "1990-01-01",
+              "time": "12:00",
+              "timeKnown": true,
+              "city": {
+                "name": "Synthetic UTC",
+                "admin1": "",
+                "country": "",
+                "lat": 0,
+                "lon": 0,
+                "tz": "UTC"
+              },
+              "saved": "idle",
+              "matchedName": null,
+              "a2hsHint": null,
+              "savePromptOpen": true,
+              "busy": false,
+              "computedInput": {
+                "date": "1990-01-01",
+                "time": "12:00",
+                "timeKnown": true,
+                "city": {
+                  "name": "Synthetic UTC",
+                  "admin1": "",
+                  "country": "",
+                  "lat": 0,
+                  "lon": 0,
+                  "tz": "UTC"
+                },
+                "houseSystem": "whole"
+              },
+              "mineHandoff": null,
+              "shareInput": {
+                "date": "1990-01-01"
+              }
+            },
+            "events": [
+              {
+                "event": "synthetic-reader-qualified",
+                "admitted": true,
+                "calls": 1,
+                "ordinaryProviderBypassEstablished": false
+              }
+            ],
+            "accessGeneration": 2,
+            "runId": 2,
+            "contextId": 1,
+            "resultOwnerPresent": true,
+            "primaryOrigin": true,
+            "mineOrigin": false,
+            "allowed": true,
+            "context": null,
+            "profile": null,
+            "a2hsClaim": null,
+            "focus": "typing"
+          }
+        }
+      ],
+      "actualReader": {
+        "beforeLease": false,
+        "matchingOwner": true,
+        "mismatchedOwner": false,
+        "afterRevoke": false
+      },
+      "qualification": "Native Chrome execution of exact extracted callbacks with unchanged actual store, native localStorage/sessionStorage/EventTarget/RAF and actual Base reader. No full ChartCalculator render or hook mount-timing claim. Captured synthetic records only; persisted saves not cancelled."
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "origin": "http://127.0.0.1:63637",
+  "browser": "152.0.7977.83",
+  "cleanup": {
+    "browserClosed": true,
+    "serverClosed": true
+  },
+  "driverSha256": "bb54969b505717d2436d436ae110fbd23d244acc9406727bc55f0c0315dc6629"
+}

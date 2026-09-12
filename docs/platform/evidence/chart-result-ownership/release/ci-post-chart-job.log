@@ -1,0 +1,293 @@
+﻿2026-09-08T09:22:15.0714872Z Current runner version: '2.337.0'
+2026-09-08T09:22:15.0733531Z ##[group]Runner Image Provisioner
+2026-09-08T09:22:15.0734175Z Hosted Compute Agent
+2026-09-08T09:22:15.0734653Z Version: 20260828.587
+2026-09-08T09:22:15.0735104Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-09-08T09:22:15.0735644Z Build Date: 2026-08-28T16:44:25Z
+2026-09-08T09:22:15.0736156Z Worker ID: {8a4dc9c1-974e-4c76-84df-1d228b2db2f0}
+2026-09-08T09:22:15.0736665Z Azure Region: centralus
+2026-09-08T09:22:15.0737096Z ##[endgroup]
+2026-09-08T09:22:15.0738037Z ##[group]Operating System
+2026-09-08T09:22:15.0738720Z Ubuntu
+2026-09-08T09:22:15.0739118Z 24.04.4
+2026-09-08T09:22:15.0739485Z LTS
+2026-09-08T09:22:15.0739874Z ##[endgroup]
+2026-09-08T09:22:15.0740269Z ##[group]Runner Image
+2026-09-08T09:22:15.0740699Z Image: ubuntu-24.04
+2026-09-08T09:22:15.0741119Z Version: 20260831.293.1
+2026-09-08T09:22:15.0742021Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260831.293/images/ubuntu/Ubuntu2404-Readme.md
+2026-09-08T09:22:15.0743131Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260831.293
+2026-09-08T09:22:15.0743891Z ##[endgroup]
+2026-09-08T09:22:15.0744742Z ##[group]GITHUB_TOKEN Permissions
+2026-09-08T09:22:15.0746318Z Contents: read
+2026-09-08T09:22:15.0746754Z Metadata: read
+2026-09-08T09:22:15.0747147Z ##[endgroup]
+2026-09-08T09:22:15.0749122Z Secret source: Actions
+2026-09-08T09:22:15.0750003Z Prepare workflow directory
+2026-09-08T09:22:15.1074844Z Prepare all required actions
+2026-09-08T09:22:15.1127142Z Getting action download info
+2026-09-08T09:22:15.3871961Z Download action repository 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-09-08T09:22:15.9700424Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-09-08T09:22:16.2960839Z Complete job name: Phase 3 post-chart drive
+2026-09-08T09:22:16.3527953Z ##[group]Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+2026-09-08T09:22:16.3529091Z with:
+2026-09-08T09:22:16.3529648Z   repository: ZodiacsOfficial/site
+2026-09-08T09:22:16.3532940Z   token: ***
+2026-09-08T09:22:16.3533415Z   ssh-strict: true
+2026-09-08T09:22:16.3533840Z   ssh-user: git
+2026-09-08T09:22:16.3534261Z   persist-credentials: true
+2026-09-08T09:22:16.3534749Z   clean: true
+2026-09-08T09:22:16.3535210Z   sparse-checkout-cone-mode: true
+2026-09-08T09:22:16.3535809Z   fetch-depth: 1
+2026-09-08T09:22:16.3536359Z   fetch-tags: false
+2026-09-08T09:22:16.3536825Z   show-progress: true
+2026-09-08T09:22:16.3537293Z   lfs: false
+2026-09-08T09:22:16.3537705Z   submodules: false
+2026-09-08T09:22:16.3538159Z   set-safe-directory: true
+2026-09-08T09:22:16.3538766Z   allow-unsafe-pr-checkout: false
+2026-09-08T09:22:16.3539472Z ##[endgroup]
+2026-09-08T09:22:16.4323272Z Syncing repository: ZodiacsOfficial/site
+2026-09-08T09:22:16.4325279Z ##[group]Getting Git version info
+2026-09-08T09:22:16.4325873Z Working directory is '/home/runner/work/site/site'
+2026-09-08T09:22:16.4326930Z [command]/usr/bin/git version
+2026-09-08T09:22:16.6771223Z git version 2.55.0
+2026-09-08T09:22:16.6789591Z ##[endgroup]
+2026-09-08T09:22:16.6804701Z Temporarily overriding HOME='/home/runner/work/_temp/f6b514cf-19dc-4062-a4bd-00eac491897d' before making global git config changes
+2026-09-08T09:22:16.6807610Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-08T09:22:16.6810110Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/site/site
+2026-09-08T09:22:16.6852292Z Deleting the contents of '/home/runner/work/site/site'
+2026-09-08T09:22:16.6856403Z ##[group]Determining repository object format
+2026-09-08T09:22:16.6858640Z ##[endgroup]
+2026-09-08T09:22:16.6860548Z ##[group]Initializing the repository
+2026-09-08T09:22:16.6862342Z [command]/usr/bin/git init /home/runner/work/site/site
+2026-09-08T09:22:16.7581710Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-08T09:22:16.7584356Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-08T09:22:16.7586333Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-08T09:22:16.7588067Z hint: call:
+2026-09-08T09:22:16.7589335Z hint:
+2026-09-08T09:22:16.7590629Z hint: 	git config --global init.defaultBranch <name>
+2026-09-08T09:22:16.7592091Z hint:
+2026-09-08T09:22:16.7593374Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-08T09:22:16.7595408Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-08T09:22:16.7597261Z hint:
+2026-09-08T09:22:16.7598261Z hint: 	git branch -m <name>
+2026-09-08T09:22:16.7599465Z hint:
+2026-09-08T09:22:16.7600818Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-08T09:22:16.7602842Z Initialized empty Git repository in /home/runner/work/site/site/.git/
+2026-09-08T09:22:16.7606333Z [command]/usr/bin/git remote add origin https://github.com/ZodiacsOfficial/site
+2026-09-08T09:22:16.7631800Z ##[endgroup]
+2026-09-08T09:22:16.7633666Z ##[group]Disabling automatic garbage collection
+2026-09-08T09:22:16.7635211Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-08T09:22:16.7657911Z ##[endgroup]
+2026-09-08T09:22:16.7659791Z ##[group]Setting up auth
+2026-09-08T09:22:16.7661158Z Removing SSH command configuration
+2026-09-08T09:22:16.7662980Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-08T09:22:16.7688029Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-08T09:22:16.7976025Z Removing HTTP extra header
+2026-09-08T09:22:16.7981316Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-08T09:22:16.8006742Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-08T09:22:16.8159242Z Removing includeIf entries pointing to credentials config files
+2026-09-08T09:22:16.8164002Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-08T09:22:16.8188049Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-08T09:22:16.8343344Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-08T09:22:16.8372914Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/site/site/.git.path /home/runner/work/_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:22:16.8396051Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/site/site/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:22:16.8470003Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:22:16.8493927Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:22:16.8513178Z ##[endgroup]
+2026-09-08T09:22:16.8514885Z ##[group]Fetching the repository
+2026-09-08T09:22:16.8520118Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e2ceea8b391765f6cdef857871a36ebaebc6d5f1:refs/remotes/pull/434/merge
+2026-09-08T09:22:28.3034937Z From https://github.com/ZodiacsOfficial/site
+2026-09-08T09:22:28.3035802Z  * [new ref]         e2ceea8b391765f6cdef857871a36ebaebc6d5f1 -> pull/434/merge
+2026-09-08T09:22:28.3040567Z ##[endgroup]
+2026-09-08T09:22:28.3041162Z ##[group]Determining the checkout info
+2026-09-08T09:22:28.3041708Z ##[endgroup]
+2026-09-08T09:22:28.3045761Z [command]/usr/bin/git sparse-checkout disable
+2026-09-08T09:22:28.3270149Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-08T09:22:28.3291306Z ##[group]Checking out the ref
+2026-09-08T09:22:28.3294770Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/434/merge
+2026-09-08T09:22:29.3398340Z Updating files:  66% (7486/11185)
+2026-09-08T09:22:29.3557408Z Updating files:  67% (7494/11185)
+2026-09-08T09:22:29.3592368Z Updating files:  68% (7606/11185)
+2026-09-08T09:22:29.3627858Z Updating files:  69% (7718/11185)
+2026-09-08T09:22:29.3671941Z Updating files:  70% (7830/11185)
+2026-09-08T09:22:29.3711289Z Updating files:  71% (7942/11185)
+2026-09-08T09:22:29.3762363Z Updating files:  72% (8054/11185)
+2026-09-08T09:22:29.3799727Z Updating files:  73% (8166/11185)
+2026-09-08T09:22:29.3833389Z Updating files:  74% (8277/11185)
+2026-09-08T09:22:29.3908049Z Updating files:  75% (8389/11185)
+2026-09-08T09:22:29.4003286Z Updating files:  76% (8501/11185)
+2026-09-08T09:22:29.4128831Z Updating files:  77% (8613/11185)
+2026-09-08T09:22:29.4176910Z Updating files:  78% (8725/11185)
+2026-09-08T09:22:29.4221977Z Updating files:  79% (8837/11185)
+2026-09-08T09:22:29.4272931Z Updating files:  80% (8948/11185)
+2026-09-08T09:22:29.4316734Z Updating files:  81% (9060/11185)
+2026-09-08T09:22:29.4345450Z Updating files:  82% (9172/11185)
+2026-09-08T09:22:29.4375988Z Updating files:  83% (9284/11185)
+2026-09-08T09:22:29.4409581Z Updating files:  84% (9396/11185)
+2026-09-08T09:22:29.4443072Z Updating files:  85% (9508/11185)
+2026-09-08T09:22:29.4480023Z Updating files:  86% (9620/11185)
+2026-09-08T09:22:29.4719516Z Updating files:  87% (9731/11185)
+2026-09-08T09:22:29.4760733Z Updating files:  88% (9843/11185)
+2026-09-08T09:22:29.4809135Z Updating files:  89% (9955/11185)
+2026-09-08T09:22:29.4856311Z Updating files:  90% (10067/11185)
+2026-09-08T09:22:29.4901934Z Updating files:  91% (10179/11185)
+2026-09-08T09:22:29.4949076Z Updating files:  92% (10291/11185)
+2026-09-08T09:22:29.4988782Z Updating files:  93% (10403/11185)
+2026-09-08T09:22:29.5029820Z Updating files:  94% (10514/11185)
+2026-09-08T09:22:29.5077980Z Updating files:  95% (10626/11185)
+2026-09-08T09:22:29.5134616Z Updating files:  96% (10738/11185)
+2026-09-08T09:22:29.5195318Z Updating files:  97% (10850/11185)
+2026-09-08T09:22:29.6454779Z Updating files:  98% (10962/11185)
+2026-09-08T09:22:29.7845357Z Updating files:  99% (11074/11185)
+2026-09-08T09:22:29.7846008Z Updating files: 100% (11185/11185)
+2026-09-08T09:22:29.7846316Z Updating files: 100% (11185/11185), done.
+2026-09-08T09:22:29.7919308Z Note: switching to 'refs/remotes/pull/434/merge'.
+2026-09-08T09:22:29.7919971Z 
+2026-09-08T09:22:29.7920305Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-09-08T09:22:29.7920887Z changes and commit them, and you can discard any commits you make in this
+2026-09-08T09:22:29.7921503Z state without impacting any branches by switching back to a branch.
+2026-09-08T09:22:29.7921809Z 
+2026-09-08T09:22:29.7922029Z If you want to create a new branch to retain commits you create, you may
+2026-09-08T09:22:29.7922557Z do so (now or later) by using -c with the switch command. Example:
+2026-09-08T09:22:29.7922827Z 
+2026-09-08T09:22:29.7922989Z   git switch -c <new-branch-name>
+2026-09-08T09:22:29.7923182Z 
+2026-09-08T09:22:29.7923323Z Or undo this operation with:
+2026-09-08T09:22:29.7923565Z 
+2026-09-08T09:22:29.7923667Z   git switch -
+2026-09-08T09:22:29.7923860Z 
+2026-09-08T09:22:29.7924102Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-09-08T09:22:29.7924450Z 
+2026-09-08T09:22:29.7924896Z HEAD is now at e2ceea8 Merge c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3 into abcf1a44e52040db79a369b49bc9b55d78099b22
+2026-09-08T09:22:29.7962724Z ##[endgroup]
+2026-09-08T09:22:29.8000189Z [command]/usr/bin/git log -1 --format=%H
+2026-09-08T09:22:29.8019454Z e2ceea8b391765f6cdef857871a36ebaebc6d5f1
+2026-09-08T09:22:29.8234941Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-08T09:22:29.8236410Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-09-08T09:22:29.8236738Z with:
+2026-09-08T09:22:29.8237006Z   node-version: 22
+2026-09-08T09:22:29.8237228Z   cache: npm
+2026-09-08T09:22:29.8237428Z   always-auth: false
+2026-09-08T09:22:29.8237703Z   check-latest: false
+2026-09-08T09:22:29.8239860Z   token: ***
+2026-09-08T09:22:29.8240082Z ##[endgroup]
+2026-09-08T09:22:29.9301599Z Found in cache @ /opt/hostedtoolcache/node/22.23.2/x64
+2026-09-08T09:22:29.9305692Z (node:2046) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-09-08T09:22:29.9306459Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-09-08T09:22:29.9307662Z ##[group]Environment details
+2026-09-08T09:22:30.6111222Z node: v22.23.2
+2026-09-08T09:22:30.6111653Z npm: 10.9.8
+2026-09-08T09:22:30.6111862Z yarn: 1.22.22
+2026-09-08T09:22:30.6112653Z ##[endgroup]
+2026-09-08T09:22:30.6130117Z [command]/opt/hostedtoolcache/node/22.23.2/x64/bin/npm config get cache
+2026-09-08T09:22:30.8998812Z /home/runner/.npm
+2026-09-08T09:22:31.0381960Z npm cache is not found
+2026-09-08T09:22:31.0493741Z ##[group]Run npm ci
+2026-09-08T09:22:31.0494032Z [36;1mnpm ci[0m
+2026-09-08T09:22:31.0525696Z shell: /usr/bin/bash -e {0}
+2026-09-08T09:22:31.0526067Z ##[endgroup]
+2026-09-08T09:22:43.5400907Z 
+2026-09-08T09:22:43.5406637Z added 727 packages, and audited 728 packages in 12s
+2026-09-08T09:22:43.5407021Z 
+2026-09-08T09:22:43.5407214Z 243 packages are looking for funding
+2026-09-08T09:22:43.5407496Z   run `npm fund` for details
+2026-09-08T09:22:43.5411076Z 
+2026-09-08T09:22:43.5411240Z found 0 vulnerabilities
+2026-09-08T09:22:43.5766299Z ##[group]Run npx playwright-core install chromium
+2026-09-08T09:22:43.5766684Z [36;1mnpx playwright-core install chromium[0m
+2026-09-08T09:22:43.5793373Z shell: /usr/bin/bash -e {0}
+2026-09-08T09:22:43.5793695Z ##[endgroup]
+2026-09-08T09:22:44.0953400Z Downloading Chrome for Testing 149.0.7827.55 (playwright chromium v1228) from https://cdn.playwright.dev/builds/cft/149.0.7827.55/linux64/chrome-linux64.zip
+2026-09-08T09:22:45.1037130Z |                                                                                |   0% of 177 MiB
+2026-09-08T09:22:45.4357726Z |■■■■■■■■                                                                        |  10% of 177 MiB
+2026-09-08T09:22:45.4989012Z |■■■■■■■■■■■■■■■■                                                                |  20% of 177 MiB
+2026-09-08T09:22:45.5372468Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 177 MiB
+2026-09-08T09:22:45.5740566Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 177 MiB
+2026-09-08T09:22:46.0921801Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 177 MiB
+2026-09-08T09:22:46.1294565Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 177 MiB
+2026-09-08T09:22:46.1669919Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 177 MiB
+2026-09-08T09:22:46.2010529Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 177 MiB
+2026-09-08T09:22:46.2479763Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 177 MiB
+2026-09-08T09:22:46.3053505Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 177 MiB
+2026-09-08T09:22:48.8405340Z Chrome for Testing 149.0.7827.55 (playwright chromium v1228) downloaded to /home/runner/.cache/ms-playwright/chromium-1228
+2026-09-08T09:22:48.8406816Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2026-09-08T09:22:49.7546590Z |                                                                                |   0% of 2.3 MiB
+2026-09-08T09:22:49.7883057Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2026-09-08T09:22:49.8026907Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2026-09-08T09:22:49.8140313Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2026-09-08T09:22:49.8224885Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2026-09-08T09:22:49.8324232Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2026-09-08T09:22:49.8337872Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2026-09-08T09:22:49.8442245Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2026-09-08T09:22:49.8454693Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2026-09-08T09:22:49.8478354Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2026-09-08T09:22:49.8554588Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2026-09-08T09:22:49.9060090Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2026-09-08T09:22:49.9062445Z Downloading Chrome Headless Shell 149.0.7827.55 (playwright chromium-headless-shell v1228) from https://cdn.playwright.dev/builds/cft/149.0.7827.55/linux64/chrome-headless-shell-linux64.zip
+2026-09-08T09:22:50.9210820Z |                                                                                |   0% of 114.2 MiB
+2026-09-08T09:22:51.4026957Z |■■■■■■■■                                                                        |  10% of 114.2 MiB
+2026-09-08T09:22:51.4703312Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.2 MiB
+2026-09-08T09:22:51.5125352Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.2 MiB
+2026-09-08T09:22:51.5516253Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.2 MiB
+2026-09-08T09:22:51.5986359Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.2 MiB
+2026-09-08T09:22:51.6436976Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.2 MiB
+2026-09-08T09:22:51.7097227Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.2 MiB
+2026-09-08T09:22:51.7360670Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.2 MiB
+2026-09-08T09:22:51.7653903Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.2 MiB
+2026-09-08T09:22:51.7885094Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.2 MiB
+2026-09-08T09:22:53.6612392Z Chrome Headless Shell 149.0.7827.55 (playwright chromium-headless-shell v1228) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1228
+2026-09-08T09:22:53.6807384Z ##[group]Run npm run test:phase3:post-chart
+2026-09-08T09:22:53.6807726Z [36;1mnpm run test:phase3:post-chart[0m
+2026-09-08T09:22:53.6826876Z shell: /usr/bin/bash -e {0}
+2026-09-08T09:22:53.6827220Z ##[endgroup]
+2026-09-08T09:22:53.8609835Z 
+2026-09-08T09:22:53.8610507Z > zodiacs-org@1.0.0 test:phase3:post-chart
+2026-09-08T09:22:53.8611208Z > node tests/post-chart-daily.mjs
+2026-09-08T09:22:53.8611436Z 
+2026-09-08T09:23:19.1261923Z Phase 3 post-chart fixture build: PASS
+2026-09-08T09:23:41.9112315Z FAIL editing form fields cannot rewrite displayed-result context — {"mode":"full","sunSign":"cancer","chartId":"220e8400-e29b-41d4-a716-446655440000","contextId":2} -> undefined
+2026-09-08T09:23:41.9113919Z file:///home/runner/work/site/site/tests/post-chart-daily-drive.mjs:949
+2026-09-08T09:23:41.9114633Z   throw new Error(`Post-chart daily acceptance failed: ${failed.length}/${results.length} checks.`);
+2026-09-08T09:23:41.9115159Z         ^
+2026-09-08T09:23:41.9115431Z 
+2026-09-08T09:23:41.9115910Z Error: Post-chart daily acceptance failed: 1/291 checks.
+2026-09-08T09:23:41.9116525Z     at file:///home/runner/work/site/site/tests/post-chart-daily-drive.mjs:949:9
+2026-09-08T09:23:41.9117143Z     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+2026-09-08T09:23:41.9117490Z 
+2026-09-08T09:23:41.9117636Z Node.js v22.23.2
+2026-09-08T09:23:41.9310938Z ##[error]Process completed with exit code 1.
+2026-09-08T09:23:41.9424674Z Post job cleanup.
+2026-09-08T09:23:42.0065179Z [command]/usr/bin/git version
+2026-09-08T09:23:42.0096314Z git version 2.55.0
+2026-09-08T09:23:42.0123324Z Temporarily overriding HOME='/home/runner/work/_temp/d5a9a108-6aa7-47c2-be32-02a2a88e8efd' before making global git config changes
+2026-09-08T09:23:42.0124515Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-08T09:23:42.0127523Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/site/site
+2026-09-08T09:23:42.0152091Z Removing SSH command configuration
+2026-09-08T09:23:42.0157467Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-08T09:23:42.0183114Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-08T09:23:42.0355489Z Removing HTTP extra header
+2026-09-08T09:23:42.0356457Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-08T09:23:42.0381948Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-08T09:23:42.0567905Z Removing includeIf entries pointing to credentials config files
+2026-09-08T09:23:42.0573911Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-08T09:23:42.0592678Z includeif.gitdir:/home/runner/work/site/site/.git.path
+2026-09-08T09:23:42.0593347Z includeif.gitdir:/home/runner/work/site/site/.git/worktrees/*.path
+2026-09-08T09:23:42.0593883Z includeif.gitdir:/github/workspace/.git.path
+2026-09-08T09:23:42.0594312Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-09-08T09:23:42.0600475Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/site/site/.git.path
+2026-09-08T09:23:42.0618955Z /home/runner/work/_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:23:42.0637356Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/site/site/.git.path /home/runner/work/_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:23:42.0668592Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/site/site/.git/worktrees/*.path
+2026-09-08T09:23:42.0682526Z /home/runner/work/_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:23:42.0696405Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/site/site/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:23:42.1210166Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-09-08T09:23:42.1230193Z /github/runner_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:23:42.1235911Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:23:42.1262430Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-09-08T09:23:42.1279407Z /github/runner_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:23:42.1285091Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config
+2026-09-08T09:23:42.1511096Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-08T09:23:42.1691734Z Removing credentials config '/home/runner/work/_temp/git-credentials-3743dd1a-30b1-4182-b7ec-4f3ee29edc89.config'
+2026-09-08T09:23:42.1821157Z Cleaning up orphan processes
+2026-09-08T09:23:42.2006788Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

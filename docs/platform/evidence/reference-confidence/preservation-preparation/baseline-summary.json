@@ -1,0 +1,128 @@
+{
+  "acceptedBaselineControls": 17,
+  "initialPassed": 15,
+  "initialFailed": 2,
+  "affectedRerunPassed": 2,
+  "candidateTested": false,
+  "newYorkPriorBehavior": {
+    "input": {
+      "date": "1990-06-15",
+      "city": "New York",
+      "known": false,
+      "time": "14:30",
+      "mode": "full"
+    },
+    "primary": {
+      "beforeSha256": "d32d066eb578dd8c0e9241492d344070aa7cd4aeb8c65664db0e8eb1713a3bea",
+      "finalNumericalSha256": "d32d066eb578dd8c0e9241492d344070aa7cd4aeb8c65664db0e8eb1713a3bea",
+      "envelopeSha256": "de631f2df0a68e4d3435a01b434f4e4ac63c031655afcf8902e32c9840b50657",
+      "envelopeJson": "{\"receipt\":{\"conventions\":{\"angles\":\"gast-and-mean-obliquity\",\"aspects\":\"major-aspects;sun-moon-eight-planets;no-nodes\",\"calendar\":\"proleptic-gregorian\",\"longitudeUnit\":\"degrees-[0,360)\",\"moonNodes\":\"instantaneous-geocentric-moon-orbit-plane\",\"moonPosition\":\"astronomy-engine-ecliptic-geo-moon\",\"planetPositions\":\"apparent-geocentric-ecliptic-of-date\",\"speed\":\"degrees-per-day;central-difference-plus-minus-0.25-day\",\"zodiac\":\"tropical\"},\"coordinates\":{\"latitude\":40.71,\"longitude\":-74},\"coverage\":{\"angleExclusions\":\"exact-geographic-poles-and-ecliptic-horizon-coincidence\",\"assessment\":\"finite-reference-cases-only\",\"broadDateRange\":\"not-certified\",\"inputSyntax\":\"not-an-astronomical-accuracy-guarantee\"},\"engine\":{\"name\":\"@zodiacs/engine\",\"version\":\"0.1.1-rc.6\"},\"houses\":{\"absenceReason\":\"unknown-time\",\"actual\":null,\"requested\":\"whole\"},\"inputFlags\":[],\"instant\":\"1990-06-15T16:00:00.000Z\",\"localResolution\":{\"date\":\"1990-06-15\",\"gapShiftMinutes\":0,\"offsetMinutes\":-240,\"policy\":{\"fold\":\"earlier\",\"gap\":\"shift-forward\"},\"time\":\"12:00\",\"timeZone\":\"America/New_York\"},\"provenance\":null,\"reference\":\"local-noon\",\"resultFlags\":[\"no-time\"],\"schema\":\"zodiacs.calculation-receipt.draft-v1\",\"sourceInstant\":null,\"timeKnown\":false},\"requiredFeatures\":[],\"result\":{\"angles\":null,\"aspects\":[{\"a\":\"Jupiter\",\"applying\":false,\"b\":\"Pluto\",\"orb\":0.5267782438588426,\"type\":\"trine\"},{\"a\":\"Moon\",\"applying\":true,\"b\":\"Venus\",\"orb\":1.3831582683749275,\"type\":\"sextile\"},{\"a\":\"Moon\",\"applying\":false,\"b\":\"Jupiter\",\"orb\":1.664625423912753,\"type\":\"trine\"},{\"a\":\"Neptune\",\"applying\":false,\"b\":\"Pluto\",\"orb\":1.6861468326618478,\"type\":\"sextile\"},{\"a\":\"Moon\",\"applying\":false,\"b\":\"Pluto\",\"orb\":2.191403667771624,\"type\":\"trine\"},{\"a\":\"Jupiter\",\"applying\":false,\"b\":\"Neptune\",\"orb\":2.212925076520719,\"type\":\"opposition\"},{\"a\":\"Mars\",\"applying\":true,\"b\":\"Neptune\",\"orb\":2.5518039782035657,\"type\":\"square\"},{\"a\":\"Mars\",\"applying\":false,\"b\":\"Uranus\",\"orb\":3.003425225240335,\"type\":\"square\"},{\"a\":\"Venus\",\"applying\":false,\"b\":\"Jupiter\",\"orb\":3.0477836922876804,\"type\":\"sextile\"},{\"a\":\"Venus\",\"applying\":false,\"b\":\"Pluto\",\"orb\":3.574561936146523,\"type\":\"opposition\"},{\"a\":\"Moon\",\"applying\":false,\"b\":\"Neptune\",\"orb\":3.877550500433472,\"type\":\"sextile\"},{\"a\":\"Mars\",\"applying\":true,\"b\":\"Jupiter\",\"orb\":4.764729054724285,\"type\":\"square\"},{\"a\":\"Venus\",\"applying\":true,\"b\":\"Saturn\",\"orb\":5.048695984453786,\"type\":\"trine\"},{\"a\":\"Venus\",\"applying\":false,\"b\":\"Neptune\",\"orb\":5.260708768808399,\"type\":\"trine\"},{\"a\":\"Uranus\",\"applying\":false,\"b\":\"Neptune\",\"orb\":5.555229203443901,\"type\":\"conjunction\"},{\"a\":\"Sun\",\"applying\":true,\"b\":\"Moon\",\"orb\":6.698348873753957,\"type\":\"square\"},{\"a\":\"Jupiter\",\"applying\":false,\"b\":\"Uranus\",\"orb\":7.7681542799646195,\"type\":\"opposition\"}],\"bodies\":[{\"body\":\"Sun\",\"degree\":24.288577239605615,\"lat\":-0.000018305714504785282,\"lon\":84.28857723960562,\"retrograde\":false,\"sign\":\"gemini\",\"speed\":0.955119971905674},{\"body\":\"Moon\",\"degree\":17.590228365851658,\"lat\":3.287853817211613,\"lon\":347.59022836585166,\"retrograde\":false,\"sign\":\"pisces\",\"speed\":13.422185772972625},{\"body\":\"Mercury\",\"degree\":5.97742924556951,\"lat\":-1.6329745193296843,\"lon\":65.97742924556951,\"retrograde\":false,\"sign\":\"gemini\",\"speed\":1.7237090231942602},{\"body\":\"Venus\",\"degree\":18.973386634226586,\"lat\":-1.94283438448093,\"lon\":48.973386634226586,\"retrograde\":false,\"sign\":\"taurus\",\"speed\":1.1761577409909023},{\"body\":\"Mars\",\"degree\":11.16087388721462,\"lat\":-1.9862713923326767,\"lon\":11.16087388721462,\"retrograde\":false,\"sign\":\"aries\",\"speed\":0.718754626688451},{\"body\":\"Jupiter\",\"degree\":15.925602941938905,\"lat\":0.1870260069902289,\"lon\":105.9256029419389,\"retrograde\":false,\"sign\":\"cancer\",\"speed\":0.21673680624758163},{\"body\":\"Saturn\",\"degree\":24.022082618680315,\"lat\":0.11700425838116964,\"lon\":294.0220826186804,\"retrograde\":true,\"sign\":\"capricorn\",\"speed\":-0.05880738997336721},{\"body\":\"Uranus\",\"degree\":8.157448661974286,\"lat\":-0.3255981499118934,\"lon\":278.1574486619743,\"retrograde\":true,\"sign\":\"capricorn\",\"speed\":-0.038966726803209895},{\"body\":\"Neptune\",\"degree\":13.712677865418186,\"lat\":0.8770493327153731,\"lon\":283.7126778654182,\"retrograde\":true,\"sign\":\"capricorn\",\"speed\":-0.025058336333131592},{\"body\":\"Pluto\",\"degree\":15.398824698080034,\"lat\":15.85262764354645,\"lon\":225.39882469808006,\"retrograde\":true,\"sign\":\"scorpio\",\"speed\":-0.020114344706428255},{\"body\":\"North Node\",\"degree\":8.123577856346856,\"lat\":0,\"lon\":308.12357785634686,\"retrograde\":false,\"sign\":\"aquarius\",\"speed\":0.01079347461825364},{\"body\":\"South Node\",\"degree\":8.123577856346856,\"lat\":0,\"lon\":128.12357785634686,\"retrograde\":false,\"sign\":\"leo\",\"speed\":0.01079347461825364}],\"houses\":null},\"schema\":\"zodiacs.natal-envelope.draft-v1\"}",
+      "candidates": [
+        "pisces"
+      ]
+    },
+    "confidence": {
+      "endpointCalls": [
+        {
+          "type": "endpoints",
+          "date": "1990-06-15",
+          "zone": "America/New_York"
+        },
+        {
+          "type": "bodies",
+          "utc": "1990-06-15T04:00:00.000Z"
+        },
+        {
+          "type": "bodies",
+          "utc": "1990-06-16T03:59:59.999Z"
+        }
+      ],
+      "registry": [
+        "/registry/gemini/"
+      ],
+      "unknownRegistrySuppressed": false
+    },
+    "calls": [
+      {
+        "type": "resolve",
+        "date": "1990-06-15",
+        "time": "12:00",
+        "zone": "America/New_York"
+      },
+      {
+        "type": "membership",
+        "date": "1990-06-15",
+        "zone": "America/New_York"
+      },
+      {
+        "type": "portable",
+        "utc": "1990-06-15T16:00:00.000Z"
+      },
+      {
+        "type": "endpoints",
+        "date": "1990-06-15",
+        "zone": "America/New_York"
+      },
+      {
+        "type": "resolve",
+        "date": "1990-06-15",
+        "time": "00:00",
+        "zone": "America/New_York"
+      },
+      {
+        "type": "resolve",
+        "date": "1990-06-16",
+        "time": "00:00",
+        "zone": "America/New_York"
+      },
+      {
+        "type": "bodies",
+        "utc": "1990-06-15T04:00:00.000Z"
+      },
+      {
+        "type": "bodies",
+        "utc": "1990-06-16T03:59:59.999Z"
+      }
+    ],
+    "context": {
+      "mode": "full",
+      "sunSign": "gemini",
+      "chartId": null,
+      "contextId": 8
+    }
+  },
+  "rawFiles": [
+    {
+      "path": "baseline-result.json",
+      "sha256": "6bda331b3fef1395388d38acf67393f1161d9a6207b1302d10ab1028ad93ed36"
+    },
+    {
+      "path": "baseline-save-corrected.json",
+      "sha256": "2672e74a8bf950e07d0958e99e2fe12c05b6b5489697a41ccbecde62cd733072"
+    },
+    {
+      "path": "baseline-identity.json",
+      "sha256": "657e2b0317507ea329f5fd8d4115c81db0b67d7de0b0171662a505c0d778301a"
+    },
+    {
+      "path": "secure-origin-probe.json",
+      "sha256": "1116e373e5e07488388fa9d9bd7f6602b8984223a011bf49a65b4316e5ce331b"
+    },
+    {
+      "path": "drive.initial.mjs.log",
+      "sha256": "5ebc241d3c3a8570e3560c137dde8d7abdb0593aa048f4f42813b01bb7a8525e"
+    },
+    {
+      "path": "drive.mjs",
+      "sha256": "40c31d02d180166dc99d555bb7957541a533dbf51261bc9f6368a83a1606ff45"
+    },
+    {
+      "path": "entry.tsx",
+      "sha256": "e85db4ff8754d69378d1e2e6c4a8108a52e4c7bd8701670210d318c90fde5ebe"
+    },
+    {
+      "path": "build.mjs",
+      "sha256": "8005a750b09fc38fe1a1dce9fc37810439f94c1f327e9316562f2209d56b6411"
+    }
+  ]
+}

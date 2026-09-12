@@ -1,0 +1,2864 @@
+{
+  "base": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "changed": 714,
+  "nonDocumentation": 36,
+  "exactExpectedNonDocumentation": true,
+  "files": [
+    {
+      "status": "M",
+      "path": ".github/phase1-scope-allowance.json"
+    },
+    {
+      "status": "M",
+      "path": ".github/workflows/site-check.yml"
+    },
+    {
+      "status": "M",
+      "path": "docs/acceptance/phase1/screenshots/manifest.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/platform/DECISIONS.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/platform/EVIDENCE.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/platform/PLAN.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/platform/REVIEW.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/platform/STATUS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/README.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/COMMANDS.md.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/REVIEW.md.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/freeze1-identity.json.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/freeze1.patch.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/post-freeze-verification.json.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/raw-evidence.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/raw-members.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/root-copy-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/author-freeze1/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/C-016-decision.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/REVIEW.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/apply.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/assembled-source-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/catalog-runtime-inputs.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/catalog-runtime-metafile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/catalog-runtime-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/catalog-runtime.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-baseline-inputs.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-baseline-metafile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-baseline-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-baseline.stderr"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-candidate-inputs.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-candidate-metafile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-candidate-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-candidate.stderr"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/known-0617-html.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/known-0617-inspector.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/known-0617-receiver.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/known-1843-html.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/known-1843-inspector.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/known-1843-receiver.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/reference-0617-html.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/reference-0617-inspector.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/reference-0617-receiver.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/reference-1843-html.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/reference-1843-inspector.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-baseline/reference-1843-receiver.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/known-0617-html.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/known-0617-inspector.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/known-0617-receiver.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/known-1843-html.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/known-1843-inspector.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/known-1843-receiver.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/reference-0617-html.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/reference-0617-inspector.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/reference-0617-receiver.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/reference-1843-html.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/reference-1843-inspector.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/consumer-output-candidate/reference-1843-receiver.html.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/catalog-runtime-audit.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/catalog-runtime-bundle.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/catalog-runtime-entry.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/consumer-baseline.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/consumer-baseline.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/consumer-build.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/consumer-candidate.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/consumer-candidate.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/image-drive.initial.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/image-drive.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/reconcile.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/seal.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/source-audit.initial.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/drivers/source-audit.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/freeze1-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/freeze1.patch"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/image-drive.initial.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/image-drive.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/app-icons/v3/icon-512.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/aquarius.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/aries.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/cancer.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/capricorn.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/gemini.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/leo.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/libra.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/pisces.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/sagittarius.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/scorpio.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/taurus.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/assets/zodiac-icons/128/virgo.webp"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/fonts/eb-garamond-latin-400-italic.woff2"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/fonts/eb-garamond-latin-400-normal.woff2"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/fonts/eb-garamond-latin-500-normal.woff2"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-assets/fonts/jetbrains-mono-latin-wght-normal.woff2"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images-initial/baseline-metafile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images-initial/baseline.js.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images-initial/candidate-metafile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images-initial/candidate.js.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images-initial/entry.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images-initial/input-identities.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images-initial/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/baseline-known-sheet-optin.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/baseline-metafile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/baseline-reference-card.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/baseline-reference-sheet-hidden.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/baseline-reference-sheet-optin.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/baseline.js.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/candidate-known-sheet-optin.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/candidate-metafile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/candidate-reference-card.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/candidate-reference-sheet-hidden.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/candidate-reference-sheet-optin.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/candidate.js.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/entry.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/input-identities.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/native-images/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/reconcile-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/reconcile.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/root-copy-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/seal-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source-audit-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source-audit.initial.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source-audit.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/components/AspectGlyph.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/components/PlanetGlyph.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/data/context-help.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/islands/AstroTerm.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/islands/ChartCalculator.registry-bridge.test.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/islands/PositionsShareSurface.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/islands/SignChip.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/islands/explorer/Inspector.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/islands/explorer/lens/copy.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/islands/explorer/tour/copy.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/analytics-config.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/analytics.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/approach.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/brand-icons.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/chart-signature.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/communication.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/compat.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/context-help-client.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/dignities.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/engine/aspects.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/engine/chart-adapter.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/engine/full.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/engine/houses.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/engine/synastry.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/glyphs/paths.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/astrology.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/core.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/english-only.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/index.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/plural.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ru-runtime/client.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ru-runtime/index.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ru-runtime/server.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ui/client.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ui/en.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ui/es.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ui/fr.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ui/growth.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ui/it.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ui/pt.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ui/ru.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/i18n/ui/server.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/interpretations.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/moon-certainty.test.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/moon-certainty.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/natal-context.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/natal.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/scene/build.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/scene/emphasis.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/scene/layout.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/scene/types.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/share-card-brand.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/share-card-copy.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/share-card-pastel-icons.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/share-card.test.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/share-card.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/share-positions-reading.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/share-positions.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/signs.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/wheel/TechnicalWheel.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/wheel/Wheel.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/wheel/body-leader.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/lib/wheel/technical-layout.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/pages/es/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/pages/fr/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/pages/it/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/pages/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/pages/pt/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/pages/ru/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/server/chart-preview-model.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/server/chart-preview.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/strings/additions.fr.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/strings/additions.it.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/strings/additions.pt.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/styles/context-help.css.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/src/styles/tokens.css.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/tests/api/og-chart.test.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/tests/local-date-reference-drive.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/tests/moon-result-ownership-drive.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/baseline/tests/t17-positions-share.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/components/AspectGlyph.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/components/PlanetGlyph.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/data/context-help.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/AstroTerm.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/ChartCalculator.registry-bridge.test.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/MoonPhaseTool.reference.test.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/PositionsShareSurface.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/SignChip.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/explorer/Inspector.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/explorer/lens/copy.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/islands/explorer/tour/copy.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/analytics-config.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/analytics.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/approach.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/brand-icons.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/chart-signature.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/communication.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/compat.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/context-help-client.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/dignities.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/engine/aspects.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/engine/chart-adapter.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/engine/full.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/engine/houses.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/engine/synastry.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/glyphs/paths.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/astrology.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/core.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/english-only.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/index.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/plural.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ru-runtime/client.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ru-runtime/index.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ru-runtime/server.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ui/client.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ui/en.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ui/es.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ui/fr.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ui/growth.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ui/it.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ui/pt.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ui/ru.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/i18n/ui/server.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/interpretations.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/moon-certainty.test.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/moon-certainty.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/natal-context.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/natal.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/reference-captions.test.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/scene/build.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/scene/emphasis.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/scene/layout.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/scene/types.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/share-card-brand.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/share-card-copy.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/share-card-pastel-icons.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/share-card.test.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/share-card.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/share-positions-reading.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/share-positions.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/signs.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/wheel/TechnicalWheel.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/wheel/Wheel.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/wheel/body-leader.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/lib/wheel/technical-layout.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/pages/es/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/pages/fr/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/pages/it/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/pages/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/pages/pt/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/pages/ru/moon-phase/index.astro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/server/chart-preview-model.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/server/chart-preview.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/strings/additions.fr.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/strings/additions.it.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/strings/additions.pt.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/styles/context-help.css.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/src/styles/tokens.css.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/tests/api/og-chart.test.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/tests/local-date-reference-drive.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/tests/moon-result-ownership-drive.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/tests/reference-caption-drive.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/consumer-review/source/candidate/tests/t17-positions-share.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/COMMANDS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/REVIEW.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/build-metafile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/build.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/capture-dependencies.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/capture-supplement.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/capture.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/consumed-inputs.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/dependency-source/astronomy-engine/esm/astronomy.js.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/fourth-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/fourth-build.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/initial-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/initial-build.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/initial-lookup.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/initial-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/initial-result.stderr"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/known-0617-html.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/known-0617-inspector.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/known-0617-receiver.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/known-1843-html.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/known-1843-inspector.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/known-1843-receiver.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/reference-0617-html.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/reference-0617-inspector.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/reference-0617-receiver.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/reference-1843-html.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/reference-1843-inspector.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/output/reference-1843-receiver.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/probe.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/probe.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/result.stderr"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/root-copy-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/second-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/second-build.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source-locations.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/scripts/build-i18n-additions.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/scripts/build-i18n-additions.test.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/components/AspectGlyph.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/components/PlanetGlyph.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/data/context-help.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/islands/AstroTerm.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/islands/PositionsShareSurface.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/islands/SignChip.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/islands/explorer/Inspector.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/analytics-config.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/analytics.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/approach.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/brand-icons.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/chart-signature.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/communication.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/compat.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/context-help-client.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/dignities.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/engine/aspects.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/engine/chart-adapter.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/engine/full.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/engine/houses.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/engine/synastry.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/glyphs/paths.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/astrology.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/core.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/english-only.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/index.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/plural.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ru-runtime/client.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ru-runtime/index.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ru-runtime/server.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ui/client.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ui/en.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ui/es.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ui/fr.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ui/growth.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ui/it.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ui/pt.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ui/ru.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/i18n/ui/server.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/interpretations.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/moon-certainty.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/natal-context.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/natal.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/scene/build.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/scene/emphasis.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/scene/layout.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/scene/types.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/share-card-brand.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/share-card-copy.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/share-card-pastel-icons.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/share-card.test.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/share-card.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/share-positions-reading.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/share-positions.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/signs.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/wheel/TechnicalWheel.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/wheel/Wheel.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/wheel/body-leader.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/lib/wheel/technical-layout.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/server/chart-preview-model.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/server/chart-preview.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/strings/additions.fr.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/strings/additions.it.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/strings/additions.pt.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/source/src/styles/context-help.css"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/third-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/independent-preparation/third-build.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/COMMANDS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/REVIEW.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/after/.github/phase1-scope-allowance.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/after/.github/workflows/site-check.yml"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/audit.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/audit.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/author-freeze.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/before/.github/phase1-scope-allowance.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/before/.github/workflows/site-check.yml"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/executed-or-reviewed/i18n-additions.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/executed-or-reviewed/scripts/build-i18n-additions.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/executed-or-reviewed/scripts/phase1-scope-guard.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/executed-or-reviewed/tests/reference-caption-drive.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/executed-or-reviewed/tests/visual/browser.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/fixture-source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/generation-independent.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/generation/after/i18n-additions.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/generation/before/i18n-additions.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/generation/identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/generation/integration.patch"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/integration.patch"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/prepare.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/prepare.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/root-copy-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/source-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/metadata-review/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/REVIEW.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/audit-final.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/audit-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/audit.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/catalog-audit.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/catalog-audit.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/catalog-values.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/package-audit.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-COMMANDS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-README.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-acceptance-summary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-copy-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-final-source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-normal-pages.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-normal-pages.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-normal-pages.preflight1.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-raw-members.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-sharing-image-disposition.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/root-source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/seal.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/normal-page-audit/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/REVIEW.md.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/browser-result.json.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/output-result.json.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/raw-evidence.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/raw-members.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/root-copy-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/scope-map.json.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preparation/source-verification.json.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/COMMANDS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/REVIEW.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/executed-inputs-archive.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/executed-inputs.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/executed-inputs.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/freeze.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/native-harness-correction.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/parity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/raw-evidence-archive.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/raw-evidence.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/root-copy-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/seal-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/preservation-review/source-review.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/release-start/astrofolio-files.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/release-start/astrofolio-pre-release.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/release-start/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/release-start/sdk-hold-pre-release.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/release-start/sdk-main.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/release-start/site-main.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/COMMANDS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/README.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/acceptance-summary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/capture-comparison.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/en-tool-1280-local-reference.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/final-source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/full-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/metadata-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/raw-evidence.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/raw-members.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/ru-tool-390-local-reference.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/scope.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/sharing-image-disposition.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/root-integration/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/REVIEW.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/audit-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/final-source/tests/t17-positions-share.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/git-attempts.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/prior-c015-delivered.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/prior-c015-sharing.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/root-COMMANDS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/root-README.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/root-copy-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/root-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/root-raw-members.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/root-sharing-image-disposition.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/selected-records.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/sharing-33-percent-baseline.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/sharing-33-percent.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/sharing-baseline-source.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/sharing-candidate-source.ts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/sharing-image-comparison.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/sharing-image-diff.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/sharing-image-disposition.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/sharing.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-captions/sharing-evidence-audit/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/ci-final/README.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/ci-final/ci.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/ci-final/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/COMMANDS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/REVIEW.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/ReadingPath.exact.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/audit-pr.initial.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/audit-pr.initial.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/audit-pr.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/audit-pr.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/en-chart-1280-failure.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/en-chart-1280.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/en-chart-390-failure.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/en-chart-390.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/en-positions-1280.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/en-positions-1280.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/en-positions-390.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/en-positions-390.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/remote-data/a.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/remote-data/index.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/remote-data/j.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/remote-data/t.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280-juneau-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280-juneau.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280-known-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280-known.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280-recovered-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280-recovered.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280-refused.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280-toronto-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280-toronto.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-1280.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390-juneau-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390-juneau.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390-known-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390-known.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390-recovered-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390-recovered.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390-refused.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390-toronto-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390-toronto.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-chart-390.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-positions-1280.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-positions-1280.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-positions-390.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run1/ru-positions-390.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280-juneau-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280-juneau.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280-known-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280-known.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280-recovered-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280-recovered.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280-refused.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280-toronto-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280-toronto.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-1280.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390-juneau-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390-juneau.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390-known-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390-known.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390-recovered-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390-recovered.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390-refused.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390-toronto-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390-toronto.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/en-chart-390.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/remote-data/a.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/remote-data/index.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/remote-data/j.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/remote-data/t.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/browser-run2/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/capture-source.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/cleanup.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/cleanup.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/cleanup.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/dependency-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/deployment-after.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/deployment-before.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/deployment-initial.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/disabled-guard.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/final-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/freeze2-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/harness-correction.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/pr-identity/audit.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/pr-identity/pr-files.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/pr-identity/pr-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/pr-identity/pr.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/prepare-driver.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-drive.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-drive.run1.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/REVIEW.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/audit-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/audit.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/audit.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/ReadingPath.exact.tsx.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run1/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run1/ru-chart-1280-juneau-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run1/ru-chart-1280-known-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run1/ru-chart-1280-recovered-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run1/ru-chart-1280-toronto-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run1/ru-chart-390-juneau-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run1/ru-chart-390-known-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run1/ru-chart-390-recovered-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run1/ru-chart-390-toronto-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run2/en-chart-1280-juneau-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run2/en-chart-1280-known-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run2/en-chart-1280-recovered-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run2/en-chart-1280-toronto-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run2/en-chart-390-juneau-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run2/en-chart-390-known-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run2/en-chart-390-recovered-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run2/en-chart-390-toronto-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/browser-run2/result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/cleanup.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/deployment-after.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/deployment-before.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/freeze2-identity.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/harness-correction.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/preview-drive.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/preview-drive.run1.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/source-snapshot.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/verified-results.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/verify.initial.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/verify.initial.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/verify.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/captured/verify.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/driver.diff"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/receipt-audit-result.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/receipt-audit.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-evidence-audit/receipt-audit.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-run1.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/preview-run2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/prior-c014-driver.mjs.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/remote-modules-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/remote-modules.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/root-copy-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/seal.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/source-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/source-snapshot-manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/source-snapshot.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/source-snapshot.tar.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/syntax.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/verified-results.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/verify.initial.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/verify.initial.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/verify.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/preview/verify.py.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/release/ci-runs.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/release/existing-pr.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/release/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/release/pr-body.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/release/pr-files.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/release/pr-verification.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/platform/evidence/reference-confidence/release/pr.json"
+    },
+    {
+      "status": "M",
+      "path": "i18n-additions.md"
+    },
+    {
+      "status": "M",
+      "path": "src/islands/ChartCalculator.registry-bridge.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/islands/ChartCalculator.tsx"
+    },
+    {
+      "status": "A",
+      "path": "src/islands/MoonPhaseTool.reference.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/islands/MoonPhaseTool.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/islands/explorer/lens/copy.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/islands/explorer/tour/copy.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/i18n/ui/en.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/i18n/ui/es.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/i18n/ui/fr.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/i18n/ui/it.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/i18n/ui/pt.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/i18n/ui/ru.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/moon-certainty.test.tsx"
+    },
+    {
+      "status": "A",
+      "path": "src/lib/reference-captions.test.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/share-card-copy.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/share-card.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/lib/share-card.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/pages/es/moon-phase/index.astro"
+    },
+    {
+      "status": "M",
+      "path": "src/pages/fr/moon-phase/index.astro"
+    },
+    {
+      "status": "M",
+      "path": "src/pages/it/moon-phase/index.astro"
+    },
+    {
+      "status": "M",
+      "path": "src/pages/moon-phase/index.astro"
+    },
+    {
+      "status": "M",
+      "path": "src/pages/pt/moon-phase/index.astro"
+    },
+    {
+      "status": "M",
+      "path": "src/pages/ru/moon-phase/index.astro"
+    },
+    {
+      "status": "M",
+      "path": "src/server/chart-preview-model.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/server/chart-preview.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/strings/additions.fr.mjs"
+    },
+    {
+      "status": "M",
+      "path": "src/strings/additions.it.mjs"
+    },
+    {
+      "status": "M",
+      "path": "src/strings/additions.pt.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tests/api/og-chart.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "tests/local-date-reference-drive.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tests/moon-result-ownership-drive.mjs"
+    },
+    {
+      "status": "A",
+      "path": "tests/reference-caption-drive.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tests/t17-positions-share.mjs"
+    }
+  ]
+}

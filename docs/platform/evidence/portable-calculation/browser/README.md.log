@@ -1,0 +1,93 @@
+# Portable calculation — actual Chrome acceptance
+
+Final result: **12/12 browser case groups and 42/42 observer negative controls
+passed** in actual Chrome 152.0.7977.83. Chrome precise coverage recorded exactly
+one call each to `computePortableChart`, public `natalChart`, internal
+`computeChart`, and `createNatalEnvelope` for the separately measured calculation.
+Neither the calculator nor receipt creator was replaced by a mock or wrapper.
+
+Final run: `run-1788841898123-18336`, completed 2026-09-08T04:31:39.492Z.
+Source: site branch `codex/platform-portable-calculation`, base commit
+`6ab85278bea708337e20947966a54a5072ad0627` plus the exact four implementation
+files identified in `report.json`. At execution these source changes were
+uncommitted. Their hashes matched the frozen implementation identity before and
+after execution and again after the user interruption. This is not a claim that
+base commit 6ab85278 alone contains the new module.
+
+## Executed code and isolation
+
+The harness copied the actual source files and installed engine to an owned
+scratch fixture, then bundled the new portable module and real SDK receipt
+exports with esbuild. The 11-module graph and every input's bytes/hash are
+recorded; receipt, native engine and Astronomy Engine are present, geo and
+ownership SDK are absent. All 23 installed rc.5 package members and fixture
+copies match the exact vendored archive. Astronomy Engine is 2.1.19.
+
+The final 125,683-byte bundle has SHA256
+`33f8bb250e61a39b986b2f1d4acc2e73f4a1ee4926e35c60027234cec5416515`.
+Final runner SHA256:
+`baf3dd5efeb41c3ff3267e347441d2bcd7cddce12489164667652bbee8cee685`.
+Final browser-cases SHA256:
+`c1e84b97e3aa92f5c1f24d7db6b5db9bb7ccc77588403389c87f0125a5ff1dab`.
+
+Only three local static GETs loaded the owned page, bundle and test cases. The
+page then ran with browser networking offline and a deny rule for further
+requests. There were zero subsequent requests, request failures, console errors,
+page errors or observed calculation-time network/storage/cookie/Intl calls.
+Local/session storage and cookies were empty before and after. Observer negative
+controls throw before performing their synthetic network or storage operations.
+
+The 42 negative controls cover fetch, XHR, WebSocket, EventSource, workers,
+beacons, local/session storage methods, IndexedDB, CacheStorage, cookies,
+every available Intl function entry (13 in this Chrome), and six locale-format
+shortcuts on Date/Number/BigInt/String. The exact list and observed events are
+recorded. This is measured coverage of those browser interfaces, not a claim to
+sandbox arbitrary code or authenticate caller metadata.
+
+## Runtime cases
+
+The actual browser executed complete native calculation and receipt creation,
+compared all compact body/angle/house/aspect values at full precision, retained
+requested Placidus versus actual Whole, preserved unknown-time 08:30 and explicit
+source ISO spelling, serialized and parsed the frozen receipt, and checked the
+canonical replay input. Mutation controls changed every mutable chart branch,
+caller Date/flags/context, and attempted writes into recursively frozen outputs.
+
+Further cases cover fixed private errors without raw error inspection, revoked
+context proxies, context accessors/oversize data, one-read input getters,
+post-calculation context capture, explicit historical-resolution metadata,
+missing-place/unknown-time-noon distinctions, and year 0099 handling. The receipt
+remains a Zodiacs draft and its provenance remains claimed.
+
+This is an owned synthetic acceptance page, not product UI or a saved/account
+workflow. `initial-page.png` and `offline-results.png` were inspected; content is
+visible, the 12 successful groups render, and no error overlay appeared. Raw
+coverage, browser trace, source/module identities and request records are kept.
+No new numerical oracle, human review, broad accuracy certification, account
+migration acceptance, production deployment or external adoption is claimed.
+
+## Attempts and cleanup
+
+The first run (`run-1788841801131-17555`) passed the same 12 runtime groups and
+24 observer controls. It measured DateTimeFormat specifically. Its runner,
+browser cases, raw results and captures are retained separately. The final
+harness added all available Intl entries and locale shortcuts; product source
+was unchanged and no tolerance or acceptance assertion was weakened.
+
+Both runs closed their owned browser and server and removed their owned profile.
+After interruption, the final result and source identities remained intact, no
+owned process remained, and the profile was absent. The initial process-inspection
+attempt was blocked by the filesystem/process sandbox's `ps` permission; an
+escalated read-only inspection succeeded. This was not a candidate browser failure
+or an automatic approval-review rejection. `post-interruption-check.json` records
+that check. No rerun was needed after the interruption, and no other browser view
+or separate Astrofolio work was inspected or changed.
+
+Reproduce from the frozen root source and implementation identity using the exact
+command in `final-command.json`. The runner writes only under its evidence
+folder and refuses source/artifact mismatches. Bundle path comments, ephemeral
+ports and timestamps change between runs, so compare recorded source and module
+bytes as well as each run's own bundle hash. `copy-manifest.json` maps selected
+raw evidence into durable docs without formatting or executable test discovery;
+fixture dependency duplicates are excluded because their exact members are
+already identified against the archived package and recorded in the module graph.

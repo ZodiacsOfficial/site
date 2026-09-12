@@ -1,0 +1,43 @@
+Build & Check	Dependency advisories stay at zero	﻿2026-09-12T09:12:22.7894602Z ##[group]Run node scripts/audit-with-retry.mjs --omit=dev
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:22.7895354Z [36;1mnode scripts/audit-with-retry.mjs --omit=dev[0m
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:22.7896208Z [36;1mnode scripts/audit-with-retry.mjs --audit-level=high[0m
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:22.7922910Z shell: /usr/bin/bash -e {0}
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:22.7923208Z ##[endgroup]
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0054313Z # npm audit report
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0054878Z 
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0055540Z astro  <7.2.8
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0055861Z Severity: critical
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0056533Z Astro: Remote code execution through AVIF image optimization - https://github.com/advisories/GHSA-26w7-cxv4-gfx2
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0057452Z fix available via `npm audit fix`
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0057791Z node_modules/astro
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0057967Z 
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0058104Z js-yaml  4.0.0 - 4.3.1
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0058406Z Severity: high
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0059245Z js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources - https://github.com/advisories/GHSA-2883-xcg3-v3hh
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0060287Z fix available via `npm audit fix`
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0060727Z node_modules/js-yaml
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0060997Z 
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0061210Z sharp  <0.35.4
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0061592Z Severity: high
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0062540Z sharp: Vulnerabilities in libheif: GHSA-g89c-p67h-r497 and GHSA-2jg2-4ch7-h545 - https://github.com/advisories/GHSA-rgj7-g3m4-5g8c
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0063579Z fix available via `npm audit fix`
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0064028Z node_modules/sharp
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0064219Z 
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0064346Z smol-toml  <=1.7.0
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0064983Z Severity: high
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0065504Z smol-toml: Denial of Service via malformed TOML documents - https://github.com/advisories/GHSA-7w5x-hrqm-74c2
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0066009Z fix available via `npm audit fix`
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0066324Z node_modules/smol-toml
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0066446Z 
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0066571Z svgo  4.0.0 - 4.0.2
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0066808Z Severity: high
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0067397Z SVGO: removeScripts allows executable links through namespace and control-character bypasses - https://github.com/advisories/GHSA-w27v-7q3p-w38r
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0068158Z SVGO: removeScripts incompletely sanitizes executable HTML in SVG foreignObject elements - https://github.com/advisories/GHSA-4vpr-x523-8j87
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0068700Z fix available via `npm audit fix`
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0068950Z node_modules/svgo
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0069110Z 
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0069256Z 5 vulnerabilities (4 high, 1 critical)
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0069437Z 
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0069563Z To address all issues, run:
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0069850Z   npm audit fix
+Build & Check	Dependency advisories stay at zero	2026-09-12T09:12:24.0099169Z ##[error]Process completed with exit code 1.

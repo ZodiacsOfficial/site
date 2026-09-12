@@ -1,0 +1,679 @@
+{
+  "baseRefName": "codex/platform-portable-calculation",
+  "files": [
+    {
+      "path": "docs/acceptance/phase1/screenshots/manifest.json",
+      "additions": 4,
+      "deletions": 4
+    },
+    {
+      "path": "docs/platform/EVIDENCE.md",
+      "additions": 74,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/PLAN.md",
+      "additions": 8,
+      "deletions": 1
+    },
+    {
+      "path": "docs/platform/REVIEW.md",
+      "additions": 11,
+      "deletions": 2
+    },
+    {
+      "path": "docs/platform/STATUS.md",
+      "additions": 18,
+      "deletions": 2
+    },
+    {
+      "path": "docs/platform/evidence/portable-calculation/release/ci-34187725308-final.json",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/EVIDENCE.md.log",
+      "additions": 114,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/IMPLEMENTATION-CHOICES.md.log",
+      "additions": 49,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/copy-manifest.json",
+      "additions": 199,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/diff-check.log",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/focused-runs.json.log",
+      "additions": 50,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/focused-tests.log",
+      "additions": 13,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/focused-typecheck.log",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-diff-check.log",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-focused-tests.log",
+      "additions": 13,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-identity.json.log",
+      "additions": 18,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-runs.json.log",
+      "additions": 50,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-source.patch.log",
+      "additions": 1045,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-source/src/lib/profile/saved-record-store.test.ts.log",
+      "additions": 415,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-source/src/lib/profile/saved-record-store.ts.log",
+      "additions": 420,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-source/src/lib/profile/saved-record.test.ts.log",
+      "additions": 86,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-source/src/lib/profile/saved-record.ts.log",
+      "additions": 100,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-tracked-diff-check.log",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/freeze1-typecheck.log",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/identity.json.log",
+      "additions": 18,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/initial-late-open-stall.log",
+      "additions": 60,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/initial-record-tests.log",
+      "additions": 91,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/initial-source/saved-record-store.ts.log",
+      "additions": 394,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/initial-source/saved-record.test.ts.log",
+      "additions": 86,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/initial-source/saved-record.ts.log",
+      "additions": 97,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/initial-store-tests.log",
+      "additions": 11,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/initial-typecheck.log",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/pre-open-cancellation-store.ts.log",
+      "additions": 403,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/implementation/source.patch.log",
+      "additions": 1045,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/COMMANDS.md.log",
+      "additions": 18,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/REVIEW.md.log",
+      "additions": 41,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/freeze.json.log",
+      "additions": 61,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/package-lock.json.log",
+      "additions": 12088,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/package.json.log",
+      "additions": 167,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/src/lib/account-v2/storage-identity.ts.log",
+      "additions": 19,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/src/lib/engine/chart-adapter.ts.log",
+      "additions": 24,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/src/lib/engine/portable.ts.log",
+      "additions": 84,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/src/lib/engine/types.ts.log",
+      "additions": 75,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/src/lib/profile/saved-record-store.test.ts.log",
+      "additions": 415,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/src/lib/profile/saved-record-store.ts.log",
+      "additions": 420,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/src/lib/profile/saved-record.test.ts.log",
+      "additions": 86,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/frozen-source/src/lib/profile/saved-record.ts.log",
+      "additions": 100,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/manifest.json",
+      "additions": 278,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/PLAN.md.log",
+      "additions": 59,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/browser-cases.mjs.log",
+      "additions": 182,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/build-freeze1-complete.log.log",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/build-freeze1.log.log",
+      "additions": 29,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/build.mjs.log",
+      "additions": 5,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/bundle-inputs.json.log",
+      "additions": 44,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/driver.mjs.log",
+      "additions": 18,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/entry.ts.log",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/identifier-negative-control.log.log",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/native-hooks.mjs.log",
+      "additions": 88,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/quota-cleanup-driver.mjs.log",
+      "additions": 18,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/quota-cleanup-freeze1.log.log",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/quota-cleanup-result-1788844305849.json.log",
+      "additions": 168,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/result-1788844220579.json.log",
+      "additions": 524,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/run-freeze1.log.log",
+      "additions": 22,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/native/subject.js.log",
+      "additions": 3813,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/build.log.log",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/build.mjs.log",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/bundle-inputs.json.log",
+      "additions": 20,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/identity.json.log",
+      "additions": 31,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/probe.log.log",
+      "additions": 47,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/probe.mjs.log",
+      "additions": 14,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/result.json.log",
+      "additions": 47,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/src/lib/account-v2/storage-identity.ts.log",
+      "additions": 19,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/src/lib/engine/chart-adapter.ts.log",
+      "additions": 24,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/src/lib/engine/portable.ts.log",
+      "additions": 84,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/src/lib/engine/types.ts.log",
+      "additions": 75,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/src/lib/profile/saved-record-store.ts.log",
+      "additions": 403,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/src/lib/profile/saved-record.ts.log",
+      "additions": 100,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/pre-freeze-open-review/subject.js.log",
+      "additions": 1200,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/source-integrity.json.log",
+      "additions": 152,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/independent-review/source.patch.log",
+      "additions": 1045,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/build.log",
+      "additions": 4527,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/capture-parity.json",
+      "additions": 97,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/captures.log",
+      "additions": 41,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/check.log",
+      "additions": 78,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/gates.json",
+      "additions": 69,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/initial-test.json",
+      "additions": 14,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/integrated-source.json",
+      "additions": 22,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/scope.log",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/test-before-capture-refresh.log",
+      "additions": 516,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/release/test.log",
+      "additions": 491,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/root-review/manifest.json",
+      "additions": 53,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/root-review/metafile.json",
+      "additions": 184,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/root-review/probe-initial-wrong-lf-expectation.log",
+      "additions": 19,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/root-review/probe-initial-wrong-lf-expectation.mjs.log",
+      "additions": 35,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/root-review/probe.log",
+      "additions": 35,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/root-review/probe.mjs.log",
+      "additions": 35,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/root-review/record-observed.ts.log",
+      "additions": 97,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/root-review/result.json",
+      "additions": 35,
+      "deletions": 0
+    },
+    {
+      "path": "docs/platform/evidence/saved-records/root-review/source.json",
+      "additions": 7,
+      "deletions": 0
+    },
+    {
+      "path": "src/lib/profile/saved-record-store.test.ts",
+      "additions": 415,
+      "deletions": 0
+    }
+  ],
+  "headRefOid": "a0bf55176dd4df4d27763bfeb2cf97e36abe4d15",
+  "isDraft": true,
+  "number": 426,
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423201",
+      "name": "Build & Check",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-08T05:29:59Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846675/job/101948423560",
+      "name": "Browser evidence (${{ (((github.event.action == 'edited') && 'candidates') || 'compare') }})",
+      "startedAt": "2026-09-08T05:29:59Z",
+      "status": "COMPLETED",
+      "workflowName": "Browser Evidence"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423050",
+      "name": "Legacy wing drift",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423152",
+      "name": "Phase 3 delivery SQL",
+      "startedAt": "2026-09-08T05:30:01Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-08T05:30:24Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423203",
+      "name": "Phase 4 compatibility invite SQL",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "COMPLETED",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948422935",
+      "name": "Phase 6 assistant quota SQL",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423106",
+      "name": "Account Sync v2 SQL",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423286",
+      "name": "Phase 7 Living Chart sync SQL",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423325",
+      "name": "Phase 7 Living Chart drive",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423435",
+      "name": "Zodiac Games SQL",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423400",
+      "name": "Phase 4 sharing drive",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423369",
+      "name": "Phase 3 post-chart drive",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423147",
+      "name": "Phase 3 push drive",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423381",
+      "name": "Phase 3 PWA drive",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/ZodiacsOfficial/site/actions/runs/34190846700/job/101948423306",
+      "name": "Registry Aura drive",
+      "startedAt": "2026-09-08T05:30:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Site Check"
+    },
+    {
+      "__typename": "StatusContext",
+      "context": "Vercel",
+      "startedAt": "2026-09-08T05:29:29Z",
+      "state": "PENDING",
+      "targetUrl": "https://vercel.com/zodiacsofficial/zodiacs-org/bhx76pgozg4Djw3mbBayzay7VrxS"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-08T05:30:01Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://vercel.com/github",
+      "name": "Vercel Preview Comments",
+      "startedAt": "2026-09-08T05:30:01Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    }
+  ],
+  "title": "Add optional immutable saved natal records with transaction guards",
+  "url": "https://github.com/ZodiacsOfficial/site/pull/426"
+}

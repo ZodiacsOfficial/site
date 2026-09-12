@@ -1,0 +1,5 @@
+function exitTour() {
+    setTourOpen(false);
+    setTourKind(null);
+    setTourVisual(null);
+  }

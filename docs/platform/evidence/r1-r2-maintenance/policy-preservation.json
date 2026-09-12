@@ -1,0 +1,42 @@
+[
+  {
+    "path": "public/registry/zodiacs.registry.json",
+    "sha256": "f6a581f499a5c523910c2ff6566e91204660b60d9e8ba9197399816c10d87cfd"
+  },
+  {
+    "path": "src/data/registry-research/approval-manifest.json",
+    "sha256": "bbbb4f1ffb3d9805169641228671504ea42344cee8346c4dc27ef3c3aa071dc1"
+  },
+  {
+    "path": "scripts/registry-research-lib.mjs",
+    "sha256": "04b9a09037a3fea6091454902e392bf6b34a1720a42f26b411312fa294a6ad43"
+  },
+  {
+    "path": "scripts/build-registry-research.mjs",
+    "sha256": "ec1b6ed8ddd35c826fb7a0405251d280111c0094f62bf2f89ba0f9379b761c03"
+  },
+  {
+    "path": "scripts/verify-daily-freshness.mjs",
+    "sha256": "71b6b569a2ff116b8b816250cad0553baafd33e7d317ad52391a8dc897e75dc1"
+  },
+  {
+    "path": "scripts/phase1-scope-guard.mjs",
+    "sha256": "53c8452a2350eda3fb6541066846a88ad2111df46c803db807e91212c02c282d"
+  },
+  {
+    "path": ".github/workflows/site-check.yml",
+    "sha256": "5eda3577f373103788d2305fe8ae898393efa89b2bd38d0f0e5142d29ab6c166"
+  },
+  {
+    "path": "tests/visual/lighthouse.mjs",
+    "sha256": "c4fae88366905cc69cdd5c44be3816ae5d46004c415b37b4a61456e2a3450cd4"
+  },
+  {
+    "path": "tests/visual/widget-lighthouse.mjs",
+    "sha256": "a7a0750fe9635a8ce650804a068f4225e77a6e5ed6adce823aec98279736d285"
+  },
+  {
+    "path": "package.json",
+    "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c"
+  }
+]

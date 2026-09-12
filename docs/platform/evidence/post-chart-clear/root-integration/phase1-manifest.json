@@ -1,0 +1,467 @@
+{
+  "schema": "zodiacs.phase1-visual-acceptance.v4",
+  "driver": {
+    "name": "playwright-core",
+    "version": "1.61.1",
+    "script": "tests/phase1-acceptance-drive.mjs",
+    "contractVersion": 4
+  },
+  "capturedAt": "2026-09-08T10:49:52.057Z",
+  "browser": "Chromium 152.0.7977.83",
+  "dailyDate": "2026-09-08",
+  "publicationCanonicalSha256": "0151c51db2743087a1d5f38ed2369dd6175db2aa25eac60d5e7ac61bf9420e0c",
+  "templateSourceSha256": "e85d852a325e93e76a4a5d46249908da0f134819ccd030c13482b7c6457c6c18",
+  "renderPayloadSha256": {
+    "daily": "136d3711cc4acc8d10134c968e14da6b5aa1a4a1a6aaddf20499bb528a3d9f61",
+    "dailyPublication": "96d3ce9b1daac4f0cba7dea30f68aec797f82ca58a2717c6aa7291882ba95971",
+    "dailyPublicationManifest": "f23b13d62750903c0c66e59e9938d1b9334e66102a40ee4d724f55dac50191f8",
+    "horoscopeProgram": "997243b7e885dac2bf1216692bb7c26b833409035f83abea027ef5a7fe88c3ef"
+  },
+  "buildReceipt": {
+    "schema": "zodiacs.phase1-build-receipt.v1",
+    "builtAt": "2026-09-08T10:49:26.805Z",
+    "templateSourceSha256": "e85d852a325e93e76a4a5d46249908da0f134819ccd030c13482b7c6457c6c18",
+    "dailyDate": "2026-09-08",
+    "publicationCanonicalSha256": "0151c51db2743087a1d5f38ed2369dd6175db2aa25eac60d5e7ac61bf9420e0c",
+    "renderPayloadSha256": {
+      "daily": "136d3711cc4acc8d10134c968e14da6b5aa1a4a1a6aaddf20499bb528a3d9f61",
+      "dailyPublication": "96d3ce9b1daac4f0cba7dea30f68aec797f82ca58a2717c6aa7291882ba95971",
+      "dailyPublicationManifest": "f23b13d62750903c0c66e59e9938d1b9334e66102a40ee4d724f55dac50191f8",
+      "horoscopeProgram": "997243b7e885dac2bf1216692bb7c26b833409035f83abea027ef5a7fe88c3ef"
+    }
+  },
+  "captures": [
+    {
+      "template": "today",
+      "path": "/today/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "screenshot": {
+        "file": "today-360.png",
+        "width": 360,
+        "height": 6460,
+        "sha256": "bba99e6dce960402ecb331b0e89531010016a5b3cf77abc2c599b762de85585d"
+      },
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "scrollHeight": 6460,
+        "contentLength": 4144,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "today",
+      "path": "/today/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "screenshot": {
+        "file": "today-1280.png",
+        "width": 1280,
+        "height": 4157,
+        "sha256": "df98dcf3a99852078ed9a8e48f706b5d6348f89ccaad9b57856787a28b1cb355"
+      },
+      "layout": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "scrollHeight": 4157,
+        "contentLength": 4198,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "horoscopes-hub",
+      "path": "/horoscopes/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "screenshot": {
+        "file": "horoscopes-hub-360.png",
+        "width": 360,
+        "height": 5759,
+        "sha256": "943e86beedd700f66cdf7fc42f2edfa27e5887c235f82cc5a88fa41cc032df29"
+      },
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "scrollHeight": 5759,
+        "contentLength": 3893,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "horoscopes-hub",
+      "path": "/horoscopes/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "screenshot": {
+        "file": "horoscopes-hub-1280.png",
+        "width": 1280,
+        "height": 2882,
+        "sha256": "240e37981ef145ecfb0706f648c56f19eaa4246df1dada8a7abdda2e023fd15b"
+      },
+      "layout": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "scrollHeight": 2882,
+        "contentLength": 3947,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "daily",
+      "path": "/horoscopes/aries/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "screenshot": {
+        "file": "daily-360.png",
+        "width": 360,
+        "height": 4380,
+        "sha256": "a8e8653183724ed9d8d784bf7d53ebb567b9ac60e73b7654017d7af43943fc7a"
+      },
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "scrollHeight": 4380,
+        "contentLength": 2513,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "daily",
+      "path": "/horoscopes/aries/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "screenshot": {
+        "file": "daily-1280.png",
+        "width": 1280,
+        "height": 3585,
+        "sha256": "6094da6649170179fa02ab16b95a3e9d2421fd9394b53eeab2851ed45648b0d4"
+      },
+      "layout": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "scrollHeight": 3585,
+        "contentLength": 2567,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "tomorrow",
+      "path": "/horoscopes/aries/tomorrow/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "screenshot": {
+        "file": "tomorrow-360.png",
+        "width": 360,
+        "height": 4301,
+        "sha256": "a82cd761a9f4691f8e38e9b86ca7316dc35ae0203caa4a0360076d7f9c9f0b0d"
+      },
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "scrollHeight": 4301,
+        "contentLength": 2495,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "tomorrow",
+      "path": "/horoscopes/aries/tomorrow/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "screenshot": {
+        "file": "tomorrow-1280.png",
+        "width": 1280,
+        "height": 3491,
+        "sha256": "ee8a49cd2b3feb3a84a8ccb4f920830e826367a8f185bd76d09b016f6d71fb29"
+      },
+      "layout": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "scrollHeight": 3491,
+        "contentLength": 2549,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "weekly",
+      "path": "/horoscopes/aries/weekly/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "screenshot": {
+        "file": "weekly-360.png",
+        "width": 360,
+        "height": 5022,
+        "sha256": "9d2fd31c201495175541308e6c18c94dcd418e14c354f9b8c198ded073c79f9f"
+      },
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "scrollHeight": 5022,
+        "contentLength": 3370,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "weekly",
+      "path": "/horoscopes/aries/weekly/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "screenshot": {
+        "file": "weekly-1280.png",
+        "width": 1280,
+        "height": 3863,
+        "sha256": "0afbc2638c95820b197f5dc61258a0309f6080afc14502c2e8ba0e78a944c498"
+      },
+      "layout": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "scrollHeight": 3863,
+        "contentLength": 3424,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "monthly",
+      "path": "/horoscopes/aries/monthly/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "screenshot": {
+        "file": "monthly-360.png",
+        "width": 360,
+        "height": 5034,
+        "sha256": "449fedc241bfd45123c7b0232aa34b7f3e349f72bcf04643cbd37c6c3598ff2d"
+      },
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "scrollHeight": 5034,
+        "contentLength": 3729,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "monthly",
+      "path": "/horoscopes/aries/monthly/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "screenshot": {
+        "file": "monthly-1280.png",
+        "width": 1280,
+        "height": 3724,
+        "sha256": "976d081ca509bc74b24c62f5be5431e73dfbe500ab8b86f8e163b75dfd4907f3"
+      },
+      "layout": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "scrollHeight": 3724,
+        "contentLength": 3783,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "love",
+      "path": "/horoscopes/aries/love/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "screenshot": {
+        "file": "love-360.png",
+        "width": 360,
+        "height": 4010,
+        "sha256": "8960502cbc89236daeda333db9a47028372d66bac268a263ca1607ad493fd29f"
+      },
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "scrollHeight": 4010,
+        "contentLength": 2282,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "love",
+      "path": "/horoscopes/aries/love/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "screenshot": {
+        "file": "love-1280.png",
+        "width": 1280,
+        "height": 3245,
+        "sha256": "683c32444bcc24b0c82cec09db7d7dd1fbceadfb026f7a89525cc9924942d23f"
+      },
+      "layout": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "scrollHeight": 3245,
+        "contentLength": 2336,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "career",
+      "path": "/horoscopes/aries/career/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "screenshot": {
+        "file": "career-360.png",
+        "width": 360,
+        "height": 3966,
+        "sha256": "28bc4ebd3e6135ab9c65fa58bee28a93e05a9e6ec3756abf765ac2cbaf8813aa"
+      },
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "scrollHeight": 3966,
+        "contentLength": 2269,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "career",
+      "path": "/horoscopes/aries/career/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "screenshot": {
+        "file": "career-1280.png",
+        "width": 1280,
+        "height": 3291,
+        "sha256": "e2a61850576dcfc710e9f976176c5baa478b49c7cccdd47a13466970eceb49a1"
+      },
+      "layout": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "scrollHeight": 3291,
+        "contentLength": 2323,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "yearly",
+      "path": "/horoscopes/aries/2027/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "screenshot": {
+        "file": "yearly-360.png",
+        "width": 360,
+        "height": 12554,
+        "sha256": "0ec2db5c0f63e4c70998ee55858cfdc6c3742801227da7fdf2bb153411477c67"
+      },
+      "layout": {
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "scrollHeight": 12554,
+        "contentLength": 12967,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    },
+    {
+      "template": "yearly",
+      "path": "/horoscopes/aries/2027/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "screenshot": {
+        "file": "yearly-1280.png",
+        "width": 1280,
+        "height": 7784,
+        "sha256": "cc8a1fdfe776e65e5190995a99ec6703395862f194e4e2256776bc053eedec5e"
+      },
+      "layout": {
+        "clientWidth": 1280,
+        "scrollWidth": 1280,
+        "scrollHeight": 7784,
+        "contentLength": 13021,
+        "overlay": false,
+        "guideLauncher": true
+      },
+      "errors": [],
+      "status": 200
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+function invalidateProfileHandoff(): void {
+    advanceInputRevision();
+    profileHandoffIdRef.current += 1;
+    primaryProfileChartIdRef.current = null;
+    runChartIdRef.current += 1;
+    clearResult();
+    setBusy(false);
+    focusAfterComputeRef.current = false;
+  }

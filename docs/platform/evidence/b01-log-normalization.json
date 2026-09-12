@@ -1,0 +1,32 @@
+[
+  {
+    "file": "site-b01-build.log",
+    "rawSHA256": "fdb1504bb53c4adc2458c90f99f54db408285ca504a28d3afaf2688162712c61",
+    "storedSHA256": "0a4f1c51c908769deb50db45dddbff343cfc617c307c06eb72d76f6279203242"
+  },
+  {
+    "file": "site-b01-check.log",
+    "rawSHA256": "73e96c887482778085db7eca41a7d78fb80fb2bdd19538bc5a185fa2c839245c",
+    "storedSHA256": "32b51d633da66ab5cfcd31274f54cc4558198aeb4d9e428494b48025d1ebe404"
+  },
+  {
+    "file": "b01-boundary-candidate-tests.log",
+    "rawSHA256": "8c78b08249112d59368363b356ec7a9c75e10d8455948e0fb209393b8006f787",
+    "storedSHA256": "6b6bde93237097d23052c3b0677a16896ce0c6645102a509c05e846cf6d085ac"
+  },
+  {
+    "file": "b02-fresh-consumer-rc2.log",
+    "rawSHA256": "f11d7428203a4b5eda1c4a3f1014293142f54afb821d3c616a2e583bdd1888fa",
+    "storedSHA256": "f11d7428203a4b5eda1c4a3f1014293142f54afb821d3c616a2e583bdd1888fa"
+  },
+  {
+    "file": "b02-pack-rc2.json",
+    "rawSHA256": "a5a2c02a8340ed580ed6a758b48ad60310fdf92706fbcdc8098b7ab135b4cd8f",
+    "storedSHA256": "a5a2c02a8340ed580ed6a758b48ad60310fdf92706fbcdc8098b7ab135b4cd8f"
+  },
+  {
+    "file": "correction-remote-today.log",
+    "rawSHA256": "7cda01b6b3abc75bea57f14df66187dde3d7eaa89c03ab3ced40c19bb37c2918",
+    "storedSHA256": "7cda01b6b3abc75bea57f14df66187dde3d7eaa89c03ab3ced40c19bb37c2918"
+  }
+]

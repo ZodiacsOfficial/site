@@ -1,0 +1,10 @@
+import {resolveLocalToUtc} from './source/src/lib/time/localToUtc';
+function nextIsoDate(date: string): string {
+  const [year, month, day] = date.split('-').map(Number);
+  return new Date(Date.UTC(year, month - 1, day + 1)).toISOString().slice(0, 10);
+}
+export function localDateEndpointsUtc(date: string, timeZone: string): LocalDateEndpoints {
+  const start = resolveLocalToUtc(date, '00:00', timeZone).utc;
+  const nextStart = resolveLocalToUtc(nextIsoDate(date), '00:00', timeZone).utc;
+  return { start, end: new Date(nextStart.getTime() - 1) };
+}

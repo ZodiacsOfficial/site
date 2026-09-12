@@ -1,0 +1,141 @@
+{
+  "recordedAt": "2026-09-07T22:45:44.619924+00:00",
+  "sourceToEvidence": [
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-rc3-offline.json",
+      "evidence": "starter-rc3-offline.json",
+      "sha256": "c62925ac7791a15c312ea7dc2db18878097d52d99eb3a811e86d61d7ebedf46e"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-rc3-verifier-tests.log",
+      "evidence": "starter-rc3-verifier-tests.log",
+      "sha256": "8171b527b4f07409504559302a8e755d474dfb9844dd467810eb0c9b19c28bbc"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-rc3-fresh-consumer.log",
+      "evidence": "starter-rc3-fresh-consumer.log",
+      "sha256": "c4276178c905c6c2c8e4828e11f658250ee9c4f5e4f3fce6782178ee9b6963ca"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-rc3-site-tests.log",
+      "evidence": "starter-rc3-site-tests.log",
+      "sha256": "5fb772985ef9916ceee29235276affd71b9f206b60873504095199964fdf5e3c"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-rc3-site-build.log",
+      "evidence": "starter-rc3-site-build.log",
+      "sha256": "80ffd3fd1c6c2401d4f61e8e0f76776ba99ba34354f5013517d2984ed5b0ba12"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-rc3-site-check.log",
+      "evidence": "starter-rc3-site-check.log",
+      "sha256": "1870be8768479b703cd76db3465f48bd21d7bf14f993a0e1d9cb2c7ebe825943"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-rc3-scope.log",
+      "evidence": "starter-rc3-scope.log",
+      "sha256": "8cc8b07de6db106b515ab9514c0860508f07d48c5f1ccf75080ed1434126f006"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-receipt-context.log",
+      "evidence": "starter-receipt-context.log",
+      "sha256": "7f1b1e9bdb6e9eb1a6f7dd5ca4db94ab871b7e304884977c3e4577abddf34cb2"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-rc3-browser/browser.json",
+      "evidence": "browser-archive.json",
+      "sha256": "2109e2988e82e93fa967715540482106a450575a5182b71de640701437016fe6"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-rc3-developer-browser/developers-browser.json",
+      "evidence": "developers-browser.json",
+      "sha256": "c81104f6835edef374f21ee265a875c753d3cc8b4aa703c9cd34def49345520e"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-rc3-developer-browser/developer-examples-390-zoom1.png",
+      "evidence": "developer-examples-390.png",
+      "sha256": "4253e901d33498f6a9fb7c39d438ac374dbd2d78241ac96cd321fabbc23f1e57"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/onboarding.json",
+      "evidence": "onboarding/onboarding.json",
+      "sha256": "3dcf03a1b637072dc2b735aa1d3f07a0771e6764fbff466b89fa725d8a48ce59"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/rendered-setup.sh",
+      "evidence": "onboarding/rendered-setup.sh.log",
+      "sha256": "23ea7efc525a3dab44f7429b5318539585e9afa6b54994c306d43fff2586da03"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/success.log",
+      "evidence": "onboarding/success.log",
+      "sha256": "5488ca253e067867332f39a164872ec9a2654cbd48e63cb1b3d1a1eceb39dd4a"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/existing-directory.log",
+      "evidence": "onboarding/existing-directory.log",
+      "sha256": "e6ce57296a59dd8a63fbe6e3f0b343b81a0061d95548b87d25d5a9004736c2df"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/http-failure.log",
+      "evidence": "onboarding/http-failure.log",
+      "sha256": "59434e43e989f8571e3a25d6af7938ce4d0b6d1ddd1bfbf99505f97916c1ff29"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-rc3-onboarding/hash-mismatch.log",
+      "evidence": "onboarding/hash-mismatch.log",
+      "sha256": "dadd11bfd746b7e0132042f3a91796d08c7c5dc53137ec57e3a016ef8e279501"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/REVIEW.md",
+      "evidence": "focus/REVIEW.md",
+      "sha256": "33902c23e95644d0145bd2598eaff043580a90a623b0aaa0abd14d9a4e8bc7a1"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/summary.json",
+      "evidence": "focus/summary.json",
+      "sha256": "9c41ccf883645cad00871456c4f1efd991fad8bd07b89439eb9feb336b05d209"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/strict-focus-control.json",
+      "evidence": "focus/strict-focus-control.json",
+      "sha256": "78b22a7403df6b34334bed1122ab2d44d894085b8088be15e008845d839e7ed2"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/source-hashes.json",
+      "evidence": "focus/source-hashes.json",
+      "sha256": "ee6a20145d05dfb85adbb76b749809421d01da7584de9f307935d5ae88a29efa"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/focus-trace.json",
+      "evidence": "focus/focus-trace.json",
+      "sha256": "805f74210b94743c9dd2ef74de68274fa722891039cecf9f6576b88795bc053c"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/direct-focus.json",
+      "evidence": "focus/direct-focus.json",
+      "sha256": "1f08ce9a9d289a22bdce47602b954ac49db9aaf6de86852317390e65c77fbcc1"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/cleanup.json",
+      "evidence": "focus/cleanup.json",
+      "sha256": "b8eedc264a8eedb4f436bf9a83bf53ffa49223aa64ee24a10188d3fba2da528c"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/trace-focus.mjs",
+      "evidence": "focus/trace-focus.mjs.log",
+      "sha256": "970cbbd21cf544b298592b78ae6ef171ab4942eb6a3bf144a35445f258f542a4"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/direct-focus.mjs",
+      "evidence": "focus/direct-focus.mjs.log",
+      "sha256": "a017b4338f7e1f1410752d6188f6648c51d5466964a59325dece5897fce1250e"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-widget-focus/strict-focus-control.mjs",
+      "evidence": "focus/strict-focus-control.mjs.log",
+      "sha256": "d042513153d79eb6c9171c1346ac4a67cf046ffc107a4c6ed77997cc1af4333c"
+    }
+  ],
+  "normalization": "Bytes are unchanged. Executable scratch probes/setup are saved with .log suffix so evidence is not an active repository script. Scratch-relative references in reports identify original evidence; archived paths are mapped here."
+}

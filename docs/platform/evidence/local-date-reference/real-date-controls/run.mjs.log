@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import ts from 'typescript';
+import * as esbuild from 'esbuild';
+import {chromium} from 'playwright-core';
+const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+const raw=fs.readFileSync('source/src/lib/chart-date-certainty.ts','utf8'),ast=ts.createSourceFile('chart-date-certainty.ts',raw,ts.ScriptTarget.Latest,true);const selected=[];
+for(const n of ast.statements)if(ts.isFunctionDeclaration(n)&&['nextIsoDate','localDateEndpointsUtc'].includes(n.name?.text))selected.push(n.getText(ast));
+if(selected.length!==2)throw Error('Endpoint extraction mismatch');
+fs.writeFileSync('endpoint-extracted.ts',"import {resolveLocalToUtc} from './source/src/lib/time/localToUtc';\n"+selected.join('\n')+'\n');
+const entry="export * from './source/src/lib/time/localToUtc';export * from './source/src/lib/time/local-date-intervals';export * from './endpoint-extracted';export {finiteProbe} from './finite-probe.mjs';";
+const outputs={};for(const [format,outfile]of [['esm','subject.mjs'],['iife','subject.js']]){const build=await esbuild.build({stdin:{contents:entry,resolveDir:process.cwd()},bundle:true,write:false,format,globalName:format==='iife'?'dateProbe':undefined,platform:'neutral',target:'es2022',metafile:true});const bytes=build.outputFiles[0].contents;fs.writeFileSync(outfile,bytes);outputs[outfile]={sha256:hash(bytes),inputs:Object.keys(build.metafile.inputs).filter(x=>!x.startsWith('<')).map(path=>({path,sha256:hash(fs.readFileSync(path))}))}}
+fs.writeFileSync('build-identity.json',JSON.stringify({extractedFunctions:selected.map((text,i)=>({name:['nextIsoDate','localDateEndpointsUtc'][i],sha256:hash(text)})),outputs},null,2)+'\n');
+const fixtures=JSON.parse(fs.readFileSync('fixtures.json','utf8'));const api=await import('./subject.mjs');
+const node={runtime:process.version,icu:process.versions.icu,tzdb:process.versions.tz,...api.finiteProbe(fixtures,api)};fs.writeFileSync('node-result.json',JSON.stringify(node,null,2)+'\n');
+let browser;const native={runtime:process.version,requests:[],pageErrors:[]};
+try{browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--disable-background-networking']});native.browser=browser.version();const context=await browser.newContext();await context.route('**/*',route=>{native.requests.push(route.request().url());return route.abort()});const page=await context.newPage();page.on('pageerror',e=>native.pageErrors.push(String(e)));await page.goto('about:blank');await page.addScriptTag({content:fs.readFileSync('subject.js','utf8')});Object.assign(native,await page.evaluate(fixtures=>dateProbe.finiteProbe(fixtures,dateProbe),fixtures));if(native.summary.unresolvedCount)throw Error('Unexpected unresolved native controls');native.outcome='passed'}catch(error){native.outcome='failed';native.error=String(error.stack??error);process.exitCode=1}finally{await browser?.close();native.cleanup='Owned disposable browser closed; no server, storage or permitted external request.';fs.writeFileSync('native-result.json',JSON.stringify(native,null,2)+'\n');console.log(JSON.stringify({node:node.runtime,nodeSummary:node.summary,nativeBrowser:native.browser,nativeSummary:native.summary,outcome:native.outcome,error:native.error}))}

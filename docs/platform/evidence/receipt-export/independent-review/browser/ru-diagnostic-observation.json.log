@@ -1,0 +1,598 @@
+{
+  "detail": {
+    "forms": 1,
+    "calculators": [
+      {
+        "subject": "self",
+        "buttons": [
+          {
+            "disabled": true,
+            "text": "Скачать запись расчёта (.json)↓"
+          }
+        ],
+        "receipt": "1990-06-15 · 18:30:00 UTC · 40.71°, -74.01° · Дома целых знаков · движок v0.1.1-rc.5"
+      }
+    ],
+    "date": [
+      ""
+    ],
+    "time": [
+      ""
+    ],
+    "button": {
+      "disabled": true,
+      "label": "Скачать запись расчёта (.json)↓"
+    },
+    "notice": "Запись расчёта для этой карты недоступна.",
+    "events": {
+      "computed": [
+        {
+          "mode": "full",
+          "sunSign": "gemini",
+          "contextId": 1
+        }
+      ],
+      "urls": [
+        {
+          "url": "blob:http://127.0.0.1:63297/e10079ab-648e-49ae-9ff7-d50bae2df2fa",
+          "type": "image/svg+xml",
+          "size": 161584
+        }
+      ],
+      "revoked": [
+        "blob:http://127.0.0.1:63297/e10079ab-648e-49ae-9ff7-d50bae2df2fa"
+      ],
+      "writes": [],
+      "idbOpens": []
+    },
+    "hydration": [
+      {
+        "component": "/_astro/ChartCalculator.ChqyFlxy.js",
+        "props": "{\"mode\":[0,\"full\"],\"locale\":[0,\"ru\"],\"data-astro-cid-ycsqp4jh\":[0,true]}"
+      }
+    ]
+  },
+  "requests": [
+    {
+      "url": "http://127.0.0.1:63297/ru/birth-chart/",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/Base.Bryss0yT.css",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/calculator.MBHg3tIV.css",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/explorer.ijMRUwvv.css",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/ChartActionDock.Cc8zzTbx.css",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/ChartCalculator.ChqyFlxy.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/client.DPkn9Lbl.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/preload-helper.L5lOfJxi.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/preact.module.Bjq9tLsx.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/hooks.module.C0_8FjiD.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/profile-access-reader.DoQqlSjt.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/chunk-PD4H342X.BYuLx_KT.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/signs.BMXPKoMF.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/PlanetGlyph.BhITbtcc.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/i18n.Cg_lCJuc.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/CalculationReload.DXyGkRsn.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/astrology.BHib5efU.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/share.BRlg0eGS.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/chart-handoff.Dvz2AAcL.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/useProfileAccessGeneration.w2JLb1F6.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/useEngine.BxQZzCQs.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/BirthFields.VmY_J4-2.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/localToUtc.lkZcCpbL.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/interpretations.BaZkYN67.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/AstroTerm.7K8SAipO.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/SignChip.Dx3tQVZl.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/AspectGlyph.DMIAGIQV.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/Wheel.RNRSqGob.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/dignities.BycBkP8Y.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/houses.DhEjqPPf.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/technical-layout.DQIjXHHb.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/lite.DKWHZC5_.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/learning-input-identity.C-WLv51I.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/analytics.CH5T6e-b.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/post-chart-context.BZ1tHGpl.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/app-icons/v3/favicon.svg",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/paths.DYbAuceH.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/PlaceSearch.D1WsU_jW.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/civil-date.CpOZUt7Z.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/technical-locales.DDKucXXd.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/ChartActionDock.DLS2UbgE.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/LearningPractice.CSqTNZrv.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/natal.D7JKDSdx.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/synastry.rhUg9_9F.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/aspects.BNC-J2iD.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/compat.Bjc3uaB7.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/chart-context-copy.UBOz97Jz.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/AspectPatternFeature.DkxQP4nT.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/use-learning-sources.CF4htVRf.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/schema.DqKqbGHb.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/read-store.X7Oz9YN7.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/full.DXD_oWB0.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/chart-adapter.DdfW9XjH.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/calculator-receipt.DqIFvBmX.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/app-icons/v3/favicon.svg",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/PositionsShareSurface.Eb3pENdV.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/share-positions.D3o0ugj4.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/share-card.BvVC0EVI.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/share-card-brand.CJKZtcRK.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/share-card-copy.D0c42nic.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/chart-signature.-is-2T7w.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/CalendarSubscribe.DXtj1Bbr.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/gemini.avif",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/pisces.avif",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/libra.avif",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/aries.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/taurus.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/gemini.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/cancer.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/leo.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/virgo.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/libra.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/scorpio.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/sagittarius.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/capricorn.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/aquarius.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/pisces.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/site-footer.css",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/store.DKqN0snE.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/_astro/deletions.DUQYISzq.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/aries.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/taurus.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/gemini.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/cancer.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/leo.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/virgo.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/libra.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/scorpio.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/sagittarius.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/capricorn.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/aquarius.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/zodiac-icons/128/pisces.webp",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/fonts/eb-garamond-latin-500-normal.woff2",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/fonts/eb-garamond-latin-400-italic.woff2",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/fonts/jetbrains-mono-latin-wght-normal.woff2",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "blob:http://127.0.0.1:63297/e10079ab-648e-49ae-9ff7-d50bae2df2fa",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/app-icons/v3/icon-512.png",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/fonts/eb-garamond-latin-400-normal.woff2",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/fonts/golos-text-cyr-b.woff2",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/fonts/eb-garamond-cyrillic-500-normal.woff2",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/fonts/jetbrains-mono-cyrillic-400-500.woff2",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/fonts/golos-text-cyr-a.woff2",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/assistant-ui.js?v=ask-guide-3",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/assistant-ui.css?v=ask-guide-3",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:63297/assets/guide-avatar.webp",
+      "method": "GET",
+      "body": null
+    }
+  ],
+  "errors": []
+}

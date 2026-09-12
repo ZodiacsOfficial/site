@@ -1,0 +1,37 @@
+{
+  "sourceManifestSha256": "00412e89d5edf1a302f899e9ddee255116149939557433edd2ab17d9dc0c70a9",
+  "verifiedRecords": 7,
+  "verifiedOrdinaryMembers": 126,
+  "verifiedOriginalArchiveRecords": 127,
+  "fileMap": [
+    {
+      "sourcePath": "REVIEW.md.log",
+      "path": "REVIEW.md.log"
+    },
+    {
+      "sourcePath": "browser-result.json.log",
+      "path": "browser-result.json.log"
+    },
+    {
+      "sourcePath": "output-result.json.log",
+      "path": "output-result.json.log"
+    },
+    {
+      "sourcePath": "raw-evidence.tar.gz",
+      "path": "raw-evidence.tar.gz"
+    },
+    {
+      "sourcePath": "raw-members.json",
+      "path": "raw-members.json"
+    },
+    {
+      "sourcePath": "scope-map.json.log",
+      "path": "scope-map.json.log"
+    },
+    {
+      "sourcePath": "source-verification.json.log",
+      "path": "source-verification.json.log"
+    }
+  ],
+  "sourceBytesUnchanged": true
+}

@@ -1,0 +1,13 @@
+{
+  "qualification": "Observed tool outcomes recorded after the attempts. No stdout was returned from the Git attempts. No root or Git mutation was attempted. The root's historical provenance is retained as attributed evidence, not a successful independent Git reproduction.",
+  "attempts": [
+    {"argv": ["git", "log", "-1", "--format=%H %aI %s", "9d180c9f1a2f66893ccd6d73fcda106cb3894674", "--", "docs/acceptance/phase4-sharing/chart-sheet-33-percent.png"], "mode": "default sandbox", "outcome": "No output; interrupted", "exitCode": 130},
+    {"argv": ["git", "show", "9d180c9f1a2f66893ccd6d73fcda106cb3894674:docs/acceptance/phase4-sharing/chart-sheet-33-percent.png"], "mode": "Python subprocess in default sandbox", "outcome": "subprocess.TimeoutExpired after 30 seconds", "wrapperExitCode": 1, "stdout": ""},
+    {"argv": ["git", "log", "-1", "--format=%H %aI %s", "9d180c9f1a2f66893ccd6d73fcda106cb3894674", "--", "docs/acceptance/phase4-sharing/chart-sheet-33-percent.png"], "mode": "approved read-only escalation", "outcome": "No output; interrupted", "exitCode": 130},
+    {"argv": ["/Library/Developer/CommandLineTools/usr/bin/git", "log", "-1", "--format=%H %aI %s", "9d180c9f1a2f66893ccd6d73fcda106cb3894674", "--", "docs/acceptance/phase4-sharing/chart-sheet-33-percent.png"], "mode": "default sandbox, direct installed Git", "outcome": "No output; interrupted", "exitCode": 130}
+  ],
+  "otherReadSetup": [
+    "A process-list diagnostic was denied: zsh:1: operation not permitted: ps. No process listing obtained.",
+    "An initial broad search of the prior evidence directory matched embedded PR patch JSON and produced truncated output. The conclusion instead uses the exact delivered prior sharing.log bytes and selected raw archive members."
+  ]
+}

@@ -1,0 +1,13 @@
+from pathlib import Path
+import json,hashlib,shutil
+base=Path('docs/platform/evidence/local-date-intervals')
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+for kind,source,expected in [('author','/private/tmp/zodiacs-platform-local-date-intervals-evidence','4e596e14248a9c6f48c59536ce1f1e7b3c1fd826c7ef2b3bb19be8ec1634f895'),('independent-review','/private/tmp/zodiacs-platform-local-date-intervals-independent-review/delivery','f04478c508027ed8fe5d6ac1cb8d8fa842087de155cf7f4c26d01a065768a014')]:
+ source=Path(source);m=source/'manifest.json';assert sha(m)==expected
+ records=json.loads(m.read_text())['records'];dest=base/kind;dest.mkdir(parents=True,exist_ok=True);copied=[]
+ for r in records+[{'path':'manifest.json','bytes':m.stat().st_size,'sha256':sha(m)}]:
+  p=source/r['path'];assert p.stat().st_size==r['bytes'] and sha(p)==r['sha256']
+  target=dest/(r['path']+('.log' if p.suffix not in ['.png','.log','.gz'] else ''));target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target)
+  assert sha(target)==r['sha256'];copied.append({'sourcePath':r['path'],'path':str(target.relative_to(dest)),'bytes':r['bytes'],'sha256':r['sha256']})
+ (dest/'copy-manifest.json').write_text(json.dumps({'originalManifestSha256':expected,'records':copied},indent=2)+'\n')
+ print(kind,'verified records',len(records),'copy manifest',sha(dest/'copy-manifest.json'))

@@ -1,0 +1,464 @@
+[
+  {
+    "path": ".github/phase1-scope-allowance.json",
+    "main": "38b421846d6425ed1b813768c8100dd694feed28",
+    "accepted": "8e00dbd9a44fd280790084148558740297b0ccf7",
+    "same": false
+  },
+  {
+    "path": "docs/REGISTRY-RESEARCH-METHOD.md",
+    "main": "4967b0c39e4277f6a6bc7d618d96c636093f9730",
+    "accepted": "7cf7806cf1057a5c81d3a4202644cbf7a3adc749",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/career-1280.png",
+    "main": "071b2e3ec7624682fa45e778f91a669406ee6877",
+    "accepted": "b74041a26014d4d4e0752f066066b8f60cd60671",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/career-360.png",
+    "main": "d8497381af29863e4b24fa8c9ae5607d3286b4c3",
+    "accepted": "75bd036ad008a1ca7bf953338a818d1e1246bac0",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/daily-1280.png",
+    "main": "fe891a3fa8aaa1818b55dbce2ebace1c92aedbbd",
+    "accepted": "79dca10f394e27d816ffbb67a50862e2e72db3ee",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/daily-360.png",
+    "main": "d1a1eadd558e0bed1ad714aa676f85f055f5cc72",
+    "accepted": "dd4070637475b164f09453e7e726d63548b3212b",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/horoscopes-hub-1280.png",
+    "main": "bf2cb4ec65a7ad8b5e020dd1dd83454424662030",
+    "accepted": "a7f3d2f1df13f965719bbb27bd57a1239cdcb11a",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/horoscopes-hub-360.png",
+    "main": "daebceff8641fe3b39a7f4f9672fa06058fdf97c",
+    "accepted": "1560d26a3feb7afed6ffc249613bdc9407bd0942",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/love-1280.png",
+    "main": "6d79e968851dece9a7d694d8ab9687d59b987401",
+    "accepted": "3d1ec110c1532311c952bfb41110d1a64c33cfa7",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/love-360.png",
+    "main": "964e665ea8ce200dfc4f00e5c7912f5afd8fb5db",
+    "accepted": "4add5a3e9e6164212fdec96aac7b52efa25d7df9",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/manifest.json",
+    "main": "1cb09c2de9de3f04aba01fade3f653c82336b0e3",
+    "accepted": "21f26ff28fb54d96f1697d0cfebcd5878697ab71",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/today-1280.png",
+    "main": "9ac1dfc519cb0c776aad23d5bc180b29ce4c7474",
+    "accepted": "d536d94d76be6c7a21de0f539cf48d6320fd2f5c",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/today-360.png",
+    "main": "25d744d8f5cc2720f6bfdf9b69ad67c29ff60716",
+    "accepted": "edf7012c2c4c2994df2b68936861ade6b8940338",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/tomorrow-1280.png",
+    "main": "d0a284a037a47f5985d8cf2a1e6fe3f20c8be627",
+    "accepted": "06c3ac68a15f5b061415c2e1e331450332325b69",
+    "same": false
+  },
+  {
+    "path": "docs/acceptance/phase1/screenshots/tomorrow-360.png",
+    "main": "9a86cdc4efd191b255e10482172841f10d0e073e",
+    "accepted": "64b4dca5102598af4cac6d36322cd679f8e347e2",
+    "same": false
+  },
+  {
+    "path": "package-lock.json",
+    "main": "81f2b96bd218971a6f3c8fd69c5d3eb085646c3d",
+    "accepted": "94b9e02347084c3d38c26188db9f1e5935098254",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-market-history.v1.json",
+    "main": "3ce886f541ca60fa0fc0c5c8fd86ab032058be28",
+    "accepted": "9ec744c1ef043f9206d77436f431ef60077e4f1e",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/index.json",
+    "main": "f6a7ae815c3efe37d73d2d4ddd12713f3614ba95",
+    "accepted": "547367a1650ebe33667bccb20da1eec44adf06b1",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-09.json",
+    "main": "2a140af88bcea46e5bddbea4f913b9a046958aa1",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-10.json",
+    "main": "db73bd63c26230667c0b0e2a185e69c1b30ce754",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-11.json",
+    "main": "4d94a4b35f09193acd4dd483c7beac7e60f95392",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-12.json",
+    "main": "207ab23c730d1417caa411204a7fd6a33df24a8e",
+    "accepted": "190efad51393c39e701787787f542b472580b1c5",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-12t15-59-18-579z-mercury-trine-pluto.json",
+    "main": "946db359e4a472a2c17639ebb977924af55c3dd8",
+    "accepted": "4f6fb4f9fba0bd32755cdf5082c478b5cb2597c0",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-12t16-41-18-624z-mercury-opposition-neptune.json",
+    "main": "a2eaa26f8c027d28d1b348b4ef4d6ce3c170f616",
+    "accepted": "3e1846b7aa1af458dc2dda60ddaf9942affb43d0",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus.json",
+    "main": "a2180448b874f69c811d7265deedb2b9501fa9b0",
+    "accepted": "1139dbe920bf67c240bb6fe204834de96ee7f056",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-15t18-41-31-944z-venus-square-pluto.json",
+    "main": "af60a046d74887aaf8df91ccff9978dec4b2e30d",
+    "accepted": "6d838d0b285987f1e8588719eb96f740abf9a18d",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-16t08-31-12-865z-neptune-sextile-pluto.json",
+    "main": "9c14546d8fa79e6874ec7d94fcc91c8e4cde9ebe",
+    "accepted": "d67d22172d5d885a21ad71a8680c10bd0471dc77",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn.json",
+    "main": "472bb07bb63e093baf756f0eeb23f85b65356ed0",
+    "accepted": "4ef2c62ad1482719d6f907f799cfd8d5a432609f",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-ingress-2026-09-10t08-12-43-517z-venus-scorpio.json",
+    "main": "69b3cbbda050cc503fc12a194d90b8b5a62678dd",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-ingress-2026-09-10t16-21-13-543z-mercury-libra.json",
+    "main": "c480ae2b649055e3f071e48788cb15f2655a84e0",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-lunation-2026-09-11t03-26-50-210z-new-moon-virgo.json",
+    "main": "559c1bda04b7914ece68009140caa65ac3bbed9a",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-event-brief-station-2026-09-10t18-40-43-743z-uranus-retrograde-gemini.json",
+    "main": "b30a365005a7acbf9243058c4f76ae4fec8d3613",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-01-observation-168h.json",
+    "main": "e925df9a47de48709eeee21b8e6b7a7dc1a43f7c",
+    "accepted": "5fcd1087481e45ef8d2c84b1f7b62e3ba197c2b0",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-02-observation-168h.json",
+    "main": "7a873ac10416dd9acb800fcd414ca92b9ae8a465",
+    "accepted": "7d47d7415651a08792d26faf4e6d47e637f18f71",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-03-observation-168h.json",
+    "main": "8270e553a2a36d2ab0d794a77acc99289079b8b9",
+    "accepted": "0403d2948e6d13b3a4672a2084aa0cbf3f3a281b",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-04-observation-168h.json",
+    "main": "0be47abf4201e2eb1eb32d4b829d16c126edeef2",
+    "accepted": "6de7fb0d2d3498ece7de7c7084ff545bc63ab3c5",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-05-observation-168h.json",
+    "main": "25dad924080640fa8fdb20562aaaa4a1e84692ef",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-07-observation-24h.json",
+    "main": "c1953c340d8b8848923baafac6c48cc79927d567",
+    "accepted": "233f2af95f7f3738ed9c914e376369870d8b881b",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-08-observation-24h.json",
+    "main": "9a018124300daedc87354b6548d62450e6a64028",
+    "accepted": "fa7ed4b029feb100c79b168a90243becd7d35fe0",
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-09-observation-24h.json",
+    "main": "7bac418fcd88132898971475a84338ba1559c953",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-09.json",
+    "main": "79a86f66e9397a5c4d2bce6dda0a5f430608d92d",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-10-observation-24h.json",
+    "main": "e76e672a7c8816bf3b1719d198fd574dabca580b",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-10.json",
+    "main": "46cf4ec9b6c3a3f88e1c42c2124515e14f60cf1a",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-11-observation-24h.json",
+    "main": "e8a63c29988b01b65b2fdd3029c5fdd5e0166e0e",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-11.json",
+    "main": "c8f7732209adbc33e0aad7b6e03eafddfbf1d222",
+    "accepted": null,
+    "same": false
+  },
+  {
+    "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-12.json",
+    "main": "17288abab37f8da068f9353f8467bfe0ecb774c7",
+    "accepted": "b3c2307750f672849351dbee88cc61cac8168b17",
+    "same": false
+  },
+  {
+    "path": "public/assets/registry-outlook.json",
+    "main": "1ad8aa4d35abbd4057ae936720efc9adec8e5080",
+    "accepted": "1d1c6a92a9dc8ea75bdec64879f2fa0b2887bcfc",
+    "same": false
+  },
+  {
+    "path": "public/assets/registry-research-feed.json",
+    "main": "c9de9a587891a46842a275d8c70068549a891a41",
+    "accepted": "3a54550e988c3de4b4f628bcaa9933f9504ddcab",
+    "same": false
+  },
+  {
+    "path": "public/registry/aquarius/index.html",
+    "main": "215a9c6a81cbf9cbcc332d27214fac9cafa26c8f",
+    "accepted": "79ca35575f43725576f5a28411c0cbc1ecdf3b70",
+    "same": false
+  },
+  {
+    "path": "public/registry/aries/index.html",
+    "main": "5170656297d1eb6a43d1a8485bdddf9fd4f49898",
+    "accepted": "58c14268b49eb5f0d98cfcc7f826931bdcddfed4",
+    "same": false
+  },
+  {
+    "path": "public/registry/cancer/index.html",
+    "main": "405ce8f8312460b1a08d7349e34da2b05f20f363",
+    "accepted": "8828aad944011f63c104ff7d292fe15675f3a32e",
+    "same": false
+  },
+  {
+    "path": "public/registry/capricorn/index.html",
+    "main": "34373f1771d346e5725bfc05be23b79951a914c7",
+    "accepted": "9292626ffc0bbac00b6a524eb5d0c3cc1990db45",
+    "same": false
+  },
+  {
+    "path": "public/registry/gemini/index.html",
+    "main": "bb2e1900df909c23492228de17bf536311132ea1",
+    "accepted": "e46b997b6ee21f9c82af0a4d140da7fa9cefd1c9",
+    "same": false
+  },
+  {
+    "path": "public/registry/leo/index.html",
+    "main": "a409ee075c5a80c69a71758294a28ee87d79be9e",
+    "accepted": "a7307952249d2cc8b3573f7bcf2037d4038122f2",
+    "same": false
+  },
+  {
+    "path": "public/registry/libra/index.html",
+    "main": "f5b9e7d1d34a69adb9b11740a304f3475e2bdaa0",
+    "accepted": "cfe1dbb1d948192d23d42048903e13dbcf99a830",
+    "same": false
+  },
+  {
+    "path": "public/registry/pisces/index.html",
+    "main": "14b45e46016294e364d995d3252045abc7b0c829",
+    "accepted": "7b374f9c2eb9da90d6291cf72430040b05b81e3f",
+    "same": false
+  },
+  {
+    "path": "public/registry/sagittarius/index.html",
+    "main": "47b2c237003879210751e4e856fe082d7a319b71",
+    "accepted": "0edf5dd35ee094aaa88dbabb37d1e42257b19d53",
+    "same": false
+  },
+  {
+    "path": "public/registry/scorpio/index.html",
+    "main": "ce677dbde08aa6896f0e0d02b14388fbec3e5ca8",
+    "accepted": "f0746f557246599c2b6521412c022a0d71925d25",
+    "same": false
+  },
+  {
+    "path": "public/registry/taurus/index.html",
+    "main": "a88a5b7a907280730bc55e863cedd1894cfb8b63",
+    "accepted": "d5ee1ea79e618f7e358f27ac62bf2ba03cabbd27",
+    "same": false
+  },
+  {
+    "path": "public/registry/virgo/index.html",
+    "main": "7d7ed1b6a6a65af5d4a394ff1adb9fcf32eff92f",
+    "accepted": "faaa93d8bd7f26d942f7f9f45bef297d4e7bea1e",
+    "same": false
+  },
+  {
+    "path": "scripts/build-sign-pages.mjs",
+    "main": "e5d4410ccc1c9fefc9c420e031cb8bc98469b405",
+    "accepted": "d2ae839f6b48b48619ddcdffbb8cd423c6aacd97",
+    "same": false
+  },
+  {
+    "path": "scripts/registry-market-snapshot-lib.mjs",
+    "main": "7f4081760553f0ee88ea1f54b18d71cc653dda2a",
+    "accepted": "834851d37fd617341e4ca149bc420b1adaff0522",
+    "same": false
+  },
+  {
+    "path": "scripts/registry-market-snapshot.test.mjs",
+    "main": "52ea4799edacfe5a07406e19423cbf920e8e23e0",
+    "accepted": "c0ed389b4bcfbd377e7738d01b84abf88f6886ac",
+    "same": false
+  },
+  {
+    "path": "scripts/registry-research-lib.mjs",
+    "main": "c07911b04a9e264ec294cfca499dc4283a30ffb6",
+    "accepted": "129e59db28099f9146ab5bc70f9353846a417e7b",
+    "same": false
+  },
+  {
+    "path": "scripts/registry-research.test.mjs",
+    "main": "92e84437de5a795631db542d935176b58f0ef57b",
+    "accepted": "bee729e9326c6b314b95b1a07ca466217ef05b9c",
+    "same": false
+  },
+  {
+    "path": "scripts/sign-records.test.mjs",
+    "main": "0689a4485681f573cbeaea3abfb062694e4fd707",
+    "accepted": "d597f83f74b0994997f5ce9736a93207614de705",
+    "same": false
+  },
+  {
+    "path": "src/data/daily-publication-manifest.json",
+    "main": "5eb8c9b896362a0588b6376cffd728044563c9dc",
+    "accepted": "d383e1fe17c1dcb79db7b51561bb514cc155d0b9",
+    "same": false
+  },
+  {
+    "path": "src/data/daily-publication.json",
+    "main": "1b2cf8270162efe7378f9a10e487d757ec1b7605",
+    "accepted": "1b2cf8270162efe7378f9a10e487d757ec1b7605",
+    "same": true
+  },
+  {
+    "path": "src/data/daily.json",
+    "main": "0d9c695d8d92cabe18cbe153c4dba355ab42d30f",
+    "accepted": "0d9c695d8d92cabe18cbe153c4dba355ab42d30f",
+    "same": true
+  },
+  {
+    "path": "src/data/horoscope-program.json",
+    "main": "27a3cee3d97f50080b8b51d5a1bcca26b0922634",
+    "accepted": "27a3cee3d97f50080b8b51d5a1bcca26b0922634",
+    "same": true
+  },
+  {
+    "path": "src/data/registry-research/drafts.json",
+    "main": "6fa2d4d1799e5d60cccc7f560e12560efd503332",
+    "accepted": "b811b95f9cb60863b9360f2ca40eccc258199878",
+    "same": false
+  },
+  {
+    "path": "src/data/registry-research/publication.json",
+    "main": "f6a7ae815c3efe37d73d2d4ddd12713f3614ba95",
+    "accepted": "547367a1650ebe33667bccb20da1eec44adf06b1",
+    "same": false
+  },
+  {
+    "path": "src/islands/today/TodayBrief.loading.test.ts",
+    "main": "4f9a13e7d98a06205b27a162aea59dfc5d4b0f14",
+    "accepted": "ca40b485a00b37af6b80ec82e86a301994657756",
+    "same": false
+  },
+  {
+    "path": "src/islands/today/TodayBrief.tsx",
+    "main": "f98ff2fbd0e12dbc35ce1b46c85a33eb1ec2807f",
+    "accepted": "8d990ab9391202282a7378cfb2e2ec63626932d8",
+    "same": false
+  },
+  {
+    "path": "src/lib/horoscope-program.test.ts",
+    "main": "0772dddc3bebee5d6bbbacf6acf272829410f639",
+    "accepted": "1d8ccddcdc2ec6b2c5ddc62ff1c5542f171d6fab",
+    "same": false
+  },
+  {
+    "path": "src/pages/today/index.astro",
+    "main": "89b391a9f699fbf68cdbe94ebd259464708ae42d",
+    "accepted": "73f1c16392a25ff91eb18c8403a03136553c4acc",
+    "same": false
+  },
+  {
+    "path": "tests/sign-record-drive.mjs",
+    "main": "587cc3eea7bd7b11acb54f659f028e0971b60e0f",
+    "accepted": "b7e5cf09b20d59479d359efaad4c95f99a10c692",
+    "same": false
+  }
+]

@@ -1,0 +1,374 @@
+{
+  "at": "2026-09-08T07:37:29.490Z",
+  "node": "v22.23.2",
+  "icu": "78.2",
+  "tz": "2026a",
+  "inputs": [
+    {
+      "path": "src/lib/time/technical-locales.ts",
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+      "bytes": 167
+    },
+    {
+      "path": "src/lib/time/civil-date.ts",
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+      "bytes": 1480
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd",
+      "bytes": 6897
+    },
+    {
+      "path": "src/lib/i18n/core.ts",
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760",
+      "bytes": 4611
+    },
+    {
+      "path": "src/lib/i18n/ru-runtime/client.ts",
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72",
+      "bytes": 465
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e",
+      "bytes": 38127
+    },
+    {
+      "path": "src/lib/i18n/ru-runtime/server.ts",
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e",
+      "bytes": 6883
+    },
+    {
+      "path": "src/lib/i18n/ru-runtime/index.ts",
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc",
+      "bytes": 474
+    },
+    {
+      "path": "src/lib/signs.ts",
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4",
+      "bytes": 16338
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+      "bytes": 1810
+    },
+    {
+      "path": "src/lib/i18n/ui/client.ts",
+      "sha256": "5319e26e0a1926e0dd1f59df1c6eeb1685f5632ed02a7e5177329824aa200a75",
+      "bytes": 802
+    },
+    {
+      "path": "src/lib/i18n/ui/growth.ts",
+      "sha256": "a0630997cb02c1fe7dc4226ce1632c57b822f39fe8005a5b33a8d0eee6344273",
+      "bytes": 4309
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890",
+      "bytes": 21866
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "sha256": "a7765491183cb21cc94f18e50f7de7f7749ce84e4a841726eb537a645483af7f",
+      "bytes": 23867
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "sha256": "53534df49cd4a8dcd7245e806c696b5f521ecea8bdf6a9bf4cf16415c24019b3",
+      "bytes": 25488
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "sha256": "39d594d153d8d86190a7210a24e3f4e5fc863764310619f8cc1239a26375712f",
+      "bytes": 27542
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "sha256": "5db6cc6f90d31fa4f053addaff09de38d1b724d6f1ca22eb9af258976ef4f4f5",
+      "bytes": 26366
+    },
+    {
+      "path": "src/lib/i18n/ui/server.ts",
+      "sha256": "5e6ada084ee309154ddc51c311bcee36f5dac9980284a9a2e0122bd5a7ed9ab9",
+      "bytes": 614
+    },
+    {
+      "path": "src/lib/i18n/english-only.ts",
+      "sha256": "cf3d95de210519f0f81b798d11e8d3b2f1bdd1df56ef06a30a1f2f39aa0cbdef",
+      "bytes": 1516
+    },
+    {
+      "path": "src/lib/i18n/plural.ts",
+      "sha256": "397d989e04bbfabd4ba8b5d0fcc028bfb7c421d3e84e72cc31efdf5af74c889d",
+      "bytes": 1657
+    },
+    {
+      "path": "src/lib/i18n/index.ts",
+      "sha256": "2a436231455868ba2ce6f4a0c8d30ab74966e341d7cdb9fc2f5432bc9ee64303",
+      "bytes": 8203
+    },
+    {
+      "path": "src/lib/moon-certainty.ts",
+      "sha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994",
+      "bytes": 1909
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d",
+      "bytes": 4693
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+      "sha256": "eda5c8c0462d21f269ffb8a6abfc8e6c5a2ebbc6d8fcb55d796d0a63e7b721c4",
+      "bytes": 4213
+    },
+    {
+      "path": "node_modules/astronomy-engine/esm/astronomy.js",
+      "sha256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7",
+      "bytes": 412025
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+      "sha256": "8578139013ab4f4c0d2811682e92d6b6818492e1a392ddee43aeea033a8ebfc3",
+      "bytes": 4644
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/internal.js",
+      "sha256": "52403d7a8514ceea3d5ac1ad7f404f79ff1163d907bbc783600edf1574ff2e42",
+      "bytes": 245
+    },
+    {
+      "path": "src/lib/engine/chart-adapter.ts",
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "bytes": 788
+    },
+    {
+      "path": "src/lib/engine/full.ts",
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+      "bytes": 1215
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+      "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08",
+      "bytes": 1459
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/receipt.js",
+      "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea",
+      "bytes": 24948
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+      "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d",
+      "bytes": 2593
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/index.js",
+      "sha256": "585f25423b08830025e9f4bbdbbe3dffb3bbd4d79f2891952c110f2ebfcf0bbc",
+      "bytes": 13163
+    },
+    {
+      "path": "src/lib/engine/portable.ts",
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "bytes": 3084
+    },
+    {
+      "path": "src/lib/engine/calculator-receipt.ts",
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+      "bytes": 2725
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+      "bytes": 116026
+    }
+  ],
+  "numerical": [
+    {
+      "date": "2011-12-30",
+      "zone": "Pacific/Apia",
+      "resolved": {
+        "utc": "2011-12-30T22:00:00.000Z",
+        "offsetMinutes": 840,
+        "flags": [
+          "dst-gap"
+        ]
+      },
+      "referenceWall": "Saturday, December 31, 2011 at 12:00:00 p.m. GMT+14",
+      "endpoints": {
+        "start": "2011-12-30T10:00:00.000Z",
+        "end": "2011-12-30T09:59:59.999Z"
+      },
+      "endpointDurationMs": 0,
+      "candidates": [
+        "pisces"
+      ],
+      "moonUncertain": false,
+      "moonLabel": "Pisces",
+      "stableSun": "capricorn",
+      "receiptCreated": true
+    },
+    {
+      "date": "1892-07-04",
+      "zone": "Pacific/Apia",
+      "resolved": {
+        "utc": "1892-07-03T23:26:56.000Z",
+        "offsetMinutes": 753.0666666666667,
+        "flags": [
+          "dst-fold",
+          "lmt"
+        ]
+      },
+      "referenceWall": "Monday, July 4, 1892 at 12:00:00 p.m. GMT+12:33:04",
+      "endpoints": {
+        "start": "1892-07-03T11:26:56.000Z",
+        "end": "1892-07-05T11:26:55.999Z"
+      },
+      "endpointDurationMs": 172800000,
+      "candidates": [
+        "libra",
+        "scorpio"
+      ],
+      "moonUncertain": true,
+      "moonLabel": "Libra / Scorpio",
+      "stableSun": "cancer",
+      "receiptCreated": true
+    },
+    {
+      "date": "2009-10-31",
+      "zone": "America/St_Johns",
+      "resolved": {
+        "utc": "2009-10-31T14:30:00.000Z",
+        "offsetMinutes": -150,
+        "flags": []
+      },
+      "referenceWall": "Saturday, October 31, 2009 at 12:00:00 p.m. NDT",
+      "endpoints": {
+        "start": "2009-10-31T02:30:00.000Z",
+        "end": "2009-11-01T02:29:59.999Z"
+      },
+      "endpointDurationMs": 86400000,
+      "candidates": [
+        "aries"
+      ],
+      "moonUncertain": false,
+      "moonLabel": "Aries",
+      "stableSun": "scorpio",
+      "receiptCreated": true
+    },
+    {
+      "date": "1919-03-31",
+      "zone": "America/Toronto",
+      "resolved": {
+        "utc": "1919-03-31T16:00:00.000Z",
+        "offsetMinutes": -240,
+        "flags": []
+      },
+      "referenceWall": "Monday, March 31, 1919 at 12:00:00 p.m. GMT-4",
+      "endpoints": {
+        "start": "1919-03-31T05:00:00.000Z",
+        "end": "1919-04-01T03:59:59.999Z"
+      },
+      "endpointDurationMs": 82800000,
+      "candidates": [
+        "aries"
+      ],
+      "moonUncertain": false,
+      "moonLabel": "Aries",
+      "stableSun": "aries",
+      "receiptCreated": true
+    },
+    {
+      "date": "1990-01-04",
+      "zone": "Asia/Bangkok",
+      "resolved": {
+        "utc": "1990-01-04T05:00:00.000Z",
+        "offsetMinutes": 420,
+        "flags": []
+      },
+      "referenceWall": "Thursday, January 4, 1990 at 12:00:00 p.m. GMT+7",
+      "endpoints": {
+        "start": "1990-01-03T17:00:00.000Z",
+        "end": "1990-01-04T16:59:59.999Z"
+      },
+      "endpointDurationMs": 86400000,
+      "candidates": [
+        "aries"
+      ],
+      "moonUncertain": false,
+      "moonLabel": "Aries",
+      "stableSun": "capricorn",
+      "receiptCreated": true
+    }
+  ],
+  "rejectedRun": {
+    "sourceSha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+    "extractedSha256": "d19ba49f306f0d2a1b7c4ca4aa482476b415ca75080e8a14e3c48bce16f36023",
+    "scope": "Exact extracted function, controlled engine/coverage boundaries, no DOM or native UI claims",
+    "calls": [
+      "setBusy",
+      "setError",
+      "setSaved",
+      "setMatchedName",
+      "setSavePromptOpen",
+      "setA2hsHint",
+      "setCard",
+      "setSignature",
+      "setPositionsOnly",
+      "setShareDialogOpen",
+      "setMoonAmbiguous",
+      "setRegistryRecordSlug",
+      "setSubjectMode",
+      "setMineHandoff",
+      "natal",
+      "coverage",
+      "setError",
+      "setBusy"
+    ],
+    "state": {
+      "chart": {
+        "identity": "previous-successful-chart",
+        "flags": [],
+        "bodies": [
+          {
+            "body": "Sun",
+            "lon": 10
+          },
+          {
+            "body": "Moon",
+            "lon": 10
+          }
+        ]
+      },
+      "computedInput": {
+        "date": "1990-01-04",
+        "city": {
+          "tz": "Asia/Bangkok"
+        }
+      },
+      "shareInput": {
+        "date": "1990-01-04"
+      },
+      "card": "busy",
+      "error": "Date coverage unavailable",
+      "busy": false,
+      "saved": "idle",
+      "matchedName": null,
+      "savePromptOpen": false,
+      "a2hsHint": null,
+      "signature": null,
+      "positionsOnly": null,
+      "shareDialogOpen": false,
+      "moonAmbiguous": false,
+      "registryRecordSlug": null,
+      "subjectMode": "self",
+      "mineHandoff": null
+    },
+    "oldChartRetained": true,
+    "oldComputedInputRetained": true,
+    "oldShareInputRetained": true,
+    "chartComputedBeforeCoverage": true
+  }
+}

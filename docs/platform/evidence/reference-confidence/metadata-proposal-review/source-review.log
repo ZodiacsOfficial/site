@@ -1,0 +1,54 @@
+{
+  "base": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+  "patchSha256": "408d373d7221f7b8caf796a0e67e6ee7f458fcab0ca5ceac628b3a71dbfbb2a4",
+  "exactTwoFilePatchApplies": true,
+  "beforeBytesMatchImmutableGit": true,
+  "allowanceChangedKeys": [
+    "id",
+    "baseCommit",
+    "authorization"
+  ],
+  "protectedPathsUnchanged": [
+    "src/lib/i18n/index.test.ts",
+    "src/lib/i18n/ui/en.ts",
+    "src/lib/i18n/ui/es.ts",
+    "src/lib/i18n/ui/fr.ts",
+    "src/lib/i18n/ui/it.ts",
+    "src/lib/i18n/ui/pt.ts",
+    "src/lib/i18n/ui/ru.test.ts",
+    "src/lib/i18n/ui/ru.ts"
+  ],
+  "exactFourLineWorkflowAddition": true,
+  "permissionsPinsSetupTriggersAndUploadsUnchanged": true,
+  "scopeGuardSha256": "53c8452a2350eda3fb6541066846a88ad2111df46c803db807e91212c02c282d",
+  "commands": [
+    {
+      "label": "patch-check",
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/private/tmp/zodiacs-platform-reference-confidence-metadata-independent-review/integration.patch"
+      ],
+      "cwd": "/private/tmp/zodiacs-platform-reference-confidence-metadata-independent-review/apply-fixture",
+      "exitCode": 0
+    },
+    {
+      "label": "patch-apply",
+      "argv": [
+        "git",
+        "apply",
+        "/private/tmp/zodiacs-platform-reference-confidence-metadata-independent-review/integration.patch"
+      ],
+      "cwd": "/private/tmp/zodiacs-platform-reference-confidence-metadata-independent-review/apply-fixture",
+      "exitCode": 0
+    }
+  ],
+  "verifiedAtUtc": "2026-09-08T11:52:21.489012+00:00",
+  "pending": [
+    "Actual driver/freeze compatibility",
+    "Actual candidate full-diff scope CLI",
+    "Semantic catalog-copy approval",
+    "Native/CI execution"
+  ]
+}

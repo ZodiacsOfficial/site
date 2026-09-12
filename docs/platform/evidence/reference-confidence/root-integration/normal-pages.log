@@ -1,0 +1,13 @@
+{"name":"en-chart-1280","passed":false}
+{"name":"en-chart-390","passed":false}
+{"name":"es-chart-1280","passed":true}
+{"name":"es-chart-390","passed":true}
+{"name":"fr-chart-1280","passed":true}
+{"name":"fr-chart-390","passed":true}
+{"name":"it-chart-1280","passed":true}
+{"name":"it-chart-390","passed":true}
+{"name":"pt-chart-1280","passed":true}
+{"name":"pt-chart-390","passed":true}
+{"name":"ru-chart-1280","passed":true}
+{"name":"ru-chart-390","passed":true}
+{"passed":10,"failed":2,"outcome":"failed"}

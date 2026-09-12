@@ -375,7 +375,7 @@ export function buildOpenApi(
     },
     servers: [{ url: API_ORIGIN }],
     tags: [
-      { name: 'daily', description: 'Regenerated at the 00:00 UTC publication boundary from the noon-UTC snapshot.' },
+      { name: 'daily', description: 'Daily publication is scheduled from 00:00 UTC using positions computed for noon UTC. Delivery can be delayed; check each payload edition date.' },
       { name: 'yearly', description: 'Regenerated when the underlying yearly data is refreshed.' },
     ],
     paths: {

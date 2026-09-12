@@ -1,0 +1,78 @@
+[
+  {
+    "path": "source/src/lib/profile/schema.ts",
+    "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+  },
+  {
+    "path": "source/src/lib/account-v2/profile-access-reader.ts",
+    "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+  },
+  {
+    "path": "source/src/lib/profile/deletions.ts",
+    "sha256": "ff6011e36ae422f154374973982c8e5d9840aafca12627554b3a1354ec5855ef"
+  },
+  {
+    "path": "source/src/lib/account-v2/feature-flags.ts",
+    "sha256": "ac0111bfea02f434c9976820d91fd7807b0d237064d9f586c02516d4f74c43da"
+  },
+  {
+    "path": "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+    "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+  },
+  {
+    "path": "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+    "sha256": "eda5c8c0462d21f269ffb8a6abfc8e6c5a2ebbc6d8fcb55d796d0a63e7b721c4"
+  },
+  {
+    "path": "node_modules/@zodiacs/engine/dist/internal-math.js",
+    "sha256": "187cbd31a74bd069dc413e6fb1ef33cc72a108e9a405a3b5095b64346def2422"
+  },
+  {
+    "path": "source/src/lib/engine/types.ts",
+    "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54"
+  },
+  {
+    "path": "source/src/lib/profile/polar-repair.ts",
+    "sha256": "772dc144d1d00429c46f925f43061da071b9117d0f351896e4395d746552e741"
+  },
+  {
+    "path": "source/src/lib/profile/read-store.ts",
+    "sha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485"
+  },
+  {
+    "path": "source/src/lib/i18n/core.ts",
+    "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+  },
+  {
+    "path": "source/src/lib/i18n/ru-runtime/client.ts",
+    "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+  },
+  {
+    "path": "source/src/lib/i18n/ui/ru.ts",
+    "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+  },
+  {
+    "path": "source/src/lib/i18n/ru-runtime/server.ts",
+    "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+  },
+  {
+    "path": "source/src/lib/i18n/ru-runtime/index.ts",
+    "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+  },
+  {
+    "path": "source/src/lib/signs.ts",
+    "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+  },
+  {
+    "path": "source/src/lib/profile/store.ts",
+    "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+  },
+  {
+    "path": "source/src/lib/profile/post-chart-context.ts",
+    "sha256": "7622c364e6471acd6ba849ceddb03fde6998bbaf70160c3d35b604a0e845b905"
+  },
+  {
+    "path": "source/src/lib/a2hs.ts",
+    "sha256": "3fb8b2aea25d49fa7657a5a7230396112227c028ac8f42c9db7cb3096b5adfb7"
+  }
+]

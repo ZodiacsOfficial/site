@@ -1,0 +1,33 @@
+# Commands and provenance
+
+All author commands ran in `/private/tmp/zodiacs-platform-post-chart-clear`, detached at the exact base in `base.json`. Node is `/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node` (22.23.2), Chrome was discovered by existing repository `findChromium` (152.0.7977.83); no dependency install or runtime service change. Output paths are isolated author evidence.
+
+Final focused checks:
+```
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/vitest/vitest.mjs run src/lib/profile/post-chart-context.test.ts src/lib/email/post-chart-state.test.ts src/lib/hooks/useProfileAccessGeneration.test.ts src/islands/ChartCalculator.ownership.test.ts
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/typescript/bin/tsc --noEmit
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/astro/bin/astro.mjs check
+git diff --check
+```
+Logs: `focused-freeze2.log`, `types-freeze2.log`, `astro-check-freeze2.log`.
+
+Final native controls:
+```
+OUT_DIR=/private/tmp/zodiacs-platform-post-chart-clear-evidence/native-freeze2 /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/post-chart-context-clear-drive.mjs
+```
+The before-fix variant used the preserved `driver-session-race-before.mjs.log` source and `native-session-race-before` output. Earlier exact drivers/results remain separately preserved; do not substitute the final driver for earlier claims.
+
+Full fixture build and page checks, same command before and after correction:
+```
+ASTRO_TELEMETRY_DISABLED=1 /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/post-chart-daily.mjs
+```
+Logs: `full-post-chart-gate.log` (first failure) and `full-post-chart-gate-freeze2.log` (294/294). The existing wrapper sets non-secret test environment values and intercepts the corresponding endpoints. No real message is sent.
+
+Bounded full-page paused diagnostic:
+```
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /private/tmp/zodiacs-platform-post-chart-clear-evidence/paused-diagnostic.mjs
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /private/tmp/zodiacs-platform-post-chart-clear-evidence/paused-diagnostic-freeze2.mjs
+```
+The second driver changes evidence output names only. Both use the actual existing preparePage implementation plus observation, with the same original 30-second timeout. It owns and closes its local preview/browser. Source-generator and raw first failure/pass records remain archived.
+
+Source seals: `seal-source.py` generated Freeze1; `seal-source2.py` generates the separate final freeze. These are provenance utilities and must not be rerun against later moving source to overwrite historic evidence.

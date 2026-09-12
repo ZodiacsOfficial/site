@@ -1,0 +1,69 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { resolve, join } from 'node:path';
+import { chromium } from '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/playwright-core/index.mjs';
+import { findChromium, STABLE_CHROMIUM_ARGS } from '/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/browser.mjs';
+import { withPreview } from '/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/preview-server.mjs';
+const root='/Users/chiburashka/.codex/worktrees/4806/site';
+const out=resolve(root,'docs/platform/evidence/site-engine-rc5/release/native-zoom');
+await mkdir(out,{recursive:true});
+const profile=await mkdtemp('/private/tmp/zdx-zoom-');
+const checks=[],cases=[],failures=[];
+const check=(name,pass,detail=null)=>{checks.push({name,pass:Boolean(pass),detail});assert.ok(pass,name)};
+let context,settings,page,originalZoom,browserVersion;
+const cleanup={ownedProfile:true,copiedAuthentication:false,restoredZoom:false,browserClosed:false};
+const dimensions=page=>page.evaluate(()=>({width:innerWidth,height:innerHeight,dpr:devicePixelRatio,clientWidth:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,htmlZoom:getComputedStyle(document.documentElement).zoom,bodyZoom:getComputedStyle(document.body).zoom,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches,overlay:!!document.querySelector('astro-error-overlay')}));
+const capture=async(file)=>{const cdp=await context.newCDPSession(page);const {data}=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false});const bytes=Buffer.from(data,'base64');await writeFile(join(out,file),bytes);await cdp.detach();return {file,width:bytes.readUInt32BE(16),height:bytes.readUInt32BE(20),sha256:createHash('sha256').update(bytes).digest('hex')}};
+try {
+ context=await chromium.launchPersistentContext(profile,{executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS,viewport:{width:1280,height:900},deviceScaleFactor:1,reducedMotion:'reduce'});
+ browserVersion=context.browser()?.version();
+ settings=await context.newPage();await settings.goto('chrome://settings/appearance');
+ await settings.waitForFunction(()=>typeof chrome.settingsPrivate?.getDefaultZoom==='function');
+ originalZoom=await settings.evaluate(()=>new Promise(resolve=>chrome.settingsPrivate.getDefaultZoom(resolve)));
+ await withPreview({port:4340},async(baseURL)=>{
+  for(const factor of [2,4]) for(const [path,preceding,region] of [
+   ['/developers/','chart calculation stays on the device','JavaScript quick start'],
+   ['/developers/support/','archived rc.1 API reference','Local engine support matrix'],
+  ]){
+   await settings.evaluate(factor=>new Promise(resolve=>chrome.settingsPrivate.setDefaultZoom(factor,resolve)),factor);
+   const configured=await settings.evaluate(()=>new Promise(resolve=>chrome.settingsPrivate.getDefaultZoom(resolve)));
+   const item={factor,path,captures:[],errors:[]};cases.push(item);
+   page=await context.newPage();await page.setViewportSize({width:1280,height:900});
+   page.on('pageerror',error=>item.errors.push(error.message));
+   const response=await page.goto(baseURL+path,{waitUntil:'networkidle'});
+   check(`${factor}x ${path} loads`,response.status()===200&&(await page.locator('h1').textContent()).length>0);
+   item.dimensions=await dimensions(page);
+   check(`${factor}x ${path} native zoom`,Math.abs(configured-factor)<1e-9&&item.dimensions.width===1280/factor&&item.dimensions.dpr===factor,item.dimensions);
+   check(`${factor}x ${path} reflow/reduced motion`,item.dimensions.scrollWidth<=item.dimensions.clientWidth+1&&item.dimensions.reduced&&!item.dimensions.overlay&&item.dimensions.htmlZoom==='1'&&item.dimensions.bodyZoom==='1');
+   const scroller=page.getByRole('region',{name:region,exact:true});
+   await page.getByRole('link',{name:preceding,exact:true}).focus();await page.keyboard.press('Tab');
+   const focus=await scroller.evaluate(node=>{const c=getComputedStyle(node);return {active:node===document.activeElement,visible:node.matches(':focus-visible'),outline:c.outlineStyle,width:parseFloat(c.outlineWidth),scroll:node.scrollLeft,overflow:node.scrollWidth>node.clientWidth,rect:node.getBoundingClientRect().toJSON()}});
+   check(`${factor}x ${path} keyboard focus`,focus.active&&focus.visible&&focus.outline!=='none'&&Math.abs(focus.width-(path.includes('support')?2:1.5))<1e-9,focus);
+   if(focus.overflow){await page.keyboard.press('ArrowRight');await page.waitForFunction(el=>el.scrollLeft>0,await scroller.elementHandle());check(`${factor}x ${path} keyboard horizontal region scrolling`,await scroller.evaluate(el=>el.scrollLeft>0));}
+   item.captures.push(await capture(`${path.includes('support')?'support':'entry'}-${factor}x-region.png`));
+   await page.keyboard.press('Tab');
+   check(`${factor}x ${path} scroller can be exited`,await scroller.evaluate(el=>el!==document.activeElement));
+   await page.keyboard.press('Control+End');await page.keyboard.press('Meta+ArrowDown');await page.waitForTimeout(400);
+   // Explicit keyboard End is platform-sensitive; repeated PageDown establishes
+   // actual keyboard reachability without a programmatic scroll substitute.
+   for(let i=0;i<100;i++){
+    const reached=await page.locator('footer.zfooter').evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight+1);
+    if(reached)break;
+    await page.keyboard.press('PageDown');await page.waitForTimeout(40);
+   }
+   const footer=await page.locator('footer.zfooter').evaluate(el=>({count:document.querySelectorAll('footer.zfooter').length,bottom:el.getBoundingClientRect().bottom,top:el.getBoundingClientRect().top,height:innerHeight,scrollY}));
+   check(`${factor}x ${path} canonical footer keyboard reachable`,footer.count===1&&footer.bottom<=footer.height+1&&footer.bottom>0,footer);
+   item.captures.push(await capture(`${path.includes('support')?'support':'entry'}-${factor}x-footer.png`));
+   check(`${factor}x ${path} no runtime errors`,item.errors.length===0,item.errors);
+   await page.close();page=null;
+  }
+ });
+}catch(error){failures.push({message:error.message,stack:error.stack});if(page)try{await capture('failure.png')}catch{}}
+finally{
+ if(settings&&originalZoom!==undefined)try{await settings.evaluate(factor=>new Promise(resolve=>chrome.settingsPrivate.setDefaultZoom(factor,resolve)),originalZoom);cleanup.restoredZoom=Math.abs((await settings.evaluate(()=>new Promise(resolve=>chrome.settingsPrivate.getDefaultZoom(resolve))))-originalZoom)<1e-9}catch(error){cleanup.error=error.message}
+ if(context){await context.close();cleanup.browserClosed=true}
+ const receipt=JSON.parse(await readFile(join(root,'dist/.phase1-build-receipt.json'),'utf8'));
+ const report={status:failures.length?'failed':'passed',timestamp:new Date().toISOString(),runtime:{node:process.version,chrome:browserVersion},scope:'Actual native Chrome 200%/400% zoom, developer entry/support, finite keyboard/reflow/reduced-motion/canonical-footer controls. No CSS zoom substitute or human accessibility certification.',buildReceipt:receipt,checks,cases,failures,cleanup};
+ await writeFile(join(out,'result.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({status:report.status,checks:checks.length,failures,cleanup}));if(failures.length)process.exitCode=1;
+}

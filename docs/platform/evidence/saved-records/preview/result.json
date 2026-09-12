@@ -1,0 +1,125 @@
+{
+  "result": "passed",
+  "capturedAt": "2026-09-08T05:36:21.897Z",
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "deployment": "dpl_bhx76pgozg4Djw3mbBayzay7VrxS",
+  "source": "a0bf55176dd4df4d27763bfeb2cf97e36abe4d15",
+  "base": "https://zodiacs-9wi4nsxk8-zodiacsofficial.vercel.app",
+  "checks": [
+    {
+      "width": 1280,
+      "path": "/developers/",
+      "status": 200,
+      "layout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "reduced": true
+      }
+    },
+    {
+      "width": 1280,
+      "path": "/developers/support/",
+      "status": 200,
+      "layout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "reduced": true
+      }
+    },
+    {
+      "width": 1280,
+      "path": "/developers/examples/",
+      "status": 200,
+      "layout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "reduced": true
+      }
+    },
+    {
+      "width": 1280,
+      "path": "/birth-chart/",
+      "syntheticResultVersion": "0.1.1-rc.5",
+      "noSavedProfile": true
+    },
+    {
+      "width": 390,
+      "path": "/developers/",
+      "status": 200,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "reduced": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/developers/support/",
+      "status": 200,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "reduced": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/developers/examples/",
+      "status": 200,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "reduced": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/birth-chart/",
+      "syntheticResultVersion": "0.1.1-rc.5",
+      "noSavedProfile": true
+    },
+    {
+      "width": 320,
+      "path": "/developers/",
+      "status": 200,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "reduced": true
+      }
+    },
+    {
+      "width": 320,
+      "path": "/developers/support/",
+      "status": 200,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "reduced": true
+      }
+    },
+    {
+      "width": 320,
+      "path": "/developers/examples/",
+      "status": 200,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "reduced": true
+      }
+    },
+    {
+      "width": 320,
+      "path": "/birth-chart/",
+      "syntheticResultVersion": "0.1.1-rc.5",
+      "noSavedProfile": true
+    },
+    {
+      "path": "/api/v1/sky/today.json",
+      "status": 200,
+      "date": "2026-09-08"
+    }
+  ],
+  "scope": "Authenticated exact-source preview using synthetic inputs; temporary auth values are not recorded. No production or account operations."
+}

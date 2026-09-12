@@ -1,0 +1,12 @@
+import fs from'node:fs';import path from'node:path';import assert from'node:assert/strict';import{createHash}from'node:crypto';import{build}from'esbuild';
+const records=[];
+for(const kind of ['baseline','candidate']){
+ const result=await build({entryPoints:['fixture-entry.tsx'],outfile:kind+'.js',platform:'browser',format:'iife',bundle:true,target:'es2022',jsx:'automatic',jsxImportSource:'preact',define:{'import.meta.env':'{}'},metafile:true,plugins:[{name:'owned-boundaries',setup(builder){
+  if(kind==='baseline')builder.onLoad({filter:/\/MoonPhaseTool\.tsx$/},({path:p})=>({contents:fs.readFileSync('baseline-MoonPhaseTool.tsx','utf8'),loader:'tsx',resolveDir:path.dirname(p)}));
+  builder.onResolve({filter:/lib\/hooks\/useEngine$/},()=>({path:'loader',namespace:'owned'}));
+  builder.onResolve({filter:/lib\/geo\/search$/},()=>({path:'search',namespace:'owned'}));
+  builder.onLoad({filter:/.*/,namespace:'owned'},({path:p})=>({contents:p==='loader'?'export function useEngine(){return ()=>window.fixtureLoad();}':`export const preloadIndex=async()=>{};export const searchCities=async(q)=>[{name:'Synthetic Bangkok',admin1:'',country:'TH',lat:13.75,lon:100.5,tz:'Asia/Bangkok',pop:0},{name:'Synthetic Toronto',admin1:'',country:'CA',lat:43.65,lon:-79.38,tz:'America/Toronto',pop:0}].filter(x=>x.name.toLowerCase().includes(q.toLowerCase()));`}));
+ }}]});
+ const inputs=Object.keys(result.metafile.inputs).filter(p=>!p.startsWith('owned:')&&!p.startsWith('<')).map(p=>{assert.ok(path.resolve(p).startsWith(process.cwd()+'/'));const source=kind==='baseline'&&p.endsWith('/MoonPhaseTool.tsx')?'baseline-MoonPhaseTool.tsx':p;return{path:p,actualSource:source,sha256:createHash('sha256').update(fs.readFileSync(source)).digest('hex')};});records.push({kind,inputs,bundleSha256:createHash('sha256').update(fs.readFileSync(kind+'.js')).digest('hex')});
+}
+fs.writeFileSync('build-inputs.json',JSON.stringify(records,null,2)+'\n');console.log(JSON.stringify(records.map(x=>({kind:x.kind,inputs:x.inputs.length,bundleSha256:x.bundleSha256}))));

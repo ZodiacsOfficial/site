@@ -1,0 +1,1222 @@
+{
+  "checkedAt": "2026-09-08T04:01:56.744995+00:00",
+  "artifactSHA256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
+  "archiveBytes": 36065,
+  "packedFiles": [
+    {
+      "path": "LICENSE",
+      "bytes": 1068,
+      "sha256": "9a8ab25f278db9d59a00ee82d1a82d63ee4891a9c417c53b4e2b9942aaab10df"
+    },
+    {
+      "path": "NOTICE",
+      "bytes": 1378,
+      "sha256": "06a8e2e2bae6d6113e738f8c4ee3869f698fbf39756a26ce842d549dde423450"
+    },
+    {
+      "path": "dist/chunk-4YKOFVM6.js",
+      "bytes": 4644,
+      "sha256": "5d795078c6cfc19404f933c87c3748946706ab30631d6b4b4b695a227dc8b803"
+    },
+    {
+      "path": "dist/chunk-CPALRSPC.js",
+      "bytes": 1459,
+      "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08"
+    },
+    {
+      "path": "dist/chunk-INI453VG.js",
+      "bytes": 4693,
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+    },
+    {
+      "path": "dist/chunk-K5MRTCWE.js",
+      "bytes": 2593,
+      "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d"
+    },
+    {
+      "path": "dist/chunk-PD4H342X.js",
+      "bytes": 4213,
+      "sha256": "5852fc08c1f56052de23dc2f018b3bcd6e75b080c18c9d9b5a793a2be49bf4c0"
+    },
+    {
+      "path": "dist/geo.js",
+      "bytes": 11616,
+      "sha256": "9d45088e73e9dadf8083c3673d12e5e8affedd17d1796a6fb0f3b0ec6ae679f5"
+    },
+    {
+      "path": "dist/index.js",
+      "bytes": 13163,
+      "sha256": "46306e0005fc4dd86eaa62a062f8e54957bceb0e672a6f073f920434d2b2ef3b"
+    },
+    {
+      "path": "dist/internal-math.js",
+      "bytes": 591,
+      "sha256": "8c058be3014be9d5443a87cd09413ecec21af89fe599ebe9ed4e58a8cda9870a"
+    },
+    {
+      "path": "dist/internal.js",
+      "bytes": 245,
+      "sha256": "5a913b0ebbe34440e13f65d5ecddd7c2f5454746eb8d1861ff5bc1ec8ae88c52"
+    },
+    {
+      "path": "dist/receipt.js",
+      "bytes": 24948,
+      "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea"
+    },
+    {
+      "path": "package.json",
+      "bytes": 2154,
+      "sha256": "84206969fb8c9c78c1abee1cfb4ebeda6b862c77bff0e5f7effc2ebc47826387"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 5628,
+      "sha256": "8dded1aea3cc4318a0a07f2777892584709a7543a3d33f2b773fb92d132c93fe"
+    },
+    {
+      "path": "LICENSING.md",
+      "bytes": 2591,
+      "sha256": "8a2010524ad7ebf388dabe0bda5ed2ed8753b8bb112f284f0c23826546410096"
+    },
+    {
+      "path": "README.md",
+      "bytes": 15784,
+      "sha256": "4bb5149b88c323e4730687e92c17ab55c2742f8fe2ac2bc218408cffdb559e1c"
+    },
+    {
+      "path": "dist/geo.d.ts",
+      "bytes": 2172,
+      "sha256": "0454dda71c0559da5a0f792ed592d07f610132a601e67c8ed37eddf2d22b774d"
+    },
+    {
+      "path": "dist/index.d.ts",
+      "bytes": 4010,
+      "sha256": "3c4063793f944f3cb0b1e07338c4c24becb6480aacede5cf3199bd18186403fa"
+    },
+    {
+      "path": "dist/internal-math-2qAGGDMX.d.ts",
+      "bytes": 5630,
+      "sha256": "2eb16b632345cade067e9a415b4d5d96252af3dbb247b8c24fecfe2840dc64a0"
+    },
+    {
+      "path": "dist/internal-math.d.ts",
+      "bytes": 595,
+      "sha256": "0a648b1bba45a089192ef6804dfb640ba45e07f307807a64f48e3b3c99c0248c"
+    },
+    {
+      "path": "dist/internal.d.ts",
+      "bytes": 502,
+      "sha256": "68eacb2ef7bc5be384d027cba266256baa440460c94539f36edbde95f9b1649e"
+    },
+    {
+      "path": "dist/receipt.d.ts",
+      "bytes": 6522,
+      "sha256": "7ca8a71659c70c1fb15a98506bd63d0e77f32f7018c914d4ba0ace1ec7ad7d54"
+    },
+    {
+      "path": "dist/types-CHoIZzek.d.ts",
+      "bytes": 5013,
+      "sha256": "08b23ad16ae93803ed08f9b9dda797e8c46fa3d14dac3bae5debd3f984288a85"
+    }
+  ],
+  "lockChangedPaths": [
+    "/packages//dependencies/@zodiacs/engine",
+    "/packages/node_modules/@zodiacs/engine/integrity",
+    "/packages/node_modules/@zodiacs/engine/resolved",
+    "/packages/node_modules/@zodiacs/engine/version"
+  ],
+  "immutableEvidence": [
+    {
+      "key": "ledger",
+      "path": "docs/platform/evidence/site-engine-rc5/README.md",
+      "sha256": "22d091867af95b350bd4704395ff3fcf86b01bcf86dde5563aabed6718502864",
+      "equalToImmutableGitObject": true
+    },
+    {
+      "key": "node22",
+      "path": "docs/platform/evidence/site-engine-rc5/independent-node-polar-node22.json",
+      "sha256": "f868f04c0449bb443587e7d4d21a4e5e2da8a4783593de8e0769e6c45dd1a731",
+      "equalToImmutableGitObject": true
+    },
+    {
+      "key": "node24",
+      "path": "docs/platform/evidence/site-engine-rc5/independent-node-polar-node24.json",
+      "sha256": "fd4c4eaf1f7a465250e153e5be75bdae39dd7cf490534ba6fbc4a6cff9ad8728",
+      "equalToImmutableGitObject": true
+    },
+    {
+      "key": "publicConsumer",
+      "path": "docs/platform/evidence/site-engine-rc5/public-candidate-consumer.log",
+      "sha256": "19691a87624c045377440a85ee8ff7e0007083b6faaecfa642240d220dabc47d",
+      "equalToImmutableGitObject": true
+    }
+  ],
+  "preservation": {
+    "base": "ba65375a34cee6a85f94b53ba45861f1b81f34ef",
+    "files": [
+      {
+        "path": "examples/platform/README.md",
+        "sha256": "2798774ac2dc29b61445289e1c73c76970c72ae34c70c707483a01782d34c996"
+      },
+      {
+        "path": "examples/platform/candidate.json",
+        "sha256": "c6a1483e18773cd6d7fb7b577716718ae0f71cd5ee499d074992ca868e9fbfc0"
+      },
+      {
+        "path": "examples/platform/npm-shrinkwrap.json",
+        "sha256": "f56170a2f507e82eef976eba17d8ad72f8cdb113ec5c8a1bbf69857aef620658"
+      },
+      {
+        "path": "examples/platform/package.json",
+        "sha256": "369d138e26e0872114ee9c892208692b13a27e3ecc31822f0b1f2348b135c866"
+      },
+      {
+        "path": "examples/platform/scripts/build.mjs",
+        "sha256": "3da4170d63ab93cf1cd6b87e36fa79696c2785bd1d19718a801770fecbadc903"
+      },
+      {
+        "path": "examples/platform/scripts/fetch-engine.mjs",
+        "sha256": "688f3130dbbca3112c3a00eb79f88a4cf700609c9720a0b38b80119b057e16a7"
+      },
+      {
+        "path": "examples/platform/scripts/server.mjs",
+        "sha256": "423dcc75dae07d0a5a5903bfd434f7883cdd2a6ed3bb39067221599a6563d2bd"
+      },
+      {
+        "path": "examples/platform/src/app.mjs",
+        "sha256": "20974f4a7e22af4b446c0f26685f4cb211a560cb2b9af1505db3a995168155ee"
+      },
+      {
+        "path": "examples/platform/src/calculate.mjs",
+        "sha256": "38ebdc01cf24d4d78c99daa7246d7969116fb3196c23de23df6d6c0c16df8cb8"
+      },
+      {
+        "path": "examples/platform/src/favicon.svg",
+        "sha256": "2a5d6adb395ba4c859298de7222cd13ce109942af4ff294418761d15f2d71abe"
+      },
+      {
+        "path": "examples/platform/src/natal.html",
+        "sha256": "48a10034daade86a7b6bea16a0f50218295dace5a53e567a2dfe6648540141f7"
+      },
+      {
+        "path": "examples/platform/src/styles.css",
+        "sha256": "307ae0993c62cea0a4d8b8cb70b4f676b7077fa1eb5fc6de3b508e875deef5bb"
+      },
+      {
+        "path": "examples/platform/src/transits.html",
+        "sha256": "67c4ef1233f3d6ac6bba140c7cc31d6f53cbac5bd20d01b9b58f5371fe685adc"
+      },
+      {
+        "path": "examples/platform/src/widget-contract.mjs",
+        "sha256": "e916ddbf8553eff378a371756fd8cb4ddce72c4ca8c7d7a6d5227fef40bddb07"
+      },
+      {
+        "path": "examples/platform/src/widget.html",
+        "sha256": "12c3ec5de764dc4bf9edb2eb8cfdfde96e66e319347684d891a499fab1185b08"
+      },
+      {
+        "path": "examples/platform/src/widget.mjs",
+        "sha256": "96188d3be175b2a642319ed809529bc787ac20a1a22bdd9f6a83fae5159718a9"
+      },
+      {
+        "path": "examples/platform/tests/calculate.check.mjs",
+        "sha256": "5386701d6b6bad9118c4374682cca1abb8b271d0d73a8d74ce99abe82f644160"
+      },
+      {
+        "path": "examples/platform/tests/receipt.check.mjs",
+        "sha256": "1ff0d46b35b891b9cf23f3bbd009f89b3ed4d37270cfddb1686ce6233e5e6dfa"
+      },
+      {
+        "path": "examples/platform/tests/server.check.mjs",
+        "sha256": "fab28ccce6d78ca7b20a5c0197d370d0d6a48a3b40d359e9ad02cea6ab631e1e"
+      },
+      {
+        "path": "examples/platform/tests/widget.check.mjs",
+        "sha256": "b7fe3f861a17e248921ea7991bfb5680c1c161c0121f16e8b9f8ae4745486c46"
+      },
+      {
+        "path": "examples/platform/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+        "sha256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17"
+      },
+      {
+        "path": "examples/platform/vendor/zodiacs-engine-0.1.1-rc.3.tgz",
+        "sha256": "aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17"
+      },
+      {
+        "path": "public/examples/platform-starter.json",
+        "sha256": "6bf58bdc65901c23193d24ba19a7723e9c3d9adda70bc1dc958267aa0bba073b"
+      },
+      {
+        "path": "public/examples/zodiacs-platform-starter-0.1.0-rc.2.tgz",
+        "sha256": "d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420"
+      },
+      {
+        "path": "public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz",
+        "sha256": "facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a"
+      },
+      {
+        "path": "public/sdk/engine/.nojekyll",
+        "sha256": "dff146815b98d43ce024df190e241a0e6dc179203e7e05b1258ca1719b8f4d3a"
+      },
+      {
+        "path": "public/sdk/engine/assets/custom.css",
+        "sha256": "ad5a4df7df5f246bee8bc2074e419e7793caf0ec26a9bf70b5058afae4e5ebb6"
+      },
+      {
+        "path": "public/sdk/engine/assets/hierarchy.js",
+        "sha256": "02b13de664484021efcf0388944b451d63196637a7b93f53ff29e3b6bb112e05"
+      },
+      {
+        "path": "public/sdk/engine/assets/highlight.css",
+        "sha256": "4abc5499c3252c13d00d803656af2c1ac992d98eb708382168cbce958da65755"
+      },
+      {
+        "path": "public/sdk/engine/assets/icons.js",
+        "sha256": "ef46752ace8ec936ceeaf75e4499774ba970ae6e8fc663f35a3a6c08ed7c7e1b"
+      },
+      {
+        "path": "public/sdk/engine/assets/icons.svg",
+        "sha256": "6e6463c759b66b92fad51bdb72d93c937d609b4039607b39815457f82ace36db"
+      },
+      {
+        "path": "public/sdk/engine/assets/main.js",
+        "sha256": "a91e49305d77aa7e55d9e1f3dc0ee0d64a472b1218d3b52fb261632a1a9f60d8"
+      },
+      {
+        "path": "public/sdk/engine/assets/navigation.js",
+        "sha256": "08e294b44ea73818fd82b99f90d6d5949d39c6d75fabdb9009dad20818be4908"
+      },
+      {
+        "path": "public/sdk/engine/assets/search.js",
+        "sha256": "910b9d7ee63b87af9b82890bbad292b220e5db4488531b32455188916772d1f3"
+      },
+      {
+        "path": "public/sdk/engine/assets/style.css",
+        "sha256": "f8e91600fb75222763624abb9015ddec164d8a11d6f2c4f3b6a1db04a7bad0ba"
+      },
+      {
+        "path": "public/sdk/engine/functions/geo.createGeoNamesClient.html",
+        "sha256": "dab9882e68aea91e7f3dcdf282bff929a85bc4a006db0affc109da4bfff796cd"
+      },
+      {
+        "path": "public/sdk/engine/functions/geo.offsetAt.html",
+        "sha256": "a37dcae11fd263a44825a6d8f04f61ee281a1ef1aa647dfc0db8e9fae985fb1f"
+      },
+      {
+        "path": "public/sdk/engine/functions/geo.resolveBirth.html",
+        "sha256": "43ab7582ffc34c4d64adf8d8774a490c35328de6dccd3fde6b70d76a3cfd0cb1"
+      },
+      {
+        "path": "public/sdk/engine/functions/geo.resolveLocalToUtc.html",
+        "sha256": "e3cf54a147402f45c8551e257c6cea30f9704e54a458ddd02c5b14f7148136cc"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.computeAngles.html",
+        "sha256": "49f4bef6d77f3dfd5c1634ed5d5416c41805894821341fe0d612788cce70b902"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.computeHouses.html",
+        "sha256": "36215d60cce4bf303f58067150e989ea3c10a9b15187a5349f1ac34a6da065db"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.degreeInSign.html",
+        "sha256": "9bffbd4ffffee0c74cc136bbb861135950ecbddd1c9653132a4d317a44a35627"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.elementBalance.html",
+        "sha256": "70d85f128058fdf128fdf0f68d3de9da1be56bb029f06d5da6f9ac469d3f076d"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.findAspects.html",
+        "sha256": "fa309c2083db81597d3832d05a961aa14d9b16ffff9ed856693ee9849e0b21b6"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.findInterAspects.html",
+        "sha256": "824c3b0582edeb8b8d936ffe3d1baa84c6d774d39cc2c241204328b77b769e9f"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.findLongitudeCrossings.html",
+        "sha256": "96e4cb713cee6e0fe296eb5305d44783934fa946f252456579e1c40ab23f51c0"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.groupIntoSeasons.html",
+        "sha256": "859f245e4a0b4c09e5e5af62f335d85744c5171c840edbb2bcff78ecfc1a1a0a"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.houseOf.html",
+        "sha256": "28e0cf8f9f4864fa2e5c19446fdf3422acefeeb88280e8ce4744da6edb4bd43b"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.matchAspect.html",
+        "sha256": "6d80b6155da7d0151cd0a1dd036db3163c6ff99aee3a6dc9ba77384b1c25dd26"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.meanObliquity.html",
+        "sha256": "1c93905cfd5cd17024deaae972af5337cd2227950aa9e5d1c08f8b63af84269d"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.modalityBalance.html",
+        "sha256": "53cd7601584da66c872e64e78920a030f108071d926d8e0da310459dfcc4d3f9"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.moonPhase.html",
+        "sha256": "4cb3cb3ef4ace2b068c1893e6f073a330e0f6790f7bf874329b25624eeb62512"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.natalChart.html",
+        "sha256": "0dfb0d9e0308dc9f0a8e47e06746725e8691a558fbbc4b34026a835efbfeb474"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.normalizeLongitude.html",
+        "sha256": "cf25b5c92d783a8e806fc4eae726876ba0d78902bb7958b24131e0526779181c"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.placidusCusps.html",
+        "sha256": "222ed73daa7bdbadbc1db404cfdbbf03919b03359efe70d731b32c37207def2c"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.positions.html",
+        "sha256": "a756471ce31852e5a4d42a3749ec3bf969deaf0d42be32f5c34e2339cd97f988"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.ramcOf.html",
+        "sha256": "dd938a6c0a693daf12a9a212ba9ef8893e654f16db1f5804170f8d5b4277ccfa"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.saturnReturn.html",
+        "sha256": "5495336d22f2380dc79a1ba9688bb7b44320c16efb938bc0fb7db262497ebc9f"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.separation.html",
+        "sha256": "a87a1207e63b4c53414bed0158746ffaae9252122669108922fb24276266b646"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.signForLongitude.html",
+        "sha256": "85c24a892d5bc7e1317a09dde527d285b5a35af9070c3cd5eb3ebef927c9eaef"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.signIndexForLongitude.html",
+        "sha256": "8b29ffe55b262664a986c5e3e12ddd94583dc650e573ce1d3e9189c01ab7a669"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.summarizePair.html",
+        "sha256": "b0bd32cd7079153f62be62fbddd8cfbbe740c12472e8da12792135862876ecb1"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.synastry.html",
+        "sha256": "4a2a49a5e8f21a9a29090161005ba39b81f765fbc2b284b5eda2be1ce477d936"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.transits.html",
+        "sha256": "7d23b462c7644028a500afc03e5a0b03e1cf30b84615c8696e11015a78555f5c"
+      },
+      {
+        "path": "public/sdk/engine/functions/index.wholeSignCusps.html",
+        "sha256": "a36ce1d75ea95418001a2164aa0f33416741eb8dd13867c21b4beb6e28a61554"
+      },
+      {
+        "path": "public/sdk/engine/hierarchy.html",
+        "sha256": "37261cb510057410483f5e961043dadc6191955474662a970204c820571fcda8"
+      },
+      {
+        "path": "public/sdk/engine/index.html",
+        "sha256": "13e4402da4d56cb4dfb3aa3dc16a0b89674f9b3463b4957430b14ae8e5011d90"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/geo.City.html",
+        "sha256": "d375ca75cc9b768a0819a6bb7134ac0abe50a4d822b69dc0ba091772ae61c67e"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/geo.GeoNamesClient.html",
+        "sha256": "a66a2c0da4867b09288f7d47c0607f94c5ccfe209bd323a893082c87489b5883"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/geo.GeoNamesClientOptions.html",
+        "sha256": "94fa3cfd6f079be089a2e50514d6da613dd1e9bf328bddf494ff4f0951598687"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/geo.GeoNamesIndexMetadata.html",
+        "sha256": "3f92637f76e7cda9a2c18dd8277f930f5d71cc9dbe4144c042c40c0c0c0f9776"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/geo.LocalBirthInput.html",
+        "sha256": "8f944c86d6b382fa53f49099d1c57f5f54824d20c65c6e9eac56d01e2d3bed3d"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/geo.LocalTimeResolution.html",
+        "sha256": "798c5decfbee64b03df5df917e4e2088106a5a5aaeda4a90f7488fdc423f589b"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.AngleInput.html",
+        "sha256": "c871cf18152282c9dd03677580d2146309e1225563dd3a2dfc9e991698f7b578"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.Angles.html",
+        "sha256": "c1d686c40e0d2430abbf8d4000077eb12f11d02d1ed9c9481f1bea84c1e2d715"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.Aspect.html",
+        "sha256": "b26b9553ee9dc1a1f68d741bbcd5083bbf7c9347010fa30c4ba2a56793d98e3f"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.AspectDefinition.html",
+        "sha256": "c74dd7af2fb625d67090e2ac4284794b382d3e2a98c79658bc4bcf7552f03c64"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.BirthInput.html",
+        "sha256": "f697079d8e0c1d3c0f1baa495753601d032ffbdfdd22c250ba83f509bbb58c12"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.BodyPosition.html",
+        "sha256": "a3535e71cd168f952f21d7fa572d75c7e8ef70262206f32561a21a9fb35022ee"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.Chart.html",
+        "sha256": "99abd9809b048add7c8443668abe2985be17b1843f164be590360aec37e0b968"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.ChartInput.html",
+        "sha256": "c0fa6c2a800d1344e7579ea93c9a4526766c9a4b9d70d4150cc9bbb88c990867"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.Houses.html",
+        "sha256": "c83a5e4cf1c72b8aed5b91cd0432d356b832bbb9899bbb1153eaf2ffbded251b"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.InterAspect.html",
+        "sha256": "025ac174c03191cbb1e68512d4bfd2cb66bf376d8161bfe65eab8beca8d72680"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.LongitudeCrossing.html",
+        "sha256": "dda19f4b84db12502566e6511be743bb8982cf983c50636dbe941ec40ced061f"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.MinimalBody.html",
+        "sha256": "d598f6561ca350cd2c6c6bca33c6972edcdb5433f3763e340bfe32611652933a"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.MoonPhase.html",
+        "sha256": "a9d7cbe28d780ade73fe60aabe24615c30d24a00224e15cfdaba34d46967168d"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.PairSummary.html",
+        "sha256": "44eb74ab23069143284590cc9c11ac5be462128cd7e3e3ca69c79dab75e162b6"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.ReturnSeason.html",
+        "sha256": "8fb885b4c8e8785fd0198b78be40e18b819d70fba44e62eff77822b9cb8adaf8"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.SaturnReturnResult.html",
+        "sha256": "0ff056db91369fa665a35b3f77726e6ed551ec5168c169af78708dcb61f343e5"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.SignDefinition.html",
+        "sha256": "e183e36297e82f592d63bc1d23acb35ba93e0168ac01e04c2fc91cb2933291de"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.SynastryResult.html",
+        "sha256": "6111f3cff956aca97366f117f3c45aefa203e531ff33b2ce41262b704665c63e"
+      },
+      {
+        "path": "public/sdk/engine/interfaces/index.TransitResult.html",
+        "sha256": "1d53a42aa9e15887ba3d808ff3b8509bf9a3a5d3b690f51b7fd48715a21914ac"
+      },
+      {
+        "path": "public/sdk/engine/media/CHANGELOG.md",
+        "sha256": "239919b8f7ffa15219e24426c106f19c575c1f19b48e20d96200242ce8cdb0d0"
+      },
+      {
+        "path": "public/sdk/engine/media/LICENSING.md",
+        "sha256": "8a2010524ad7ebf388dabe0bda5ed2ed8753b8bb112f284f0c23826546410096"
+      },
+      {
+        "path": "public/sdk/engine/media/NOTICE",
+        "sha256": "06a8e2e2bae6d6113e738f8c4ee3869f698fbf39756a26ce842d549dde423450"
+      },
+      {
+        "path": "public/sdk/engine/modules.html",
+        "sha256": "4d5c501b2756146691206581a0f5d152f932c8950a88e3213e06482da46a38d5"
+      },
+      {
+        "path": "public/sdk/engine/modules/geo.html",
+        "sha256": "e9f7b5bac1c1ab01fa2d327b9790b2906a916a6ef48b123ffabe96fe19727c8f"
+      },
+      {
+        "path": "public/sdk/engine/modules/index.html",
+        "sha256": "8016078dd1f670d04409ac3beffcfa402f463c0e5f1bc702c3e59beb8c67f3c1"
+      },
+      {
+        "path": "public/sdk/engine/types/index.AspectType.html",
+        "sha256": "c794728b8b673104e4acca47ae98c2e4b50a8373c7ffcf5d1a557a5fd89bbe69"
+      },
+      {
+        "path": "public/sdk/engine/types/index.BodyName.html",
+        "sha256": "d0aa7b43157371af4574ec60d6901f0610b152f9e220a347b30fe0925dcdf239"
+      },
+      {
+        "path": "public/sdk/engine/types/index.ChartFlag.html",
+        "sha256": "b112adcd4300fb839efb2f0a6a6022d6a8547843783807983513fa5f557016b4"
+      },
+      {
+        "path": "public/sdk/engine/types/index.DateInput.html",
+        "sha256": "ec61b6a2c0bf72716abfc631b873f2af4dc8a46ba707fa464c72cda01a023078"
+      },
+      {
+        "path": "public/sdk/engine/types/index.Element.html",
+        "sha256": "817c51fff1464c7783efbe805dcea7111c1e30cf79a96735ad577d15c0d03ddc"
+      },
+      {
+        "path": "public/sdk/engine/types/index.HouseNumber.html",
+        "sha256": "0786adcc5096bf94528a5d39db3f6cf8486d2a3b179de5c4b129d8c9c97ec446"
+      },
+      {
+        "path": "public/sdk/engine/types/index.HouseSystem.html",
+        "sha256": "72608a85059ec800837cbdded31a4c4b60cdde008167f30a23699649da683cd9"
+      },
+      {
+        "path": "public/sdk/engine/types/index.Modality.html",
+        "sha256": "757170fad1fa7b5857866a7ad72e72f67257d4d26b05a7a0d4b29f2a33dcdb12"
+      },
+      {
+        "path": "public/sdk/engine/types/index.MoonPhaseName.html",
+        "sha256": "defdcc8a2bf8adc8b888734315a23ec5a0abd2325c4693014de755d4ebdfd9e3"
+      },
+      {
+        "path": "public/sdk/engine/types/index.NatalSource.html",
+        "sha256": "1d1eff80b417dc348f95c731e6a54ce8328d6e6f34c6b31df0296a8b3b21e6de"
+      },
+      {
+        "path": "public/sdk/engine/types/index.Polarity.html",
+        "sha256": "0a1a01a408bb7ffc582158f938698d22baae953acaaa190f9507faf1395b7536"
+      },
+      {
+        "path": "public/sdk/engine/types/index.SaturnReturnSource.html",
+        "sha256": "d4017ab5cca479bdf62c2a21ef93c7c319cd5582055c318802a919332655a29f"
+      },
+      {
+        "path": "public/sdk/engine/types/index.ZodiacSign.html",
+        "sha256": "7bd7b6d5a9dc89bace4be1bc302f5847bb359231fde0888b8fee6a0f50d64e6b"
+      },
+      {
+        "path": "public/sdk/engine/variables/index.ASPECTS.html",
+        "sha256": "a074cf199824c1c86e9c914bb6ed3d7820d86be75ea8387665be5da99931f69a"
+      },
+      {
+        "path": "public/sdk/engine/variables/index.ASPECT_BODIES.html",
+        "sha256": "64defb878d4eac238a32a701ce17204e8ce8afb89db78fd14041f3b31efc2bb7"
+      },
+      {
+        "path": "public/sdk/engine/variables/index.ASPECT_TYPES.html",
+        "sha256": "08afd3bd31d0f3fab0424ae804a8d51ba7f33ad2e65fcabc9ca80d53b96f551d"
+      },
+      {
+        "path": "public/sdk/engine/variables/index.ELEMENTS.html",
+        "sha256": "d9ee6296e930ac6717479ec05580f8963594190fa7eb3cdc2dc1d9dcc40f3360"
+      },
+      {
+        "path": "public/sdk/engine/variables/index.ENGINE_VERSION.html",
+        "sha256": "43f126ae1092bfb6bab2d7911bdcabd5a0b7c2afa0ba422454df2202fe0847fa"
+      },
+      {
+        "path": "public/sdk/engine/variables/index.HOUSE_SYSTEMS.html",
+        "sha256": "08032a50a38e2c87c475ef1cfedfd78030879a8163db97e71739120066439643"
+      },
+      {
+        "path": "public/sdk/engine/variables/index.MODALITIES.html",
+        "sha256": "0cfe5b3bf4c37249cec1d1bfccdcbe506a1136444e715ee1607e951a1eed0928"
+      },
+      {
+        "path": "public/sdk/engine/variables/index.SIGNS.html",
+        "sha256": "0b638d85e626da0eb39321d044a751db69fd135a609936b1861f9ae9e68e4738"
+      },
+      {
+        "path": "public/sdk/engine/variables/index.SIGN_NAMES.html",
+        "sha256": "af26a4f9d5f988fc7582dac6e464bc76301565cf2b821715dd8f0624452a36dd"
+      },
+      {
+        "path": "public/sdk/examples/simastry-aura/index.html",
+        "sha256": "2fc2e7130de7844d99701d69c8525e0260e41b2bc333838c2103a3f2e72ea7e8"
+      },
+      {
+        "path": "public/sdk/index.html",
+        "sha256": "8e880bdff6acab505013afc47245faa3d8826490e500eb7f3af2a46135d779ea"
+      },
+      {
+        "path": "scripts/platform-engine-report.mjs",
+        "sha256": "77d45abf45f7db9343320cd8ff85438d42360d1ead654f27c03f7e69394e7144"
+      },
+      {
+        "path": "src/components/SiteFooter.astro",
+        "sha256": "d51212bba8380b20ead7a4a5cc3bc59b6ba77171aa9dd2d83bf5aa9ac5f7b290"
+      },
+      {
+        "path": "src/islands/ChartCalculator.tsx",
+        "sha256": "5dda4f013b779ee4ce9e1e0d5f33dd6453a3eb4d2342255b80c353d5a854763f"
+      },
+      {
+        "path": "src/layouts/Base.astro",
+        "sha256": "72f3b70e484f9a5cf294ee69bd9a35389118b4e78444a42cf8285203eb8eda3e"
+      },
+      {
+        "path": "src/lib/account-api/encryption.test.ts",
+        "sha256": "e17333aa98687694ef9e4159a850f64d527d04e4c9c5db76615ee0542f2089d6"
+      },
+      {
+        "path": "src/lib/account-api/encryption.ts",
+        "sha256": "de10b2e88d5b4497c6249f1bbd5d587bd2f1c3de60d6145ecc9bef74d4ab1351"
+      },
+      {
+        "path": "src/lib/account-api/handler.test.ts",
+        "sha256": "8dda6608bfc57216724d412111d04014be158bb9f885e64be244a3e3693184eb"
+      },
+      {
+        "path": "src/lib/account-api/handler.ts",
+        "sha256": "75f52ba9f0646657eaa57d524bf702a3e4553f8ee7292fe10ffb3024777f4de2"
+      },
+      {
+        "path": "src/lib/account-api/mutation-verifier.test.ts",
+        "sha256": "5498c0e48fd071c04dd0dc448b98bbd36e1ed4d06fc2d7c62f6ce092c49eda80"
+      },
+      {
+        "path": "src/lib/account-api/mutation-verifier.ts",
+        "sha256": "f50deb9bc64fb0c96f5ac055a4f375a0214be2c237796f9c36dfc78c0d72771a"
+      },
+      {
+        "path": "src/lib/account-api/request.ts",
+        "sha256": "6d1d4b66ad71e954d1fe93d7d4995def80c96006b8d70d8f27dab0adbe35488f"
+      },
+      {
+        "path": "src/lib/account-api/server.ts",
+        "sha256": "69972923d73c236c59dccaa330897db151f75300843ebe0b1a5fb2d60d37beb2"
+      },
+      {
+        "path": "src/lib/account-api/sync-handler.test.ts",
+        "sha256": "9aefd7f9eea543c65b92dbea6ceae262f38a7babf1624842ca9be43f56d1d9e6"
+      },
+      {
+        "path": "src/lib/account-api/sync-server.ts",
+        "sha256": "3e38f64355635890a612f2a7923f9e37fbeabad5b48c3a69aaf1a31df11d307b"
+      },
+      {
+        "path": "src/lib/account-api/sync-wire.test.ts",
+        "sha256": "a9c0fd58c107f34d5cd2ce0a597a460d1cfe2c320d551c003d4beb70f00e18cb"
+      },
+      {
+        "path": "src/lib/account-api/sync-wire.ts",
+        "sha256": "9b8a09e9d79f2dd353d197927b0f5c5a135a607ad2ed3889eae3c7446a06f822"
+      },
+      {
+        "path": "src/lib/account-api/types.ts",
+        "sha256": "ed96a3d6c36c6c1df8c7fe64872fe40effd320be4a4f1c9d4bedd8ef8a73df8c"
+      },
+      {
+        "path": "src/lib/account-v2/auth-epoch.test.ts",
+        "sha256": "2b697ae58524ad649e8d464a8ec72e776ff93a21aad8e5b360ce413653fa6b66"
+      },
+      {
+        "path": "src/lib/account-v2/auth-epoch.ts",
+        "sha256": "a0c848ec383be9023e17a13bd22a781b61778fcc0d3812b6ee9d3495d81e3ae8"
+      },
+      {
+        "path": "src/lib/account-v2/browser-storage.test.ts",
+        "sha256": "1600eaa7e90dce5c425525986df89230c9061896554c1691d7145a92ca549a6e"
+      },
+      {
+        "path": "src/lib/account-v2/browser-storage.ts",
+        "sha256": "83004a5e312d4874e70577bcfd35631e356b81e48201ae8e8eae55ce688aafd9"
+      },
+      {
+        "path": "src/lib/account-v2/chart-label.ts",
+        "sha256": "e3b5e3230e0bca7c8f978de9bb4a8abe525731fea3f49fcfdf9d161589d96a91"
+      },
+      {
+        "path": "src/lib/account-v2/chart-wire.test.ts",
+        "sha256": "0e7c0b22a1e5570560f9e0c948d4c03c96222386b41e5db3c1b0274ee9e38448"
+      },
+      {
+        "path": "src/lib/account-v2/chart-wire.ts",
+        "sha256": "56fa915f8e2c588cc1e6e3901482ef4938b51ea0c634e6d99955b58db142f950"
+      },
+      {
+        "path": "src/lib/account-v2/client.test.ts",
+        "sha256": "ca385bcf15ea40d5ffb541c15294c4e6306c6802a4f3dbd939db439704b99ee5"
+      },
+      {
+        "path": "src/lib/account-v2/client.ts",
+        "sha256": "5098a63e7618b2453ce42277104fd46ca45eed35bd5ded52a95a0687a43642bf"
+      },
+      {
+        "path": "src/lib/account-v2/cutover.test.ts",
+        "sha256": "d26362d6221df5dee8b6a9272f657b2d7689f673c8c67a786d2453f2137891a4"
+      },
+      {
+        "path": "src/lib/account-v2/deletion-recovery.test.ts",
+        "sha256": "9338e29cb41453dec1a02447335909a02cca3466c4b484da19b9539c6e626ffe"
+      },
+      {
+        "path": "src/lib/account-v2/deletion-recovery.ts",
+        "sha256": "cf5d333f6e53941b216de136ac4b27beb9ae732c4fd43c4d8be5912f77d0df88"
+      },
+      {
+        "path": "src/lib/account-v2/feature-flags.test.ts",
+        "sha256": "136a2a8d0b20c83cb492f9e77f7f5de76f40524c8efc189aee7b37e06c5fc9d2"
+      },
+      {
+        "path": "src/lib/account-v2/feature-flags.ts",
+        "sha256": "ac0111bfea02f434c9976820d91fd7807b0d237064d9f586c02516d4f74c43da"
+      },
+      {
+        "path": "src/lib/account-v2/local-state.test.ts",
+        "sha256": "666a013770cb8a3297ef0dd0fadd8dd819b79d2c039a855691555ab66f03c459"
+      },
+      {
+        "path": "src/lib/account-v2/local-state.ts",
+        "sha256": "94133384e3e9184282c8350f038ab7cce5a95f815bd6e8f50d7778f5f916e345"
+      },
+      {
+        "path": "src/lib/account-v2/mutation-fingerprint.test.ts",
+        "sha256": "073888f71f39210bcf070a323d32f81fa31ecdb035c898a9d7b9b2d5d7d301c9"
+      },
+      {
+        "path": "src/lib/account-v2/mutation-fingerprint.ts",
+        "sha256": "1c04d2a4f28215b713ce14ec8114719e742bfd457bbd943904e09ca5905c85a8"
+      },
+      {
+        "path": "src/lib/account-v2/pending-operation.test.ts",
+        "sha256": "06fdb72e2c649a8e46b9463d7e1932240f72251f7364127c61b45fdbb410a0a6"
+      },
+      {
+        "path": "src/lib/account-v2/pending-operation.ts",
+        "sha256": "5c9003b6463a7c408c6c2a82a9e9d4ddfc7bc13ced76ef4e69ce94b786a317b4"
+      },
+      {
+        "path": "src/lib/account-v2/policy.ts",
+        "sha256": "d5897f2175c6c368466554dee58393aa47026cff890f357f679580e1cfb75874"
+      },
+      {
+        "path": "src/lib/account-v2/profile-access-reader.ts",
+        "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+      },
+      {
+        "path": "src/lib/account-v2/profile-access.test.ts",
+        "sha256": "055222b452f26e38ddf0b90b568f1d88ab08d6ec701ebbc306689b57ac553ef0"
+      },
+      {
+        "path": "src/lib/account-v2/profile-access.ts",
+        "sha256": "08a4533f8df039a3e10855cd85bca318a57fd474f378e2a4d4ac5fe31eee8274"
+      },
+      {
+        "path": "src/lib/account-v2/profile-boundary.test.ts",
+        "sha256": "84a5258f1683cc7fe6481df1ad19b70acee52373ac8a4ce233aa120438d4d5a4"
+      },
+      {
+        "path": "src/lib/account-v2/profile-boundary.ts",
+        "sha256": "6c1354634879049a7f03aebfb70183cc3daf62d38a0199cf2578ebbc55cf1829"
+      },
+      {
+        "path": "src/lib/account-v2/profile-lease.test.ts",
+        "sha256": "3b443a7085d9a3367f75557a78ad7b4628fa44d01f25e371f969e3f38afa8b36"
+      },
+      {
+        "path": "src/lib/account-v2/profile-lease.ts",
+        "sha256": "be434eba4d19ed65e439609dd627108538d15c12a78b36e999e6d75adc0a30ef"
+      },
+      {
+        "path": "src/lib/account-v2/remote-chart.test.ts",
+        "sha256": "07cd87660c34be6f76376fa697ad02309ca38f9cd0d8f82af2b983d555c09336"
+      },
+      {
+        "path": "src/lib/account-v2/remote-chart.ts",
+        "sha256": "74bd4bf17e810712d8f5406971f8e98fe467cbc11a1bf87de33a84525135cb8b"
+      },
+      {
+        "path": "src/lib/account-v2/storage-identity.ts",
+        "sha256": "fac153299e09bf775443e2ed71be9e81ad8de6ad911a87c85ac4fc42707675ab"
+      },
+      {
+        "path": "src/lib/account-v2/types.ts",
+        "sha256": "e9c448984990886832d1fd10b07f01dc995fa95d1ffed622d3c3f97709590810"
+      },
+      {
+        "path": "src/lib/engine/aspects.ts",
+        "sha256": "0faaa80258494bee18bb5247291a8ecbe0abc9554775c5f0c43b8d0f00c2660f"
+      },
+      {
+        "path": "src/lib/engine/fixtures/independent-validation.test-helpers.ts",
+        "sha256": "f20df7811e6a7f5815bd640c38e59855586d9c9d575b1a728588e7459f8de5ee"
+      },
+      {
+        "path": "src/lib/engine/fixtures/legacy-polar-saved.json",
+        "sha256": "9991f0dc3f2e9e48dc73572703a45333928525516526aa6e3f7049513f76f2ee"
+      },
+      {
+        "path": "src/lib/engine/fixtures/swiss-eight-cases-policy.json",
+        "sha256": "9dfc069be7c6854da1f0dff578c0b213e64624e720d21e27c6301b7612fd79a4"
+      },
+      {
+        "path": "src/lib/engine/fixtures/swiss-eight-cases.fixture.json",
+        "sha256": "e51073b6c78ce721a4cd284d6626566c1c267c63075e6c81654302d6d5f9c7ed"
+      },
+      {
+        "path": "src/lib/engine/fixtures/swiss-lunar-fixed-target-applicability.json",
+        "sha256": "2f9056c0f93b22e3270bf1f496d804759a9057ac6b3e5a142604248ba1dddb1a"
+      },
+      {
+        "path": "src/lib/engine/fixtures/swiss-lunar-return-policy.json",
+        "sha256": "16c807cfb7374c340200064ba6f4332b98923f77b05f6f24f62ea5541d5aa146"
+      },
+      {
+        "path": "src/lib/engine/fixtures/swiss-lunar-returned-charts.fixture.json",
+        "sha256": "daa41662758d7c1f4dfa234e2dfbd33a884d11b343d94af605b28a537c18b410"
+      },
+      {
+        "path": "src/lib/engine/fixtures/swiss-lunar-returns.fixture.json",
+        "sha256": "22e4a55652e12541d01cbd46c7efad018a06e60169fb399e2d02a6ab2ab6d5d5"
+      },
+      {
+        "path": "src/lib/engine/fixtures/swiss-node-polar-policy.json",
+        "sha256": "7742cb2bc7cd0932a344ddcb708e45dad07b91cb653ea1f55538c2d73fa18e96"
+      },
+      {
+        "path": "src/lib/engine/fixtures/swiss-node-polar.fixture.json",
+        "sha256": "022fbc030185b84aa0954411aab266577cd75f50a1947dc4717e92d8a9db9260"
+      },
+      {
+        "path": "src/lib/engine/fixtures/transit-window-independent.json",
+        "sha256": "db4ddce1d2761ad0ada1ab7aaf456d74d2f79b6b6a3434b1b8f6b9895ad66c3a"
+      },
+      {
+        "path": "src/lib/engine/full.ts",
+        "sha256": "172ccbe20a898c4e4ca156da956ab64ef36bb26c6177e6df29f9e7838683a888"
+      },
+      {
+        "path": "src/lib/engine/houses.ts",
+        "sha256": "e4230eb4f6d3e904efdd871b6067a9ca6ef5da630d60a64a83df099e48301eb0"
+      },
+      {
+        "path": "src/lib/engine/types.ts",
+        "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54"
+      },
+      {
+        "path": "src/lib/living-chart/capture-sync-choice.test.ts",
+        "sha256": "3959e1432183c37be60ea1353e7910d2291db84d5b2d746cfaf6806d2baa1224"
+      },
+      {
+        "path": "src/lib/living-chart/capture-sync-choice.ts",
+        "sha256": "f376bdda6f176103bb41f78f53830e82c432763ebb62fef8bbc40350c17170bb"
+      },
+      {
+        "path": "src/lib/living-chart/cloud.test.ts",
+        "sha256": "b10cf1333bb2526aa2b716aca37b773a0bfa33210ac949f30436371e22f24e88"
+      },
+      {
+        "path": "src/lib/living-chart/cloud.ts",
+        "sha256": "b5dd60dfa81f8b307919b6ebb203c6c44cb515d8a7813a846006dff4a5f26a61"
+      },
+      {
+        "path": "src/lib/living-chart/feature-flags.test.ts",
+        "sha256": "c9715872ad6527e587ecefed6a0706b8153c1b886c9fbff867cd2abb3c62faf9"
+      },
+      {
+        "path": "src/lib/living-chart/feature-flags.ts",
+        "sha256": "da39b8e0584e79bb8f6a84344e103a466bb89c0abb76afcb6a424200003ca4e1"
+      },
+      {
+        "path": "src/lib/living-chart/forecast-snapshot.test.ts",
+        "sha256": "ec5aca921531cb0e1f8ffba787e45f099da765e722f739b7ab509b7b464dc745"
+      },
+      {
+        "path": "src/lib/living-chart/forecast-snapshot.ts",
+        "sha256": "d6beb01d92999434563196d6daf03479e9a0efc8b68d627501813da4620b7b24"
+      },
+      {
+        "path": "src/lib/living-chart/initialization-guard.test.ts",
+        "sha256": "9650f20d4dec5de8438147eefae93678904d8ae39d16ab50a92ea1ec7f74149b"
+      },
+      {
+        "path": "src/lib/living-chart/initialization-guard.ts",
+        "sha256": "e940f46283c398b2d3a203f89ca9daf523386898535b0fdd6b671c82b6755918"
+      },
+      {
+        "path": "src/lib/living-chart/owner.test.ts",
+        "sha256": "cc3d71c0eeee63e18baebfc5cb9a9d11b88a32180a9a4e195e74a6f55ca013b5"
+      },
+      {
+        "path": "src/lib/living-chart/owner.ts",
+        "sha256": "d22af6676482d11d0c30ad5ac71ecc0b4fdc98cfba9f4e57b8f8b5b1d25e619a"
+      },
+      {
+        "path": "src/lib/living-chart/schema.test.ts",
+        "sha256": "a5c1b447aa8298906c8fde52d2680095b514ac2db934795ac1d4e540eb117ea1"
+      },
+      {
+        "path": "src/lib/living-chart/schema.ts",
+        "sha256": "bce0c78e775e7f889684defd9f345a45ed1e475fa7d682919f7a28d987d4f9ed"
+      },
+      {
+        "path": "src/lib/living-chart/store.test.ts",
+        "sha256": "c5fb665fc8350f314ee1dc3ebda8360a38e663a7fa7228d444bfdafcb9f40c08"
+      },
+      {
+        "path": "src/lib/living-chart/store.ts",
+        "sha256": "47d7d834bff25a8d1b288a33bba72b5116bbf8c66fb54234c70573115b86c676"
+      },
+      {
+        "path": "src/lib/living-chart/sync-metadata.ts",
+        "sha256": "6c1df8efaca1d554820ae644b2477116e027cf1f6110b76d0e5a5139074a3d34"
+      },
+      {
+        "path": "src/lib/living-chart/sync.test.ts",
+        "sha256": "26c2eb2c8b3ad1fd73f021efea7eb5a861b6a673f4cb3777ae83ca09a616ad25"
+      },
+      {
+        "path": "src/lib/living-chart/sync.ts",
+        "sha256": "fa317017252e9a4bc6c8daea2332340a39965f19fd5156db8cadb95fd3dd9a3a"
+      },
+      {
+        "path": "src/lib/living-chart/types.ts",
+        "sha256": "8f79abb72f561be42bfc35e2e51160ed8993dd437aff53de842609161dd4681b"
+      },
+      {
+        "path": "src/lib/profile/daily-email-client.test.ts",
+        "sha256": "1484dd012b8bf587bf73fee64b7a99fd9d025af8af7f199db12c2db8fece3e7c"
+      },
+      {
+        "path": "src/lib/profile/daily-email-client.ts",
+        "sha256": "19c31b36c3fd0996259cfbf3567a5a8a57f1abb31bb6062948933468c44dd20a"
+      },
+      {
+        "path": "src/lib/profile/deletions.ts",
+        "sha256": "ff6011e36ae422f154374973982c8e5d9840aafca12627554b3a1354ec5855ef"
+      },
+      {
+        "path": "src/lib/profile/merge.test.ts",
+        "sha256": "010bcfaafcf3f91d7e83426968ebebba1e464c84d3ca6dbd3407504bf585f7ee"
+      },
+      {
+        "path": "src/lib/profile/merge.ts",
+        "sha256": "3e49d997f331d47182b3103d0f01d18dc72aa7b19219418e59c1b55923aeb084"
+      },
+      {
+        "path": "src/lib/profile/pairs.test.ts",
+        "sha256": "b341b63c4e29e107f4a3fe0add088abd1de1e77b0f2890ce6798ba441b51aa81"
+      },
+      {
+        "path": "src/lib/profile/pairs.ts",
+        "sha256": "d65e900f510b30ea6e887a78c1c42d01243f8afa5d96c4cf8d1d12a9b7d41c18"
+      },
+      {
+        "path": "src/lib/profile/personal-chart.test.ts",
+        "sha256": "54eaf5048a65ebc152513d5bacdf0cbb06eaaadc9b05304c8f6489a0b528df90"
+      },
+      {
+        "path": "src/lib/profile/polar-repair.test.ts",
+        "sha256": "2c70e0bb0817d975907d88b225316d87b583d58ce4f84dbef92052c8541e74ca"
+      },
+      {
+        "path": "src/lib/profile/polar-repair.ts",
+        "sha256": "772dc144d1d00429c46f925f43061da071b9117d0f351896e4395d746552e741"
+      },
+      {
+        "path": "src/lib/profile/post-chart-context.ts",
+        "sha256": "7622c364e6471acd6ba849ceddb03fde6998bbaf70160c3d35b604a0e845b905"
+      },
+      {
+        "path": "src/lib/profile/profile-chart-handoff.ts",
+        "sha256": "e1df154c323b6990857df47ff5a3aa722ec033903c285ac8a9f993543cb17304"
+      },
+      {
+        "path": "src/lib/profile/read-store.ts",
+        "sha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485"
+      },
+      {
+        "path": "src/lib/profile/resolve.ts",
+        "sha256": "c94bcbdc638593b74b52caa02060292651a6610c626d20eee0ebbc05a0f0d9b1"
+      },
+      {
+        "path": "src/lib/profile/schema.ts",
+        "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+      },
+      {
+        "path": "src/lib/profile/store.test.ts",
+        "sha256": "aa0de7a66c153a14a57319d4e667c790048f75fa0aba8edb858eca2adfc00362"
+      },
+      {
+        "path": "src/lib/profile/store.ts",
+        "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+      },
+      {
+        "path": "src/lib/profile/sync.test.ts",
+        "sha256": "3153e23f424f8336257e3109bdb029b90b263c1b95a23578dbdb9f8e091d47de"
+      },
+      {
+        "path": "src/lib/profile/sync.ts",
+        "sha256": "0c884287355fc79d244d76d505b1b4977565127e7e58e58d801365b59c22a2e8"
+      },
+      {
+        "path": "src/lib/wallet/address.test.ts",
+        "sha256": "9dc638cee5b929ed8931cc33dba86098bf89aff1e6dfd858c4d1d147f4c910bb"
+      },
+      {
+        "path": "src/lib/wallet/address.ts",
+        "sha256": "e0d7aeaed2f767bed0976bc1fd7347c3938b37eab639337d0608dc3efaff8f4c"
+      },
+      {
+        "path": "src/lib/wallet/aura-connectors.test.ts",
+        "sha256": "ea69a1d14a3aedede9e9b06b00552648505f508b38ab9078aadb05852e25756e"
+      },
+      {
+        "path": "src/lib/wallet/aura-connectors.ts",
+        "sha256": "82b18f708315265cceeea4c72d50b8e01931f408a068e7729e243d1c3e27ff34"
+      },
+      {
+        "path": "src/lib/wallet/config.test.ts",
+        "sha256": "0948edd4e4b9862822a5fedbe14578933cbdc19f7220a04d83973ac48000e128"
+      },
+      {
+        "path": "src/lib/wallet/config.ts",
+        "sha256": "d1b32530d29b4bf58e9158110ba60cc78adde777902d7eb38912dfcedf219ddf"
+      },
+      {
+        "path": "src/lib/wallet/holdings.test.ts",
+        "sha256": "801ee08778937924b776d5f71215ed8f578e83463687c0adaa272b8c0c695ef2"
+      },
+      {
+        "path": "src/lib/wallet/holdings.ts",
+        "sha256": "4210fa9fe5d4284e60fad5e902faeac2c05d2cef58a4f071dc5cc5f292862a44"
+      },
+      {
+        "path": "src/lib/wallet/providers.test.ts",
+        "sha256": "a06230c2e89db12e6c12d32472b89cb3ea4697aea88ea704c57c8eb8ea961029"
+      },
+      {
+        "path": "src/lib/wallet/providers.ts",
+        "sha256": "845edddedcd1ea61f84370ebd27b322eb46c008dc7d11c4e8f9c24b901bb4826"
+      },
+      {
+        "path": "src/lib/wallet/share-card.test.ts",
+        "sha256": "5a0253ef1845364e28526c43d2916e5a7017b3bc866ebcae0a7b3bd26a57fb9b"
+      },
+      {
+        "path": "src/lib/wallet/share-card.ts",
+        "sha256": "0439291d8b519e662bf9a463607ea2dedf048993b3ea4f16feee3d30c4bf3ae8"
+      },
+      {
+        "path": "src/lib/wallet/types.ts",
+        "sha256": "c52c198db6cdc6b0752128f4eb04525a1c87b7d62d8e018eb7d34ce55751fc0e"
+      },
+      {
+        "path": "src/styles/base.css",
+        "sha256": "a85d1939ab2bdd43e378d6257a502767182fe654a9dccf328c67f1b41df598cc"
+      },
+      {
+        "path": "src/styles/calculator-first-paint.css",
+        "sha256": "ede26eecf16f775131837e836bc752e504bee2e781100dec361e8fc3d0269184"
+      },
+      {
+        "path": "src/styles/calculator.css",
+        "sha256": "7fe31ea7cb1344d1a5cb7e3aa66fb6c633ea442791e1af198f53a1946b6aadb6"
+      },
+      {
+        "path": "src/styles/chinese-zodiac.css",
+        "sha256": "8d994ecc505cf3c797263b7aabb65f9b99fdbb7e983eb38b5b00ae4cbff0382c"
+      },
+      {
+        "path": "src/styles/cluster.css",
+        "sha256": "ea3a707d47cf1487ba801a0f1c96dd4a4fc000bf177186e4cff73dad53c5c6a1"
+      },
+      {
+        "path": "src/styles/context-help.css",
+        "sha256": "6c2e5c83d5ba584707986e81a97618690bb2d1a68e73789eb60ed3775a202b1d"
+      },
+      {
+        "path": "src/styles/events.css",
+        "sha256": "ce0b8c6dd0a1f1d01cfef8219b7e352c9140c36a420bdab8d141f997da7c8ce6"
+      },
+      {
+        "path": "src/styles/evidence-disclosure.css",
+        "sha256": "1320de7746404c56091e0261543d49a3599d86c4a74f48674225d65a04e338a5"
+      },
+      {
+        "path": "src/styles/explorer.css",
+        "sha256": "bae077ec22caf42761a15f94ead861c0a46fd406b9b7eee5683f3f978f315ab1"
+      },
+      {
+        "path": "src/styles/living-chart.css",
+        "sha256": "c51aac72f438cb9bf3f3562c6eb3a539711a07ed0209e61da36f9b97523f1175"
+      },
+      {
+        "path": "src/styles/people.css",
+        "sha256": "41cabad249ed4a132a4628ff71382b969c04c35e6756d1aeebc77934b2ffcf90"
+      },
+      {
+        "path": "src/styles/post-chart-daily.css",
+        "sha256": "99a8048b0826a9af03dc8d35c4b3644b58faee2e54cce5bcb54c4873f819edea"
+      },
+      {
+        "path": "src/styles/prose.css",
+        "sha256": "caa27e63115115ba0458bd6961ae27855f91f78c4d8ea643fe037d7346d26fc8"
+      },
+      {
+        "path": "src/styles/push.css",
+        "sha256": "212e2bfdd4f94a487c059c61376eb027b5683c8fb070e497ba1c562705e3a093"
+      },
+      {
+        "path": "src/styles/pwa-install.css",
+        "sha256": "1388fe1334ce7deab58e81c4429cc8538821d8afe45d487c1729490936a505dd"
+      },
+      {
+        "path": "src/styles/race.css",
+        "sha256": "1edaf41640665a1db6065ee53a97119a117688fe72a67db57343856203c0da17"
+      },
+      {
+        "path": "src/styles/registry-aura.css",
+        "sha256": "1cbf286e764dc8590971330625f33c922d0da54e6f2b69ee5af17fc7152151b8"
+      },
+      {
+        "path": "src/styles/rx-table.css",
+        "sha256": "fa9edd9a63d8dcd489121b91cdc19eb1cbe5866d42e9d9636ace48c81d309b44"
+      },
+      {
+        "path": "src/styles/site-footer.css",
+        "sha256": "d6088ed5422a2ec37639adb906b1c6ed81ff93df7f36d3d50de1d23ab94e0700"
+      },
+      {
+        "path": "src/styles/someone-else.css",
+        "sha256": "5b2f4a60478422f1f08c1ad0ec1a20f035504d6a6670a73ea1786810c9da2586"
+      },
+      {
+        "path": "src/styles/today.css",
+        "sha256": "7233bbb4e7927b44f01332e57c692f75ee1281e8a2474573d932f2c1b85f9857"
+      },
+      {
+        "path": "src/styles/tokens.css",
+        "sha256": "4ee3e929f656cf7e683adca7bf6fc1b9d4fdb3f7ab05a5d4cb02e95548a820a2"
+      },
+      {
+        "path": "src/styles/transit-itinerary.css",
+        "sha256": "dcf642ac7f2c0e1a986b8b355c4950fc5a966d0989ff2d0f60a1743ab063166c"
+      },
+      {
+        "path": "src/styles/wallet-chart.css",
+        "sha256": "142a77615d16e1f4d8b2820de96d4f42e116d6fa47fc9f63b0b7a5a0a3e7f811"
+      },
+      {
+        "path": "vendor/zodiacs-engine-0.1.0.tgz",
+        "sha256": "8da3e0f2eb3818fe2c5833e05331be61da9b605ffa118a8462182821412e7cbe"
+      },
+      {
+        "path": "vendor/zodiacs-engine-0.1.1-rc.0.tgz",
+        "sha256": "4b16eeac2e8c82e5fb3a5b3756b2ed31f8fec93a37728a722b9ef81ce8f5c20d"
+      },
+      {
+        "path": "vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+        "sha256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17"
+      }
+    ]
+  },
+  "frozenSourceFiles": 12,
+  "anonymousArtifactMatches": true,
+  "sourceReadmeMatchesPacked": true
+}

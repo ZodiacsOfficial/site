@@ -1,0 +1,72 @@
+{
+  "at": "2026-09-08T05:31:49.690Z",
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "purpose": "Baseline source and proposed truthful context compatibility control, not author patch acceptance",
+  "results": [
+    {
+      "zone": "+01:00",
+      "detailsLinkAccepted": true,
+      "instant": "1990-06-15T13:30:00.000Z",
+      "offsetMinutes": 60,
+      "legacySuccess": true,
+      "portableContextSuccess": false,
+      "failureCode": "calculation_failed"
+    },
+    {
+      "zone": "+0100",
+      "detailsLinkAccepted": true,
+      "instant": "1990-06-15T13:30:00.000Z",
+      "offsetMinutes": 60,
+      "legacySuccess": true,
+      "portableContextSuccess": false,
+      "failureCode": "calculation_failed"
+    },
+    {
+      "zone": "-02:30",
+      "detailsLinkAccepted": true,
+      "instant": "1990-06-15T17:00:00.000Z",
+      "offsetMinutes": -150,
+      "legacySuccess": true,
+      "portableContextSuccess": false,
+      "failureCode": "calculation_failed"
+    },
+    {
+      "zone": "+23:59",
+      "detailsLinkAccepted": true,
+      "instant": "1990-06-14T14:31:00.000Z",
+      "offsetMinutes": 1439,
+      "legacySuccess": true,
+      "portableContextSuccess": false,
+      "failureCode": "calculation_failed"
+    },
+    {
+      "zone": "-00:00",
+      "detailsLinkAccepted": true,
+      "instant": "1990-06-15T14:30:00.000Z",
+      "offsetMinutes": 0,
+      "legacySuccess": true,
+      "portableContextSuccess": false,
+      "failureCode": "calculation_failed"
+    },
+    {
+      "zone": "UTC",
+      "detailsLinkAccepted": true,
+      "instant": "1990-06-15T14:30:00.000Z",
+      "offsetMinutes": 0,
+      "legacySuccess": true,
+      "portableContextSuccess": true
+    },
+    {
+      "zone": "US/Eastern",
+      "detailsLinkAccepted": true,
+      "instant": "1990-06-15T18:30:00.000Z",
+      "offsetMinutes": -240,
+      "legacySuccess": true,
+      "portableContextSuccess": true
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "contextClosed": true
+}

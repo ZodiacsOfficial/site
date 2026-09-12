@@ -1,0 +1,45 @@
+{
+  "base": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "beforeSha256": "74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5",
+  "afterSha256": "286ca48156fb294f2af629fdf973d921565c5601142396a4d31fe5f1d95633a9",
+  "patchSha256": "f9ce2b49d843e6d6c65b5bd49155554f63aa82b146b48313e13d90ad6a5cadf4",
+  "onlyFourLineStepAdded": true,
+  "frozenDriverSha256": "f60a0858fe7afbffd813bc1f9d4fca91e5a1e983b48b60374426bc37b9f86364",
+  "dependencies": {
+    "esbuild": {
+      "declared": "^0.28.1",
+      "lockVersion": "0.28.1"
+    },
+    "playwright-core": {
+      "declared": "^1.61.1",
+      "lockVersion": "1.61.1"
+    },
+    "preact": {
+      "declared": "^10.26.0",
+      "lockVersion": "10.29.4"
+    }
+  },
+  "baseFiles": [
+    {
+      "path": "tests/visual/browser.mjs",
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a",
+      "bytes": 3304
+    },
+    {
+      "path": "package.json",
+      "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c",
+      "bytes": 11388
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3",
+      "bytes": 436565
+    },
+    {
+      "path": "src/layouts/Base.astro",
+      "sha256": "72f3b70e484f9a5cf294ee69bd9a35389118b4e78444a42cf8285203eb8eda3e",
+      "bytes": 25204
+    }
+  ],
+  "qualification": "Read-only CI wiring/source review, not Linux execution or CI-success claim. Existing always-upload step retains output that exists; abrupt termination may prevent final per-group result writing."
+}

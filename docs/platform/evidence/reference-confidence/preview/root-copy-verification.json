@@ -1,0 +1,11 @@
+{
+  "sourceManifestSha256": "dd97557038ccd0796cf0d3ca89a2996c80d960ad5b9916dcf5590801bc88c387",
+  "verifiedRecords": 144,
+  "verifiedOrdinaryArchiveMembers": {
+    "remote-modules": 68,
+    "source-snapshot": 28
+  },
+  "selectedSourceBlobsMatchExactCommit": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "copiedPayloadsUnchanged": true,
+  "note": "Root verifies captured bytes and exact source; native execution and private access scan remain attributed to independent reviewer."
+}

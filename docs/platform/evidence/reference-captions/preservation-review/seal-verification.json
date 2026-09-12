@@ -1,0 +1,10 @@
+{
+  "sourceFiles": 33,
+  "originalAndCopiedFrozenHashesMatch": true,
+  "selectedInputReferences": 548,
+  "uniqueInputPayloads": 267,
+  "inputArchiveRegularMembersVerified": 267,
+  "rawArchiveRegularMembersVerified": 101,
+  "allOriginalFailuresRetained": true,
+  "signing": "No signature; SHA256 sealed manifest only."
+}

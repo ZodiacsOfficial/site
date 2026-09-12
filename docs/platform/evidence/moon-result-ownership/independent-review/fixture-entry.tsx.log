@@ -1,0 +1,17 @@
+import {h,render} from 'preact';
+import MoonPhaseTool from './source/src/islands/MoonPhaseTool';
+import * as actual from './source/src/lib/engine/full';
+import en from './source/src/lib/i18n/ui/en';
+import {createModuleLoader} from './source/src/lib/module-load';
+const pending:any[]=[],calls:any[]=[],errors:any[]=[];let current:any=null;let fail=false;let mountId=0;
+const engine={...actual,bodyLongitude(body:any,utc:any){calls.push({body,utc:new Date(utc).toISOString(),mountId});if(fail)throw new Error('Synthetic calculation failure');return actual.bodyLongitude(body,utc);}};
+const importer=()=>{window.fixture.importAttempts++;return current?current.promise:Promise.resolve(engine);};
+const productionLoader=createModuleLoader(importer);
+window.fixtureLoad=()=>new URL(location.href).searchParams.get('loader')==='raw'?importer():productionLoader();
+window.fixture={pending,calls,errors,importAttempts:0,
+ hold(){let yes:any,no:any;const promise=new Promise((resolve,reject)=>{yes=resolve;no=reject;});current={promise,yes,no};pending.push(current);return pending.length-1;},
+ release(id:number){pending[id].yes(engine);},reject(id:number){pending[id].no(new Error('Synthetic importer failure'));},immediate(){current=null;},fail(value:boolean){fail=value;},
+ mount(){mountId++;window.__ZDX_UI__={locale:'en',messages:en};render(h(MoonPhaseTool,{}),document.getElementById('mount')!);},unmount(){render(null,document.getElementById('mount')!);},
+};
+window.addEventListener('unhandledrejection',e=>{errors.push({type:'unhandledrejection',message:String(e.reason)});});
+if(!new URL(location.href).searchParams.has('defer'))window.fixture.mount();

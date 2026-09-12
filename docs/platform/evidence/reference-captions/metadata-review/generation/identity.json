@@ -1,0 +1,9 @@
+{
+  "path": "i18n-additions.md",
+  "beforeSha256": "cd4092b9fdefcc7f1cce50455b93d2d1ee1da70acfbb0d658f65c00b2b237396",
+  "afterSha256": "a5477a59ccc43cc3edad8b44904acda4fd2bcea7e67e97909f8cf683e06ba812",
+  "patchSha256": "cdcebdd27255dd9e71c89e98c87975b75724f160cc84404010ffd317ed83efe5",
+  "generatorSha256": "7cae770860a39d5423c8f4c6e5cad4df35261b41d55e1fdad51e622a55494e82",
+  "generationLogSha256": "4e59f75b1f3fa4c7642addd9adc1570fe4b3276cf8c56bd224bde38c4c3694b4",
+  "expectedChange": "One English default value for shareCard.referenceTimeNote, unchanged generator."
+}

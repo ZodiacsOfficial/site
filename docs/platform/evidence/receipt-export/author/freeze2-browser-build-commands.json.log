@@ -1,0 +1,21 @@
+[
+  {
+    "command": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/astro/bin/astro.mjs",
+      "build"
+    ],
+    "log": "freeze2-astro-build.log",
+    "seconds": 14.854249000549316,
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "scripts/build-assistant-ui.mjs"
+    ],
+    "log": "freeze2-static-guide-build.log",
+    "seconds": 0.13846921920776367,
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,1667 @@
+{
+  "module": {
+    "nativeTemporal": "object",
+    "rows": [
+      {
+        "name": "utc singleton",
+        "date": "1990-01-04",
+        "time": "",
+        "zone": null,
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 90.7226336126505,
+            "illum": 0.5063060007264075,
+            "lon": 14.594962446154454,
+            "altLon": null,
+            "caption": "Read at midday universal time — a time and place pin the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "1990-01-04T12:00:00.000Z",
+              "value": 14.594962446154454
+            },
+            {
+              "body": "Sun",
+              "utc": "1990-01-04T12:00:00.000Z",
+              "value": 283.87232883350396
+            },
+            {
+              "body": "Moon",
+              "utc": "1990-01-04T00:00:00.000Z",
+              "value": 7.57889621685888
+            },
+            {
+              "body": "Moon",
+              "utc": "1990-01-04T23:59:00.000Z",
+              "value": 21.650298215758767
+            }
+          ],
+          "resolutions": []
+        },
+        "instant": "1990-01-04T12:00:00.000Z",
+        "resolvedWall": null,
+        "member": null,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "utc phase category crossing",
+        "date": "2024-01-09",
+        "time": "",
+        "zone": null,
+        "value": {
+          "result": {
+            "phase": "Waning Crescent",
+            "angle": 333.3346533658649,
+            "illum": 0.053178510034040005,
+            "lon": 262.0379535553318,
+            "altLon": null,
+            "caption": "Read at midday universal time — a time and place pin the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2024-01-09T12:00:00.000Z",
+              "value": 262.0379535553318
+            },
+            {
+              "body": "Sun",
+              "utc": "2024-01-09T12:00:00.000Z",
+              "value": 288.7033001894669
+            },
+            {
+              "body": "Moon",
+              "utc": "2024-01-09T00:00:00.000Z",
+              "value": 255.10470670665177
+            },
+            {
+              "body": "Moon",
+              "utc": "2024-01-09T23:59:00.000Z",
+              "value": 269.0704765258396
+            }
+          ],
+          "resolutions": []
+        },
+        "instant": "2024-01-09T12:00:00.000Z",
+        "resolvedWall": null,
+        "member": null,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "local two signs",
+        "date": "1990-01-01",
+        "time": "",
+        "zone": "Europe/London",
+        "value": {
+          "result": {
+            "phase": "Waxing Crescent",
+            "angle": 52.45332330552543,
+            "illum": 0.19529622912573236,
+            "lon": 333.2675900418851,
+            "altLon": 326.5572256870055,
+            "caption": "Read at midday local time — adding the clock time pins the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "1990-01-01T12:00:00.000Z",
+              "value": 333.2675900418851
+            },
+            {
+              "body": "Sun",
+              "utc": "1990-01-01T12:00:00.000Z",
+              "value": 280.8142667363597
+            },
+            {
+              "body": "Moon",
+              "utc": "1990-01-01T00:00:00.000Z",
+              "value": 326.5572256870055
+            },
+            {
+              "body": "Moon",
+              "utc": "1990-01-01T23:59:00.000Z",
+              "value": 340.018256472051
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "1990-01-01",
+                "12:00",
+                "Europe/London"
+              ],
+              "utc": "1990-01-01T12:00:00.000Z",
+              "offsetMinutes": 0,
+              "flags": []
+            },
+            {
+              "args": [
+                "1990-01-01",
+                "00:00",
+                "Europe/London"
+              ],
+              "utc": "1990-01-01T00:00:00.000Z",
+              "offsetMinutes": 0,
+              "flags": []
+            },
+            {
+              "args": [
+                "1990-01-01",
+                "23:59",
+                "Europe/London"
+              ],
+              "utc": "1990-01-01T23:59:00.000Z",
+              "offsetMinutes": 0,
+              "flags": []
+            }
+          ]
+        },
+        "instant": "1990-01-01T12:00:00.000Z",
+        "resolvedWall": "01/01/1990, 12:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": true
+      },
+      {
+        "name": "Toronto omitted member",
+        "date": "1919-03-31",
+        "time": "",
+        "zone": "America/Toronto",
+        "value": {
+          "result": {
+            "phase": "New Moon",
+            "angle": 357.02194679439486,
+            "illum": 0.0006752457709652826,
+            "lon": 6.908715565947205,
+            "altLon": null,
+            "caption": "Read at midday local time — adding the clock time pins the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "1919-03-31T16:00:00.000Z",
+              "value": 6.908715565947205
+            },
+            {
+              "body": "Sun",
+              "utc": "1919-03-31T16:00:00.000Z",
+              "value": 9.88676877155234
+            },
+            {
+              "body": "Moon",
+              "utc": "1919-03-31T05:00:00.000Z",
+              "value": 0.026289658393466198
+            },
+            {
+              "body": "Moon",
+              "utc": "1919-04-01T03:59:00.000Z",
+              "value": 14.443874704303823
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "1919-03-31",
+                "12:00",
+                "America/Toronto"
+              ],
+              "utc": "1919-03-31T16:00:00.000Z",
+              "offsetMinutes": -240,
+              "flags": []
+            },
+            {
+              "args": [
+                "1919-03-31",
+                "00:00",
+                "America/Toronto"
+              ],
+              "utc": "1919-03-31T05:00:00.000Z",
+              "offsetMinutes": -240,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "1919-03-31",
+                "23:59",
+                "America/Toronto"
+              ],
+              "utc": "1919-04-01T03:59:00.000Z",
+              "offsetMinutes": -240,
+              "flags": []
+            }
+          ]
+        },
+        "instant": "1919-03-31T16:00:00.000Z",
+        "resolvedWall": "03/31/1919, 12:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "Juneau repeated member",
+        "date": "1867-10-18",
+        "time": "",
+        "zone": "America/Juneau",
+        "value": {
+          "result": {
+            "phase": "Waning Gibbous",
+            "angle": 236.67191455818536,
+            "illum": 0.7747162254713422,
+            "lon": 80.692820323055,
+            "altLon": null,
+            "caption": "Read at midday local time — adding the clock time pins the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "1867-10-17T20:57:41.000Z",
+              "value": 80.692820323055
+            },
+            {
+              "body": "Sun",
+              "utc": "1867-10-17T20:57:41.000Z",
+              "value": 204.02090576486964
+            },
+            {
+              "body": "Moon",
+              "utc": "1867-10-17T08:57:41.000Z",
+              "value": 73.5247920572915
+            },
+            {
+              "body": "Moon",
+              "utc": "1867-10-18T08:56:41.000Z",
+              "value": 87.8469678996891
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "1867-10-18",
+                "12:00",
+                "America/Juneau"
+              ],
+              "utc": "1867-10-17T20:57:41.000Z",
+              "offsetMinutes": 902.3166666666667,
+              "flags": [
+                "lmt"
+              ]
+            },
+            {
+              "args": [
+                "1867-10-18",
+                "00:00",
+                "America/Juneau"
+              ],
+              "utc": "1867-10-17T08:57:41.000Z",
+              "offsetMinutes": 902.3166666666667,
+              "flags": [
+                "lmt"
+              ]
+            },
+            {
+              "args": [
+                "1867-10-18",
+                "23:59",
+                "America/Juneau"
+              ],
+              "utc": "1867-10-18T08:56:41.000Z",
+              "offsetMinutes": 902.3166666666667,
+              "flags": [
+                "dst-fold",
+                "lmt"
+              ]
+            }
+          ]
+        },
+        "instant": "1867-10-17T20:57:41.000Z",
+        "resolvedWall": "10/18/1867, 12:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "real noon gap",
+        "date": "2000-01-15",
+        "time": "",
+        "zone": "Africa/Khartoum",
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 100.85543901591933,
+            "illum": 0.594165840672007,
+            "lon": 35.40995647837468,
+            "altLon": 28.491545157350515,
+            "caption": "Read at midday local time — adding the clock time pins the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2000-01-15T10:00:00.000Z",
+              "value": 35.40995647837468
+            },
+            {
+              "body": "Sun",
+              "utc": "2000-01-15T10:00:00.000Z",
+              "value": 294.55451746245535
+            },
+            {
+              "body": "Moon",
+              "utc": "2000-01-14T22:00:00.000Z",
+              "value": 28.491545157350515
+            },
+            {
+              "body": "Moon",
+              "utc": "2000-01-15T20:59:00.000Z",
+              "value": 41.82524658618672
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "2000-01-15",
+                "12:00",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-15T10:00:00.000Z",
+              "offsetMinutes": 180,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "2000-01-15",
+                "00:00",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-14T22:00:00.000Z",
+              "offsetMinutes": 120,
+              "flags": []
+            },
+            {
+              "args": [
+                "2000-01-15",
+                "23:59",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-15T20:59:00.000Z",
+              "offsetMinutes": 180,
+              "flags": []
+            }
+          ]
+        },
+        "instant": "2000-01-15T10:00:00.000Z",
+        "resolvedWall": "01/15/2000, 13:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": true
+      },
+      {
+        "name": "known local gap",
+        "date": "2000-01-15",
+        "time": "12:00",
+        "zone": "Africa/Khartoum",
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 100.85543901591933,
+            "illum": 0.594165840672007,
+            "lon": 35.40995647837468,
+            "altLon": null,
+            "caption": ""
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2000-01-15T10:00:00.000Z",
+              "value": 35.40995647837468
+            },
+            {
+              "body": "Sun",
+              "utc": "2000-01-15T10:00:00.000Z",
+              "value": 294.55451746245535
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "2000-01-15",
+                "12:00",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-15T10:00:00.000Z",
+              "offsetMinutes": 180,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "2000-01-15",
+                "00:00",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-14T22:00:00.000Z",
+              "offsetMinutes": 120,
+              "flags": []
+            },
+            {
+              "args": [
+                "2000-01-15",
+                "23:59",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-15T20:59:00.000Z",
+              "offsetMinutes": 180,
+              "flags": []
+            }
+          ]
+        },
+        "instant": "2000-01-15T10:00:00.000Z",
+        "resolvedWall": "01/15/2000, 13:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "known UTC",
+        "date": "2000-01-15",
+        "time": "08:30",
+        "zone": null,
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 100.04910680549477,
+            "illum": 0.5872460841618686,
+            "lon": 34.53996883262403,
+            "altLon": null,
+            "caption": "The time is read as universal time — add a birthplace to convert your local clock."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2000-01-15T08:30:00.000Z",
+              "value": 34.53996883262403
+            },
+            {
+              "body": "Sun",
+              "utc": "2000-01-15T08:30:00.000Z",
+              "value": 294.49086202712925
+            }
+          ],
+          "resolutions": []
+        },
+        "instant": "2000-01-15T08:30:00.000Z",
+        "resolvedWall": null,
+        "member": null,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "skipped reference",
+        "date": "2011-12-30",
+        "time": "",
+        "zone": "Pacific/Apia",
+        "value": {
+          "result": null,
+          "error": "We couldn’t establish a calculation time within this local date. Check the date and place.",
+          "busy": false,
+          "calls": [],
+          "resolutions": [
+            {
+              "args": [
+                "2011-12-30",
+                "12:00",
+                "Pacific/Apia"
+              ],
+              "utc": "2011-12-30T22:00:00.000Z",
+              "offsetMinutes": 840,
+              "flags": [
+                "dst-gap"
+              ]
+            }
+          ]
+        },
+        "instant": null,
+        "resolvedWall": null,
+        "member": null,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "skipped known time",
+        "date": "2011-12-30",
+        "time": "08:30",
+        "zone": "Pacific/Apia",
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 73.54458932956226,
+            "illum": 0.3583654620479334,
+            "lon": 352.24995209665553,
+            "altLon": null,
+            "caption": ""
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2011-12-30T18:30:00.000Z",
+              "value": 352.24995209665553
+            },
+            {
+              "body": "Sun",
+              "utc": "2011-12-30T18:30:00.000Z",
+              "value": 278.7053627670933
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "2011-12-30",
+                "08:30",
+                "Pacific/Apia"
+              ],
+              "utc": "2011-12-30T18:30:00.000Z",
+              "offsetMinutes": 840,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "2011-12-30",
+                "00:00",
+                "Pacific/Apia"
+              ],
+              "utc": "2011-12-30T10:00:00.000Z",
+              "offsetMinutes": 840,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "2011-12-30",
+                "23:59",
+                "Pacific/Apia"
+              ],
+              "utc": "2011-12-31T09:59:00.000Z",
+              "offsetMinutes": 840,
+              "flags": [
+                "dst-gap"
+              ]
+            }
+          ]
+        },
+        "instant": "2011-12-30T18:30:00.000Z",
+        "resolvedWall": "12/31/2011, 08:30:00",
+        "member": false,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": false
+      }
+    ],
+    "phases": [
+      {
+        "date": "2024-01-01",
+        "points": [
+          {
+            "instant": "2024-01-01T00:00:00.000Z",
+            "liteName": "Waning Gibbous",
+            "liteAngle": 235.95072882786553,
+            "fullAngle": 235.9539068592851,
+            "moon": 155.99293133144124,
+            "sun": 280.03902447215614
+          },
+          {
+            "instant": "2024-01-01T12:00:00.000Z",
+            "liteName": "Waning Gibbous",
+            "liteAngle": 241.35122858287104,
+            "fullAngle": 241.3592098237524,
+            "moon": 161.90773694497045,
+            "sun": 280.54852712121806
+          },
+          {
+            "instant": "2024-01-01T23:59:59.999Z",
+            "liteName": "Waning Gibbous",
+            "liteAngle": 246.73462142533936,
+            "fullAngle": 246.75180949611428,
+            "moon": 167.8098623556756,
+            "sun": 281.0580528595613
+          }
+        ]
+      },
+      {
+        "date": "2024-01-09",
+        "points": [
+          {
+            "instant": "2024-01-09T00:00:00.000Z",
+            "liteName": "Waning Crescent",
+            "liteAngle": 326.89225045951935,
+            "fullAngle": 326.9111625619094,
+            "moon": 255.10470670665177,
+            "sun": 288.19354414474236
+          },
+          {
+            "instant": "2024-01-09T12:00:00.000Z",
+            "liteName": "Waning Crescent",
+            "liteAngle": 333.3204687032339,
+            "fullAngle": 333.3346533658649,
+            "moon": 262.0379535553318,
+            "sun": 288.7033001894669
+          },
+          {
+            "instant": "2024-01-09T23:59:59.999Z",
+            "liteName": "New Moon",
+            "liteAngle": 339.8501861647983,
+            "fullAngle": 339.8672803217895,
+            "moon": 269.08032982599445,
+            "sun": 289.21304950420495
+          }
+        ]
+      },
+      {
+        "date": "2024-01-16",
+        "points": [
+          {
+            "instant": "2024-01-16T00:00:00.000Z",
+            "liteName": "Waxing Crescent",
+            "liteAngle": 61.607551022159896,
+            "fullAngle": 61.794719370303994,
+            "moon": 357.1228115306046,
+            "sun": 295.3280921603006
+          },
+          {
+            "instant": "2024-01-16T12:00:00.000Z",
+            "liteName": "First Quarter",
+            "liteAngle": 68.28313366785733,
+            "fullAngle": 68.44458211254954,
+            "moon": 4.282000637651549,
+            "sun": 295.837418525102
+          },
+          {
+            "instant": "2024-01-16T23:59:59.999Z",
+            "liteName": "First Quarter",
+            "liteAngle": 74.88759045901679,
+            "fullAngle": 75.01962646276962,
+            "moon": 11.366320637488627,
+            "sun": 296.346694174719
+          }
+        ]
+      },
+      {
+        "date": "2024-04-07",
+        "points": [
+          {
+            "instant": "2024-04-07T00:00:00.000Z",
+            "liteName": "Waning Crescent",
+            "liteAngle": 335.3730218727469,
+            "fullAngle": 335.1769331796652,
+            "moon": 352.84208576998117,
+            "sun": 17.66515259031604
+          },
+          {
+            "instant": "2024-04-07T12:00:00.000Z",
+            "liteName": "New Moon",
+            "liteAngle": 342.40949807333345,
+            "fullAngle": 342.2118370090005,
+            "moon": 0.3688778697634234,
+            "sun": 18.157040860762947
+          },
+          {
+            "instant": "2024-04-07T23:59:59.999Z",
+            "liteName": "New Moon",
+            "liteAngle": 349.4486196562066,
+            "fullAngle": 349.25554777986633,
+            "moon": 7.904342112702693,
+            "sun": 18.64879433283636
+          }
+        ]
+      }
+    ]
+  },
+  "withoutTemporal": {
+    "nativeTemporal": "undefined",
+    "rows": [
+      {
+        "name": "utc singleton",
+        "date": "1990-01-04",
+        "time": "",
+        "zone": null,
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 90.7226336126505,
+            "illum": 0.5063060007264075,
+            "lon": 14.594962446154454,
+            "altLon": null,
+            "caption": "Read at midday universal time — a time and place pin the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "1990-01-04T12:00:00.000Z",
+              "value": 14.594962446154454
+            },
+            {
+              "body": "Sun",
+              "utc": "1990-01-04T12:00:00.000Z",
+              "value": 283.87232883350396
+            },
+            {
+              "body": "Moon",
+              "utc": "1990-01-04T00:00:00.000Z",
+              "value": 7.57889621685888
+            },
+            {
+              "body": "Moon",
+              "utc": "1990-01-04T23:59:00.000Z",
+              "value": 21.650298215758767
+            }
+          ],
+          "resolutions": []
+        },
+        "instant": "1990-01-04T12:00:00.000Z",
+        "resolvedWall": null,
+        "member": null,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "utc phase category crossing",
+        "date": "2024-01-09",
+        "time": "",
+        "zone": null,
+        "value": {
+          "result": {
+            "phase": "Waning Crescent",
+            "angle": 333.3346533658649,
+            "illum": 0.053178510034040005,
+            "lon": 262.0379535553318,
+            "altLon": null,
+            "caption": "Read at midday universal time — a time and place pin the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2024-01-09T12:00:00.000Z",
+              "value": 262.0379535553318
+            },
+            {
+              "body": "Sun",
+              "utc": "2024-01-09T12:00:00.000Z",
+              "value": 288.7033001894669
+            },
+            {
+              "body": "Moon",
+              "utc": "2024-01-09T00:00:00.000Z",
+              "value": 255.10470670665177
+            },
+            {
+              "body": "Moon",
+              "utc": "2024-01-09T23:59:00.000Z",
+              "value": 269.0704765258396
+            }
+          ],
+          "resolutions": []
+        },
+        "instant": "2024-01-09T12:00:00.000Z",
+        "resolvedWall": null,
+        "member": null,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "local two signs",
+        "date": "1990-01-01",
+        "time": "",
+        "zone": "Europe/London",
+        "value": {
+          "result": {
+            "phase": "Waxing Crescent",
+            "angle": 52.45332330552543,
+            "illum": 0.19529622912573236,
+            "lon": 333.2675900418851,
+            "altLon": 326.5572256870055,
+            "caption": "Read at midday local time — adding the clock time pins the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "1990-01-01T12:00:00.000Z",
+              "value": 333.2675900418851
+            },
+            {
+              "body": "Sun",
+              "utc": "1990-01-01T12:00:00.000Z",
+              "value": 280.8142667363597
+            },
+            {
+              "body": "Moon",
+              "utc": "1990-01-01T00:00:00.000Z",
+              "value": 326.5572256870055
+            },
+            {
+              "body": "Moon",
+              "utc": "1990-01-01T23:59:00.000Z",
+              "value": 340.018256472051
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "1990-01-01",
+                "12:00",
+                "Europe/London"
+              ],
+              "utc": "1990-01-01T12:00:00.000Z",
+              "offsetMinutes": 0,
+              "flags": []
+            },
+            {
+              "args": [
+                "1990-01-01",
+                "00:00",
+                "Europe/London"
+              ],
+              "utc": "1990-01-01T00:00:00.000Z",
+              "offsetMinutes": 0,
+              "flags": []
+            },
+            {
+              "args": [
+                "1990-01-01",
+                "23:59",
+                "Europe/London"
+              ],
+              "utc": "1990-01-01T23:59:00.000Z",
+              "offsetMinutes": 0,
+              "flags": []
+            }
+          ]
+        },
+        "instant": "1990-01-01T12:00:00.000Z",
+        "resolvedWall": "01/01/1990, 12:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": true
+      },
+      {
+        "name": "Toronto omitted member",
+        "date": "1919-03-31",
+        "time": "",
+        "zone": "America/Toronto",
+        "value": {
+          "result": {
+            "phase": "New Moon",
+            "angle": 357.02194679439486,
+            "illum": 0.0006752457709652826,
+            "lon": 6.908715565947205,
+            "altLon": null,
+            "caption": "Read at midday local time — adding the clock time pins the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "1919-03-31T16:00:00.000Z",
+              "value": 6.908715565947205
+            },
+            {
+              "body": "Sun",
+              "utc": "1919-03-31T16:00:00.000Z",
+              "value": 9.88676877155234
+            },
+            {
+              "body": "Moon",
+              "utc": "1919-03-31T05:00:00.000Z",
+              "value": 0.026289658393466198
+            },
+            {
+              "body": "Moon",
+              "utc": "1919-04-01T03:59:00.000Z",
+              "value": 14.443874704303823
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "1919-03-31",
+                "12:00",
+                "America/Toronto"
+              ],
+              "utc": "1919-03-31T16:00:00.000Z",
+              "offsetMinutes": -240,
+              "flags": []
+            },
+            {
+              "args": [
+                "1919-03-31",
+                "00:00",
+                "America/Toronto"
+              ],
+              "utc": "1919-03-31T05:00:00.000Z",
+              "offsetMinutes": -240,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "1919-03-31",
+                "23:59",
+                "America/Toronto"
+              ],
+              "utc": "1919-04-01T03:59:00.000Z",
+              "offsetMinutes": -240,
+              "flags": []
+            }
+          ]
+        },
+        "instant": "1919-03-31T16:00:00.000Z",
+        "resolvedWall": "03/31/1919, 12:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "Juneau repeated member",
+        "date": "1867-10-18",
+        "time": "",
+        "zone": "America/Juneau",
+        "value": {
+          "result": {
+            "phase": "Waning Gibbous",
+            "angle": 236.67191455818536,
+            "illum": 0.7747162254713422,
+            "lon": 80.692820323055,
+            "altLon": null,
+            "caption": "Read at midday local time — adding the clock time pins the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "1867-10-17T20:57:41.000Z",
+              "value": 80.692820323055
+            },
+            {
+              "body": "Sun",
+              "utc": "1867-10-17T20:57:41.000Z",
+              "value": 204.02090576486964
+            },
+            {
+              "body": "Moon",
+              "utc": "1867-10-17T08:57:41.000Z",
+              "value": 73.5247920572915
+            },
+            {
+              "body": "Moon",
+              "utc": "1867-10-18T08:56:41.000Z",
+              "value": 87.8469678996891
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "1867-10-18",
+                "12:00",
+                "America/Juneau"
+              ],
+              "utc": "1867-10-17T20:57:41.000Z",
+              "offsetMinutes": 902.3166666666667,
+              "flags": [
+                "lmt"
+              ]
+            },
+            {
+              "args": [
+                "1867-10-18",
+                "00:00",
+                "America/Juneau"
+              ],
+              "utc": "1867-10-17T08:57:41.000Z",
+              "offsetMinutes": 902.3166666666667,
+              "flags": [
+                "lmt"
+              ]
+            },
+            {
+              "args": [
+                "1867-10-18",
+                "23:59",
+                "America/Juneau"
+              ],
+              "utc": "1867-10-18T08:56:41.000Z",
+              "offsetMinutes": 902.3166666666667,
+              "flags": [
+                "dst-fold",
+                "lmt"
+              ]
+            }
+          ]
+        },
+        "instant": "1867-10-17T20:57:41.000Z",
+        "resolvedWall": "10/18/1867, 12:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "real noon gap",
+        "date": "2000-01-15",
+        "time": "",
+        "zone": "Africa/Khartoum",
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 100.85543901591933,
+            "illum": 0.594165840672007,
+            "lon": 35.40995647837468,
+            "altLon": 28.491545157350515,
+            "caption": "Read at midday local time — adding the clock time pins the degree exactly."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2000-01-15T10:00:00.000Z",
+              "value": 35.40995647837468
+            },
+            {
+              "body": "Sun",
+              "utc": "2000-01-15T10:00:00.000Z",
+              "value": 294.55451746245535
+            },
+            {
+              "body": "Moon",
+              "utc": "2000-01-14T22:00:00.000Z",
+              "value": 28.491545157350515
+            },
+            {
+              "body": "Moon",
+              "utc": "2000-01-15T20:59:00.000Z",
+              "value": 41.82524658618672
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "2000-01-15",
+                "12:00",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-15T10:00:00.000Z",
+              "offsetMinutes": 180,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "2000-01-15",
+                "00:00",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-14T22:00:00.000Z",
+              "offsetMinutes": 120,
+              "flags": []
+            },
+            {
+              "args": [
+                "2000-01-15",
+                "23:59",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-15T20:59:00.000Z",
+              "offsetMinutes": 180,
+              "flags": []
+            }
+          ]
+        },
+        "instant": "2000-01-15T10:00:00.000Z",
+        "resolvedWall": "01/15/2000, 13:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": true
+      },
+      {
+        "name": "known local gap",
+        "date": "2000-01-15",
+        "time": "12:00",
+        "zone": "Africa/Khartoum",
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 100.85543901591933,
+            "illum": 0.594165840672007,
+            "lon": 35.40995647837468,
+            "altLon": null,
+            "caption": ""
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2000-01-15T10:00:00.000Z",
+              "value": 35.40995647837468
+            },
+            {
+              "body": "Sun",
+              "utc": "2000-01-15T10:00:00.000Z",
+              "value": 294.55451746245535
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "2000-01-15",
+                "12:00",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-15T10:00:00.000Z",
+              "offsetMinutes": 180,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "2000-01-15",
+                "00:00",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-14T22:00:00.000Z",
+              "offsetMinutes": 120,
+              "flags": []
+            },
+            {
+              "args": [
+                "2000-01-15",
+                "23:59",
+                "Africa/Khartoum"
+              ],
+              "utc": "2000-01-15T20:59:00.000Z",
+              "offsetMinutes": 180,
+              "flags": []
+            }
+          ]
+        },
+        "instant": "2000-01-15T10:00:00.000Z",
+        "resolvedWall": "01/15/2000, 13:00:00",
+        "member": true,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "known UTC",
+        "date": "2000-01-15",
+        "time": "08:30",
+        "zone": null,
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 100.04910680549477,
+            "illum": 0.5872460841618686,
+            "lon": 34.53996883262403,
+            "altLon": null,
+            "caption": "The time is read as universal time — add a birthplace to convert your local clock."
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2000-01-15T08:30:00.000Z",
+              "value": 34.53996883262403
+            },
+            {
+              "body": "Sun",
+              "utc": "2000-01-15T08:30:00.000Z",
+              "value": 294.49086202712925
+            }
+          ],
+          "resolutions": []
+        },
+        "instant": "2000-01-15T08:30:00.000Z",
+        "resolvedWall": null,
+        "member": null,
+        "captionInCollapsedDisclosure": true,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "skipped reference",
+        "date": "2011-12-30",
+        "time": "",
+        "zone": "Pacific/Apia",
+        "value": {
+          "result": null,
+          "error": "We couldn’t establish a calculation time within this local date. Check the date and place.",
+          "busy": false,
+          "calls": [],
+          "resolutions": [
+            {
+              "args": [
+                "2011-12-30",
+                "12:00",
+                "Pacific/Apia"
+              ],
+              "utc": "2011-12-30T22:00:00.000Z",
+              "offsetMinutes": 840,
+              "flags": [
+                "dst-gap"
+              ]
+            }
+          ]
+        },
+        "instant": null,
+        "resolvedWall": null,
+        "member": null,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": false
+      },
+      {
+        "name": "skipped known time",
+        "date": "2011-12-30",
+        "time": "08:30",
+        "zone": "Pacific/Apia",
+        "value": {
+          "result": {
+            "phase": "First Quarter",
+            "angle": 73.54458932956226,
+            "illum": 0.3583654620479334,
+            "lon": 352.24995209665553,
+            "altLon": null,
+            "caption": ""
+          },
+          "error": "",
+          "busy": false,
+          "calls": [
+            {
+              "body": "Moon",
+              "utc": "2011-12-30T18:30:00.000Z",
+              "value": 352.24995209665553
+            },
+            {
+              "body": "Sun",
+              "utc": "2011-12-30T18:30:00.000Z",
+              "value": 278.7053627670933
+            }
+          ],
+          "resolutions": [
+            {
+              "args": [
+                "2011-12-30",
+                "08:30",
+                "Pacific/Apia"
+              ],
+              "utc": "2011-12-30T18:30:00.000Z",
+              "offsetMinutes": 840,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "2011-12-30",
+                "00:00",
+                "Pacific/Apia"
+              ],
+              "utc": "2011-12-30T10:00:00.000Z",
+              "offsetMinutes": 840,
+              "flags": [
+                "dst-gap"
+              ]
+            },
+            {
+              "args": [
+                "2011-12-30",
+                "23:59",
+                "Pacific/Apia"
+              ],
+              "utc": "2011-12-31T09:59:00.000Z",
+              "offsetMinutes": 840,
+              "flags": [
+                "dst-gap"
+              ]
+            }
+          ]
+        },
+        "instant": "2011-12-30T18:30:00.000Z",
+        "resolvedWall": "12/31/2011, 08:30:00",
+        "member": false,
+        "captionInCollapsedDisclosure": false,
+        "captionOmittedForAlternateSign": false
+      }
+    ],
+    "phases": [
+      {
+        "date": "2024-01-01",
+        "points": [
+          {
+            "instant": "2024-01-01T00:00:00.000Z",
+            "liteName": "Waning Gibbous",
+            "liteAngle": 235.95072882786553,
+            "fullAngle": 235.9539068592851,
+            "moon": 155.99293133144124,
+            "sun": 280.03902447215614
+          },
+          {
+            "instant": "2024-01-01T12:00:00.000Z",
+            "liteName": "Waning Gibbous",
+            "liteAngle": 241.35122858287104,
+            "fullAngle": 241.3592098237524,
+            "moon": 161.90773694497045,
+            "sun": 280.54852712121806
+          },
+          {
+            "instant": "2024-01-01T23:59:59.999Z",
+            "liteName": "Waning Gibbous",
+            "liteAngle": 246.73462142533936,
+            "fullAngle": 246.75180949611428,
+            "moon": 167.8098623556756,
+            "sun": 281.0580528595613
+          }
+        ]
+      },
+      {
+        "date": "2024-01-09",
+        "points": [
+          {
+            "instant": "2024-01-09T00:00:00.000Z",
+            "liteName": "Waning Crescent",
+            "liteAngle": 326.89225045951935,
+            "fullAngle": 326.9111625619094,
+            "moon": 255.10470670665177,
+            "sun": 288.19354414474236
+          },
+          {
+            "instant": "2024-01-09T12:00:00.000Z",
+            "liteName": "Waning Crescent",
+            "liteAngle": 333.3204687032339,
+            "fullAngle": 333.3346533658649,
+            "moon": 262.0379535553318,
+            "sun": 288.7033001894669
+          },
+          {
+            "instant": "2024-01-09T23:59:59.999Z",
+            "liteName": "New Moon",
+            "liteAngle": 339.8501861647983,
+            "fullAngle": 339.8672803217895,
+            "moon": 269.08032982599445,
+            "sun": 289.21304950420495
+          }
+        ]
+      },
+      {
+        "date": "2024-01-16",
+        "points": [
+          {
+            "instant": "2024-01-16T00:00:00.000Z",
+            "liteName": "Waxing Crescent",
+            "liteAngle": 61.607551022159896,
+            "fullAngle": 61.794719370303994,
+            "moon": 357.1228115306046,
+            "sun": 295.3280921603006
+          },
+          {
+            "instant": "2024-01-16T12:00:00.000Z",
+            "liteName": "First Quarter",
+            "liteAngle": 68.28313366785733,
+            "fullAngle": 68.44458211254954,
+            "moon": 4.282000637651549,
+            "sun": 295.837418525102
+          },
+          {
+            "instant": "2024-01-16T23:59:59.999Z",
+            "liteName": "First Quarter",
+            "liteAngle": 74.88759045901679,
+            "fullAngle": 75.01962646276962,
+            "moon": 11.366320637488627,
+            "sun": 296.346694174719
+          }
+        ]
+      },
+      {
+        "date": "2024-04-07",
+        "points": [
+          {
+            "instant": "2024-04-07T00:00:00.000Z",
+            "liteName": "Waning Crescent",
+            "liteAngle": 335.3730218727469,
+            "fullAngle": 335.1769331796652,
+            "moon": 352.84208576998117,
+            "sun": 17.66515259031604
+          },
+          {
+            "instant": "2024-04-07T12:00:00.000Z",
+            "liteName": "New Moon",
+            "liteAngle": 342.40949807333345,
+            "fullAngle": 342.2118370090005,
+            "moon": 0.3688778697634234,
+            "sun": 18.157040860762947
+          },
+          {
+            "instant": "2024-04-07T23:59:59.999Z",
+            "liteName": "New Moon",
+            "liteAngle": 349.4486196562066,
+            "fullAngle": 349.25554777986633,
+            "moon": 7.904342112702693,
+            "sun": 18.64879433283636
+          }
+        ]
+      }
+    ]
+  },
+  "temporalRemovalPreservesAllOutputs": true,
+  "dom": [
+    {
+      "name": "utc-singleton",
+      "date": "1990-01-04",
+      "zone": null,
+      "time": "",
+      "observation": {
+        "visibleText": "Moon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗",
+        "allText": "Moon phaseFirst Quarter51% illuminatedMoon in AriesHow we compute14°35′ AriesRead at midday universal time — a time and place pin the degree exactly.Get the birth chart for this date↗",
+        "captionPresent": true,
+        "detailsOpen": false,
+        "notice": null
+      }
+    },
+    {
+      "name": "local-two-signs",
+      "date": "1990-01-01",
+      "zone": "Europe/London",
+      "time": "",
+      "observation": {
+        "visibleText": "Moon phase\nWaxing Crescent20% illuminatedMoon in Pisces or Aquarius\nHow we compute\n\nThe Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.\n\nGet the birth chart for this date↗",
+        "allText": "Moon phaseWaxing Crescent20% illuminatedMoon in Pisces or AquariusHow we compute3°16′ PiscesThe Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.Get the birth chart for this date↗",
+        "captionPresent": false,
+        "detailsOpen": false,
+        "notice": "The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter."
+      }
+    },
+    {
+      "name": "same-date-noon-gap",
+      "date": "2000-01-15",
+      "zone": "Africa/Khartoum",
+      "time": "",
+      "observation": {
+        "visibleText": "Moon phase\nFirst Quarter59% illuminatedMoon in Taurus or Aries\nHow we compute\n\nThe Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.\n\nGet the birth chart for this date↗",
+        "allText": "Moon phaseFirst Quarter59% illuminatedMoon in Taurus or AriesHow we compute5°24′ TaurusThe Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.Get the birth chart for this date↗",
+        "captionPresent": false,
+        "detailsOpen": false,
+        "notice": "The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter."
+      }
+    },
+    {
+      "name": "known-utc",
+      "date": "2000-01-15",
+      "zone": null,
+      "time": "08:30",
+      "observation": {
+        "visibleText": "Moon phase\nFirst Quarter59% illuminatedMoon in Taurus\nHow we compute\nGet the birth chart for this date↗",
+        "allText": "Moon phaseFirst Quarter59% illuminatedMoon in TaurusHow we compute4°32′ TaurusThe time is read as universal time — add a birthplace to convert your local clock.Get the birth chart for this date↗",
+        "captionPresent": true,
+        "detailsOpen": false,
+        "notice": null
+      }
+    }
+  ],
+  "errors": [],
+  "browser": "152.0.7977.83",
+  "requests": [
+    {
+      "url": "http://127.0.0.1:54839/",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.css",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.js",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/subject.mjs",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.css",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.js",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/assets/zodiac-icons/48/aries.avif",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.css",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.js",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/assets/zodiac-icons/48/pisces.avif",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/assets/zodiac-icons/48/aquarius.avif",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.css",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.js",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/assets/zodiac-icons/48/taurus.avif",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/assets/zodiac-icons/48/aries.avif",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.css",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/dom.js",
+      "method": "GET",
+      "allowed": true
+    },
+    {
+      "url": "http://127.0.0.1:54839/assets/zodiac-icons/48/taurus.avif",
+      "method": "GET",
+      "allowed": true
+    }
+  ],
+  "source": {
+    "domSha256": "c9da344220a7fb5c2ba8b26b5403175d0cb7977301ec2214e8e7f27e81f3a97c",
+    "subjectSha256": "94e4a46cedcfcb873500996e5db716f1a878e6cb1dfbba3a73233befe844ac42"
+  },
+  "cleanup": {
+    "contextsClosed": true,
+    "browserClosed": true,
+    "serverClosed": true
+  },
+  "qualification": "Read-only baseline preparation. Exact Moon component and numerical modules, with declared loader/synthetic-place controls. DOM checks establish current hidden/omitted caption behavior; no prototype or changed product source was run."
+}

@@ -1,0 +1,74 @@
+{
+  "records": [
+    {
+      "path": "COMMANDS.md",
+      "bytes": 3849,
+      "sha256": "603d6846cbce3b18a1862e259d3ea37bf35c8a3de27180a74936eb1dc1f78f2d"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 9343,
+      "sha256": "b514a2fda17524ad2fbeb4b0f42367a1894073308086885b7a79ffc015ee4cf1"
+    },
+    {
+      "path": "executed-inputs-archive.json",
+      "bytes": 56954,
+      "sha256": "61456a95ed47b49010149c3a9a2ead5b2e200db2504f31d66e18a93725bf0e81"
+    },
+    {
+      "path": "executed-inputs.json",
+      "bytes": 231610,
+      "sha256": "a99e5882a903496eb65ec6260115fd12120837f1f44f508c5a2a49785588dbb2"
+    },
+    {
+      "path": "executed-inputs.tar.gz",
+      "bytes": 1102423,
+      "sha256": "53b90a8285e4b9634c43253a34ca221d962299ddad806e5f3c79f9062d5a3fc8"
+    },
+    {
+      "path": "freeze.json",
+      "bytes": 6520,
+      "sha256": "c055e55985284904cb82e39fa1eca53a035aa337a3a49a752240fcd5c7d21644"
+    },
+    {
+      "path": "native-harness-correction.json",
+      "bytes": 606,
+      "sha256": "e243a3a72f27f9f0dac8394c79712b604988974a32333c173f644f49c4fb8a6e"
+    },
+    {
+      "path": "parity.json",
+      "bytes": 34795,
+      "sha256": "9fa1a85806c2f62c1b4fd50a4ff52ac2906fe6cc68c655f2d4f92765ab021ac5"
+    },
+    {
+      "path": "raw-evidence-archive.json",
+      "bytes": 16858,
+      "sha256": "3304de390f0af2c4f52c735c57012d18bac5fc25f5c542b6d3ad7175cbbdd769"
+    },
+    {
+      "path": "raw-evidence.tar.gz",
+      "bytes": 1511025,
+      "sha256": "d7e12dbcbd115e649450772530ce78f4ada91f008eb07766a2e93f40151cdd75"
+    },
+    {
+      "path": "root-copy-verification.json",
+      "bytes": 253,
+      "sha256": "17dbcd82bd157369a0237da8b8a32c49753f5f145d98850cd9d76381a75a7f46"
+    },
+    {
+      "path": "seal-verification.json",
+      "bytes": 320,
+      "sha256": "b28410f3f064f0e40c4205f4cb307bf4550ad30ce0a57bc5b8e8ef7b6986060d"
+    },
+    {
+      "path": "source-manifest.json",
+      "bytes": 1924,
+      "sha256": "81e2baa15e9abca55dea69ea41e4604485c872f0f24d7b38f6dc1ccbe7cfecdb"
+    },
+    {
+      "path": "source-review.json",
+      "bytes": 11741,
+      "sha256": "f94a93ee8caf24e0599d310b32846d84400918837e9739ceb5b469ab2f676e98"
+    }
+  ]
+}

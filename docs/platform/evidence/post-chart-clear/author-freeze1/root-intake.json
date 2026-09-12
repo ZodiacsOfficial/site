@@ -1,0 +1,9 @@
+{
+  "rootHead": "295bbfbe3728b3d6f57ff665dc0b08feb765bc41",
+  "authorBase": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "sixFrozenFileBytesVerified": true,
+  "patchAppliesCleanlyWithoutApplication": true,
+  "fullExistingPageGate": "Fixture build passed; author reports subsequent paused-panel wait timeout under investigation. No full-page acceptance is claimed.",
+  "independentReview": "in progress",
+  "rootSourceApplied": false
+}

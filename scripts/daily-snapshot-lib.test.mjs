@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { degreeInSign, moonPhase, positions, signForLongitude } from '@zodiacs/engine';
+import { ENGINE_VERSION, degreeInSign, moonPhase, positions, signForLongitude } from '@zodiacs/engine';
 import { bodyLongitude } from '@zodiacs/engine/internal';
 import { afterEach, describe, expect, it } from 'vitest';
 import { computeDailySnapshot } from './daily-snapshot-lib.mjs';
@@ -64,7 +64,7 @@ describe('daily snapshot source coverage', () => {
       resolve(repositoryRoot, 'src/data/daily-publication-manifest.json'),
       'utf8',
     ));
-    expect(manifest.facts.engine).toEqual({ name: '@zodiacs/engine', version: '0.1.0' });
+    expect(manifest.facts.engine).toEqual({ name: '@zodiacs/engine', version: ENGINE_VERSION });
     expect(manifest.verification.copyVerifierIndependentFromGenerator).toBe(true);
     expect(manifest.verification.astronomyAudit).toMatchObject({
       implementation: 'zodiacs.daily-fact-audit.v2',
